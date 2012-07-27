@@ -5,7 +5,8 @@ import java.util.List;
 
 public class PrepareResult {
 
-    public static class Split extends SplitResult {
+    public static class Split
+            extends SplitResult {
 
         private final CharSet origThis;
         private final DFAState origNext;

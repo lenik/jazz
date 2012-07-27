@@ -1,6 +1,7 @@
 package net.bodz.bas.util;
 
-public class OperationException extends Exception {
+public class OperationException
+        extends Exception {
 
     private static final long serialVersionUID = 5079299543033517264L;
 

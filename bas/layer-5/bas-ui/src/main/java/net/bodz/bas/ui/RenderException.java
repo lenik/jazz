@@ -1,6 +1,7 @@
 package net.bodz.bas.ui;
 
-public class RenderException extends UIException {
+public class RenderException
+        extends UIException {
 
     private static final long serialVersionUID = 6917073279661438551L;
 

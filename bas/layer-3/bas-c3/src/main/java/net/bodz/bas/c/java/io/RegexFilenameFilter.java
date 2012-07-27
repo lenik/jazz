@@ -5,7 +5,8 @@ import java.io.FilenameFilter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegexFilenameFilter implements FilenameFilter {
+public class RegexFilenameFilter
+        implements FilenameFilter {
 
     private final boolean whole;
     private final boolean fullpath;

@@ -25,9 +25,9 @@ public class MkbatTest {
         File moddir = FilePath.canoniOf(lapiBase, "mod/GUI Utilities");
         File indir = new File(moddir, "bin");
         String[] mkbatArgs = { //
-        "-O", outdir.getPath(), // 
-                "-l", "bodz_swt", //   
-                "-l", "bodz_lapiota", //   
+        "-O", outdir.getPath(), //
+                "-l", "bodz_swt", //
+                "-l", "bodz_lapiota", //
                 "-rq", "--", // recursive, quiet
                 indir.getPath(), //
         };

@@ -1,6 +1,7 @@
 package net.bodz.bas.loader;
 
-public class LoadException extends Exception {
+public class LoadException
+        extends Exception {
 
     private static final long serialVersionUID = 5449221151871597792L;
 

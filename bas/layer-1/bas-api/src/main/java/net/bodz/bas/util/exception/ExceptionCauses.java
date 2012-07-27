@@ -15,7 +15,7 @@ import net.bodz.bas.err.RuntimizedException;
  */
 @Documented
 @Retention(RetentionPolicy.CLASS)
-@Target( { ElementType.METHOD, //
+@Target({ ElementType.METHOD, //
         ElementType.CONSTRUCTOR // Should be warning when declared on ctors
 })
 public @interface ExceptionCauses {

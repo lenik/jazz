@@ -1,6 +1,7 @@
 package net.bodz.bas.dotnet.synthetics;
 
-public class NoSuchConstException extends RuntimeException {
+public class NoSuchConstException
+        extends RuntimeException {
 
     private static final long serialVersionUID = -3416559667196537369L;
 

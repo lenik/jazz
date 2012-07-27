@@ -12,7 +12,8 @@ import java.nio.charset.CoderResult;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.util.primitive.IntMath;
 
-public class ReaderInputStream extends InputStream {
+public class ReaderInputStream
+        extends InputStream {
 
     protected final Reader reader;
     private CharsetEncoder encoder;
@@ -42,8 +43,8 @@ public class ReaderInputStream extends InputStream {
             {
                 CoderResult result = encoder.encode(charbuf, bytebuf, end);
                 if (result.isOverflow())
-                    throw new UnexpectedException("bytebuf overflow"); 
-                assert !result.isError() : "encode error"; 
+                    throw new UnexpectedException("bytebuf overflow");
+                assert !result.isError() : "encode error";
             }
             bytebuf.flip();
         }
@@ -51,7 +52,8 @@ public class ReaderInputStream extends InputStream {
     }
 
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         if (!bytebuf.hasRemaining()) {
             int c = reader.read();
             if (c == -1)

@@ -3,7 +3,8 @@ package net.bodz.bas.util.ints;
 import java.util.BitSet;
 import java.util.NoSuchElementException;
 
-public class BitSetIntSet extends _IntSet {
+public class BitSetIntSet
+        extends _IntSet {
 
     private final BitSet bits;
     private int cardinality;
@@ -71,7 +72,8 @@ public class BitSetIntSet extends _IntSet {
         bits.clear();
     }
 
-    class Iter implements IntIterator {
+    class Iter
+            implements IntIterator {
 
         int i = bits.nextSetBit(0);
         int current = -1;
@@ -111,7 +113,7 @@ public class BitSetIntSet extends _IntSet {
         int i = -1;
         int j = 0;
         while ((i = bits.nextSetBit(i + 1)) >= 0) {
-            assert j < cardinality : "inconsistency"; 
+            assert j < cardinality : "inconsistency";
             array[j++] = i;
         }
         return array;

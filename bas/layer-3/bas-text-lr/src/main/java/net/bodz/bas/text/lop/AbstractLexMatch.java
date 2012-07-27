@@ -1,6 +1,7 @@
 package net.bodz.bas.text.lop;
 
-public class AbstractLexMatch implements Comparable<AbstractLexMatch> {
+public class AbstractLexMatch
+        implements Comparable<AbstractLexMatch> {
 
     private int order;
     private int declOrder;

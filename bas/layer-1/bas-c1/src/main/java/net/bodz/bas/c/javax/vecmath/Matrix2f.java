@@ -187,8 +187,7 @@ public class Matrix2f
 
     @Override
     public String toString() {
-        return String.format("[ %10.4f %10.4f ]\n" + "[ %10.4f %10.4f ]\n", //$NON-NLS-1$ //$NON-NLS-2$
-                x00, x01, x10, x11);
+        return String.format("[ %10.4f %10.4f ]\n" + "[ %10.4f %10.4f ]\n", x00, x01, x10, x11);
     }
 
 }

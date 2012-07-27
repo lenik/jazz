@@ -2,7 +2,8 @@ package net.bodz.bas.text.lop;
 
 import net.bodz.bas.sio.util.IXYTellable;
 
-public interface Token extends IXYTellable {
+public interface Token
+        extends IXYTellable {
 
     int getId();
 

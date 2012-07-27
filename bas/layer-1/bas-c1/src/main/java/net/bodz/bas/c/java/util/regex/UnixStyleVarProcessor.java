@@ -3,7 +3,6 @@ package net.bodz.bas.c.java.util.regex;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-
 public class UnixStyleVarProcessor
         extends PatternProcessor {
 

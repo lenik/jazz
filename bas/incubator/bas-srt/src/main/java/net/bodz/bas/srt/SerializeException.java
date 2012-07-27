@@ -1,6 +1,7 @@
 package net.bodz.bas.srt;
 
-public class SerializeException extends Exception {
+public class SerializeException
+        extends Exception {
 
     private static final long serialVersionUID = 9182248134717166976L;
 

@@ -2,7 +2,8 @@ package net.bodz.bas.util;
 
 import java.util.EventObject;
 
-public class DurationChangeEvent extends EventObject {
+public class DurationChangeEvent
+        extends EventObject {
 
     private static final long serialVersionUID = 6974126689767434701L;
 

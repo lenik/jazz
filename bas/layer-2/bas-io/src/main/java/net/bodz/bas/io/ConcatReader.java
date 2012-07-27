@@ -6,7 +6,8 @@ import java.nio.CharBuffer;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ConcatReader extends Reader {
+public class ConcatReader
+        extends Reader {
 
     protected final Queue<Reader> q;
     private boolean fast = true;
@@ -33,7 +34,8 @@ public class ConcatReader extends Reader {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close()
+            throws IOException {
         while (!q.isEmpty()) {
             Reader reader = q.remove();
             reader.close();
@@ -41,7 +43,8 @@ public class ConcatReader extends Reader {
     }
 
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         if (q.isEmpty())
             return -1;
         Reader head = q.peek();
@@ -54,7 +57,8 @@ public class ConcatReader extends Reader {
     }
 
     @Override
-    public int read(char[] cbuf, int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len)
+            throws IOException {
         if (q.isEmpty())
             return -1;
         int sum = 0;
@@ -82,7 +86,8 @@ public class ConcatReader extends Reader {
     }
 
     @Override
-    public int read(CharBuffer target) throws IOException {
+    public int read(CharBuffer target)
+            throws IOException {
         if (q.isEmpty())
             return -1;
         int len = target.remaining();
@@ -110,7 +115,8 @@ public class ConcatReader extends Reader {
     }
 
     @Override
-    public boolean ready() throws IOException {
+    public boolean ready()
+            throws IOException {
         if (q.isEmpty())
             return false;
         Reader head = q.peek();
@@ -118,7 +124,8 @@ public class ConcatReader extends Reader {
     }
 
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n)
+            throws IOException {
         if (q.isEmpty())
             return 0;
         long sum = 0;

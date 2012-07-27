@@ -312,7 +312,7 @@ public class GNUDiff {
                  * empty, and that case was handled above without calling `diag'. Let's verify that
                  * this is true.
                  */
-                throw new IllegalArgumentException("Empty subsequence"); 
+                throw new IllegalArgumentException("Empty subsequence");
             } else {
                 /* Use that point to split this problem into two subproblems. */
                 compareseq(xoff, b, yoff, b - d);
@@ -369,7 +369,8 @@ public class GNUDiff {
      * order.
      */
 
-    static class ReverseScript implements ScriptBuilder {
+    static class ReverseScript
+            implements ScriptBuilder {
         public List<DiffInfo> build_script(final boolean[] changed0, int len0, final boolean[] changed1, int len1) {
             List<DiffInfo> script = new ArrayList<DiffInfo>();
             int i0 = 0, i1 = 0;
@@ -396,7 +397,8 @@ public class GNUDiff {
         }
     }
 
-    static class ForwardScript implements ScriptBuilder {
+    static class ForwardScript
+            implements ScriptBuilder {
         /**
          * Scan the tables of which lines are inserted and deleted, producing an edit script in
          * forward order.

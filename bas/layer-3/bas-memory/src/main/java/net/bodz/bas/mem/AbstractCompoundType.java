@@ -1,6 +1,8 @@
 package net.bodz.bas.mem;
 
-public abstract class AbstractCompoundType extends AbstractType implements CompoundType {
+public abstract class AbstractCompoundType
+        extends AbstractType
+        implements CompoundType {
 
     @Override
     public int indexOf(String fieldName) {
@@ -13,7 +15,8 @@ public abstract class AbstractCompoundType extends AbstractType implements Compo
     }
 
     @Override
-    public Type access(int field) throws AccessException {
+    public Type access(int field)
+            throws AccessException {
         return null;
     }
 

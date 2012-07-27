@@ -20,7 +20,7 @@ public class _LibraryUtil {
             System.loadLibrary(libname);
         } catch (UnsatisfiedLinkError e) {
             String filename = System.mapLibraryName(libname);
-            URL url = _LibraryUtil.class.getResource("/" + filename); 
+            URL url = _LibraryUtil.class.getResource("/" + filename);
             if (url == null)
                 throw e;
             if (loaded.contains(filename))
@@ -38,7 +38,7 @@ public class _LibraryUtil {
                 out.close();
                 in.close();
             } catch (IOException ex) {
-                throw new RuntimeException("Can\'t copy library to " + tmpFile, ex); 
+                throw new RuntimeException("Can\'t copy library to " + tmpFile, ex);
             }
             System.load(tmpFile.getPath());
             loaded.add(filename);

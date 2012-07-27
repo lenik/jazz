@@ -1,6 +1,7 @@
 package net.bodz.bas.jvm.exit;
 
-public class SecurityControl extends SecurityException {
+public class SecurityControl
+        extends SecurityException {
 
     private static final long serialVersionUID = -1493647695398433533L;
 

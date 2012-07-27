@@ -1,7 +1,7 @@
 package net.bodz.bas.mem;
 
-
-public class BadAddressException extends AccessException {
+public class BadAddressException
+        extends AccessException {
 
     private static final long serialVersionUID = 8898684852756951338L;
 
@@ -10,8 +10,7 @@ public class BadAddressException extends AccessException {
     }
 
     public BadAddressException(long addr, long boundary) {
-        super(String.format("Address %d exceeds the boundary %d", addr, 
-                boundary));
+        super(String.format("Address %d exceeds the boundary %d", addr, boundary));
     }
 
 }

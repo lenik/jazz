@@ -5,7 +5,8 @@ import java.io.Serializable;
 /**
  * State Context
  */
-public interface IStateGraph extends Serializable {
+public interface IStateGraph
+        extends Serializable {
 
     Object context();
 

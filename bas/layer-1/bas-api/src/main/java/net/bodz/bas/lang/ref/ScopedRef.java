@@ -2,7 +2,6 @@ package net.bodz.bas.lang.ref;
 
 import java.util.LinkedList;
 
-
 /**
  * Scoped Var.
  */

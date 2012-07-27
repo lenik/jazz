@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs;
 
-
 /**
  * This class defines bit constants for file modifiers, and static helper functions to encode/decode
  * with the modifier string.

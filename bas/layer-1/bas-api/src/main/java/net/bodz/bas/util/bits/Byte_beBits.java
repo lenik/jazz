@@ -1,6 +1,5 @@
 package net.bodz.bas.util.bits;
 
-
 public class Byte_beBits
         extends AbstractBits {
 
@@ -36,11 +35,11 @@ public class Byte_beBits
     public static final byte[] CLEAR;
     static {
         SET = new byte[] {
-        //
+                //
                 (byte) 0x80, (byte) 0x40, (byte) 0x20, (byte) 0x10, //
                 (byte) 0x08, (byte) 0x04, (byte) 0x02, (byte) 0x01, };
         CLEAR = new byte[] {
-        //
+                //
                 (byte) 0x7f, (byte) 0xbf, (byte) 0xdf, (byte) 0xef, //
                 (byte) 0xf7, (byte) 0xfb, (byte) 0xfd, (byte) 0xfe, };
     }

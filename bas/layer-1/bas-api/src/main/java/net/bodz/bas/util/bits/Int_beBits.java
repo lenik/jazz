@@ -1,6 +1,5 @@
 package net.bodz.bas.util.bits;
 
-
 public class Int_beBits
         extends AbstractBits {
 
@@ -36,7 +35,7 @@ public class Int_beBits
     public static final int[] CLEAR;
     static {
         SET = new int[] {
-        //
+                //
                 0x80000000, 0x40000000, 0x20000000, 0x10000000,//
                 0x08000000, 0x04000000, 0x02000000, 0x01000000,//
                 0x00800000, 0x00400000, 0x00200000, 0x00100000,//
@@ -47,7 +46,7 @@ public class Int_beBits
                 0x00000008, 0x00000004, 0x00000002, 0x00000001,//
         };
         CLEAR = new int[] {
-        //
+                //
                 0x7fffffff, 0xbfffffff, 0xdfffffff, 0xefffffff,//
                 0xf7ffffff, 0xfbffffff, 0xfdffffff, 0xfeffffff,//
                 0xff7fffff, 0xffbfffff, 0xffdfffff, 0xffefffff,//

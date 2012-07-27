@@ -1,6 +1,5 @@
 package net.bodz.bas.c.java.util.regex;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 

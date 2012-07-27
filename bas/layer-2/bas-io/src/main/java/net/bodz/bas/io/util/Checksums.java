@@ -4,7 +4,8 @@ import java.util.zip.Checksum;
 
 public class Checksums {
 
-    public static abstract class _Checksum implements Checksum, Cloneable {
+    public static abstract class _Checksum
+            implements Checksum, Cloneable {
 
         public void update(byte[] bytes, int off, int len) {
             while (len-- > 0) {
@@ -19,7 +20,7 @@ public class Checksums {
 
         @Override
         public String toString() {
-            return getClass().getSimpleName() + ":" + getValue(); 
+            return getClass().getSimpleName() + ":" + getValue();
         }
 
     }

@@ -11,9 +11,11 @@ import com.sun.jna.PointerType;
 import com.sun.jna.ptr.ByReference;
 import com.sun.jna.win32.StdCallLibrary;
 
-public interface W32API extends StdCallLibrary {
+public interface W32API
+        extends StdCallLibrary {
 
-    class HANDLE extends PointerType {
+    class HANDLE
+            extends PointerType {
 
         public HANDLE() {
         }
@@ -37,14 +39,14 @@ public interface W32API extends StdCallLibrary {
     }
 
     HANDLE INVALID_HANDLE_VALUE = new HANDLE() {
-                                    @Override
-                                    public void setPointer(Pointer p) {
-                                        throw new UnsupportedOperationException(
-                                                "Immutable reference");
-                                    }
-                                };
+        @Override
+        public void setPointer(Pointer p) {
+            throw new UnsupportedOperationException("Immutable reference");
+        }
+    };
 
-    class HANDLEByReference extends ByReference {
+    class HANDLEByReference
+            extends ByReference {
 
         public HANDLEByReference() {
             this(null);
@@ -72,25 +74,32 @@ public interface W32API extends StdCallLibrary {
 
     }
 
-    class HBITMAP extends HANDLE {
+    class HBITMAP
+            extends HANDLE {
     }
 
-    class HDC extends HANDLE {
+    class HDC
+            extends HANDLE {
     }
 
-    class HICON extends HANDLE {
+    class HICON
+            extends HANDLE {
     }
 
-    class HINSTANCE extends HANDLE {
+    class HINSTANCE
+            extends HANDLE {
     }
 
-    class HMODULE extends HINSTANCE {
+    class HMODULE
+            extends HINSTANCE {
     }
 
-    class HRGN extends HANDLE {
+    class HRGN
+            extends HANDLE {
     }
 
-    class HWND extends HANDLE {
+    class HWND
+            extends HANDLE {
 
         public HWND() {
             super();

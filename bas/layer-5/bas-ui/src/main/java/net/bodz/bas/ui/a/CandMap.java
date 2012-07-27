@@ -13,7 +13,7 @@ import net.bodz.bas.ui.CandMapProvider;
  * Candidates Map
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD, ElementType.PARAMETER })
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
 public @interface CandMap {
 
     Class<? extends CandMapProvider> value() default CandMapProvider.class;

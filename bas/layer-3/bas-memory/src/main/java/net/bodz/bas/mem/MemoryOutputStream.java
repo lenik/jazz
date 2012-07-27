@@ -5,7 +5,8 @@ import java.io.OutputStream;
 
 import net.bodz.bas.meta.codehint.ThreadUnsafe;
 
-public class MemoryOutputStream extends OutputStream {
+public class MemoryOutputStream
+        extends OutputStream {
 
     private final Memory memory;
 
@@ -28,9 +29,10 @@ public class MemoryOutputStream extends OutputStream {
 
     @ThreadUnsafe
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b)
+            throws IOException {
         if (size == 0)
-            throw new IOException("overflow"); 
+            throw new IOException("overflow");
         buf1[0] = (byte) b;
         try {
             memory.write(start++, buf1);
@@ -43,9 +45,10 @@ public class MemoryOutputStream extends OutputStream {
 
     @ThreadUnsafe
     @Override
-    public void write(byte[] b, int off, int len) throws IOException {
+    public void write(byte[] b, int off, int len)
+            throws IOException {
         if (size == 0)
-            throw new IOException("overflow"); 
+            throw new IOException("overflow");
         try {
             if (size == -1) {
                 memory.write(start, b, off, len);

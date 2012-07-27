@@ -11,12 +11,13 @@ public class DesktopApps {
 
     static boolean _encode = false;
 
-    public static void openMailer(String recipient, String subject, String body) throws IOException {
+    public static void openMailer(String recipient, String subject, String body)
+            throws IOException {
         StringBuilder buf = new StringBuilder();
-        buf.append("mailto:"); 
+        buf.append("mailto:");
         buf.append(recipient);
-        buf.append("?subject=" + _encode(subject)); 
-        buf.append("&body=" + _encode(body)); 
+        buf.append("?subject=" + _encode(subject));
+        buf.append("&body=" + _encode(body));
         String s = buf.toString();
         URI mailURI;
         try {
@@ -31,8 +32,8 @@ public class DesktopApps {
 
     static String _encode(String s) {
         try {
-            s = URLEncoder.encode(s, "utf-8"); 
-            return s.replace("+", "%20");  
+            s = URLEncoder.encode(s, "utf-8");
+            return s.replace("+", "%20");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

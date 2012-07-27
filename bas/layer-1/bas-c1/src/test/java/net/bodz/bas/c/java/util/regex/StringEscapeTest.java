@@ -1,6 +1,5 @@
 package net.bodz.bas.c.java.util.regex;
 
-
 import net.bodz.bas.c.string.StringEscape;
 
 import org.junit.Assert;

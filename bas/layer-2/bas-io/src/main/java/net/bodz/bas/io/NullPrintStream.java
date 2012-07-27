@@ -3,7 +3,8 @@ package net.bodz.bas.io;
 import java.io.PrintStream;
 import java.util.Locale;
 
-public class NullPrintStream extends PrintStream {
+public class NullPrintStream
+        extends PrintStream {
 
     public NullPrintStream() {
         super(NullOutputStream.getInstance());

@@ -2,7 +2,8 @@ package net.bodz.bas.c.java.util.regex;
 
 import java.io.Serializable;
 
-public class Delimiter implements Serializable {
+public class Delimiter
+        implements Serializable {
 
     private static final long serialVersionUID = 1766948183124423805L;
 

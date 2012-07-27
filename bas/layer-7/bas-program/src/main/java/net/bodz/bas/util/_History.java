@@ -3,7 +3,8 @@ package net.bodz.bas.util;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.OutOfDomainException;
 
-public abstract class _History implements History {
+public abstract class _History
+        implements History {
 
     protected abstract OperationRecord get(int position);
 
@@ -11,9 +12,9 @@ public abstract class _History implements History {
     public void moveTo(int p) {
         int size = size();
         if (p < 0)
-            throw new OutOfDomainException("position", p, 0); 
+            throw new OutOfDomainException("position", p, 0);
         if (p >= size)
-            throw new OutOfDomainException("position", p, size); 
+            throw new OutOfDomainException("position", p, size);
 
         int current = getPosition();
         if (current == p)
@@ -37,18 +38,20 @@ public abstract class _History implements History {
     }
 
     @Override
-    public void undo() throws OperationException {
+    public void undo()
+            throws OperationException {
         int p = getPosition();
         if (p <= 0)
-            throw new IllegalUsageException("Can\'t undo more"); 
+            throw new IllegalUsageException("Can\'t undo more");
         moveTo(p - 1);
     }
 
     @Override
-    public void redo() throws OperationException {
+    public void redo()
+            throws OperationException {
         int p = getPosition();
         if (p >= size())
-            throw new IllegalUsageException("Can\'t redo more"); 
+            throw new IllegalUsageException("Can\'t redo more");
         moveTo(p + 1);
     }
 

@@ -1,6 +1,5 @@
 package net.bodz.bas.util.order;
 
-
 /**
  * It's impossible to create a static instance for general ComparableComparator purpose.
  * <p>

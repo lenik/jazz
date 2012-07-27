@@ -5,8 +5,6 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.c.string.Strings;
 
-
-
 public class QuoteFormat {
 
     final Pattern quotePattern;

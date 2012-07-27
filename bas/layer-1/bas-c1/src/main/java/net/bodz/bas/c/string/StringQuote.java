@@ -1,6 +1,5 @@
 package net.bodz.bas.c.string;
 
-
 public class StringQuote {
 
     public static String q(String s) {

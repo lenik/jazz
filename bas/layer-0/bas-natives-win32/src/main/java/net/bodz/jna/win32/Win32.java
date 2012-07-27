@@ -12,8 +12,8 @@ import com.sun.jna.win32.W32APITypeMapper;
 
 public class Win32 {
 
-    static final boolean             ascii;
-    static final Charset             unicodeCharset;
+    static final boolean ascii;
+    static final Charset unicodeCharset;
     static final Map<String, Object> _options;
     static {
         ascii = java.lang.Boolean.getBoolean("w32.ascii");
@@ -47,9 +47,9 @@ public class Win32 {
         return new String(buf, unicodeCharset);
     }
 
-    public static GDI32    gdi32;
+    public static GDI32 gdi32;
     public static Kernel32 kernel32;
-    public static User32   user32;
+    public static User32 user32;
 
     static {
         gdi32 = (GDI32) Native.loadLibrary("gdi32", GDI32.class, _options);

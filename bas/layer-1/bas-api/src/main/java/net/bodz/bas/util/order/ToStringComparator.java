@@ -1,6 +1,5 @@
 package net.bodz.bas.util.order;
 
-
 public class ToStringComparator
         extends AbstractOrderComparator<Object, String> {
 

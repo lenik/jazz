@@ -1,6 +1,5 @@
 package net.bodz.bas.c.string;
 
-
 public class StringPart {
 
     public static String chop(String s, int chopLen) {

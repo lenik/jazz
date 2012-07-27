@@ -1,6 +1,7 @@
 package net.bodz.bas.fsm.base;
 
-public class InvalidStateException extends RuntimeException {
+public class InvalidStateException
+        extends RuntimeException {
 
     static final long serialVersionUID = -1082822725269575429L;
 

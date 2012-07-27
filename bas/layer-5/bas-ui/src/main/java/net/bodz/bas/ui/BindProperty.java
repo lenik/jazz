@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import net.bodz.bas.meta.lang.TargetSide;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD, ElementType.METHOD })
+@Target({ ElementType.FIELD, ElementType.METHOD })
 @TargetSide(TargetSide.GUI)
 public @interface BindProperty {
 

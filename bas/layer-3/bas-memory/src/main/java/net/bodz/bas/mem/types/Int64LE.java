@@ -6,11 +6,13 @@ import net.bodz.bas.mem.Memory;
 import net.bodz.bas.meta.codehint.ThreadUnsafe;
 import net.bodz.bas.util.primitive.IntMath;
 
-public class Int64LE extends AbstractType {
+public class Int64LE
+        extends AbstractType {
 
     @ThreadUnsafe
     @Override
-    public Long get(Memory memory, int offset) throws AccessException {
+    public Long get(Memory memory, int offset)
+            throws AccessException {
         byte[] mem = new byte[8];
         memory.read(offset, mem);
         return read(mem);
@@ -18,7 +20,8 @@ public class Int64LE extends AbstractType {
 
     @ThreadUnsafe
     @Override
-    public void put(Memory memory, int offset, Object value) throws AccessException {
+    public void put(Memory memory, int offset, Object value)
+            throws AccessException {
         byte[] mem = new byte[8];
         write(mem, (Long) value);
         memory.write(offset, mem);

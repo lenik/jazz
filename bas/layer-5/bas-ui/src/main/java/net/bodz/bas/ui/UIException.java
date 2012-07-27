@@ -1,6 +1,7 @@
 package net.bodz.bas.ui;
 
-public class UIException extends Exception {
+public class UIException
+        extends Exception {
 
     private static final long serialVersionUID = -2958503691436447996L;
 

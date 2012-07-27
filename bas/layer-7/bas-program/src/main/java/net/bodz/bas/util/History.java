@@ -7,15 +7,18 @@ public interface History {
     /** pointer to the operation which has just been rollbacked. */
     int getPosition();
 
-    void moveTo(int position) throws OperationException;
+    void moveTo(int position)
+            throws OperationException;
 
     // utilities
     boolean canUndo();
 
     boolean canRedo();
 
-    void undo() throws OperationException;
+    void undo()
+            throws OperationException;
 
-    void redo() throws OperationException;
+    void redo()
+            throws OperationException;
 
 }

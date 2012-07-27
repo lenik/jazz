@@ -1,6 +1,7 @@
 package net.bodz.bas.mem;
 
-public class UnionType extends AbstractCompoundType {
+public class UnionType
+        extends AbstractCompoundType {
 
     // Type
 

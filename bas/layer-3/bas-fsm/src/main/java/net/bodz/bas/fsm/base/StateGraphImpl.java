@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class StateGraphImpl implements IStateGraph {
+public class StateGraphImpl
+        implements IStateGraph {
 
     private static final long serialVersionUID = 3618890808666598908L;
 
@@ -143,16 +144,14 @@ public class StateGraphImpl implements IStateGraph {
         assert key != null;
         assert state != null;
         if (registry.containsKey(key))
-            throw new IllegalArgumentException("Key " + key 
-                    + " is already existed."); 
+            throw new IllegalArgumentException("Key " + key + " is already existed.");
         registry.put(key, state);
     }
 
     public void remove(Object key) {
         assert key != null;
         if (!registry.containsKey(key))
-            throw new IllegalArgumentException(
-                    "Key " + key + " isn\'t existed.");  
+            throw new IllegalArgumentException("Key " + key + " isn\'t existed.");
         registry.remove(key);
     }
 

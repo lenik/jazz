@@ -7,7 +7,8 @@ import java.io.IOException;
  */
 public class PropertyBeanTaskTest {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)
+            throws IOException {
         new TaskTestApp(1).run();
     }
 
