@@ -46,7 +46,7 @@ public class SaveImageDialog
     }
 
     public SaveImageDialog(Shell parent, int style, ImageData image) {
-        super(parent, style, ControlsNLS.getString("SaveImageDialog.title")); //$NON-NLS-1$
+        super(parent, style, ControlsNLS.getString("SaveImageDialog.title"));
         this.imageData = image;
     }
 
@@ -94,7 +94,7 @@ public class SaveImageDialog
         composite.setLayout(gridLayout);
 
         final Label typeLabel = new Label(composite, SWT.NONE);
-        typeLabel.setText(ControlsNLS.getString("SaveImageDialog.imageType")); //$NON-NLS-1$
+        typeLabel.setText(ControlsNLS.getString("SaveImageDialog.imageType"));
 
         imageTypeCombo = new Combo(composite, SWT.READ_ONLY);
         final GridData gd_imageTypeCombo = new GridData();
@@ -108,14 +108,14 @@ public class SaveImageDialog
         paramsStack.setLayoutData(gd_optionsComposite);
 
         final Label pathLabel = new Label(composite, SWT.NONE);
-        pathLabel.setText(ControlsNLS.getString("SaveImageDialog.filePath")); //$NON-NLS-1$
+        pathLabel.setText(ControlsNLS.getString("SaveImageDialog.filePath"));
 
         pathText = new Text(composite, SWT.BORDER);
         final GridData gd_pathText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         pathText.setLayoutData(gd_pathText);
 
         final Button browseButton = new Button(composite, SWT.NONE);
-        browseButton.setText(ControlsNLS.getString("SaveImageDialog.browse")); //$NON-NLS-1$
+        browseButton.setText(ControlsNLS.getString("SaveImageDialog.browse"));
         browseButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -123,8 +123,8 @@ public class SaveImageDialog
                 assert typeIndex != -1;
                 ImageType type = imageTypes[typeIndex];
                 String ext = type.getExtension();
-                String[] names = { type.getName() + " (*." + ext + ")" }; //$NON-NLS-1$ //$NON-NLS-2$
-                String[] extensions = { "*." + ext }; //$NON-NLS-1$
+                String[] names = { type.getName() + " (*." + ext + ")" };
+                String[] extensions = { "*." + ext };
 
                 FileDialog saveDialog = new FileDialog(getParent(), SWT.SAVE);
                 saveDialog.setFilterNames(names);

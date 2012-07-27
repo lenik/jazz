@@ -40,7 +40,7 @@ public class GridTest_SimpleObject
 
         @Override
         public String toString() {
-            return "Lucy is " + lucy + "\nLily is " + lily; //$NON-NLS-1$ //$NON-NLS-2$
+            return "Lucy is " + lucy + "\nLily is " + lily;
         }
 
     }
@@ -48,11 +48,11 @@ public class GridTest_SimpleObject
     private School school;
 
     public GridTest_SimpleObject() {
-        school = new School("Dream School"); //$NON-NLS-1$
-        school.lucy = new SimplePerson("Lucy", 12, false); //$NON-NLS-1$
+        school = new School("Dream School");
+        school.lucy = new SimplePerson("Lucy", 12, false);
         school.lily = new ComplexPerson();
-        school.lily.name = "Lily"; //$NON-NLS-1$
-        school.lily.setASL(20, false, "Hometown"); //$NON-NLS-1$
+        school.lily.name = "Lily";
+        school.lily.setASL(20, false, "Hometown");
     }
 
     @Override

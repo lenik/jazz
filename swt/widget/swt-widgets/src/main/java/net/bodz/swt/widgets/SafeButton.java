@@ -35,7 +35,7 @@ public class SafeButton
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (SafeButton.DEBUG)
-                    System.out.println("S enter"); //$NON-NLS-1$
+                    System.out.println("S enter");
                 synchronized (button) {
                     final boolean orig = button.isEnabled();
                     if (orig == false)
@@ -57,7 +57,7 @@ public class SafeButton
                     }.start();
                 }
                 if (DEBUG)
-                    System.out.println("S leave"); //$NON-NLS-1$
+                    System.out.println("S leave");
             }
 
             @Override

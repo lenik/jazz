@@ -99,28 +99,27 @@ public class DialogUI
         this.icon = icon;
     }
 
-    public static final String ERROR = "error"; //$NON-NLS-1$
-    public static final String INFORMATION = "information"; //$NON-NLS-1$
-    public static final String QUESTION = "question"; //$NON-NLS-1$
-    public static final String WARNING = "warning"; //$NON-NLS-1$
-    public static final String WORKING = "working"; //$NON-NLS-1$
+    public static final String ERROR = "error";
+    public static final String INFORMATION = "information";
+    public static final String QUESTION = "question";
+    public static final String WARNING = "warning";
+    public static final String WORKING = "working";
 
     // key -> icon image res path.
     static final Map<String, String> aliases;
     static {
         aliases = new HashMap<String, String>();
-        aliases.put(ERROR, ""); //$NON-NLS-1$
-        aliases.put(INFORMATION, ""); //$NON-NLS-1$
-        aliases.put(QUESTION, ""); //$NON-NLS-1$
-        aliases.put(WARNING, ""); //$NON-NLS-1$
-        aliases.put(WORKING, ""); //$NON-NLS-1$
+        aliases.put(ERROR, "");
+        aliases.put(INFORMATION, "");
+        aliases.put(QUESTION, "");
+        aliases.put(WARNING, "");
+        aliases.put(WORKING, "");
     }
 
     public void setIcon(String alias) {
         String respath = aliases.get(alias);
         if (respath == null)
-            throw new IllegalArgumentException(GUINLS.getString("SWTInteraction.badicon") //$NON-NLS-1$
-                    + alias);
+            throw new IllegalArgumentException(GUINLS.getString("SWTInteraction.badicon") + alias);
         Image image = SWTResources.getImageRes(respath);
         setIcon(image);
     }
@@ -133,10 +132,10 @@ public class DialogUI
             @Override
             public void addAction(final IAction action) {
                 if (action == null)
-                    throw new NullPointerException("action"); //$NON-NLS-1$
+                    throw new NullPointerException("action");
                 Composite userBar = getUserBar();
                 if (userBar == null)
-                    throw new IllegalStateException("no user bar"); //$NON-NLS-1$
+                    throw new IllegalStateException("no user bar");
                 final Button button = new Button(userBar, SWT.NONE);
                 button.setEnabled(action.isEnabled());
                 button.setVisible(action.isVisible());
@@ -292,7 +291,7 @@ public class DialogUI
                     char c = p.getMnemonic();
                     int m = Strings.indexOfIgnoreCase(text, c);
                     if (m != -1)
-                        text = text.substring(0, m) + "&" + text.substring(m); //$NON-NLS-1$
+                        text = text.substring(0, m) + "&" + text.substring(m);
                     Button button = addButton(parent, SWT.NONE, image, text, i);
                     String description = p.getDescription();
                     if (description != null)
@@ -314,7 +313,7 @@ public class DialogUI
         try {
             parser = TypeParsers.guess(type, true);
         } catch (ParseException e) {
-            throw new IllegalUsageError(GUINLS.getString("SWTInteraction.errparse") + type); //$NON-NLS-1$
+            throw new IllegalUsageError(GUINLS.getString("SWTInteraction.errparse") + type);
         }
         class PromptDialog
                 extends _Dialog {

@@ -28,7 +28,7 @@ public abstract class _ImageType
     static void _save(ImageLoader loader, OutputStream out, int format)
             throws IOException {
         if (out == null)
-            throw new NullPointerException("out"); //$NON-NLS-1$
+            throw new NullPointerException("out");
         try {
             loader.save(out, format);
         } catch (SWTException e) {

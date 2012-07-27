@@ -13,7 +13,7 @@ public class SaveImageDialogTest {
 
     static Image image;
     static {
-        image = SWTResources.getImage(new File("V:/Downloads/mx/Images/03.jpg")); //$NON-NLS-1$
+        image = SWTResources.getImage(new File("V:/Downloads/mx/Images/03.jpg"));
     }
 
     public static void main(String[] args) {
@@ -21,7 +21,7 @@ public class SaveImageDialogTest {
         Shell parent = new Shell();
         SaveImageDialog dialog = new SaveImageDialog(parent, SWT.NONE, imageData);
         File file = dialog.open();
-        System.out.println("File: " + file); //$NON-NLS-1$
+        System.out.println("File: " + file);
     }
 
 }

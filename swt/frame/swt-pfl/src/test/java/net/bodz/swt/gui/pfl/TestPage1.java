@@ -31,7 +31,7 @@ public class TestPage1
         parent.setLayout(gridLayout);
 
         final Label nameLabel = new Label(parent, SWT.NONE);
-        nameLabel.setText("&Name: "); //$NON-NLS-1$
+        nameLabel.setText("&Name: ");
 
         nameText = new Text(parent, SWT.BORDER);
         nameText.setTextLimit(100);
@@ -39,7 +39,7 @@ public class TestPage1
         nameText.setLayoutData(gd_nameText);
 
         final Label ageLabel = new Label(parent, SWT.NONE);
-        ageLabel.setText("&Age: "); //$NON-NLS-1$
+        ageLabel.setText("&Age: ");
 
         ageText = new Text(parent, SWT.BORDER);
         ageText.setTextLimit(2);
@@ -55,7 +55,7 @@ public class TestPage1
         try {
             int age = Integer.parseInt(agestr);
             if (age < 0)
-                throw new ValidateException(ageText, new OutOfDomainException("age", age, 0)); //$NON-NLS-1$
+                throw new ValidateException(ageText, new OutOfDomainException("age", age, 0));
         } catch (NumberFormatException e) {
             throw new ValidateException(ageText, e);
         }

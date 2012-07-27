@@ -21,12 +21,12 @@ public class GIFImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("GIFImageType.name"); //$NON-NLS-1$
+        return ControlsNLS.getString("GIFImageType.name");
     }
 
     @Override
     public String getExtension() {
-        return "gif"; //$NON-NLS-1$
+        return "gif";
     }
 
     static class Params {
@@ -47,14 +47,14 @@ public class GIFImageType
             this.params = params;
 
             final Label transparentcyLabel = new Label(this, SWT.NONE);
-            transparentcyLabel.setText(ControlsNLS.getString("GIFImageType.transparency")); //$NON-NLS-1$
+            transparentcyLabel.setText(ControlsNLS.getString("GIFImageType.transparency"));
 
             final Canvas colorBlock = new Canvas(this, SWT.NONE);
             final GridData gd_colorBlock = new GridData(16, 16);
             colorBlock.setLayoutData(gd_colorBlock);
 
             final Link selectTransLink = new Link(this, SWT.NONE);
-            selectTransLink.setText(ControlsNLS.getString("GIFImageType.selectLink")); //$NON-NLS-1$
+            selectTransLink.setText(ControlsNLS.getString("GIFImageType.selectLink"));
         }
 
         @Override
@@ -69,7 +69,7 @@ public class GIFImageType
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
         if (imageData == null)
-            throw new NullPointerException("imageData"); //$NON-NLS-1$
+            throw new NullPointerException("imageData");
         Params params = (Params) _params;
         if (params.transparentPixel != -1)
             imageData.transparentPixel = params.transparentPixel;

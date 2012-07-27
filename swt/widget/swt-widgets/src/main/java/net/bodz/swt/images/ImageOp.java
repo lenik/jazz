@@ -25,7 +25,7 @@ public class ImageOp {
             case 24:
                 return new SWTImageAccessor.RGB24(image);
             default:
-                throw new NotImplementedException("Direct: " + image.depth); //$NON-NLS-1$
+                throw new NotImplementedException("Direct: " + image.depth);
             }
         } else {
             switch (image.depth) {
@@ -39,7 +39,7 @@ public class ImageOp {
                 return new SWTImageAccessor.Index1(image);
             case 16:
             default:
-                throw new NotImplementedException("Indexed: " + image.depth); //$NON-NLS-1$
+                throw new NotImplementedException("Indexed: " + image.depth);
             }
         }
     }

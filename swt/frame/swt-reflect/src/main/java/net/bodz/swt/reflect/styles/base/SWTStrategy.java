@@ -26,7 +26,7 @@ public abstract class SWTStrategy
     private static final long serialVersionUID = 4665944902525510516L;
 
     protected static class Config {
-        public String defaultIcon = "/icons/full/obj16/genericvariable_obj.gif"; //$NON-NLS-1$
+        public String defaultIcon = "/icons/full/obj16/genericvariable_obj.gif";
         public int defaultIconSize = 16;
 
         public static Config getDefault() {
@@ -57,7 +57,7 @@ public abstract class SWTStrategy
     @Override
     public SWTRenderer put(Class<?> key, Renderer value) {
         if (!(value instanceof SWTRenderer))
-            throw new IllegalArgumentException(GUINLS.getString("SWTStrategy.notSWTRenderer") + value); //$NON-NLS-1$
+            throw new IllegalArgumentException(GUINLS.getString("SWTStrategy.notSWTRenderer") + value);
         return (SWTRenderer) super.put(key, value);
     }
 
@@ -75,11 +75,10 @@ public abstract class SWTStrategy
     public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
-            throw new NullPointerException("rc"); //$NON-NLS-1$
+            throw new NullPointerException("rc");
         SWTRenderer renderer = findRenderer(var);
         if (renderer == null) {
-            String errmesg = GUINLS.getString("SWTStrategy.nullRenderer") //$NON-NLS-1$
-                    + var.getMeta().getName();
+            String errmesg = GUINLS.getString("SWTStrategy.nullRenderer") + var.getMeta().getName();
             var = GUIVars.wrap(errmesg);
             renderer = findRenderer(var);
             throw new RenderException(errmesg); // XXX -
@@ -92,7 +91,7 @@ public abstract class SWTStrategy
     public Control render(SWTRenderContext rc, Object constantValue, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
-            throw new NullPointerException("rc"); //$NON-NLS-1$
+            throw new NullPointerException("rc");
         GUIVar<Object> var = GUIVars.wrap(constantValue);
         return render(rc, var, parent, style);
     }

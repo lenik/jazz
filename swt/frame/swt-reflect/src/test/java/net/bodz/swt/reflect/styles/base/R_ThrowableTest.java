@@ -9,12 +9,12 @@ public class R_ThrowableTest {
         Throwable th = null;
         try {
             try {
-                R_ThrowableTest.class.getField("non-exist"); //$NON-NLS-1$
+                R_ThrowableTest.class.getField("non-exist");
             } catch (Throwable e) {
-                throw new RuntimeException("getField failed", e); //$NON-NLS-1$
+                throw new RuntimeException("getField failed", e);
             }
         } catch (Exception e) {
-            th = new IllegalUsageError("some test message", e); //$NON-NLS-1$
+            th = new IllegalUsageError("some test message", e);
         }
         assert th != null;
         TestMain.test(th);

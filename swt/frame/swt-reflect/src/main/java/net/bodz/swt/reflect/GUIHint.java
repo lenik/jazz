@@ -67,11 +67,11 @@ public class GUIHint {
         this.viewId = copy.viewId;
     }
 
-    static String MORE = "MORE"; //$NON-NLS-1$
+    static String MORE = "MORE";
 
     static String prep(String id, AnnotatedElement elm) {
         if (id.isEmpty())
-            id = MORE + "." + Ns.getName(elm); //$NON-NLS-1$
+            id = MORE + "." + Ns.getName(elm);
         return id;
     }
 

@@ -15,11 +15,11 @@ public class SWTConfig
     @Override
     public ClassLoader getLoader(ClassLoader parent) {
         BundledLoader bl = BundledLoader.replace(parent);
-        URL[] urls = LoadUtil.find("swt_win32"); //$NON-NLS-1$
+        URL[] urls = LoadUtil.find("swt_win32");
         if (urls == null) {
-            URL url = SJEclipse.findlib("org.eclipse.swt.win32.win32.x86_"); //$NON-NLS-1$
+            URL url = SJEclipse.findlib("org.eclipse.swt.win32.win32.x86_");
             if (url == null)
-                throw new Error(GUINLS.getString("SWTConfig.cantFindSWTLib")); //$NON-NLS-1$
+                throw new Error(GUINLS.getString("SWTConfig.cantFindSWTLib"));
             UCL.addURL(bl, url);
         } else
             UCL.addURL(bl, urls);

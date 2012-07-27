@@ -41,10 +41,10 @@ import org.eclipse.swt.widgets.Label;
 public class R_Throwable
         extends SWTRenderer {
 
-    static final String expandedIcon = "/icons/full/obj16/remove_correction.gif"; //$NON-NLS-1$
-    static final String collapsedIcon = "/icons/full/obj16/add_correction.gif"; //$NON-NLS-1$
+    static final String expandedIcon = "/icons/full/obj16/remove_correction.gif";
+    static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";
 
-    public static String mailAddress = GUINLS.getString("R_Throwable.mailAddress"); //$NON-NLS-1$
+    public static String mailAddress = GUINLS.getString("R_Throwable.mailAddress");
 
     static boolean usingColors = false;
     static boolean showTools = true;
@@ -69,9 +69,9 @@ public class R_Throwable
         while (th != null) {
             String mesg = String.valueOf(th); // th.getMessage();
             if (mesg == null)
-                mesg = GUINLS.getString("R_Throwable.n_a"); //$NON-NLS-1$
+                mesg = GUINLS.getString("R_Throwable.n_a");
             if (causeLevel++ != 0)
-                mesg = GUINLS.getString("R_Throwable.causedBy") + mesg; //$NON-NLS-1$
+                mesg = GUINLS.getString("R_Throwable.causedBy") + mesg;
             final Label swithcerIcon = new Label(comp, SWT.NONE);
             swithcerIcon.setImage(SWTResources.getImageRes(collapsedIcon));
 
@@ -97,7 +97,7 @@ public class R_Throwable
                 Label entry = new Label(callstackComp, SWT.NONE);
                 String textline = traceElement.toString();
                 entry.setText(textline);
-                errbuf.print("    "); //$NON-NLS-1$
+                errbuf.print("    ");
                 errbuf.println(textline);
                 if (usingColors) {
                     Color bg = entry.getBackground();
@@ -146,9 +146,9 @@ public class R_Throwable
 
         if (showTools) {
             final String errorText = errbuf.toString();
-            Image copyImage = SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif"); //$NON-NLS-1$
-            IAction copyAction = new _Action(copyImage,
-                    GUINLS.getString("R_Throwable.copy"), GUINLS.getString("R_Throwable.copy.doc")) {//$NON-NLS-1$ //$NON-NLS-2$
+            Image copyImage = SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif");
+            IAction copyAction = new _Action(copyImage, GUINLS.getString("R_Throwable.copy"),
+                    GUINLS.getString("R_Throwable.copy.doc")) {
                 @Override
                 public void execute() {
                     Clipboard clipboard = new Clipboard(display);
@@ -160,18 +160,17 @@ public class R_Throwable
                 }
             };
 
-            final Image mailImage = SWTResources.getImageRes("/icons/full/obj16/text_edit.gif"); //$NON-NLS-1$
-            final String mailSubject = GUINLS.getString("R_Throwable.errorReport"); //$NON-NLS-1$
+            final Image mailImage = SWTResources.getImageRes("/icons/full/obj16/text_edit.gif");
+            final String mailSubject = GUINLS.getString("R_Throwable.errorReport");
             IAction mailAction = new _Action(mailImage, //
-                    GUINLS.getString("R_Throwable.report"), //$NON-NLS-1$
-                    GUINLS.getString("R_Throwable.sendMail")) {//$NON-NLS-1$
+                    GUINLS.getString("R_Throwable.report"), GUINLS.getString("R_Throwable.sendMail")) {
                 @Override
                 public void execute() {
                     try {
                         DesktopApps.openMailer(mailAddress, mailSubject, errorText);
                     } catch (IOException e) {
                         DialogUI iact = rc.interact(parent);
-                        iact.alert(GUINLS.getString("R_Throwable.cantSend"), e); //$NON-NLS-1$
+                        iact.alert(GUINLS.getString("R_Throwable.cantSend"), e);
                     }
                 }
             };
@@ -181,13 +180,12 @@ public class R_Throwable
         }
 
         if (showDebug) {
-            final Image debugImage = SWTResources.getImageRes("/icons/full/eview16/debug_view.gif"); //$NON-NLS-1$
+            final Image debugImage = SWTResources.getImageRes("/icons/full/eview16/debug_view.gif");
             IAction debugAction = new _Action(debugImage, //
-                    GUINLS.getString("R_Throwable.debug"), //$NON-NLS-1$
-                    GUINLS.getString("R_Throwable.debug.doc")) {//$NON-NLS-1$
+                    GUINLS.getString("R_Throwable.debug"), GUINLS.getString("R_Throwable.debug.doc")) {
                 @Override
                 public void execute() {
-                    throw new ExpectedException("debug", throwable); //$NON-NLS-1$
+                    throw new ExpectedException("debug", throwable);
                 }
             };
             rc.addAction(debugAction);

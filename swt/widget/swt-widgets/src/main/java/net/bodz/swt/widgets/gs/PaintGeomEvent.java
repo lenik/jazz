@@ -41,9 +41,9 @@ public class PaintGeomEvent
         String s = source.toString();
         GeomSpace gspace = canvas.getGeomSpace();
         s = s.substring(0, s.length() - 1) // remove trailing '}'
-                + " space=" + gspace // //$NON-NLS-1$
-                + " index=" + index // //$NON-NLS-1$
-                + " vrect=" + viewRect // //$NON-NLS-1$
+                + " space=" + gspace //
+                + " index=" + index //
+                + " vrect=" + viewRect //
         ;
         return s;
     }

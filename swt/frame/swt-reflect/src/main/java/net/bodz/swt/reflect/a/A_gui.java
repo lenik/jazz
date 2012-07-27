@@ -86,15 +86,15 @@ public class A_gui
     static Map<String, RGB> colorNames;
     static {
         colorNames = new HashMap<String, RGB>();
-        colorNames.put("black", new RGB(0, 0, 0)); //$NON-NLS-1$
-        colorNames.put("white", new RGB(255, 255, 255)); //$NON-NLS-1$
-        colorNames.put("red", new RGB(255, 0, 0)); //$NON-NLS-1$
-        colorNames.put("green", new RGB(0, 255, 0)); //$NON-NLS-1$
-        colorNames.put("blue", new RGB(0, 0, 255)); //$NON-NLS-1$
-        colorNames.put("cyan", new RGB(0, 255, 255)); //$NON-NLS-1$
-        colorNames.put("magenta", new RGB(255, 0, 255)); // pink //$NON-NLS-1$
-        colorNames.put("yellow", new RGB(255, 255, 0)); //$NON-NLS-1$
-        colorNames.put("gray", new RGB(128, 128, 128)); //$NON-NLS-1$
+        colorNames.put("black", new RGB(0, 0, 0));
+        colorNames.put("white", new RGB(255, 255, 255));
+        colorNames.put("red", new RGB(255, 0, 0));
+        colorNames.put("green", new RGB(0, 255, 0));
+        colorNames.put("blue", new RGB(0, 0, 255));
+        colorNames.put("cyan", new RGB(0, 255, 255));
+        colorNames.put("magenta", new RGB(255, 0, 255)); // pink
+        colorNames.put("yellow", new RGB(255, 255, 0));
+        colorNames.put("gray", new RGB(128, 128, 128));
     }
 
     /**
@@ -112,11 +112,10 @@ public class A_gui
         }
         // color name not exists, and the fail value isn't specified.
         if (sharp == -1)
-            throw new IllegalUsageError(GUINLS.getString("A_gui.badColor") + colorExp); //$NON-NLS-1$
+            throw new IllegalUsageError(GUINLS.getString("A_gui.badColor") + colorExp);
         String failval = colorExp.substring(sharp + 1);
         if (failval.length() != 6)
-            throw new IllegalUsageError(GUINLS.getString("A_gui.colorFormat") //$NON-NLS-1$
-                    + failval);
+            throw new IllegalUsageError(GUINLS.getString("A_gui.colorFormat") + failval);
         int rgb = Integer.parseInt(failval, 16);
         int blue = rgb & 0xff;
         rgb >>= 8;

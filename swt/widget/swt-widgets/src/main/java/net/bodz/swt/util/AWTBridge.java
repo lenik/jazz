@@ -137,11 +137,10 @@ public class AWTBridge {
             int[] componentSize = ccm.getComponentSize();
             for (int i = 0; i < componentSize.length; i++)
                 if (componentSize[i] != 8)
-                    throw new NotImplementedException(CommonNLS.getString("AWTBridge.errBits") //$NON-NLS-1$
-                            + componentSize[i]);
+                    throw new NotImplementedException(CommonNLS.getString("AWTBridge.errBits") + componentSize[i]);
             int transferType = ccm.getTransferType();
             if (transferType != DataBuffer.TYPE_BYTE)
-                throw new NotImplementedException(CommonNLS.getString("AWTBridge.errTransType") + transferType); //$NON-NLS-1$
+                throw new NotImplementedException(CommonNLS.getString("AWTBridge.errTransType") + transferType);
             // XXX - ??
             PaletteData palette = new PaletteData(0x0000ff, 0x00ff00, 0xff0000);
             ImageData data = new ImageData(width, height, pixelSize, palette);
@@ -156,7 +155,7 @@ public class AWTBridge {
             }
             return data;
         } else
-            throw new UnsupportedOperationException(CommonNLS.getString("AWTBridge.errColorModel") //$NON-NLS-1$
+            throw new UnsupportedOperationException(CommonNLS.getString("AWTBridge.errColorModel")
                     + cm.getClass().getName());
     }
 

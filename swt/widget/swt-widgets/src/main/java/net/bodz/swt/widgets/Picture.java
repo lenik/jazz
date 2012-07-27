@@ -99,9 +99,9 @@ public class Picture
 
     boolean copyView(Rectangle viewBounds, GC destGC, Rectangle destBounds) {
         if (destGC == null)
-            throw new NullPointerException("gc"); //$NON-NLS-1$
+            throw new NullPointerException("gc");
         if (destBounds == null)
-            throw new NullPointerException("bounds"); //$NON-NLS-1$
+            throw new NullPointerException("bounds");
         if (image == null)
             return false;
         if (viewBounds == null)
@@ -151,7 +151,7 @@ public class Picture
 
             @Override
             public void paintControl(PaintEvent e) {
-                System.out.println("Paint"); //$NON-NLS-1$
+                System.out.println("Paint");
                 Picture pic = Picture.this;
                 Rectangle viewBounds = getBlockBounds(pic, control);
                 if (viewBounds == null)

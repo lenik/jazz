@@ -35,8 +35,8 @@ public class SimplePerson {
 
     @Override
     public String toString() {
-        String title = sex ? "Mr. " : "Ms. "; //$NON-NLS-1$ //$NON-NLS-2$
-        return title + name + " is " + age + " years old. "; //$NON-NLS-1$ //$NON-NLS-2$
+        String title = sex ? "Mr. " : "Ms. ";
+        return title + name + " is " + age + " years old. ";
     }
 
 }

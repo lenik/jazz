@@ -66,7 +66,7 @@ public class BufferedCanvas
 
     public synchronized void submit(Rectangle area) {
         if (area == null)
-            throw new NullPointerException("area"); //$NON-NLS-1$
+            throw new NullPointerException("area");
         queue.add(area);
     }
 

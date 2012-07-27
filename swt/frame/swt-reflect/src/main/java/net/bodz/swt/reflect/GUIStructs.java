@@ -151,15 +151,13 @@ public class GUIStructs {
         static final Set<MethodSignature> ignoreMethods;
         static {
             ignoreMethods = new HashSet<MethodSignature>();
-            ignoreMethods.add(new MethodSignature("toString")); //$NON-NLS-1$
-            ignoreMethods.add(new MethodSignature("hashcode")); //$NON-NLS-1$
-            ignoreMethods.add(new MethodSignature("equals", Object.class)); //$NON-NLS-1$
-            ignoreMethods.add(new MethodSignature("clone")); //$NON-NLS-1$
-            ignoreMethods.add(new MethodSignature("readObject", //$NON-NLS-1$
-                    ObjectInputStream.class));
-            ignoreMethods.add(new MethodSignature("writeObject", //$NON-NLS-1$
-                    ObjectOutputStream.class));
-            ignoreMethods.add(new MethodSignature("readObjectNoDate")); //$NON-NLS-1$
+            ignoreMethods.add(new MethodSignature("toString"));
+            ignoreMethods.add(new MethodSignature("hashcode"));
+            ignoreMethods.add(new MethodSignature("equals", Object.class));
+            ignoreMethods.add(new MethodSignature("clone"));
+            ignoreMethods.add(new MethodSignature("readObject", ObjectInputStream.class));
+            ignoreMethods.add(new MethodSignature("writeObject", ObjectOutputStream.class));
+            ignoreMethods.add(new MethodSignature("readObjectNoDate"));
         }
 
         public void add(Method method)
@@ -239,8 +237,7 @@ public class GUIStructs {
                     GUICallVar callVar = methodMeta.newCall(object);
                     var = callVar;
                 } else {
-                    throw new UnexpectedException(GUINLS.getString("GUIStructs.unknownMemberMetaType") //$NON-NLS-1$
-                            + meta);
+                    throw new UnexpectedException(GUINLS.getString("GUIStructs.unknownMemberMetaType") + meta);
                 }
                 add(var);
             }
@@ -248,7 +245,7 @@ public class GUIStructs {
 
         @Override
         public String toString() {
-            return meta + "@" + object; //$NON-NLS-1$
+            return meta + "@" + object;
         }
 
     }
@@ -295,7 +292,7 @@ public class GUIStructs {
                     try {
                         paramVar.check(initArgs[i]);
                     } catch (CheckException e) {
-                        throw new IllegalUsageError(GUINLS.getString("GUIStructs.checkFailOnInit")); //$NON-NLS-1$
+                        throw new IllegalUsageError(GUINLS.getString("GUIStructs.checkFailOnInit"));
                     }
                     paramVar.set(initArgs[i]);
                 }
@@ -474,7 +471,7 @@ public class GUIStructs {
 
         @Override
         public String getName() {
-            return GUINLS.getString("GUIStructs._retval"); //$NON-NLS-1$
+            return GUINLS.getString("GUIStructs._retval");
         }
 
         @Override
@@ -531,7 +528,7 @@ public class GUIStructs {
 
         @Override
         public String toString() {
-            return GUINLS.getString("GUIStructs.retval"); //$NON-NLS-1$
+            return GUINLS.getString("GUIStructs.retval");
         }
 
     }
@@ -658,15 +655,14 @@ public class GUIStructs {
                 throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException(GUINLS.getString("GUIStructs.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                        + value);
+                throw new CheckException(GUINLS.getString("GUIStructs.notInstOf") + type + ": " + value);
             if (checker != null)
                 checker.check(value);
         }
 
         @Override
         public String toString() {
-            return param + "[" + index + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+            return param + "[" + index + "]";
         }
 
     }

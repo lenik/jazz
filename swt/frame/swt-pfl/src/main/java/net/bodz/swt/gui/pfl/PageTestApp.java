@@ -66,7 +66,7 @@ public class PageTestApp
                 throws PageException {
             holder.setLayout(new GridLayout(1, false));
             prevLabel = new Label(holder, SWT.NONE);
-            prevLabel.setText(GUINLS.getString("PageTestApp.youFromQ")); //$NON-NLS-1$
+            prevLabel.setText(GUINLS.getString("PageTestApp.youFromQ"));
 
             infoLabel = new Label(holder, SWT.NONE);
 
@@ -80,7 +80,7 @@ public class PageTestApp
                 throws PageException {
             IBook book = context.getPageContext().getBook();
             TreePath referrer = context.getReferrerPath();
-            prevLabel.setText(GUINLS.format("PageTestApp.youFromA_s", referrer)); //$NON-NLS-1$
+            prevLabel.setText(GUINLS.format("PageTestApp.youFromA_s", referrer));
 
             // debug request must come from an existing page.
             if (referrer == null)
@@ -88,13 +88,11 @@ public class PageTestApp
 
             IPage referrerPage = book.getPage(referrer);
             if (referrerPage == null)
-                throw new IllegalUsageException(GUINLS.getString("PageTestApp.badAddress") //$NON-NLS-1$
-                        + referrer);
+                throw new IllegalUsageException(GUINLS.getString("PageTestApp.badAddress") + referrer);
 
             String type = referrerPage.getClass().getName();
             int hash = System.identityHashCode(referrerPage);
-            infoLabel.setText(GUINLS.getString("PageTestApp.page_") + type + ") @" //$NON-NLS-1$ //$NON-NLS-2$
-                    + Integer.toHexString(hash) + ": "); //$NON-NLS-1$
+            infoLabel.setText(GUINLS.getString("PageTestApp.page_") + type + ") @" + Integer.toHexString(hash) + ": ");
 
             String s = referrerPage.toString();
             text.setText(s);

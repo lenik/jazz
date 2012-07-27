@@ -33,7 +33,7 @@ class DetailMessage
         // new FixSizeComposite(parent, SWT.BORDER, 10, 10);
 
         ToolItem copyItem = addToolItem(SWT.PUSH);
-        copyItem.setText("&Copy"); //$NON-NLS-1$
+        copyItem.setText("&Copy");
         copyItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -47,7 +47,7 @@ class DetailMessage
             }
         });
         ToolItem debugItem = addToolItem(SWT.PUSH);
-        debugItem.setText("&Debug"); //$NON-NLS-1$
+        debugItem.setText("&Debug");
         debugItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -77,26 +77,26 @@ public class WindowCompositeTest {
                 Point size;
                 System.out.println();
                 // size = titleBar.computeSize(wHint, hHint);
-                //                System.out.println("Title bar=" + size); //$NON-NLS-1$
+                // System.out.println("Title bar=" + size);
                 //
                 // size = stack.computeSize(wHint, hHint);
-                //                System.out.println("Stack size=" + size); //$NON-NLS-1$
+                // System.out.println("Stack size=" + size);
 
                 size = computeSize(wHint, hHint);
-                System.out.println("Detail size=" + size); //$NON-NLS-1$
+                System.out.println("Detail size=" + size);
 
                 size = getParent().computeSize(wHint, hHint);
-                System.out.println("Parent size=" + size); //$NON-NLS-1$
+                System.out.println("Parent size=" + size);
 
                 size = test.holder.computeSize(wHint, hHint);
-                System.out.println("Test.parent=" + size); //$NON-NLS-1$
+                System.out.println("Test.parent=" + size);
 
                 size = test.shell.computeSize(wHint, hHint);
-                System.out.println("Shell size=" + size); //$NON-NLS-1$
+                System.out.println("Shell size=" + size);
             }
         };
-        detail.setImage(SWTResources.getImageRes("/sun/print/resources/oneside.png")); //$NON-NLS-1$
-        detail.setText("Detail Test"); //$NON-NLS-1$
+        detail.setImage(SWTResources.getImageRes("/sun/print/resources/oneside.png"));
+        detail.setText("Detail Test");
 
         detail.addDetailSwitchListener(new DetailSwitchListener() {
             @Override

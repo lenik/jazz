@@ -34,28 +34,28 @@ public class TestComposite
         toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         final ToolItem helloItem = new ToolItem(toolBar, SWT.PUSH);
-        helloItem.setImage(SWTResources.getImageRes("/icons/full/obj16/quickfix_warning_obj.gif")); //$NON-NLS-1$
-        helloItem.setText("Hello"); //$NON-NLS-1$
+        helloItem.setImage(SWTResources.getImageRes("/icons/full/obj16/quickfix_warning_obj.gif"));
+        helloItem.setText("Hello");
 
         final ToolItem sep = new ToolItem(toolBar, SWT.SEPARATOR);
-        sep.setText("New item"); //$NON-NLS-1$
+        sep.setText("New item");
 
         final ToolItem worldItem = new ToolItem(toolBar, SWT.PUSH);
-        worldItem.setImage(SWTResources.getImageRes("/icons/full/obj16/innerclass_public_obj.gif")); //$NON-NLS-1$
-        worldItem.setText("Big Big World"); //$NON-NLS-1$
+        worldItem.setImage(SWTResources.getImageRes("/icons/full/obj16/innerclass_public_obj.gif"));
+        worldItem.setText("Big Big World");
 
         final CoolBar coolBar = new CoolBar(this, SWT.NONE);
         coolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
         final CoolItem cool1 = new CoolItem(coolBar, SWT.PUSH);
-        cool1.setText("New item"); //$NON-NLS-1$
+        cool1.setText("New item");
 
         final Button wowButton = new Button(coolBar, SWT.NONE);
-        wowButton.setText("Wow"); //$NON-NLS-1$
+        wowButton.setText("Wow");
         cool1.setControl(wowButton);
 
         final CoolItem cool2 = new CoolItem(coolBar, SWT.PUSH);
-        cool2.setText("New item"); //$NON-NLS-1$
+        cool2.setText("New item");
 
         final Composite composite_1 = new Composite(coolBar, SWT.NONE);
         final RowLayout rowLayout = new RowLayout();
@@ -67,24 +67,24 @@ public class TestComposite
         cool2.setControl(composite_1);
 
         final Button morningButton = new Button(composite_1, SWT.TOGGLE);
-        morningButton.setText("Morning"); //$NON-NLS-1$
+        morningButton.setText("Morning");
 
         final Button eveningButton = new Button(composite_1, SWT.TOGGLE);
-        eveningButton.setText("Evening"); //$NON-NLS-1$
+        eveningButton.setText("Evening");
 
         final Label hr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
         hr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         final Label nameLabel = new Label(this, SWT.NONE);
         nameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        nameLabel.setText("&Name"); //$NON-NLS-1$
+        nameLabel.setText("&Name");
 
         name = new Text(this, SWT.BORDER);
         name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
         final Label ageLabel = new Label(this, SWT.NONE);
         ageLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        ageLabel.setText("&Age"); //$NON-NLS-1$
+        ageLabel.setText("&Age");
 
         age = new Text(this, SWT.BORDER);
         age.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -96,10 +96,10 @@ public class TestComposite
         composite.setLayout(rowLayout_1);
 
         final Button okButton = new Button(composite, SWT.NONE);
-        okButton.setText("&OK"); //$NON-NLS-1$
+        okButton.setText("&OK");
 
         final Button cancelButton = new Button(composite, SWT.NONE);
-        cancelButton.setText("&Cancel"); //$NON-NLS-1$
+        cancelButton.setText("&Cancel");
         //
     }
 

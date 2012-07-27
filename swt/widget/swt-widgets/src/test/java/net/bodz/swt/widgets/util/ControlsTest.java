@@ -12,17 +12,17 @@ public class ControlsTest {
 
     public void testShellSize() {
         Shell shell = new Shell();
-        shell.setText(""); //$NON-NLS-1$
+        shell.setText("");
         shell.setLayout(new FillLayout());
         new FixSizeComposite(shell, SWT.BORDER, 1, 1);
 
         Point size = shell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-        System.out.println("shell/empty size = " + size); //$NON-NLS-1$
+        System.out.println("shell/empty size = " + size);
         Controls.resizeToPreferredSize(shell);
         shell.layout();
         shell.open();
         size = shell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-        System.out.println("shell/empty size (layout) = " + size); //$NON-NLS-1$
+        System.out.println("shell/empty size (layout) = " + size);
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch())
                 display.sleep();

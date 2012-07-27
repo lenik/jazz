@@ -67,7 +67,7 @@ public class NavigatorComposite
 
         @Override
         protected void handleException(Exception e) {
-            UI.alert(GUINLS.getString("WizardComposite.validateException"), e); //$NON-NLS-1$
+            UI.alert(GUINLS.getString("WizardComposite.validateException"), e);
         }
 
     }
@@ -139,7 +139,7 @@ public class NavigatorComposite
     }
 
     void createContents() {
-        defaultPageIcon = SWTResources.getImageRes("/icons/full/obj16/brkp_grp.gif"); //$NON-NLS-1$
+        defaultPageIcon = SWTResources.getImageRes("/icons/full/obj16/brkp_grp.gif");
 
         final GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginWidth = 5;
@@ -165,7 +165,7 @@ public class NavigatorComposite
         pageIconLabel.setImage(defaultPageIcon);
 
         pageTitleLabel = new Label(titleBar, SWT.WRAP);
-        pageTitleLabel.setText(GUINLS.getString("WizardComposite.pageTitle")); //$NON-NLS-1$
+        pageTitleLabel.setText(GUINLS.getString("WizardComposite.pageTitle"));
         pageTitleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label titleHr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -193,26 +193,26 @@ public class NavigatorComposite
 
         if ((flags & SHOW_BEGIN) != 0) {
             goBeginButton = new Button(navBar, SWT.NONE);
-            goBeginButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_l_edit.gif")); //$NON-NLS-1$
-            goBeginButton.setText(GUINLS.getString("WizardComposite.begin")); //$NON-NLS-1$
+            goBeginButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_l_edit.gif"));
+            goBeginButton.setText(GUINLS.getString("WizardComposite.begin"));
         }
 
         if ((flags & SHOW_BACK) != 0) {
             goBackButton = new Button(navBar, SWT.NONE);
-            goBackButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_backward.gif")); //$NON-NLS-1$
-            goBackButton.setText(GUINLS.getString("WizardComposite.back")); //$NON-NLS-1$
+            goBackButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_backward.gif"));
+            goBackButton.setText(GUINLS.getString("WizardComposite.back"));
         }
 
         if ((flags & SHOW_FORWARD) != 0) {
             goForwardButton = new Button(navBar, SWT.NONE);
-            goForwardButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_forward.gif")); //$NON-NLS-1$
-            goForwardButton.setText(GUINLS.getString("WizardComposite.next")); //$NON-NLS-1$
+            goForwardButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_forward.gif"));
+            goForwardButton.setText(GUINLS.getString("WizardComposite.next"));
         }
 
         if ((flags & SHOW_END) != 0) {
             goEndButton = new Button(navBar, SWT.NONE);
-            goEndButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_r_edit.gif")); //$NON-NLS-1$
-            goEndButton.setText(GUINLS.getString("WizardComposite.finish")); //$NON-NLS-1$
+            goEndButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_r_edit.gif"));
+            goEndButton.setText(GUINLS.getString("WizardComposite.finish"));
         }
 
         setupEvents();
@@ -302,7 +302,7 @@ public class NavigatorComposite
 
         void refreshTitle() {
             IPage page = pageContainer.getActivePage();
-            String title = ""; //$NON-NLS-1$
+            String title = "";
             if (page != null)
                 title = page.getPageTitle();
             pageTitleLabel.setText(title);

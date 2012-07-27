@@ -20,7 +20,7 @@ public class PageTestAppTest {
                     throws PageException {
                 holder.setLayout(new FillLayout());
                 Label label = new Label(holder, SWT.NONE);
-                label.setText("Test Page"); //$NON-NLS-1$
+                label.setText("Test Page");
             }
 
         });
