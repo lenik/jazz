@@ -3,7 +3,6 @@ package net.bodz.mda.xjdoc.tags;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 public class MergedTagBook
         extends ArrayList<ITagBook>
         implements ITagBook {

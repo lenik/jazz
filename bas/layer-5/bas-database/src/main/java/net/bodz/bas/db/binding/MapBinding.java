@@ -39,7 +39,7 @@ public class MapBinding {
     public void getFields(Map<String, Object> map)
             throws ReflectiveOperationException {
         assert map != null;
-        for (IProperty property : propertyMap.values()) {
+        for (IProperty property : propertyMap.getProperties()) {
             String name = property.getName();
             Object value = property.get(instance);
             map.put(name, value);
@@ -52,7 +52,7 @@ public class MapBinding {
         for (Entry<String, ?> e : map.entrySet()) {
             String name = e.getKey();
             Object value = e.getValue();
-            IProperty property = propertyMap.get(name);
+            IProperty property = propertyMap.getProperty(name);
             if (property == null)
                 setNonexistField(name, value);
             else

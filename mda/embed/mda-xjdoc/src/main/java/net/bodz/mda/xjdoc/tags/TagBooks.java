@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 public class TagBooks {
 
     static Map<String, ITagBook> map;

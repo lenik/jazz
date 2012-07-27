@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.traits.ValidateException;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.api.QuietHint;
+import net.bodz.swt.err.ValidateException;
 
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
