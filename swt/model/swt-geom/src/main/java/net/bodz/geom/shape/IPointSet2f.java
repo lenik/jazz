@@ -3,9 +3,9 @@ package net.bodz.geom.shape;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.geom.shape.base.Point2f;
+import javax.vecmath.Point2f;
 
-public interface PointSet2f {
+public interface IPointSet2f {
 
     int pointCount();
 
@@ -22,16 +22,16 @@ public interface PointSet2f {
 
     List<Point2f> toPointRefsList(boolean copy);
 
-    Point2f.Static point(int index);
+    Point2f point(int index);
 
     float pointX(int index);
 
     float pointY(int index);
 
-    Iterator<Point2f.Static> pointIterator();
+    Iterator<Point2f> pointIterator();
 
-    Point2f.Static[] toPointsArray(boolean copy);
+    Point2f[] toPointsArray(boolean copy);
 
-    List<Point2f.Static> toPointsList(boolean copy);
+    List<Point2f> toPointsList(boolean copy);
 
 }

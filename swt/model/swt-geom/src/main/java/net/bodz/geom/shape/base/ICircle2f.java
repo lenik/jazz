@@ -1,10 +1,10 @@
 package net.bodz.geom.shape.base;
 
-import net.bodz.geom.shape.Shape2f;
-import net.bodz.geom.shape.ShapeAmount2f;
+import net.bodz.geom.shape.IShape2f;
+import net.bodz.geom.shape.IShapeAmount2f;
 
-public interface Circle2f
-        extends Shape2f, ShapeAmount2f {
+public interface ICircle2f
+        extends IShape2f, IShapeAmount2f {
 
     int SP_BORDER = 0;
 
@@ -20,14 +20,14 @@ public interface Circle2f
 
     void radius(float radius);
 
-    Point2f.Static center();
+    IPoint2f.Static center();
 
-    void center(Point2f point);
+    void center(IPoint2f point);
 
     // -o Shape
-    Circle2f snapshot();
+    ICircle2f snapshot();
 
-    Circle2f clone();
+    ICircle2f clone();
 
     // -o ShapeAmount
 
@@ -51,14 +51,14 @@ public interface Circle2f
             this.radius = radius;
         }
 
-        public Static_Cr(Point2f cpoint, float radius) {
+        public Static_Cr(IPoint2f cpoint, float radius) {
             this.centerX = cpoint.x();
             this.centerY = cpoint.y();
             this.radius = radius;
         }
 
         @Override
-        public Circle2f snapshot() {
+        public ICircle2f snapshot() {
             return new Static_Cr(centerX, centerY, radius);
         }
 
@@ -98,7 +98,7 @@ public interface Circle2f
             return 1;
         }
 
-        public Point2f pointRef(int index) {
+        public IPoint2f pointRef(int index) {
             switch (index) {
             case PT_CENTER:
                 return new PtCenter();
@@ -221,7 +221,7 @@ public interface Circle2f
             return 2;
         }
 
-        public Point2f pointRef(int index) {
+        public IPoint2f pointRef(int index) {
             switch (index) {
             case PT_CENTER:
                 return new PtCenter();
@@ -243,9 +243,9 @@ public interface Circle2f
         public static final int PT_1 = 1;
         public static final int PT_2 = 2;
 
-        Point2f a;
-        Point2f b;
-        Point2f c;
+        IPoint2f a;
+        IPoint2f b;
+        IPoint2f c;
 
         protected final class Pt0
                 extends AbstractPoint2f {
@@ -346,7 +346,7 @@ public interface Circle2f
 
         }
 
-        public P3(Point2f a, Point2f b, Point2f c) {
+        public P3(IPoint2f a, IPoint2f b, IPoint2f c) {
             assert a != null;
             assert b != null;
             assert c != null;
@@ -355,7 +355,7 @@ public interface Circle2f
             this.c = c;
         }
 
-        public P3(Point2f pt[]) {
+        public P3(IPoint2f pt[]) {
             assert pt != null;
             assert pt.length >= 3;
             this.a = pt[0];
@@ -364,7 +364,7 @@ public interface Circle2f
         }
 
         public P3(float aX, float aY, float bX, float bY, float cX, float cY) {
-            this(new Point2f.Static(aX, aY), new Point2f.Static(bX, bY), new Point2f.Static(cX, cY));
+            this(new IPoint2f.Static(aX, aY), new IPoint2f.Static(bX, bY), new IPoint2f.Static(cX, cY));
         }
 
         public P3(float x[], float y[]) {
@@ -373,13 +373,13 @@ public interface Circle2f
             assert x.length >= 3;
             assert y.length >= 3;
 
-            a = new Point2f.Static(x[0], y[0]);
-            b = new Point2f.Static(x[1], y[1]);
-            c = new Point2f.Static(x[2], y[2]);
+            a = new IPoint2f.Static(x[0], y[0]);
+            b = new IPoint2f.Static(x[1], y[1]);
+            c = new IPoint2f.Static(x[2], y[2]);
         }
 
         @Override
-        public Circle2f snapshot() {
+        public ICircle2f snapshot() {
             return new P3(a.snapshot(), b.snapshot(), c.snapshot());
         }
 
@@ -407,7 +407,7 @@ public interface Circle2f
             return 3;
         }
 
-        public Point2f pointRef(int index) {
+        public IPoint2f pointRef(int index) {
             switch (index) {
             case PT_0:
                 return new Pt0();
@@ -432,8 +432,8 @@ public interface Circle2f
         public static final int PT_P = 0;
         public static final int PT_Q = 1;
 
-        Point2f p;
-        Point2f q;
+        IPoint2f p;
+        IPoint2f q;
 
         protected final class PtP
                 extends AbstractPoint2f {
@@ -542,7 +542,7 @@ public interface Circle2f
             return 2;
         }
 
-        public Point2f pointRef(int index) {
+        public IPoint2f pointRef(int index) {
             switch (index) {
             case PT_P:
                 return new PtP();

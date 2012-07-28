@@ -4,8 +4,8 @@ import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.drawtarget.TransformedDrawTarget2f;
 import net.bodz.geom.drawtarget.swt.SWTDrawTarget2f;
 import net.bodz.geom.shape.EditablePointSet2f;
-import net.bodz.geom.shape.Shape2f;
-import net.bodz.geom.shape.base.Point2f;
+import net.bodz.geom.shape.IShape2f;
+import net.bodz.geom.shape.base.IPoint2f;
 import net.bodz.geom.transform.ViewTransformer2f;
 import net.bodz.swt.state.SWTContext;
 
@@ -25,7 +25,7 @@ public class GDContext
     public Image preview;
 
     // Select
-    public Shape2f selshape;
+    public IShape2f selshape;
 
     // Edit
     public EditablePointSet2f seledit;
@@ -33,7 +33,7 @@ public class GDContext
     public int selspoint;
 
     // Draw
-    public Shape2f mkshape;
+    public IShape2f mkshape;
 
     // View
     public ViewTransformer2f vt;
@@ -54,13 +54,13 @@ public class GDContext
         shapes.draw(dt);
     }
 
-    public Point vtTarget(Point2f point) {
-        Point2f swt = vt.transformTo(point);
+    public Point vtTarget(IPoint2f point) {
+        IPoint2f swt = vt.transformTo(point);
         return new Point((int) swt.x(), (int) swt.y());
     }
 
-    public Point2f vtSource(int x, int y) {
-        Point2f point = new Point2f.Static(x, y);
+    public IPoint2f vtSource(int x, int y) {
+        IPoint2f point = new IPoint2f.Static(x, y);
         vt.transform(point);
         return point;
     }

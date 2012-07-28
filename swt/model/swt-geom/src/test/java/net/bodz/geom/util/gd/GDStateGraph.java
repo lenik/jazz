@@ -15,7 +15,7 @@ public class GDStateGraph
         super();
     }
 
-    public GDStateGraph(SWTState start) {
+    public GDStateGraph(ISWTState start) {
         super(start);
     }
 

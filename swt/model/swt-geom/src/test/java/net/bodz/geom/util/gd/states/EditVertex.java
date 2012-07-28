@@ -1,5 +1,6 @@
 package net.bodz.geom.util.gd.states;
 
+import net.bodz.bas.fsm.base.IState;
 import net.bodz.geom.shape.EditablePointSet2f;
 import net.bodz.geom.util.gd.GDState;
 import net.bodz.geom.util.gd.GDStateGraph;
@@ -18,7 +19,7 @@ public class EditVertex
     }
 
     @Override
-    public void enter(State prev) {
+    public void enter(IState prev) {
         super.enter(prev);
     }
 

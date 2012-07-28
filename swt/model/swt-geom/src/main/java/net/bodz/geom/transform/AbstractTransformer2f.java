@@ -1,7 +1,7 @@
 package net.bodz.geom.transform;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
-import net.bodz.geom.shape.base.Point2f;
+import net.bodz.geom.shape.base.IPoint2f;
 
 public abstract class AbstractTransformer2f
         implements Transformer2f {
@@ -14,7 +14,7 @@ public abstract class AbstractTransformer2f
 
     public abstract void transform(javax.vecmath.Vector2f vector);
 
-    public void transform(Point2f point) {
+    public void transform(IPoint2f point) {
         Vector2f v = new Vector2f(point.x(), point.y());
         transform(v);
         point.x(v.x);
@@ -27,15 +27,15 @@ public abstract class AbstractTransformer2f
         return v;
     }
 
-    public Point2f transformTo(Point2f point) {
-        Point2f p = point.clone();
+    public IPoint2f transformTo(IPoint2f point) {
+        IPoint2f p = point.clone();
         transform(p);
         return p;
     }
 
     public abstract void invert(javax.vecmath.Vector2f vector);
 
-    public void invert(Point2f point) {
+    public void invert(IPoint2f point) {
         Vector2f v = new Vector2f(point.x(), point.y());
         invert(v);
         point.x(v.x);
@@ -48,8 +48,8 @@ public abstract class AbstractTransformer2f
         return v;
     }
 
-    public Point2f invertTo(Point2f point) {
-        Point2f p = point.clone();
+    public IPoint2f invertTo(IPoint2f point) {
+        IPoint2f p = point.clone();
         invert(p);
         return p;
     }

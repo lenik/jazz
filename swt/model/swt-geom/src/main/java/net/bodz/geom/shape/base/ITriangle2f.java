@@ -1,10 +1,10 @@
 package net.bodz.geom.shape.base;
 
-import net.bodz.geom.shape.Shape2f;
-import net.bodz.geom.shape.ShapeAmount2f;
+import net.bodz.geom.shape.IShape2f;
+import net.bodz.geom.shape.IShapeAmount2f;
 
-public interface Triangle2f
-        extends Shape2f, ShapeAmount2f {
+public interface ITriangle2f
+        extends IShape2f, IShapeAmount2f {
 
     int SP_0 = 1;
     int SP_1 = 2;
@@ -34,32 +34,32 @@ public interface Triangle2f
 
     void y2(float y);
 
-    Point2f.Static p0();
+    IPoint2f.Static p0();
 
-    Point2f.Static p1();
+    IPoint2f.Static p1();
 
-    Point2f.Static p2();
+    IPoint2f.Static p2();
 
-    void p0(Point2f p);
+    void p0(IPoint2f p);
 
-    void p1(Point2f p);
+    void p1(IPoint2f p);
 
-    void p2(Point2f p);
+    void p2(IPoint2f p);
 
     float centerX();
 
     float centerY();
 
-    Point2f center();
+    IPoint2f center();
 
-    Circle2f cIn();
+    ICircle2f cIn();
 
-    Circle2f cEx();
+    ICircle2f cEx();
 
     // -o Shape
-    Triangle2f.Static snapshot();
+    ITriangle2f.Static snapshot();
 
-    Triangle2f clone();
+    ITriangle2f clone();
 
     public static class Static
             extends AbstractTriangle2f {
@@ -86,7 +86,7 @@ public interface Triangle2f
             this.y2 = y2;
         }
 
-        public Static(Point2f p0, Point2f p1, Point2f p2) {
+        public Static(IPoint2f p0, IPoint2f p1, IPoint2f p2) {
             this.x0 = p0.x();
             this.y0 = p0.y();
             this.x1 = p1.x();
@@ -154,7 +154,7 @@ public interface Triangle2f
         }
 
         @Override
-        public Point2f pointRef(int index) {
+        public IPoint2f pointRef(int index) {
             switch (index) {
             case PT_0:
                 return new Pt0();

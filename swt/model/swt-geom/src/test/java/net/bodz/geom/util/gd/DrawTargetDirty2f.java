@@ -4,7 +4,7 @@ import net.bodz.geom.drawtarget.AbstractDrawTarget2f;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.base.AbstractRectangle2f;
-import net.bodz.geom.shape.base.Rectangle2f;
+import net.bodz.geom.shape.base.IRectangle2f;
 
 public class DrawTargetDirty2f
         extends AbstractDrawTarget2f {
@@ -19,7 +19,7 @@ public class DrawTargetDirty2f
     }
 
     private void clearDirty() {
-        dirtyRect = new Rectangle2f.LeftPositive(Float.MAX_VALUE, Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
+        dirtyRect = new IRectangle2f.LeftPositive(Float.MAX_VALUE, Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
     }
 
     @Override

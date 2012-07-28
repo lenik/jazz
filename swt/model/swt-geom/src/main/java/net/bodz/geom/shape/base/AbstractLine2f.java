@@ -11,7 +11,7 @@ import net.bodz.geom.shape.AbstractShape2f;
 
 public abstract class AbstractLine2f
         extends AbstractShape2f
-        implements Line2f, Serializable {
+        implements ILine2f, Serializable {
 
     private static final long serialVersionUID = 4549850040626555777L;
 
@@ -114,20 +114,20 @@ public abstract class AbstractLine2f
         throw new ReadOnlyAttributeException(this, "y1");
     }
 
-    public Point2f.Static p0() {
-        return new Point2f.Static(x0(), y0());
+    public IPoint2f.Static p0() {
+        return new IPoint2f.Static(x0(), y0());
     }
 
-    public Point2f.Static p1() {
-        return new Point2f.Static(x1(), y1());
+    public IPoint2f.Static p1() {
+        return new IPoint2f.Static(x1(), y1());
     }
 
-    public void p0(Point2f p0) {
+    public void p0(IPoint2f p0) {
         x0(p0.x());
         y0(p0.y());
     }
 
-    public void p1(Point2f p1) {
+    public void p1(IPoint2f p1) {
         x1(p1.x());
         y1(p1.y());
     }
@@ -167,7 +167,7 @@ public abstract class AbstractLine2f
             return indexY(y);
     }
 
-    public float index(Point2f point) {
+    public float index(IPoint2f point) {
         return index(point.x(), point.y());
     }
 
@@ -179,8 +179,8 @@ public abstract class AbstractLine2f
         return (y - y0()) / (y1() - y0());
     }
 
-    public Point2f.Static point(float index) {
-        return new Point2f.Static(pointX(index), pointY(index));
+    public IPoint2f.Static point(float index) {
+        return new IPoint2f.Static(pointX(index), pointY(index));
     }
 
     public float pointX(float index) {
@@ -191,7 +191,7 @@ public abstract class AbstractLine2f
         return y0() + (y1() - y0()) * index;
     }
 
-    public Point2f.Static _intersectsAt(Line2f line) {
+    public IPoint2f.Static _intersectsAt(ILine2f line) {
         float k1 = gradient();
         float b1 = y();
         float k2 = line.gradient();
@@ -201,15 +201,15 @@ public abstract class AbstractLine2f
         float Dy = k1 * b2 - k2 * b1;
         float x = Dx / D;
         float y = -Dy / D;
-        return new Point2f.Static(x, y);
+        return new IPoint2f.Static(x, y);
     }
 
-    public boolean _intersects(Line2f line) {
+    public boolean _intersects(ILine2f line) {
         return _intersectsAt(line) != null;
     }
 
-    public Point2f.Static intersectsAt(Line2f line) {
-        Point2f.Static point = _intersectsAt(line);
+    public IPoint2f.Static intersectsAt(ILine2f line) {
+        IPoint2f.Static point = _intersectsAt(line);
         float t = index(point);
         if (t < 0.0f || t > 1.0f)
             return null;
@@ -219,7 +219,7 @@ public abstract class AbstractLine2f
         return point;
     }
 
-    public boolean intersects(Line2f line) {
+    public boolean intersects(ILine2f line) {
         return intersectsAt(line) != null;
     }
 
@@ -247,7 +247,7 @@ public abstract class AbstractLine2f
         return 2;
     }
 
-    public Point2f pointRef(int index) {
+    public IPoint2f pointRef(int index) {
         switch (index) {
         case 0:
             return new Pt0();
@@ -271,13 +271,13 @@ public abstract class AbstractLine2f
         Vector2f v0 = p0().vectorTo(x, y);
         if (v.dot(v0) <= 0) {
             // index(H) < 0
-            Point2f p0 = p0();
+            IPoint2f p0 = p0();
             return new PickInfo2f(p0, p0.distance(x, y));
         } else {
             Vector2f v1 = p1().vectorFrom(x, y);
             if (v.dot(v1) <= 0) {
                 // index(H) > 1
-                Point2f p1 = p1();
+                IPoint2f p1 = p1();
                 return new PickInfo2f(p1, p1.distance(x, y));
             }
         }
@@ -286,7 +286,7 @@ public abstract class AbstractLine2f
         return new PickInfo2f(this, dist);
     }
 
-    public float distanceExtended(Point2f point) {
+    public float distanceExtended(IPoint2f point) {
         return distanceExtended(point.x(), point.y());
     }
 
@@ -320,7 +320,7 @@ public abstract class AbstractLine2f
         return pickInfo.distance;
     }
 
-    public final boolean containsHP(Point2f point) {
+    public final boolean containsHP(IPoint2f point) {
         Vector2f N = toVector();
         N.normalize();
         return point.inside(p0(), N);
@@ -329,7 +329,7 @@ public abstract class AbstractLine2f
     // -o Shape
 
     @Override
-    public Point2f spointRef(int id) {
+    public IPoint2f spointRef(int id) {
         switch (id) {
         case SP_CENTER:
             return new PtCenter();
@@ -342,12 +342,12 @@ public abstract class AbstractLine2f
     }
 
     @Override
-    public Line2f crop(Point2f base, Vector2f normal) {
+    public ILine2f crop(IPoint2f base, Vector2f normal) {
         assert base != null;
         assert normal != null;
 
-        Point2f P = p0();
-        Point2f Q = p1();
+        IPoint2f P = p0();
+        IPoint2f Q = p1();
         float num = normal.dot(base.vectorTo(P));
         float den = normal.dot(P.vectorTo(Q));
 
@@ -363,7 +363,7 @@ public abstract class AbstractLine2f
         // P + (num / den) (Q - P)
         float t = -num / den;
         Vector2f PQ = P.vectorTo(Q);
-        Point2f cut = P.toAdd(PQ.toScale(t));
+        IPoint2f cut = P.addCopy(PQ.toScale(t));
         if (den > 0) {
             // PQ enters into
             if (t <= 0)
@@ -371,7 +371,7 @@ public abstract class AbstractLine2f
             else if (t > 1)
                 return null;
             else
-                return new Line2f.Static(cut, Q);
+                return new ILine2f.Static(cut, Q);
         } else {
             // PQ leaves out
             if (t < 0)
@@ -379,25 +379,25 @@ public abstract class AbstractLine2f
             else if (t >= 1)
                 return this;
             else
-                return new Line2f.Static(P, cut);
+                return new ILine2f.Static(P, cut);
         }
     }
 
     @Override
-    public Line2f crop(Rectangle2f rect) {
-        return (Line2f) cropConvexPolygon(rect);
+    public ILine2f crop(IRectangle2f rect) {
+        return (ILine2f) cropConvexPolygon(rect);
     }
 
     @Override
-    public Line2f crop(float x0, float y0, float x1, float y1) {
-        return crop(new Rectangle2f.StaticLeft(x0, y0, x1, y1));
+    public ILine2f crop(float x0, float y0, float x1, float y1) {
+        return crop(new IRectangle2f.StaticLeft(x0, y0, x1, y1));
     }
 
-    public Line2f convertToLine2f() {
+    public ILine2f convertToLine2f() {
         return null;
     }
 
-    public Polygon2f convertToPolygon() {
+    public IPolygon2f convertToPolygon() {
         return null;
     }
 
@@ -407,13 +407,13 @@ public abstract class AbstractLine2f
     }
 
     @Override
-    public Rectangle2f boundingBox() {
-        return new Rectangle2f.StaticLeft(x0(), y0(), x1(), y1());
+    public IRectangle2f boundingBox() {
+        return new IRectangle2f.StaticLeft(x0(), y0(), x1(), y1());
     }
 
     @Override
-    public Line2f.Static snapshot() {
-        return new Line2f.Static(p0(), p1());
+    public ILine2f.Static snapshot() {
+        return new ILine2f.Static(p0(), p1());
     }
 
     @Override

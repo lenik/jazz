@@ -4,27 +4,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.vecmath.Vector2f;
-
+import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.geom.base.PickInfo2f;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
-import net.bodz.geom.shape.Shape2f;
-import net.bodz.geom.shape.base.Line2f;
-import net.bodz.geom.shape.base.Point2f;
-import net.bodz.geom.shape.base.Point2f.Static;
-import net.bodz.geom.shape.base.Polygon2f;
-import net.bodz.geom.shape.base.Rectangle2f;
-import net.bodz.geom.shape.base.Triangle2f;
+import net.bodz.geom.shape.IShape2f;
+import net.bodz.geom.shape.base.ILine2f;
+import net.bodz.geom.shape.base.IPoint2f;
+import net.bodz.geom.shape.base.IPoint2f.Static;
+import net.bodz.geom.shape.base.IPolygon2f;
+import net.bodz.geom.shape.base.IRectangle2f;
+import net.bodz.geom.shape.base.ITriangle2f;
 
 public class SWTShape2f
-        implements Shape2f {
+        implements IShape2f {
 
-    protected Shape2f delegatee;
+    protected IShape2f delegatee;
 
     public SWTStyle style;
 
-    public SWTShape2f(Shape2f delegatee) {
+    public SWTShape2f(IShape2f delegatee) {
         assert delegatee != null;
         this.delegatee = delegatee;
     }
@@ -52,12 +51,12 @@ public class SWTShape2f
 
     // -o Shape Delegated
 
-    public Rectangle2f boundingBox() {
+    public IRectangle2f boundingBox() {
         return delegatee.boundingBox();
     }
 
     @Override
-    public Shape2f clone() {
+    public IShape2f clone() {
         return delegatee.clone();
     }
 
@@ -65,39 +64,39 @@ public class SWTShape2f
         return delegatee.contains(x, y);
     }
 
-    public boolean contains(Point2f point) {
+    public boolean contains(IPoint2f point) {
         return delegatee.contains(point);
     }
 
-    public Shape2f convertTo(Class<?> shapeClass) {
+    public IShape2f convertTo(Class<?> shapeClass) {
         return delegatee.convertTo(shapeClass);
     }
 
-    public Shape2f crop(float x0, float y0, float x1, float y1, float x2, float y2) {
+    public IShape2f crop(float x0, float y0, float x1, float y1, float x2, float y2) {
         return delegatee.crop(x0, y0, x1, y1, x2, y2);
     }
 
-    public Shape2f crop(float x0, float y0, float x1, float y1) {
+    public IShape2f crop(float x0, float y0, float x1, float y1) {
         return delegatee.crop(x0, y0, x1, y1);
     }
 
-    public Shape2f crop(Line2f directed) {
+    public IShape2f crop(ILine2f directed) {
         return delegatee.crop(directed);
     }
 
-    public Shape2f crop(Point2f baseHalfPlane, Vector2f normal) {
+    public IShape2f crop(IPoint2f baseHalfPlane, Vector2f normal) {
         return delegatee.crop(baseHalfPlane, normal);
     }
 
-    public Shape2f crop(Polygon2f polygon) {
+    public IShape2f crop(IPolygon2f polygon) {
         return delegatee.crop(polygon);
     }
 
-    public Shape2f crop(Rectangle2f rectangle) {
+    public IShape2f crop(IRectangle2f rectangle) {
         return delegatee.crop(rectangle);
     }
 
-    public Shape2f crop(Triangle2f triangle) {
+    public IShape2f crop(ITriangle2f triangle) {
         return delegatee.crop(triangle);
     }
 
@@ -105,7 +104,7 @@ public class SWTShape2f
         return delegatee.distance(x, y);
     }
 
-    public float distance(Point2f point) {
+    public float distance(IPoint2f point) {
         return delegatee.distance(point);
     }
 
@@ -113,11 +112,11 @@ public class SWTShape2f
         return delegatee.getConvertToClasses();
     }
 
-    public Shape2f pick(float x, float y) {
+    public IShape2f pick(float x, float y) {
         return delegatee.pick(x, y);
     }
 
-    public Shape2f pick(Point2f point) {
+    public IShape2f pick(IPoint2f point) {
         return delegatee.pick(point);
     }
 
@@ -125,7 +124,7 @@ public class SWTShape2f
         return delegatee.pickInfo(x, y);
     }
 
-    public PickInfo2f pickInfo(Point2f point) {
+    public PickInfo2f pickInfo(IPoint2f point) {
         return delegatee.pickInfo(point);
     }
 
@@ -141,11 +140,11 @@ public class SWTShape2f
         return delegatee.pointIterator();
     }
 
-    public Point2f pointRef(int index) {
+    public IPoint2f pointRef(int index) {
         return delegatee.pointRef(index);
     }
 
-    public Iterator<Point2f> pointRefIterator() {
+    public Iterator<IPoint2f> pointRefIterator() {
         return delegatee.pointRefIterator();
     }
 
@@ -157,55 +156,55 @@ public class SWTShape2f
         return delegatee.pointY(index);
     }
 
-    public void rotate(float angle, float baseX, float baseY) {
-        delegatee.rotate(angle, baseX, baseY);
+    public void rotateAt(float angle, float baseX, float baseY) {
+        delegatee.rotateAt(angle, baseX, baseY);
     }
 
-    public void rotate(float angle, Point2f basePoint) {
-        delegatee.rotate(angle, basePoint);
+    public void rotate(float angle, IPoint2f basePoint) {
+        delegatee.rotateAt(angle, basePoint);
     }
 
     public void rotate(float angle) {
         delegatee.rotate(angle);
     }
 
-    public void scale(float kx, float ky, float baseX, float baseY) {
-        delegatee.scale(kx, ky, baseX, baseY);
+    public void scaleAt(float kx, float ky, float baseX, float baseY) {
+        delegatee.scaleAt(kx, ky, baseX, baseY);
     }
 
-    public void scale(float k, float baseX, float baseY) {
-        delegatee.scale(k, baseX, baseY);
+    public void scaleAt(float k, float baseX, float baseY) {
+        delegatee.scaleAt(k, baseX, baseY);
     }
 
-    public void scale(float kx, float ky, Point2f basePoint) {
-        delegatee.scale(kx, ky, basePoint);
+    public void scale(float kx, float ky, IPoint2f basePoint) {
+        delegatee.scaleAt(kx, ky, basePoint);
     }
 
     public void scale(float kx, float ky) {
         delegatee.scale(kx, ky);
     }
 
-    public void scale(float k, Point2f basePoint) {
-        delegatee.scale(k, basePoint);
+    public void scale(float k, IPoint2f basePoint) {
+        delegatee.scaleAt(k, basePoint);
     }
 
     public void scale(float k) {
         delegatee.scale(k);
     }
 
-    public void scale(Vector2f kv, float baseX, float baseY) {
-        delegatee.scale(kv, baseX, baseY);
+    public void scaleAt(Vector2f kv, float baseX, float baseY) {
+        delegatee.scaleAt(kv, baseX, baseY);
     }
 
-    public void scale(Vector2f kv, Point2f basePoint) {
-        delegatee.scale(kv, basePoint);
+    public void scale(Vector2f kv, IPoint2f basePoint) {
+        delegatee.scaleAt(kv, basePoint);
     }
 
     public void scale(Vector2f kv) {
         delegatee.scale(kv);
     }
 
-    public Shape2f snapshot() {
+    public IShape2f snapshot() {
         return delegatee.snapshot();
     }
 
@@ -213,7 +212,7 @@ public class SWTShape2f
         return delegatee.spoint(id);
     }
 
-    public Point2f spointRef(int id) {
+    public IPoint2f spointRef(int id) {
         return delegatee.spointRef(id);
     }
 
@@ -225,11 +224,11 @@ public class SWTShape2f
         return delegatee.spointY(id);
     }
 
-    public Point2f[] toPointRefsArray(boolean copy) {
+    public IPoint2f[] toPointRefsArray(boolean copy) {
         return delegatee.toPointRefsArray(copy);
     }
 
-    public List<Point2f> toPointRefsList(boolean copy) {
+    public List<IPoint2f> toPointRefsList(boolean copy) {
         return delegatee.toPointRefsList(copy);
     }
 

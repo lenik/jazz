@@ -3,6 +3,7 @@ package net.bodz.geom.util.gd;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.fsm.base.IStateGraph;
 import net.bodz.swt.state.ISWTState;
 
 import org.eclipse.swt.SWT;
@@ -19,15 +20,15 @@ public class DesignerToolbox2f {
     protected Shell shell;
     private List list;
 
-    StateGraph graph;
+    IStateGraph graph;
 
     Map<String, ISWTState> commands;
 
-    public DesignerToolbox2f(StateGraph graph) {
+    public DesignerToolbox2f(IStateGraph graph) {
         assert graph != null;
         this.graph = graph;
 
-        commands = new HashMap<String, SWTState>();
+        commands = new HashMap<String, ISWTState>();
 
         /*
          * commands.put("select", new Select(graph)); commands.put("edit", new EditMajor(graph));
@@ -70,7 +71,7 @@ public class DesignerToolbox2f {
                 if (i == -1)
                     return;
                 String cmd = list.getItem(i);
-                SWTState state = commands.get(cmd);
+                ISWTState state = commands.get(cmd);
                 if (state != null) {
                     graph.jump(state);
                 }
