@@ -13,7 +13,8 @@ import net.bodz.swt.err.ValidateException;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-public abstract class PageFlow {
+public abstract class AbstractPageFlow
+        implements IPageFlow {
 
     private final IPageContext pageContext;
     private final IBook book;
@@ -22,7 +23,7 @@ public abstract class PageFlow {
     private List<LocationChangeListener> locationChangeListeners;
     private List<IBadPathListener> badPathListeners;
 
-    public PageFlow(IPageContext pageContext) {
+    public AbstractPageFlow(IPageContext pageContext) {
         if (pageContext == null)
             throw new NullPointerException("pageContext");
         this.pageContext = pageContext;
@@ -38,13 +39,9 @@ public abstract class PageFlow {
         return this.history.get();
     }
 
-    /**
-     * @throws IllegalStateException
-     *             if current page is sticked
-     */
-    public boolean jump(int delta) {
+    public boolean go(int pageCount) {
         TreePath prev = history.get();
-        if (!history.jump(delta))
+        if (!history.jump(pageCount))
             return false;
         try {
             TreePath next = history.get();

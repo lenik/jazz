@@ -40,10 +40,10 @@ public class NavigatorComposite
     static final int SHOW_FORWARD = 4;
     static final int SHOW_END = 8;
 
-    class _PageFlow
-            extends PageFlow {
+    class DefaultPageFlow
+            extends AbstractPageFlow {
 
-        public _PageFlow() {
+        public DefaultPageFlow() {
             super(NavigatorComposite.this);
         }
 
@@ -75,7 +75,7 @@ public class NavigatorComposite
     private IBook book;
     private NLS dict;
     private History history;
-    private PageFlow pageFlow;
+    private AbstractPageFlow pageFlow;
 
     private UserInterface UI;
 
@@ -115,7 +115,7 @@ public class NavigatorComposite
         this.book = book;
         this.dict = book.getDict();
         this.history = history;
-        this.pageFlow = new _PageFlow();
+        this.pageFlow = new DefaultPageFlow();
         this.UI = new DialogUI(getShell());
 
         labelFormat_sc = GUINLS.getString("NavigatorComposite.labelFormat_sc");
@@ -134,7 +134,7 @@ public class NavigatorComposite
     }
 
     @Override
-    public PageFlow getPageFlow() {
+    public AbstractPageFlow getPageFlow() {
         return pageFlow;
     }
 
@@ -228,7 +228,7 @@ public class NavigatorComposite
                 @Override
                 public void widgetSelected(SelectionEvent e) {
                     int backwards = history.getBackwards();
-                    pageFlow.jump(-backwards);
+                    pageFlow.go(-backwards);
                 }
             });
 
@@ -236,14 +236,14 @@ public class NavigatorComposite
             goBackButton.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
-                    pageFlow.jump(-1);
+                    pageFlow.go(-1);
                 }
             });
         if (goForwardButton != null)
             goForwardButton.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
-                    pageFlow.jump(1);
+                    pageFlow.go(1);
                 }
             });
         if (goEndButton != null)
@@ -251,7 +251,7 @@ public class NavigatorComposite
                 @Override
                 public void widgetSelected(SelectionEvent e) {
                     int forwards = history.getForwards();
-                    pageFlow.jump(forwards);
+                    pageFlow.go(forwards);
                 }
             });
         history.addHistoryChangeListener(new HistoryChangeListener() {
