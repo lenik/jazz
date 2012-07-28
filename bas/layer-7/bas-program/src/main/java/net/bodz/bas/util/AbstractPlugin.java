@@ -1,18 +1,20 @@
 package net.bodz.bas.util;
 
 import net.bodz.bas.meta.build.AppClassDoc;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public class AbstractPlugin
         implements IPlugin {
 
+    AppClassDoc classDoc;
+
     public AbstractPlugin() {
-        AppClassDoc info = AppClassDoc.get(getClass());
-        description = info.getDoc();
+        classDoc = ClassDocs.loadFromResource(getClass()).decorate(AppClassDoc.class);
     }
 
     @Override
     public String getDescription() {
-        return description;
+        return classDoc.getTextHeader();
     }
 
     @Deprecated
