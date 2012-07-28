@@ -10,6 +10,6 @@ public interface IPageContext {
 
     History getHistory();
 
-    PageFlow getPageFlow();
+    AbstractPageFlow getPageFlow();
 
 }

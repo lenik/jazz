@@ -1,7 +1,6 @@
 package net.bodz.swt.gui.pfl;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.meta.info.Doc;
 import net.bodz.bas.ui.a.Icon;
 import net.bodz.swt.err.ValidateException;
 
@@ -12,7 +11,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-@Doc("Test page 1")
+/**
+ * Test page 1
+ */
 @Icon("icons/full/obj16/ant.gif")
 public class TestPage1
         extends AbstractPage {
