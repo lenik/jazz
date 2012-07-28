@@ -51,10 +51,10 @@ public class CreateFile
                 boolean append = CreateFile.this.append && dest.exists();
                 String abbr = Strings.ellipse(String.valueOf(data), 40);
                 if (append) {
-                    L.finfo(PackNLS.getString("CreateFile.appendTo_ss"), dest, abbr);
+                    logger.infof(PackNLS.getString("CreateFile.appendTo_ss"), dest, abbr);
                     Files.append(dest, data, charset);
                 } else {
-                    L.finfo(PackNLS.getString("CreateFile.createFile_ss"), dest, abbr);
+                    logger.infof(PackNLS.getString("CreateFile.createFile_ss"), dest, abbr);
                     Files.createFile(dest, data, charset);
                 }
             } catch (IOException e) {
@@ -74,7 +74,7 @@ public class CreateFile
         @Override
         protected void _run() {
             File dest = new File(session.getFile(base), path);
-            L.info(PackNLS.getString("CreateFile.deleteFile"), dest);
+            logger.info(PackNLS.getString("CreateFile.deleteFile"), dest);
             dest.delete();
         }
 

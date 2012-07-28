@@ -225,7 +225,7 @@ public class FileCopy
             long sum = 0;
 
             Attachment a = getAttachment(session, true);
-            L.finfo(PackNLS.getString("FileCopy.packFiles_ss"), getId(), a);
+            logger.infof(PackNLS.getString("FileCopy.packFiles_ss"), getId(), a);
 
             ZipOutputStream zout;
             try {
@@ -271,14 +271,14 @@ public class FileCopy
                 try {
                     if (f.isDirectory()) {
                         assert dest.endsWith("/");
-                        L.detail(PackNLS.getString("FileCopy.putEntry"), dest);
+                        logger.log(PackNLS.getString("FileCopy.putEntry"), dest);
                         JarEntry entry = new JarEntry(dest);
                         zout.putNextEntry(entry);
                         zout.closeEntry();
                         sum += dirFileSize;
                     } else if (f.isFile()) {
                         long fileSize = f.length();
-                        L.fdetail(PackNLS.getString("FileCopy.putEntry_sd"), dest, fileSize);
+                        logger.logf(PackNLS.getString("FileCopy.putEntry_sd"), dest, fileSize);
                         JarEntry entry = new JarEntry(dest);
                         // entry.setSize(fileSize);
                         zout.putNextEntry(entry);
@@ -301,10 +301,10 @@ public class FileCopy
                             zout.closeEntry();
                         }
                         if (remaining != 0)
-                            L.fwarn("Incorrect file size %d, %d more bytes doesn't exist\n", fileSize, remaining);
+                            logger.warnf("Incorrect file size %d, %d more bytes doesn't exist\n", fileSize, remaining);
                         sum += fileSize;
                     } else {
-                        L.warn(PackNLS.getString("FileCopy.unknownFileType"), f);
+                        logger.warn(PackNLS.getString("FileCopy.unknownFileType"), f);
                         continue;
                     }
                     list.add(dest);
@@ -336,7 +336,7 @@ public class FileCopy
             if (!preConstruct)
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
-            L.finfo(PackNLS.getString("FileCopy.installFiles_ss"), getId(), baseDir);
+            logger.infof(PackNLS.getString("FileCopy.installFiles_ss"), getId(), baseDir);
             Data data = (Data) getRegistryData();
             if (data == null || data.list == null)
                 throw new IllegalStateException(PackNLS.getString("FileCopy.missingRegistry"));
@@ -380,11 +380,11 @@ public class FileCopy
                     if (autoMkdirs) {
                         File destParentDir = destFile.getParentFile();
                         if (!destParentDir.isDirectory()) {
-                            L.detail(PackNLS.getString("FileCopy.mkdir"), destParentDir, "/");
+                            logger.log(PackNLS.getString("FileCopy.mkdir"), destParentDir, "/");
                             destParentDir.mkdirs();
                         }
                     }
-                    L.detail(PackNLS.getString("FileCopy.extract"), destFile);
+                    logger.log(PackNLS.getString("FileCopy.extract"), destFile);
                     FileOutputStream destOut = null;
                     try {
                         InputStream entryIn = zipFile.getInputStream(entry);
@@ -408,7 +408,7 @@ public class FileCopy
                             try {
                                 destOut.close();
                             } catch (IOException e) {
-                                L.warn(PackNLS.getString("FileCopy.cantCloseDest"), destFile);
+                                logger.warn(PackNLS.getString("FileCopy.cantCloseDest"), destFile);
                             }
                     }
                 }
@@ -435,7 +435,7 @@ public class FileCopy
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
             }
-            L.finfo(PackNLS.getString("FileCopy.removeFiles_ss"), getId(), baseDir);
+            logger.infof(PackNLS.getString("FileCopy.removeFiles_ss"), getId(), baseDir);
             Attachment a = getAttachment(session, false);
             ZipInputStream zin = null;
             try {
@@ -467,19 +467,19 @@ public class FileCopy
                     name = name.substring(0, name.length() - 1);
                 File dest = new File(baseDir, name);
                 if (!dest.exists()) {
-                    L.detail(PackNLS.getString("FileCopy.fileNotExist"), dest);
+                    logger.log(PackNLS.getString("FileCopy.fileNotExist"), dest);
                     continue;
                 }
                 if (isdir) {
-                    L.detail(PackNLS.getString("FileCopy.deleteDir"), dest);
+                    logger.log(PackNLS.getString("FileCopy.deleteDir"), dest);
                     dest.delete();
                     continue;
                 }
-                L.detail(PackNLS.getString("FileCopy.deleteFile"), dest);
+                logger.log(PackNLS.getString("FileCopy.deleteFile"), dest);
                 if (dest.delete())
                     Utils.removeEmptyParents(dest.getParentFile(), baseDir);
                 else {
-                    L.fdetail(PackNLS.getString("FileCopy.cantDelete_s"), dest);
+                    logger.logf(PackNLS.getString("FileCopy.cantDelete_s"), dest);
                     dest.deleteOnExit();
                     session.getFlags().set(ISession.REBOOT);
                 }

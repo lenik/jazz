@@ -336,7 +336,7 @@ public class BatchCLI
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.errorFormat(/* 1, */e, "Failed to process %s: %s", file, e.getMessage());
+            L.errorf(/* 1, */e, "Failed to process %s: %s", file, e.getMessage());
             if (!errorContinue)
                 throw new ControlBreak();
         } finally {
