@@ -1,7 +1,7 @@
 package net.bodz.geom.transform;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
-import net.bodz.geom.shape.base.Point2f;
+import net.bodz.geom.shape.base.IPoint2f;
 
 public interface Transformer2f {
 
@@ -38,7 +38,7 @@ public interface Transformer2f {
      * @param point
      *            to be transformed.
      */
-    void transform(Point2f point);
+    void transform(IPoint2f point);
 
     /**
      * Transform a vector into a new vector.
@@ -56,7 +56,7 @@ public interface Transformer2f {
      *            to be transformed.
      * @return The new transformed point.
      */
-    Point2f transformTo(Point2f point);
+    IPoint2f transformTo(IPoint2f point);
 
     /**
      * Invert-Transform a vector in-place.
@@ -72,7 +72,7 @@ public interface Transformer2f {
      * @param point
      *            to be transformed.
      */
-    void invert(Point2f point);
+    void invert(IPoint2f point);
 
     /**
      * Invert-Transform a vector into a new vector.
@@ -90,6 +90,6 @@ public interface Transformer2f {
      *            to be transformed.
      * @return The new transformed point.
      */
-    Point2f invertTo(Point2f point);
+    IPoint2f invertTo(IPoint2f point);
 
 }

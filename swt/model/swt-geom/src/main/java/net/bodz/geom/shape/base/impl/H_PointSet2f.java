@@ -3,19 +3,20 @@ package net.bodz.geom.shape.base.impl;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import javax.vecmath.Point2f;
+
 import net.bodz.geom.shape.EditablePointSet2f;
-import net.bodz.geom.shape.PointSet2f;
-import net.bodz.geom.shape.base.Point2f;
+import net.bodz.geom.shape.IPointSet2f;
 
 public class H_PointSet2f {
 
     private static class _PointIterator {
-        PointSet2f ps;
+        IPointSet2f ps;
         int index = 0;
 
         boolean currentDeleted = false;
 
-        public _PointIterator(PointSet2f ps) {
+        public _PointIterator(IPointSet2f ps) {
             assert ps != null;
             this.ps = ps;
         }
@@ -49,9 +50,9 @@ public class H_PointSet2f {
 
     public static class PointIterator
             extends _PointIterator
-            implements Iterator<Point2f.Static> {
+            implements Iterator<Point2f> {
 
-        public PointIterator(PointSet2f ps) {
+        public PointIterator(IPointSet2f ps) {
             super(ps);
         }
 
@@ -60,7 +61,7 @@ public class H_PointSet2f {
             return index < ps.pointCount();
         }
 
-        public Point2f.Static next() {
+        public Point2f next() {
             if (index >= ps.pointCount())
                 throw new NoSuchElementException();
             currentDeleted = false;
@@ -73,7 +74,7 @@ public class H_PointSet2f {
             extends _PointIterator
             implements Iterator<Point2f> {
 
-        public PointRefIterator(PointSet2f ps) {
+        public PointRefIterator(IPointSet2f ps) {
             super(ps);
         }
 

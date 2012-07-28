@@ -1,11 +1,11 @@
 package net.bodz.geom.shape.base;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
-import net.bodz.geom.shape.Shape2f;
-import net.bodz.geom.shape.ShapeAmount2f;
+import net.bodz.geom.shape.IShape2f;
+import net.bodz.geom.shape.IShapeAmount2f;
 
-public interface Rectangle2f
-        extends Shape2f, ShapeAmount2f {
+public interface IRectangle2f
+        extends IShape2f, IShapeAmount2f {
 
     int SP_0 = 0;
     int SP_1 = 1;
@@ -49,21 +49,21 @@ public interface Rectangle2f
 
     void y3(float y3);
 
-    Point2f.Static p0();
+    IPoint2f.Static p0();
 
-    Point2f.Static p1();
+    IPoint2f.Static p1();
 
-    Point2f.Static p2();
+    IPoint2f.Static p2();
 
-    Point2f.Static p3();
+    IPoint2f.Static p3();
 
-    void p0(Point2f point);
+    void p0(IPoint2f point);
 
-    void p1(Point2f point);
+    void p1(IPoint2f point);
 
-    void p2(Point2f point);
+    void p2(IPoint2f point);
 
-    void p3(Point2f point);
+    void p3(IPoint2f point);
 
     float width();
 
@@ -81,12 +81,12 @@ public interface Rectangle2f
 
     int outcode(float x, float y);
 
-    int outcode(Point2f point);
+    int outcode(IPoint2f point);
 
     // -o Shape
-    Rectangle2f snapshot();
+    IRectangle2f snapshot();
 
-    Rectangle2f clone();
+    IRectangle2f clone();
 
     // -o ShapeAmount
 
@@ -171,7 +171,7 @@ public interface Rectangle2f
             return 4;
         }
 
-        public Point2f pointRef(int index) {
+        public IPoint2f pointRef(int index) {
             switch (index) {
             case PT_0:
                 return new Pt0();
@@ -197,16 +197,16 @@ public interface Rectangle2f
             super(x0, y0, x0 + d2.x, y0 + d2.y);
         }
 
-        public StaticLeft(Point2f p0, Point2f p2) {
+        public StaticLeft(IPoint2f p0, IPoint2f p2) {
             super(p0.x(), p0.y(), p2.x(), p2.y());
         }
 
-        public StaticLeft(Rectangle2f rectangle) {
+        public StaticLeft(IRectangle2f rectangle) {
             super(rectangle.x0(), rectangle.y0(), rectangle.y2(), rectangle.y2());
         }
 
-        public StaticLeft(Point2f p0, Vector2f d2) {
-            this(p0, p0.toAdd(d2));
+        public StaticLeft(IPoint2f p0, Vector2f d2) {
+            this(p0, p0.addCopy(d2));
         }
 
         @Override
@@ -268,16 +268,16 @@ public interface Rectangle2f
             super(x0, y0, x0 + d2.x, y0 + d2.y);
         }
 
-        public StaticRight(Point2f p0, Point2f p2) {
+        public StaticRight(IPoint2f p0, IPoint2f p2) {
             super(p0.x(), p0.y(), p2.x(), p2.y());
         }
 
-        public StaticRight(Rectangle2f rectangle) {
+        public StaticRight(IRectangle2f rectangle) {
             super(rectangle.x0(), rectangle.y0(), rectangle.y2(), rectangle.y2());
         }
 
-        public StaticRight(Point2f p0, Vector2f d2) {
-            this(p0, p0.toAdd(d2));
+        public StaticRight(IPoint2f p0, Vector2f d2) {
+            this(p0, p0.addCopy(d2));
         }
 
         @Override
@@ -349,17 +349,17 @@ public interface Rectangle2f
             positize();
         }
 
-        public LeftPositive(Point2f p0, Point2f p2) {
+        public LeftPositive(IPoint2f p0, IPoint2f p2) {
             super(p0, p2);
             positize();
         }
 
-        public LeftPositive(Point2f p0, Vector2f d2) {
+        public LeftPositive(IPoint2f p0, Vector2f d2) {
             super(p0, d2);
             positize();
         }
 
-        public LeftPositive(Rectangle2f rectangle) {
+        public LeftPositive(IRectangle2f rectangle) {
             this(rectangle.x0(), rectangle.y0(), rectangle.y2(), rectangle.y2());
         }
 
@@ -387,17 +387,17 @@ public interface Rectangle2f
             positize();
         }
 
-        public RightPositive(Point2f p0, Point2f p2) {
+        public RightPositive(IPoint2f p0, IPoint2f p2) {
             super(p0, p2);
             positize();
         }
 
-        public RightPositive(Point2f p0, Vector2f d2) {
+        public RightPositive(IPoint2f p0, Vector2f d2) {
             super(p0, d2);
             positize();
         }
 
-        public RightPositive(Rectangle2f rectangle) {
+        public RightPositive(IRectangle2f rectangle) {
             this(rectangle.x0(), rectangle.y0(), rectangle.y2(), rectangle.y2());
         }
 

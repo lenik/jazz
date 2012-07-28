@@ -1,6 +1,6 @@
 package net.bodz.geom.shape;
 
-public interface ShapeAmount2f {
+public interface IShapeAmount2f {
 
     float NOT_AVAILABLE = Float.NaN;
 

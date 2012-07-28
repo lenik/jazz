@@ -9,10 +9,10 @@ import net.bodz.geom.base.PickInfo2f;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;
-import net.bodz.geom.shape.Shape2f;
+import net.bodz.geom.shape.IShape2f;
 import net.bodz.geom.shape.base.AbstractRectangle2f;
-import net.bodz.geom.shape.base.Point2f;
-import net.bodz.geom.shape.base.Rectangle2f;
+import net.bodz.geom.shape.base.IPoint2f;
+import net.bodz.geom.shape.base.IRectangle2f;
 
 public class GDShapes2f
         extends AbstractShape2f {
@@ -25,7 +25,7 @@ public class GDShapes2f
             int n = shapes.size();
             List<SWTShape2f> copies = new ArrayList<SWTShape2f>(n);
             for (int i = 0; i < n; i++) {
-                Shape2f shape = shapes.get(i);
+                IShape2f shape = shapes.get(i);
                 copies.set(i, new SWTShape2f(shape.clone()));
             }
             this.shapes = copies;
@@ -46,9 +46,9 @@ public class GDShapes2f
 
     public static class CompPickInfo2f
             extends PickInfo2f {
-        public Shape2f component;
+        public IShape2f component;
 
-        public CompPickInfo2f(Shape2f pick, float distance, Shape2f component) {
+        public CompPickInfo2f(IShape2f pick, float distance, IShape2f component) {
             super(pick, distance);
             this.component = component;
         }
@@ -59,10 +59,10 @@ public class GDShapes2f
         float minDistance = Float.MAX_VALUE;
         PickInfo2f minPI = null;
         int n = shapes.size();
-        Shape2f component = null;
+        IShape2f component = null;
 
         for (int i = 0; i < n; i++) {
-            Shape2f shape = shapes.get(i);
+            IShape2f shape = shapes.get(i);
             PickInfo2f pi = shape.pickInfo(x, y);
             if (pi.distance < minDistance) {
                 minDistance = pi.distance;
@@ -75,10 +75,10 @@ public class GDShapes2f
         return new CompPickInfo2f(minPI.pick, minPI.distance, component);
     }
 
-    public Shape2f find(float x, float y) {
+    public IShape2f find(float x, float y) {
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
-            Shape2f shape = shapes.get(i);
+            IShape2f shape = shapes.get(i);
             if (shape.contains(x, y))
                 return shape;
         }
@@ -90,7 +90,7 @@ public class GDShapes2f
         float minDistance = Float.MAX_VALUE;
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
-            Shape2f shape = shapes.get(i);
+            IShape2f shape = shapes.get(i);
             float dist = shape.distance(x, y);
             if (dist < minDistance) {
                 minDistance = dist;
@@ -105,15 +105,15 @@ public class GDShapes2f
         return 0;
     }
 
-    public Point2f pointRef(int index) {
+    public IPoint2f pointRef(int index) {
         return null;
     }
 
     @Override
-    public Shape2f crop(Point2f baseHalfPlane, Vector2f normal) {
+    public IShape2f crop(IPoint2f baseHalfPlane, Vector2f normal) {
         int n = shapes.size();
         for (int i = 0; i < n;) {
-            Shape2f shape = shapes.get(i);
+            IShape2f shape = shapes.get(i);
             shape = shape.crop(baseHalfPlane, normal);
             if (shape == null) {
                 shapes.remove(i);
@@ -128,13 +128,13 @@ public class GDShapes2f
     }
 
     @Override
-    public Rectangle2f boundingBox() {
-        AbstractRectangle2f b = new Rectangle2f.LeftPositive(Float.MAX_VALUE, Float.MAX_VALUE, -Float.MAX_VALUE,
+    public IRectangle2f boundingBox() {
+        AbstractRectangle2f b = new IRectangle2f.LeftPositive(Float.MAX_VALUE, Float.MAX_VALUE, -Float.MAX_VALUE,
                 -Float.MAX_VALUE);
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
-            Shape2f shape = shapes.get(i);
-            Rectangle2f r = shape.boundingBox();
+            IShape2f shape = shapes.get(i);
+            IRectangle2f r = shape.boundingBox();
             b.addWithScale(r);
         }
         return super.boundingBox();
@@ -158,7 +158,7 @@ public class GDShapes2f
             throws DrawException {
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
-            Shape2f shape = shapes.get(i);
+            IShape2f shape = shapes.get(i);
             shape.draw(target);
         }
     }

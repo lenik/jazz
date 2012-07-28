@@ -6,39 +6,39 @@ import java.util.List;
 import net.bodz.bas.util.Pair;
 import net.bodz.geom.base.ReadOnlyAttributeException;
 import net.bodz.geom.shape.EditablePointSet2f;
-import net.bodz.geom.shape.Shape2f;
-import net.bodz.geom.shape.ShapeAmount2f;
+import net.bodz.geom.shape.IShape2f;
+import net.bodz.geom.shape.IShapeAmount2f;
 
-public interface Polygon2f
-        extends Shape2f, ShapeAmount2f, EditablePointSet2f {
+public interface IPolygon2f
+        extends IShape2f, IShapeAmount2f, EditablePointSet2f {
 
     float pointX(int index);
 
     float pointY(int index);
 
-    Point2f.Static point(float index);
+    IPoint2f.Static point(float index);
 
     float pointX(float index);
 
     float pointY(float index);
 
-    float index(Point2f point);
+    float index(IPoint2f point);
 
     float index(float x, float y);
 
-    Point2f.Static center();
+    IPoint2f.Static center();
 
     float centerX();
 
     float centerY();
 
-    Line2f edgeRef(int index);
+    ILine2f edgeRef(int index);
 
-    Line2f edgeRef(int index1, int index2);
+    ILine2f edgeRef(int index1, int index2);
 
-    Line2f.Static edge(int index);
+    ILine2f.Static edge(int index);
 
-    Line2f.Static edge(int index1, int index2);
+    ILine2f.Static edge(int index1, int index2);
 
     /**
      * Open/close is only affect to following operations: addCross draw
@@ -53,15 +53,15 @@ public interface Polygon2f
 
     void addIndex(float index);
 
-    void addCross(Line2f line);
+    void addCross(ILine2f line);
 
-    List<Point2f.Static> intersectsAt(Line2f line);
+    List<IPoint2f.Static> intersectsAt(ILine2f line);
 
-    List<Integer> intersectsAtIndex(Line2f line);
+    List<Integer> intersectsAtIndex(ILine2f line);
 
-    int intersectsCount(Line2f line);
+    int intersectsCount(ILine2f line);
 
-    boolean intersects(Line2f line);
+    boolean intersects(ILine2f line);
 
     /**
      * If the polygon has 0, 1, 2 points, or not planarized, then the direction is N/A.
@@ -77,12 +77,12 @@ public interface Polygon2f
 
     void planarize();
 
-    Triangle2f[] toTriangles();
+    ITriangle2f[] toTriangles();
 
     // -o EditablePointSet
 
     // -o Shape
-    Polygon2f clone();
+    IPolygon2f clone();
 
     // -o ShapeAmount
 
@@ -94,18 +94,18 @@ public interface Polygon2f
 
         static final long serialVersionUID = -2531595816721898308L;
 
-        public List<Point2f> points;
+        public List<IPoint2f> points;
 
         public Standard() {
-            this.points = new ArrayList<Point2f>();
+            this.points = new ArrayList<IPoint2f>();
         }
 
-        public Standard(List<Point2f> points, boolean copy) {
+        public Standard(List<IPoint2f> points, boolean copy) {
             if (points == null)
-                this.points = new ArrayList<Point2f>();
+                this.points = new ArrayList<IPoint2f>();
             else if (copy) {
-                this.points = new ArrayList<Point2f>();
-                for (Point2f pt : points) {
+                this.points = new ArrayList<IPoint2f>();
+                for (IPoint2f pt : points) {
                     this.points.add(pt.clone());
                 }
             } else {
@@ -113,14 +113,14 @@ public interface Polygon2f
             }
         }
 
-        public Standard(List<Point2f> points) {
+        public Standard(List<IPoint2f> points) {
             this(points, false);
         }
 
         @Override
         public Standard snapshot() {
             int n = this.points.size();
-            List<Point2f> points = new ArrayList<Point2f>(n);
+            List<IPoint2f> points = new ArrayList<IPoint2f>(n);
             for (int i = 0; i < n; i++)
                 points.add(this.points.get(i).snapshot());
             return new Standard(points);
@@ -135,19 +135,19 @@ public interface Polygon2f
             return points.size();
         }
 
-        public Point2f pointRef(int index) {
+        public IPoint2f pointRef(int index) {
             assert index >= 0 && index < points.size();
             return points.get(index);
         }
 
         @Override
-        public void addPoint(int index, Point2f point) {
+        public void addPoint(int index, IPoint2f point) {
             points.add(index, point);
         }
 
         @Override
         public void addPoint(int index, float x, float y) {
-            points.add(index, new Point2f.Static(x, y));
+            points.add(index, new IPoint2f.Static(x, y));
         }
 
         @Override
@@ -203,7 +203,7 @@ public interface Polygon2f
             this(init.first, init.second);
         }
 
-        public StaticFixed(Point2f[] points) {
+        public StaticFixed(IPoint2f[] points) {
             assert points != null;
             assert points.length > 0;
             x = new float[points.length];
@@ -231,7 +231,7 @@ public interface Polygon2f
         }
 
         @Override
-        public Shape2f snapshot() {
+        public IShape2f snapshot() {
             return clone();
         }
 
@@ -245,9 +245,9 @@ public interface Polygon2f
         }
 
         // TODO
-        public Point2f pointRef(int index) {
+        public IPoint2f pointRef(int index) {
             assert index >= 0 && index < count;
-            return new Point2f.Static(x[offset + index], y[offset + index]);
+            return new IPoint2f.Static(x[offset + index], y[offset + index]);
         }
 
         @Override

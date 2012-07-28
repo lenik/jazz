@@ -7,11 +7,11 @@ import net.bodz.geom.base.PickInfo2f;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;
-import net.bodz.geom.shape.Shape2f;
+import net.bodz.geom.shape.IShape2f;
 
 public abstract class AbstractRectangle2f
         extends AbstractShape2f
-        implements Rectangle2f, Serializable {
+        implements IRectangle2f, Serializable {
 
     private static final long serialVersionUID = -7287160250280344587L;
 
@@ -355,38 +355,38 @@ public abstract class AbstractRectangle2f
 
     }
 
-    public Point2f.Static p0() {
-        return new Point2f.Static(x0(), y0());
+    public IPoint2f.Static p0() {
+        return new IPoint2f.Static(x0(), y0());
     }
 
-    public Point2f.Static p1() {
-        return new Point2f.Static(x1(), y1());
+    public IPoint2f.Static p1() {
+        return new IPoint2f.Static(x1(), y1());
     }
 
-    public Point2f.Static p2() {
-        return new Point2f.Static(x2(), y2());
+    public IPoint2f.Static p2() {
+        return new IPoint2f.Static(x2(), y2());
     }
 
-    public Point2f.Static p3() {
-        return new Point2f.Static(x3(), y3());
+    public IPoint2f.Static p3() {
+        return new IPoint2f.Static(x3(), y3());
     }
 
-    public void p0(Point2f p0) {
+    public void p0(IPoint2f p0) {
         x0(p0.x());
         y0(p0.y());
     }
 
-    public void p1(Point2f p1) {
+    public void p1(IPoint2f p1) {
         x1(p1.x());
         y1(p1.y());
     }
 
-    public void p2(Point2f p2) {
+    public void p2(IPoint2f p2) {
         x2(p2.x());
         y2(p2.y());
     }
 
-    public void p3(Point2f p3) {
+    public void p3(IPoint2f p3) {
         x3(p3.x());
         y3(p3.y());
     }
@@ -441,7 +441,7 @@ public abstract class AbstractRectangle2f
     }
 
     public int outcode(float x, float y) {
-        Rectangle2f positive = clone();
+        IRectangle2f positive = clone();
         positive.positize();
         int out = 0;
         if (positive.width() <= 0) {
@@ -461,7 +461,7 @@ public abstract class AbstractRectangle2f
         return out;
     }
 
-    public int outcode(Point2f point) {
+    public int outcode(IPoint2f point) {
         assert point != null;
         return outcode(point.x(), point.y());
     }
@@ -475,8 +475,8 @@ public abstract class AbstractRectangle2f
 
     @Override
     public PickInfo2f pickInfo(float x, float y) {
-        Rectangle2f.StaticLeft pos = new Rectangle2f.LeftPositive(this);
-        Point2f c = pos.spointRef(SP_CENTER);
+        IRectangle2f.StaticLeft pos = new IRectangle2f.LeftPositive(this);
+        IPoint2f c = pos.spointRef(SP_CENTER);
         int Hsel = x < c.x() ? 0 : 1;
         int Vsel = y < c.y() ? 0 : 2;
         float dx, dy;
@@ -536,7 +536,7 @@ public abstract class AbstractRectangle2f
 
     @Override
     public float distance(float x, float y) {
-        Point2f c = pointRef(SP_CENTER);
+        IPoint2f c = pointRef(SP_CENTER);
         float dx = Math.abs(x - c.x());
         float dy = Math.abs(y - c.y());
         dx -= width() / 2;
@@ -551,7 +551,7 @@ public abstract class AbstractRectangle2f
     }
 
     @Override
-    public Point2f spointRef(int id) {
+    public IPoint2f spointRef(int id) {
         switch (id) {
         case SP_0:
             return new Pt0();
@@ -566,18 +566,18 @@ public abstract class AbstractRectangle2f
     }
 
     @Override
-    public Shape2f crop(Point2f baseHalfPlane, Vector2f normal) {
+    public IShape2f crop(IPoint2f baseHalfPlane, Vector2f normal) {
         // TODO
         return null;
     }
 
-    public Polygon2f convertToPolygon2f() {
+    public IPolygon2f convertToPolygon2f() {
         // TODO
         return null;
     }
 
     @Override
-    public abstract Rectangle2f snapshot();
+    public abstract IRectangle2f snapshot();
 
     @Override
     public abstract AbstractRectangle2f clone();
@@ -626,13 +626,13 @@ public abstract class AbstractRectangle2f
         return b;
     }
 
-    public boolean addWithScale(Point2f point) {
+    public boolean addWithScale(IPoint2f point) {
         assert point != null;
         return addWithScale(point.x(), point.y());
     }
 
-    public boolean addWithScale(Shape2f shape) {
-        Rectangle2f bounds = shape.boundingBox();
+    public boolean addWithScale(IShape2f shape) {
+        IRectangle2f bounds = shape.boundingBox();
         boolean b = false;
         b |= addWithScale(bounds.p0());
         b |= addWithScale(bounds.p1());

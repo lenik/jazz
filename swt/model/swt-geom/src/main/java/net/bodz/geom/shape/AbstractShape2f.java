@@ -9,48 +9,45 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.vecmath.Point2f;
+import javax.vecmath.Vector2f;
+
 import net.bodz.geom.base.PickInfo2f;
-import net.bodz.geom.shape.base.AbstractPoint2f;
-import net.bodz.geom.shape.base.Circle2f;
-import net.bodz.geom.shape.base.Line2f;
-import net.bodz.geom.shape.base.Point2f;
-import net.bodz.geom.shape.base.Polygon2f;
-import net.bodz.geom.shape.base.Rectangle2f;
-import net.bodz.geom.shape.base.Triangle2f;
+import net.bodz.geom.shape.base.*;
 import net.bodz.geom.shape.base.impl.H_PointSet2f;
 
 public abstract class AbstractShape2f
-        implements Shape2f {
+        implements IShape2f {
 
     // -o PointSet
 
+    @Override
     public float pointX(int index) {
-        assert index >= 0 && index < pointCount();
         Point2f p = point(index);
-        assert p != null;
-        return p.x();
+        return p.x;
     }
 
+    @Override
     public float pointY(int index) {
-        assert index >= 0 && index < pointCount();
         Point2f p = point(index);
-        assert p != null;
-        return p.y();
+        return p.y;
     }
 
-    public Point2f.Static point(int index) {
-        assert index >= 0 && index < pointCount();
+    @Override
+    public Point2f point(int index) {
         Point2f ref = pointRef(index);
-        return new Point2f.Static(ref.x(), ref.y());
+        return ref;
     }
 
-    public Iterator<Point2f.Static> pointIterator() {
+    @Override
+    public Iterator<Point2f> pointIterator() {
         return new H_PointSet2f.PointIterator(this);
     }
 
-    public Point2f.Static[] toPointsArray(boolean copy) {
+    @Override
+    public Point2f[] toPointsArray(boolean copy) {
         int n = pointCount();
-        Point2f.Static[] points = new Point2f.Static[n];
+        Point2f[] points = new Point2f[n];
         if (copy)
             for (int i = 0; i < n; i++)
                 points[i] = point(i).clone();
@@ -60,9 +57,10 @@ public abstract class AbstractShape2f
         return points;
     }
 
-    public List<Point2f.Static> toPointsList(boolean copy) {
+    @Override
+    public List<Point2f> toPointsList(boolean copy) {
         int n = pointCount();
-        List<Point2f.Static> points = new ArrayList<Point2f.Static>(n);
+        List<Point2f> points = new ArrayList<Point2f>(n);
         if (copy)
             for (int i = 0; i < n; i++)
                 points.add(point(i).clone());
@@ -72,13 +70,15 @@ public abstract class AbstractShape2f
         return points;
     }
 
+    @Override
     public Iterator<Point2f> pointRefIterator() {
         return new H_PointSet2f.PointRefIterator(this);
     }
 
+    @Override
     public Point2f[] toPointRefsArray(boolean copy) {
         int n = pointCount();
-        Point2f[] points = new Point2f[n];
+        IPoint2f[] points = new IPoint2f[n];
         if (copy)
             for (int i = 0; i < n; i++)
                 points[i] = pointRef(i).clone();
@@ -88,9 +88,10 @@ public abstract class AbstractShape2f
         return points;
     }
 
-    public List<Point2f> toPointRefsList(boolean copy) {
+    @Override
+    public List<IPoint2f> toPointRefsList(boolean copy) {
         int n = pointCount();
-        List<Point2f> points = new ArrayList<Point2f>(n);
+        List<IPoint2f> points = new ArrayList<IPoint2f>(n);
         if (copy)
             for (int i = 0; i < n; i++)
                 points.add(pointRef(i).clone());
@@ -102,36 +103,44 @@ public abstract class AbstractShape2f
 
     // -o Pick
 
-    public PickInfo2f pickInfo(Point2f point) {
+    @Override
+    public PickInfo2f pickInfo(IPoint2f point) {
         assert point != null;
         return pickInfo(point.x(), point.y());
     }
 
+    @Override
     public abstract PickInfo2f pickInfo(float x, float y);
 
-    public Shape2f pick(Point2f point) {
+    @Override
+    public IShape2f pick(IPoint2f point) {
         assert point != null;
         return pick(point.x(), point.y());
     }
 
-    public Shape2f pick(float x, float y) {
+    @Override
+    public IShape2f pick(float x, float y) {
         PickInfo2f pi = pickInfo(x, y);
         if (pi.distance <= 0)
             return pi.pick;
         return null;
     }
 
-    public float distance(Point2f point) {
+    @Override
+    public float distance(IPoint2f point) {
         assert point != null;
         return distance(point.x(), point.y());
     }
 
+    @Override
     public abstract float distance(float x, float y);
 
-    public boolean contains(Point2f point) {
+    @Override
+    public boolean contains(IPoint2f point) {
         return contains(point.x(), point.y());
     }
 
+    @Override
     public boolean contains(float x, float y) {
         return distance(x, y) <= 0.0f;
     }
@@ -152,7 +161,7 @@ public abstract class AbstractShape2f
                 ay = 0.0f;
             } else {
                 for (int i = 0; i < n; i++) {
-                    Point2f pt = pointRef(i);
+                    IPoint2f pt = pointRef(i);
                     ax += pt.x();
                     ay += pt.y();
                 }
@@ -175,7 +184,8 @@ public abstract class AbstractShape2f
         }
     }
 
-    public Point2f spointRef(int id) {
+    @Override
+    public IPoint2f spointRef(int id) {
         switch (id) {
         case SP_CENTER:
             return new PtCenter();
@@ -183,102 +193,119 @@ public abstract class AbstractShape2f
         return null;
     }
 
-    public Point2f.Static spoint(int id) {
+    @Override
+    public StaticPoint2f spoint(int id) {
         return spointRef(id).snapshot();
     }
 
+    @Override
     public float spointX(int id) {
-        Point2f p = spointRef(id);
+        IPoint2f p = spointRef(id);
         if (p == null)
             return Float.NaN;
         return p.x();
     }
 
+    @Override
     public float spointY(int id) {
-        Point2f p = spointRef(id);
+        IPoint2f p = spointRef(id);
         if (p == null)
             return Float.NaN;
         return p.y();
     }
 
+    @Override
     public void translate(float dx, float dy) {
         int n = pointCount();
         for (int i = 0; i < n; i++) {
-            Point2f p = pointRef(i);
+            IPoint2f p = pointRef(i);
             p.translate(dx, dy);
         }
     }
 
+    @Override
     public void rotate(float angle) {
         int n = pointCount();
         for (int i = 0; i < n; i++) {
-            Point2f p = pointRef(i);
+            IPoint2f p = pointRef(i);
             p.rotate(angle);
         }
     }
 
+    @Override
     public void scale(float kx, float ky) {
         int n = pointCount();
         for (int i = 0; i < n; i++) {
-            Point2f p = pointRef(i);
+            IPoint2f p = pointRef(i);
             p.scale(kx, ky);
         }
     }
 
-    public void rotate(float angle, float baseX, float baseY) {
+    @Override
+    public void rotateAt(float angle, float baseX, float baseY) {
         int n = pointCount();
         for (int i = 0; i < n; i++) {
-            Point2f p = pointRef(i);
-            p.rotate(angle, baseX, baseY);
+            IPoint2f p = pointRef(i);
+            p.rotateAt(angle, baseX, baseY);
         }
     }
 
-    public void scale(float kx, float ky, float baseX, float baseY) {
+    @Override
+    public void scaleAt(float kx, float ky, float baseX, float baseY) {
         int n = pointCount();
         for (int i = 0; i < n; i++) {
-            Point2f p = pointRef(i);
-            p.scale(kx, ky, baseX, baseY);
+            IPoint2f p = pointRef(i);
+            p.scaleAt(kx, ky, baseX, baseY);
         }
     }
 
+    @Override
     public void translate(javax.vecmath.Vector2f dv) {
         translate(dv.x, dv.y);
     }
 
-    public void rotate(float angle, Point2f basePoint) {
-        rotate(angle, basePoint.x(), basePoint.y());
+    @Override
+    public void rotateAt(float angle, Point2f basePoint) {
+        rotateAt(angle, basePoint.x, basePoint.y);
     }
 
-    public void scale(float k, float baseX, float baseY) {
-        scale(k, k, baseX, baseY);
+    @Override
+    public void scaleAt(float k, float baseX, float baseY) {
+        scaleAt(k, k, baseX, baseY);
     }
 
-    public void scale(float kx, float ky, Point2f basePoint) {
-        scale(kx, ky, basePoint.x(), basePoint.y());
+    @Override
+    public void scaleAt(float kx, float ky, Point2f basePoint) {
+        scaleAt(kx, ky, basePoint.x, basePoint.y);
     }
 
-    public void scale(float k, Point2f basePoint) {
-        scale(k, k, basePoint.x(), basePoint.y());
+    @Override
+    public void scaleAt(float k, Point2f basePoint) {
+        scaleAt(k, k, basePoint.x, basePoint.y);
     }
 
+    @Override
     public void scale(float k) {
         scale(k, k);
     }
 
-    public void scale(javax.vecmath.Vector2f kv, float baseX, float baseY) {
-        scale(kv.x, kv.y, baseX, baseY);
+    @Override
+    public void scaleAt(Vector2f kv, float baseX, float baseY) {
+        scaleAt(kv.x, kv.y, baseX, baseY);
     }
 
-    public void scale(javax.vecmath.Vector2f kv, Point2f basePoint) {
-        scale(kv.x, kv.y, basePoint.x(), basePoint.y());
+    @Override
+    public void scaleAt(Vector2f kv, Point2f basePoint) {
+        scaleAt(kv.x, kv.y, basePoint.x, basePoint.y);
     }
 
+    @Override
     public void scale(javax.vecmath.Vector2f kv) {
         scale(kv.x, kv.y);
     }
 
-    protected Shape2f cropConvexPolygon(PointSet2f polygon) {
-        Shape2f cropped = this;
+    protected IShape2f cropConvexPolygon(IPointSet2f polygon) {
+        IShape2f cropped = this;
         int n = polygon.pointCount();
         Point2f prev = polygon.pointRef(n - 1);
         for (int i = 0; i < n; i++) {
@@ -291,33 +318,40 @@ public abstract class AbstractShape2f
         return cropped;
     }
 
-    public abstract Shape2f crop(Point2f baseHalfPlane, javax.vecmath.Vector2f normal);
+    @Override
+    public abstract IShape2f crop(javax.vecmath.Point2f baseHalfPlane, javax.vecmath.Vector2f normal);
 
-    public Shape2f crop(Line2f directed) {
+    @Override
+    public IShape2f crop(ILine2f directed) {
         return crop(directed.p0(), directed.getNormal());
     }
 
-    public Shape2f crop(Rectangle2f rectangle) {
+    @Override
+    public IShape2f crop(IRectangle2f rectangle) {
         return cropConvexPolygon(rectangle);
     }
 
-    public Shape2f crop(float x0, float y0, float x1, float y1) {
-        return crop(new Rectangle2f.StaticLeft(x0, y0, x1, y1));
+    @Override
+    public IShape2f crop(float x0, float y0, float x1, float y1) {
+        return crop(new IRectangle2f.StaticLeft(x0, y0, x1, y1));
     }
 
-    public Shape2f crop(Triangle2f triangle) {
+    @Override
+    public IShape2f crop(ITriangle2f triangle) {
         return cropConvexPolygon(triangle);
     }
 
-    public Shape2f crop(float x0, float y0, float x1, float y1, float x2, float y2) {
-        return cropConvexPolygon(new Triangle2f.Static(x0, y0, x1, y1, x2, y2));
+    @Override
+    public IShape2f crop(float x0, float y0, float x1, float y1, float x2, float y2) {
+        return cropConvexPolygon(new ITriangle2f.Static(x0, y0, x1, y1, x2, y2));
     }
 
-    public Shape2f crop(Polygon2f polygon) {
-        Triangle2f[] triSet = polygon.toTriangles();
-        ArrayList<Shape2f> shapes = new ArrayList<Shape2f>();
+    @Override
+    public IShape2f crop(IPolygon2f polygon) {
+        ITriangle2f[] triSet = polygon.toTriangles();
+        ArrayList<IShape2f> shapes = new ArrayList<IShape2f>();
         for (int i = 0; i < triSet.length; i++) {
-            Shape2f cropped = crop(triSet[i]);
+            IShape2f cropped = crop(triSet[i]);
             if (cropped != null)
                 shapes.add(cropped);
         }
@@ -337,17 +371,19 @@ public abstract class AbstractShape2f
         return info;
     }
 
+    @Override
     public Set<Class<?>> getConvertToClasses() {
         return getShapeClassInfo().convertToMethods.keySet();
     }
 
-    public Shape2f convertTo(Class<?> cls) {
+    @Override
+    public IShape2f convertTo(Class<?> cls) {
         ShapeClassInfo info = getShapeClassInfo();
         Method mtd = info.convertToMethods.get(cls);
         if (mtd != null) {
             try {
                 Object ret = mtd.invoke(this, new Object[] {});
-                return (Shape2f) ret;
+                return (IShape2f) ret;
             } catch (InvocationTargetException e) {
                 throw new RuntimeException(e.getMessage(), e);
             } catch (IllegalAccessException e) {
@@ -357,12 +393,13 @@ public abstract class AbstractShape2f
         return null;
     }
 
-    public Rectangle2f boundingBox() {
+    @Override
+    public IRectangle2f boundingBox() {
         int n = pointCount();
         if (n == 0)
-            return new Rectangle2f.StaticLeft(0, 0, 0, 0);
+            return new IRectangle2f.StaticLeft(0, 0, 0, 0);
 
-        Rectangle2f r = new Rectangle2f.StaticLeft(pointRef(0), new javax.vecmath.Vector2f(Float.MIN_VALUE,
+        IRectangle2f r = new IRectangle2f.StaticLeft(pointRef(0), new javax.vecmath.Vector2f(Float.MIN_VALUE,
                 Float.MIN_VALUE));
 
         for (int i = 1; i < n; i++)
@@ -371,12 +408,12 @@ public abstract class AbstractShape2f
         return r;
     }
 
-    public Circle2f boundingSphere() {
+    public ICircle2f boundingSphere() {
         int n = pointCount();
         if (n == 0)
-            return new Circle2f.Static_Cr(0, 0, 0);
+            return new ICircle2f.Static_Cr(0, 0, 0);
 
-        Circle2f.Static_Cr c = new Circle2f.Static_Cr(pointRef(0), Float.MIN_VALUE);
+        ICircle2f.Static_Cr c = new ICircle2f.Static_Cr(pointRef(0), Float.MIN_VALUE);
 
         for (int i = 1; i < n; i++)
             ; // c.addWithScale(points.point(i));
@@ -384,7 +421,8 @@ public abstract class AbstractShape2f
         return c;
     }
 
-    public abstract Shape2f snapshot();
+    @Override
+    public abstract IShape2f snapshot();
 
     @Override
     public abstract AbstractShape2f clone();
@@ -395,7 +433,7 @@ public abstract class AbstractShape2f
         buf.append("<PointSet>");
         int n = pointCount();
         for (int i = 0; i < n; i++) {
-            Point2f pt = pointRef(i);
+            IPoint2f pt = pointRef(i);
             buf.append(pt.toString());
         }
         buf.append("</PointSet>");

@@ -1,7 +1,7 @@
 package net.bodz.geom.util.gd.states;
 
-import net.bodz.geom.shape.Shape2f;
-import net.bodz.geom.shape.base.Point2f;
+import net.bodz.geom.shape.IShape2f;
+import net.bodz.geom.shape.base.IPoint2f;
 import net.bodz.geom.util.gd.GDContext;
 import net.bodz.geom.util.gd.GDState;
 import net.bodz.geom.util.gd.GDStateGraph;
@@ -36,10 +36,10 @@ public class Select
             gc.dispose();
 
         } else {
-            Point2f p = context.vtSource(e.x, e.y);
+            IPoint2f p = context.vtSource(e.x, e.y);
 
             /* is p on some object ? */
-            Shape2f pick = context.shapes.pick(p);
+            IShape2f pick = context.shapes.pick(p);
             if (pick == null)
                 return this;
 
@@ -58,10 +58,10 @@ public class Select
     public GDState onMouseDoubleClick(MouseEvent e) {
         GDContext context = getContext();
 
-        Point2f p = context.vtSource(e.x, e.y);
+        IPoint2f p = context.vtSource(e.x, e.y);
 
         /* is p on some object ? */
-        Shape2f pick = context.shapes.pick(p);
+        IShape2f pick = context.shapes.pick(p);
         if (pick == null)
             return this;
 

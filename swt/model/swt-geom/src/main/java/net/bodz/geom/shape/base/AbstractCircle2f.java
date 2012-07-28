@@ -2,6 +2,7 @@ package net.bodz.geom.shape.base;
 
 import java.io.Serializable;
 
+import javax.vecmath.Point2f;
 import javax.vecmath.Vector2f;
 
 import net.bodz.geom.base.PickInfo2f;
@@ -9,11 +10,11 @@ import net.bodz.geom.base.ReadOnlyAttributeException;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;
-import net.bodz.geom.shape.Shape2f;
+import net.bodz.geom.shape.IShape2f;
 
 public abstract class AbstractCircle2f
         extends AbstractShape2f
-        implements Circle2f, Serializable {
+        implements ICircle2f, Serializable {
 
     protected final class PtCenter
             extends AbstractPoint2f {
@@ -51,32 +52,32 @@ public abstract class AbstractCircle2f
     static final long serialVersionUID = -5944408962774434730L;
 
     public void centerX(float x) {
-        throw new ReadOnlyAttributeException();
+        throw new ReadOnlyAttributeException(AbstractCircle2f.class, "centerX");
     }
 
     public void centerY(float y) {
-        throw new ReadOnlyAttributeException();
+        throw new ReadOnlyAttributeException(AbstractCircle2f.class, "centerY");
     }
 
     public void radius(float radius) {
-        throw new ReadOnlyAttributeException();
+        throw new ReadOnlyAttributeException(AbstractCircle2f.class, "radius");
     }
 
-    public Point2f.Static center() {
-        return new Point2f.Static(new PtCenter());
+    public IPoint2f.Static center() {
+        return new IPoint2f.Static(new PtCenter());
     }
 
-    public void center(Point2f point) {
+    public void center(IPoint2f point) {
         centerX(point.x());
         centerY(point.y());
     }
 
     @Override
-    public Rectangle2f boundingBox() {
+    public IRectangle2f boundingBox() {
         float centerX = centerX();
         float centerY = centerY();
         float radius = radius();
-        return new Rectangle2f.StaticLeft(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+        return new IRectangle2f.StaticLeft(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
     }
 
     @Override
@@ -102,7 +103,7 @@ public abstract class AbstractCircle2f
     // -o Shape
 
     @Override
-    public Point2f spointRef(int id) {
+    public IPoint2f spointRef(int id) {
         switch (id) {
         case SP_CENTER:
             return new PtCenter();
@@ -111,18 +112,18 @@ public abstract class AbstractCircle2f
     }
 
     @Override
-    public Shape2f crop(Point2f baseHalfPlane, Vector2f normal) {
+    public IShape2f crop(Point2f baseHalfPlane, Vector2f normal) {
         // TODO
         return null;
     }
 
-    public Polygon2f convertToPolygon() {
+    public IPolygon2f convertToPolygon() {
         // TODO
         return null;
     }
 
     @Override
-    public abstract Circle2f snapshot();
+    public abstract ICircle2f snapshot();
 
     @Override
     public abstract AbstractCircle2f clone();

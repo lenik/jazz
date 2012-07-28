@@ -1,7 +1,7 @@
 package net.bodz.geom.drawtarget;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
-import net.bodz.geom.shape.base.Point2f;
+import net.bodz.geom.shape.base.IPoint2f;
 import net.bodz.geom.transform.MatViewTransformer2f;
 import net.bodz.geom.transform.Transformer2f;
 import net.bodz.geom.transform.ViewTransformer2f;
@@ -52,7 +52,7 @@ public class TransformedDrawTarget2f
         matTransformmer.transform(vector);
     }
 
-    public void transform(Point2f point) {
+    public void transform(IPoint2f point) {
         matTransformmer.transform(point);
     }
 
@@ -60,7 +60,7 @@ public class TransformedDrawTarget2f
         return matTransformmer.transformTo(vector);
     }
 
-    public Point2f transformTo(Point2f point) {
+    public IPoint2f transformTo(IPoint2f point) {
         return matTransformmer.transformTo(point);
     }
 
@@ -68,7 +68,7 @@ public class TransformedDrawTarget2f
         matTransformmer.invert(vector);
     }
 
-    public void invert(Point2f point) {
+    public void invert(IPoint2f point) {
         matTransformmer.invert(point);
     }
 
@@ -76,7 +76,7 @@ public class TransformedDrawTarget2f
         return matTransformmer.invertTo(vector);
     }
 
-    public Point2f invertTo(Point2f point) {
+    public IPoint2f invertTo(IPoint2f point) {
         return matTransformmer.invertTo(point);
     }
 
@@ -121,79 +121,79 @@ public class TransformedDrawTarget2f
     // -o DrawTarget
 
     @Override
-    public void drawCircle(Point2f center, float radiusX, float radiusY)
+    public void drawCircle(IPoint2f center, float radiusX, float radiusY)
             throws DrawException {
         delegatee.drawCircle(transformTo(center), radiusX, radiusY);
     }
 
     @Override
-    public void drawEllipse(Point2f p0, Point2f p1)
+    public void drawEllipse(IPoint2f p0, IPoint2f p1)
             throws DrawException {
         delegatee.drawEllipse(transformTo(p0), transformTo(p1));
     }
 
     @Override
-    public void drawLine(Point2f start, Point2f end)
+    public void drawLine(IPoint2f start, IPoint2f end)
             throws DrawException {
         delegatee.drawLine(transformTo(start), transformTo(end));
     }
 
     @Override
-    public void drawPixel(Point2f point)
+    public void drawPixel(IPoint2f point)
             throws DrawException {
         delegatee.drawPixel(transformTo(point));
     }
 
     @Override
-    public void drawPolygon(Point2f[] points)
+    public void drawPolygon(IPoint2f[] points)
             throws DrawException {
-        Point2f[] pts = new Point2f[points.length];
+        IPoint2f[] pts = new IPoint2f[points.length];
         for (int i = 0; i < pts.length; i++)
             pts[i] = transformTo(points[i]);
         delegatee.drawPolygon(pts);
     }
 
     @Override
-    public void drawRectangle(Point2f p0, Point2f p1)
+    public void drawRectangle(IPoint2f p0, IPoint2f p1)
             throws DrawException {
         delegatee.drawRectangle(transformTo(p0), transformTo(p1));
     }
 
     @Override
-    public void drawTriangle(Point2f p0, Point2f p1, Point2f p2)
+    public void drawTriangle(IPoint2f p0, IPoint2f p1, IPoint2f p2)
             throws DrawException {
         delegatee.drawTriangle(transformTo(p0), transformTo(p1), transformTo(p2));
     }
 
     @Override
-    public void fillCircle(Point2f center, float radiusX, float radiusY)
+    public void fillCircle(IPoint2f center, float radiusX, float radiusY)
             throws DrawException {
         delegatee.fillCircle(transformTo(center), radiusX, radiusY);
     }
 
     @Override
-    public void fillEllipse(Point2f p0, Point2f p1)
+    public void fillEllipse(IPoint2f p0, IPoint2f p1)
             throws DrawException {
         delegatee.fillEllipse(transformTo(p0), transformTo(p1));
     }
 
     @Override
-    public void fillPolygon(Point2f[] points)
+    public void fillPolygon(IPoint2f[] points)
             throws DrawException {
-        Point2f[] pts = new Point2f[points.length];
+        IPoint2f[] pts = new IPoint2f[points.length];
         for (int i = 0; i < pts.length; i++)
             pts[i] = transformTo(points[i]);
         delegatee.fillPolygon(pts);
     }
 
     @Override
-    public void fillRectangle(Point2f p0, Point2f p1)
+    public void fillRectangle(IPoint2f p0, IPoint2f p1)
             throws DrawException {
         delegatee.fillRectangle(transformTo(p0), transformTo(p1));
     }
 
     @Override
-    public void fillTriangle(Point2f p0, Point2f p1, Point2f p2)
+    public void fillTriangle(IPoint2f p0, IPoint2f p1, IPoint2f p2)
             throws DrawException {
         delegatee.fillTriangle(transformTo(p0), transformTo(p1), transformTo(p2));
     }

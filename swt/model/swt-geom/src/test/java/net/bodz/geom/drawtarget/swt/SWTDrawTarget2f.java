@@ -6,8 +6,8 @@ import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.Font;
 import net.bodz.geom.drawtarget.Pattern;
 import net.bodz.geom.drawtarget.Stroke;
-import net.bodz.geom.shape.base.Point2f;
-import net.bodz.geom.shape.base.Polygon2f;
+import net.bodz.geom.shape.base.IPoint2f;
+import net.bodz.geom.shape.base.IPolygon2f;
 
 import org.eclipse.swt.graphics.GC;
 
@@ -45,7 +45,7 @@ public class SWTDrawTarget2f
     }
 
     @Override
-    public void drawPolygon(Polygon2f polygon) {
+    public void drawPolygon(IPolygon2f polygon) {
         if (polygon.isClosed()) {
             int[] swt = convertPolygonToSWT(polygon);
             gc.drawPolygon(swt);
@@ -78,16 +78,16 @@ public class SWTDrawTarget2f
     }
 
     @Override
-    public void fillPolygon(Polygon2f polygon) {
+    public void fillPolygon(IPolygon2f polygon) {
         int[] swt = convertPolygonToSWT(polygon);
         gc.fillPolygon(swt);
     }
 
-    public static int[] convertPolygonToSWT(Polygon2f polygon) {
+    public static int[] convertPolygonToSWT(IPolygon2f polygon) {
         int n = polygon.pointCount();
         int[] xy = new int[n + n];
         for (int i = 0; i < n; i++) {
-            Point2f point = polygon.pointRef(i);
+            IPoint2f point = polygon.pointRef(i);
             xy[i + i] = (int) point.x();
             xy[i + i + 1] = (int) point.y();
         }

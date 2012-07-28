@@ -2,17 +2,18 @@ package net.bodz.geom.shape.base;
 
 import java.io.Serializable;
 
+import javax.vecmath.Point2f;
 import javax.vecmath.Vector2f;
 
 import net.bodz.geom.base.PickInfo2f;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;
-import net.bodz.geom.shape.Shape2f;
+import net.bodz.geom.shape.IShape2f;
 
 public abstract class AbstractTriangle2f
         extends AbstractShape2f
-        implements Triangle2f, Serializable {
+        implements ITriangle2f, Serializable {
 
     private static final long serialVersionUID = -1486259130919044343L;
     public static final int CCW = 1;
@@ -140,29 +141,29 @@ public abstract class AbstractTriangle2f
 
     }
 
-    public Point2f.Static p0() {
-        return new Point2f.Static(x0(), y0());
+    public Point2f p0() {
+        return new Point2f(x0(), y0());
     }
 
-    public Point2f.Static p1() {
-        return new Point2f.Static(x1(), y1());
+    public Point2f p1() {
+        return new Point2f(x1(), y1());
     }
 
-    public Point2f.Static p2() {
-        return new Point2f.Static(x2(), y2());
+    public Point2f p2() {
+        return new Point2f(x2(), y2());
     }
 
-    public void p0(Point2f p0) {
+    public void p0(IPoint2f p0) {
         x0(p0.x());
         y0(p0.y());
     }
 
-    public void p1(Point2f p1) {
+    public void p1(IPoint2f p1) {
         x1(p1.x());
         y1(p1.y());
     }
 
-    public void p2(Point2f p2) {
+    public void p2(IPoint2f p2) {
         x2(p2.x());
         y2(p2.y());
     }
@@ -175,16 +176,16 @@ public abstract class AbstractTriangle2f
         return (y0() + y1() + y2()) / 3;
     }
 
-    public Point2f center() {
+    public IPoint2f center() {
         return new PtCenter();
     }
 
-    public Circle2f cIn() {
+    public ICircle2f cIn() {
         // r = S/p = 4R sinA/2 sinB/2 sinC/2
         return null;
     }
 
-    public Circle2f cEx() {
+    public ICircle2f cEx() {
         // R = abc/4S = a/2sinA
         return null;
     }
@@ -219,11 +220,11 @@ public abstract class AbstractTriangle2f
 
     @Override
     public boolean contains(float x, float y) {
-        return contains(new Point2f.Static(x, y));
+        return contains(new IPoint2f.Static(x, y));
     }
 
     @Override
-    public boolean contains(Point2f point) {
+    public boolean contains(IPoint2f point) {
         Vector2f v0 = point.vectorTo(p0());
         Vector2f v1 = point.vectorTo(p1());
         Vector2f v2 = point.vectorTo(p2());
@@ -240,10 +241,10 @@ public abstract class AbstractTriangle2f
 
     public abstract int pointCount();
 
-    public abstract Point2f pointRef(int index);
+    public abstract IPoint2f pointRef(int index);
 
     @Override
-    public Point2f spointRef(int id) {
+    public IPoint2f spointRef(int id) {
         switch (id) {
         case SP_CENTER:
             return new PtCenter();
@@ -258,22 +259,22 @@ public abstract class AbstractTriangle2f
     }
 
     @Override
-    public Shape2f crop(Point2f baseHalfPlane, Vector2f normal) {
+    public IShape2f crop(IPoint2f baseHalfPlane, Vector2f normal) {
         // TODO
         return null;
     }
 
     @Override
-    public Triangle2f.Static snapshot() {
-        return new Triangle2f.Static(x0(), y0(), x1(), y1(), x2(), y2());
+    public ITriangle2f.Static snapshot() {
+        return new ITriangle2f.Static(x0(), y0(), x1(), y1(), x2(), y2());
     }
 
     @Override
     public abstract AbstractTriangle2f clone();
 
     // @see REFM.kb
-    public Polygon2f convertToPolygon2f() {
-        Point2f[] points = new Point2f[] { new Pt0(), new Pt1(), new Pt2(), };
+    public IPolygon2f convertToPolygon2f() {
+        IPoint2f[] points = new IPoint2f[] { new Pt0(), new Pt1(), new Pt2(), };
         return null; // new Polygon2f.FastInitArray(points);
     }
 
