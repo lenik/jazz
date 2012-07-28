@@ -128,7 +128,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void stderrFormat(String format, Object... args);
+    void stderrf(String format, Object... args);
 
     /**
      * Add formatted a stderr logging with an exception.
@@ -140,7 +140,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void stderrFormat(Throwable e, String format, Object... args);
+    void stderrf(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a stderr logging with a delta verbose.
@@ -152,7 +152,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _stderrFormat(int delta, String format, Object... args);
+    void _stderrf(int delta, String format, Object... args);
 
     /**
      * Add formatted a stderr logging with a delta verbose with an exception.
@@ -166,7 +166,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _stderrFormat(int delta, Throwable e, String format, Object... args);
+    void _stderrf(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if stdout logging is enabled.
@@ -288,7 +288,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void stdoutFormat(String format, Object... args);
+    void stdoutf(String format, Object... args);
 
     /**
      * Add formatted a stdout logging with an exception.
@@ -300,7 +300,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void stdoutFormat(Throwable e, String format, Object... args);
+    void stdoutf(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a stdout logging with a delta verbose.
@@ -312,7 +312,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _stdoutFormat(int delta, String format, Object... args);
+    void _stdoutf(int delta, String format, Object... args);
 
     /**
      * Add formatted a stdout logging with a delta verbose with an exception.
@@ -326,7 +326,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _stdoutFormat(int delta, Throwable e, String format, Object... args);
+    void _stdoutf(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if fatal logging is enabled.
@@ -448,7 +448,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    boolean fatalFormat(String format, Object... args);
+    boolean fatalf(String format, Object... args);
 
     /**
      * Add formatted a fatal logging with an exception.
@@ -460,7 +460,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    boolean fatalFormat(Throwable e, String format, Object... args);
+    boolean fatalf(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a fatal logging with a delta verbose.
@@ -472,7 +472,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    boolean _fatalFormat(int delta, String format, Object... args);
+    boolean _fatalf(int delta, String format, Object... args);
 
     /**
      * Add formatted a fatal logging with a delta verbose with an exception.
@@ -486,7 +486,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    boolean _fatalFormat(int delta, Throwable e, String format, Object... args);
+    boolean _fatalf(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if error logging is enabled.
@@ -530,7 +530,6 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    @Override
     boolean error(Object message);
 
     /**
@@ -609,7 +608,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    boolean errorFormat(String format, Object... args);
+    boolean errorf(String format, Object... args);
 
     /**
      * Add formatted a error logging with an exception.
@@ -621,7 +620,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    boolean errorFormat(Throwable e, String format, Object... args);
+    boolean errorf(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a error logging with a delta verbose.
@@ -633,7 +632,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    boolean _errorFormat(int delta, String format, Object... args);
+    boolean _errorf(int delta, String format, Object... args);
 
     /**
      * Add formatted a error logging with a delta verbose with an exception.
@@ -647,7 +646,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    boolean _errorFormat(int delta, Throwable e, String format, Object... args);
+    boolean _errorf(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if warn logging is enabled.
@@ -769,7 +768,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void warnFormat(String format, Object... args);
+    void warnf(String format, Object... args);
 
     /**
      * Add formatted a warn logging with an exception.
@@ -781,7 +780,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void warnFormat(Throwable e, String format, Object... args);
+    void warnf(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a warn logging with a delta verbose.
@@ -793,7 +792,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _warnFormat(int delta, String format, Object... args);
+    void _warnf(int delta, String format, Object... args);
 
     /**
      * Add formatted a warn logging with a delta verbose with an exception.
@@ -807,35 +806,35 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _warnFormat(int delta, Throwable e, String format, Object... args);
+    void _warnf(int delta, Throwable e, String format, Object... args);
 
     /**
-     * Check if log logging is enabled.
+     * Check if mesg logging is enabled.
      * 
-     * @return <code>true</code> If log logging is enabled.
+     * @return <code>true</code> If mesg logging is enabled.
      */
-    boolean isLogEnabled();
+    boolean isMesgEnabled();
 
     /**
-     * Check if log logging with a delta verbose is enabled.
+     * Check if mesg logging with a delta verbose is enabled.
      * 
      * @param delta
      *            The verbose level delta.
-     * @return <code>true</code> IF log logging with the specific delta is enabled.
+     * @return <code>true</code> IF mesg logging with the specific delta is enabled.
      */
-    boolean isLogEnabled(int delta);
+    boolean isMesgEnabled(int delta);
 
     /**
-     * Get the log logging output sink.
+     * Get the mesg logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
      * 
      * @return Non-<code>null</code> sink object.
      */
-    ILogSink getLogSink();
+    ILogSink getMesgSink();
 
     /**
-     * Get the log logging output sink with a delta verbose.
+     * Get the mesg logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
      * 
@@ -843,74 +842,74 @@ public interface Logger
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
      */
-    ILogSink getLogSink(int delta);
+    ILogSink getMesgSink(int delta);
 
     /**
-     * Add a log logging.
+     * Add a mesg logging.
      * 
      * @param message
      *            The logging message.
      */
-    void log(Object message);
+    void mesg(Object message);
 
     /**
-     * Add a log logging with an exception.
-     * 
-     * @param e
-     *            The exception object.
-     * @param message
-     *            The logging message.
-     */
-    void log(Throwable e, Object message);
-
-    /**
-     * Add a log logging with a delta verbose.
-     * 
-     * @param message
-     *            The logging message.
-     */
-    void _log(int delta, Object message);
-
-    /**
-     * Add a log logging with a delta verbose with an exception.
+     * Add a mesg logging with an exception.
      * 
      * @param e
      *            The exception object.
      * @param message
      *            The logging message.
      */
-    void _log(int delta, Throwable e, Object message);
+    void mesg(Throwable e, Object message);
 
     /**
-     * Add a log logging.
+     * Add a mesg logging with a delta verbose.
+     * 
+     * @param message
+     *            The logging message.
+     */
+    void _mesg(int delta, Object message);
+
+    /**
+     * Add a mesg logging with a delta verbose with an exception.
+     * 
+     * @param e
+     *            The exception object.
+     * @param message
+     *            The logging message.
+     */
+    void _mesg(int delta, Throwable e, Object message);
+
+    /**
+     * Add a mesg logging.
      * 
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void log(Object... messageArray);
+    void mesg(Object... messageArray);
 
     /**
-     * Add a log logging with an exception.
+     * Add a mesg logging with an exception.
      * 
      * @param e
      *            The exception object.
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void log(Throwable e, Object... messageArray);
+    void mesg(Throwable e, Object... messageArray);
 
     /**
-     * Add a log logging with a delta verbose.
+     * Add a mesg logging with a delta verbose.
      * 
      * @param delta
      *            The verbose level delta.
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void _log(int delta, Object... messageArray);
+    void _mesg(int delta, Object... messageArray);
 
     /**
-     * Add a log logging with a delta verbose with an exception.
+     * Add a mesg logging with a delta verbose with an exception.
      * 
      * @param delta
      *            The verbose level delta.
@@ -919,47 +918,21 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void _log(int delta, Throwable e, Object... messageArray);
+    void _mesg(int delta, Throwable e, Object... messageArray);
 
     /**
-     * Add formatted a log logging.
+     * Add formatted a mesg logging.
      * 
      * @param format
      *            The message format.
      * @param args
      *            The arguments to the format.
      */
-    void logFormat(String format, Object... args);
+    void mesgf(String format, Object... args);
 
     /**
-     * Add formatted a log logging with an exception.
+     * Add formatted a mesg logging with an exception.
      * 
-     * @param e
-     *            The exception object.
-     * @param format
-     *            The message format.
-     * @param args
-     *            The arguments to the format.
-     */
-    void logFormat(Throwable e, String format, Object... args);
-
-    /**
-     * Add formatted a log logging with a delta verbose.
-     * 
-     * @param delta
-     *            The verbose level delta.
-     * @param format
-     *            The message format.
-     * @param args
-     *            The arguments to the format.
-     */
-    void _logFormat(int delta, String format, Object... args);
-
-    /**
-     * Add formatted a log logging with a delta verbose with an exception.
-     * 
-     * @param delta
-     *            The verbose level delta.
      * @param e
      *            The exception object.
      * @param format
@@ -967,7 +940,33 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _logFormat(int delta, Throwable e, String format, Object... args);
+    void mesgf(Throwable e, String format, Object... args);
+
+    /**
+     * Add formatted a mesg logging with a delta verbose.
+     * 
+     * @param delta
+     *            The verbose level delta.
+     * @param format
+     *            The message format.
+     * @param args
+     *            The arguments to the format.
+     */
+    void _mesgf(int delta, String format, Object... args);
+
+    /**
+     * Add formatted a mesg logging with a delta verbose with an exception.
+     * 
+     * @param delta
+     *            The verbose level delta.
+     * @param e
+     *            The exception object.
+     * @param format
+     *            The message format.
+     * @param args
+     *            The arguments to the format.
+     */
+    void _mesgf(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if info logging is enabled.
@@ -1089,7 +1088,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void infoFormat(String format, Object... args);
+    void infof(String format, Object... args);
 
     /**
      * Add formatted a info logging with an exception.
@@ -1101,7 +1100,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void infoFormat(Throwable e, String format, Object... args);
+    void infof(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a info logging with a delta verbose.
@@ -1113,7 +1112,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _infoFormat(int delta, String format, Object... args);
+    void _infof(int delta, String format, Object... args);
 
     /**
      * Add formatted a info logging with a delta verbose with an exception.
@@ -1127,7 +1126,167 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _infoFormat(int delta, Throwable e, String format, Object... args);
+    void _infof(int delta, Throwable e, String format, Object... args);
+
+    /**
+     * Check if log logging is enabled.
+     * 
+     * @return <code>true</code> If log logging is enabled.
+     */
+    boolean isLogEnabled();
+
+    /**
+     * Check if log logging with a delta verbose is enabled.
+     * 
+     * @param delta
+     *            The verbose level delta.
+     * @return <code>true</code> IF log logging with the specific delta is enabled.
+     */
+    boolean isLogEnabled(int delta);
+
+    /**
+     * Get the log logging output sink.
+     * <p>
+     * If the specific logging is disabled, a NullLogSink will be returned.
+     * 
+     * @return Non-<code>null</code> sink object.
+     */
+    ILogSink getLogSink();
+
+    /**
+     * Get the log logging output sink with a delta verbose.
+     * <p>
+     * If the specific logging is disabled, a NullLogSink will be returned.
+     * 
+     * @param delta
+     *            The verbose level delta.
+     * @return Non-<code>null</code> sink object.
+     */
+    ILogSink getLogSink(int delta);
+
+    /**
+     * Add a log logging.
+     * 
+     * @param message
+     *            The logging message.
+     */
+    void log(Object message);
+
+    /**
+     * Add a log logging with an exception.
+     * 
+     * @param e
+     *            The exception object.
+     * @param message
+     *            The logging message.
+     */
+    void log(Throwable e, Object message);
+
+    /**
+     * Add a log logging with a delta verbose.
+     * 
+     * @param message
+     *            The logging message.
+     */
+    void _log(int delta, Object message);
+
+    /**
+     * Add a log logging with a delta verbose with an exception.
+     * 
+     * @param e
+     *            The exception object.
+     * @param message
+     *            The logging message.
+     */
+    void _log(int delta, Throwable e, Object message);
+
+    /**
+     * Add a log logging.
+     * 
+     * @param messageArray
+     *            The logging message in pieces, will be concated.
+     */
+    void log(Object... messageArray);
+
+    /**
+     * Add a log logging with an exception.
+     * 
+     * @param e
+     *            The exception object.
+     * @param messageArray
+     *            The logging message in pieces, will be concated.
+     */
+    void log(Throwable e, Object... messageArray);
+
+    /**
+     * Add a log logging with a delta verbose.
+     * 
+     * @param delta
+     *            The verbose level delta.
+     * @param messageArray
+     *            The logging message in pieces, will be concated.
+     */
+    void _log(int delta, Object... messageArray);
+
+    /**
+     * Add a log logging with a delta verbose with an exception.
+     * 
+     * @param delta
+     *            The verbose level delta.
+     * @param e
+     *            The exception object.
+     * @param messageArray
+     *            The logging message in pieces, will be concated.
+     */
+    void _log(int delta, Throwable e, Object... messageArray);
+
+    /**
+     * Add formatted a log logging.
+     * 
+     * @param format
+     *            The message format.
+     * @param args
+     *            The arguments to the format.
+     */
+    void logf(String format, Object... args);
+
+    /**
+     * Add formatted a log logging with an exception.
+     * 
+     * @param e
+     *            The exception object.
+     * @param format
+     *            The message format.
+     * @param args
+     *            The arguments to the format.
+     */
+    void logf(Throwable e, String format, Object... args);
+
+    /**
+     * Add formatted a log logging with a delta verbose.
+     * 
+     * @param delta
+     *            The verbose level delta.
+     * @param format
+     *            The message format.
+     * @param args
+     *            The arguments to the format.
+     */
+    void _logf(int delta, String format, Object... args);
+
+    /**
+     * Add formatted a log logging with a delta verbose with an exception.
+     * 
+     * @param delta
+     *            The verbose level delta.
+     * @param e
+     *            The exception object.
+     * @param format
+     *            The message format.
+     * @param args
+     *            The arguments to the format.
+     */
+    void _logf(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if debug logging is enabled.
@@ -1249,7 +1408,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void debugFormat(String format, Object... args);
+    void debugf(String format, Object... args);
 
     /**
      * Add formatted a debug logging with an exception.
@@ -1261,7 +1420,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void debugFormat(Throwable e, String format, Object... args);
+    void debugf(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a debug logging with a delta verbose.
@@ -1273,7 +1432,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _debugFormat(int delta, String format, Object... args);
+    void _debugf(int delta, String format, Object... args);
 
     /**
      * Add formatted a debug logging with a delta verbose with an exception.
@@ -1287,7 +1446,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _debugFormat(int delta, Throwable e, String format, Object... args);
+    void _debugf(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if trace logging is enabled.
@@ -1409,7 +1568,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void traceFormat(String format, Object... args);
+    void tracef(String format, Object... args);
 
     /**
      * Add formatted a trace logging with an exception.
@@ -1421,7 +1580,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void traceFormat(Throwable e, String format, Object... args);
+    void tracef(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a trace logging with a delta verbose.
@@ -1433,7 +1592,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _traceFormat(int delta, String format, Object... args);
+    void _tracef(int delta, String format, Object... args);
 
     /**
      * Add formatted a trace logging with a delta verbose with an exception.
@@ -1447,7 +1606,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _traceFormat(int delta, Throwable e, String format, Object... args);
+    void _tracef(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if status logging is enabled.
@@ -1569,7 +1728,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void statusFormat(String format, Object... args);
+    void statusf(String format, Object... args);
 
     /**
      * Add formatted a status logging with an exception.
@@ -1581,7 +1740,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void statusFormat(Throwable e, String format, Object... args);
+    void statusf(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a status logging with a delta verbose.
@@ -1593,7 +1752,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _statusFormat(int delta, String format, Object... args);
+    void _statusf(int delta, String format, Object... args);
 
     /**
      * Add formatted a status logging with a delta verbose with an exception.
@@ -1607,7 +1766,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _statusFormat(int delta, Throwable e, String format, Object... args);
+    void _statusf(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if progress logging is enabled.
@@ -1729,7 +1888,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void progressFormat(String format, Object... args);
+    void progressf(String format, Object... args);
 
     /**
      * Add formatted a progress logging with an exception.
@@ -1741,7 +1900,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void progressFormat(Throwable e, String format, Object... args);
+    void progressf(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a progress logging with a delta verbose.
@@ -1753,7 +1912,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _progressFormat(int delta, String format, Object... args);
+    void _progressf(int delta, String format, Object... args);
 
     /**
      * Add formatted a progress logging with a delta verbose with an exception.
@@ -1767,6 +1926,6 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void _progressFormat(int delta, Throwable e, String format, Object... args);
+    void _progressf(int delta, Throwable e, String format, Object... args);
 
 }

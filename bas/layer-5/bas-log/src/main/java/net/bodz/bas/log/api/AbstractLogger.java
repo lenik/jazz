@@ -21,6 +21,11 @@ public abstract class AbstractLogger
     }
 
     @Override
+    public void mesg(Object message) {
+        getMesgSink().p(message);
+    }
+
+    @Override
     public void log(Object message) {
         getLogSink().p(message);
     }
@@ -65,7 +70,7 @@ public abstract class AbstractLogger
         _debug(0, message, t);
     }
 
-    // See LoggerCG.
+    // --- LOGGER CG GENERATED BEGIN ---
 
     @Override
     public boolean isStderrEnabled() {
@@ -123,22 +128,22 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final void stderrFormat(String fmt, Object... args) {
+    public final void stderrf(String fmt, Object... args) {
         _stderr(0, null, format(fmt, args));
     }
 
     @Override
-    public final void stderrFormat(Throwable e, String fmt, Object... args) {
+    public final void stderrf(Throwable e, String fmt, Object... args) {
         _stderr(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _stderrFormat(int delta, String fmt, Object... args) {
+    public final void _stderrf(int delta, String fmt, Object... args) {
         _stderr(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _stderrFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final void _stderrf(int delta, Throwable e, String fmt, Object... args) {
         _stderr(delta, e, format(fmt, args));
     }
 
@@ -198,22 +203,22 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final void stdoutFormat(String fmt, Object... args) {
+    public final void stdoutf(String fmt, Object... args) {
         _stdout(0, null, format(fmt, args));
     }
 
     @Override
-    public final void stdoutFormat(Throwable e, String fmt, Object... args) {
+    public final void stdoutf(Throwable e, String fmt, Object... args) {
         _stdout(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _stdoutFormat(int delta, String fmt, Object... args) {
+    public final void _stdoutf(int delta, String fmt, Object... args) {
         _stdout(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _stdoutFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final void _stdoutf(int delta, Throwable e, String fmt, Object... args) {
         _stdout(delta, e, format(fmt, args));
     }
 
@@ -274,22 +279,22 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final boolean fatalFormat(String fmt, Object... args) {
+    public final boolean fatalf(String fmt, Object... args) {
         return _fatal(0, null, format(fmt, args));
     }
 
     @Override
-    public final boolean fatalFormat(Throwable e, String fmt, Object... args) {
+    public final boolean fatalf(Throwable e, String fmt, Object... args) {
         return _fatal(0, e, format(fmt, args));
     }
 
     @Override
-    public final boolean _fatalFormat(int delta, String fmt, Object... args) {
+    public final boolean _fatalf(int delta, String fmt, Object... args) {
         return _fatal(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final boolean _fatalFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final boolean _fatalf(int delta, Throwable e, String fmt, Object... args) {
         return _fatal(delta, e, format(fmt, args));
     }
 
@@ -350,22 +355,22 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final boolean errorFormat(String fmt, Object... args) {
+    public final boolean errorf(String fmt, Object... args) {
         return _error(0, null, format(fmt, args));
     }
 
     @Override
-    public final boolean errorFormat(Throwable e, String fmt, Object... args) {
+    public final boolean errorf(Throwable e, String fmt, Object... args) {
         return _error(0, e, format(fmt, args));
     }
 
     @Override
-    public final boolean _errorFormat(int delta, String fmt, Object... args) {
+    public final boolean _errorf(int delta, String fmt, Object... args) {
         return _error(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final boolean _errorFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final boolean _errorf(int delta, Throwable e, String fmt, Object... args) {
         return _error(delta, e, format(fmt, args));
     }
 
@@ -425,98 +430,98 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final void warnFormat(String fmt, Object... args) {
+    public final void warnf(String fmt, Object... args) {
         _warn(0, null, format(fmt, args));
     }
 
     @Override
-    public final void warnFormat(Throwable e, String fmt, Object... args) {
+    public final void warnf(Throwable e, String fmt, Object... args) {
         _warn(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _warnFormat(int delta, String fmt, Object... args) {
+    public final void _warnf(int delta, String fmt, Object... args) {
         _warn(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _warnFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final void _warnf(int delta, Throwable e, String fmt, Object... args) {
         _warn(delta, e, format(fmt, args));
     }
 
     @Override
-    public boolean isLogEnabled() {
-        return LogLevel.LOG.getPriority() <= getMaxPriority();
+    public boolean isMesgEnabled() {
+        return LogLevel.MESG.getPriority() <= getMaxPriority();
     }
 
     @Override
-    public boolean isLogEnabled(int delta) {
-        return LogLevel.LOG.getPriority() + delta <= getMaxPriority();
+    public boolean isMesgEnabled(int delta) {
+        return LogLevel.MESG.getPriority() + delta <= getMaxPriority();
     }
 
     @Override
-    public ILogSink getLogSink() {
-        return get(LogLevel.LOG);
+    public ILogSink getMesgSink() {
+        return get(LogLevel.MESG);
     }
 
     @Override
-    public ILogSink getLogSink(int delta) {
-        return get(LogLevel.LOG, delta);
+    public ILogSink getMesgSink(int delta) {
+        return get(LogLevel.MESG, delta);
     }
 
     @Override
-    public final void log(Throwable e, Object message) {
-        _log(0, e, message);
+    public final void mesg(Throwable e, Object message) {
+        _mesg(0, e, message);
     }
 
     @Override
-    public final void _log(int delta, Object message) {
-        _log(delta, null, message);
+    public final void _mesg(int delta, Object message) {
+        _mesg(delta, null, message);
     }
 
     @Override
-    public void _log(int delta, Throwable e, Object message) {
-        getLogSink(delta).p(e, message);
+    public void _mesg(int delta, Throwable e, Object message) {
+        getMesgSink(delta).p(e, message);
     }
 
     @Override
-    public final void log(Object... messageArray) {
-        _log(0, null, concat(messageArray));
+    public final void mesg(Object... messageArray) {
+        _mesg(0, null, concat(messageArray));
     }
 
     @Override
-    public final void log(Throwable e, Object... messageArray) {
-        _log(0, e, concat(messageArray));
+    public final void mesg(Throwable e, Object... messageArray) {
+        _mesg(0, e, concat(messageArray));
     }
 
     @Override
-    public final void _log(int delta, Object... messageArray) {
-        _log(delta, null, concat(messageArray));
+    public final void _mesg(int delta, Object... messageArray) {
+        _mesg(delta, null, concat(messageArray));
     }
 
     @Override
-    public final void _log(int delta, Throwable e, Object... messageArray) {
-        _log(delta, e, concat(messageArray));
+    public final void _mesg(int delta, Throwable e, Object... messageArray) {
+        _mesg(delta, e, concat(messageArray));
     }
 
     @Override
-    public final void logFormat(String fmt, Object... args) {
-        _log(0, null, format(fmt, args));
+    public final void mesgf(String fmt, Object... args) {
+        _mesg(0, null, format(fmt, args));
     }
 
     @Override
-    public final void logFormat(Throwable e, String fmt, Object... args) {
-        _log(0, e, format(fmt, args));
+    public final void mesgf(Throwable e, String fmt, Object... args) {
+        _mesg(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _logFormat(int delta, String fmt, Object... args) {
-        _log(delta, fmt, format(fmt, args));
+    public final void _mesgf(int delta, String fmt, Object... args) {
+        _mesg(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _logFormat(int delta, Throwable e, String fmt, Object... args) {
-        _log(delta, e, format(fmt, args));
+    public final void _mesgf(int delta, Throwable e, String fmt, Object... args) {
+        _mesg(delta, e, format(fmt, args));
     }
 
     @Override
@@ -575,23 +580,98 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final void infoFormat(String fmt, Object... args) {
+    public final void infof(String fmt, Object... args) {
         _info(0, null, format(fmt, args));
     }
 
     @Override
-    public final void infoFormat(Throwable e, String fmt, Object... args) {
+    public final void infof(Throwable e, String fmt, Object... args) {
         _info(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _infoFormat(int delta, String fmt, Object... args) {
+    public final void _infof(int delta, String fmt, Object... args) {
         _info(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _infoFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final void _infof(int delta, Throwable e, String fmt, Object... args) {
         _info(delta, e, format(fmt, args));
+    }
+
+    @Override
+    public boolean isLogEnabled() {
+        return LogLevel.LOG.getPriority() <= getMaxPriority();
+    }
+
+    @Override
+    public boolean isLogEnabled(int delta) {
+        return LogLevel.LOG.getPriority() + delta <= getMaxPriority();
+    }
+
+    @Override
+    public ILogSink getLogSink() {
+        return get(LogLevel.LOG);
+    }
+
+    @Override
+    public ILogSink getLogSink(int delta) {
+        return get(LogLevel.LOG, delta);
+    }
+
+    @Override
+    public final void log(Throwable e, Object message) {
+        _log(0, e, message);
+    }
+
+    @Override
+    public final void _log(int delta, Object message) {
+        _log(delta, null, message);
+    }
+
+    @Override
+    public void _log(int delta, Throwable e, Object message) {
+        getLogSink(delta).p(e, message);
+    }
+
+    @Override
+    public final void log(Object... messageArray) {
+        _log(0, null, concat(messageArray));
+    }
+
+    @Override
+    public final void log(Throwable e, Object... messageArray) {
+        _log(0, e, concat(messageArray));
+    }
+
+    @Override
+    public final void _log(int delta, Object... messageArray) {
+        _log(delta, null, concat(messageArray));
+    }
+
+    @Override
+    public final void _log(int delta, Throwable e, Object... messageArray) {
+        _log(delta, e, concat(messageArray));
+    }
+
+    @Override
+    public final void logf(String fmt, Object... args) {
+        _log(0, null, format(fmt, args));
+    }
+
+    @Override
+    public final void logf(Throwable e, String fmt, Object... args) {
+        _log(0, e, format(fmt, args));
+    }
+
+    @Override
+    public final void _logf(int delta, String fmt, Object... args) {
+        _log(delta, fmt, format(fmt, args));
+    }
+
+    @Override
+    public final void _logf(int delta, Throwable e, String fmt, Object... args) {
+        _log(delta, e, format(fmt, args));
     }
 
     @Override
@@ -650,22 +730,22 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final void debugFormat(String fmt, Object... args) {
+    public final void debugf(String fmt, Object... args) {
         _debug(0, null, format(fmt, args));
     }
 
     @Override
-    public final void debugFormat(Throwable e, String fmt, Object... args) {
+    public final void debugf(Throwable e, String fmt, Object... args) {
         _debug(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _debugFormat(int delta, String fmt, Object... args) {
+    public final void _debugf(int delta, String fmt, Object... args) {
         _debug(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _debugFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final void _debugf(int delta, Throwable e, String fmt, Object... args) {
         _debug(delta, e, format(fmt, args));
     }
 
@@ -725,22 +805,22 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final void traceFormat(String fmt, Object... args) {
+    public final void tracef(String fmt, Object... args) {
         _trace(0, null, format(fmt, args));
     }
 
     @Override
-    public final void traceFormat(Throwable e, String fmt, Object... args) {
+    public final void tracef(Throwable e, String fmt, Object... args) {
         _trace(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _traceFormat(int delta, String fmt, Object... args) {
+    public final void _tracef(int delta, String fmt, Object... args) {
         _trace(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _traceFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final void _tracef(int delta, Throwable e, String fmt, Object... args) {
         _trace(delta, e, format(fmt, args));
     }
 
@@ -800,22 +880,22 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final void statusFormat(String fmt, Object... args) {
+    public final void statusf(String fmt, Object... args) {
         _status(0, null, format(fmt, args));
     }
 
     @Override
-    public final void statusFormat(Throwable e, String fmt, Object... args) {
+    public final void statusf(Throwable e, String fmt, Object... args) {
         _status(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _statusFormat(int delta, String fmt, Object... args) {
+    public final void _statusf(int delta, String fmt, Object... args) {
         _status(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _statusFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final void _statusf(int delta, Throwable e, String fmt, Object... args) {
         _status(delta, e, format(fmt, args));
     }
 
@@ -875,23 +955,25 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final void progressFormat(String fmt, Object... args) {
+    public final void progressf(String fmt, Object... args) {
         _progress(0, null, format(fmt, args));
     }
 
     @Override
-    public final void progressFormat(Throwable e, String fmt, Object... args) {
+    public final void progressf(Throwable e, String fmt, Object... args) {
         _progress(0, e, format(fmt, args));
     }
 
     @Override
-    public final void _progressFormat(int delta, String fmt, Object... args) {
+    public final void _progressf(int delta, String fmt, Object... args) {
         _progress(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final void _progressFormat(int delta, Throwable e, String fmt, Object... args) {
+    public final void _progressf(int delta, Throwable e, String fmt, Object... args) {
         _progress(delta, e, format(fmt, args));
     }
+
+    // +++ LOGGER CG GENERATED END +++
 
 }

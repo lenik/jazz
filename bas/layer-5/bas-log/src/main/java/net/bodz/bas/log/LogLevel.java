@@ -12,8 +12,9 @@ public class LogLevel {
     public static final LogLevel FATAL = new LogLevel("fatal", logGroup, -3, 0);
     public static final LogLevel ERROR = new LogLevel("error", logGroup, -2, 3);
     public static final LogLevel WARN = new LogLevel("warn", logGroup, -1, 4);
-    public static final LogLevel LOG = new LogLevel("log", logGroup, 0, 6);
+    public static final LogLevel MESG = new LogLevel("mesg", logGroup, 0, 6);
     public static final LogLevel INFO = new LogLevel("info", logGroup, 1, 6);
+    public static final LogLevel LOG = new LogLevel("log", logGroup, 2, 6);
     public static final LogLevel DEBUG = new LogLevel("debug", logGroup, 3, 7);
     public static final LogLevel TRACE = new LogLevel("trace", logGroup, 4, 7);
 
