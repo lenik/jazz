@@ -1,75 +1,75 @@
 
     @Override
-    public boolean is@Name@Enabled() {
-        return LogLevel.@NAME@.getPriority() <= getMaxPriority();
+    public boolean is${Name}Enabled() {
+        return LogLevel.${NAME}.getPriority() <= getMaxPriority();
     }
 
     @Override
-    public boolean is@Name@Enabled(int delta) {
-        return LogLevel.@NAME@.getPriority() + delta <= getMaxPriority();
+    public boolean is${Name}Enabled(int delta) {
+        return LogLevel.${NAME}.getPriority() + delta <= getMaxPriority();
     }
 
     @Override
-    public ILogSink get@Name@Sink() {
-        return get(LogLevel.@NAME@);
+    public ILogSink get${Name}Sink() {
+        return get(LogLevel.${NAME});
     }
 
     @Override
-    public ILogSink get@Name@Sink(int delta) {
-        return get(LogLevel.@NAME@, delta);
+    public ILogSink get${Name}Sink(int delta) {
+        return get(LogLevel.${NAME}, delta);
     }
 
     @Override
-    public final @rettype@ @name@(Throwable e, Object message) {
-        @return@_@name@(0, e, message);
+    public final ${rettype} ${name}(Throwable e, Object message) {
+        ${return}_${name}(0, e, message);
     }
 
     @Override
-    public final @rettype@ _@name@(int delta, Object message) {
-        @return@_@name@(delta, null, message);
+    public final ${rettype} _${name}(int delta, Object message) {
+        ${return}_${name}(delta, null, message);
     }
 
     @Override
-    public @rettype@ _@name@(int delta, Throwable e, Object message) {
-        get@Name@Sink(delta).p(e, message);
+    public ${rettype} _${name}(int delta, Throwable e, Object message) {
+        get${Name}Sink(delta).p(e, message);
     }
 
     @Override
-    public final @rettype@ @name@(Object... messageArray) {
-        @return@_@name@(0, null, concat(messageArray));
+    public final ${rettype} ${name}(Object... messageArray) {
+        ${return}_${name}(0, null, concat(messageArray));
     }
 
     @Override
-    public final @rettype@ @name@(Throwable e, Object... messageArray) {
-        @return@_@name@(0, e, concat(messageArray));
+    public final ${rettype} ${name}(Throwable e, Object... messageArray) {
+        ${return}_${name}(0, e, concat(messageArray));
     }
 
     @Override
-    public final @rettype@ _@name@(int delta, Object... messageArray) {
-        @return@_@name@(delta, null, concat(messageArray));
+    public final ${rettype} _${name}(int delta, Object... messageArray) {
+        ${return}_${name}(delta, null, concat(messageArray));
     }
 
     @Override
-    public final @rettype@ _@name@(int delta, Throwable e, Object... messageArray) {
-        @return@_@name@(delta, e, concat(messageArray));
+    public final ${rettype} _${name}(int delta, Throwable e, Object... messageArray) {
+        ${return}_${name}(delta, e, concat(messageArray));
     }
 
     @Override
-    public final @rettype@ @name@Format(String fmt, Object... args) {
-        @return@_@name@(0, null, format(fmt, args));
+    public final ${rettype} ${name}f(String fmt, Object... args) {
+        ${return}_${name}(0, null, format(fmt, args));
     }
 
     @Override
-    public final @rettype@ @name@Format(Throwable e, String fmt, Object... args) {
-        @return@_@name@(0, e, format(fmt, args));
+    public final ${rettype} ${name}f(Throwable e, String fmt, Object... args) {
+        ${return}_${name}(0, e, format(fmt, args));
     }
 
     @Override
-    public final @rettype@ _@name@Format(int delta, String fmt, Object... args) {
-        @return@_@name@(delta, fmt, format(fmt, args));
+    public final ${rettype} _${name}f(int delta, String fmt, Object... args) {
+        ${return}_${name}(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public final @rettype@ _@name@Format(int delta, Throwable e, String fmt, Object... args) {
-        @return@_@name@(delta, e, format(fmt, args));
+    public final ${rettype} _${name}f(int delta, Throwable e, String fmt, Object... args) {
+        ${return}_${name}(delta, e, format(fmt, args));
     }

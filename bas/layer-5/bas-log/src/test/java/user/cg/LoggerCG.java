@@ -44,8 +44,14 @@ public class LoggerCG {
             String LevelName = Strings.ucfirst(levelName);
 
             String level = src_Logger;
-            level = level.replaceAll("@name@", levelName);
-            level = level.replaceAll("@Name@", LevelName);
+            level = level.replace("${name}", levelName);
+            level = level.replace("${Name}", LevelName);
+
+            String rettype = "void";
+            if (levelName.equals("fatal") || levelName.equals("error")) {
+                rettype = "boolean";
+            }
+            level = level.replace("${rettype}", rettype);
 
             System.out.println(level);
         }
@@ -58,9 +64,9 @@ public class LoggerCG {
             String LEVELNAME = levelName.toUpperCase();
 
             String text = src_AbstractLogger;
-            text = text.replaceAll("@name@", levelName);
-            text = text.replaceAll("@Name@", LevelName);
-            text = text.replaceAll("@NAME@", LEVELNAME);
+            text = text.replace("${name}", levelName);
+            text = text.replace("${Name}", LevelName);
+            text = text.replace("${NAME}", LEVELNAME);
 
             String rettype = "void";
             String _return = "";
@@ -68,18 +74,22 @@ public class LoggerCG {
                 rettype = "boolean";
                 _return = "return ";
             }
-            text = text.replaceAll("@rettype@", rettype);
-            text = text.replaceAll("@return@", _return);
+            text = text.replace("${rettype}", rettype);
+            text = text.replace("${return}", _return);
 
             System.out.println(text);
         }
     }
 
+    static boolean ifaceOrImpl = false;
+
     public static void main(String[] args)
             throws Exception {
         LoggerCG cg = new LoggerCG();
-        // cg.makeLogger();
-        cg.makeAbstractLogger();
+        if (ifaceOrImpl)
+            cg.makeLogger();
+        else
+            cg.makeAbstractLogger();
     }
 
 }
