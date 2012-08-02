@@ -1,5 +1,7 @@
 package net.bodz.swt.widgets.gs;
 
+import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -7,18 +9,9 @@ import java.util.Random;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseWheelListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -28,9 +21,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 
-/**
- * @test GeomCanvasTest
- */
 public class GeomCanvas
         extends Canvas {
 

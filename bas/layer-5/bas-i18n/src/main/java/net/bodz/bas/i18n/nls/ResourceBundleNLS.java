@@ -11,13 +11,11 @@ public class ResourceBundleNLS
 
     private ResourceBundle resourceBundle;
 
-    ResourceBundleNLS(NLS parent)
-            throws MissingResourceException {
+    ResourceBundleNLS(NLS parent) {
         this(parent, Locale.getDefault());
     }
 
-    ResourceBundleNLS(NLS parent, Locale locale)
-            throws MissingResourceException {
+    ResourceBundleNLS(NLS parent, Locale locale) {
         super(parent, locale);
         this.baseName = getClass().getName();
         reload();

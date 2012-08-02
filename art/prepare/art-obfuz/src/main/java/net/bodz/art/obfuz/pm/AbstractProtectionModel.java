@@ -1,5 +1,7 @@
 package net.bodz.art.obfuz.pm;
 
+import static net.bodz.art.obfuz.nls.ProtectNLS.ProtectNLS;
+
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.KeyPair;
@@ -12,7 +14,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-import net.bodz.art.obfuz.nls.ProtectNLS;
 import net.bodz.art.obfuz.seals.IdSeededSequence;
 import net.bodz.art.obfuz.seals.Sequence;
 import net.bodz.art.obfuz.sysid.SysIdProvider;

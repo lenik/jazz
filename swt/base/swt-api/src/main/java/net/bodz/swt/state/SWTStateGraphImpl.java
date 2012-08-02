@@ -4,7 +4,6 @@ import java.util.Map;
 
 import net.bodz.bas.fsm.base.IState;
 import net.bodz.bas.fsm.base.StateGraphImpl;
-import net.bodz.swt.ex.HistoryMouseListener;
 
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;

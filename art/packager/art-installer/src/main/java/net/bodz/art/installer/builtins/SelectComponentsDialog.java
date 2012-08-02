@@ -1,12 +1,13 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
 import net.bodz.art.installer.IComponent;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.art.installer.util.Indices;
 import net.bodz.art.installer.util.MissingDependancyBuffer.Entry;
 import net.bodz.bas.c.string.Strings;

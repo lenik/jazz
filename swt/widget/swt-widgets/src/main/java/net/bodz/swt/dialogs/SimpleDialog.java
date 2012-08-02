@@ -1,12 +1,13 @@
 package net.bodz.swt.dialogs;
 
+import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.traits.ValidateException;
-import net.bodz.swt.nls.ControlsNLS;
 import net.bodz.swt.util.SWTResources;
 import net.bodz.swt.widgets.Switcher;
 import net.bodz.swt.widgets.util.Controls;

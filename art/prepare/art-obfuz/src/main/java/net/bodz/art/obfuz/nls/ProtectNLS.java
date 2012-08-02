@@ -1,21 +1,21 @@
 package net.bodz.art.obfuz.nls;
 
-import java.util.ResourceBundle;
+import java.util.Locale;
+
+import net.bodz.bas.i18n.nls.ClassResourceNLS;
+import net.bodz.bas.i18n.nls.NLS;
 
 public class ProtectNLS
-        extends NLS {
+        extends ClassResourceNLS {
 
-    private static final ResourceBundle bundle;
-    static {
-        bundle = ResourceBundle.getBundle(ProtectNLS.class.getName());
+    public ProtectNLS(NLS next, Locale locale) {
+        super(next, locale);
     }
 
-    public static String format(String key, Object... args) {
-        return format(bundle, key, args);
+    public ProtectNLS(NLS next) {
+        super(next);
     }
 
-    public static String getString(String key) {
-        return getString(bundle, key);
-    }
+    public static final ProtectNLS ProtectNLS = new ProtectNLS(null);
 
 }

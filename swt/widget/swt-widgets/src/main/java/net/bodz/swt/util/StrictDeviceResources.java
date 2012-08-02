@@ -1,5 +1,7 @@
 package net.bodz.swt.util;
 
+import static net.bodz.swt.nls.CommonNLS.CommonNLS;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,17 +19,10 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.swt.nls.CommonNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.*;
 
 public class StrictDeviceResources {
 

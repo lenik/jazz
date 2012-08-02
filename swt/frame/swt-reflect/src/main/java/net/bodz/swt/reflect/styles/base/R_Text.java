@@ -1,5 +1,7 @@
 package net.bodz.swt.reflect.styles.base;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EventObject;
@@ -7,6 +9,7 @@ import java.util.EventObject;
 import javax.swing.border.Border;
 
 import net.bodz.bas.err.CheckException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.adapters.CommitAdapter;
 import net.bodz.swt.adapters.CommitException;
@@ -16,7 +19,6 @@ import net.bodz.swt.reflect.GUIVarMeta;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
 import net.bodz.swt.reflect.a.MaxLength;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -47,7 +49,7 @@ public class R_Text
             return label;
         } else {
             Integer border = (Integer) Ns.getValue(meta, Border.class);
-            if (border == null || (int) border > 0)
+            if (border == null || border > 0)
                 style |= SWT.BORDER;
             final Text text = new Text(parent, style);
             // Ns.getValue(meta, EchoChar.class);

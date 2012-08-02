@@ -1,15 +1,10 @@
 package net.bodz.swt.util;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.ComponentColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DirectColorModel;
-import java.awt.image.IndexColorModel;
-import java.awt.image.WritableRaster;
+import static net.bodz.swt.nls.CommonNLS.CommonNLS;
+
+import java.awt.image.*;
 
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.swt.nls.CommonNLS;
 
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;

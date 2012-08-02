@@ -1,5 +1,7 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -23,7 +25,6 @@ import net.bodz.art.installer.Attachment;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.InstallException;
 import net.bodz.art.installer.RegistryData;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.art.installer.util.Utils;
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.IOConfig;

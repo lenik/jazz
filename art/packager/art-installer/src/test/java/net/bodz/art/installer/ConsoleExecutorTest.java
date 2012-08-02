@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import net.bodz.art.installer.builtins.TestConfig;
 import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 import org.junit.Test;
 
@@ -20,15 +22,17 @@ public class ConsoleExecutorTest
     @Test
     public void testPack()
             throws SessionException {
-        session.addResFolder(0, new FileResFolder(TestConfig.outDir, true));
-        session.dump(Stdio.stdout);
+        IFile outdir = new JavaioFile(TestConfig.outDir);
+        outdir.setAutoCreateParents(true);
+        session.addResFolder(0, outdir);
+        session.dump(Stdio.cout);
         pack();
     }
 
     @Test
     public void testInstall()
             throws SessionException {
-        session.addResFolder(new FileResFolder(TestConfig.outDir, false));
+        session.addResFolder(new JavaioFile(TestConfig.outDir));
         session.setScheme(Schemes.MAXIMUM);
         TestConfig.setTestBaseDir(session);
         install();
@@ -37,7 +41,7 @@ public class ConsoleExecutorTest
     @Test
     public void testUninstall()
             throws SessionException {
-        session.addResFolder(new FileResFolder(TestConfig.outDir, false));
+        session.addResFolder(new JavaioFile(TestConfig.outDir));
         // uninstaller should get the installed base dir from system registry.
         session.setScheme(Schemes.MAXIMUM);
         TestConfig.setTestBaseDir(session);

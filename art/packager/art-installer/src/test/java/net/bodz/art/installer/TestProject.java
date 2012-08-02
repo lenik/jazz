@@ -32,6 +32,7 @@ public class TestProject
 
         testSection = new OptionalSection("test", "Test source and classes");
         {
+
             File testBinDir = SJProject.getOutputBase(TestProject.class);
             File testSrcDir = SJProject.getSrcBase(TestProject.class);
             FileFinder testbin = new FileFinder(FileCopy.NoSVN, testBinDir);

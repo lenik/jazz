@@ -1,9 +1,9 @@
 package net.bodz.swt.dialogs;
 
+import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
+
 import java.io.IOException;
 import java.io.OutputStream;
-
-import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;

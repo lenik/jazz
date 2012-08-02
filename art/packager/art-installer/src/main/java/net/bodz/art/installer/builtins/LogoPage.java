@@ -1,12 +1,12 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import net.bodz.art.installer.ConfigPage;
 import net.bodz.art.installer.IComponent;
 import net.bodz.art.installer.IProject;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.Installer;
 import net.bodz.art.installer.LogoImage;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.swt.gui.pfl.PageException;
 import net.bodz.swt.util.SWTResources;
 import net.bodz.swt.widgets.Picture;

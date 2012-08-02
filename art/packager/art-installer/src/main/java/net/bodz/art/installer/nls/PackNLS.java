@@ -1,21 +1,21 @@
 package net.bodz.art.installer.nls;
 
-import java.util.ResourceBundle;
+import java.util.Locale;
+
+import net.bodz.bas.i18n.nls.ClassResourceNLS;
+import net.bodz.bas.i18n.nls.NLS;
 
 public class PackNLS
-        extends NLSAccessor {
+        extends ClassResourceNLS {
 
-    private static final ResourceBundle bundle;
-    static {
-        bundle = ResourceBundle.getBundle(PackNLS.class.getName());
+    public PackNLS(NLS next, Locale locale) {
+        super(next, locale);
     }
 
-    public static String format(String key, Object... args) {
-        return format(bundle, key, args);
+    public PackNLS(NLS next) {
+        super(next);
     }
 
-    public static String getString(String key) {
-        return getString(bundle, key);
-    }
+    public static final PackNLS PackNLS = new PackNLS(null);
 
 }

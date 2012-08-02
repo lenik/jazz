@@ -1,8 +1,9 @@
 package net.bodz.art.installer;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.util.ArrayList;
 
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.log.AbstractLogSink;
@@ -39,13 +40,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.ProgressBar;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.*;
 
 class ProgressPage
         extends AbstractPage {

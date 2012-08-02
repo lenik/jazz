@@ -26,7 +26,7 @@ public class AbstractCLIPlugin
             throws CLIException, ParseException {
         if (parameters.isEmpty())
             return;
-        DefaultOptionGroup group = getOptions();
+        IOptionGroup group = getOptions();
         group.load(this, parameters);
     }
 
@@ -35,7 +35,7 @@ public class AbstractCLIPlugin
     @Override
     public void initialize() {
         super.initialize();
-        DefaultOptionGroup opts = getOptions();
+        IOptionGroup opts = getOptions();
         Map<?, ?> properties = System.getProperties();
         try {
             opts.load(this, (Map<String, ?>) properties);
@@ -49,7 +49,7 @@ public class AbstractCLIPlugin
     @Override
     public void help(IPrintOut out, String prefix) {
         IOptionGroup opts = getOptions();
-        TreeMap<String, IOption> map = opts.getLocalOptionMap();
+        Map<String, IOption> map = opts.getLocalOptionMap();
         int maxlen = 0;
         for (String name : map.keySet())
             if (name.length() > maxlen)

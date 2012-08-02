@@ -1,5 +1,6 @@
 package net.bodz.swt.reflect.styles.grid;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.reflect.GUIHint;
 import net.bodz.swt.reflect.GUIStructs.GUICallMeta;
@@ -7,7 +8,6 @@ import net.bodz.swt.reflect.GUIStructs.GUICallVar;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

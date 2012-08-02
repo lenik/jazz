@@ -1,5 +1,7 @@
 package net.bodz.swt.reflect.util;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +9,6 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.swt.dialogs.SimpleDialog;
-import net.bodz.swt.reflect.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 import net.bodz.swt.widgets.util.EmptyComposite;
 

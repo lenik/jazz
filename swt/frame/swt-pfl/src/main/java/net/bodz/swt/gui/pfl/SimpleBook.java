@@ -1,18 +1,13 @@
 package net.bodz.swt.gui.pfl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.i18n.nls.NLS;
-import net.bodz.bas.i18n.nls.ResourceBundleNLS;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 public class SimpleBook
         extends AbstractBook {
@@ -38,7 +33,7 @@ public class SimpleBook
         super(title, next);
         map = new HashMap<TreePath, IPage>();
         methods = new ArrayList<PageMethod>(4);
-        dict = new ResourceBundleNLS("GUI Dict", GUINLS.bundle);
+        dict = GUINLS;
     }
 
     @Override
@@ -132,7 +127,7 @@ public class SimpleBook
         for (PageMethod method : methods)
             out.println("        " + method);
         if (dict != null)
-            out.println("    Dict: " + dict.getTitle());
+            out.println("    Dict: " + dict.getName());
         if (next != null) {
             out.println();
             out.println(next);

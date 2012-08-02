@@ -1,10 +1,11 @@
 package net.bodz.swt.reflect;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import net.bodz.bas.util.event.IPropertyChangeSupport;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 /**
  * Property names:

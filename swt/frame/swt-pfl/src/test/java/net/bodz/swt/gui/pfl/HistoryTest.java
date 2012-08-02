@@ -1,8 +1,6 @@
 package net.bodz.swt.gui.pfl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import net.bodz.bas.collection.tree.TreePath;
 
 import org.junit.Test;

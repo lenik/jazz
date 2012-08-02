@@ -1,12 +1,12 @@
 package net.bodz.art.installer;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import net.bodz.art.installer.nls.PackNLS;
 
 import org.eclipse.swt.graphics.ImageData;
 

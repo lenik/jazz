@@ -9,12 +9,16 @@ import net.bodz.bas.variant.map.IVariantLookupMap;
 public interface NLS
         extends IVariantLookupMap<String> {
 
+    NLS getParent();
+
     /**
-     * The descriptive name for the dict instance.
+     * The descriptive name.
      * 
      * @return A non-<code>null</code> name string.
      */
     String getName();
+
+    String getPath();
 
     /**
      * Get the preferred locale.

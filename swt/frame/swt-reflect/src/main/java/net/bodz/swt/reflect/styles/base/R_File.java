@@ -1,5 +1,7 @@
 package net.bodz.swt.reflect.styles.base;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,7 +17,6 @@ import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.GUIVarMeta;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

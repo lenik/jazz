@@ -1,6 +1,6 @@
 package net.bodz.art.obfuz.seals;
 
-import net.bodz.art.obfuz.nls.ProtectNLS;
+import static net.bodz.art.obfuz.nls.ProtectNLS.ProtectNLS;
 import net.bodz.art.obfuz.pm.ProtectionModel;
 import net.bodz.art.obfuz.pm.ProtectionModels;
 

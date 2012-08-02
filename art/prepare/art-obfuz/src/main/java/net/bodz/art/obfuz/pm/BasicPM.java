@@ -1,12 +1,13 @@
 package net.bodz.art.obfuz.pm;
 
+import static net.bodz.art.obfuz.nls.ProtectNLS.ProtectNLS;
+
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.crypto.SecretKey;
 
-import net.bodz.art.obfuz.nls.ProtectNLS;
 import net.bodz.art.obfuz.sysid.CpuId;
 import net.bodz.art.obfuz.sysid.MacAddressId;
 import net.bodz.art.obfuz.sysid.SysIdProvider;

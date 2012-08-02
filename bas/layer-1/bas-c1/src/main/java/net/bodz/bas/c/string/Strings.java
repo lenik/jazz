@@ -4,6 +4,25 @@ import java.util.Arrays;
 
 public class Strings {
 
+    public static String repeat(int count, String pattern) {
+        StringBuilder buf = new StringBuilder(pattern.length() * count);
+        while (--count >= 0)
+            buf.append(pattern);
+        return buf.toString();
+    }
+
+    public static String repeat(int count, char c) {
+        char[] buf = new char[count];
+        Arrays.fill(buf, c);
+        return new String(buf);
+    }
+
+    public static String reverse(String s) {
+        StringBuilder buf = new StringBuilder(s);
+        buf.reverse();
+        return buf.toString();
+    }
+
     static final char PADCHAR = ' ';
 
     public static String padLeft(String s, int len, char padChar) {
@@ -117,19 +136,6 @@ public class Strings {
             }
         }
         return buf.toString();
-    }
-
-    public static String repeat(int count, String pattern) {
-        StringBuilder buf = new StringBuilder(pattern.length() * count);
-        while (--count >= 0)
-            buf.append(pattern);
-        return buf.toString();
-    }
-
-    public static String repeat(int count, char c) {
-        char[] buf = new char[count];
-        Arrays.fill(buf, c);
-        return new String(buf);
     }
 
     public static String ellipse(String s, int len, String ellipse) {

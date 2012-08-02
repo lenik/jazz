@@ -11,10 +11,10 @@ import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.IShape2f;
 import net.bodz.geom.shape.base.ILine2f;
 import net.bodz.geom.shape.base.IPoint2f;
-import net.bodz.geom.shape.base.IPoint2f.Static;
 import net.bodz.geom.shape.base.IPolygon2f;
 import net.bodz.geom.shape.base.IRectangle2f;
 import net.bodz.geom.shape.base.ITriangle2f;
+import net.bodz.geom.shape.base.ITriangle2f.Static;
 
 public class SWTShape2f
         implements IShape2f {

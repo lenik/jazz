@@ -1,25 +1,24 @@
 package net.bodz.bas.util.ints;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * @see Iterator
+ * @see java.util.Iterator
  */
 public interface IntIterator {
 
     /**
-     * @see Iterator#hasNext()
+     * @see java.util.Iterator#hasNext()
      */
     boolean hasNext();
 
     /**
-     * @see Iterator#next()
+     * @see java.util.Iterator#next()
      */
     int next();
 
     /**
-     * @see Iterator#remove()
+     * @see java.util.Iterator#remove()
      */
     void remove();
 

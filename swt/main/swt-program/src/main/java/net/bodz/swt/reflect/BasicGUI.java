@@ -1,5 +1,7 @@
 package net.bodz.swt.reflect;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -13,19 +15,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.prefs.Preferences;
 
-import net.bodz.bas.cli.BasicCLI;
+import net.bodz.bas.c.java.util.LocaleTraits;
+import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.loader.boot.BootInfo;
-import net.bodz.bas.meta.build.ClassInfo;
-import net.bodz.bas.meta.i18n.Language;
+import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.program.StartMode;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.program.SWTConfig;
-import net.bodz.swt.reflect.nls.GUINLS;
 import net.bodz.swt.reflect.util.DialogUI;
 import net.bodz.swt.reflect.util.ThreadsMonitor;
 import net.bodz.swt.util.SWTResources;
@@ -45,16 +46,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.*;
 
 /**
  * @website http://www.bodz.net/products/BasicGUI
@@ -161,7 +153,7 @@ public class BasicGUI
             } else
                 lang = Locale.getDefault().getLanguage();
         }
-        Locale locale = Locales.getLocale(lang);
+        Locale locale = LocaleTraits.parseLocale(lang);
         Locale.setDefault(locale);
 
         shell = createShell();// throws GUIExcaption
@@ -395,9 +387,9 @@ public class BasicGUI
     }
 
     protected String getBannerString() {
-        ClassInfo info = _loadClassInfo();
-        String author = info.getAuthor();
-        String webSite = info.getWebSite();
+        AppClassDoc classDoc = _loadClassInfo();
+        String author = classDoc.getAuthor().toString();
+        String webSite = classDoc.getWebSite();
         if (webSite == null)
             webSite = "http://www.bodz.net/";
         String banner = GUINLS.format("BasicGUI.banner", author, webSite, webSite);

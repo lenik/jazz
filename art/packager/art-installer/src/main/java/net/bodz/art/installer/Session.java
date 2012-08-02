@@ -1,5 +1,7 @@
 package net.bodz.art.installer;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.beans.ExceptionListener;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +15,6 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.art.installer.util.Flags;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;

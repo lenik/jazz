@@ -1,5 +1,7 @@
 package net.bodz.swt.reflect.styles.base;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 
@@ -15,7 +17,6 @@ import net.bodz.swt.reflect.GUIHint;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
-import net.bodz.swt.reflect.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 import net.bodz.swt.widgets.DynamicControl;
 

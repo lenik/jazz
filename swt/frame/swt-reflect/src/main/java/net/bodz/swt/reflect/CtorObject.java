@@ -22,7 +22,7 @@ public class CtorObject
     }
 
     public Object newInstance()
-            throws ReflectException {
+            throws ReflectiveOperationException {
         Object retval = Reflects.newInstance(ctor, parameters);
         setRetval(retval);
         return retval;

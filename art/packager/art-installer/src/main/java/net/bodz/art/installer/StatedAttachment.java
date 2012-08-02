@@ -1,13 +1,8 @@
 package net.bodz.art.installer;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.Reader;
-import java.io.Writer;
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
+import java.io.*;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
@@ -15,7 +10,6 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.vfs.IFile;

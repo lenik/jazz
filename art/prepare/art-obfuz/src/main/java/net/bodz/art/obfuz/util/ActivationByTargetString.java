@@ -1,5 +1,7 @@
 package net.bodz.art.obfuz.util;
 
+import static net.bodz.art.obfuz.nls.ProtectNLS.ProtectNLS;
+
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -7,7 +9,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.prefs.Preferences;
 
-import net.bodz.art.obfuz.nls.ProtectNLS;
 import net.bodz.art.obfuz.pm.ProtectException;
 import net.bodz.art.obfuz.pm.ProtectionModel;
 import net.bodz.art.obfuz.seals.CodeSet;

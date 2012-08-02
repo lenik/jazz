@@ -1,6 +1,6 @@
 package net.bodz.art.installer;
 
-import net.bodz.art.installer.nls.PackNLS;
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.Proposals;
@@ -9,10 +9,6 @@ import net.bodz.bas.util.ProgressChangeEvent;
 import net.bodz.bas.util.StatusChangeEvent;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 
-/**
- * @test {@link PackageTaskTest}
- * @test {@link ConsoleExecutorTest}
- */
 public class ConsoleExecutor
         extends ProjectExecutor {
 
@@ -39,14 +35,14 @@ public class ConsoleExecutor
 
     @Override
     public void statusChange(StatusChangeEvent e) {
-        L.mesg(e.getStatus());
+        logger.mesg(e.getStatus());
     }
 
     @Override
     public void progressChange(ProgressChangeEvent e) {
         double progress = 100 * e.getProgress();
         String mesg = String.format(PackNLS.getString("ConsoleExecutor.progress_f"), progress);
-        L.tinfo(mesg);
+        logger.info(mesg);
     }
 
     @Override
@@ -55,7 +51,7 @@ public class ConsoleExecutor
         // long d = job.getDuration()
         // ...
         String mesg = String.format(PackNLS.getString("ConsoleExecutor.durationChanged_d"), e.getIncrement());
-        L.tinfo(mesg);
+        logger.info(mesg);
     }
 
 }

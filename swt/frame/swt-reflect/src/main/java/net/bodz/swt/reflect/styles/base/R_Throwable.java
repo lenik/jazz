@@ -1,11 +1,14 @@
 package net.bodz.swt.reflect.styles.base;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.beans.EventHandler;
 import java.io.IOException;
 import java.util.EventObject;
 
 import net.bodz.bas.c.java.awt.DesktopApps;
 import net.bodz.bas.c.system.SystemProperties;
+import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.reflect.GUIVar;
@@ -13,7 +16,6 @@ import net.bodz.swt.reflect.IAction;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
 import net.bodz.swt.reflect._Action;
-import net.bodz.swt.reflect.nls.GUINLS;
 import net.bodz.swt.reflect.util.DialogUI;
 import net.bodz.swt.util.SWTResources;
 import net.bodz.swt.widgets.util.Controls;

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.meta.i18n.Language;
 import net.bodz.swt.dialogs.SimpleDialog;
 import net.bodz.swt.err.ValidateException;
 

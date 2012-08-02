@@ -1,9 +1,10 @@
 package net.bodz.art.obfuz.util;
 
+import static net.bodz.art.obfuz.nls.ProtectNLS.ProtectNLS;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.art.obfuz.nls.ProtectNLS;
 import net.bodz.bas.err.ParseException;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.gui.pfl.AbstractPage;

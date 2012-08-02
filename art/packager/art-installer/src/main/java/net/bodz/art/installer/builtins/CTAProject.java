@@ -1,12 +1,13 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 
 import net.bodz.art.installer.BaseDirVariable;
 import net.bodz.art.installer.IComponent;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.TempFile;
 import net.bodz.bas.meta.build.MainVersion;

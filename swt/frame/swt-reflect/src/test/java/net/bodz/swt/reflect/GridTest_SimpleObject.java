@@ -1,6 +1,5 @@
 package net.bodz.swt.reflect;
 
-import net.bodz.bas.meta.info.Doc;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.Border;
@@ -23,7 +22,9 @@ public class GridTest_SimpleObject
 
     public static class School {
 
-        @Doc("School Identifier")
+        /**
+         * School Identifier
+         */
         @Color(value = "blue", back = "#ccccff")
         public final String id;
 

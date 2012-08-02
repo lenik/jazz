@@ -1,11 +1,12 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.io.File;
 import java.nio.file.Files;
 
 import net.bodz.art.installer.AbstractComponent;
 import net.bodz.art.installer.ISession;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.system.SystemInfo;
 
 import com.roxes.win32.LnkFile;

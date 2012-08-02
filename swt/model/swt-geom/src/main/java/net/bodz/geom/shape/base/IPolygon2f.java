@@ -3,8 +3,8 @@ package net.bodz.geom.shape.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.err.ReadOnlyAttributeException;
 import net.bodz.bas.util.Pair;
-import net.bodz.geom.base.ReadOnlyAttributeException;
 import net.bodz.geom.shape.EditablePointSet2f;
 import net.bodz.geom.shape.IShape2f;
 import net.bodz.geom.shape.IShapeAmount2f;
@@ -252,12 +252,12 @@ public interface IPolygon2f
 
         @Override
         public void addPoint(int index, float x, float y) {
-            throw new ReadOnlyAttributeException();
+            throw new ReadOnlyAttributeException(getClass(), "points");
         }
 
         @Override
         public void removePoint(int index) {
-            throw new ReadOnlyAttributeException();
+            throw new ReadOnlyAttributeException(getClass(), "points");
         }
 
     }

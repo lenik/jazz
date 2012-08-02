@@ -1,6 +1,8 @@
 package net.bodz.art.installer;
 
 import net.bodz.art.installer.builtins.TestConfig;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.swt.gui.pfl.BadPathEvent;
 import net.bodz.swt.gui.pfl.IBadPathListener;
 import net.bodz.swt.widgets.test.ControlTestApp;
@@ -19,7 +21,8 @@ public class InstallCompositeTest {
         ProjectExecutor executor = new ConsoleExecutor(project);
         ISession session = executor.getSession();
 
-        session.addResFolder(new FileResFolder(TestConfig.outDir));
+        IFile outdir = new JavaioFile(TestConfig.outDir);
+        session.addResFolder(outdir);
         TestConfig.setTestBaseDir(session);
 
         InstallComposite c = new InstallComposite(session, app.holder, SWT.BORDER);
