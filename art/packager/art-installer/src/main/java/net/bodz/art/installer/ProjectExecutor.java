@@ -12,13 +12,11 @@ public abstract class ProjectExecutor
     protected final ISession session;
 
     protected final UserInterface UI;
-    protected final Logger L;
+    protected final Logger logger;
 
     public ProjectExecutor(IProject project, UserInterface userInterface, Logger logger) {
         if (project == null)
             throw new NullPointerException("project");
-        if (userInterface == null)
-            throw new NullPointerException("userInterface");
         if (userInterface == null)
             throw new NullPointerException("userInterface");
         if (logger == null)
@@ -26,7 +24,7 @@ public abstract class ProjectExecutor
         this.project = project;
         this.session = new Session(project, userInterface, logger);
         this.UI = userInterface;
-        this.L = logger;
+        this.logger = logger;
     }
 
     public ProjectExecutor(ISession session, UserInterface userInterface, Logger logger) {
@@ -35,7 +33,7 @@ public abstract class ProjectExecutor
         this.project = session.getProject();
         this.session = session;
         this.UI = userInterface;
-        this.L = logger;
+        this.logger = logger;
     }
 
     public IProject getProject() {
@@ -72,13 +70,13 @@ public abstract class ProjectExecutor
         Logger _logger = session.getLogger();
         SessionJob job;
         try {
-            session.setLogger(L);
+            session.setLogger(logger);
             job = project.execute(type, session);
         } finally {
             session.setLogger(_logger);
         }
         if (job != null) {
-            if (L.isDebugEnabled())
+            if (logger.isDebugEnabled())
                 job.dump(Stdio.cout);
             bind(job);
             try {

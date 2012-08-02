@@ -1,7 +1,6 @@
 package net.bodz.swt.widgets.gs;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import net.bodz.bas.util.ints.IntIterator;
 import net.bodz.swt.widgets.gs.GridSpace.HFirst;
 

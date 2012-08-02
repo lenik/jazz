@@ -1,14 +1,17 @@
 package net.bodz.art.installer;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.ant.TaskLogger;
 import net.bodz.bas.util.exception.ExceptionBuffer;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;
+import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -39,12 +42,14 @@ public class PackageTask
     }
 
     public void setOutDir(File outdir) {
-        FileResFolder folder = new FileResFolder(outdir, true);
+        IFile folder = new JavaioFile(outdir);
+        folder.setAutoCreateParents(true);
         setResFolder(folder);
     }
 
     public void setOutJar(File zipFile) {
-        ZipResFolder outjar = new ZipResFolder(zipFile, true);
+        IFile outjar = new ZipResFolder(zipFile);
+        outjar.setAutoCreateParents(true);
         setResFolder(outjar);
     }
 

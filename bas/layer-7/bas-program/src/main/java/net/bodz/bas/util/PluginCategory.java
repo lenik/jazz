@@ -5,7 +5,6 @@ import java.util.Map;
 
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.meta.build.AppClassDoc;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 /**
  * Plugin Category
@@ -22,7 +21,7 @@ public class PluginCategory {
         assert baseType != null;
         this.categoryName = name;
         this.categoryBaseType = baseType;
-        this.categoryClassDoc = ClassDocs.loadFromResource(baseType).decorate(AppClassDoc.class);
+        this.categoryClassDoc = AppClassDoc.get(baseType);
         registry = new HashMap<String, PluginTypeEx>();
     }
 

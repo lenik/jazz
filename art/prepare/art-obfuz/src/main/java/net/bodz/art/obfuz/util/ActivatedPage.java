@@ -1,6 +1,6 @@
 package net.bodz.art.obfuz.util;
 
-import net.bodz.art.obfuz.nls.ProtectNLS;
+import static net.bodz.art.obfuz.nls.ProtectNLS.ProtectNLS;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.swt.gui.pfl.AbstractPage;
 import net.bodz.swt.gui.pfl.PageException;

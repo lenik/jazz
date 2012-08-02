@@ -4,6 +4,7 @@ import java.util.Map;
 
 import net.bodz.art.installer.builtins.TestConfig;
 import net.bodz.bas.c.java.util.TextMap;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.bas.xml.XMLs;
 
 import org.junit.Assert;
@@ -24,7 +25,9 @@ public class ComponentsTest
 
         ProjectExecutor executor = new ConsoleExecutor(project);
         ISession session = executor.getSession();
-        session.addResFolder(0, new FileResFolder(TestConfig.outDir, true));
+        JavaioFile outDir = new JavaioFile(TestConfig.outDir);
+        outDir.setAutoCreateParents(true); // resFileLink<true>
+        session.addResFolder(0, outDir);
         executor.pack();
 
         TextMap<Object> registry = components.exportRegistry();

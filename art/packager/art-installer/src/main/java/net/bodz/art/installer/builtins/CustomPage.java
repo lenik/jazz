@@ -1,5 +1,6 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import static net.bodz.art.installer.util.TreeItems.FULL;
 import static net.bodz.art.installer.util.TreeItems.NONE;
 import static net.bodz.art.installer.util.TreeItems.UNKNOWN;
@@ -16,7 +17,6 @@ import net.bodz.art.installer.IProject;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.Scheme;
 import net.bodz.art.installer.Variable;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.art.installer.util.MissingDependancyBuffer;
 import net.bodz.art.installer.util.MissingDependancyBuffer.Entry;
 import net.bodz.art.installer.util.TreeItems;
@@ -40,13 +40,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.*;
 
 /**
  * @test CustomPageTest

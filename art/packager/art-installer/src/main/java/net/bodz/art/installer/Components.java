@@ -1,10 +1,11 @@
 package net.bodz.art.installer;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;

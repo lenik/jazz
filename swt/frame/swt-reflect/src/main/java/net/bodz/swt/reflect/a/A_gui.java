@@ -1,5 +1,7 @@
 package net.bodz.swt.reflect.a;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.lang.reflect.AnnotatedElement;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +14,6 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.ui.a.Font;
 import net.bodz.bas.ui.a.PreferredSize;
-import net.bodz.swt.reflect.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.apache.commons.collections15.Factory;

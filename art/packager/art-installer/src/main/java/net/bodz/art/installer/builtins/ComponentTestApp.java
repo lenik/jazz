@@ -1,9 +1,9 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import net.bodz.art.installer.ConsoleExecutor;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.SessionException;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 public class ComponentTestApp {

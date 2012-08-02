@@ -3,7 +3,6 @@ package net.bodz.bas.util;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.model.IFactory;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 /**
  * Plugin Implementation
@@ -12,7 +11,7 @@ public class PluginTypeEx {
 
     private final Class<? extends IPlugin> clazz;
     private final IFactory<IPlugin> factory;
-    private final AppClassDoc classDoc;
+    private final AppClassDoc info;
 
     @SuppressWarnings("unchecked")
     public PluginTypeEx(IFactory<IPlugin> factory) {
@@ -22,7 +21,7 @@ public class PluginTypeEx {
         if (!IPlugin.class.isAssignableFrom(type))
             throw new IllegalArgumentException("wrong factory which create " + type);
         this.clazz = (Class<? extends IPlugin>) type;
-        this.classDoc = ClassDocs.loadFromResource(clazz).decorate(AppClassDoc.class);
+        this.info = AppClassDoc.get(clazz);
     }
 
     public PluginTypeEx(Class<? extends IPlugin> clazz) {

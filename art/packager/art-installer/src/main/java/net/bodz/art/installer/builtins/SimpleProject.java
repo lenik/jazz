@@ -1,5 +1,7 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.io.File;
 import java.nio.file.Files;
 
@@ -8,7 +10,6 @@ import net.bodz.art.installer.BaseDirVariable;
 import net.bodz.art.installer.ConfigPage;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.Variable;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.system.SystemInfo;
 
 public class SimpleProject

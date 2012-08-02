@@ -40,7 +40,7 @@ public class LocaleTraits
     @Override
     public Locale parse(String localeName)
             throws ParseException {
-        return parseLocale(localeName, defaultTextformSeparator);
+        return parseLocale(localeName);
     }
 
     @Override
@@ -58,6 +58,11 @@ public class LocaleTraits
         }
 
         return parseLocale(text, separator);
+    }
+
+    public static Locale parseLocale(String localeName)
+            throws ParseException {
+        return parseLocale(localeName, defaultTextformSeparator);
     }
 
     public static Locale parseLocale(String localeName, String separator)

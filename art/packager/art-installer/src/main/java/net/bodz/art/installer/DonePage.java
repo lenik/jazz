@@ -1,6 +1,6 @@
 package net.bodz.art.installer;
 
-import net.bodz.art.installer.nls.PackNLS;
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.swt.gui.pfl.AbstractPage;
 import net.bodz.swt.gui.pfl.PageException;

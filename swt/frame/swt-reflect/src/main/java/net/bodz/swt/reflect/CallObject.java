@@ -25,7 +25,7 @@ public class CallObject
     }
 
     public Object invoke()
-            throws ReflectException {
+            throws ReflectiveOperationException {
         Object retval = Reflects.invoke(object, method, parameters);
         setRetval(retval);
         return retval;

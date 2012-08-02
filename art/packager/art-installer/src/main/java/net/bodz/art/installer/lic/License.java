@@ -1,8 +1,9 @@
 package net.bodz.art.installer.lic;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.io.IOException;
 
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.io.resource.tools.StreamReading;

@@ -1,12 +1,13 @@
 package net.bodz.swt.reflect;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.c.type.Types;
 import net.bodz.bas.err.CheckException;
 import net.bodz.bas.err.CreateException;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 public class GUIVars {
 

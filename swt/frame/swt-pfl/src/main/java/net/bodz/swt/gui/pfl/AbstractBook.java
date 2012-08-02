@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.i18n.nls.CombinedNLS;
 import net.bodz.bas.i18n.nls.NLS;
 
 public abstract class AbstractBook
@@ -84,7 +85,7 @@ public abstract class AbstractBook
             return d1;
         if (d1 == d2)
             return d1;
-        MergeDict all = new MergeDict(d1.getTitle(), d1, d2);
+        CombinedNLS all = new CombinedNLS(d1.getTitle(), d1, d2);
         return all;
     }
 

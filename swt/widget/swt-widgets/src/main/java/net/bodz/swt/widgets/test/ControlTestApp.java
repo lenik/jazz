@@ -3,7 +3,7 @@ package net.bodz.swt.widgets.test;
 import java.awt.BorderLayout;
 import java.lang.reflect.Constructor;
 
-import net.bodz.bas.mode._fn.Proc1;
+import net.bodz.bas.lang.fn.Proc1;
 import net.bodz.swt.widgets.util.Controls;
 
 import org.eclipse.swt.SWT;

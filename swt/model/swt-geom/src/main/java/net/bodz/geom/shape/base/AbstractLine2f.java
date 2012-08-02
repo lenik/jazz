@@ -3,8 +3,8 @@ package net.bodz.geom.shape.base;
 import java.io.Serializable;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
+import net.bodz.bas.err.ReadOnlyAttributeException;
 import net.bodz.geom.base.PickInfo2f;
-import net.bodz.geom.base.ReadOnlyAttributeException;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;

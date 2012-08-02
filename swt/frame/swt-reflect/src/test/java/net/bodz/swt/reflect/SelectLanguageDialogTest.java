@@ -1,11 +1,12 @@
 package net.bodz.swt.reflect;
 
-import net.bodz.bas.meta.i18n.Language;
-
 import org.eclipse.swt.SWT;
 import org.junit.Test;
 
-@Language({ "es", "et" })
+/**
+ * @lang es
+ * @lang et
+ */
 public class SelectLanguageDialogTest
         extends BasicGUI {
 

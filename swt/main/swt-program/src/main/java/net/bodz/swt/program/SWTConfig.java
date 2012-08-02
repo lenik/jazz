@@ -1,5 +1,7 @@
 package net.bodz.swt.program;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.net.URL;
 
 import net.bodz.bas.loader.BundledLoader;
@@ -7,7 +9,6 @@ import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader._LoadConfig;
 import net.bodz.bas.snm.SJEclipse;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 public class SWTConfig
         extends _LoadConfig {

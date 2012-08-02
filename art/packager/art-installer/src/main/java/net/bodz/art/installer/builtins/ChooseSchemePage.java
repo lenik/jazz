@@ -1,10 +1,10 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import net.bodz.art.installer.ConfigPage;
 import net.bodz.art.installer.IComponent;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.Scheme;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.swt.err.ValidateException;
 import net.bodz.swt.widgets.util.Controls;

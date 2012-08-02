@@ -1,5 +1,7 @@
 package net.bodz.swt.reflect;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -33,7 +35,6 @@ import net.bodz.swt.reflect.GUIVars.GUIFieldMeta;
 import net.bodz.swt.reflect.GUIVars.GUIFieldVar;
 import net.bodz.swt.reflect.GUIVars.GUIPropertyMeta;
 import net.bodz.swt.reflect.GUIVars.GUIPropertyVar;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 public class GUIStructs {
 
@@ -450,7 +451,7 @@ public class GUIStructs {
         }
 
         public Object invoke()
-                throws ReflectException {
+                throws ReflectiveOperationException {
             return getCallContext().invoke();
         }
 

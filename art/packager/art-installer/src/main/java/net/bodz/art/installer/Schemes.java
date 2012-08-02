@@ -1,9 +1,10 @@
 package net.bodz.art.installer;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.string.Strings;
 
 public class Schemes {

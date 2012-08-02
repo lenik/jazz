@@ -1,5 +1,7 @@
 package net.bodz.swt.reflect.util;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,15 +13,14 @@ import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.mode._fn.Func0;
+import net.bodz.bas.lang.fn.Func0;
+import net.bodz.bas.ui.AbstractUserInterface;
 import net.bodz.bas.ui.IProposal;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.bas.util.Objects;
 import net.bodz.swt.dialogs.SimpleDialog;
-import net.bodz.swt.reflect.DialogUITest;
 import net.bodz.swt.reflect.IAction;
 import net.bodz.swt.reflect.SWTRenderContext;
-import net.bodz.swt.reflect.nls.GUINLS;
 import net.bodz.swt.reflect.styles.base.SWTStrategy;
 import net.bodz.swt.reflect.styles.grid.SWTGridStrategy;
 import net.bodz.swt.util.SWTResources;
@@ -34,19 +35,10 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.*;
 
-/**
- * @test {@link DialogUITest}
- */
 public class DialogUI
-        extends _UserInterface {
+        extends AbstractUserInterface {
 
     static SWTGridStrategy strategy = new SWTGridStrategy();
 

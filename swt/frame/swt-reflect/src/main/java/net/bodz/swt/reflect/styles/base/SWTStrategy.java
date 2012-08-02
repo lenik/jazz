@@ -1,12 +1,14 @@
 package net.bodz.swt.reflect.styles.base;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.io.File;
 import java.util.Date;
 
 import javax.swing.Renderer;
 
-import net.bodz.bas.meta.util.ChainUsage;
-import net.bodz.bas.meta.util.OverrideOption;
+import net.bodz.bas.meta.codehint.ChainUsage;
+import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.bas.ui.RenderStrategy;
 import net.bodz.bas.ui.Var;
@@ -14,7 +16,6 @@ import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.GUIVars;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
-import net.bodz.swt.reflect.nls.GUINLS;
 
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;

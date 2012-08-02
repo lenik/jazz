@@ -370,7 +370,7 @@ public class BasicCLI
             if (L.isDebugEnabled()) {
                 for (Entry<String, IOption> entry : opts.getLocalOptionMap().entrySet()) {
                     IOption opt = entry.getValue();
-                    String optnam = opt.getFriendlyName();
+                    String optnam = opt.getName();
                     if (!optnam.equals(entry.getKey()))
                         continue;
                     Object optval = opt.parse(this);
@@ -512,6 +512,10 @@ public class BasicCLI
     protected void doFileArgument(IFile file, InputStream in)
             throws Exception {
         throw new NotImplementedException();
+    }
+
+    protected AppClassDoc _loadClassInfo() {
+        return null;
     }
 
 }

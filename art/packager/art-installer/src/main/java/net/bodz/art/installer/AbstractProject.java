@@ -1,5 +1,7 @@
 package net.bodz.art.installer;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.io.File;
 import java.net.URL;
 import java.util.Collection;
@@ -14,11 +16,12 @@ import net.bodz.art.installer.Schemes.Maximum;
 import net.bodz.art.installer.Schemes.Minimum;
 import net.bodz.art.installer.builtins.RequiredSection;
 import net.bodz.art.installer.lic.License;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.collection.tree.TreeCallback;
+import net.bodz.bas.meta.build.AppClassDoc;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.graphics.ImageData;
@@ -50,16 +53,16 @@ public class AbstractProject
             String respath = alogo.value();
             logo = SWTResources.getImageDataRes(clazz, respath);
         }
-        ClassInfo info = ClassInfo.get(clazz);
+        AppClassDoc info = ClassDocs.loadFromResource(clazz);
         setName(clazz.getName());
         setText(A_bas.getDisplayName(clazz));
-        setDoc(info.getDoc());
+        setDoc(info.getTextHeader());
         URL iconURL = info.getIcon();
         if (iconURL != null) {
             ImageData icon = SWTResources.getImageData(iconURL);
             setImage(icon);
         }
-        version = info.getVersionString();
+        version = info.getVersion().toString();
         company = info.getAuthor();
         updateTime = info.getDateString();
     }

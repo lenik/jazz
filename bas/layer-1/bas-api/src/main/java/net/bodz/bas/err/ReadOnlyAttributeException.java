@@ -1,9 +1,9 @@
-package net.bodz.geom.base;
+package net.bodz.bas.err;
 
 public class ReadOnlyAttributeException
-        extends RuntimeException {
+        extends ReadOnlyException {
 
-    static final long serialVersionUID = 2237834200964798481L;
+    static final long serialVersionUID = 1L;
 
     public ReadOnlyAttributeException(Class<?> clazz, String attributeName) {
         super(clazz.getName() + "::" + attributeName + " is read-only. ");

@@ -1,8 +1,8 @@
 package net.bodz.art.obfuz.pm;
 
-import java.util.Arrays;
+import static net.bodz.art.obfuz.nls.ProtectNLS.ProtectNLS;
 
-import net.bodz.art.obfuz.nls.ProtectNLS;
+import java.util.Arrays;
 
 public class XorMatrix
         implements Cloneable {

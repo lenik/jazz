@@ -1,12 +1,13 @@
 package net.bodz.art.installer.builtins;
 
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
 import net.bodz.art.installer.AbstractComponent;
 import net.bodz.art.installer.ISession;
-import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.string.Strings;
 
 public class CreateFile

@@ -1,6 +1,6 @@
 package net.bodz.swt.reflect.util;
 
-import net.bodz.bas.mode._fn.Proc1;
+import net.bodz.bas.lang.fn.Proc1;
 import net.bodz.swt.widgets.test.ControlTestApp;
 import net.bodz.swt.widgets.util.TestComposite;
 

@@ -1,10 +1,7 @@
 package net.bodz.art.obfuz.seals;
 
-import net.bodz.art.obfuz.nls.ProtectNLS;
+import static net.bodz.art.obfuz.nls.ProtectNLS.ProtectNLS;
 
-/**
- * @test AccumEntropyTest
- */
 public class AccumEntropy
         extends _Entropy {
 

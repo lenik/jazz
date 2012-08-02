@@ -1,5 +1,7 @@
 package net.bodz.swt.gui.pfl;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
@@ -9,7 +11,6 @@ import net.bodz.bas.i18n.nls.NLS;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.adapters.ControlAdapters;
-import net.bodz.swt.reflect.nls.GUINLS;
 import net.bodz.swt.reflect.util.DialogUI;
 import net.bodz.swt.util.SWTResources;
 

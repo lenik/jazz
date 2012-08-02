@@ -1,8 +1,9 @@
 package net.bodz.art.installer;
 
-import net.bodz.art.installer.nls.PackNLS;
+import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
@@ -14,14 +15,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 /**
+ * @name boDz Product Installer
  * @website http://www.bodz.net/products/SWT-Installer
  */
-@DisplayName("boDz Product Installer")
 // @Icon("icon.gif")
 @LogoImage("logo2.jpg")
+@MainVersion({ 1, 0 })
 @PreferredSize(width = 500, height = 400)
 @RcsKeywords(id = "$Id$")
-@Version({ 1, 0 })
 public class Installer
         extends BasicGUI {
 

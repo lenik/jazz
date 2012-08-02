@@ -1,8 +1,8 @@
 package net.bodz.swt.gui.pfl;
 
+import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.swt.reflect.nls.GUINLS;
 import net.bodz.swt.widgets.test.ControlTestApp;
 
 import org.eclipse.swt.SWT;

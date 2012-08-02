@@ -5,16 +5,15 @@ import java.io.Serializable;
 import javax.vecmath.Point2f;
 import javax.vecmath.Vector2f;
 
+import net.bodz.bas.err.ReadOnlyAttributeException;
 import net.bodz.geom.base.PickInfo2f;
-import net.bodz.geom.base.ReadOnlyAttributeException;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;
-import net.bodz.geom.shape.IShape2f;
 
 public abstract class AbstractCircle2f
         extends AbstractShape2f
-        implements ICircle2f, Serializable {
+        implements Circle2f, Serializable {
 
     protected final class PtCenter
             extends AbstractPoint2f {
@@ -63,21 +62,21 @@ public abstract class AbstractCircle2f
         throw new ReadOnlyAttributeException(AbstractCircle2f.class, "radius");
     }
 
-    public IPoint2f.Static center() {
-        return new IPoint2f.Static(new PtCenter());
+    public Point2f.Static center() {
+        return new Point2f.Static(new PtCenter());
     }
 
-    public void center(IPoint2f point) {
+    public void center(Point2f point) {
         centerX(point.x());
         centerY(point.y());
     }
 
     @Override
-    public IRectangle2f boundingBox() {
+    public Rectangle2f boundingBox() {
         float centerX = centerX();
         float centerY = centerY();
         float radius = radius();
-        return new IRectangle2f.StaticLeft(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+        return new Rectangle2f.StaticLeft(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
     }
 
     @Override
@@ -103,7 +102,7 @@ public abstract class AbstractCircle2f
     // -o Shape
 
     @Override
-    public IPoint2f spointRef(int id) {
+    public Point2f spointRef(int id) {
         switch (id) {
         case SP_CENTER:
             return new PtCenter();
@@ -112,18 +111,18 @@ public abstract class AbstractCircle2f
     }
 
     @Override
-    public IShape2f crop(Point2f baseHalfPlane, Vector2f normal) {
+    public Shape2f crop(Point2f baseHalfPlane, Vector2f normal) {
         // TODO
         return null;
     }
 
-    public IPolygon2f convertToPolygon() {
+    public Polygon2f convertToPolygon() {
         // TODO
         return null;
     }
 
     @Override
-    public abstract ICircle2f snapshot();
+    public abstract Circle2f snapshot();
 
     @Override
     public abstract AbstractCircle2f clone();

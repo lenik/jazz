@@ -3,13 +3,15 @@ package net.bodz.art.installer;
 import net.bodz.art.installer.builtins.TestConfig;
 import net.bodz.bas.c.reflect.Reflects;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.util.Job;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 import org.junit.Test;
 
 public class InstallerTest {
 
     static {
-        Reflects.setStatic(_Job.class, "slowdown", 10);
+        Reflects.setStatic(Job.class, "slowdown", 10);
     }
 
     @Test
@@ -21,7 +23,7 @@ public class InstallerTest {
             public void setSession(ISession session) {
                 super.setSession(session);
                 session.getLogger().setLevel(LogLevel.DEBUG);
-                session.addResFolder(new FileResFolder(TestConfig.outDir));
+                session.addResFolder(new JavaioFile(TestConfig.outDir));
                 TestConfig.setTestBaseDir(session);
             }
         };

@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
+import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.i18n.LocaleColo;
 import net.bodz.bas.variant.map.AbstractVariantLookupMap;
 
 public abstract class AbstractNLS
@@ -16,14 +18,14 @@ public abstract class AbstractNLS
     private String name;
 
     public AbstractNLS() {
-        this.parent = null;
+        this(null, LocaleColo.getInstance().get());
     }
 
     /**
      * This constructor doesn't call {@link #reload(Locale)}.
      */
     public AbstractNLS(NLS parent) {
-        this(parent, Locale.getDefault());
+        this(parent, LocaleColo.getInstance().get());
     }
 
     /**
@@ -32,29 +34,53 @@ public abstract class AbstractNLS
     public AbstractNLS(NLS parent, Locale preferredLocale) {
         this.parent = parent;
         this.preferredLocale = preferredLocale;
+
+        String simpleName = getClass().getSimpleName();
+        if (simpleName.endsWith("NLS"))
+            simpleName = simpleName.substring(0, simpleName.length() - 3);
+        name = Strings.hyphenatize(simpleName);
     }
 
+    @Override
     public NLS getParent() {
         return parent;
     }
 
     @Override
     public String getName() {
-        if (name == null) {
-            String parentName = parent == null ? "" : parent.getName();
-            StringBuilder buf = new StringBuilder(parentName.length() + 30);
-            buf.append(parentName);
-            buf.append('/');
-            buf.append(localName());
-            name = buf.toString();
-        }
         return name;
     }
 
+    public void setName(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        this.name = name;
+    }
+
+    @Override
+    public String getPath() {
+        StringBuilder buf = new StringBuilder(100);
+        NLS node = this;
+        do {
+            String nodeName = node.getName();
+
+            if (buf.length() != 0)
+                buf.append('/');
+            buf.append(Strings.reverse(nodeName));
+
+            node = node.getParent();
+        } while (node != null);
+
+        buf.reverse();
+        return buf.toString();
+    }
+
+    @Override
     public Locale getPreferredLocale() {
         return preferredLocale;
     }
 
+    @Override
     public void setPreferredLocale(Locale preferredLocale) {
         this.preferredLocale = preferredLocale;
         try {
@@ -167,7 +193,7 @@ public abstract class AbstractNLS
 
     @Override
     public String toString() {
-        return getName();
+        return getPath();
     }
 
 }

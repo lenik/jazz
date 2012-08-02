@@ -1,12 +1,13 @@
 package net.bodz.swt.dialogs;
 
+import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.traits.ValidateException;
-import net.bodz.swt.nls.ControlsNLS;
 import net.bodz.swt.widgets.StackComposite;
 import net.bodz.swt.widgets.util.FixSizeComposite;
 
@@ -17,13 +18,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.*;
 
 /**
  * @test {@link SaveImageDialogTest}
