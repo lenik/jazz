@@ -1,6 +1,5 @@
-package net.bodz.bas.log.api;
+package net.bodz.bas.log;
 
-import net.bodz.bas.log.ILogComposite;
 
 public interface LoggerCompat
         extends ILogComposite {

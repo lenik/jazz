@@ -6,7 +6,7 @@ import java.util.List;
 import net.bodz.bas.collection.tree.TreeNode;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;

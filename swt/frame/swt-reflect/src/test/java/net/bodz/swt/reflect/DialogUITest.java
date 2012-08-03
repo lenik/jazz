@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.ui.Proposals;
 import net.bodz.bas.util.example.Address;
 import net.bodz.bas.util.example.Person;
@@ -135,13 +136,13 @@ public class DialogUITest {
         if (choices == null)
             System.out.println("nothing choiced");
         else
-            System.out.println("Choiced: " + Strings.joinDot(choices));
+            System.out.println("Choiced: " + StringArray.joinByDot(choices));
 
         Set<Integer> kv = ia.choices("Choice numbers: ", numbers, 2, 4);
         if (kv == null)
             System.out.println("nothing choiced");
         else
-            System.out.println("Choiced: " + Strings.join(", ", kv));
+            System.out.println("Choiced: " + StringArray.join(", ", kv));
     }
 
 }

@@ -1,15 +1,15 @@
-package net.bodz.bas.log.logImpls;
+package user.logs;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-public class ClDog {
+public class HelloWithApacheLogger {
 
     Log logger;
 
-    public ClDog() {
-        logger = LogFactory.getLog(ClDog.class);
+    public HelloWithApacheLogger() {
+        logger = LogFactory.getLog(HelloWithApacheLogger.class);
     }
 
     public void hello() {

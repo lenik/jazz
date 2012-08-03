@@ -1,7 +1,5 @@
-package net.bodz.bas.log.api;
+package net.bodz.bas.log;
 
-import net.bodz.bas.log.AbstractLogComposite;
-import net.bodz.bas.log.LogLevel;
 
 public class AbstractLoggerCompat
         extends AbstractLogComposite

@@ -18,7 +18,7 @@ import java.util.Set;
 import net.bodz.art.installer.util.Flags;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.vfs.IFile;

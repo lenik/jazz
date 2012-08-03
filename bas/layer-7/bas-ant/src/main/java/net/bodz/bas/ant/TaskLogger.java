@@ -1,8 +1,8 @@
 package net.bodz.bas.ant;
 
 import net.bodz.bas.log.AbstractLogSink;
+import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.LogLevel;
-import net.bodz.bas.log.api.AbstractLogger;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -19,8 +19,8 @@ public class TaskLogger
     }
 
     @Override
-    public AntLogSink get(LogLevel category, int verboseLevel) {
-        int antLevel = getAntLevel(category, verboseLevel);
+    public AntLogSink get(LogLevel category, int delta) {
+        int antLevel = getAntLevel(category, delta);
         return new AntLogSink(antLevel);
     }
 

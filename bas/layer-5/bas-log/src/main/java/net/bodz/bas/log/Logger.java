@@ -1,8 +1,7 @@
-package net.bodz.bas.log.api;
+package net.bodz.bas.log;
 
 import javax.annotation.Generated;
 
-import net.bodz.bas.log.ILogSink;
 
 @Generated("By LoggerCG")
 public interface Logger

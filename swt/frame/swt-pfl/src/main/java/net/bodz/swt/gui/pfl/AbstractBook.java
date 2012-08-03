@@ -85,7 +85,8 @@ public abstract class AbstractBook
             return d1;
         if (d1 == d2)
             return d1;
-        CombinedNLS all = new CombinedNLS(d1.getTitle(), d1, d2);
+        CombinedNLS all = new CombinedNLS(d1, d2);
+        all.setName(d1.getName());
         return all;
     }
 

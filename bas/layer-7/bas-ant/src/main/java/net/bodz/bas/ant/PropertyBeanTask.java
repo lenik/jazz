@@ -21,7 +21,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 import net.bodz.bas.vfs.SystemColos;
 
 import org.apache.tools.ant.BuildException;

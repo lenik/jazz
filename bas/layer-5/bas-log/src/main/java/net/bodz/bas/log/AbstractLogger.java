@@ -1,9 +1,7 @@
-package net.bodz.bas.log.api;
+package net.bodz.bas.log;
 
 import javax.annotation.Generated;
 
-import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.LogLevel;
 
 @Generated("LoggerCG")
 public abstract class AbstractLogger
@@ -47,27 +45,27 @@ public abstract class AbstractLogger
 
     @Override
     public final boolean fatal(Object message, Throwable t) {
-        return _fatal(0, message, t);
+        return _fatal(0, t, message);
     }
 
     @Override
     public final boolean error(Object message, Throwable t) {
-        return _error(0, message, t);
+        return _error(0, t, message);
     }
 
     @Override
     public final void warn(Object message, Throwable t) {
-        _warn(0, message, t);
+        _warn(0, t, message);
     }
 
     @Override
     public final void info(Object message, Throwable t) {
-        _info(0, message, t);
+        _info(0, t, message);
     }
 
     @Override
     public final void debug(Object message, Throwable t) {
-        _debug(0, message, t);
+        _debug(0, t, message);
     }
 
     // --- LOGGER CG GENERATED BEGIN ---
@@ -83,12 +81,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getStderrSink() {
+    public final ILogSink getStderrSink() {
         return get(LogLevel.STDERR);
     }
 
     @Override
-    public ILogSink getStderrSink(int delta) {
+    public final ILogSink getStderrSink(int delta) {
         return get(LogLevel.STDERR, delta);
     }
 
@@ -158,12 +156,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getStdoutSink() {
+    public final ILogSink getStdoutSink() {
         return get(LogLevel.STDOUT);
     }
 
     @Override
-    public ILogSink getStdoutSink(int delta) {
+    public final ILogSink getStdoutSink(int delta) {
         return get(LogLevel.STDOUT, delta);
     }
 
@@ -233,12 +231,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getFatalSink() {
+    public final ILogSink getFatalSink() {
         return get(LogLevel.FATAL);
     }
 
     @Override
-    public ILogSink getFatalSink(int delta) {
+    public final ILogSink getFatalSink(int delta) {
         return get(LogLevel.FATAL, delta);
     }
 
@@ -309,12 +307,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getErrorSink() {
+    public final ILogSink getErrorSink() {
         return get(LogLevel.ERROR);
     }
 
     @Override
-    public ILogSink getErrorSink(int delta) {
+    public final ILogSink getErrorSink(int delta) {
         return get(LogLevel.ERROR, delta);
     }
 
@@ -385,12 +383,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getWarnSink() {
+    public final ILogSink getWarnSink() {
         return get(LogLevel.WARN);
     }
 
     @Override
-    public ILogSink getWarnSink(int delta) {
+    public final ILogSink getWarnSink(int delta) {
         return get(LogLevel.WARN, delta);
     }
 
@@ -460,12 +458,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getMesgSink() {
+    public final ILogSink getMesgSink() {
         return get(LogLevel.MESG);
     }
 
     @Override
-    public ILogSink getMesgSink(int delta) {
+    public final ILogSink getMesgSink(int delta) {
         return get(LogLevel.MESG, delta);
     }
 
@@ -535,12 +533,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getInfoSink() {
+    public final ILogSink getInfoSink() {
         return get(LogLevel.INFO);
     }
 
     @Override
-    public ILogSink getInfoSink(int delta) {
+    public final ILogSink getInfoSink(int delta) {
         return get(LogLevel.INFO, delta);
     }
 
@@ -610,12 +608,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getLogSink() {
+    public final ILogSink getLogSink() {
         return get(LogLevel.LOG);
     }
 
     @Override
-    public ILogSink getLogSink(int delta) {
+    public final ILogSink getLogSink(int delta) {
         return get(LogLevel.LOG, delta);
     }
 
@@ -685,12 +683,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getDebugSink() {
+    public final ILogSink getDebugSink() {
         return get(LogLevel.DEBUG);
     }
 
     @Override
-    public ILogSink getDebugSink(int delta) {
+    public final ILogSink getDebugSink(int delta) {
         return get(LogLevel.DEBUG, delta);
     }
 
@@ -760,12 +758,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getTraceSink() {
+    public final ILogSink getTraceSink() {
         return get(LogLevel.TRACE);
     }
 
     @Override
-    public ILogSink getTraceSink(int delta) {
+    public final ILogSink getTraceSink(int delta) {
         return get(LogLevel.TRACE, delta);
     }
 
@@ -835,12 +833,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getStatusSink() {
+    public final ILogSink getStatusSink() {
         return get(LogLevel.STATUS);
     }
 
     @Override
-    public ILogSink getStatusSink(int delta) {
+    public final ILogSink getStatusSink(int delta) {
         return get(LogLevel.STATUS, delta);
     }
 
@@ -910,12 +908,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public ILogSink getProgressSink() {
+    public final ILogSink getProgressSink() {
         return get(LogLevel.PROGRESS);
     }
 
     @Override
-    public ILogSink getProgressSink(int delta) {
+    public final ILogSink getProgressSink(int delta) {
         return get(LogLevel.PROGRESS, delta);
     }
 

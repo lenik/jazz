@@ -1,6 +1,6 @@
 package net.bodz.art.installer;
 
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.JobObserver;

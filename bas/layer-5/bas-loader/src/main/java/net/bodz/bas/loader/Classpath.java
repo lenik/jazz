@@ -6,8 +6,8 @@ import java.net.URLClassLoader;
 
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.log.ILogSink;
+import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.NullLogSink;
-import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.sio.IPrintOut;
 
 public class Classpath {

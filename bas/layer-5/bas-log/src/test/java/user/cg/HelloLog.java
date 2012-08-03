@@ -1,8 +1,8 @@
 package user.cg;
 
 import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.api.Logger;
-import net.bodz.bas.log.api.LoggerFactory;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class HelloLog {
 

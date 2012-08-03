@@ -1,7 +1,7 @@
-package net.bodz.bas.log.testapp;
+package user.logs.weave;
 
 import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 
 public class ParentJob {
 
