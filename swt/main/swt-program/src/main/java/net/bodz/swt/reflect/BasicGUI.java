@@ -189,12 +189,12 @@ public class BasicGUI
     }
 
     protected String getTitle() {
-        ClassInfo info = _loadClassInfo();
-        String title = info.getName();
-        String doc = info.getDoc();
+        AppClassDoc classDoc = _loadClassInfo();
+        String title = classDoc.getName();
+        String doc = classDoc.getText().toPlainText();
         if (doc != null)
             title += ": " + doc;
-        String version = info.getVersionString();
+        String version = classDoc.getVersion().toString();
         return title + " " + version;
     }
 
@@ -202,10 +202,10 @@ public class BasicGUI
             throws UIException {
         Shell shell = new Shell();
         shell.setText(getTitle());
-        ClassInfo info = _loadClassInfo();
+        AppClassDoc classDoc = _loadClassInfo();
         Image[] icons;
         try {
-            icons = loadImages(info.getIcons());
+            icons = loadImages(classDoc.getIcons());
         } catch (IOException e) {
             throw new UIException(e);
         }

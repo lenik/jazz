@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.vecmath.Point2f;
+
 import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.geom.base.PickInfo2f;
 import net.bodz.geom.drawtarget.DrawException;
@@ -14,7 +16,7 @@ import net.bodz.geom.shape.base.IPoint2f;
 import net.bodz.geom.shape.base.IPolygon2f;
 import net.bodz.geom.shape.base.IRectangle2f;
 import net.bodz.geom.shape.base.ITriangle2f;
-import net.bodz.geom.shape.base.ITriangle2f.Static;
+import net.bodz.geom.shape.base.StaticPoint2f;
 
 public class SWTShape2f
         implements IShape2f {
@@ -128,7 +130,7 @@ public class SWTShape2f
         return delegatee.pickInfo(point);
     }
 
-    public Static point(int index) {
+    public Point2f point(int index) {
         return delegatee.point(index);
     }
 
@@ -136,7 +138,7 @@ public class SWTShape2f
         return delegatee.pointCount();
     }
 
-    public Iterator<Static> pointIterator() {
+    public Iterator<Point2f> pointIterator() {
         return delegatee.pointIterator();
     }
 
@@ -208,7 +210,7 @@ public class SWTShape2f
         return delegatee.snapshot();
     }
 
-    public Static spoint(int id) {
+    public StaticPoint2f spoint(int id) {
         return delegatee.spoint(id);
     }
 
@@ -232,11 +234,11 @@ public class SWTShape2f
         return delegatee.toPointRefsList(copy);
     }
 
-    public Static[] toPointsArray(boolean copy) {
+    public Point2f[] toPointsArray(boolean copy) {
         return delegatee.toPointsArray(copy);
     }
 
-    public List<Static> toPointsList(boolean copy) {
+    public List<StaticPoint2f> toPointsList(boolean copy) {
         return delegatee.toPointsList(copy);
     }
 

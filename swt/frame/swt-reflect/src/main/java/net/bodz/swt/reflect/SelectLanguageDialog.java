@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import net.bodz.bas.c.java.util.LocaleTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.swt.dialogs.SimpleDialog;
 import net.bodz.swt.err.ValidateException;
@@ -66,7 +67,7 @@ public class SelectLanguageDialog
         String defaultLocaleName = Locale.getDefault().toString();
         for (int i = 0; i < langNames.size(); i++) {
             String name = langNames.get(i);
-            Locale locale = Locales.getLocale(name);
+            Locale locale = LocaleTraits.parseLocale(name);
             String caption = locale.getDisplayName();
             combo.add(caption);
             if (name.equals(defaultLocaleName))

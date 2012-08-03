@@ -226,10 +226,10 @@ public class AbstractPoint2f
     }
 
     @Override
-    public IPoint2f.Static point(int index) {
+    public StaticPoint2f point(int index) {
         if (index != 0)
             return null;
-        return new IPoint2f.Static(x(), y());
+        return new StaticPoint2f(x(), y());
     }
 
     @Override
@@ -306,8 +306,8 @@ public class AbstractPoint2f
     }
 
     @Override
-    public IPoint2f.Static snapshot() {
-        return new IPoint2f.Static(x(), y());
+    public StaticPoint2f snapshot() {
+        return new StaticPoint2f(x(), y());
     }
 
     @Override

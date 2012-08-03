@@ -9,10 +9,6 @@ public class CheckException
         super();
     }
 
-    public CheckException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
     public CheckException(String message, Throwable cause) {
         super(message, cause);
     }

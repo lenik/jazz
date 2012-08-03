@@ -34,11 +34,11 @@ public interface ITriangle2f
 
     void y2(float y);
 
-    IPoint2f.Static p0();
+    StaticPoint2f p0();
 
-    IPoint2f.Static p1();
+    StaticPoint2f p1();
 
-    IPoint2f.Static p2();
+    StaticPoint2f p2();
 
     void p0(IPoint2f p);
 

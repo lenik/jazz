@@ -2,23 +2,29 @@ package net.bodz.bas.i18n.nls;
 
 import java.util.Locale;
 
+import net.bodz.bas.i18n.LocaleColo;
+
 public final class CombinedNLS
         extends AbstractNLS {
 
-    private final NLS[] dicts;
+    private final NLS[] children;
 
-    public CombinedNLS(Locale preferredLocale, NLS parent, NLS... dicts) {
+    public CombinedNLS(NLS parent, NLS... children) {
+        this(LocaleColo.getInstance().get(), parent, children);
+    }
+
+    public CombinedNLS(Locale preferredLocale, NLS parent, NLS... children) {
         super(parent, preferredLocale);
-        if (dicts == null)
-            throw new NullPointerException("dicts");
-        this.dicts = dicts;
+        if (children == null)
+            throw new NullPointerException("children");
+        this.children = children;
     }
 
     @Override
     public void setPreferredLocale(Locale preferredLocale) {
         super.setPreferredLocale(preferredLocale);
-        for (int i = 0; i < dicts.length; i++) {
-            NLS dict = dicts[i];
+        for (int i = 0; i < children.length; i++) {
+            NLS dict = children[i];
             dict.setPreferredLocale(preferredLocale);
         }
     }
@@ -31,26 +37,26 @@ public final class CombinedNLS
     @Override
     protected String localName() {
         StringBuilder buf = new StringBuilder();
-        for (int i = 0; i < dicts.length; i++) {
+        for (int i = 0; i < children.length; i++) {
             if (i != 0)
                 buf.append('+');
-            buf.append(dicts[i].getName());
+            buf.append(children[i].getName());
         }
         return buf.toString();
     }
 
     @Override
     protected boolean localContainsKey(String key) {
-        for (int i = 0; i < dicts.length; i++)
-            if (dicts[i].containsKey(key))
+        for (int i = 0; i < children.length; i++)
+            if (children[i].containsKey(key))
                 return true;
         return false;
     }
 
     @Override
     protected Object localGet(String key) {
-        for (int i = 0; i < dicts.length; i++) {
-            NLS dict = dicts[i];
+        for (int i = 0; i < children.length; i++) {
+            NLS dict = children[i];
             Object value = dict.get(key);
             if (value != null)
                 return value;

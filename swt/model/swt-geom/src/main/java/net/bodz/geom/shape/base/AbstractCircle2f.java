@@ -10,6 +10,7 @@ import net.bodz.geom.base.PickInfo2f;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;
+import net.bodz.geom.shape.IShape2f;
 
 public abstract class AbstractCircle2f
         extends AbstractShape2f
@@ -62,8 +63,8 @@ public abstract class AbstractCircle2f
         throw new ReadOnlyAttributeException(AbstractCircle2f.class, "radius");
     }
 
-    public Point2f.Static center() {
-        return new Point2f.Static(new PtCenter());
+    public IPoint2f center() {
+        return new StaticPoint2f(new PtCenter());
     }
 
     public void center(Point2f point) {
@@ -72,11 +73,11 @@ public abstract class AbstractCircle2f
     }
 
     @Override
-    public Rectangle2f boundingBox() {
+    public IRectangle2f boundingBox() {
         float centerX = centerX();
         float centerY = centerY();
         float radius = radius();
-        return new Rectangle2f.StaticLeft(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+        return new IRectangle2f.StaticLeft(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
     }
 
     @Override
@@ -102,7 +103,7 @@ public abstract class AbstractCircle2f
     // -o Shape
 
     @Override
-    public Point2f spointRef(int id) {
+    public IPoint2f spointRef(int id) {
         switch (id) {
         case SP_CENTER:
             return new PtCenter();
@@ -111,18 +112,18 @@ public abstract class AbstractCircle2f
     }
 
     @Override
-    public Shape2f crop(Point2f baseHalfPlane, Vector2f normal) {
+    public IShape2f crop(Point2f baseHalfPlane, Vector2f normal) {
         // TODO
         return null;
     }
 
-    public Polygon2f convertToPolygon() {
+    public IPolygon2f convertToPolygon() {
         // TODO
         return null;
     }
 
     @Override
-    public abstract Circle2f snapshot();
+    public abstract ICircle2f snapshot();
 
     @Override
     public abstract AbstractCircle2f clone();

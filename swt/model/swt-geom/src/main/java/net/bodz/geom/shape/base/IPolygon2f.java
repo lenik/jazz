@@ -16,7 +16,7 @@ public interface IPolygon2f
 
     float pointY(int index);
 
-    IPoint2f.Static point(float index);
+    StaticPoint2f point(float index);
 
     float pointX(float index);
 
@@ -26,7 +26,7 @@ public interface IPolygon2f
 
     float index(float x, float y);
 
-    IPoint2f.Static center();
+    StaticPoint2f center();
 
     float centerX();
 
@@ -55,7 +55,7 @@ public interface IPolygon2f
 
     void addCross(ILine2f line);
 
-    List<IPoint2f.Static> intersectsAt(ILine2f line);
+    List<StaticPoint2f> intersectsAt(ILine2f line);
 
     List<Integer> intersectsAtIndex(ILine2f line);
 
@@ -147,7 +147,7 @@ public interface IPolygon2f
 
         @Override
         public void addPoint(int index, float x, float y) {
-            points.add(index, new IPoint2f.Static(x, y));
+            points.add(index, new StaticPoint2f(x, y));
         }
 
         @Override
@@ -247,7 +247,7 @@ public interface IPolygon2f
         // TODO
         public IPoint2f pointRef(int index) {
             assert index >= 0 && index < count;
-            return new IPoint2f.Static(x[offset + index], y[offset + index]);
+            return new StaticPoint2f(x[offset + index], y[offset + index]);
         }
 
         @Override

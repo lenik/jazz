@@ -66,7 +66,7 @@ public class R_File
                         throws CommitException {
                     File file = new File(fileText.getText());
                     try {
-                        var.check(file);
+                        var.validate(file);
                         var.set(file);
                     } catch (CheckException e) {
                         throw new CommitException(e);

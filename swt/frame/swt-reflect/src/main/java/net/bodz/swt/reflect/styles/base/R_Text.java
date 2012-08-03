@@ -80,7 +80,7 @@ public class R_Text
                         throws CommitException {
                     try {
                         Object val = parser.parse(text.getText());
-                        var.check(val);
+                        var.validate(val);
                         var.set(val);
                     } catch (ParseException e) {
                         throw new CommitException(e);

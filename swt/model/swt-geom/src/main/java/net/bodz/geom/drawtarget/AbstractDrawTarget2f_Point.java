@@ -5,6 +5,7 @@ import net.bodz.geom.shape.base.IPoint2f;
 import net.bodz.geom.shape.base.IPolygon2f;
 import net.bodz.geom.shape.base.IRectangle2f;
 import net.bodz.geom.shape.base.ITriangle2f;
+import net.bodz.geom.shape.base.StaticPoint2f;
 
 public abstract class AbstractDrawTarget2f_Point
         extends AbstractDrawTarget2f {
@@ -16,7 +17,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void drawPixel(float x, float y)
             throws DrawException {
-        drawPixel(new IPoint2f.Static(x, y));
+        drawPixel(new StaticPoint2f(x, y));
     }
 
     @Override
@@ -26,7 +27,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void drawLine(float x0, float y0, float x1, float y1)
             throws DrawException {
-        drawLine(new IPoint2f.Static(x0, y0), new IPoint2f.Static(x1, y1));
+        drawLine(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1));
     }
 
     @Override
@@ -58,7 +59,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void drawTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
             throws DrawException {
-        super.drawTriangle(new IPoint2f.Static(x0, y0), new IPoint2f.Static(x1, y1), new IPoint2f.Static(x2, y2));
+        super.drawTriangle(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1), new StaticPoint2f(x2, y2));
     }
 
     @Override
@@ -74,7 +75,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public final void drawCircle(float centerX, float centerY, float radiusX, float radiusY)
             throws DrawException {
-        drawCircle(new IPoint2f.Static(centerX, centerY), radiusX, radiusY);
+        drawCircle(new StaticPoint2f(centerX, centerY), radiusX, radiusY);
     }
 
     @Override
@@ -84,7 +85,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void drawEllipse(float x0, float y0, float x1, float y1)
             throws DrawException {
-        drawEllipse(new IPoint2f.Static(x0, y0), new IPoint2f.Static(x1, y1));
+        drawEllipse(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1));
     }
 
     @Override
@@ -96,7 +97,7 @@ public abstract class AbstractDrawTarget2f_Point
             throws DrawException {
         IPoint2f[] points = new IPoint2f[count];
         for (int i = 0; i < count; i++)
-            points[i] = new IPoint2f.Static(x[i + offset], y[i + offset]);
+            points[i] = new StaticPoint2f(x[i + offset], y[i + offset]);
         drawPolygon(points);
     }
 
@@ -131,7 +132,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void fillTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
             throws DrawException {
-        super.fillTriangle(new IPoint2f.Static(x0, y0), new IPoint2f.Static(x1, y1), new IPoint2f.Static(x2, y2));
+        super.fillTriangle(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1), new StaticPoint2f(x2, y2));
     }
 
     @Override
@@ -147,7 +148,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public final void fillCircle(float centerX, float centerY, float radiusX, float radiusY)
             throws DrawException {
-        fillCircle(new IPoint2f.Static(centerX, centerY), radiusX, radiusY);
+        fillCircle(new StaticPoint2f(centerX, centerY), radiusX, radiusY);
     }
 
     @Override
@@ -157,7 +158,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void fillEllipse(float x0, float y0, float x1, float y1)
             throws DrawException {
-        fillEllipse(new IPoint2f.Static(x0, y0), new IPoint2f.Static(x1, y1));
+        fillEllipse(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1));
     }
 
     @Override
@@ -169,7 +170,7 @@ public abstract class AbstractDrawTarget2f_Point
             throws DrawException {
         IPoint2f[] points = new IPoint2f[count];
         for (int i = 0; i < count; i++)
-            points[i] = new IPoint2f.Static(x[i + offset], y[i + offset]);
+            points[i] = new StaticPoint2f(x[i + offset], y[i + offset]);
         fillPolygon(points);
     }
 

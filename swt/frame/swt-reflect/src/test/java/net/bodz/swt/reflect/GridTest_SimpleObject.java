@@ -9,6 +9,7 @@ import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.reflect.styles.grid.SWTGridStrategy;
 import net.bodz.swt.reflect.testtypes.ComplexPerson;
 import net.bodz.swt.reflect.testtypes.SimplePerson;
+import net.bodz.swt.widgets.Timer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

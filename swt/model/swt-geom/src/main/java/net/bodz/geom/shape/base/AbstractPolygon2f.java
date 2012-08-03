@@ -45,7 +45,7 @@ public abstract class AbstractPolygon2f
 
     private boolean opened;
 
-    public IPoint2f.Static point(float index) {
+    public StaticPoint2f point(float index) {
         int start = (int) Math.floor(index);
         int end = (int) Math.ceil(index);
         if (start == end)
@@ -79,8 +79,8 @@ public abstract class AbstractPolygon2f
         return index(point.x(), point.y());
     }
 
-    public IPoint2f.Static center() {
-        return new IPoint2f.Static(centerX(), centerY());
+    public StaticPoint2f center() {
+        return new StaticPoint2f(centerX(), centerY());
     }
 
     public float centerX() {
@@ -197,8 +197,8 @@ public abstract class AbstractPolygon2f
         }
     }
 
-    public List<IPoint2f.Static> intersectsAt(ILine2f line, int max) {
-        List<IPoint2f.Static> list = new ArrayList<IPoint2f.Static>();
+    public List<StaticPoint2f> intersectsAt(ILine2f line, int max) {
+        List<StaticPoint2f> list = new ArrayList<StaticPoint2f>();
         int n = pointCount();
         for (int i = 0; i < n; i++)
             if (edge(i).intersectsAt(line) != null) {
@@ -221,7 +221,7 @@ public abstract class AbstractPolygon2f
         return list;
     }
 
-    public List<IPoint2f.Static> intersectsAt(ILine2f line) {
+    public List<StaticPoint2f> intersectsAt(ILine2f line) {
         return intersectsAt(line, Integer.MAX_VALUE);
     }
 
@@ -351,7 +351,7 @@ public abstract class AbstractPolygon2f
 
         @Override
         public void addPoint(int index, float x, float y) {
-            addPoint(index, new IPoint2f.Static(x, y));
+            addPoint(index, new StaticPoint2f(x, y));
         }
 
         // for toTriangle, only

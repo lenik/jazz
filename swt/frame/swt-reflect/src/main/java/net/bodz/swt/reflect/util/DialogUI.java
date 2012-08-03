@@ -8,16 +8,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.bodz.bas.c.string.StringSearch;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.fn.Func0;
+import net.bodz.bas.trait.Traits;
+import net.bodz.bas.traits.IParser;
 import net.bodz.bas.ui.AbstractUserInterface;
 import net.bodz.bas.ui.IProposal;
 import net.bodz.bas.ui.RenderException;
-import net.bodz.bas.util.Objects;
+import net.bodz.bas.util.Nullables;
 import net.bodz.swt.dialogs.SimpleDialog;
 import net.bodz.swt.reflect.IAction;
 import net.bodz.swt.reflect.SWTRenderContext;
@@ -281,7 +283,7 @@ public class DialogUI
                     // if (bundle.contains(name)) ... else
                     String text = Strings.ucfirstWords(name);
                     char c = p.getMnemonic();
-                    int m = Strings.indexOfIgnoreCase(text, c);
+                    int m = StringSearch.indexOfIgnoreCase(text, c);
                     if (m != -1)
                         text = text.substring(0, m) + "&" + text.substring(m);
                     Button button = addButton(parent, SWT.NONE, image, text, i);
@@ -301,12 +303,9 @@ public class DialogUI
 
     @Override
     public <T> T prompt(String title, final Object detail, final Class<T> type, final T initial) {
-        final TypeParser parser;
-        try {
-            parser = TypeParsers.guess(type, true);
-        } catch (ParseException e) {
-            throw new IllegalUsageError(GUINLS.getString("SWTInteraction.errparse") + type);
-        }
+
+        final IParser<?> parser = Traits.getTrait(type, IParser.class);
+
         class PromptDialog
                 extends _Dialog {
 
@@ -467,7 +466,7 @@ public class DialogUI
                 for (Entry<?, ?> entry : candidates.entrySet()) {
                     final Object key = entry.getKey();
                     Object value = entry.getValue();
-                    boolean selected = Objects.equals(key, initial);
+                    boolean selected = Nullables.equals(key, initial);
                     Button radio = new Button(parent, SWT.RADIO);
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
@@ -524,7 +523,7 @@ public class DialogUI
                 for (Entry<?, ?> entry : candidates.entrySet()) {
                     final Object key = entry.getKey();
                     Object value = entry.getValue();
-                    boolean selected = Objects.equals(key, initial);
+                    boolean selected = Nullables.equals(key, initial);
                     int insertIndex = combo.getItemCount();
                     combo.add(String.valueOf(value));
                     if (selected)
@@ -537,7 +536,8 @@ public class DialogUI
     }
 
     @Override
-    public <K> Set<K> choices(String title, final Object detail, final Map<K, ?> candidates, K... initial) {
+    public <K> Set<K> choices(String title, final Object detail, final Map<K, ?> candidates,
+            @SuppressWarnings("unchecked") K... initial) {
         final Set<K> initials = new HashSet<K>(initial.length);
         for (K k : initial)
             initials.add(k);
@@ -680,7 +680,7 @@ public class DialogUI
                 for (Entry<K, ?> entry : candidates.entrySet()) {
                     final K key = entry.getKey();
                     Object value = entry.getValue();
-                    boolean selected = Objects.equals(key, initial);
+                    boolean selected = Nullables.equals(key, initial);
                     int insertIndex = listBox.getItemCount();
                     listBox.add(String.valueOf(value));
                     if (selected)

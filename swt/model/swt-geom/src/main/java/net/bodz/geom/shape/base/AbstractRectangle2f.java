@@ -355,20 +355,20 @@ public abstract class AbstractRectangle2f
 
     }
 
-    public IPoint2f.Static p0() {
-        return new IPoint2f.Static(x0(), y0());
+    public StaticPoint2f p0() {
+        return new StaticPoint2f(x0(), y0());
     }
 
-    public IPoint2f.Static p1() {
-        return new IPoint2f.Static(x1(), y1());
+    public StaticPoint2f p1() {
+        return new StaticPoint2f(x1(), y1());
     }
 
-    public IPoint2f.Static p2() {
-        return new IPoint2f.Static(x2(), y2());
+    public StaticPoint2f p2() {
+        return new StaticPoint2f(x2(), y2());
     }
 
-    public IPoint2f.Static p3() {
-        return new IPoint2f.Static(x3(), y3());
+    public StaticPoint2f p3() {
+        return new StaticPoint2f(x3(), y3());
     }
 
     public void p0(IPoint2f p0) {

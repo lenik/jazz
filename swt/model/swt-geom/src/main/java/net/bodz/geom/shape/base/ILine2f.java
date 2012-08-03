@@ -26,9 +26,9 @@ public interface ILine2f
 
     void y1(float y1);
 
-    IPoint2f.Static p0();
+    StaticPoint2f p0();
 
-    IPoint2f.Static p1();
+    StaticPoint2f p1();
 
     void p0(IPoint2f p0);
 
@@ -58,7 +58,7 @@ public interface ILine2f
 
     float angle();
 
-    IPoint2f.Static point(float index);
+    StaticPoint2f point(float index);
 
     float pointX(float index);
 
@@ -72,11 +72,11 @@ public interface ILine2f
 
     float indexY(float y);
 
-    IPoint2f.Static _intersectsAt(ILine2f line);
+    StaticPoint2f _intersectsAt(ILine2f line);
 
     boolean _intersects(ILine2f line);
 
-    IPoint2f.Static intersectsAt(ILine2f line);
+    StaticPoint2f intersectsAt(ILine2f line);
 
     boolean intersects(ILine2f line);
 

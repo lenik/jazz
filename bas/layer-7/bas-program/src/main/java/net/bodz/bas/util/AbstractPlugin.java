@@ -1,6 +1,7 @@
 package net.bodz.bas.util;
 
 import net.bodz.bas.meta.build.AppClassDoc;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public class AbstractPlugin
         implements IPlugin {
@@ -8,15 +9,13 @@ public class AbstractPlugin
     AppClassDoc classDoc;
 
     public AbstractPlugin() {
-        AppClassDoc classDoc = AppClassDoc.get(getClass());
-        description = classDoc.getText().toPlainText();
-
         classDoc = ClassDocs.loadFromResource(getClass()).decorate(AppClassDoc.class);
     }
 
     @Override
     public String getDescription() {
-        return classDoc.getTextHeader();
+        String description = classDoc.getTextHeader();
+        return description;
     }
 
     @Deprecated
