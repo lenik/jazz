@@ -58,7 +58,7 @@ public class R_Boolean
                         throws CommitException {
                     boolean val = check.getSelection();
                     try {
-                        var.check(val);
+                        var.validate(val);
                         var.set(val);
                     } catch (CheckException e) {
                         throw new CommitException(e);

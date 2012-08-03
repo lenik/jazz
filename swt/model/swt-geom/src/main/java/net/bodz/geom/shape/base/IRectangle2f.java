@@ -49,13 +49,13 @@ public interface IRectangle2f
 
     void y3(float y3);
 
-    IPoint2f.Static p0();
+    StaticPoint2f p0();
 
-    IPoint2f.Static p1();
+    StaticPoint2f p1();
 
-    IPoint2f.Static p2();
+    StaticPoint2f p2();
 
-    IPoint2f.Static p3();
+    StaticPoint2f p3();
 
     void p0(IPoint2f point);
 

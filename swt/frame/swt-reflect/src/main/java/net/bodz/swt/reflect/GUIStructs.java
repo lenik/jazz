@@ -30,6 +30,10 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerColo;
+import net.bodz.bas.trait.Traits;
+import net.bodz.bas.traits.IValidator;
+import net.bodz.bas.traits.ValidateException;
 import net.bodz.swt.err.GUIAccessException;
 import net.bodz.swt.reflect.GUIVars.GUIFieldMeta;
 import net.bodz.swt.reflect.GUIVars.GUIFieldVar;
@@ -38,7 +42,7 @@ import net.bodz.swt.reflect.GUIVars.GUIPropertyVar;
 
 public class GUIStructs {
 
-    static Logger logger = LogTerms.get(1);
+    static Logger logger = LoggerColo.getInstance().get(1);
 
     public static class ClassMeta {
 
@@ -135,7 +139,7 @@ public class GUIStructs {
         void add(String name, GUIVarMeta meta) {
             if (map != null) {
                 if (map.containsKey(name))
-                    logger.fwarn(GUINLS.getString("GUIStructs.dupItem_sss"), //
+                    logger.warnf(GUINLS.getString("GUIStructs.dupItem_sss"), //
                             name, this, meta.getName());
                 map.put(name, meta);
             } else
@@ -291,7 +295,7 @@ public class GUIStructs {
                 ParameterVar paramVar = new ParameterVar(paramMeta, cc);
                 if (i < initArgs.length) {
                     try {
-                        paramVar.check(initArgs[i]);
+                        paramVar.validate(initArgs[i]);
                     } catch (CheckException e) {
                         throw new IllegalUsageError(GUINLS.getString("GUIStructs.checkFailOnInit"));
                     }
@@ -437,7 +441,7 @@ public class GUIStructs {
         }
 
         @Override
-        public void check(Object newValue)
+        public void validate(Object newValue)
                 throws CheckException {
             // read-only
         }
@@ -562,7 +566,7 @@ public class GUIStructs {
         }
 
         @Override
-        public void check(Object newValue)
+        public void validate(Object newValue)
                 throws CheckException {
             meta.check(newValue);
         }
@@ -586,7 +590,7 @@ public class GUIStructs {
         protected final int index;
         protected final boolean readOnly;
         protected final GUIHint hint;
-        protected final Checker checker;
+        protected final IValidator<Object> checker;
 
         public ParameterMeta(MethodParameter param) {
             this.param = param;
@@ -594,7 +598,7 @@ public class GUIStructs {
             readOnly = param.isAnnotationPresent(ReadOnly.class);
             hint = GUIHint.get(param);
             try {
-                checker = Checks.getChecker(param);
+                checker = Traits.getTrait(param, IValidator.class);
             } catch (CreateException e) {
                 throw new RuntimeException(e);
             }
@@ -652,13 +656,13 @@ public class GUIStructs {
             return hint;
         }
 
-        public void check(Object value)
-                throws CheckException {
+        public void validate(Object value)
+                throws ValidateException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
                 throw new CheckException(GUINLS.getString("GUIStructs.notInstOf") + type + ": " + value);
             if (checker != null)
-                checker.check(value);
+                checker.validate(value);
         }
 
         @Override
@@ -696,9 +700,9 @@ public class GUIStructs {
         }
 
         @Override
-        public void check(Object newValue)
-                throws CheckException {
-            meta.check(newValue);
+        public void validate(Object newValue)
+                throws ValidateException {
+            meta.validate(newValue);
         }
 
         @Override

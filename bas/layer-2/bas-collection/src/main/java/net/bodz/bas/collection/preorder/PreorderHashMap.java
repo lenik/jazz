@@ -1,7 +1,7 @@
 package net.bodz.bas.collection.preorder;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.Map;
 
 import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.Pair;
@@ -25,7 +25,7 @@ public class PreorderHashMap<K, V>
     }
 
     @Override
-    public Entry<K, V> meetEntry(K key) {
+    public Map.Entry<K, V> meetEntry(K key) {
         K meetKey = meetKey(key);
         V meetValue = get(meetKey);
         return new Pair<K, V>(meetKey, meetValue);
@@ -48,7 +48,7 @@ public class PreorderHashMap<K, V>
     }
 
     class JoinEntryFilter
-            implements IFilter<Entry<K, V>> {
+            implements IFilter<Map.Entry<K, V>> {
 
         final K minKey;
 
@@ -57,7 +57,7 @@ public class PreorderHashMap<K, V>
         }
 
         @Override
-        public boolean accept(Entry<K, V> entry)
+        public boolean accept(Map.Entry<K, V> entry)
                 throws RuntimeException {
             K key = entry.getKey();
             return preorder.isLessOrEquals(minKey, key);
@@ -66,7 +66,7 @@ public class PreorderHashMap<K, V>
     }
 
     @Override
-    public Iterable<Entry<K, V>> joinEntries(K key) {
+    public Iterable<Map.Entry<K, V>> joinEntries(K key) {
         return Iterables.filter(entrySet(), new JoinEntryFilter(key));
     }
 

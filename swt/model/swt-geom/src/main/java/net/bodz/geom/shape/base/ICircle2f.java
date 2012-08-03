@@ -20,7 +20,7 @@ public interface ICircle2f
 
     void radius(float radius);
 
-    IPoint2f.Static center();
+    StaticPoint2f center();
 
     void center(IPoint2f point);
 
@@ -364,7 +364,7 @@ public interface ICircle2f
         }
 
         public P3(float aX, float aY, float bX, float bY, float cX, float cY) {
-            this(new IPoint2f.Static(aX, aY), new IPoint2f.Static(bX, bY), new IPoint2f.Static(cX, cY));
+            this(new StaticPoint2f(aX, aY), new StaticPoint2f(bX, bY), new StaticPoint2f(cX, cY));
         }
 
         public P3(float x[], float y[]) {
@@ -373,9 +373,9 @@ public interface ICircle2f
             assert x.length >= 3;
             assert y.length >= 3;
 
-            a = new IPoint2f.Static(x[0], y[0]);
-            b = new IPoint2f.Static(x[1], y[1]);
-            c = new IPoint2f.Static(x[2], y[2]);
+            a = new StaticPoint2f(x[0], y[0]);
+            b = new StaticPoint2f(x[1], y[1]);
+            c = new StaticPoint2f(x[2], y[2]);
         }
 
         @Override

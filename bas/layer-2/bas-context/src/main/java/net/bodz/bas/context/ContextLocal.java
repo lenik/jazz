@@ -3,6 +3,8 @@ package net.bodz.bas.context;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.jvm.stack.Caller;
+
 /**
  * The context local class provides an inheritable variable management. If the variable is allocated
  * in one context, it will be also the default variable storage for all its children contexts unless
@@ -131,6 +133,12 @@ public class ContextLocal<T> {
      */
     public T get(Class<?> clazz) {
         return get(ClassContextId.getInstance(clazz));
+    }
+
+    public T get(int caller) {
+        Class<?> callerClass = Caller.getCallerClass(caller + 1);
+        T instance = get(callerClass);
+        return instance;
     }
 
     /**

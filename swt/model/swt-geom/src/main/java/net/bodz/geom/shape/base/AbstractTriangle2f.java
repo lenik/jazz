@@ -220,7 +220,7 @@ public abstract class AbstractTriangle2f
 
     @Override
     public boolean contains(float x, float y) {
-        return contains(new IPoint2f.Static(x, y));
+        return contains(new StaticPoint2f(x, y));
     }
 
     @Override

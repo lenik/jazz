@@ -114,12 +114,12 @@ public abstract class AbstractLine2f
         throw new ReadOnlyAttributeException(this, "y1");
     }
 
-    public IPoint2f.Static p0() {
-        return new IPoint2f.Static(x0(), y0());
+    public StaticPoint2f p0() {
+        return new StaticPoint2f(x0(), y0());
     }
 
-    public IPoint2f.Static p1() {
-        return new IPoint2f.Static(x1(), y1());
+    public StaticPoint2f p1() {
+        return new StaticPoint2f(x1(), y1());
     }
 
     public void p0(IPoint2f p0) {
@@ -179,8 +179,8 @@ public abstract class AbstractLine2f
         return (y - y0()) / (y1() - y0());
     }
 
-    public IPoint2f.Static point(float index) {
-        return new IPoint2f.Static(pointX(index), pointY(index));
+    public StaticPoint2f point(float index) {
+        return new StaticPoint2f(pointX(index), pointY(index));
     }
 
     public float pointX(float index) {
@@ -191,7 +191,7 @@ public abstract class AbstractLine2f
         return y0() + (y1() - y0()) * index;
     }
 
-    public IPoint2f.Static _intersectsAt(ILine2f line) {
+    public StaticPoint2f _intersectsAt(ILine2f line) {
         float k1 = gradient();
         float b1 = y();
         float k2 = line.gradient();
@@ -201,15 +201,15 @@ public abstract class AbstractLine2f
         float Dy = k1 * b2 - k2 * b1;
         float x = Dx / D;
         float y = -Dy / D;
-        return new IPoint2f.Static(x, y);
+        return new StaticPoint2f(x, y);
     }
 
     public boolean _intersects(ILine2f line) {
         return _intersectsAt(line) != null;
     }
 
-    public IPoint2f.Static intersectsAt(ILine2f line) {
-        IPoint2f.Static point = _intersectsAt(line);
+    public StaticPoint2f intersectsAt(ILine2f line) {
+        StaticPoint2f point = _intersectsAt(line);
         float t = index(point);
         if (t < 0.0f || t > 1.0f)
             return null;

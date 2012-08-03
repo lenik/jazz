@@ -64,7 +64,7 @@ public class R_CallObject
                             retLabel.setText(String.valueOf(retval));
                             opbar.layout();
                         }
-                    } catch (ReflectException ex) {
+                    } catch (ReflectiveOperationException ex) {
                         String mesg = GUINLS.getString("R_CallObject.failedToCall");
                         rc.interact(button).alert(mesg, ex);
                     }

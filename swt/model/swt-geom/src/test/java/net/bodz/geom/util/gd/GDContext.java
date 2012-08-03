@@ -6,6 +6,7 @@ import net.bodz.geom.drawtarget.swt.SWTDrawTarget2f;
 import net.bodz.geom.shape.EditablePointSet2f;
 import net.bodz.geom.shape.IShape2f;
 import net.bodz.geom.shape.base.IPoint2f;
+import net.bodz.geom.shape.base.StaticPoint2f;
 import net.bodz.geom.transform.ViewTransformer2f;
 import net.bodz.swt.state.SWTContext;
 
@@ -60,7 +61,7 @@ public class GDContext
     }
 
     public IPoint2f vtSource(int x, int y) {
-        IPoint2f point = new IPoint2f.Static(x, y);
+        IPoint2f point = new StaticPoint2f(x, y);
         vt.transform(point);
         return point;
     }

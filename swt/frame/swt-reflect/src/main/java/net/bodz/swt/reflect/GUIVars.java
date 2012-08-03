@@ -7,7 +7,15 @@ import java.lang.reflect.Field;
 
 import net.bodz.bas.c.type.Types;
 import net.bodz.bas.err.CheckException;
-import net.bodz.bas.err.CreateException;
+import net.bodz.bas.trait.Traits;
+import net.bodz.bas.traits.IValidator;
+import net.bodz.bas.traits.ValidateException;
+import net.bodz.swt.api.Vars.ConstantMeta;
+import net.bodz.swt.api.Vars.ConstantVar;
+import net.bodz.swt.api.Vars.FieldMeta;
+import net.bodz.swt.api.Vars.FieldVar;
+import net.bodz.swt.api.Vars.PropertyMeta;
+import net.bodz.swt.api.Vars.PropertyVar;
 
 public class GUIVars {
 
@@ -15,15 +23,11 @@ public class GUIVars {
             extends FieldMeta
             implements GUIVarMeta {
 
-        protected final Checker checker;
+        protected final IValidator<Object> validator;
 
         public GUIFieldMeta(Field field) {
             super(field);
-            try {
-                checker = Checks.getChecker(this);
-            } catch (CreateException e) {
-                throw new RuntimeException(e);
-            }
+            validator = Traits.getTrait(this, IValidator.class);
         }
 
         @Override
@@ -36,8 +40,8 @@ public class GUIVars {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
                 throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
-            if (checker != null)
-                checker.check(value);
+            if (validator != null)
+                validator.validate(value);
         }
     }
 
@@ -59,7 +63,7 @@ public class GUIVars {
         }
 
         @Override
-        public void check(Object newValue)
+        public void validate(Object newValue)
                 throws CheckException {
             GUIFieldMeta meta = (GUIFieldMeta) this.meta;
             meta.check(newValue);
@@ -71,15 +75,11 @@ public class GUIVars {
             extends PropertyMeta
             implements GUIVarMeta {
 
-        protected final Checker checker;
+        protected final IValidator<Object> validator;
 
         public GUIPropertyMeta(PropertyDescriptor property) {
             super(property);
-            try {
-                checker = Checks.getChecker(this);
-            } catch (CreateException e) {
-                throw new RuntimeException(e);
-            }
+            validator = Traits.getTrait(this, IValidator.class);
         }
 
         @Override
@@ -92,8 +92,8 @@ public class GUIVars {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
                 throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
-            if (checker != null)
-                checker.check(value);
+            if (validator != null)
+                validator.validate(value);
         }
 
     }
@@ -116,7 +116,7 @@ public class GUIVars {
         }
 
         @Override
-        public void check(Object newValue)
+        public void validate(Object newValue)
                 throws CheckException {
             GUIPropertyMeta meta = (GUIPropertyMeta) this.meta;
             meta.check(newValue);
@@ -129,26 +129,18 @@ public class GUIVars {
             implements GUIVarMeta {
 
         private final GUIHint hint;
-        protected final Checker checker;
+        protected final IValidator<Object> validator;
 
         public GUIConstantMeta(Class<?> type, GUIHint hint) {
             super(type);
             this.hint = hint;
-            try {
-                this.checker = Checks.getChecker(this);
-            } catch (CreateException e) {
-                throw new RuntimeException(e);
-            }
+            this.validator = Traits.getTrait(this, IValidator.class);
         }
 
         public GUIConstantMeta(String name, Class<?> type, GUIHint hint) {
             super(name, type);
             this.hint = hint;
-            try {
-                this.checker = Checks.getChecker(this);
-            } catch (CreateException e) {
-                throw new RuntimeException(e);
-            }
+            this.validator = Traits.getTrait(this, IValidator.class);
         }
 
         @Override
@@ -157,12 +149,12 @@ public class GUIVars {
         }
 
         public void check(Object value)
-                throws CheckException {
+                throws ValidateException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
                 throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
-            if (checker != null)
-                checker.check(value);
+            if (validator != null)
+                validator.validate(value);
         }
 
     }
@@ -193,8 +185,8 @@ public class GUIVars {
         }
 
         @Override
-        public void check(Object newValue)
-                throws CheckException {
+        public void validate(Object newValue)
+                throws ValidateException {
             GUIConstantMeta meta = (GUIConstantMeta) this.meta;
             meta.check(newValue);
         }
