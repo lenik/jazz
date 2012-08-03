@@ -4,6 +4,7 @@ import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import net.bodz.art.installer.ConsoleExecutor;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.SessionException;
+import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 public class ComponentTestApp {
@@ -19,7 +20,7 @@ public class ComponentTestApp {
     }
 
     ConsoleExecutor buildExecutor() {
-        ConsoleExecutor executor = new ConsoleExecutor(project, LogTerms.console);
+        ConsoleExecutor executor = new ConsoleExecutor(project, ConsoleLogger.getInstance());
         ISession session = executor.getSession();
         session.addResFolder(0, new JavaioFile(TestConfig.outDir/* , true */));
         return executor;

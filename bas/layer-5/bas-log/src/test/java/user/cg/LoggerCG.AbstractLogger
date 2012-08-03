@@ -10,12 +10,12 @@
     }
 
     @Override
-    public ILogSink get${Name}Sink() {
+    public final ILogSink get${Name}Sink() {
         return get(LogLevel.${NAME});
     }
 
     @Override
-    public ILogSink get${Name}Sink(int delta) {
+    public final ILogSink get${Name}Sink(int delta) {
         return get(LogLevel.${NAME}, delta);
     }
 

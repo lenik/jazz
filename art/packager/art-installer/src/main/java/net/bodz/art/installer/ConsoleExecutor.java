@@ -1,7 +1,8 @@
 package net.bodz.art.installer;
 
 import static net.bodz.art.installer.nls.PackNLS.PackNLS;
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.Proposals;
 import net.bodz.bas.util.DurationChangeEvent;
@@ -13,7 +14,7 @@ public class ConsoleExecutor
         extends ProjectExecutor {
 
     public ConsoleExecutor(IProject project) {
-        this(project, LogTerms.console);
+        this(project, ConsoleLogger.getInstance());
     }
 
     public ConsoleExecutor(IProject project, Logger logger) {

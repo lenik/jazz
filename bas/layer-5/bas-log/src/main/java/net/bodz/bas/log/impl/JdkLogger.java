@@ -3,10 +3,10 @@ package net.bodz.bas.log.impl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
-import net.bodz.bas.log.api.AbstractLogger;
 import net.bodz.bas.log.impl.JdkLogSink.FineSink;
 import net.bodz.bas.log.impl.JdkLogSink.FinerSink;
 import net.bodz.bas.log.impl.JdkLogSink.FinestSink;

@@ -1,10 +1,10 @@
-package net.bodz.bas.log.testapp;
+package user.logs.weave;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 
 public class ChildJob {
 

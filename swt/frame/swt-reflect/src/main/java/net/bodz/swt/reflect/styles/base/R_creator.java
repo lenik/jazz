@@ -5,12 +5,12 @@ import static net.bodz.swt.reflect.nls.GUINLS.GUINLS;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 
-import net.bodz.bas.c.type.Types;
+import net.bodz.bas.c.type.TypeName;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.layouts.LineLayout;
 import net.bodz.swt.reflect.GUIHint;
@@ -52,7 +52,7 @@ public class R_creator
     }
 
     public Control renderTextParserCreator(final SWTRenderContext rc, final DynamicControl parent, final int style,
-            final IParser parser) {
+            final IParser<?> parser) {
         Composite comp = new Composite(parent, style);
         comp.setLayout(new LineLayout());
         final Text text = new Text(comp, SWT.BORDER);
@@ -86,9 +86,9 @@ public class R_creator
             throws RenderException, SWTException {
         Menu createMenu = new Menu(parent);
         Class<?> type = var.getMeta().getType();
-        IParser parser;
+        IParser<?> parser;
         try {
-            parser = ParserUtil.guess(type);
+            parser = Traits.getTrait(type, IParser.class);
             GUIHint hint = GUIHint.get(type);
             Image icon = GUIHint.get(type).getIcon();
 
@@ -110,7 +110,7 @@ public class R_creator
             GUIHint hint = GUIHint.get(ctor);
             String label = hint.getLabel();
             if (label == null) {
-                String pt = Types.joinNames(", ", true, ctor.getParameterTypes());
+                String pt = TypeName.join(", ", true, ctor.getParameterTypes());
                 label = GUINLS.getString("R_creator.new_") + pt + ")";
             }
         }

@@ -1,9 +1,9 @@
 package net.bodz.bas.log.impl;
 
+import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
-import net.bodz.bas.log.api.AbstractLogger;
 import net.bodz.bas.log.impl.Slf4jLogSink.DebugSink;
 import net.bodz.bas.log.impl.Slf4jLogSink.ErrorSink;
 import net.bodz.bas.log.impl.Slf4jLogSink.InfoSink;

@@ -1,6 +1,6 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.exception.RecoverableExceptionListener;
 import net.bodz.bas.util.exception.RecoverableExceptionSource;

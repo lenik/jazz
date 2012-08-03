@@ -7,7 +7,7 @@ import net.bodz.art.installer.IProject;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.Variable;
 import net.bodz.bas.c.java.io.TempFile;
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 
 public class TestConfig {
 

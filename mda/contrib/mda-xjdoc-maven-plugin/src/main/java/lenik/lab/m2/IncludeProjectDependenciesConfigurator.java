@@ -6,8 +6,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.log.api.Logger;
-import net.bodz.bas.log.api.LoggerFactory;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.m2.util.MavenLogLogger;
 import net.bodz.bas.m2.util.ProjectUtils;
 

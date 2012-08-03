@@ -29,7 +29,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.Logger;
 import net.bodz.swt.err.GUIAccessException;
 import net.bodz.swt.reflect.GUIVars.GUIFieldMeta;
 import net.bodz.swt.reflect.GUIVars.GUIFieldVar;

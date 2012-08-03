@@ -67,7 +67,7 @@ public class Shortcut
                 parentFile = Files.canoniOf(parentFile);
                 parentFile.mkdirs();
             }
-            L.info(PackNLS.getString("Shortcut.create"), dst);
+            logger.info(PackNLS.getString("Shortcut.create"), dst);
             if (SystemInfo.isWin32()) {
                 File _src = Files.canoniOf(src);
                 LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
@@ -101,7 +101,7 @@ public class Shortcut
             String lnkFilePath = lnk.getLinkFilePath();
             File file = new File(lnkFilePath);
             if (file.exists()) {
-                L.info(PackNLS.getString("Shortcut.remove"), file);
+                logger.info(PackNLS.getString("Shortcut.remove"), file);
                 file.delete();
             }
         }

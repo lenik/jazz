@@ -3,6 +3,7 @@ package net.bodz.art.installer;
 import java.io.IOException;
 
 import net.bodz.art.installer.builtins.TestConfig;
+import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
@@ -16,7 +17,7 @@ public class ConsoleExecutorTest
             throws IOException {
         super(new TestProject());
         // L.setLevel(LogTerm.INFO);
-        L.setLevel(LogTerm.DEBUG);
+        logger.setMaxPriority(LogLevel.DEBUG.getPriority());
     }
 
     @Test

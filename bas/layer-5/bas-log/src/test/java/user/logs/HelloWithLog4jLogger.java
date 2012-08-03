@@ -1,11 +1,11 @@
-package net.bodz.bas.log.logImpls;
+package user.logs;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
-public class Log4jDog {
+public class HelloWithLog4jLogger {
 
-    Logger logger = Logger.getLogger(Log4jDog.class);
+    Logger logger = Logger.getLogger(HelloWithLog4jLogger.class);
 
     public void hello() {
         logger.info("Hello from " + getClass());

@@ -12,11 +12,11 @@ import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.model.IFactory;
 import net.bodz.bas.ui.a.Font;
 import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.util.SWTResources;
 
-import org.apache.commons.collections15.Factory;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
@@ -29,7 +29,7 @@ public class A_gui
         Icon aicon = aobject.getAnnotation(Icon.class);
         if (aicon == null)
             return null;
-        Factory<?> iconFactory = getIconFactory(aicon);
+        IFactory<?> iconFactory = getIconFactory(aicon);
         if (iconFactory == null) { // load resource-path
             String[] resPaths = aicon.value();
             if (resPaths.length == 0)
@@ -47,16 +47,16 @@ public class A_gui
         }
     }
 
-    public static Factory<?> getFontFactory(Font afont) {
+    public static IFactory<?> getFontFactory(Font afont) {
         if (afont == null)
             return null;
-        Class<? extends Factory<?>> factoryClass = afont.factory();
-        if (factoryClass == Factory.class) {
+        Class<? extends IFactory<?>> factoryClass = afont.factory();
+        if (factoryClass == IFactory.class) {
             String name = afont.name();
             int height = afont.height();
             int style = afont.style();
             FontData fontData = new FontData(name, height, style);
-            return new Factory.Static<FontData>(fontData);
+            return new IFactory.Static<FontData>(fontData);
         }
         try {
             return SingletonUtil.getClassInstance(factoryClass);
@@ -69,7 +69,7 @@ public class A_gui
         Font nfont = aobject.getAnnotation(Font.class);
         if (nfont == null)
             return null;
-        Factory<?> fontFactory = getFontFactory(nfont);
+        IFactory<?> fontFactory = getFontFactory(nfont);
         try {
             FontData fontData = (FontData) fontFactory.create();
             return fontData;

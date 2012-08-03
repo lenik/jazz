@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.log.AbstractLogSink;
+import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.api.AbstractLogger;
+import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.ui.Proposals;
 import net.bodz.bas.ui.UserInterface;
@@ -258,8 +260,8 @@ class ProgressPage
         logList.removeAll();
         setState(BLOCK);
 
-        final LogTerm logger0 = session.getLogger();
-        session.setLogger(new PLogTerm());
+        final Logger logger0 = session.getLogger();
+        session.setLogger(new PageLogger());
         rootJob = session.getProject().execute(IComponent.INSTALL, session);
         jobThread = new Thread() {
             @Override
@@ -269,7 +271,7 @@ class ProgressPage
                 try {
                     session.loadRegistry();
                     if (rootJob != null) {
-                        if (logger0.showDebug())
+                        if (logger0.isDebugEnabled())
                             rootJob.dump(Stdio.cout);
                         Observer observer = new Observer(_UI);
                         rootJob.setUserInterface(_UI);
@@ -384,10 +386,10 @@ class ProgressPage
 
     public void setTextAndLog(int level, String s, Object data) {
         setText(s);
-        log(level, s, data);
+        _log(level, s, data);
     }
 
-    public void log(int level, String s, Object data) {
+    public void _log(int level, String s, Object data) {
         // enhanced list:
         // Image icon = getLevelIcon(level);
         // logsList.add(icon, s);
@@ -428,49 +430,56 @@ class ProgressPage
         }
     }
 
-    class PTerminal
+    class PageLogSink
             extends AbstractLogSink { // BufferedTerminal
 
-        final int level;
+        final LogLevel level;
+        final int priority;
 
-        public PTerminal(int level) {
+        public PageLogSink(LogLevel level) {
             this.level = level;
+            this.priority = level.getPriority();
         }
 
         @Override
-        protected void _p(final String s) {
+        public void logMessage(Object message) {
+            final String s = String.valueOf(message);
             pageContainer.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     setText(s);
-                    log(level, s, null);
+                    _log(priority, s, null);
                 }
             });
         }
 
         @Override
-        protected void _t(final String s) {
+        public void logException(Object message, final Throwable exception) {
+            final String s = String.valueOf(message);
             pageContainer.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     setText(s);
+                    _log(priority, s, exception);
                 }
             });
         }
 
     }
 
-    class PLogTerm
+    class PageLogger
             extends AbstractLogger {
 
-        public PLogTerm() {
-            int level = session.getLogger().getLevel();
-            setLevel(level);
+        public PageLogger() {
+            int maxPriority = session.getLogger().getMaxPriority();
+            setMaxPriority(maxPriority);
         }
 
         @Override
-        public ILogSink getLogSink(int level) {
-            return new PTerminal(level);
+        public ILogSink get(LogLevel level, int delta) {
+            if (level.getGroup() == LogLevel.stdGroup) {
+            }
+            return new PageLogSink(level);
         }
 
     }

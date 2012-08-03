@@ -4,8 +4,8 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.bodz.bas.log.api.Logger;
-import net.bodz.bas.log.api.LoggerFactory;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.util.order.PriorityComparator;
 
 /**

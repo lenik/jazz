@@ -1,4 +1,4 @@
-package net.bodz.bas.log.api;
+package net.bodz.bas.log;
 
 import net.bodz.bas.log.log4j.Log4jLogger;
 

@@ -33,4 +33,7 @@ public class PrintStreamLogSink
             exception.printStackTrace(stream);
     }
 
+    public static PrintStreamLogSink stdout = new PrintStreamLogSink(System.out);
+    public static PrintStreamLogSink stderr = new PrintStreamLogSink(System.err);
+
 }
