@@ -2,10 +2,10 @@ package net.bodz.art.installer;
 
 import static net.bodz.art.installer.nls.PackNLS.PackNLS;
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.swt.gui.pfl.AbstractPage;
-import net.bodz.swt.gui.pfl.PageException;
-import net.bodz.swt.gui.pfl.PageMethod;
-import net.bodz.swt.gui.pfl.ServiceContext;
+import net.bodz.swt.c3.pageflow.AbstractPage;
+import net.bodz.swt.c3.pageflow.PageException;
+import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c3.pageflow.ServiceContext;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

@@ -7,9 +7,9 @@ import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
-import net.bodz.swt.gui.pfl.BadPathEvent;
-import net.bodz.swt.gui.pfl.IBadPathListener;
-import net.bodz.swt.reflect.BasicGUI;
+import net.bodz.swt.c3.pageflow.BadPathEvent;
+import net.bodz.swt.c3.pageflow.IBadPathListener;
+import net.bodz.swt.program.BasicGUI;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

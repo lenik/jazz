@@ -2,7 +2,7 @@ package net.bodz.art.obfuz.util;
 
 import net.bodz.art.obfuz.pm.BasicPM;
 import net.bodz.art.obfuz.pm.ProtectionModel;
-import net.bodz.swt.gui.pfl.PageTestApp;
+import net.bodz.swt.c3.test.PageTestApp;
 
 import org.junit.Test;
 

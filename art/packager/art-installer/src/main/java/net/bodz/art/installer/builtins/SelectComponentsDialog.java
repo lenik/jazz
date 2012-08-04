@@ -12,7 +12,7 @@ import net.bodz.art.installer.util.Indices;
 import net.bodz.art.installer.util.MissingDependancyBuffer.Entry;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.CreateException;
-import net.bodz.swt.dialogs.SimpleDialog;
+import net.bodz.swt.c3.dialog.SimpleDialog;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

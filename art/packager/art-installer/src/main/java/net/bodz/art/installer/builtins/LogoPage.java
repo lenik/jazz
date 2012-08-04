@@ -7,9 +7,9 @@ import net.bodz.art.installer.IProject;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.Installer;
 import net.bodz.art.installer.LogoImage;
-import net.bodz.swt.gui.pfl.PageException;
-import net.bodz.swt.util.SWTResources;
-import net.bodz.swt.widgets.Picture;
+import net.bodz.swt.c3.canvas.Picture;
+import net.bodz.swt.c3.pageflow.PageException;
+import net.bodz.swt.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;

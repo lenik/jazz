@@ -2,7 +2,7 @@ package net.bodz.art.installer;
 
 import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.bas.ui.ConsoleUI;
-import net.bodz.swt.gui.pfl.PageTestApp;
+import net.bodz.swt.c3.test.PageTestApp;
 
 import org.junit.Test;
 

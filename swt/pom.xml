@@ -21,11 +21,9 @@
         </dependency>
     </dependencies>
     <modules>
-        <module>base</module>
-        <module>model</module>
-        <module>widget</module>
-        <module>frame</module>
-        <module>main</module>
+        <module>layer-1</module>
+        <module>layer-3</module>
+        <module>layer-5</module>
     </modules>
     <properties>
         <java.version>1.7</java.version>

@@ -3,9 +3,9 @@ package net.bodz.art.installer;
 import net.bodz.art.installer.builtins.TestConfig;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
-import net.bodz.swt.gui.pfl.BadPathEvent;
-import net.bodz.swt.gui.pfl.IBadPathListener;
-import net.bodz.swt.widgets.test.ControlTestApp;
+import net.bodz.swt.c3.pageflow.BadPathEvent;
+import net.bodz.swt.c3.pageflow.IBadPathListener;
+import net.bodz.swt.c3.test.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.junit.Test;

@@ -14,6 +14,7 @@
     <modules>
         <module>bas-collection</module>
         <module>bas-context</module>
+        <module>bas-geom</module>
         <module>bas-io</module>
         <module>bas-script</module>
         <module>bas-trait-impl</module>
