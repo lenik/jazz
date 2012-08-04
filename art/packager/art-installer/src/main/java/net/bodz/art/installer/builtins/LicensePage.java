@@ -6,11 +6,11 @@ import net.bodz.art.installer.IComponent;
 import net.bodz.art.installer.ISession;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.swt.gui.pfl.IPage;
-import net.bodz.swt.gui.pfl.PageException;
-import net.bodz.swt.gui.pfl.PageMethod;
-import net.bodz.swt.gui.pfl.ServiceContext;
-import net.bodz.swt.layouts.BorderLayout;
+import net.bodz.swt.c.layout.BorderLayout;
+import net.bodz.swt.c3.pageflow.IPage;
+import net.bodz.swt.c3.pageflow.PageException;
+import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c3.pageflow.ServiceContext;
 import net.bodz.swt.widgets.util.Playback;
 
 import org.eclipse.swt.SWT;

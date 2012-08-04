@@ -2,10 +2,10 @@ package net.bodz.art.installer;
 
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.ui.UIException;
-import net.bodz.swt.gui.pfl.IBook;
-import net.bodz.swt.gui.pfl.IPage;
-import net.bodz.swt.gui.pfl.NavigatorComposite;
-import net.bodz.swt.gui.pfl.SimpleBook;
+import net.bodz.swt.c3.pageflow.IBook;
+import net.bodz.swt.c3.pageflow.IPage;
+import net.bodz.swt.c3.pageflow.NavigatorComposite;
+import net.bodz.swt.c3.pageflow.SimpleBook;
 
 import org.eclipse.swt.widgets.Composite;
 

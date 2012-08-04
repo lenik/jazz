@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.swt.adapters.ControlAdapters;
-import net.bodz.swt.gui.pfl.AbstractPage;
-import net.bodz.swt.gui.pfl.PageMethod;
+import net.bodz.swt.c.control.ControlAdapters;
+import net.bodz.swt.c3.pageflow.AbstractPage;
+import net.bodz.swt.c3.pageflow.PageMethod;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -23,9 +23,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
 
-/**
- * @test {@link ActivatePageTest}
- */
 public class ActivatePage
         extends AbstractPage {
 

@@ -6,8 +6,8 @@ import net.bodz.art.installer.IComponent;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.Scheme;
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.swt.err.ValidateException;
-import net.bodz.swt.widgets.util.Controls;
+import net.bodz.swt.c3.control.Controls;
+import net.bodz.swt.gui.err.ValidateException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

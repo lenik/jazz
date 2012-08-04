@@ -33,42 +33,42 @@ public class Win32Vars {
         if (!SystemInfo.isWin32())
             return;
         project.define(WINDIR, //
-                new File(Win32.getWindowsDirectory()));
+                new File(Win32Only.getWindowsDirectory()));
         project.define(SYSDIR, //
-                new File(Win32.getWindowsSystemDirectory()));
+                new File(Win32Only.getWindowsSystemDirectory()));
 
         project.define(PROGRAM_FILES, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PROGRAM_FILES));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PROGRAM_FILES));
         project.define(COMMON_FILES, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_FILES));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_COMMON_FILES));
         project.define(COMMON_DESKTOP, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_DESKTOP));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_COMMON_DESKTOP));
         project.define(COMMON_DOCUMENTS, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_DOCUMENTS));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_COMMON_DOCUMENTS));
         project.define(COMMON_START_MENU, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_START_MENU));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_COMMON_START_MENU));
         project.define(COMMON_PROGRAMS_MENU, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_PROGRAMS_MENU));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_COMMON_PROGRAMS_MENU));
         project.define(COMMON_AUTOSTART_MENU, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_AUTOSTART_MENU));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_COMMON_AUTOSTART_MENU));
         project.define(COMMON_TEMPLATES, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_TEMPLATES));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_COMMON_TEMPLATES));
         project.define(PERSONAL_DESKTOP, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_DESKTOP));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PERSONAL_DESKTOP));
         project.define(PERSONAL_FILES, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_FILES));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PERSONAL_FILES));
         project.define(PERSONAL_START_MENU, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_START_MENU));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PERSONAL_START_MENU));
         project.define(PERSONAL_PROGRAMS_MENU, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_PROGRAMS_MENU));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PERSONAL_PROGRAMS_MENU));
         project.define(PERSONAL_AUTOSTART_MENU, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_AUTOSTART_MENU));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PERSONAL_AUTOSTART_MENU));
         project.define(PERSONAL_TEMPLATES, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_TEMPLATES));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PERSONAL_TEMPLATES));
         project.define(PERSONAL_SEND_TO, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_SEND_TO));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PERSONAL_SEND_TO));
         project.define(PERSONAL_FAVORITES, //
-                Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_FAVORITES));
+                Win32Only.getSpecialDirectory(Win32Only.SPECIALDIRECTORY_PERSONAL_FAVORITES));
     }
 
 }

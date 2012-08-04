@@ -1,24 +1,16 @@
-base/ 基本数据结构与体系规范
-    swt-compat
-    swt-dependency
-    swt-proxy
-    swt-api
+layer-1/ SWT 基本框架
+    swt-swt
     swt-c1
+    swt-gui
     
-model/ 图元类型与结构
-    swt-geom
+layer-3/ 扩展库
+    swt-c3
     swt-image
     
-widget/ 基本 UI 组件层
-    swt-widgets
-    
-frame/ 框架基础
-    swt-module
-    swt-pfl
+layer-5/ 框架
     swt-reflect
-    swt-test
-    
-main/ 应用框架
+    swt-reflect-extras      Reflect Extras
+    swt-program             GUI quickstart
+    swt-draw                Draw framework
     swt-director
-    swt-program
 
