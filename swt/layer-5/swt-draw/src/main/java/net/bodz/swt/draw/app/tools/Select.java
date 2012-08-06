@@ -1,7 +1,7 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.geom.shape.IShape2f;
-import net.bodz.geom.shape.base.IPointRef2d;
+import net.bodz.bas.geom_f.IShape2d;
+import net.bodz.bas.geom_f.base.IPointRef2d;
 import net.bodz.swt.draw.app.GDContext;
 import net.bodz.swt.draw.app.GDState;
 import net.bodz.swt.draw.app.GDStateGraph;
@@ -39,7 +39,7 @@ public class Select
             IPointRef2d p = context.vtSource(e.x, e.y);
 
             /* is p on some object ? */
-            IShape2f pick = context.shapes.pick(p);
+            IShape2d pick = context.shapes.pick(p);
             if (pick == null)
                 return this;
 
@@ -61,7 +61,7 @@ public class Select
         IPointRef2d p = context.vtSource(e.x, e.y);
 
         /* is p on some object ? */
-        IShape2f pick = context.shapes.pick(p);
+        IShape2d pick = context.shapes.pick(p);
         if (pick == null)
             return this;
 

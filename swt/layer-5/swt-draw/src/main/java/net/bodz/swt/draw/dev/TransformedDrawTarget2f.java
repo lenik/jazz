@@ -1,26 +1,26 @@
 package net.bodz.swt.draw.dev;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
-import net.bodz.geom.shape.base.IPointRef2d;
-import net.bodz.geom.transform.MatViewTransformer2f;
-import net.bodz.geom.transform.Transformer2f;
-import net.bodz.geom.transform.ViewTransformer2f;
+import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.tr.MatViewTransformer2d;
+import net.bodz.bas.geom_f.tr.ITransformer2d;
+import net.bodz.bas.geom_f.tr.ViewTransformer2d;
 
 public class TransformedDrawTarget2f
         extends AbstractDrawTarget2f_Point
-        implements DelegateDrawTarget2f, ViewTransformer2f {
+        implements DelegateDrawTarget2f, ViewTransformer2d {
 
     DrawTarget2f delegatee;
-    ViewTransformer2f matTransformmer;
+    ViewTransformer2d matTransformmer;
 
-    public TransformedDrawTarget2f(DrawTarget2f delegant, ViewTransformer2f vt) {
+    public TransformedDrawTarget2f(DrawTarget2f delegant, ViewTransformer2d vt) {
         assert delegant != null;
         this.delegatee = delegant;
         this.matTransformmer = vt;
     }
 
     public TransformedDrawTarget2f(DrawTarget2f delegant) {
-        this(delegant, new MatViewTransformer2f());
+        this(delegant, new MatViewTransformer2d());
     }
 
     // -o DelegatingDrawTarget_f
@@ -36,11 +36,11 @@ public class TransformedDrawTarget2f
 
     // -o Transformmer
 
-    public void mul(Transformer2f suffix) {
+    public void mul(ITransformer2d suffix) {
         matTransformmer.mul(suffix);
     }
 
-    public void mulBy(Transformer2f prefix) {
+    public void mulBy(ITransformer2d prefix) {
         matTransformmer.mulBy(prefix);
     }
 

@@ -1,11 +1,11 @@
 package net.bodz.swt.draw.dev;
 
-import net.bodz.geom.shape.base.ILineRef2f;
-import net.bodz.geom.shape.base.IPointRef2d;
-import net.bodz.geom.shape.base.IPolygon2f;
-import net.bodz.geom.shape.base.IRectangle2f;
-import net.bodz.geom.shape.base.ITriangle2f;
-import net.bodz.geom.shape.base.StaticPoint2f;
+import net.bodz.bas.geom_f.base.ILine2d;
+import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.base.IPolygon2d;
+import net.bodz.bas.geom_f.base.IRectangle2d;
+import net.bodz.bas.geom_f.base.ITriangle2d;
+import net.bodz.bas.geom_f.base.Point2d;
 
 public abstract class AbstractDrawTarget2f_Point
         extends AbstractDrawTarget2f {
@@ -17,7 +17,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void drawPixel(float x, float y)
             throws DrawException {
-        drawPixel(new StaticPoint2f(x, y));
+        drawPixel(new Point2d(x, y));
     }
 
     @Override
@@ -27,13 +27,13 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void drawLine(float x0, float y0, float x1, float y1)
             throws DrawException {
-        drawLine(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1));
+        drawLine(new Point2d(x0, y0), new Point2d(x1, y1));
     }
 
     @Override
-    public void drawLine(ILineRef2f line)
+    public void drawLine(ILine2d line)
             throws DrawException {
-        drawLine(line.p0(), line.p1());
+        drawLine(line.getP0(), line.getP1());
     }
 
     @Override
@@ -47,9 +47,9 @@ public abstract class AbstractDrawTarget2f_Point
     }
 
     @Override
-    public void drawRectangle(IRectangle2f rect)
+    public void drawRectangle(IRectangle2d rect)
             throws DrawException {
-        super.drawRectangle(rect.p0(), rect.p1());
+        super.drawRectangle(rect.getPoint0(), rect.getPoint1());
     }
 
     @Override
@@ -59,13 +59,13 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void drawTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
             throws DrawException {
-        super.drawTriangle(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1), new StaticPoint2f(x2, y2));
+        super.drawTriangle(new Point2d(x0, y0), new Point2d(x1, y1), new Point2d(x2, y2));
     }
 
     @Override
-    public void drawTriangle(ITriangle2f triangle)
+    public void drawTriangle(ITriangle2d triangle)
             throws DrawException {
-        drawTriangle(triangle.p0(), triangle.p1(), triangle.p2());
+        drawTriangle(triangle.getPoint0(), triangle.getPoint1(), triangle.getPoint2());
     }
 
     @Override
@@ -75,7 +75,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public final void drawCircle(float centerX, float centerY, float radiusX, float radiusY)
             throws DrawException {
-        drawCircle(new StaticPoint2f(centerX, centerY), radiusX, radiusY);
+        drawCircle(new Point2d(centerX, centerY), radiusX, radiusY);
     }
 
     @Override
@@ -85,7 +85,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void drawEllipse(float x0, float y0, float x1, float y1)
             throws DrawException {
-        drawEllipse(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1));
+        drawEllipse(new Point2d(x0, y0), new Point2d(x1, y1));
     }
 
     @Override
@@ -97,14 +97,14 @@ public abstract class AbstractDrawTarget2f_Point
             throws DrawException {
         IPointRef2d[] points = new IPointRef2d[count];
         for (int i = 0; i < count; i++)
-            points[i] = new StaticPoint2f(x[i + offset], y[i + offset]);
+            points[i] = new Point2d(x[i + offset], y[i + offset]);
         drawPolygon(points);
     }
 
     @Override
-    public void drawPolygon(IPolygon2f polygon)
+    public void drawPolygon(IPolygon2d polygon)
             throws DrawException {
-        drawPolygon(polygon.toPointRefsArray(true));
+        drawPolygon(polygon.toPointRefArray(true));
     }
 
     // Fill...
@@ -120,9 +120,9 @@ public abstract class AbstractDrawTarget2f_Point
     }
 
     @Override
-    public void fillRectangle(IRectangle2f rect)
+    public void fillRectangle(IRectangle2d rect)
             throws DrawException {
-        super.fillRectangle(rect.p0(), rect.p1());
+        super.fillRectangle(rect.getPoint0(), rect.getPoint1());
     }
 
     @Override
@@ -132,13 +132,13 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void fillTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
             throws DrawException {
-        super.fillTriangle(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1), new StaticPoint2f(x2, y2));
+        super.fillTriangle(new Point2d(x0, y0), new Point2d(x1, y1), new Point2d(x2, y2));
     }
 
     @Override
-    public void fillTriangle(ITriangle2f triangle)
+    public void fillTriangle(ITriangle2d triangle)
             throws DrawException {
-        fillTriangle(triangle.p0(), triangle.p1(), triangle.p2());
+        fillTriangle(triangle.getPoint0(), triangle.getPoint1(), triangle.getPoint2());
     }
 
     @Override
@@ -148,7 +148,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public final void fillCircle(float centerX, float centerY, float radiusX, float radiusY)
             throws DrawException {
-        fillCircle(new StaticPoint2f(centerX, centerY), radiusX, radiusY);
+        fillCircle(new Point2d(centerX, centerY), radiusX, radiusY);
     }
 
     @Override
@@ -158,7 +158,7 @@ public abstract class AbstractDrawTarget2f_Point
     @Override
     public void fillEllipse(float x0, float y0, float x1, float y1)
             throws DrawException {
-        fillEllipse(new StaticPoint2f(x0, y0), new StaticPoint2f(x1, y1));
+        fillEllipse(new Point2d(x0, y0), new Point2d(x1, y1));
     }
 
     @Override
@@ -170,14 +170,14 @@ public abstract class AbstractDrawTarget2f_Point
             throws DrawException {
         IPointRef2d[] points = new IPointRef2d[count];
         for (int i = 0; i < count; i++)
-            points[i] = new StaticPoint2f(x[i + offset], y[i + offset]);
+            points[i] = new Point2d(x[i + offset], y[i + offset]);
         fillPolygon(points);
     }
 
     @Override
-    public void fillPolygon(IPolygon2f polygon)
+    public void fillPolygon(IPolygon2d polygon)
             throws DrawException {
-        fillPolygon(polygon.toPointRefsArray(true));
+        fillPolygon(polygon.toPointRefArray(true));
     }
 
 }

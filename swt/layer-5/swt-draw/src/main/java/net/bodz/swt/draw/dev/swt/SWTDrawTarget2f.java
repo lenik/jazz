@@ -1,7 +1,7 @@
 package net.bodz.swt.draw.dev.swt;
 
-import net.bodz.geom.shape.base.IPointRef2d;
-import net.bodz.geom.shape.base.IPolygon2f;
+import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.base.IPolygon2d;
 import net.bodz.swt.draw.dev.AbstractDrawTarget2f;
 import net.bodz.swt.draw.dev.Color;
 import net.bodz.swt.draw.dev.DrawException;
@@ -45,7 +45,7 @@ public class SWTDrawTarget2f
     }
 
     @Override
-    public void drawPolygon(IPolygon2f polygon) {
+    public void drawPolygon(IPolygon2d polygon) {
         if (polygon.isClosed()) {
             int[] swt = convertPolygonToSWT(polygon);
             gc.drawPolygon(swt);
@@ -78,18 +78,18 @@ public class SWTDrawTarget2f
     }
 
     @Override
-    public void fillPolygon(IPolygon2f polygon) {
+    public void fillPolygon(IPolygon2d polygon) {
         int[] swt = convertPolygonToSWT(polygon);
         gc.fillPolygon(swt);
     }
 
-    public static int[] convertPolygonToSWT(IPolygon2f polygon) {
-        int n = polygon.pointCount();
+    public static int[] convertPolygonToSWT(IPolygon2d polygon) {
+        int n = polygon.getPointCount();
         int[] xy = new int[n + n];
         for (int i = 0; i < n; i++) {
-            IPointRef2d point = polygon.pointRef(i);
-            xy[i + i] = (int) point.x();
-            xy[i + i + 1] = (int) point.y();
+            IPointRef2d point = polygon.getPointRef(i);
+            xy[i + i] = (int) point.getX();
+            xy[i + i + 1] = (int) point.getY();
         }
         return xy;
     }

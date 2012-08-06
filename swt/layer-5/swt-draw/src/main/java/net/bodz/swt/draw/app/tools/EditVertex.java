@@ -1,7 +1,7 @@
 package net.bodz.swt.draw.app.tools;
 
 import net.bodz.bas.fsm.base.IState;
-import net.bodz.geom.shape.EditablePointSet2f;
+import net.bodz.bas.geom_f.base.IEditablePointSet2d;
 import net.bodz.swt.draw.app.GDState;
 import net.bodz.swt.draw.app.GDStateGraph;
 
@@ -11,7 +11,7 @@ public class EditVertex
         extends GDState {
 
     // Shape2f shape;
-    EditablePointSet2f editable;
+    IEditablePointSet2d editable;
     int pointIndex;
 
     public EditVertex(GDStateGraph graph) {
@@ -24,7 +24,7 @@ public class EditVertex
     }
 
     boolean check(int index) {
-        if (index < 0 || index >= editable.pointCount())
+        if (index < 0 || index >= editable.getPointCount())
             return false;
         return true;
     }
@@ -37,7 +37,7 @@ public class EditVertex
             if (!check(pointIndex))
                 break;
             editable.removePoint(pointIndex);
-            pointIndex %= editable.pointCount();
+            pointIndex %= editable.getPointCount();
             if (pointIndex == 0) {
                 // the shape may be still exist, even no any point.
             }

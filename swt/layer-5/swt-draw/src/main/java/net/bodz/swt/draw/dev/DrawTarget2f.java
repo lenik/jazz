@@ -1,10 +1,10 @@
 package net.bodz.swt.draw.dev;
 
-import net.bodz.geom.shape.base.ILineRef2f;
-import net.bodz.geom.shape.base.IPointRef2d;
-import net.bodz.geom.shape.base.IPolygon2f;
-import net.bodz.geom.shape.base.IRectangle2f;
-import net.bodz.geom.shape.base.ITriangle2f;
+import net.bodz.bas.geom_f.base.ILine2d;
+import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.base.IPolygon2d;
+import net.bodz.bas.geom_f.base.IRectangle2d;
+import net.bodz.bas.geom_f.base.ITriangle2d;
 
 public interface DrawTarget2f {
 
@@ -20,7 +20,7 @@ public interface DrawTarget2f {
     void drawLine(IPointRef2d start, IPointRef2d end)
             throws DrawException;
 
-    void drawLine(ILineRef2f line)
+    void drawLine(ILine2d line)
             throws DrawException;
 
     void drawRectangle(float x0, float y0, float x1, float y1)
@@ -29,7 +29,7 @@ public interface DrawTarget2f {
     void drawRectangle(IPointRef2d p0, IPointRef2d p1)
             throws DrawException;
 
-    void drawRectangle(IRectangle2f rect)
+    void drawRectangle(IRectangle2d rect)
             throws DrawException;
 
     void drawTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
@@ -38,7 +38,7 @@ public interface DrawTarget2f {
     void drawTriangle(IPointRef2d p0, IPointRef2d p1, IPointRef2d p2)
             throws DrawException;
 
-    void drawTriangle(ITriangle2f triangle)
+    void drawTriangle(ITriangle2d triangle)
             throws DrawException;
 
     void drawEllipse(float x0, float y0, float x1, float y1)
@@ -47,7 +47,7 @@ public interface DrawTarget2f {
     void drawEllipse(IPointRef2d p0, IPointRef2d p1)
             throws DrawException;
 
-    void drawEllipse(IRectangle2f boundingBox)
+    void drawEllipse(IRectangle2d boundingBox)
             throws DrawException;
 
     // void drawEllipse(Ellipse2f ellipse);
@@ -63,7 +63,7 @@ public interface DrawTarget2f {
     void drawCircle(IPointRef2d center, float radius)
             throws DrawException;
 
-    void drawPolygon(IPolygon2f polygon)
+    void drawPolygon(IPolygon2d polygon)
             throws DrawException;
 
     void drawPolygon(IPointRef2d[] points)
@@ -81,7 +81,7 @@ public interface DrawTarget2f {
     void fillTriangle(IPointRef2d p0, IPointRef2d p1, IPointRef2d p2)
             throws DrawException;
 
-    void fillTriangle(ITriangle2f triangle)
+    void fillTriangle(ITriangle2d triangle)
             throws DrawException;
 
     void fillRectangle(float x0, float y0, float x1, float y1)
@@ -90,7 +90,7 @@ public interface DrawTarget2f {
     void fillRectangle(IPointRef2d p0, IPointRef2d p1)
             throws DrawException;
 
-    void fillRectangle(IRectangle2f boundingBox)
+    void fillRectangle(IRectangle2d boundingBox)
             throws DrawException;
 
     void fillEllipse(float x0, float y0, float x1, float y1)
@@ -99,7 +99,7 @@ public interface DrawTarget2f {
     void fillEllipse(IPointRef2d p0, IPointRef2d p1)
             throws DrawException;
 
-    void fillEllipse(IRectangle2f boundingBox)
+    void fillEllipse(IRectangle2d boundingBox)
             throws DrawException;
 
     // void drawFilledEllipse(Ellipse2f ellipse);
@@ -115,7 +115,7 @@ public interface DrawTarget2f {
     void fillCircle(IPointRef2d center, float radius)
             throws DrawException;
 
-    void fillPolygon(IPolygon2f polygon)
+    void fillPolygon(IPolygon2d polygon)
             throws DrawException;
 
     void fillPolygon(IPointRef2d[] points)

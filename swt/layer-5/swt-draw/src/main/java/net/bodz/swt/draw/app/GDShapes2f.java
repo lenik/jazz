@@ -3,29 +3,29 @@ package net.bodz.swt.draw.app;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.c.javax.vecmath.Vector2f;
-import net.bodz.geom.base.PickInfo2f;
-import net.bodz.geom.shape.AbstractShape2f;
-import net.bodz.geom.shape.IShape2f;
-import net.bodz.geom.shape.base.AbstractRectangle2f;
-import net.bodz.geom.shape.base.IPointRef2d;
-import net.bodz.geom.shape.base.IRectangle2f;
-import net.bodz.swt.draw.dev.DrawException;
-import net.bodz.swt.draw.dev.DrawTarget2f;
+import net.bodz.bas.geom_f.api.AbstractShape2d;
+import net.bodz.bas.geom_f.api.IShape2d;
+import net.bodz.bas.geom_f.api.PickResult2d;
+import net.bodz.bas.geom_f.api.PositiveHalfPlane;
+import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.base.Point2d;
+import net.bodz.bas.geom_f.base.Rectangle2d;
+import net.bodz.bas.gui.dev.GraphicsOperationException;
+import net.bodz.bas.gui.dev.IDrawContext2d;
 
 public class GDShapes2f
-        extends AbstractShape2f {
+        extends AbstractShape2d {
 
-    List<SWTShape2f> shapes;
+    List<SWTShape2d> shapes;
 
-    public GDShapes2f(List<SWTShape2f> shapes, boolean copy) {
+    public GDShapes2f(List<SWTShape2d> shapes, boolean copy) {
         assert shapes != null;
         if (copy) {
             int n = shapes.size();
-            List<SWTShape2f> copies = new ArrayList<SWTShape2f>(n);
+            List<SWTShape2d> copies = new ArrayList<SWTShape2d>(n);
             for (int i = 0; i < n; i++) {
-                IShape2f shape = shapes.get(i);
-                copies.set(i, new SWTShape2f(shape.clone()));
+                IShape2d shape = shapes.get(i);
+                copies.set(i, new SWTShape2d(shape.clone()));
             }
             this.shapes = copies;
         } else {
@@ -33,51 +33,51 @@ public class GDShapes2f
         }
     }
 
-    public GDShapes2f(List<SWTShape2f> shapes) {
+    public GDShapes2f(List<SWTShape2d> shapes) {
         this(shapes, false);
     }
 
     public GDShapes2f() {
-        this(new ArrayList<SWTShape2f>(), false);
+        this(new ArrayList<SWTShape2d>(), false);
     }
 
     // -o Pick
 
-    public static class CompPickInfo2f
-            extends PickInfo2f {
-        public IShape2f component;
+    public static class CompPickResult2d
+            extends PickResult2d {
+        public IShape2d component;
 
-        public CompPickInfo2f(IShape2f pick, float distance, IShape2f component) {
+        public CompPickResult2d(IShape2d pick, float distance, IShape2d component) {
             super(pick, distance);
             this.component = component;
         }
     }
 
     @Override
-    public PickInfo2f pickInfo(float x, float y) {
+    public PickResult2d _pick(Point2d point) {
         float minDistance = Float.MAX_VALUE;
-        PickInfo2f minPI = null;
+        PickResult2d minPI = null;
         int n = shapes.size();
-        IShape2f component = null;
+        IShape2d component = null;
 
         for (int i = 0; i < n; i++) {
-            IShape2f shape = shapes.get(i);
-            PickInfo2f pi = shape.pickInfo(x, y);
-            if (pi.distance < minDistance) {
-                minDistance = pi.distance;
-                minPI = pi;
+            IShape2d shape = shapes.get(i);
+            PickResult2d result = shape._pick(point);
+            if (result.getDistance() < minDistance) {
+                minDistance = result.getDistance();
+                minPI = result;
                 component = shape;
             }
         }
         if (minPI == null)
             return null;
-        return new CompPickInfo2f(minPI.pick, minPI.distance, component);
+        return new CompPickResult2d(minPI.getShape(), minPI.getDistance(), component);
     }
 
-    public IShape2f find(float x, float y) {
+    public IShape2d find(float x, float y) {
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
-            IShape2f shape = shapes.get(i);
+            IShape2d shape = shapes.get(i);
             if (shape.contains(x, y))
                 return shape;
         }
@@ -85,12 +85,12 @@ public class GDShapes2f
     }
 
     @Override
-    public float distance(float x, float y) {
+    public float distance(Point2d point) {
         float minDistance = Float.MAX_VALUE;
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
-            IShape2f shape = shapes.get(i);
-            float dist = shape.distance(x, y);
+            IShape2d shape = shapes.get(i);
+            float dist = shape.distance(point);
             if (dist < minDistance) {
                 minDistance = dist;
             }
@@ -100,20 +100,21 @@ public class GDShapes2f
 
     // -o Shape
 
-    public int pointCount() {
+    public int getPointCount() {
         return 0;
     }
 
-    public IPointRef2d pointRef(int index) {
+    @Override
+    public IPointRef2d getPointRef(int index) {
         return null;
     }
 
     @Override
-    public IShape2f crop(IPointRef2d baseHalfPlane, Vector2f normal) {
+    public IShape2d crop(PositiveHalfPlane hp) {
         int n = shapes.size();
         for (int i = 0; i < n;) {
-            IShape2f shape = shapes.get(i);
-            shape = shape.crop(baseHalfPlane, normal);
+            IShape2d shape = shapes.get(i);
+            shape = shape.crop(hp);
             if (shape == null) {
                 shapes.remove(i);
                 n--;
@@ -127,25 +128,19 @@ public class GDShapes2f
     }
 
     @Override
-    public IRectangle2f boundingBox() {
-        AbstractRectangle2f b = new IRectangle2f.LeftPositive(Float.MAX_VALUE, Float.MAX_VALUE, -Float.MAX_VALUE,
-                -Float.MAX_VALUE);
+    public Rectangle2d getBoundingBox() {
         int n = shapes.size();
-        for (int i = 0; i < n; i++) {
-            IShape2f shape = shapes.get(i);
-            IRectangle2f r = shape.boundingBox();
-            b.addWithScale(r);
-        }
-        return super.boundingBox();
-    }
+        if (n == 0)
+            return null;
 
-    @Override
-    public GDShapes2f snapshot() {
-        int n = shapes.size();
-        List<SWTShape2f> shapes = new ArrayList<SWTShape2f>(n);
-        for (int i = 0; i < n; i++)
-            shapes.add(new SWTShape2f(shapes.get(i).snapshot()));
-        return new GDShapes2f(shapes);
+        Rectangle2d bbox = shapes.get(0).getBoundingBox();
+
+        for (int i = 1; i < n; i++) {
+            IShape2d shape = shapes.get(i);
+            Rectangle2d r = shape.getBoundingBox();
+            bbox.include(r);
+        }
+        return bbox; // super.getBoundingBox();
     }
 
     @Override
@@ -153,12 +148,21 @@ public class GDShapes2f
         return new GDShapes2f(shapes, true);
     }
 
-    public void draw(DrawTarget2f target)
-            throws DrawException {
+    @Override
+    public GDShapes2f snapshot() {
+        int n = shapes.size();
+        List<SWTShape2d> shapes = new ArrayList<SWTShape2d>(n);
+        for (int i = 0; i < n; i++)
+            shapes.add(new SWTShape2d(shapes.get(i).snapshot()));
+        return new GDShapes2f(shapes);
+    }
+
+    public void draw(IDrawContext2d context)
+            throws GraphicsOperationException {
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
-            IShape2f shape = shapes.get(i);
-            shape.draw(target);
+            IShape2d shape = shapes.get(i);
+            shape.draw(context);
         }
     }
 

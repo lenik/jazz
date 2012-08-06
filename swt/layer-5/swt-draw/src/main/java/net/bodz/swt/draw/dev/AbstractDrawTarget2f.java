@@ -1,10 +1,10 @@
 package net.bodz.swt.draw.dev;
 
-import net.bodz.geom.shape.base.ILineRef2f;
-import net.bodz.geom.shape.base.IPointRef2d;
-import net.bodz.geom.shape.base.IPolygon2f;
-import net.bodz.geom.shape.base.IRectangle2f;
-import net.bodz.geom.shape.base.ITriangle2f;
+import net.bodz.bas.geom_f.base.ILine2d;
+import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.base.IPolygon2d;
+import net.bodz.bas.geom_f.base.IRectangle2d;
+import net.bodz.bas.geom_f.base.ITriangle2d;
 
 public abstract class AbstractDrawTarget2f
         implements DrawTarget2f {
@@ -34,24 +34,24 @@ public abstract class AbstractDrawTarget2f
 
     public void drawEllipse(float x0, float y0, float x1, float y1)
             throws DrawException {
-        IPolygon2f sampled = new IPolygon2f.SampleEllipse(x0, y0, x1, y1);
+        IPolygon2d sampled = new IPolygon2d.SampleEllipse(x0, y0, x1, y1);
         drawPolygon(sampled);
     }
 
-    public void drawPolygon(IPolygon2f polygon)
+    public void drawPolygon(IPolygon2d polygon)
             throws DrawException {
-        int n = polygon.pointCount();
+        int n = polygon.getPointCount();
         switch (n) {
         case 1:
-            drawPixel(polygon.pointRef(0));
+            drawPixel(polygon.getPointRef(0));
         case 0:
             return;
         }
 
         int offset = polygon.isOpened() ? 1 : 0;
-        IPointRef2d pre = polygon.pointRef((n + offset - 1) % n);
+        IPointRef2d pre = polygon.getPointRef((n + offset - 1) % n);
         for (int i = offset; i < n; i++) {
-            IPointRef2d p = polygon.pointRef(i);
+            IPointRef2d p = polygon.getPointRef(i);
             drawLine(pre, p);
             pre = p;
         }
@@ -68,13 +68,13 @@ public abstract class AbstractDrawTarget2f
 
     public void fillEllipse(float x0, float y0, float x1, float y1)
             throws DrawException {
-        IPolygon2f sampled = new IPolygon2f.SampleEllipse(x0, y0, x1, y1);
+        IPolygon2d sampled = new IPolygon2d.SampleEllipse(x0, y0, x1, y1);
         fillPolygon(sampled);
     }
 
-    public void fillPolygon(IPolygon2f polygon)
+    public void fillPolygon(IPolygon2d polygon)
             throws DrawException {
-        ITriangle2f[] triangles = polygon.toTriangles();
+        ITriangle2d[] triangles = polygon.toTriangleArray();
         for (int i = 0; i < triangles.length; i++)
             fillTriangle(triangles[i]);
     }
@@ -83,47 +83,47 @@ public abstract class AbstractDrawTarget2f
 
     public void drawPixel(IPointRef2d point)
             throws DrawException {
-        drawPixel(point.x(), point.y());
+        drawPixel(point.getX(), point.getY());
     }
 
     public void drawLine(IPointRef2d start, IPointRef2d end)
             throws DrawException {
-        drawLine(start.x(), start.y(), end.x(), end.y());
+        drawLine(start.getX(), start.getY(), end.getX(), end.getY());
     }
 
-    public void drawLine(ILineRef2f line)
+    public void drawLine(ILine2d line)
             throws DrawException {
-        drawLine(line.x0(), line.y0(), line.x1(), line.y1());
+        drawLine(line.getX0(), line.getY0(), line.getX1(), line.getY1());
     }
 
     public void drawTriangle(IPointRef2d p0, IPointRef2d p1, IPointRef2d p2)
             throws DrawException {
-        drawTriangle(p0.x(), p0.y(), p1.x(), p1.y(), p2.x(), p2.y());
+        drawTriangle(p0.getX(), p0.getY(), p1.getX(), p1.getY(), p2.getX(), p2.getY());
     }
 
-    public void drawTriangle(ITriangle2f triangle)
+    public void drawTriangle(ITriangle2d triangle)
             throws DrawException {
-        drawTriangle(triangle.x0(), triangle.y0(), triangle.x1(), triangle.y1(), triangle.x2(), triangle.y2());
+        drawTriangle(triangle.getX0(), triangle.getY0(), triangle.getX1(), triangle.getY1(), triangle.getX2(), triangle.getY2());
     }
 
     public void drawRectangle(IPointRef2d p0, IPointRef2d p1)
             throws DrawException {
-        drawRectangle(p0.x(), p0.y(), p1.x(), p1.y());
+        drawRectangle(p0.getX(), p0.getY(), p1.getX(), p1.getY());
     }
 
-    public void drawRectangle(IRectangle2f rect)
+    public void drawRectangle(IRectangle2d rect)
             throws DrawException {
-        drawRectangle(rect.x0(), rect.y0(), rect.x2(), rect.y2());
+        drawRectangle(rect.getX0(), rect.getY0(), rect.getX2(), rect.getY2());
     }
 
     public void drawEllipse(IPointRef2d p0, IPointRef2d p1)
             throws DrawException {
-        drawEllipse(p0.x(), p0.y(), p1.x(), p1.y());
+        drawEllipse(p0.getX(), p0.getY(), p1.getX(), p1.getY());
     }
 
-    public void drawEllipse(IRectangle2f boundingBox)
+    public void drawEllipse(IRectangle2d boundingBox)
             throws DrawException {
-        drawEllipse(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(), boundingBox.y2());
+        drawEllipse(boundingBox.getX0(), boundingBox.getY0(), boundingBox.getX2(), boundingBox.getY2());
     }
 
     public void drawCircle(float centerX, float centerY, float radiusX, float radiusY)
@@ -138,17 +138,17 @@ public abstract class AbstractDrawTarget2f
 
     public void drawCircle(IPointRef2d center, float radiusX, float radiusY)
             throws DrawException {
-        drawCircle(center.x(), center.y(), radiusX, radiusY);
+        drawCircle(center.getX(), center.getY(), radiusX, radiusY);
     }
 
     public void drawCircle(IPointRef2d center, float radius)
             throws DrawException {
-        drawCircle(center.x(), center.y(), radius, radius);
+        drawCircle(center.getX(), center.getY(), radius, radius);
     }
 
     public void drawPolygon(float[] x, float[] y, int offset, int count)
             throws DrawException {
-        IPolygon2f polygon = new IPolygon2f.StaticFixed(x, y, offset, count);
+        IPolygon2d polygon = new IPolygon2d.StaticFixed(x, y, offset, count);
         drawPolygon(polygon);
     }
 
@@ -175,32 +175,32 @@ public abstract class AbstractDrawTarget2f
 
     public void fillTriangle(IPointRef2d p0, IPointRef2d p1, IPointRef2d p2)
             throws DrawException {
-        fillTriangle(p0.x(), p0.y(), p1.x(), p1.y(), p2.x(), p2.y());
+        fillTriangle(p0.getX(), p0.getY(), p1.getX(), p1.getY(), p2.getX(), p2.getY());
     }
 
-    public void fillTriangle(ITriangle2f triangle)
+    public void fillTriangle(ITriangle2d triangle)
             throws DrawException {
-        fillTriangle(triangle.x0(), triangle.y0(), triangle.x1(), triangle.y1(), triangle.x2(), triangle.y2());
+        fillTriangle(triangle.getX0(), triangle.getY0(), triangle.getX1(), triangle.getY1(), triangle.getX2(), triangle.getY2());
     }
 
     public void fillRectangle(IPointRef2d p0, IPointRef2d p1)
             throws DrawException {
-        fillRectangle(p0.x(), p0.y(), p1.x(), p1.y());
+        fillRectangle(p0.getX(), p0.getY(), p1.getX(), p1.getY());
     }
 
-    public void fillRectangle(IRectangle2f boundingBox)
+    public void fillRectangle(IRectangle2d boundingBox)
             throws DrawException {
-        fillRectangle(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(), boundingBox.y2());
+        fillRectangle(boundingBox.getX0(), boundingBox.getY0(), boundingBox.getX2(), boundingBox.getY2());
     }
 
     public void fillEllipse(IPointRef2d p0, IPointRef2d p1)
             throws DrawException {
-        fillEllipse(p0.x(), p0.y(), p1.x(), p1.y());
+        fillEllipse(p0.getX(), p0.getY(), p1.getX(), p1.getY());
     }
 
-    public void fillEllipse(IRectangle2f boundingBox)
+    public void fillEllipse(IRectangle2d boundingBox)
             throws DrawException {
-        fillEllipse(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(), boundingBox.y2());
+        fillEllipse(boundingBox.getX0(), boundingBox.getY0(), boundingBox.getX2(), boundingBox.getY2());
     }
 
     public void fillCircle(float centerX, float centerY, float radiusX, float radiusY)
@@ -215,12 +215,12 @@ public abstract class AbstractDrawTarget2f
 
     public void fillCircle(IPointRef2d center, float radiusX, float radiusY)
             throws DrawException {
-        fillCircle(center.x(), center.y(), radiusX, radiusY);
+        fillCircle(center.getX(), center.getY(), radiusX, radiusY);
     }
 
     public void fillCircle(IPointRef2d center, float radius)
             throws DrawException {
-        fillCircle(center.x(), center.y(), radius, radius);
+        fillCircle(center.getX(), center.getY(), radius, radius);
     }
 
     public void fillPolygon(IPointRef2d[] points)
@@ -233,7 +233,7 @@ public abstract class AbstractDrawTarget2f
 
     public void fillPolygon(float[] x, float[] y, int offset, int count)
             throws DrawException {
-        IPolygon2f polygon = new IPolygon2f.StaticFixed(x, y, offset, count);
+        IPolygon2d polygon = new IPolygon2d.StaticFixed(x, y, offset, count);
         fillPolygon(polygon);
     }
 

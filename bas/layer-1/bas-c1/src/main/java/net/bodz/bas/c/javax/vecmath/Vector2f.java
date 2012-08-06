@@ -5,7 +5,7 @@ import javax.vecmath.Tuple2f;
 
 public class Vector2f
         extends javax.vecmath.Vector2f
-        implements IVector2fEx {
+        implements IMyVector2f {
 
     private static final long serialVersionUID = 1L;
 
