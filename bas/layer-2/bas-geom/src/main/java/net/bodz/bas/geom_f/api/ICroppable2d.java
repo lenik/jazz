@@ -1,0 +1,42 @@
+package net.bodz.bas.geom_f.api;
+
+import net.bodz.bas.geom_f.base.Polygon2d;
+import net.bodz.bas.geom_f.base.Rectangle2d;
+import net.bodz.bas.geom_f.base.Triangle2d;
+
+public interface ICroppable2d {
+
+    /**
+     * Remove contents of this shape outside the given half plane.
+     * 
+     * @param php
+     *            The crop half plane. Must be non-<code>null</code>.
+     */
+    IShape2d crop(PositiveHalfPlane php);
+
+    /**
+     * Remove contents of this shape outside the given rectangle.
+     * 
+     * @param rectangle
+     *            The crop rectangle. Must be non-<code>null</code>.
+     */
+    IShape2d crop(Rectangle2d rectangle);
+
+    /**
+     * Remove contents of this shape outside the given triangle.
+     * 
+     * @param triangle
+     *            The crop triangle. Must be non-<code>null</code>.
+     */
+    IShape2d crop(Triangle2d triangle);
+
+    /**
+     * Remove contents of this shape outside the given polygon.
+     * 
+     * @param convexPolygon
+     *            A convex polygon. The crop result is undefined if the polygon is not convex (i.e.,
+     *            concave). Must be non-<code>null</code>.
+     */
+    IShape2d crop(Polygon2d convexPolygon);
+
+}

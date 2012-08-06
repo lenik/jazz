@@ -2,9 +2,9 @@ package net.bodz.swt.draw.dev.awt;
 
 import java.awt.Graphics2D;
 
+import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.base.IPolygon2d;
 import net.bodz.bas.util.Pair;
-import net.bodz.geom.shape.base.IPointRef2d;
-import net.bodz.geom.shape.base.IPolygon2f;
 import net.bodz.swt.draw.dev.AbstractDrawTarget2f;
 import net.bodz.swt.draw.dev.DrawException;
 
@@ -33,7 +33,7 @@ public class AWTDrawTarget2f
     }
 
     @Override
-    public void drawPolygon(IPolygon2f polygon) {
+    public void drawPolygon(IPolygon2d polygon) {
         if (polygon.isClosed()) {
             Pair<int[], int[]> awt = convertPolygonToAWT(polygon);
             int n = awt.first.length;
@@ -68,20 +68,20 @@ public class AWTDrawTarget2f
     }
 
     @Override
-    public void fillPolygon(IPolygon2f polygon) {
+    public void fillPolygon(IPolygon2d polygon) {
         Pair<int[], int[]> awt = convertPolygonToAWT(polygon);
         int n = awt.first.length;
         g.fillPolygon(awt.first, awt.second, n);
     }
 
-    public static Pair<int[], int[]> convertPolygonToAWT(IPolygon2f polygon) {
-        int n = polygon.pointCount();
+    public static Pair<int[], int[]> convertPolygonToAWT(IPolygon2d polygon) {
+        int n = polygon.getPointCount();
         int[] x = new int[n];
         int[] y = new int[n];
         for (int i = 0; i < n; i++) {
-            IPointRef2d point = polygon.pointRef(i);
-            x[i] = (int) point.x();
-            y[i] = (int) point.y();
+            IPointRef2d point = polygon.getPointRef(i);
+            x[i] = (int) point.getX();
+            y[i] = (int) point.getY();
         }
         return new Pair<int[], int[]>(x, y);
     }

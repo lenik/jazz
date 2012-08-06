@@ -7,7 +7,7 @@ import javax.vecmath.Vector3d;
 
 public class Vector3f
         extends javax.vecmath.Vector3f
-        implements IVector3fEx {
+        implements IMyVector3f {
 
     private static final long serialVersionUID = 1L;
 

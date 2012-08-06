@@ -1,10 +1,10 @@
 package net.bodz.swt.draw.app;
 
-import net.bodz.geom.shape.EditablePointSet2f;
-import net.bodz.geom.shape.IShape2f;
-import net.bodz.geom.shape.base.IPointRef2d;
-import net.bodz.geom.shape.base.StaticPoint2f;
-import net.bodz.geom.transform.ViewTransformer2f;
+import net.bodz.bas.geom_f.IShape2d;
+import net.bodz.bas.geom_f.base.IEditablePointSet2d;
+import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.base.Point2d;
+import net.bodz.bas.geom_f.tr.ViewTransformer2d;
 import net.bodz.swt.draw.dev.DrawTarget2f;
 import net.bodz.swt.draw.dev.TransformedDrawTarget2f;
 import net.bodz.swt.draw.dev.swt.SWTDrawTarget2f;
@@ -26,20 +26,20 @@ public class GDContext
     public Image preview;
 
     // Select
-    public IShape2f selshape;
+    public IShape2d selshape;
 
     // Edit
-    public EditablePointSet2f seledit;
+    public IEditablePointSet2d seledit;
     public int selpoint;
     public int selspoint;
 
     // Draw
-    public IShape2f mkshape;
+    public IShape2d mkshape;
 
     // View
-    public ViewTransformer2f vt;
+    public ViewTransformer2d vt;
 
-    public DrawTarget2f getDT(GC gc, ViewTransformer2f transformer) {
+    public DrawTarget2f getDT(GC gc, ViewTransformer2d transformer) {
         DrawTarget2f sdt = new SWTDrawTarget2f(gc);
         DrawTarget2f tdt = new TransformedDrawTarget2f(sdt, transformer);
         return tdt;
@@ -57,11 +57,11 @@ public class GDContext
 
     public Point vtTarget(IPointRef2d point) {
         IPointRef2d swt = vt.transformTo(point);
-        return new Point((int) swt.x(), (int) swt.y());
+        return new Point((int) swt.getX(), (int) swt.getY());
     }
 
     public IPointRef2d vtSource(int x, int y) {
-        IPointRef2d point = new StaticPoint2f(x, y);
+        IPointRef2d point = new Point2d(x, y);
         vt.transform(point);
         return point;
     }
