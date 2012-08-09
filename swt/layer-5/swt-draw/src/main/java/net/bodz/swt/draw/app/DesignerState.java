@@ -5,16 +5,16 @@ import net.bodz.swt.gui.state.SWTStateImpl;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 
-public class GDState
+public class DesignerState
         extends SWTStateImpl {
 
-    public GDState(GDStateGraph graph) {
+    public DesignerState(DesignerStateGraph graph) {
         super(graph);
         assert graph != null;
     }
 
     @Override
-    public GDStateGraph getGraph() {
+    public DesignerStateGraph getGraph() {
         return getGraph();
     }
 
@@ -23,32 +23,32 @@ public class GDState
     }
 
     @Override
-    public GDState onKeyPressed(KeyEvent e) {
+    public DesignerState onKeyPressed(KeyEvent e) {
         return this;
     }
 
     @Override
-    public GDState onKeyReleased(KeyEvent e) {
+    public DesignerState onKeyReleased(KeyEvent e) {
         return this;
     }
 
     @Override
-    public GDState onMouseDoubleClick(MouseEvent e) {
+    public DesignerState onMouseDoubleClick(MouseEvent e) {
         return this;
     }
 
     @Override
-    public GDState onMouseDown(MouseEvent e) {
+    public DesignerState onMouseDown(MouseEvent e) {
         return this;
     }
 
     @Override
-    public GDState onMouseMove(MouseEvent e, MouseEvent d) {
+    public DesignerState onMouseMove(MouseEvent e, MouseEvent d) {
         return this;
     }
 
     @Override
-    public GDState onMouseUp(MouseEvent e, MouseEvent d) {
+    public DesignerState onMouseUp(MouseEvent e, MouseEvent d) {
         return this;
     }
 

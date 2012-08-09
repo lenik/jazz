@@ -2,19 +2,19 @@ package net.bodz.swt.draw.app.tools;
 
 import net.bodz.bas.fsm.base.IState;
 import net.bodz.bas.geom_f.base.IEditablePointSet2d;
-import net.bodz.swt.draw.app.GDState;
-import net.bodz.swt.draw.app.GDStateGraph;
+import net.bodz.swt.draw.app.DesignerState;
+import net.bodz.swt.draw.app.DesignerStateGraph;
 
 import org.eclipse.swt.events.KeyEvent;
 
 public class EditVertex
-        extends GDState {
+        extends DesignerState {
 
     // Shape2f shape;
     IEditablePointSet2d editable;
     int pointIndex;
 
-    public EditVertex(GDStateGraph graph) {
+    public EditVertex(DesignerStateGraph graph) {
         super(graph);
     }
 
@@ -30,7 +30,7 @@ public class EditVertex
     }
 
     @Override
-    public GDState onKeyPressed(KeyEvent e) {
+    public DesignerState onKeyPressed(KeyEvent e) {
         switch (e.keyCode) {
         case java.awt.event.KeyEvent.VK_DELETE:
         case java.awt.event.KeyEvent.VK_BACK_SPACE:

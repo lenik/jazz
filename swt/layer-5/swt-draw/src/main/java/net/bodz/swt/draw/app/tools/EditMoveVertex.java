@@ -1,12 +1,12 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.GDState;
-import net.bodz.swt.draw.app.GDStateGraph;
+import net.bodz.swt.draw.app.DesignerState;
+import net.bodz.swt.draw.app.DesignerStateGraph;
 
 public class EditMoveVertex
-        extends GDState {
+        extends DesignerState {
 
-    public EditMoveVertex(GDStateGraph graph) {
+    public EditMoveVertex(DesignerStateGraph graph) {
         super(graph);
     }
 

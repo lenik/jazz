@@ -1,12 +1,12 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.GDState;
-import net.bodz.swt.draw.app.GDStateGraph;
+import net.bodz.swt.draw.app.DesignerState;
+import net.bodz.swt.draw.app.DesignerStateGraph;
 
 public class DrawRectangle
-        extends GDState {
+        extends DesignerState {
 
-    public DrawRectangle(GDStateGraph graph) {
+    public DrawRectangle(DesignerStateGraph graph) {
         super(graph);
     }
 
