@@ -2,7 +2,7 @@ package net.bodz.swt.director.layers;
 
 import java.util.EventObject;
 
-import net.bodz.bas.meta.lang.Const;
+import net.bodz.bas.meta.optim.Const;
 
 import org.eclipse.swt.graphics.Rectangle;
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.meta.codehint.ThreadUnsafe;
+import net.bodz.bas.meta.optim.ThreadUnsafe;
 
 @ThreadUnsafe
 public class TokenQueue
