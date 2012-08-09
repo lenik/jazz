@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.lang;
+package net.bodz.bas.meta.optim;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
