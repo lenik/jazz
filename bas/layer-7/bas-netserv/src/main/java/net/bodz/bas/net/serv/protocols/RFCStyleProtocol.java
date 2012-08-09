@@ -2,7 +2,7 @@ package net.bodz.bas.net.serv.protocols;
 
 import java.io.IOException;
 
-import net.bodz.bas.flow.units.builtin.text.TextProcessUnit;
+import net.bodz.bas.flow.unit.builtins.text.TextProcessUnit;
 
 public class RFCStyleProtocol
         extends TextProcessUnit {

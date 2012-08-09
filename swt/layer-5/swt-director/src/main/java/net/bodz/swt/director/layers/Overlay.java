@@ -1,6 +1,6 @@
 package net.bodz.swt.director.layers;
 
-import net.bodz.bas.meta.lang.Const;
+import net.bodz.bas.meta.optim.Const;
 
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
