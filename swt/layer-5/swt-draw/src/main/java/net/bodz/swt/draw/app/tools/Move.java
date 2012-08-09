@@ -1,12 +1,12 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.GDState;
-import net.bodz.swt.draw.app.GDStateGraph;
+import net.bodz.swt.draw.app.DesignerState;
+import net.bodz.swt.draw.app.DesignerStateGraph;
 
 public class Move
-        extends GDState {
+        extends DesignerState {
 
-    public Move(GDStateGraph graph) {
+    public Move(DesignerStateGraph graph) {
         super(graph);
     }
 

@@ -1,16 +1,16 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.GDState;
-import net.bodz.swt.draw.app.GDStateGraph;
+import net.bodz.swt.draw.app.DesignerState;
+import net.bodz.swt.draw.app.DesignerStateGraph;
 import net.bodz.swt.draw.dev.DrawTarget2f;
 
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 
 public class Hover
-        extends GDState {
+        extends DesignerState {
 
-    public Hover(GDStateGraph graph) {
+    public Hover(DesignerStateGraph graph) {
         super(graph);
     }
 
@@ -21,29 +21,29 @@ public class Hover
     }
 
     @Override
-    public GDState onMouseDown(MouseEvent e) {
+    public DesignerState onMouseDown(MouseEvent e) {
         // Move? Scale? Rotate? ...
         //
         return super.onMouseDown(e);
     }
 
     @Override
-    public GDState onMouseMove(MouseEvent e, MouseEvent d) {
+    public DesignerState onMouseMove(MouseEvent e, MouseEvent d) {
         return super.onMouseMove(e, d);
     }
 
     @Override
-    public GDState onMouseUp(MouseEvent e, MouseEvent d) {
+    public DesignerState onMouseUp(MouseEvent e, MouseEvent d) {
         return super.onMouseUp(e, d);
     }
 
     @Override
-    public GDState onMouseDoubleClick(MouseEvent e) {
+    public DesignerState onMouseDoubleClick(MouseEvent e) {
         return getGraph().get(EditMajor.class);
     }
 
     @Override
-    public GDState onKeyPressed(KeyEvent e) {
+    public DesignerState onKeyPressed(KeyEvent e) {
         switch (e.keyCode) {
         case java.awt.event.KeyEvent.VK_ENTER:
             // Edit outline

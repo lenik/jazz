@@ -1,34 +1,34 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.GDState;
-import net.bodz.swt.draw.app.GDStateGraph;
+import net.bodz.swt.draw.app.DesignerState;
+import net.bodz.swt.draw.app.DesignerStateGraph;
 
 import org.eclipse.swt.events.MouseEvent;
 
 public class EditMajor
-        extends GDState {
+        extends DesignerState {
 
-    public EditMajor(GDStateGraph graph) {
+    public EditMajor(DesignerStateGraph graph) {
         super(graph);
     }
 
     @Override
-    public GDState onMouseDown(MouseEvent e) {
+    public DesignerState onMouseDown(MouseEvent e) {
         return super.onMouseDown(e);
     }
 
     @Override
-    public GDState onMouseMove(MouseEvent e, MouseEvent d) {
+    public DesignerState onMouseMove(MouseEvent e, MouseEvent d) {
         return super.onMouseMove(e, d);
     }
 
     @Override
-    public GDState onMouseUp(MouseEvent e, MouseEvent d) {
+    public DesignerState onMouseUp(MouseEvent e, MouseEvent d) {
         return super.onMouseUp(e, d);
     }
 
     @Override
-    public GDState onMouseDoubleClick(MouseEvent e) {
+    public DesignerState onMouseDoubleClick(MouseEvent e) {
         return super.onMouseDoubleClick(e);
     }
 
