@@ -3,7 +3,7 @@ package net.bodz.bas.mem.types;
 import net.bodz.bas.mem.AbstractType;
 import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.Memory;
-import net.bodz.bas.meta.codehint.ThreadUnsafe;
+import net.bodz.bas.meta.optim.ThreadUnsafe;
 import net.bodz.bas.util.primitive.IntMath;
 
 public class Int64BE

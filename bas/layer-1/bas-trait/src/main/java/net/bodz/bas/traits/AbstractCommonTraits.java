@@ -11,7 +11,7 @@ import net.bodz.bas.lang.mi.AbstractQueryable;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.meta.codehint.ThreadUnsafe;
+import net.bodz.bas.meta.optim.ThreadUnsafe;
 
 @ThreadUnsafe
 public abstract class AbstractCommonTraits<T>
