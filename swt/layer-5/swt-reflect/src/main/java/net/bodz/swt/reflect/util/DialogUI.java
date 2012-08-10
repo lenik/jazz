@@ -20,13 +20,13 @@ import net.bodz.bas.ui.AbstractUserInterface;
 import net.bodz.bas.ui.IProposal;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.bas.util.Nullables;
-import net.bodz.swt.c3.composite.StackComposite;
+import net.bodz.swt.c.composite.StackComposite;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c3.dialog.SimpleDialog;
 import net.bodz.swt.reflect.IAction;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.styles.base.SWTStrategy;
 import net.bodz.swt.reflect.styles.grid.SWTGridStrategy;
-import net.bodz.swt.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

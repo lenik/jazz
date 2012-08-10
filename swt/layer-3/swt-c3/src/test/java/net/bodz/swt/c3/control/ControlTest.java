@@ -1,6 +1,6 @@
 package net.bodz.swt.c3.control;
 
-import net.bodz.swt.c3.test.ControlTestApp;
+import net.bodz.swt.c.test.ControlTestApp;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;

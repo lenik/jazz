@@ -1,13 +1,13 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.bas.geom_f.IShape2d;
-import net.bodz.bas.geom_f.base.IPointRef2d;
-import net.bodz.swt.draw.app.GDContext;
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
-
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.GC;
+
+import net.bodz.bas.geom_f.api.IShape2d;
+import net.bodz.bas.geom_f.base.Point2d;
+import net.bodz.swt.draw.app.DesignerState;
+import net.bodz.swt.draw.app.DesignerStateGraph;
+import net.bodz.swt.draw.app.GDContext;
 
 public class Select
         extends DesignerState {
@@ -36,7 +36,7 @@ public class Select
             gc.dispose();
 
         } else {
-            IPointRef2d p = context.vtSource(e.x, e.y);
+            Point2d p = context.vtSource(e.x, e.y);
 
             /* is p on some object ? */
             IShape2d pick = context.shapes.pick(p);
@@ -58,7 +58,7 @@ public class Select
     public DesignerState onMouseDoubleClick(MouseEvent e) {
         GDContext context = getContext();
 
-        IPointRef2d p = context.vtSource(e.x, e.y);
+        Point2d p = context.vtSource(e.x, e.y);
 
         /* is p on some object ? */
         IShape2d pick = context.shapes.pick(p);

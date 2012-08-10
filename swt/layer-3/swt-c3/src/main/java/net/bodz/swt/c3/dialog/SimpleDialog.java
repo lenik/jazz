@@ -5,14 +5,6 @@ import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.err.CancelException;
-import net.bodz.bas.err.CreateException;
-import net.bodz.bas.traits.ValidateException;
-import net.bodz.swt.c3.composite.EmptyComposite;
-import net.bodz.swt.c3.composite.Switcher;
-import net.bodz.swt.c3.control.Controls;
-import net.bodz.swt.resources.SWTResources;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -30,6 +22,14 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+
+import net.bodz.bas.err.CancelException;
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.traits.ValidateException;
+import net.bodz.swt.c.composite.EmptyComposite;
+import net.bodz.swt.c.composite.Switcher;
+import net.bodz.swt.c.control.Controls;
+import net.bodz.swt.c.resources.SWTResources;
 
 public abstract class SimpleDialog
         extends Dialog {
@@ -261,7 +261,7 @@ public abstract class SimpleDialog
         errorBar = new Switcher(shell, _diagstyle);
         Composite errorComp = errorBar.get(true);
         errorComp.setLayout(new FillLayout());
-        errorLabel = new Label(errorComp, _diagstyle);w
+        errorLabel = new Label(errorComp, _diagstyle);
         errorBar.set(false);
 
         final Composite bottomBar = new Composite(shell, _diagstyle);

@@ -15,6 +15,9 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
+import net.bodz.bas.lang.fn.Pred1;
+import net.bodz.swt.c.canvas.ViewportCanvas;
+
 public class ControlAdapters {
 
     // ...?

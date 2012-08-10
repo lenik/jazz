@@ -26,15 +26,15 @@ import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.c.control.ControlAdapters;
+import net.bodz.swt.c.control.Controls;
+import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.menu.Menus;
-import net.bodz.swt.c3.control.Controls;
-import net.bodz.swt.c3.control.DynamicControl;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.program.monitor.ThreadsMonitor;
 import net.bodz.swt.reflect.AboutDialog;
 import net.bodz.swt.reflect.CreditDialog;
 import net.bodz.swt.reflect.SelectLanguageDialog;
 import net.bodz.swt.reflect.util.DialogUI;
-import net.bodz.swt.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;

@@ -1,6 +1,6 @@
 package net.bodz.swt.draw.core.particle;
 
-import net.bodz.swt.c3.test.ControlTestApp;
+import net.bodz.swt.c.test.ControlTestApp;
 import net.bodz.swt.draw.core.particle.GridParticleBounds;
 import net.bodz.swt.draw.core.particle.ParticleCanvas;
 import net.bodz.swt.draw.core.particle.GridParticleBounds.HFirst;

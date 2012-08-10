@@ -22,7 +22,7 @@ import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.collection.tree.TreeCallback;
 import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
-import net.bodz.swt.resources.SWTResources;
+import net.bodz.swt.c.resources.SWTResources;
 
 import org.eclipse.swt.graphics.ImageData;
 

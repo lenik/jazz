@@ -6,6 +6,8 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 
+import net.bodz.bas.geom_f.particle.IParticleBounds2d;
+
 public class ParticlePaintEvent
         extends EventObject {
 
@@ -39,7 +41,7 @@ public class ParticlePaintEvent
     public String toString() {
         PaintEvent source = getSource();
         String s = source.toString();
-        IParticleBounds gspace = canvas.getGeomSpace();
+        IParticleBounds2d gspace = canvas.getParticleBounds();
         s = s.substring(0, s.length() - 1) // remove trailing '}'
                 + " space=" + gspace //
                 + " index=" + index //

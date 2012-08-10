@@ -8,10 +8,10 @@ import java.util.Map;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.ui.UserInterface;
-import net.bodz.swt.c3.composite.EmptyComposite;
+import net.bodz.swt.c.composite.EmptyComposite;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c3.dialog.SimpleDialog;
 import net.bodz.swt.reflect.util.DialogUI;
-import net.bodz.swt.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

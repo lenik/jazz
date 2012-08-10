@@ -10,6 +10,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Test;
 
+import net.bodz.swt.c.button.SafeButton;
+
 public class SafeButtonTest {
 
     static Random rand = new Random();

@@ -9,10 +9,10 @@ import javax.swing.border.Border;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.ui.a.PreferredSize;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.reflect.a.A_gui;
 import net.bodz.swt.reflect.a.MenuContrib;
 import net.bodz.swt.reflect.a.View;
-import net.bodz.swt.resources.SWTResources;
 
 import org.apache.commons.collections15.Factory;
 import org.eclipse.swt.graphics.Device;

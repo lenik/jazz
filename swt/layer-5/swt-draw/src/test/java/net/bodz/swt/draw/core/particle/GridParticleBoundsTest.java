@@ -1,51 +1,53 @@
 package net.bodz.swt.draw.core.particle;
 
 import static org.junit.Assert.*;
-import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.swt.draw.core.particle.GridParticleBounds.HFirst;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.junit.Test;
 
+import net.bodz.bas.c.java.lang.Arrays;
+import net.bodz.bas.util.ints.IntIterable;
+import net.bodz.swt.draw.core.particle.GridParticleBounds.HFirst;
+
 public class GridParticleBoundsTest {
 
     @Test
     public void testHFirst() {
-        HFirst gs = new HFirst(4, 4);
-        gs.setCellWidth(20);
-        gs.setCellHeight(10);
-        Rectangle b = gs.getBounds();
+        HFirst hFirst = new HFirst(4, 4);
+        hFirst.setCellWidth(20);
+        hFirst.setCellHeight(10);
+        Rectangle b = hFirst.getBoundingBox();
         assertEquals(80, b.width);
         assertEquals(40, b.height);
-        gs.setCellSize(10);
+        hFirst.setCellSize(10);
 
-        gs.setHPadding(1);
-        gs.setVPadding(2);
-        b = gs.getBounds();
+        hFirst.setHPadding(1);
+        hFirst.setVPadding(2);
+        b = hFirst.getBoundingBox();
         assertEquals(43, b.width);
         assertEquals(46, b.height);
-        gs.setPadding(1);
+        hFirst.setPadding(1);
 
-        gs.setCellWidth(9);
-        gs.setCellHeight(9);
-        Point p = gs.getOrig(0);
+        hFirst.setCellWidth(9);
+        hFirst.setCellHeight(9);
+        Point p = hFirst.getOrig(0);
         assertEquals(0, p.x);
         assertEquals(0, p.y);
-        p = gs.getOrig(7);
+        p = hFirst.getOrig(7);
         assertEquals(30, p.x);
         assertEquals(10, p.y);
 
-        assertEquals(2 * 4 + 1, gs.find(13, 22));// cell(2, 1)
-        assertEquals(-1, gs.find(19, 22));// cell(2, 1+)
-        assertEquals(-1, gs.find(13, 29));// cell(2+,1)
-        assertEquals(3 * 4 + 2, gs.find(23, 31));// cell(3, 2)
-        assertEquals(3 * 4 + 3, gs.find(38, 38));// cell(3, 3)
-        assertEquals(-1, gs.find(40, 40));// cell(4, 4)
+        assertEquals(2 * 4 + 1, hFirst.getParticleIndexAt(13, 22));// cell(2, 1)
+        assertEquals(-1, hFirst.getParticleIndexAt(19, 22));// cell(2, 1+)
+        assertEquals(-1, hFirst.getParticleIndexAt(13, 29));// cell(2+,1)
+        assertEquals(3 * 4 + 2, hFirst.getParticleIndexAt(23, 31));// cell(3, 2)
+        assertEquals(3 * 4 + 3, hFirst.getParticleIndexAt(38, 38));// cell(3, 3)
+        assertEquals(-1, hFirst.getParticleIndexAt(40, 40));// cell(4, 4)
 
         // [2, 2] - [3, 3]
-        IntIterator it = gs.iterator(new Rectangle(22, 22, 10, 10));
-        int[] found = Arrays2.convert(it);
+        IntIterable particles = hFirst.getParticleIndexes(new Rectangle(22, 22, 10, 10));
+        int[] found = Arrays.convert(particles);
         int[] exp1 = {
                 //
                 2 * 4 + 2, //

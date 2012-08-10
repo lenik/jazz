@@ -3,6 +3,9 @@ package net.bodz.swt.graphics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 
+import net.bodz.bas.gui.dev.IDrawContext2d;
+import net.bodz.swt.gui.dev.SWTDrawContext2d;
+
 public abstract class ImagePainter {
 
     Image image;
@@ -49,10 +52,11 @@ public abstract class ImagePainter {
         draw(true);
     }
 
-    public DrawTarget2f getDrawTarget() {
-        DrawTarget2f dt = new SWTDrawTarget2f(gc);
-        return dt;
+    public IDrawContext2d getDrawContext() {
+        IDrawContext2d ctx = new SWTDrawContext2d(gc);
+        return ctx;
     }
 
     public abstract void paint(GC gc);
+
 }

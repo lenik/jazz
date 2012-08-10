@@ -2,7 +2,7 @@ package net.bodz.swt.c3.file.image;
 
 import java.io.File;
 
-import net.bodz.swt.resources.SWTResources;
+import net.bodz.swt.c.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;

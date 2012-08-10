@@ -1,6 +1,6 @@
 package net.bodz.swt.c3.pageflow;
 
-import net.bodz.swt.c3.test.ControlTestApp;
+import net.bodz.swt.c.test.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.junit.Test;

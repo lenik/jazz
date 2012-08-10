@@ -1,10 +1,14 @@
 package net.bodz.swt.c.awt;
 
+import static net.bodz.swt.nls.CommonNLS.CommonNLS;
+
 import java.awt.image.*;
 
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
+
+import net.bodz.bas.err.NotImplementedException;
 
 public class AWTBridge {
 

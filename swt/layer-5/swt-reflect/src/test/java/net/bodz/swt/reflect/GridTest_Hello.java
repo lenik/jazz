@@ -1,7 +1,7 @@
 package net.bodz.swt.reflect;
 
 import net.bodz.bas.ui.UIException;
-import net.bodz.swt.resources.SWTResources;
+import net.bodz.swt.c.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

@@ -22,12 +22,12 @@ import net.bodz.art.installer.util.MissingDependancyBuffer.Entry;
 import net.bodz.art.installer.util.TreeItems;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.ui.UserInterface;
-import net.bodz.swt.c3.composite.WindowComposite;
+import net.bodz.swt.c.composite.WindowComposite;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.ServiceContext;
 import net.bodz.swt.gui.err.QuietValidateException;
 import net.bodz.swt.gui.err.ValidateException;
-import net.bodz.swt.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

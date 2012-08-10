@@ -1,6 +1,6 @@
 package net.bodz.swt.c3.test;
 
-import net.bodz.swt.resources.SWTResources;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.widgets.util.TestCompositeTest;
 
 import org.eclipse.swt.SWT;

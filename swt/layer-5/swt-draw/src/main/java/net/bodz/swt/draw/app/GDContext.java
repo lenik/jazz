@@ -1,19 +1,16 @@
 package net.bodz.swt.draw.app;
 
-import net.bodz.bas.geom_f.IShape2d;
-import net.bodz.bas.geom_f.base.IEditablePointSet2d;
-import net.bodz.bas.geom_f.base.IPointRef2d;
-import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.geom_f.tr.ViewTransformer2d;
-import net.bodz.swt.draw.dev.DrawTarget2f;
-import net.bodz.swt.draw.dev.TransformedDrawTarget2f;
-import net.bodz.swt.draw.dev.swt.SWTDrawTarget2f;
-import net.bodz.swt.gui.state.SWTContext;
-
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+
+import net.bodz.bas.geom_f.api.IEditablePointSet2d;
+import net.bodz.bas.geom_f.api.IShape2d;
+import net.bodz.bas.geom_f.base.Point2d;
+import net.bodz.bas.geom_f.tr.MatrixTransformer2d;
+import net.bodz.bas.gui.dev.IDrawContext2d;
+import net.bodz.swt.gui.dev.SWTDrawContext2d;
+import net.bodz.swt.gui.state.SWTContext;
 
 public class GDContext
         extends SWTContext {
@@ -37,32 +34,34 @@ public class GDContext
     public IShape2d mkshape;
 
     // View
-    public ViewTransformer2d vt;
+    public MatrixTransformer2d transformer;
 
-    public DrawTarget2f getDT(GC gc, ViewTransformer2d transformer) {
-        DrawTarget2f sdt = new SWTDrawTarget2f(gc);
-        DrawTarget2f tdt = new TransformedDrawTarget2f(sdt, transformer);
-        return tdt;
+    public IDrawContext2d getContext2d(GC gc, MatrixTransformer2d transformer) {
+        SWTDrawContext2d ctx = new SWTDrawContext2d(gc);
+        if (transformer != null)
+            ctx.setTransformer(transformer);
+        return ctx;
     }
 
-    public DrawTarget2f getDT(GC gc) {
-        return getDT(gc, vt);
+    public IDrawContext2d getContext2d(GC gc) {
+        return getContext2d(gc, transformer);
     }
 
     public void render() {
         GC gc = new GC(rendered);
-        DrawTarget2f dt = getDT(gc);
-        shapes.draw(dt);
+        IDrawContext2d ctx = getContext2d(gc);
+        shapes.draw(ctx);
     }
 
-    public Point vtTarget(IPointRef2d point) {
-        IPointRef2d swt = vt.transformTo(point);
-        return new Point((int) swt.getX(), (int) swt.getY());
+    public Point2d vtTarget(Point2d point) {
+        Point2d target = point.clone();
+        transformer.transform(target);
+        return target;
     }
 
-    public IPointRef2d vtSource(int x, int y) {
-        IPointRef2d point = new Point2d(x, y);
-        vt.transform(point);
+    public Point2d vtSource(int x, int y) {
+        Point2d point = new Point2d(x, y);
+        transformer.transform(point);
         return point;
     }
 

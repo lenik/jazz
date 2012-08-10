@@ -1,7 +1,9 @@
 package net.bodz.swt.c3.button;
 
+import net.bodz.swt.c.button.RolloverButton;
+import net.bodz.swt.c.button.RolloverStyle;
 import net.bodz.swt.c.color.Syscolors;
-import net.bodz.swt.c3.test.ControlTestApp;
+import net.bodz.swt.c.test.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

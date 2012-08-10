@@ -2,7 +2,7 @@ package net.bodz.swt.reflect.styles.base;
 
 import static net.bodz.swt.nls.GUINLS.GUINLS;
 import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.c3.control.DynamicControl;
+import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.GUIVarMeta;
 import net.bodz.swt.reflect.SWTRenderContext;

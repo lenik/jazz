@@ -7,6 +7,8 @@ import java.util.Stack;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 
+import net.bodz.bas.collection.list.LinkedStack;
+
 public abstract class HistoryMouseListener
         implements MouseListener {
 
