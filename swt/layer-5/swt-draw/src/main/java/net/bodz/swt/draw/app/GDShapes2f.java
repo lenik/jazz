@@ -16,16 +16,16 @@ import net.bodz.bas.gui.dev.IDrawContext2d;
 public class GDShapes2f
         extends AbstractShape2d {
 
-    List<SWTShape2f> shapes;
+    List<SWTShape2d> shapes;
 
-    public GDShapes2f(List<SWTShape2f> shapes, boolean copy) {
+    public GDShapes2f(List<SWTShape2d> shapes, boolean copy) {
         assert shapes != null;
         if (copy) {
             int n = shapes.size();
-            List<SWTShape2f> copies = new ArrayList<SWTShape2f>(n);
+            List<SWTShape2d> copies = new ArrayList<SWTShape2d>(n);
             for (int i = 0; i < n; i++) {
                 IShape2d shape = shapes.get(i);
-                copies.set(i, new SWTShape2f(shape.clone()));
+                copies.set(i, new SWTShape2d(shape.clone()));
             }
             this.shapes = copies;
         } else {
@@ -33,12 +33,12 @@ public class GDShapes2f
         }
     }
 
-    public GDShapes2f(List<SWTShape2f> shapes) {
+    public GDShapes2f(List<SWTShape2d> shapes) {
         this(shapes, false);
     }
 
     public GDShapes2f() {
-        this(new ArrayList<SWTShape2f>(), false);
+        this(new ArrayList<SWTShape2d>(), false);
     }
 
     // -o Pick
@@ -129,7 +129,12 @@ public class GDShapes2f
     @Override
     public Rectangle2d getBoundingBox() {
         int n = shapes.size();
-        for (int i = 0; i < n; i++) {
+        if (n == 0)
+            return null;
+
+        Rectangle2d bbox = shapes.get(0).getBoundingBox();
+
+        for (int i = 1; i < n; i++) {
             IShape2d shape = shapes.get(i);
             IRectangle2d r = shape.getBoundingBoxRef();
             b.include(r);
@@ -145,23 +150,18 @@ public class GDShapes2f
     @Override
     public GDShapes2f snapshot() {
         int n = shapes.size();
-        List<SWTShape2f> shapes = new ArrayList<SWTShape2f>(n);
+        List<SWTShape2d> shapes = new ArrayList<SWTShape2d>(n);
         for (int i = 0; i < n; i++)
-            shapes.add(new SWTShape2f(shapes.get(i).snapshot()));
+            shapes.add(new SWTShape2d(shapes.get(i).snapshot()));
         return new GDShapes2f(shapes);
     }
 
-    @Override
-    public GDShapes2f clone() {
-        return new GDShapes2f(shapes, true);
-    }
-
-    public void draw(DrawTarget2f target)
-            throws DrawException {
+    public void draw(IDrawContext2d context)
+            throws GraphicsOperationException {
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
             IShape2d shape = shapes.get(i);
-            shape.draw(target);
+            shape.draw(context);
         }
     }
 

@@ -6,13 +6,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.i18n.nls.NLS;
-import net.bodz.bas.ui.UserInterface;
-import net.bodz.bas.variant.map.SimpleRequest;
-import net.bodz.swt.c.control.ControlAdapters;
-import net.bodz.swt.resources.SWTResources;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -26,9 +19,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-/**
- * @test {@link NavigatorCompositeTest}
- */
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.i18n.nls.NLS;
+import net.bodz.bas.ui.UserInterface;
+import net.bodz.bas.variant.map.SimpleRequest;
+import net.bodz.swt.c.control.ControlAdapters;
+import net.bodz.swt.c.resources.SWTResources;
+
 public class NavigatorComposite
         extends Composite
         implements IPageContext {

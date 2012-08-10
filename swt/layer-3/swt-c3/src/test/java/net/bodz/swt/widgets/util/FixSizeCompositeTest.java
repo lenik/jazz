@@ -1,7 +1,7 @@
 package net.bodz.swt.widgets.util;
 
-import net.bodz.swt.c3.composite.FixSizeComposite;
-import net.bodz.swt.c3.test.ControlTestApp;
+import net.bodz.swt.c.composite.FixSizeComposite;
+import net.bodz.swt.c.test.ControlTestApp;
 import net.bodz.swt.c3.test.TestComposite;
 
 import org.eclipse.swt.SWT;

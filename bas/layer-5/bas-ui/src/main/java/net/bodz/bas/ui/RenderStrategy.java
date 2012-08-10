@@ -4,7 +4,7 @@ import net.bodz.bas.c.type.TypePrMap;
 import net.bodz.bas.util.primitive.Boxing;
 
 public abstract class RenderStrategy
-        extends TypePrMap<Renderer> {
+        extends TypePrMap<IRenderer> {
 
     private static final long serialVersionUID = 383209437177989123L;
 
@@ -17,7 +17,7 @@ public abstract class RenderStrategy
      */
     public Object render(Object context, Var<?> var)
             throws RenderException {
-        Renderer renderer = findRenderer(var);
+        IRenderer renderer = findRenderer(var);
         if (renderer == null)
             throw new RenderException("Don\'t know how to render " + var.getType());
         return renderer.render(context, var);
@@ -28,14 +28,14 @@ public abstract class RenderStrategy
      *             if var is null.
      * @return <code>null</code> if no matching renderer.
      */
-    protected Renderer findRenderer(Var<?> var) {
+    protected IRenderer findRenderer(Var<?> var) {
         if (var == null)
             throw new NullPointerException();
         Class<?> type = var.getType();
         return findRenderer(type);
     }
 
-    protected Renderer findRenderer(Class<?> type) {
+    protected IRenderer findRenderer(Class<?> type) {
         Class<?> usingType = floorKey(type);
         if (usingType == null) {
             if (type.isPrimitive()) {

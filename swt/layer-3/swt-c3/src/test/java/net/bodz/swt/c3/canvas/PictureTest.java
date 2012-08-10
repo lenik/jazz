@@ -2,8 +2,9 @@ package net.bodz.swt.c3.canvas;
 
 import java.io.File;
 
-import net.bodz.swt.c3.test.ControlTestApp;
-import net.bodz.swt.resources.SWTResources;
+import net.bodz.swt.c.canvas.Picture;
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c.test.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;

@@ -1,8 +1,8 @@
 package net.bodz.swt.draw.app.tools;
 
+import net.bodz.bas.gui.dev.IDrawContext2d;
 import net.bodz.swt.draw.app.DesignerState;
 import net.bodz.swt.draw.app.DesignerStateGraph;
-import net.bodz.swt.draw.dev.DrawTarget2f;
 
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
@@ -14,7 +14,7 @@ public class Hover
         super(graph);
     }
 
-    public void paintState(DrawTarget2f dt) {
+    public void paintState(IDrawContext2d dt) {
         // assert selected != null;
         // GC gc;
         // gc.setForeground()

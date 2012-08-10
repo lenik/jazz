@@ -1,9 +1,9 @@
 package net.bodz.swt.draw.app;
 
-import net.bodz.swt.draw.dev.swt.SWTColor;
-import net.bodz.swt.draw.dev.swt.SWTFont;
-import net.bodz.swt.draw.dev.swt.SWTPattern;
-import net.bodz.swt.draw.dev.swt.SWTStroke;
+import net.bodz.swt.gui.dev.SWTColor;
+import net.bodz.swt.gui.dev.SWTFillPattern;
+import net.bodz.swt.gui.dev.SWTFont;
+import net.bodz.swt.gui.dev.SWTStroke;
 
 public class SWTStyle {
 
@@ -13,9 +13,9 @@ public class SWTStyle {
     public SWTColor fillColor;
     public SWTColor fontColor;
 
-    public SWTPattern pattern;
-    public SWTPattern fillPattern;
-    public SWTPattern fontPattern;
+    public SWTFillPattern pattern;
+    public SWTFillPattern fillPattern;
+    public SWTFillPattern fontPattern;
 
     public SWTFont font;
 

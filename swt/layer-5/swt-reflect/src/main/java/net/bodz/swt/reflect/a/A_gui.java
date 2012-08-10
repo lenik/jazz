@@ -15,7 +15,7 @@ import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.model.IFactory;
 import net.bodz.bas.ui.a.Font;
 import net.bodz.bas.ui.a.PreferredSize;
-import net.bodz.swt.resources.SWTResources;
+import net.bodz.swt.c.resources.SWTResources;
 
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.ImageData;

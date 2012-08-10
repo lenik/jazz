@@ -6,12 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.util.ints.IntIterable;
-import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.swt.gui.geom.region.IRegion;
-import net.bodz.swt.gui.geom.region.SWTRegion;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Color;
@@ -23,10 +17,18 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 
+import net.bodz.bas.geom_f.base.Rectangle2d;
+import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.util.ints.IntIterable;
+import net.bodz.bas.util.ints.IntIterator;
+import net.bodz.swt.draw.geom_i.IParticleBounds2i;
+import net.bodz.swt.gui.dev.SWTRegion;
+import net.bodz.swt.gui.geom.SWTShapes;
+
 public class ParticleCanvas
         extends Canvas {
 
-    private IParticleBounds gspace;
+    private IParticleBounds2i bounds;
     private boolean paintBg;
 
     private ScrollBar hbar;
@@ -35,9 +37,9 @@ public class ParticleCanvas
     private int xoffMax;
     private int yoffMax;
 
-    private List<ParticlePaintListener> pgListeners;
+    private List<ParticlePaintListener> particlePaintListeners;
 
-    public ParticleCanvas(Composite parent, IParticleBounds space) {
+    public ParticleCanvas(Composite parent, IParticleBounds2i space) {
         this(parent, SWT.H_SCROLL | SWT.V_SCROLL, space);
     }
 
@@ -47,9 +49,9 @@ public class ParticleCanvas
      * @see SWT#H_SCROLL (recommend)
      * @see SWT#V_SCROLL (recommend)
      */
-    public ParticleCanvas(Composite parent, int style, IParticleBounds space) {
+    public ParticleCanvas(Composite parent, int style, IParticleBounds2i space) {
         super(parent, style | SWT.NO_REDRAW_RESIZE | SWT.NO_BACKGROUND);
-        this.gspace = space;
+        this.bounds = space;
         this.paintBg = 0 == (style & SWT.NO_BACKGROUND);
         this.viewOffset = new Point(0, 0);
 
@@ -142,30 +144,33 @@ public class ParticleCanvas
         safeAdd = 40;
     }
 
-    public IParticleBounds getGeomSpace() {
-        return gspace;
+    public IParticleBounds2i getParticleBounds() {
+        return bounds;
     }
 
-    public void setGeomSpace(IParticleBounds gspace) {
-        this.gspace = gspace;
+    public void setParticleBounds(IParticleBounds2i bounds) {
+        this.bounds = bounds;
         updateBounds();
         redraw();
     }
 
     void updateBounds() {
-        if (gspace == null)
+        if (bounds == null)
             return;
-        Rectangle geomBounds = gspace.getBounds();
+
+        Rectangle bbox = bounds.getBoundingBox();
+
         Point canvasSize = getSize();
-        boolean useh = viewOffset.x != 0 || geomBounds.width > canvasSize.x;
-        boolean usev = viewOffset.y != 0 || geomBounds.height > canvasSize.y;
+        boolean useh = viewOffset.x != 0 || bbox.width > canvasSize.x;
+        boolean usev = viewOffset.y != 0 || bbox.height > canvasSize.y;
         // this.setSize(bounds.width, bounds.height);
-        xoffMax = geomBounds.width - canvasSize.x + safeAdd;
-        yoffMax = geomBounds.height - canvasSize.y + safeAdd;
+        xoffMax = bbox.width - canvasSize.x + safeAdd;
+        yoffMax = bbox.height - canvasSize.y + safeAdd;
         if (xoffMax < 0)
             xoffMax = 0;
         if (yoffMax < 0)
             yoffMax = 0;
+
         if (hbar != null) {
             hbar.setVisible(useh);
             if (useh)
@@ -180,10 +185,10 @@ public class ParticleCanvas
 
     @Override
     public Point computeSize(int wHint, int hHint, boolean changed) {
-        if (gspace == null)
+        if (bounds == null)
             return super.computeSize(wHint, hHint, changed);
-        Rectangle bounds = gspace.getBounds();
-        return new Point(bounds.width, bounds.height);
+        Rectangle bbox = bounds.getBoundingBox();
+        return new Point(bbox.width, bbox.height);
     }
 
     /**
@@ -192,18 +197,18 @@ public class ParticleCanvas
      * {@link ParticlePaintListener#paint(ParticlePaintEvent)} must take consider of
      * {@link #isPaintBg() paintBg} to decide whether to paint the geom's background. For most
      * cases, call {@link #paintBackground(GC, Rectangle)} with the component's
-     * {@link IParticleBounds#getBound(int) bounds} is just fine.
+     * {@link IParticleBounds2i#getBoundingBox(int) bounds} is just fine.
      */
     public void addPaintGeomListener(ParticlePaintListener listener) {
         if (listener == null)
             throw new NullPointerException("listener");
-        if (pgListeners == null)
-            pgListeners = new ArrayList<ParticlePaintListener>(1);
-        pgListeners.add(listener);
+        if (particlePaintListeners == null)
+            particlePaintListeners = new ArrayList<ParticlePaintListener>(1);
+        particlePaintListeners.add(listener);
     }
 
     public void removePaintGeomListener(ParticlePaintListener listener) {
-        pgListeners.remove(listener);
+        particlePaintListeners.remove(listener);
     }
 
     public boolean isPaintBg() {
@@ -223,7 +228,7 @@ public class ParticleCanvas
 
     private static boolean paintStat = false;
 
-    protected IRegion createGRegion(Rectangle rect) {
+    protected SWTRegion createRegion(Rectangle2d rect) {
         SWTRegion region = new SWTRegion();
         region.add(rect);
         return region;
@@ -244,19 +249,20 @@ public class ParticleCanvas
 
     // protected void
     private void paintImpl(GC gc, Rectangle viewRect, Point viewOffset) {
-        if (gspace == null)
+        if (bounds == null)
             return;
-        Rectangle geomBounds = null;
+        Rectangle qbox = null;
         if (viewRect == null) {
-            Rectangle bounds = gspace.getBounds();
-            viewRect = new Rectangle(0, 0, bounds.height, bounds.height);
+            Rectangle bbox = bounds.getBoundingBox();
+            viewRect = new Rectangle(0, 0, bbox.height, bbox.height);
             // keep geomBounds == null, to iterate ALL geoms.
         } else {
-            geomBounds = new Rectangle(//
+            qbox = new Rectangle(//
                     viewRect.x + viewOffset.x, viewRect.y + viewOffset.y, //
                     viewRect.width, viewRect.height);
         }
-        IntIterable geoms = gspace.find(geomBounds);
+
+        IntIterable geoms = bounds.getParticleIndexes(qbox);
         IntIterator geomsIter;
 
         if (paintStat) {
@@ -277,29 +283,31 @@ public class ParticleCanvas
             System.out.println(buf);
         }
         if (paintBg) {
-            IRegion gregion = createGRegion(viewRect);
+            SWTRegion region = createRegion(SWTShapes.convert(viewRect));
             geomsIter = geoms.iterator();
             while (geomsIter.hasNext()) {
                 int geom = geomsIter.next();
-                Rectangle geomRect = gspace.getBound(geom);
+                Rectangle geomRect = bounds.getBoundingBox(geom);
+                // geomRect.translate(-viewOffset.x, -viewOffset.y);
                 geomRect.x -= viewOffset.x;
                 geomRect.y -= viewOffset.y;
-                gregion.subtract(geomRect);
+                region.remove(SWTShapes.convert(geomRect));
             }
-            Region region = gregion.toRegion();
-            gc.setClipping(region);
-            paintBackground(gc, region);
+            Region _region = region.getRegion();
+            gc.setClipping(_region);
+            paintBackground(gc, _region);
             gc.setClipping((Region) null);
-            gregion.dispose();
+            region.dispose();
         }
 
         geomsIter = geoms.iterator();
         while (geomsIter.hasNext()) {
             int geom = geomsIter.next();
-            Rectangle geomRect = gspace.getBound(geom);
-            geomRect.x -= viewOffset.x;
-            geomRect.y -= viewOffset.y;
-            if (pgListeners == null) {
+            Rectangle bbox = bounds.getBoundingBox(geom);
+            // _bbox.translate(-viewOffset.x, -viewOffset.y);
+            bbox.x -= viewOffset.x;
+            bbox.y -= viewOffset.y;
+            if (particlePaintListeners == null) {
                 // default to show the rectangular boxes.
                 int red = random.nextInt(256);
                 int green = random.nextInt(256);
@@ -307,19 +315,19 @@ public class ParticleCanvas
                 Color bgColor = new Color(getDisplay(), red, green, blue);
                 // Color bg0 = gc.getBackground();
                 gc.setBackground(bgColor);
-                gc.fillRectangle(geomRect);
-                gc.drawRectangle(geomRect);
+                gc.fillRectangle(bbox);
+                gc.drawRectangle(bbox);
                 String str = String.valueOf(geom);
                 if (str.length() > 3)
                     str = str.substring(str.length() - 3);
                 Point strExt = gc.textExtent(str);
                 gc.drawText(str, //
-                        geomRect.x + (geomRect.width - strExt.x) / 2, //
-                        geomRect.y + (geomRect.height - strExt.y) / 2);
+                        bbox.x + (bbox.width - strExt.x) / 2, //
+                        bbox.y + (bbox.height - strExt.y) / 2);
                 // gc.setBackground(bg0);
             } else {
-                ParticlePaintEvent paintGeomEvent = new ParticlePaintEvent(this, gc, geom, geomRect);
-                for (ParticlePaintListener l : pgListeners)
+                ParticlePaintEvent paintGeomEvent = new ParticlePaintEvent(this, gc, geom, bbox);
+                for (ParticlePaintListener l : particlePaintListeners)
                     l.paint(paintGeomEvent);
             }
         }
@@ -330,10 +338,12 @@ public class ParticleCanvas
     }
 
     public void redrawGeom(int index, boolean all) {
-        Rectangle geomRect = gspace.getBound(index);
+        Rectangle geomRect = bounds.getBoundingBox(index);
         int viewx = geomRect.x - viewOffset.x;
         int viewy = geomRect.y - viewOffset.y;
-        redraw(viewx, viewy, geomRect.width, geomRect.height, all);
+        int width = geomRect.width;
+        int height = geomRect.height;
+        redraw(viewx, viewy, width, height, all);
     }
 
     public void drawTo(GC gc) {
@@ -411,11 +421,11 @@ public class ParticleCanvas
         return new Point(viewX, viewY);
     }
 
-    public int hittest(int viewX, int viewY) {
-        if (gspace == null)
+    public int hitTest(int viewX, int viewY) {
+        if (bounds == null)
             return -1;
         Point p = toGlobal(viewX, viewY);
-        int find = gspace.find(p.x, p.y);
+        int find = bounds.getParticleIndexAt(new Point(p.x, p.y));
         return find;
     }
 

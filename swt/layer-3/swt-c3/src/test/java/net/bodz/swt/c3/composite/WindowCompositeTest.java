@@ -1,7 +1,10 @@
 package net.bodz.swt.c3.composite;
 
-import net.bodz.swt.c3.test.ControlTestApp;
-import net.bodz.swt.resources.SWTResources;
+import net.bodz.swt.c.composite.DetailSwitchEvent;
+import net.bodz.swt.c.composite.DetailSwitchListener;
+import net.bodz.swt.c.composite.WindowComposite;
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c.test.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;

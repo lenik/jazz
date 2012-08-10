@@ -253,8 +253,7 @@ public class Vars {
         @Override
         public void set(Object value) {
             if (meta.writef == null)
-                throw new ReadOnlyException(LangNLS.getString("Vars.nowrite") //$NON-NLS-1$
-                        + meta.getName());
+                throw new ReadOnlyException(LangNLS.getString("Vars.nowrite") + meta.getName());
             Reflects.invoke(ctx, meta.writef, value);
         }
 

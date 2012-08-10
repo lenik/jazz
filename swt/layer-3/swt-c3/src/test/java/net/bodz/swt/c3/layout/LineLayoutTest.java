@@ -1,14 +1,14 @@
 package net.bodz.swt.c3.layout;
 
-import net.bodz.bas.ui.UIException;
-import net.bodz.swt.c.layout.BorderLayout;
-import net.bodz.swt.c.layout.LineLayout;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.bas.ui.UIException;
+import net.bodz.swt.c.layout.BorderLayout;
+import net.bodz.swt.c.layout.LineLayout;
 
 public class LineLayoutTest
         extends BasicGUI {

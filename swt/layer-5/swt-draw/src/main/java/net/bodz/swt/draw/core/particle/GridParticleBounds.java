@@ -1,16 +1,18 @@
 package net.bodz.swt.draw.core.particle;
 
-import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.err.ReadOnlyException;
-import net.bodz.bas.util.EmptyConsts;
-import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.bas.util.ints.PrefetchedIntIterator;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
+import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.err.ReadOnlyException;
+import net.bodz.bas.util.EmptyConsts;
+import net.bodz.bas.util.ints.IntIterable;
+import net.bodz.bas.util.ints.IntIterator;
+import net.bodz.bas.util.ints.PrefetchedIntIterator;
+import net.bodz.swt.draw.geom_i.AbstractParticleBounds2i;
+
 public abstract class GridParticleBounds
-        extends AbstractParticleBounds {
+        extends AbstractParticleBounds2i {
 
     static final int DEFAULT_CELLWIDTH = 5;
     static final int DEFAULT_CELLHEIGHT = 5;
@@ -19,7 +21,7 @@ public abstract class GridParticleBounds
     int cellh = DEFAULT_CELLHEIGHT;
 
     public final int getSize() {
-        return size();
+        return getParticleCount();
     }
 
     public void setSize(int size) {
@@ -29,7 +31,7 @@ public abstract class GridParticleBounds
     public abstract Point getOrig(int index);
 
     @Override
-    public Rectangle getBound(int index) {
+    public Rectangle getBoundingBox(int index) {
         Point orig = getOrig(index);
         int x = orig.x;
         int y = orig.y;
@@ -84,7 +86,7 @@ public abstract class GridParticleBounds
         }
 
         @Override
-        public int size() {
+        public int getParticleCount() {
             return size;
         }
 
@@ -145,7 +147,7 @@ public abstract class GridParticleBounds
         }
 
         @Override
-        public Rectangle getBounds() {
+        public Rectangle getBoundingBox() {
             int w = columns * cellw;
             int h = rows * cellh;
             if (columns >= 1)
@@ -156,28 +158,40 @@ public abstract class GridParticleBounds
         }
 
         @Override
-        public int[] findAll(int x, int y) {
-            int index = find(x, y);
+        public int[] getParticleIndexesAt(Point point) {
+            int index = getParticleIndexAt(point);
             if (index == -1)
                 return EmptyConsts.noInt;
             return new int[] { index };
         }
 
         @Override
-        public final IntIterator iterator(Rectangle rect) {
-            if (rect == null)
-                return iteratorAll();
-            assert rect.width >= 0 && rect.height >= 0;
-            int x0 = Math.max(0, rect.x);
-            int y0 = Math.max(0, rect.y);
+        public IntIterable getParticleIndexes(final Rectangle boundingBox) {
+            return new IntIterable() {
+                @Override
+                public IntIterator iterator() {
+                    return getParticleIndexesIterator(boundingBox);
+                }
+            };
+        }
+
+        IntIterator getParticleIndexesIterator(Rectangle boundingBox) {
+            if (boundingBox == null)
+                throw new NullPointerException("boundingBox");
+
+            assert boundingBox.width >= 0 && boundingBox.height >= 0;
+
+            int x0 = Math.max(0, boundingBox.x);
+            int y0 = Math.max(0, boundingBox.y);
             int dx = cellw + hpad;
             int dy = cellh + vpad;
             final int r0 = y0 / dy;
             final int c0 = x0 / dx;
             if (r0 >= rows || c0 >= columns)
                 return IntIterator.empty;
-            int r1 = (y0 + rect.height) / dy;
-            int c1 = (x0 + rect.width) / dx;
+
+            int r1 = (y0 + boundingBox.height) / dy;
+            int c1 = (x0 + boundingBox.width) / dx;
             if (r1 >= rows)
                 r1 = rows - 1;
             if (c1 >= columns)
@@ -186,6 +200,7 @@ public abstract class GridParticleBounds
             final int cn = c1 - c0 + 1;
             if (rn < 1 || cn < 1)
                 return IntIterator.empty;
+
             return iteratorCells(r0, c0, rn, cn);
         }
 
@@ -214,7 +229,9 @@ public abstract class GridParticleBounds
         }
 
         @Override
-        public int find(int x, int y) {
+        public int getParticleIndexAt(Point point) {
+            int x = point.x;
+            int y = point.y;
             if (x < 0 || y < 0)
                 return -1;
             int dx = cellw + hpad;

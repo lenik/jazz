@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.fsm.base.IStateGraph;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.state.ISWTState;
-import net.bodz.swt.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;

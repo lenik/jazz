@@ -12,13 +12,13 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.ui.RenderException;
+import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.LineLayout;
-import net.bodz.swt.c3.control.DynamicControl;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.reflect.GUIHint;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
-import net.bodz.swt.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

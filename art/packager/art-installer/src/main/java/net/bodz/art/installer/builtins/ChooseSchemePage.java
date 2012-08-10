@@ -6,7 +6,7 @@ import net.bodz.art.installer.IComponent;
 import net.bodz.art.installer.ISession;
 import net.bodz.art.installer.Scheme;
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.swt.c3.control.Controls;
+import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.gui.err.ValidateException;
 
 import org.eclipse.swt.SWT;

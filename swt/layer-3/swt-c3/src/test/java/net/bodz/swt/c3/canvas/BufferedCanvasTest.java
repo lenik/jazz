@@ -1,5 +1,6 @@
 package net.bodz.swt.c3.canvas;
 
+import net.bodz.swt.c.canvas.BufferedCanvas;
 import net.bodz.swt.c3.control.ControlTest;
 
 import org.eclipse.swt.SWT;

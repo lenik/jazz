@@ -8,8 +8,8 @@ import java.io.IOException;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.traits.ValidateException;
-import net.bodz.swt.c3.composite.FixSizeComposite;
-import net.bodz.swt.c3.composite.StackComposite;
+import net.bodz.swt.c.composite.FixSizeComposite;
+import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c3.dialog.ParametersComposite;
 import net.bodz.swt.c3.dialog.SimpleDialog;
 

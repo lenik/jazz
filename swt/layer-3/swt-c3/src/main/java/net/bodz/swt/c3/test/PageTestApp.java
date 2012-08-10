@@ -3,6 +3,7 @@ package net.bodz.swt.c3.test;
 import static net.bodz.swt.nls.GUINLS.GUINLS;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.swt.c.test.ControlTestApp;
 import net.bodz.swt.c3.pageflow.*;
 
 import org.eclipse.swt.SWT;

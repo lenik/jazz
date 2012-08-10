@@ -1,7 +1,7 @@
 package net.bodz.swt.draw.app.tools;
 
 import net.bodz.bas.fsm.base.IState;
-import net.bodz.bas.geom_f.base.IEditablePointSet2d;
+import net.bodz.bas.geom_f.api.IEditablePointSet2d;
 import net.bodz.swt.draw.app.DesignerState;
 import net.bodz.swt.draw.app.DesignerStateGraph;
 

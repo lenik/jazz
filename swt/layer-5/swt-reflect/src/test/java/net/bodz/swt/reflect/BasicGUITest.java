@@ -3,7 +3,7 @@ package net.bodz.swt.reflect;
 import net.bodz.bas.ui.a.Color;
 import net.bodz.bas.ui.a.Font;
 import net.bodz.bas.ui.a.Visible;
-import net.bodz.swt.resources.SWTResources;
+import net.bodz.swt.c.resources.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;

@@ -1,13 +1,14 @@
-package net.bodz.art.installer.builtins;
+package net.bodz.redist.installer.builtins;
 
-import static net.bodz.art.installer.nls.PackNLS.PackNLS;
-import net.bodz.art.installer.ConfigPage;
-import net.bodz.art.installer.IComponent;
-import net.bodz.art.installer.IProject;
-import net.bodz.art.installer.ISession;
-import net.bodz.art.installer.Installer;
-import net.bodz.art.installer.LogoImage;
-import net.bodz.swt.c3.canvas.Picture;
+import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
+import net.bodz.redist.installer.ConfigPage;
+import net.bodz.redist.installer.IComponent;
+import net.bodz.redist.installer.IProject;
+import net.bodz.redist.installer.ISession;
+import net.bodz.redist.installer.Installer;
+import net.bodz.redist.installer.LogoImage;
+import net.bodz.swt.c.canvas.Picture;
+import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.resources.SWTResources;
 
