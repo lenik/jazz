@@ -1,0 +1,17 @@
+base/                   基础组件
+    redist-api
+    
+os/                     操作系统访问支持
+    redist-win32
+    redist-linux
+
+prepare/                预处理
+    redist-obfuz        混淆结构支持
+    
+packager/               打包
+    redist-pack         包结构
+    redist-installer    安装程序
+    
+support/                支持工具
+    redist-site         产品支持站点，如自动更新
+    redist-admin        维护工具如算号器等
