@@ -1,10 +1,5 @@
 package net.bodz.swt.reflect;
 
-import net.bodz.bas.ui.a.Color;
-import net.bodz.bas.ui.a.Font;
-import net.bodz.bas.ui.a.Visible;
-import net.bodz.swt.c.resources.SWTResources;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Point;
@@ -17,16 +12,24 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.junit.Test;
 
+import net.bodz.bas.ui.a.Visible;
+import net.bodz.swt.c.resources.SWTResources;
+
 public class BasicGUITest
         extends BasicGUI {
 
     @Visible(false)
     String greeting = "Hello";
 
-    @Font(name = "Arial", height = 20)
+    /**
+     * @font Arial
+     * @font.height 20
+     */
     String name = "Caynoh";
 
-    @Color("red")
+    /**
+     * @color red
+     */
     int age = 13;
 
     private Text greetingText;

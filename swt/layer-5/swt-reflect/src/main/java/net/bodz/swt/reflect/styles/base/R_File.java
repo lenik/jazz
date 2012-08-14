@@ -2,21 +2,10 @@ package net.bodz.swt.reflect.styles.base;
 
 import static net.bodz.swt.nls.GUINLS.GUINLS;
 
-import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.EventObject;
-
-import net.bodz.bas.err.CheckException;
-import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.c.control.CommitAdapter;
-import net.bodz.swt.c.control.CommitException;
-import net.bodz.swt.c.control.ControlAdapters;
-import net.bodz.swt.reflect.GUIVar;
-import net.bodz.swt.reflect.GUIVarMeta;
-import net.bodz.swt.reflect.SWTRenderContext;
-import net.bodz.swt.reflect.SWTRenderer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -27,6 +16,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.bas.err.CheckException;
+import net.bodz.bas.ui.RenderException;
+import net.bodz.swt.c.control.CommitAdapter;
+import net.bodz.swt.c.control.CommitException;
+import net.bodz.swt.c.control.ControlAdapters;
+import net.bodz.swt.c.layout.BorderLayout;
+import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.GUIVarMeta;
+import net.bodz.swt.reflect.SWTRenderContext;
+import net.bodz.swt.reflect.SWTRenderer;
 
 public class R_File
         extends SWTRenderer {

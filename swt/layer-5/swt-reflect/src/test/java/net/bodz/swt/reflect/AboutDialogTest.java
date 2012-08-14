@@ -2,7 +2,9 @@ package net.bodz.swt.reflect;
 
 import org.junit.Test;
 
-@DisplayName("My Product")
+/**
+ * @label My Product
+ */
 public class AboutDialogTest {
 
     @Test
