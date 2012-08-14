@@ -1,8 +1,5 @@
 package net.bodz.swt.reflect;
 
-import net.bodz.bas.ui.UIException;
-import net.bodz.swt.c.resources.SWTResources;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -12,44 +9,46 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.junit.Test;
 
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c.test.ControlTestApp;
+
 public class GridTest_Hello
-        extends BasicGUI {
+        extends ControlTestApp {
 
     private Text text_2;
     private Text text;
 
     @Override
-    protected void createInitialView(Composite comp)
-            throws UIException {
+    public void run() {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 3;
-        comp.setLayout(gridLayout);
+        holder.setLayout(gridLayout);
 
-        final Label label = new Label(comp, SWT.NONE);
+        final Label label = new Label(holder, SWT.NONE);
         label.setImage(SWTResources.getImageRes("/icons/full/obj16/genericvariable_obj.gif"));
 
-        final Label label_1 = new Label(comp, SWT.NONE);
+        final Label label_1 = new Label(holder, SWT.NONE);
         label_1.setText("Label");
 
-        text = new Text(comp, SWT.BORDER);
+        text = new Text(holder, SWT.BORDER);
         text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-        final Label label_2 = new Label(comp, SWT.NONE);
+        final Label label_2 = new Label(holder, SWT.NONE);
         label_2.setImage(SWTResources.getImageRes("/icons/full/obj16/unknown_obj.gif"));
 
-        final Label label_3 = new Label(comp, SWT.NONE);
+        final Label label_3 = new Label(holder, SWT.NONE);
         label_3.setText("Label");
 
-        final Button button = new Button(comp, SWT.CHECK);
+        final Button button = new Button(holder, SWT.CHECK);
         button.setText("Check Button");
 
-        final Label label_4 = new Label(comp, SWT.NONE);
+        final Label label_4 = new Label(holder, SWT.NONE);
         label_4.setText("lab4");
 
-        final Label label_5 = new Label(comp, SWT.NONE);
+        final Label label_5 = new Label(holder, SWT.NONE);
         label_5.setText("Label");
 
-        final Composite composite = new Composite(comp, SWT.NONE);
+        final Composite composite = new Composite(holder, SWT.NONE);
         composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         final GridLayout gridLayout_1 = new GridLayout();
         gridLayout_1.numColumns = 3;
@@ -73,10 +72,6 @@ public class GridTest_Hello
 
         final Button button_1 = new Button(composite, SWT.CHECK);
         button_1.setText("Check Button");
-    }
-
-    @Override
-    protected void checkHangOns() {
     }
 
     @Test

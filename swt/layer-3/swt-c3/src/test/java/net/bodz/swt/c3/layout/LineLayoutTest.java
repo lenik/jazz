@@ -6,16 +6,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.ui.UIException;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.layout.LineLayout;
+import net.bodz.swt.c.test.ControlTestApp;
 
 public class LineLayoutTest
-        extends BasicGUI {
+        extends ControlTestApp {
 
     @Override
-    protected void createInitialView(Composite holder)
-            throws UIException {
+    public void run() {
         holder.setLayout(new BorderLayout(0, 0));
 
         final Button button = new Button(holder, SWT.NONE);
@@ -51,7 +50,7 @@ public class LineLayoutTest
 
     public static void main(String[] args)
             throws Throwable {
-        new LineLayoutTest().run(args);
+        new LineLayoutTest().run();
     }
 
 }

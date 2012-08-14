@@ -1,15 +1,15 @@
 package net.bodz.swt.reflect.styles;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.widgets.Composite;
+
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.GUIVars;
 import net.bodz.swt.reflect.styles.grid.SWTGridStrategy;
 import net.bodz.swt.reflect.util.DialogUI;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.widgets.Composite;
 
 @PreferredSize(width = 640, height = 400)
 public class TestMain

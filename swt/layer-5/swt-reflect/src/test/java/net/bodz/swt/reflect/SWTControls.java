@@ -1,23 +1,20 @@
 package net.bodz.swt.reflect;
 
-import java.awt.BorderLayout;
-
-import net.bodz.bas.ui.UIException;
-import net.bodz.swt.c.layout.LineLayout;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.junit.Test;
+
+import net.bodz.swt.c.layout.BorderLayout;
+import net.bodz.swt.c.layout.LineLayout;
+import net.bodz.swt.c.test.ControlTestApp;
 
 public class SWTControls
-        extends BasicGUI {
+        extends ControlTestApp {
 
     @Override
-    protected void createInitialView(Composite holder)
-            throws UIException {
+    public void run() {
         holder.setLayout(new BorderLayout(0, 0));
 
         final Button button = new Button(holder, SWT.NONE);
@@ -51,14 +48,8 @@ public class SWTControls
         button1.setText("B");
     }
 
-    @Override
-    protected void checkHangOns() {
-    }
-
-    @Test
-    public void test()
-            throws Throwable {
-        run();
+    public static void main(String[] args) {
+        new SWTControls().run();
     }
 
 }
