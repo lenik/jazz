@@ -13,7 +13,6 @@ public abstract class ArrayTraits<T>
     public static final String textformSeparator = ",";
 
     private final Class<T> valueType;
-
     private IParser<T> valueParser;
 
     public ArrayTraits(Class<T> valueType) {

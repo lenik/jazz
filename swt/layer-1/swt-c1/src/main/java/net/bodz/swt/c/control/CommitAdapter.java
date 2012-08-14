@@ -1,5 +1,7 @@
 package net.bodz.swt.c.control;
 
+import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
+
 import java.util.EventObject;
 
 import org.eclipse.swt.events.TypedEvent;
