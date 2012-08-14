@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
+import net.bodz.swt.program.BasicGUI;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.GUIVars;
 import net.bodz.swt.reflect.styles.grid.SWTGridStrategy;
@@ -29,7 +30,7 @@ public class TestMain
         TestMain main = new TestMain();
         main.obj = obj;
         try {
-            main.run();
+            main.execute();
         } catch (Throwable e) {
             new DialogUI().alert("Error", e);
         }

@@ -3,7 +3,6 @@ package net.bodz.bas.flow.unit;
 import java.io.IOException;
 
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.flow.*;
 import net.bodz.bas.flow.stream.IReceiver;
 import net.bodz.bas.flow.unit.metadata.IPortMeta;
 import net.bodz.bas.flow.unit.metadata.StrictPortMeta;

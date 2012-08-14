@@ -3,7 +3,6 @@ package net.bodz.bas.flow.unit;
 import java.io.IOException;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.flow.*;
 import net.bodz.bas.flow.stream.IReceiverEx;
 import net.bodz.bas.flow.unit.metadata.IPortMeta;
 import net.bodz.bas.flow.unit.metadata.StrictPortMeta;
