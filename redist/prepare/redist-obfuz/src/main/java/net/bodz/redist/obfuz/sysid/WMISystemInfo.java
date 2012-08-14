@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 
 import net.bodz.bas.c.java.io.capture.Processes;
+import net.bodz.bas.c.java.lang.Arrays;
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.variant.map.HashVariantMap;
 
@@ -78,7 +79,7 @@ public class WMISystemInfo
         if (!wmicProgram.canExecute())
             throw new WMIException("wmic utility isn't existed: " + wmicProgram);
         try {
-            String[] cmdarray = Arrays2.concatv(wmicProgram.getPath(), args);
+            String[] cmdarray = Arrays.unshift(wmicProgram.getPath(), args);
             Process wmicProcess = Processes.shellExec(cmdarray);
             Charset charset = Charset.defaultCharset();
             String output = Processes.iocap(wmicProcess, charset);
