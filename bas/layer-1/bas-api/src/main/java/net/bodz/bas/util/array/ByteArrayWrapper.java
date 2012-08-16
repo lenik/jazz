@@ -17,6 +17,10 @@ public class ByteArrayWrapper
         this(array, 0, array.length);
     }
 
+    ByteArrayWrapper(byte[] array, int start) {
+        this(array, start, array.length);
+    }
+
     ByteArrayWrapper(byte[] array, int start, int end) {
         super(start, end);
         if (array == null)

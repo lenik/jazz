@@ -1,13 +1,13 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
 
 import java.io.File;
 import java.io.IOException;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
@@ -64,7 +64,7 @@ public class ClassDocBuilderMojo
      * 
      * @parameter expression="${classdoc.missingDoc}"
      */
-    DomainString missingDoc;
+    XDomainString missingDoc;
 
     /**
      * Xjdoc book names.

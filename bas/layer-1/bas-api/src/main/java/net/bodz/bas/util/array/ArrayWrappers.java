@@ -16,6 +16,10 @@ public abstract class ArrayWrappers {
         return new ArrayWrapper<T>(array, start, end);
     }
 
+    public static ByteArrayWrapper wrap(byte[] array, int start) {
+        return wrap(array, start, array.length);
+    }
+
     public static ByteArrayWrapper wrap(byte[] array) {
         return new ByteArrayWrapper(array);
     }
@@ -28,6 +32,10 @@ public abstract class ArrayWrappers {
      */
     public static ByteArrayWrapper wrap(byte[] array, int start, int end) {
         return new ByteArrayWrapper(array, start, end);
+    }
+
+    public static IntArrayWrapper wrap(int[] array, int start) {
+        return wrap(array, start, array.length);
     }
 
     public static IntArrayWrapper wrap(int[] array) {
@@ -44,6 +52,10 @@ public abstract class ArrayWrappers {
         return new IntArrayWrapper(array, start, end);
     }
 
+    public static LongArrayWrapper wrap(long[] array, int start) {
+        return wrap(array, start, array.length);
+    }
+
     public static LongArrayWrapper wrap(long[] array) {
         return new LongArrayWrapper(array);
     }
@@ -56,6 +68,10 @@ public abstract class ArrayWrappers {
      */
     public static LongArrayWrapper wrap(long[] array, int start, int end) {
         return new LongArrayWrapper(array, start, end);
+    }
+
+    public static FloatArrayWrapper wrap(float[] array, int start) {
+        return wrap(array, start, array.length);
     }
 
     public static FloatArrayWrapper wrap(float[] array) {
@@ -72,6 +88,10 @@ public abstract class ArrayWrappers {
         return new FloatArrayWrapper(array, start, end);
     }
 
+    public static DoubleArrayWrapper wrap(double[] array, int start) {
+        return wrap(array, start, array.length);
+    }
+
     public static DoubleArrayWrapper wrap(double[] array) {
         return new DoubleArrayWrapper(array);
     }
@@ -86,6 +106,10 @@ public abstract class ArrayWrappers {
         return new DoubleArrayWrapper(array, start, end);
     }
 
+    public static BooleanArrayWrapper wrap(boolean[] array, int start) {
+        return wrap(array, start, array.length);
+    }
+
     public static BooleanArrayWrapper wrap(boolean[] array) {
         return new BooleanArrayWrapper(array);
     }
@@ -98,6 +122,10 @@ public abstract class ArrayWrappers {
      */
     public static BooleanArrayWrapper wrap(boolean[] array, int start, int end) {
         return new BooleanArrayWrapper(array, start, end);
+    }
+
+    public static CharArrayWrapper wrap(char[] array, int start) {
+        return wrap(array, start, array.length);
     }
 
     public static CharArrayWrapper wrap(char[] array) {
