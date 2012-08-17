@@ -1,7 +1,5 @@
 package net.bodz.jna.win32;
 
-import static net.bodz.jna.win32.Win32.kernel32;
-
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
@@ -12,7 +10,8 @@ import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 
 public class Kernel32Test
-        extends Assert {
+        extends Assert
+        implements IWin32 {
 
     public static String getAsciz(ByteBuffer buffer) {
         return getAsciz(buffer, Charset.defaultCharset());

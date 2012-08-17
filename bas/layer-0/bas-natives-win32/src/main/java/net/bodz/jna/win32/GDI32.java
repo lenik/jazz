@@ -10,7 +10,7 @@ import com.sun.jna.Structure;
 public interface GDI32
         extends W32API {
 
-    class RECT
+    public class RECT
             extends Structure {
         public int left;
         public int top;
@@ -29,7 +29,7 @@ public interface GDI32
 
     int RDH_RECTANGLES = 1;
 
-    class RGNDATAHEADER
+    public class RGNDATAHEADER
             extends Structure {
         public int dwSize = size();
         public int iType = RDH_RECTANGLES; // required
@@ -38,7 +38,7 @@ public interface GDI32
         public RECT rcBound;
     }
 
-    class RGNDATA
+    public class RGNDATA
             extends Structure {
         public RGNDATAHEADER rdh;
         public byte[] Buffer;

@@ -10,7 +10,7 @@ import com.sun.jna.Native;
 import com.sun.jna.win32.W32APIFunctionMapper;
 import com.sun.jna.win32.W32APITypeMapper;
 
-public class Win32 {
+public class Win32Config {
 
     static final boolean ascii;
     static final Charset unicodeCharset;
@@ -45,16 +45,6 @@ public class Win32 {
         if (ascii)
             return Native.toString(buf);
         return new String(buf, unicodeCharset);
-    }
-
-    public static GDI32 gdi32;
-    public static Kernel32 kernel32;
-    public static User32 user32;
-
-    static {
-        gdi32 = (GDI32) Native.loadLibrary("gdi32", GDI32.class, _options);
-        kernel32 = (Kernel32) Native.loadLibrary("kernel32", Kernel32.class, _options);
-        user32 = (User32) Native.loadLibrary("user32", User32.class, _options);
     }
 
 }

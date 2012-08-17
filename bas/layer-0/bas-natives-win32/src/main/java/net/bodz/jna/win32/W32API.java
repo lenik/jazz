@@ -1,7 +1,5 @@
 package net.bodz.jna.win32;
 
-import static net.bodz.jna.win32.Win32.user32;
-
 import java.awt.Component;
 
 import com.sun.jna.FromNativeContext;
@@ -14,7 +12,7 @@ import com.sun.jna.win32.StdCallLibrary;
 public interface W32API
         extends StdCallLibrary {
 
-    class HANDLE
+    public class HANDLE
             extends PointerType {
 
         public HANDLE() {
@@ -45,7 +43,7 @@ public interface W32API
         }
     };
 
-    class HANDLEByReference
+    public class HANDLEByReference
             extends ByReference {
 
         public HANDLEByReference() {
@@ -74,32 +72,33 @@ public interface W32API
 
     }
 
-    class HBITMAP
+    public class HBITMAP
             extends HANDLE {
     }
 
-    class HDC
+    public class HDC
             extends HANDLE {
     }
 
-    class HICON
+    public class HICON
             extends HANDLE {
     }
 
-    class HINSTANCE
+    public class HINSTANCE
             extends HANDLE {
     }
 
-    class HMODULE
+    public class HMODULE
             extends HINSTANCE {
     }
 
-    class HRGN
+    public class HRGN
             extends HANDLE {
     }
 
-    class HWND
-            extends HANDLE {
+    public class HWND
+            extends HANDLE
+            implements IWin32 {
 
         public HWND() {
             super();
@@ -121,11 +120,11 @@ public interface W32API
             String text = "(n/a)";
             int len = user32.GetWindowTextLength(this);
             if (len != 0) {
-                int cb = Win32.charSize(len + 1);
+                int cb = Win32Config.charSize(len + 1);
                 byte[] buf = new byte[cb];
                 len = user32.GetWindowText(this, buf, len + 1);
-                cb = Win32.charSize(len);
-                text = Win32.toString(buf, 0, cb);
+                cb = Win32Config.charSize(len);
+                text = Win32Config.toString(buf, 0, cb);
             }
             return text;
         }
