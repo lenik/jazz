@@ -9,27 +9,27 @@ public class JavaSerializedType
 
     @Override
     public Object get(Memory memory, int offset)
-            throws AccessException {
+            throws MemoryAccessException {
         MemoryInputStream min = new MemoryInputStream(memory, offset, -1);
         try {
             ObjectInputStream in = new ObjectInputStream(min);
             return in.readObject();
         } catch (IOException e) {
-            throw new AccessException(e);
+            throw new MemoryAccessException(e);
         } catch (ClassNotFoundException e) {
-            throw new AccessException(e);
+            throw new MemoryAccessException(e);
         }
     }
 
     @Override
     public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+            throws MemoryAccessException {
         MemoryOutputStream mout = new MemoryOutputStream(memory, offset, -1);
         try {
             ObjectOutputStream out = new ObjectOutputStream(mout);
             out.writeObject(value);
         } catch (IOException e) {
-            throw new AccessException(e);
+            throw new MemoryAccessException(e);
         }
     }
 

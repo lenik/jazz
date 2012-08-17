@@ -43,7 +43,7 @@ public class MemoryInputStream
             return -1;
         try {
             memory.read(start++, buf1);
-        } catch (AccessException e) {
+        } catch (MemoryAccessException e) {
             throw new IOException(e);
         }
         if (size != -1)
@@ -68,7 +68,7 @@ public class MemoryInputStream
             start += cb;
             size -= cb;
             return cb;
-        } catch (AccessException e) {
+        } catch (MemoryAccessException e) {
             throw new IOException(e.getMessage(), e);
         }
     }

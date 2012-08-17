@@ -36,7 +36,7 @@ public class MemoryOutputStream
         buf1[0] = (byte) b;
         try {
             memory.write(start++, buf1);
-        } catch (AccessException e) {
+        } catch (MemoryAccessException e) {
             throw new IOException(e);
         }
         if (size != -1)
@@ -59,7 +59,7 @@ public class MemoryOutputStream
             memory.write(start, b, off, cb);
             start += cb;
             size -= cb;
-        } catch (AccessException e) {
+        } catch (MemoryAccessException e) {
             throw new IOException(e);
         }
     }

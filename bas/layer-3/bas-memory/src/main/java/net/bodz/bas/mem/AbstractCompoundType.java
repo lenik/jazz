@@ -16,7 +16,7 @@ public abstract class AbstractCompoundType
 
     @Override
     public Type access(int field)
-            throws AccessException {
+            throws MemoryAccessException {
         return null;
     }
 

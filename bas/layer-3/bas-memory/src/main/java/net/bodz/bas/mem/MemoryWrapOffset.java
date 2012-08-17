@@ -32,37 +32,37 @@ public class MemoryWrapOffset
 
     @Override
     public byte read(int addr)
-            throws AccessException {
+            throws MemoryAccessException {
         return orig.read(addr + offset);
     }
 
     @Override
     public void write(int addr, byte value)
-            throws AccessException {
+            throws MemoryAccessException {
         orig.write(addr + offset, value);
     }
 
     @Override
     public void read(int addr, byte[] buf)
-            throws AccessException {
+            throws MemoryAccessException {
         orig.read(addr + offset, buf);
     }
 
     @Override
     public void read(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+            throws MemoryAccessException {
         orig.read(addr + offset, buf, off, len);
     }
 
     @Override
     public void write(int addr, byte[] buf)
-            throws AccessException {
+            throws MemoryAccessException {
         orig.write(addr + offset, buf);
     }
 
     @Override
     public void write(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+            throws MemoryAccessException {
         orig.write(addr + offset, buf, off, len);
     }
 

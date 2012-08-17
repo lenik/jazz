@@ -1,7 +1,7 @@
 package net.bodz.bas.mem.types;
 
 import net.bodz.bas.mem.AbstractRefType;
-import net.bodz.bas.mem.AccessException;
+import net.bodz.bas.mem.MemoryAccessException;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem.MemoryWrapOffset;
 import net.bodz.bas.mem.Type;
@@ -10,7 +10,7 @@ public abstract class _Ptr32
         extends AbstractRefType {
 
     public _Ptr32(Type targetType)
-            throws AccessException {
+            throws MemoryAccessException {
         super(targetType);
     }
 
@@ -18,18 +18,18 @@ public abstract class _Ptr32
      * @return absolute or relative address
      */
     public abstract int getAddress(Memory memory, int offset)
-            throws AccessException;
+            throws MemoryAccessException;
 
     /**
      * @param addr
      *            absolute or relative address
      */
     public abstract void putAddress(Memory memory, int offset, int addr)
-            throws AccessException;
+            throws MemoryAccessException;
 
     @Override
     public MemoryWrapOffset get(Memory memory, int offset)
-            throws AccessException {
+            throws MemoryAccessException {
         int addr = getAddress(memory, offset);
         return new MemoryWrapOffset(memory, addr);
     }
@@ -40,7 +40,7 @@ public abstract class _Ptr32
      */
     @Override
     protected void putLocal(Memory memory, int offset, int targetOffset)
-            throws AccessException {
+            throws MemoryAccessException {
         putAddress(memory, offset, targetOffset);
     }
 
@@ -50,7 +50,7 @@ public abstract class _Ptr32
      */
     @Override
     protected void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset)
-            throws AccessException {
+            throws MemoryAccessException {
         throw new UnsupportedOperationException();
     }
 

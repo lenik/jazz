@@ -1,7 +1,7 @@
 package net.bodz.bas.mem.types;
 
 import net.bodz.bas.mem.AbstractType;
-import net.bodz.bas.mem.AccessException;
+import net.bodz.bas.mem.MemoryAccessException;
 import net.bodz.bas.mem.Memory;
 
 public class Bool8
@@ -12,13 +12,13 @@ public class Bool8
 
     @Override
     public Boolean get(Memory memory, int offset)
-            throws AccessException {
+            throws MemoryAccessException {
         return memory.read(offset) != 0;
     }
 
     @Override
     public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+            throws MemoryAccessException {
         if ((Boolean) value)
             memory.write(offset, TRUE);
         else

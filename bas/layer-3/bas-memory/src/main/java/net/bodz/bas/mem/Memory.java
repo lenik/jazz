@@ -6,22 +6,22 @@ package net.bodz.bas.mem;
 public interface Memory {
 
     byte read(int addr)
-            throws AccessException;
+            throws MemoryAccessException;
 
     void write(int addr, byte value)
-            throws AccessException;
+            throws MemoryAccessException;
 
     void read(int addr, byte[] buf, int off, int len)
-            throws AccessException;
+            throws MemoryAccessException;
 
     void read(int addr, byte[] buf)
-            throws AccessException;
+            throws MemoryAccessException;
 
     void write(int addr, byte[] buf, int off, int len)
-            throws AccessException;
+            throws MemoryAccessException;
 
     void write(int addr, byte[] buf)
-            throws AccessException;
+            throws MemoryAccessException;
 
     Memory offset(long off);
 
@@ -32,26 +32,26 @@ public interface Memory {
 
     /** in native byte-order */
     short readInt16(int addr)
-            throws AccessException;
+            throws MemoryAccessException;
 
     /** in native byte-order */
     void writeInt16(int addr, short value)
-            throws AccessException;
+            throws MemoryAccessException;
 
     /** in native byte-order */
     int readInt32(int addr)
-            throws AccessException;
+            throws MemoryAccessException;
 
     /** in native byte-order */
     void writeInt32(int addr, int value)
-            throws AccessException;
+            throws MemoryAccessException;
 
     /** in native byte-order */
     long readInt64(int addr)
-            throws AccessException;
+            throws MemoryAccessException;
 
     /** in native byte-order */
     void writeInt64(int addr, long value)
-            throws AccessException;
+            throws MemoryAccessException;
 
 }
