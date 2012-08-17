@@ -9,7 +9,7 @@ public interface User32
         extends W32API {
 
     /** Defines the x- and y-coordinates of a point. */
-    class POINT
+    public class POINT
             extends Structure {
 
         public int x, y;
@@ -24,7 +24,7 @@ public interface User32
 
     }
 
-    class POINTByValue
+    public class POINTByValue
             extends Structure
             implements Structure.ByValue {
 
@@ -41,7 +41,7 @@ public interface User32
     }
 
     /** Specifies the width and height of a rectangle. */
-    class LPSIZE
+    public class LPSIZE
             extends Structure {
 
         public int cx, cy;
@@ -56,7 +56,7 @@ public interface User32
 
     }
 
-    interface WNDENUMPROC
+    public interface WNDENUMPROC
             extends StdCallCallback {
         boolean callback(HWND hWnd, Pointer data);
     }
@@ -97,7 +97,7 @@ public interface User32
     int GWL_USERDATA = -21;
 
     int WS_OVERLAPPED = 0x00000000;
-    int WS_POPUP = 0x80000000;
+    int WS_POPUP = (int) (0x80000000L);
     int WS_CHILD = 0x40000000;
     int WS_MINIMIZE = 0x20000000;
     int WS_VISIBLE = 0x10000000;
