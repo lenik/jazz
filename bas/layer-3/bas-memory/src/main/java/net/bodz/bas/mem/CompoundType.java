@@ -8,12 +8,12 @@ public interface CompoundType
     String nameOf(int fieldIndex);
 
     Type access(int field)
-            throws AccessException;
+            throws MemoryAccessException;
 
     Object get(int offset, int field)
-            throws AccessException;
+            throws MemoryAccessException;
 
     void put(int offset, int field, Object value)
-            throws AccessException;
+            throws MemoryAccessException;
 
 }

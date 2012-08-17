@@ -5,12 +5,12 @@ public interface RefType
 
     @Override
     MemoryWrapOffset get(Memory memory, int offset)
-            throws AccessException;
+            throws MemoryAccessException;
 
     Object getTarget(Memory memory, int offset)
-            throws AccessException;
+            throws MemoryAccessException;
 
     void putTarget(Memory memory, int offset, Object value)
-            throws AccessException;
+            throws MemoryAccessException;
 
 }

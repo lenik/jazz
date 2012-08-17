@@ -1,7 +1,7 @@
 package net.bodz.bas.mem;
 
 public class BadAddressException
-        extends AccessException {
+        extends MemoryAccessException {
 
     private static final long serialVersionUID = 8898684852756951338L;
 

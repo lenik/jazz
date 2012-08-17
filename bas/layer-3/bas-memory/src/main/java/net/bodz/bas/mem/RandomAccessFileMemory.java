@@ -58,48 +58,48 @@ public class RandomAccessFileMemory
 
     @Override
     public void read(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+            throws MemoryAccessException {
         try {
             file.seek(offset + addr);
             file.readFully(buf, off, len);
         } catch (IOException e) {
-            throw new AccessException(e);
+            throw new MemoryAccessException(e);
         }
     }
 
     @Override
     public byte read(int addr)
-            throws AccessException {
+            throws MemoryAccessException {
         try {
             file.seek(offset + addr);
             int b = file.read();
             if (b == -1)
-                throw new AccessException("end of file");
+                throw new MemoryAccessException("end of file");
             return (byte) b;
         } catch (IOException e) {
-            throw new AccessException(e);
+            throw new MemoryAccessException(e);
         }
     }
 
     @Override
     public void write(int addr, byte value)
-            throws AccessException {
+            throws MemoryAccessException {
         try {
             file.seek(offset + addr);
             file.write(IntMath.unsign(value));
         } catch (IOException e) {
-            throw new AccessException(e);
+            throw new MemoryAccessException(e);
         }
     }
 
     @Override
     public void write(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+            throws MemoryAccessException {
         try {
             file.seek(offset + addr);
             file.write(buf, off, len);
         } catch (IOException e) {
-            throw new AccessException(e);
+            throw new MemoryAccessException(e);
         }
     }
 

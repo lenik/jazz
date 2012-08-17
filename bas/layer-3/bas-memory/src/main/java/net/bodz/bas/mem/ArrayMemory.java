@@ -25,7 +25,7 @@ public class ArrayMemory
 
     @Override
     public byte read(int addr)
-            throws AccessException {
+            throws MemoryAccessException {
         if (addr >= end - start)
             throw new BadAddressException(addr, end - start);
         return array[start + addr];
@@ -33,7 +33,7 @@ public class ArrayMemory
 
     @Override
     public void write(int addr, byte value)
-            throws AccessException {
+            throws MemoryAccessException {
         if (addr >= end - start)
             throw new BadAddressException(addr, end - start);
         array[start + addr] = value;
@@ -41,7 +41,7 @@ public class ArrayMemory
 
     @Override
     public void read(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+            throws MemoryAccessException {
         int actualEnd = start + addr + len;
         if (actualEnd > end)
             throw new BadAddressException(actualEnd, end);

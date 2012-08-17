@@ -1,7 +1,7 @@
 package net.bodz.bas.mem.types;
 
 import net.bodz.bas.mem.AbstractType;
-import net.bodz.bas.mem.AccessException;
+import net.bodz.bas.mem.MemoryAccessException;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.meta.optim.ThreadUnsafe;
 
@@ -11,14 +11,14 @@ public class Int8
     @ThreadUnsafe
     @Override
     public Byte get(Memory memory, int offset)
-            throws AccessException {
+            throws MemoryAccessException {
         return memory.read(offset);
     }
 
     @ThreadUnsafe
     @Override
     public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+            throws MemoryAccessException {
         memory.write(offset, (Byte) value);
     }
 

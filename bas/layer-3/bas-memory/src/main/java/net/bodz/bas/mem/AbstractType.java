@@ -13,7 +13,7 @@ public abstract class AbstractType
 
     @Override
     public Type specialize(Object param)
-            throws AccessException {
+            throws MemoryAccessException {
         return this;
     }
 

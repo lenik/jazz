@@ -7,7 +7,7 @@ public abstract class AbstractRefType
     protected final Type targetType;
 
     public AbstractRefType(Type targetType)
-            throws AccessException {
+            throws MemoryAccessException {
         this.targetType = targetType;
     }
 
@@ -16,11 +16,11 @@ public abstract class AbstractRefType
      */
     @Override
     public abstract MemoryWrapOffset get(Memory memory, int offset)
-            throws AccessException;
+            throws MemoryAccessException;
 
     @Override
     public void put(Memory memory, int offset, Object targetAddr)
-            throws AccessException {
+            throws MemoryAccessException {
         MemoryWrapOffset target = (MemoryWrapOffset) targetAddr;
         Memory targetMemory = target.getOrig();
         int targetOffset = target.getOffset();
@@ -31,23 +31,23 @@ public abstract class AbstractRefType
     }
 
     protected void putLocal(Memory memory, int offset, int targetOffset)
-            throws AccessException {
+            throws MemoryAccessException {
         putRemote(memory, offset, memory, targetOffset);
     }
 
     protected abstract void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset)
-            throws AccessException;
+            throws MemoryAccessException;
 
     @Override
     public Object getTarget(Memory memory, int offset)
-            throws AccessException {
+            throws MemoryAccessException {
         MemoryWrapOffset target = get(memory, offset);
         return targetType.get(target.getOrig(), target.getOffset());
     }
 
     @Override
     public void putTarget(Memory memory, int offset, Object value)
-            throws AccessException {
+            throws MemoryAccessException {
         MemoryWrapOffset target = get(memory, offset);
         targetType.put(target.getOrig(), target.getOffset(), value);
     }
