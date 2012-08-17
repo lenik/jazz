@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.bodz.bas</groupId>
+        <artifactId>bas-parent</artifactId>
+        <version>0.5-SNAPSHOT</version>
+    </parent>
+    <groupId>net.bodz.jazz</groupId>
+    <artifactId>jazz</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>bas</module>
+        <module>mda</module>
+    </modules>
+    <name>Jazz Project</name>
+    <url>http://bas.bodz.net/</url>
+    <inceptionYear>2004</inceptionYear>
+    <developers>
+        <developer>
+            <id>lenik</id>
+            <name>Lenik (谢继雷)</name>
+            <email>lenik@bodz.net</email>
+            <roles>
+                <role>Project Leader</role>
+            </roles>
+            <timezone>GMT+8</timezone>
+        </developer>
+    </developers>
+    <mailingLists>
+        <mailingList>
+            <name>boDz Software Foundation</name>
+            <archive>http://list.bodz.net/bsf/archive</archive>
+            <post>post@bsf.list.bodz.net</post>
+            <subscribe>subscribe@bsf.list.bodz.net</subscribe>
+            <unsubscribe>unsubscribe@bsf.list.bodz.net</unsubscribe>
+        </mailingList>
+    </mailingLists>
+    <scm>
+        <connection>scm:git:ssh://git.bodz.net/repos/git/jazz.git</connection>
+    </scm>
+</project>
