@@ -3,7 +3,7 @@ package net.bodz.bas.util.primitive;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Boxing {
+public class Primitives {
 
     private static Map<Class<?>, Class<?>> p2w;
     private static Map<Class<?>, Class<?>> w2p;
