@@ -5,10 +5,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.Provider;
-import java.security.Security;
+import java.nio.file.Files;
+import java.security.*;
 import java.security.KeyStore.Builder;
 import java.security.KeyStore.CallbackHandlerProtection;
 import java.security.Provider.Service;
@@ -18,16 +16,8 @@ import java.util.List;
 
 import javax.security.auth.callback.CallbackHandler;
 
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.err.IllegalUsageException;
-import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.net.CURL;
-import net.bodz.bas.net.CURL.Alpha;
-import net.bodz.bas.nls.SysNLS;
-import net.bodz.bas.types.util.Iterates;
-import net.bodz.bas.types.util.Objects;
-import net.bodz.bas.types.util.PrefetchedIterator;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.util.iter.PrefetchedIterator;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 
