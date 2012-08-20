@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.lang.fn.Func1;
 import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.bas.util.ints.IntIterator;
 
@@ -293,6 +294,17 @@ public class Arrays
                 max = v;
         }
         return max;
+    }
+
+    public static <T> T[] map(T[] array, Func1<T, T> fn) {
+        Class<?> valType = array.getClass().getComponentType();
+        T[] result = (T[]) Array.newInstance(valType, array.length);
+        for (int i = 0; i < array.length; i++) {
+            T val = array[i];
+            val = fn.eval(val);
+            result[i] = val;
+        }
+        return result;
     }
 
 }
