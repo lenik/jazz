@@ -1,10 +1,10 @@
 package net.bodz.swt.image.accessor;
 
-import net.bodz.bas.err.NotImplementedException;
-
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
+
+import net.bodz.bas.err.NotImplementedException;
 
 public class ImageOp {
 

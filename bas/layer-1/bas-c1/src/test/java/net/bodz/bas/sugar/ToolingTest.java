@@ -1,9 +1,9 @@
 package net.bodz.bas.sugar;
 
-import net.bodz.bas.util.example.Person;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.util.example.Person;
 
 public class ToolingTest
         extends Assert {

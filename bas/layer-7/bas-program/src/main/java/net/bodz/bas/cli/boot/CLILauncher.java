@@ -1,8 +1,8 @@
 package net.bodz.bas.cli.boot;
 
-import net.bodz.bas.cli.skel.BasicCLI;
-
 import org.apache.commons.lang.ArrayUtils;
+
+import net.bodz.bas.cli.skel.BasicCLI;
 
 public class CLILauncher {
 

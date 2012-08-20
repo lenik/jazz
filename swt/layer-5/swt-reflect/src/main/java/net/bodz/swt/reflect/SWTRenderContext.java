@@ -1,12 +1,12 @@
 package net.bodz.swt.reflect;
 
-import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.reflect.util.DialogUI;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Control;
+
+import net.bodz.bas.ui.RenderException;
+import net.bodz.swt.reflect.util.DialogUI;
 
 public class SWTRenderContext {
 

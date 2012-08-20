@@ -1,8 +1,5 @@
 package net.bodz.bas.i18n.dom;
 
-import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.MultiLangStringParser;
-
 import org.junit.Assert;
 import org.junit.Test;
 

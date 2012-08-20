@@ -1,8 +1,8 @@
 package net.bodz.swt.draw.app;
 
-import net.bodz.bas.geom_f.tr.ITransformedView2d;
-
 import org.eclipse.swt.graphics.Rectangle;
+
+import net.bodz.bas.geom_f.tr.ITransformedView2d;
 
 public class Document2f {
 

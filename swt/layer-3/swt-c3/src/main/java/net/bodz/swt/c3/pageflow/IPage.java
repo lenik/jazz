@@ -3,11 +3,11 @@ package net.bodz.swt.c3.pageflow;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.swt.gui.err.ValidateException;
-
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Control;
+
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.swt.gui.err.ValidateException;
 
 public interface IPage {
 

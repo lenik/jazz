@@ -2,11 +2,11 @@ package net.bodz.bas.io;
 
 import java.io.File;
 
-import net.bodz.bas.context.ClassContextId;
-import net.bodz.bas.vfs.CurrentDirectoryColo;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.context.ClassContextId;
+import net.bodz.bas.vfs.CurrentDirectoryColo;
 
 public class ContextCWDTest
         extends Assert {

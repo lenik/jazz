@@ -6,6 +6,12 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import org.apache.commons.vfs.FileContent;
+import org.apache.commons.vfs.FileName;
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileSystemManager;
+
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.JavaioStreamResource;
 import net.bodz.bas.util.iter.Mitorx;
@@ -13,12 +19,6 @@ import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.util.IFilenameFilter;
-
-import org.apache.commons.vfs.FileContent;
-import org.apache.commons.vfs.FileName;
-import org.apache.commons.vfs.FileObject;
-import org.apache.commons.vfs.FileSystemException;
-import org.apache.commons.vfs.FileSystemManager;
 
 public class ApacheVFSFile
         extends AbstractFile {

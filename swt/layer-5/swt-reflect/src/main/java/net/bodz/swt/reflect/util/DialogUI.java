@@ -8,6 +8,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.*;
+
 import net.bodz.bas.c.string.StringSearch;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.CancelException;
@@ -27,17 +38,6 @@ import net.bodz.swt.reflect.IAction;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.styles.base.SWTStrategy;
 import net.bodz.swt.reflect.styles.grid.SWTGridStrategy;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
 
 public class DialogUI
         extends AbstractUserInterface {

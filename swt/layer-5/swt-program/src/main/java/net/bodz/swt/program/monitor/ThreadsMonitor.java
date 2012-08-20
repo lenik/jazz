@@ -5,14 +5,6 @@ import static net.bodz.swt.nls.GUINLS.GUINLS;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.err.CreateException;
-import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.ui.UserInterface;
-import net.bodz.swt.c.composite.EmptyComposite;
-import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.dialog.SimpleDialog;
-import net.bodz.swt.reflect.util.DialogUI;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -24,6 +16,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
+
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.ui.UserInterface;
+import net.bodz.swt.c.composite.EmptyComposite;
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c3.dialog.SimpleDialog;
+import net.bodz.swt.reflect.util.DialogUI;
 
 /**
  * @test

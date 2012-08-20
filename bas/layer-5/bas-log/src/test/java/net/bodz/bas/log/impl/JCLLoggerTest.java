@@ -1,7 +1,5 @@
 package net.bodz.bas.log.impl;
 
-import net.bodz.bas.log.impl.JCLLogger;
-
 import org.junit.Assert;
 import org.junit.Test;
 

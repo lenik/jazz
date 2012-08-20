@@ -1,18 +1,19 @@
 package net.bodz.swt.reflect.styles.base;
 
 import static net.bodz.swt.nls.GUINLS.GUINLS;
-import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.c.control.DynamicControl;
-import net.bodz.swt.reflect.GUIVar;
-import net.bodz.swt.reflect.GUIVarMeta;
-import net.bodz.swt.reflect.SWTRenderContext;
-import net.bodz.swt.reflect.SWTRenderer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.bas.ui.RenderException;
+import net.bodz.swt.c.control.DynamicControl;
+import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.GUIVarMeta;
+import net.bodz.swt.reflect.SWTRenderContext;
+import net.bodz.swt.reflect.SWTRenderer;
 
 public abstract class _R_Object
         extends SWTRenderer {

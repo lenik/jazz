@@ -3,6 +3,9 @@ package net.bodz.bas.flow.unit;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.flow.unit.arch.GrabberUnit;
 import net.bodz.bas.flow.unit.arch.TeeUnit;
 import net.bodz.bas.flow.unit.builtins.DumperSinkUnit;
@@ -10,9 +13,6 @@ import net.bodz.bas.flow.unit.builtins.InputStreamSourceUnit;
 import net.bodz.bas.flow.unit.builtins.text.BreakLinesUnit;
 import net.bodz.bas.flow.unit.builtins.text.BreakOrCutLinesUnit;
 import net.bodz.bas.flow.unit.builtins.text.DecodeUnit;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class AbstractUnitTest
         extends Assert {

@@ -3,11 +3,11 @@ package net.bodz.bas.sio;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import net.bodz.bas.sio.bits.NibByteArrayOutputStream;
-import net.bodz.bas.sio.bits.OutputStreamNibbleOut;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.bits.NibByteArrayOutputStream;
+import net.bodz.bas.sio.bits.OutputStreamNibbleOut;
 
 public class OutputStreamNibbleOutTest
         extends Assert {

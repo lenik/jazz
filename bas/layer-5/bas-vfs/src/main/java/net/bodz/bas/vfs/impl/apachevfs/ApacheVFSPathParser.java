@@ -4,12 +4,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.VFS;
+
 import net.bodz.bas.vfs.path.AbstractGenericPathParser;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-
-import org.apache.commons.vfs.FileSystemException;
-import org.apache.commons.vfs.VFS;
 
 public class ApacheVFSPathParser
         extends AbstractGenericPathParser {

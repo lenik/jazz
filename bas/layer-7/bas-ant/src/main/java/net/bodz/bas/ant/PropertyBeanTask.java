@@ -13,6 +13,12 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.DataType;
+import org.apache.tools.ant.types.Path;
+
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypePrSet;
 import net.bodz.bas.collection.preorder.PrefixSet;
@@ -23,12 +29,6 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.vfs.SystemColos;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.types.DataType;
-import org.apache.tools.ant.types.Path;
 
 public class PropertyBeanTask
         extends Task

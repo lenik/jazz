@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import net.bodz.bas.ui.a.Visible;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.program.BasicGUI;
 
 public class BasicGUITest
         extends BasicGUI {

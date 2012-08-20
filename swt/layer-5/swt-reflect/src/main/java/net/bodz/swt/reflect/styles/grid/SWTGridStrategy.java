@@ -1,16 +1,6 @@
 package net.bodz.swt.reflect.styles.grid;
 
 import static net.bodz.swt.nls.GUINLS.GUINLS;
-import net.bodz.bas.err.CreateException;
-import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.reflect.*;
-import net.bodz.swt.reflect.GUIStructs.GUICallMeta;
-import net.bodz.swt.reflect.GUIStructs.ParameterMeta;
-import net.bodz.swt.reflect.GUIStructs.RetvalMeta;
-import net.bodz.swt.reflect.GUIVars.GUIFieldMeta;
-import net.bodz.swt.reflect.GUIVars.GUIPropertyMeta;
-import net.bodz.swt.reflect.styles.base.SWTStrategy;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -21,6 +11,17 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.ui.RenderException;
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.reflect.*;
+import net.bodz.swt.reflect.GUIStructs.GUICallMeta;
+import net.bodz.swt.reflect.GUIStructs.ParameterMeta;
+import net.bodz.swt.reflect.GUIStructs.RetvalMeta;
+import net.bodz.swt.reflect.GUIVars.GUIFieldMeta;
+import net.bodz.swt.reflect.GUIVars.GUIPropertyMeta;
+import net.bodz.swt.reflect.styles.base.SWTStrategy;
 
 public class SWTGridStrategy
         extends SWTStrategy {

@@ -3,10 +3,6 @@ package net.bodz.swt.draw.app;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.fsm.base.IStateGraph;
-import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.gui.state.ISWTState;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -15,6 +11,10 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+
+import net.bodz.bas.fsm.base.IStateGraph;
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.gui.state.ISWTState;
 
 public class DesignerToolbox2f {
 

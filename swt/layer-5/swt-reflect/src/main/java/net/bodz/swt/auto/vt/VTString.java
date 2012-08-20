@@ -1,11 +1,11 @@
 package net.bodz.swt.auto.vt;
 
-import net.bodz.swt.auto.AbstractVisualType;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.swt.auto.AbstractVisualType;
 
 public class VTString
         extends AbstractVisualType {

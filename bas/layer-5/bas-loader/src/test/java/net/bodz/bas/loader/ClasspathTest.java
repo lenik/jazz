@@ -1,9 +1,9 @@
 package net.bodz.bas.loader;
 
-import net.bodz.bas.sio.Stdio;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.Stdio;
 
 public class ClasspathTest
         extends Assert {

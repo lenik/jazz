@@ -13,6 +13,8 @@ import java.util.Map.Entry;
 import javax.rmi.CORBA.Util;
 import javax.script.ScriptException;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli.model.IOption;
@@ -49,8 +51,6 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.SystemColos;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
-
-import org.apache.commons.lang.ArrayUtils;
 
 /**
  * Basic CLI Framework

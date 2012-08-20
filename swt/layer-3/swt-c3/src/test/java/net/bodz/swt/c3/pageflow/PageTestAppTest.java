@@ -1,11 +1,11 @@
 package net.bodz.swt.c3.pageflow;
 
-import net.bodz.swt.c3.test.PageTestApp;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.swt.c3.test.PageTestApp;
 
 public class PageTestAppTest {
 

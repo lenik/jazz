@@ -1,9 +1,5 @@
 package net.bodz.swt.c3.composite;
 
-import net.bodz.swt.c.composite.Switcher;
-import net.bodz.swt.c.test.ControlTestApp;
-import net.bodz.swt.c3.test.TestComposite;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -12,6 +8,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.junit.Test;
+
+import net.bodz.swt.c.composite.Switcher;
+import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c3.test.TestComposite;
 
 public class SwitcherTest {
 

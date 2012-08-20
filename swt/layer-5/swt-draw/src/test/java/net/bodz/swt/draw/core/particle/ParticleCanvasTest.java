@@ -1,11 +1,9 @@
 package net.bodz.swt.draw.core.particle;
 
-import net.bodz.swt.c.test.ControlTestApp;
-import net.bodz.swt.draw.core.particle.GridParticleBounds;
-import net.bodz.swt.draw.core.particle.ParticleCanvas;
-import net.bodz.swt.draw.core.particle.GridParticleBounds.HFirst;
-
 import org.eclipse.swt.SWT;
+
+import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.draw.core.particle.GridParticleBounds.HFirst;
 
 public class ParticleCanvasTest {
 

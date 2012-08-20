@@ -2,12 +2,12 @@ package net.bodz.swt.c3.file.image;
 
 import java.io.File;
 
-import net.bodz.swt.c.resources.SWTResources;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Shell;
+
+import net.bodz.swt.c.resources.SWTResources;
 
 public class SaveImageDialogTest {
 

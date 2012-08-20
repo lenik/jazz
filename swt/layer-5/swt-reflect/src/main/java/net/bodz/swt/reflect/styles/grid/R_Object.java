@@ -1,5 +1,9 @@
 package net.bodz.swt.reflect.styles.grid;
 
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Composite;
+
 import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.reflect.GUIHint;
 import net.bodz.swt.reflect.GUIStruct;
@@ -8,10 +12,6 @@ import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.GUIVars;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.styles.base._R_Object;
-
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Composite;
 
 public class R_Object
         extends _R_Object {

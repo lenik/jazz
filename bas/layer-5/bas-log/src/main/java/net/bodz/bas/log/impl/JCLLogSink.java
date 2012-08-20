@@ -1,8 +1,8 @@
 package net.bodz.bas.log.impl;
 
-import net.bodz.bas.log.AbstractLogSink;
-
 import org.apache.commons.logging.Log;
+
+import net.bodz.bas.log.AbstractLogSink;
 
 public abstract class JCLLogSink
         extends AbstractLogSink {

@@ -2,8 +2,6 @@ package net.bodz.swt.c3.file;
 
 import java.io.File;
 
-import net.bodz.swt.widgets.FileEditorTest;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -12,6 +10,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.swt.widgets.FileEditorTest;
 
 /**
  * @test {@link FileEditorTest}

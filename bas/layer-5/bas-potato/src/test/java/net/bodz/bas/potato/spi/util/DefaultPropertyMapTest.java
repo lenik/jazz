@@ -1,13 +1,13 @@
 package net.bodz.bas.potato.spi.util;
 
-import net.bodz.bas.potato.traits.IProperty;
-import net.bodz.bas.potato.traits.IPropertyMap;
-import net.bodz.bas.trait.Traits;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import user.bean.AddressBean;
+
+import net.bodz.bas.potato.traits.IProperty;
+import net.bodz.bas.potato.traits.IPropertyMap;
+import net.bodz.bas.trait.Traits;
 
 public class DefaultPropertyMapTest
         extends Assert {

@@ -12,16 +12,16 @@ import java.net.URL;
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
 
+import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
+
 import net.bodz.bas.c.java.beans.Jdk7XMLEncoder;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.util.exception.ExceptionBuffer;
-
-import org.xml.sax.*;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 public class XMLs {
 

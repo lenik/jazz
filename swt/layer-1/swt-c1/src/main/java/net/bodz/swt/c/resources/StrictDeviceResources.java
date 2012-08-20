@@ -13,16 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.graphics.*;
+
 import net.bodz.bas.collection.map.IndexMap;
 import net.bodz.bas.err.IllegalArgumentTypeException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.Stdio;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.graphics.*;
 
 public class StrictDeviceResources {
 

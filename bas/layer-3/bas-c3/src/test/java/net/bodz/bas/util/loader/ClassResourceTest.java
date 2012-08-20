@@ -1,11 +1,11 @@
 package net.bodz.bas.util.loader;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class ClassResourceTest
         extends Assert {

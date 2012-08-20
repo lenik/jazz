@@ -1,10 +1,10 @@
 package net.bodz.bas.c.type;
 
-import net.bodz.bas.collection.preorder.IPreorder;
-import net.bodz.bas.collection.preorder.PackageNamePreorder;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.collection.preorder.IPreorder;
+import net.bodz.bas.collection.preorder.PackageNamePreorder;
 
 public class PackageNamePreorderTest
         extends Assert {

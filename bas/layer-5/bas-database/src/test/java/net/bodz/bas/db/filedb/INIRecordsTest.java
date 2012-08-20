@@ -5,13 +5,13 @@ import static net.bodz.bas.db.filedb.MultiTextMapsTest.map2str;
 import java.io.IOException;
 import java.util.Map;
 
-import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.util.iter.Mitorx;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import net.bodz.bas.c.loader.ClassResource;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.util.iter.Mitorx;
 
 public class INIRecordsTest
         extends Assert {

@@ -6,14 +6,6 @@ import java.lang.reflect.Method;
 
 import javax.swing.border.Border;
 
-import net.bodz.bas.err.CreateException;
-import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.ui.a.PreferredSize;
-import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.reflect.a.A_gui;
-import net.bodz.swt.reflect.a.MenuContrib;
-import net.bodz.swt.reflect.a.View;
-
 import org.apache.commons.collections15.Factory;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
@@ -21,6 +13,14 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
+
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.ui.a.PreferredSize;
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.reflect.a.A_gui;
+import net.bodz.swt.reflect.a.MenuContrib;
+import net.bodz.swt.reflect.a.View;
 
 public class GUIHint {
 

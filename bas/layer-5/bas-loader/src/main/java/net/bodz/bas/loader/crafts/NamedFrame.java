@@ -4,14 +4,14 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.jvm.stack.FrameConstructError;
-import net.bodz.bas.jvm.stack.FrameTemplate_forAsm;
-import net.bodz.bas.loader.CustomClassLoader;
-
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+
+import net.bodz.bas.jvm.stack.FrameConstructError;
+import net.bodz.bas.jvm.stack.FrameTemplate_forAsm;
+import net.bodz.bas.loader.CustomClassLoader;
 
 public class NamedFrame {
 

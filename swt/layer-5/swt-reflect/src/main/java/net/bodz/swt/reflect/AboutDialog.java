@@ -1,11 +1,11 @@
 package net.bodz.swt.reflect;
 
-import net.bodz.bas.err.CreateException;
-import net.bodz.swt.c3.dialog.SimpleDialog;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+
+import net.bodz.bas.err.CreateException;
+import net.bodz.swt.c3.dialog.SimpleDialog;
 
 public class AboutDialog
         extends SimpleDialog {

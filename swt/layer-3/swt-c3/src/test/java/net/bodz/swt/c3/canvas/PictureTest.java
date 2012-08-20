@@ -2,14 +2,14 @@ package net.bodz.swt.c3.canvas;
 
 import java.io.File;
 
-import net.bodz.swt.c.canvas.Picture;
-import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c.test.ControlTestApp;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Image;
+
+import net.bodz.swt.c.canvas.Picture;
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c.test.ControlTestApp;
 
 public class PictureTest {
 

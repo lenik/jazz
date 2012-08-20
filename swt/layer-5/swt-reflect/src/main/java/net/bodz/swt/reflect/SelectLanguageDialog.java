@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import net.bodz.bas.c.java.util.LocaleTraits;
-import net.bodz.bas.err.CreateException;
-import net.bodz.swt.c3.dialog.SimpleDialog;
-import net.bodz.swt.gui.err.ValidateException;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+
+import net.bodz.bas.c.java.util.LocaleTraits;
+import net.bodz.bas.err.CreateException;
+import net.bodz.swt.c3.dialog.SimpleDialog;
+import net.bodz.swt.gui.err.ValidateException;
 
 /**
  * @test

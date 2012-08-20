@@ -1,7 +1,5 @@
 package net.bodz.swt.draw.app;
 
-import net.bodz.swt.gui.state.SWTStateGraphImpl;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.PaintEvent;
@@ -11,6 +9,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+
+import net.bodz.swt.gui.state.SWTStateGraphImpl;
 
 public class DesignerCanvas2f
         extends Composite

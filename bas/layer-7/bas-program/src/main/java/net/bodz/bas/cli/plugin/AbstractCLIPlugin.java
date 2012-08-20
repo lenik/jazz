@@ -1,11 +1,9 @@
 package net.bodz.bas.cli.plugin;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.cli.ClassOptions;
-import net.bodz.bas.cli.model.DefaultOptionGroup;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.skel.CLIException;

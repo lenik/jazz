@@ -1,5 +1,8 @@
 package net.bodz.bas.log.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
@@ -9,9 +12,6 @@ import net.bodz.bas.log.impl.Slf4jLogSink.ErrorSink;
 import net.bodz.bas.log.impl.Slf4jLogSink.InfoSink;
 import net.bodz.bas.log.impl.Slf4jLogSink.TraceSink;
 import net.bodz.bas.log.impl.Slf4jLogSink.WarnSink;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Slf4jLogger
         extends AbstractLogger {

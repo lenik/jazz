@@ -1,13 +1,13 @@
 package net.bodz.swt.reflect.util;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.*;
+
 import net.bodz.bas.err.CreateException;
 import net.bodz.swt.reflect.GUIHint;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.GUIVarMeta;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.*;
 
 public class SWTInject {
 

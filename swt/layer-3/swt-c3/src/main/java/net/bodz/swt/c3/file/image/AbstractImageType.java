@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import net.bodz.swt.c3.dialog.ParametersComposite;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
+
+import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public abstract class AbstractImageType
         implements ImageType {

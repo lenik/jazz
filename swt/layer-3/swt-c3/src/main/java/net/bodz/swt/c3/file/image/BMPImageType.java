@@ -5,15 +5,15 @@ import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.traits.ValidateException;
-import net.bodz.swt.c3.dialog.ParametersComposite;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+
+import net.bodz.bas.traits.ValidateException;
+import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public class BMPImageType
         extends AbstractImageType {

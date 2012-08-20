@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.util.Nullables;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.StackComposite;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 public class PageContainer
         extends StackComposite {

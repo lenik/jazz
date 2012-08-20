@@ -1,9 +1,9 @@
 package net.bodz.swt.gui.err;
 
+import org.eclipse.swt.widgets.Control;
+
 import net.bodz.bas.err.CheckException;
 import net.bodz.swt.gui.QuietHint;
-
-import org.eclipse.swt.widgets.Control;
 
 public class ValidateException
         extends CheckException

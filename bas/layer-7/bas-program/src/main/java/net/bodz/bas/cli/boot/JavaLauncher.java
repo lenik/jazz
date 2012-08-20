@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.jvm.exit.CatchExit;
 import net.bodz.bas.jvm.exit.ExitableProgram;
@@ -22,8 +24,6 @@ import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.charset.BasCharsetProvider;
-
-import org.apache.commons.lang.ArrayUtils;
 
 @BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher

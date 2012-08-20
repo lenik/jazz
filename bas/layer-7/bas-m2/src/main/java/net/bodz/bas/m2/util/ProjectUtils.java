@@ -1,10 +1,10 @@
 package net.bodz.bas.m2.util;
 
-import net.bodz.bas.err.UnexpectedException;
-
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluationException;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator;
+
+import net.bodz.bas.err.UnexpectedException;
 
 public class ProjectUtils {
 

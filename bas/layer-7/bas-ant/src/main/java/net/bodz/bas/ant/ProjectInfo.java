@@ -3,13 +3,13 @@ package net.bodz.bas.ant;
 import java.io.File;
 import java.util.Map;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.snm.EclipseProject;
-import net.bodz.bas.vfs.SystemColos;
-
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
+
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.snm.EclipseProject;
+import net.bodz.bas.vfs.SystemColos;
 
 public class ProjectInfo {
 

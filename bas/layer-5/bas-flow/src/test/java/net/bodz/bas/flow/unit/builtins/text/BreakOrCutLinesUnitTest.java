@@ -3,12 +3,11 @@ package net.bodz.bas.flow.unit.builtins.text;
 import java.io.IOException;
 import java.util.Collection;
 
-import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.flow.unit.builtins.text.BreakOrCutLinesUnit;
-import net.bodz.bas.flow.utils.WhatIf;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.flow.utils.WhatIf;
 
 public class BreakOrCutLinesUnitTest
         extends Assert {

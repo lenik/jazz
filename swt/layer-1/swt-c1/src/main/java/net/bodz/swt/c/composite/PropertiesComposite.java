@@ -1,12 +1,12 @@
 package net.bodz.swt.c.composite;
 
-import net.bodz.swt.c.resources.SWTResources;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.swt.c.resources.SWTResources;
 
 public class PropertiesComposite
         extends Composite {

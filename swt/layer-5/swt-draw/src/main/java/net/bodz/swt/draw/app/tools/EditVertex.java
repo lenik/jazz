@@ -1,11 +1,11 @@
 package net.bodz.swt.draw.app.tools;
 
+import org.eclipse.swt.events.KeyEvent;
+
 import net.bodz.bas.fsm.base.IState;
 import net.bodz.bas.geom_f.api.IEditablePointSet2d;
 import net.bodz.swt.draw.app.DesignerState;
 import net.bodz.swt.draw.app.DesignerStateGraph;
-
-import org.eclipse.swt.events.KeyEvent;
 
 public class EditVertex
         extends DesignerState {

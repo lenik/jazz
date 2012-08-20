@@ -2,12 +2,12 @@ package net.bodz.bas.c.java.util.regex;
 
 import java.util.regex.Pattern;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.c.java.util.regex.RegexProcessor.SpaceOverride;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.string.StringGrep;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class RegexProcessorTest
         extends Assert {

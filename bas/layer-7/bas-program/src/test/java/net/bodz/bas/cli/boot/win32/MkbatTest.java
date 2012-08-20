@@ -5,7 +5,6 @@ import java.net.URL;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.cli.boot.win32.Mkbat;
 import net.bodz.bas.snm.EclipseProject;
 
 public class MkbatTest {

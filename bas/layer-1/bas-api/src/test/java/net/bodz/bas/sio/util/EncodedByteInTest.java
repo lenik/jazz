@@ -3,11 +3,11 @@ package net.bodz.bas.sio.util;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.sio.BByteOut;
-import net.bodz.bas.sio.StringCharIn;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.BByteOut;
+import net.bodz.bas.sio.StringCharIn;
 
 public class EncodedByteInTest
         extends Assert {

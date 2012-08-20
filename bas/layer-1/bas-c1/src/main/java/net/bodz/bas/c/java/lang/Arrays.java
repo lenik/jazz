@@ -259,4 +259,40 @@ public class Arrays
         return array;
     }
 
+    public static int min(int[] array) {
+        return min(array, 0, array.length);
+    }
+
+    public static int min(int[] array, int offset, int length) {
+        if (length < 1)
+            throw new IllegalArgumentException("length < 1" + length);
+
+        int min = array[offset];
+        int end = offset + length;
+        for (int i = offset + 1; i < end; i++) {
+            int v = array[i];
+            if (v < min)
+                min = v;
+        }
+        return min;
+    }
+
+    public static int max(int[] array) {
+        return max(array, 0, array.length);
+    }
+
+    public static int max(int[] array, int offset, int length) {
+        if (length < 1)
+            throw new IllegalArgumentException("length < 1" + length);
+
+        int max = array[offset];
+        int end = offset + length;
+        for (int i = offset + 1; i < end; i++) {
+            int v = array[i];
+            if (v > max)
+                max = v;
+        }
+        return max;
+    }
+
 }

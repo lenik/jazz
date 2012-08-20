@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
+import org.junit.Test;
+
 import net.bodz.bas.c.system.SystemEnviron;
 import net.bodz.bas.c.system.SystemProperties;
-
-import org.junit.Test;
 
 public class ProcessesTest {
 

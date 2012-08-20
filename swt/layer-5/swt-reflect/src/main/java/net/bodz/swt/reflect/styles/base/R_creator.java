@@ -5,6 +5,18 @@ import static net.bodz.swt.nls.GUINLS.GUINLS;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Text;
+
 import net.bodz.bas.c.type.TypeName;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
@@ -19,18 +31,6 @@ import net.bodz.swt.reflect.GUIHint;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Text;
 
 public class R_creator
         extends SWTRenderer {

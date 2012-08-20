@@ -1,18 +1,18 @@
 package net.bodz.bas.util.array;
 
-import static net.bodz.bas.util.array.AbstractArrayWrapper.wrap;
+import static net.bodz.bas.util.array.ArrayWrappers.wrap;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.lang.fn.Proc1;
 import net.bodz.bas.util.primitive.IntMath;
 import net.bodz.bas.util.primitive.IntegerCollection;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class PermutationTest
         extends Assert {

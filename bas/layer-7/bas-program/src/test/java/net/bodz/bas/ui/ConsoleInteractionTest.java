@@ -1,9 +1,9 @@
 package net.bodz.bas.ui;
 
+import org.junit.Test;
+
 import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.model.IExecutableX;
-
-import org.junit.Test;
 
 public class ConsoleInteractionTest {
 

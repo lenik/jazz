@@ -8,13 +8,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.swt.gui.err.ValidateException;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.swt.gui.err.ValidateException;
 
 public abstract class AbstractPage
         implements IPage {

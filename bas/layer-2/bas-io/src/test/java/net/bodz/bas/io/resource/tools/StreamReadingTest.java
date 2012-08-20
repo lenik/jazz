@@ -3,11 +3,11 @@ package net.bodz.bas.io.resource.tools;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import net.bodz.bas.io.resource.builtin.InputStreamSource;
-import net.bodz.bas.util.iter.Mitorx;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.io.resource.builtin.InputStreamSource;
+import net.bodz.bas.util.iter.Mitorx;
 
 public class StreamReadingTest
         extends Assert {

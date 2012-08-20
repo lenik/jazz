@@ -1,10 +1,10 @@
 package net.bodz.swt.reflect.util;
 
+import org.eclipse.swt.widgets.Button;
+
 import net.bodz.bas.lang.fn.Proc1;
 import net.bodz.swt.c.test.ControlTestApp;
 import net.bodz.swt.c3.test.TestComposite;
-
-import org.eclipse.swt.widgets.Button;
 
 public class ControlTestAppTest {
 

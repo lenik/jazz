@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
-import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.flow.unit.GenericUnit_11;
-import net.bodz.bas.flow.unit.builtins.text.Binary_Hex;
-import net.bodz.bas.flow.unit.builtins.text.EncodeUnit;
-import net.bodz.bas.flow.utils.WhatIf;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.flow.unit.GenericUnit_11;
+import net.bodz.bas.flow.utils.WhatIf;
 
 public class EncodeUnitTest
         extends Assert {

@@ -1,8 +1,8 @@
 package net.bodz.bas.vfs.impl.apachevfs;
 
-import net.bodz.bas.vfs.path.DefaultPath;
-
 import org.apache.commons.vfs.FileName;
+
+import net.bodz.bas.vfs.path.DefaultPath;
 
 public class ApacheVFSPath
         extends DefaultPath {

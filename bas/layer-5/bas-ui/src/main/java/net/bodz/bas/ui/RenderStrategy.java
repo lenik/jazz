@@ -1,7 +1,7 @@
 package net.bodz.bas.ui;
 
 import net.bodz.bas.c.type.TypePrMap;
-import net.bodz.bas.util.primitive.Boxing;
+import net.bodz.bas.util.primitive.Primitives;
 
 public abstract class RenderStrategy
         extends TypePrMap<IRenderer> {
@@ -39,7 +39,7 @@ public abstract class RenderStrategy
         Class<?> usingType = floorKey(type);
         if (usingType == null) {
             if (type.isPrimitive()) {
-                usingType = floorKey(Boxing.box(type));
+                usingType = floorKey(Primitives.box(type));
                 if (usingType == null)
                     return null;
             } else

@@ -1,8 +1,8 @@
 package net.bodz.bas.m2.util;
 
-import net.bodz.bas.log.AbstractLogSink;
-
 import org.apache.maven.plugin.logging.Log;
+
+import net.bodz.bas.log.AbstractLogSink;
 
 public abstract class MavenLogSink
         extends AbstractLogSink {
