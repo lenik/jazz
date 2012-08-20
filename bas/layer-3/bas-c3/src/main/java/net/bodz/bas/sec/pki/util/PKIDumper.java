@@ -1,64 +1,31 @@
 package net.bodz.bas.sec.pki.util;
 
-import static net.bodz.bas.types.util.ArrayOps.Bytes;
-
 import java.io.PrintWriter;
 import java.math.BigInteger;
-import java.security.AlgorithmParameters;
-import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
-import java.security.Provider;
-import java.security.ProviderException;
-import java.security.PublicKey;
-import java.security.UnrecoverableEntryException;
-import java.security.UnrecoverableKeyException;
+import java.security.*;
 import java.security.KeyStore.Builder;
 import java.security.KeyStore.CallbackHandlerProtection;
 import java.security.KeyStore.Entry;
 import java.security.KeyStore.PasswordProtection;
 import java.security.KeyStore.ProtectionParameter;
 import java.security.Provider.Service;
-import java.security.cert.CertStore;
-import java.security.cert.CertStoreException;
-import java.security.cert.CertStoreParameters;
+import java.security.cert.*;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateEncodingException;
-import java.security.cert.CertificateParsingException;
-import java.security.cert.CollectionCertStoreParameters;
-import java.security.cert.LDAPCertStoreParameters;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import javax.crypto.Cipher;
 import javax.crypto.ExemptionMechanism;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.x500.X500Principal;
 
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.sec.crypto.Cryptos;
-import net.bodz.bas.text.encodings.Encodings;
-import net.bodz.bas.text.encodings.HexEncoding;
-import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TreeTextMap;
-import net.bodz.bas.types.util.Comparators;
-import net.bodz.bas.types.util.Iterates;
-import net.bodz.bas.types.util.Strings;
 import sun.security.x509.AlgorithmId;
 import sun.security.x509.X500Name;
 import sun.security.x509.X509Key;
+
+import net.bodz.bas.c.java.security.Cryptos;
+import net.bodz.bas.c.java.util.TextMap;
+import net.bodz.bas.c.java.util.TreeTextMap;
+import net.bodz.bas.c.string.Strings;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 
