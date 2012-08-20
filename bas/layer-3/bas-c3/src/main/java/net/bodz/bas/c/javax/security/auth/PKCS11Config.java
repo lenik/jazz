@@ -1,4 +1,4 @@
-package net.bodz.bas.sec.pki.util;
+package net.bodz.bas.c.javax.security.auth;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -10,21 +10,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import sun.security.pkcs11.wrapper.PKCS11Constants;
-
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.sio.IPrintOut;
 
 public class PKCS11Config {
 
-    private String           name;
-    private File             library;
-    private String           description;
-    private Integer          slot;
-    private Integer          slotListIndex;
+    private String name;
+    private File library;
+    private String description;
+    private Integer slot;
+    private Integer slotListIndex;
     private Collection<Long> enabledMechanisms;
     private Collection<Long> disabledMechanisms;
-    private TextMap<String>  attributes;
+    private TextMap<String> attributes;
 
     public PKCS11Config(String name, File library) {
         this.name = name;
@@ -39,10 +39,9 @@ public class PKCS11Config {
     /**
      * name suffix of this provider instance
      * <p>
-     * This string is concatenated with the prefix SunPKCS11- to produce this
-     * provider instance's name (that is, the the string returned by its
-     * Provider.getName() method). For example, if the name attribute is
-     * "FooAccelerator", then the provider instance's name will be
+     * This string is concatenated with the prefix SunPKCS11- to produce this provider instance's
+     * name (that is, the the string returned by its Provider.getName() method). For example, if the
+     * name attribute is "FooAccelerator", then the provider instance's name will be
      * "SunPKCS11-FooAccelerator".
      */
     public String getName() {
@@ -56,10 +55,9 @@ public class PKCS11Config {
     /**
      * pathname of PKCS#11 implementation
      * <p>
-     * This is the full pathname (including extension) of the PKCS#11
-     * implementation; the format of the pathname is platform dependent. For
-     * example, /opt/foo/lib/libpkcs11.so might be the pathname of a PKCS#11
-     * implementation on Solaris and Linux while C:\foo\mypkcs11.dll might be
+     * This is the full pathname (including extension) of the PKCS#11 implementation; the format of
+     * the pathname is platform dependent. For example, /opt/foo/lib/libpkcs11.so might be the
+     * pathname of a PKCS#11 implementation on Solaris and Linux while C:\foo\mypkcs11.dll might be
      * one on Windows.
      */
     public File getLibrary() {
@@ -77,9 +75,8 @@ public class PKCS11Config {
     /**
      * description of this provider instance
      * <p>
-     * This string will be returned by the provider instance's
-     * Provider.getInfo() method. If none is specified, a default description
-     * will be returned.
+     * This string will be returned by the provider instance's Provider.getInfo() method. If none is
+     * specified, a default description will be returned.
      */
     public String getDescription() {
         return description;
@@ -92,10 +89,9 @@ public class PKCS11Config {
     /**
      * slot id
      * <p>
-     * This is the id of the slot that this provider instance is to be
-     * associated with. For example, you would use 1 for the slot with the id 1
-     * under PKCS#11. At most one of slot or slotListIndex may be specified. If
-     * neither is specified, the default is a slotListIndex of 0.
+     * This is the id of the slot that this provider instance is to be associated with. For example,
+     * you would use 1 for the slot with the id 1 under PKCS#11. At most one of slot or
+     * slotListIndex may be specified. If neither is specified, the default is a slotListIndex of 0.
      */
     public int getSlot() {
         return slot;
@@ -109,11 +105,10 @@ public class PKCS11Config {
     /**
      * slot index
      * <p>
-     * This is the slot index that this provider instance is to be associated
-     * with. It is the index into the list of all slots returned by the PKCS#11
-     * function C_GetSlotList. For example, 0 indicates the first slot in the
-     * list. At most one of slot or slotListIndex may be specified. If neither
-     * is specified, the default is a slotListIndex of 0.
+     * This is the slot index that this provider instance is to be associated with. It is the index
+     * into the list of all slots returned by the PKCS#11 function C_GetSlotList. For example, 0
+     * indicates the first slot in the list. At most one of slot or slotListIndex may be specified.
+     * If neither is specified, the default is a slotListIndex of 0.
      */
     public int getSlotListIndex() {
         return slotListIndex;
@@ -125,8 +120,7 @@ public class PKCS11Config {
     }
 
     /**
-     * @return <code>true</code> using slot-id, or <code>false</code> using
-     *         slot-list-index.
+     * @return <code>true</code> using slot-id, or <code>false</code> using slot-list-index.
      */
     public boolean isSlotId() {
         return slot != null;
@@ -135,11 +129,10 @@ public class PKCS11Config {
     /**
      * brace enclosed, whitespace-separated list of PKCS#11 mechanisms to enable
      * <p>
-     * This is the list PKCS#11 mechanisms that this provider instance should
-     * use, provided that they are supported by both the Sun PKCS#11 provider
-     * and PKCS#11 token. All other mechanisms will be ignored. Each entry in
-     * the list is the name of a PKCS#11 mechanism. Here is an example that
-     * lists two PKCS#11 mechanisms.
+     * This is the list PKCS#11 mechanisms that this provider instance should use, provided that
+     * they are supported by both the Sun PKCS#11 provider and PKCS#11 token. All other mechanisms
+     * will be ignored. Each entry in the list is the name of a PKCS#11 mechanism. Here is an
+     * example that lists two PKCS#11 mechanisms.
      * 
      * <pre>
      * enabledMechanisms = {
@@ -148,9 +141,9 @@ public class PKCS11Config {
      * }
      * </pre>
      * 
-     * At most one of enabledMechanisms or disabledMechanisms may be specified.
-     * If neither is specified, the mechanisms enabled are those that are
-     * supported by both the Sun PKCS#11 provider and the PKCS#11 token.
+     * At most one of enabledMechanisms or disabledMechanisms may be specified. If neither is
+     * specified, the mechanisms enabled are those that are supported by both the Sun PKCS#11
+     * provider and the PKCS#11 token.
      * 
      * @see PKCS11Constants
      * @see PKCS11Constants#CKM_RSA_PKCS
@@ -174,17 +167,16 @@ public class PKCS11Config {
     }
 
     /**
-     * brace enclosed, whitespace-separated list of PKCS#11 mechanisms to
-     * disable
+     * brace enclosed, whitespace-separated list of PKCS#11 mechanisms to disable
      * <p>
-     * This is the list of PKCS#11 mechanism that this provider instance should
-     * ignore. Any mechanism listed will be ignored by the provider, even if
-     * they are supported by the token and the Sun PKCS#11 provider. The strings
-     * SecureRandom and KeyStore may be specified to disable those services.
+     * This is the list of PKCS#11 mechanism that this provider instance should ignore. Any
+     * mechanism listed will be ignored by the provider, even if they are supported by the token and
+     * the Sun PKCS#11 provider. The strings SecureRandom and KeyStore may be specified to disable
+     * those services.
      * <p>
-     * At most one of enabledMechanisms or disabledMechanisms may be specified.
-     * If neither is specified, the mechanisms enabled are those that are
-     * supported by both the Sun PKCS#11 provider and the PKCS#11 token
+     * At most one of enabledMechanisms or disabledMechanisms may be specified. If neither is
+     * specified, the mechanisms enabled are those that are supported by both the Sun PKCS#11
+     * provider and the PKCS#11 token
      * 
      * @see PKCS11Constants
      * @see PKCS11Constants#CKM_RSA_PKCS
@@ -209,10 +201,9 @@ public class PKCS11Config {
     }
 
     /**
-     * The attributes option can be used to specify additional PKCS#11 that
-     * should be set when creating PKCS#11 key objects. This makes it possible
-     * to accomodate tokens that require particular attributes. For details, see
-     * the section below.
+     * The attributes option can be used to specify additional PKCS#11 that should be set when
+     * creating PKCS#11 key objects. This makes it possible to accomodate tokens that require
+     * particular attributes. For details, see the section below.
      */
     public TextMap<String> getAttributes() {
         return attributes;
@@ -230,7 +221,7 @@ public class PKCS11Config {
         return (String) attributes.remove(name);
     }
 
-    public void dump(CharOut out) {
+    public void dump(IPrintOut out) {
         if (name != null)
             out.println("name = " + name); //$NON-NLS-1$
         if (library != null)

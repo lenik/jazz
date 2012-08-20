@@ -1,4 +1,4 @@
-package net.bodz.bas.sec.pki.util;
+package net.bodz.bas.c.javax.security.auth;
 
 import java.io.File;
 import java.io.InputStream;
@@ -12,11 +12,17 @@ import java.security.KeyStore.CallbackHandlerProtection;
 import java.security.Provider.Service;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.security.auth.callback.CallbackHandler;
 
+import net.bodz.bas.c.java.net.CURL;
+import net.bodz.bas.c.java.net.CURL.Alpha;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.util.Nullables;
 import net.bodz.bas.util.iter.PrefetchedIterator;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
@@ -26,24 +32,24 @@ import com.sun.security.auth.callback.TextCallbackHandler;
  */
 public class CertSelector {
 
-    public static final int AUTO        = 0;
-    public static final int NONE        = 1;
-    public static final int STORETYPE   = 2;
-    public static final int KEYSTORE    = 3;
+    public static final int AUTO = 0;
+    public static final int NONE = 1;
+    public static final int STORETYPE = 2;
+    public static final int KEYSTORE = 3;
     public static final int CERTIFICATE = 4;
-    public static final int SUBENTRY    = 5;
+    public static final int SUBENTRY = 5;
 
-    private int             type;
-    private Provider        provider;
-    private KeyStore        keyStore;
+    private int type;
+    private Provider provider;
+    private KeyStore keyStore;
 
-    private String          storeType;
-    private String          storePassword;
-    private String          storePath;
-    private File            storeFile;
-    private String          certPassword;
-    private String          certAlias;
-    private String          subEntry;       // not used.
+    private String storeType;
+    private String storePassword;
+    private String storePath;
+    private File storeFile;
+    private String certPassword;
+    private String certAlias;
+    private String subEntry; // not used.
 
     public CertSelector(String curl) {
         this(new CURL(curl));
@@ -53,11 +59,13 @@ public class CertSelector {
         this(curl, AUTO);
     }
 
-    public CertSelector(String curl, Provider provider) throws KeyStoreException {
+    public CertSelector(String curl, Provider provider)
+            throws KeyStoreException {
         this(new CURL(curl), provider);
     }
 
-    public CertSelector(CURL curl, Provider provider) throws KeyStoreException {
+    public CertSelector(CURL curl, Provider provider)
+            throws KeyStoreException {
         this(curl, AUTO, provider);
     }
 
@@ -69,16 +77,18 @@ public class CertSelector {
         }
     }
 
-    public CertSelector(CURL curl, int type, Provider provider) throws KeyStoreException {
+    public CertSelector(CURL curl, int type, Provider provider)
+            throws KeyStoreException {
         _parse(curl, type, provider);
     }
 
-    static final String defaultStoreType = "JKS"; //$NON-NLS-1$
-    static final String KS_NONE          = "-";  //$NON-NLS-1$
+    static final String defaultStoreType = "JKS";
+    static final String KS_NONE = "-";
 
-    void _parse(CURL curl, int type, Provider provider) throws KeyStoreException {
+    void _parse(CURL curl, int type, Provider provider)
+            throws KeyStoreException {
         if (curl == null)
-            throw new NullPointerException("certURL"); //$NON-NLS-1$
+            throw new NullPointerException("certURL");
         int detType = NONE;
         storeType = curl.getType();
         if (storeType != null)
@@ -95,7 +105,7 @@ public class CertSelector {
             if (!storePath.isEmpty()) {
                 if (KS_NONE.equals(storePath)) {
                     storeFile = null;
-                } else if (storePath.contains("://")) //$NON-NLS-1$
+                } else if (storePath.contains("://"))
                     try {
                         URL url = new URL(storePath);
                         // create a temp file when necessary?
@@ -128,8 +138,8 @@ public class CertSelector {
             }
         }
         if (type > detType)
-            throw new IllegalArgumentException(String.format(SysNLS
-                    .getString("CertSelector.typeIsntCompleted_ss"), type, curl)); //$NON-NLS-1$
+            throw new IllegalArgumentException(String.format(SysNLS.getString("CertSelector.typeIsntCompleted_ss"),
+                    type, curl));
         this.type = type == AUTO ? detType : type;
         if (provider != null) {
             this.provider = provider;
@@ -175,9 +185,10 @@ public class CertSelector {
     }
 
     public Iterable<Provider> getStoreTypeProviders() {
-        class Iter extends PrefetchedIterator<Provider> {
+        class Iter
+                extends PrefetchedIterator<Provider> {
             Provider[] all = Security.getProviders();
-            int        i   = 0;
+            int i = 0;
 
             @Override
             protected Provider fetch() {
@@ -190,7 +201,7 @@ public class CertSelector {
                             if (storeType.equals(service.getAlgorithm()))
                                 return provider;
                         } else {
-                            if ("KeyStore".equals(service.getType())) //$NON-NLS-1$
+                            if ("KeyStore".equals(service.getType()))
                                 return provider;
                         }
                     }
@@ -198,20 +209,27 @@ public class CertSelector {
                 return end();
             }
         }
-        return Iterates.iterate(Iter.class, this);
+        return new Iterable<Provider>() {
+            @Override
+            public Iterator<Provider> iterator() {
+                return new Iter();
+            }
+        };
     }
 
     protected CallbackHandler getPromptPasswordHandler() {
         return new TextCallbackHandler();
     }
 
-    public KeyStore getKeyStore() throws KeyStoreException {
+    public KeyStore getKeyStore()
+            throws KeyStoreException {
         if (keyStore == null)
             keyStore = getKeyStore(provider);
         return keyStore;
     }
 
-    public KeyStore getKeyStore(Provider provider) throws KeyStoreException {
+    public KeyStore getKeyStore(Provider provider)
+            throws KeyStoreException {
         if (type < KEYSTORE)
             throw new IllegalUsageException();
         KeyStore keyStore;
@@ -225,7 +243,7 @@ public class CertSelector {
                 if (storeFile != null)
                     in = Files.getInputStream(storeFile);
                 else
-                    throw new IllegalStateException(SysNLS.getString("CertSelector.noKeyStore")); //$NON-NLS-1$
+                    throw new IllegalStateException(SysNLS.getString("CertSelector.noKeyStore"));
                 keyStore.load(in, storePassword.toCharArray());
             } catch (Exception e) {
                 throw new KeyStoreException(e);
@@ -249,21 +267,24 @@ public class CertSelector {
         return keyStore;
     }
 
-    public Certificate getCertificate() throws KeyStoreException {
+    public Certificate getCertificate()
+            throws KeyStoreException {
         if (type < CERTIFICATE)
             throw new IllegalUsageException();
         KeyStore keyStore = getKeyStore();
         return getCertificate(keyStore);
     }
 
-    public Certificate getCertificate(Provider provider) throws KeyStoreException {
+    public Certificate getCertificate(Provider provider)
+            throws KeyStoreException {
         if (type < CERTIFICATE)
             throw new IllegalUsageException();
         KeyStore keyStore = getKeyStore(provider);
         return getCertificate(keyStore);
     }
 
-    Certificate getCertificate(KeyStore keyStore) throws KeyStoreException {
+    Certificate getCertificate(KeyStore keyStore)
+            throws KeyStoreException {
         Certificate cert = keyStore.getCertificate(certAlias);
         return cert;
     }
@@ -293,17 +314,17 @@ public class CertSelector {
         CertSelector c = (CertSelector) obj;
         if (type != c.type)
             return false;
-        if (!Objects.equals(storeType, c.storeType))
+        if (!Nullables.equals(storeType, c.storeType))
             return false;
-        if (!Objects.equals(storePassword, c.storePassword))
+        if (!Nullables.equals(storePassword, c.storePassword))
             return false;
-        if (!Objects.equals(storePath, c.storePath))
+        if (!Nullables.equals(storePath, c.storePath))
             return false;
-        if (!Objects.equals(certPassword, c.certPassword))
+        if (!Nullables.equals(certPassword, c.certPassword))
             return false;
-        if (!Objects.equals(certAlias, c.certAlias))
+        if (!Nullables.equals(certAlias, c.certAlias))
             return false;
-        if (!Objects.equals(subEntry, c.subEntry))
+        if (!Nullables.equals(subEntry, c.subEntry))
             return false;
         return true;
     }
@@ -311,17 +332,17 @@ public class CertSelector {
     String getTypeString() {
         switch (type) {
         case AUTO:
-            return "AUTO"; //$NON-NLS-1$
+            return "AUTO";
         case NONE:
-            return "NONE"; //$NON-NLS-1$
+            return "NONE";
         case STORETYPE:
-            return "STORETYPE"; //$NON-NLS-1$
+            return "STORETYPE";
         case KEYSTORE:
-            return "KEYSTORE"; //$NON-NLS-1$
+            return "KEYSTORE";
         case CERTIFICATE:
-            return "CERTIFICATE"; //$NON-NLS-1$
+            return "CERTIFICATE";
         case SUBENTRY:
-            return "SUBENTRY"; //$NON-NLS-1$
+            return "SUBENTRY";
         }
         throw new UnexpectedException();
     }
@@ -340,7 +361,7 @@ public class CertSelector {
                 String[] params2 = null;
                 if (certPassword != null)
                     params2 = new String[] { certPassword };
-                String s = certAlias == null ? "" : certAlias; //$NON-NLS-1$
+                String s = certAlias == null ? "" : certAlias;
                 String[] betas2 = Alpha.parseBetas(s);
                 Alpha alpha2 = new Alpha(params2, betas2);
                 list.add(alpha2);
@@ -360,13 +381,15 @@ public class CertSelector {
         return toCURL().toString();
     }
 
-    public void dump(CharOut out) throws KeyStoreException {
+    public void dump(IPrintOut out)
+            throws KeyStoreException {
         dump(out, 1);
     }
 
-    public void dump(CharOut out, int detail) throws KeyStoreException {
+    public void dump(IPrintOut out, int detail)
+            throws KeyStoreException {
         if (type == NONE) {
-            out.println("NONE"); //$NON-NLS-1$
+            out.println("NONE");
             return;
         }
         PKIDumper dumper = new PKIDumper(out, detail);
@@ -376,26 +399,26 @@ public class CertSelector {
             if (provider == null) {
                 // dump all providers
                 for (Provider provider : getStoreTypeProviders()) {
-                    out.println("Provider " + provider.getName()); //$NON-NLS-1$
+                    out.println("Provider " + provider.getName());
                     keyStore = getKeyStore(provider);
-                    dumper.dumpKeyStore("", keyStore); //$NON-NLS-1$
+                    dumper.dumpKeyStore("", keyStore);
                 }
             } else {
                 keyStore = getKeyStore();
                 // dump keystore of specified provider
-                dumper.dumpKeyStore("", keyStore); //$NON-NLS-1$
+                dumper.dumpKeyStore("", keyStore);
             }
             break;
         case KEYSTORE:
             keyStore = getKeyStore();
-            dumper.dumpKeyStore("", keyStore); //$NON-NLS-1$
+            dumper.dumpKeyStore("", keyStore);
             break;
         case CERTIFICATE:
             keyStore = getKeyStore();
-            dumper.dumpStoreEntry("", keyStore, certAlias, certPassword); //$NON-NLS-1$
+            dumper.dumpStoreEntry("", keyStore, certAlias, certPassword);
             break;
         case SUBENTRY:
-            out.println("Not implemented."); //$NON-NLS-1$
+            out.println("Not implemented.");
             break;
         default:
             throw new IllegalStateException();
