@@ -1,15 +1,15 @@
 package net.bodz.swt.c3.pageflow;
 
-import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.ui.a.Icon;
-import net.bodz.swt.gui.err.ValidateException;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.ui.a.Icon;
+import net.bodz.swt.gui.err.ValidateException;
 
 /**
  * Test page 1

@@ -2,10 +2,10 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.Iterator;
 
+import org.junit.Test;
+
 import net.bodz.bas.util.iter.Iterators2;
 import net.bodz.bas.util.primitive.IntegerComparator;
-
-import org.junit.Test;
 
 public class WeaveIteratorTest
         extends IteratorTestBase {

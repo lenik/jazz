@@ -3,9 +3,9 @@ package net.bodz.bas.c.type;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.sio.ITreeOut;
-
 import org.apache.commons.lang.ArrayUtils;
+
+import net.bodz.bas.sio.ITreeOut;
 
 public class TypeChain {
 

@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.err.CorruptedStateError;
-import net.bodz.swt.c.test.ControlTestApp;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -18,6 +15,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.FileDialog;
 import org.junit.Test;
+
+import net.bodz.bas.err.CorruptedStateError;
+import net.bodz.swt.c.test.ControlTestApp;
 
 public class AbstractListEditorTest {
 

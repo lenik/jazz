@@ -1,10 +1,10 @@
 package net.bodz.swt.c3.canvas;
 
-import net.bodz.swt.c.canvas.BufferedCanvas;
-import net.bodz.swt.c3.control.ControlTest;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
+
+import net.bodz.swt.c.canvas.BufferedCanvas;
+import net.bodz.swt.c3.control.ControlTest;
 
 public class BufferedCanvasTest {
 

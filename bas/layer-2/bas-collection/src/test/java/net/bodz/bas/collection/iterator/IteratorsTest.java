@@ -2,9 +2,9 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.Iterator;
 
-import net.bodz.bas.util.iter.Iterators;
-
 import org.junit.Test;
+
+import net.bodz.bas.util.iter.Iterators;
 
 public class IteratorsTest
         extends IteratorTestBase {

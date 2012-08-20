@@ -13,7 +13,6 @@ import net.bodz.bas.ui.a.Color;
 import net.bodz.bas.ui.a.Label;
 import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.c3.misc.Timer;
-import net.bodz.swt.program.BasicGUI;
 import net.bodz.swt.reflect.styles.grid.SWTGridStrategy;
 import net.bodz.swt.reflect.testtypes.ComplexPerson;
 import net.bodz.swt.reflect.testtypes.SimplePerson;

@@ -2,10 +2,10 @@ package net.bodz.bas.c.type;
 
 import java.lang.reflect.Constructor;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.model.AbstractCreator;
-
-import org.apache.commons.lang.ArrayUtils;
 
 public final class ConstructorCreator<T>
         extends AbstractCreator<T> {

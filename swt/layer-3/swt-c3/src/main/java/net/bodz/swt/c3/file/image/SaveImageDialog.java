@@ -6,13 +6,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import net.bodz.bas.err.CreateException;
-import net.bodz.bas.traits.ValidateException;
-import net.bodz.swt.c.composite.FixSizeComposite;
-import net.bodz.swt.c.composite.StackComposite;
-import net.bodz.swt.c3.dialog.ParametersComposite;
-import net.bodz.swt.c3.dialog.SimpleDialog;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -21,6 +14,13 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.traits.ValidateException;
+import net.bodz.swt.c.composite.FixSizeComposite;
+import net.bodz.swt.c.composite.StackComposite;
+import net.bodz.swt.c3.dialog.ParametersComposite;
+import net.bodz.swt.c3.dialog.SimpleDialog;
 
 public class SaveImageDialog
         extends SimpleDialog {

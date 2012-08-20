@@ -1,6 +1,7 @@
 package net.bodz.bas.trait.spi;
 
 import static net.bodz.bas.trait.spi.ITraitsProvider.*;
+
 import net.bodz.bas.lang.mi.IQueryable;
 
 enum BuiltinProviderOrder {

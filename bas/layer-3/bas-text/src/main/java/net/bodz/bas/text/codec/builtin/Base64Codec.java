@@ -3,6 +3,8 @@ package net.bodz.bas.text.codec.builtin;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import org.apache.commons.codec.binary.Base64;
+
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
 import net.bodz.bas.sio.IByteIn;
@@ -10,8 +12,6 @@ import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.codec.AbstractByteCodec;
-
-import org.apache.commons.codec.binary.Base64;
 
 public class Base64Codec
         extends AbstractByteCodec {

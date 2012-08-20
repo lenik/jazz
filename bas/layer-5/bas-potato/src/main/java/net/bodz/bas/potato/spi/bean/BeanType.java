@@ -6,7 +6,11 @@ import net.bodz.bas.potato.spi.builtin.DefaultEventMap;
 import net.bodz.bas.potato.spi.builtin.DefaultMethodMap;
 import net.bodz.bas.potato.spi.builtin.DefaultPropertyMap;
 import net.bodz.bas.potato.spi.builtin.NullConstructorMap;
-import net.bodz.bas.potato.traits.*;
+import net.bodz.bas.potato.traits.AbstractType;
+import net.bodz.bas.potato.traits.IConstructorMap;
+import net.bodz.bas.potato.traits.IEventMap;
+import net.bodz.bas.potato.traits.IMethodMap;
+import net.bodz.bas.potato.traits.IPropertyMap;
 
 public class BeanType
         extends AbstractType {

@@ -1,11 +1,11 @@
 package net.bodz.swt.draw.app.tools;
 
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.MouseEvent;
+
 import net.bodz.bas.gui.dev.IDrawContext2d;
 import net.bodz.swt.draw.app.DesignerState;
 import net.bodz.swt.draw.app.DesignerStateGraph;
-
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.MouseEvent;
 
 public class Hover
         extends DesignerState {

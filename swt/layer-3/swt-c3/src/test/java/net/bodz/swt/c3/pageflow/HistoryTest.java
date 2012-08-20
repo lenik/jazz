@@ -1,9 +1,10 @@
 package net.bodz.swt.c3.pageflow;
 
 import static org.junit.Assert.*;
-import net.bodz.bas.collection.tree.TreePath;
 
 import org.junit.Test;
+
+import net.bodz.bas.collection.tree.TreePath;
 
 public class HistoryTest {
 

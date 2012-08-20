@@ -2,8 +2,6 @@ package net.bodz.bas.cli.boot;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.bas.cli.boot.JavaLauncher;
-
 import org.junit.Test;
 
 public class JavaLauncherTest {

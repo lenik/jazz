@@ -1,12 +1,12 @@
 package net.bodz.bas.trait;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.meta.lang.TraitClass;
 import net.bodz.bas.traits.ICommonTraits;
 import net.bodz.bas.util.example.Person;
 import net.bodz.bas.util.example.PersonTraits;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 @TraitClass(PersonTraits.class)
 public class AbstractTypeTraitsTest

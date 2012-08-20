@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import net.bodz.bas.c.string.StringEscape;
-import net.bodz.bas.c.string.Strings;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.c.string.StringEscape;
+import net.bodz.bas.c.string.Strings;
 
 public class SystemPropertiesTest
         extends Assert {

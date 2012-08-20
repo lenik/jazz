@@ -1,8 +1,8 @@
 package net.bodz.swt.c3.misc;
 
-import net.bodz.swt.widgets.TimerTest;
-
 import org.eclipse.swt.widgets.Display;
+
+import net.bodz.swt.widgets.TimerTest;
 
 /**
  * @test {@link TimerTest}

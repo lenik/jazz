@@ -4,10 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.bodz.bas.sio.bits.InputStreamNibbleIn;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.bits.InputStreamNibbleIn;
 
 public class InputStreamNibbleInTest
         extends Assert {

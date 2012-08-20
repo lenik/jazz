@@ -1,9 +1,9 @@
 package net.bodz.swt.draw.app;
 
-import net.bodz.swt.gui.state.SWTStateImpl;
-
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
+
+import net.bodz.swt.gui.state.SWTStateImpl;
 
 public class DesignerState
         extends SWTStateImpl {

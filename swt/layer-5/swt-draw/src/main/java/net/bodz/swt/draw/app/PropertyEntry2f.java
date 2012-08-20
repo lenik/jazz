@@ -2,15 +2,15 @@ package net.bodz.swt.draw.app;
 
 import java.lang.reflect.Field;
 
-import net.bodz.swt.auto.AbstractVisualType;
-import net.bodz.swt.auto.VisualType;
-import net.bodz.swt.auto.VisualTypes;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.swt.auto.AbstractVisualType;
+import net.bodz.swt.auto.VisualType;
+import net.bodz.swt.auto.VisualTypes;
 
 public class PropertyEntry2f
         extends Composite {

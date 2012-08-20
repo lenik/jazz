@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.resource.AbstractStreamResource;
-import net.bodz.bas.sio.*;
-
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.VFS;
+
+import net.bodz.bas.io.resource.AbstractStreamResource;
+import net.bodz.bas.sio.*;
 
 public class VFileResource
         extends AbstractStreamResource {

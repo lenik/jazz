@@ -7,8 +7,8 @@ import java.nio.ByteBuffer;
 
 import net.bodz.bas.cli.skel.BatchEditCLI;
 import net.bodz.bas.cli.skel.EditResult;
-import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.MainVersion;
+import net.bodz.bas.meta.build.RcsKeywords;
 
 /**
  * Fix: .bat goto labels must not cross 1k block boundary.

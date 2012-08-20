@@ -1,13 +1,13 @@
 package user.apachevfs;
 
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.VFS;
+import org.apache.commons.vfs.operations.FileOperation;
+
 import net.bodz.bas.bean.BeanDump;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.PrintOutImpl;
 import net.bodz.bas.sio.Stdio;
-
-import org.apache.commons.vfs.FileObject;
-import org.apache.commons.vfs.VFS;
-import org.apache.commons.vfs.operations.FileOperation;
 
 public class ListFileOperations {
 

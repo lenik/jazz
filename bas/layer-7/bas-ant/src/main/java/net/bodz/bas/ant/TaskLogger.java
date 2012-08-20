@@ -1,11 +1,11 @@
 package net.bodz.bas.ant;
 
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
+
 import net.bodz.bas.log.AbstractLogSink;
 import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.LogLevel;
-
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
 
 public class TaskLogger
         extends AbstractLogger {

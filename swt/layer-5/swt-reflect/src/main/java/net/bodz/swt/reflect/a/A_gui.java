@@ -8,6 +8,11 @@ import java.util.Map;
 
 import javax.swing.Icon;
 
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
+
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
@@ -16,11 +21,6 @@ import net.bodz.bas.model.IFactory;
 import net.bodz.bas.ui.a.Font;
 import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.c.resources.SWTResources;
-
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 
 public class A_gui
         extends net.bodz.bas.ui.a.A_ui {

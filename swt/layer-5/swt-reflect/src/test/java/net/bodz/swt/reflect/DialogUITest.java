@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.swt.widgets.Shell;
+import org.junit.Test;
+
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.ui.Proposals;
 import net.bodz.bas.util.example.Address;
 import net.bodz.bas.util.example.Person;
 import net.bodz.swt.reflect.util.DialogUI;
-
-import org.eclipse.swt.widgets.Shell;
-import org.junit.Test;
 
 public class DialogUITest {
 

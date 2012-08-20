@@ -2,9 +2,9 @@ package net.bodz.swt.c3.file;
 
 import java.io.File;
 
-import net.bodz.swt.c3.list.AbstractListEditor;
-
 import org.eclipse.swt.widgets.Composite;
+
+import net.bodz.swt.c3.list.AbstractListEditor;
 
 public class FileListEditor
         extends AbstractListEditor<File> {

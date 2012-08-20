@@ -3,15 +3,15 @@ package net.bodz.swt.c3.pageflow;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
+
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.gui.QuietHint;
 import net.bodz.swt.gui.err.ValidateException;
-
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
 
 public abstract class AbstractPageFlow
         implements IPageFlow {

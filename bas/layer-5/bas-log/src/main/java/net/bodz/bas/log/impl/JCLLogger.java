@@ -1,5 +1,9 @@
 package net.bodz.bas.log.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogConfigurationException;
+import org.apache.commons.logging.LogFactory;
+
 import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
@@ -10,10 +14,6 @@ import net.bodz.bas.log.impl.JCLLogSink.FatalSink;
 import net.bodz.bas.log.impl.JCLLogSink.InfoSink;
 import net.bodz.bas.log.impl.JCLLogSink.TraceSink;
 import net.bodz.bas.log.impl.JCLLogSink.WarnSink;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogConfigurationException;
-import org.apache.commons.logging.LogFactory;
 
 public class JCLLogger
         extends AbstractLogger {

@@ -1,16 +1,16 @@
 package net.bodz.swt.draw.core.particle;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.lang.Arrays;
 import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.swt.draw.core.particle.GridParticleBounds.HFirst;
 
-public class GridParticleBoundsTest {
+public class GridParticleBoundsTest
+        extends Assert {
 
     @Test
     public void testHFirst() {

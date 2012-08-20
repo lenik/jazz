@@ -4,16 +4,14 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
-import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.flow.unit.GenericUnit_11;
-import net.bodz.bas.flow.unit.builtins.text.DecodeUnit;
-import net.bodz.bas.flow.unit.builtins.text.Text_String;
-import net.bodz.bas.flow.utils.WhatIf;
-import net.bodz.bas.text.codec.builtin.HexCodec;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.flow.unit.GenericUnit_11;
+import net.bodz.bas.flow.utils.WhatIf;
+import net.bodz.bas.text.codec.builtin.HexCodec;
 
 public class DecodeUnitTest
         extends Assert {

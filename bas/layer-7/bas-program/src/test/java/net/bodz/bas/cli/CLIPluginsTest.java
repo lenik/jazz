@@ -1,10 +1,11 @@
 package net.bodz.bas.cli;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.cli.plugin.AbstractCLIPlugin;
-import net.bodz.bas.cli.plugin.CLIPlugins;
 
 import org.junit.Test;
+
+import net.bodz.bas.cli.plugin.AbstractCLIPlugin;
+import net.bodz.bas.cli.plugin.CLIPlugins;
 
 public class CLIPluginsTest {
 

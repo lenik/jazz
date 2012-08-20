@@ -5,15 +5,15 @@ import java.util.List;
 
 import javax.script.ScriptException;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Task;
+
 import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.potato.traits.IType;
-
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 public class CLITask
         extends Task {

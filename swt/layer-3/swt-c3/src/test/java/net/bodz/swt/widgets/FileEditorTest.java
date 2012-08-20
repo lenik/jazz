@@ -1,9 +1,5 @@
 package net.bodz.swt.widgets;
 
-import net.bodz.swt.c.test.ControlTestApp;
-import net.bodz.swt.c3.file.FileEditor;
-import net.bodz.swt.c3.file.FileSelector;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -11,6 +7,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.junit.Test;
+
+import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c3.file.FileEditor;
+import net.bodz.swt.c3.file.FileSelector;
 
 public class FileEditorTest {
 

@@ -1,9 +1,9 @@
 package net.bodz.swt.gui.state;
 
-import net.bodz.bas.fsm.base.IState;
-
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
+
+import net.bodz.bas.fsm.base.IState;
 
 public interface ISWTState
         extends IState {

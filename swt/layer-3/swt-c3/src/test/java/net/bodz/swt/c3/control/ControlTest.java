@@ -1,11 +1,11 @@
 package net.bodz.swt.c3.control;
 
-import net.bodz.swt.c.test.ControlTestApp;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import net.bodz.swt.c.test.ControlTestApp;
 
 /**
  * @see ControlTestApp

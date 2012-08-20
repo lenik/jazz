@@ -8,6 +8,13 @@ import java.util.EventObject;
 
 import javax.swing.border.Border;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+
 import net.bodz.bas.err.CheckException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.ui.RenderException;
@@ -19,13 +26,6 @@ import net.bodz.swt.reflect.GUIVarMeta;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
 import net.bodz.swt.reflect.a.MaxLength;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 public class R_Text
         extends SWTRenderer {

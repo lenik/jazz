@@ -2,8 +2,6 @@ package net.bodz.bas.c.misc;
 
 import java.io.File;
 
-import net.bodz.bas.c.misc.MavenPath;
-
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -2,11 +2,11 @@ package net.bodz.bas.context.colos;
 
 import java.io.File;
 
-import net.bodz.bas.context.StaticContextId;
-import net.bodz.bas.vfs.SystemColos;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.context.StaticContextId;
+import net.bodz.bas.vfs.SystemColos;
 
 public class SystemColosTest
         extends Assert {

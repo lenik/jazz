@@ -1,11 +1,12 @@
 package net.bodz.bas.cli;
 
 import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.potato.Potatoes;
 import net.bodz.bas.potato.traits.IType;
-
-import org.junit.Test;
 
 public class CLIScriptClassTest
         extends BasicCLI {

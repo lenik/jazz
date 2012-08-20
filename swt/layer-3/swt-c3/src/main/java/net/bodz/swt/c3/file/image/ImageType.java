@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import net.bodz.swt.c3.dialog.ParametersComposite;
-
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
+
+import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public interface ImageType {
 

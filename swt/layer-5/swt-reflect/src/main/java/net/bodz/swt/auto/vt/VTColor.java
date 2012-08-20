@@ -1,7 +1,5 @@
 package net.bodz.swt.auto.vt;
 
-import net.bodz.swt.auto.AbstractVisualType;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -12,6 +10,8 @@ import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.swt.auto.AbstractVisualType;
 
 public class VTColor
         extends AbstractVisualType {

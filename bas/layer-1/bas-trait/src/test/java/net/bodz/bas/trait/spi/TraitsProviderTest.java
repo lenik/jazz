@@ -3,11 +3,11 @@ package net.bodz.bas.trait.spi;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.trait.Traits;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import net.bodz.bas.trait.Traits;
 
 public class TraitsProviderTest
         extends Assert {

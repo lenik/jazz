@@ -1,9 +1,9 @@
 package net.bodz.bas.c.java.util.regex;
 
-import net.bodz.bas.c.string.StringEscape;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.c.string.StringEscape;
 
 public class StringEscapeTest
         extends Assert {

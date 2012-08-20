@@ -1,7 +1,7 @@
 package net.bodz.bas.mem.types;
 
-import net.bodz.bas.mem.MemoryAccessException;
 import net.bodz.bas.mem.Memory;
+import net.bodz.bas.mem.MemoryAccessException;
 import net.bodz.bas.mem.Type;
 
 public class AbsPtr32LE

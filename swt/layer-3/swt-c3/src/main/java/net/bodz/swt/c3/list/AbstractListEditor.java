@@ -2,8 +2,6 @@ package net.bodz.swt.c3.list;
 
 import java.util.ArrayList;
 
-import net.bodz.bas.err.CorruptedStateError;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -19,6 +17,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+
+import net.bodz.bas.err.CorruptedStateError;
 
 public abstract class AbstractListEditor<T>
         extends Composite {

@@ -1,10 +1,6 @@
 package net.bodz.swt.c3.test;
 
 import static net.bodz.swt.nls.GUINLS.GUINLS;
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.swt.c.test.ControlTestApp;
-import net.bodz.swt.c3.pageflow.*;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -12,6 +8,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c3.pageflow.*;
 
 public class PageTestApp
         extends ControlTestApp {

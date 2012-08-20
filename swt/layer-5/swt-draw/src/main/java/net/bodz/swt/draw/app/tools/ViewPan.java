@@ -1,9 +1,9 @@
 package net.bodz.swt.draw.app.tools;
 
+import org.eclipse.swt.events.MouseEvent;
+
 import net.bodz.swt.draw.app.DesignerState;
 import net.bodz.swt.draw.app.DesignerStateGraph;
-
-import org.eclipse.swt.events.MouseEvent;
 
 public class ViewPan
         extends DesignerState {

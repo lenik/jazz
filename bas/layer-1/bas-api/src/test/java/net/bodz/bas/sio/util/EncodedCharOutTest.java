@@ -3,10 +3,10 @@ package net.bodz.bas.sio.util;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.sio.BByteOut;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.BByteOut;
 
 public class EncodedCharOutTest
         extends Assert {

@@ -8,6 +8,7 @@ import net.bodz.bas.geom_f.api.IShape2d;
 import net.bodz.bas.geom_f.api.PickResult2d;
 import net.bodz.bas.geom_f.api.PositiveHalfPlane;
 import net.bodz.bas.geom_f.base.IPointRef2d;
+import net.bodz.bas.geom_f.base.IRectangle2d;
 import net.bodz.bas.geom_f.base.Point2d;
 import net.bodz.bas.geom_f.base.Rectangle2d;
 import net.bodz.bas.gui.dev.GraphicsOperationException;

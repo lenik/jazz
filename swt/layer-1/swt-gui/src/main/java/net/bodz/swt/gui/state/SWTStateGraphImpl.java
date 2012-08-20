@@ -2,15 +2,15 @@ package net.bodz.swt.gui.state;
 
 import java.util.Map;
 
-import net.bodz.bas.fsm.base.IState;
-import net.bodz.bas.fsm.base.StateGraphImpl;
-import net.bodz.swt.c.control.HistoryMouseListener;
-
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
+
+import net.bodz.bas.fsm.base.IState;
+import net.bodz.bas.fsm.base.StateGraphImpl;
+import net.bodz.swt.c.control.HistoryMouseListener;
 
 public class SWTStateGraphImpl
         extends StateGraphImpl

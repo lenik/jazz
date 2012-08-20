@@ -6,13 +6,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.db.filedb.MultiTextMaps.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.iter.Mitorx;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class MultiTextMapsTest
         extends Assert {

@@ -1,8 +1,8 @@
 package net.bodz.bas.mem.types;
 
 import net.bodz.bas.mem.AbstractRefType;
-import net.bodz.bas.mem.MemoryAccessException;
 import net.bodz.bas.mem.Memory;
+import net.bodz.bas.mem.MemoryAccessException;
 import net.bodz.bas.mem.MemoryWrapOffset;
 import net.bodz.bas.mem.Type;
 

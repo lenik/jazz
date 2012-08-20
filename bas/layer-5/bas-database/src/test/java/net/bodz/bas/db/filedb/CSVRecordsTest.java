@@ -2,12 +2,12 @@ package net.bodz.bas.db.filedb;
 
 import java.io.IOException;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.util.iter.Mitorx;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class CSVRecordsTest
         extends Assert {

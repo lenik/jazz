@@ -2,11 +2,11 @@ package net.bodz.bas.sio;
 
 import java.io.IOException;
 
-import net.bodz.bas.sio.bits.BNibbleIn;
-import net.bodz.bas.sio.bits.LANibbleIn;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.bits.BNibbleIn;
+import net.bodz.bas.sio.bits.LANibbleIn;
 
 public class LANibbleInTest
         extends Assert {

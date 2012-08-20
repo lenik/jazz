@@ -1,10 +1,10 @@
 package net.bodz.bas.loader.boot;
 
-import net.bodz.bas.loader.DefaultBooter;
-import net.bodz.bas.loader.LoadException;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadException;
 
 public class DefaultBooterTest
         extends Assert {

@@ -1,9 +1,9 @@
 package net.bodz.swt.gui.state;
 
-import net.bodz.bas.fsm.base.StateImpl;
-
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
+
+import net.bodz.bas.fsm.base.StateImpl;
 
 public class SWTStateImpl
         extends StateImpl

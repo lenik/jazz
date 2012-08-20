@@ -1,8 +1,8 @@
 package net.bodz.bas.log.impl;
 
-import net.bodz.bas.log.AbstractLogSink;
-
 import org.slf4j.Logger;
+
+import net.bodz.bas.log.AbstractLogSink;
 
 public abstract class Slf4jLogSink
         extends AbstractLogSink {

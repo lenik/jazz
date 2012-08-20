@@ -1,8 +1,8 @@
 package net.bodz.swt.c3.list;
 
-import net.bodz.bas.ui.UserInterface;
-
 import org.eclipse.swt.widgets.Composite;
+
+import net.bodz.bas.ui.UserInterface;
 
 public class ListEditor
         extends AbstractListEditor<String> {

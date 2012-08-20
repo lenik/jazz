@@ -5,11 +5,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.c.java.io.FileURL;
-import net.bodz.bas.cli.boot.win32.Mkbat;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Path;
+
+import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.cli.boot.win32.Mkbat;
 
 public class MkbatTask
         extends CLITask {

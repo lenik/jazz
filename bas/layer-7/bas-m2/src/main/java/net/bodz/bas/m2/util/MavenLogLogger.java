@@ -1,5 +1,7 @@
 package net.bodz.bas.m2.util;
 
+import org.apache.maven.plugin.logging.Log;
+
 import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
@@ -8,8 +10,6 @@ import net.bodz.bas.m2.util.MavenLogSink.DebugSink;
 import net.bodz.bas.m2.util.MavenLogSink.ErrorSink;
 import net.bodz.bas.m2.util.MavenLogSink.InfoSink;
 import net.bodz.bas.m2.util.MavenLogSink.WarnSink;
-
-import org.apache.maven.plugin.logging.Log;
 
 public class MavenLogLogger
         extends AbstractLogger {
