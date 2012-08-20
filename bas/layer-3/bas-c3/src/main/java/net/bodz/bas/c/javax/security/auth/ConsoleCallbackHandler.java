@@ -1,4 +1,4 @@
-package net.bodz.bas.sec.pki.util;
+package net.bodz.bas.c.javax.security.auth;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,23 +10,26 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
-import com.sun.security.auth.callback.TextCallbackHandler;
+import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.sio.Stdio;
 
 /**
- * @see TextCallbackHandler
+ * @see com.sun.security.auth.callback.TextCallbackHandler
  */
 @Deprecated
-public class ConsoleCallbackHandler implements CallbackHandler {
+public class ConsoleCallbackHandler
+        implements CallbackHandler {
 
-    private LogTerm logger;
-    private char[]  password;
+    private IPrintOut stdout;
+    private IPrintOut stderr;
+    private char[] password;
 
-    public ConsoleCallbackHandler(LogTerm logger) {
-        this.logger = logger;
+    public ConsoleCallbackHandler(IPrintOut stdout, IPrintOut stderr) {
+        this.stdout = stdout;
     }
 
     public ConsoleCallbackHandler() {
-        this(LogTerms.console);
+        this(Stdio.cout, Stdio.cerr);
     }
 
     public void clearPassword() {
@@ -38,18 +41,20 @@ public class ConsoleCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
+    public void handle(Callback[] callbacks)
+            throws IOException, UnsupportedCallbackException {
         for (Callback callback : callbacks) {
             handle(callback);
         }
     }
 
-    void handle(Callback callback) throws IOException {
+    void handle(Callback callback)
+            throws IOException {
         if (callback instanceof PasswordCallback) {
             PasswordCallback pwdCall = (PasswordCallback) callback;
             if (password == null) {
                 String prompt = pwdCall.getPrompt();
-                logger.info(prompt);
+                stdout.println(prompt);
                 BufferedReader lineIn = Files.getBufferedReader(System.in);
                 String line = lineIn.readLine();
                 password = line.toCharArray();
@@ -58,19 +63,17 @@ public class ConsoleCallbackHandler implements CallbackHandler {
 
         } else if (callback instanceof TextOutputCallback) {
             TextOutputCallback textOutCall = (TextOutputCallback) callback;
-            Terminal out = logger.detail();
+            IPrintOut out = stdout;
             switch (textOutCall.getMessageType()) {
             case TextOutputCallback.INFORMATION:
-                out = logger.info();
+                out = stdout;
                 break;
             case TextOutputCallback.WARNING:
-                out = logger.warn();
-                break;
             case TextOutputCallback.ERROR:
-                out = logger.error();
+                out = stderr;
                 break;
             }
-            out.p(textOutCall.getMessage());
+            out.println(textOutCall.getMessage());
         }
     }
 

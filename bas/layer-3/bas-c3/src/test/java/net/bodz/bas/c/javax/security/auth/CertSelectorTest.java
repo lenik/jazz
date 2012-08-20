@@ -1,29 +1,30 @@
-package net.bodz.bas.sec.pki.util;
+package net.bodz.bas.c.javax.security.auth;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.io.File;
+import java.nio.file.Files;
 
-import net.bodz.bas.io.Files;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-public class CertSelectorTest {
+public class CertSelectorTest
+        extends Assert {
 
     static File secdir;
     static File cacerts;
     static {
         if (secdir == null) {
-            String javaHome = System.getenv("JAVA_HOME"); //$NON-NLS-1$
+            String javaHome = System.getenv("JAVA_HOME");
             if (javaHome != null) {
-                File f = new File(javaHome, "jre/lib/security"); //$NON-NLS-1$
+                File f = new File(javaHome, "jre/lib/security");
                 if (f.isDirectory())
                     secdir = f;
             }
         }
         if (secdir != null) {
-            cacerts = Files.canoniOf(secdir, "cacerts"); //$NON-NLS-1$
+            cacerts = Files.canoniOf(secdir, "cacerts");
         }
     }
 
@@ -31,7 +32,7 @@ public class CertSelectorTest {
         if (secdir == null)
             return null;
         String cacertsPath = cacerts.getPath();
-        String s = "JKS://changeit@" + cacertsPath; //$NON-NLS-1$
+        String s = "JKS://changeit@" + cacertsPath;
         CertSelector cs = new CertSelector(s);
         return cs;
     }
@@ -40,7 +41,7 @@ public class CertSelectorTest {
         if (secdir == null)
             return null;
         String cacertsPath = cacerts.getPath();
-        String s = "JKS://changeit@" + cacertsPath + "#" + alias; //$NON-NLS-1$ //$NON-NLS-2$
+        String s = "JKS://changeit@" + cacertsPath + "#" + alias;
         CertSelector cs = new CertSelector(s);
         return cs;
     }
@@ -63,13 +64,13 @@ public class CertSelectorTest {
      */
     @Test
     public void test1() {
-        String alias = "globalsignca"; //$NON-NLS-1$
+        String alias = "globalsignca";
         CertSelector cs = get(alias);
         if (cs == null)
             return;
 
-        assertEquals("JKS", cs.getStoreType()); //$NON-NLS-1$
-        assertEquals("changeit", cs.getStorePassword()); //$NON-NLS-1$
+        assertEquals("JKS", cs.getStoreType());
+        assertEquals("changeit", cs.getStorePassword());
         assertEquals(cacerts, cs.getStoreFile());
 
         assertNull(cs.getCertPassword());
