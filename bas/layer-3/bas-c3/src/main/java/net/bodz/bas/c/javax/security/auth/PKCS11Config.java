@@ -10,11 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import sun.security.pkcs11.wrapper.PKCS11Constants;
+
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.sio.IPrintOut;
 
+@SuppressWarnings("restriction")
 public class PKCS11Config {
 
     private String name;
@@ -218,7 +221,7 @@ public class PKCS11Config {
     public String removeAttribute(String name) {
         if (attributes == null)
             return null;
-        return (String) attributes.remove(name);
+        return attributes.remove(name);
     }
 
     public void dump(IPrintOut out) {

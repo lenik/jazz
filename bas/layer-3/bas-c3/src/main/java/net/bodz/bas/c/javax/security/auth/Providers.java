@@ -12,6 +12,10 @@ import java.security.Security;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import sun.security.pkcs11.SunPKCS11;
+import sun.security.pkcs11.wrapper.PKCS11;
+import sun.security.pkcs11.wrapper.PKCS11Exception;
+
 import net.bodz.bas.c.java.net.CURL;
 import net.bodz.bas.c.java.net.CURL.Alpha;
 import net.bodz.bas.c.java.util.HashTextMap;
