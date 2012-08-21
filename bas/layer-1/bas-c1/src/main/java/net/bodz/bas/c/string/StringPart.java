@@ -177,4 +177,16 @@ public class StringPart {
         return s.substring(pos + 1);
     }
 
+    public static String ltrim(String s, String prefix) {
+        if (s.startsWith(prefix))
+            s = s.substring(prefix.length());
+        return s;
+    }
+
+    public static String rtrim(String s, String suffix) {
+        if (s.endsWith(suffix))
+            s = s.substring(0, s.length() - suffix.length());
+        return s;
+    }
+
 }

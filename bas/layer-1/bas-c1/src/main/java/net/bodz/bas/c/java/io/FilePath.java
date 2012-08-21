@@ -220,4 +220,13 @@ public class FilePath {
         return new NameExtension(path.substring(0, dot), path.substring(dot + 1));
     }
 
+    public static String toUnixStyle(String path) {
+        if (path == null)
+            return null;
+        // if (SystemProperties.getOsName().equals("win32"))
+        path = path.replace(fileSeparator, '/');
+        // Mac? path = path.replace(":", SLASH);
+        return path;
+    }
+
 }

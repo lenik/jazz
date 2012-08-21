@@ -1,8 +1,9 @@
 package net.bodz.redist.obfuz.sysid;
 
-import net.bodz.bas.util.order.NaturalComparator;
-
 import org.junit.Test;
+
+import net.bodz.bas.c.java.util.MapDump;
+import net.bodz.bas.util.order.ComparableComparator;
 
 public class WMISystemInfoTest {
 
@@ -17,7 +18,7 @@ public class WMISystemInfoTest {
     public void testInstance()
             throws Exception {
         WMISystemInfo info = WMISystemInfo.getInstance();
-        String dump = Maps.dump(info, new NaturalComparator<>());
+        String dump = MapDump.dump(info, ComparableComparator.getRawInstance());
         System.out.println(dump);
     }
 

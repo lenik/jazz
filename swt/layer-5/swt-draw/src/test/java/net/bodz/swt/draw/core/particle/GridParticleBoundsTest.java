@@ -5,7 +5,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.java.lang.Arrays;
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.swt.draw.core.particle.GridParticleBounds.HFirst;
 

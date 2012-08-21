@@ -1,10 +1,11 @@
 package net.bodz.bas.c.javax.security.auth;
 
 import java.io.File;
-import java.nio.file.Files;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.c.java.io.FilePath;
 
 public class CertSelectorTest
         extends Assert {
@@ -21,7 +22,7 @@ public class CertSelectorTest
             }
         }
         if (secdir != null) {
-            cacerts = Files.canoniOf(secdir, "cacerts");
+            cacerts = FilePath.canoniOf(secdir, "cacerts");
         }
     }
 

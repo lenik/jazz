@@ -4,6 +4,19 @@ import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
 
 import java.util.ArrayList;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.*;
+
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.log.AbstractLogSink;
@@ -30,19 +43,6 @@ import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.PageMethod;
 import net.bodz.swt.c3.pageflow.ServiceContext;
 import net.bodz.swt.reflect.util.DialogUI;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.*;
 
 class ProgressPage
         extends AbstractPage {
@@ -471,8 +471,9 @@ class ProgressPage
             extends AbstractLogger {
 
         public PageLogger() {
-            int maxPriority = session.getLogger().getMaxPriority();
-            setMaxPriority(maxPriority);
+            Logger sessionLogger = session.getLogger();
+            setLevel(sessionLogger.getLevel());
+            setDelta(sessionLogger.getDelta());
         }
 
         @Override

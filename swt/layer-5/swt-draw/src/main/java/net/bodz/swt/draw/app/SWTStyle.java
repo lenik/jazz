@@ -7,15 +7,12 @@ import net.bodz.swt.gui.dev.SWTStroke;
 
 public class SWTStyle {
 
-    public SWTStroke storke;
-
     public SWTColor color;
     public SWTColor fillColor;
-    public SWTColor fontColor;
 
+    public SWTStroke storke;
     public SWTFillPattern pattern;
     public SWTFillPattern fillPattern;
-    public SWTFillPattern fontPattern;
 
     public SWTFont font;
 

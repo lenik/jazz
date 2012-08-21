@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +52,7 @@ import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.SystemColos;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
@@ -88,7 +92,7 @@ public class BasicCLI
      * @option -v
      */
     void _verbose() {
-        L.verbose(1);
+        L.setDelta(L.getDelta() + 1);
     }
 
     /**
@@ -97,7 +101,7 @@ public class BasicCLI
      * @option -q
      */
     void _quiet() {
-        L.verbose(-1);
+        L.setDelta(L.getDelta() - 1);
     }
 
     protected Map<String, Object> _vars;
@@ -469,16 +473,18 @@ public class BasicCLI
             throws Exception {
         String name = wildcards.getName();
         if (enableWildcards && (name.contains("*") || name.contains("?"))) {
-// FileSystem fs = FileSystems.getDefault();
-// PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
-// for (File sibling : wildcards.getParentFile().listFiles())
-// if (pathMatcher.matches(sibling.toPath())) {
-// L.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
-// doFileArgument(sibling);
-// }
+            FileSystem fs = FileSystems.getDefault();
+            PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
+            for (File sibling : wildcards.getParentFile().listFiles())
+                if (pathMatcher.matches(sibling.toPath())) {
+                    L.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
+                    IFile _sibling = new JavaioFile(sibling);
+                    doFileArgument(_sibling);
+                }
             return;
         }
-        doFileArgument(wildcards);
+        IFile plainFile = new JavaioFile(wildcards);
+        doFileArgument(plainFile);
     }
 
     /**

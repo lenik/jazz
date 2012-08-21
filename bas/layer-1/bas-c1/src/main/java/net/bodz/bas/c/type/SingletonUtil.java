@@ -6,6 +6,9 @@ import net.bodz.bas.err.OutOfDomainException;
 
 public class SingletonUtil {
 
+    /**
+     * @throws OutOfDomainException
+     */
     public static <T> T getClassInstance(Class<T> clazz, Object... args)
             throws ReflectiveOperationException {
         if (clazz == null)

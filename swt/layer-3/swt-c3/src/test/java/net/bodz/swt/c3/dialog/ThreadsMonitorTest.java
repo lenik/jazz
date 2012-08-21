@@ -1,4 +1,4 @@
-package net.bodz.swt.reflect.util;
+package net.bodz.swt.c3.dialog;
 
 import org.eclipse.swt.SWT;
 

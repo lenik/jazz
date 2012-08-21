@@ -145,7 +145,7 @@ public class CLITask
             // adapting attributes
             if (logLevel != 0) {
                 Logger logger = (Logger) appType.getProperty("logger").get(app);
-                logger.verbose(logLevel);
+                logger.setDelta(logLevel);
             }
         } catch (CLIException e) {
             throw new BuildException(e.getMessage(), e);

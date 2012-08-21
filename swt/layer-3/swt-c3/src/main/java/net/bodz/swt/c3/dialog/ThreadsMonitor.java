@@ -1,4 +1,4 @@
-package net.bodz.swt.program.monitor;
+package net.bodz.swt.c3.dialog;
 
 import static net.bodz.swt.nls.GUINLS.GUINLS;
 
@@ -22,12 +22,8 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.dialog.SimpleDialog;
 import net.bodz.swt.reflect.util.DialogUI;
 
-/**
- * @test
- */
 public class ThreadsMonitor
         extends SimpleDialog {
 

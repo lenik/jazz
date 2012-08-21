@@ -1,10 +1,9 @@
-package net.bodz.swt.adapters;
+package net.bodz.swt.c.control;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.junit.Test;
 
-import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.test.ControlTestApp;
 
 public class ControlAdaptersTest {

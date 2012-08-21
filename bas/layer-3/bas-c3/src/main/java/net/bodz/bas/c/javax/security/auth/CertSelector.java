@@ -1,11 +1,11 @@
 package net.bodz.bas.c.javax.security.auth;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.security.*;
 import java.security.KeyStore.Builder;
 import java.security.KeyStore.CallbackHandlerProtection;
@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.security.auth.callback.CallbackHandler;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.net.CURL;
 import net.bodz.bas.c.java.net.CURL.Alpha;
 import net.bodz.bas.err.IllegalUsageException;
@@ -27,9 +28,7 @@ import net.bodz.bas.util.iter.PrefetchedIterator;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 
-/**
- * @test CertSelectorTest
- */
+@SuppressWarnings("restriction")
 public class CertSelector {
 
     public static final int AUTO = 0;
@@ -116,7 +115,7 @@ public class CertSelector {
                         throw new IllegalArgumentException(e);
                     }
                 else {
-                    storeFile = Files.canoniOf(storePath);
+                    storeFile = FilePath.canoniOf(storePath);
                 }
             }
             detType = KEYSTORE;
@@ -241,7 +240,7 @@ public class CertSelector {
             try {
                 InputStream in = null;
                 if (storeFile != null)
-                    in = Files.getInputStream(storeFile);
+                    in = new FileInputStream(storeFile);
                 else
                     throw new IllegalStateException(SysNLS.getString("CertSelector.noKeyStore"));
                 keyStore.load(in, storePassword.toCharArray());

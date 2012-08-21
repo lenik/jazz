@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,16 +19,17 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import net.bodz.bas.c.java.io.FileFinder;
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.io.IOConfig;
+import net.bodz.bas.c.java.io.PruneFileFilter;
+import net.bodz.bas.sio.BCharOut;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.Attachment;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.InstallException;
 import net.bodz.redist.installer.RegistryData;
 import net.bodz.redist.installer.util.Utils;
-import net.bodz.bas.c.java.io.FileFinder;
-import net.bodz.bas.c.java.io.IOConfig;
-import net.bodz.bas.c.java.io.PruneFileFilter;
-import net.bodz.bas.sio.BCharOut;
 
 public class FileCopy
         extends AbstractComponent {
@@ -129,7 +129,7 @@ public class FileCopy
 
     public FileCopy(String baseName, String basePath, FileFinder finder)
             throws IOException {
-        this(baseName, basePath, Files.findBase(finder.getStart()), finder.listFiles());
+        this(baseName, basePath, FilePath.findBase(finder.getStart()), finder.listFiles());
     }
 
     private static final String ROOT = null;

@@ -10,6 +10,9 @@ import java.util.Set;
 
 import org.eclipse.swt.graphics.ImageData;
 
+import net.bodz.bas.meta.build.AppClassDoc;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
+
 public abstract class AbstractComponent
         implements IComponent {
 
@@ -34,9 +37,11 @@ public abstract class AbstractComponent
 
     public AbstractComponent(boolean visible, boolean defaultSelection) {
         Class<?> clazz = getClass();
+        AppClassDoc classDoc = ClassDocs.loadFromResource(clazz).decorate(AppClassDoc.class);
+
         name = clazz.getSimpleName();
-        text = A_bas.getDisplayName(clazz);
-        doc = A_bas.getDoc(clazz);
+        text = classDoc.getLabel().toString();
+        doc = classDoc.getText().toString();
         if (doc == null)
             doc = text;
         this.visible = visible;

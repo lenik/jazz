@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.c.reflect.MethodSignature;
-import net.bodz.bas.c.type.Types;
 import net.bodz.bas.err.CheckException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
@@ -34,6 +33,7 @@ import net.bodz.bas.log.LoggerColo;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IValidator;
 import net.bodz.bas.traits.ValidateException;
+import net.bodz.bas.util.primitive.Primitives;
 import net.bodz.swt.gui.err.GUIAccessException;
 import net.bodz.swt.reflect.GUIVars.GUIFieldMeta;
 import net.bodz.swt.reflect.GUIVars.GUIFieldVar;
@@ -659,7 +659,7 @@ public class GUIStructs {
         public void validate(Object value)
                 throws ValidateException {
             Class<?> type = getType();
-            if (value != null && !Types.box(type).isInstance(value))
+            if (value != null && !Primitives.box(type).isInstance(value))
                 throw new CheckException(GUINLS.getString("GUIStructs.notInstOf") + type + ": " + value);
             if (checker != null)
                 checker.validate(value);

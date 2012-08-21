@@ -3,14 +3,14 @@ package net.bodz.redist.installer.builtins;
 import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
 
 import java.io.File;
-import java.nio.file.Files;
 
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.redist.installer.AbstractProject;
 import net.bodz.redist.installer.BaseDirVariable;
 import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.Variable;
-import net.bodz.bas.c.system.SystemInfo;
 
 public class SimpleProject
         extends AbstractProject {
@@ -89,7 +89,7 @@ public class SimpleProject
             if (parent == null)
                 parent = "C:/Program Files";
         }
-        PFILES_ROOT = Files.canoniOf(parent);
+        PFILES_ROOT = FilePath.canoniOf(parent);
     }
 
 }

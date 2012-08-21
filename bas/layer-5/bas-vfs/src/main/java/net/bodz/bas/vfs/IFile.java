@@ -14,8 +14,7 @@ public interface IFile
     IFile clone();
 
     @Override
-    IFile getParentFile()
-            throws FileResolveException;
+    IFile getParentFile();
 
     @Override
     IFile getChild(String childName)

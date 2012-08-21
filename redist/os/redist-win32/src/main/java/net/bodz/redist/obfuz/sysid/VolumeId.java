@@ -1,12 +1,13 @@
 package net.bodz.redist.obfuz.sysid;
 
 import net.bodz.bas.err.SystemException;
-import net.bodz.jna.win32.Win32Config;
+import net.bodz.jna.win32.IWin32;
 
 import com.sun.jna.ptr.IntByReference;
 
 public class VolumeId
-        extends AbstractSysIdProvider {
+        extends AbstractSysIdProvider
+        implements IWin32 {
 
     private final String path;
 
@@ -19,7 +20,7 @@ public class VolumeId
     public byte[] getId()
             throws SystemException {
         IntByReference pSerial = new IntByReference();
-        Win32Config.kernel32.GetVolumeInformationA(path, null, 0, pSerial, null, null, null, 0);
+        kernel32.GetVolumeInformationA(path, null, 0, pSerial, null, null, null, 0);
         int serial = pSerial.getValue();
         byte[] bytes = new byte[4];
         bytes[0] = (byte) (serial >> 24);

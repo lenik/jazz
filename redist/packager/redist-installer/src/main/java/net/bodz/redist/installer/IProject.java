@@ -2,9 +2,11 @@ package net.bodz.redist.installer;
 
 import java.util.Map;
 
-import net.bodz.bas.collection.tree.TreeCallback;
-
 import org.eclipse.swt.graphics.ImageData;
+
+import net.bodz.bas.collection.tree.TreeCallback;
+import net.bodz.bas.meta.build.IVersion;
+import net.bodz.mda.xjdoc.util.Author;
 
 public interface IProject
         extends IComponent {
@@ -14,9 +16,9 @@ public interface IProject
      */
     ImageData getLogo();
 
-    String getVersion();
+    IVersion getVersion();
 
-    String getCompany();
+    Author getCompany();
 
     String getLicense();
 

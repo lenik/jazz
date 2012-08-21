@@ -16,7 +16,10 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.model.IFactory;
 import net.bodz.bas.ui.a.*;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.reflect.a.A_gui;
+import net.bodz.swt.gui.a.ColorAnnotation;
+import net.bodz.swt.gui.a.FontAnnotation;
+import net.bodz.swt.gui.a.IconAnnotation;
+import net.bodz.swt.gui.a.LabelAnnotation;
 import net.bodz.swt.reflect.a.MenuContrib;
 import net.bodz.swt.reflect.a.View;
 
@@ -91,20 +94,20 @@ public class GUIHint {
 
         Icon _icon = aobject.getAnnotation(Icon.class);
         if (_icon != null)
-            this.iconFactory = getIconFactory(_icon.value(), _icon.factory());
+            this.iconFactory = IconAnnotation.getIconFactory(_icon.value(), _icon.factory());
 
         Label _label = aobject.getAnnotation(Label.class);
         if (_label != null)
-            this.labelFactory = getLabelFactory(_label.value(), _label.factory());
+            this.labelFactory = LabelAnnotation.getLabelFactory(_label.value(), _label.factory());
 
         Font _font = aobject.getAnnotation(Font.class);
         if (_font != null)
-            this.fontFactory = getFontFactory(_font);
+            this.fontFactory = FontAnnotation.getFontFactory(_font);
 
         Color _color = aobject.getAnnotation(Color.class);
         if (_color != null) {
-            RGB fore = A_gui.parseColor(_color.value());
-            RGB back = A_gui.parseColor(_color.back());
+            RGB fore = ColorAnnotation.parseColor(_color.value());
+            RGB back = ColorAnnotation.parseColor(_color.back());
             if (fore != null)
                 this.color = fore;
             if (back != null)

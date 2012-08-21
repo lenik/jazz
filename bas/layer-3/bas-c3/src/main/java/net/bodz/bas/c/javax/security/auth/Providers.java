@@ -21,12 +21,13 @@ import net.bodz.bas.c.java.net.CURL.Alpha;
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.tmp.TempCharOut;
-import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.PrintOutImpl;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.tmp.TempOut;
+import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.traits.IParser;
 
+@SuppressWarnings("restriction")
 public class Providers {
 
     private static final Parser parser = new Parser();
@@ -40,7 +41,7 @@ public class Providers {
     }
 
     public static class Parser
-            implements IParser<Provider> {
+            extends AbstractParser<Provider> {
 
         @Override
         public Provider parse(String s)
@@ -57,10 +58,10 @@ public class Providers {
                 type = s;
                 s = null;
             }
-            IParser parser = parsers.get(type);
+            IParser<Provider> parser = parsers.get(type);
             if (parser == null)
                 throw new ParseException(SysNLS.getString("Providers.noProvider") + type);
-            return (Provider) parser.parse(s);
+            return parser.parse(s);
         }
 
     }
@@ -85,14 +86,14 @@ public class Providers {
      * </ul>
      */
     static class PKCS11Parser
-            implements IParser<Provider> {
+            extends AbstractParser<Provider> {
 
-        IPrintOut getTemp()
+        TempOut getTemp()
                 throws IOException {
             File tempFile = File.createTempFile("p11conf", ".ini");
             Charset utf8 = Charset.forName("utf-8");
-            ICharOut tempOut = new TempCharOut(tempFile, utf8);
-            return PrintOutImpl.from(tempOut);
+            TempOut tempOut = new TempOut(tempFile, utf8);
+            return tempOut;
         }
 
         static Field _p11;
@@ -176,7 +177,7 @@ public class Providers {
 
         SunPKCS11 tryConfig(String name, String library, String slot, Map<String, String> parameters)
                 throws IOException {
-            IPrintOut out = getTemp();
+            TempOut out = getTemp();
             if (name != null)
                 out.println("name = " + name);
             if (library != null)
@@ -206,7 +207,8 @@ public class Providers {
                 SunPKCS11 provider = new SunPKCS11(file.getPath());
                 return provider;
             } catch (ProviderException e) {
-                String config = Files.readAll(file, "utf-8");
+                LocalFileResource res = new LocalFileResource(file);
+                String config = res.tooling()._for(StreamReading.class).readTextContents();
                 System.err.println(SysNLS.getString("Providers.configError") + e.getMessage());
                 System.err.println(config);
                 throw e;

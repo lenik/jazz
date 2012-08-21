@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,17 +14,20 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import net.bodz.redist.installer.util.Flags;
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
+import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.snm.MavenProjectOrigin;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.SystemColos;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.bas.xml.XMLs;
+import net.bodz.redist.installer.util.Flags;
 
 public class Session
         implements ISession {
@@ -35,7 +37,7 @@ public class Session
 
     private final IProject project;
     protected final UserInterface UI;
-    protected Logger L;
+    protected Logger logger;
 
     private Components components;
     private Scheme scheme;
@@ -59,7 +61,7 @@ public class Session
             throw new NullPointerException("logger");
         this.project = project;
         this.UI = userInterface;
-        this.L = logger;
+        this.logger = logger;
 
         logger.info(PackNLS.getString("Session.collectComponents"));
         components = Components.collect(project);
@@ -78,12 +80,17 @@ public class Session
         }
 
         resFolders = new ArrayList<IFsTree>();
-        addResFolder(new JavaioFile(Files.canoniOf("."), true));
+
+        addResFolder(new JavaioFile(FilePath.canoniOf("."), true));
         addResFolder(new JavaioFile(SystemColos.cwd.get()/* , true */));
-        Class<?> projectClass = project.getClass();
-        IFsTree projectResBase = SJProject.getResBase(projectClass);
+
+        MavenProjectOrigin installerPo = MavenProjectOrigin.fromClass(Installer.class);
+        MavenProjectOrigin userPo = MavenProjectOrigin.fromClass(project.getClass());
+
+        IFile projectResBase = new JavaioFile(userPo.getResourceDir(project.getClass()));
         addResFolder(projectResBase);
-        IFsTree installerResBase = SJProject.getResBase(Installer.class);
+
+        IFile installerResBase = new JavaioFile(installerPo.getResourceDir(Installer.class));
         addResFolder(installerResBase);
 
         searchLoaders = new ArrayList<ClassLoader>();
@@ -107,10 +114,12 @@ public class Session
         return components.get(id);
     }
 
+    @Override
     public Scheme getScheme() {
         return scheme;
     }
 
+    @Override
     public void setScheme(String schemeName) {
         if (schemeName == null)
             throw new NullPointerException("schemeName");
@@ -126,6 +135,7 @@ public class Session
         throw new NoSuchElementException(schemeName);
     }
 
+    @Override
     public void setScheme(Scheme scheme) {
         this.scheme = scheme;
     }
@@ -137,12 +147,12 @@ public class Session
 
     @Override
     public Logger getLogger() {
-        return L;
+        return logger;
     }
 
     @Override
     public void setLogger(Logger logger) {
-        this.L = logger;
+        this.logger = logger;
     }
 
     @Override
@@ -176,7 +186,7 @@ public class Session
 
     @Override
     public String expand(String s) {
-        VariableExpand expander = new VariableExpand(variables);
+        UnixStyleVarProcessor expander = new UnixStyleVarProcessor(variables);
         String expansion = expander.process(s);
         return expansion;
     }
@@ -250,7 +260,7 @@ public class Session
             implements ExceptionListener {
         @Override
         public void exceptionThrown(Exception e) {
-            L.warn(e);
+            logger.warn(e);
         }
     }
 
@@ -258,11 +268,11 @@ public class Session
     public void closeAttachments() {
         for (Entry<String, StatedAttachment> entry : apool.entrySet()) {
             StatedAttachment a = entry.getValue();
-            L.info(PackNLS.getString("Session.closeAttachment"), a);
+            logger.info(PackNLS.getString("Session.closeAttachment"), a);
             try {
                 a.close();
             } catch (IOException e) {
-                L.warn(PackNLS.getString("Session.cantCloseAttachment"), a);
+                logger.warn(PackNLS.getString("Session.cantCloseAttachment"), a);
             }
         }
         apool.clear();
@@ -275,17 +285,16 @@ public class Session
             // load registry before install/uinstall
             IFile registryLink = findResource(registryPath, false);
             if (registryLink.exists() == Boolean.TRUE) {
-                L.info(PackNLS.getString("Session.loadRegistry"), registryLink);
+                logger.info(PackNLS.getString("Session.loadRegistry"), registryLink);
                 InputStream in = registryLink.getInputSource().newInputStream();
                 Object obj = XMLs.decode(in, new ExWarn());
                 in.close();
                 if (!(obj instanceof Map<?, ?>))
                     throw new SessionException(PackNLS.getString("Session.registryIsntMap") + obj);
-                @SuppressWarnings("unchecked")
-                Map<String, Object> registry = (Map<String, Object>) obj;
-                L.info(PackNLS.getString("Session.registryToLoad"), registry);
+                @SuppressWarnings("unchecked") Map<String, Object> registry = (Map<String, Object>) obj;
+                logger.info(PackNLS.getString("Session.registryToLoad"), registry);
                 components.importRegistry(registry);
-                L.info(PackNLS.getString("Session.registryLoaded"));
+                logger.info(PackNLS.getString("Session.registryLoaded"));
             }
         } catch (IOException e) {
             throw new SessionException(PackNLS.getString("Session.failedToLoadRegistry"), e);
@@ -299,13 +308,13 @@ public class Session
             // save registry after packed
             TextMap<Object> registry = components.exportRegistry();
             if (registry != null) {
-                L.info(PackNLS.getString("Session.registryToSave"), registry);
+                logger.info(PackNLS.getString("Session.registryToSave"), registry);
                 IFile registryLink = newResource(registryPath);
-                L.info(PackNLS.getString("Session.saveRegistryTo"), registryLink);
+                logger.info(PackNLS.getString("Session.saveRegistryTo"), registryLink);
                 OutputStream out = registryLink.getOutputTarget(false).newOutputStream();
                 XMLs.encode(registry, out, new ExWarn());
                 out.close();
-                L.info(PackNLS.getString("Session.registrySaved"));
+                logger.info(PackNLS.getString("Session.registrySaved"));
             }
         } catch (IOException e) {
             throw new SessionException(PackNLS.getString("Session.failedToSaveRegistry"), e);

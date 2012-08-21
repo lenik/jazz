@@ -12,9 +12,6 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.snm.BuildPath.ClassContainer;
 import net.bodz.bas.snm.BuildPath.SourceFolder;
 
-/**
- * @test {@link EclipseProjectTest}
- */
 public class EclipseProject {
 
     File baseDir;

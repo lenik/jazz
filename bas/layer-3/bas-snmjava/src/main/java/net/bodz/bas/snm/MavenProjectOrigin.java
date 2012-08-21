@@ -1,19 +1,60 @@
-package net.bodz.bas.c.misc;
+package net.bodz.bas.snm;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 
-public class MavenPath {
+import net.bodz.bas.c.java.io.FileClass;
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.err.UnexpectedException;
 
-    public static File getSourceFile(Class<?> clazz) {
-        File classFile = getClassFile(clazz);
+/**
+ * The origin directory of a maven project.
+ * 
+ * So it's suggested to name as `FoobarPo`.
+ */
+public class MavenProjectOrigin {
+
+    File projectDir;
+
+    public MavenProjectOrigin(File projectDir) {
+        this.projectDir = projectDir;
+    }
+
+    public File getProjectDir() {
+        return projectDir;
+    }
+
+    public File find(String name) {
+        return new File(projectDir, name);
+    }
+
+    public static MavenProjectOrigin fromClass(Class<?> clazz) {
+        String fname = clazz.getName().replace('.', '/') + ".class";
+
+        File classFile = FileClass.getClassFile(clazz);
+        String path = classFile.getPath();
+        path = FilePath.toUnixStyle(path);
+
+        if (!path.endsWith(fname))
+            throw new UnexpectedException("Unexpected class file: " + path);
+
+        String dirname = path.substring(0, path.length() - fname.length() - 1);
+
+        dirname = StringPart.rtrim(dirname, "target/classes");
+        dirname = StringPart.rtrim(dirname, "target/test-classes");
+
+        File dir = new File(dirname);
+
+        return new MavenProjectOrigin(dir);
+    }
+
+    public File getSourceFile(Class<?> clazz) {
+        File classFile = FileClass.getClassFile(clazz);
 
         // foo/target/classes/ => foo/src/main/java/
         // foo/target/test-classes/ => foo/src/test/java/
         String path = classFile.getPath();
-        path = normalizePathString(path);
+        path = FilePath.toUnixStyle(path);
         path = path.replace("/target/classes/", "/src/main/java/");
         path = path.replace("/target/test-classes/", "/src/test/java/");
 
@@ -32,22 +73,9 @@ public class MavenPath {
         return new File(path);
     }
 
-    public static File getClassFile(Class<?> clazz) {
-        String resName = clazz.getName().replace('.', '/') + ".class";
-        URL url = clazz.getClassLoader().getResource(resName);
-        URI uri;
-        try {
-            uri = url.toURI();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-        File file = new File(uri);
-        return file;
-    }
-
-    public static File getSiblingResource(File dir) {
+    public File getSiblingResource(File dir) {
         String path = dir.getPath();
-        path = normalizePathString(path);
+        path = FilePath.toUnixStyle(path);
         // src/main/java => src/main/resources
         // target/classes => src/main/resources
         // target/test-classes => src/test/resources
@@ -57,19 +85,8 @@ public class MavenPath {
         return new File(path);
     }
 
-    static final String fileSeparator = System.getProperty("file.separator");
-
-    static String normalizePathString(String path) {
-        if (path == null)
-            return null;
-        // if (SystemProperties.getOsName().equals("win32"))
-        path = path.replace(fileSeparator, "/");
-        // Mac? path = path.replace(":", SLASH);
-        return path;
-    }
-
-    public static File getResourceDir(Class<?> clazz) {
-        File classFile = getClassFile(clazz);
+    public File getResourceDir(Class<?> clazz) {
+        File classFile = FileClass.getClassFile(clazz);
 
         // foo/target/classes/ => foo/src/main/java/
         // foo/target/test-classes/ => foo/src/test/java/

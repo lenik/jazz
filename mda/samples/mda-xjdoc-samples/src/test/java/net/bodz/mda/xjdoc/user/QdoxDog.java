@@ -4,10 +4,12 @@ import static net.bodz.bas.lang.negotiation.Negotiation.*;
 
 import java.io.File;
 
-import net.bodz.bas.c.misc.MavenPath;
+import org.junit.Assert;
+
 import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.snm.MavenProjectOrigin;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.conv.ClassDocFlatfLoader;
@@ -16,8 +18,6 @@ import net.bodz.mda.xjdoc.tags.ITagBook;
 import net.bodz.mda.xjdoc.tags.TagBooks;
 import net.bodz.mda.xjdoc.user.xjl.AnimalTagBook;
 import net.bodz.mda.xjdoc.util.ImportMap;
-
-import org.junit.Assert;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
@@ -38,8 +38,11 @@ public class QdoxDog
         TagBooks.register("animal", new AnimalTagBook());
         ITagBook book = TagBooks.parse("javadoc, animal");
 
-        File animalSource = MavenPath.getSourceFile(Animal.class);
-        File dogSource = MavenPath.getSourceFile(Dog.class);
+        MavenProjectOrigin po = MavenProjectOrigin.fromClass(Animal.class);
+
+        File animalSource = po.getSourceFile(Animal.class);
+        File dogSource = po.getSourceFile(Dog.class);
+
         javaDocBuilder.addSource(animalSource);
         javaDocBuilder.addSource(dogSource);
         // javaDocBuilder.addSourceTree(file)

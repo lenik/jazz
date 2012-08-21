@@ -49,7 +49,6 @@ public abstract class SessionJob
         super.addChildJob(job, progressIncrement);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<? extends SessionJob> getChildren() {
         return (List<? extends SessionJob>) super.getChildren();

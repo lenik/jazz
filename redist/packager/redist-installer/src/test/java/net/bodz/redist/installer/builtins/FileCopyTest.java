@@ -1,13 +1,14 @@
 package net.bodz.redist.installer.builtins;
 
 import java.io.File;
-import java.nio.file.Files;
-
-import net.bodz.redist.installer.SessionException;
-import net.bodz.redist.installer.TestProject;
-import net.bodz.bas.c.java.io.TempFile;
 
 import org.junit.Test;
+
+import net.bodz.bas.c.java.io.TempFile;
+import net.bodz.bas.io.resource.tools.StreamWriting;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
+import net.bodz.redist.installer.SessionException;
+import net.bodz.redist.installer.TestProject;
 
 public class FileCopyTest
         extends ComponentTestApp {
@@ -18,7 +19,9 @@ public class FileCopyTest
         File localdir = new File(tmp, "localdir");
         localdir.mkdirs();
         File catfile = new File(localdir, "cat");
-        Files.write(catfile, "a black fat cat. ");
+
+        new JavaioFile(catfile).tooling()._for(StreamWriting.class).write("a black fat cat. ");
+
         FileCopy copy = new FileCopy(TestProject.BASE_A, "copytest", localdir, catfile);
         section.add(copy);
     }

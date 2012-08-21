@@ -4,8 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
 
-import javax.swing.border.Border;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -19,6 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.ui.RenderException;
+import net.bodz.bas.ui.a.Border;
 import net.bodz.swt.reflect.GUIVar;
 import net.bodz.swt.reflect.GUIVarMeta;
 import net.bodz.swt.reflect.SWTRenderContext;
@@ -52,9 +51,10 @@ public class R_Date
                 });
             return dateLabel;
         } else {
-            Integer border = (Integer) Ns.getValue(meta, Border.class);
-            if (border == null || (int) border > 0)
-                style |= SWT.BORDER;
+            Border _border = meta.getClass().getAnnotation(Border.class);
+            if (_border != null)
+                if (_border.value() > 0)
+                    style |= SWT.BORDER;
             Composite holder = new Composite(parent, style);
             holder.setLayout(new GridLayout(2, false));
 

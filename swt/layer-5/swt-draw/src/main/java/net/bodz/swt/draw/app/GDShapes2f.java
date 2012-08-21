@@ -8,7 +8,6 @@ import net.bodz.bas.geom_f.api.IShape2d;
 import net.bodz.bas.geom_f.api.PickResult2d;
 import net.bodz.bas.geom_f.api.PositiveHalfPlane;
 import net.bodz.bas.geom_f.base.IPointRef2d;
-import net.bodz.bas.geom_f.base.IRectangle2d;
 import net.bodz.bas.geom_f.base.Point2d;
 import net.bodz.bas.geom_f.base.Rectangle2d;
 import net.bodz.bas.gui.dev.GraphicsOperationException;
@@ -55,24 +54,24 @@ public class GDShapes2f
     }
 
     @Override
-    public PickResult2d _pick(float x, float y) {
+    public PickResult2d _pick(Point2d point) {
         float minDistance = Float.MAX_VALUE;
-        PickResult2d minPI = null;
+        PickResult2d result = null;
         int n = shapes.size();
         IShape2d component = null;
 
         for (int i = 0; i < n; i++) {
-            IShape2d shape = shapes.get(i);
-            PickResult2d pi = shape._pick(x, y);
-            if (pi.distance < minDistance) {
-                minDistance = pi.distance;
-                minPI = pi;
-                component = shape;
+            IShape2d sh = shapes.get(i);
+            PickResult2d r = sh._pick(point);
+            if (r.getDistance() < minDistance) {
+                minDistance = r.getDistance();
+                result = r;
+                component = sh;
             }
         }
-        if (minPI == null)
+        if (result == null)
             return null;
-        return new CompPickInfo2f(minPI.pick, minPI.distance, component);
+        return new CompPickInfo2f(result.getShape(), result.getDistance(), component);
     }
 
     public IShape2d find(float x, float y) {
@@ -105,16 +104,17 @@ public class GDShapes2f
         return 0;
     }
 
+    @Override
     public IPointRef2d getPointRef(int index) {
         return null;
     }
 
     @Override
-    public IShape2d crop(PositiveHalfPlane hp) {
+    public IShape2d crop(PositiveHalfPlane php, boolean detached) {
         int n = shapes.size();
         for (int i = 0; i < n;) {
             IShape2d shape = shapes.get(i);
-            shape = shape.crop(baseHalfPlane, normal);
+            shape = shape.crop(php, detached);
             if (shape == null) {
                 shapes.remove(i);
                 n--;
@@ -137,8 +137,8 @@ public class GDShapes2f
 
         for (int i = 1; i < n; i++) {
             IShape2d shape = shapes.get(i);
-            IRectangle2d r = shape.getBoundingBoxRef();
-            b.include(r);
+            Rectangle2d b = shape.getBoundingBox();
+            bbox.include(b);
         }
         return bbox; // super.getBoundingBox();
     }

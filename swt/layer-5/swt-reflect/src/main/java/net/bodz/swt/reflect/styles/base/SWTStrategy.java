@@ -5,14 +5,13 @@ import static net.bodz.swt.nls.GUINLS.GUINLS;
 import java.io.File;
 import java.util.Date;
 
-import javax.swing.Renderer;
-
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.meta.codehint.ChainUsage;
 import net.bodz.bas.meta.codehint.OverrideOption;
+import net.bodz.bas.ui.IRenderer;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.bas.ui.RenderStrategy;
 import net.bodz.bas.ui.Var;
@@ -56,7 +55,7 @@ public abstract class SWTStrategy
     }
 
     @Override
-    public SWTRenderer put(Class<?> key, Renderer value) {
+    public SWTRenderer put(Class<?> key, IRenderer value) {
         if (!(value instanceof SWTRenderer))
             throw new IllegalArgumentException(GUINLS.getString("SWTStrategy.notSWTRenderer") + value);
         return (SWTRenderer) super.put(key, value);
@@ -67,7 +66,7 @@ public abstract class SWTStrategy
             throws RenderException {
         try {
             SWTRenderContext rc = null; // new SWTRenderContext();
-            return render(rc, (GUIVar<?>) var);
+            return render(rc, var);
         } catch (SWTException e) {
             throw new RenderException(e);
         }

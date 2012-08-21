@@ -49,6 +49,10 @@ public class LocalFileResource
         this(new File(filename), charsetName);
     }
 
+    public File getFile() {
+        return file;
+    }
+
     @Override
     public InputStream newInputStream()
             throws IOException {
