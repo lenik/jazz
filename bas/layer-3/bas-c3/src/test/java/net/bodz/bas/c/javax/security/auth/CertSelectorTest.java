@@ -1,8 +1,5 @@
 package net.bodz.bas.c.javax.security.auth;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import java.io.File;
 import java.nio.file.Files;
 
