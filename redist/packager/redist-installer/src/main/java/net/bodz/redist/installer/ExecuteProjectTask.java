@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Task;
+
 import net.bodz.bas.ant.NamedParameter;
 import net.bodz.bas.ant.TaskLogger;
 import net.bodz.bas.ant.WithNamedParameters;
@@ -18,9 +21,6 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
-
 public abstract class ExecuteProjectTask
         extends Task {
 
@@ -28,7 +28,7 @@ public abstract class ExecuteProjectTask
     private String scheme;
     private IFsTree resFolder;
     private WithNamedParameters parameters;
-    private int logLevel;
+    private int verboseLevel;
 
     public ExecuteProjectTask() {
         parameters = new WithNamedParameters();
@@ -60,12 +60,12 @@ public abstract class ExecuteProjectTask
         setResFolder(src);
     }
 
-    public int getLogLevel() {
-        return logLevel;
+    public int getVerboseLevel() {
+        return verboseLevel;
     }
 
-    public void setLogLevel(int logLevel) {
-        this.logLevel = logLevel;
+    public void setVerboseLevel(int verboseLevel) {
+        this.verboseLevel = verboseLevel;
     }
 
     public void addConfiguredParameter(NamedParameter parameter)
@@ -83,7 +83,7 @@ public abstract class ExecuteProjectTask
         if (resFolder == null)
             throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsntSpecified"));
         TaskLogger logger = new TaskLogger(this);
-        logger.setLevel(logger.getLevel() + logLevel);
+        logger.setLevel(logger.getLevel(), verboseLevel);
         final List<Exception> exceptions = new ArrayList<Exception>();
         ConsoleExecutor executor = new ConsoleExecutor(project, logger) {
             @Override

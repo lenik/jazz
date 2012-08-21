@@ -55,6 +55,11 @@ public class Polygon2d
     // -o IPointSet2d
 
     @Override
+    public List<Point2d> getPoints() {
+        return points;
+    }
+
+    @Override
     public int getPointCount() {
         return points.size();
     }

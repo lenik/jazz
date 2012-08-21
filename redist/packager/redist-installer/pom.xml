@@ -19,6 +19,11 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>net.bodz.redist</groupId>
+            <artifactId>redist-win32</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.swt</groupId>
             <artifactId>swt-program</artifactId>
             <version>1.2.0-SNAPSHOT</version>

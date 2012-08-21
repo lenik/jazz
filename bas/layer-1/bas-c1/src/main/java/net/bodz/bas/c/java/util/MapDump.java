@@ -1,4 +1,4 @@
-package net.bodz.bas.collection.map;
+package net.bodz.bas.c.java.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 /**
  * Dump map to text contents.
  */
-public class DumpMap {
+public class MapDump {
 
     public static <K, V> String dump(Map<K, V> map) {
         return dump(map, null);

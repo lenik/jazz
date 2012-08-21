@@ -9,12 +9,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.prefs.Preferences;
 
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.ParseException;
 import net.bodz.redist.obfuz.pm.ProtectException;
 import net.bodz.redist.obfuz.pm.ProtectionModel;
 import net.bodz.redist.obfuz.seals.CodeSet;
 import net.bodz.redist.obfuz.seals.Sequence;
-import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.err.ParseException;
 
 public class ActivationByTargetString {
 
@@ -37,19 +37,24 @@ public class ActivationByTargetString {
             throws ProtectException {
         if (clazz == null)
             throw new NullPointerException("clazz");
-        Activation activation = Ns.getN(clazz, Activation.class);
-        if (activation == null)
+
+        Activation _activation = clazz.getAnnotation(Activation.class);
+        if (_activation == null)
             throw new IllegalUsageError(ProtectNLS.getString("ActivationByTargetString.noActivationInfo"));
-        this.prefix = activation.prefix();
+
+        // AppClassDoc
+
+        this.prefix = _activation.prefix();
         this.prefixBytes = prefix.getBytes(encoding);
-        this.segments = activation.segments();
+        this.segments = _activation.segments();
+
         String[] websites = Ns._getValue(clazz, WebSite.class);
         if (websites != null && websites.length != 0)
             website = websites[0];
         else
             website = null;
 
-        String productId = activation.productId();
+        String productId = _activation.productId();
         if (productId.isEmpty())
             preferences = Preferences.userNodeForPackage(clazz);
         else {

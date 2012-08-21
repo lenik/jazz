@@ -34,6 +34,7 @@ import net.bodz.bas.util.order.ComparableComparator;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 
+@SuppressWarnings("restriction")
 public class PKIDumper {
 
     private IPrintOut out;

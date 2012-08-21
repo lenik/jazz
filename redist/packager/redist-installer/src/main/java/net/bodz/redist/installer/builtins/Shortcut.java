@@ -3,11 +3,11 @@ package net.bodz.redist.installer.builtins;
 import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
 
 import java.io.File;
-import java.nio.file.Files;
 
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.ISession;
-import net.bodz.bas.c.system.SystemInfo;
 
 import com.roxes.win32.LnkFile;
 
@@ -64,12 +64,12 @@ public class Shortcut
             if (!dst.exists()) {
                 // mkdir -p dst.parent
                 File parentFile = dst.getParentFile();
-                parentFile = Files.canoniOf(parentFile);
+                parentFile = FilePath.canoniOf(parentFile);
                 parentFile.mkdirs();
             }
             logger.info(PackNLS.getString("Shortcut.create"), dst);
             if (SystemInfo.isWin32()) {
-                File _src = Files.canoniOf(src);
+                File _src = FilePath.canoniOf(src);
                 LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
                 lnk.setPath(_src.getPath());
                 if (arguments != null)

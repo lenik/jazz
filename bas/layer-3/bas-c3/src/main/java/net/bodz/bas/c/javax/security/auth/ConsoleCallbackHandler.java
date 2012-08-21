@@ -2,7 +2,6 @@ package net.bodz.bas.c.javax.security.auth;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
@@ -10,12 +9,14 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
+import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 
 /**
  * @see com.sun.security.auth.callback.TextCallbackHandler
  */
+@SuppressWarnings("restriction")
 @Deprecated
 public class ConsoleCallbackHandler
         implements CallbackHandler {
@@ -55,7 +56,7 @@ public class ConsoleCallbackHandler
             if (password == null) {
                 String prompt = pwdCall.getPrompt();
                 stdout.println(prompt);
-                BufferedReader lineIn = Files.getBufferedReader(System.in);
+                BufferedReader lineIn = new InputStreamSource(System.in).newBufferedReader();
                 String line = lineIn.readLine();
                 password = line.toCharArray();
             }

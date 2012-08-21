@@ -3,11 +3,12 @@ package net.bodz.redist.installer;
 import java.io.File;
 import java.io.IOException;
 
+import net.bodz.bas.c.java.io.FileFinder;
+import net.bodz.bas.snm.MavenProjectOrigin;
 import net.bodz.redist.installer.builtins.CTAProject;
 import net.bodz.redist.installer.builtins.FileCopy;
 import net.bodz.redist.installer.builtins.OptionalSection;
 import net.bodz.redist.installer.builtins.Section;
-import net.bodz.bas.c.java.io.FileFinder;
 
 /**
  * @name ABC Program
@@ -32,9 +33,9 @@ public class TestProject
 
         testSection = new OptionalSection("test", "Test source and classes");
         {
-
-            File testBinDir = SJProject.getOutputBase(TestProject.class);
-            File testSrcDir = SJProject.getSrcBase(TestProject.class);
+            MavenProjectOrigin testPo = MavenProjectOrigin.fromClass(TestProject.class);
+            File testBinDir = testPo.find("target/bin");
+            File testSrcDir = testPo.find("src/main/java");
             FileFinder testbin = new FileFinder(FileCopy.NoSVN, testBinDir);
             FileFinder testsrc = new FileFinder(FileCopy.NoSVN, testSrcDir);
             copyTestClassesFiles = new FileCopy(BASE_TEST, testbin);

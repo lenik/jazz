@@ -8,9 +8,10 @@ import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.ISession;
-import net.bodz.bas.c.system.SystemInfo;
 
 import com.roxes.win32.LnkFile;
 
@@ -64,7 +65,7 @@ public class FileLink
                 } else {
                     // mkdir -p dst.parent
                     File parentFile = dst.getParentFile();
-                    parentFile = Files.canoniOf(parentFile);
+                    parentFile = FilePath.canoniOf(parentFile);
                     parentFile.mkdirs();
                 }
                 if (symbolic) {
@@ -75,7 +76,7 @@ public class FileLink
                         logger.warn(e);
                         if (SystemInfo.isWin32()) {
                             logger.warn(PackNLS.getString("FileLink.symlinkIsntSupported"));
-                            File _src = Files.canoniOf(src);
+                            File _src = FilePath.canoniOf(src);
                             LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
                             lnk.setPath(_src.getPath());
                             lnk.setWorkingDirectory(_src.getParent());
@@ -99,7 +100,7 @@ public class FileLink
                         logger.warn(errmesg);
                         try {
                             File parentFile = dst.getParentFile();
-                            parentFile = Files.canoniOf(parentFile);
+                            parentFile = FilePath.canoniOf(parentFile);
                             parentFile.mkdirs();
                             Files.copy(src, dst);
                         } catch (IOException ex) {

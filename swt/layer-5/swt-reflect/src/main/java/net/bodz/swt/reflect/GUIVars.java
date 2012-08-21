@@ -5,11 +5,11 @@ import static net.bodz.swt.nls.GUINLS.GUINLS;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 
-import net.bodz.bas.c.type.Types;
 import net.bodz.bas.err.CheckException;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IValidator;
 import net.bodz.bas.traits.ValidateException;
+import net.bodz.bas.util.primitive.Primitives;
 import net.bodz.swt.gui.Vars.ConstantMeta;
 import net.bodz.swt.gui.Vars.ConstantVar;
 import net.bodz.swt.gui.Vars.FieldMeta;
@@ -38,7 +38,7 @@ public class GUIVars {
         public void check(Object value)
                 throws CheckException {
             Class<?> type = getType();
-            if (value != null && !Types.box(type).isInstance(value))
+            if (value != null && !Primitives.box(type).isInstance(value))
                 throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
             if (validator != null)
                 validator.validate(value);
@@ -90,7 +90,7 @@ public class GUIVars {
         public void check(Object value)
                 throws CheckException {
             Class<?> type = getType();
-            if (value != null && !Types.box(type).isInstance(value))
+            if (value != null && !Primitives.box(type).isInstance(value))
                 throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
             if (validator != null)
                 validator.validate(value);
@@ -151,7 +151,7 @@ public class GUIVars {
         public void check(Object value)
                 throws ValidateException {
             Class<?> type = getType();
-            if (value != null && !Types.box(type).isInstance(value))
+            if (value != null && !Primitives.box(type).isInstance(value))
                 throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
             if (validator != null)
                 validator.validate(value);

@@ -3,6 +3,8 @@ package net.bodz.bas.c.java.lang;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.java.util.Arrays;
+
 public class ArraysTest
         extends Assert {
 

@@ -6,8 +6,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EventObject;
 
-import javax.swing.border.Border;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
@@ -17,7 +15,10 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.err.CheckException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.trait.Traits;
+import net.bodz.bas.traits.IParser;
 import net.bodz.bas.ui.RenderException;
+import net.bodz.bas.ui.a.Border;
 import net.bodz.swt.c.control.CommitAdapter;
 import net.bodz.swt.c.control.CommitException;
 import net.bodz.swt.c.control.ControlAdapters;
@@ -48,9 +49,12 @@ public class R_Text
                 });
             return label;
         } else {
-            Integer border = (Integer) Ns.getValue(meta, Border.class);
-            if (border == null || border > 0)
-                style |= SWT.BORDER;
+            Border _border = meta.getAnnotation(Border.class);
+            if (_border != null) {
+                int border = _border.value();
+                if (border > 0)
+                    style |= SWT.BORDER;
+            }
             final Text text = new Text(parent, style);
             // Ns.getValue(meta, EchoChar.class);
             // text.setEchoChar(echo);
@@ -68,9 +72,9 @@ public class R_Text
                     }
                 });
             Class<?> type = meta.getType();
-            final TypeParser parser;
+            final IParser<?> parser;
             try {
-                parser = TypeParsers.guess(type, true);
+                parser = Traits.getTrait(type, IParser.class);
             } catch (ParseException e) {
                 throw new RenderException(GUINLS.getString("R_Text.cantGuessParserForNum") + type);
             }

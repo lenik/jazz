@@ -1,5 +1,6 @@
 package net.bodz.bas.collection.set;
 
+import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
@@ -11,9 +12,9 @@ import java.util.Set;
  */
 public class IdentityHashSet
         extends AbstractSet<Object>
-        implements Set<Object> {
+        implements Set<Object>, Serializable {
 
-    private static final long serialVersionUID = -6499268314160028115L;
+    private static final long serialVersionUID = 1L;
 
     private final IdentityHashMap<Object, Object> ihm;
 

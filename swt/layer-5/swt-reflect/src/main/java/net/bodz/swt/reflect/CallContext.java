@@ -5,8 +5,8 @@ import static net.bodz.swt.nls.GUINLS.GUINLS;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import net.bodz.bas.c.type.Types;
 import net.bodz.bas.util.event.IPropertyChangeSupport;
+import net.bodz.bas.util.primitive.Primitives;
 
 /**
  * Property names:
@@ -72,7 +72,7 @@ public class CallContext
     public void set(int parameterIndex, Object value) {
         if (value != null) {
             Class<?> type = parameterTypes[parameterIndex];
-            if (!Types.box(type).isInstance(value)) {
+            if (!Primitives.box(type).isInstance(value)) {
                 String fmt = GUINLS.getString("CallContext.errParamType_dss");
                 throw new ClassCastException(String.format(fmt, parameterIndex, type, value.getClass()));
             }

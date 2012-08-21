@@ -2,13 +2,13 @@ package net.bodz.redist.installer;
 
 import java.io.IOException;
 
-import net.bodz.redist.installer.builtins.TestConfig;
+import org.junit.Test;
+
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
-
-import org.junit.Test;
+import net.bodz.redist.installer.builtins.TestConfig;
 
 public class ConsoleExecutorTest
         extends ConsoleExecutor {
@@ -16,8 +16,7 @@ public class ConsoleExecutorTest
     public ConsoleExecutorTest()
             throws IOException {
         super(new TestProject());
-        // L.setLevel(LogTerm.INFO);
-        logger.setMaxPriority(LogLevel.DEBUG.getPriority());
+        logger.setLevel(LogLevel.INFO, 0);
     }
 
     @Test

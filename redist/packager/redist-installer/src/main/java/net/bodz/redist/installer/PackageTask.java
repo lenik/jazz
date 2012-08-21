@@ -6,15 +6,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Task;
+
 import net.bodz.bas.ant.TaskLogger;
 import net.bodz.bas.util.exception.ExceptionBuffer;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 /**
  * Ant task for package Distins-Project
@@ -24,7 +24,7 @@ public class PackageTask
 
     private IProject project;
     private IFsTree output;
-    private int logLevel;
+    private int verboseLevel;
 
     public PackageTask() {
     }
@@ -53,12 +53,12 @@ public class PackageTask
         setResFolder(outjar);
     }
 
-    public int getLogLevel() {
-        return logLevel;
+    public int getVerboseLevel() {
+        return verboseLevel;
     }
 
-    public void setLogLevel(int logLevel) {
-        this.logLevel = logLevel;
+    public void setVerboseLevel(int verboseLevel) {
+        this.verboseLevel = verboseLevel;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class PackageTask
         if (output == null)
             throw new BuildException(PackNLS.getString("PackageTask.resFolderIsntSpecified"));
         TaskLogger logger = new TaskLogger(this);
-        logger.setLevel(logger.getLevel() + logLevel);
+        logger.setLevel(logger.getLevel(), verboseLevel);
         final List<Exception> exceptions = new ArrayList<Exception>();
         ConsoleExecutor executor = new ConsoleExecutor(project, logger) {
             @Override

@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
@@ -67,12 +68,15 @@ public abstract class AbstractFile
     }
 
     @Override
-    public IFile getParentFile()
-            throws FileResolveException {
+    public IFile getParentFile() {
         IPath parentPath = getPath().getParent();
         if (parentPath == null)
             return null;
-        return parentPath.toFile();
+        try {
+            return parentPath.toFile();
+        } catch (FileResolveException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 
 import net.bodz.bas.c.java.io.capture.Processes;
-import net.bodz.bas.c.java.lang.Arrays;
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.variant.map.HashVariantMap;
 

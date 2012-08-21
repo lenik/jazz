@@ -3,7 +3,6 @@ package net.bodz.bas.c.javax.security.auth;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,6 +11,7 @@ import java.util.Map.Entry;
 
 import sun.security.pkcs11.wrapper.PKCS11Constants;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.err.UnexpectedException;
@@ -68,11 +68,11 @@ public class PKCS11Config {
     }
 
     public void setLibrary(String library) {
-        this.library = Files.canoniOf(library);
+        this.library = FilePath.canoniOf(library);
     }
 
     public void setLibrary(File library) {
-        this.library = Files.canoniOf(library);
+        this.library = FilePath.canoniOf(library);
     }
 
     /**

@@ -19,18 +19,21 @@ public class SWTShape2d
     public void draw(IDrawContext2d target)
             throws GraphicsOperationException {
         if (style != null) {
-            if (style.storke != null)
-                target.setStroke(style.storke);
             if (style.color != null)
                 target.setColor(style.color);
+
             if (style.fillColor != null)
                 target.setFillColor(style.fillColor);
-            if (style.fontColor != null)
-                target.setFontColor(style.fontColor);
+
+            if (style.storke != null)
+                target.setStroke(style.storke);
+
             if (style.pattern != null)
                 target.setPattern(style.pattern);
+
             if (style.fillPattern != null)
                 target.setFillPattern(style.fillPattern);
+
             if (style.font != null)
                 target.setFont(style.font);
         }

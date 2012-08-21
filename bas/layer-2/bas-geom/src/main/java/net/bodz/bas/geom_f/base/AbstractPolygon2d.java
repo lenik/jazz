@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.geom_f.api.AbstractShape2d;
 import net.bodz.bas.geom_f.api.CurveDirection;
+import net.bodz.bas.geom_f.api.IPointSet2d;
 import net.bodz.bas.geom_f.api.IShape2d;
 import net.bodz.bas.geom_f.api.PickResult2d;
 import net.bodz.bas.geom_f.api.PositiveHalfPlane;
@@ -233,7 +234,7 @@ public abstract class AbstractPolygon2d
         int n = getPointCount();
         int c = 0;
         for (int i = 0; i < n; i++)
-            if (getEdge(i).getIntersectionLinear(line) != null)
+            if (getEdge(i).getIntersection(line) != null)
                 if (++c >= maxTest)
                     break;
         return c;
@@ -248,12 +249,15 @@ public abstract class AbstractPolygon2d
     public List<Point2d> getIntersectionLinear(Line2d line, int max) {
         List<Point2d> list = new ArrayList<Point2d>();
         int n = getPointCount();
-        for (int i = 0; i < n; i++)
-            if (getEdge(i).getIntersectionLinear(line) != null) {
-                list.add(getPoint(i));
+        for (int i = 0; i < n; i++) {
+            Point2d x = getEdge(i).getIntersection(line);
+            if (x != null) {
+                // list.add(getPoint(i));
+                list.add(x);
                 if (list.size() >= max)
                     break;
             }
+        }
         return list;
     }
 
@@ -262,15 +266,19 @@ public abstract class AbstractPolygon2d
         return getIntersectionIndexesLinear(line, Integer.MAX_VALUE);
     }
 
-    public List<Float> getIntersectionIndexesLinear(ILine2d line, int max) {
+    public List<Float> getIntersectionIndexesLinear(Line2d line, int max) {
         List<Float> list = new ArrayList<Float>();
         int n = getPointCount();
-        for (int i = 0; i < n; i++)
-            if (getEdge(i).getIntersectionLinear(line) != null) {
-                list.add(i);
+        for (int index = 0; index < n; index++) {
+            Line2d edge = getEdge(index);
+            Point2d s = edge.getIntersection(line);
+            if (s != null) {
+                float _index = edge.index(s.x, s.y);
+                list.add(_index);
                 if (list.size() >= max)
                     break;
             }
+        }
         return list;
     }
 
@@ -285,7 +293,7 @@ public abstract class AbstractPolygon2d
 
         Point2d endPoint = getPoint(end);
         Point2d point = startPoint.lineTo(endPoint).getPointLinear(index - start);
-        addPointRef(end, point);
+        addPoint(end, point);
         return point;
     }
 
@@ -302,7 +310,7 @@ public abstract class AbstractPolygon2d
         for (int i = offset; i >= 0; i--) {
             Point2d p = getPoint(i);
             ILine2d edge = p.lineTo(ep);
-            Point2d x = edge.intersectsAt(line);
+            Point2d x = edge.getIntersection(line);
             if (x == null) {
                 points.add(p);
             } else {
@@ -354,7 +362,7 @@ public abstract class AbstractPolygon2d
                 findcut: for (int j = 0; j < i - 1; j++) {
                     Line2d I = getEdge(i);
                     Line2d J = getEdge(j);
-                    Point2d x = I.getIntersectionByCross(J);
+                    Point2d x = I.getIntersection(J);
                     if (x == null)
                         continue;
                     assert j < i;
@@ -385,9 +393,9 @@ public abstract class AbstractPolygon2d
             selfCuts = selfCuts();
         }
 
-        public TdTempPolygon(IPolygon2d polygon) {
+        public TdTempPolygon(IPointSet2d points) {
             // don't copy the content of points.
-            super(polygon);
+            super(points.toPointList(false));
         }
 
         public int getIntersectionCount(int index) {
@@ -422,8 +430,9 @@ public abstract class AbstractPolygon2d
             // List<Float> r2 = getIntersectionIndexesLinear(remove2);
             // List<Float> a = getIntersectionIndexesLinear(add1);
 
-            super.removePoint(index);
+            Point2d removed = super.removePoint(index);
             selfCuts = selfCuts();
+            return removed;
         }
 
         List<Integer> selfCuts() {

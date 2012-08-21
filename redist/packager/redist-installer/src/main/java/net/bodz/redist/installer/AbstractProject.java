@@ -10,30 +10,32 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.swt.graphics.ImageData;
+
+import net.bodz.bas.c.java.util.TextMap;
+import net.bodz.bas.c.java.util.TreeTextMap;
+import net.bodz.bas.collection.set.IdentityHashSet;
+import net.bodz.bas.collection.tree.TreeCallback;
+import net.bodz.bas.meta.build.AppClassDoc;
+import net.bodz.bas.meta.build.IVersion;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.util.Author;
 import net.bodz.redist.installer.Schemes.Custom;
 import net.bodz.redist.installer.Schemes.Default;
 import net.bodz.redist.installer.Schemes.Maximum;
 import net.bodz.redist.installer.Schemes.Minimum;
 import net.bodz.redist.installer.builtins.RequiredSection;
 import net.bodz.redist.installer.lic.License;
-import net.bodz.bas.c.java.util.TextMap;
-import net.bodz.bas.c.java.util.TreeTextMap;
-import net.bodz.bas.collection.set.IdentityHashSet;
-import net.bodz.bas.collection.tree.TreeCallback;
-import net.bodz.bas.meta.build.AppClassDoc;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.swt.c.resources.SWTResources;
-
-import org.eclipse.swt.graphics.ImageData;
 
 public class AbstractProject
         extends RequiredSection
         implements IProject {
 
     private ImageData logo;
-    private String version;
+    private IVersion version;
     private String updateTime;
-    private String company;
+    private Author company;
 
     public AbstractProject(Class<?> clazz, IComponent... children) {
         super("root", PackNLS.getString("_Project.projectRoot"), children);
@@ -48,23 +50,24 @@ public class AbstractProject
     }
 
     protected void loadInfo(Class<?> clazz) {
-        LogoImage alogo = Ns.getN(clazz, LogoImage.class);
+        LogoImage alogo = clazz.getAnnotation(LogoImage.class);
         if (alogo != null) {
             String respath = alogo.value();
             logo = SWTResources.getImageDataRes(clazz, respath);
         }
-        AppClassDoc info = ClassDocs.loadFromResource(clazz);
+
+        AppClassDoc classDoc = ClassDocs.loadFromResource(clazz).decorate(AppClassDoc.class);
         setName(clazz.getName());
         setText(A_bas.getDisplayName(clazz));
-        setDoc(info.getTextHeader());
-        URL iconURL = info.getIcon();
+        setDoc(classDoc.getTextHeader());
+        URL iconURL = classDoc.getIcon();
         if (iconURL != null) {
             ImageData icon = SWTResources.getImageData(iconURL);
             setImage(icon);
         }
-        version = info.getVersion().toString();
-        company = info.getAuthor();
-        updateTime = info.getDateString();
+        version = classDoc.getVersion();
+        company = classDoc.getAuthor();
+        updateTime = classDoc.getDateString();
     }
 
     @Override
@@ -76,22 +79,27 @@ public class AbstractProject
         this.logo = logo;
     }
 
-    public String getVersion() {
+    @Override
+    public IVersion getVersion() {
         return version;
     }
 
-    public String getCompany() {
+    @Override
+    public Author getCompany() {
         return company;
     }
 
+    @Override
     public String getLicense() {
         return License.GPLv2;
     }
 
+    @Override
     public String getUpdateTime() {
         return updateTime;
     }
 
+    @Override
     public Scheme[] getSchemes() {
         Scheme[] commons = {
                 //

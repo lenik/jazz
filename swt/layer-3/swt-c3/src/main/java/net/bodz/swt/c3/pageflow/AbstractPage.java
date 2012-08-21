@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.swt.gui.a.IconAnnotation;
 import net.bodz.swt.gui.err.ValidateException;
 
 public abstract class AbstractPage
@@ -42,7 +43,7 @@ public abstract class AbstractPage
     @Override
     public ImageData getPageIcon() {
         Class<?> clazz = getClass();
-        ImageData icon = A_gui.getIcon(clazz);
+        ImageData icon = IconAnnotation.getIcon(clazz);
         return icon;
     }
 

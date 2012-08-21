@@ -1,8 +1,13 @@
 package net.bodz.redist.installer;
 
 import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.ui.UIException;
@@ -10,9 +15,6 @@ import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.c3.pageflow.BadPathEvent;
 import net.bodz.swt.c3.pageflow.IBadPathListener;
 import net.bodz.swt.program.BasicGUI;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 
 /**
  * @name boDz Product Installer
@@ -42,7 +44,7 @@ public class Installer
 
     public Installer(IProject project) {
         this.project = project;
-        this.L.setLevel(LogLevel.DETAIL);
+        this.L.setLevel(LogLevel.INFO);
     }
 
     @Override
@@ -76,7 +78,7 @@ public class Installer
     @Override
     protected String getTitle() {
         String text = project.getText();
-        String version = project.getVersion();
+        IVersion version = project.getVersion();
         return text + PackNLS.getString("Installer.installer") + version;
     }
 

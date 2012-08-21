@@ -6,7 +6,6 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.util.regex.GlobPattern;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.lang.ControlBreak;
@@ -307,7 +306,7 @@ public class BatchCLI
         if (sortComparator != null)
             finder.setComparator(sortComparator);
         for (IFile f : finder)
-            _processFile(FilePath.canoniOf(f));
+            _processFile(f);
     }
 
     /**

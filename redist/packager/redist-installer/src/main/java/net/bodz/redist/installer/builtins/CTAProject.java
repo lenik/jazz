@@ -6,12 +6,13 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 
-import net.bodz.redist.installer.BaseDirVariable;
-import net.bodz.redist.installer.IComponent;
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.TempFile;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
+import net.bodz.bas.snm.MavenProjectOrigin;
+import net.bodz.redist.installer.BaseDirVariable;
+import net.bodz.redist.installer.IComponent;
 
 /**
  * A test program for z.dist components.
@@ -57,9 +58,11 @@ public class CTAProject
 
         FileFilter filter = FileCopy.NoSVN;
 
+        MavenProjectOrigin redistPo = MavenProjectOrigin.fromClass(IComponent.class);
+
         classesSection = new RequiredSection("bin", "Core Java Class Files");
         {
-            File binDir = SJProject.getOutputBase(IComponent.class);
+            File binDir = redistPo.find("target/bin");
             FileFinder binfiles = new FileFinder(filter, binDir);
             FileCopy copyClassFiles = new FileCopy(BASE_PROGRAMS, binfiles);
             classesSection.add(copyClassFiles);
@@ -67,11 +70,10 @@ public class CTAProject
 
         sourceSection = new DefaultSection("src", "Core Java Source Files");
         {
-            File srcDir = SJProject.getSrcBase(IComponent.class);
+            File srcDir = redistPo.find("src/main/java");
             FileFinder srcfiles = new FileFinder(filter, srcDir);
             FileCopy copySrcFiles = new FileCopy(BASE_PROGRAMS, srcfiles);
             sourceSection.add(copySrcFiles);
         }
     }
-
 }

@@ -256,10 +256,14 @@ public class BatchEditCLI
             throws FileResolveException {
         if (outputDirectory == null)
             return in;
+
         IFile out = outputDirectory.getChild(relative);
+        out.setPreferredCharset(outputEncoding);
+
         IFile outdir = out.getParentFile();
         if (!outdir.isTree())
             throw new Error("Invalid output directory: " + outdir);
+
         return out;
     }
 
@@ -272,12 +276,6 @@ public class BatchEditCLI
     protected IFile getOutputFile(String relative)
             throws FileResolveException {
         return getOutputFile(relative, currentStartFile);
-    }
-
-    protected IFile getOutputFile(IFile in)
-            throws FileResolveException {
-        String relative = getRelativeName(in);
-        return _getOutputFile(relative, in);
     }
 
     /**
@@ -442,8 +440,7 @@ public class BatchEditCLI
 
     protected void addResult(IFile src, IFile dst, IFile edit, EditResult result)
             throws IOException {
-        IOException ee = null;
-        L._debugFormat(1, "FF", "x");
+        L._debugf(1, "FF", "x");
         L._debug(3, "F", "X");
         if (result == null)
             L._info(1, "[skip] ", src);

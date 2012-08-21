@@ -3,11 +3,11 @@ package net.bodz.redist.installer.builtins;
 import java.io.File;
 import java.util.Map;
 
+import net.bodz.bas.c.java.io.TempFile;
+import net.bodz.bas.log.Logger;
 import net.bodz.redist.installer.IProject;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.Variable;
-import net.bodz.bas.c.java.io.TempFile;
-import net.bodz.bas.log.Logger;
 
 public class TestConfig {
 
@@ -23,14 +23,14 @@ public class TestConfig {
 
     public static void setTestBaseDir(ISession session) {
         IProject project = session.getProject();
-        Logger L = session.getLogger();
+        Logger logger = session.getLogger();
         Map<String, Variable> variables = project.getVariables();
         for (Map.Entry<String, Variable> e : variables.entrySet()) {
             String name = e.getKey();
             Variable variable = e.getValue();
             if (variable.getType() == Variable.BASE_DIR) {
                 File testbase = new File(TestConfig.targetHome, name);
-                L.infoFormat("Set test basedir %s => %s\n", name, testbase);
+                logger.infof("Set test basedir %s => %s\n", name, testbase);
                 session.set(name, testbase);
             }
         }

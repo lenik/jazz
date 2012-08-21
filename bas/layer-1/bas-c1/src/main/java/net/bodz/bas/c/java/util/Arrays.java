@@ -1,4 +1,4 @@
-package net.bodz.bas.c.java.lang;
+package net.bodz.bas.c.java.util;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

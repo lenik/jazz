@@ -1,11 +1,11 @@
-package net.bodz.bas.c.java.lang;
+package net.bodz.bas.c.java.util;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Because java.lang.Arrays isn't inheritable, so we have this class.
+ * Because {@link java.util.Arrays} isn't inheritable, so we have this class.
  */
 public class _Arrays {
 

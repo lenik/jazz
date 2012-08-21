@@ -44,7 +44,7 @@ import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.menu.Menus;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.program.monitor.ThreadsMonitor;
+import net.bodz.swt.c3.dialog.ThreadsMonitor;
 import net.bodz.swt.reflect.AboutDialog;
 import net.bodz.swt.reflect.CreditDialog;
 import net.bodz.swt.reflect.SelectLanguageDialog;
@@ -70,10 +70,10 @@ public class BasicGUI
     private int shellHeight = SWT.DEFAULT;
 
     {
-        PreferredSize size = Ns.getN(getClass(), PreferredSize.class);
-        if (size != null) {
-            shellWidth = size.width();
-            shellHeight = size.height();
+        PreferredSize _size = getClass().getAnnotation(PreferredSize.class);
+        if (_size != null) {
+            shellWidth = _size.width();
+            shellHeight = _size.height();
         }
     }
 
