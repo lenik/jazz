@@ -11,19 +11,41 @@ public abstract class AbstractLogComposite
         // extends SkippedCallerBase
         implements ILogComposite {
 
-    private int maxPriority = 0;
+    private LogLevel level = LogLevel.INFO;
+    private int delta = 0;
+    private int maxPriority = level.getPriority() + delta;
 
-    public int getMaxPriority() {
-        return maxPriority;
-    }
-
-    public void setMaxPriority(int maxPriority) {
-        this.maxPriority = maxPriority;
+    @Override
+    public LogLevel getLevel() {
+        return level;
     }
 
     @Override
-    public void verbose(int delta) {
-        this.maxPriority += delta;
+    public void setLevel(LogLevel level) {
+        this.level = level;
+        this.maxPriority = level.getPriority() + delta;
+    }
+
+    @Override
+    public int getDelta() {
+        return delta;
+    }
+
+    @Override
+    public void setDelta(int delta) {
+        this.delta = delta;
+        this.maxPriority = level.getPriority() + delta;
+    }
+
+    @Override
+    public void setLevel(LogLevel level, int delta) {
+        this.level = level;
+        this.delta = delta;
+        this.maxPriority = level.getPriority() + delta;
+    }
+
+    protected int getMaxPriority() {
+        return maxPriority;
     }
 
     /**
@@ -48,7 +70,7 @@ public abstract class AbstractLogComposite
 
     @Override
     public boolean isEnabled(LogLevel level, int delta) {
-        return level.getPriority() + delta <= getMaxPriority();
+        return level.getPriority() + delta <= maxPriority;
     }
 
     @Override

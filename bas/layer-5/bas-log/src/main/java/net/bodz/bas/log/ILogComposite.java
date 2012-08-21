@@ -2,25 +2,15 @@ package net.bodz.bas.log;
 
 public interface ILogComposite {
 
-    /**
-     * It's logged only if the actual level is less then or equals to the max priority.
-     * 
-     * @return Max priority.
-     */
-    int getMaxPriority();
+    LogLevel getLevel();
 
-    /**
-     * Set the max priority.
-     * 
-     * @param maxPriority
-     *            The max priority.
-     */
-    void setMaxPriority(int maxPriority);
+    void setLevel(LogLevel level);
 
-    /**
-     * Set the max priority with current priority plus the specified <code>delta</code>.
-     */
-    void verbose(int delta);
+    int getDelta();
+
+    void setDelta(int delta);
+
+    void setLevel(LogLevel logLevel, int delta);
 
     /**
      * @return {@link NullLogSink} if {@link ILogSink} for the specified <code>eventType</code>

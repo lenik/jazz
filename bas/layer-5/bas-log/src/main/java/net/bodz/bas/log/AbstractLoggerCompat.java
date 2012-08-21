@@ -1,6 +1,5 @@
 package net.bodz.bas.log;
 
-
 public class AbstractLoggerCompat
         extends AbstractLogComposite
         implements LoggerCompat {
