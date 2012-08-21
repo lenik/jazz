@@ -4,19 +4,17 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
-import javax.swing.border.Border;
-
-import org.apache.commons.collections15.Factory;
 import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 
+import net.bodz.bas.c.reflect.AnnotatedElements;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.ui.a.PreferredSize;
+import net.bodz.bas.model.IFactory;
+import net.bodz.bas.ui.a.*;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.reflect.a.A_gui;
 import net.bodz.swt.reflect.a.MenuContrib;
@@ -30,9 +28,9 @@ public class GUIHint {
     public Boolean enabled;
     public Boolean visible;
     public int tabOrder;
-    private Factory<?> iconFactory;
-    private Factory<String> labelFactory;
-    private Factory<?> fontFactory;
+    private IFactory<?> iconFactory;
+    private IFactory<String> labelFactory;
+    private IFactory<?> fontFactory;
     public RGB color;
     public RGB backColor;
     public Point preferredSize;
@@ -71,7 +69,7 @@ public class GUIHint {
 
     static String prep(String id, AnnotatedElement elm) {
         if (id.isEmpty())
-            id = MORE + "." + Ns.getName(elm);
+            id = MORE + "." + AnnotatedElements.getName(elm);
         return id;
     }
 
@@ -79,58 +77,54 @@ public class GUIHint {
         this(copy);
         this.doc = A_bas.getDoc(aobject);
 
-        Boolean enabled = (Boolean) Ns.getValue(aobject, net.bodz.bas.ui.a.Enabled.class);
-        if (enabled != null)
-            this.enabled = enabled;
+        Visible _visible = aobject.getAnnotation(Visible.class);
+        if (_visible != null)
+            this.visible = _visible.value();
 
-        Boolean visible = (Boolean) Ns.getValue(aobject, net.bodz.bas.ui.a.Visible.class);
-        if (visible != null)
-            this.visible = visible;
+        Order _order = aobject.getAnnotation(Order.class);
+        if (_order != null)
+            this.order = _order.value();
 
-        Integer order = (Integer) Ns.getValue(aobject, net.bodz.bas.ui.a.Order.class);
-        if (order != null)
-            this.order = order;
+        TabOrder _tabOrder = aobject.getAnnotation(TabOrder.class);
+        if (_tabOrder != null)
+            this.tabOrder = _tabOrder.value();
 
-        Integer tabOrder = (Integer) Ns.getValue(aobject, net.bodz.bas.ui.a.TabOrder.class);
-        if (tabOrder != null)
-            this.tabOrder = tabOrder;
+        Icon _icon = aobject.getAnnotation(Icon.class);
+        if (_icon != null)
+            this.iconFactory = getIconFactory(_icon.value(), _icon.factory());
 
-        Factory<?> iconFactory = A_gui.getIconFactory(Ns.getN(aobject, net.bodz.bas.ui.a.Icon.class));
-        if (iconFactory != null)
-            this.iconFactory = iconFactory;
+        Label _label = aobject.getAnnotation(Label.class);
+        if (_label != null)
+            this.labelFactory = getLabelFactory(_label.value(), _label.factory());
 
-        Factory<String> labelFactory = A_gui.getLabelFactory(Ns.getN(aobject, net.bodz.bas.ui.a.Label.class));
-        if (labelFactory != null)
-            this.labelFactory = labelFactory;
+        Font _font = aobject.getAnnotation(Font.class);
+        if (_font != null)
+            this.fontFactory = getFontFactory(_font);
 
-        Factory<?> fontFactory = A_gui.getFontFactory(Ns.getN(aobject, net.bodz.bas.ui.a.Font.class));
-        if (fontFactory != null)
-            this.fontFactory = fontFactory;
-
-        net.bodz.bas.ui.a.Color colorN = Ns.getN(aobject, net.bodz.bas.ui.a.Color.class);
-        if (colorN != null) {
-            RGB color = A_gui.parseColor(colorN.value());
-            RGB back = A_gui.parseColor(colorN.back());
-            if (color != null)
-                this.color = color;
+        Color _color = aobject.getAnnotation(Color.class);
+        if (_color != null) {
+            RGB fore = A_gui.parseColor(_color.value());
+            RGB back = A_gui.parseColor(_color.back());
+            if (fore != null)
+                this.color = fore;
             if (back != null)
                 this.backColor = back;
         }
 
-        Point preferredSize = A_gui.parseSize(Ns.getN(aobject, PreferredSize.class));
-        if (preferredSize != null)
-            this.preferredSize = preferredSize;
+        PreferredSize _preferredSize = aobject.getAnnotation(PreferredSize.class);
+        if (_preferredSize != null)
+            this.preferredSize = new Point(_preferredSize.width(), _preferredSize.height());
 
-        Integer border = (Integer) Ns.getValue(aobject, Border.class);
-        if (border != null)
-            this.border = border;
+        Border _border = aobject.getAnnotation(Border.class);
+        if (_border != null)
+            this.border = _border.value();
 
-        String menuItem = (String) Ns.getValue(aobject, MenuContrib.class);
-        if (menuItem != null)
+        MenuContrib _menu = aobject.getAnnotation(MenuContrib.class);
+        if (_menu != null)
             this.menuItem = prep(menuItem, aobject);
 
-        String viewId = (String) Ns.getValue(aobject, View.class);
-        if (viewId != null)
+        View _view = aobject.getAnnotation(View.class);
+        if (_view != null)
             this.viewId = prep(viewId, aobject);
     }
 
@@ -166,18 +160,18 @@ public class GUIHint {
         if (labelFactory == null)
             return null;
         try {
-            return (String) labelFactory.create(args);
+            return labelFactory.create(args);
         } catch (CreateException e) {
             throw new IllegalUsageError(e);
         }
     }
 
-    public Font getFont(Device device, Object... args) {
+    public org.eclipse.swt.graphics.Font getFont(Device device, Object... args) {
         if (fontFactory == null)
             return null;
         try {
             FontData fd = (FontData) fontFactory.create(args);
-            return new Font(device, fd);
+            return new org.eclipse.swt.graphics.Font(device, fd);
         } catch (CreateException e) {
             throw new IllegalUsageError(e);
         }
