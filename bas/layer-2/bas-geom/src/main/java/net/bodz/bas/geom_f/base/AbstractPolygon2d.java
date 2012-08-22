@@ -314,7 +314,7 @@ public abstract class AbstractPolygon2d
             if (x == null) {
                 points.add(p);
             } else {
-                addPointRef(i + 1, x);
+                addPoint(i + 1, x);
                 points.add(x);
             }
             ep = p;
@@ -487,7 +487,7 @@ public abstract class AbstractPolygon2d
             skips = 0;
             Triangle2d t = new Triangle2d(//
                     temp.getPoint(i), temp.getPoint(j), temp.getPoint((j + 1) % n));
-            if (t.area() > 0)
+            if (t.getArea() > 0)
                 ts.add(t);
             temp.removePoint(j);
             n--;
@@ -535,21 +535,28 @@ public abstract class AbstractPolygon2d
             return result.getDistance();
     }
 
+    // -o IPolygonizable2d
+
+    @Override
+    public Polygon2d polygonize() {
+        return snapshot();
+    }
+
     // -o ICroppable2d
 
     @Override
-    public IShape2d crop(PositiveHalfPlane php) {
+    public IShape2d crop(PositiveHalfPlane php, boolean detached) {
         ArrayList<Point2d> points = new ArrayList<Point2d>();
 
         int n = getPointCount();
 
         int off = isOpened() ? 0 : n - 1;
         Point2d pre = getPoint(off);
-        boolean lastOut = pre.crop(php);
+        boolean lastOut = pre.crop(php, detached);
 
         for (int i = 0; i < n; i++) {
             Point2d p = getPoint(i);
-            boolean out = p.crop(php) == null;
+            boolean out = p.crop(php, detached) == null;
             if (lastOut == out) {
                 if (!out)
                     points.add(p);

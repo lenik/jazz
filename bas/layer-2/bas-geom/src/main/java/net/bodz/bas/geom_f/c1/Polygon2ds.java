@@ -28,7 +28,7 @@ public class Polygon2ds {
             yset[i] = cy + ry * (float) Math.sin(a);
             a = a + delta;
         }
-        return new Polygon2d(xset, yset);
+        return Polygon2d.fromXY(xset, yset);
     }
 
 }

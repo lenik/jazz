@@ -11,7 +11,10 @@ public interface IPolygonizable2d {
      *            How many segments each line/arc will be divided into, at least.
      * @param maxSegmentLength
      *            The maximum segment length.
+     * @return <code>null</code> If it's not supported.
      */
     Polygon2d polygonize(int minSegments, Float maxSegmentLength);
+
+    Polygon2d polygonize();
 
 }

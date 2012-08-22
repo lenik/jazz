@@ -31,12 +31,13 @@ public class Ellipse2d_BB
         return new Point2d(cx, cy);
     }
 
+    @Override
     public int getPointCount() {
         return 2;
     }
 
     @Override
-    public IPointRef2d getPointRef(int index) {
+    public Point2d getPoint(int index) {
         switch (index) {
         case 0:
             return p0;

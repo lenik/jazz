@@ -8,6 +8,14 @@ import net.bodz.bas.geom_f.api.IShapeAmount2d;
 public interface ITriangle2d
         extends IShape2d, IShapeAmount2d /* , IExtendable2d */{
 
+    // -o Shape
+
+    @Override
+    Triangle2d snapshot();
+
+    @Override
+    ITriangle2d clone();
+
     float getX0();
 
     void setX0(float x);
@@ -67,13 +75,5 @@ public interface ITriangle2d
     Circle2d getIncircle();
 
     Circle2d getCircumcircle();
-
-    // -o Shape
-
-    @Override
-    Triangle2d snapshot();
-
-    @Override
-    ITriangle2d clone();
 
 }

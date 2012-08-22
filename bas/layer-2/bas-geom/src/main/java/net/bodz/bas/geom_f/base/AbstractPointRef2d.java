@@ -5,6 +5,7 @@ import javax.vecmath.Tuple2f;
 
 import net.bodz.bas.c.javax.vecmath.I_Tuple2f_;
 import net.bodz.bas.c.javax.vecmath.Vector2f;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.geom_f.api.AbstractShape2d;
 import net.bodz.bas.geom_f.api.PickResult2d;
 import net.bodz.bas.geom_f.api.PositiveHalfPlane;
@@ -235,16 +236,16 @@ public abstract class AbstractPointRef2d
     // -o ICroppable2d
 
     @Override
-    public Point2d crop(PositiveHalfPlane hp) {
+    public Point2d crop(PositiveHalfPlane php, boolean detached) {
         Point2d point = this.snapshot();
-        if (hp.contains(point))
+        if (php.contains(point))
             return point;
         else
             return null;
     }
 
     @Override
-    public Point2d crop(Rectangle2d rectangle) {
+    public Point2d crop(Rectangle2d rectangle, boolean detached) {
         Point2d point = this.snapshot();
         if (rectangle.contains(point))
             return point;
@@ -253,7 +254,7 @@ public abstract class AbstractPointRef2d
     }
 
     @Override
-    public Point2d crop(Triangle2d triangle) {
+    public Point2d crop(Triangle2d triangle, boolean detached) {
         Point2d point = this.snapshot();
         if (triangle.contains(point))
             return point;
@@ -262,12 +263,19 @@ public abstract class AbstractPointRef2d
     }
 
     @Override
-    public Point2d crop(Polygon2d polygon) {
+    public Point2d crop(Polygon2d polygon, boolean detached) {
         Point2d point = this.snapshot();
         if (polygon.contains(point))
             return point;
         else
             return null;
+    }
+
+    // -o IPolygonizable2d
+
+    @Override
+    public Polygon2d polygonize() {
+        return null;
     }
 
     // I_Tuple2f

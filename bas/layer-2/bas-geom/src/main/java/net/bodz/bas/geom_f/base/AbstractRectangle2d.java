@@ -249,13 +249,22 @@ public abstract class AbstractRectangle2d
         return Math.max(dx, dy);
     }
 
+    // -o IPolygonizable2d
+
+    @Override
+    public Polygon2d polygonize() {
+        Polygon2d polygon = new Polygon2d(getPoint0(), getPoint1(), getPoint2(), getPoint3());
+        polygon.close();
+        return polygon;
+    }
+
     // -o ICroppable2d
 
     @Override
-    public IShape2d crop(PositiveHalfPlane hp) {
+    public IShape2d crop(PositiveHalfPlane php, boolean detached) {
         boolean intersected = false;
         for (Point2d p : getPoints())
-            if (hp.contains(p)) {
+            if (php.contains(p)) {
                 intersected = true;
                 break;
             }
@@ -268,7 +277,7 @@ public abstract class AbstractRectangle2d
     }
 
     @Override
-    public IShape2d crop(Rectangle2d rectangle) {
+    public IShape2d crop(Rectangle2d rectangle, boolean detached) {
         Rectangle2d result = snapshot();
         result.positize();
 

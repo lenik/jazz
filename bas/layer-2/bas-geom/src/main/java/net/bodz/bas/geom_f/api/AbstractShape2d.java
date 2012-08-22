@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.geom_f.base.Circle2d;
 import net.bodz.bas.geom_f.base.IPointRef2d;
 import net.bodz.bas.geom_f.base.Point2d;
@@ -308,28 +309,40 @@ public abstract class AbstractShape2d
         throw new UnsupportedOperationException("Not extendable.");
     }
 
+    // -o IPolygonizable2d
+
+    @Override
+    public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {
+        Polygon2d polygon = polygonize();
+        if (polygon == null)
+            return null;
+        if (minSegments > 1 || maxSegmentLength != null)
+            polygon = polygon.polygonize(minSegments, maxSegmentLength);
+        return polygon;
+    }
+
     // -o ICroppable2d
 
     @Override
-    public IShape2d crop(Triangle2d triangle) {
+    public IShape2d crop(Triangle2d triangle, boolean detached) {
         CurveDirection direction = triangle.getDirection();
-        return crop_convex(triangle, direction);
+        return crop_convex(triangle, direction, detached);
     }
 
     @Override
-    public IShape2d crop(Rectangle2d rectangle) {
+    public IShape2d crop(Rectangle2d rectangle, boolean detached) {
         Rectangle2d pos = rectangle.snapshot();
         pos.positize();
-        return crop_convex(pos, CurveDirection.clockwise);
+        return crop_convex(pos, CurveDirection.clockwise, detached);
     }
 
     @Override
-    public IShape2d crop(Polygon2d convexPolygon) {
+    public IShape2d crop(Polygon2d convexPolygon, boolean detached) {
         CurveDirection direction = convexPolygon.getDirection();
-        return crop_convex(convexPolygon, direction);
+        return crop_convex(convexPolygon, direction, detached);
     }
 
-    IShape2d crop_convex(IPointSet2d polygon, CurveDirection direction) {
+    IShape2d crop_convex(IPointSet2d polygon, CurveDirection direction, boolean detached) {
         IShape2d result = this;
 
         int n = polygon.getPointCount();
@@ -339,7 +352,7 @@ public abstract class AbstractShape2d
 
             PositiveHalfPlane php = new PositiveHalfPlane(prev, point);
 
-            result = result.crop(php);
+            result = result.crop(php, detached);
 
             if (result.isValid())
                 return null;
