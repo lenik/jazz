@@ -12,6 +12,9 @@ public abstract class AbstractEllipse2d
     private static final long serialVersionUID = 1L;
 
     @Override
+    public abstract AbstractEllipse2d clone();
+
+    @Override
     public Ellipse2d snapshot() {
         Point2d center1 = getCenter1();
         Point2d center2 = getCenter2();
@@ -98,16 +101,21 @@ public abstract class AbstractEllipse2d
         return d - (2 * a);
     }
 
-    // -o ICroppable2d
-    @Override
-    public IShape2d crop(PositiveHalfPlane php) {
-        return null;
-    }
-
     // -o IPolygonizable2d
 
     @Override
+    public Polygon2d polygonize() {
+        return polygonize(4, null);
+    }
+
+    @Override
     public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {
+        return null;
+    }
+
+    // -o ICroppable2d
+    @Override
+    public IShape2d crop(PositiveHalfPlane php, boolean detached) {
         return null;
     }
 

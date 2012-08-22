@@ -2,6 +2,9 @@ package net.bodz.bas.geom_f.base;
 
 import java.io.Serializable;
 
+import net.bodz.bas.geom_f.api.IShape2d;
+import net.bodz.bas.geom_f.api.PositiveHalfPlane;
+
 /**
  * Center-Radius
  */
@@ -41,36 +44,7 @@ public class Circle2d
         return this;
     }
 
-    @Override
-    public boolean include(Point2d point) {
-        if (radius <= 0) {
-            setCenterX(point.x);
-            setCenterY(point.y);
-            setRadius(0.0f);
-            return true;
-        }
-
-        float cx = center.x;
-        float cy = center.y;
-        float dx = point.x - cx;
-        float dy = point.y - cy;
-        float dist2 = dx * dx + dy * dy;
-
-        // already contains the point(x, y)
-        if (dist2 <= radius * radius)
-            return false;
-
-        float dist = (float) Math.sqrt(dist2);
-        float newRadius = (dist + radius) / 2;
-
-        center.x = ((newRadius - radius) * cx + newRadius * point.x) / dist;
-        center.y = ((newRadius - radius) * cy + newRadius * point.y) / dist;
-        radius = newRadius;
-
-        return true;
-    }
-
-    //
+    // -o IPointSet2d
 
     public int getPointCount() {
         return 1;
@@ -119,6 +93,51 @@ public class Circle2d
     @Override
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    // -o IExtendable2d
+
+    @Override
+    public boolean include(Point2d point) {
+        if (radius <= 0) {
+            setCenterX(point.x);
+            setCenterY(point.y);
+            setRadius(0.0f);
+            return true;
+        }
+
+        float cx = center.x;
+        float cy = center.y;
+        float dx = point.x - cx;
+        float dy = point.y - cy;
+        float dist2 = dx * dx + dy * dy;
+
+        // already contains the point(x, y)
+        if (dist2 <= radius * radius)
+            return false;
+
+        float dist = (float) Math.sqrt(dist2);
+        float newRadius = (dist + radius) / 2;
+
+        center.x = ((newRadius - radius) * cx + newRadius * point.x) / dist;
+        center.y = ((newRadius - radius) * cy + newRadius * point.y) / dist;
+        radius = newRadius;
+
+        return true;
+    }
+
+    // -o IPolygonizable2d
+
+    @Override
+    public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {
+        return null;
+    }
+
+    // -o ICroppable2d
+
+    @Override
+    public IShape2d crop(PositiveHalfPlane php, boolean detached) {
+        return null;
     }
 
 }

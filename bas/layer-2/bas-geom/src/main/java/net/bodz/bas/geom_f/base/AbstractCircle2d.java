@@ -1,7 +1,10 @@
 package net.bodz.bas.geom_f.base;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.geom_f.api.AbstractShape2d;
+import net.bodz.bas.geom_f.api.IShape2d;
 import net.bodz.bas.geom_f.api.PickResult2d;
+import net.bodz.bas.geom_f.api.PositiveHalfPlane;
 
 public abstract class AbstractCircle2d
         extends AbstractShape2d
@@ -92,6 +95,24 @@ public abstract class AbstractCircle2d
         Point2d center = getCenterPoint();
         float dr = center.distance(point);
         return dr - getRadius();
+    }
+
+    // -o IPolygonizable2d
+
+    @Override
+    public Polygon2d polygonize() {
+        return polygonize(4, null);
+    }
+
+    @Override
+    public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {
+        throw new NotImplementedException();
+    }
+
+    // -o ICroppable2d
+    @Override
+    public IShape2d crop(PositiveHalfPlane php, boolean detached) {
+        return null;
     }
 
     @Override

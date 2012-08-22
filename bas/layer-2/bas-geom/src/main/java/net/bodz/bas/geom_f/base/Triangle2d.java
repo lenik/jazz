@@ -35,6 +35,11 @@ public class Triangle2d
         return new Triangle2d(p0.snapshot(), p1.snapshot(), p2.snapshot());
     }
 
+    @Override
+    public Triangle2d snapshotConst() {
+        return new Triangle2d(p0, p1, p2);
+    }
+
     // IPointSet2d
 
     @Override

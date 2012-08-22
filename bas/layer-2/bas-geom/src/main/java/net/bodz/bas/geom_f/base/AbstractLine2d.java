@@ -119,6 +119,18 @@ public abstract class AbstractLine2d
         return new Point2d(x, y);
     }
 
+    public boolean isParallel(Line2d line) {
+        Vector2f v1 = toVector();
+        Vector2f v2 = line.toVector();
+        float prod = v1.x * v2.y - v1.y * v2.x;
+        return Math.abs(prod) < EPSILON;
+    }
+
+    @Override
+    public boolean isIntersectedExtended(Line2d line) {
+        return !isParallel(line);
+    }
+
     @Override
     public Point2d getIntersectionExtended(Line2d line) {
         float k1 = getSlope();
@@ -131,6 +143,20 @@ public abstract class AbstractLine2d
         float x = Dx / D;
         float y = -Dy / D;
         return new Point2d(x, y);
+    }
+
+    @Override
+    public boolean isIntersected(Line2d line) {
+        if (isParallel(line))
+            return false;
+        Point2d pt = getIntersection(line);
+        float i = indexOfX(pt.x);
+        float j = indexOfX(pt.y);
+        if (i < 0.0f || i > 1.0f)
+            return false;
+        if (j < 0.0f || j > 1.0f)
+            return false;
+        return true;
     }
 
     @Override
@@ -220,10 +246,19 @@ public abstract class AbstractLine2d
         return result.getDistance();
     }
 
+    // -o IPolygonizable2d
+
+    @Override
+    public Polygon2d polygonize() {
+        Polygon2d polygon = new Polygon2d(getPoint0(), getPoint1());
+        polygon.open();
+        return polygon;
+    }
+
     // -o ICroppable2d
 
     @Override
-    public IShape2d crop(PositiveHalfPlane php) {
+    public IShape2d crop(PositiveHalfPlane php, boolean detached) {
         Point2d P = getPoint0();
         Point2d Q = getPoint1();
         Vector2f normal = getNormal();

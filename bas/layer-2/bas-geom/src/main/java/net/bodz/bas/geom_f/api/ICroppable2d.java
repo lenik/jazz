@@ -12,7 +12,7 @@ public interface ICroppable2d {
      * @param php
      *            The crop half plane. Must be non-<code>null</code>.
      */
-    IShape2d crop(PositiveHalfPlane php);
+    IShape2d crop(PositiveHalfPlane php, boolean detached);
 
     /**
      * Remove contents of this shape outside the given rectangle.
@@ -20,7 +20,7 @@ public interface ICroppable2d {
      * @param rectangle
      *            The crop rectangle. Must be non-<code>null</code>.
      */
-    IShape2d crop(Rectangle2d rectangle);
+    IShape2d crop(Rectangle2d rectangle, boolean detached);
 
     /**
      * Remove contents of this shape outside the given triangle.
@@ -28,7 +28,7 @@ public interface ICroppable2d {
      * @param triangle
      *            The crop triangle. Must be non-<code>null</code>.
      */
-    IShape2d crop(Triangle2d triangle);
+    IShape2d crop(Triangle2d triangle, boolean detached);
 
     /**
      * Remove contents of this shape outside the given polygon.
@@ -37,6 +37,6 @@ public interface ICroppable2d {
      *            A convex polygon. The crop result is undefined if the polygon is not convex (i.e.,
      *            concave). Must be non-<code>null</code>.
      */
-    IShape2d crop(Polygon2d convexPolygon);
+    IShape2d crop(Polygon2d convexPolygon, boolean detached);
 
 }

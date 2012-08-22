@@ -1,9 +1,12 @@
 package net.bodz.bas.geom_f.base;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.geom_f.api.AbstractShape2d;
 import net.bodz.bas.geom_f.api.CurveDirection;
+import net.bodz.bas.geom_f.api.IShape2d;
 import net.bodz.bas.geom_f.api.PickResult2d;
+import net.bodz.bas.geom_f.api.PositiveHalfPlane;
 
 public abstract class AbstractTriangle2d
         extends AbstractShape2d
@@ -16,7 +19,18 @@ public abstract class AbstractTriangle2d
 
     @Override
     public Triangle2d snapshot() {
-        return new Triangle2d(getX0(), getY0(), getX1(), getY1(), getX2(), getY2());
+        return new Triangle2d(//
+                getPoint0().snapshot(), //
+                getPoint1().snapshot(), //
+                getPoint2().snapshot());
+    }
+
+    @Override
+    public Triangle2d snapshotConst() {
+        return new Triangle2d(//
+                getPoint0(), //
+                getPoint1(), //
+                getPoint2());
     }
 
     @Override
@@ -31,7 +45,70 @@ public abstract class AbstractTriangle2d
         return point0.snapshot();
     }
 
+    // -o IShapeAmount2d
+
+    @Override
+    public float getLength() {
+        float a = getPoint0().vectorTo(getPoint1()).length();
+        float b = getPoint1().vectorTo(getPoint2()).length();
+        float c = getPoint2().vectorTo(getPoint0()).length();
+        return a + b + c;
+    }
+
+    @Override
+    public float getArea() {
+        float a = getPoint0().vectorTo(getPoint1()).length();
+        float b = getPoint1().vectorTo(getPoint2()).length();
+        float c = getPoint2().vectorTo(getPoint0()).length();
+        float p = (a + b + c) / 2;
+        float s = p * (p - a) * (p - b) * (p - c);
+        return (float) Math.sqrt(s);
+    }
+
     // -o IPointSet2d
+
+    // -o IPickable2d
+
+    @Override
+    public PickResult2d _pick(Point2d point) {
+        return new PickResult2d(this, distance(point));
+    }
+
+    @Override
+    public float distance(Point2d point) {
+        float a = getPoint0().lineTo(getPoint1()).distance(point);
+        float b = getPoint1().lineTo(getPoint2()).distance(point);
+        float c = getPoint2().lineTo(getPoint0()).distance(point);
+        return Math.max(Math.max(a, b), c);
+    }
+
+    // TODO optim
+    @Override
+    public boolean contains(Point2d point) {
+        return super.contains(point);
+    }
+
+    // -o IPolygonizable2d
+
+    @Override
+    public Polygon2d polygonize() {
+        Polygon2d polygon = new Polygon2d(//
+                getPoint0(), //
+                getPoint1(), //
+                getPoint2());
+        polygon.close();
+        return polygon;
+    }
+
+    // -o ICroppable2d
+
+    @Override
+    public IShape2d crop(PositiveHalfPlane php, boolean detached) {
+        // In most cases return another triangle.
+        throw new NotImplementedException();
+    }
+
+    // -o ITriangle2d
 
     @Override
     public Vector2f getVector0() {
@@ -118,45 +195,6 @@ public abstract class AbstractTriangle2d
     public Circle2d getCircumcircle() {
         // R = abc/4S = a/2sinA
         return null;
-    }
-
-    // -o IPickable2d
-
-    @Override
-    public PickResult2d _pick(Point2d point) {
-        return new PickResult2d(this, distance(point));
-    }
-
-    @Override
-    public float distance(Point2d point) {
-        float a = getPoint0().lineTo(getPoint1()).distance(point);
-        float b = getPoint1().lineTo(getPoint2()).distance(point);
-        float c = getPoint2().lineTo(getPoint0()).distance(point);
-        return Math.max(Math.max(a, b), c);
-    }
-
-    // TODO optim
-    @Override
-    public boolean contains(Point2d point) {
-        return super.contains(point);
-    }
-
-    // -o IShapeAmount2d
-
-    public float length() {
-        float a = getPoint0().vectorTo(getPoint1()).length();
-        float b = getPoint1().vectorTo(getPoint2()).length();
-        float c = getPoint2().vectorTo(getPoint0()).length();
-        return a + b + c;
-    }
-
-    public float area() {
-        float a = getPoint0().vectorTo(getPoint1()).length();
-        float b = getPoint1().vectorTo(getPoint2()).length();
-        float c = getPoint2().vectorTo(getPoint0()).length();
-        float p = (a + b + c) / 2;
-        float s = p * (p - a) * (p - b) * (p - c);
-        return (float) Math.sqrt(s);
     }
 
 }
