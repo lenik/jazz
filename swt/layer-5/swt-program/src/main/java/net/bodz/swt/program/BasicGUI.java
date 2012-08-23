@@ -32,23 +32,23 @@ import net.bodz.bas.c.java.util.LocaleTraits;
 import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.gui.a.PreferredSize;
+import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.gui.ia.UIException;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.program.StartMode;
-import net.bodz.bas.ui.UIException;
-import net.bodz.bas.ui.UserInterface;
-import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.menu.Menus;
 import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c3.dialog.AboutDialog;
+import net.bodz.swt.c3.dialog.CreditDialog;
+import net.bodz.swt.c3.dialog.SelectLanguageDialog;
 import net.bodz.swt.c3.dialog.ThreadsMonitor;
-import net.bodz.swt.reflect.AboutDialog;
-import net.bodz.swt.reflect.CreditDialog;
-import net.bodz.swt.reflect.SelectLanguageDialog;
-import net.bodz.swt.reflect.util.DialogUI;
+import net.bodz.swt.gui.ia.DialogInteraction;
 
 /**
  * @website http://www.bodz.net/products/BasicGUI
@@ -81,7 +81,7 @@ public class BasicGUI
     private DynamicControl viewArea;
     private Map<Object, Composite> views;
 
-    protected UserInterface UI = new DialogUI();
+    protected IUserInteraction UI = new DialogInteraction();
 
     @Override
     public synchronized void execute(String... args)
@@ -92,7 +92,7 @@ public class BasicGUI
             throw c;
         } catch (Exception e) {
             if (!shell.isDisposed()) {
-                DialogUI iact = new DialogUI(shell);
+                DialogInteraction iact = new DialogInteraction(shell);
                 iact.alert(e.getMessage(), e);
             }
             throw e;
@@ -159,7 +159,7 @@ public class BasicGUI
         Locale.setDefault(locale);
 
         shell = createShell();// throws GUIExcaption
-        UI = new DialogUI(shell);
+        UI = new DialogInteraction(shell);
 
         shell.open();
         shell.layout();

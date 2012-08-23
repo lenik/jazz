@@ -19,14 +19,14 @@ import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.gui.ia.Proposals;
 import net.bodz.bas.log.AbstractLogSink;
 import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.ui.Proposals;
-import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.DurationChangeEvent;
 import net.bodz.bas.util.IJob;
 import net.bodz.bas.util.JobObserver;
@@ -42,7 +42,7 @@ import net.bodz.swt.c3.pageflow.IPage;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.PageMethod;
 import net.bodz.swt.c3.pageflow.ServiceContext;
-import net.bodz.swt.reflect.util.DialogUI;
+import net.bodz.swt.gui.ia.DialogInteraction;
 
 class ProgressPage
         extends AbstractPage {
@@ -129,7 +129,7 @@ class ProgressPage
                         if (index != -1) {
                             Object data = logList.getData(String.valueOf(index));
                             if (data != null) {
-                                UserInterface UI = session.getUserInterface();
+                                IUserInteraction UI = session.getUserInterface();
                                 UI.alert("Log Detail: " + data, data);
                             }
                         }
@@ -267,7 +267,7 @@ class ProgressPage
             @Override
             public void run() {
                 int state = CANCELED;
-                DialogUI _UI = new DialogUI(new Shell(new Display()));
+                DialogInteraction _UI = new DialogInteraction(new Shell(new Display()));
                 try {
                     session.loadRegistry();
                     if (rootJob != null) {
@@ -306,9 +306,9 @@ class ProgressPage
     class Observer
             extends JobObserver {
 
-        final UserInterface UI;
+        final IUserInteraction UI;
 
-        public Observer(UserInterface UI) {
+        public Observer(IUserInteraction UI) {
             if (UI == null)
                 throw new NullPointerException("UI");
             this.UI = UI;

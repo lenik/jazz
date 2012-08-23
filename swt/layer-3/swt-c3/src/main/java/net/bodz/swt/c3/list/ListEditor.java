@@ -2,12 +2,12 @@ package net.bodz.swt.c3.list;
 
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.ui.UserInterface;
+import net.bodz.bas.gui.ia.IUserInteraction;
 
 public class ListEditor
         extends AbstractListEditor<String> {
 
-    private UserInterface UI;
+    private IUserInteraction UI;
 
     public ListEditor(Composite parent, int style) {
         super(parent, style);

@@ -14,8 +14,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.swt.gui.a.IconAnnotation;
-import net.bodz.swt.gui.err.ValidateException;
 
 public abstract class AbstractPage
         implements IPage {
@@ -104,7 +104,7 @@ public abstract class AbstractPage
      */
     @Override
     public void validate()
-            throws PageException, ValidateException {
+            throws PageException, GUIValidationException {
     }
 
     /**

@@ -1,6 +1,6 @@
 package net.bodz.swt.c3.pageflow;
 
-import net.bodz.swt.gui.QuietHint;
+import net.bodz.bas.gui.util.QuietHint;
 
 public class PageException
         extends Exception

@@ -15,8 +15,8 @@
         <module>swt-director</module>
         <module>swt-draw</module>
         <module>swt-program</module>
-        <module>swt-reflect</module>
-        <module>swt-reflect-extras</module>
+        <module>swt-viz</module>
+        <module>swt-viz-extras</module>
     </modules>
     <name>SWT :: Layer 5</name>
 </project>

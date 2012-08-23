@@ -6,12 +6,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.gui.a.PreferredSize;
+import net.bodz.bas.gui.ia.UIException;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
-import net.bodz.bas.ui.UIException;
-import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.c3.pageflow.BadPathEvent;
 import net.bodz.swt.c3.pageflow.IBadPathListener;
 import net.bodz.swt.program.BasicGUI;

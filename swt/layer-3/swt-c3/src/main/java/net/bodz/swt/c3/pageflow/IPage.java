@@ -7,7 +7,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.swt.gui.err.ValidateException;
+import net.bodz.bas.gui.err.GUIValidationException;
 
 public interface IPage {
 
@@ -45,11 +45,9 @@ public interface IPage {
 
     /**
      * Can't go ahead (or submit) if validation is failed.
-     * 
-     * @throws ValidateException
      */
     void validate()
-            throws PageException, ValidateException;
+            throws PageException, GUIValidationException;
 
     /**
      * @return <code>null</code> to use a default submit method.

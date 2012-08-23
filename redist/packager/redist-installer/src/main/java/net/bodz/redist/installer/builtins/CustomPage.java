@@ -1,33 +1,13 @@
 package net.bodz.redist.installer.builtins;
 
 import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-import static net.bodz.redist.installer.util.TreeItems.FULL;
-import static net.bodz.redist.installer.util.TreeItems.NONE;
-import static net.bodz.redist.installer.util.TreeItems.UNKNOWN;
+import static net.bodz.redist.installer.util.TreeItems.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import net.bodz.redist.installer.ConfigPage;
-import net.bodz.redist.installer.IComponent;
-import net.bodz.redist.installer.IProject;
-import net.bodz.redist.installer.ISession;
-import net.bodz.redist.installer.Scheme;
-import net.bodz.redist.installer.Variable;
-import net.bodz.redist.installer.util.MissingDependancyBuffer;
-import net.bodz.redist.installer.util.MissingDependancyBuffer.Entry;
-import net.bodz.redist.installer.util.TreeItems;
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.ui.UserInterface;
-import net.bodz.swt.c.composite.WindowComposite;
-import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.ServiceContext;
-import net.bodz.swt.gui.err.QuietValidateException;
-import net.bodz.swt.gui.err.ValidateException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -41,6 +21,24 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.gui.err.QuietValidationException;
+import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.redist.installer.ConfigPage;
+import net.bodz.redist.installer.IComponent;
+import net.bodz.redist.installer.IProject;
+import net.bodz.redist.installer.ISession;
+import net.bodz.redist.installer.Scheme;
+import net.bodz.redist.installer.Variable;
+import net.bodz.redist.installer.util.MissingDependancyBuffer;
+import net.bodz.redist.installer.util.MissingDependancyBuffer.Entry;
+import net.bodz.redist.installer.util.TreeItems;
+import net.bodz.swt.c.composite.WindowComposite;
+import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c3.pageflow.PageException;
+import net.bodz.swt.c3.pageflow.ServiceContext;
 
 /**
  * @test CustomPageTest
@@ -292,7 +290,7 @@ public class CustomPage
 
     @Override
     public void validate()
-            throws ValidateException {
+            throws GUIValidationException {
         IProject project = session.getProject();
         MissingDependancyBuffer missingBuffer = new MissingDependancyBuffer();
         project.analyseDependency(missingBuffer);
@@ -303,7 +301,7 @@ public class CustomPage
                     PackNLS.getString("CustomPage.checkMissings.caption"), missingList);
             Collection<IComponent> add = dialog.open();
             if (add == null)
-                throw new QuietValidateException(tree);
+                throw new QuietValidationException(tree);
             for (IComponent c : add) {
                 TreeItem item = (TreeItem) c.getViewData();
                 TreeItems.setState(item, FULL);
@@ -316,15 +314,15 @@ public class CustomPage
             String path = dirText.getText();
             File dirFile = new File(path);
             if (dirFile.isFile())
-                throw new ValidateException(dirText, PackNLS.getString("CustomPage.fileExists"));
+                throw new GUIValidationException(dirText, PackNLS.getString("CustomPage.fileExists"));
             else if (!dirFile.exists()) {
-                UserInterface UI = session.getUserInterface();
+                IUserInteraction UI = session.getUserInterface();
                 boolean confirmed = UI.confirm(PackNLS.getString("CustomPage.createDirQ"),
                         PackNLS.format("CustomPage.confirmMkdir", dirFile));
                 if (!confirmed) {
-                    throw new QuietValidateException(dirText);
+                    throw new QuietValidationException(dirText);
                 } else if (!dirFile.mkdirs())
-                    throw new ValidateException(dirText, PackNLS.getString("CustomPage.cantMkdir") + dirFile);
+                    throw new GUIValidationException(dirText, PackNLS.getString("CustomPage.cantMkdir") + dirFile);
             }
             session.set(name, dirFile);
         }

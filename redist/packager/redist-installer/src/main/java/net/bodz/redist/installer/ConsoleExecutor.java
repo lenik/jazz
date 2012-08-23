@@ -1,10 +1,11 @@
 package net.bodz.redist.installer;
 
 import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
+
+import net.bodz.bas.gui.ia.ConsoleInteraction;
+import net.bodz.bas.gui.ia.Proposals;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.impl.ConsoleLogger;
-import net.bodz.bas.ui.ConsoleUI;
-import net.bodz.bas.ui.Proposals;
 import net.bodz.bas.util.DurationChangeEvent;
 import net.bodz.bas.util.ProgressChangeEvent;
 import net.bodz.bas.util.StatusChangeEvent;
@@ -18,7 +19,7 @@ public class ConsoleExecutor
     }
 
     public ConsoleExecutor(IProject project, Logger logger) {
-        super(project, ConsoleUI.stdout, logger);
+        super(project, ConsoleInteraction.stdout, logger);
     }
 
     @Override
