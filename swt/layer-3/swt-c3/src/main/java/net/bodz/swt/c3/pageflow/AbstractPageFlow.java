@@ -7,11 +7,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.gui.util.QuietHint;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
-import net.bodz.swt.gui.QuietHint;
-import net.bodz.swt.gui.err.ValidateException;
 
 public abstract class AbstractPageFlow
         implements IPageFlow {
@@ -73,7 +73,7 @@ public abstract class AbstractPageFlow
                 IPage page = book.getPage(prev);
                 try {
                     page.validate();
-                } catch (ValidateException e) {
+                } catch (GUIValidationException e) {
                     handleQException(e);
                     Control control = e.getControl();
                     if (control != null)
@@ -167,7 +167,7 @@ public abstract class AbstractPageFlow
     /**
      * @see ControlAdapters#commit(Control, net.bodz.swt.adapters.CommitAdapter)
      */
-    protected void handleValidateException(ValidateException e) {
+    protected void handleValidateException(GUIValidationException e) {
         handleQException(e);
         Control control = e.getControl();
         if (control != null) {

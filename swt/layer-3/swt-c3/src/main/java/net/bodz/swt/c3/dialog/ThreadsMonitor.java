@@ -19,10 +19,9 @@ import org.eclipse.swt.widgets.Spinner;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.ui.UserInterface;
+import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.reflect.util.DialogUI;
 
 public class ThreadsMonitor
         extends SimpleDialog {
@@ -33,7 +32,7 @@ public class ThreadsMonitor
 
     private List threadList;
 
-    private UserInterface UI;
+    private IUserInteraction UI;
 
     public ThreadsMonitor(Shell parent, int style) {
         super(parent, style, GUINLS.getString("ThreadsMonitor.threadsMonitor"));

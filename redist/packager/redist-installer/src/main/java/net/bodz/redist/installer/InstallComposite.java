@@ -1,7 +1,7 @@
 package net.bodz.redist.installer;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.ui.UIException;
+import net.bodz.bas.gui.ia.UIException;
 import net.bodz.swt.c3.pageflow.IBook;
 import net.bodz.swt.c3.pageflow.IPage;
 import net.bodz.swt.c3.pageflow.NavigatorComposite;

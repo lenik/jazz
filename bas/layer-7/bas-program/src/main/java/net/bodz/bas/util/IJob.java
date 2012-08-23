@@ -1,7 +1,7 @@
 package net.bodz.bas.util;
 
+import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.bas.log.Logger;
-import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.exception.RecoverableExceptionListener;
 import net.bodz.bas.util.exception.RecoverableExceptionSource;
 
@@ -64,7 +64,7 @@ public interface IJob
 
     void removeDurationChangeListener(DurationChangeListener listener);
 
-    void setUserInterface(UserInterface userInterface);
+    void setUserInterface(IUserInteraction userInterface);
 
     void setLogger(Logger logger);
 

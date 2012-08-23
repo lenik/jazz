@@ -28,6 +28,8 @@ import net.bodz.bas.cli.plugin.CLIPlugins;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.gui.ia.ConsoleInteraction;
+import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.log.ILogSink;
@@ -46,8 +48,6 @@ import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ParserUtil;
-import net.bodz.bas.ui.ConsoleUI;
-import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
 import net.bodz.bas.vfs.IFile;
@@ -74,7 +74,7 @@ public class BasicCLI
     protected Logger L = LoggerFactory.getLogger(BasicCLI.class);
     // LogTerms.resolveFile(1);
 
-    protected UserInterface UI = ConsoleUI.stdout;
+    protected IUserInteraction UI = ConsoleInteraction.stdout;
 
     /**
      * @option hidden

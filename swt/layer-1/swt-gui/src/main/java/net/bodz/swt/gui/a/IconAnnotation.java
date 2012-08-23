@@ -5,9 +5,9 @@ import java.lang.reflect.AnnotatedElement;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.gui.a.Icon;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.model.IFactory;
-import net.bodz.bas.ui.a.Icon;
 import net.bodz.swt.c.resources.SWTResources;
 
 public class IconAnnotation {

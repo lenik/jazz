@@ -2,12 +2,15 @@ package net.bodz.bas.ui;
 
 import org.junit.Test;
 
+import net.bodz.bas.gui.ia.AbstractTryBlock;
+import net.bodz.bas.gui.ia.ConsoleInteraction;
+
 public class _TryBlockTest {
 
     @Test
     public void testMaxRetry()
             throws Exception {
-        new AbstractTryBlock(ConsoleUI.stderr, 3) {
+        new AbstractTryBlock(ConsoleInteraction.stderr, 3) {
 
             @Override
             protected void body()

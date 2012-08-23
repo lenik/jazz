@@ -1,13 +1,6 @@
 package net.bodz.redist.installer.builtins;
 
 import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-import net.bodz.redist.installer.ConfigPage;
-import net.bodz.redist.installer.IComponent;
-import net.bodz.redist.installer.ISession;
-import net.bodz.redist.installer.Scheme;
-import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.swt.c.control.Controls;
-import net.bodz.swt.gui.err.ValidateException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,6 +11,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.bas.c.system.SystemProperties;
+import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.redist.installer.ConfigPage;
+import net.bodz.redist.installer.IComponent;
+import net.bodz.redist.installer.ISession;
+import net.bodz.redist.installer.Scheme;
+import net.bodz.swt.c.control.Controls;
 
 /**
  * @test {@link ChooseSchemePageTest}
@@ -88,9 +89,9 @@ public class ChooseSchemePage
 
     @Override
     public void validate()
-            throws ValidateException {
+            throws GUIValidationException {
         if (selectedIndex == -1)
-            throw new ValidateException(PackNLS.getString("ChooseSchemePage.notSelected"));
+            throw new GUIValidationException(PackNLS.getString("ChooseSchemePage.notSelected"));
         Scheme scheme = schemes[selectedIndex];
         session.setScheme(scheme);
     }
