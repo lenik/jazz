@@ -15,7 +15,7 @@ import net.bodz.bas.ui.IRenderer;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.bas.ui.RenderStrategy;
 import net.bodz.bas.ui.Var;
-import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.SwtEntry;
 import net.bodz.swt.reflect.GUIVars;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
@@ -72,19 +72,19 @@ public abstract class SWTStrategy
         }
     }
 
-    public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+    public Control render(SWTRenderContext rc, SwtEntry<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");
         SWTRenderer renderer = findRenderer(var);
         if (renderer == null) {
-            String errmesg = GUINLS.getString("SWTStrategy.nullRenderer") + var.getMeta().getName();
+            String errmesg = GUINLS.getString("SWTStrategy.nullRenderer") + var.getMetadata().getName();
             var = GUIVars.wrap(errmesg);
             renderer = findRenderer(var);
             throw new RenderException(errmesg); // XXX -
         }
         @SuppressWarnings("unchecked")
-        GUIVar<Object> gvar = (GUIVar<Object>) var;
+        SwtEntry<Object> gvar = (SwtEntry<Object>) var;
         return renderer.render(rc, gvar, parent, style);
     }
 
@@ -92,7 +92,7 @@ public abstract class SWTStrategy
             throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");
-        GUIVar<Object> var = GUIVars.wrap(constantValue);
+        SwtEntry<Object> var = GUIVars.wrap(constantValue);
         return render(rc, var, parent, style);
     }
 

@@ -5,7 +5,7 @@ import static net.bodz.swt.nls.GUINLS.GUINLS;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import net.bodz.bas.util.event.IPropertyChangeSupport;
+import net.bodz.bas.util.event.IPropertyChangeSource;
 import net.bodz.bas.util.primitive.Primitives;
 
 /**
@@ -17,7 +17,7 @@ import net.bodz.bas.util.primitive.Primitives;
  * </ul>
  */
 public class CallContext
-        implements IPropertyChangeSupport {
+        implements IPropertyChangeSource {
 
     private Object retval;
     private Class<?>[] parameterTypes;

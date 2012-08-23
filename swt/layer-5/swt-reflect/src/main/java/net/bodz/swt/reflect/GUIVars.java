@@ -21,7 +21,7 @@ public class GUIVars {
 
     public static class GUIFieldMeta
             extends FieldMeta
-            implements GUIVarMeta {
+            implements SwtEntryMetadata1 {
 
         protected final IValidator<Object> validator;
 
@@ -31,8 +31,8 @@ public class GUIVars {
         }
 
         @Override
-        public GUIHint getHint() {
-            return GUIHint.get(field);
+        public SwtEntryMetadata getHint() {
+            return SwtEntryMetadata.get(field);
         }
 
         public void check(Object value)
@@ -47,7 +47,7 @@ public class GUIVars {
 
     public static class GUIFieldVar<T>
             extends FieldVar<T>
-            implements GUIVar<T> {
+            implements SwtEntry<T> {
 
         public GUIFieldVar(GUIFieldMeta meta, Object object) {
             super(meta, object);
@@ -58,8 +58,8 @@ public class GUIVars {
         }
 
         @Override
-        public GUIVarMeta getMeta() {
-            return (GUIVarMeta) super.getMeta();
+        public SwtEntryMetadata1 getMetadata() {
+            return (SwtEntryMetadata1) super.getMetadata();
         }
 
         @Override
@@ -73,7 +73,7 @@ public class GUIVars {
 
     public static class GUIPropertyMeta
             extends PropertyMeta
-            implements GUIVarMeta {
+            implements SwtEntryMetadata1 {
 
         protected final IValidator<Object> validator;
 
@@ -83,8 +83,8 @@ public class GUIVars {
         }
 
         @Override
-        public GUIHint getHint() {
-            return GUIHint.get(property);
+        public SwtEntryMetadata getHint() {
+            return SwtEntryMetadata.get(property);
         }
 
         public void check(Object value)
@@ -100,7 +100,7 @@ public class GUIVars {
 
     public static class GUIPropertyVar<T>
             extends PropertyVar<T>
-            implements GUIVar<T> {
+            implements SwtEntry<T> {
 
         public GUIPropertyVar(PropertyMeta meta, Object object) {
             super(meta, object);
@@ -111,8 +111,8 @@ public class GUIVars {
         }
 
         @Override
-        public GUIVarMeta getMeta() {
-            return (GUIVarMeta) super.getMeta();
+        public SwtEntryMetadata1 getMetadata() {
+            return (SwtEntryMetadata1) super.getMetadata();
         }
 
         @Override
@@ -126,25 +126,25 @@ public class GUIVars {
 
     public static class GUIConstantMeta
             extends ConstantMeta
-            implements GUIVarMeta {
+            implements SwtEntryMetadata1 {
 
-        private final GUIHint hint;
+        private final SwtEntryMetadata hint;
         protected final IValidator<Object> validator;
 
-        public GUIConstantMeta(Class<?> type, GUIHint hint) {
+        public GUIConstantMeta(Class<?> type, SwtEntryMetadata hint) {
             super(type);
             this.hint = hint;
             this.validator = Traits.getTrait(this, IValidator.class);
         }
 
-        public GUIConstantMeta(String name, Class<?> type, GUIHint hint) {
+        public GUIConstantMeta(String name, Class<?> type, SwtEntryMetadata hint) {
             super(name, type);
             this.hint = hint;
             this.validator = Traits.getTrait(this, IValidator.class);
         }
 
         @Override
-        public GUIHint getHint() {
+        public SwtEntryMetadata getHint() {
             return hint;
         }
 
@@ -161,9 +161,9 @@ public class GUIVars {
 
     public static class GUIConstantVar<T>
             extends ConstantVar<T>
-            implements GUIVar<T> {
+            implements SwtEntry<T> {
 
-        public GUIConstantVar(String name, T value, GUIHint hint) {
+        public GUIConstantVar(String name, T value, SwtEntryMetadata hint) {
             super(new GUIConstantMeta(name, value.getClass(), hint), value);
         }
 
@@ -171,7 +171,7 @@ public class GUIVars {
             super(new GUIConstantMeta(name, value.getClass(), null), value);
         }
 
-        public GUIConstantVar(T value, GUIHint hint) {
+        public GUIConstantVar(T value, SwtEntryMetadata hint) {
             super(new GUIConstantMeta(value.getClass(), hint), value);
         }
 
@@ -180,8 +180,8 @@ public class GUIVars {
         }
 
         @Override
-        public GUIVarMeta getMeta() {
-            return (GUIVarMeta) super.getMeta();
+        public SwtEntryMetadata1 getMetadata() {
+            return (SwtEntryMetadata1) super.getMetadata();
         }
 
         @Override
@@ -193,27 +193,27 @@ public class GUIVars {
 
     }
 
-    public static <T> GUIVar<T> wrap(Object object, Field field) {
+    public static <T> SwtEntry<T> wrap(Object object, Field field) {
         return new GUIFieldVar<T>(field, object);
     }
 
-    public static <T> GUIVar<T> wrap(Object object, PropertyDescriptor property) {
+    public static <T> SwtEntry<T> wrap(Object object, PropertyDescriptor property) {
         return new GUIPropertyVar<T>(property, object);
     }
 
-    public static <T> GUIVar<T> wrap(String name, T constant, GUIHint hint) {
+    public static <T> SwtEntry<T> wrap(String name, T constant, SwtEntryMetadata hint) {
         return new GUIConstantVar<T>(name, constant, hint);
     }
 
-    public static <T> GUIVar<T> wrap(String name, T constant) {
+    public static <T> SwtEntry<T> wrap(String name, T constant) {
         return new GUIConstantVar<T>(name, constant);
     }
 
-    public static <T> GUIVar<T> wrap(T constant, GUIHint hint) {
+    public static <T> SwtEntry<T> wrap(T constant, SwtEntryMetadata hint) {
         return new GUIConstantVar<T>(constant, hint);
     }
 
-    public static <T> GUIVar<T> wrap(T constant) {
+    public static <T> SwtEntry<T> wrap(T constant) {
         return new GUIConstantVar<T>(constant);
     }
 

@@ -1,32 +1,44 @@
 package net.bodz.bas.potato.traits;
 
+import net.bodz.bas.util.event.IPropertyChangeListener;
+
 public abstract class AbstractProperty
         extends AbstractElement
         implements IProperty {
-
-    private boolean bound;
-    private boolean constrained;
 
     public AbstractProperty(Class<?> declaringType, String propertyName) {
         super(declaringType, propertyName);
     }
 
     @Override
-    public boolean isBound() {
-        return bound;
-    }
-
-    protected void setBound(boolean bound) {
-        this.bound = bound;
+    public boolean isReadable() {
+        return true;
     }
 
     @Override
-    public boolean isConstrained() {
-        return constrained;
+    public boolean isWritable() {
+        return true;
     }
 
-    protected void setConstrained(boolean constrained) {
-        this.constrained = constrained;
+    @Override
+    public boolean isPropertyChangeSource() {
+        return false;
+    }
+
+    @Override
+    public void addPropertyChangeListener(Object instance, IPropertyChangeListener listener) {
+    }
+
+    @Override
+    public void addPropertyChangeListener(Object instance, String property, IPropertyChangeListener listener) {
+    }
+
+    @Override
+    public void removePropertyChangeListener(Object instance, IPropertyChangeListener listener) {
+    }
+
+    @Override
+    public void removePropertyChangeListener(Object instance, String property, IPropertyChangeListener listener) {
     }
 
 }

@@ -9,7 +9,7 @@ import net.bodz.bas.i18n.dom.DomainString;
 public abstract class AbstractElement
         implements IElement {
 
-    private final Class<?> declaringType;
+    private final Class<?> declaringClass;
     private final String name;
 
     DomainString displayName;
@@ -24,13 +24,13 @@ public abstract class AbstractElement
      *            May be <code>null</code>.
      */
     public AbstractElement(Class<?> declaringType, String name) {
-        this.declaringType = declaringType;
+        this.declaringClass = declaringType;
         this.name = name;
     }
 
     @Override
-    public Class<?> getDeclaringType() {
-        return declaringType;
+    public Class<?> getDeclaringClass() {
+        return declaringClass;
     }
 
     @Override

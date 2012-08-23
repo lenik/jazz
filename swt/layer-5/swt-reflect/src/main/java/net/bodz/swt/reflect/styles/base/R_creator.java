@@ -27,8 +27,8 @@ import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.LineLayout;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.reflect.GUIHint;
-import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.SwtEntryMetadata;
+import net.bodz.swt.reflect.SwtEntry;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
 
@@ -41,7 +41,7 @@ public class R_creator
     Image getIcon(AnnotatedElement... tries)
             throws CreateException {
         for (AnnotatedElement elm : tries) {
-            GUIHint hint = GUIHint.get(elm);
+            SwtEntryMetadata hint = SwtEntryMetadata.get(elm);
             if (hint == null)
                 continue;
             Image icon = hint.getIcon();
@@ -82,15 +82,15 @@ public class R_creator
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+    public Control render(final SWTRenderContext rc, SwtEntry<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         Menu createMenu = new Menu(parent);
-        Class<?> type = var.getMeta().getType();
+        Class<?> type = var.getMetadata().getType();
         IParser<?> parser;
         try {
             parser = Traits.getTrait(type, IParser.class);
-            GUIHint hint = GUIHint.get(type);
-            Image icon = GUIHint.get(type).getIcon();
+            SwtEntryMetadata hint = SwtEntryMetadata.get(type);
+            Image icon = SwtEntryMetadata.get(type).getIcon();
 
         } catch (CreateException e) {
             throw new IllegalUsageError(GUINLS.getString("R_creator.failedGetParser") + type);
@@ -107,7 +107,7 @@ public class R_creator
         }
 
         for (Constructor<?> ctor : type.getConstructors()) {
-            GUIHint hint = GUIHint.get(ctor);
+            SwtEntryMetadata hint = SwtEntryMetadata.get(ctor);
             String label = hint.getLabel();
             if (label == null) {
                 String pt = TypeName.join(", ", true, ctor.getParameterTypes());

@@ -23,7 +23,7 @@ import net.bodz.swt.gui.a.LabelAnnotation;
 import net.bodz.swt.reflect.a.MenuContrib;
 import net.bodz.swt.reflect.a.View;
 
-public class GUIHint {
+public class SwtEntryMetadata {
 
     public String doc;
 
@@ -43,10 +43,10 @@ public class GUIHint {
     private String toolItem;
     private String viewId;
 
-    public GUIHint() {
+    public SwtEntryMetadata() {
     }
 
-    public GUIHint(GUIHint copy) {
+    public SwtEntryMetadata(SwtEntryMetadata copy) {
         if (copy == null)
             return;
         this.doc = copy.doc;
@@ -76,7 +76,7 @@ public class GUIHint {
         return id;
     }
 
-    public GUIHint(GUIHint copy, AnnotatedElement aobject) {
+    public SwtEntryMetadata(SwtEntryMetadata copy, AnnotatedElement aobject) {
         this(copy);
         this.doc = A_bas.getDoc(aobject);
 
@@ -131,23 +131,23 @@ public class GUIHint {
             this.viewId = prep(viewId, aobject);
     }
 
-    protected GUIHint(AnnotatedElement elm) {
+    protected SwtEntryMetadata(AnnotatedElement elm) {
         this(null, elm);
     }
 
-    public static GUIHint get(AnnotatedElement elm) {
+    public static SwtEntryMetadata get(AnnotatedElement elm) {
         // parent...
-        return new GUIHint(elm);
+        return new SwtEntryMetadata(elm);
     }
 
-    public static GUIHint get(PropertyDescriptor property) {
+    public static SwtEntryMetadata get(PropertyDescriptor property) {
         Method readf = property.getReadMethod();
         Method writef = property.getWriteMethod();
-        GUIHint hint = null;
+        SwtEntryMetadata hint = null;
         if (readf != null)
-            hint = new GUIHint(hint, readf);
+            hint = new SwtEntryMetadata(hint, readf);
         if (writef != null)
-            hint = new GUIHint(hint, writef);
+            hint = new SwtEntryMetadata(hint, writef);
         return hint;
     }
 

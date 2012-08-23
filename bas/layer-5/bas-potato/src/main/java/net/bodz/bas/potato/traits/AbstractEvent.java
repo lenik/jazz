@@ -78,7 +78,7 @@ public abstract class AbstractEvent
             throws ReflectiveOperationException {
         String methodName = "add" + ucfirstName + "Listener";
         try {
-            return getDeclaringType().getMethod(methodName, getListenerClass());
+            return getDeclaringClass().getMethod(methodName, getListenerClass());
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -88,7 +88,7 @@ public abstract class AbstractEvent
             throws ReflectiveOperationException {
         String methodName = "remove" + ucfirstName + "Listener";
         try {
-            return getDeclaringType().getMethod(methodName, getListenerClass());
+            return getDeclaringClass().getMethod(methodName, getListenerClass());
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -98,7 +98,7 @@ public abstract class AbstractEvent
             throws ReflectiveOperationException {
         String methodName = "get" + ucfirstName + "Listeners";
         try {
-            return getDeclaringType().getMethod(methodName, getListenerClass());
+            return getDeclaringClass().getMethod(methodName, getListenerClass());
         } catch (NoSuchMethodException e) {
             return null;
         }

@@ -35,6 +35,8 @@ public class ReflectMethod
         return method.invoke(instance, parameters);
     }
 
+    // -o AnnotatedElement
+
     @Override
     public Annotation[] getAnnotations() {
         return method.getAnnotations();
@@ -53,6 +55,11 @@ public class ReflectMethod
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         return method.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public int getModifiers() {
+        return method.getModifiers();
     }
 
 }

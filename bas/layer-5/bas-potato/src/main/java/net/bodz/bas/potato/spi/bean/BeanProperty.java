@@ -4,16 +4,17 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.potato.traits.AbstractProperty;
+import net.bodz.bas.util.event.IPropertyChangeListener;
+import net.bodz.bas.util.event.IPropertyChangeSource;
 
 public class BeanProperty
         extends AbstractProperty {
 
     private final PropertyDescriptor propertyDescriptor;
-    private final Method firstMethod;
+    private Boolean propertyChangeSource;
 
     /**
      * @throws NullPointerException
@@ -22,16 +23,7 @@ public class BeanProperty
      */
     public BeanProperty(Class<?> declaringType, PropertyDescriptor propertyDescriptor) {
         super(declaringType, propertyDescriptor.getName());
-
         this.propertyDescriptor = propertyDescriptor;
-
-        Method method = propertyDescriptor.getReadMethod();
-        if (method == null) {
-            method = propertyDescriptor.getWriteMethod();
-            if (method == null)
-                throw new UnexpectedException("Bean property neither readable nor writable.");
-        }
-        firstMethod = method;
     }
 
     @Override
@@ -57,46 +49,128 @@ public class BeanProperty
     }
 
     @Override
-    public Class<?> getType() {
+    public Class<?> getPropertyType() {
         return propertyDescriptor.getPropertyType();
     }
 
     @Override
-    public Object get(Object instance)
-            throws ReflectiveOperationException {
-        Method readMethod = propertyDescriptor.getReadMethod();
-        if (readMethod == null)
-            throw new NoSuchMethodException("No read method");
-        return readMethod.invoke(instance);
+    public boolean isReadable() {
+        return propertyDescriptor.getReadMethod() != null;
     }
 
     @Override
-    public void set(Object instance, Object value)
-            throws ReflectiveOperationException {
-        Method writeMethod = propertyDescriptor.getWriteMethod();
-        if (writeMethod == null)
-            throw new NoSuchMethodException("No write method");
-        writeMethod.invoke(instance, value);
+    public boolean isWritable() {
+        return propertyDescriptor.getWriteMethod() != null;
     }
+
+    @Override
+    public Object getValue(Object instance)
+            throws ReflectiveOperationException {
+        Method getter = propertyDescriptor.getReadMethod();
+        if (getter == null)
+            throw new NoSuchMethodException("No getter method");
+        return getter.invoke(instance);
+    }
+
+    @Override
+    public void setValue(Object instance, Object value)
+            throws ReflectiveOperationException {
+        Method setter = propertyDescriptor.getWriteMethod();
+        if (setter == null)
+            throw new NoSuchMethodException("No setter method");
+        setter.invoke(instance, value);
+    }
+
+    @Override
+    public boolean isPropertyChangeSource() {
+        if (propertyChangeSource == null) {
+            synchronized (this) {
+                if (propertyChangeSource == null) {
+                    Class<?> declaringType = getDeclaringClass();
+                    propertyChangeSource = IPropertyChangeSource.class.isAssignableFrom(declaringType);
+                }
+            }
+        }
+        return propertyChangeSource;
+    }
+
+    @Override
+    public void addPropertyChangeListener(Object instance, IPropertyChangeListener listener) {
+        if (isPropertyChangeSource()) {
+            IPropertyChangeSource source = (IPropertyChangeSource) instance;
+            source.addPropertyChangeListener(listener);
+        }
+    }
+
+    @Override
+    public void addPropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener) {
+        if (isPropertyChangeSource()) {
+            IPropertyChangeSource source = (IPropertyChangeSource) instance;
+            source.addPropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    @Override
+    public void removePropertyChangeListener(Object instance, IPropertyChangeListener listener) {
+        if (isPropertyChangeSource()) {
+            IPropertyChangeSource source = (IPropertyChangeSource) instance;
+            source.removePropertyChangeListener(listener);
+        }
+    }
+
+    @Override
+    public void removePropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener) {
+        if (isPropertyChangeSource()) {
+            IPropertyChangeSource source = (IPropertyChangeSource) instance;
+            source.removePropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    // -o AnnotatedElement
 
     @Override
     public Annotation[] getAnnotations() {
-        return firstMethod.getAnnotations();
+        Method getter = propertyDescriptor.getReadMethod();
+        if (getter == null)
+            return new Annotation[0];
+        else
+            return getter.getAnnotations();
     }
 
     @Override
     public Annotation[] getDeclaredAnnotations() {
-        return firstMethod.getDeclaredAnnotations();
+        Method getter = propertyDescriptor.getReadMethod();
+        if (getter == null)
+            return new Annotation[0];
+        else
+            return getter.getDeclaredAnnotations();
     }
 
     @Override
     public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-        return firstMethod.getAnnotation(annotationClass);
+        Method getter = propertyDescriptor.getReadMethod();
+        if (getter == null)
+            return null;
+        else
+            return getter.getAnnotation(annotationClass);
     }
 
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
-        return firstMethod.isAnnotationPresent(annotationClass);
+        Method getter = propertyDescriptor.getReadMethod();
+        if (getter == null)
+            return false;
+        else
+            return getter.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public int getModifiers() {
+        Method getter = propertyDescriptor.getReadMethod();
+        if (getter == null)
+            return 0;
+        else
+            return getter.getModifiers();
     }
 
 }

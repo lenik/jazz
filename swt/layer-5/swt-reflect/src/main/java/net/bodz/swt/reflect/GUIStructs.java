@@ -65,10 +65,10 @@ public class GUIStructs {
         }
 
         private final ClassMeta prev;
-        private GUIHint hint;
+        private SwtEntryMetadata hint;
 
-        private List<GUIVarMeta> list;
-        private Map<String, GUIVarMeta> map;
+        private List<SwtEntryMetadata1> list;
+        private Map<String, SwtEntryMetadata1> map;
 
         protected ClassMeta(ClassMeta prev, Class<?> clazz)
                 throws GUIAccessException {
@@ -78,13 +78,13 @@ public class GUIStructs {
         protected ClassMeta(ClassMeta prev, Class<?> clazz, int flags)
                 throws GUIAccessException {
             this.prev = prev;
-            this.hint = new GUIHint(//
+            this.hint = new SwtEntryMetadata(//
                     prev == null ? null : prev.hint, clazz);
             boolean nodup = (flags & NO_DUP_PROPS) != 0;
             if (nodup)
-                map = new HashMap<String, GUIVarMeta>();
+                map = new HashMap<String, SwtEntryMetadata1>();
             else
-                list = new ArrayList<GUIVarMeta>();
+                list = new ArrayList<SwtEntryMetadata1>();
 
             boolean all = (flags & ALL_DECL) != 0;
             boolean force = (flags & FORCE_ACCESS) != 0;
@@ -136,7 +136,7 @@ public class GUIStructs {
                 return new ClassMeta(get(p), clazz, flags);
         }
 
-        void add(String name, GUIVarMeta meta) {
+        void add(String name, SwtEntryMetadata1 meta) {
             if (map != null) {
                 if (map.containsKey(name))
                     logger.warnf(GUINLS.getString("GUIStructs.dupItem_sss"), //
@@ -197,7 +197,7 @@ public class GUIStructs {
             add(name, meta);
         }
 
-        protected void getContents(List<GUIVarMeta> buf) {
+        protected void getContents(List<SwtEntryMetadata1> buf) {
             if (map != null)
                 buf.addAll(map.values());
             else
@@ -206,8 +206,8 @@ public class GUIStructs {
                 prev.getContents(buf);
         }
 
-        public List<GUIVarMeta> getContents() {
-            List<GUIVarMeta> buf = new ArrayList<GUIVarMeta>( //
+        public List<SwtEntryMetadata1> getContents() {
+            List<SwtEntryMetadata1> buf = new ArrayList<SwtEntryMetadata1>( //
                     map != null ? map.size() : list.size());
             getContents(buf);
             return buf;
@@ -227,10 +227,10 @@ public class GUIStructs {
             Class<?> clazz = object.getClass();
             this.meta = ClassMeta.get(clazz);
             this.object = object;
-            List<GUIVarMeta> metas = this.meta.getContents();
+            List<SwtEntryMetadata1> metas = this.meta.getContents();
             // sort?
-            for (GUIVarMeta meta : metas) {
-                GUIVar<?> var;
+            for (SwtEntryMetadata1 meta : metas) {
+                SwtEntry<?> var;
                 if (meta instanceof GUIFieldMeta) {
                     GUIFieldMeta fieldMeta = (GUIFieldMeta) meta;
                     var = new GUIFieldVar<Object>(fieldMeta, object);
@@ -312,16 +312,16 @@ public class GUIStructs {
     }
 
     public static class GUICallMeta
-            implements GUIVarMeta {
+            implements SwtEntryMetadata1 {
 
         protected Method method;
-        protected GUIHint hint;
+        protected SwtEntryMetadata hint;
         protected RetvalMeta retvalMeta;
         protected ParametersMeta parametersMeta;
 
         public GUICallMeta(Method method) {
             this.method = method;
-            this.hint = GUIHint.get(method);
+            this.hint = SwtEntryMetadata.get(method);
             this.retvalMeta = new RetvalMeta(method);
             MethodParameter[] mpv = MethodParameter.getParameters(method);
             this.parametersMeta = new ParametersMeta(mpv);
@@ -381,7 +381,7 @@ public class GUIStructs {
         }
 
         @Override
-        public GUIHint getHint() {
+        public SwtEntryMetadata getHint() {
             return hint;
         }
 
@@ -399,7 +399,7 @@ public class GUIStructs {
 
     public static class GUICallVar
             extends ParametersStruct
-            implements GUIVar<CallObject> {
+            implements SwtEntry<CallObject> {
 
         private static final long serialVersionUID = 7447549523460668389L;
 
@@ -422,7 +422,7 @@ public class GUIStructs {
         }
 
         @Override
-        public GUICallMeta getMeta() {
+        public GUICallMeta getMetadata() {
             return meta;
         }
 
@@ -462,10 +462,10 @@ public class GUIStructs {
     }
 
     public static class RetvalMeta
-            implements GUIVarMeta {
+            implements SwtEntryMetadata1 {
 
         protected final Method method;
-        protected final GUIHint hint;
+        protected final SwtEntryMetadata hint;
 
         public RetvalMeta(Method method) {
             this.method = method;
@@ -522,7 +522,7 @@ public class GUIStructs {
         }
 
         @Override
-        public GUIHint getHint() {
+        public SwtEntryMetadata getHint() {
             return hint;
         }
 
@@ -539,7 +539,7 @@ public class GUIStructs {
     }
 
     public static class RetvalVar
-            implements GUIVar<Object> {
+            implements SwtEntry<Object> {
 
         private final RetvalMeta meta;
         private final CallContext cc;
@@ -551,7 +551,7 @@ public class GUIStructs {
         }
 
         @Override
-        public GUIVarMeta getMeta() {
+        public SwtEntryMetadata1 getMetadata() {
             return meta;
         }
 
@@ -584,19 +584,19 @@ public class GUIStructs {
     }
 
     public static class ParameterMeta
-            implements GUIVarMeta {
+            implements SwtEntryMetadata1 {
 
         protected final MethodParameter param;
         protected final int index;
         protected final boolean readOnly;
-        protected final GUIHint hint;
+        protected final SwtEntryMetadata hint;
         protected final IValidator<Object> checker;
 
         public ParameterMeta(MethodParameter param) {
             this.param = param;
             index = param.getIndex();
             readOnly = param.isAnnotationPresent(ReadOnly.class);
-            hint = GUIHint.get(param);
+            hint = SwtEntryMetadata.get(param);
             try {
                 checker = Traits.getTrait(param, IValidator.class);
             } catch (CreateException e) {
@@ -652,7 +652,7 @@ public class GUIStructs {
         }
 
         @Override
-        public GUIHint getHint() {
+        public SwtEntryMetadata getHint() {
             return hint;
         }
 
@@ -673,7 +673,7 @@ public class GUIStructs {
     }
 
     public static class ParameterVar
-            implements GUIVar<Object> {
+            implements SwtEntry<Object> {
 
         private final ParameterMeta meta;
         private final CallContext cc;
@@ -685,7 +685,7 @@ public class GUIStructs {
         }
 
         @Override
-        public GUIVarMeta getMeta() {
+        public SwtEntryMetadata1 getMetadata() {
             return meta;
         }
 

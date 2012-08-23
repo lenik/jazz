@@ -17,8 +17,8 @@ import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.c.control.CommitAdapter;
 import net.bodz.swt.c.control.CommitException;
 import net.bodz.swt.c.control.ControlAdapters;
-import net.bodz.swt.reflect.GUIVar;
-import net.bodz.swt.reflect.GUIVarMeta;
+import net.bodz.swt.reflect.SwtEntry;
+import net.bodz.swt.reflect.SwtEntryMetadata1;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
 
@@ -26,9 +26,9 @@ public class R_Boolean
         extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final GUIVar<?> var, Composite parent, int style)
+    public Control render(final SWTRenderContext rc, final SwtEntry<?> var, Composite parent, int style)
             throws RenderException, SWTException {
-        GUIVarMeta meta = var.getMeta();
+        SwtEntryMetadata1 meta = var.getMetadata();
         Boolean _val = (Boolean) var.get();
         boolean val = _val == null ? false : _val;
         final Button check = new Button(parent, style | SWT.CHECK);

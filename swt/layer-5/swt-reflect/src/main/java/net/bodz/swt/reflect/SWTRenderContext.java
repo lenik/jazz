@@ -14,10 +14,10 @@ public class SWTRenderContext {
         return new DialogUI(active.getShell());
     }
 
-    public void addEffects(Control control, GUIVar<?> var)
+    public void addEffects(Control control, SwtEntry<?> var)
             throws RenderException {
-        GUIVarMeta meta = var.getMeta();
-        GUIHint hint = meta.getHint();
+        SwtEntryMetadata1 meta = var.getMetadata();
+        SwtEntryMetadata hint = meta.getHint();
         if (hint == null)
             return;
         Device device = control.getDisplay();

@@ -5,13 +5,13 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.swt.reflect.GUIHint;
-import net.bodz.swt.reflect.GUIVar;
-import net.bodz.swt.reflect.GUIVarMeta;
+import net.bodz.swt.reflect.SwtEntryMetadata;
+import net.bodz.swt.reflect.SwtEntry;
+import net.bodz.swt.reflect.SwtEntryMetadata1;
 
 public class SWTInject {
 
-    public static int styleFx(int style, GUIHint hint) {
+    public static int styleFx(int style, SwtEntryMetadata hint) {
         if (hint != null) {
             if (hint.border != 0)
                 style |= SWT.BORDER;
@@ -19,15 +19,15 @@ public class SWTInject {
         return style;
     }
 
-    public static int styleFx(int style, GUIVarMeta meta) {
+    public static int styleFx(int style, SwtEntryMetadata1 meta) {
         return styleFx(style, meta.getHint());
     }
 
-    public static int styleFx(int style, GUIVar<?> var) {
-        return styleFx(style, var.getMeta().getHint());
+    public static int styleFx(int style, SwtEntry<?> var) {
+        return styleFx(style, var.getMetadata().getHint());
     }
 
-    public void inject(Widget widget, GUIHint data)
+    public void inject(Widget widget, SwtEntryMetadata data)
             throws InjectException {
         if (widget instanceof Item)
             inject((Item) widget, data);
@@ -39,7 +39,7 @@ public class SWTInject {
             inject((ToolTip) widget, data);
     }
 
-    public void inject(Item item, GUIHint data)
+    public void inject(Item item, SwtEntryMetadata data)
             throws InjectException {
         try {
             Image icon = data.getIcon();
@@ -80,21 +80,21 @@ public class SWTInject {
         }
     }
 
-    public void inject(Menu menu, GUIHint data) {
+    public void inject(Menu menu, SwtEntryMetadata data) {
         if (data.visible != null)
             menu.setVisible(data.visible);
         if (data.enabled != null)
             menu.setEnabled(data.enabled);
     }
 
-    public void inject(ScrollBar bar, GUIHint data) {
+    public void inject(ScrollBar bar, SwtEntryMetadata data) {
         if (data.visible != null)
             bar.setVisible(data.visible);
         if (data.enabled != null)
             bar.setEnabled(data.enabled);
     }
 
-    public void inject(ToolTip tooltip, GUIHint data) {
+    public void inject(ToolTip tooltip, SwtEntryMetadata data) {
         if (data.visible != null)
             tooltip.setVisible(data.visible);
     }

@@ -3,22 +3,25 @@ package net.bodz.bas.lang.ref;
 import java.lang.reflect.Field;
 
 public class FieldRef<T>
-        implements Ref<T> {
+        extends AbstractRef<T> {
+
+    private static final long serialVersionUID = 1L;
 
     private final Object object;
     private final Field field;
-    private final Class<T> fieldType;
 
     /**
      * @param object
      *            may be <code>null</code> if <code>field</code> refers to a static field.
      */
     public FieldRef(Object object, Field field, Class<T> fieldType) {
-        if (field == null)
-            throw new NullPointerException("field");
         this.object = object;
         this.field = field;
-        this.fieldType = fieldType;
+    }
+
+    @Override
+    public Class<? extends T> getValueType() {
+        return (Class<? extends T>) field.getType();
     }
 
     @Override
@@ -29,7 +32,7 @@ public class FieldRef<T>
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-        return fieldType.cast(fieldValue);
+        return getValueType().cast(fieldValue);
     }
 
     @Override

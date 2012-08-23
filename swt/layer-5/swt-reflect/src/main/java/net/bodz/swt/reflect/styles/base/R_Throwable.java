@@ -30,7 +30,7 @@ import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.SwtEntry;
 import net.bodz.swt.reflect.IAction;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
@@ -53,7 +53,7 @@ public class R_Throwable
     static boolean showDebug = SystemProperties.isDevelopMode();
 
     @Override
-    public Control render(final SWTRenderContext rc, final GUIVar<?> var, final Composite parent, final int style)
+    public Control render(final SWTRenderContext rc, final SwtEntry<?> var, final Composite parent, final int style)
             throws RenderException, SWTException {
         final Display display = parent == null ? Display.getCurrent() //
                 : parent.getDisplay();

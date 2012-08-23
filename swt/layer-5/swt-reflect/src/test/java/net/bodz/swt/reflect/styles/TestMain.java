@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
-import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.SwtEntry;
 import net.bodz.swt.reflect.GUIVars;
 import net.bodz.swt.reflect.styles.grid.SWTGridStrategy;
 import net.bodz.swt.reflect.util.DialogUI;
@@ -21,7 +21,7 @@ public class TestMain
     protected void createInitialView(Composite comp)
             throws UIException, SWTException {
         SWTGridStrategy strategy = new SWTGridStrategy();
-        GUIVar<Object> var = GUIVars.wrap(obj);
+        SwtEntry<Object> var = GUIVars.wrap(obj);
         strategy.render(null, var, comp, SWT.NONE);
     }
 

@@ -27,7 +27,7 @@ public class DefaultPropertyMapTest
 
         IProperty cityProp = propertyMap.getProperty("city");
         assertEquals("city", cityProp.getName());
-        assertSame(AddressBean.class, cityProp.getDeclaringType());
+        assertSame(AddressBean.class, cityProp.getDeclaringClass());
 
         cityProp.set(addr, "New York");
         assertEquals("New York", addr.getCity());

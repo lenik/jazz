@@ -14,10 +14,10 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.reflect.GUIHint;
+import net.bodz.swt.reflect.SwtEntryMetadata;
 import net.bodz.swt.reflect.GUIStructs.GUICallMeta;
 import net.bodz.swt.reflect.GUIStructs.GUICallVar;
-import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.SwtEntry;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
 
@@ -31,13 +31,13 @@ public class R_CallObject
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+    public Control render(final SWTRenderContext rc, SwtEntry<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         if (!(var instanceof GUICallVar))
             throw new IllegalArgumentException(GUINLS.getString("R_CallObject.notGUICallVar") + var);
         final GUICallVar callVar = (GUICallVar) var;
-        GUICallMeta meta = callVar.getMeta();
-        GUIHint hint = meta.getHint();
+        GUICallMeta meta = callVar.getMetadata();
+        SwtEntryMetadata hint = meta.getHint();
         final Composite comp = gridStyle.renderStruct(rc, callVar, parent, style);
         final Composite opbar = new Composite(comp, SWT.NONE);
         opbar.setLayoutData(new GridData(//

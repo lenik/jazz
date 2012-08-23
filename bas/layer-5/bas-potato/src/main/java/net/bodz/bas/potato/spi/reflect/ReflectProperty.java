@@ -2,13 +2,17 @@ package net.bodz.bas.potato.spi.reflect;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import net.bodz.bas.potato.traits.AbstractProperty;
+import net.bodz.bas.util.event.IPropertyChangeListener;
+import net.bodz.bas.util.event.IPropertyChangeSource;
 
 public class ReflectProperty
         extends AbstractProperty {
 
     private final Field field;
+    private Boolean propertyChangeSource;
 
     /**
      * @throws NullPointerException
@@ -20,21 +24,86 @@ public class ReflectProperty
     }
 
     @Override
-    public Class<?> getType() {
+    public Class<?> getPropertyType() {
         return field.getType();
     }
 
     @Override
-    public Object get(Object instance)
+    public boolean isReadable() {
+        // int modifiers = field.getModifiers();
+        // if (Modifier.isPrivate(modifiers))
+        // return false;
+        return true;
+    }
+
+    @Override
+    public boolean isWritable() {
+        int modifiers = field.getModifiers();
+        if (Modifier.isFinal(modifiers))
+            return false;
+        // if (Modifier.isPrivate(modifiers)) return false;
+        // if (field.isAnnotationPresent(ReadOnly.class)) return false;
+        return true;
+    }
+
+    @Override
+    public Object getValue(Object instance)
             throws ReflectiveOperationException {
         return field.get(instance);
     }
 
     @Override
-    public void set(Object instance, Object value)
+    public void setValue(Object instance, Object value)
             throws ReflectiveOperationException {
         field.set(instance, value);
     }
+
+    @Override
+    public boolean isPropertyChangeSource() {
+        if (propertyChangeSource == null) {
+            synchronized (this) {
+                if (propertyChangeSource == null) {
+                    Class<?> declaringType = getDeclaringClass();
+                    propertyChangeSource = IPropertyChangeSource.class.isAssignableFrom(declaringType);
+                }
+            }
+        }
+        return propertyChangeSource;
+    }
+
+    @Override
+    public void addPropertyChangeListener(Object instance, IPropertyChangeListener listener) {
+        if (isPropertyChangeSource()) {
+            IPropertyChangeSource source = (IPropertyChangeSource) instance;
+            source.addPropertyChangeListener(listener);
+        }
+    }
+
+    @Override
+    public void addPropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener) {
+        if (isPropertyChangeSource()) {
+            IPropertyChangeSource source = (IPropertyChangeSource) instance;
+            source.addPropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    @Override
+    public void removePropertyChangeListener(Object instance, IPropertyChangeListener listener) {
+        if (isPropertyChangeSource()) {
+            IPropertyChangeSource source = (IPropertyChangeSource) instance;
+            source.removePropertyChangeListener(listener);
+        }
+    }
+
+    @Override
+    public void removePropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener) {
+        if (isPropertyChangeSource()) {
+            IPropertyChangeSource source = (IPropertyChangeSource) instance;
+            source.removePropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    // -o AnnotatedElement
 
     @Override
     public Annotation[] getAnnotations() {
@@ -54,6 +123,11 @@ public class ReflectProperty
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         return field.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public int getModifiers() {
+        return field.getModifiers();
     }
 
 }

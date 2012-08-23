@@ -61,7 +61,7 @@ public class GridTest_SimpleObject
     protected void createInitialView(Composite holder)
             throws UIException {
         SWTRenderContext rc = new SWTRenderContext();
-        GUIVar<School> schoolVar = GUIVars.wrap(school);
+        SwtEntry<School> schoolVar = GUIVars.wrap(school);
         SWTGridStrategy style = new SWTGridStrategy();
         try {
             style.render(rc, schoolVar, holder, SWT.BORDER);
