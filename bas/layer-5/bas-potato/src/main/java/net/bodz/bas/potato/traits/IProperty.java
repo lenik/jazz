@@ -1,8 +1,8 @@
 package net.bodz.bas.potato.traits;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyDescriptor;
+
+import net.bodz.bas.util.event.IPropertyChangeListener;
 
 public interface IProperty
         extends IElement {
@@ -12,7 +12,11 @@ public interface IProperty
      * 
      * @return Type of the property, never <code>null</code>.
      */
-    Class<?> getType();
+    Class<?> getPropertyType();
+
+    boolean isReadable();
+
+    boolean isWritable();
 
     /**
      * Get the property value from a particular instance.
@@ -22,7 +26,7 @@ public interface IProperty
      * @throws ClassCastException
      *             If <code>instance</code> isn't of the declaring potato type
      */
-    Object get(Object instance)
+    Object getValue(Object instance)
             throws ReflectiveOperationException;
 
     /**
@@ -35,26 +39,23 @@ public interface IProperty
      * @throws IllegalArgumentException
      *             If <code>value</code> isn't instance of type of this property.
      */
-    void set(Object instance, Object value)
+    void setValue(Object instance, Object value)
             throws ReflectiveOperationException;
 
     /**
      * A bound property can cause property change event.
      * 
      * @return <code>true</code> If this is a bound property.
-     * @see PropertyChangeListener
-     * @see PropertyChangeEvent
+     * @see PropertyDescriptor#isBound()
      */
-    boolean isBound();
+    boolean isPropertyChangeSource();
 
-    /**
-     * 
-     * A constrained property can cause vetoable property change event. *
-     * 
-     * @return <code>true</code> If this is a constrained property.
-     * @see VetoableChangeListener
-     * @see PropertyChangeEvent
-     */
-    boolean isConstrained();
+    void addPropertyChangeListener(Object instance, IPropertyChangeListener listener);
+
+    void addPropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener);
+
+    void removePropertyChangeListener(Object instance, IPropertyChangeListener listener);
+
+    void removePropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener);
 
 }

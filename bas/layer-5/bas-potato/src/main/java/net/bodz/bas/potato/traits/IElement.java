@@ -13,7 +13,7 @@ public interface IElement
      * 
      * @return The declaring type.
      */
-    Class<?> getDeclaringType();
+    Class<?> getDeclaringClass();
 
     /**
      * The unique name of the potato element.
@@ -76,6 +76,11 @@ public interface IElement
      * </table>
      */
     int getPreferenceLevel();
+
+    /**
+     * @see java.lang.reflect.Modifier
+     */
+    int getModifiers();
 
     /**
      * Specify the category names this element belongs to.

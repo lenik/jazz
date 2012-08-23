@@ -30,6 +30,8 @@ public class ReflectConstructor
         return ctor.newInstance(ctor, parameters);
     }
 
+    // -o AnnotatedElement
+
     @Override
     public Annotation[] getAnnotations() {
         return ctor.getAnnotations();
@@ -48,6 +50,11 @@ public class ReflectConstructor
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         return ctor.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public int getModifiers() {
+        return ctor.getModifiers();
     }
 
 }

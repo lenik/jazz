@@ -7,31 +7,36 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.NoSuchKeyException;
-import net.bodz.bas.lang.ref.Ref;
+import net.bodz.bas.lang.ref.AbstractRef;
 
-public class PropertyRef<PropertyType>
-        implements Ref<PropertyType> {
+public class BeanPropertyRef<T>
+        extends AbstractRef<T> {
+
+    private static final long serialVersionUID = 1L;
 
     private final Object bean;
 
     private final String propertyName;
-    private final Class<PropertyType> propertyType;
+    private final Class<T> propertyType;
 
-    private final Method readMethod;
-    private final Method writeMethod;
+    private final Method getter;
+    private final Method setter;
     private final Object[] parameters;
 
-    public PropertyRef(Object bean, String propertyName, Class<PropertyType> propertyType, Method readMethod,
-            Method writeMethod, Object... parameters) {
-        if (propertyType == null)
-            throw new NullPointerException("propertyType");
+    public BeanPropertyRef(Object bean, String propertyName, Class<T> propertyType, Method getter, Method setter,
+            Object... parameters) {
+
         if (parameters != null && parameters.length == 0)
             parameters = null;
+
         this.bean = bean;
+
         this.propertyName = propertyName;
         this.propertyType = propertyType;
-        this.readMethod = readMethod;
-        this.writeMethod = writeMethod;
+
+        this.getter = getter;
+        this.setter = setter;
+
         this.parameters = parameters;
     }
 
@@ -40,15 +45,20 @@ public class PropertyRef<PropertyType>
     }
 
     @Override
-    public PropertyType get() {
-        if (readMethod == null)
+    public Class<? extends T> getValueType() {
+        return propertyType;
+    }
+
+    @Override
+    public T get() {
+        if (getter == null)
             throw new UnsupportedOperationException("Can't read from property. ");
         Object propertyValue;
         try {
             if (parameters == null)
-                propertyValue = readMethod.invoke(bean);
+                propertyValue = getter.invoke(bean);
             else
-                propertyValue = readMethod.invoke(bean, parameters);
+                propertyValue = getter.invoke(bean, parameters);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -56,11 +66,11 @@ public class PropertyRef<PropertyType>
     }
 
     @Override
-    public void set(PropertyType value) {
-        if (writeMethod == null)
+    public void set(T value) {
+        if (setter == null)
             throw new UnsupportedOperationException("Can't write to property. ");
         try {
-            writeMethod.invoke(bean, value);
+            setter.invoke(bean, value);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -71,16 +81,16 @@ public class PropertyRef<PropertyType>
         return String.valueOf(bean);
     }
 
-    public static <T> PropertyRef<T> wrap(T bean, Class<T> propertyType, PropertyDescriptor propertyDescriptor,
+    public static <T> BeanPropertyRef<T> wrap(T bean, Class<T> propertyType, PropertyDescriptor propertyDescriptor,
             Object... parameters) {
         if (bean == null)
             throw new NullPointerException("bean");
 
-        Class<?> beanClass = (Class<?>) bean.getClass();
+        Class<?> beanClass = bean.getClass();
         return wrap(beanClass, bean, propertyType, propertyDescriptor, parameters);
     }
 
-    public static <T> PropertyRef<T> wrap(Class<?> beanClass, T bean, Class<T> propertyType,
+    public static <T> BeanPropertyRef<T> wrap(Class<?> beanClass, T bean, Class<T> propertyType,
             PropertyDescriptor propertyDescriptor, Object... parameters) {
         Class<?> actualType = propertyDescriptor.getPropertyType();
         if (!propertyType.isAssignableFrom(actualType))
@@ -90,20 +100,20 @@ public class PropertyRef<PropertyType>
         Method readMethod = propertyDescriptor.getReadMethod();
         Method writeMethod = propertyDescriptor.getWriteMethod();
 
-        PropertyRef<T> propertyRef = new PropertyRef<T>(bean, propertyName, propertyType, readMethod, writeMethod,
-                parameters);
+        BeanPropertyRef<T> propertyRef = new BeanPropertyRef<T>(bean, propertyName, propertyType, readMethod,
+                writeMethod, parameters);
         return propertyRef;
     }
 
-    public static <T> PropertyRef<T> wrap(T bean, Class<T> propertyType, String propertyName, Object... parameters)
+    public static <T> BeanPropertyRef<T> wrap(T bean, Class<T> propertyType, String propertyName, Object... parameters)
             throws IntrospectionException {
         if (bean == null)
             throw new NullPointerException("bean");
-        Class<?> beanClass = (Class<?>) bean.getClass();
+        Class<?> beanClass = bean.getClass();
         return wrap(beanClass, bean, propertyType, propertyName, parameters);
     }
 
-    public static <T> PropertyRef<T> wrap(Class<?> beanClass, T bean, Class<T> propertyType, String propertyName,
+    public static <T> BeanPropertyRef<T> wrap(Class<?> beanClass, T bean, Class<T> propertyType, String propertyName,
             Object... parameters)
             throws IntrospectionException {
         BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);

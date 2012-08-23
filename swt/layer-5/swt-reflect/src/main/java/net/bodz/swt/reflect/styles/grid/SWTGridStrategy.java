@@ -83,16 +83,16 @@ public class SWTGridStrategy
         // icon label control
         GridLayout gridLayout = new GridLayout(3, false);
         grid.setLayout(gridLayout);
-        for (GUIVar<?> childvar : struct)
+        for (SwtEntry<?> childvar : struct)
             renderChild(rc, grid, childvar);
         return grid;
     }
 
-    void renderChild(final SWTRenderContext rc, Composite grid, GUIVar<?> var)
+    void renderChild(final SWTRenderContext rc, Composite grid, SwtEntry<?> var)
             throws RenderException, SWTException {
-        GUIVarMeta meta = var.getMeta();
+        SwtEntryMetadata1 meta = var.getMetadata();
         String name = meta.getName();
-        GUIHint hint = meta.getHint();
+        SwtEntryMetadata hint = meta.getHint();
 
         // Column #1
         Label iconLabel = new Label(grid, SWT.NONE);

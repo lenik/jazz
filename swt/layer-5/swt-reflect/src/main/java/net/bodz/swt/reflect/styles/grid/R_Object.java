@@ -5,10 +5,10 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.reflect.GUIHint;
+import net.bodz.swt.reflect.SwtEntryMetadata;
 import net.bodz.swt.reflect.GUIStruct;
 import net.bodz.swt.reflect.GUIStructs.GUIObjectStruct;
-import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.SwtEntry;
 import net.bodz.swt.reflect.GUIVars;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.styles.base._R_Object;
@@ -23,13 +23,13 @@ public class R_Object
     }
 
     @Override
-    protected Composite renderObject(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+    protected Composite renderObject(final SWTRenderContext rc, SwtEntry<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         assert var != null;
         Object object = var.get();
         if (object == null) {
             object = "(null)";
-            GUIHint hint = new GUIHint();
+            SwtEntryMetadata hint = new SwtEntryMetadata();
             hint.color = new RGB(255, 0, 0);
             var = GUIVars.wrap(object, hint);
         }

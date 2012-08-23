@@ -23,8 +23,8 @@ import net.bodz.swt.c.control.CommitAdapter;
 import net.bodz.swt.c.control.CommitException;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.layout.BorderLayout;
-import net.bodz.swt.reflect.GUIVar;
-import net.bodz.swt.reflect.GUIVarMeta;
+import net.bodz.swt.reflect.SwtEntry;
+import net.bodz.swt.reflect.SwtEntryMetadata1;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
 
@@ -32,9 +32,9 @@ public class R_File
         extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final GUIVar<?> var, final Composite parent, final int style)
+    public Control render(final SWTRenderContext rc, final SwtEntry<?> var, final Composite parent, final int style)
             throws RenderException, SWTException {
-        GUIVarMeta meta = var.getMeta();
+        SwtEntryMetadata1 meta = var.getMetadata();
         File val = (File) var.get();
         assert val != null;
         final Composite comp = new Composite(parent, style);

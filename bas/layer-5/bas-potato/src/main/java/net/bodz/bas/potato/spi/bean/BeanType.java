@@ -1,6 +1,8 @@
 package net.bodz.bas.potato.spi.bean;
 
+import java.beans.BeanDescriptor;
 import java.beans.BeanInfo;
+import java.lang.annotation.Annotation;
 
 import net.bodz.bas.potato.spi.builtin.DefaultEventMap;
 import net.bodz.bas.potato.spi.builtin.DefaultMethodMap;
@@ -15,6 +17,9 @@ import net.bodz.bas.potato.traits.IPropertyMap;
 public class BeanType
         extends AbstractType {
 
+    private BeanDescriptor beanDescriptor;
+    private Class<?> beanClass;
+
     private IPropertyMap propertyMap;
     private IMethodMap methodMap;
     private IConstructorMap constructorMap;
@@ -22,10 +27,22 @@ public class BeanType
 
     public BeanType(BeanInfo beanInfo) {
         super(beanInfo.getBeanDescriptor().getName());
+
+        beanDescriptor = beanInfo.getBeanDescriptor();
+        beanClass = beanDescriptor.getBeanClass();
+
         propertyMap = new DefaultPropertyMap().addBeanProperties(beanInfo);
         methodMap = new DefaultMethodMap().addBeanMethods(beanInfo);
         constructorMap = NullConstructorMap.getInstance();
         eventMap = new DefaultEventMap().addBeanEvents(beanInfo);
+    }
+
+    public BeanDescriptor getBeanDescriptor() {
+        return beanDescriptor;
+    }
+
+    public Class<?> getBeanClass() {
+        return beanClass;
     }
 
     @Override
@@ -46,6 +63,33 @@ public class BeanType
     @Override
     public IEventMap getEventMap() {
         return eventMap;
+    }
+
+    // -o AnnotatedElement
+
+    @Override
+    public Annotation[] getAnnotations() {
+        return beanClass.getAnnotations();
+    }
+
+    @Override
+    public Annotation[] getDeclaredAnnotations() {
+        return beanClass.getDeclaredAnnotations();
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        return beanClass.getAnnotation(annotationClass);
+    }
+
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return beanClass.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public int getModifiers() {
+        return beanClass.getModifiers();
     }
 
 }

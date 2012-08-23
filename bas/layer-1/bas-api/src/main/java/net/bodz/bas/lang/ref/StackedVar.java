@@ -5,10 +5,23 @@ import java.util.LinkedList;
 /**
  * Scoped Var.
  */
-public class ScopedRef<T>
-        implements Ref<T> {
+public class StackedVar<T>
+        extends AbstractRef<T> {
 
+    private static final long serialVersionUID = 1L;
+
+    protected final Class<? extends T> valueType;
     protected LinkedList<T> stack = new LinkedList<T>();
+
+    @SuppressWarnings("unchecked")
+    public StackedVar(Class<?> valueType) {
+        this.valueType = (Class<? extends T>) valueType;
+    }
+
+    @Override
+    public Class<? extends T> getValueType() {
+        return valueType;
+    }
 
     @Override
     public T get() {
@@ -18,10 +31,10 @@ public class ScopedRef<T>
     }
 
     @Override
-    public void set(T o) {
+    public void set(T value) {
         if (stack.isEmpty())
             throw new RuntimeException("stack underflow");
-        stack.set(stack.size(), o);
+        stack.set(stack.size(), value);
     }
 
     public void begin(T init) {

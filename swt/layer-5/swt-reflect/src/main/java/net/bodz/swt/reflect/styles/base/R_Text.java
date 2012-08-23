@@ -22,8 +22,8 @@ import net.bodz.bas.ui.a.Border;
 import net.bodz.swt.c.control.CommitAdapter;
 import net.bodz.swt.c.control.CommitException;
 import net.bodz.swt.c.control.ControlAdapters;
-import net.bodz.swt.reflect.GUIVar;
-import net.bodz.swt.reflect.GUIVarMeta;
+import net.bodz.swt.reflect.SwtEntry;
+import net.bodz.swt.reflect.SwtEntryMetadata1;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.SWTRenderer;
 import net.bodz.swt.reflect.a.MaxLength;
@@ -32,9 +32,9 @@ public class R_Text
         extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final GUIVar<?> var, Composite parent, int style)
+    public Control render(final SWTRenderContext rc, final SwtEntry<?> var, Composite parent, int style)
             throws RenderException, SWTException {
-        GUIVarMeta meta = var.getMeta();
+        SwtEntryMetadata1 meta = var.getMetadata();
         boolean readOnly = meta.isReadOnly();
         String val = String.valueOf(var.get());
         if (readOnly) {

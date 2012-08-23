@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.reflect.GUIVar;
+import net.bodz.swt.reflect.SwtEntry;
 import net.bodz.swt.reflect.SWTRenderContext;
 import net.bodz.swt.reflect.styles.base._R_Object;
 
@@ -19,7 +19,7 @@ public class R_Object
     }
 
     @Override
-    protected Control renderObject(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+    protected Control renderObject(final SWTRenderContext rc, SwtEntry<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         assert var != null;
         // GUIVarMeta meta = var.getMeta();

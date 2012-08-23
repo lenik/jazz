@@ -14,8 +14,8 @@ public abstract class AbstractType
         super(null, name);
     }
 
-    public AbstractType(Class<?> declaringType, String name) {
-        super(declaringType, name);
+    public AbstractType(Class<?> declaringClass, String name) {
+        super(declaringClass, name);
     }
 
     @Override
