@@ -7,7 +7,7 @@ import org.eclipse.swt.layout.FillLayout;
 
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.test.ControlTestApp;
-import net.bodz.swt.c3.test.TestComposite;
+import net.bodz.swt.c.test.TestComposite;
 
 public class FixSizeCompositeTest {
 

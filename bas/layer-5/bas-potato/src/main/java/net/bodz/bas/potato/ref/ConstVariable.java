@@ -12,7 +12,12 @@ public class ConstVariable<T>
     }
 
     @Override
-    public void set(T value) {
+    public IRefDescriptor getDescriptor() {
+        return new ConstVariableDescriptor(name, valueType);
+    }
+
+    @Override
+    public void set(Object value) {
         throw new ReadOnlyException("Can't mutate a const ref");
     }
 

@@ -8,7 +8,7 @@ public abstract class AbstractValidator<T>
 
     @Override
     public void validate(T o, INegotiation negotiation)
-            throws ValidateException, NegotiationException {
+            throws ValidationException, NegotiationException {
         if (negotiation != null)
             negotiation.ignore();
         validate(o);

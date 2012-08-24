@@ -1,11 +1,17 @@
 package net.bodz.bas.potato.traits;
 
+import net.bodz.bas.c.reflect.MethodSignature;
+
 public interface IMethod
         extends IElement {
 
     Class<?> getReturnType();
 
     Class<?>[] getParameterTypes();
+
+    IParameter[] getParameters();
+
+    MethodSignature getSignature();
 
     /**
      * @throws NullPointerException

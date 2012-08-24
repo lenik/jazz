@@ -36,26 +36,27 @@ import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.bas.gui.ia.UIException;
 import net.bodz.bas.loader.boot.BootInfo;
-import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.program.StartMode;
-import net.bodz.swt.c.control.ControlAdapters;
+import net.bodz.bas.potato.book.ArtifactDoc;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.menu.Menus;
 import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.c3.dialog.AboutDialog;
 import net.bodz.swt.c3.dialog.CreditDialog;
 import net.bodz.swt.c3.dialog.SelectLanguageDialog;
 import net.bodz.swt.c3.dialog.ThreadsMonitor;
-import net.bodz.swt.gui.ia.DialogInteraction;
+import net.bodz.swt.c3.ia.DialogInteraction;
 
 /**
+ * @lang en
+ * @lang zh-cn
  * @website http://www.bodz.net/products/BasicGUI
  */
 @BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
 @StartMode(StartMode.GUI)
-@Language({ "en", "zh_CN" })
 public class BasicGUI
         extends BasicCLI {
 
@@ -191,12 +192,12 @@ public class BasicGUI
     }
 
     protected String getTitle() {
-        AppClassDoc classDoc = _loadClassInfo();
-        String title = classDoc.getName();
-        String doc = classDoc.getText().toPlainText();
+        ArtifactDoc artifactDoc = getArtifactDoc();
+        String title = artifactDoc.getName();
+        String doc = artifactDoc.getText().toPlainText();
         if (doc != null)
             title += ": " + doc;
-        String version = classDoc.getVersion().toString();
+        String version = artifactDoc.getVersion().toString();
         return title + " " + version;
     }
 
@@ -204,10 +205,10 @@ public class BasicGUI
             throws UIException {
         Shell shell = new Shell();
         shell.setText(getTitle());
-        AppClassDoc classDoc = _loadClassInfo();
+        ArtifactDoc artifactDoc = getArtifactDoc();
         Image[] icons;
         try {
-            icons = loadImages(classDoc.getIcons());
+            icons = loadImages(artifactDoc.getIcons());
         } catch (IOException e) {
             throw new UIException(e);
         }
@@ -381,7 +382,7 @@ public class BasicGUI
         Label updateTime = new Label(bottomBar, SWT.NONE);
         updateTime.setLayoutData(new GridData(SWT.END, SWT.CENTER, true, false));
         updateTime.setAlignment(SWT.RIGHT);
-        String dateString = _loadClassInfo().getDateString();
+        String dateString = getArtifactDoc().getReleaseDateString();
         if (dateString != null) {
             updateTime.setText(GUINLS.getString("BasicGUI.lastUpdated") + dateString);
         }
@@ -389,9 +390,9 @@ public class BasicGUI
     }
 
     protected String getBannerString() {
-        AppClassDoc classDoc = _loadClassInfo();
-        String author = classDoc.getAuthor().toString();
-        String webSite = classDoc.getWebSite();
+        ArtifactDoc artifactDoc = getArtifactDoc();
+        String author = artifactDoc.getAuthor().toString();
+        String webSite = artifactDoc.getWebSite();
         if (webSite == null)
             webSite = "http://www.bodz.net/";
         String banner = GUINLS.format("BasicGUI.banner", author, webSite, webSite);

@@ -1,15 +1,16 @@
 package net.bodz.bas.gui.err;
 
-import net.bodz.bas.err.CheckException;
 import net.bodz.bas.gui.util.QuietHint;
+import net.bodz.bas.traits.ValidationException;
 
 public class GUIValidationException
-        extends CheckException
+        extends ValidationException
         implements QuietHint {
 
     private static final long serialVersionUID = 1L;
 
     Object control;
+    boolean quiet;
 
     public GUIValidationException() {
         super();
@@ -54,7 +55,7 @@ public class GUIValidationException
 
     @Override
     public boolean isQuiet() {
-        return false;
+        return quiet;
     }
 
 }

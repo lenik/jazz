@@ -75,7 +75,7 @@ public abstract class AbstractType
         if (property == null) {
             throw new NoSuchPropertyException(propertyName);
         }
-        T value = (T) property.get(instance);
+        T value = (T) property.getValue(instance);
         return value;
     }
 
@@ -86,7 +86,7 @@ public abstract class AbstractType
         if (property == null) {
             throw new NoSuchPropertyException(propertyName);
         }
-        property.set(instance, value);
+        property.setValue(instance, value);
     }
 
     @Override

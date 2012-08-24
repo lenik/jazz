@@ -8,10 +8,22 @@ public class PropertyRefEntry<T>
     private static final long serialVersionUID = 1L;
 
     Object instance;
+    IProperty property;
 
     public PropertyRefEntry(Object instance, IProperty property) {
-        super(property.getName(), property);
+        super(property.getName());
         this.instance = instance;
+        this.property = property;
+    }
+
+    @Override
+    public IRefDescriptor getDescriptor() {
+        return new PropertyRefDescriptor(property);
+    }
+
+    @Override
+    public Class<? extends T> getValueType() {
+        return (Class<? extends T>) property.getPropertyType();
     }
 
     @Override
@@ -25,12 +37,24 @@ public class PropertyRefEntry<T>
     }
 
     @Override
-    public void set(T value) {
+    public void set(Object value) {
         try {
             property.setValue(instance, value);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void addValueChangeListener(IValueChangeListener listener) {
+        ValueOfPropertyChangeListener _listener = new ValueOfPropertyChangeListener(listener);
+        property.addPropertyChangeListener(instance, property.getName(), _listener);
+    }
+
+    @Override
+    public void removeValueChangeListener(IValueChangeListener listener) {
+        ValueOfPropertyChangeListener _listener = new ValueOfPropertyChangeListener(listener);
+        property.removePropertyChangeListener(listener, property.getName(), _listener);
     }
 
 }

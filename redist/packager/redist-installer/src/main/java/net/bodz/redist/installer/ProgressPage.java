@@ -37,12 +37,12 @@ import net.bodz.swt.c.composite.DetailSwitchEvent;
 import net.bodz.swt.c.composite.DetailSwitchListener;
 import net.bodz.swt.c.composite.WindowComposite;
 import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c3.ia.DialogInteraction;
 import net.bodz.swt.c3.pageflow.AbstractPage;
 import net.bodz.swt.c3.pageflow.IPage;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.PageMethod;
 import net.bodz.swt.c3.pageflow.ServiceContext;
-import net.bodz.swt.gui.ia.DialogInteraction;
 
 class ProgressPage
         extends AbstractPage {

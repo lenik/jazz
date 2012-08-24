@@ -3,7 +3,7 @@ package net.bodz.bas.validator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.traits.AbstractValidator;
-import net.bodz.bas.traits.ValidateException;
+import net.bodz.bas.traits.ValidationException;
 
 public class RegexValidator
         extends AbstractValidator<String> {
@@ -24,9 +24,9 @@ public class RegexValidator
 
     @Override
     public void validate(String string)
-            throws ValidateException {
+            throws ValidationException {
         if (!pattern.matcher(string).matches())
-            throw new ValidateException(String.format("String Doesn't match with regex(%s): %s", //
+            throw new ValidationException(String.format("String Doesn't match with regex(%s): %s", //
                     pattern.pattern(), string));
     }
 

@@ -16,6 +16,8 @@ import net.bodz.bas.gui.dev.IDrawContext2d;
 public class GDShapes2f
         extends AbstractShape2d {
 
+    private static final long serialVersionUID = 1L;
+
     List<SWTShape2d> shapes;
 
     public GDShapes2f(List<SWTShape2d> shapes, boolean copy) {

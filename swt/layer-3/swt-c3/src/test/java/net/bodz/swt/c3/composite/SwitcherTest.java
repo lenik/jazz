@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.test.ControlTestApp;
-import net.bodz.swt.c3.test.TestComposite;
+import net.bodz.swt.c.test.TestComposite;
 
 public class SwitcherTest {
 

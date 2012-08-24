@@ -1,12 +1,11 @@
 package net.bodz.bas.potato.traits;
 
-import java.lang.reflect.AnnotatedElement;
 import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
 
 public interface IElement
-        extends AnnotatedElement {
+        extends IAnnotatedElement {
 
     /**
      * The type where this element is declared.

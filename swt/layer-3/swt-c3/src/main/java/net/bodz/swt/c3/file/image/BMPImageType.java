@@ -12,7 +12,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.traits.ValidateException;
+import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public class BMPImageType
@@ -56,7 +56,7 @@ public class BMPImageType
 
         @Override
         public Object get()
-                throws ValidateException {
+                throws ValidationException {
             params.compressByRLE = rleCompressedButton.getSelection();
             return params;
         }

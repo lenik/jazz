@@ -8,9 +8,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
-import net.bodz.swt.auto.AbstractVisualType;
-import net.bodz.swt.auto.VisualType;
-import net.bodz.swt.auto.VisualTypes;
+import net.bodz.swt.draw.utils.vt.AbstractVisualType;
+import net.bodz.swt.draw.utils.vt.VisualType;
+import net.bodz.swt.draw.utils.vt.VisualTypes;
 
 public class PropertyEntry2f
         extends Composite {
