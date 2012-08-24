@@ -1,9 +1,17 @@
 package net.bodz.bas.util.event;
 
 /**
+ * Property change event source.
+ * 
+ * WARNING: To support listener-wrappers, an implementation should use maps which utilized the
+ * equality methods ( {@link Object#hashCode()}, {@link Object#equals(Object)}), rather then
+ * identity equality, to store listeners.
+ * 
  * @see java.beans.PropertyChangeSupport
  */
-public interface IPropertyChangeSource {
+public interface IPropertyChangeSource
+// extends EventSource
+{
 
     void addPropertyChangeListener(IPropertyChangeListener listener);
 

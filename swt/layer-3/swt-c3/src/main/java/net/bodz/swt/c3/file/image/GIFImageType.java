@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 
-import net.bodz.bas.traits.ValidateException;
+import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public class GIFImageType
@@ -61,7 +61,7 @@ public class GIFImageType
 
         @Override
         public Params get()
-                throws ValidateException {
+                throws ValidationException {
             return params;
         }
 

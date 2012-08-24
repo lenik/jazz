@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.traits;
 
 import java.lang.annotation.Annotation;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -10,12 +11,13 @@ public abstract class AbstractElement
         implements IElement {
 
     private final Class<?> declaringClass;
-    private final String name;
+    private String name;
 
-    DomainString displayName;
-    DomainString description;
-    DomainString helpDoc;
-    Set<String> tags;
+    private DomainString displayName;
+    private DomainString description;
+    private DomainString helpDoc;
+
+    private Set<String> tags;
 
     /**
      * @param declaringType
@@ -74,6 +76,11 @@ public abstract class AbstractElement
     }
 
     @Override
+    public int getModifiers() {
+        return 0;
+    }
+
+    @Override
     public Set<String> getTags() {
         if (tags == null) {
             synchronized (this) {
@@ -127,6 +134,13 @@ public abstract class AbstractElement
             if (annotationClass.isInstance(a))
                 return true;
         return false;
+    }
+
+    @Override
+    public void findAnnotations(Map<Class<? extends Annotation>, Annotation> map) {
+        Annotation[] annotations = getAnnotations();
+        for (Annotation annotation : annotations)
+            map.put(annotation.getClass(), annotation);
     }
 
     @Override

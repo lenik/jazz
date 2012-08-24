@@ -4,7 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.swt.c3.test.TestComposite;
+import net.bodz.swt.c.test.TestComposite;
 
 public class TestPage2
         extends AbstractPage {

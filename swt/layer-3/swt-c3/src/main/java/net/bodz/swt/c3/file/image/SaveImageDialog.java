@@ -16,7 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.traits.ValidateException;
+import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c3.dialog.ParametersComposite;
@@ -51,7 +51,7 @@ public class SaveImageDialog
 
     @Override
     protected Object evaluate()
-            throws ValidateException, IOException {
+            throws ValidationException, IOException {
         String path = pathText.getText();
         File file = new File(path);
         // if (file.exists()) ;
@@ -155,7 +155,7 @@ public class SaveImageDialog
 
         @Override
         public Object get()
-                throws ValidateException {
+                throws ValidationException {
             return null;
         }
 

@@ -22,6 +22,7 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c3.ia.DialogInteraction;
 
 public class ThreadsMonitor
         extends SimpleDialog {
@@ -37,7 +38,7 @@ public class ThreadsMonitor
     public ThreadsMonitor(Shell parent, int style) {
         super(parent, style, GUINLS.getString("ThreadsMonitor.threadsMonitor"));
         threadMap = new HashMap<Long, Thread>();
-        UI = new DialogUI(parent);
+        UI = new DialogInteraction(parent);
     }
 
     @Override

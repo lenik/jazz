@@ -25,6 +25,7 @@ import net.bodz.bas.i18n.nls.NLS;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c3.ia.DialogInteraction;
 
 public class NavigatorComposite
         extends Composite
@@ -113,7 +114,7 @@ public class NavigatorComposite
         this.dict = book.getDict();
         this.history = history;
         this.pageFlow = new DefaultPageFlow();
-        this.UI = new DialogUI(getShell());
+        this.UI = new DialogInteraction(getShell());
 
         labelFormat_sc = GUINLS.getString("NavigatorComposite.labelFormat_sc");
 

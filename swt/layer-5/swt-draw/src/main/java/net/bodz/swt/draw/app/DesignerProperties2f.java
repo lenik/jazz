@@ -11,7 +11,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import net.bodz.swt.auto.VisualTypes;
+import net.bodz.swt.draw.utils.vt.VisualTypes;
 
 public class DesignerProperties2f {
 

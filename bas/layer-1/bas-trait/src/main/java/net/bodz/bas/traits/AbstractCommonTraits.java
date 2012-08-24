@@ -169,7 +169,7 @@ public abstract class AbstractCommonTraits<T>
 
     @Override
     public void validate(T object, INegotiation negotiation)
-            throws ValidateException, NegotiationException {
+            throws ValidationException, NegotiationException {
         if (negotiation != null)
             negotiation.ignore();
         validate(object);
@@ -285,7 +285,7 @@ public abstract class AbstractCommonTraits<T>
 
     @Override
     public void validate(T object)
-            throws ValidateException {
+            throws ValidationException {
     }
 
     @Override

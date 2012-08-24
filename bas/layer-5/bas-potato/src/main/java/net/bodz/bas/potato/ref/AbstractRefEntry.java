@@ -3,7 +3,6 @@ package net.bodz.bas.potato.ref;
 import java.util.Map;
 
 import net.bodz.bas.lang.ref.AbstractRef;
-import net.bodz.bas.potato.traits.IProperty;
 
 public abstract class AbstractRefEntry<T>
         extends AbstractRef<T>
@@ -11,18 +10,10 @@ public abstract class AbstractRefEntry<T>
 
     private static final long serialVersionUID = 1L;
 
-    private String name;
-    protected final IProperty property;
+    protected String name;
 
-    public AbstractRefEntry(String name, IProperty property) {
+    public AbstractRefEntry(String name) {
         this.name = name;
-        this.property = property;
-    }
-
-    @Override
-    public Class<? extends T> getValueType() {
-        Class<? extends T> propertyType = (Class<? extends T>) property.getPropertyType();
-        return propertyType;
     }
 
     @Override
@@ -32,11 +23,6 @@ public abstract class AbstractRefEntry<T>
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public IProperty getProperty() {
-        return property;
     }
 
     // -o Map.Entry
@@ -56,6 +42,16 @@ public abstract class AbstractRefEntry<T>
         T oldValue = get();
         set(value);
         return oldValue;
+    }
+
+    @Override
+    public void addValueChangeListener(IValueChangeListener listener) {
+        // throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void removeValueChangeListener(IValueChangeListener listener) {
+        // throw new UnsupportedOperationException();
     }
 
 }

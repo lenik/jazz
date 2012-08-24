@@ -41,7 +41,7 @@ public class MapBinding {
         assert map != null;
         for (IProperty property : propertyMap.getProperties()) {
             String name = property.getName();
-            Object value = property.get(instance);
+            Object value = property.getValue(instance);
             map.put(name, value);
         }
     }
@@ -56,7 +56,7 @@ public class MapBinding {
             if (property == null)
                 setNonexistField(name, value);
             else
-                property.set(instance, value);
+                property.setValue(instance, value);
         }
     }
 

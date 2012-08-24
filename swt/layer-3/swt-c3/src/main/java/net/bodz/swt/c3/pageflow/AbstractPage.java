@@ -13,12 +13,19 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.util.Nullables;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.swt.gui.a.IconAnnotation;
 
 public abstract class AbstractPage
         implements IPage {
+
+    ClassDoc classDoc;
 
     protected PageContainer pageContainer;
     protected Composite pageHolder;
@@ -28,16 +35,18 @@ public abstract class AbstractPage
     protected PropertyChangeSupport propertyChangeSupport;
 
     public AbstractPage() {
+        classDoc = ClassDocs.loadFromResource(getClass());
         propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
     @Override
     public String getPageTitle() {
         Class<?> clazz = getClass();
-        String doc = A_bas.getDoc(clazz);
-        if (doc != null)
-            return doc;
-        return clazz.getName();
+        String header = classDoc.getTextHeader().toString();
+        if (!Nullables.isEmpty(header))
+            return header;
+        else
+            return clazz.getCanonicalName();
     }
 
     @Override

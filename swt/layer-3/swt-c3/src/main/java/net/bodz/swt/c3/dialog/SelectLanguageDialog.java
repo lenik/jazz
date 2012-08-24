@@ -13,17 +13,28 @@ import org.eclipse.swt.widgets.Shell;
 import net.bodz.bas.c.java.util.LocaleTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public class SelectLanguageDialog
         extends SimpleDialog {
 
-    private Class<?> declType;
     private List<String> langNames;
     private Combo combo;
 
     public SelectLanguageDialog(Shell parent, int style, Class<?> declType) {
         super(parent, style, "Select Locale");
-        this.declType = declType;
+
+        langNames = new ArrayList<String>();
+
+        while (declType != null) {
+            ArtifactDoc typeDoc = ClassDocs.loadFromResource(declType).as(ArtifactDoc.class);
+
+            for (String lang : typeDoc.getLangs())
+                langNames.add(lang);
+
+            declType = declType.getSuperclass();
+        }
     }
 
     @Override
@@ -43,15 +54,7 @@ public class SelectLanguageDialog
     @Override
     protected void createBody(Composite parent)
             throws CreateException {
-        langNames = new ArrayList<String>();
-        while (declType != null) {
-            Language a = declType.getAnnotation(Language.class);
-            if (a != null) {
-                for (String langName : a.value())
-                    langNames.add(langName);
-            }
-            declType = declType.getSuperclass();
-        }
+
         if (langNames.isEmpty())
             accept(null);
         if (langNames.size() == 1)
@@ -62,11 +65,11 @@ public class SelectLanguageDialog
         combo = new Combo(parent, SWT.READ_ONLY);
         String defaultLocaleName = Locale.getDefault().toString();
         for (int i = 0; i < langNames.size(); i++) {
-            String name = langNames.get(i);
-            Locale locale = LocaleTraits.parseLocale(name);
+            String langName = langNames.get(i);
+            Locale locale = LocaleTraits.parseLocale(langName);
             String caption = locale.getDisplayName();
             combo.add(caption);
-            if (name.equals(defaultLocaleName))
+            if (langName.equals(defaultLocaleName))
                 combo.select(i);
         }
     }

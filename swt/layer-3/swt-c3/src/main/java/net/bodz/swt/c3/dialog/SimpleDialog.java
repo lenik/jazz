@@ -25,11 +25,14 @@ import org.eclipse.swt.widgets.Shell;
 
 import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.traits.ValidateException;
+import net.bodz.bas.gui.util.IValidationListener;
+import net.bodz.bas.gui.util.ValidationEvent;
+import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.c3.ia.DialogInteraction;
 
 public abstract class SimpleDialog
         extends Dialog {
@@ -51,12 +54,12 @@ public abstract class SimpleDialog
     private Composite userBar;
     private Composite basicBar;
 
-    private DialogUI interact;
+    private DialogInteraction ia;
 
     private Object result;
     private boolean canceled;
 
-    private List<ValidateListener> validateListeners;
+    private List<IValidationListener> validationListeners;
     private List<SelectionListener> selectionListeners;
 
     /**
@@ -72,7 +75,7 @@ public abstract class SimpleDialog
             setText(title);
         icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif");
         image = icon;
-        interact = new DialogUI(parent, SWT.APPLICATION_MODAL);
+        ia = new DialogInteraction(parent, SWT.APPLICATION_MODAL);
     }
 
     /**
@@ -113,22 +116,22 @@ public abstract class SimpleDialog
         return result;
     }
 
-    public void addValidateListener(ValidateListener listener) {
-        if (validateListeners == null)
-            validateListeners = new ArrayList<ValidateListener>(1);
-        validateListeners.add(listener);
+    public void addValidationListener(IValidationListener listener) {
+        if (validationListeners == null)
+            validationListeners = new ArrayList<IValidationListener>(1);
+        validationListeners.add(listener);
     }
 
-    public void removeValidateListener(ValidateListener listener) {
-        if (validateListeners != null)
-            validateListeners.remove(listener);
+    public void removeValidationListener(IValidationListener listener) {
+        if (validationListeners != null)
+            validationListeners.remove(listener);
     }
 
-    protected final void fireValidate()
-            throws ValidateException {
-        if (validateListeners != null) {
-            ValidateEvent event = new ValidateEvent(this);
-            for (ValidateListener listener : validateListeners)
+    protected final void fireValidation()
+            throws ValidationException {
+        if (validationListeners != null) {
+            ValidationEvent event = new ValidationEvent(this, result);
+            for (IValidationListener listener : validationListeners)
                 listener.validate(event);
         }
     }
@@ -207,16 +210,16 @@ public abstract class SimpleDialog
             return;
         }
         try {
-            fireValidate();
-        } catch (ValidateException ex) {
-            interact.alert(ControlsNLS.getString("SimpleDialog.checkFailure"), ex);
+            fireValidation();
+        } catch (ValidationException e) {
+            ia.alert(ControlsNLS.getString("SimpleDialog.checkFailure"), e);
             return;
         }
         if (value == EVALUATE) {
             try {
                 value = evaluate();
             } catch (Exception e) {
-                interact.alert("Evaluation exception", e);
+                ia.alert("Evaluation exception", e);
                 return;
             }
         }

@@ -1,5 +1,7 @@
 package net.bodz.bas.potato.traits;
 
+import net.bodz.bas.c.reflect.MethodSignature;
+
 public interface IConstructor
         extends IElement {
 
@@ -12,6 +14,8 @@ public interface IConstructor
     String getName();
 
     Class<?>[] getParameterTypes();
+
+    MethodSignature getSignature();
 
     /**
      * @throws NullPointerException

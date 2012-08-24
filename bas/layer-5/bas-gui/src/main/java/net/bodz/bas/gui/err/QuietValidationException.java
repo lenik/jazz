@@ -1,5 +1,8 @@
 package net.bodz.bas.gui.err;
 
+/**
+ * A helper exception. So you don't have to set quiet=true.
+ */
 public class QuietValidationException
         extends GUIValidationException {
 

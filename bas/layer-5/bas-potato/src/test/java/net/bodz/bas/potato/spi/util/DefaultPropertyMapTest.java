@@ -29,7 +29,7 @@ public class DefaultPropertyMapTest
         assertEquals("city", cityProp.getName());
         assertSame(AddressBean.class, cityProp.getDeclaringClass());
 
-        cityProp.set(addr, "New York");
+        cityProp.setValue(addr, "New York");
         assertEquals("New York", addr.getCity());
     }
 

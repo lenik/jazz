@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.potato.traits.AbstractMethod;
+import net.bodz.bas.potato.traits.IParameter;
 
 public class ReflectMethod
         extends AbstractMethod {
@@ -27,6 +28,11 @@ public class ReflectMethod
     @Override
     public Class<?>[] getParameterTypes() {
         return method.getParameterTypes();
+    }
+
+    @Override
+    protected IParameter createParameter(int index) {
+        return null;
     }
 
     @Override

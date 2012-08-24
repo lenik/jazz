@@ -4,8 +4,7 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.gui.ia.AbstractTryBlock;
 import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.bas.gui.ia.Proposals;
-import net.bodz.swt.gui.ia.DialogInteraction;
-import net.bodz.swt.viz.DialogTryBlockTest;
+import net.bodz.swt.c3.ia.DialogInteraction;
 
 /**
  * @test {@link DialogTryBlockTest}

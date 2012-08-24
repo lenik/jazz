@@ -6,9 +6,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.swt.gui.ia.DialogInteraction;
-import net.bodz.swt.viz.core.SwtEntry;
-import net.bodz.swt.viz.core.SwtEntryMetadata;
+import net.bodz.swt.c3.ia.DialogInteraction;
 
 public class SWTRenderContext {
 
@@ -16,12 +14,15 @@ public class SWTRenderContext {
         return new DialogInteraction(active.getShell());
     }
 
-    public void addEffects(Control control, SwtEntry<?> var)
+    public void addEffects(Control control, IRefEntry_SWT<?> entry)
             throws RenderException {
-        SwtEntryMetadata meta = var.getMetadata();
-        SwtEntryMetadata hint = meta.getHint();
-        if (hint == null)
+        SwtStylesheet stylesheet = entry.getStylesheet();
+        if (stylesheet == null)
             return;
+        addEffects(control, stylesheet);
+    }
+
+    public void addEffects(Control control, SwtStylesheet hint) {
         Device device = control.getDisplay();
         if (hint.doc != null)
             control.setToolTipText(hint.doc);
@@ -40,7 +41,7 @@ public class SWTRenderContext {
             control.setSize(hint.preferredSize);
     }
 
-    public void addAction(IAction action) {
+    public void addAction(ICommand action) {
     }
 
 }
