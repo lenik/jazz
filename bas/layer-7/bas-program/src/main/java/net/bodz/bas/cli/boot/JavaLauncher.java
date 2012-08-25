@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.jvm.exit.CatchExit;
 import net.bodz.bas.jvm.exit.ExitableProgram;
@@ -19,7 +20,6 @@ import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.loader.Classpath;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadUtil;
-import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.sio.Stdio;
@@ -53,7 +53,7 @@ public abstract class JavaLauncher
                 Classpath.addURL(urls);
             }
             if (LOAD_DUMP)
-                UCL.dump(sysLoader, Stdio.cerr);
+                URLClassLoaders.dump(sysLoader, Stdio.cerr);
 
             String mainClassName = getMainClassName();
             mainClass = DefaultBooter.loadFix(sysLoader, mainClassName);

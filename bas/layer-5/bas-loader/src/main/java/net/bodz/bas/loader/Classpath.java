@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.Logger;
@@ -24,7 +25,7 @@ public class Classpath {
         URLClassLoader ucl = (URLClassLoader) loader;
         int count = 0;
         for (URL url : urls) {
-            int added = UCL.addURL(ucl, url);
+            int added = URLClassLoaders.addURL(ucl, url);
             if (added != 0) {
                 count += added;
                 out.p("addURL ", url, " -> ", ucl);
@@ -42,12 +43,12 @@ public class Classpath {
     }
 
     public static void dumpURLs(IPrintOut out) {
-        UCL.dump(Caller.getCallerClassLoader(0), out);
+        URLClassLoaders.dump(Caller.getCallerClassLoader(0), out);
         out.flush();
     }
 
     public static String dumpURLs() {
-        return UCL.dump(Caller.getCallerClassLoader(0));
+        return URLClassLoaders.dump(Caller.getCallerClassLoader(0));
     }
 
 }

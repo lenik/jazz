@@ -10,6 +10,7 @@ import java.util.*;
 
 import net.bodz.bas.c.java.io.FileDiff;
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringArray;
@@ -26,7 +27,6 @@ import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadException;
 import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.TempClassLoader;
-import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
@@ -116,7 +116,7 @@ public class Mkbat
         else
             bootSysLoader = TempClassLoader.get(classpath, initSysLoader);
         if (BOOT_DUMP)
-            UCL.dump(bootSysLoader, Stdio.cerr);
+            URLClassLoaders.dump(bootSysLoader, Stdio.cerr);
     }
 
     @Override

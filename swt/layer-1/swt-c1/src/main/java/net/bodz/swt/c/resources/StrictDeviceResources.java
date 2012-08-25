@@ -17,11 +17,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.*;
 
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.collection.map.IndexMap;
 import net.bodz.bas.err.IllegalArgumentTypeException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 
 public class StrictDeviceResources {
@@ -357,8 +358,8 @@ public class StrictDeviceResources {
     }
 
     static void dumpLoader(ClassLoader loader) {
-        ICharOut out = Stdio.cerr;
-        UCL.dump(loader, out);
+        IPrintOut out = Stdio.cerr;
+        URLClassLoaders.dump(loader, out);
         out.flush();
     }
 

@@ -7,10 +7,10 @@ import java.net.URLClassLoader;
 import org.apache.tools.ant.types.Path;
 
 import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.loader.UCL;
 import net.bodz.bas.model.IFactory;
 import net.bodz.bas.util.Factories;
 
@@ -60,7 +60,7 @@ public class ValueConstruct
             URL url = FileURL.getURL(loc);
             urls[i] = url;
         }
-        UCL.addURL(loader, urls);
+        URLClassLoaders.addURL(loader, urls);
     }
 
     public Object create()

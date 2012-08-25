@@ -141,7 +141,6 @@ public abstract class AbstractComponent
         this.moreSize = moreSize;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<IComponent> getChildren() {
         if (children == null)
@@ -160,7 +159,6 @@ public abstract class AbstractComponent
             children.remove(child);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Set<IComponent> getDependancy() {
         if (dependancy == null)

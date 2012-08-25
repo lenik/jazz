@@ -1,4 +1,4 @@
-package net.bodz.bas.loader;
+package net.bodz.bas.c.java.net;
 
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
 
-public class UCL {
+public class URLClassLoaders {
 
     static Method URLClassLoader_addURL;
     static {
@@ -127,14 +126,6 @@ public class UCL {
         Collect collect = new Collect();
         findURLs(loader, collect);
         return collect.get();
-    }
-
-    public static void findURLs(Iter it) {
-        findURLs(Caller.getCallerClassLoader(0), it);
-    }
-
-    public static URL[] findURLs() {
-        return findURLs(Caller.getCallerClassLoader(0));
     }
 
     public static abstract class Iter {
