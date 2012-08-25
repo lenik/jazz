@@ -1,20 +1,20 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.meta.build.AppClassDoc;
+import net.bodz.bas.potato.book.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public class AbstractPlugin
         implements IPlugin {
 
-    AppClassDoc classDoc;
+    ArtifactDoc artifactDoc;
 
     public AbstractPlugin() {
-        classDoc = ClassDocs.loadFromResource(getClass()).decorate(AppClassDoc.class);
+        artifactDoc = ClassDocs.loadFromResource(getClass()).as(ArtifactDoc.class);
     }
 
     @Override
     public String getDescription() {
-        String description = classDoc.getTextHeader();
+        String description = artifactDoc.getTextHeader();
         return description;
     }
 

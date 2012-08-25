@@ -28,7 +28,6 @@ import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootProc;
-import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
@@ -36,6 +35,7 @@ import net.bodz.bas.meta.program.ProgramName;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.meta.program.StartMode;
 import net.bodz.bas.meta.program.StartModeUtil;
+import net.bodz.bas.potato.book.ArtifactDoc;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
@@ -69,13 +69,13 @@ public class Mkbat
         generated = new HashSet<String>();
         varmap = new HashMap<String, String>();
 
-        AppClassDoc classDoc;
-        classDoc = ClassDocs.loadFromResource(getClass()).decorate(AppClassDoc.class);
-        ReleaseDescription release = classDoc.getReleaseDescription();
+        ArtifactDoc artifactDoc;
+        artifactDoc = ClassDocs.loadFromResource(getClass()).as(ArtifactDoc.class);
+
+        ReleaseDescription release = artifactDoc.getReleaseDescription();
         String releaseId = release.getFriendlyId();
 
-        String generator = releaseId;// + ", " + classInfo.getDateString()
-        ;
+        String generator = releaseId;// + ", " + classInfo.getDateString();
         varmap.put("GENERATOR", generator);
     }
 

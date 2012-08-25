@@ -16,8 +16,8 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.collection.tree.TreeCallback;
-import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.build.IVersion;
+import net.bodz.bas.potato.book.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.util.Author;
 import net.bodz.redist.installer.Schemes.Custom;
@@ -56,18 +56,18 @@ public class AbstractProject
             logo = SWTResources.getImageDataRes(clazz, respath);
         }
 
-        AppClassDoc classDoc = ClassDocs.loadFromResource(clazz).decorate(AppClassDoc.class);
+        ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
         setName(clazz.getName());
         setText(A_bas.getDisplayName(clazz));
-        setDoc(classDoc.getTextHeader());
-        URL iconURL = classDoc.getIcon();
+        setDoc(artifactDoc.getTextHeader());
+        URL iconURL = artifactDoc.getIcon();
         if (iconURL != null) {
             ImageData icon = SWTResources.getImageData(iconURL);
             setImage(icon);
         }
-        version = classDoc.getVersion();
-        company = classDoc.getAuthor();
-        updateTime = classDoc.getDateString();
+        version = artifactDoc.getVersion();
+        company = artifactDoc.getAuthor();
+        updateTime = artifactDoc.getReleaseDateString();
     }
 
     @Override

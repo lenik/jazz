@@ -1,16 +1,22 @@
-package net.bodz.bas.meta.build;
+package net.bodz.bas.potato.book;
 
+import java.text.DateFormat;
+import java.util.Date;
+
+import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.mda.xjdoc.model.DecoratedClassDoc;
-import net.bodz.mda.xjdoc.model.IClassDoc;
+import net.bodz.bas.meta.build.IVersion;
+import net.bodz.bas.meta.build.ReleaseDescription;
+import net.bodz.mda.xjdoc.model.DecoratedElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.util.Author;
 
-public class AppClassDoc
-        extends DecoratedClassDoc {
+public class ArtifactDoc
+        extends DecoratedElementDoc {
 
     private static final long serialVersionUID = 1L;
 
-    public AppClassDoc(IClassDoc _orig) {
+    public ArtifactDoc(IElementDoc _orig) {
         super(_orig);
     }
 
@@ -71,6 +77,31 @@ public class AppClassDoc
         // release.setReleaseNotes(releaseNotes);
 
         return release;
+    }
+
+    public Date getReleaseDate() {
+        return null;
+    }
+
+    static final DateFormat RELEASE_DATE_FORMAT;
+    static {
+        RELEASE_DATE_FORMAT = Dates.YYYY_MM_DD;
+    }
+
+    public String getReleaseDateString() {
+        Date releaseDate = getReleaseDate();
+        if (releaseDate == null)
+            return "recently";
+        else
+            return RELEASE_DATE_FORMAT.format(releaseDate);
+    }
+
+    public String getWebSite() {
+        return "http://example.com";
+    }
+
+    public String[] getLangs() {
+        return null;
     }
 
 }

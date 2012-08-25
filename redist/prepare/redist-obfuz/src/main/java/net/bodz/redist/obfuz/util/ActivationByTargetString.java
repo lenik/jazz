@@ -11,6 +11,8 @@ import java.util.prefs.Preferences;
 
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.redist.obfuz.pm.ProtectException;
 import net.bodz.redist.obfuz.pm.ProtectionModel;
 import net.bodz.redist.obfuz.seals.CodeSet;
@@ -42,17 +44,13 @@ public class ActivationByTargetString {
         if (_activation == null)
             throw new IllegalUsageError(ProtectNLS.getString("ActivationByTargetString.noActivationInfo"));
 
-        // AppClassDoc
+        ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
 
         this.prefix = _activation.prefix();
         this.prefixBytes = prefix.getBytes(encoding);
         this.segments = _activation.segments();
 
-        String[] websites = Ns._getValue(clazz, WebSite.class);
-        if (websites != null && websites.length != 0)
-            website = websites[0];
-        else
-            website = null;
+        this.website = artifactDoc.getWebSite();
 
         String productId = _activation.productId();
         if (productId.isEmpty())

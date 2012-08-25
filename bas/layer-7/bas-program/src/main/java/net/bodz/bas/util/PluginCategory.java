@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.meta.build.AppClassDoc;
+import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 /**
  * Plugin Category
@@ -13,7 +14,7 @@ public class PluginCategory {
 
     private final String categoryName;
     private final Class<? extends IPlugin> categoryBaseType;
-    private final AppClassDoc categoryClassDoc;
+    private final ArtifactDoc categoryDoc;
 
     protected Map<String, PluginTypeEx> registry;
 
@@ -21,7 +22,7 @@ public class PluginCategory {
         assert baseType != null;
         this.categoryName = name;
         this.categoryBaseType = baseType;
-        this.categoryClassDoc = AppClassDoc.get(baseType);
+        this.categoryDoc = ClassDocs.loadFromResource(baseType).as(ArtifactDoc.class);
         registry = new HashMap<String, PluginTypeEx>();
     }
 
@@ -38,7 +39,7 @@ public class PluginCategory {
     }
 
     public String getDescription() {
-        return categoryClassDoc.getTextHeader();
+        return categoryDoc.getTextHeader();
     }
 
     public Map<String, PluginTypeEx> getRegistry() {
