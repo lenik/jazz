@@ -2,6 +2,8 @@ package net.bodz.bas.loader;
 
 import java.net.URL;
 
+import net.bodz.bas.c.java.net.URLClassLoaders;
+
 public class _LoadConfig
         implements LoadConfig {
 
@@ -14,7 +16,7 @@ public class _LoadConfig
     protected ClassLoader addLibs(ClassLoader parent, String... libspecs) {
         URL[] urls = LoadUtil.find(libspecs);
         assert urls != null : "findLibs returns null";
-        return UCL.addOrCreate(parent, urls);
+        return URLClassLoaders.addOrCreate(parent, urls);
     }
 
     @Override

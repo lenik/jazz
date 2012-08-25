@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.lang.fn.Pred1;
 import net.bodz.bas.loader.boot.BootInfo;
@@ -30,7 +31,7 @@ public class DefaultBooter {
         else
             bootSysLoader = TempClassLoader.get(userlibs, initSysLoader);
         if (LOADFIX_DUMP)
-            UCL.dump(bootSysLoader, Stdio.cerr);
+            URLClassLoaders.dump(bootSysLoader, Stdio.cerr);
 
         Class<?> class0 = null;
         // can found by bootSysLoader?
@@ -84,10 +85,10 @@ public class DefaultBooter {
         // add userlibs to the last
         // these libs are specified by Booter-Main(-l, USERLIB, ..., FQCN, ...)
         // OPT..
-        realLoader = UCL.addOrCreate(realLoader, userlibs);
+        realLoader = URLClassLoaders.addOrCreate(realLoader, userlibs);
 
         if (LOAD_DUMP)
-            UCL.dump(realLoader, out);
+            URLClassLoaders.dump(realLoader, out);
         Class<?> class1;
         try {
             class1 = Class.forName(className, false, realLoader);
