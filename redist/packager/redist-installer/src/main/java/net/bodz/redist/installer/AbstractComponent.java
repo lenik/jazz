@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.eclipse.swt.graphics.ImageData;
 
-import net.bodz.bas.meta.build.AppClassDoc;
+import net.bodz.bas.potato.book.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public abstract class AbstractComponent
@@ -37,11 +37,11 @@ public abstract class AbstractComponent
 
     public AbstractComponent(boolean visible, boolean defaultSelection) {
         Class<?> clazz = getClass();
-        AppClassDoc classDoc = ClassDocs.loadFromResource(clazz).decorate(AppClassDoc.class);
+        ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
 
         name = clazz.getSimpleName();
-        text = classDoc.getLabel().toString();
-        doc = classDoc.getText().toString();
+        text = artifactDoc.getLabel().toString();
+        doc = artifactDoc.getText().toString();
         if (doc == null)
             doc = text;
         this.visible = visible;

@@ -9,9 +9,10 @@ import java.util.Map.Entry;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom.DomainStrings;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
@@ -57,60 +58,12 @@ public class ElementDoc
 
     @Transient
     public DomainString getTextHeader() {
-        DomainString header = new XDomainString();
-        for (Entry<String, String> entry : text.entrySet()) {
-            String domain = entry.getKey();
-            String _text = entry.getValue();
-            String _header;
-
-            int parbreak = indexOfParbreak(_text);
-            if (parbreak == -1)
-                _header = _text;
-            else
-                _header = _text.substring(0, parbreak);
-
-            header.put(domain, _header.trim());
-        }
-        return header;
+        return DomainStrings.getTextHeader(text);
     }
 
+    @Transient
     public DomainString getTextBody() {
-        DomainString body = new XDomainString();
-        for (Entry<String, String> entry : text.entrySet()) {
-            String domain = entry.getKey();
-            String _text = entry.getValue();
-            String _body;
-
-            int parbreak = indexOfParbreak(_text);
-            if (parbreak == -1)
-                continue;
-            else
-                _body = _text.substring(parbreak + 1);
-
-            body.put(domain, _body.trim());
-        }
-        return body;
-    }
-
-    static int indexOfParbreak(String s) {
-        int off = 0;
-        while ((off = s.indexOf('\n', off)) != -1) {
-            int ahead = off + 1;
-            if (ahead < s.length()) {
-                char ch = s.charAt(ahead);
-                if (ch == '\n') // \n\n
-                    return off;
-                String after = s.substring(off + 1).trim();
-                if (!after.isEmpty()) {
-                    ch = after.charAt(0);
-                    if (ch == '-') // \n- Here '-' is a special char for line-continue.
-                        continue;
-                    if (!Character.isAlphabetic(ch)) // \n<punct>
-                        return off;
-                }
-            }
-        }
-        return -1;
+        return DomainStrings.getTextBody(text);
     }
 
     @Override
@@ -220,6 +173,11 @@ public class ElementDoc
     protected boolean processInstruction(String command, String data)
             throws ParseException {
         return false;
+    }
+
+    @Override
+    public <T> T as(Class<T> decoratedType) {
+        return new Tooling(this).getWrapper(decoratedType);
     }
 
 }

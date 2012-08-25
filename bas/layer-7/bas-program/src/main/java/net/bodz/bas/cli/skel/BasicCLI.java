@@ -35,12 +35,12 @@ import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.codehint.ChainUsage;
 import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.model.IExecutableVarArgsX;
+import net.bodz.bas.potato.book.ArtifactDoc;
 import net.bodz.bas.potato.traits.IType;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
@@ -229,17 +229,17 @@ public class BasicCLI
     }
 
     protected void _version(IPrintOut out) {
-        AppClassDoc classDoc;
+        ArtifactDoc artifactDoc;
         try {
-            classDoc = ClassDocs.loadFromResource(getClass()).decorate(AppClassDoc.class);
+            artifactDoc = ClassDocs.loadFromResource(getClass()).as(ArtifactDoc.class);
         } catch (ClassDocLoadException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-        ReleaseDescription release = classDoc.getReleaseDescription();
-        out.printf("[%s] %s\n", classDoc.getLabel(), classDoc.getTextHeader());
+        ReleaseDescription release = artifactDoc.getReleaseDescription();
+        out.printf("[%s] %s\n", artifactDoc.getLabel(), artifactDoc.getTextHeader());
         out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
-                classDoc.getAuthor(), //
-                classDoc.getVersion(), //
+                artifactDoc.getAuthor(), //
+                artifactDoc.getVersion(), //
                 release.getReleaseDateString());
     }
 
@@ -520,7 +520,7 @@ public class BasicCLI
         throw new NotImplementedException();
     }
 
-    protected AppClassDoc _loadClassInfo() {
+    protected ArtifactDoc getArtifactDoc() {
         return null;
     }
 

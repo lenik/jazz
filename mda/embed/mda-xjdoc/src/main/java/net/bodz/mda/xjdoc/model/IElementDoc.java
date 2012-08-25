@@ -3,8 +3,10 @@ package net.bodz.mda.xjdoc.model;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.sugar.IWrappedAsable;
 
-public interface IElementDoc {
+public interface IElementDoc
+        extends IWrappedAsable<Object> {
 
     /**
      * Get the (canonical/unique) element name.

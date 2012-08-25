@@ -60,4 +60,9 @@ public abstract class DecoratedElementDoc
         return getWrapped().getTagMap();
     }
 
+    @Override
+    public <T> T as(Class<T> decoratedType) {
+        return getWrapped().as(decoratedType);
+    }
+
 }
