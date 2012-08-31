@@ -5,12 +5,12 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import net.bodz.swt.c3.test.PageTestApp;
+import net.bodz.swt.c3.test.PageTester;
 
 public class PageTestAppTest {
 
     public static void main(String[] args) {
-        PageTestApp app = new PageTestApp(new AbstractPage() {
+        PageTester app = new PageTester(new AbstractPage() {
 
             @Override
             public String getPageTitle() {

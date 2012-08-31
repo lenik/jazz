@@ -9,9 +9,10 @@ import org.junit.Test;
 import net.bodz.swt.c.button.RolloverButton;
 import net.bodz.swt.c.button.RolloverStyle;
 import net.bodz.swt.c.color.Syscolors;
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 
-public class RolloverButtonTest {
+public class RolloverButtonTest
+        extends WidgetTester {
 
     static class SelectionDebug
             implements SelectionListener {
@@ -31,19 +32,20 @@ public class RolloverButtonTest {
     @Test
     public void test1()
             throws Exception {
-        ControlTestApp app = new ControlTestApp();
-        Syscolors ct = new Syscolors(app.display);
+        Syscolors ct = new Syscolors(display);
         RolloverStyle normal = new RolloverStyle(ct.black, ct.white);
         RolloverStyle hover = new RolloverStyle(ct.yellow, ct.red);
         RolloverStyle active = new RolloverStyle(ct.white, ct.black);
 
-        RolloverButton a = new RolloverButton(app.holder, SWT.NONE);
+        RolloverButton a = new RolloverButton(body, SWT.NONE);
+        a.setText("Button");
         a.setNormalStyle(normal);
         a.setHoverStyle(hover);
         a.setActiveStyle(active);
         a.addSelectionListener(new SelectionDebug());
 
-        final RolloverButton b = new RolloverButton(app.holder, SWT.NONE);
+        final RolloverButton b = new RolloverButton(body, SWT.NONE);
+        b.setText("Check");
         b.setNormalStyle(normal);
         b.setHoverStyle(hover);
         b.setActiveStyle(active);
@@ -54,8 +56,6 @@ public class RolloverButtonTest {
                 b.setActive(!b.getActive());
             }
         });
-
-        app.run();
     }
 
 }

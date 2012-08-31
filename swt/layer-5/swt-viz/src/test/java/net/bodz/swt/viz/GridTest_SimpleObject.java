@@ -2,52 +2,22 @@ package net.bodz.swt.viz;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.junit.Test;
 
 import user.ComplexPerson;
+import user.School;
 import user.SimplePerson;
 
-import net.bodz.bas.gui.a.Border;
-import net.bodz.bas.gui.a.Color;
-import net.bodz.bas.gui.a.Label;
 import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.gui.ia.UIException;
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
-import net.bodz.swt.viz.SWTRenderContext;
 
 @PreferredSize(width = 500, height = 400)
 public class GridTest_SimpleObject
-        extends ControlTestApp {
-
-    public static class School {
-
-        /**
-         * School Identifier
-         */
-        @Color(value = "blue", back = "#ccccff")
-        public final String id;
-
-        public School(String id) {
-            this.id = id;
-        }
-
-        @Label("Lucy Girl")
-        @Border
-        public SimplePerson lucy;
-
-        @Label("Lily Girl")
-        public ComplexPerson lily;
-
-        @Override
-        public String toString() {
-            return "Lucy is " + lucy + "\nLily is " + lily;
-        }
-
-    }
+        extends WidgetTester {
 
     private School school;
 
@@ -59,44 +29,27 @@ public class GridTest_SimpleObject
         school.lily.setASL(20, false, "Hometown");
     }
 
-    @Override
-    protected void createInitialView(Composite holder)
-            throws UIException {
+    @Test
+    public void testGridViz()
+            throws Throwable {
+        final Label bar = new Label(shell, SWT.NONE);
+        new Timer(100, bar) {
+            @Override
+            public void run() {
+                bar.setText(String.valueOf(school));
+            }
+        };
+
         SWTRenderContext rc = new SWTRenderContext();
         IRefEntry_SWT<School> schoolVar = GUIVars.wrap(school);
         GridVisualization style = new GridVisualization();
         try {
-            style.render(rc, schoolVar, holder, SWT.BORDER);
+            style.render(rc, schoolVar, body, SWT.BORDER);
         } catch (RenderException e) {
             throw new UIException(e);
         } catch (SWTException e) {
             throw new UIException(e);
         }
-    }
-
-    @Override
-    protected Control createStatusBar(Composite parent) {
-        final org.eclipse.swt.widgets.Label bar = new org.eclipse.swt.widgets.Label(parent, SWT.NONE);
-        new Timer(100) {
-
-            @Override
-            public void run() {
-                bar.setText(String.valueOf(school));
-            }
-
-            @Override
-            public boolean isDisposed() {
-                return bar.isDisposed();
-            }
-
-        };
-        return bar;
-    }
-
-    @Test
-    public void test()
-            throws Throwable {
-        execute();
     }
 
 }

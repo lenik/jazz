@@ -5,19 +5,18 @@ import java.util.Date;
 import org.eclipse.swt.SWT;
 import org.junit.Test;
 
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.extern.DatePicker;
 
-public class DatePickerTest {
+public class DatePickerTest
+        extends WidgetTester {
 
     @Test
-    public void test()
+    public void testPickDate()
             throws Exception {
-        ControlTestApp app = new ControlTestApp();
-        DatePicker picker = new DatePicker(app.holder, SWT.NONE);
+        DatePicker picker = new DatePicker(body, SWT.NONE);
         Date date = new Date();
         picker.setDate(date);
-        app.run();
     }
 
 }

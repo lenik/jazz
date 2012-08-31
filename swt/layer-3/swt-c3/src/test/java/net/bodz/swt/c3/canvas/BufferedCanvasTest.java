@@ -1,23 +1,17 @@
 package net.bodz.swt.c3.canvas;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
+import org.junit.Test;
 
 import net.bodz.swt.c.canvas.BufferedCanvas;
-import net.bodz.swt.c3.control.ControlTest;
+import net.bodz.swt.c.test.WidgetTester;
 
-public class BufferedCanvasTest {
+public class BufferedCanvasTest
+        extends WidgetTester {
 
-    public static void main(String[] args) {
-        new ControlTest() {
-
-            @Override
-            protected void createContents(Shell shell)
-                    throws Exception {
-                new BufferedCanvas(shell, SWT.NONE);
-            }
-
-        }.run();
+    @Test
+    public void test1() {
+        new BufferedCanvas(shell, SWT.NONE);
     }
 
 }

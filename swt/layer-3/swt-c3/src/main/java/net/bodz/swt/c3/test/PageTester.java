@@ -11,11 +11,11 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.pageflow.*;
 
-public class PageTestApp
-        extends ControlTestApp {
+public class PageTester
+        extends WidgetTester {
 
     private NavigatorComposite navigator;
     private SimpleBook book;
@@ -23,14 +23,14 @@ public class PageTestApp
     static final TreePath START = new TreePath("start");
     static final TreePath DEBUG = new TreePath("debug");
 
-    public PageTestApp() {
+    public PageTester() {
         book = new SimpleBook();
         book.setFirst(START);
         book.add(DEBUG, new DebugPage());
         book.addMethod(new PageMethod(DEBUG.getPath(), "Debug"));
     }
 
-    public PageTestApp(IPage pageToTest) {
+    public PageTester(IPage pageToTest) {
         this();
         setTestPage(pageToTest);
     }
@@ -41,7 +41,7 @@ public class PageTestApp
 
     @Override
     public void run() {
-        navigator = new NavigatorComposite(book, holder, SWT.NONE);
+        navigator = new NavigatorComposite(book, body, SWT.NONE);
         navigator.getPageFlow().addBadPathListener(new IBadPathListener() {
             @Override
             public void badPath(BadPathEvent e) {

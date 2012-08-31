@@ -7,20 +7,22 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Region;
 import org.eclipse.swt.widgets.Canvas;
+import org.junit.Test;
 
 import net.bodz.bas.geom_f.base.Rectangle2d;
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 
-public class SWTRegionTest {
+public class SWTRegionTest
+        extends WidgetTester {
 
-    public static void main(String[] args) {
+    @Test
+    public void test1() {
         final SWTRegion region = new SWTRegion();
         region.add(new Rectangle2d(100, 100, 80, 80));
         region.add(new Rectangle2d(200, 200, 100, 100));
         region.remove(new Rectangle2d(150, 150, 70, 80));
 
-        ControlTestApp test = new ControlTestApp();
-        Canvas canvas = new Canvas(test.holder, SWT.BORDER);
+        Canvas canvas = new Canvas(body, SWT.BORDER);
         canvas.addPaintListener(new PaintListener() {
             @Override
             public void paintControl(PaintEvent e) {
@@ -34,7 +36,6 @@ public class SWTRegionTest {
                 e.gc.setClipping((Region) null);
             }
         });
-        test.run();
     }
 
 }
