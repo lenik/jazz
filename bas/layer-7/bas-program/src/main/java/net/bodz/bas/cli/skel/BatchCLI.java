@@ -273,10 +273,10 @@ public class BatchCLI
                     if (fileExclusivePattern.matcher(file.getName()).matches())
                         return false;
                 if (pathInclusivePattern != null)
-                    if (!pathInclusivePattern.matcher(file.getPath()).find())
+                    if (!pathInclusivePattern.matcher(file.getPath().toString()).find())
                         return false;
                 if (pathExclusivePattern != null)
-                    if (pathExclusivePattern.matcher(file.getPath()).find())
+                    if (pathExclusivePattern.matcher(file.getPath().toString()).find())
                         return false;
                 return true;
             }

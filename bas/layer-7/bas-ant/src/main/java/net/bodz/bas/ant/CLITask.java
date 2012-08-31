@@ -59,7 +59,7 @@ public class CLITask
 
     protected Object get(String cliFieldName) {
         try {
-            return appType.getProperty(cliFieldName).get(app);
+            return appType.getProperty(cliFieldName).getValue(app);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -67,7 +67,7 @@ public class CLITask
 
     protected void set(String cliFieldName, Object newValue) {
         try {
-            appType.getProperty(cliFieldName).set(app, newValue);
+            appType.getProperty(cliFieldName).setValue(app, newValue);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -144,7 +144,7 @@ public class CLITask
             }
             // adapting attributes
             if (logLevel != 0) {
-                Logger logger = (Logger) appType.getProperty("logger").get(app);
+                Logger logger = (Logger) appType.getProperty("logger").getValue(app);
                 logger.setDelta(logLevel);
             }
         } catch (CLIException e) {

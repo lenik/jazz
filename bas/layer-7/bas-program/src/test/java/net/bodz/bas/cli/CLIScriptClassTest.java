@@ -30,7 +30,7 @@ public class CLIScriptClassTest
             throws Exception {
         IType type = Potatoes.getType(getClass());
         // ScriptClass<Object> sclass = Scripts.getScriptClass(this);
-        type.getProperty("myName").get(this);
+        type.getProperty("myName").getValue(this);
 
         assertEquals("get myName", "Lucy", type.get(this, "myName"));
         assertEquals("get yourAge", 13, type.get(this, "yourAge"));

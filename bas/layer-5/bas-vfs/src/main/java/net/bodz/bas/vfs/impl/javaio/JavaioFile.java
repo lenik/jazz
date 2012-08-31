@@ -13,6 +13,9 @@ import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.VFSException;
 
+/**
+ * @see LocalFileResource
+ */
 public class JavaioFile
         extends AbstractFile.TransientPath
         implements IFsTree {
