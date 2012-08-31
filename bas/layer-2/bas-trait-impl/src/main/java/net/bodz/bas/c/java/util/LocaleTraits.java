@@ -45,7 +45,7 @@ public class LocaleTraits
 
     @Override
     public Locale parse(String text, INegotiation negotiation)
-            throws ParseException, NegotiationException {
+            throws NegotiationException {
         String separator = defaultTextformSeparator;
 
         for (IParameter param : negotiation) {
@@ -60,13 +60,11 @@ public class LocaleTraits
         return parseLocale(text, separator);
     }
 
-    public static Locale parseLocale(String localeName)
-            throws ParseException {
+    public static Locale parseLocale(String localeName) {
         return parseLocale(localeName, defaultTextformSeparator);
     }
 
-    public static Locale parseLocale(String localeName, String separator)
-            throws ParseException {
+    public static Locale parseLocale(String localeName, String separator) {
         String lang = localeName;
         int sep = lang.indexOf(separator);
         if (sep == -1)
