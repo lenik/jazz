@@ -5,23 +5,24 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.junit.Test;
 
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.layout.LineLayout;
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 
 public class LineLayoutTest
-        extends ControlTestApp {
+        extends WidgetTester {
 
-    @Override
-    public void run() {
-        holder.setLayout(new BorderLayout(0, 0));
+    @Test
+    public void test1() {
+        body.setLayout(new BorderLayout(0, 0));
 
-        final Button button = new Button(holder, SWT.NONE);
+        final Button button = new Button(body, SWT.NONE);
         button.setLayoutData(BorderLayout.NORTH);
         button.setText("button");
 
-        final Composite south = new Composite(holder, SWT.NONE);
+        final Composite south = new Composite(body, SWT.NONE);
         south.setLayout(new LineLayout());
         south.setLayoutData(BorderLayout.SOUTH);
 
@@ -37,7 +38,7 @@ public class LineLayoutTest
         final Button buttonC = new Button(south, SWT.NONE);
         buttonC.setText("test");
 
-        final Composite east = new Composite(holder, SWT.BORDER);
+        final Composite east = new Composite(body, SWT.BORDER);
         east.setLayout(new LineLayout());
         east.setLayoutData(BorderLayout.EAST);
 
@@ -46,11 +47,6 @@ public class LineLayoutTest
 
         final Button button1 = new Button(east, SWT.NONE);
         button1.setText("B");
-    }
-
-    public static void main(String[] args)
-            throws Throwable {
-        new LineLayoutTest().run();
     }
 
 }

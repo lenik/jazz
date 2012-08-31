@@ -3,9 +3,10 @@ package net.bodz.swt.c3.pageflow;
 import org.eclipse.swt.SWT;
 import org.junit.Test;
 
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 
-public class NavigatorCompositeTest {
+public class NavigatorCompositeTest
+        extends WidgetTester {
 
     @Test
     public void test1() {
@@ -14,17 +15,15 @@ public class NavigatorCompositeTest {
         book.add(TestPage2.class, new TestPage2());
         book.setFirst(TestPage1.class);
 
-        final ControlTestApp test = new ControlTestApp();
-        final NavigatorComposite navigator = new NavigatorComposite(book, test.holder, SWT.BORDER);
+        final NavigatorComposite navigator = new NavigatorComposite(book, body, SWT.BORDER);
 
         navigator.getPageFlow().addBadPathListener(new IBadPathListener() {
             @Override
             public void badPath(BadPathEvent e) {
-                test.shell.dispose();
+                shell.dispose();
                 System.out.println("Exit: " + e.path);
             }
         });
-        test.run();
     }
 
 }

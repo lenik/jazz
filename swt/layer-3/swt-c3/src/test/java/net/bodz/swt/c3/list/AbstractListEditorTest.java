@@ -17,9 +17,14 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.junit.Test;
 
 import net.bodz.bas.err.CorruptedStateError;
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 
-public class AbstractListEditorTest {
+public class AbstractListEditorTest
+        extends WidgetTester {
+
+    public AbstractListEditorTest() {
+        super(false);
+    }
 
     @Test
     public void test()
@@ -31,13 +36,11 @@ public class AbstractListEditorTest {
             s += " *";
         }
 
-        ControlTestApp app = new ControlTestApp();
-
-        app.holder.setLayout(new GridLayout(1, true));
-        final Button allowArrangeCheck = new Button(app.holder, SWT.CHECK);
+        body.setLayout(new GridLayout(1, true));
+        final Button allowArrangeCheck = new Button(body, SWT.CHECK);
         allowArrangeCheck.setText("&Allow arrange");
 
-        final AbstractListEditor<File> filesEditor = new AbstractListEditor<File>(app.holder, SWT.NONE) {
+        final AbstractListEditor<File> filesEditor = new AbstractListEditor<File>(body, SWT.NONE) {
             @Override
             protected File createObject() {
                 FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
@@ -80,18 +83,20 @@ public class AbstractListEditorTest {
         });
         filesEditor.setList(files);
 
-        filesEditor.setForeground(app.display.getSystemColor(SWT.COLOR_WHITE));
-        filesEditor.setBackground(app.display.getSystemColor(SWT.COLOR_BLUE));
+        filesEditor.setForeground(display.getSystemColor(SWT.COLOR_WHITE));
+        filesEditor.setBackground(display.getSystemColor(SWT.COLOR_BLUE));
 
         FontData fontData = filesEditor.getFont().getFontData()[0];
         fontData.setHeight(15);
-        Font font = new Font(app.display, fontData);
+        Font font = new Font(display, fontData);
         filesEditor.setFont(font);
 
-        app.run();
+        run();
+
         System.out.println("Result List: ");
         for (int i = 0; i < files.size(); i++) {
             System.out.printf("%d. %s\n", i, files.get(i));
         }
     }
+
 }

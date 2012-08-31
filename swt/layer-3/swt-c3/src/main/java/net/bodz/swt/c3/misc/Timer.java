@@ -1,6 +1,7 @@
 package net.bodz.swt.c3.misc;
 
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Widget;
 
 import net.bodz.swt.widgets.TimerTest;
 
@@ -31,6 +32,7 @@ public abstract class Timer
     private int interval;
     private boolean enabled;
     private Display display;
+    private Widget parent;
 
     private Delayed pending;
     private boolean disposed;
@@ -39,23 +41,16 @@ public abstract class Timer
      * @param interval
      *            in milliseconds
      */
-    public Timer(int interval, boolean enabled, Display display) {
+    public Timer(int interval, boolean enabled, Widget parent) {
         assert display != null;
         this.enabled = enabled;
-        this.display = display;
+        this.parent = parent;
+        this.display = parent.getDisplay();
         setInterval(interval);
     }
 
-    public Timer(int interval, boolean enabled) {
-        this(interval, enabled, Display.getCurrent());
-    }
-
-    public Timer(int interval, Display display) {
-        this(interval, true, display);
-    }
-
-    public Timer(int interval) {
-        this(interval, true);
+    public Timer(int interval, Widget parent) {
+        this(interval, true, parent);
     }
 
     void schedule(int interval) {
@@ -65,7 +60,13 @@ public abstract class Timer
     }
 
     public boolean isDisposed() {
-        return disposed || display.isDisposed();
+        if (disposed)
+            return true;
+        if (display.isDisposed())
+            return true;
+        if (parent != null && parent.isDisposed())
+            return true;
+        return false;
     }
 
     public void dispose() {

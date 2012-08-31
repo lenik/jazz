@@ -10,26 +10,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.junit.Test;
 
 import net.bodz.swt.c.composite.Switcher;
-import net.bodz.swt.c.test.ControlTestApp;
 import net.bodz.swt.c.test.TestComposite;
+import net.bodz.swt.c.test.WidgetTester;
 
-public class SwitcherTest {
+public class SwitcherTest
+        extends WidgetTester {
 
     @Test
-    public void test()
+    public void test1()
             throws Exception {
-        ControlTestApp app = new ControlTestApp();
-        app.holder.setLayout(new GridLayout(1, false));
+        body.setLayout(new GridLayout(1, false));
 
-        final Button check = new Button(app.holder, SWT.CHECK);
-        final Switcher switcher = new Switcher(app.holder, SWT.BORDER, app.holder);
+        final Button check = new Button(body, SWT.CHECK);
+        final Switcher switcher = new Switcher(body, SWT.BORDER, body);
         switcher.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
 
         Composite trueHolder = switcher.get(true);
         // Composite falseHolder = switcher.get(false);
         TestComposite c1 = new TestComposite(trueHolder, SWT.NONE);
         // TestComposite c2 = new TestComposite(falseHolder, SWT.NONE);
-        c1.setBackground(app.display.getSystemColor(SWT.COLOR_WHITE));
+        c1.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
         // c2.setBackground(app.display.getSystemColor(SWT.COLOR_BLUE));
 
         check.setText("&Visible");
@@ -40,8 +40,6 @@ public class SwitcherTest {
                 switcher.set(visible);
             }
         });
-
-        app.run();
     }
 
 }

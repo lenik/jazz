@@ -9,22 +9,22 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.junit.Test;
 
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
 
-public class TimerTest {
+public class TimerTest
+        extends WidgetTester {
 
     int count;
 
     @Test
     public void test()
             throws Exception {
-        ControlTestApp app = new ControlTestApp();
-        app.holder.setLayout(new GridLayout(1, false));
-        final Label counter = new Label(app.holder, SWT.NONE);
+        body.setLayout(new GridLayout(1, false));
+        final Label counter = new Label(body, SWT.NONE);
         counter.setText("Count: ");
         counter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        final Timer timer = new Timer(100, false, app.display) {
+        final Timer timer = new Timer(100, false, counter) {
 
             @Override
             public void run() {
@@ -33,7 +33,7 @@ public class TimerTest {
             }
 
         };
-        final Button button = new Button(app.holder, SWT.CHECK);
+        final Button button = new Button(body, SWT.CHECK);
         button.setText("Enable");
         button.addSelectionListener(new SelectionAdapter() {
 
@@ -44,7 +44,6 @@ public class TimerTest {
             }
 
         });
-        app.run();
     }
 
 }

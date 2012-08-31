@@ -8,22 +8,22 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.junit.Test;
 
-import net.bodz.swt.c.test.ControlTestApp;
+import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.file.FileEditor;
 import net.bodz.swt.c3.file.FileSelector;
 
-public class FileEditorTest {
+public class FileEditorTest
+        extends WidgetTester {
 
     @Test
-    public void test()
+    public void testSelectFileOrDir()
             throws Exception {
-        ControlTestApp app = new ControlTestApp();
-        app.holder.setLayout(new GridLayout(1, false));
+        body.setLayout(new GridLayout(1, false));
 
-        final Button dirMode = new Button(app.holder, SWT.CHECK);
+        final Button dirMode = new Button(body, SWT.CHECK);
         dirMode.setText("&Directory Mode");
 
-        final FileEditor editor = new FileEditor(app.holder, SWT.NONE);
+        final FileEditor editor = new FileEditor(body, SWT.NONE);
         editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final FileSelector fs = new FileSelector();
@@ -41,8 +41,6 @@ public class FileEditorTest {
                     fs.setFileMode(SWT.OPEN);
             }
         });
-
-        app.run();
     }
 
 }

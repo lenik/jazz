@@ -2,7 +2,7 @@ package net.bodz.redist.obfuz.util;
 
 import net.bodz.redist.obfuz.pm.BasicPM;
 import net.bodz.redist.obfuz.pm.ProtectionModel;
-import net.bodz.swt.c3.test.PageTestApp;
+import net.bodz.swt.c3.test.PageTester;
 
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class ActivatePageTest
         ActivationByTargetString abts = getABTS();
         String code = abts.generateFor("next");
         System.out.println("Activation Code: " + code);
-        PageTestApp app = new PageTestApp(new ActivatePage(this, "a:"));
+        PageTester app = new PageTester(new ActivatePage(this, "a:"));
         app.run();
     }
 
