@@ -1,7 +1,5 @@
 package net.bodz.swt.c3.pageflow;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
@@ -21,6 +19,7 @@ import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.i18n.nls.NLS;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
@@ -29,7 +28,7 @@ import net.bodz.swt.c3.ia.DialogInteraction;
 
 public class NavigatorComposite
         extends Composite
-        implements IPageContext {
+        implements IPageContext, II18nCapable {
 
     private static final int MAX_HISTORY = 300;
 
@@ -65,7 +64,7 @@ public class NavigatorComposite
 
         @Override
         protected void handleException(Exception e) {
-            UI.alert(GUINLS.getString("WizardComposite.validateException"), e);
+            UI.alert(tr._("Validate Exception"), e);
         }
 
     }
@@ -116,7 +115,7 @@ public class NavigatorComposite
         this.pageFlow = new DefaultPageFlow();
         this.UI = new DialogInteraction(getShell());
 
-        labelFormat_sc = GUINLS.getString("NavigatorComposite.labelFormat_sc");
+        labelFormat_sc = tr._("%s");
 
         createContents();
     }
@@ -163,7 +162,7 @@ public class NavigatorComposite
         pageIconLabel.setImage(defaultPageIcon);
 
         pageTitleLabel = new Label(titleBar, SWT.WRAP);
-        pageTitleLabel.setText(GUINLS.getString("WizardComposite.pageTitle"));
+        pageTitleLabel.setText(tr._("Title Of Current Page"));
         pageTitleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label titleHr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -192,25 +191,25 @@ public class NavigatorComposite
         if ((flags & SHOW_BEGIN) != 0) {
             goBeginButton = new Button(navBar, SWT.NONE);
             goBeginButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_l_edit.gif"));
-            goBeginButton.setText(GUINLS.getString("WizardComposite.begin"));
+            goBeginButton.setText(tr._("Beg&in"));
         }
 
         if ((flags & SHOW_BACK) != 0) {
             goBackButton = new Button(navBar, SWT.NONE);
             goBackButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_backward.gif"));
-            goBackButton.setText(GUINLS.getString("WizardComposite.back"));
+            goBackButton.setText(tr._("&Back"));
         }
 
         if ((flags & SHOW_FORWARD) != 0) {
             goForwardButton = new Button(navBar, SWT.NONE);
             goForwardButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_forward.gif"));
-            goForwardButton.setText(GUINLS.getString("WizardComposite.next"));
+            goForwardButton.setText(tr._("&Next"));
         }
 
         if ((flags & SHOW_END) != 0) {
             goEndButton = new Button(navBar, SWT.NONE);
             goEndButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_r_edit.gif"));
-            goEndButton.setText(GUINLS.getString("WizardComposite.finish"));
+            goEndButton.setText(tr._("&Finish"));
         }
 
         setupEvents();

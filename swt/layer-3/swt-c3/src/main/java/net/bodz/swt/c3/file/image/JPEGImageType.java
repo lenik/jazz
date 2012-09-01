@@ -1,7 +1,5 @@
 package net.bodz.swt.c3.file.image;
 
-import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -22,7 +20,7 @@ public class JPEGImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("JPEGImageType.name");
+        return tr._("JPEG");
     }
 
     @Override
@@ -51,7 +49,7 @@ public class JPEGImageType
             setLayout(gridLayout);
 
             final Label jpegQualityLabel = new Label(this, SWT.NONE);
-            jpegQualityLabel.setText(ControlsNLS.getString("JPEGImageType.jpegQuality"));
+            jpegQualityLabel.setText(tr._("JPEG &Quality:"));
 
             qualityScale = new Scale(this, SWT.NONE);
             qualityScale.setMinimum(10);

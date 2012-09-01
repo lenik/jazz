@@ -2,11 +2,13 @@ package net.bodz.bas.gui.viz;
 
 import net.bodz.bas.c.type.TypePrMap;
 import net.bodz.bas.gui.ia.UIException;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.util.primitive.Primitives;
 
 public abstract class AbstractVisualization
-        extends TypePrMap<IRenderer> {
+        extends TypePrMap<IRenderer>
+        implements II18nCapable  {
 
     private static final long serialVersionUID = 1L;
 

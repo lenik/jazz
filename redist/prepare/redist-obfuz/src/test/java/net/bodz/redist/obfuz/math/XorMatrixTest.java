@@ -1,8 +1,8 @@
 package net.bodz.redist.obfuz.math;
 
-import net.bodz.redist.obfuz.pm.XorMatrix;
-
 import org.junit.Test;
+
+import net.bodz.redist.obfuz.pm.XorMatrix;
 
 public class XorMatrixTest {
 

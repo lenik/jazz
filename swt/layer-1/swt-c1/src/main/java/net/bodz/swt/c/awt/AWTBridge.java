@@ -1,7 +1,5 @@
 package net.bodz.swt.c.awt;
 
-import static net.bodz.swt.nls.CommonNLS.CommonNLS;
-
 import java.awt.image.*;
 
 import org.eclipse.swt.graphics.ImageData;
@@ -9,8 +7,10 @@ import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.i18n.nls.II18nCapable;
 
-public class AWTBridge {
+public class AWTBridge
+        implements II18nCapable {
 
     /**
      * @see - SWT Snippet 156
@@ -132,10 +132,10 @@ public class AWTBridge {
             int[] componentSize = ccm.getComponentSize();
             for (int i = 0; i < componentSize.length; i++)
                 if (componentSize[i] != 8)
-                    throw new NotImplementedException(CommonNLS.getString("AWTBridge.errBits") + componentSize[i]);
+                    throw new NotImplementedException(tr._("color component bits: ") + componentSize[i]);
             int transferType = ccm.getTransferType();
             if (transferType != DataBuffer.TYPE_BYTE)
-                throw new NotImplementedException(CommonNLS.getString("AWTBridge.errTransType") + transferType);
+                throw new NotImplementedException(tr._("ccm transferType isn\'t BYTE: ") + transferType);
             // XXX - ??
             PaletteData palette = new PaletteData(0x0000ff, 0x00ff00, 0xff0000);
             ImageData data = new ImageData(width, height, pixelSize, palette);
@@ -150,8 +150,7 @@ public class AWTBridge {
             }
             return data;
         } else
-            throw new UnsupportedOperationException(CommonNLS.getString("AWTBridge.errColorModel")
-                    + cm.getClass().getName());
+            throw new UnsupportedOperationException(tr._("colorModel: ") + cm.getClass().getName());
     }
 
 }

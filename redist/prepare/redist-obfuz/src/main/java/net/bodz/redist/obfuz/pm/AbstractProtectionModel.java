@@ -1,7 +1,5 @@
 package net.bodz.redist.obfuz.pm;
 
-import static net.bodz.redist.obfuz.nls.ProtectNLS.ProtectNLS;
-
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.KeyPair;
@@ -14,17 +12,18 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-import net.bodz.redist.obfuz.seals.IdSeededSequence;
-import net.bodz.redist.obfuz.seals.Sequence;
-import net.bodz.redist.obfuz.sysid.SysIdProvider;
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.SystemException;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.text.codec.builtin.HexCodec;
+import net.bodz.redist.obfuz.seals.IdSeededSequence;
+import net.bodz.redist.obfuz.seals.Sequence;
+import net.bodz.redist.obfuz.sysid.SysIdProvider;
 
 public abstract class AbstractProtectionModel
-        implements ProtectionModel {
+        implements ProtectionModel, II18nCapable {
 
     private final SysIdProvider sysIdProvider;
     private final int seed;
@@ -44,7 +43,7 @@ public abstract class AbstractProtectionModel
     public VirtualMachine getVM(String type) {
         VirtualMachine vm = machines.get(type);
         if (vm == null)
-            throw new IllegalUsageException(ProtectNLS.getString("_ProtectionModel.vmIsntExisted") + type);
+            throw new IllegalUsageException(tr._("VM for specified type isn\'t existed: ") + type);
         return vm;
     }
 
@@ -81,7 +80,7 @@ public abstract class AbstractProtectionModel
             String name = names[i];
             Section section = getSection(name);
             if (section == null)
-                throw new NullPointerException(ProtectNLS.getString("_ProtectionModel.sectionIsntDefined") + name);
+                throw new NullPointerException(tr._("Section isn\'t defined: ") + name);
             sections[i] = section;
         }
         return sections;

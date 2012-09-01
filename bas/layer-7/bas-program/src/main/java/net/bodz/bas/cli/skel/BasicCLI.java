@@ -30,6 +30,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.ia.ConsoleInteraction;
 import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.log.ILogSink;
@@ -61,7 +62,7 @@ import net.bodz.mda.xjdoc.conv.ClassDocs;
  */
 @RcsKeywords(id = "$Id$")
 public class BasicCLI
-        implements Runnable, IExecutableVarArgsX<String, Exception> {
+        implements Runnable, IExecutableVarArgsX<String, Exception>, II18nCapable {
 
     /**
      * @option --stdout hidden weak

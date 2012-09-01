@@ -1,18 +1,5 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-import net.bodz.redist.installer.ConfigPage;
-import net.bodz.redist.installer.IComponent;
-import net.bodz.redist.installer.ISession;
-import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.swt.c.layout.BorderLayout;
-import net.bodz.swt.c3.pageflow.IPage;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.PageMethod;
-import net.bodz.swt.c3.pageflow.ServiceContext;
-import net.bodz.swt.widgets.util.Playback;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -21,6 +8,18 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.bas.c.system.SystemProperties;
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.redist.installer.ConfigPage;
+import net.bodz.redist.installer.IComponent;
+import net.bodz.redist.installer.ISession;
+import net.bodz.swt.c.layout.BorderLayout;
+import net.bodz.swt.c3.pageflow.IPage;
+import net.bodz.swt.c3.pageflow.PageException;
+import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c3.pageflow.ServiceContext;
+import net.bodz.swt.widgets.util.Playback;
 
 public class LicensePage
         extends ConfigPage {
@@ -40,7 +39,7 @@ public class LicensePage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("LicensePage.title");
+        return tr._("License");
     }
 
     @Override
@@ -62,11 +61,11 @@ public class LicensePage
         };
 
         agreeButton = new Button(composite, SWT.RADIO);
-        agreeButton.setText(PackNLS.getString("LicensePage.agree"));
+        agreeButton.setText(tr._("&Agree"));
         agreeButton.addSelectionListener(refreshMethods);
 
         disagreeButton = new Button(composite, SWT.RADIO);
-        disagreeButton.setText(PackNLS.getString("LicensePage.disagree"));
+        disagreeButton.setText(tr._("&Disagree"));
         disagreeButton.addSelectionListener(refreshMethods);
 
         if (SystemProperties.isDevelopMode())

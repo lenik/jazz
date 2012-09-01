@@ -1,7 +1,5 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -226,7 +224,7 @@ public class FileCopy
             long sum = 0;
 
             Attachment a = getAttachment(session, true);
-            logger.infof(PackNLS.getString("FileCopy.packFiles_ss"), getId(), a);
+            logger.infof(tr._("Pack %s files to %s\n"), getId(), a);
 
             ZipOutputStream zout;
             try {
@@ -253,7 +251,7 @@ public class FileCopy
                 else {
                     // fix: see "path += File.separator" above.
                     if (!path.startsWith(removal)) {
-                        String mesg = PackNLS.getString("FileCopy.notWithinPrefix") + removal + ": " + path;
+                        String mesg = tr._("File not within the prefix ") + removal + ": " + path;
                         if (recoverException(new InstallException(mesg)))
                             continue; // next file
                         return;
@@ -272,14 +270,14 @@ public class FileCopy
                 try {
                     if (f.isDirectory()) {
                         assert dest.endsWith("/");
-                        logger.log(PackNLS.getString("FileCopy.putEntry"), dest);
+                        logger.log(tr._("Put entry "), dest);
                         JarEntry entry = new JarEntry(dest);
                         zout.putNextEntry(entry);
                         zout.closeEntry();
                         sum += dirFileSize;
                     } else if (f.isFile()) {
                         long fileSize = f.length();
-                        logger.logf(PackNLS.getString("FileCopy.putEntry_sd"), dest, fileSize);
+                        logger.logf(tr._("Put entry %s (size=%d) "), dest, fileSize);
                         JarEntry entry = new JarEntry(dest);
                         // entry.setSize(fileSize);
                         zout.putNextEntry(entry);
@@ -305,7 +303,7 @@ public class FileCopy
                             logger.warnf("Incorrect file size %d, %d more bytes doesn't exist\n", fileSize, remaining);
                         sum += fileSize;
                     } else {
-                        logger.warn(PackNLS.getString("FileCopy.unknownFileType"), f);
+                        logger.warn(tr._("Ignored file of unknown type: "), f);
                         continue;
                     }
                     list.add(dest);
@@ -337,10 +335,10 @@ public class FileCopy
             if (!preConstruct)
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
-            logger.infof(PackNLS.getString("FileCopy.installFiles_ss"), getId(), baseDir);
+            logger.infof(tr._("Install %s files to %s\n"), getId(), baseDir);
             Data data = (Data) getRegistryData();
             if (data == null || data.list == null)
-                throw new IllegalStateException(PackNLS.getString("FileCopy.missingRegistry"));
+                throw new IllegalStateException(tr._("Missing registry data, which contains the file list to copy."));
 
             setProgressSize(data.list.length);
 
@@ -359,7 +357,7 @@ public class FileCopy
                         break;
                     ZipEntry entry = zipFile.getEntry(name);
                     if (entry == null) {
-                        InstallException ex = new InstallException(PackNLS.getString("FileCopy.entryIsntExisted")
+                        InstallException ex = new InstallException(tr._("Entry isn\'t existed: ")
                                 + name);
                         if (recoverException(ex))
                             continue;
@@ -381,11 +379,11 @@ public class FileCopy
                     if (autoMkdirs) {
                         File destParentDir = destFile.getParentFile();
                         if (!destParentDir.isDirectory()) {
-                            logger.log(PackNLS.getString("FileCopy.mkdir"), destParentDir, "/");
+                            logger.log(tr._("Create  directory "), destParentDir, "/");
                             destParentDir.mkdirs();
                         }
                     }
-                    logger.log(PackNLS.getString("FileCopy.extract"), destFile);
+                    logger.log(tr._("Extract "), destFile);
                     FileOutputStream destOut = null;
                     try {
                         InputStream entryIn = zipFile.getInputStream(entry);
@@ -397,7 +395,7 @@ public class FileCopy
                             int cb = Math.min(blockSize, (int) remaining);
                             cb = entryIn.read(block, 0, cb);
                             if (cb == -1)
-                                throw new IOException(PackNLS.getString("FileCopy.unexpectedEOF") + name);
+                                throw new IOException(tr._("Unexpected end of file: ") + name);
                             destOut.write(block, 0, cb);
                             remaining -= cb;
                         }
@@ -409,7 +407,7 @@ public class FileCopy
                             try {
                                 destOut.close();
                             } catch (IOException e) {
-                                logger.warn(PackNLS.getString("FileCopy.cantCloseDest"), destFile);
+                                logger.warn(tr._("Can\'t close dest file "), destFile);
                             }
                     }
                 }
@@ -436,13 +434,13 @@ public class FileCopy
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
             }
-            logger.infof(PackNLS.getString("FileCopy.removeFiles_ss"), getId(), baseDir);
+            logger.infof(tr._("Remove %s files from %s\n"), getId(), baseDir);
             Attachment a = getAttachment(session, false);
             ZipInputStream zin = null;
             try {
                 zin = a.getZipIn();
             } catch (IOException e) {
-                throwException(new InstallException(PackNLS.getString("FileCopy.errorRead") + a, e));
+                throwException(new InstallException(tr._("Failed to read from ") + a, e));
                 return;
             }
             List<String> names = new ArrayList<String>();
@@ -452,7 +450,7 @@ public class FileCopy
                     names.add(entry.getName());
                 zin.close();
             } catch (IOException e) {
-                throwException(new InstallException(PackNLS.getString("FileCopy.failedToListArchive"), e));
+                throwException(new InstallException(tr._("Failed to list the archive"), e));
                 return;
             } finally {
                 try {
@@ -468,19 +466,19 @@ public class FileCopy
                     name = name.substring(0, name.length() - 1);
                 File dest = new File(baseDir, name);
                 if (!dest.exists()) {
-                    logger.log(PackNLS.getString("FileCopy.fileNotExist"), dest);
+                    logger.log(tr._("File doesn\'t exist: "), dest);
                     continue;
                 }
                 if (isdir) {
-                    logger.log(PackNLS.getString("FileCopy.deleteDir"), dest);
+                    logger.log(tr._("Delete directory "), dest);
                     dest.delete();
                     continue;
                 }
-                logger.log(PackNLS.getString("FileCopy.deleteFile"), dest);
+                logger.log(tr._("Delete file "), dest);
                 if (dest.delete())
                     Utils.removeEmptyParents(dest.getParentFile(), baseDir);
                 else {
-                    logger.logf(PackNLS.getString("FileCopy.cantDelete_s"), dest);
+                    logger.logf(tr._("Can\'t delete file %s, try at exit\n"), dest);
                     dest.deleteOnExit();
                     session.getFlags().set(ISession.REBOOT);
                 }

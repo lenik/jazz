@@ -5,7 +5,6 @@ import javax.vecmath.Tuple2f;
 
 import net.bodz.bas.c.javax.vecmath.I_Tuple2f_;
 import net.bodz.bas.c.javax.vecmath.Vector2f;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.geom_f.api.AbstractShape2d;
 import net.bodz.bas.geom_f.api.PickResult2d;
 import net.bodz.bas.geom_f.api.PositiveHalfPlane;

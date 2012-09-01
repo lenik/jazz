@@ -1,7 +1,5 @@
 package net.bodz.swt.viz.builtin;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.io.File;
 import java.util.EventObject;
 
@@ -52,7 +50,7 @@ public class R_File
         fileText.setLayoutData(BorderLayout.CENTER);
 
         final Button browseButton = new Button(comp, SWT.NONE);
-        browseButton.setText(GUINLS.getString("R_File.browse"));
+        browseButton.setText(tr._("Browse"));
         browseButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -73,7 +71,7 @@ public class R_File
             try {
                 validator = Traits.getTrait(valueType, IValidator.class);
             } catch (QueryException e) {
-                throw new RenderException(GUINLS.getString("R_Text.cantGuessParserForNum") + valueType);
+                throw new RenderException(tr._("Can\'t guess parser for number class: ") + valueType);
             }
 
             ControlAdapters.commit(fileText, new CommitAdapter(//

@@ -1,13 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.PageMethod;
-import net.bodz.swt.c3.pageflow.ServiceContext;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
@@ -15,6 +7,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.sio.BCharOut;
+import net.bodz.swt.c3.pageflow.AbstractPage;
+import net.bodz.swt.c3.pageflow.PageException;
+import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c3.pageflow.ServiceContext;
 
 class SummaryPage
         extends AbstractPage {
@@ -37,14 +36,14 @@ class SummaryPage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("SummaryPage.summary");
+        return tr._("Summary");
     }
 
     @Override
     protected void createContents(Composite holder) {
         holder.setLayout(new GridLayout());
         final Label sessionConfigurationLabel = new Label(holder, SWT.NONE);
-        sessionConfigurationLabel.setText(PackNLS.getString("SummaryPage.sessionConfig"));
+        sessionConfigurationLabel.setText(tr._("Session Configuration: "));
 
         text = new Text(holder, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI | SWT.BORDER);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -57,7 +55,7 @@ public class Installer
             }
         }
         if (project == null)
-            throw new IllegalUsageError(PackNLS.getString("Installer.noConfig"));
+            throw new IllegalUsageError(tr._("no config specified"));
     }
 
     @Override
@@ -79,7 +77,7 @@ public class Installer
     protected String getTitle() {
         String text = project.getText();
         IVersion version = project.getVersion();
-        return text + PackNLS.getString("Installer.installer") + version;
+        return text + tr._(" Installer ") + version;
     }
 
     public ISession getSession() {

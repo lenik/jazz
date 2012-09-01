@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +13,7 @@ import net.bodz.bas.ant.TaskLogger;
 import net.bodz.bas.ant.WithNamedParameters;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.util.exception.ExceptionBuffer;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 import net.bodz.bas.vfs.IFile;
@@ -22,7 +21,8 @@ import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 public abstract class ExecuteProjectTask
-        extends Task {
+        extends Task
+        implements II18nCapable {
 
     private IProject project;
     private String scheme;
@@ -46,7 +46,7 @@ public abstract class ExecuteProjectTask
 
     public void setResFolder(IFsTree resFolder) {
         if (this.resFolder != null)
-            throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsSpecified") + resFolder);
+            throw new BuildException(tr._("ResFolder is already specified: ") + resFolder);
         this.resFolder = resFolder;
     }
 
@@ -79,9 +79,9 @@ public abstract class ExecuteProjectTask
     public void execute()
             throws BuildException {
         if (project == null)
-            throw new BuildException(PackNLS.getString("ExecuteProjectTask.projectIsntSpecified"));
+            throw new BuildException(tr._("Project isn\'t specified"));
         if (resFolder == null)
-            throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsntSpecified"));
+            throw new BuildException(tr._("Resource folder isn\'t specified"));
         TaskLogger logger = new TaskLogger(this);
         logger.setLevel(logger.getLevel(), verboseLevel);
         final List<Exception> exceptions = new ArrayList<Exception>();
@@ -106,7 +106,7 @@ public abstract class ExecuteProjectTask
         for (Map.Entry<String, ?> e : map.entrySet()) {
             String name = e.getKey();
             if (!vardef.containsKey(name))
-                throw new IllegalArgumentException(PackNLS.getString("ExecuteProjectTask.undefinedVariable") + name);
+                throw new IllegalArgumentException(tr._("Undefined variable: ") + name);
             Object value = e.getValue();
             session.set(name, value);
         }

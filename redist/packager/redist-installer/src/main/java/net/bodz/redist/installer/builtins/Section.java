@@ -1,10 +1,10 @@
 package net.bodz.redist.installer.builtins;
 
+import org.eclipse.swt.graphics.ImageData;
+
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.ISession;
-
-import org.eclipse.swt.graphics.ImageData;
 
 public class Section
         extends AbstractComponent {

@@ -38,7 +38,7 @@ public class R_CallObject
             throws RenderException, SWTException {
 
         if (!(entry instanceof InvocationRefcomp))
-            throw new IllegalArgumentException(GUINLS.getString("R_CallObject.notInvocationRefcomp") + entry);
+            throw new IllegalArgumentException(tr._("R_CallObject.notInvocationRefcomp") + entry);
 
         final InvocationRefcomp refcomp = (InvocationRefcomp) entry;
         InvocationDescriptor descriptor = refcomp.getDescriptor();
@@ -73,7 +73,7 @@ public class R_CallObject
                             opbar.layout();
                         }
                     } catch (ReflectiveOperationException ex) {
-                        String mesg = GUINLS.getString("R_CallObject.failedToCall");
+                        String mesg = tr._("Failed to invoke call");
                         rc.interact(button).alert(mesg, ex);
                     }
                 }

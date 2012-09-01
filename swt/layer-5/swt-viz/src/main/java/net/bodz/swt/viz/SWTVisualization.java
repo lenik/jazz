@@ -54,7 +54,7 @@ public abstract class SWTVisualization
     @Override
     public SWTRenderer put(Class<?> key, IRenderer value) {
         if (!(value instanceof SWTRenderer))
-            throw new IllegalArgumentException(GUINLS.getString("SWTStrategy.notSWTRenderer") + value);
+            throw new IllegalArgumentException(tr._("not a SWTRenderer: ") + value);
         return (SWTRenderer) super.put(key, value);
     }
 
@@ -75,7 +75,7 @@ public abstract class SWTVisualization
             throw new NullPointerException("rc");
         SWTRenderer renderer = findRenderer(entry);
         if (renderer == null) {
-            String errmesg = GUINLS.getString("SWTStrategy.nullRenderer") + entry.getName();
+            String errmesg = tr._("Don\'t know how to render ") + entry.getName();
             entry = GUIVars.wrap(errmesg);
             renderer = findRenderer(entry);
             throw new RenderException(errmesg); // XXX -

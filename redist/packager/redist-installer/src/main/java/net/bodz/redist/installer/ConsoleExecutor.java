@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import net.bodz.bas.gui.ia.ConsoleInteraction;
 import net.bodz.bas.gui.ia.Proposals;
 import net.bodz.bas.log.Logger;
@@ -43,7 +41,7 @@ public class ConsoleExecutor
     @Override
     public void progressChange(ProgressChangeEvent e) {
         double progress = 100 * e.getProgress();
-        String mesg = String.format(PackNLS.getString("ConsoleExecutor.progress_f"), progress);
+        String mesg = String.format(tr._("Progress %.2f%%"), progress);
         logger.info(mesg);
     }
 
@@ -52,7 +50,7 @@ public class ConsoleExecutor
         // getTimeBegin();
         // long d = job.getDuration()
         // ...
-        String mesg = String.format(PackNLS.getString("ConsoleExecutor.durationChanged_d"), e.getIncrement());
+        String mesg = String.format(tr._("Duration Changed: %d"), e.getIncrement());
         logger.info(mesg);
     }
 

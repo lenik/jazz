@@ -1,10 +1,10 @@
 package net.bodz.redist.installer;
 
+import org.junit.Test;
+
 import net.bodz.bas.gui.ia.ConsoleInteraction;
 import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.swt.c3.test.PageTester;
-
-import org.junit.Test;
 
 public class DonePageTest {
 

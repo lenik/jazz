@@ -1,11 +1,11 @@
 package net.bodz.redist.obfuz.pm;
 
-import static net.bodz.redist.obfuz.nls.ProtectNLS.ProtectNLS;
-
 import java.util.Arrays;
 
+import net.bodz.bas.i18n.nls.II18nCapable;
+
 public class XorMatrix
-        implements Cloneable {
+        implements Cloneable, II18nCapable {
 
     private final int[] m;
     private final int rows;
@@ -51,7 +51,7 @@ public class XorMatrix
 
     void checkMultiplyWith(XorMatrix m) {
         if (cols != m.rows)
-            throw new IllegalArgumentException(ProtectNLS.getString("XorMatrix.cantMultiply") + m);
+            throw new IllegalArgumentException(tr._("can\'t multiply with ") + m);
     }
 
     public void add(XorMatrix b) {

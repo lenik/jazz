@@ -2,10 +2,10 @@ package net.bodz.redist.installer.util;
 
 import java.util.Collection;
 
+import org.eclipse.swt.widgets.TreeItem;
+
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.err.UnexpectedException;
-
-import org.eclipse.swt.widgets.TreeItem;
 
 public class TreeItems {
 

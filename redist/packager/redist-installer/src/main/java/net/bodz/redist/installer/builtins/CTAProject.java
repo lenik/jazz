@@ -47,13 +47,13 @@ public class CTAProject
         File testHome = TempFile.getTmpDir();
 
         define("BASE_A",
-                new BaseDirVariable(PackNLS.getString("CTAProject.aa"), new File(testHome, PackNLS
+                new BaseDirVariable(tr._("Apples"), new File(testHome, PackNLS
                         .getString("CTAProject.a"))));
         define("BASE_B",
-                new BaseDirVariable(PackNLS.getString("CTAProject.bb"), new File(testHome, PackNLS
+                new BaseDirVariable(tr._("Bees"), new File(testHome, PackNLS
                         .getString("CTAProject.b"))));
         define("BASE_C",
-                new BaseDirVariable(PackNLS.getString("CTAProject.cc"), new File(testHome, PackNLS
+                new BaseDirVariable(tr._("Cakes"), new File(testHome, PackNLS
                         .getString("CTAProject.c"))));
 
         FileFilter filter = FileCopy.NoSVN;

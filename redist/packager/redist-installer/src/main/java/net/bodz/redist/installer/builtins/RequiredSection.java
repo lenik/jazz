@@ -1,8 +1,8 @@
 package net.bodz.redist.installer.builtins;
 
-import net.bodz.redist.installer.IComponent;
-
 import org.eclipse.swt.graphics.ImageData;
+
+import net.bodz.redist.installer.IComponent;
 
 public class RequiredSection
         extends Section {

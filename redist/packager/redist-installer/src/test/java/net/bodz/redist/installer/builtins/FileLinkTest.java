@@ -1,9 +1,9 @@
 package net.bodz.redist.installer.builtins;
 
+import org.junit.Test;
+
 import net.bodz.redist.installer.SessionException;
 import net.bodz.redist.installer.TestProject;
-
-import org.junit.Test;
 
 public class FileLinkTest
         extends ComponentTestApp {

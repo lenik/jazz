@@ -1,7 +1,5 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -48,7 +46,7 @@ public class ChooseSchemePage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("ChooseSchemePage.title");
+        return tr._("Choose Install Type: ");
     }
 
     @Override
@@ -91,14 +89,14 @@ public class ChooseSchemePage
     public void validate()
             throws GUIValidationException {
         if (selectedIndex == -1)
-            throw new GUIValidationException(PackNLS.getString("ChooseSchemePage.notSelected"));
+            throw new GUIValidationException(tr._("Scheme isn\'t selected"));
         Scheme scheme = schemes[selectedIndex];
         session.setScheme(scheme);
     }
 
     @Override
     public String toString() {
-        return PackNLS.getString("ChooseSchemePage.selected") + selectedIndex;
+        return tr._("selected scheme ") + selectedIndex;
     }
 
 }

@@ -2,8 +2,8 @@ package net.bodz.redist.obfuz.seals;
 
 import java.nio.ByteBuffer;
 
-import net.bodz.redist.obfuz.sysid.SysIdProvider;
 import net.bodz.bas.err.SystemException;
+import net.bodz.redist.obfuz.sysid.SysIdProvider;
 
 public abstract class IdSeededSequence
         extends _Sequence {

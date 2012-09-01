@@ -1,10 +1,13 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.list;
-import static net.bodz.bas.lang.negotiation.Negotiation.option;
+import static net.bodz.bas.lang.negotiation.Negotiation.*;
 
 import java.io.File;
 import java.io.IOException;
+
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
@@ -24,10 +27,6 @@ import net.bodz.mda.xjdoc.tags.MergedTagBook;
 import net.bodz.mda.xjdoc.tags.TagBooks;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.shared.mojo.AbstractResourceGeneratorMojo;
-
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;

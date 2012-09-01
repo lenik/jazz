@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.beans.ExceptionListener;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +17,7 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.snm.MavenProjectOrigin;
@@ -30,7 +29,7 @@ import net.bodz.bas.xml.XMLs;
 import net.bodz.redist.installer.util.Flags;
 
 public class Session
-        implements ISession {
+        implements ISession, II18nCapable {
 
     static final String attachmentsPath = "a/";
     static final String registryPath = "registry.xml";
@@ -63,7 +62,7 @@ public class Session
         this.UI = userInterface;
         this.logger = logger;
 
-        logger.info(PackNLS.getString("Session.collectComponents"));
+        logger.info(tr._("Collect components"));
         components = Components.collect(project);
         scheme = new Schemes.Default();
         flags = new Flags();
@@ -234,7 +233,7 @@ public class Session
             return newResource(path);
         else {
             if (firstUnknownLink == null)
-                throw new NoSuchElementException(PackNLS.getString("Session.resIsntExisted") + path);
+                throw new NoSuchElementException(tr._("Resource isn\'t existed: ") + path);
             return firstUnknownLink;
         }
     }
@@ -268,11 +267,11 @@ public class Session
     public void closeAttachments() {
         for (Entry<String, StatedAttachment> entry : apool.entrySet()) {
             StatedAttachment a = entry.getValue();
-            logger.info(PackNLS.getString("Session.closeAttachment"), a);
+            logger.info(tr._("Close attachment "), a);
             try {
                 a.close();
             } catch (IOException e) {
-                logger.warn(PackNLS.getString("Session.cantCloseAttachment"), a);
+                logger.warn(tr._("Can\'t close attachment: "), a);
             }
         }
         apool.clear();
@@ -285,19 +284,19 @@ public class Session
             // load registry before install/uinstall
             IFile registryLink = findResource(registryPath, false);
             if (registryLink.exists() == Boolean.TRUE) {
-                logger.info(PackNLS.getString("Session.loadRegistry"), registryLink);
+                logger.info(tr._("Loading registry from "), registryLink);
                 InputStream in = registryLink.getInputSource().newInputStream();
                 Object obj = XMLs.decode(in, new ExWarn());
                 in.close();
                 if (!(obj instanceof Map<?, ?>))
-                    throw new SessionException(PackNLS.getString("Session.registryIsntMap") + obj);
+                    throw new SessionException(tr._("bad decoded registry: ") + obj);
                 @SuppressWarnings("unchecked") Map<String, Object> registry = (Map<String, Object>) obj;
-                logger.info(PackNLS.getString("Session.registryToLoad"), registry);
+                logger.info(tr._("Registry data to load: "), registry);
                 components.importRegistry(registry);
-                logger.info(PackNLS.getString("Session.registryLoaded"));
+                logger.info(tr._("Registry loaded"));
             }
         } catch (IOException e) {
-            throw new SessionException(PackNLS.getString("Session.failedToLoadRegistry"), e);
+            throw new SessionException(tr._("Failed to load registry"), e);
         }
     }
 
@@ -308,41 +307,41 @@ public class Session
             // save registry after packed
             TextMap<Object> registry = components.exportRegistry();
             if (registry != null) {
-                logger.info(PackNLS.getString("Session.registryToSave"), registry);
+                logger.info(tr._("Registry data to save: "), registry);
                 IFile registryLink = newResource(registryPath);
-                logger.info(PackNLS.getString("Session.saveRegistryTo"), registryLink);
+                logger.info(tr._("Saving registry to "), registryLink);
                 OutputStream out = registryLink.getOutputTarget(false).newOutputStream();
                 XMLs.encode(registry, out, new ExWarn());
                 out.close();
-                logger.info(PackNLS.getString("Session.registrySaved"));
+                logger.info(tr._("Registry saved"));
             }
         } catch (IOException e) {
-            throw new SessionException(PackNLS.getString("Session.failedToSaveRegistry"), e);
+            throw new SessionException(tr._("Failed to save registry"), e);
         }
     }
 
     @Override
     public void dump(IPrintOut out) {
-        out.println(PackNLS.getString("Session.session_"), this, ": ");
-        out.println(PackNLS.getString("Session._project"), project);
-        out.println(PackNLS.getString("Session._scheme"), scheme);
+        out.println(tr._("Session "), this, ": ");
+        out.println(tr._("  Project = "), project);
+        out.println(tr._("  Scheme = "), scheme);
         for (IFsTree resFolder : resFolders)
-            out.println(PackNLS.getString("Session._resFolder"), resFolder);
+            out.println(tr._("  Resource Folder = "), resFolder);
         for (Map.Entry<String, Object> e : variables.entrySet())
-            out.printf(PackNLS.getString("Session._var_ss"), e.getKey(), e.getValue());
+            out.printf(tr._("  Var %s = %s\n"), e.getKey(), e.getValue());
         int i = 0;
         i = 0;
         for (ClassLoader searchLoader : searchLoaders)
-            out.printf(PackNLS.getString("Session._searchLoader_ds"), i++, searchLoader);
+            out.printf(tr._("  Search Loader[%d] = %s\n"), i++, searchLoader);
         if (apool != null) {
             Set<Entry<String, StatedAttachment>> entrySet = apool.entrySet();
             for (Entry<String, StatedAttachment> entry : entrySet) {
                 String name = entry.getKey();
                 StatedAttachment a = entry.getValue();
-                out.printf(PackNLS.getString("Session._poolAttachment_ss"), name, a);
+                out.printf(tr._("  Pool Attachment[%s] = %s\n"), name, a);
             }
         }
-        out.println(PackNLS.getString("Session._componentTree"));
+        out.println(tr._("  Component Tree: "));
         dump(out, project, "    ");
     }
 

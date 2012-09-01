@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import net.bodz.redist.installer.util.Flags;
 import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.vfs.IFsEntry;
 import net.bodz.bas.vfs.IFsTree;
+import net.bodz.redist.installer.util.Flags;
 
 public interface ISession {
 

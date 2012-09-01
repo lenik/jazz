@@ -261,9 +261,9 @@ public class BasicGUI
             return null;
         final Menu menu = new Menu(shell, SWT.BAR);
 
-        final Menu fileMenu = Menus.newSubMenu(menu, GUINLS.getString("BasicGUI.menu.file"));
+        final Menu fileMenu = Menus.newSubMenu(menu, tr._("&File"));
         final MenuItem fileExit = new MenuItem(fileMenu, SWT.NONE);
-        fileExit.setText(GUINLS.getString("BasicGUI.menu.exit"));
+        fileExit.setText(tr._("E&xit"));
 
         return menu;
     }
@@ -369,12 +369,12 @@ public class BasicGUI
                 try {
                     uri = new URI(s);
                 } catch (URISyntaxException ex) {
-                    throw new IllegalUsageError(GUINLS.getString("BasicGUI.badBannerLink") + s, ex);
+                    throw new IllegalUsageError(tr._("Bad banner link URL: ") + s, ex);
                 }
                 try {
                     Desktop.getDesktop().browse(uri);
                 } catch (IOException ex) {
-                    UI.alert(GUINLS.getString("BasicGUI.cantOpenBrowser"), ex);
+                    UI.alert(tr._("Can\'t open browser"), ex);
                 }
             }
         });
@@ -384,7 +384,7 @@ public class BasicGUI
         updateTime.setAlignment(SWT.RIGHT);
         String dateString = getArtifactDoc().getReleaseDateString();
         if (dateString != null) {
-            updateTime.setText(GUINLS.getString("BasicGUI.lastUpdated") + dateString);
+            updateTime.setText(tr._("Last updated: ") + dateString);
         }
         return bottomBar;
     }
@@ -412,7 +412,7 @@ public class BasicGUI
             throws UIException {
         holder.setLayout(new FillLayout());
         Label welcomeLabel = new Label(holder, SWT.NONE);
-        welcomeLabel.setText(GUINLS.getString("BasicGUI.welcome"));
+        welcomeLabel.setText(tr._("Welcome BasicGUI!"));
     }
 
     protected void createView(Composite holder, Object key)

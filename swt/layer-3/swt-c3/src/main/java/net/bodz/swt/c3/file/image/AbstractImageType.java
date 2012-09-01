@@ -10,10 +10,11 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
 
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public abstract class AbstractImageType
-        implements ImageType {
+        implements ImageType, II18nCapable {
 
     @Override
     public ImageData load(InputStream in)

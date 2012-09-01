@@ -2,12 +2,12 @@ package net.bodz.redist.installer.builtins;
 
 import java.util.Collection;
 
+import org.eclipse.swt.SWT;
+import org.junit.Test;
+
 import net.bodz.redist.installer.Components;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.TestProject;
-
-import org.eclipse.swt.SWT;
-import org.junit.Test;
 
 public class SelectComponentsDialogTest {
 

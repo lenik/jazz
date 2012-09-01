@@ -1,9 +1,8 @@
 package net.bodz.swt.viz.invoke;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.io.Serializable;
 
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.util.primitive.Primitives;
 
 /**
@@ -15,7 +14,7 @@ import net.bodz.bas.util.primitive.Primitives;
  * </ul>
  */
 public abstract class AbstractInvocation
-        implements Serializable // , IPropertyChangeSource
+        implements Serializable, II18nCapable // , IPropertyChangeSource
 {
 
     private static final long serialVersionUID = 1L;
@@ -69,7 +68,7 @@ public abstract class AbstractInvocation
         if (value != null) {
             Class<?> type = getParameterType(index);
             if (!Primitives.box(type).isInstance(value)) {
-                String fmt = GUINLS.getString("CallContext.errParamType_dss");
+                String fmt = tr._("Parameter[%d] is %s, but set to %s");
                 throw new ClassCastException(String.format(fmt, index, type, value.getClass()));
             }
         }

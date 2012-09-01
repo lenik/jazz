@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +8,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 import net.bodz.bas.ant.TaskLogger;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.util.exception.ExceptionBuffer;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 import net.bodz.bas.vfs.IFile;
@@ -20,7 +19,8 @@ import net.bodz.bas.vfs.impl.javaio.JavaioFile;
  * Ant task for package Distins-Project
  */
 public class PackageTask
-        extends Task {
+        extends Task
+        implements II18nCapable {
 
     private IProject project;
     private IFsTree output;
@@ -37,7 +37,7 @@ public class PackageTask
 
     public void setResFolder(IFsTree resFolder) {
         if (this.output != null)
-            throw new BuildException(PackNLS.getString("PackageTask.outputIsSpecified") + output);
+            throw new BuildException(tr._("Output is already specified: ") + output);
         this.output = resFolder;
     }
 
@@ -65,9 +65,9 @@ public class PackageTask
     public void execute()
             throws BuildException {
         if (project == null)
-            throw new BuildException(PackNLS.getString("PackageTask.projectIsntSpecified"));
+            throw new BuildException(tr._("Project isn\'t specified"));
         if (output == null)
-            throw new BuildException(PackNLS.getString("PackageTask.resFolderIsntSpecified"));
+            throw new BuildException(tr._("Resource folder isn\'t specified"));
         TaskLogger logger = new TaskLogger(this);
         logger.setLevel(logger.getLevel(), verboseLevel);
         final List<Exception> exceptions = new ArrayList<Exception>();

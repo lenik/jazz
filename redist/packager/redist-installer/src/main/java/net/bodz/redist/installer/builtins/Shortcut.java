@@ -1,7 +1,5 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.File;
 
 import net.bodz.bas.c.java.io.FilePath;
@@ -67,7 +65,7 @@ public class Shortcut
                 parentFile = FilePath.canoniOf(parentFile);
                 parentFile.mkdirs();
             }
-            logger.info(PackNLS.getString("Shortcut.create"), dst);
+            logger.info(tr._("Create shortcut "), dst);
             if (SystemInfo.isWin32()) {
                 File _src = FilePath.canoniOf(src);
                 LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
@@ -101,7 +99,7 @@ public class Shortcut
             String lnkFilePath = lnk.getLinkFilePath();
             File file = new File(lnkFilePath);
             if (file.exists()) {
-                logger.info(PackNLS.getString("Shortcut.remove"), file);
+                logger.info(tr._("Remove shortcut "), file);
                 file.delete();
             }
         }

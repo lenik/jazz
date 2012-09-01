@@ -1,12 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.PageMethod;
-import net.bodz.swt.c3.pageflow.ServiceContext;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -16,6 +9,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.swt.c3.pageflow.AbstractPage;
+import net.bodz.swt.c3.pageflow.PageException;
+import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c3.pageflow.ServiceContext;
 
 class DonePage
         extends AbstractPage {
@@ -34,7 +33,7 @@ class DonePage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("DonePage.done");
+        return tr._("Done");
     }
 
     @Override
@@ -43,10 +42,10 @@ class DonePage
 
         final Label thsInstallationProcessLabel = new Label(holder, SWT.WRAP);
         thsInstallationProcessLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        thsInstallationProcessLabel.setText(PackNLS.getString("DonePage.installCompleted"));
+        thsInstallationProcessLabel.setText(tr._("Ths installation process is completed, you may choose to reboot the computer. "));
 
         final Button rebootCheck = new Button(holder, SWT.CHECK);
-        rebootCheck.setText(PackNLS.getString("DonePage.reboot"));
+        rebootCheck.setText(tr._("Reboot the computer"));
         rebootCheck.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

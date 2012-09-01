@@ -1,7 +1,5 @@
 package net.bodz.swt.c3.file.image;
 
-import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -20,7 +18,7 @@ public class BMPImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("BMPImageType.name");
+        return tr._("Bitmap");
     }
 
     @Override
@@ -50,7 +48,7 @@ public class BMPImageType
             setLayout(gridLayout);
 
             rleCompressedButton = new Button(this, SWT.CHECK);
-            rleCompressedButton.setText(ControlsNLS.getString("BMPImageType.rleCompressed"));
+            rleCompressedButton.setText(tr._("&RLE Compressed"));
             rleCompressedButton.setSelection(params.compressByRLE);
         }
 

@@ -1,14 +1,12 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import net.bodz.bas.c.string.Strings;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.ISession;
-import net.bodz.bas.c.string.Strings;
 
 public class CreateFile
         extends AbstractComponent {
@@ -52,10 +50,10 @@ public class CreateFile
                 boolean append = CreateFile.this.append && dest.exists();
                 String abbr = Strings.ellipse(String.valueOf(data), 40);
                 if (append) {
-                    logger.infof(PackNLS.getString("CreateFile.appendTo_ss"), dest, abbr);
+                    logger.infof(tr._("Append to %s: %s"), dest, abbr);
                     Files.append(dest, data, charset);
                 } else {
-                    logger.infof(PackNLS.getString("CreateFile.createFile_ss"), dest, abbr);
+                    logger.infof(tr._("Create file %s: %s"), dest, abbr);
                     Files.createFile(dest, data, charset);
                 }
             } catch (IOException e) {
@@ -75,7 +73,7 @@ public class CreateFile
         @Override
         protected void _run() {
             File dest = new File(session.getFile(base), path);
-            logger.info(PackNLS.getString("CreateFile.deleteFile"), dest);
+            logger.info(tr._("Delete file "), dest);
             dest.delete();
         }
 

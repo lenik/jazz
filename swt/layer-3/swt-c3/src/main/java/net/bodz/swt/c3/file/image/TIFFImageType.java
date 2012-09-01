@@ -1,7 +1,5 @@
 package net.bodz.swt.c3.file.image;
 
-import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -14,7 +12,7 @@ public class TIFFImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("TIFFImageType.name");
+        return tr._("TIFF");
     }
 
     @Override
