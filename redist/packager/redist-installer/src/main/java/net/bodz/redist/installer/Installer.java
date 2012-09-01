@@ -42,7 +42,7 @@ public class Installer
 
     public Installer(IProject project) {
         this.project = project;
-        this.L.setLevel(LogLevel.INFO);
+        this.logger.setLevel(LogLevel.INFO);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Installer
     @Override
     protected void createInitialView(final Composite parent)
             throws UIException {
-        ISession session = new Session(project, UI, L);
+        ISession session = new Session(project, UI, logger);
         setSession(session);
         InstallComposite installComposite = new InstallComposite(session, parent, SWT.NONE);
         installComposite.getPageFlow().addBadPathListener(new IBadPathListener() {

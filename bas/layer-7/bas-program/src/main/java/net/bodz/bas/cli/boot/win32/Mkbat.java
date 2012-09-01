@@ -144,7 +144,7 @@ public class Mkbat
         Class<?> class0 = null;
         // can found by bootSysLoader?
         try {
-            L._info(2, "try " + className);
+            logger._info(2, "try " + className);
             class0 = bootSysLoader.loadClass(className);
             // class0 = Jdk7Reflect.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
@@ -181,7 +181,7 @@ public class Mkbat
         // has main()? [2, configLoader]
         try {
             class1.getMethod("main", String[].class);
-            L.info("    main-class: " + class1);
+            logger.info("    main-class: " + class1);
         } catch (NoSuchMethodException e) {
             return EditResult.pass("notapp");
             // return ProcessResult.err(e, "notapp");
@@ -262,7 +262,7 @@ public class Mkbat
                     fname = lib;
                 else
                     fname = lib + ".jar";
-                L.warn("lib ", lib, " => ", fname);
+                logger.warn("lib ", lib, " => ", fname);
             } else
                 fname = f.getName();
             String loadlib = "call :load " + qq(lib) + " " + qq(fname);
@@ -282,12 +282,12 @@ public class Mkbat
         ByteArrayResource batFixedRes = new ByteArrayResource(batFixed);
 
         if (!Arrays.equals(batData, batFixed))
-            L.info("bat label boundary fixed: ", batFile);
+            logger.info("bat label boundary fixed: ", batFile);
         if (force) {
-            L.info("write ", batFile);
+            logger.info("write ", batFile);
             batFile.tooling()._for(StreamWriting.class).writeBytes(batFixed);
         } else if (FileDiff.copyDiff(batFixedRes, batFile.getResource()))
-            L.info("save ", batFile);
+            logger.info("save ", batFile);
     }
 
     static URLResource batTempl;

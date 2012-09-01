@@ -227,16 +227,16 @@ public class BatchEditCLI
         assert b != null;
 
         if (a.exists() && !b.exists()) {
-            L.info("[new ]", a);
+            logger.info("[new ]", a);
             return true;
         } else if (!a.exists() && b.exists()) {
-            L.info("[miss]", a);
+            logger.info("[miss]", a);
             return true;
         }
         if (diffAlgorithm == null) {
             if (FileDiff.equals(a.getInputSource(), b.getInputSource()))
                 return false;
-            L.info("[edit] ", a);
+            logger.info("[edit] ", a);
             return true;
         }
         List<String> al = a.getInputSource(inputEncoding).tooling()._for(StreamReading.class).listLines();
@@ -244,7 +244,7 @@ public class BatchEditCLI
         List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;
-        L.info("[edit] ", a);
+        logger.info("[edit] ", a);
         diffFormat.format(al, bl, diffs, diffOutput);
         return true;
     }
@@ -288,7 +288,7 @@ public class BatchEditCLI
     protected void _processFile(IFile file) {
         Throwable err = null;
         try {
-            L.info("[proc] ", file);
+            logger.info("[proc] ", file);
             EditResult result = BatchEditCLI.this.doEdit(file);
             addResult(file, result);
         } catch (RuntimeException e) {
@@ -304,7 +304,7 @@ public class BatchEditCLI
             // err before addResult() or raised inside addResult()
             if (err != null) {
                 stat.add(EditResult.err(err));
-                L.error("[fail] ", file, ": ", err);
+                logger.error("[fail] ", file, ": ", err);
             }
         }
     }
@@ -440,16 +440,16 @@ public class BatchEditCLI
 
     protected void addResult(IFile src, IFile dst, IFile edit, EditResult result)
             throws IOException {
-        L._debugf(1, "FF", "x");
-        L._debug(3, "F", "X");
+        logger._debugf(1, "FF", "x");
+        logger._debug(3, "F", "X");
         if (result == null)
-            L._info(1, "[skip] ", src);
+            logger._info(1, "[skip] ", src);
         else {
             if (src != null)
                 applyResult(src, dst, edit, result);
             stat.add(result);
             if (result.done)
-                L.info("[", result.getOperationName(), "] ", dst);
+                logger.info("[", result.getOperationName(), "] ", dst);
             if (result.error) {
                 String tags;
                 if (result.tags.length == 0)
@@ -457,9 +457,9 @@ public class BatchEditCLI
                 else
                     tags = "|" + StringArray.join("|", result.tags);
                 if (result.cause != null)
-                    L.error("[fail", tags, "] ", src, ": ", result.cause);
+                    logger.error("[fail", tags, "] ", src, ": ", result.cause);
                 else
-                    L.error("[fail", tags, "] ", src);
+                    logger.error("[fail", tags, "] ", src);
             }
         }
     }
@@ -545,10 +545,10 @@ public class BatchEditCLI
     protected void doMain(String[] args)
             throws Exception {
         super.doMain(args);
-        if (L.isInfoEnabled(1))
-            stat.dumpDetail(L.getInfoSink(1));
-        else if (L.isInfoEnabled())
-            stat.dumpBrief(L.getInfoSink());
+        if (logger.isInfoEnabled(1))
+            stat.dumpDetail(logger.getInfoSink(1));
+        else if (logger.isInfoEnabled())
+            stat.dumpBrief(logger.getInfoSink());
         // System.exit(stat.errors);
     }
 
@@ -556,7 +556,7 @@ public class BatchEditCLI
     @OverrideOption(group = "batchEdit")
     protected void doFileArgument(final IFile file)
             throws Exception {
-        L.status("[start] ", file);
+        logger.status("[start] ", file);
         super.doFileArgument(file);
     }
 

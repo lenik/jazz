@@ -72,10 +72,10 @@ public class BasicCLI
     /**
      * @option --logger hidden
      */
-    protected Logger L = LoggerFactory.getLogger(BasicCLI.class);
+    protected Logger logger = LoggerFactory.getLogger(BasicCLI.class);
     // LogTerms.resolveFile(1);
 
-    protected IUserInteraction UI = ConsoleInteraction.stdout;
+    protected IUserInteraction ia = ConsoleInteraction.stdout;
 
     /**
      * @option hidden
@@ -93,7 +93,7 @@ public class BasicCLI
      * @option -v
      */
     void _verbose() {
-        L.setDelta(L.getDelta() + 1);
+        logger.setDelta(logger.getDelta() + 1);
     }
 
     /**
@@ -102,7 +102,7 @@ public class BasicCLI
      * @option -q
      */
     void _quiet() {
-        L.setDelta(L.getDelta() - 1);
+        logger.setDelta(logger.getDelta() - 1);
     }
 
     protected Map<String, Object> _vars;
@@ -300,7 +300,7 @@ public class BasicCLI
         if (prepared)
             return;
 
-        ILogSink dbg = L.getDebugSink();
+        ILogSink dbg = logger.getDebugSink();
         // dbg.p("parse boot info");
         // bootProc = BootProc.get(getClass());
         //
@@ -341,7 +341,7 @@ public class BasicCLI
         try {
             execute(new String[0]);
         } catch (Exception e) {
-            UI.alert(e.getMessage(), e);
+            ia.alert(e.getMessage(), e);
         }
     }
 
@@ -351,7 +351,7 @@ public class BasicCLI
     @Override
     public synchronized void execute(String... args)
             throws Exception {
-        ILogSink dbg = L.getDebugSink();
+        ILogSink dbg = logger.getDebugSink();
         dbg.p("cli prepare");
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.
@@ -372,7 +372,7 @@ public class BasicCLI
             // }
             // }
 
-            if (L.isDebugEnabled()) {
+            if (logger.isDebugEnabled()) {
                 for (Entry<String, IOption> entry : opts.getLocalOptionMap().entrySet()) {
                     IOption opt = entry.getValue();
                     String optnam = opt.getName();
@@ -478,7 +478,7 @@ public class BasicCLI
             PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
             for (File sibling : wildcards.getParentFile().listFiles())
                 if (pathMatcher.matches(sibling.toPath())) {
-                    L.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
+                    logger.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
                     IFile _sibling = new JavaioFile(sibling);
                     doFileArgument(_sibling);
                 }
