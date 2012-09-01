@@ -1,13 +1,13 @@
 package net.bodz.redist.installer.builtins;
 
+import org.junit.Test;
+
+import net.bodz.bas.gui.ia.ConsoleInteraction;
+import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.Session;
 import net.bodz.redist.installer.TestProject;
-import net.bodz.bas.gui.ia.ConsoleInteraction;
-import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.swt.c3.test.PageTester;
-
-import org.junit.Test;
 
 public class ChooseSchemePageTest {
 

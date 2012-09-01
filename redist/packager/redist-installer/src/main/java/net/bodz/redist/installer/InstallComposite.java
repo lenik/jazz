@@ -1,13 +1,13 @@
 package net.bodz.redist.installer;
 
+import org.eclipse.swt.widgets.Composite;
+
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.ia.UIException;
 import net.bodz.swt.c3.pageflow.IBook;
 import net.bodz.swt.c3.pageflow.IPage;
 import net.bodz.swt.c3.pageflow.NavigatorComposite;
 import net.bodz.swt.c3.pageflow.SimpleBook;
-
-import org.eclipse.swt.widgets.Composite;
 
 public class InstallComposite
         extends NavigatorComposite {

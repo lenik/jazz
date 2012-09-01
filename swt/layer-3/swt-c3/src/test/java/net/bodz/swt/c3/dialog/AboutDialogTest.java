@@ -2,8 +2,6 @@ package net.bodz.swt.c3.dialog;
 
 import org.junit.Test;
 
-import net.bodz.swt.c3.dialog.AboutDialog;
-
 /**
  * @label My Product
  */

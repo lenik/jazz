@@ -1,7 +1,5 @@
 package net.bodz.swt.c3.file.image;
 
-import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -23,7 +21,7 @@ public class GIFImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("GIFImageType.name");
+        return tr._("GIF");
     }
 
     @Override
@@ -49,14 +47,14 @@ public class GIFImageType
             this.params = params;
 
             final Label transparentcyLabel = new Label(this, SWT.NONE);
-            transparentcyLabel.setText(ControlsNLS.getString("GIFImageType.transparency"));
+            transparentcyLabel.setText(tr._("&Transparency: "));
 
             final Canvas colorBlock = new Canvas(this, SWT.NONE);
             final GridData gd_colorBlock = new GridData(16, 16);
             colorBlock.setLayoutData(gd_colorBlock);
 
             final Link selectTransLink = new Link(this, SWT.NONE);
-            selectTransLink.setText(ControlsNLS.getString("GIFImageType.selectLink"));
+            selectTransLink.setText(tr._("<a>select</a>"));
         }
 
         @Override

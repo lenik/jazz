@@ -1,14 +1,14 @@
 package net.bodz.redist.installer.lic;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.IOException;
 
 import net.bodz.bas.c.loader.ClassResource;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 
-public class License {
+public class License
+        implements II18nCapable {
 
     static String get(String name) {
         URLResource licenseURL = ClassResource.classData(License.class, name);
@@ -17,7 +17,7 @@ public class License {
             String license = licenseURL.tooling()._for(StreamReading.class).readTextContents();
             return license;
         } catch (IOException e) {
-            throw new IllegalArgumentException(PackNLS.getString("License.badLicense") + name);
+            throw new IllegalArgumentException(tr._("No such license: ") + name);
         }
     }
 

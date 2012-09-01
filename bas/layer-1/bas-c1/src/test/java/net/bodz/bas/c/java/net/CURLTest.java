@@ -1,19 +1,18 @@
 package net.bodz.bas.c.java.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.net.CURL.Alpha;
 
-public class CURLTest {
+public class CURLTest
+        extends Assert {
 
     @Test
     public void test1() {

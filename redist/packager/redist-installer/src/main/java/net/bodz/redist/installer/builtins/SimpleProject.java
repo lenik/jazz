@@ -1,7 +1,5 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.File;
 
 import net.bodz.bas.c.java.io.FilePath;
@@ -73,8 +71,8 @@ public class SimpleProject
 
         File programsDir = new File(PFILES_ROOT, getName() + "-" + getVersion());
         Variable programsVar = new BaseDirVariable(//
-                PackNLS.getString("SimpleProject.programFiles"), //
-                PackNLS.getString("SimpleProject.doc.programs"), programsDir);
+                tr._("Program Files"), //
+                tr._("Where do you want to put the program files"), programsDir);
         define(BASE_PROGRAMS, programsVar);
 
         if (SystemInfo.isWin32())

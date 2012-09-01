@@ -1,7 +1,5 @@
 package net.bodz.swt.draw.core.particle;
 
-import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 
 import net.bodz.bas.geom_f.base.Rectangle2d;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.bas.util.ints.IntIterator;
@@ -26,7 +25,8 @@ import net.bodz.swt.gui.dev.SWTRegion;
 import net.bodz.swt.gui.geom.SWTShapes;
 
 public class ParticleCanvas
-        extends Canvas {
+        extends Canvas
+        implements II18nCapable {
 
     private IParticleBounds2i bounds;
     private boolean paintBg;
@@ -67,7 +67,7 @@ public class ParticleCanvas
             @Override
             public void paintControl(PaintEvent e) {
                 if (painting)
-                    throw new IllegalStateException(ControlsNLS.getString("GeomCanvas.noReentrant"));
+                    throw new IllegalStateException(tr._("paint no reentrant"));
                 painting = true;
                 Rectangle viewRect = new Rectangle(e.x, e.y, e.width, e.height);
                 paintImpl(e.gc, viewRect, viewOffset);

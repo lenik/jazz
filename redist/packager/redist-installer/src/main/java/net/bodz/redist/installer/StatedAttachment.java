@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.*;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
@@ -11,11 +9,12 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.vfs.IFile;
 
 public class StatedAttachment
-        implements Attachment {
+        implements Attachment, II18nCapable {
 
     private final IFile link;
     private final String encoding;
@@ -154,7 +153,7 @@ public class StatedAttachment
 
     @Override
     public String toString() {
-        String s = PackNLS.getString("Attachment.attachment");
+        String s = tr._("attachment ");
         s += link.toString();
         return s;
     }
@@ -167,7 +166,7 @@ public class StatedAttachment
 
         public StateBase(IFile link, String accessType) {
             this.link = link;
-            this.error = PackNLS.getString("Attachment.currentlyAccess") + accessType;
+            this.error = tr._("Currently opened using ") + accessType;
         }
 
         @Override

@@ -1,7 +1,5 @@
 package net.bodz.swt.viz.builtin;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.io.IOException;
 import java.util.EventObject;
 
@@ -47,7 +45,7 @@ public class R_Throwable
     static final String expandedIcon = "/icons/full/obj16/remove_correction.gif";
     static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";
 
-    public static String mailAddress = GUINLS.getString("R_Throwable.mailAddress");
+    public static String mailAddress = tr._("errorbox@bodz.net");
 
     static boolean usingColors = false;
     static boolean showTools = true;
@@ -75,9 +73,9 @@ public class R_Throwable
         while (th != null) {
             String mesg = String.valueOf(th); // th.getMessage();
             if (mesg == null)
-                mesg = GUINLS.getString("R_Throwable.n_a");
+                mesg = tr._("(n/a)");
             if (causeLevel++ != 0)
-                mesg = GUINLS.getString("R_Throwable.causedBy") + mesg;
+                mesg = tr._("Caused by: ") + mesg;
             final Label swithcerIcon = new Label(comp, SWT.NONE);
             swithcerIcon.setImage(SWTResources.getImageRes(collapsedIcon));
 
@@ -153,8 +151,8 @@ public class R_Throwable
         if (showTools) {
             final String errorText = errbuf.toString();
             Image copyImage = SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif");
-            ICommand copyAction = new AbstractCommand(copyImage, GUINLS.getString("R_Throwable.copy"),
-                    GUINLS.getString("R_Throwable.copy.doc")) {
+            ICommand copyAction = new AbstractCommand(copyImage, tr._("&Copy"),
+                    tr._("Copy exception text to clipboard")) {
                 @Override
                 public void execute() {
                     Clipboard clipboard = new Clipboard(display);
@@ -167,16 +165,16 @@ public class R_Throwable
             };
 
             final Image mailImage = SWTResources.getImageRes("/icons/full/obj16/text_edit.gif");
-            final String mailSubject = GUINLS.getString("R_Throwable.errorReport");
+            final String mailSubject = tr._("Error Report");
             ICommand mailAction = new AbstractCommand(mailImage, //
-                    GUINLS.getString("R_Throwable.report"), GUINLS.getString("R_Throwable.sendMail")) {
+                    tr._("&Report"), tr._("Send error report to the responsib")) {
                 @Override
                 public void execute() {
                     try {
                         DesktopApps.openMailer(mailAddress, mailSubject, errorText);
                     } catch (IOException e) {
                         DialogInteraction iact = rc.interact(parent);
-                        iact.alert(GUINLS.getString("R_Throwable.cantSend"), e);
+                        iact.alert(tr._("Can\'t send mail"), e);
                     }
                 }
             };
@@ -188,7 +186,7 @@ public class R_Throwable
         if (showDebug) {
             final Image debugImage = SWTResources.getImageRes("/icons/full/eview16/debug_view.gif");
             ICommand debugAction = new AbstractCommand(debugImage, //
-                    GUINLS.getString("R_Throwable.debug"), GUINLS.getString("R_Throwable.debug.doc")) {
+                    tr._("&Debug"), tr._("Go into the source where the exception happens. ")) {
                 @Override
                 public void execute() {
                     throw new ExpectedException("debug", throwable);

@@ -1,9 +1,10 @@
 package net.bodz.redist.obfuz.util;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.redist.obfuz.pm.BasicPM;
 
 import org.junit.Test;
+
+import net.bodz.redist.obfuz.pm.BasicPM;
 
 @Activation(prefix = "PCLT", segments = 5)
 public class ActivationByTargetStringTest {

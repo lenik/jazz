@@ -1,12 +1,12 @@
 package net.bodz.redist.installer;
 
-import net.bodz.redist.installer.builtins.TestConfig;
+import org.junit.Test;
+
 import net.bodz.bas.c.reflect.Reflects;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.util.Job;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
-
-import org.junit.Test;
+import net.bodz.redist.installer.builtins.TestConfig;
 
 public class InstallerTest {
 

@@ -1,15 +1,15 @@
 package net.bodz.swt.gui.a;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.graphics.RGB;
 
 import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.i18n.nls.II18nCapable;
 
-public class ColorAnnotation {
+public class ColorAnnotation
+        implements II18nCapable {
 
     static Map<String, RGB> colorNames;
     static {
@@ -40,10 +40,10 @@ public class ColorAnnotation {
         }
         // color name not exists, and the fail value isn't specified.
         if (sharp == -1)
-            throw new IllegalUsageError(GUINLS.getString("A_gui.badColor") + colorExp);
+            throw new IllegalUsageError(tr._("Bad color name: ") + colorExp);
         String failval = colorExp.substring(sharp + 1);
         if (failval.length() != 6)
-            throw new IllegalUsageError(GUINLS.getString("A_gui.colorFormat") + failval);
+            throw new IllegalUsageError(tr._("color format: #rrggbb, given ") + failval);
         int rgb = Integer.parseInt(failval, 16);
         int blue = rgb & 0xff;
         rgb >>= 8;

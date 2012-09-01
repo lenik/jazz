@@ -1,8 +1,8 @@
 package net.bodz.redist.obfuz.sysid;
 
-import net.bodz.bas.err.SystemException;
-
 import org.junit.Test;
+
+import net.bodz.bas.err.SystemException;
 
 public class VolumeIdTest {
 

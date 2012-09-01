@@ -1,14 +1,7 @@
 package net.bodz.redist.obfuz.util;
 
-import static net.bodz.redist.obfuz.nls.ProtectNLS.ProtectNLS;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import net.bodz.bas.err.ParseException;
-import net.bodz.swt.c.control.ControlAdapters;
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageMethod;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -22,6 +15,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
+
+import net.bodz.bas.err.ParseException;
+import net.bodz.swt.c.control.ControlAdapters;
+import net.bodz.swt.c3.pageflow.AbstractPage;
+import net.bodz.swt.c3.pageflow.PageMethod;
 
 public class ActivatePage
         extends AbstractPage {
@@ -56,7 +54,7 @@ public class ActivatePage
 
     @Override
     public String getPageTitle() {
-        return ProtectNLS.getString("ActivatePage.title");
+        return tr._("Product Activation");
     }
 
     class RecalcAdapter
@@ -80,7 +78,7 @@ public class ActivatePage
         final Label welcomeLabel = new Label(holder, SWT.NONE);
         final GridData gd_pleaseEnterRegistrationLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
         welcomeLabel.setLayoutData(gd_pleaseEnterRegistrationLabel);
-        welcomeLabel.setText(ProtectNLS.getString("ActivatePage.caption"));
+        welcomeLabel.setText(tr._("Please activate this software: "));
 
         final Label companyLabel = new Label(holder, SWT.NONE);
         final GridData gd_companyLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
@@ -105,7 +103,7 @@ public class ActivatePage
         final Label hostIdLabel = new Label(holder, SWT.NONE);
         final GridData gd_hostIdLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
         hostIdLabel.setLayoutData(gd_hostIdLabel);
-        hostIdLabel.setText(ProtectNLS.getString("ActivatePage.hostId"));
+        hostIdLabel.setText(tr._("Host ID: "));
 
         hostIdText = new Text(holder, SWT.BORDER | SWT.READ_ONLY);
         final GridData gd_hostIdText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -114,7 +112,7 @@ public class ActivatePage
         final Label codeLabel = new Label(holder, SWT.NONE);
         final GridData gd_codeLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
         codeLabel.setLayoutData(gd_codeLabel);
-        codeLabel.setText(ProtectNLS.getString("ActivatePage.activationCode"));
+        codeLabel.setText(tr._("Activation Code: "));
 
         codeText = new Text(holder, SWT.BORDER);
         final GridData gd_codeText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -140,7 +138,7 @@ public class ActivatePage
         final Label label1 = new Label(holder, SWT.WRAP);
         final GridData gd_label1 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1);
         label1.setLayoutData(gd_label1);
-        label1.setText(ProtectNLS.getString("ActivatePage.hint1"));
+        label1.setText(tr._("Have encounter any problem?"));
 
         link = new Link(holder, SWT.NONE);
         final GridData gd_label2 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1);
@@ -161,7 +159,7 @@ public class ActivatePage
         hostIdText.setText(hostId);
         if (website == null)
             website = "";
-        link.setText(String.format(ProtectNLS.getString("ActivatePage.accessWebsite_s"), website));
+        link.setText(String.format(tr._("Access our <a href=\"%s\">website</a> to get the activation code."), website));
         link.setToolTipText(website);
     }
 

@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -89,7 +87,7 @@ class ProgressPage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("ProgressPage.installing");
+        return tr._("Installing Software");
     }
 
     @Override
@@ -138,7 +136,7 @@ class ProgressPage
 
                 final ToolItem copyItem = addToolItem(SWT.PUSH);
                 copyItem.setImage(SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif"));
-                copyItem.setToolTipText(PackNLS.getString("ProgressPage.copyClipboard"));
+                copyItem.setToolTipText(tr._("Copy"));
                 copyItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
@@ -183,7 +181,7 @@ class ProgressPage
         };
         GridData gd_detail = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         logDetail.setLayoutData(gd_detail);
-        logDetail.setText(PackNLS.getString("ProgressPage.logsLabel"));
+        logDetail.setText(tr._("Install Logs: "));
         logDetail.addDetailSwitchListener(new DetailSwitchListener() {
             @Override
             public void detailSwitch(DetailSwitchEvent e) {
@@ -212,7 +210,7 @@ class ProgressPage
         timebar.setLayout(gridLayout_2);
 
         final Label _elapsedLabel = new Label(timebar, SWT.NONE);
-        _elapsedLabel.setText(PackNLS.getString("ProgressPage.elapsedTime"));
+        _elapsedLabel.setText(tr._("Elapsed Time: "));
 
         elapsedLabel = new Label(timebar, SWT.NONE);
         elapsedLabel.setText("-:-:-");
@@ -223,7 +221,7 @@ class ProgressPage
         sep.setLayoutData(gd_sep);
 
         final Label _remainingLabel = new Label(timebar, SWT.NONE);
-        _remainingLabel.setText(PackNLS.getString("ProgressPage.remainingTime"));
+        _remainingLabel.setText(tr._("Remaining Time:"));
 
         remainingLabel = new Label(timebar, SWT.NONE);
         remainingLabel.setText("-:-:-");
@@ -282,7 +280,7 @@ class ProgressPage
                     if (jobState == IJob.TERMINATED)
                         state = DONE;
                 } catch (Exception e) {
-                    _UI.alert(PackNLS.getString("ProgressPage.installError"), e);
+                    _UI.alert(tr._("Install Error"), e);
                 } finally {
                     rootJob = null;
                     jobThread = null;
@@ -351,15 +349,15 @@ class ProgressPage
 
         @Override
         public void exceptionThrown(Exception ex) {
-            UI.alert(PackNLS.getString("ProgressPage.failedToInstall") + ex.getMessage(), ex);
+            UI.alert(tr._("Failed to install: ") + ex.getMessage(), ex);
         }
 
         @Override
         public void recoverException(RecoverableExceptionEvent e) {
             Exception ex = e.getException();
             int answer = UI.ask(
-                    PackNLS.getString("ProgressPage.errorHappens") + ex.getMessage()
-                            + PackNLS.getString("ProgressPage._continue"), e, Proposals.ignore, Proposals.cancel,
+                    tr._("Error happens: ") + ex.getMessage()
+                            + tr._(", continue?"), e, Proposals.ignore, Proposals.cancel,
                     Proposals.debug);
             switch (answer) {
             case 0:

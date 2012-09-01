@@ -1,17 +1,15 @@
 package net.bodz.redist.obfuz.pm;
 
-import static net.bodz.redist.obfuz.nls.ProtectNLS.ProtectNLS;
-
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.crypto.SecretKey;
 
+import net.bodz.bas.err.SystemException;
 import net.bodz.redist.obfuz.sysid.CpuId;
 import net.bodz.redist.obfuz.sysid.MacAddressId;
 import net.bodz.redist.obfuz.sysid.SysIdProvider;
-import net.bodz.bas.err.SystemException;
 
 public class BasicPM
         extends AbstractProtectionModel {
@@ -34,7 +32,7 @@ public class BasicPM
             if (id != null)
                 return sip;
         }
-        throw new SystemException(ProtectNLS.getString("BasicPM.cantIdentify"));
+        throw new SystemException(tr._("Can\'t identify this machine."));
     }
 
     @Override

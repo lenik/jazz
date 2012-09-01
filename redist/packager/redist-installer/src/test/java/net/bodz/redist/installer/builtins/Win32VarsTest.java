@@ -1,10 +1,10 @@
 package net.bodz.redist.installer.builtins;
 
+import org.junit.Test;
+
+import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.redist.installer.TestProject;
 import net.bodz.redist.installer.Variable;
-import net.bodz.bas.c.system.SystemInfo;
-
-import org.junit.Test;
 
 public class Win32VarsTest {
 

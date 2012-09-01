@@ -1,7 +1,5 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -37,7 +35,7 @@ public class LogoPage
         IProject project = session.getProject();
         String text = project.getText();
         IVersion version = project.getVersion();
-        return PackNLS.getString("LogoPage.title") + text + " " + version;
+        return tr._("Welcome to install ") + text + " " + version;
     }
 
     @Override

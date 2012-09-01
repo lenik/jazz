@@ -118,7 +118,7 @@ public class GridVisualization
             }
             iconLabel.setImage(icon);
         } catch (CreateException e) {
-            throw new RenderException(GUINLS.getString("SWTGridStrategy.failedToRenderIcon"), e);
+            throw new RenderException(tr._("Failed to render icon"), e);
         }
 
         // Column #2

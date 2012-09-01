@@ -1,7 +1,5 @@
 package net.bodz.swt.c.test;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,11 +13,13 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.layout.BorderLayout;
 
 public abstract class WidgetTester
-        extends Assert {
+        extends Assert
+        implements II18nCapable {
 
     boolean autorun = true;
     String title;
@@ -36,7 +36,7 @@ public abstract class WidgetTester
 
     public WidgetTester(boolean junitMode) {
         title = getClass().getSimpleName();
-        // title = GUINLS.getString("ControlTestApp.title");
+        // title = tr._("Control Test App");
         if (!junitMode) {
             create();
             boot();
@@ -87,7 +87,7 @@ public abstract class WidgetTester
     }
 
     protected void createTools() {
-        addToolButton(GUINLS.getString("ControlTestApp.autoFit"), //
+        addToolButton(tr._("Auto &Fit"), //
                 new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {

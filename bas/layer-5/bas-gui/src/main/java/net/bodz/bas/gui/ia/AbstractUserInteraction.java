@@ -5,10 +5,11 @@ import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.collection.map.IndexMap;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.model.IExecutableX;
 
 public abstract class AbstractUserInteraction
-        implements IUserInteraction {
+        implements IUserInteraction, II18nCapable {
 
     @Override
     public void alert(String title) {

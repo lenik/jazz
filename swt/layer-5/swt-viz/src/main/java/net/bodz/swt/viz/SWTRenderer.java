@@ -10,11 +10,12 @@ import org.eclipse.swt.widgets.Control;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.gui.viz.IRenderer;
 import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 
 public abstract class SWTRenderer
-        implements IRenderer {
+        implements IRenderer, II18nCapable {
 
     /**
      * @throws NullPointerException

@@ -27,7 +27,8 @@ import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.traits.IParser;
 
 @SuppressWarnings("restriction")
-public class Providers {
+public class Providers
+        implements II18nCapable {
 
     private static final Parser parser = new Parser();
 
@@ -59,7 +60,7 @@ public class Providers {
             }
             IParser<Provider> parser = parsers.get(type);
             if (parser == null)
-                throw new ParseException(SysNLS.getString("Providers.noProvider") + type);
+                throw new ParseException(tr._("No such provider: ") + type);
             return parser.parse(s);
         }
 
@@ -120,7 +121,7 @@ public class Providers {
                 throws ParseException {
             CURL curl = new CURL(s);
             if (curl.getType() != null)
-                throw new ParseException(SysNLS.getString("Providers.typeShouldBeStripped"));
+                throw new ParseException(tr._("the type should be stripped."));
             Alpha[] alphas = curl.getAlphas();
             String path = alphas[0].formatBetas();
             Provider provider = null;
@@ -150,7 +151,7 @@ public class Providers {
                                 throw new ParseException(e);
                             }
                             if (slots.length == 0)
-                                throw new ParseException(SysNLS.getString("Providers.noSlot"));
+                                throw new ParseException(tr._("no slot"));
                             int got = -1;
                             for (int i = 0; i < slots.length; i++) {
                                 String slotId = ":" + slots[i];
@@ -161,7 +162,7 @@ public class Providers {
                                 }
                             }
                             if (got == -1)
-                                throw new ParseException(SysNLS.getString("Providers.noAvailSlot"));
+                                throw new ParseException(tr._("no available slot!"));
                             provider = sprov;
                         }
                     } else
@@ -208,7 +209,7 @@ public class Providers {
             } catch (ProviderException e) {
                 LocalFileResource res = new LocalFileResource(file);
                 String config = res.tooling()._for(StreamReading.class).readTextContents();
-                System.err.println(SysNLS.getString("Providers.configError") + e.getMessage());
+                System.err.println(tr._("Config error: ") + e.getMessage());
                 System.err.println(config);
                 throw e;
             }

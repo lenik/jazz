@@ -1,7 +1,5 @@
 package net.bodz.swt.c3.ia;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -110,7 +108,7 @@ public class DialogInteraction
     public void setIcon(String alias) {
         String respath = aliases.get(alias);
         if (respath == null)
-            throw new IllegalArgumentException(GUINLS.getString("SWTInteraction.badicon") + alias);
+            throw new IllegalArgumentException(tr._("invalid icon alias: ") + alias);
         Image image = SWTResources.getImageRes(respath);
         setIcon(image);
     }

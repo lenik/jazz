@@ -1,9 +1,10 @@
 package net.bodz.redist.obfuz.seals;
 
-import static net.bodz.redist.obfuz.nls.ProtectNLS.ProtectNLS;
+import net.bodz.bas.i18n.nls.II18nCapable;
 
 public class AccumEntropy
-        extends _Entropy {
+        extends _Entropy
+        implements II18nCapable {
 
     private byte[] pool;
     private final int multiplier;
@@ -14,7 +15,7 @@ public class AccumEntropy
 
     public AccumEntropy(int poolSize, int multiplier) {
         if (poolSize < 2)
-            throw new IllegalArgumentException(ProtectNLS.getString("AccumEntropy.poolTooSmall"));
+            throw new IllegalArgumentException(tr._("The pool is too small"));
         this.pool = new byte[poolSize];
         this.multiplier = multiplier;
     }

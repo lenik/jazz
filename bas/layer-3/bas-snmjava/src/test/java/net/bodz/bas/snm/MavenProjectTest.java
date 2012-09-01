@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.io.FileClass;
-import net.bodz.bas.snm.MavenProjectOrigin;
 
 public class MavenProjectTest
         extends Assert {

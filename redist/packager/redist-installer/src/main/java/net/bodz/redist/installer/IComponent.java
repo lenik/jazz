@@ -3,9 +3,9 @@ package net.bodz.redist.installer;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.collection.tree.TreeNode;
-
 import org.eclipse.swt.graphics.ImageData;
+
+import net.bodz.bas.collection.tree.TreeNode;
 
 public interface IComponent
         extends TreeNode<IComponent> {

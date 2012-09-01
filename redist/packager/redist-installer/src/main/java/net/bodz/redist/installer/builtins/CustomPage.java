@@ -161,7 +161,7 @@ public class CustomPage
                     dirText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
                     File sessionFileValue = (File) session.get(name);
                     if (sessionFileValue == null)
-                        throw new NullPointerException(PackNLS.getString("CustomPage.varSetToNull") + name);
+                        throw new NullPointerException(tr._("file variable is set to null in session: ") + name);
 
                     dirText.setData(name);
                     dirText.setText(sessionFileValue.getPath());
@@ -172,7 +172,7 @@ public class CustomPage
                         @Override
                         public void widgetSelected(SelectionEvent e) {
                             DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.NONE);
-                            dialog.setText(PackNLS.getString("CustomPage.selectDirFor") + var.getText());
+                            dialog.setText(tr._("Select the directory for ") + var.getText());
                             String dir = dialog.open();
                             if (dir != null)
                                 dirText.setText(dir);
@@ -183,7 +183,7 @@ public class CustomPage
 
         };
         basedirsComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-        basedirsComp.setText(PackNLS.getString("CustomPage.installLocations"));
+        basedirsComp.setText(tr._("Install Locations:"));
 
         Label hr2 = new Label(holder, SWT.SEPARATOR | SWT.HORIZONTAL);
         hr2.setLayoutData(//
@@ -198,7 +198,7 @@ public class CustomPage
         statusbar.setLayout(gridLayout_statusbar);
 
         final Label installSizeLabel = new Label(statusbar, SWT.NONE);
-        installSizeLabel.setText(PackNLS.getString("CustomPage.installSize"));
+        installSizeLabel.setText(tr._("Install Size: "));
 
         sizeLabel = new Label(statusbar, SWT.NONE);
     }
@@ -275,7 +275,7 @@ public class CustomPage
     }
 
     protected void setSizeBytes(long size) {
-        sizeLabel.setText(size + PackNLS.getString("CustomPage.bytes"));
+        sizeLabel.setText(size + tr._(" bytes"));
     }
 
     @Override
@@ -285,7 +285,7 @@ public class CustomPage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("CustomPage.title");
+        return tr._("Custom Components");
     }
 
     @Override
@@ -297,8 +297,8 @@ public class CustomPage
         List<Entry> missingList = missingBuffer.getList();
         if (!missingList.isEmpty()) {
             SelectComponentsDialog dialog = new SelectComponentsDialog(pageContainer.getShell(), SWT.NONE,
-                    PackNLS.getString("CustomPage.checkMissings"),
-                    PackNLS.getString("CustomPage.checkMissings.caption"), missingList);
+                    tr._("Check missing components"),
+                    tr._("The following missing components are required due to dependancy:"), missingList);
             Collection<IComponent> add = dialog.open();
             if (add == null)
                 throw new QuietValidationException(tree);
@@ -314,15 +314,15 @@ public class CustomPage
             String path = dirText.getText();
             File dirFile = new File(path);
             if (dirFile.isFile())
-                throw new GUIValidationException(dirText, PackNLS.getString("CustomPage.fileExists"));
+                throw new GUIValidationException(dirText, tr._("file exists"));
             else if (!dirFile.exists()) {
                 IUserInteraction UI = session.getUserInterface();
-                boolean confirmed = UI.confirm(PackNLS.getString("CustomPage.createDirQ"),
+                boolean confirmed = UI.confirm(tr._("Create the directory?"),
                         PackNLS.format("CustomPage.confirmMkdir", dirFile));
                 if (!confirmed) {
                     throw new QuietValidationException(dirText);
                 } else if (!dirFile.mkdirs())
-                    throw new GUIValidationException(dirText, PackNLS.getString("CustomPage.cantMkdir") + dirFile);
+                    throw new GUIValidationException(dirText, tr._("Can\'t create ") + dirFile);
             }
             session.set(name, dirFile);
         }

@@ -6,11 +6,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.log.Logger;
-import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.m2.util.MavenLogLogger;
-import net.bodz.bas.m2.util.ProjectUtils;
-
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.Mojo;
@@ -21,6 +16,11 @@ import org.codehaus.plexus.component.configurator.ComponentConfigurationExceptio
 import org.codehaus.plexus.component.configurator.ConfigurationListener;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
+
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.m2.util.MavenLogLogger;
+import net.bodz.bas.m2.util.ProjectUtils;
 
 /**
  * Add the project's runtime classpath to plugin classpath.

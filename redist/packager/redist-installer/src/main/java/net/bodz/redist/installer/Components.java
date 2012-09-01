@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -9,14 +7,13 @@ import java.util.NoSuchElementException;
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
+import net.bodz.bas.i18n.nls.II18nCapable;
 
-/**
- * @test {@link ComponentsTest}
- */
 public class Components
-        extends TreeTextMap<IComponent> {
+        extends TreeTextMap<IComponent>
+        implements II18nCapable {
 
-    private static final long serialVersionUID = -3086334384020221224L;
+    private static final long serialVersionUID = 1L;
 
     private TextMap<String> nextMap;
 
@@ -47,7 +44,7 @@ public class Components
             if (component != null)
                 component.setRegistryData(data);
             else if (strict) {
-                throw new NoSuchElementException(String.format(PackNLS.getString("Components.compNotDefined"), id));
+                throw new NoSuchElementException(String.format(tr._("Component (id=%s) isn\'t defined"), id));
             }
         }
     }
@@ -134,8 +131,7 @@ public class Components
                         assert id != null;
                         child.setId(id);
                     } else if (idMap.containsKey(id)) {
-                        String mesg = String.format(PackNLS.getString("Components.duplicatedId_sss"), id,
-                                idMap.get(id), child);
+                        String mesg = String.format(tr._("Dupliated id(%s): old=%s, new=%s"), id, idMap.get(id), child);
                         throw new IllegalStateException(mesg);
                     }
                     idMap.put(id, child);
@@ -152,7 +148,7 @@ public class Components
     static String searchUnusedKey(TextMap<?> map, String s, int startIndex) {
         while (true) {
             if (startIndex >= Integer.MAX_VALUE)
-                throw new RuntimeException(PackNLS.getString("Components.indexUsedOut") + s);
+                throw new RuntimeException(tr._("Index used out for: ") + s);
             String key = s + startIndex;
             if (!map.containsKey(key))
                 return key;

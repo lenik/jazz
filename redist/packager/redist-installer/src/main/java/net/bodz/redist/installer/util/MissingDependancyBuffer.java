@@ -3,8 +3,8 @@ package net.bodz.redist.installer.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.redist.installer.IComponent;
 import net.bodz.bas.collection.tree.TreeCallback;
+import net.bodz.redist.installer.IComponent;
 
 public class MissingDependancyBuffer
         implements TreeCallback<IComponent> {

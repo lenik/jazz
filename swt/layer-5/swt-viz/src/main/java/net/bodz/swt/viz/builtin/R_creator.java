@@ -1,7 +1,5 @@
 package net.bodz.swt.viz.builtin;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 
@@ -67,7 +65,7 @@ public class R_creator
                     parent.clear();
                     // rerenderObject(obj);
                 } catch (ParseException pe) {
-                    rc.interact(parent).alert(GUINLS.getString("R_creator.parseFailure"), pe);
+                    rc.interact(parent).alert(tr._("Parse Failure"), pe);
                     text.setFocus();
                 }
             }
@@ -95,11 +93,11 @@ public class R_creator
             Image icon = SwtStylesheet.get(type).getIcon();
 
         } catch (CreateException e) {
-            throw new IllegalUsageError(GUINLS.getString("R_creator.failedGetParser") + type);
+            throw new IllegalUsageError(tr._("failed to get parser for ") + type);
         }
         if (parser != null) {
             MenuItem menuItem = new MenuItem(createMenu, 0);
-            menuItem.setText(GUINLS.getString("R_creator.fromText"));
+            menuItem.setText(tr._("From Text"));
             menuItem.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
@@ -113,7 +111,7 @@ public class R_creator
             String label = hint.getLabel();
             if (label == null) {
                 String pt = TypeName.join(", ", true, ctor.getParameterTypes());
-                label = GUINLS.getString("R_creator.new_") + pt + ")";
+                label = tr._("new(") + pt + ")";
             }
         }
         Composite comp = new Composite(parent, style);

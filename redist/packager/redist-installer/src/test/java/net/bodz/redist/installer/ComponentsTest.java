@@ -2,13 +2,13 @@ package net.bodz.redist.installer;
 
 import java.util.Map;
 
-import net.bodz.redist.installer.builtins.TestConfig;
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.bas.xml.XMLs;
-
-import org.junit.Assert;
-import org.junit.Test;
+import net.bodz.redist.installer.builtins.TestConfig;
 
 public class ComponentsTest
         extends Assert {

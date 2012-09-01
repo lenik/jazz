@@ -29,7 +29,8 @@ import net.bodz.bas.util.iter.PrefetchedIterator;
 import com.sun.security.auth.callback.TextCallbackHandler;
 
 @SuppressWarnings("restriction")
-public class CertSelector {
+public class CertSelector
+        implements II18nCapable {
 
     public static final int AUTO = 0;
     public static final int NONE = 1;
@@ -137,8 +138,7 @@ public class CertSelector {
             }
         }
         if (type > detType)
-            throw new IllegalArgumentException(String.format(SysNLS.getString("CertSelector.typeIsntCompleted_ss"),
-                    type, curl));
+            throw new IllegalArgumentException(tr._("Type(%s) is not completed: %s", type, curl));
         this.type = type == AUTO ? detType : type;
         if (provider != null) {
             this.provider = provider;
@@ -242,7 +242,7 @@ public class CertSelector {
                 if (storeFile != null)
                     in = new FileInputStream(storeFile);
                 else
-                    throw new IllegalStateException(SysNLS.getString("CertSelector.noKeyStore"));
+                    throw new IllegalStateException(tr._("No key store specified?"));
                 keyStore.load(in, storePassword.toCharArray());
             } catch (Exception e) {
                 throw new KeyStoreException(e);

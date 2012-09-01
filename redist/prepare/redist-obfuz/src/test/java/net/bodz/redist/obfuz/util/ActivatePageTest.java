@@ -1,10 +1,10 @@
 package net.bodz.redist.obfuz.util;
 
+import org.junit.Test;
+
 import net.bodz.redist.obfuz.pm.BasicPM;
 import net.bodz.redist.obfuz.pm.ProtectionModel;
 import net.bodz.swt.c3.test.PageTester;
-
-import org.junit.Test;
 
 @Activation(productId = "net.bodz.dist.pro.util.ActTest", prefix = "APT", segments = 3)
 public class ActivatePageTest

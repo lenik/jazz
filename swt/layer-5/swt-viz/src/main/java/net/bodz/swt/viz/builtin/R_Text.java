@@ -1,7 +1,5 @@
 package net.bodz.swt.viz.builtin;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.util.EventObject;
 
 import org.eclipse.swt.SWT;
@@ -85,7 +83,7 @@ public class R_Text
                 parser = Traits.getTrait(type, IParser.class);
                 validator = Traits.getTrait(type, IValidator.class);
             } catch (QueryException e) {
-                throw new RenderException(GUINLS.getString("R_Text.cantGuessParserForNum") + type);
+                throw new RenderException(tr._("Can\'t guess parser for number class: ") + type);
             }
 
             ControlAdapters.commit(text, new CommitAdapter(rc.interact(text)) {

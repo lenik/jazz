@@ -2,9 +2,9 @@ package net.bodz.redist.installer;
 
 import java.io.IOException;
 
-import net.bodz.bas.ant.TaskTestApp;
-
 import org.junit.Test;
+
+import net.bodz.bas.ant.TaskTestApp;
 
 public class PackageTaskTest {
 

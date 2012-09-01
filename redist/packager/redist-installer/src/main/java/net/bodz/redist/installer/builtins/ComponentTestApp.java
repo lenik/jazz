@@ -1,21 +1,21 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
+import net.bodz.bas.i18n.nls.II18nCapable;
+import net.bodz.bas.log.impl.ConsoleLogger;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.redist.installer.ConsoleExecutor;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.SessionException;
-import net.bodz.bas.log.impl.ConsoleLogger;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
-public class ComponentTestApp {
+public class ComponentTestApp
+        implements II18nCapable {
 
     protected final CTAProject project;
     protected final Section section;
 
     public ComponentTestApp() {
         project = new CTAProject();
-        section = new DefaultSection("test", PackNLS.getString("ComponentTestApp.test.text"),
-                PackNLS.getString("ComponentTestApp.test.doc"));
+        section = new DefaultSection("test", tr._("Test Section"), tr._("Components under test should put them here"));
         project.add(section);
     }
 

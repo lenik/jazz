@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.geom_f.base.Circle2d;
 import net.bodz.bas.geom_f.base.IPointRef2d;
 import net.bodz.bas.geom_f.base.Point2d;

@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.io.File;
 import java.net.URL;
 import java.util.Collection;
@@ -38,7 +36,7 @@ public class AbstractProject
     private Author company;
 
     public AbstractProject(Class<?> clazz, IComponent... children) {
-        super("root", PackNLS.getString("_Project.projectRoot"), children);
+        super("root", tr._("Project Root"), children);
         if (clazz != null)
             loadInfo(clazz);
         this.variables = new TreeTextMap<Variable>();
@@ -172,7 +170,7 @@ public class AbstractProject
         if (parent == null)
             throw new NullPointerException("null component in level " + level);
         if (uniq.contains(parent))
-            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + parent);
+            throw new IllegalStateException(tr._("Loop detected: ") + parent);
         uniq.add(parent);
         Collection<IComponent> children = parent.getDependancy();
         if (children == null)
@@ -204,7 +202,7 @@ public class AbstractProject
         if (child == null)
             throw new NullPointerException("null component in rev-level " + level);
         if (uniq.contains(child))
-            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + child);
+            throw new IllegalStateException(tr._("Loop detected: ") + child);
         uniq.add(child);
         Set<IComponent> parents = bydeps.get(child);
         if (parents == null)
@@ -233,7 +231,7 @@ public class AbstractProject
     boolean analyseDependency(IComponent child, TreeCallback<IComponent> missingCallback, int level,
             IdentityHashSet uniq) {
         if (uniq.contains(child))
-            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + child);
+            throw new IllegalStateException(tr._("Loop detected: ") + child);
         uniq.add(child);
         Collection<IComponent> dependancy = child.getDependancy();
         if (dependancy == null)

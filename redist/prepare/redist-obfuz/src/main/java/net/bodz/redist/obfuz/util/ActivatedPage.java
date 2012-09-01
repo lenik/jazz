@@ -1,17 +1,16 @@
 package net.bodz.redist.obfuz.util;
 
-import static net.bodz.redist.obfuz.nls.ProtectNLS.ProtectNLS;
-import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.PageMethod;
-import net.bodz.swt.c3.pageflow.ServiceContext;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+
+import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.swt.c3.pageflow.AbstractPage;
+import net.bodz.swt.c3.pageflow.PageException;
+import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c3.pageflow.ServiceContext;
 
 public class ActivatedPage
         extends AbstractPage {
@@ -32,7 +31,7 @@ public class ActivatedPage
 
     @Override
     public String getPageTitle() {
-        return ProtectNLS.getString("ActivatedPage.title");
+        return tr._("Successfully activated. ");
     }
 
     @Override
@@ -40,7 +39,7 @@ public class ActivatedPage
         parent.setLayout(new GridLayout());
 
         final Label thankLabel = new Label(parent, SWT.NONE);
-        thankLabel.setText(ProtectNLS.getString("ActivatedPage.thank"));
+        thankLabel.setText(tr._("Thank you for your registration!"));
     }
 
     @Override

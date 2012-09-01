@@ -1,7 +1,5 @@
 package net.bodz.swt.c3.file.image;
 
-import static net.bodz.swt.nls.ControlsNLS.ControlsNLS;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,7 +38,7 @@ public class SaveImageDialog
     }
 
     public SaveImageDialog(Shell parent, int style, ImageData image) {
-        super(parent, style, ControlsNLS.getString("SaveImageDialog.title"));
+        super(parent, style, tr._("Save image as..."));
         this.imageData = image;
     }
 
@@ -88,7 +86,7 @@ public class SaveImageDialog
         composite.setLayout(gridLayout);
 
         final Label typeLabel = new Label(composite, SWT.NONE);
-        typeLabel.setText(ControlsNLS.getString("SaveImageDialog.imageType"));
+        typeLabel.setText(tr._("Image &Type:"));
 
         imageTypeCombo = new Combo(composite, SWT.READ_ONLY);
         final GridData gd_imageTypeCombo = new GridData();
@@ -102,14 +100,14 @@ public class SaveImageDialog
         paramsStack.setLayoutData(gd_optionsComposite);
 
         final Label pathLabel = new Label(composite, SWT.NONE);
-        pathLabel.setText(ControlsNLS.getString("SaveImageDialog.filePath"));
+        pathLabel.setText(tr._("File path: "));
 
         pathText = new Text(composite, SWT.BORDER);
         final GridData gd_pathText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         pathText.setLayoutData(gd_pathText);
 
         final Button browseButton = new Button(composite, SWT.NONE);
-        browseButton.setText(ControlsNLS.getString("SaveImageDialog.browse"));
+        browseButton.setText(tr._("&Browse"));
         browseButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

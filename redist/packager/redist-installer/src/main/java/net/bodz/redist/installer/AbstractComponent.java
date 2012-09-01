@@ -1,7 +1,5 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,11 +8,12 @@ import java.util.Set;
 
 import org.eclipse.swt.graphics.ImageData;
 
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.book.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public abstract class AbstractComponent
-        implements IComponent {
+        implements IComponent, II18nCapable {
 
     private String id;
     private Object viewData;
@@ -252,7 +251,7 @@ public abstract class AbstractComponent
             job = uninstall(session);
             break;
         default:
-            throw new IllegalArgumentException(PackNLS.getString("_Component.invalidType") + type);
+            throw new IllegalArgumentException(tr._("Invalid type: ") + type);
         }
 
         List<IComponent> children = getChildren();

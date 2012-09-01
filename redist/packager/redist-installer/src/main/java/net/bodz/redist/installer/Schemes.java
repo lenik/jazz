@@ -1,16 +1,15 @@
 package net.bodz.redist.installer;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.i18n.nls.II18nCapable;
 
 public class Schemes {
 
     static abstract class _Scheme
-            implements Scheme {
+            implements Scheme, II18nCapable {
 
         private final String name;
         private final String caption;
@@ -56,12 +55,12 @@ public class Schemes {
             extends _Scheme {
 
         public Minimum(IComponent... autoComponents) {
-            super(MINIMUM, PackNLS.getString("Schemes.minimum"), autoComponents);
+            super(MINIMUM, tr._("Minimum"), autoComponents);
         }
 
         @Override
         public String getDescription() {
-            return PackNLS.getString("Schemes.min");
+            return tr._("Only installs the required components");
         }
 
         @Override
@@ -75,12 +74,12 @@ public class Schemes {
             extends _Scheme {
 
         public Default(IComponent... autoComponents) {
-            super(DEFAULT, PackNLS.getString("Schemes.standard"), autoComponents);
+            super(DEFAULT, tr._("Standard"), autoComponents);
         }
 
         @Override
         public String getDescription() {
-            return PackNLS.getString("Schemes.std");
+            return tr._("Installs most recommended components");
         }
 
         @Override
@@ -94,12 +93,12 @@ public class Schemes {
             extends _Scheme {
 
         public Maximum(IComponent... autoComponents) {
-            super(MAXIMUM, PackNLS.getString("Schemes.maximum"), autoComponents);
+            super(MAXIMUM, tr._("Maximum"), autoComponents);
         }
 
         @Override
         public String getDescription() {
-            return PackNLS.getString("Schemes.full");
+            return tr._("Install all components");
         }
 
         @Override
@@ -113,12 +112,12 @@ public class Schemes {
             extends _Scheme {
 
         public Custom(IComponent... autoComponents) {
-            super(CUSTOM, PackNLS.getString("Schemes.custom2"), autoComponents);
+            super(CUSTOM, tr._("Custom"), autoComponents);
         }
 
         @Override
         public String getDescription() {
-            return PackNLS.getString("Schemes.custom");
+            return tr._("Custom components to satisfy what you need");
         }
 
         @Override

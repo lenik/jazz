@@ -1,18 +1,9 @@
 package net.bodz.redist.installer.builtins;
 
-import static net.bodz.redist.installer.nls.PackNLS.PackNLS;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-
-import net.bodz.redist.installer.IComponent;
-import net.bodz.redist.installer.util.Indices;
-import net.bodz.redist.installer.util.MissingDependancyBuffer.Entry;
-import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.err.CreateException;
-import net.bodz.swt.c3.dialog.SimpleDialog;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -21,6 +12,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+
+import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.err.CreateException;
+import net.bodz.redist.installer.IComponent;
+import net.bodz.redist.installer.util.Indices;
+import net.bodz.redist.installer.util.MissingDependancyBuffer.Entry;
+import net.bodz.swt.c3.dialog.SimpleDialog;
 
 public class SelectComponentsDialog
         extends SimpleDialog {
@@ -101,7 +99,7 @@ public class SelectComponentsDialog
     protected void createUserButtons(Composite parent)
             throws CreateException {
         Button selectAll = new Button(parent, SWT.NONE);
-        selectAll.setText(PackNLS.getString("SelectComponentsDialog.selectAll"));
+        selectAll.setText(tr._("Select &All"));
         selectAll.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -109,7 +107,7 @@ public class SelectComponentsDialog
             }
         });
         Button selectInverse = new Button(parent, SWT.NONE);
-        selectInverse.setText(PackNLS.getString("SelectComponentsDialog.selectInverse"));
+        selectInverse.setText(tr._("&Inverse"));
         selectInverse.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
