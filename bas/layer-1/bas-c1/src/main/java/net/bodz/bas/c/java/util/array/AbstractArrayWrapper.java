@@ -1,12 +1,14 @@
-package net.bodz.bas.util.array;
+package net.bodz.bas.c.java.util.array;
 
 import java.util.AbstractList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import net.bodz.bas.c.java.util.Arrays;
+
 public abstract class AbstractArrayWrapper<A, E>
-        extends ArrayWrappers
+        extends Arrays
         implements IArrayWrapper<A, E> {
 
     public final int start;

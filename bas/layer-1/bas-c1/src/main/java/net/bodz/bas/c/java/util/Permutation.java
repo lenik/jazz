@@ -1,5 +1,7 @@
-package net.bodz.bas.util.array;
+package net.bodz.bas.c.java.util;
 
+import net.bodz.bas.c.java.util.array.ArrayWrapper;
+import net.bodz.bas.c.java.util.array.IArrayWrapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.lang.fn.Proc1;

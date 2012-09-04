@@ -5,8 +5,8 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.java.util.Permutation;
 import net.bodz.bas.lang.fn.Proc1;
-import net.bodz.bas.util.array.Permutation;
 
 public class ClassComparatorTest
         extends Assert {

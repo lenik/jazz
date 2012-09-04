@@ -3,11 +3,6 @@ package net.bodz.bas.collection.buffer;
 import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 
-import net.bodz.bas.util.array.IArrayWrapper;
-
-/**
- * See {@link IArrayWrapper}
- */
 @Deprecated
 public class CharRing
         extends AbstractRingBuffer<char[], Character> {

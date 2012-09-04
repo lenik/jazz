@@ -1,21 +1,21 @@
-package net.bodz.bas.util.array;
+package net.bodz.bas.c.java.util.array;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.err.NotImplementedException;
 
-public class ShortArrayWrapper
+public class FloatArrayWrapper
         extends AbstractArrayWrapper<float[], Float> {
 
     public final float[] array;
 
-    ShortArrayWrapper(float[] array) {
+    public FloatArrayWrapper(float[] array) {
         this(array, 0, array.length);
     }
 
-    ShortArrayWrapper(float[] array, int start, int end) {
+    public FloatArrayWrapper(float[] array, int start, int end) {
         super(start, end);
         if (array == null)
             throw new NullPointerException("array");
@@ -67,36 +67,17 @@ public class ShortArrayWrapper
 
     @Override
     public void _fill(int actualFrom, int actualTo, Float val) {
-        Arrays.fill(array, actualFrom, actualTo, (Float) val);
+        Arrays.fill(array, actualFrom, actualTo, val);
     }
 
     @Override
     protected void _reverse(int actualFrom, int actualTo) {
-        int swaps = (actualTo - actualFrom) / 2;
-        assert swaps >= 0;
-        int left = actualFrom;
-        int right = actualTo - 1;
-        while (swaps-- != 0) {
-            float temp = array[left];
-            array[left] = array[right];
-            array[right] = temp;
-            ++left;
-            --right;
-        }
+        Arrays.reverse(array, actualFrom, actualTo);
     }
 
     @Override
     protected void _shuffle(Random random, int actualFrom, int actualTo, int strength) {
-        int length = actualTo - actualFrom;
-        while (strength-- > 0) {
-            int n = start + random.nextInt(length);
-            int m = start + random.nextInt(length);
-            if (n == m)
-                continue;
-            float temp = array[n];
-            array[n] = array[m];
-            array[m] = temp;
-        }
+        Arrays.shuffle(array, actualFrom, actualTo, random, strength);
     }
 
     @Override

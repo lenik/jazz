@@ -1,6 +1,4 @@
-package net.bodz.bas.util.array;
-
-import static net.bodz.bas.util.array.ArrayWrappers.wrap;
+package net.bodz.bas.c.java.util;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,7 +28,7 @@ public class PermutationTest
         final char[] array = orig.toCharArray();
         final Set<String> instances = new HashSet<String>();
 
-        Permutation.iterate(wrap(array), new Proc1<char[]>() {
+        Permutation.iterate(Arrays.wrap(array), new Proc1<char[]>() {
             @Override
             public void exec(char[] inst) {
                 count++;
@@ -62,12 +60,12 @@ public class PermutationTest
         }
 
         String eval(int ord) {
-            Permutation.perm(ord, wrap(src), wrap(dst));
+            Permutation.perm(ord, Arrays.wrap(src), Arrays.wrap(dst));
             return String.valueOf(dst);
         }
 
         void o(int ord, String expected) {
-            Permutation.perm(ord, wrap(src), wrap(dst));
+            Permutation.perm(ord, Arrays.wrap(src), Arrays.wrap(dst));
             String actual = String.valueOf(dst);
             assertEquals(expected, actual);
         }
@@ -142,7 +140,7 @@ public class PermutationTest
         TestPermEval d = new TestPermEval("12345".toCharArray());
         int last = 0;
         for (int i = 0; i < 120; i++) {
-            String perm = (String) d.eval(i);
+            String perm = d.eval(i);
             int num = Integer.parseInt(perm);
             assertTrue("increase", num > last);
             last = num;
@@ -158,7 +156,7 @@ public class PermutationTest
 
         public void o(String input, int expected) {
             char[] dst = input.toCharArray();
-            int actual = Permutation.ord(wrap(src), wrap(dst));
+            int actual = Permutation.ord(Arrays.wrap(src), Arrays.wrap(dst));
             assertEquals(expected, actual);
         }
     }
@@ -223,10 +221,10 @@ public class PermutationTest
     public void testIterOrd() {
         final char[] src = "1234".toCharArray();
         final List<Integer> ords = new ArrayList<Integer>();
-        Permutation.iterate(wrap(src), new Proc1<char[]>() {
+        Permutation.iterate(Arrays.wrap(src), new Proc1<char[]>() {
             @Override
             public void exec(char[] inst) {
-                int ord = Permutation.ord(wrap(src), wrap(inst));
+                int ord = Permutation.ord(Arrays.wrap(src), Arrays.wrap(inst));
                 ords.add(ord);
             }
         });

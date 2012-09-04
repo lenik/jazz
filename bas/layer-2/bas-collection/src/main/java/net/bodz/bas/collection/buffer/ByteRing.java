@@ -5,11 +5,7 @@ import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.util.array.IArrayWrapper;
 
-/**
- * @see {@link IArrayWrapper}
- */
 @Deprecated
 public class ByteRing
         extends AbstractRingBuffer<byte[], Byte> {
