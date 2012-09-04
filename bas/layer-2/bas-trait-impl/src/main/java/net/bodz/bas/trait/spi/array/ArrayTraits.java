@@ -1,8 +1,8 @@
 package net.bodz.bas.trait.spi.array;
 
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.array.ArrayType;
 
 /**
  * The traits for generic Object array.
@@ -16,7 +16,7 @@ public abstract class ArrayTraits<T>
     private IParser<T> valueParser;
 
     public ArrayTraits(Class<T> valueType) {
-        super(ArrayType.getArrayType(valueType));
+        super(Arrays.getArrayType(valueType));
         this.valueType = valueType;
     }
 

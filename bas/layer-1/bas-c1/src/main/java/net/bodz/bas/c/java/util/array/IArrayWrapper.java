@@ -1,4 +1,4 @@
-package net.bodz.bas.util.array;
+package net.bodz.bas.c.java.util.array;
 
 import java.util.Comparator;
 import java.util.List;
