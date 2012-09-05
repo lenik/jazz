@@ -1,0 +1,25 @@
+algebra
+base
+base-maml
+    ace
+computation
+computation-pde
+    probability
+    statistics
+extension
+    geography
+fundamental
+    combinatorics
+    dev
+    fuzzy
+    logic
+    number
+    set
+    topology
+geometry
+    dev
+    euclid
+    euclid-voronoi
+graphics
+image
+optimization
