@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-c3</module>
-        <module>bas-node</module>
         <module>bas-memory</module>
+        <module>bas-node</module>
         <module>bas-snmjava</module>
         <module>bas-text</module>
         <module>bas-text-lr</module>
