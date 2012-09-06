@@ -14,6 +14,7 @@ layer-1/ 核心语言增强与语言工具
 layer-2/ 基础数据类型扩展
     bas-collection
     bas-context
+    bas-i18n
     bas-io
     bas-trait-impl
     bas-script
@@ -23,7 +24,6 @@ layer-3/ 工具和杂项
     bas-text
     bas-text-lr
     bas-memory
-    bas-srt
     bas-snmjava
     bas-c3
 
@@ -31,7 +31,6 @@ layer-5/ 框架基础
     bas-bean
     bas-database
     bas-flow
-    bas-i18n
     bas-l10n
     bas-loader
     bas-log
@@ -48,6 +47,9 @@ layer-7/ 应用框架
     bas-program
     bas-unitperf
     bas-vcs
+
+incubator/
+    bas-srt
 
 build/
     bas-uber
