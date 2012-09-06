@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.variant.map.IVariantLookupMap;
-import net.bodz.bas.variant.map.Map2VariantMap;
+import net.bodz.bas.util.variant.IVariantLookupMap;
+import net.bodz.bas.util.variant.Map2VariantMap;
 
 /**
  * Find method name in the dispatch path, translate into request attributes and remove them from

@@ -1,6 +1,6 @@
 package cg;
 
-import net.bodz.bas.variant.map.AbstractVariantLookupMap_MatrixImpl;
+import net.bodz.bas.util.variant.AbstractVariantLookupMap_MatrixImpl;
 
 /**
  * @see AbstractVariantLookupMap_MatrixImpl

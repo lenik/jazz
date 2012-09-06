@@ -1,8 +1,7 @@
-package net.bodz.bas.variant.map;
+package net.bodz.bas.util.variant;
 
 import java.lang.reflect.Array;
 
-import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.util.Nullables;
 
 public abstract class AbstractVariantLookupMap<K>
@@ -58,7 +57,7 @@ public abstract class AbstractVariantLookupMap<K>
     @Override
     public String[] getStringArray(K key) {
         Object value = get(key);
-        return StringArray.convert(value);
+        return toStringArray(value);
     }
 
     @Override
@@ -66,7 +65,30 @@ public abstract class AbstractVariantLookupMap<K>
         Object value = get(key);
         if (value == null)
             return containsKey(key) ? null : defaultValue;
-        return StringArray.convert(value);
+        return toStringArray(value);
+    }
+
+    static String[] toStringArray(Object scalarOrArray) {
+        if (scalarOrArray == null)
+            return null;
+
+        Class<?> type = scalarOrArray.getClass();
+        if (!type.isArray())
+            return new String[] { Nullables.toString(scalarOrArray) };
+
+        if (type.getComponentType().equals(String.class))
+            return (String[]) scalarOrArray;
+
+        Object array = scalarOrArray;
+        int len = Array.getLength(array);
+        String[] sv = new String[len];
+        for (int i = 0; i < len; i++) {
+            Object item = Array.get(array, i);
+            if (item != null) {
+                sv[i] = item.toString();
+            }
+        }
+        return sv;
     }
 
 }

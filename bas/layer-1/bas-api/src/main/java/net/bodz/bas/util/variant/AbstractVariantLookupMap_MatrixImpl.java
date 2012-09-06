@@ -1,11 +1,11 @@
-package net.bodz.bas.variant.map;
+package net.bodz.bas.util.variant;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
 import net.bodz.bas.err.TypeConvertException;
-import net.bodz.bas.variant.conv.*;
+import net.bodz.bas.util.primitive.*;
 
 /**
  * @see cg.VariantLookupMapGenerator

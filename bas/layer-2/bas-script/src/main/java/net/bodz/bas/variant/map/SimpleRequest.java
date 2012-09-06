@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.util.Nullables;
+import net.bodz.bas.util.variant.AbstractVariantLookupMap;
 
 public class SimpleRequest
         extends AbstractVariantLookupMap<String> {
