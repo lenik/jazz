@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-uber</module>
-        <!--<module>fj5</module>-->
     </modules>
     <name>BAS :: Build</name>
 </project>

@@ -2,7 +2,8 @@ package net.bodz.node.generic.chain;
 
 import net.bodz.bas.err.ReadOnlyException;
 
-public class CChainNode extends _ChainNode {
+public class CChainNode
+        extends _ChainNode {
 
     IChainNode next;
     IChainNode prev;
@@ -23,12 +24,14 @@ public class CChainNode extends _ChainNode {
     }
 
     @Override
-    public void setNext(IChainNode next) throws ReadOnlyException {
+    public void setNext(IChainNode next)
+            throws ReadOnlyException {
         this.next = next;
     }
 
     @Override
-    public void setPrev(IChainNode prev) throws ReadOnlyException {
+    public void setPrev(IChainNode prev)
+            throws ReadOnlyException {
         this.prev = prev;
     }
 

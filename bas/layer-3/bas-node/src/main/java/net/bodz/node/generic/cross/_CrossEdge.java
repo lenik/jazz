@@ -4,35 +4,42 @@ import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.node.generic.chain.ChainIteration;
 import net.bodz.node.generic.chain.IChainNode;
 
-public abstract class _CrossEdge implements ICrossEdge {
+public abstract class _CrossEdge
+        implements ICrossEdge {
 
     @Override
-    public final void setNext(IChainNode _next) throws ReadOnlyException {
+    public final void setNext(IChainNode _next)
+            throws ReadOnlyException {
         ICrossEdge next = (ICrossEdge) _next;
         setNext2(next);
     }
 
     @Override
-    public final void setPrev(IChainNode _prev) throws ReadOnlyException {
+    public final void setPrev(IChainNode _prev)
+            throws ReadOnlyException {
         ICrossEdge prev = (ICrossEdge) _prev;
         setPrev2(prev);
     }
 
-    protected void setNext2(ICrossEdge next) throws ReadOnlyException {
+    protected void setNext2(ICrossEdge next)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
-    protected void setPrev2(ICrossEdge prev) throws ReadOnlyException {
+    protected void setPrev2(ICrossEdge prev)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
     @Override
-    public void setIn(ICrossNode in) throws ReadOnlyException {
+    public void setIn(ICrossNode in)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
     @Override
-    public void setOut(ICrossNode out) throws ReadOnlyException {
+    public void setOut(ICrossNode out)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
