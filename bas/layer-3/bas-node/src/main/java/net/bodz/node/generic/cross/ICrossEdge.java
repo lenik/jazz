@@ -3,25 +3,30 @@ package net.bodz.node.generic.cross;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.node.generic.chain.IChainNode;
 
-public interface ICrossEdge extends IChainNode {
+public interface ICrossEdge
+        extends IChainNode {
 
     ICrossEdge getNext();
 
     ICrossEdge getPrev();
 
     /** assert next instanceof ICrossEdge */
-    void setNext(IChainNode next) throws ReadOnlyException;
+    void setNext(IChainNode next)
+            throws ReadOnlyException;
 
     /** assert prev instanceof ICrossEdge */
-    void setPrev(IChainNode prev) throws ReadOnlyException;
+    void setPrev(IChainNode prev)
+            throws ReadOnlyException;
 
     ICrossNode getOut();
 
     ICrossNode getIn();
 
-    void setOut(ICrossNode out) throws ReadOnlyException;
+    void setOut(ICrossNode out)
+            throws ReadOnlyException;
 
-    void setIn(ICrossNode in) throws ReadOnlyException;
+    void setIn(ICrossNode in)
+            throws ReadOnlyException;
 
     ICrossEdge getComing();
 

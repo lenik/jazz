@@ -12,8 +12,6 @@ import net.bodz.bas.err.OutOfDomainException;
  * <ul>
  * <li>empty string</li>
  * </ul>
- * 
- * @test {@link TreePathTest}
  */
 public class TreePath
         implements Comparable<TreePath>, Serializable {

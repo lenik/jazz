@@ -8,8 +8,10 @@ public interface IChainNode {
 
     IChainNode getPrev();
 
-    void setNext(IChainNode next) throws ReadOnlyException;
+    void setNext(IChainNode next)
+            throws ReadOnlyException;
 
-    void setPrev(IChainNode prev) throws ReadOnlyException;
+    void setPrev(IChainNode prev)
+            throws ReadOnlyException;
 
 }

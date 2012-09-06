@@ -1,18 +1,18 @@
 package net.bodz.node.generic.chain;
 
-import static net.bodz.bas.util.iter.PrefetchedIterator.END;
-
 import java.util.Iterator;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.util.iter.PrefetchedIterator;
 
-public class ChainIterator<NT extends IChainNode> // 
-        extends PrefetchedIterator<NT> implements Iterator<NT> {
+public class ChainIterator<NT extends IChainNode>
+        //
+        extends PrefetchedIterator<NT>
+        implements Iterator<NT> {
 
-    private NT         start;
-    private IChainNode current;
-    private int        state;
+    private NT start;
+    private NT current;
+    private int state;
 
     public ChainIterator(NT start, int mode) {
         this.start = start;
@@ -27,7 +27,7 @@ public class ChainIterator<NT extends IChainNode> //
         case Rewind:
             current = start;
             while (true) {
-                IChainNode prev = current.getPrev();
+                NT prev = (NT) current.getPrev();
                 if (prev == null)
                     break;
                 current = prev;
@@ -68,7 +68,7 @@ public class ChainIterator<NT extends IChainNode> //
             return current = start;
         case PREV:
         case PREV_ONLY:
-            current = current.getPrev();
+            current = (NT) current.getPrev();
             if (current == null) {
                 current = start;
                 state = state == PREV_ONLY ? _END : NEXT;
@@ -76,10 +76,10 @@ public class ChainIterator<NT extends IChainNode> //
             }
             return current;
         case NEXT:
-            current = current.getNext();
+            current = (NT) current.getNext();
             if (current == null) {
                 state = _END;
-                return END;
+                return end();
             }
             return current;
         case _END:
@@ -88,21 +88,21 @@ public class ChainIterator<NT extends IChainNode> //
         throw new UnexpectedException();
     }
 
-    public static final int  All             = 0;
-    public static final int  Rewind          = 1;
-    public static final int  PrevIncl        = 2;
-    public static final int  NextIncl        = 3;
-    public static final int  PrevOnly        = 4;
-    public static final int  NextOnly        = 5;
-    public static final int  ResetHead       = 6;
-    public static final int  ResetTail       = 7;
+    public static final int All = 0;
+    public static final int Rewind = 1;
+    public static final int PrevIncl = 2;
+    public static final int NextIncl = 3;
+    public static final int PrevOnly = 4;
+    public static final int NextOnly = 5;
+    public static final int ResetHead = 6;
+    public static final int ResetTail = 7;
 
-    private static final int _END            = 0;
-    private static final int START_PREV      = 1;
+    private static final int _END = 0;
+    private static final int START_PREV = 1;
     private static final int START_PREV_ONLY = 2;
-    private static final int START_NEXT      = 3;
-    private static final int NEXT            = 4;
-    private static final int PREV            = 5;
-    private static final int PREV_ONLY       = 6;
+    private static final int START_NEXT = 3;
+    private static final int NEXT = 4;
+    private static final int PREV = 5;
+    private static final int PREV_ONLY = 6;
 
 }

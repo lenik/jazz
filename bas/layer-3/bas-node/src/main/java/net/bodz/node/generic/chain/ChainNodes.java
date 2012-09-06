@@ -1,7 +1,6 @@
 package net.bodz.node.generic.chain;
 
-import static net.bodz.node.generic.Config.SafeCheck;
-import static net.bodz.node.generic.Config.WriteCheck;
+import static net.bodz.node.generic.NodeConfig.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -86,8 +85,7 @@ public class ChainNodes {
         return node;
     }
 
-    public static IChainNode insertBefore(IChainNode _This, IChainNode head,
-            IChainNode tail) {
+    public static IChainNode insertBefore(IChainNode _This, IChainNode head, IChainNode tail) {
         assert head != null;
         assert tail != null;
         if (_This != null) {
@@ -102,8 +100,7 @@ public class ChainNodes {
         return head;
     }
 
-    public static IChainNode insertAfter(IChainNode _This, IChainNode head,
-            IChainNode tail) {
+    public static IChainNode insertAfter(IChainNode _This, IChainNode head, IChainNode tail) {
         assert head != null;
         assert tail != null;
         if (_This != null) {
@@ -118,8 +115,7 @@ public class ChainNodes {
         return tail;
     }
 
-    public static IChainNode detach(IChainNode _This, IChainNode newPrev,
-            IChainNode newNext) {
+    public static IChainNode detach(IChainNode _This, IChainNode newPrev, IChainNode newNext) {
         assert _This != null;
         IChainNode prev = _This.getPrev();
         IChainNode next = _This.getNext();
@@ -138,7 +134,8 @@ public class ChainNodes {
         return detach(_This, null, null);
     }
 
-    public static boolean checkCircular(IChainNode start) throws CheckFailure {
+    public static boolean checkCircular(IChainNode start)
+            throws CheckFailure {
         if (start == null)
             return true;
         Set<IChainNode> set = new HashSet<IChainNode>();

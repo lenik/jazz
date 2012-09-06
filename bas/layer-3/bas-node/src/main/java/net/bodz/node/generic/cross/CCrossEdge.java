@@ -2,11 +2,12 @@ package net.bodz.node.generic.cross;
 
 import net.bodz.bas.err.ReadOnlyException;
 
-public class CCrossEdge extends _CrossEdge {
+public class CCrossEdge
+        extends _CrossEdge {
 
     ICrossNode in;
     ICrossNode out;
-    
+
     ICrossEdge next;
     ICrossEdge prev;
 
@@ -41,12 +42,14 @@ public class CCrossEdge extends _CrossEdge {
     }
 
     @Override
-    protected void setNext2(ICrossEdge next) throws ReadOnlyException {
+    protected void setNext2(ICrossEdge next)
+            throws ReadOnlyException {
         this.next = next;
     }
 
     @Override
-    protected void setPrev2(ICrossEdge prev) throws ReadOnlyException {
+    protected void setPrev2(ICrossEdge prev)
+            throws ReadOnlyException {
         this.prev = prev;
     }
 
