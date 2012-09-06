@@ -20,6 +20,7 @@ import net.bodz.bas.c.java.net.CURL.Alpha;
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.io.tmp.TempOut;
