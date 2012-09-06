@@ -22,13 +22,11 @@ import net.bodz.bas.c.java.net.CURL;
 import net.bodz.bas.c.java.net.CURL.Alpha;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.util.iter.PrefetchedIterator;
 
-import com.sun.security.auth.callback.TextCallbackHandler;
-
-@SuppressWarnings("restriction")
 public class CertSelector
         implements II18nCapable {
 
@@ -216,8 +214,9 @@ public class CertSelector
         };
     }
 
+    @SuppressWarnings("restriction")
     protected CallbackHandler getPromptPasswordHandler() {
-        return new TextCallbackHandler();
+        return new com.sun.security.auth.callback.TextCallbackHandler();
     }
 
     public KeyStore getKeyStore()
