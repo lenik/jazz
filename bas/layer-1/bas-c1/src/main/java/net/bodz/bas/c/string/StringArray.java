@@ -13,7 +13,6 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.util.Nullables;
 import net.bodz.bas.util.Pair;
 
 public class StringArray {
@@ -364,28 +363,6 @@ public class StringArray {
 
     public static String[] splitBySize(String s, int size) {
         return splitBySize(s, size, 0);
-    }
-
-    public static String[] convert(Object scalarOrArray) {
-        if (scalarOrArray == null)
-            return null;
-
-        Class<?> type = scalarOrArray.getClass();
-        if (!type.isArray())
-            return new String[] { Nullables.toString(scalarOrArray) };
-
-        if (type.getComponentType().equals(String.class))
-            return (String[]) scalarOrArray;
-
-        Object array = scalarOrArray;
-        int len = Array.getLength(array);
-        String[] sv = new String[len];
-        for (int i = 0; i < len; i++) {
-            Object item = Array.get(array, i);
-            if (item != null)
-                sv[i] = item.toString();
-        }
-        return sv;
     }
 
 }

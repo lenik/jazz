@@ -1,4 +1,4 @@
-package net.bodz.bas.variant.conv;
+package net.bodz.bas.util.primitive;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -6,7 +6,7 @@ import java.util.Date;
 
 import net.bodz.bas.err.TypeConvertException;
 
-public interface ITypeConversion {
+interface ITypeConversion {
 
     BigDecimal fromObject(Object o)
             throws TypeConvertException;

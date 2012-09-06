@@ -1,4 +1,4 @@
-package net.bodz.bas.variant.conv;
+package net.bodz.bas.util.primitive;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

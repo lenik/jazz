@@ -1,4 +1,4 @@
-package net.bodz.bas.variant.map;
+package net.bodz.bas.util.variant;
 
 import java.util.Set;
 

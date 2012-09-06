@@ -1,6 +1,6 @@
 package net.bodz.bas.disp.req;
 
-import net.bodz.bas.variant.map.IVariantLookupMap;
+import net.bodz.bas.util.variant.IVariantLookupMap;
 
 public interface IRequestMethod {
 

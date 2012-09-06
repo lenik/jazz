@@ -5,8 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.variant.map.IVariantLookupMap;
-import net.bodz.bas.variant.map.Map2VariantLookupMap;
+import net.bodz.bas.util.variant.IVariantLookupMap;
+import net.bodz.bas.util.variant.Map2VariantLookupMap;
 import net.bodz.bas.vfs.util.ContentType;
 import net.bodz.bas.vfs.util.ContentTypes;
 

@@ -1,69 +1,69 @@
-package net.bodz.bas.variant.conv;
+package net.bodz.bas.util.primitive;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import net.bodz.bas.err.TypeConvertException;
 
-public class TypeMatrix_byte {
+public class TypeMatrix_int {
 
-    public static byte fromObject(Object o)
+    public static int fromObject(Object o)
             throws TypeConvertException {
         if (o == null)
-            return (byte) 0;
+            return (int) 0;
         if (o instanceof Number)
-            return ((Number) o).byteValue();
+            return ((Number) o).intValue();
         return fromString(o.toString());
     }
 
-    public static byte fromString(String str)
+    public static int fromString(String str)
             throws TypeConvertException {
         if (str == null)
-            return (byte) 0;
+            return (int) 0;
         try {
-            return Byte.parseByte((String) str);
+            return Integer.parseInt((String) str);
         } catch (NumberFormatException e) {
             throw new TypeConvertException(e);
         }
     }
 
-    public static byte toByte(byte value) {
+    public static byte toByte(int value) {
         return (byte) value;
     }
 
-    public static short toShort(byte value) {
+    public static short toShort(int value) {
         return (short) value;
     }
 
-    public static int toInt(byte value) {
+    public static int toInt(int value) {
         return (int) value;
     }
 
-    public static long toLong(byte value) {
+    public static long toLong(int value) {
         return (long) value;
     }
 
-    public static float toFloat(byte value) {
+    public static float toFloat(int value) {
         return (float) value;
     }
 
-    public static double toDouble(byte value) {
+    public static double toDouble(int value) {
         return (double) value;
     }
 
-    public static boolean toBoolean(byte value) {
+    public static boolean toBoolean(int value) {
         return value != 0;
     }
 
-    public static char toChar(byte value) {
+    public static char toChar(int value) {
         return (char) (value & 0xff);
     }
 
-    public static BigInteger toBigInteger(byte value) {
+    public static BigInteger toBigInteger(int value) {
         return BigInteger.valueOf(value);
     }
 
-    public static BigDecimal toBigDecimal(byte value) {
+    public static BigDecimal toBigDecimal(int value) {
         return new BigDecimal(value);
     }
 
