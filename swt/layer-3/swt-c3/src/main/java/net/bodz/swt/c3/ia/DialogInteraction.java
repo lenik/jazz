@@ -27,12 +27,21 @@ import net.bodz.bas.gui.ia.IProposal;
 import net.bodz.bas.gui.viz.IVisualization;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.bas.lang.fn.Func0;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.Negotiation;
+import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.bas.potato.ref.ConstVariable;
+import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.Nullables;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c3.dialog.SimpleDialog;
+import net.bodz.swt.gui.api.ICommand;
+import net.bodz.swt.gui.api.ICommandGroup;
 
 public class DialogInteraction
         extends AbstractUserInteraction {
@@ -113,11 +122,15 @@ public class DialogInteraction
         setIcon(image);
     }
 
+    static IRefEntry<?> wrap(Object obj) {
+        return new ConstVariable<Object>("undefined", obj);
+    }
+
     abstract class _Dialog
             extends SimpleDialog {
 
         class RC
-                extends SWTRenderContext {
+                implements ICommandGroup {
             @Override
             public void addAction(final ICommand action) {
                 if (action == null)
@@ -131,8 +144,10 @@ public class DialogInteraction
                 String text = action.getText();
                 String doc = action.getDoc();
                 Image image = action.getImage();
-                if (text == null)
-                    text = A_bas.getDisplayName(action.getClass());
+                if (text == null) {
+                    ClassDoc classDoc = ClassDocs.loadFromResource(action.getClass());
+                    text = classDoc.as(ArtifactDoc.class).getLabel().toString();
+                }
                 button.setText(text);
                 if (doc != null)
                     button.setToolTipText(doc);
@@ -151,8 +166,9 @@ public class DialogInteraction
             super(parent, style, title);
         }
 
-        public SWTRenderContext getRenderContext() {
-            return new RC();
+        public INegotiation getNegotiation() {
+            return Negotiation.list(//
+                    Negotiation.option(ICommandGroup.class, new RC()));
         }
 
         @Override
@@ -188,9 +204,9 @@ public class DialogInteraction
             @Override
             protected void createDetail(Composite parent)
                     throws CreateException {
-                SWTRenderContext rc = getRenderContext();
+                INegotiation negotiation = getNegotiation();
                 try {
-                    visualization.render(rc, detail, parent, SWT.NONE);
+                    visualization.render(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -210,7 +226,7 @@ public class DialogInteraction
         class ConfirmDialog
                 extends _Dialog {
 
-            SWTRenderContext rc = getRenderContext();
+            INegotiation negotiation = getNegotiation();
 
             public ConfirmDialog(Shell parent, int style, String title) {
                 super(parent, style, title);
@@ -225,7 +241,7 @@ public class DialogInteraction
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    visualization.render(rc, detail, parent, SWT.NONE);
+                    visualization.render(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -246,7 +262,7 @@ public class DialogInteraction
         class AskDialog
                 extends _Dialog {
 
-            SWTRenderContext rc = getRenderContext();
+            INegotiation negotiation = getNegotiation();
 
             public AskDialog(Shell parent, int style, String title) {
                 super(parent, style, title);
@@ -261,7 +277,7 @@ public class DialogInteraction
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    visualization.render(rc, detail, parent, SWT.NONE);
+                    visualization.render(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -310,7 +326,6 @@ public class DialogInteraction
                 super(parent, style, title);
             }
 
-            @SuppressWarnings("unchecked")
             @Override
             public T open() {
                 return (T) super.open(false);
@@ -326,9 +341,9 @@ public class DialogInteraction
             @Override
             protected void createDetail(Composite parent)
                     throws SWTException, CreateException {
-                SWTRenderContext rc = getRenderContext();
+                INegotiation negotiation = getNegotiation();
                 try {
-                    visualization.render(rc, detail, parent, SWT.NONE);
+                    visualization.render(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -360,22 +375,22 @@ public class DialogInteraction
     private static int FLATMAX = 3;
 
     static class PreRenderred {
-        private final SWTRenderContext rc;
-        private final IVisualization style;
+        private final INegotiation negotiation;
+        private final IVisualization viz;
         private final StackComposite stack;
         private final Control[] controls;
         private int next;
 
-        public PreRenderred(SWTRenderContext rc, Composite parent, IVisualization style, int size) {
-            this.rc = rc;
+        public PreRenderred(INegotiation negotiation, Composite parent, IVisualization style, int size) {
+            this.negotiation = negotiation;
             this.stack = new StackComposite(parent, SWT.BORDER);
-            this.style = style;
+            this.viz = style;
             this.controls = new Control[size];
         }
 
         public int render(Object value)
                 throws RenderException, SWTException {
-            Control control = style.render(rc, value, stack, SWT.NONE);
+            Control control = (Control) viz.render(stack, wrap(value), negotiation);
             controls[next] = control;
             return next++;
         }
@@ -404,7 +419,7 @@ public class DialogInteraction
         class ChoiceDialog
                 extends _Dialog {
 
-            SWTRenderContext rc = getRenderContext();
+            INegotiation negotiation = getNegotiation();
 
             class SetResultByData
                     extends SelectionAdapter {
@@ -424,7 +439,6 @@ public class DialogInteraction
                 super(parent, style, title);
             }
 
-            @SuppressWarnings("unchecked")
             @Override
             public K open() {
                 return (K) super.open(false);
@@ -440,7 +454,7 @@ public class DialogInteraction
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    visualization.render(rc, detail, parent, SWT.NONE);
+                    visualization.render(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -466,7 +480,7 @@ public class DialogInteraction
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
-                        visualization.render(rc, value, parent, SWT.NONE);
+                        visualization.render(parent, wrap(value), negotiation);
                     } catch (RenderException e) {
                         throw new CreateException(e);
                     }
@@ -485,7 +499,8 @@ public class DialogInteraction
                 int size = candidates.size();
                 final Object[] keys = new Object[size];
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(rc, parent, visualization, size) : null;
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, visualization, size)
+                        : null;
                 try {
                     int index = 0;
                     for (Entry<?, ?> entry : candidates.entrySet()) {
@@ -539,14 +554,13 @@ public class DialogInteraction
 
         class ChoicesDialog
                 extends _Dialog {
-            SWTRenderContext rc = getRenderContext();
+            INegotiation negotiation = getNegotiation();
             Func0<Set<K>> selection;
 
             public ChoicesDialog(Shell parent, int style, String title) {
                 super(parent, style, title);
             }
 
-            @SuppressWarnings("unchecked")
             @Override
             public Set<K> open() {
                 return (Set<K>) super.open(false);
@@ -562,7 +576,7 @@ public class DialogInteraction
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    visualization.render(rc, detail, parent, SWT.NONE);
+                    visualization.render(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -601,7 +615,7 @@ public class DialogInteraction
                     button.setSelection(selected);
                     keyButtons[index++] = new KeyButton(key, button);
                     try {
-                        visualization.render(rc, value, parent, SWT.NONE);
+                        visualization.render(parent, wrap(value), negotiation);
                     } catch (RenderException e) {
                         throw new CreateException(e);
                     }
@@ -637,7 +651,8 @@ public class DialogInteraction
 
                 final int size = candidates.size();
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(rc, parent, visualization, size) : null;
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, visualization, size)
+                        : null;
                 final _K[] keys = new _K[size];
                 int index = 0;
                 for (Entry<K, ?> entry : candidates.entrySet())

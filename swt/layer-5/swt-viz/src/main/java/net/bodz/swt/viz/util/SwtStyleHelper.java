@@ -1,4 +1,4 @@
-package net.bodz.swt.viz;
+package net.bodz.swt.viz.util;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
@@ -6,14 +6,10 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.swt.c3.ia.DialogInteraction;
-import net.bodz.swt.gui.api.ICommand;
+import net.bodz.swt.viz.IRefEntry_SWT;
+import net.bodz.swt.viz.SwtStylesheet;
 
-public class SWTRenderContext {
-
-    public DialogInteraction interact(Control active) {
-        return new DialogInteraction(active.getShell());
-    }
+public class SwtStyleHelper {
 
     public void addEffects(Control control, IRefEntry_SWT<?> entry)
             throws RenderException {
@@ -40,9 +36,6 @@ public class SWTRenderContext {
             control.setFont(font);
         if (hint.preferredSize != null)
             control.setSize(hint.preferredSize);
-    }
-
-    public void addAction(ICommand action) {
     }
 
 }
