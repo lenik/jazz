@@ -5,6 +5,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public class AboutDialog
         extends SimpleDialog {
@@ -14,7 +16,11 @@ public class AboutDialog
     }
 
     public AboutDialog(Shell parent, int style, Class<?> clazz) {
-        super(parent, style, "About " + A_bas.getDisplayName(clazz));
+        this(parent, style, ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class));
+    }
+
+    public AboutDialog(Shell parent, int style, ArtifactDoc doc) {
+        super(parent, style, "About " + doc.getLabel());
     }
 
     @Override
