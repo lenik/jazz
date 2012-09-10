@@ -2,12 +2,12 @@ package net.bodz.swt.c.control;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 
 import net.bodz.bas.collection.list.LinkedStack;
+import net.bodz.bas.collection.list.Stack;
 
 public abstract class HistoryMouseListener
         implements MouseListener {

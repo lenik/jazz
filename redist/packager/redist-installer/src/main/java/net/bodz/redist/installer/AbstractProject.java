@@ -55,8 +55,9 @@ public class AbstractProject
         }
 
         ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
+
         setName(clazz.getName());
-        setText(A_bas.getDisplayName(clazz));
+        setText(artifactDoc.getLabel().toString());
         setDoc(artifactDoc.getTextHeader());
         URL iconURL = artifactDoc.getIcon();
         if (iconURL != null) {

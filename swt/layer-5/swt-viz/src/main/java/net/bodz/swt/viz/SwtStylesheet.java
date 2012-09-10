@@ -15,6 +15,8 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.gui.a.*;
 import net.bodz.bas.model.IFactory;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.a.ColorAnnotation;
 import net.bodz.swt.gui.a.FontAnnotation;
@@ -78,7 +80,9 @@ public class SwtStylesheet {
 
     public SwtStylesheet(SwtStylesheet copy, AnnotatedElement aobject) {
         this(copy);
-        this.doc = A_bas.getDoc(aobject);
+
+        ClassDoc classDoc = ClassDocs.loadFromResource(aobject.getClass());
+        this.doc = classDoc.getText().toString();
 
         Visible _visible = aobject.getAnnotation(Visible.class);
         if (_visible != null)

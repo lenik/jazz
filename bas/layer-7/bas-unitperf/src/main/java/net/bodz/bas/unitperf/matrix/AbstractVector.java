@@ -1,10 +1,12 @@
 package net.bodz.bas.unitperf.matrix;
 
+import java.io.Serializable;
+
 /**
  * TODO
  */
 public abstract class AbstractVector
-        implements Vector {
+        implements Vector, Serializable {
 
     private static final long serialVersionUID = 1L;
 
