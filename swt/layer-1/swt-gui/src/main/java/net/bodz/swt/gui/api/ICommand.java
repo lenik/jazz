@@ -1,4 +1,4 @@
-package net.bodz.swt.viz;
+package net.bodz.swt.gui.api;
 
 import org.eclipse.swt.graphics.Image;
 
