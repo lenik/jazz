@@ -2,25 +2,22 @@ package net.bodz.swt.draw.app.tools;
 
 import org.eclipse.swt.events.KeyEvent;
 
-import net.bodz.bas.fsm.base.IState;
 import net.bodz.bas.geom_f.api.IEditablePointSet2d;
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
+import net.bodz.swt.draw.app.ICanvasMode;
+import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class EditVertex
-        extends DesignerState {
+        extends SubCanvasMode {
+
+    private static final long serialVersionUID = 1L;
 
     // Shape2f shape;
     IEditablePointSet2d editable;
     int pointIndex;
 
-    public EditVertex(DesignerStateGraph graph) {
-        super(graph);
-    }
-
-    @Override
-    public void enter(IState prev) {
-        super.enter(prev);
+    public EditVertex(IClientCanvas canvas, ICanvasMode parent) {
+        super(canvas, parent);
     }
 
     boolean check(int index) {
@@ -30,7 +27,7 @@ public class EditVertex
     }
 
     @Override
-    public DesignerState onKeyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
         switch (e.keyCode) {
         case java.awt.event.KeyEvent.VK_DELETE:
         case java.awt.event.KeyEvent.VK_BACK_SPACE:
@@ -45,9 +42,6 @@ public class EditVertex
             // notifyRefresh();
             break;
         }
-        return super.onKeyPressed(e);
     }
-
-    private static final long serialVersionUID = -2085947787836396117L;
 
 }

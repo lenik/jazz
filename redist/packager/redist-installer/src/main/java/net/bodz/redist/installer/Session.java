@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
@@ -80,7 +79,7 @@ public class Session
 
         resFolders = new ArrayList<IFsTree>();
 
-        addResFolder(new JavaioFile(FilePath.canoniOf("."), true));
+        // addResFolder(new JavaioFile(FilePath.canoniOf(".")/*, true*/));
         addResFolder(new JavaioFile(SystemColos.cwd.get()/* , true */));
 
         MavenProjectOrigin installerPo = MavenProjectOrigin.fromClass(Installer.class);

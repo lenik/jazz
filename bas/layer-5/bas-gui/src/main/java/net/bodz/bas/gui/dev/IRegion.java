@@ -9,9 +9,9 @@ public interface IRegion
 
     void add(Rectangle2d rect);
 
-    void add(Polygon2d polygon);
-
     void remove(Rectangle2d rect);
+
+    void add(Polygon2d polygon);
 
     void remove(Polygon2d polygon);
 

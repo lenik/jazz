@@ -1,37 +1,16 @@
 package net.bodz.swt.draw.app.tools;
 
-import org.eclipse.swt.events.MouseEvent;
-
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
+import net.bodz.swt.draw.app.ICanvasMode;
+import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class EditMajor
-        extends DesignerState {
+        extends SubCanvasMode {
 
-    public EditMajor(DesignerStateGraph graph) {
-        super(graph);
+    private static final long serialVersionUID = 1L;
+
+    public EditMajor(IClientCanvas canvas, ICanvasMode parent) {
+        super(canvas, parent);
     }
-
-    @Override
-    public DesignerState onMouseDown(MouseEvent e) {
-        return super.onMouseDown(e);
-    }
-
-    @Override
-    public DesignerState onMouseMove(MouseEvent e, MouseEvent d) {
-        return super.onMouseMove(e, d);
-    }
-
-    @Override
-    public DesignerState onMouseUp(MouseEvent e, MouseEvent d) {
-        return super.onMouseUp(e, d);
-    }
-
-    @Override
-    public DesignerState onMouseDoubleClick(MouseEvent e) {
-        return super.onMouseDoubleClick(e);
-    }
-
-    private static final long serialVersionUID = -5929768636672028188L;
 
 }

@@ -4,14 +4,17 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 
 import net.bodz.bas.gui.dev.IDrawContext2d;
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
+import net.bodz.swt.draw.app.ICanvasMode;
+import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class Hover
-        extends DesignerState {
+        extends SubCanvasMode {
 
-    public Hover(DesignerStateGraph graph) {
-        super(graph);
+    private static final long serialVersionUID = 1L;
+
+    public Hover(IClientCanvas canvas, ICanvasMode parent) {
+        super(canvas, parent);
     }
 
     public void paintState(IDrawContext2d dt) {
@@ -21,46 +24,46 @@ public class Hover
     }
 
     @Override
-    public DesignerState onMouseDown(MouseEvent e) {
+    public void mouseDown(MouseEvent e) {
         // Move? Scale? Rotate? ...
-        //
-        return super.onMouseDown(e);
     }
 
     @Override
-    public DesignerState onMouseMove(MouseEvent e, MouseEvent d) {
-        return super.onMouseMove(e, d);
+    public void mouseMove(MouseEvent e, MouseEvent d) {
     }
 
     @Override
-    public DesignerState onMouseUp(MouseEvent e, MouseEvent d) {
-        return super.onMouseUp(e, d);
+    public void mouseUp(MouseEvent e, MouseEvent d) {
     }
 
     @Override
-    public DesignerState onMouseDoubleClick(MouseEvent e) {
-        return getGraph().get(EditMajor.class);
+    public void mouseDoubleClick(MouseEvent e) {
+        EditMajor editMajor = new EditMajor(getCanvas(), this);
+        getCanvas().setMode(editMajor);
     }
 
     @Override
-    public DesignerState onKeyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
+        ICanvasMode sub = null;
         switch (e.keyCode) {
         case java.awt.event.KeyEvent.VK_ENTER:
             // Edit outline
-            return getGraph().get(EditMajor.class);
+            sub = new EditMajor(getCanvas(), this);
+            break;
 
         case java.awt.event.KeyEvent.VK_ESCAPE:
             // Deselect
-            return getGraph().get(Select.class);
+            sub = new Select(getCanvas(), this);
+            break;
 
         case java.awt.event.KeyEvent.VK_DELETE:
             // Delete
-            return getGraph().get(Select.class);
+            sub = new Select(getCanvas(), this);
+            break;
         }
 
-        return super.onKeyPressed(e);
+        if (sub != null)
+            getCanvas().setMode(sub);
     }
-
-    private static final long serialVersionUID = -2407464748332203791L;
 
 }

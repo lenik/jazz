@@ -1,15 +1,16 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
+import net.bodz.swt.draw.app.ICanvasMode;
+import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class Scale
-        extends DesignerState {
+        extends SubCanvasMode {
 
-    public Scale(DesignerStateGraph graph) {
-        super(graph);
+    private static final long serialVersionUID = 1L;
+
+    public Scale(IClientCanvas canvas, ICanvasMode parent) {
+        super(canvas, parent);
     }
-
-    private static final long serialVersionUID = 4955735558820941943L;
 
 }

@@ -10,19 +10,15 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.swt.gui.state.SWTStateGraphImpl;
-
 public class DesignerCanvas2f
         extends Composite
-        implements PaintListener {
-
-    protected SWTStateGraphImpl sg = new SWTStateGraphImpl();
+        implements PaintListener, IClientCanvas {
 
     Document2f doc = new Document2f();
-
     Image major;
-
     Canvas canvas;
+
+    ICanvasMode mode;
 
     public DesignerCanvas2f(Composite parent, int style) {
         super(parent, style & ~SWT.DOUBLE_BUFFERED);
@@ -54,10 +50,6 @@ public class DesignerCanvas2f
     protected void checkSubclass() {
     }
 
-    public SWTStateGraphImpl getGraph() {
-        return sg;
-    }
-
     // -o PaintListener
 
     public void paintControl(PaintEvent e) {
@@ -66,4 +58,17 @@ public class DesignerCanvas2f
         e.gc.setBackground(new Color(null, 222, 222, 222));
         e.gc.fillOval(0, 0, 1000, 1000);
     }
+
+    // -o ICanvasClient
+
+    @Override
+    public ICanvasMode getMode() {
+        return mode;
+    }
+
+    @Override
+    public void setMode(ICanvasMode mode) {
+        this.mode = mode;
+    }
+
 }
