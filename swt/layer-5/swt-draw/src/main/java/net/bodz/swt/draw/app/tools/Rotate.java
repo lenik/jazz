@@ -1,15 +1,16 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
+import net.bodz.swt.draw.app.ICanvasMode;
+import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class Rotate
-        extends DesignerState {
+        extends SubCanvasMode {
 
-    public Rotate(DesignerStateGraph graph) {
-        super(graph);
+    private static final long serialVersionUID = 1L;
+
+    public Rotate(IClientCanvas canvas, ICanvasMode parent) {
+        super(canvas, parent);
     }
-
-    private static final long serialVersionUID = 5696709913044045011L;
 
 }

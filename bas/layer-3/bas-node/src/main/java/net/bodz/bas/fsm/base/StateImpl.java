@@ -1,5 +1,6 @@
 package net.bodz.bas.fsm.base;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,10 +15,11 @@ public abstract class StateImpl
 
     private static final long serialVersionUID = 1L;
 
-    private static final Map<Object, IState> DummyMap = new HashMap<Object, IState>();
+    static final Map<Object, IState> STATIC_MAP = new HashMap<Object, IState>();
+    static final Map<Object, IState> DUMMY_MAP = Collections.emptyMap();
 
-    protected IStateGraph graph;
-    protected Map<Object, IState> staticMap = DummyMap;
+    private IStateGraph graph;
+    private Map<Object, IState> staticMap = DUMMY_MAP;
 
     public StateImpl(IStateGraph graph) {
         this.graph = graph;
@@ -31,10 +33,12 @@ public abstract class StateImpl
         return NORMAL;
     }
 
-    public IStateGraph getGraph() {
-        return graph;
-    }
+//    @Override
+//    public IStateGraph getGraph() {
+//        return graph;
+//    }
 
+    @Override
     public void setGraph(IStateGraph graph) {
         this.graph = graph;
     }

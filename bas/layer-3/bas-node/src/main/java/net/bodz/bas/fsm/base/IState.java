@@ -45,7 +45,7 @@ public interface IState
      * 
      * @return The owner graph
      */
-    IStateGraph getGraph();
+//    IStateGraph getGraph();
 
     /**
      * Set the owner graph

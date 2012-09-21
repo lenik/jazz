@@ -2,25 +2,26 @@ package net.bodz.swt.draw.app.tools;
 
 import org.eclipse.swt.events.MouseEvent;
 
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
+import net.bodz.swt.draw.app.ICanvasMode;
+import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class ViewPan
-        extends DesignerState {
+        extends SubCanvasMode {
 
-    public ViewPan(DesignerStateGraph graph) {
-        super(graph);
+    private static final long serialVersionUID = 1L;
+
+    public ViewPan(IClientCanvas canvas, ICanvasMode parent) {
+        super(canvas, parent);
     }
 
     @Override
-    public DesignerState onMouseMove(MouseEvent e, MouseEvent d) {
+    public void mouseMove(MouseEvent e, MouseEvent d) {
         // vt.translate(e.x - d.x, e.y - d.y);
         d.x = e.x;
         d.y = e.y;
-        return this;
     }
 
     // TODO Scroll/MouseWheel
-    private static final long serialVersionUID = -6417492993883699928L;
 
 }

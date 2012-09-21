@@ -12,34 +12,36 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
-import net.bodz.bas.fsm.base.IStateGraph;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.gui.state.ISWTState;
+import net.bodz.swt.draw.app.tools.*;
 
 public class DesignerToolbox2f {
 
     protected Shell shell;
     private List list;
 
-    IStateGraph graph;
+    IClientCanvas canvas;
 
-    Map<String, ISWTState> commands;
+    Map<String, ICanvasMode> commands;
 
-    public DesignerToolbox2f(IStateGraph graph) {
-        assert graph != null;
-        this.graph = graph;
+    public DesignerToolbox2f(DesignerCanvas2f canvas) {
+        assert canvas != null;
+        this.canvas = canvas;
 
-        commands = new HashMap<String, ISWTState>();
+        commands = new HashMap<String, ICanvasMode>();
 
-        /*
-         * commands.put("select", new Select(graph)); commands.put("edit", new EditMajor(graph));
-         * commands.put("paint", new Select(graph)); commands.put("point", new DrawPoint(graph));
-         * commands.put("line", new DrawLine(graph)); commands.put("triangle", new
-         * DrawTriangle(graph)); commands.put("circle 3p", new DrawCircle3P(graph));
-         * commands.put("circle c,r", new DrawCircle3P(graph)); commands.put("rectangle", new
-         * DrawRectangle(graph)); commands.put("n-poly", new Select(graph)); commands.put("n-star",
-         * new Select(graph)); commands.put("polygon", new Select(graph));
-         */
+        commands.put("select", new Select(canvas));
+        commands.put("edit", new EditMajor(canvas));
+        commands.put("paint", new Select(canvas));
+        commands.put("point", new DrawPoint(canvas));
+        commands.put("line", new DrawLine(canvas));
+        commands.put("triangle", new DrawTriangle(canvas));
+        commands.put("circle 3p", new DrawCircle3P(canvas));
+        commands.put("circle c,r", new DrawCircle3P(canvas));
+        commands.put("rectangle", new DrawRectangle(canvas));
+        commands.put("n-poly", new Select(canvas));
+        commands.put("n-star", new Select(canvas));
+        commands.put("polygon", new Select(canvas));
 
         createContents();
     }
@@ -72,12 +74,11 @@ public class DesignerToolbox2f {
                 if (i == -1)
                     return;
                 String cmd = list.getItem(i);
-                ISWTState state = commands.get(cmd);
-                if (state != null) {
-                    graph.jump(state);
+                ICanvasMode state = commands.get(cmd);
+                if (state != null) 
+                    canvas.setMode(state);
                 }
-            }
-        });
+            });
 
         sashForm.setWeights(new int[] { 105 });
     }

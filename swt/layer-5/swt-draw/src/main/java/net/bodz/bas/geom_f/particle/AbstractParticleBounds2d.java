@@ -136,6 +136,7 @@ public abstract class AbstractParticleBounds2d
             }
             return -1;
         }
+
     }
 
 }

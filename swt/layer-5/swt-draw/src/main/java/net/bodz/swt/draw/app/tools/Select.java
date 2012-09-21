@@ -5,27 +5,24 @@ import org.eclipse.swt.graphics.GC;
 
 import net.bodz.bas.geom_f.api.IShape2d;
 import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
 import net.bodz.swt.draw.app.GDContext;
+import net.bodz.swt.draw.app.ICanvasMode;
+import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class Select
-        extends DesignerState {
+        extends SubCanvasMode {
+
+    private static final long serialVersionUID = 1L;
 
     static int[] DASH_SELECT = new int[] { 1, 1, };
 
-    public Select(DesignerStateGraph graph) {
-        super(graph);
+    public Select(IClientCanvas canvas, ICanvasMode parent) {
+        super(canvas, parent);
     }
 
     @Override
-    public DesignerState onMouseDown(MouseEvent e) {
-
-        return super.onMouseDown(e);
-    }
-
-    @Override
-    public DesignerState onMouseMove(MouseEvent e, MouseEvent d) {
+    public void mouseMove(MouseEvent e, MouseEvent d) {
         GDContext context = getContext();
 
         if (d != null) {
@@ -40,34 +37,24 @@ public class Select
 
             /* is p on some object ? */
             IShape2d pick = context.shapes.pick(p);
-            if (pick == null)
-                return this;
-
-            // TODO - Point2f dp = context.vtSource(d.x, d.y);
-            // GC gc = new GC(context.preview);
+            if (pick != null) {
+                // TODO - Point2f dp = context.vtSource(d.x, d.y);
+                // GC gc = new GC(context.preview);
+            }
         }
-        return super.onMouseMove(e, d);
     }
 
     @Override
-    public DesignerState onMouseUp(MouseEvent e, MouseEvent d) {
-        return super.onMouseUp(e, d);
-    }
-
-    @Override
-    public DesignerState onMouseDoubleClick(MouseEvent e) {
+    public void mouseDoubleClick(MouseEvent e) {
         GDContext context = getContext();
 
         Point2d p = context.vtSource(e.x, e.y);
 
         /* is p on some object ? */
         IShape2d pick = context.shapes.pick(p);
-        if (pick == null)
-            return this;
-
-        return super.onMouseDoubleClick(e);
+        if (pick != null) {
+            super.mouseDoubleClick(e);
+        }
     }
-
-    private static final long serialVersionUID = -7370181553009703148L;
 
 }

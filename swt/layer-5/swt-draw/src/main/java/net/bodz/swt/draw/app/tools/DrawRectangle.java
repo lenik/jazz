@@ -1,15 +1,15 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.DesignerState;
-import net.bodz.swt.draw.app.DesignerStateGraph;
+import net.bodz.swt.draw.app.ICanvasMode;
+import net.bodz.swt.draw.app.IClientCanvas;
 
 public class DrawRectangle
-        extends DesignerState {
+        extends DrawCommand {
 
-    public DrawRectangle(DesignerStateGraph graph) {
-        super(graph);
+    private static final long serialVersionUID = 1L;
+
+    public DrawRectangle(IClientCanvas canvas, ICanvasMode parent) {
+        super(canvas, parent);
     }
-
-    private static final long serialVersionUID = -6388855656599387535L;
 
 }
