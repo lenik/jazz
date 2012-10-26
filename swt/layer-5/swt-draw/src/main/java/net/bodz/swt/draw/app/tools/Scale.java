@@ -1,7 +1,7 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.ICanvasMode;
-import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.c.canvas.Canvas;
+import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class Scale
@@ -9,7 +9,7 @@ public class Scale
 
     private static final long serialVersionUID = 1L;
 
-    public Scale(IClientCanvas canvas, ICanvasMode parent) {
+    public Scale(Canvas canvas, ICanvasMode parent) {
         super(canvas, parent);
     }
 

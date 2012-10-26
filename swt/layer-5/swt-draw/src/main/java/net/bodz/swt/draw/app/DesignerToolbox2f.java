@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
+import net.bodz.swt.c.canvas.ICanvasMode;
+import net.bodz.swt.c.canvas.IClientCanvas;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.draw.app.tools.*;
 
@@ -76,7 +78,7 @@ public class DesignerToolbox2f {
                 String cmd = list.getItem(i);
                 ICanvasMode state = commands.get(cmd);
                 if (state != null) 
-                    canvas.setMode(state);
+                    canvas.setCanvasMode(state);
                 }
             });
 

@@ -5,9 +5,9 @@ import org.eclipse.swt.graphics.GC;
 
 import net.bodz.bas.geom_f.api.IShape2d;
 import net.bodz.bas.geom_f.base.Point2d;
+import net.bodz.swt.c.canvas.Canvas;
+import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.GDContext;
-import net.bodz.swt.draw.app.ICanvasMode;
-import net.bodz.swt.draw.app.IClientCanvas;
 import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class Select
@@ -17,7 +17,7 @@ public class Select
 
     static int[] DASH_SELECT = new int[] { 1, 1, };
 
-    public Select(IClientCanvas canvas, ICanvasMode parent) {
+    public Select(Canvas canvas, ICanvasMode parent) {
         super(canvas, parent);
     }
 

@@ -2,15 +2,12 @@ package net.bodz.swt.c.control;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 
 public class Movable
-        extends HistoryMouseListener
-        implements MouseMoveListener, KeyListener {
+        extends MouseKeyAdapter {
 
     boolean active;
     Rectangle oldBounds;
@@ -22,7 +19,7 @@ public class Movable
     boolean relative;
 
     @Override
-    protected void mouseDown2(MouseEvent e) {
+    protected void _mouseDown(MouseEvent e) {
         if (e.button != 1)
             return;
         if (!(e.widget instanceof Control))
@@ -33,19 +30,18 @@ public class Movable
     }
 
     @Override
-    protected void mouseUp2(MouseEvent e, MouseEvent d) {
+    public void mouseUp(MouseEvent e, MouseEvent d) {
         active = false;
     }
 
-    public void mouseMove(MouseEvent e) {
+    @Override
+    public void mouseMove(MouseEvent e, MouseEvent d) {
         // System.out.println(e);
         // if (e.button != 1) return;
         if ((e.stateMask & SWT.BUTTON1) == 0)
             return;
         if (!active)
             return;
-
-        MouseEvent d = getPrevious(1);
 
         assert d.widget instanceof Control;
         Control control = (Control) d.widget;
@@ -57,35 +53,33 @@ public class Movable
         bounds.y += dy;
         control.setBounds(bounds);
 
-        move(dx, dy);
+        postMove(dx, dy);
     }
 
-    protected void move(int dx, int dy) {
+    protected void postMove(int dx, int dy) {
     }
 
-    public void keyPressed(KeyEvent e) {
+    @Override
+    public void keyDown(KeyEvent e) {
         if (!active)
             return;
 
         boolean cancel = false;
 
         switch (e.keyCode) {
-        case (int) SWT.ESC: // XXX
+        case SWT.ESC: // XXX
             cancel = true;
             active = false;
         }
 
         if (cancel) {
-            MouseEvent d = getPrevious(1);
+            MouseEvent lastMouseDownEvent = getLastMouseDownEvent();
 
-            assert d.widget instanceof Control;
-            Control control = (Control) d.widget;
+            assert lastMouseDownEvent.widget instanceof Control;
+            Control control = (Control) lastMouseDownEvent.widget;
 
             control.setBounds(oldBounds);
         }
-    }
-
-    public void keyReleased(KeyEvent e) {
     }
 
 }

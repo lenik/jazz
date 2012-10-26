@@ -7,12 +7,11 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 public class Picture
-        extends Canvas {
+        extends org.eclipse.swt.widgets.Canvas {
 
     private Image image;
     private boolean stretched;

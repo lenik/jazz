@@ -1,12 +1,11 @@
 package net.bodz.swt.c.canvas;
 
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 
 public class ViewportCanvas
-        extends Canvas {
+        extends org.eclipse.swt.widgets.Canvas {
 
     private int width;
     private int height;

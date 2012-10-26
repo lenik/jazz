@@ -14,14 +14,13 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 /**
  * just double buffer
  */
 public class BufferedCanvas
-        extends Canvas {
+        extends org.eclipse.swt.widgets.Canvas {
 
     private Image buffer;
     private boolean autoRefresh = true;
