@@ -10,6 +10,9 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
+import net.bodz.swt.c.canvas.ICanvasMode;
+import net.bodz.swt.c.canvas.IClientCanvas;
+
 public class DesignerCanvas2f
         extends Composite
         implements PaintListener, IClientCanvas {
@@ -62,12 +65,12 @@ public class DesignerCanvas2f
     // -o ICanvasClient
 
     @Override
-    public ICanvasMode getMode() {
+    public ICanvasMode getCanvasMode() {
         return mode;
     }
 
     @Override
-    public void setMode(ICanvasMode mode) {
+    public void setCanvasMode(ICanvasMode mode) {
         this.mode = mode;
     }
 

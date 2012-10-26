@@ -1,4 +1,4 @@
-package net.bodz.swt.draw.app;
+package net.bodz.swt.c.canvas;
 
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
@@ -40,13 +40,13 @@ public abstract class DecoratedCanvasMode
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        getWrapped().keyPressed(e);
+    public void keyDown(KeyEvent e) {
+        getWrapped().keyDown(e);
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        getWrapped().keyReleased(e);
+    public void keyUp(KeyEvent e) {
+        getWrapped().keyUp(e);
     }
 
 }

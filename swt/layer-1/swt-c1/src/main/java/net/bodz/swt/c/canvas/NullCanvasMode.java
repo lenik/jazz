@@ -1,9 +1,9 @@
-package net.bodz.swt.draw.app;
+package net.bodz.swt.c.canvas;
 
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 
-public abstract class AbstractCanvasMode
+public class NullCanvasMode
         implements ICanvasMode {
 
     @Override
@@ -23,11 +23,13 @@ public abstract class AbstractCanvasMode
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyDown(KeyEvent e) {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyUp(KeyEvent e) {
     }
+
+    public static final NullCanvasMode INSTANCE = new NullCanvasMode();
 
 }

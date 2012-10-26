@@ -4,8 +4,8 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 
 import net.bodz.bas.gui.dev.IDrawContext2d;
-import net.bodz.swt.draw.app.ICanvasMode;
-import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.c.canvas.Canvas;
+import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class Hover
@@ -13,7 +13,7 @@ public class Hover
 
     private static final long serialVersionUID = 1L;
 
-    public Hover(IClientCanvas canvas, ICanvasMode parent) {
+    public Hover(Canvas canvas, ICanvasMode parent) {
         super(canvas, parent);
     }
 
@@ -43,7 +43,7 @@ public class Hover
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyDown(KeyEvent e) {
         ICanvasMode sub = null;
         switch (e.keyCode) {
         case java.awt.event.KeyEvent.VK_ENTER:

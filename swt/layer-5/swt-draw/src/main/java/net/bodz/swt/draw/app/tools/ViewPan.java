@@ -2,8 +2,8 @@ package net.bodz.swt.draw.app.tools;
 
 import org.eclipse.swt.events.MouseEvent;
 
-import net.bodz.swt.draw.app.ICanvasMode;
-import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.c.canvas.Canvas;
+import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class ViewPan
@@ -11,7 +11,7 @@ public class ViewPan
 
     private static final long serialVersionUID = 1L;
 
-    public ViewPan(IClientCanvas canvas, ICanvasMode parent) {
+    public ViewPan(Canvas canvas, ICanvasMode parent) {
         super(canvas, parent);
     }
 

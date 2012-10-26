@@ -1,7 +1,7 @@
 package net.bodz.swt.draw.app.tools;
 
-import net.bodz.swt.draw.app.ICanvasMode;
-import net.bodz.swt.draw.app.IClientCanvas;
+import net.bodz.swt.c.canvas.Canvas;
+import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class EditMoveVertex
@@ -9,7 +9,7 @@ public class EditMoveVertex
 
     private static final long serialVersionUID = 1L;
 
-    public EditMoveVertex(IClientCanvas canvas, ICanvasMode parent) {
+    public EditMoveVertex(Canvas canvas, ICanvasMode parent) {
         super(canvas, parent);
     }
 
