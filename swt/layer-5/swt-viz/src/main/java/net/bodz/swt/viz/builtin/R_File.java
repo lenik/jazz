@@ -74,7 +74,7 @@ public class R_File
                 throw new RenderException(tr._("Can\'t guess parser for number class: ") + valueType);
             }
 
-            ControlAdapters.commit(fileText, new CommitAdapter(//
+            ControlAdapters.autocommitForFocus(fileText, new CommitAdapter(//
                     rc.interact(fileText)) {
                 @Override
                 public void commit(EventObject event)

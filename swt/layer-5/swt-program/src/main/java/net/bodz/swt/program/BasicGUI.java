@@ -302,15 +302,15 @@ public class BasicGUI
 
         MenuItem feature = new MenuItem(menu, SWT.PUSH);
         feature.setText("Feature Request...");
-        ControlAdapters.openBrowser(feature, "http://track.bodz.net/request?product=?");
+        ControlAdapters.onclickBrowse(feature, "http://track.bodz.net/request?product=?");
 
         MenuItem bug = new MenuItem(menu, SWT.PUSH);
         bug.setText("Bug Report...");
-        ControlAdapters.openBrowser(bug, "http://track.bodz.net/bugs?product=?");
+        ControlAdapters.onclickBrowse(bug, "http://track.bodz.net/bugs?product=?");
 
         MenuItem forum = new MenuItem(menu, SWT.PUSH);
         forum.setText("Forum");
-        ControlAdapters.openBrowser(forum, "http://track.bodz.net/forum?product=?");
+        ControlAdapters.onclickBrowse(forum, "http://track.bodz.net/forum?product=?");
 
         new MenuItem(menu, SWT.SEPARATOR);
 
