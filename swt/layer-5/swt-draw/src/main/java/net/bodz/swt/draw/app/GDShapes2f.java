@@ -43,7 +43,7 @@ public class GDShapes2f
         this(new ArrayList<SWTShape2d>(), false);
     }
 
-    // -o Pick
+    // -o IPickable2d
 
     public static class CompPickInfo2f
             extends PickResult2d {
@@ -159,12 +159,12 @@ public class GDShapes2f
         return new GDShapes2f(shapes);
     }
 
-    public void draw(IDrawContext2d context)
+    public void draw(IDrawContext2d ctx)
             throws GraphicsOperationException {
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
             IShape2d shape = shapes.get(i);
-            shape.draw(context);
+            shape.draw(ctx);
         }
     }
 
