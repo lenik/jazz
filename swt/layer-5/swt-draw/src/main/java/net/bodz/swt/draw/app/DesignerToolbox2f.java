@@ -12,8 +12,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
+import net.bodz.swt.c.canvas.Canvas;
 import net.bodz.swt.c.canvas.ICanvasMode;
-import net.bodz.swt.c.canvas.IClientCanvas;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.draw.app.tools.*;
 
@@ -22,28 +22,29 @@ public class DesignerToolbox2f {
     protected Shell shell;
     private List list;
 
-    IClientCanvas canvas;
+    Canvas canvas;
 
-    Map<String, ICanvasMode> commands;
+    Map<String, ICanvasMode> canvasModes;
 
-    public DesignerToolbox2f(DesignerCanvas2f canvas) {
-        assert canvas != null;
-        this.canvas = canvas;
+    public DesignerToolbox2f(DesignerCanvas2f designerCanvas) {
+        assert designerCanvas != null;
+        this.canvas = designerCanvas.canvas;
 
-        commands = new HashMap<String, ICanvasMode>();
+        canvasModes = new HashMap<String, ICanvasMode>();
 
-        commands.put("select", new Select(canvas));
-        commands.put("edit", new EditMajor(canvas));
-        commands.put("paint", new Select(canvas));
-        commands.put("point", new DrawPoint(canvas));
-        commands.put("line", new DrawLine(canvas));
-        commands.put("triangle", new DrawTriangle(canvas));
-        commands.put("circle 3p", new DrawCircle3P(canvas));
-        commands.put("circle c,r", new DrawCircle3P(canvas));
-        commands.put("rectangle", new DrawRectangle(canvas));
-        commands.put("n-poly", new Select(canvas));
-        commands.put("n-star", new Select(canvas));
-        commands.put("polygon", new Select(canvas));
+        Select select = new Select(canvas, null);
+        canvasModes.put("select", select);
+        canvasModes.put("edit", new EditMajor(canvas, select));
+        canvasModes.put("paint", new Select(canvas, select));
+        canvasModes.put("point", new DrawPoint(canvas, select));
+        canvasModes.put("line", new DrawLine(canvas, select));
+        canvasModes.put("triangle", new DrawTriangle(canvas, select));
+        canvasModes.put("circle 3p", new DrawCircle3P(canvas, select));
+        canvasModes.put("circle c,r", new DrawCircle3P(canvas, select));
+        canvasModes.put("rectangle", new DrawRectangle(canvas, select));
+        canvasModes.put("n-poly", new Select(canvas, select));
+        canvasModes.put("n-star", new Select(canvas, select));
+        canvasModes.put("polygon", new Select(canvas, select));
 
         createContents();
     }
@@ -68,19 +69,19 @@ public class DesignerToolbox2f {
         sashForm.setBackground(SWTResources.getColor(87, 87, 87));
 
         list = new List(sashForm, SWT.BORDER);
-        list.setItems(commands.keySet().toArray(new String[0]));
+        list.setItems(canvasModes.keySet().toArray(new String[0]));
         list.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 int i = list.getSelectionIndex();
                 if (i == -1)
                     return;
-                String cmd = list.getItem(i);
-                ICanvasMode state = commands.get(cmd);
-                if (state != null) 
-                    canvas.setCanvasMode(state);
-                }
-            });
+                String modeName = list.getItem(i);
+                ICanvasMode mode = canvasModes.get(modeName);
+                if (mode != null)
+                    canvas.setMode(mode);
+            }
+        });
 
         sashForm.setWeights(new int[] { 105 });
     }
