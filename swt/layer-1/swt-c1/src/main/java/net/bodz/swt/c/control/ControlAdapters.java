@@ -13,8 +13,13 @@ import net.bodz.swt.c.canvas.ViewportCanvas;
 
 public class ControlAdapters {
 
-    // ...?
-    public static void loseFocus(final Control control, final LoseFocusListener loseFocusListener) {
+    /**
+     * Auto re-grab the focus when the focus is lost.
+     * 
+     * @param loseFocusListener
+     *            Observer when it is try to lose focus.
+     */
+    public static void regrabFocus(final Control control, final LoseFocusListener loseFocusListener) {
         control.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -26,20 +31,30 @@ public class ControlAdapters {
         });
     }
 
-    public static class FontAutoSize
-            extends ControlAdapter {
-        @Override
-        public void controlResized(final ControlEvent e) {
-            Control control = (Control) e.widget;
-            int height = control.getBounds().height;
-            FontData fontData = control.getFont().getFontData()[0];
-            fontData.setHeight(height / 2);
-            Font font = new Font(control.getDisplay(), fontData);
-            control.setFont(font);
-        }
-    }
+    public static void onresizeChangeFontSize(final Control control) {
+        Point origSize = control.getSize();
+        FontData origFontData = control.getFont().getFontData()[0];
+        int origFontHeight = origFontData.getHeight();
 
-    public static final FontAutoSize fontAutoSize = new FontAutoSize();
+        // final float fontRatioX = (float) (origFontHeight) / origSize.x;
+        final float origRows = origSize.y / (float) (origFontHeight);
+
+        control.addControlListener(new ControlAdapter() {
+            @Override
+            public void controlResized(final ControlEvent e) {
+                Control control = (Control) e.widget;
+                // int width = control.getBounds().width;
+                int height = control.getBounds().height;
+
+                FontData fontData = control.getFont().getFontData()[0];
+                float newFontHeight = Math.round(height / origRows);
+                fontData.setHeight((int) newFontHeight);
+
+                Font font = new Font(control.getDisplay(), fontData);
+                control.setFont(font);
+            }
+        });
+    }
 
     static final Pred1<MouseEvent> pass;
     static {

@@ -165,7 +165,7 @@ public abstract class AbstractPageFlow
     }
 
     /**
-     * @see ControlAdapters#commit(Control, net.bodz.swt.adapters.CommitAdapter)
+     * @see ControlAdapters#autocommitForFocus(Control, net.bodz.swt.adapters.CommitAdapter)
      */
     protected void handleValidateException(GUIValidationException e) {
         handleQException(e);

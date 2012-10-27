@@ -18,7 +18,7 @@ import net.bodz.swt.c3.ia.DialogInteraction;
 public class ControlAdapters
         extends net.bodz.swt.c.control.ControlAdapters {
 
-    public static void commit(final Control control, final CommitListener commitListener,
+    public static void autocommitForFocus(final Control control, final CommitListener commitListener,
             final CommitFailListener commitFailListener) {
         control.addFocusListener(new FocusAdapter() {
             @Override
@@ -35,8 +35,8 @@ public class ControlAdapters
         });
     }
 
-    public static void commit(Control control, CommitAdapter commitAdapter) {
-        commit(control, commitAdapter, commitAdapter);
+    public static void autocommitForFocus(Control control, CommitAdapter commitAdapter) {
+        autocommitForFocus(control, commitAdapter, commitAdapter);
     }
 
     static class OpenBrowserAdapter
@@ -64,15 +64,15 @@ public class ControlAdapters
         }
     }
 
-    public static void openBrowser(Link link) {
+    public static void onclickBrowse(Link link) {
         link.addSelectionListener(new OpenBrowserAdapter());
     }
 
-    public static void openBrowser(Button button, Object address) {
+    public static void onclickBrowse(Button button, Object address) {
         button.addSelectionListener(new OpenBrowserAdapter(address));
     }
 
-    public static void openBrowser(MenuItem menuItem, Object address) {
+    public static void onclickBrowse(MenuItem menuItem, Object address) {
         menuItem.addSelectionListener(new OpenBrowserAdapter(address));
     }
 
