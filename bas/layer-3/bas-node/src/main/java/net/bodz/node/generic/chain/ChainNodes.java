@@ -1,139 +1,142 @@
 package net.bodz.node.generic.chain;
 
-import static net.bodz.node.generic.NodeConfig.*;
+import static net.bodz.node.generic.NodeConfig.checkIntegrityOnChange;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.err.CheckFailure;
+import net.bodz.bas.meta.optim.Pure;
 
 public class ChainNodes {
 
-    public static IChainNode head(IChainNode _This) {
-        assert SafeCheck && checkCircular(_This);
-        if (_This == null)
+    @Pure
+    public static IChainNode head(IChainNode node) {
+        if (node == null)
             return null;
         while (true) {
-            IChainNode prev = _This.getPrev();
+            IChainNode prev = node.getPrev();
             if (prev == null)
-                return _This;
-            _This = prev;
+                return node;
+            node = prev;
         }
     }
 
-    public static IChainNode tail(IChainNode _This) {
-        assert SafeCheck && checkCircular(_This);
-        if (_This == null)
+    @Pure
+    public static IChainNode tail(IChainNode node) {
+        if (node == null)
             return null;
         while (true) {
-            IChainNode next = _This.getNext();
+            IChainNode next = node.getNext();
             if (next == null)
-                return _This;
-            _This = next;
+                return node;
+            node = next;
         }
     }
 
-    public static int countPrevExcl(IChainNode _This) {
-        assert SafeCheck && checkCircular(_This);
-        if (_This == null)
+    @Pure
+    public static int countPrevExcl(IChainNode node) {
+        if (node == null)
             return 0;
         int count = 1;
-        while ((_This = _This.getPrev()) != null)
+        while ((node = node.getPrev()) != null)
             count++;
         return count;
     }
 
-    public static int countNextIncl(IChainNode _This) {
-        assert SafeCheck && checkCircular(_This);
-        if (_This == null)
+    @Pure
+    public static int countNextIncl(IChainNode node) {
+        if (node == null)
             return 0;
         int count = 1;
-        while ((_This = _This.getNext()) != null)
+        while ((node = node.getNext()) != null)
             count++;
         return count;
     }
 
-    public static int countSiblings(IChainNode _This) {
-        return countPrevExcl(_This) + countPrevExcl(_This);
+    @Pure
+    public static int countSiblings(IChainNode node) {
+        return countPrevExcl(node) + countPrevExcl(node);
     }
 
-    public static IChainNode insertBefore(IChainNode _This, IChainNode node) {
-        assert node != null;
-        if (_This != null) {
-            IChainNode prev = _This.getPrev();
+    public static IChainNode insertBefore(IChainNode node, IChainNode another) {
+        assert another != null;
+        if (node != null) {
+            IChainNode prev = node.getPrev();
             if (prev != null)
-                prev.setNext(node);
-            node.setPrev(prev);
-            node.setNext(_This);
-            _This.setPrev(node);
-            assert WriteCheck && checkCircular(_This);
+                prev.setNext(another);
+            another.setPrev(prev);
+            another.setNext(node);
+            node.setPrev(another);
+            assert checkIntegrityOnChange && checkCircular(node);
         }
-        return node;
+        return another;
     }
 
-    public static IChainNode insertAfter(IChainNode _This, IChainNode node) {
-        assert node != null;
-        if (_This != null) {
-            IChainNode next = _This.getNext();
+    public static IChainNode insertAfter(IChainNode node, IChainNode another) {
+        assert another != null;
+        if (node != null) {
+            IChainNode next = node.getNext();
             if (next != null)
-                next.setPrev(node);
-            node.setNext(next);
-            node.setPrev(_This);
-            _This.setNext(node);
-            assert WriteCheck && checkCircular(_This);
+                next.setPrev(another);
+            another.setNext(next);
+            another.setPrev(node);
+            node.setNext(another);
+            assert checkIntegrityOnChange && checkCircular(node);
         }
-        return node;
+        return another;
     }
 
-    public static IChainNode insertBefore(IChainNode _This, IChainNode head, IChainNode tail) {
+    public static IChainNode insertBefore(IChainNode node, IChainNode head, IChainNode tail) {
         assert head != null;
         assert tail != null;
-        if (_This != null) {
-            IChainNode prev = _This.getPrev();
+        if (node != null) {
+            IChainNode prev = node.getPrev();
             if (prev != null)
                 prev.setNext(head);
             head.setPrev(prev);
-            tail.setNext(_This);
-            _This.setPrev(tail);
-            assert WriteCheck && checkCircular(_This);
+            tail.setNext(node);
+            node.setPrev(tail);
+            assert checkIntegrityOnChange && checkCircular(node);
         }
         return head;
     }
 
-    public static IChainNode insertAfter(IChainNode _This, IChainNode head, IChainNode tail) {
+    public static IChainNode insertAfter(IChainNode node, IChainNode head, IChainNode tail) {
         assert head != null;
         assert tail != null;
-        if (_This != null) {
-            IChainNode next = _This.getNext();
+        if (node != null) {
+            IChainNode next = node.getNext();
             if (next != null)
                 next.setPrev(tail);
             tail.setNext(next);
-            head.setPrev(_This);
-            _This.setNext(head);
-            assert WriteCheck && checkCircular(_This);
+            head.setPrev(node);
+            node.setNext(head);
+            assert checkIntegrityOnChange && checkCircular(node);
         }
         return tail;
     }
 
-    public static IChainNode detach(IChainNode _This, IChainNode newPrev, IChainNode newNext) {
-        assert _This != null;
-        IChainNode prev = _This.getPrev();
-        IChainNode next = _This.getNext();
+    public static IChainNode detach(IChainNode node, IChainNode newPrev, IChainNode newNext) {
+        assert node != null;
+        IChainNode prev = node.getPrev();
+        IChainNode next = node.getNext();
         if (prev != null)
             prev.setNext(next);
         if (next != null)
             next.setPrev(prev);
-        _This.setPrev(newPrev);
-        _This.setNext(newNext);
+        node.setPrev(newPrev);
+        node.setNext(newNext);
         if (newPrev != null || newNext != null)
-            assert WriteCheck && checkCircular(_This);
-        return _This;
+            assert checkIntegrityOnChange && checkCircular(node);
+        return node;
     }
 
-    public static IChainNode detach(IChainNode _This) {
-        return detach(_This, null, null);
+    public static IChainNode detach(IChainNode node) {
+        return detach(node, null, null);
     }
 
+    @Pure
     public static boolean checkCircular(IChainNode start)
             throws CheckFailure {
         if (start == null)
