@@ -71,23 +71,23 @@ class Util {
         return parser;
     }
 
-    public static String dispval(Object o) {
-        if (o == null)
+    public static String dispval(Object obj) {
+        if (obj == null)
             return "null";
-        Class<?> type = o.getClass();
+        Class<?> type = obj.getClass();
         StringBuilder buf = null;
         if (type.isArray()) {
-            int l = Array.getLength(o);
-            buf = new StringBuilder(l * 20);
+            int len = Array.getLength(obj);
+            buf = new StringBuilder(len * 20);
             buf.append("{");
-            for (int i = 0; i < l; i++) {
+            for (int i = 0; i < len; i++) {
                 if (i > 0)
                     buf.append(", ");
-                buf.append(dispval(Array.get(o, i)));
+                buf.append(dispval(Array.get(obj, i)));
             }
             buf.append("}");
-        } else if (o instanceof Collection<?>) {
-            Collection<?> col = (Collection<?>) o;
+        } else if (obj instanceof Collection<?>) {
+            Collection<?> col = (Collection<?>) obj;
             buf = new StringBuilder(col.size() * 20);
             buf.append(type.getSimpleName() + " {");
             boolean first = true;
@@ -99,8 +99,8 @@ class Util {
                 buf.append(dispval(c));
             }
             buf.append('}');
-        } else if (o instanceof Map<?, ?>) {
-            Map<?, ?> map = (Map<?, ?>) o;
+        } else if (obj instanceof Map<?, ?>) {
+            Map<?, ?> map = (Map<?, ?>) obj;
             buf = new StringBuilder(map.size() * 20);
             buf.append(type.getSimpleName() + " {");
             boolean first = true;
@@ -112,42 +112,16 @@ class Util {
                 buf.append(e.getKey() + "=" + dispval(e.getValue()));
             }
             buf.append('}');
-        } else if (o instanceof String) {
-            return "\"" + o + "\"";
+        } else if (obj instanceof String) {
+            return "\"" + obj + "\"";
         } else {
-            String typeName = o.getClass().getName();
+            String typeName = obj.getClass().getName();
             int dot = typeName.lastIndexOf('.');
             if (dot != -1)
                 typeName = typeName.substring(dot + 1);
-            return typeName + "(" + String.valueOf(o) + ")";
+            return typeName + "(" + String.valueOf(obj) + ")";
         }
         return buf == null ? "" : buf.toString();
-    }
-
-    private static Map<Class<?>, Object> trueValues;
-    static {
-        trueValues = new HashMap<Class<?>, Object>();
-        trueValues.put(byte.class, (byte) 1);
-        trueValues.put(Byte.class, (byte) 1);
-        trueValues.put(short.class, (short) 1);
-        trueValues.put(Short.class, (short) 1);
-        trueValues.put(int.class, 1);
-        trueValues.put(Integer.class, 1);
-        trueValues.put(long.class, (long) 1);
-        trueValues.put(Long.class, (long) 1);
-        trueValues.put(float.class, (float) 1);
-        trueValues.put(Float.class, (float) 1);
-        trueValues.put(double.class, (double) 1);
-        trueValues.put(Double.class, (double) 1);
-        trueValues.put(boolean.class, true);
-        trueValues.put(Boolean.class, true);
-        trueValues.put(char.class, '1');
-        trueValues.put(Character.class, '1');
-        trueValues.put(String.class, "");
-    }
-
-    public static Object getTrueValue(Class<?> type) {
-        return trueValues.get(type);
     }
 
 }

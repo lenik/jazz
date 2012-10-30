@@ -2,8 +2,6 @@ package net.bodz.bas.cli.skel;
 
 import java.io.File;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
@@ -23,9 +21,7 @@ import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
-import net.bodz.bas.cli.plugin.CLIPlugin;
 import net.bodz.bas.cli.plugin.CLIPlugins;
-import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.ia.ConsoleInteraction;
@@ -46,11 +42,7 @@ import net.bodz.bas.potato.traits.IType;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.trait.Traits;
-import net.bodz.bas.traits.AbstractParser;
-import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ParserUtil;
-import net.bodz.bas.util.PluginException;
-import net.bodz.bas.util.PluginTypeEx;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.SystemColos;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
@@ -135,89 +127,6 @@ public class BasicCLI
     }
 
     protected final CLIPlugins plugins = new CLIPlugins();
-
-    private class PluginParser
-            extends AbstractParser<CLIPlugin> {
-
-        @Override
-        public CLIPlugin parse(String idCtor)
-                throws ParseException {
-            int eq = idCtor.indexOf('=');
-            String id = idCtor;
-            String arg = null;
-            if (eq != -1) {
-                id = idCtor.substring(0, eq);
-                arg = idCtor.substring(eq + 1);
-            }
-            try {
-                CLIPlugin plugin = create(id, arg);
-                plugin.setParameters(_vars);
-                return plugin;
-            } catch (PluginException e) {
-                throw new ParseException(e.getMessage(), e);
-            } catch (CreateException e) {
-                throw new ParseException(e.getMessage(), e);
-            } catch (CLIException e) {
-                throw new ParseException(e.getMessage(), e);
-            }
-        }
-
-        private CLIPlugin create(String pluginId, String ctorArg)
-                throws CreateException, PluginException, ParseException {
-            PluginTypeEx typeEx = plugins.getTypeEx(CLIPlugin.class, pluginId);
-            if (typeEx == null)
-                throw new PluginException("no plugin of " + pluginId);
-            Class<?> clazz = typeEx.getType();
-            Constructor<?>[] ctors = clazz.getConstructors(); // only get public
-            Constructor<?> ctor = null;
-            Class<?>[] sigMaxLen = null;
-            for (Constructor<?> _ctor : ctors) {
-                Class<?>[] _sig = _ctor.getParameterTypes();
-                if (ctor == null || _sig.length > sigMaxLen.length) {
-                    ctor = _ctor;
-                    sigMaxLen = _sig;
-                }
-            }
-            if (ctor == null)
-                throw new PluginException("no constructor in " + clazz);
-            int len = sigMaxLen.length;
-            int off = 0;
-            if (clazz.isMemberClass()) {
-                len--;
-                off++;
-            }
-            if (len == 0) {
-                assert ctorArg == null;
-                return (CLIPlugin) typeEx.newInstance();
-            }
-            if (len != 1)
-                throw new PluginException("no suitable constructor to use: " + typeEx);
-
-            Class<?> sig0 = sigMaxLen[off];
-            if (sig0 == String.class)
-                return (CLIPlugin) typeEx.newInstance(ctorArg);
-            if (!sig0.isArray()) {
-                Object val = ParserUtil.parse(sig0, ctorArg);
-                return (CLIPlugin) typeEx.newInstance(val);
-            }
-
-            // ctor(E[] array)
-            String[] args = {};
-            if (ctorArg != null)
-                args = ctorArg.split(",");
-            Class<?> valtype = sig0.getComponentType();
-            if (valtype == String.class)
-                return (CLIPlugin) typeEx.newInstance((Object) args);
-
-            IParser<?> parser = Traits.getTrait(valtype, IParser.class);
-            Object valarray = Array.newInstance(valtype, args.length);
-            for (int i = 0; i < args.length; i++) {
-                Object val = parser.parse(args[i]);
-                Array.set(valarray, i, val);
-            }
-            return (CLIPlugin) typeEx.newInstance(valarray);
-        }
-    }
 
     /**
      * Show version information
@@ -346,7 +255,7 @@ public class BasicCLI
     }
 
     /**
-     * public access: so derivations don't have to declare static main()s.
+     * Public access: so derivations don't have to declare static main()s.
      */
     @Override
     public synchronized void execute(String... args)
