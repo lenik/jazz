@@ -4,7 +4,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.meta.optim.Const;
+import net.bodz.bas.meta.optim.Pure;
 
 public interface Overlay
         extends Paintable {
@@ -12,7 +12,7 @@ public interface Overlay
     /**
      * @return byref
      */
-    @Const
+    @Pure
     Rectangle getDefinedRegion();
 
     boolean isDefined(int x, int y);
@@ -35,7 +35,7 @@ public interface Overlay
     /**
      * @return undefined if <code>isInvalid(null)</code> returns <code>false</code>.
      */
-    @Const
+    @Pure
     Rectangle getInvalidRegion();
 
     void addInvalidateListener(InvalidateListener listener);
