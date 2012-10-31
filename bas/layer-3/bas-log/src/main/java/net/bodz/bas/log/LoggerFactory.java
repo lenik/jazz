@@ -1,6 +1,6 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.log.log4j.Log4jLogger;
+import net.bodz.bas.log.impl.Log4jLogger;
 
 public class LoggerFactory {
 

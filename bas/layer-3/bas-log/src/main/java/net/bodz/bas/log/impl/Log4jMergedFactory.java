@@ -1,11 +1,11 @@
-package net.bodz.bas.log.log4j;
+package net.bodz.bas.log.impl;
 
 import java.io.IOException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public class MergedLog4jFactory {
+public class Log4jMergedFactory {
 
     static {
         try {

@@ -20,6 +20,7 @@ layer-2/ 基础数据类型扩展
     bas-script
     
 layer-3/ 工具和杂项
+    bas-log
     bas-node
     bas-text
     bas-text-lr
@@ -33,7 +34,6 @@ layer-5/ 框架基础
     bas-flow
     bas-l10n
     bas-loader
-    bas-log
     bas-potato
     bas-repr
     bas-gui

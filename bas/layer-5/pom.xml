@@ -18,7 +18,6 @@
         <module>bas-gui</module>
         <module>bas-l10n</module>
         <module>bas-loader</module>
-        <module>bas-log</module>
         <module>bas-potato</module>
         <module>bas-repr</module>
         <module>bas-vfs</module>

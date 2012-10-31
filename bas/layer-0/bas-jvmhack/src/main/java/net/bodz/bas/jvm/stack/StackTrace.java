@@ -1,8 +1,10 @@
 package net.bodz.bas.jvm.stack;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 
 public class StackTrace {
 
@@ -39,6 +41,19 @@ public class StackTrace {
             buf.append("\n");
         }
         return buf.toString();
+    }
+
+    public static String get(Throwable exception) {
+        ByteArrayOutputStream buf = new ByteArrayOutputStream();
+        try {
+            PrintStream bufOut = new PrintStream(buf, true, "utf-8");
+            exception.printStackTrace(bufOut);
+            byte[] bytes = buf.toByteArray();
+            String stackTrace = new String(bytes, "utf-8");
+            return stackTrace;
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void dump(PrintStream out) {
