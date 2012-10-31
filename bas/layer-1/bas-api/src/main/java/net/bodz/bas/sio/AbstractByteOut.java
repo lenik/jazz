@@ -61,4 +61,8 @@ public abstract class AbstractByteOut
         return new ByteOutOutputStream(this);
     }
 
+    public OutputStream toPrintStream() {
+        return new ByteOutPrintStream(this);
+    }
+
 }
