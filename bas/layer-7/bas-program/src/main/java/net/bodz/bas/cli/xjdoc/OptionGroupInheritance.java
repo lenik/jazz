@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.model;
+package net.bodz.bas.cli.xjdoc;
 
 public enum OptionGroupInheritance {
 

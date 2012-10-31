@@ -1,15 +1,16 @@
-package net.bodz.bas.cli.model;
+package net.bodz.bas.cli.xjdoc;
 
 import java.util.StringTokenizer;
 
+import net.bodz.bas.cli.model.AbstractOption;
 import net.bodz.bas.err.ParseException;
 
 /**
  * @option -D --define =NAM=VAL --stdout hidden weak
  */
-public class OptionDescriptors {
+public class OptionDescriptor {
 
-    public static void parse(AbstractOption option, String descriptor)
+    public static void apply(AbstractOption option, String descriptor)
             throws ParseException {
         StringTokenizer tokens = new StringTokenizer(descriptor, " ");
 
@@ -50,8 +51,7 @@ public class OptionDescriptors {
                 break;
 
             case "default":
-                Object defaultValue = null;
-                // TODO defaultValue = option.parse(parameter);
+                Object defaultValue = option.parseValue(parameter);
                 option.setDefaultValue(defaultValue);
                 break;
 
@@ -80,7 +80,7 @@ public class OptionDescriptors {
             default:
                 throw new ParseException("Bad option modifier: " + token);
             }
-        } // while
+        } // tokens
     }
 
 }
