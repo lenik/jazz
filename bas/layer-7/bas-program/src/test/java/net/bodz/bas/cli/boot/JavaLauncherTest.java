@@ -1,10 +1,10 @@
 package net.bodz.bas.cli.boot;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-public class JavaLauncherTest {
+public class JavaLauncherTest
+        extends Assert {
 
     static int state = 1;
 

@@ -12,7 +12,7 @@ import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
-import net.bodz.bas.collection.set.IdentityHashSet;
+import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.collection.tree.TreeCallback;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.potato.book.ArtifactDoc;
@@ -163,11 +163,11 @@ public class AbstractProject
 
     @Override
     public void findDependents(IComponent parent, TreeCallback<IComponent> callback) {
-        IdentityHashSet uniq = new IdentityHashSet();
+        IdentityObjectSet uniq = new IdentityObjectSet();
         findDependents(parent, callback, 0, uniq);
     }
 
-    boolean findDependents(IComponent parent, TreeCallback<IComponent> callback, int level, IdentityHashSet uniq) {
+    boolean findDependents(IComponent parent, TreeCallback<IComponent> callback, int level, IdentityObjectSet uniq) {
         if (parent == null)
             throw new NullPointerException("null component in level " + level);
         if (uniq.contains(parent))
@@ -195,11 +195,11 @@ public class AbstractProject
     public void findDependentsBy(IComponent child, TreeCallback<IComponent> callback) {
         if (bydeps == null)
             refreshDependants();
-        IdentityHashSet uniq = new IdentityHashSet();
+        IdentityObjectSet uniq = new IdentityObjectSet();
         findDependentsBy(child, callback, 0, uniq);
     }
 
-    boolean findDependentsBy(IComponent child, TreeCallback<IComponent> callback, int level, IdentityHashSet uniq) {
+    boolean findDependentsBy(IComponent child, TreeCallback<IComponent> callback, int level, IdentityObjectSet uniq) {
         if (child == null)
             throw new NullPointerException("null component in rev-level " + level);
         if (uniq.contains(child))
@@ -225,12 +225,12 @@ public class AbstractProject
 
     @Override
     public void analyseDependency(TreeCallback<IComponent> missingCallback) {
-        IdentityHashSet uniq = new IdentityHashSet();
+        IdentityObjectSet uniq = new IdentityObjectSet();
         analyseDependency(this, missingCallback, 0, uniq);
     }
 
     boolean analyseDependency(IComponent child, TreeCallback<IComponent> missingCallback, int level,
-            IdentityHashSet uniq) {
+            IdentityObjectSet uniq) {
         if (uniq.contains(child))
             throw new IllegalStateException(tr._("Loop detected: ") + child);
         uniq.add(child);

@@ -28,13 +28,13 @@ public class ClassOptions {
         return list.toArray(new String[0]);
     }
 
-    public static void loadOptions(Object classobj, List<String> args)
+    public static void loadOptions(Object context, List<String> args)
             throws CLIException {
-        assert classobj != null;
-        Class<Object> clazz = (Class<Object>) classobj.getClass();
+        assert context != null;
+        Class<Object> clazz = (Class<Object>) context.getClass();
         IOptionGroup group = getClassOptions(clazz);
         try {
-            group.load(classobj, args);
+            group.load(context, args);
         } catch (ParseException e) {
             throw new CLIException(e.getMessage(), e);
         }

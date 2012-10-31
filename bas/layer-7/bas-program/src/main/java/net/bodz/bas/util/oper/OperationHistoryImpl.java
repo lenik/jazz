@@ -1,12 +1,12 @@
-package net.bodz.bas.util;
+package net.bodz.bas.util.oper;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.OutOfDomainException;
 
-public abstract class _History
-        implements History {
+public abstract class OperationHistoryImpl
+        implements IOperationHistory {
 
-    protected abstract OperationRecord get(int position);
+    protected abstract IOperationRecord get(int position);
 
     @Override
     public void moveTo(int p) {

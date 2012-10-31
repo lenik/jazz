@@ -1,11 +1,9 @@
-package net.bodz.bas.ui;
+package net.bodz.bas.gui.ia;
 
 import org.junit.Test;
 
-import net.bodz.bas.gui.ia.AbstractTryBlock;
-import net.bodz.bas.gui.ia.ConsoleInteraction;
 
-public class _TryBlockTest {
+public class TryBlockTest {
 
     @Test
     public void testMaxRetry()

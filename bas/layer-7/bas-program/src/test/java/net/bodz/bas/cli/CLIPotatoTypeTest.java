@@ -8,7 +8,7 @@ import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.potato.Potatoes;
 import net.bodz.bas.potato.traits.IType;
 
-public class CLIScriptClassTest
+public class CLIPotatoTypeTest
         extends BasicCLI {
 
     /** @option */
@@ -40,7 +40,7 @@ public class CLIScriptClassTest
         assertEquals("set myName", "Linda", myName);
         assertEquals("set yourAge", 17, yourAge);
 
-        sendArguments("--serial", "--no-serial", "--no-serial");
+        parseArguments("--serial", "--no-serial", "--no-serial");
         assertEquals("serials", 3, serial.length);
         assertTrue(serial[0]);
         assertFalse(serial[1]);

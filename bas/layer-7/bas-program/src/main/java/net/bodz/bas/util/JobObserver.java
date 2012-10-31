@@ -1,5 +1,6 @@
 package net.bodz.bas.util;
 
+import net.bodz.bas.c.object.Trace;
 import net.bodz.bas.util.exception.RecoverableExceptionListener;
 
 public abstract class JobObserver

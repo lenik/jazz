@@ -29,7 +29,6 @@ import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.ControlExit;
-import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.RcsKeywords;
@@ -182,59 +181,37 @@ public class BasicCLI
         return "FILES";
     }
 
-    private boolean prepared;
-    // private BootProc bootProc;
-    private IOptionGroup opts;
-    private List<String> restArgs;
+    private transient IOptionGroup classOptionGroup;
+    private List<String> remainArguments = new ArrayList<String>();
 
     public BasicCLI() {
         _vars = new HashMap<String, Object>();
     }
 
-    public IType getScriptClass()
+    public IType getPotatoType()
             throws ScriptException {
         return Traits.getTrait(getClass(), IType.class);
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends BasicCLI> IOptionGroup getOptions()
+    public synchronized <T extends BasicCLI> IOptionGroup getOptions()
             throws CLIException {
-        Class<T> clazz = (Class<T>) this.getClass();
-        IOptionGroup opts = ClassOptions.getClassOptions(clazz);
-        return opts;
+        if (classOptionGroup == null) {
+            Class<T> clazz = (Class<T>) this.getClass();
+            classOptionGroup = ClassOptions.getClassOptions(clazz);
+        }
+        return classOptionGroup;
     }
 
-    private void _prepare()
-            throws CLIException {
-        if (prepared)
-            return;
-
-        ILogSink dbg = logger.getDebugSink();
-        // dbg.p("parse boot info");
-        // bootProc = BootProc.get(getClass());
-        //
-        // if (bootProc != null) {
-        // dbg.p("load-config PRE");
-        // try {
-        // bootProc.load(Integer.MIN_VALUE, 0);
-        // } catch (LoadException e) {
-        // throw new CLIException(e);
-        // }
-        // }
-
-        dbg.p("cli get options");
-        opts = getOptions();
-
-        restArgs = new ArrayList<String>();
-        prepared = true;
-    }
-
-    public void sendArguments(String... args)
+    public void parseArguments(String... args)
             throws CLIException, ParseException {
-        _prepare();
-        String[] rejected = opts.load(this, args);
+        if (logger.isDebugEnabled())
+            logger.debug("Parse arguments: " + StringArray.join(", ", args));
+
+        IOptionGroup options = getOptions();
+        String[] rejected = options.load(this, args);
+
         for (String arg : rejected)
-            restArgs.add(arg);
+            remainArguments.add(arg);
     }
 
     public void runExtra(String cmdline)
@@ -260,15 +237,14 @@ public class BasicCLI
     @Override
     public synchronized void execute(String... args)
             throws Exception {
-        ILogSink dbg = logger.getDebugSink();
-        dbg.p("cli prepare");
-        _prepare();
-        int preRestSize = restArgs.size(); // make climain() reentrant.
+        parseArguments(args);
+
+        int preRestSize = remainArguments.size(); // make climain() reentrant.
 
         try {
-            sendArguments(args);
+            parseArguments(args);
 
-            dbg.p("cli boot");
+            logger.debug("[CLI] Pre-boot");
             _postInit();
             _boot();
 
@@ -282,33 +258,33 @@ public class BasicCLI
             // }
 
             if (logger.isDebugEnabled()) {
-                for (Entry<String, IOption> entry : opts.getLocalOptionMap().entrySet()) {
-                    IOption opt = entry.getValue();
-                    String optnam = opt.getName();
-                    if (!optnam.equals(entry.getKey()))
+                for (Entry<String, IOption> entry : classOptionGroup.getLocalOptionMap().entrySet()) {
+                    IOption option = entry.getValue();
+                    String optionName = option.getName();
+                    if (!optionName.equals(entry.getKey()))
                         continue;
-                    Object optval = opt.parse(this);
-                    if (optval instanceof MethodCall)
+                    Object optionValue = option.parse(this);
+                    if (optionValue instanceof MethodCall)
                         continue;
-                    dbg.p(optnam, " = ", Util.dispval(optval));
+                    logger.debug(optionName, " = ", Util.dispval(optionValue));
                 }
                 for (Entry<String, Object> entry : _vars.entrySet()) {
                     String name = entry.getKey();
                     Object value = entry.getValue();
-                    dbg.p("var ", name, " = ", value);
+                    logger.debug("var ", name, " = ", value);
                 }
             }
-            String[] rest = restArgs.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
+            String[] rest = remainArguments.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
 
-            dbg.p("cli main");
+            logger.debug("[CLI] Execute main method");
             doMain(rest);
 
-            dbg.p("cli exit");
+            logger.debug("[CLI] Exit");
         } catch (ControlBreak b) {
             return;
         } finally {
-            while (restArgs.size() > preRestSize)
-                restArgs.remove(restArgs.size() - 1);
+            while (remainArguments.size() > preRestSize)
+                remainArguments.remove(remainArguments.size() - 1);
         }
     }
 

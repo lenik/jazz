@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.RuntimeReflectiveOperationException;
 import net.bodz.bas.model.IFactory;
 
 public final class Tooling {
@@ -46,7 +45,7 @@ public final class Tooling {
             T instance = (T) ctor.newInstance(hostObject);
             return instance;
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeReflectiveOperationException(e.getMessage(), e);
+            throw new IllegalUsageException("Exception thrown from the wrapper constructor", e);
         }
     }
 

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.bodz.bas.collection.set.IdentityHashSet;
+import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.lang.fn.Pred1;
 
 public class ClassScanner
@@ -180,7 +180,7 @@ public class ClassScanner
     class Dumper {
 
         int selection;
-        IdentityHashSet once = new IdentityHashSet();
+        IdentityObjectSet once = new IdentityObjectSet();
         PrintStream out = System.out;
 
         public Dumper(int selection) {

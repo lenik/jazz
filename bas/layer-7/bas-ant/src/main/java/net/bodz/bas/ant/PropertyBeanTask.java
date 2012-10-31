@@ -19,10 +19,10 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Path;
 
+import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypePrSet;
 import net.bodz.bas.collection.preorder.PrefixSet;
-import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
@@ -227,13 +227,13 @@ public class PropertyBeanTask
     class Traverser {
 
         Project project;
-        IdentityHashSet uniqSet;
+        IdentityObjectSet uniqSet;
         PrefixSet stp;
 
         public Traverser(Project project) {
             this.project = project;
             if (unique)
-                this.uniqSet = new IdentityHashSet();
+                this.uniqSet = new IdentityObjectSet();
             if ((stp = stopTypePrefixes) == null)
                 stp = defaultStopTypePrefixes;
         }

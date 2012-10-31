@@ -19,6 +19,9 @@ public interface IOptionGroup
 
     /**
      * Get local options.
+     * 
+     * The inherited options from parent option group is not included.
+     * 
      * <p>
      * The canonical-name of the option is used as the map key.
      * 
