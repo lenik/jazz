@@ -1,10 +1,10 @@
-package net.bodz.bas.util;
+package net.bodz.bas.c.object;
 
-import static org.junit.Assert.assertNotSame;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-public class TraceTest {
+public class TraceTest
+        extends Assert {
 
     static volatile boolean _deopt = true;
 
@@ -12,7 +12,6 @@ public class TraceTest {
     public void test1()
             throws Exception {
         Trace.enabled = true;
-        Trace.setLogDate("yy/MM/dd HH:mm:ss.SSS");
 
         String tom = "tom";
         String tom2 = "to";
@@ -21,11 +20,11 @@ public class TraceTest {
         assertNotSame("Should not be optimized by compiler. ", tom, tom2);
         String lucy = "lucy";
 
-        Trace.p(tom, "love lucy");
-        Trace.p(tom2, "hate lucy");
+        Trace.trace(tom, "love lucy");
+        Trace.trace(tom2, "hate lucy");
 
-        Trace.p(lucy, "is");
-        Trace.c(lucy, " confused");
+        Trace.trace(lucy, "is");
+        Trace.trace(lucy, " confused");
 
         Trace.link(tom, "love", lucy);
         Trace.link(tom2, "hate", lucy);
