@@ -1,4 +1,4 @@
-package net.bodz.bas.collection.set;
+package net.bodz.bas.c.object;
 
 import java.io.Serializable;
 import java.util.AbstractSet;
@@ -10,27 +10,27 @@ import java.util.Set;
 /**
  * Compare two objects by == operator, rather than using {@link Object#equals(Object)}.
  */
-public class IdentityHashSet
-        extends AbstractSet<Object>
-        implements Set<Object>, Serializable {
+public class IdentityHashSet<T>
+        extends AbstractSet<T>
+        implements Set<T>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final IdentityHashMap<Object, Object> ihm;
+    public static final Object existedValue = Boolean.TRUE;
+
+    private final IdentityHashMap<T, Object> ihm;
 
     public IdentityHashSet() {
-        ihm = new IdentityHashMap<Object, Object>();
+        ihm = new IdentityHashMap<T, Object>();
     }
 
     public IdentityHashSet(int expectedMaxSize) {
-        ihm = new IdentityHashMap<Object, Object>(expectedMaxSize);
+        ihm = new IdentityHashMap<T, Object>(expectedMaxSize);
     }
 
-    public IdentityHashSet(Map<? extends Object, ? extends Object> m) {
-        ihm = new IdentityHashMap<Object, Object>(m);
+    public IdentityHashSet(Map<? extends T, ?> m) {
+        ihm = new IdentityHashMap<T, Object>(m);
     }
-
-    static final Object t = null;
 
     @Override
     public boolean isEmpty() {
@@ -43,9 +43,14 @@ public class IdentityHashSet
     }
 
     @Override
-    public boolean add(Object e) {
+    public boolean contains(Object o) {
+        return ihm.containsKey(o);
+    }
+
+    @Override
+    public boolean add(T e) {
         boolean exists = ihm.containsKey(e);
-        ihm.put(e, t);
+        ihm.put(e, existedValue);
         return !exists;
     }
 
@@ -62,7 +67,7 @@ public class IdentityHashSet
     }
 
     @Override
-    public Iterator<Object> iterator() {
+    public Iterator<T> iterator() {
         return ihm.keySet().iterator();
     }
 
