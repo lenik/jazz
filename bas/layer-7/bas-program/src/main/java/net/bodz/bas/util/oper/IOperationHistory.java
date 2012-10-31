@@ -1,6 +1,6 @@
-package net.bodz.bas.util;
+package net.bodz.bas.util.oper;
 
-public interface History {
+public interface IOperationHistory {
 
     int size();
 

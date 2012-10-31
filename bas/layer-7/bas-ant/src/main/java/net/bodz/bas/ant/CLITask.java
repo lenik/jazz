@@ -24,7 +24,7 @@ public class CLITask
     public CLITask(BasicCLI app) {
         this.app = app;
         try {
-            appType = app.getScriptClass();
+            appType = app.getPotatoType();
         } catch (ScriptException e) {
             throw new Error(e.getMessage(), e);
         }

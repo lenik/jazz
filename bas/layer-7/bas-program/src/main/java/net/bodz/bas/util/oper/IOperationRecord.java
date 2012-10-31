@@ -1,6 +1,6 @@
-package net.bodz.bas.util;
+package net.bodz.bas.util.oper;
 
-public interface OperationRecord {
+public interface IOperationRecord {
 
     /**
      * @return <code>null</code> if no snapshot.

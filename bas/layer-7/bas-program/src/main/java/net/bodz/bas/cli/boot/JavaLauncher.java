@@ -27,7 +27,7 @@ import net.bodz.bas.text.charset.BasCharsetProvider;
 
 @BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher
-        implements Launcher {
+        implements ILauncher {
 
     private Class<?> mainClass;
 

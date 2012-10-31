@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs;
 
 public class FileResolveException
-        extends VFSException {
+        extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
