@@ -1,6 +1,7 @@
 package net.bodz.bas.sio;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Locale;
 
 public abstract class AbstractPrintOut
@@ -203,6 +204,10 @@ public abstract class AbstractPrintOut
 
     protected void _close()
             throws IOException {
+    }
+
+    public PrintWriter toPrintWriter() {
+        return new PrintOutPrintWriter(this);
     }
 
 }
