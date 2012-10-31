@@ -1,4 +1,4 @@
-package net.bodz.bas.log.log4j;
+package net.bodz.bas.log.impl;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

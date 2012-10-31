@@ -2,7 +2,6 @@ package net.bodz.bas.log;
 
 import javax.annotation.Generated;
 
-
 @Generated("By LoggerCG")
 public interface Logger
         extends LoggerCompat {

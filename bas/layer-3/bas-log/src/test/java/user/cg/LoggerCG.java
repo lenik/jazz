@@ -2,13 +2,14 @@ package user.cg;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.reflect.query.PublicFields;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.log.LogLevel;
 
@@ -32,9 +33,12 @@ public class LoggerCG {
             levelNames.add(levelName);
         }
 
-        src_Logger = ClassResource.classData(getClass(), "Logger")//
+        URL classLoggerURL = getClass().getResource("LoggerCG.Logger");
+        URL classAbstractLoggerURL = getClass().getResource("LoggerCG.AbstractLogger");
+
+        src_Logger = new URLResource(classLoggerURL)//
                 .tooling()._for(StreamReading.class).readTextContents();
-        src_AbstractLogger = ClassResource.classData(getClass(), "AbstractLogger")//
+        src_AbstractLogger = new URLResource(classAbstractLoggerURL)//
                 .tooling()._for(StreamReading.class).readTextContents();
     }
 
@@ -81,12 +85,12 @@ public class LoggerCG {
         }
     }
 
-    static boolean ifaceOrImpl = false;
+    static boolean generateInterfaceOrClass = false;
 
     public static void main(String[] args)
             throws Exception {
         LoggerCG cg = new LoggerCG();
-        if (ifaceOrImpl)
+        if (generateInterfaceOrClass)
             cg.makeLogger();
         else
             cg.makeAbstractLogger();

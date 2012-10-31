@@ -1,4 +1,4 @@
-package net.bodz.bas.log.log4j;
+package net.bodz.bas.log.impl;
 
 import java.io.IOException;
 import java.net.URL;
