@@ -59,7 +59,7 @@ public class Circle2d_PPP
         case PT_2:
             return p2;
         }
-        return null;
+        return getBadPoint(index);
     }
 
     /**

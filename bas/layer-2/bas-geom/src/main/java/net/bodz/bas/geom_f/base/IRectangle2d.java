@@ -7,7 +7,7 @@ import net.bodz.bas.geom_f.api.IShapeAmount2d;
 public interface IRectangle2d
         extends IShape2d, IShapeAmount2d, IExtendable2d {
 
-    // -o Shape
+    // -o IShape2d
 
     @Override
     IRectangle2d clone();
@@ -18,14 +18,7 @@ public interface IRectangle2d
     @Override
     Rectangle2d snapshotConst();
 
-    // -o ShapeAmount
-
-    //
-
-    int OUT_LEFT = 1;
-    int OUT_TOP = 2;
-    int OUT_RIGHT = 4;
-    int OUT_BOTTOM = 8;
+    // -o IPointSet2d
 
     float getX0();
 
@@ -89,7 +82,18 @@ public interface IRectangle2d
 
     // void positize_();
 
-    void normalize();
+    // boolean isIntersectedExtended(Line2d line);
+
+    boolean isIntersected(Rectangle2d rect);
+
+    void normalizeByMinMax();
+
+    void normalizeByArea();
+
+    int OUT_LEFT = 1;
+    int OUT_TOP = 2;
+    int OUT_RIGHT = 4;
+    int OUT_BOTTOM = 8;
 
     /**
      * @see #OUT_TOP

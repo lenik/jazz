@@ -56,7 +56,7 @@ public class Circle2d
         case PT_CENTER:
             return center;
         }
-        return null;
+        return getBadPoint(index);
     }
 
     @Override

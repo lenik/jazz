@@ -57,7 +57,7 @@ public class Triangle2d
         case PT_2:
             return p2;
         }
-        return null;
+        return getBadPoint(index);
     }
 
     @Override

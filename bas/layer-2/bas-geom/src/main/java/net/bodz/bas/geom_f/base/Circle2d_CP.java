@@ -43,7 +43,7 @@ public class Circle2d_CP
         case PT_POINT1:
             return point1;
         }
-        return null;
+        return getBadPoint(index);
     }
 
     @Override

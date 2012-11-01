@@ -44,6 +44,21 @@ public abstract class AbstractShape2d
 
     // -o IPointSet2d
 
+    /**
+     * Check point index.
+     * 
+     * @throws IndexOutOfBoundsException
+     *             If point index is out of bound.
+     */
+    protected Point2d getBadPoint(int index) {
+        throw new IndexOutOfBoundsException("Point index " + index + " is out of bound.");
+    }
+
+    protected void checkPointIndex(int index) {
+        if (index < 0 || index >= getPointCount())
+            getBadPoint(index);
+    }
+
     @Override
     public float getPointX(int index) {
         Point2d point = getPoint(index);

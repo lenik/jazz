@@ -40,7 +40,7 @@ public class Ellipse2d
         case PT_CENTER2:
             return center2;
         }
-        return null;
+        return getBadPoint(index);
     }
 
     @Override
