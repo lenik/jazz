@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.a;
+package net.bodz.bas.model.meta;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
