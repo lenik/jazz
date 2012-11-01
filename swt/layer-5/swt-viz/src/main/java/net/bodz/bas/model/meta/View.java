@@ -1,11 +1,9 @@
-package net.bodz.swt.viz.a;
+package net.bodz.bas.model.meta;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.eclipse.swt.widgets.Composite;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
@@ -14,7 +12,7 @@ public @interface View {
     /**
      * View path. Preferred path format: bar.subbar...base
      * <p>
-     * A view shall be {@link Composite}.
+     * A view should be {@link org.eclipse.swt.widgets.Composite}.
      * <p>
      * A link to the view may be place in the expand-bar whose barName.startsWith(value).
      * <p>
