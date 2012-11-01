@@ -129,7 +129,7 @@ public abstract class AbstractRectangle2d
     }
 
     @Override
-    public void normalize() {
+    public void normalizeByMinMax() {
         float width = getWidth();
         float height = getHeight();
         if (width == 0.0f && height == 0.0f)
@@ -143,6 +143,24 @@ public abstract class AbstractRectangle2d
             k = 1.0f / h;
         width = k * w;
         height = k * h;
+        setWidth(width);
+        setHeight(height);
+    }
+
+    @Override
+    public void normalizeByArea() {
+        float area = getArea();
+        float length = (float) Math.sqrt(area);
+        float width = getWidth();
+        float height = getHeight();
+        setWidth(width / length);
+        setHeight(height / length);
+    }
+
+    @Override
+    public boolean isIntersected(Rectangle2d rect) {
+        
+        return false;
     }
 
     @Override

@@ -15,6 +15,11 @@ public interface IPolygonizable2d {
      */
     Polygon2d polygonize(int minSegments, Float maxSegmentLength);
 
+    /**
+     * Convert the shape to a polygon.
+     * 
+     * @return <code>null</code> If it's not supported.
+     */
     Polygon2d polygonize();
 
 }

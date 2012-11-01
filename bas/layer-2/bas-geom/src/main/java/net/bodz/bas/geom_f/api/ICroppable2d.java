@@ -11,6 +11,7 @@ public interface ICroppable2d {
      * 
      * @param php
      *            The crop half plane. Must be non-<code>null</code>.
+     * @return Maybe not the shape of the same type, if it is a reduced crop.
      */
     IShape2d crop(PositiveHalfPlane php, boolean detached);
 
@@ -19,6 +20,7 @@ public interface ICroppable2d {
      * 
      * @param rectangle
      *            The crop rectangle. Must be non-<code>null</code>.
+     * @return Maybe not the shape of the same type, if it is a reduced crop.
      */
     IShape2d crop(Rectangle2d rectangle, boolean detached);
 
@@ -27,6 +29,7 @@ public interface ICroppable2d {
      * 
      * @param triangle
      *            The crop triangle. Must be non-<code>null</code>.
+     * @return Maybe not the shape of the same type, if it is a reduced crop.
      */
     IShape2d crop(Triangle2d triangle, boolean detached);
 
@@ -36,6 +39,7 @@ public interface ICroppable2d {
      * @param convexPolygon
      *            A convex polygon. The crop result is undefined if the polygon is not convex (i.e.,
      *            concave). Must be non-<code>null</code>.
+     * @return Maybe not the shape of the same type, if it is a reduced crop.
      */
     IShape2d crop(Polygon2d convexPolygon, boolean detached);
 
