@@ -1,4 +1,4 @@
-package net.bodz.swt.draw.geom_i;
+package net.bodz.swt.draw.geom_i.particle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.bas.util.ints.IntIterator;
 import net.bodz.bas.util.ints.PrefetchedIntIterator;
 
-public abstract class AbstractParticleBounds2i
-        implements IParticleBounds2i {
+public abstract class AbstractParticleBounds2d
+        implements IParticleBounds2d {
 
     static final Rectangle emptyRect = new Rectangle(0, 0, 0, 0);
 

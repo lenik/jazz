@@ -1,11 +1,11 @@
-package net.bodz.swt.draw.geom_i;
+package net.bodz.swt.draw.geom_i.particle;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
 import net.bodz.bas.util.ints.IntIterable;
 
-public interface IParticleBounds2i {
+public interface IParticleBounds2d {
 
     /**
      * Get the particle count.
