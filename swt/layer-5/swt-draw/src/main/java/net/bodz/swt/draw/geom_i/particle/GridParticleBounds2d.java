@@ -1,4 +1,4 @@
-package net.bodz.swt.draw.core.particle;
+package net.bodz.swt.draw.geom_i.particle;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -9,10 +9,9 @@ import net.bodz.bas.util.EmptyConsts;
 import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.bas.util.ints.IntIterator;
 import net.bodz.bas.util.ints.PrefetchedIntIterator;
-import net.bodz.swt.draw.geom_i.AbstractParticleBounds2i;
 
-public abstract class GridParticleBounds
-        extends AbstractParticleBounds2i {
+public abstract class GridParticleBounds2d
+        extends AbstractParticleBounds2d {
 
     static final int DEFAULT_CELLWIDTH = 5;
     static final int DEFAULT_CELLHEIGHT = 5;
@@ -71,7 +70,7 @@ public abstract class GridParticleBounds
     }
 
     public static abstract class _Array
-            extends GridParticleBounds {
+            extends GridParticleBounds2d {
 
         int size;
         int rows;

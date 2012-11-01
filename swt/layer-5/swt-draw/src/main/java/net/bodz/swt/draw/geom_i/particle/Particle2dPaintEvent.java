@@ -1,4 +1,4 @@
-package net.bodz.swt.draw.core.particle;
+package net.bodz.swt.draw.geom_i.particle;
 
 import java.util.EventObject;
 
@@ -6,14 +6,13 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.swt.draw.geom_i.IParticleBounds2i;
 
-public class ParticlePaintEvent
+public class Particle2dPaintEvent
         extends EventObject {
 
     private static final long serialVersionUID = -8403157009512252619L;
 
-    public ParticleCanvas canvas;
+    public Particle2dCanvas canvas;
 
     /**
      * geometry index
@@ -24,7 +23,7 @@ public class ParticlePaintEvent
 
     public Rectangle viewRect;
 
-    public ParticlePaintEvent(ParticleCanvas canvas, GC gc, int index, Rectangle viewRect) {
+    public Particle2dPaintEvent(Particle2dCanvas canvas, GC gc, int index, Rectangle viewRect) {
         super(canvas);
         this.canvas = canvas;
         this.gc = gc;
@@ -41,7 +40,7 @@ public class ParticlePaintEvent
     public String toString() {
         PaintEvent source = getSource();
         String s = source.toString();
-        IParticleBounds2i gspace = canvas.getParticleBounds();
+        IParticleBounds2d gspace = canvas.getParticleBounds();
         s = s.substring(0, s.length() - 1) // remove trailing '}'
                 + " space=" + gspace //
                 + " index=" + index //

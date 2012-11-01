@@ -1,4 +1,4 @@
-package net.bodz.swt.draw.core.particle;
+package net.bodz.swt.draw.geom_i.particle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +20,14 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.swt.draw.geom_i.IParticleBounds2i;
 import net.bodz.swt.gui.dev.SWTRegion;
 import net.bodz.swt.gui.geom.SWTShapes;
 
-public class ParticleCanvas
+public class Particle2dCanvas
         extends Canvas
         implements II18nCapable {
 
-    private IParticleBounds2i bounds;
+    private IParticleBounds2d bounds;
     private boolean paintBg;
 
     private ScrollBar hbar;
@@ -37,9 +36,9 @@ public class ParticleCanvas
     private int xoffMax;
     private int yoffMax;
 
-    private List<ParticlePaintListener> particlePaintListeners;
+    private List<Particle2dPaintListener> particlePaintListeners;
 
-    public ParticleCanvas(Composite parent, IParticleBounds2i space) {
+    public Particle2dCanvas(Composite parent, IParticleBounds2d space) {
         this(parent, SWT.H_SCROLL | SWT.V_SCROLL, space);
     }
 
@@ -49,7 +48,7 @@ public class ParticleCanvas
      * @see SWT#H_SCROLL (recommend)
      * @see SWT#V_SCROLL (recommend)
      */
-    public ParticleCanvas(Composite parent, int style, IParticleBounds2i space) {
+    public Particle2dCanvas(Composite parent, int style, IParticleBounds2d space) {
         super(parent, style | SWT.NO_REDRAW_RESIZE | SWT.NO_BACKGROUND);
         this.bounds = space;
         this.paintBg = 0 == (style & SWT.NO_BACKGROUND);
@@ -144,11 +143,11 @@ public class ParticleCanvas
         safeAdd = 40;
     }
 
-    public IParticleBounds2i getParticleBounds() {
+    public IParticleBounds2d getParticleBounds() {
         return bounds;
     }
 
-    public void setParticleBounds(IParticleBounds2i bounds) {
+    public void setParticleBounds(IParticleBounds2d bounds) {
         this.bounds = bounds;
         updateBounds();
         redraw();
@@ -194,20 +193,20 @@ public class ParticleCanvas
     /**
      * The background of concrete geom components are not included in the global background, for
      * geom with non-rectangular shapes, implementations of
-     * {@link ParticlePaintListener#paint(ParticlePaintEvent)} must take consider of
+     * {@link Particle2dPaintListener#paint(Particle2dPaintEvent)} must take consider of
      * {@link #isPaintBg() paintBg} to decide whether to paint the geom's background. For most
      * cases, call {@link #paintBackground(GC, Rectangle)} with the component's
-     * {@link IParticleBounds2i#getBoundingBox(int) bounds} is just fine.
+     * {@link IParticleBounds2d#getBoundingBox(int) bounds} is just fine.
      */
-    public void addPaintGeomListener(ParticlePaintListener listener) {
+    public void addPaintGeomListener(Particle2dPaintListener listener) {
         if (listener == null)
             throw new NullPointerException("listener");
         if (particlePaintListeners == null)
-            particlePaintListeners = new ArrayList<ParticlePaintListener>(1);
+            particlePaintListeners = new ArrayList<Particle2dPaintListener>(1);
         particlePaintListeners.add(listener);
     }
 
-    public void removePaintGeomListener(ParticlePaintListener listener) {
+    public void removePaintGeomListener(Particle2dPaintListener listener) {
         particlePaintListeners.remove(listener);
     }
 
@@ -326,8 +325,8 @@ public class ParticleCanvas
                         bbox.y + (bbox.height - strExt.y) / 2);
                 // gc.setBackground(bg0);
             } else {
-                ParticlePaintEvent paintGeomEvent = new ParticlePaintEvent(this, gc, geom, bbox);
-                for (ParticlePaintListener l : particlePaintListeners)
+                Particle2dPaintEvent paintGeomEvent = new Particle2dPaintEvent(this, gc, geom, bbox);
+                for (Particle2dPaintListener l : particlePaintListeners)
                     l.paint(paintGeomEvent);
             }
         }
