@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
-import net.bodz.bas.potato.traits.AbstractProperty;
+import net.bodz.bas.potato.model.AbstractProperty;
 import net.bodz.bas.util.event.IPropertyChangeListener;
 import net.bodz.bas.util.event.IPropertyChangeSource;
 

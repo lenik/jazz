@@ -6,9 +6,6 @@ import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.bas.gui.ia.Proposals;
 import net.bodz.swt.c3.ia.DialogInteraction;
 
-/**
- * @test {@link DialogTryBlockTest}
- */
 public abstract class DialogTryBlock
         extends AbstractTryBlock {
 

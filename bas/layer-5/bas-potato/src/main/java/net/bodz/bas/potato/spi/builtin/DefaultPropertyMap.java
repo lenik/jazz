@@ -7,10 +7,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
+import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.model.IPropertyMap;
 import net.bodz.bas.potato.spi.bean.BeanProperty;
 import net.bodz.bas.potato.spi.reflect.ReflectProperty;
-import net.bodz.bas.potato.traits.IProperty;
-import net.bodz.bas.potato.traits.IPropertyMap;
 import net.bodz.bas.util.order.ComparableComparator;
 
 public class DefaultPropertyMap

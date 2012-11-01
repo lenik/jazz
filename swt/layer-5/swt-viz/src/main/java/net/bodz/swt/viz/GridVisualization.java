@@ -14,11 +14,12 @@ import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.potato.model.invoke.Invocation;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.viz.builtin.R_CallObject;
-import net.bodz.swt.viz.invoke.Invocation;
 import net.bodz.swt.viz.util.ModifierIcon;
 
 public class GridVisualization

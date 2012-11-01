@@ -1,7 +1,7 @@
 package net.bodz.bas.potato;
 
 import net.bodz.bas.lang.mi.QueryException;
-import net.bodz.bas.potato.traits.IType;
+import net.bodz.bas.potato.model.IType;
 import net.bodz.bas.trait.Traits;
 
 public class Potatoes {

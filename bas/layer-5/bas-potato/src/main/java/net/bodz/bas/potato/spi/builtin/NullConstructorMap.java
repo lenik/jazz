@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.bodz.bas.c.reflect.MethodSignature;
-import net.bodz.bas.potato.traits.IConstructor;
-import net.bodz.bas.potato.traits.IConstructorMap;
+import net.bodz.bas.potato.model.IConstructor;
+import net.bodz.bas.potato.model.IConstructorMap;
 
 public class NullConstructorMap
         implements IConstructorMap {

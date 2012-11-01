@@ -9,7 +9,7 @@ import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.util.ComponentType;
-import net.bodz.bas.potato.traits.AbstractElement;
+import net.bodz.bas.potato.model.AbstractElement;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;

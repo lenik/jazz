@@ -9,10 +9,10 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.MethodSignatureComparator;
+import net.bodz.bas.potato.model.IMethod;
+import net.bodz.bas.potato.model.IMethodMap;
 import net.bodz.bas.potato.spi.bean.BeanMethod;
 import net.bodz.bas.potato.spi.reflect.ReflectMethod;
-import net.bodz.bas.potato.traits.IMethod;
-import net.bodz.bas.potato.traits.IMethodMap;
 
 public class DefaultMethodMap
         implements IMethodMap {

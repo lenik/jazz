@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.potato.model.IType;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
@@ -31,7 +32,7 @@ public class R_Boolean
             Composite parent, int style)
             throws RenderException, SWTException {
 
-        IRefDescriptor descriptor = entry.getDescriptor();
+        final IRefDescriptor descriptor = entry.getDescriptor();
 
         Boolean _val = (Boolean) entry.get();
         boolean val = _val == null ? false : _val;
@@ -61,6 +62,7 @@ public class R_Boolean
                 @Override
                 public void commit(EventObject event)
                         throws CommitException {
+                    IType type = descriptor.getPotatoType();
                     boolean val = check.getSelection();
                     try {
                         entry.validate(val);

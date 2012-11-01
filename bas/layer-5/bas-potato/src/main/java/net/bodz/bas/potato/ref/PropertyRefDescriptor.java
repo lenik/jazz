@@ -1,8 +1,8 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.potato.traits.DecoratedProperty;
-import net.bodz.bas.potato.traits.IProperty;
-import net.bodz.bas.potato.traits.IType;
+import net.bodz.bas.potato.model.DecoratedProperty;
+import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.model.IType;
 
 public class PropertyRefDescriptor
         extends DecoratedProperty

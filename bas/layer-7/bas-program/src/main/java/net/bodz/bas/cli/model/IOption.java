@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.potato.traits.IElement;
+import net.bodz.bas.potato.model.IElement;
 import net.bodz.bas.util.order.IPriority;
 
 public interface IOption

@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.lang.ref.AbstractRef;
-import net.bodz.bas.potato.traits.IProperty;
+import net.bodz.bas.potato.model.IProperty;
 
 public class PropertyRef<T>
         extends AbstractRef<T> {

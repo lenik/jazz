@@ -3,8 +3,8 @@ package net.bodz.bas.potato.spi.builtin;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.bodz.bas.potato.traits.IProperty;
-import net.bodz.bas.potato.traits.IPropertyMap;
+import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.model.IPropertyMap;
 
 public class NullPropertyMap
         implements IPropertyMap {

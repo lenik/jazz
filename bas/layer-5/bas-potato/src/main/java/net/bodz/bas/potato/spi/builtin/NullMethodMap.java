@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.bodz.bas.c.reflect.MethodSignature;
-import net.bodz.bas.potato.traits.IMethod;
-import net.bodz.bas.potato.traits.IMethodMap;
+import net.bodz.bas.potato.model.IMethod;
+import net.bodz.bas.potato.model.IMethodMap;
 
 public class NullMethodMap
         implements IMethodMap {

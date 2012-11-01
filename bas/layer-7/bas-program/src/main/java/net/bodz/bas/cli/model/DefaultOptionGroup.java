@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.preorder.PrefixMap;
-import net.bodz.bas.potato.traits.AbstractElement;
+import net.bodz.bas.potato.model.AbstractElement;
 import net.bodz.bas.util.Pair;
 
 public class DefaultOptionGroup

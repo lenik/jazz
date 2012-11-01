@@ -2,7 +2,7 @@ package net.bodz.bas.potato.spi.bean;
 
 import java.beans.FeatureDescriptor;
 
-import net.bodz.bas.potato.traits.IElement;
+import net.bodz.bas.potato.model.IElement;
 
 public class FeatureDescriptorUtil {
 

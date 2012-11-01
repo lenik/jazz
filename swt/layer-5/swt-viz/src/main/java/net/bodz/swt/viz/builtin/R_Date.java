@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.gui.a.Border;
 import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.model.meta.MaxLength;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
@@ -23,7 +24,6 @@ import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.swt.viz.SWTRenderContext;
 import net.bodz.swt.viz.SWTRenderer;
 import net.bodz.swt.viz.SwtStylesheet;
-import net.bodz.swt.viz.a.MaxLength;
 
 public class R_Date
         extends SWTRenderer {
