@@ -63,7 +63,7 @@ public class Point2d
         case 0:
             return this;
         }
-        return null;
+        return getBadPoint(index);
     }
 
     @Override

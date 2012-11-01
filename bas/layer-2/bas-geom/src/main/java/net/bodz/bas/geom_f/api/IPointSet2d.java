@@ -7,12 +7,42 @@ import net.bodz.bas.geom_f.base.Point2d;
 
 public interface IPointSet2d {
 
+    /**
+     * Get the total number of points.
+     * 
+     * @return Point count.
+     */
     int getPointCount();
 
+    /**
+     * Get a point.
+     * 
+     * @param index
+     *            The point index.
+     * @return The point at the specific index.
+     * @throws IndexOutOfBoundsException
+     *             If index is out of bound.
+     */
     Point2d getPoint(int index);
 
+    /**
+     * Get the X coordinate of a point.
+     * 
+     * @param index
+     *            The point index.
+     * @throws IndexOutOfBoundsException
+     *             If index is out of bound.
+     */
     float getPointX(int index);
 
+    /**
+     * Get the Y coordinate of a point.
+     * 
+     * @param index
+     *            The point index.
+     * @throws IndexOutOfBoundsException
+     *             If index is out of bound.
+     */
     float getPointY(int index);
 
     /**

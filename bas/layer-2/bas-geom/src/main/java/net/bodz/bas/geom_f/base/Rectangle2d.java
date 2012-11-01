@@ -1,6 +1,5 @@
 package net.bodz.bas.geom_f.base;
 
-
 public class Rectangle2d
         extends AbstractRectangle2d {
 
@@ -218,7 +217,7 @@ public class Rectangle2d
         case PT_2:
             return p2;
         }
-        return null;
+        return getBadPoint(index);
     }
 
 }

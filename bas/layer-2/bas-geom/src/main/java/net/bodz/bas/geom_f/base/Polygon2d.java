@@ -66,16 +66,15 @@ public class Polygon2d
 
     @Override
     public Point2d getPoint(int index) {
-        if (index < points.size())
-            return points.get(index);
-        else
-            return null;
+        checkPointIndex(index);
+        return points.get(index);
     }
 
     // -o IEditablePointRefSet2d
 
     @Override
     public void setPoint(int index, IPointRef2d point) {
+        checkPointIndex(index);
         setPoint(index, point.snapshot());
     }
 

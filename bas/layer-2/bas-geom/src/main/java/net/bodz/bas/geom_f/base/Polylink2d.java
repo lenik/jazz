@@ -48,25 +48,22 @@ public class Polylink2d
 
     @Override
     public Point2d getPoint(int index) {
+        checkPointIndex(index);
         IPointRef2d pointRef = getPointRef(index);
-        if (pointRef == null)
-            return null;
-        else
-            return pointRef.snapshot();
+        return pointRef.snapshot();
     }
 
     @Override
     public IPointRef2d getPointRef(int index) {
-        if (index < points.size())
-            return points.get(index);
-        else
-            return null;
+        checkPointIndex(index);
+        return points.get(index);
     }
 
     // -o IEditablePointRefSet2d
 
     @Override
     public void setPoint(int index, IPointRef2d point) {
+        checkPointIndex(index);
         points.set(index, point);
     }
 
@@ -86,7 +83,7 @@ public class Polylink2d
         return points.remove(index);
     }
 
-    // -o IPolygonizable
+    // -o IPolygonizable2d
 
     @Override
     public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {

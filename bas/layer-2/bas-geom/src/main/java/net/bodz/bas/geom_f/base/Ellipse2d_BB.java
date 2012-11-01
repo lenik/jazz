@@ -44,7 +44,7 @@ public class Ellipse2d_BB
         case 1:
             return p1;
         }
-        return null;
+        return getBadPoint(index);
     }
 
     @Override

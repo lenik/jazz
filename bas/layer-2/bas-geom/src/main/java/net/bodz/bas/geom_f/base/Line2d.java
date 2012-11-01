@@ -50,7 +50,7 @@ public class Line2d
         case PT_1:
             return p1;
         }
-        return null;
+        return getBadPoint(index);
     }
 
     @Override

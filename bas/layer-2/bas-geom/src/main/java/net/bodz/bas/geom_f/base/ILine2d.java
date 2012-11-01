@@ -28,7 +28,7 @@ public interface ILine2d
     @Override
     float getLength();
 
-    //
+    // -o IPointSet2d
 
     Point2d getPoint0();
 
