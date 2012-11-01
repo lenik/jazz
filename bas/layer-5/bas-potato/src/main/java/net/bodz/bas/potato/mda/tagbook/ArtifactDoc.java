@@ -1,4 +1,4 @@
-package net.bodz.bas.potato.book;
+package net.bodz.bas.potato.mda.tagbook;
 
 import java.text.DateFormat;
 import java.util.Date;

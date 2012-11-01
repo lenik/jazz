@@ -37,7 +37,7 @@ import net.bodz.bas.gui.ia.IUserInteraction;
 import net.bodz.bas.gui.ia.UIException;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.meta.program.StartMode;
-import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.BorderLayout;

@@ -1,6 +1,6 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public class AbstractPlugin
