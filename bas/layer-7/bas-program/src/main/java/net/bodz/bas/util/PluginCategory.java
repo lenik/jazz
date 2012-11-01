@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 /**

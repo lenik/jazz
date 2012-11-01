@@ -9,7 +9,7 @@ import java.util.Set;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 public abstract class AbstractComponent

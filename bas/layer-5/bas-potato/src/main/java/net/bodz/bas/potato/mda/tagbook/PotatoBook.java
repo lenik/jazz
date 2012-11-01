@@ -1,6 +1,6 @@
-package net.bodz.bas.potato.book;
+package net.bodz.bas.potato.mda.tagbook;
 
-import net.bodz.bas.potato.traits.IElement;
+import net.bodz.bas.potato.model.IElement;
 import net.bodz.mda.xjdoc.tags.DocTagType;
 import net.bodz.mda.xjdoc.tags.TagBook;
 import net.bodz.mda.xjdoc.tags.URLTagType;

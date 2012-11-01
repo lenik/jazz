@@ -29,7 +29,7 @@ import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.bas.lang.fn.Func0;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.Negotiation;
-import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.bas.potato.ref.ConstVariable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.trait.Traits;

@@ -35,7 +35,7 @@ import net.bodz.bas.meta.program.ProgramName;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.meta.program.StartMode;
 import net.bodz.bas.meta.program.StartModeUtil;
-import net.bodz.bas.potato.book.ArtifactDoc;
+import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
