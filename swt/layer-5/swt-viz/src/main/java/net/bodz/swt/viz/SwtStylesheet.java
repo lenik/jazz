@@ -15,6 +15,8 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.gui.a.*;
 import net.bodz.bas.model.IFactory;
+import net.bodz.bas.model.meta.MenuContrib;
+import net.bodz.bas.model.meta.View;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.swt.c.resources.SWTResources;
@@ -22,8 +24,6 @@ import net.bodz.swt.gui.a.ColorAnnotation;
 import net.bodz.swt.gui.a.FontAnnotation;
 import net.bodz.swt.gui.a.IconAnnotation;
 import net.bodz.swt.gui.a.LabelAnnotation;
-import net.bodz.swt.viz.a.MenuContrib;
-import net.bodz.swt.viz.a.View;
 
 public class SwtStylesheet {
 

@@ -3,8 +3,8 @@ package net.bodz.bas.potato.spi.builtin;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.bodz.bas.potato.traits.IEvent;
-import net.bodz.bas.potato.traits.IEventMap;
+import net.bodz.bas.potato.model.IEvent;
+import net.bodz.bas.potato.model.IEventMap;
 
 public class NullEventMap
         implements IEventMap {

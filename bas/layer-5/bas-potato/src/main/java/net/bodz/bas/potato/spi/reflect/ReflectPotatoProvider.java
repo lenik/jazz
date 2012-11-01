@@ -1,16 +1,16 @@
 package net.bodz.bas.potato.spi.reflect;
 
 import net.bodz.bas.lang.mi.QueryException;
+import net.bodz.bas.potato.model.IConstructorMap;
+import net.bodz.bas.potato.model.IEventMap;
+import net.bodz.bas.potato.model.IMethodMap;
+import net.bodz.bas.potato.model.IPropertyMap;
+import net.bodz.bas.potato.model.IType;
 import net.bodz.bas.potato.spi.AbstractPotatoProvider;
 import net.bodz.bas.potato.spi.builtin.DefaultConstructorMap;
 import net.bodz.bas.potato.spi.builtin.DefaultMethodMap;
 import net.bodz.bas.potato.spi.builtin.DefaultPropertyMap;
 import net.bodz.bas.potato.spi.builtin.NullEventMap;
-import net.bodz.bas.potato.traits.IConstructorMap;
-import net.bodz.bas.potato.traits.IEventMap;
-import net.bodz.bas.potato.traits.IMethodMap;
-import net.bodz.bas.potato.traits.IPropertyMap;
-import net.bodz.bas.potato.traits.IType;
 
 public class ReflectPotatoProvider
         extends AbstractPotatoProvider {

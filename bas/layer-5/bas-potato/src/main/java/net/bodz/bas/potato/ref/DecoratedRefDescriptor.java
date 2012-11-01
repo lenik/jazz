@@ -1,8 +1,8 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.potato.traits.DecoratedElement;
-import net.bodz.bas.potato.traits.IProperty;
-import net.bodz.bas.potato.traits.IType;
+import net.bodz.bas.potato.model.DecoratedElement;
+import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.model.IType;
 
 public class DecoratedRefDescriptor
         extends DecoratedElement

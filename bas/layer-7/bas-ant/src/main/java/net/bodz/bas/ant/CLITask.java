@@ -13,7 +13,7 @@ import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
-import net.bodz.bas.potato.traits.IType;
+import net.bodz.bas.potato.model.IType;
 
 public class CLITask
         extends Task {

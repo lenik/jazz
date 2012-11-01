@@ -3,8 +3,8 @@ package net.bodz.bas.potato.spi.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.potato.traits.AbstractMethod;
-import net.bodz.bas.potato.traits.IParameter;
+import net.bodz.bas.potato.model.AbstractMethod;
+import net.bodz.bas.potato.model.IParameter;
 
 public class ReflectMethod
         extends AbstractMethod {

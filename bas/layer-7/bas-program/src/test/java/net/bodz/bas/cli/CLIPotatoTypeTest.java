@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.potato.Potatoes;
-import net.bodz.bas.potato.traits.IType;
+import net.bodz.bas.potato.model.IType;
 
 public class CLIPotatoTypeTest
         extends BasicCLI {

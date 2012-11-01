@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import net.bodz.bas.potato.traits.AbstractProperty;
+import net.bodz.bas.potato.model.AbstractProperty;
 import net.bodz.bas.util.event.IPropertyChangeListener;
 import net.bodz.bas.util.event.IPropertyChangeSource;
 

@@ -3,7 +3,7 @@ package net.bodz.bas.potato.spi.bean;
 import java.beans.EventSetDescriptor;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.potato.traits.AbstractEvent;
+import net.bodz.bas.potato.model.AbstractEvent;
 
 public class BeanEvent
         extends AbstractEvent {

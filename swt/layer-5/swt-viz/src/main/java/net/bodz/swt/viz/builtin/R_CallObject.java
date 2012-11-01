@@ -14,14 +14,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.potato.model.invoke.Invocation;
+import net.bodz.bas.potato.model.invoke.InvocationDescriptor;
+import net.bodz.bas.potato.model.invoke.InvocationRefcomp;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.swt.viz.GridVisualization;
 import net.bodz.swt.viz.SWTRenderContext;
 import net.bodz.swt.viz.SWTRenderer;
 import net.bodz.swt.viz.SwtStylesheet;
-import net.bodz.swt.viz.invoke.Invocation;
-import net.bodz.swt.viz.invoke.InvocationDescriptor;
-import net.bodz.swt.viz.invoke.InvocationRefcomp;
 
 public class R_CallObject
         extends SWTRenderer {

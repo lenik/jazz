@@ -3,7 +3,7 @@ package net.bodz.bas.potato.spi.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
-import net.bodz.bas.potato.traits.AbstractConstructor;
+import net.bodz.bas.potato.model.AbstractConstructor;
 
 public class ReflectConstructor
         extends AbstractConstructor {

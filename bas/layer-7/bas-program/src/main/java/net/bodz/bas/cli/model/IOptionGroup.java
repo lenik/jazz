@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.bodz.bas.potato.traits.IElement;
+import net.bodz.bas.potato.model.IEditableElement;
 
 public interface IOptionGroup
-        extends IElement {
+        extends IEditableElement {
 
     /**
      * Get the parent option group.

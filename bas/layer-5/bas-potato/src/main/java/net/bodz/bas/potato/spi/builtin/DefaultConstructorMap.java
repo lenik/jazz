@@ -7,9 +7,9 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.MethodSignatureComparator;
+import net.bodz.bas.potato.model.IConstructor;
+import net.bodz.bas.potato.model.IConstructorMap;
 import net.bodz.bas.potato.spi.reflect.ReflectConstructor;
-import net.bodz.bas.potato.traits.IConstructor;
-import net.bodz.bas.potato.traits.IConstructorMap;
 
 public class DefaultConstructorMap
         implements IConstructorMap {
