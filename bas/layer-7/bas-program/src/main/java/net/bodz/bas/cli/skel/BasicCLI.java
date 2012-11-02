@@ -18,6 +18,7 @@ import org.apache.commons.lang.ArrayUtils;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ClassOptions;
+import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
@@ -43,7 +44,7 @@ import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.SystemColos;
+import net.bodz.bas.vfs.context.VFSColos;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
@@ -168,17 +169,16 @@ public class BasicCLI
         _version(out);
         out.println();
 
-        String hlp_opts = ClassOptions.helpOptions(getClass(), _helpRestSyntax(), 4, 29);
-        out.print(hlp_opts);
+        HelpPageFormatter formatter = new HelpPageFormatter();
+        formatter.setDescriptionColumn(29);
+
+        String doc = formatter.format(getOptions());
+        out.print(doc);
 
         if (plugins != null)
             plugins.help(out, "");
 
         out.flush();
-    }
-
-    protected String _helpRestSyntax() {
-        return "FILES";
     }
 
     private transient IOptionGroup classOptionGroup;
@@ -337,6 +337,8 @@ public class BasicCLI
         }
     }
 
+    boolean wildcardsEnabled = false;
+
     /**
      * 
      * User repeatable-main method. <i>({@link #_getDefaultIn()} is never used)</i>
@@ -348,29 +350,34 @@ public class BasicCLI
     protected void doMainManaged(String[] args)
             throws Exception {
         for (String arg : args) {
-            File file = SystemColos.cwd.join(getClass(), arg);
-            expandFileArgument(file);
-        }
-    }
+            IFile workdir = VFSColos.workdir.get();
+            IFile file = workdir.getChild(arg);
 
-    boolean enableWildcards = false;
+            // Only wildcards appeared in the base name is supported.
+            // Wildcards in the dir name is ignored.
+            String baseName = file.getName();
 
-    void expandFileArgument(File wildcards)
-            throws Exception {
-        String name = wildcards.getName();
-        if (enableWildcards && (name.contains("*") || name.contains("?"))) {
-            FileSystem fs = FileSystems.getDefault();
-            PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
-            for (File sibling : wildcards.getParentFile().listFiles())
-                if (pathMatcher.matches(sibling.toPath())) {
-                    logger.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
-                    IFile _sibling = new JavaioFile(sibling);
-                    doFileArgument(_sibling);
-                }
-            return;
+            if (baseName.contains("*") || baseName.contains("?")) {
+                if (!wildcardsEnabled)
+                    throw new IllegalArgumentException("Wildcards isn't supported: " + arg);
+
+                if (!(file instanceof JavaioFile))
+                    throw new UnsupportedOperationException("Wildcards is only supported in local filesystem");
+
+                File localFile = ((JavaioFile) file).getLocalFile();
+
+                FileSystem fs = FileSystems.getDefault();
+                PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
+                for (File sibling : localFile.getParentFile().listFiles())
+                    if (pathMatcher.matches(sibling.toPath())) {
+                        logger.debug("Wildcard expansion: ", localFile, " -> ", sibling);
+                        IFile _sibling = new JavaioFile(sibling);
+                        doFileArgument(_sibling);
+                    }
+            } else {
+                doFileArgument(file);
+            }
         }
-        IFile plainFile = new JavaioFile(wildcards);
-        doFileArgument(plainFile);
     }
 
     /**

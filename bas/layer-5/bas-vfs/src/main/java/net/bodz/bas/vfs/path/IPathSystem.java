@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs.path;
 
-import net.bodz.bas.vfs.CurrentDirectoryColo;
+import net.bodz.bas.c.system.UserDirColo;
 
 public interface IPathSystem {
 
@@ -55,7 +55,7 @@ public interface IPathSystem {
      * USING WITH CAUTION: Context path should not be cached.
      * 
      * @return non-<code>null</code> context path, whose alignment should be absolute.
-     * @see CurrentDirectoryColo
+     * @see UserDirColo
      */
     IPath getContextPath();
 

@@ -357,8 +357,7 @@ public class FileCopy
                         break;
                     ZipEntry entry = zipFile.getEntry(name);
                     if (entry == null) {
-                        InstallException ex = new InstallException(tr._("Entry isn\'t existed: ")
-                                + name);
+                        InstallException ex = new InstallException(tr._("Entry isn\'t existed: ") + name);
                         if (recoverException(ex))
                             continue;
                         break;

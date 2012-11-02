@@ -6,16 +6,17 @@ import org.eclipse.swt.graphics.Rectangle;
 
 import net.bodz.bas.geom_f.api.IEditablePointSet2d;
 import net.bodz.bas.geom_f.api.IShape2d;
+import net.bodz.bas.geom_f.base.CompositeShape2d;
 import net.bodz.bas.geom_f.base.Point2d;
 import net.bodz.bas.geom_f.tr.MatrixTransformer2d;
 import net.bodz.bas.gui.dev.IDrawContext2d;
 import net.bodz.swt.gui.dev.SWTDrawContext2d;
 import net.bodz.swt.gui.state.SWTContext;
 
-public class GDContext
+public class GraphDesignerContext
         extends SWTContext {
 
-    public GDShapes2f shapes;
+    public CompositeShape2d shapes;
 
     public Rectangle imageSize;
 

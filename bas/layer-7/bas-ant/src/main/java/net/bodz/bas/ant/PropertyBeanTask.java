@@ -21,6 +21,7 @@ import org.apache.tools.ant.types.Path;
 
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.c.type.TypePrSet;
 import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.err.CreateException;
@@ -28,7 +29,6 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
-import net.bodz.bas.vfs.SystemColos;
 
 public class PropertyBeanTask
         extends Task
@@ -202,7 +202,7 @@ public class PropertyBeanTask
         final Project project = getProject();
         File baseDir = project.getBaseDir();
         if (baseDir != null)
-            SystemColos.cwd.chdir(baseDir);
+            SystemColos.workdir.chdir(baseDir);
 
         try {
             Class<?>[] tryProjectTypes = { Project.class };

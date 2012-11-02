@@ -2,16 +2,15 @@ package net.bodz.redist.installer;
 
 import org.junit.Test;
 
-import net.bodz.bas.c.reflect.Reflects;
 import net.bodz.bas.log.LogLevel;
-import net.bodz.bas.util.Job;
+import net.bodz.bas.util.JobConfig;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.redist.installer.builtins.TestConfig;
 
 public class InstallerTest {
 
     static {
-        Reflects.setStatic(Job.class, "slowdown", 10);
+        JobConfig.slowdown = 10;
     }
 
     @Test

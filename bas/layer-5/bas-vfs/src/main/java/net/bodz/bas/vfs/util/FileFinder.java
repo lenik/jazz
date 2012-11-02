@@ -2,13 +2,13 @@ package net.bodz.bas.vfs.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.PruneFileFilter;
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.PrefetchedIterator;
 import net.bodz.bas.util.iter.StackedIterator;
@@ -125,12 +125,12 @@ public class FileFinder
         this.comparator = comparator;
     }
 
-    class RecIter
+    class RecursiveIterator
             extends PrefetchedIterator<IFile> {
 
         StackedIterator<IFile> stack;
 
-        public RecIter() {
+        public RecursiveIterator() {
             Iterator<IFile> startIter = Iterators.iterate(startFiles);
             stack = new StackedIterator<IFile>(startIter);
         }
@@ -145,11 +145,11 @@ public class FileFinder
             if (!prune && userFilter != null && file.isTree())
                 included = userFilter.accept(file);
             if (file.isTree() && depth < maxDepth) {
-                IFile[] children = file.listChildren(filter);
-                if (children.length > 0) {
+                List<? extends IFile> children = file.listChildren(filter);
+                if (!children.isEmpty()) {
                     if (comparator != null)
-                        Arrays.sort(children, comparator);
-                    Iterator<IFile> citer = Iterators.iterate(children);
+                        Collections.sort(children, comparator);
+                    Iterator<? extends IFile> citer = children.iterator();
                     stack.push(citer);
                 }
             }
@@ -163,10 +163,10 @@ public class FileFinder
     public Collection<String> list()
             throws IOException {
         List<String> list = new ArrayList<String>();
-        RecIter iter = new RecIter();
+        RecursiveIterator iter = new RecursiveIterator();
         while (iter.hasNext()) {
             IFile file = iter.next();
-            list.add(file.getPath());
+            list.add(file.getName());
         }
         return list;
     }
@@ -174,7 +174,7 @@ public class FileFinder
     public Collection<IFile> listFiles()
             throws IOException {
         List<IFile> list = new ArrayList<IFile>();
-        RecIter iter = new RecIter();
+        RecursiveIterator iter = new RecursiveIterator();
         while (iter.hasNext()) {
             IFile file = iter.next();
             list.add(file);

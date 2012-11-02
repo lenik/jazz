@@ -5,6 +5,7 @@ import java.util.List;
 import net.bodz.bas.model.IFilter;
 import net.bodz.bas.sugar.IToolable;
 import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.vfs.util.IFileFilter;
 import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public interface IFile
@@ -22,6 +23,9 @@ public interface IFile
 
     @Override
     Mitorx<? extends IFile, VFSException> childIterator(IFilenameFilter nameFilter)
+            throws VFSException;
+
+    Mitorx<? extends IFile, VFSException> childIterator(IFileFilter fileFilter)
             throws VFSException;
 
     /**
@@ -55,6 +59,9 @@ public interface IFile
      */
     @Override
     List<? extends IFile> listChildren(IFilenameFilter nameFilter)
+            throws VFSException;
+
+    List<? extends IFile> listChildren(IFileFilter fileFilter)
             throws VFSException;
 
 }

@@ -7,7 +7,7 @@ import net.bodz.bas.geom_f.api.IShape2d;
 import net.bodz.bas.geom_f.base.Point2d;
 import net.bodz.swt.c.canvas.Canvas;
 import net.bodz.swt.c.canvas.ICanvasMode;
-import net.bodz.swt.draw.app.GDContext;
+import net.bodz.swt.draw.app.GraphDesignerContext;
 import net.bodz.swt.draw.app.SubCanvasMode;
 
 public class Select
@@ -23,7 +23,7 @@ public class Select
 
     @Override
     public void mouseMove(MouseEvent e, MouseEvent d) {
-        GDContext context = getContext();
+        GraphDesignerContext context = getContext();
 
         if (d != null) {
             // Drag a select-range-box
@@ -46,7 +46,7 @@ public class Select
 
     @Override
     public void mouseDoubleClick(MouseEvent e) {
-        GDContext context = getContext();
+        GraphDesignerContext context = getContext();
 
         Point2d p = context.vtSource(e.x, e.y);
 

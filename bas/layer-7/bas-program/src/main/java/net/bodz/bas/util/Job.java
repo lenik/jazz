@@ -132,12 +132,10 @@ public abstract class Job
         }
     }
 
-    static int slowdown = 0;
-
     protected final boolean isStopping() {
-        if (slowdown != 0)
+        if (JobConfig.slowdown != 0)
             try {
-                Thread.sleep(slowdown);
+                Thread.sleep(JobConfig.slowdown);
             } catch (InterruptedException e) {
             }
         return getState() == STOPPING;

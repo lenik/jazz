@@ -79,7 +79,7 @@ public class WMISystemInfo
         if (!wmicProgram.canExecute())
             throw new WMIException("wmic utility isn't existed: " + wmicProgram);
         try {
-            String[] cmdarray = Arrays.unshift(wmicProgram.getPath(), args);
+            String[] cmdarray = Arrays.prepend(wmicProgram.getPath(), args);
             Process wmicProcess = Processes.shellExec(cmdarray);
             Charset charset = Charset.defaultCharset();
             String output = Processes.iocap(wmicProcess, charset);

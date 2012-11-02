@@ -12,6 +12,7 @@ import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.path.IPath;
 
 /**
  * @see LocalFileResource
@@ -44,8 +45,16 @@ public class JavaioFile
         this.jdkFile = jdkFile;
     }
 
+    public java.io.File getLocalFile() {
+        return jdkFile;
+    }
+
     private static String _slashNormalize(String path) {
         return path;
+    }
+
+    @Override
+    protected IPath constructPath(String pathString) {
     }
 
     @Override
