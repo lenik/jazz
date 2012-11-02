@@ -26,7 +26,7 @@ public class Triangle2d
     }
 
     @Override
-    public Triangle2d clone() {
+    public Triangle2d shot() {
         return new Triangle2d(p0, p1, p2);
     }
 
@@ -36,7 +36,7 @@ public class Triangle2d
     }
 
     @Override
-    public Triangle2d snapshotConst() {
+    public Triangle2d snap() {
         return new Triangle2d(p0, p1, p2);
     }
 

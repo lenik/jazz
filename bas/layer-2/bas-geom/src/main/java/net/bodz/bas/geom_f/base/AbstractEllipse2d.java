@@ -12,7 +12,7 @@ public abstract class AbstractEllipse2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractEllipse2d clone();
+    public abstract AbstractEllipse2d shot();
 
     @Override
     public Ellipse2d snapshot() {
@@ -24,7 +24,7 @@ public abstract class AbstractEllipse2d
     }
 
     @Override
-    public Ellipse2d snapshotConst() {
+    public Ellipse2d snap() {
         Point2d center1 = getCenter1();
         Point2d center2 = getCenter2();
         float a = getTransverseDiameter();

@@ -13,7 +13,7 @@ public abstract class AbstractCircle2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractCircle2d clone();
+    public abstract AbstractCircle2d shot();
 
     @Override
     public Circle2d snapshot() {
@@ -21,7 +21,7 @@ public abstract class AbstractCircle2d
     }
 
     @Override
-    public Circle2d snapshotConst() {
+    public Circle2d snap() {
         return new Circle2d(getCenterPoint(), getRadius());
     }
 

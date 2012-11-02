@@ -13,7 +13,7 @@ public interface IPointRef2d
     Point2d snapshot();
 
     @Override
-    Point2d snapshotConst();
+    Point2d snap();
 
     float getX();
 

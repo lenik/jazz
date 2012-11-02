@@ -19,7 +19,7 @@ public abstract class AbstractPolygon2d
     private boolean closed;
 
     @Override
-    public abstract AbstractPolygon2d clone();
+    public abstract AbstractPolygon2d shot();
 
     @Override
     public Polygon2d snapshot() {
@@ -30,7 +30,7 @@ public abstract class AbstractPolygon2d
     }
 
     @Override
-    public Polygon2d snapshotConst() {
+    public Polygon2d snap() {
         List<Point2d> newList = new ArrayList<Point2d>(getPointCount());
         for (Point2d p : getPoints())
             newList.add(p);
@@ -369,8 +369,8 @@ public abstract class AbstractPolygon2d
                     // j-+-j'-----------i-+-i'
                     // +----------------+
                     // j-x-i-----------j'-x-i'
-                    addPoint(i + 1, x.clone());
-                    addPoint(j + 1, x.clone());
+                    addPoint(i + 1, x.shot());
+                    addPoint(j + 1, x.shot());
                     // reverse [j + 2 .. i]
                     reverse(j + 2, i);
                     n += 2;
@@ -551,8 +551,10 @@ public abstract class AbstractPolygon2d
         int n = getPointCount();
 
         int off = isOpened() ? 0 : n - 1;
-        Point2d pre = getPoint(off);
-        boolean lastOut = pre.crop(php, detached);
+
+        // The initial prev-point is the last point.
+        Point2d prev = getPoint(off);
+        boolean lastOut = prev.crop(php, detached) == null;
 
         for (int i = 0; i < n; i++) {
             Point2d p = getPoint(i);
@@ -561,7 +563,7 @@ public abstract class AbstractPolygon2d
                 if (!out)
                     points.add(p);
             } else {
-                Point2d x = pre.lineTo(p).getIntersectionExtended(php);
+                Point2d x = prev.lineTo(p).getIntersectionExtended(php);
                 assert x != null;
                 if (out) { // in -> out
                     points.add(x);

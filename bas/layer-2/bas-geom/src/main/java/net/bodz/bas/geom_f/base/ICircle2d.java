@@ -10,13 +10,13 @@ public interface ICircle2d
     // -o IShape2d
 
     @Override
-    ICircle2d clone();
+    ICircle2d shot();
 
     @Override
     Circle2d snapshot();
 
     @Override
-    Circle2d snapshotConst();
+    Circle2d snap();
 
     // -o IShapeAmount2d
 

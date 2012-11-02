@@ -37,8 +37,8 @@ public class AbstractListEditorTest
         }
 
         body.setLayout(new GridLayout(1, true));
-        final Button allowArrangeCheck = new Button(body, SWT.CHECK);
-        allowArrangeCheck.setText("&Allow arrange");
+        final Button allowMovingItems = new Button(body, SWT.CHECK);
+        allowMovingItems.setText("&Allow moving items");
 
         final AbstractListEditor<File> filesEditor = new AbstractListEditor<File>(body, SWT.NONE) {
             @Override
@@ -53,11 +53,11 @@ public class AbstractListEditorTest
         filesEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         filesEditor.setText("&Files: ");
 
-        allowArrangeCheck.addSelectionListener(new SelectionAdapter() {
+        allowMovingItems.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                boolean allow = allowArrangeCheck.getSelection();
-                filesEditor.setAllowArrange(allow);
+                boolean allow = allowMovingItems.getSelection();
+                filesEditor.setAllowMovingItems(allow);
             }
         });
 

@@ -3,11 +3,10 @@ package net.bodz.bas.geom_f.api;
 import java.io.Serializable;
 
 import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.model.ICloneable;
 import net.bodz.bas.sugar.IDecoratable;
 
 public interface IShape2d
-        extends ICloneable, Serializable, //
+        extends Serializable, //
         IPointSet2d, IPointRefSet2d, IPositionAttributes2d, //
         IPickable2d, //
         IBoundingBox2d, //
@@ -19,9 +18,6 @@ public interface IShape2d
         IDecoratable<Object> {
 
     float EPSILON = 1e-7f;
-
-    @Override
-    IShape2d clone();
 
     /**
      * Test if empty, or negative sized.

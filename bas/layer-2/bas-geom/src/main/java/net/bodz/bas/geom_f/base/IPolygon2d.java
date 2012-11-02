@@ -15,13 +15,13 @@ public interface IPolygon2d
     // -o IShape2d
 
     @Override
-    IPolygon2d clone();
+    IPolygon2d shot();
 
     @Override
     Polygon2d snapshot();
 
     @Override
-    Polygon2d snapshotConst();
+    Polygon2d snap();
 
     // -o ShapeAmount
 

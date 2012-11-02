@@ -10,13 +10,13 @@ public interface ILine2d
     // -o IShape2d
 
     @Override
-    ILine2d clone();
+    ILine2d shot();
 
     @Override
     Line2d snapshot();
 
     @Override
-    Line2d snapshotConst();
+    Line2d snap();
 
     // -o ShapeAmount
 

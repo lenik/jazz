@@ -118,7 +118,8 @@ public interface IType
     /**
      * @see IMethod#invoke(Object, Object...)
      */
-    Object invoke(Object instance, String methodName, Object... parameters);
+    Object invoke(Object instance, String methodName, Object... parameters)
+            throws ReflectiveOperationException;
 
     /**
      * @see IMethod#invokeStatic(Object...)

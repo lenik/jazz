@@ -26,7 +26,7 @@ public class Line2d
     }
 
     @Override
-    public Line2d clone() {
+    public Line2d shot() {
         return new Line2d(p0, p1);
     }
 
@@ -36,7 +36,7 @@ public class Line2d
     }
 
     @Override
-    public Line2d snapshotConst() {
+    public Line2d snap() {
         return this;
     }
 

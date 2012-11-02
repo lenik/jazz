@@ -23,8 +23,8 @@ public class Ellipse2d
     }
 
     @Override
-    public Ellipse2d clone() {
-        return new Ellipse2d(center1.clone(), center2.clone(), a, b);
+    public Ellipse2d shot() {
+        return new Ellipse2d(center1.shot(), center2.shot(), a, b);
     }
 
     @Override

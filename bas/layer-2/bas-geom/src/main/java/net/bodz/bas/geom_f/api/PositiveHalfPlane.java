@@ -17,8 +17,8 @@ public class PositiveHalfPlane
     }
 
     @Override
-    public PositiveHalfPlane clone() {
-        return new PositiveHalfPlane(p0.clone(), p1.clone());
+    public PositiveHalfPlane shot() {
+        return new PositiveHalfPlane(p0.shot(), p1.shot());
     }
 
     @Override

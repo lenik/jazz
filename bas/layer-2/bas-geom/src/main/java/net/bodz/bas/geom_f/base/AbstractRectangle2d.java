@@ -12,7 +12,7 @@ public abstract class AbstractRectangle2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractRectangle2d clone();
+    public abstract AbstractRectangle2d shot();
 
     @Override
     public Rectangle2d snapshot() {
@@ -20,7 +20,7 @@ public abstract class AbstractRectangle2d
     }
 
     @Override
-    public Rectangle2d snapshotConst() {
+    public Rectangle2d snap() {
         return new Rectangle2d(getPoint0(), getPoint2());
     }
 
@@ -159,7 +159,7 @@ public abstract class AbstractRectangle2d
 
     @Override
     public boolean isIntersected(Rectangle2d rect) {
-        
+        // positize()
         return false;
     }
 
@@ -170,7 +170,7 @@ public abstract class AbstractRectangle2d
 
     @Override
     public int getOutcode(Point2d point) {
-        IRectangle2d positive = clone();
+        IRectangle2d positive = shot();
         positive.positize();
 
         int out = 0;
