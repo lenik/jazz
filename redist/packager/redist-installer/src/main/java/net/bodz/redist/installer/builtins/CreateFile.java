@@ -2,9 +2,11 @@ package net.bodz.redist.installer.builtins;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.tools.StreamWriting;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.ISession;
 
@@ -13,27 +15,25 @@ public class CreateFile
 
     private final String base;
     private final String path;
-    private final Object data;
-    private final Object charset;
+    private final IStreamInputSource source;
     private final boolean append;
 
-    public CreateFile(String base, String path, Object data) {
-        this(base, path, data, null, false);
+    public CreateFile(String base, String path, IStreamInputSource source) {
+        this(base, path, source, false);
     }
 
-    public CreateFile(String base, String path, Object data, Object charset, boolean append) {
+    public CreateFile(String base, String path, IStreamInputSource source, boolean append) {
         super(false, true);
         if (base == null)
             throw new NullPointerException("base");
         if (path == null)
             throw new NullPointerException("path");
-        if (data == null)
-            throw new NullPointerException("data");
+        if (source == null)
+            throw new NullPointerException("source");
         this.base = base;
         this.path = path;
         this.append = append;
-        this.data = data;
-        this.charset = charset;
+        this.source = source;
     }
 
     class CInstall
@@ -46,16 +46,17 @@ public class CreateFile
         @Override
         protected void _run() {
             File dest = new File(session.getFile(base), path);
+            JavaioFile destFile = new JavaioFile(dest);
+
             try {
                 boolean append = CreateFile.this.append && dest.exists();
-                String abbr = Strings.ellipse(String.valueOf(data), 40);
-                if (append) {
+                String abbr = Strings.ellipse(String.valueOf(source), 40);
+                if (append)
                     logger.infof(tr._("Append to %s: %s"), dest, abbr);
-                    Files.append(dest, data, charset);
-                } else {
+                else
                     logger.infof(tr._("Create file %s: %s"), dest, abbr);
-                    Files.createFile(dest, data, charset);
-                }
+
+                destFile.tooling()._for(StreamWriting.class).setAppendMode(append).writeBytes(source);
             } catch (IOException e) {
                 recoverException(e);
             }

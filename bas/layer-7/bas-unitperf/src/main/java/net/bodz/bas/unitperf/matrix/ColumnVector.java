@@ -8,6 +8,8 @@ import java.util.Arrays;
 public class ColumnVector
         extends AbstractVector {
 
+    private static final long serialVersionUID = 1L;
+
     public ColumnVector(int... data) {
         super(data);
     }

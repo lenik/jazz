@@ -12,17 +12,17 @@ import net.bodz.bas.collection.list.Stack;
 public class StackedIterator<T>
         implements Iterator<T> {
 
-    private Stack<Iterator<T>> stack;
-    private Iterator<T> currentIterator;
-    private Iterator<T> lastIterator;
+    private Stack<Iterator<? extends T>> stack;
+    private Iterator<? extends T> currentIterator;
+    private Iterator<? extends T> lastIterator;
 
     public StackedIterator() {
-        stack = new LinkedStack<Iterator<T>>();
+        stack = new LinkedStack<Iterator<? extends T>>();
     }
 
-    public StackedIterator(Iterable<Iterator<T>> iterators) {
+    public StackedIterator(Iterable<Iterator<? extends T>> iterators) {
         this();
-        for (Iterator<T> iter : iterators)
+        for (Iterator<? extends T> iter : iterators)
             push(iter);
     }
 
@@ -35,7 +35,7 @@ public class StackedIterator<T>
         return stack.size();
     }
 
-    public void push(Iterator<T> iterator) {
+    public void push(Iterator<? extends T> iterator) {
         if (currentIterator != null)
             stack.push(currentIterator);
         currentIterator = iterator;
@@ -51,7 +51,7 @@ public class StackedIterator<T>
             // -> v0.end, v1.end, ..., vn, currentIterator'.end
             // remove(v0...vn) immediately.
             while (!stack.isEmpty()) {
-                Iterator<T> top_ = stack.top();
+                Iterator<? extends T> top_ = stack.top();
                 if (top_.hasNext()) { // volatile: currentIterator, stack
                     // now maybe top_ != stack.top()
                     currentIterator = stack.pop();
@@ -100,7 +100,7 @@ public class StackedIterator<T>
         StringBuilder buf = new StringBuilder((1 + stack.size()) * 100);
         buf.append("Iterators in stack: \n");
         buf.append("  * " + currentIterator.getClass().getSimpleName() + ": " + currentIterator + "\n");
-        for (Iterator<T> iter : stack) {
+        for (Iterator<? extends T> iter : stack) {
             buf.append("    ");
             buf.append(iter.getClass().getSimpleName());
             buf.append(": ");

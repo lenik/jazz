@@ -1,10 +1,10 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.c.system;
 
 import net.bodz.bas.context.ContextLocalGroup;
 
 public interface SystemColos
         extends ContextLocalGroup {
 
-    CurrentDirectoryColo cwd = CurrentDirectoryColo.getInstance();
+    UserDirColo workdir = UserDirColo.getInstance();
 
 }

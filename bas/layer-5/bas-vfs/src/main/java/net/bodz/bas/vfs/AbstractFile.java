@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -22,6 +21,7 @@ import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.tools.HeuristicProbing;
 import net.bodz.bas.vfs.tools.IProbing;
 import net.bodz.bas.vfs.tools.LazyProbing;
+import net.bodz.bas.vfs.util.IFileFilter;
 import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public abstract class AbstractFile
@@ -319,6 +319,12 @@ public abstract class AbstractFile
         return Mitors.empty();
     }
 
+    @Override
+    public Mitorx<? extends IFile, VFSException> childIterator(IFileFilter fileFilter)
+            throws VFSException {
+        return Mitors.empty();
+    }
+
     /**
      * @def Return IteratorToList.toList(childIterator((IFilter<String>) null)).
      */
@@ -335,6 +341,12 @@ public abstract class AbstractFile
     public List<? extends IFile> listChildren(IFilenameFilter entryNameFilter)
             throws VFSException {
         return Iterators.toList(childIterator(entryNameFilter));
+    }
+
+    @Override
+    public List<? extends IFile> listChildren(IFileFilter fileFilter)
+            throws VFSException {
+        return Iterators.toList(childIterator(fileFilter));
     }
 
     @Override
@@ -391,7 +403,7 @@ public abstract class AbstractFile
     public abstract static class TransientPath
             extends TransientVolume {
 
-        protected final String pathString;
+        protected String pathString;
 
         /**
          * Creates a new fs entry with transient path.
@@ -438,9 +450,14 @@ public abstract class AbstractFile
          * @throws BadPathException
          *             If <code>pathString</code> is invalid.
          */
-        protected IPath constructPath(String pathString)
-                throws BadPathException {
-            throw new NotImplementedException();
+        protected abstract IPath constructPath(String pathString);
+
+        @Override
+        public boolean renameTo(IPath newPath) {
+            // newPath.toString();
+            String newPathStr = newPath.getURL();
+            pathString = newPathStr;
+            return true;
         }
 
         @Override

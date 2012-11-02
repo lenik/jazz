@@ -1,4 +1,4 @@
-package net.bodz.swt.draw.app;
+package net.bodz.swt.draw.core.model;
 
 import net.bodz.swt.gui.dev.SWTColor;
 import net.bodz.swt.gui.dev.SWTFillPattern;

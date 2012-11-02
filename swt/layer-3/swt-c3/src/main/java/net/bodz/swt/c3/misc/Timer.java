@@ -3,11 +3,6 @@ package net.bodz.swt.c3.misc;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
 
-import net.bodz.swt.widgets.TimerTest;
-
-/**
- * @test {@link TimerTest}
- */
 public abstract class Timer
         implements Runnable {
 

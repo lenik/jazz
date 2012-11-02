@@ -1,18 +1,24 @@
 package net.bodz.bas.ant;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import javax.script.ScriptException;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.RuntimeConfigurable;
 import org.apache.tools.ant.Task;
 
+import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
+import net.bodz.bas.meta.optim.UnderDevelopment;
 import net.bodz.bas.potato.model.IType;
 
 public class CLITask
@@ -30,23 +36,23 @@ public class CLITask
         }
     }
 
-    private List<String> moreargs;
-    private String tailargs;
+    private List<String> remainingArguments;
+    private String tailArguments;
     private int logLevel = 0;
 
     protected void addArguments(String... args) {
-        if (moreargs == null)
-            moreargs = new ArrayList<String>();
+        if (remainingArguments == null)
+            remainingArguments = new ArrayList<String>();
         for (String arg : args)
-            moreargs.add(arg);
+            remainingArguments.add(arg);
     }
 
     public String getCLITail() {
-        return tailargs;
+        return tailArguments;
     }
 
     public void setCLITail(String tailargs) {
-        this.tailargs = tailargs;
+        this.tailArguments = tailargs;
     }
 
     public int getLogLevel() {
@@ -73,74 +79,73 @@ public class CLITask
         }
     }
 
-    //
-    // @SuppressWarnings("unchecked")
-    // @Override
-    // public void maybeConfigure() throws BuildException {
-    // RuntimeConfigurable wrapper = getRuntimeConfigurableWrapper();
-    // Hashtable<?, ?> attrs = wrapper.getAttributeMap();
-    // try {
-    // ClassOptions<BasicCLI> opts = app.getOptions();
-    // List<String> rawArgs = null;
-    // for (Map.Entry<?, ?> ent : attrs.entrySet()) {
-    // String optnam = (String) ent.getKey();
-    // String optarg = (String) ent.getValue();
-    // if (optnam.startsWith("arg-")) {
-    // int argIndex = Integer.parseInt(optnam.substring(4));
-    // if (rawArgs == null)
-    // rawArgs = new ArrayList<String>(argIndex + 1);
-    // while (rawArgs.size() <= argIndex)
-    // rawArgs.add(null);
-    // rawArgs.set(argIndex, optarg);
-    // continue;
-    // }
-    // try {
-    // opts.findOption(optnam);
-    // } catch (CLIException e) {
-    // continue;
-    // }
-    // if (optnam.length() == 1)
-    // opts.load(app, "-" + optnam + optarg);
-    // else
-    // opts.load(app, "--" + optnam, optarg);
-    // wrapper.removeAttribute(optnam);
-    // }
-    // if (rawArgs != null) {
-    // for (int i = rawArgs.size() - 1; i >= 0; i--)
-    // if (rawArgs.get(i) == null)
-    // rawArgs.remove(i);
-    // String[] argv = rawArgs.toArray(Empty.Strings);
-    // app.addArguments(argv);
-    // }
-    //
-    // // children tags
-    // Enumeration<RuntimeConfigurable> children = wrapper.getChildren();
-    // while (children.hasMoreElements()) {
-    // RuntimeConfigurable child = children.nextElement();
-    // String name = child.getElementTag();
-    // String value = child.getText().toString();
-    // if ("arg".equals(name))
-    // app.addArguments(value);
-    // else
-    // ;
-    // // throw new BuildException("invalid child tag: " + name);
-    // }
-    // } catch (CLIException e) {
-    // throw new BuildException(e.getMessage(), e);
-    // } catch (ParseException e) {
-    // throw new BuildException(e.getMessage(), e);
-    // }
-    //
-    // super.maybeConfigure();
-    // }
+    @UnderDevelopment
+    public void _maybeConfigure()
+            throws BuildException {
+        RuntimeConfigurable wrapper = getRuntimeConfigurableWrapper();
+        Hashtable<?, ?> attrs = wrapper.getAttributeMap();
+        try {
+            IOptionGroup opts = app.getOptions();
+            List<String> rawArgs = null;
+            for (Map.Entry<?, ?> ent : attrs.entrySet()) {
+                String optnam = (String) ent.getKey();
+                String optarg = (String) ent.getValue();
+                if (optnam.startsWith("arg-")) {
+                    int argIndex = Integer.parseInt(optnam.substring(4));
+                    if (rawArgs == null)
+                        rawArgs = new ArrayList<String>(argIndex + 1);
+                    while (rawArgs.size() <= argIndex)
+                        rawArgs.add(null);
+                    rawArgs.set(argIndex, optarg);
+                    continue;
+                }
+
+                List<String> suggestions = new ArrayList<String>();
+                opts.fillSuggestKeys(optnam, suggestions);
+                if (suggestions.size() != 1) {
+                    // TODO
+                }
+
+                // if (optnam.length() == 1)
+                // opts.load(app, "-" + optnam + optarg);
+                // else
+                // opts.load(app, "--" + optnam, optarg);
+                wrapper.removeAttribute(optnam);
+            }
+            if (rawArgs != null) {
+                for (int i = rawArgs.size() - 1; i >= 0; i--)
+                    if (rawArgs.get(i) == null)
+                        rawArgs.remove(i);
+                String[] argv = rawArgs.toArray(new String[0]);
+                ; // app.addArguments(argv);
+            }
+
+            // children tags
+            Enumeration<RuntimeConfigurable> children = wrapper.getChildren();
+            while (children.hasMoreElements()) {
+                RuntimeConfigurable child = children.nextElement();
+                String name = child.getElementTag();
+                String value = child.getText().toString();
+                if ("arg".equals(name))
+                    ; // app.addArguments(value);
+                else
+                    ;
+                // throw new BuildException("invalid child tag: " + name);
+            }
+        } catch (CLIException e) {
+            throw new BuildException(e.getMessage(), e);
+        }
+
+        super.maybeConfigure();
+    }
 
     @Override
     public void execute()
             throws BuildException {
         try {
-            if (moreargs != null && !moreargs.isEmpty()) {
-                String[] moreargv = moreargs.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
-                app.sendArguments(moreargv);
+            if (remainingArguments != null && !remainingArguments.isEmpty()) {
+                String[] moreargv = remainingArguments.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
+                app.parseArguments(moreargv);
             }
             // adapting attributes
             if (logLevel != 0) {
@@ -155,7 +160,7 @@ public class CLITask
             throw new BuildException(e.getMessage(), e);
         }
         try {
-            app.runExtra(tailargs);
+            app.runExtra(tailArguments);
         } catch (Throwable e) {
             throw new BuildException(e.getMessage(), e);
         }

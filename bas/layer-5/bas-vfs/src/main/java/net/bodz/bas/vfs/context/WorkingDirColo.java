@@ -1,21 +1,23 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.context;
 
 import java.io.File;
 
+import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.c.system.SystemInfo;
-import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.context.ClassContextId;
 import net.bodz.bas.context.ContextLocal;
 import net.bodz.bas.context.IContextId;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.VFS;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
-public class CurrentDirectoryColo
-        extends ContextLocal<File> {
+public class WorkingDirColo
+        extends ContextLocal<IFile> {
 
     @Override
-    public File getRoot() {
-        String userDir = SystemProperties.getUserDir();
-        File defaultCwd = userDir == null ? new File(".") : new File(userDir);
-        return defaultCwd;
+    public IFile getRoot() {
+        File systemWorkDir = SystemColos.workdir.get();
+        return new JavaioFile(systemWorkDir);
     }
 
     public static boolean isAbsolutePath(String path) {
@@ -39,25 +41,26 @@ public class CurrentDirectoryColo
         return !isAbsolutePath(path);
     }
 
-    static File join(File cwd, String name) {
-        return new File(cwd, name);
+    static IFile join(IFile dir, String name) {
+        IFile child = dir.getChild(name);
+        return child;
     }
 
-    public File join(IContextId context, String name) {
+    public IFile join(IContextId context, String name) {
         if (name == null)
             throw new NullPointerException("name");
-        File cwd = get(context);
+        IFile cwd = get(context);
         return join(cwd, name);
     }
 
     /**
      * @throws IllegalArgumentException
-     *             If <code>dir</code> isn't a {@link File#isDirectory() directory}.
+     *             If <code>dir</code> isn't a {@link IFile#isDirectory() directory}.
      */
-    public void chdir(IContextId context, File dir) {
+    public void chdir(IContextId context, IFile dir) {
         if (dir == null)
             throw new NullPointerException("dir");
-        if (!dir.isDirectory())
+        if (!dir.isTree())
             throw new IllegalArgumentException("Not a directory: " + dir);
         set(context, dir);
     }
@@ -66,26 +69,26 @@ public class CurrentDirectoryColo
      * @param path
      *            Followed from current cwd, if <code>path</code> is relative.
      * @throws IllegalArgumentException
-     *             If target <code>path</code> isn't a {@link File#isDirectory() directory}.
+     *             If target <code>path</code> isn't a {@link IFile#isDirectory() directory}.
      */
     public void chdir(IContextId context, String path) {
         if (path == null)
             throw new NullPointerException("path");
-        File cwd = get(context);
+        IFile cwd = get(context);
         if (isRelativePath(path))
-            cwd = new File(cwd, path);
+            cwd = cwd.getChild(path);
         else
-            cwd = new File(path);
+            cwd = VFS.resolve(path);
         chdir(context, cwd);
     }
 
     // Shortcuts for DefaultContext
 
-    public File join(String name) {
+    public IFile join(String name) {
         return join(getDefaultContext(), name);
     }
 
-    public void chdir(File dir) {
+    public void chdir(IFile dir) {
         chdir(getDefaultContext(), dir);
     }
 
@@ -95,11 +98,11 @@ public class CurrentDirectoryColo
 
     // Shortcuts for ClassContext
 
-    public File join(Class<?> classContext, String name) {
+    public IFile join(Class<?> classContext, String name) {
         return join(ClassContextId.getInstance(classContext), name);
     }
 
-    public void chdir(Class<?> classContext, File dir) {
+    public void chdir(Class<?> classContext, IFile dir) {
         chdir(ClassContextId.getInstance(classContext), dir);
     }
 
@@ -107,9 +110,9 @@ public class CurrentDirectoryColo
         chdir(ClassContextId.getInstance(classContext), path);
     }
 
-    private static final CurrentDirectoryColo instance = new CurrentDirectoryColo();
+    private static final WorkingDirColo instance = new WorkingDirColo();
 
-    public static CurrentDirectoryColo getInstance() {
+    public static WorkingDirColo getInstance() {
         return instance;
     }
 

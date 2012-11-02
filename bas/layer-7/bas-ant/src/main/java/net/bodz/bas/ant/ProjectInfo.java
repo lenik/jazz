@@ -7,9 +7,9 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
 
+import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.snm.EclipseProject;
-import net.bodz.bas.vfs.SystemColos;
 
 public class ProjectInfo {
 
@@ -30,7 +30,7 @@ public class ProjectInfo {
 
     public ProjectInfo(Project antProject)
             throws ParseException {
-        this(antProject, SystemColos.cwd.get());
+        this(antProject, SystemColos.workdir.get());
     }
 
     public ProjectInfo(Project antProject, File searchStart)
