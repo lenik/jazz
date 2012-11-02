@@ -25,33 +25,33 @@ public class CompositeShape2d
     }
 
     @Override
-    public CompositeShape2d clone() {
-        List<IShape2d> clonedList = new ArrayList<IShape2d>(shapes.size());
+    public CompositeShape2d shot() {
+        List<IShape2d> copy = new ArrayList<IShape2d>(shapes.size());
         for (IShape2d shape : shapes) {
-            IShape2d clonedShape = shape.clone();
-            clonedList.add(clonedShape);
+            IShape2d shotdShape = shape.shot();
+            copy.add(shotdShape);
         }
-        return new CompositeShape2d(clonedList);
+        return new CompositeShape2d(copy);
     }
 
     @Override
     public CompositeShape2d snapshot() {
-        List<IShape2d> clonedList = new ArrayList<IShape2d>(shapes.size());
+        List<IShape2d> copy = new ArrayList<IShape2d>(shapes.size());
         for (IShape2d shape : shapes) {
-            IShape2d clonedShape = shape.snapshot();
-            clonedList.add(clonedShape);
+            IShape2d shotdShape = shape.snapshot();
+            copy.add(shotdShape);
         }
-        return new CompositeShape2d(clonedList);
+        return new CompositeShape2d(copy);
     }
 
     @Override
-    public CompositeShape2d snapshotConst() {
-        List<IShape2d> clonedList = new ArrayList<IShape2d>(shapes.size());
+    public CompositeShape2d snap() {
+        List<IShape2d> copy = new ArrayList<IShape2d>(shapes.size());
         for (IShape2d shape : shapes) {
-            IShape2d clonedShape = shape.snapshotConst();
-            clonedList.add(clonedShape);
+            IShape2d shotdShape = shape.snap();
+            copy.add(shotdShape);
         }
-        return new CompositeShape2d(clonedList);
+        return new CompositeShape2d(copy);
     }
 
     @Override

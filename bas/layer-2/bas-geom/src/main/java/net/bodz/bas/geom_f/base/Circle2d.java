@@ -30,8 +30,8 @@ public class Circle2d
     }
 
     @Override
-    public Circle2d clone() {
-        return new Circle2d(center.clone(), radius);
+    public Circle2d shot() {
+        return new Circle2d(center.shot(), radius);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Circle2d
     }
 
     @Override
-    public Circle2d snapshotConst() {
+    public Circle2d snap() {
         return this;
     }
 

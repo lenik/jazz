@@ -10,13 +10,13 @@ public interface IRectangle2d
     // -o IShape2d
 
     @Override
-    IRectangle2d clone();
+    IRectangle2d shot();
+
+    @Override
+    Rectangle2d snap();
 
     @Override
     Rectangle2d snapshot();
-
-    @Override
-    Rectangle2d snapshotConst();
 
     // -o IPointSet2d
 
@@ -79,8 +79,6 @@ public interface IRectangle2d
     boolean isPositive();
 
     void positize();
-
-    // void positize_();
 
     // boolean isIntersectedExtended(Line2d line);
 

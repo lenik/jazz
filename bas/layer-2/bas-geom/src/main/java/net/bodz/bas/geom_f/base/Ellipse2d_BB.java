@@ -20,8 +20,8 @@ public class Ellipse2d_BB
     }
 
     @Override
-    public Ellipse2d_BB clone() {
-        return new Ellipse2d_BB(p0.clone(), p1.clone());
+    public Ellipse2d_BB shot() {
+        return new Ellipse2d_BB(p0.shot(), p1.shot());
     }
 
     @Override

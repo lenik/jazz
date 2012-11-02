@@ -20,7 +20,7 @@ public class Link2d
     }
 
     @Override
-    public Link2d clone() {
+    public Link2d shot() {
         return new Link2d(p0, p1);
     }
 

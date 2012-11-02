@@ -16,13 +16,13 @@ public interface IEllipse2d
     // -o IShape2d
 
     @Override
-    IEllipse2d clone();
+    IEllipse2d shot();
 
     @Override
     Ellipse2d snapshot();
 
     @Override
-    Ellipse2d snapshotConst();
+    Ellipse2d snap();
 
     // -o IShapeAmount2d
 

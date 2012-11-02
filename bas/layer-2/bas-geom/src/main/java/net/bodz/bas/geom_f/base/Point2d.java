@@ -33,13 +33,13 @@ public class Point2d
     }
 
     @Override
-    public final Point2d clone() {
+    public final Point2d shot() {
         return new Point2d(x, y);
     }
 
     @Override
     public Point2d snapshot() {
-        return clone();
+        return shot();
     }
 
     public boolean equals(Point2d o, float epsilon) {

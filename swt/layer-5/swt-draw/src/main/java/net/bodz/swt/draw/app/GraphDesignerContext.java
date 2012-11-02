@@ -55,7 +55,7 @@ public class GraphDesignerContext
     }
 
     public Point2d vtTarget(Point2d point) {
-        Point2d target = point.clone();
+        Point2d target = point.shot();
         transformer.transform(target);
         return target;
     }

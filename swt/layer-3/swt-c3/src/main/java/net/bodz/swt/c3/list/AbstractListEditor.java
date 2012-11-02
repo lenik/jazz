@@ -29,54 +29,8 @@ public abstract class AbstractListEditor<T>
 
     private int dragIndex = -1;
 
-    class ArrangeAdapter
-            extends MouseAdapter
-            implements MouseMoveListener {
-
-        int downIndex = -1;
-
-        @Override
-        public void mouseDown(MouseEvent e) {
-            dragIndex = listBox.getSelectionIndex();
-            downIndex = dragIndex;
-        }
-
-        @Override
-        public void mouseUp(MouseEvent e) {
-            mouseMove(e);
-            if (dragIndex != -1) {
-                int dropIndex = listBox.getSelectionIndex();
-                assert dropIndex != -1;
-                if (dragIndex != dropIndex) {
-                    T dragValue = list.remove(dragIndex);
-                    list.add(dropIndex, dragValue);
-                }
-                dragIndex = -1;
-                downIndex = -1;
-            }
-        }
-
-        @Override
-        public void mouseMove(MouseEvent e) {
-            if ((e.stateMask & SWT.CTRL) != 0)
-                return;
-            if (downIndex != -1) {
-                int overIndex = listBox.getSelectionIndex();
-                assert overIndex != -1;
-                if (overIndex != downIndex) {
-                    String downItem = listBox.getItem(downIndex);
-                    listBox.remove(downIndex);
-                    listBox.add(downItem, overIndex);
-                    downIndex = overIndex;
-                    listBox.setSelection(downIndex);
-                }
-            }
-        }
-
-    }
-
-    private boolean allowArrange;
-    private ArrangeAdapter arrangeAdapter = new ArrangeAdapter();
+    private boolean allowMovingItems;
+    private ItemMover itemMover = new ItemMover();
 
     public AbstractListEditor(Composite parent, int style) {
         super(parent, style);
@@ -179,27 +133,28 @@ public abstract class AbstractListEditor<T>
         }
     }
 
-    public boolean isAllowArrange() {
-        return allowArrange;
+    public boolean isAllowMovingItems() {
+        return allowMovingItems;
     }
 
-    public void setAllowArrange(boolean allow) {
-        if (this.allowArrange != allow) {
+    public void setAllowMovingItems(boolean allow) {
+        if (this.allowMovingItems != allow) {
             if (allow) {
-                listBox.addMouseListener(arrangeAdapter);
-                listBox.addMouseMoveListener(arrangeAdapter);
+                listBox.addMouseListener(itemMover);
+                listBox.addMouseMoveListener(itemMover);
             } else {
-                listBox.removeMouseListener(arrangeAdapter);
-                listBox.removeMouseMoveListener(arrangeAdapter);
+                listBox.removeMouseListener(itemMover);
+                listBox.removeMouseMoveListener(itemMover);
             }
-            this.allowArrange = allow;
+            this.allowMovingItems = allow;
         }
     }
 
     protected String format(T value) {
         if (value == null)
-            return "<empty>";
-        return String.valueOf(value);
+            return "(null)";
+        else
+            return value.toString();
     }
 
     /**
@@ -293,6 +248,52 @@ public abstract class AbstractListEditor<T>
         if (selectionListeners != null)
             for (SelectionListener l : selectionListeners)
                 l.widgetDefaultSelected(e);
+    }
+
+    class ItemMover
+            extends MouseAdapter
+            implements MouseMoveListener {
+
+        int downIndex = -1;
+
+        @Override
+        public void mouseDown(MouseEvent e) {
+            dragIndex = listBox.getSelectionIndex();
+            downIndex = dragIndex;
+        }
+
+        @Override
+        public void mouseUp(MouseEvent e) {
+            mouseMove(e);
+            if (dragIndex != -1) {
+                int dropIndex = listBox.getSelectionIndex();
+                assert dropIndex != -1;
+                if (dragIndex != dropIndex) {
+                    T dragValue = list.remove(dragIndex);
+                    list.add(dropIndex, dragValue);
+                }
+                dragIndex = -1;
+                downIndex = -1;
+            }
+        }
+
+        @Override
+        public void mouseMove(MouseEvent e) {
+            if ((e.stateMask & SWT.CTRL) != 0)
+                return;
+            if (downIndex != -1) {
+                int overIndex = listBox.getSelectionIndex();
+                assert overIndex != -1;
+                if (overIndex != downIndex) {
+                    String downItem = listBox.getItem(downIndex);
+                    listBox.remove(downIndex);
+                    listBox.add(downItem, overIndex);
+                    downIndex = overIndex;
+                    listBox.setSelection(downIndex);
+                }
+            }
+        }
+
     }
 
 }

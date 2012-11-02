@@ -21,7 +21,7 @@ public class Rectangle2d
     }
 
     public static Rectangle2d sized(Point2d at, float width, float height) {
-        Point2d p2 = at.clone();
+        Point2d p2 = at.shot();
         p2.add(width, height);
         return new Rectangle2d(at, p2);
     }
@@ -39,7 +39,7 @@ public class Rectangle2d
     }
 
     @Override
-    public Rectangle2d clone() {
+    public Rectangle2d shot() {
         return new Rectangle2d(p0, p2);
     }
 
@@ -49,7 +49,7 @@ public class Rectangle2d
     }
 
     @Override
-    public Rectangle2d snapshotConst() {
+    public Rectangle2d snap() {
         return this;
     }
 

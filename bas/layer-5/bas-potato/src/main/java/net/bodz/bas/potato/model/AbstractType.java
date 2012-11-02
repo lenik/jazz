@@ -101,13 +101,13 @@ public abstract class AbstractType
         return returnValue;
     }
 
-    /**
-     * TODO
-     */
     @Override
-    public Object invoke(Object instance, String methodName, Object... parameters) {
+    public Object invoke(Object instance, String methodName, Object... parameters)
+            throws ReflectiveOperationException {
         Class<?>[] parameterTypes = TypeArray.getClasses(null, parameters);
         IMethod method = getMethod(methodName, parameterTypes);
+        Object returnValue = method.invoke(instance, parameters);
+        return returnValue;
     }
 
     @Override

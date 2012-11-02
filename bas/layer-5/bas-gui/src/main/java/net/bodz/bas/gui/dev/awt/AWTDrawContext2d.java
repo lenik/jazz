@@ -102,7 +102,7 @@ public class AWTDrawContext2d
 
     @Override
     public void drawEllipse(Rectangle2d bbox) {
-        Rectangle2d posi = bbox.clone();
+        Rectangle2d posi = bbox.shot();
         posi.positize();
         Point2d p0 = posi.getPoint0();
         int width = (int) posi.getWidth();
@@ -112,7 +112,7 @@ public class AWTDrawContext2d
 
     @Override
     public void fillEllipse(Rectangle2d bbox) {
-        Rectangle2d posi = bbox.clone();
+        Rectangle2d posi = bbox.shot();
         posi.positize();
         Point2d p0 = posi.getPoint0();
         int width = (int) posi.getWidth();

@@ -3,15 +3,6 @@ package net.bodz.bas.geom_f.api;
 public interface ISnapshotable2d {
 
     /**
-     * Take a static snapshot.
-     * 
-     * A snapshot doesn't reflect change on the source object.
-     * 
-     * @return A static snapshot. Which is not backed by this object.
-     */
-    IShape2d snapshot();
-
-    /**
      * Take a const snapshot.
      * 
      * A snapshot doesn't reflect change on the source object.
@@ -21,6 +12,20 @@ public interface ISnapshotable2d {
      * 
      * @return A const snapshot. Which maybe backed by this object.
      */
-    IShape2d snapshotConst();
+    IShape2d snap();
+
+    /**
+     * Like clone.
+     */
+    IShape2d shot();
+
+    /**
+     * Take a static snapshot.
+     * 
+     * A snapshot doesn't reflect change on the source object.
+     * 
+     * @return A static snapshot. Which is not backed by this object.
+     */
+    IShape2d snapshot();
 
 }

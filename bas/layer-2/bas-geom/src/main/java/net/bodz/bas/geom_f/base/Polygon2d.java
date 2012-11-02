@@ -47,7 +47,7 @@ public class Polygon2d
     }
 
     @Override
-    public Polygon2d clone() {
+    public Polygon2d shot() {
         List<Point2d> sameList = new ArrayList<Point2d>(points);
         return new Polygon2d(sameList);
     }

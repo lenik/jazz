@@ -20,10 +20,7 @@ public abstract class AbstractShape2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractShape2d clone();
-
-    @Override
-    public abstract IShape2d snapshot();
+    public abstract AbstractShape2d shot();
 
     @Override
     public boolean isValid() {
@@ -96,7 +93,7 @@ public abstract class AbstractShape2d
         Point2d[] points = new Point2d[n];
         if (copy)
             for (int i = 0; i < n; i++)
-                points[i] = getPoint(i).clone();
+                points[i] = getPoint(i).shot();
         else
             for (int i = 0; i < n; i++)
                 points[i] = getPoint(i);
@@ -109,7 +106,7 @@ public abstract class AbstractShape2d
         List<Point2d> points = new ArrayList<Point2d>(n);
         if (copy)
             for (int i = 0; i < n; i++)
-                points.add(getPoint(i).clone());
+                points.add(getPoint(i).shot());
         else
             for (int i = 0; i < n; i++)
                 points.add(getPoint(i));

@@ -34,7 +34,7 @@ public class Polylink2d
     }
 
     @Override
-    public Polylink2d clone() {
+    public Polylink2d shot() {
         List<IPointRef2d> newList = new ArrayList<IPointRef2d>(points);
         return new Polylink2d(newList);
     }

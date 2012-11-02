@@ -14,7 +14,7 @@ public interface ITriangle2d
     Triangle2d snapshot();
 
     @Override
-    ITriangle2d clone();
+    ITriangle2d shot();
 
     float getX0();
 

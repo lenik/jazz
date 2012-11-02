@@ -16,7 +16,7 @@ public abstract class AbstractPointRef2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractPointRef2d clone();
+    public abstract AbstractPointRef2d shot();
 
     @Override
     public Point2d snapshot() {
@@ -24,7 +24,7 @@ public abstract class AbstractPointRef2d
     }
 
     @Override
-    public Point2d snapshotConst() {
+    public Point2d snap() {
         return snapshot();
     }
 

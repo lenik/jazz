@@ -24,8 +24,8 @@ public class DecoratedShape2d
     }
 
     @Override
-    public IShape2d clone() {
-        return getWrapped().clone();
+    public IShape2d shot() {
+        return getWrapped().shot();
     }
 
     @Override
@@ -34,8 +34,8 @@ public class DecoratedShape2d
     }
 
     @Override
-    public IShape2d snapshotConst() {
-        return getWrapped().snapshotConst();
+    public IShape2d snap() {
+        return getWrapped().snap();
     }
 
     @Override

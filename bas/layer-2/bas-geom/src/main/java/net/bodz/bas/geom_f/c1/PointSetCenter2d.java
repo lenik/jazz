@@ -15,7 +15,7 @@ public class PointSetCenter2d
     }
 
     @Override
-    public PointSetCenter2d clone() {
+    public PointSetCenter2d shot() {
         return new PointSetCenter2d(points);
     }
 

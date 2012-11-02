@@ -41,8 +41,8 @@ public class Circle2d_PPP
     }
 
     @Override
-    public Circle2d_PPP clone() {
-        return new Circle2d_PPP(p0.clone(), p1.clone(), p2.clone());
+    public Circle2d_PPP shot() {
+        return new Circle2d_PPP(p0.shot(), p1.shot(), p2.shot());
     }
 
     public int getPointCount() {

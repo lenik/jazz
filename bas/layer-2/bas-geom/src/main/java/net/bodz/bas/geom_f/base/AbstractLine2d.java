@@ -13,7 +13,7 @@ public abstract class AbstractLine2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractLine2d clone();
+    public abstract AbstractLine2d shot();
 
     @Override
     public Line2d snapshot() {
@@ -21,7 +21,7 @@ public abstract class AbstractLine2d
     }
 
     @Override
-    public Line2d snapshotConst() {
+    public Line2d snap() {
         return new Line2d(getPoint0(), getPoint1());
     }
 

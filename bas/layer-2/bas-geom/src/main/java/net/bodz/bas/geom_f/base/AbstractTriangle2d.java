@@ -15,7 +15,7 @@ public abstract class AbstractTriangle2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractTriangle2d clone();
+    public abstract AbstractTriangle2d shot();
 
     @Override
     public Triangle2d snapshot() {
@@ -26,7 +26,7 @@ public abstract class AbstractTriangle2d
     }
 
     @Override
-    public Triangle2d snapshotConst() {
+    public Triangle2d snap() {
         return new Triangle2d(//
                 getPoint0(), //
                 getPoint1(), //

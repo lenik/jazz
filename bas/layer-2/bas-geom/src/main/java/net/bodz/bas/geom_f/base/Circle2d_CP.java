@@ -26,8 +26,8 @@ public class Circle2d_CP
     }
 
     @Override
-    public Circle2d_CP clone() {
-        return new Circle2d_CP(center.clone(), point1.clone());
+    public Circle2d_CP shot() {
+        return new Circle2d_CP(center.shot(), point1.shot());
     }
 
     @Override
@@ -93,7 +93,7 @@ public class Circle2d_CP
         float oldRadius = v.length();
         float scale = radius / oldRadius;
         v.scale(scale);
-        point1 = center.clone().scale_(scale);
+        point1 = center.shot().scale_(scale);
     }
 
 }
