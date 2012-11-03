@@ -66,7 +66,9 @@ public abstract class PrefetchedIterator<T>
     }
 
     /**
-     * @return ignored if ended.
+     * Fetch the next element and return.
+     * 
+     * @return Ignored if ended.
      */
     protected abstract T fetch();
 

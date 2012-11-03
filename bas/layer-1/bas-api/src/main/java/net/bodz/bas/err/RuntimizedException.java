@@ -10,7 +10,7 @@ public class RuntimizedException
     }
 
     public RuntimizedException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage(), cause);
     }
 
     public <T extends Throwable> void rethrow(Class<T> type)

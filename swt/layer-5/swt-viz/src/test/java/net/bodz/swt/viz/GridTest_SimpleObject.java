@@ -9,8 +9,8 @@ import user.ComplexPerson;
 import user.School;
 import user.SimplePerson;
 
-import net.bodz.bas.gui.a.PreferredSize;
-import net.bodz.bas.gui.ia.UIException;
+import net.bodz.bas.gui.err.GUIException;
+import net.bodz.bas.gui.mda.PreferredSize;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
@@ -46,9 +46,9 @@ public class GridTest_SimpleObject
         try {
             style.render(rc, schoolVar, body, SWT.BORDER);
         } catch (RenderException e) {
-            throw new UIException(e);
+            throw new GUIException(e);
         } catch (SWTException e) {
-            throw new UIException(e);
+            throw new GUIException(e);
         }
     }
 

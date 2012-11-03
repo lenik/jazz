@@ -1,11 +1,15 @@
 package net.bodz.bas.gui.dev;
 
-import net.bodz.bas.geom_f.base.Line2d;
-import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.geom_f.base.Polygon2d;
-import net.bodz.bas.geom_f.base.Rectangle2d;
-import net.bodz.bas.geom_f.base.Triangle2d;
-import net.bodz.bas.geom_f.tr.ITransformedView2d;
+import net.bodz.bas.geom.spec0_f.tr.ITransformedView2d;
+import net.bodz.bas.geom.spec1_f.Line2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
+import net.bodz.bas.geom.spec1_f.Polygon2d;
+import net.bodz.bas.geom.spec1_f.Rectangle2d;
+import net.bodz.bas.geom.spec1_f.Triangle2d;
+import net.bodz.bas.gui.spec0.IColor;
+import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFont;
+import net.bodz.bas.gui.spec0.IStroke;
 
 public interface IDrawContext2d
         extends ITransformedView2d {

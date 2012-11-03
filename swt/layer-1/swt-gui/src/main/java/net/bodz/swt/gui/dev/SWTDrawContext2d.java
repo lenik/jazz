@@ -2,16 +2,16 @@ package net.bodz.swt.gui.dev;
 
 import org.eclipse.swt.graphics.GC;
 
-import net.bodz.bas.geom_f.base.Line2d;
-import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.geom_f.base.Polygon2d;
-import net.bodz.bas.geom_f.base.Rectangle2d;
-import net.bodz.bas.geom_f.base.Triangle2d;
+import net.bodz.bas.geom.spec1_f.Line2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
+import net.bodz.bas.geom.spec1_f.Polygon2d;
+import net.bodz.bas.geom.spec1_f.Rectangle2d;
+import net.bodz.bas.geom.spec1_f.Triangle2d;
 import net.bodz.bas.gui.dev.AbstractDrawContext2d;
-import net.bodz.bas.gui.dev.IColor;
-import net.bodz.bas.gui.dev.IFillPattern;
-import net.bodz.bas.gui.dev.IFont;
-import net.bodz.bas.gui.dev.IStroke;
+import net.bodz.bas.gui.spec0.IColor;
+import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFont;
+import net.bodz.bas.gui.spec0.IStroke;
 
 public class SWTDrawContext2d
         extends AbstractDrawContext2d {
@@ -123,7 +123,7 @@ public class SWTDrawContext2d
 
     @Override
     public void drawLine(Line2d line) {
-        drawLine(line.p0, line.p1);
+        drawLine(line.point0, line.point1);
     }
 
     @Override

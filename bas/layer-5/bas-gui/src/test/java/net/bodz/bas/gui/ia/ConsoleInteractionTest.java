@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.err.ExpectedException;
-import net.bodz.bas.gui.ia.ConsoleInteraction;
+import net.bodz.bas.gui.dialog.ConsoleDialog;
 import net.bodz.bas.model.IExecutableX;
 
 public class ConsoleInteractionTest
@@ -13,7 +13,7 @@ public class ConsoleInteractionTest
     @Test
     public void testTryBlock()
             throws Exception {
-        ConsoleInteraction ci = ConsoleInteraction.stderr;
+        ConsoleDialog ci = ConsoleDialog.stderr;
         ci.tryBlock(new IExecutableX<Exception>() {
             @Override
             public void execute()

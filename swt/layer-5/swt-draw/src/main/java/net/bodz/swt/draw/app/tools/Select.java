@@ -3,8 +3,8 @@ package net.bodz.swt.draw.app.tools;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.GC;
 
-import net.bodz.bas.geom_f.api.IShape2d;
-import net.bodz.bas.geom_f.base.Point2d;
+import net.bodz.bas.geom.spec0_f.IPrimitive2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.swt.c.canvas.Canvas;
 import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.GraphDesignerContext;
@@ -36,7 +36,7 @@ public class Select
             Point2d p = context.vtSource(e.x, e.y);
 
             /* is p on some object ? */
-            IShape2d pick = context.shapes.pick(p);
+            IPrimitive2d pick = context.shapes.pick(p);
             if (pick != null) {
                 // TODO - Point2f dp = context.vtSource(d.x, d.y);
                 // GC gc = new GC(context.preview);
@@ -51,7 +51,7 @@ public class Select
         Point2d p = context.vtSource(e.x, e.y);
 
         /* is p on some object ? */
-        IShape2d pick = context.shapes.pick(p);
+        IPrimitive2d pick = context.shapes.pick(p);
         if (pick != null) {
             super.mouseDoubleClick(e);
         }

@@ -6,13 +6,13 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.swt.c3.ia.DialogInteraction;
+import net.bodz.swt.c3.ia.SwtDialog;
 import net.bodz.swt.gui.api.ICommand;
 
 public class SWTRenderContext {
 
-    public DialogInteraction interact(Control active) {
-        return new DialogInteraction(active.getShell());
+    public SwtDialog interact(Control active) {
+        return new SwtDialog(active.getShell());
     }
 
     public void addEffects(Control control, IRefEntry_SWT<?> entry)

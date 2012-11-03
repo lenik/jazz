@@ -2,7 +2,7 @@ package net.bodz.redist.installer;
 
 import org.junit.Test;
 
-import net.bodz.bas.gui.ia.ConsoleInteraction;
+import net.bodz.bas.gui.dialog.ConsoleDialog;
 import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.swt.c3.test.PageTester;
 
@@ -12,7 +12,7 @@ public class DonePageTest {
     public void test()
             throws Exception {
         final IProject project = new TestProject();
-        final ISession session = new Session(project, ConsoleInteraction.stdout, ConsoleLogger.getInstance());
+        final ISession session = new Session(project, ConsoleDialog.stdout, ConsoleLogger.getInstance());
         PageTester app = new PageTester(new DonePage(session));
         app.run();
     }

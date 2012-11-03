@@ -1,7 +1,7 @@
 package net.bodz.redist.installer;
 
-import net.bodz.bas.gui.ia.ConsoleInteraction;
-import net.bodz.bas.gui.ia.Proposals;
+import net.bodz.bas.gui.dialog.ConsoleDialog;
+import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.bas.util.DurationChangeEvent;
@@ -17,7 +17,7 @@ public class ConsoleExecutor
     }
 
     public ConsoleExecutor(IProject project, Logger logger) {
-        super(project, ConsoleInteraction.stdout, logger);
+        super(project, ConsoleDialog.stdout, logger);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ConsoleExecutor
     @Override
     public void recoverException(RecoverableExceptionEvent e) {
         Exception ex = e.getException();
-        int answer = UI.ask(ex.getMessage(), ex, Proposals.ignore, Proposals.cancel);
+        int answer = UI.ask(ex.getMessage(), ex, DirectiveCommands.ignore, DirectiveCommands.cancel);
         if (answer == 0) // ignore
             e.setRecovered(true);
     }

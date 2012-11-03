@@ -8,8 +8,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.gui.a.Icon;
 import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.gui.mda.Icon;
 
 /**
  * Test page 1

@@ -32,9 +32,9 @@ import net.bodz.bas.c.java.util.LocaleTraits;
 import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.gui.a.PreferredSize;
-import net.bodz.bas.gui.ia.IUserInteraction;
-import net.bodz.bas.gui.ia.UIException;
+import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.bas.gui.err.GUIException;
+import net.bodz.bas.gui.mda.PreferredSize;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.meta.program.StartMode;
 import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
@@ -48,7 +48,7 @@ import net.bodz.swt.c3.dialog.AboutDialog;
 import net.bodz.swt.c3.dialog.CreditDialog;
 import net.bodz.swt.c3.dialog.SelectLanguageDialog;
 import net.bodz.swt.c3.dialog.ThreadsMonitor;
-import net.bodz.swt.c3.ia.DialogInteraction;
+import net.bodz.swt.c3.ia.SwtDialog;
 
 /**
  * @lang en
@@ -82,7 +82,7 @@ public class BasicGUI
     private DynamicControl viewArea;
     private Map<Object, Composite> views;
 
-    protected IUserInteraction UI = new DialogInteraction();
+    protected IUserDialog UI = new SwtDialog();
 
     @Override
     public synchronized void execute(String... args)
@@ -93,7 +93,7 @@ public class BasicGUI
             throw c;
         } catch (Exception e) {
             if (!shell.isDisposed()) {
-                DialogInteraction iact = new DialogInteraction(shell);
+                SwtDialog iact = new SwtDialog(shell);
                 iact.alert(e.getMessage(), e);
             }
             throw e;
@@ -160,7 +160,7 @@ public class BasicGUI
         Locale.setDefault(locale);
 
         shell = createShell();// throws GUIExcaption
-        UI = new DialogInteraction(shell);
+        UI = new SwtDialog(shell);
 
         shell.open();
         shell.layout();
@@ -202,7 +202,7 @@ public class BasicGUI
     }
 
     protected Shell createShell()
-            throws UIException {
+            throws GUIException {
         Shell shell = new Shell();
         shell.setText(getTitle());
         ArtifactDoc artifactDoc = getArtifactDoc();
@@ -210,7 +210,7 @@ public class BasicGUI
         try {
             icons = loadImages(artifactDoc.getIcons());
         } catch (IOException e) {
-            throw new UIException(e);
+            throw new GUIException(e);
         }
         if (icons != null)
             shell.setImages(icons);
@@ -255,7 +255,7 @@ public class BasicGUI
     }
 
     protected Menu createMenu(Shell shell)
-            throws UIException {
+            throws GUIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -269,7 +269,7 @@ public class BasicGUI
     }
 
     protected Menu createStartMenu(Shell shell)
-            throws UIException {
+            throws GUIException {
         Menu menu = new Menu(shell, SWT.POP_UP);
 
         MenuItem about = new MenuItem(menu, SWT.PUSH);
@@ -328,7 +328,7 @@ public class BasicGUI
     }
 
     protected Control createToolBar(Composite parent)
-            throws UIException {
+            throws GUIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -337,7 +337,7 @@ public class BasicGUI
     }
 
     protected Control createStatusBar(Composite parent)
-            throws UIException {
+            throws GUIException {
         Composite bottomBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
         GridLayout bottomGrid = new GridLayout(3, false);
         bottomGrid.marginWidth = 0;
@@ -400,7 +400,7 @@ public class BasicGUI
     }
 
     protected Control createExpandBar(Composite parent)
-            throws UIException {
+            throws GUIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -409,14 +409,14 @@ public class BasicGUI
     }
 
     protected void createInitialView(Composite holder)
-            throws UIException {
+            throws GUIException {
         holder.setLayout(new FillLayout());
         Label welcomeLabel = new Label(holder, SWT.NONE);
         welcomeLabel.setText(tr._("Welcome BasicGUI!"));
     }
 
     protected void createView(Composite holder, Object key)
-            throws UIException {
+            throws GUIException {
         if (key == null) {
             createInitialView(holder);
             return;
@@ -425,7 +425,7 @@ public class BasicGUI
     }
 
     protected void openView(Composite holder, Object key)
-            throws UIException {
+            throws GUIException {
         Composite view = views.get(key);
         if (view == null) {
             view = new Composite(holder, SWT.NONE);

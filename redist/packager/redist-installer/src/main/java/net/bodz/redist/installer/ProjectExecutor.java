@@ -1,6 +1,6 @@
 package net.bodz.redist.installer;
 
-import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.gui.dialog.IUserDialog;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.Stdio;
@@ -13,10 +13,10 @@ public abstract class ProjectExecutor
     protected final IProject project;
     protected final ISession session;
 
-    protected final IUserInteraction UI;
+    protected final IUserDialog UI;
     protected final Logger logger;
 
-    public ProjectExecutor(IProject project, IUserInteraction userInterface, Logger logger) {
+    public ProjectExecutor(IProject project, IUserDialog userInterface, Logger logger) {
         if (project == null)
             throw new NullPointerException("project");
         if (userInterface == null)
@@ -29,7 +29,7 @@ public abstract class ProjectExecutor
         this.logger = logger;
     }
 
-    public ProjectExecutor(ISession session, IUserInteraction userInterface, Logger logger) {
+    public ProjectExecutor(ISession session, IUserDialog userInterface, Logger logger) {
         if (session == null)
             throw new NullPointerException("session");
         this.project = session.getProject();

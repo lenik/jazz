@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.gui.ia.IUserInteraction;
-import net.bodz.bas.gui.ia.Proposals;
+import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.log.AbstractLogSink;
 import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
@@ -35,7 +35,7 @@ import net.bodz.swt.c.composite.DetailSwitchEvent;
 import net.bodz.swt.c.composite.DetailSwitchListener;
 import net.bodz.swt.c.composite.WindowComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.ia.DialogInteraction;
+import net.bodz.swt.c3.ia.SwtDialog;
 import net.bodz.swt.c3.pageflow.AbstractPage;
 import net.bodz.swt.c3.pageflow.IPage;
 import net.bodz.swt.c3.pageflow.PageException;
@@ -127,7 +127,7 @@ class ProgressPage
                         if (index != -1) {
                             Object data = logList.getData(String.valueOf(index));
                             if (data != null) {
-                                IUserInteraction UI = session.getUserInterface();
+                                IUserDialog UI = session.getUserInterface();
                                 UI.alert("Log Detail: " + data, data);
                             }
                         }
@@ -265,7 +265,7 @@ class ProgressPage
             @Override
             public void run() {
                 int state = CANCELED;
-                DialogInteraction _UI = new DialogInteraction(new Shell(new Display()));
+                SwtDialog _UI = new SwtDialog(new Shell(new Display()));
                 try {
                     session.loadRegistry();
                     if (rootJob != null) {
@@ -304,9 +304,9 @@ class ProgressPage
     class Observer
             extends JobObserver {
 
-        final IUserInteraction UI;
+        final IUserDialog UI;
 
-        public Observer(IUserInteraction UI) {
+        public Observer(IUserDialog UI) {
             if (UI == null)
                 throw new NullPointerException("UI");
             this.UI = UI;
@@ -357,8 +357,8 @@ class ProgressPage
             Exception ex = e.getException();
             int answer = UI.ask(
                     tr._("Error happens: ") + ex.getMessage()
-                            + tr._(", continue?"), e, Proposals.ignore, Proposals.cancel,
-                    Proposals.debug);
+                            + tr._(", continue?"), e, DirectiveCommands.ignore, DirectiveCommands.cancel,
+                    DirectiveCommands.debug);
             switch (answer) {
             case 0:
                 e.setRecovered(true);

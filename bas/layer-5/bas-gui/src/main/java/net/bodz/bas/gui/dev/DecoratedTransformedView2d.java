@@ -2,8 +2,8 @@ package net.bodz.bas.gui.dev;
 
 import javax.vecmath.Vector2f;
 
-import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.geom_f.tr.ITransformedView2d;
+import net.bodz.bas.geom.spec0_f.tr.ITransformedView2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.model.AbstractDecorator;
 
 public abstract class DecoratedTransformedView2d

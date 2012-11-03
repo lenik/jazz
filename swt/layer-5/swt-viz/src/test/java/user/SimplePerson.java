@@ -1,6 +1,6 @@
 package user;
 
-import net.bodz.bas.gui.a.Label;
+import net.bodz.bas.gui.mda.Label;
 
 public class SimplePerson {
 

@@ -4,8 +4,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.gui.a.PreferredSize;
-import net.bodz.bas.gui.ia.UIException;
+import net.bodz.bas.gui.err.GUIException;
+import net.bodz.bas.gui.mda.PreferredSize;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
@@ -60,7 +60,7 @@ public class Installer
 
     @Override
     protected void createInitialView(final Composite parent)
-            throws UIException {
+            throws GUIException {
         ISession session = new Session(project, UI, logger);
         setSession(session);
         InstallComposite installComposite = new InstallComposite(session, parent, SWT.NONE);
