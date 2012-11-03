@@ -4,11 +4,11 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.geom_f.api.IEditablePointSet2d;
-import net.bodz.bas.geom_f.api.IShape2d;
-import net.bodz.bas.geom_f.base.CompositeShape2d;
-import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.geom_f.tr.MatrixTransformer2d;
+import net.bodz.bas.geom.spec0_f.IEditablePointSet2d;
+import net.bodz.bas.geom.spec0_f.IPrimitive2d;
+import net.bodz.bas.geom.spec0_f.tr.MatrixTransformer2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
+import net.bodz.bas.geom.spec2_f.Composite2d;
 import net.bodz.bas.gui.dev.IDrawContext2d;
 import net.bodz.swt.gui.dev.SWTDrawContext2d;
 import net.bodz.swt.gui.state.SWTContext;
@@ -16,7 +16,7 @@ import net.bodz.swt.gui.state.SWTContext;
 public class GraphDesignerContext
         extends SWTContext {
 
-    public CompositeShape2d shapes;
+    public Composite2d shapes;
 
     public Rectangle imageSize;
 
@@ -24,7 +24,7 @@ public class GraphDesignerContext
     public Image preview;
 
     // Select
-    public IShape2d selshape;
+    public IPrimitive2d selshape;
 
     // Edit
     public IEditablePointSet2d seledit;
@@ -32,7 +32,7 @@ public class GraphDesignerContext
     public int selspoint;
 
     // Draw
-    public IShape2d mkshape;
+    public IPrimitive2d mkshape;
 
     // View
     public MatrixTransformer2d transformer;

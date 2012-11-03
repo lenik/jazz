@@ -29,7 +29,7 @@ import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.ia.DialogInteraction;
+import net.bodz.swt.c3.ia.SwtDialog;
 import net.bodz.swt.gui.api.AbstractCommand;
 import net.bodz.swt.gui.api.ICommand;
 import net.bodz.swt.viz.SWTRenderContext;
@@ -173,7 +173,7 @@ public class R_Throwable
                     try {
                         DesktopApps.openMailer(mailAddress, mailSubject, errorText);
                     } catch (IOException e) {
-                        DialogInteraction iact = rc.interact(parent);
+                        SwtDialog iact = rc.interact(parent);
                         iact.alert(tr._("Can\'t send mail"), e);
                     }
                 }

@@ -2,17 +2,17 @@ package net.bodz.swt.c3.list;
 
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.gui.ia.IUserInteraction;
-import net.bodz.swt.c3.ia.DialogInteraction;
+import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.swt.c3.ia.SwtDialog;
 
 public class ListEditor
         extends AbstractListEditor<String> {
 
-    private IUserInteraction UI;
+    private IUserDialog UI;
 
     public ListEditor(Composite parent, int style) {
         super(parent, style);
-        UI = new DialogInteraction(parent.getShell());
+        UI = new SwtDialog(parent.getShell());
     }
 
     @Override

@@ -12,14 +12,14 @@ import org.junit.Test;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ExpectedException;
-import net.bodz.bas.gui.ia.Proposals;
+import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.util.example.Address;
 import net.bodz.bas.util.example.Person;
 
 public class DialogInteractionTest
         extends Assert {
 
-    DialogInteraction ia;
+    SwtDialog ia;
     Person person;
     {
         person = new Person("Lily", 12, true);
@@ -30,7 +30,7 @@ public class DialogInteractionTest
     Person lily2 = person;
 
     public DialogInteractionTest() {
-        ia = new DialogInteraction(new Shell());
+        ia = new SwtDialog(new Shell());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class DialogInteractionTest
     @Test
     public void testAsk() {
         int answer = ia.ask("Error happens", new ExpectedException(), //
-                Proposals.retry, Proposals.ignore, Proposals.cancel);
+                DirectiveCommands.retry, DirectiveCommands.ignore, DirectiveCommands.cancel);
         System.out.println("Answer: " + answer);
     }
 

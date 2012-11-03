@@ -6,8 +6,8 @@ import java.util.List;
 import net.bodz.bas.collection.tree.TreeNode;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.gui.ia.ConsoleInteraction;
-import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.gui.dialog.ConsoleDialog;
+import net.bodz.bas.gui.dialog.IUserDialog;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 import net.bodz.bas.util.exception.RecoverableExceptionListener;
@@ -15,7 +15,7 @@ import net.bodz.bas.util.exception.RecoverableExceptionListener;
 public abstract class Job
         implements IJob, TreeNode<Job> {
 
-    protected IUserInteraction UI = ConsoleInteraction.stdout;
+    protected IUserDialog UI = ConsoleDialog.stdout;
     protected Logger logger;
 
     private int state = NOTSTART;
@@ -164,7 +164,7 @@ public abstract class Job
     }
 
     @Override
-    public void setUserInterface(IUserInteraction userInterface) {
+    public void setUserInterface(IUserDialog userInterface) {
         if (userInterface == null)
             throw new NullPointerException("interaction");
         this.UI = userInterface;

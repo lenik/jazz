@@ -17,10 +17,10 @@ import org.eclipse.swt.widgets.Spinner;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.gui.dialog.IUserDialog;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.ia.DialogInteraction;
+import net.bodz.swt.c3.ia.SwtDialog;
 
 public class ThreadsMonitor
         extends SimpleDialog {
@@ -31,12 +31,12 @@ public class ThreadsMonitor
 
     private List threadList;
 
-    private IUserInteraction UI;
+    private IUserDialog UI;
 
     public ThreadsMonitor(Shell parent, int style) {
         super(parent, style, tr._("Threads Monitor"));
         threadMap = new HashMap<Long, Thread>();
-        UI = new DialogInteraction(parent);
+        UI = new SwtDialog(parent);
     }
 
     @Override

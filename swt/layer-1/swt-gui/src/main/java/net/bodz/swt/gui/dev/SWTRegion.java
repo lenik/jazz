@@ -4,13 +4,13 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Region;
 
-import net.bodz.bas.geom_f.base.Polygon2d;
-import net.bodz.bas.geom_f.base.Rectangle2d;
-import net.bodz.bas.gui.dev.AbstractRegion;
+import net.bodz.bas.geom.spec1_f.Polygon2d;
+import net.bodz.bas.geom.spec1_f.Rectangle2d;
+import net.bodz.bas.gui.spec0_f.AbstractRegion2d;
 import net.bodz.swt.gui.geom.SWTShapes;
 
 public class SWTRegion
-        extends AbstractRegion {
+        extends AbstractRegion2d {
 
     private final Region region;
 

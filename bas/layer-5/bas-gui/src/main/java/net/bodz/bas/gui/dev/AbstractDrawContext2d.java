@@ -3,8 +3,12 @@ package net.bodz.bas.gui.dev;
 import javax.vecmath.Vector2f;
 
 import net.bodz.bas.c.javax.vecmath.ColumnVectors;
-import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.geom_f.tr.MatrixTransformer2d;
+import net.bodz.bas.geom.spec0_f.tr.MatrixTransformer2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
+import net.bodz.bas.gui.spec0.IColor;
+import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFont;
+import net.bodz.bas.gui.spec0.IStroke;
 
 public abstract class AbstractDrawContext2d
         implements IDrawContext2d {

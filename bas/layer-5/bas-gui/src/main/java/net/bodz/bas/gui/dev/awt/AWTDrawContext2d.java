@@ -2,7 +2,7 @@ package net.bodz.bas.gui.dev.awt;
 
 import java.awt.Graphics2D;
 
-import net.bodz.bas.geom_f.base.*;
+import net.bodz.bas.geom.spec1_f.*;
 import net.bodz.bas.gui.dev.AbstractDrawContext2d;
 import net.bodz.bas.util.Pair;
 
@@ -37,7 +37,7 @@ public class AWTDrawContext2d
 
     @Override
     public void drawLine(Line2d line) {
-        drawLine(line.p0, line.p1);
+        drawLine(line.point0, line.point1);
     }
 
     @Override

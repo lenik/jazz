@@ -9,7 +9,7 @@ import org.eclipse.swt.graphics.Region;
 import org.eclipse.swt.widgets.Canvas;
 import org.junit.Test;
 
-import net.bodz.bas.geom_f.base.Rectangle2d;
+import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class SWTRegionTest

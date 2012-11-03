@@ -2,7 +2,7 @@ package net.bodz.swt.draw.app.tools;
 
 import org.eclipse.swt.events.KeyEvent;
 
-import net.bodz.bas.geom_f.api.IEditablePointSet2d;
+import net.bodz.bas.geom.spec0_f.IEditablePointSet2d;
 import net.bodz.swt.c.canvas.Canvas;
 import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.SubCanvasMode;

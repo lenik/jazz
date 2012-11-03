@@ -1,18 +1,18 @@
 package net.bodz.swt.draw.core.model;
 
-import net.bodz.bas.geom_f.api.DecoratedShape2d;
-import net.bodz.bas.geom_f.api.IShape2d;
+import net.bodz.bas.geom.spec0_f.DecoratedPrimitive2d;
+import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.gui.dev.GraphicsOperationException;
 import net.bodz.bas.gui.dev.IDrawContext2d;
 
 public class AbstractComponent2d
-        extends DecoratedShape2d {
+        extends DecoratedPrimitive2d {
 
     private static final long serialVersionUID = 1L;
 
     SWTStyle style;
 
-    public AbstractComponent2d(IShape2d _orig) {
+    public AbstractComponent2d(IPrimitive2d _orig) {
         super(_orig);
     }
 

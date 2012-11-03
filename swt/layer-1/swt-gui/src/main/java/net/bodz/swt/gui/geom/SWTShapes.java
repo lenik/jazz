@@ -2,9 +2,9 @@ package net.bodz.swt.gui.geom;
 
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.geom_f.api.IPointSet2d;
-import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.geom_f.base.Rectangle2d;
+import net.bodz.bas.geom.spec0_f.IPointSet2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
+import net.bodz.bas.geom.spec1_f.Rectangle2d;
 
 public class SWTShapes {
 

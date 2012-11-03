@@ -6,15 +6,15 @@ import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
-import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.gui.dialog.IUserDialog;
 import net.bodz.bas.i18n.nls.II18nCapable;
 
 public abstract class CommitAdapter
         implements CommitListener, CommitFailListener, II18nCapable {
 
-    private IUserInteraction ia;
+    private IUserDialog ia;
 
-    public CommitAdapter(IUserInteraction ia) {
+    public CommitAdapter(IUserDialog ia) {
         if (ia == null)
             throw new NullPointerException("ia");
         this.ia = ia;

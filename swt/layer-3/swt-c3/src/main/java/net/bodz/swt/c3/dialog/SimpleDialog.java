@@ -31,7 +31,7 @@ import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.ia.DialogInteraction;
+import net.bodz.swt.c3.ia.SwtDialog;
 
 public abstract class SimpleDialog
         extends Dialog
@@ -54,7 +54,7 @@ public abstract class SimpleDialog
     private Composite userBar;
     private Composite basicBar;
 
-    private DialogInteraction ia;
+    private SwtDialog ia;
 
     private Object result;
     private boolean canceled;
@@ -75,7 +75,7 @@ public abstract class SimpleDialog
             setText(title);
         icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif");
         image = icon;
-        ia = new DialogInteraction(parent, SWT.APPLICATION_MODAL);
+        ia = new SwtDialog(parent, SWT.APPLICATION_MODAL);
     }
 
     /**

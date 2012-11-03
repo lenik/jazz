@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 
-import net.bodz.bas.geom_f.base.Rectangle2d;
+import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.util.ints.IntIterable;

@@ -1,8 +1,8 @@
 package user;
 
-import net.bodz.bas.gui.a.Border;
-import net.bodz.bas.gui.a.Color;
-import net.bodz.bas.gui.a.Label;
+import net.bodz.bas.gui.mda.Border;
+import net.bodz.bas.gui.mda.Color;
+import net.bodz.bas.gui.mda.Label;
 
 public class School {
 

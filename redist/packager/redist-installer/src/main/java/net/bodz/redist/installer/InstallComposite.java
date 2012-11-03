@@ -3,7 +3,7 @@ package net.bodz.redist.installer;
 import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.gui.ia.UIException;
+import net.bodz.bas.gui.err.GUIException;
 import net.bodz.swt.c3.pageflow.IBook;
 import net.bodz.swt.c3.pageflow.IPage;
 import net.bodz.swt.c3.pageflow.NavigatorComposite;
@@ -15,7 +15,7 @@ public class InstallComposite
     protected final ISession session;
 
     public InstallComposite(ISession session, Composite parent, int style)
-            throws UIException {
+            throws GUIException {
         super(createBook(session), parent, style);
         this.session = session;
         // Pre-load the progress page.
@@ -25,7 +25,7 @@ public class InstallComposite
     }
 
     static IBook createBook(final ISession session)
-            throws UIException {
+            throws GUIException {
         SimpleBook book = new SimpleBook();
         book.add(SummaryPage.class, new SummaryPage(session));
         book.add(ProgressPage.class, new ProgressPage(session));

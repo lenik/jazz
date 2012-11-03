@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 
-import net.bodz.bas.gui.dev.IStroke;
+import net.bodz.bas.gui.spec0.IStroke;
 
 public abstract class SWTStroke
         implements IStroke, Serializable {

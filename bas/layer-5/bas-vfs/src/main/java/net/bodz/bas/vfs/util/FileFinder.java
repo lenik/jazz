@@ -9,10 +9,12 @@ import java.util.List;
 
 import net.bodz.bas.c.java.io.PruneFileFilter;
 import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.err.RuntimizedException;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.PrefetchedIterator;
 import net.bodz.bas.util.iter.StackedIterator;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.VFSException;
 
 public class FileFinder
         implements Iterable<IFile> {
@@ -140,12 +142,20 @@ public class FileFinder
             int depth = stack.size();
             if (!stack.hasNext())
                 return end();
+
             IFile file = stack.next();
             boolean included = true;
             if (!prune && userFilter != null && file.isTree())
                 included = userFilter.accept(file);
+
             if (file.isTree() && depth < maxDepth) {
-                List<? extends IFile> children = file.listChildren(filter);
+                List<? extends IFile> children;
+                try {
+                    children = file.listChildren(filter);
+                } catch (VFSException e) {
+                    throw new RuntimizedException(e);
+                }
+
                 if (!children.isEmpty()) {
                     if (comparator != null)
                         Collections.sort(children, comparator);
@@ -153,9 +163,11 @@ public class FileFinder
                     stack.push(citer);
                 }
             }
+
             if (included)
                 return file;
-            return fetch();
+            else
+                return fetch();
         }
 
     } // RecIter

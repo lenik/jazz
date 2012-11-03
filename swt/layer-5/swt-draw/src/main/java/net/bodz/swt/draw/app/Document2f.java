@@ -2,8 +2,8 @@ package net.bodz.swt.draw.app;
 
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.geom_f.base.CompositeShape2d;
-import net.bodz.bas.geom_f.tr.ITransformedView2d;
+import net.bodz.bas.geom.spec0_f.tr.ITransformedView2d;
+import net.bodz.bas.geom.spec2_f.Composite2d;
 
 public class Document2f {
 
@@ -11,6 +11,6 @@ public class Document2f {
 
     ITransformedView2d vt;
 
-    CompositeShape2d shapes = new CompositeShape2d();
+    Composite2d shapes = new Composite2d();
 
 }

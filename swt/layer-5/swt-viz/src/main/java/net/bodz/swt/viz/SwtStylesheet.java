@@ -13,7 +13,7 @@ import org.eclipse.swt.graphics.RGB;
 import net.bodz.bas.c.reflect.AnnotatedElements;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.gui.a.*;
+import net.bodz.bas.gui.mda.*;
 import net.bodz.bas.model.IFactory;
 import net.bodz.bas.model.meta.MenuContrib;
 import net.bodz.bas.model.meta.View;

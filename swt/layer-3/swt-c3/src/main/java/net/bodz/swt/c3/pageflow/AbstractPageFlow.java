@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.bas.gui.util.QuietHint;
+import net.bodz.bas.gui.util.IQuietHint;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
@@ -158,7 +158,7 @@ public abstract class AbstractPageFlow
         throw new Error(e);
     }
 
-    protected final <X extends Exception & QuietHint> void handleQException(X e) {
+    protected final <X extends Exception & IQuietHint> void handleQException(X e) {
         if (!e.isQuiet()) {
             handleException(e);
         }

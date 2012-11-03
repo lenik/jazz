@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.eclipse.swt.graphics.Pattern;
 
-import net.bodz.bas.gui.dev.IFillPattern;
+import net.bodz.bas.gui.spec0.IFillPattern;
 
 public class SWTFillPattern
         implements IFillPattern, Serializable {

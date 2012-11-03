@@ -1,11 +1,11 @@
 package net.bodz.bas.gui.dev;
 
-import net.bodz.bas.geom_f.base.AbstractRectangle2d;
-import net.bodz.bas.geom_f.base.Line2d;
-import net.bodz.bas.geom_f.base.Point2d;
-import net.bodz.bas.geom_f.base.Polygon2d;
-import net.bodz.bas.geom_f.base.Rectangle2d;
-import net.bodz.bas.geom_f.base.Triangle2d;
+import net.bodz.bas.geom.spec1_f.AbstractRectangle2d;
+import net.bodz.bas.geom.spec1_f.Line2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
+import net.bodz.bas.geom.spec1_f.Polygon2d;
+import net.bodz.bas.geom.spec1_f.Rectangle2d;
+import net.bodz.bas.geom.spec1_f.Triangle2d;
 
 public class DirtyAreaDrawContext2d
         extends DecoratedDrawContext2d {

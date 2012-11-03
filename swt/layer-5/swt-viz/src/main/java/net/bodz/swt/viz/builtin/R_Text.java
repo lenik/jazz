@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.gui.a.Border;
+import net.bodz.bas.gui.mda.Border;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.model.meta.MaxLength;

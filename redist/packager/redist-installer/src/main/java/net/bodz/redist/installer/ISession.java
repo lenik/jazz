@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.gui.dialog.IUserDialog;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.vfs.IFsEntry;
@@ -26,7 +26,7 @@ public interface ISession {
 
     void setScheme(Scheme scheme);
 
-    IUserInteraction getUserInterface();
+    IUserDialog getUserInterface();
 
     Logger getLogger();
 

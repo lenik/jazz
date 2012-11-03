@@ -1,11 +1,11 @@
 package net.bodz.bas.gui.err;
 
-import net.bodz.bas.gui.util.QuietHint;
+import net.bodz.bas.gui.util.IQuietHint;
 import net.bodz.bas.traits.ValidationException;
 
 public class GUIValidationException
         extends ValidationException
-        implements QuietHint {
+        implements IQuietHint {
 
     private static final long serialVersionUID = 1L;
 

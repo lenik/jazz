@@ -1,7 +1,7 @@
 package net.bodz.bas.gui.viz;
 
 import net.bodz.bas.c.type.TypePrMap;
-import net.bodz.bas.gui.ia.UIException;
+import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.util.primitive.Primitives;
@@ -15,7 +15,7 @@ public abstract class AbstractVisualization
     /**
      * Render editable var
      * 
-     * @throws UIException
+     * @throws GUIException
      * @throws NullPointerException
      *             if obj is <code>null</code>.
      */

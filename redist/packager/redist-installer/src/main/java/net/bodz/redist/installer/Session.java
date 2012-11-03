@@ -16,7 +16,7 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.c.system.SystemColos;
-import net.bodz.bas.gui.ia.IUserInteraction;
+import net.bodz.bas.gui.dialog.IUserDialog;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
@@ -34,7 +34,7 @@ public class Session
     static final String registryPath = "registry.xml";
 
     private final IProject project;
-    protected final IUserInteraction UI;
+    protected final IUserDialog UI;
     protected Logger logger;
 
     private Components components;
@@ -50,7 +50,7 @@ public class Session
     // private Stack<Component> stack;
     private TextMap<StatedAttachment> apool;
 
-    public Session(IProject project, IUserInteraction userInterface, Logger logger) {
+    public Session(IProject project, IUserDialog userInterface, Logger logger) {
         if (project == null)
             throw new NullPointerException("project");
         if (userInterface == null)
@@ -139,7 +139,7 @@ public class Session
     }
 
     @Override
-    public IUserInteraction getUserInterface() {
+    public IUserDialog getUserInterface() {
         return UI;
     }
 
