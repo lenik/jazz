@@ -7,15 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.rmi.CORBA.Util;
-import javax.script.ScriptException;
-
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
+import net.bodz.bas.cli.model.OptionGroupFactory;
 import net.bodz.bas.cli.plugin.CLIPlugins;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
@@ -157,8 +154,7 @@ public abstract class BasicCLI
         throw new ControlBreak();
     }
 
-    protected void _help(IPrintOut out)
-            throws CLIException {
+    protected void _help(IPrintOut out) {
         _version(out);
         out.println();
 
@@ -180,8 +176,7 @@ public abstract class BasicCLI
         _vars = new HashMap<String, Object>();
     }
 
-    public IType getPotatoType()
-            throws ScriptException {
+    public IType getPotatoType() {
         return Traits.getTrait(getClass(), IType.class);
     }
 
@@ -189,11 +184,10 @@ public abstract class BasicCLI
         return null;
     }
 
-    public synchronized <T extends BasicCLI> IOptionGroup getOptions()
-            throws CLIException {
+    public synchronized <T extends BasicCLI> IOptionGroup getOptions() {
         if (classOptionGroup == null) {
             Class<T> clazz = (Class<T>) this.getClass();
-            classOptionGroup = ClassOptions.getClassOptions(clazz);
+            classOptionGroup = OptionGroupFactory.getClassOptions(clazz);
         }
         return classOptionGroup;
     }

@@ -3,7 +3,7 @@ package net.bodz.bas.cli.plugin;
 import java.util.Map;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.cli.ClassOptions;
+import net.bodz.bas.cli.model.OptionGroupFactory;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.skel.CLIException;
@@ -16,7 +16,7 @@ public class AbstractCLIPlugin
         implements CLIPlugin {
 
     protected IOptionGroup getOptions() {
-        return ClassOptions.getClassOptions(getClass());
+        return OptionGroupFactory.getClassOptions(getClass());
     }
 
     @Override

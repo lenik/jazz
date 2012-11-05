@@ -7,7 +7,6 @@ import java.util.TreeSet;
 
 import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.util.order.AbstractNonNullComparator;
@@ -60,8 +59,7 @@ public class HelpPageFormatter {
         this.descriptionColumn = descriptionColumn;
     }
 
-    public String format(IOptionGroup group)
-            throws CLIException {
+    public String format(IOptionGroup group) {
         StringBuilder buffer = new StringBuilder(100 * columns);
 
         Set<String> usageIds = new LinkedHashSet<String>();

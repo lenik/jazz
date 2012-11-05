@@ -106,7 +106,7 @@ public interface IOption
      *            The value string to be parsed.
      * @return Parsed result.
      */
-    Object parseValue(String string)
+    Object parseValue(Object context, String string)
             throws ParseException;
 
     /**
@@ -116,7 +116,7 @@ public interface IOption
      *            to be formatted.
      * @return Non-<code>null</code> formatted value string.
      */
-    String formatValue(Object value)
+    String formatValue(Object context, Object value)
             throws FormatException;
 
     /**

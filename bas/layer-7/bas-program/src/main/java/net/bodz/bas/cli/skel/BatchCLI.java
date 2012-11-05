@@ -19,7 +19,7 @@ import net.bodz.bas.vfs.util.IFileFilter;
  * 
  * @syntax $programName [OPTIONS] [--] FILES...
  */
-public class BatchCLI
+public abstract class BatchCLI
         extends BasicCLI {
 
     /**

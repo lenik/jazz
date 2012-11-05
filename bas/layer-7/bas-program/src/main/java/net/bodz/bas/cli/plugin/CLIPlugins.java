@@ -1,7 +1,6 @@
 package net.bodz.bas.cli.plugin;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.l10n.en.English;
 import net.bodz.bas.sio.IPrintOut;
@@ -28,8 +27,7 @@ public class CLIPlugins
         return registerCategory(category);
     }
 
-    public void help(IPrintOut out, String prefix)
-            throws CLIException {
+    public void help(IPrintOut out, String prefix) {
         int maxlen = 0;
         // List<String> typeNames = new ArrayList<String>();
         for (PluginCategory pluginType : categories.values()) {
