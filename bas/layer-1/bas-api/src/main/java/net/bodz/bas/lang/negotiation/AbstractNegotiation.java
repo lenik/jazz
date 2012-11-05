@@ -4,8 +4,7 @@ public abstract class AbstractNegotiation
         implements INegotiation {
 
     @Override
-    public INegotiation refine(INegotiation respond)
-            throws NegotiationException {
+    public INegotiation refine(INegotiation respond) {
         return null;
     }
 

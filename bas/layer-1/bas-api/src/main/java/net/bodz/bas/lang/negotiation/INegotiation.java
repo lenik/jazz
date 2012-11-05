@@ -8,8 +8,7 @@ public interface INegotiation
      * 
      * @return <code>null</code> if the negotiation is forced, i.e., immutable.
      */
-    INegotiation refine(INegotiation respond)
-            throws NegotiationException;
+    INegotiation refine(INegotiation respond);
 
     // INegotiation clone();
 

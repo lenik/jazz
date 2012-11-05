@@ -1,7 +1,6 @@
 package net.bodz.bas.traits;
 
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IValidator<T> {
 
@@ -11,6 +10,6 @@ public interface IValidator<T> {
             throws ValidationException;
 
     void validate(T object, INegotiation negotiation)
-            throws ValidationException, NegotiationException;
+            throws ValidationException;
 
 }

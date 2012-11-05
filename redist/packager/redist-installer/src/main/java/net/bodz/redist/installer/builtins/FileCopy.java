@@ -21,7 +21,6 @@ import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.IOConfig;
 import net.bodz.bas.c.java.io.PruneFileFilter;
-import net.bodz.bas.sio.BCharOut;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.Attachment;
 import net.bodz.redist.installer.ISession;

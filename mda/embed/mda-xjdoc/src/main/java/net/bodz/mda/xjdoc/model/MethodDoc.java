@@ -6,7 +6,6 @@ import java.util.Map;
 
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
@@ -115,7 +114,7 @@ public class MethodDoc
 
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
-            throws IOException, NegotiationException {
+            throws IOException {
         ImportMap imports = getClassDoc().getOrCreateImports();
         String importedForm = methodId.getImportedForm(imports);
         out.sectionBegin("method:" + importedForm);

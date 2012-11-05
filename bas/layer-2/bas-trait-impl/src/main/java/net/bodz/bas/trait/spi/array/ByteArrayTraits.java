@@ -5,7 +5,6 @@ import java.nio.charset.Charset;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.IParser;
 
@@ -40,7 +39,7 @@ public class ByteArrayTraits
 
     @Override
     public byte[] parse(String text, INegotiation negotiation)
-            throws ParseException, NegotiationException {
+            throws ParseException {
         Charset charset = defaultTextformCharset;
         for (IParameter param : negotiation) {
             String paramId = param.getId();

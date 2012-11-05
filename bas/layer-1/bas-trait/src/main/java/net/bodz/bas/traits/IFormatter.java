@@ -5,7 +5,6 @@ import java.io.Writer;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IFormatter<T> {
 
@@ -38,6 +37,6 @@ public interface IFormatter<T> {
      *             If failed to format.
      */
     String format(T object, INegotiation negotiation)
-            throws NegotiationException, FormatException;
+            throws FormatException;
 
 }

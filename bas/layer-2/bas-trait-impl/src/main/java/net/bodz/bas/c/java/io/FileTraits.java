@@ -6,7 +6,6 @@ import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
@@ -43,7 +42,7 @@ public class FileTraits
 
     @Override
     public File parse(String text, INegotiation negotiation)
-            throws ParseException, NegotiationException {
+            throws ParseException {
         File contextDirectory = defaultTextformContextDirectory;
 
         for (IParameter param : negotiation) {

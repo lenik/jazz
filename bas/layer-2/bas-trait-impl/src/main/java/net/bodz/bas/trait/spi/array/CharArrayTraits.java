@@ -4,7 +4,6 @@ import net.bodz.bas.c.java.lang.CharacterTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
@@ -59,8 +58,7 @@ public class CharArrayTraits
         }
 
         @Override
-        public void negotiate(INegotiation negotiation)
-                throws NegotiationException {
+        public void negotiate(INegotiation negotiation) {
             super.negotiate(negotiation);
             charSample = negotiation.get(sampleCharSample, charSample);
         }

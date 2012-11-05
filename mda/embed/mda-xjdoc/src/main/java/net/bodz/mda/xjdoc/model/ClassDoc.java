@@ -7,7 +7,6 @@ import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -146,7 +145,7 @@ public class ClassDoc
      */
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
-            throws IOException, NegotiationException {
+            throws IOException {
         // out.sectionBegin("class");
 
         BCharOut bodyBuffer = new BCharOut();

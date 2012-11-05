@@ -53,7 +53,7 @@ public class PatternTraits
 
     @Override
     public Pattern parse(String text, INegotiation negotiation)
-            throws ParseException, NegotiationException {
+            throws ParseException {
         String mode = defaultTextformMode;
         int flags = defeaultRegexFlags;
 

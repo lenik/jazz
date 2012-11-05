@@ -6,7 +6,6 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
@@ -68,7 +67,7 @@ public class StringTraits
     @SuppressWarnings("unchecked")
     @Override
     public String newSample(Map<String, Object> classification, INegotiation negotiation)
-            throws CreateException, NegotiationException {
+            throws CreateException {
         int minLength = defaultSampleMinLength;
         int maxLength = defaultSampleMaxLength;
         ISampleGenerator<Character> charSample = defaultSampleCharSample;
