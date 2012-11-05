@@ -1,5 +1,7 @@
 package net.bodz.bas.util.iter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +12,26 @@ import net.bodz.bas.model.IFilter;
 import net.bodz.bas.model.NewInstanceCreator;
 
 public class Iterables {
+
+    public static <T> Iterable<T> concat(final List<Iterable<T>> iterables) {
+        final int n = iterables.size();
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                List<Iterator<T>> iterators = new ArrayList<>(n);
+
+                for (int i = 0; i < n; i++)
+                    iterators.set(i, iterables.get(i).iterator());
+
+                return Iterators.concat(iterators);
+            }
+        };
+    }
+
+    @SafeVarargs
+    public static <T> Iterable<T> concat(Iterable<T>... iterables) {
+        return concat(Arrays.asList(iterables));
+    }
 
     public static <T> Iterable<T> create(ICreator<? extends Iterator<T>> iteratorCreator) {
         return new CreateIterable<T>(iteratorCreator);

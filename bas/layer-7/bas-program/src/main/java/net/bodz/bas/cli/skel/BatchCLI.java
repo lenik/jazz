@@ -1,15 +1,13 @@
 package net.bodz.bas.cli.skel;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.lang.ControlBreak;
-import net.bodz.bas.meta.codehint.OverrideOption;
+import net.bodz.bas.util.iter.PrefetchedIterator;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.IPath;
@@ -292,35 +290,20 @@ public class BatchCLI
         return relativePath.getLocalPath();
     }
 
-    /**
-     * Implemented as: walk start from the file argument.
-     */
-    @Override
-    @OverrideOption(group = "batch")
-    protected void doFileArgument(final IFile file)
-            throws Exception {
-        currentStartFile = file;
-        FileFinder finder = new FileFinder(fileFilter, prune, recursive, file);
-        if (rootLast)
-            finder.setOrder(FileFinder.FILE | FileFinder.DIR_POST);
-        if (sortComparator != null)
-            finder.setComparator(sortComparator);
-        for (IFile f : finder)
-            _processFile(f);
-    }
+    class TreeScanner
+            extends PrefetchedIterator<IFile> {
 
-    /**
-     * The file-argument is handled for fs-walking.
-     * 
-     * This method will only be called if no argument is given.
-     * 
-     * @see #_processFile(IFile)
-     */
-    @Override
-    @Deprecated
-    protected void doFileArgument(IFile file, InputStream in)
-            throws Exception {
-        doFile(file, in);
+        @Override
+        protected IFile fetch() {
+            currentStartFile = file;
+            FileFinder finder = new FileFinder(fileFilter, prune, recursive, file);
+            if (rootLast)
+                finder.setOrder(FileFinder.FILE | FileFinder.DIR_POST);
+            if (sortComparator != null)
+                finder.setComparator(sortComparator);
+            for (IFile f : finder)
+                _processFile(f);
+        }
     }
 
     /**
@@ -340,52 +323,6 @@ public class BatchCLI
                 throw new ControlBreak();
         } finally {
         }
-    }
-
-    protected void doFile(IFile file)
-            throws Exception {
-        InputStream in = file.getInputSource().newInputStream();
-        try {
-            doFile(file, in);
-        } finally {
-            in.close();
-        }
-    }
-
-    /**
-     * if no argument and {@link #_getDefaultIn()} returns a non-null value, a null-file and the
-     * default-in will be passed in.
-     */
-    protected void doFile(IFile file, InputStream in)
-            throws Exception {
-        throw new NotImplementedException();
-    }
-
-    public class Methods {
-
-        public void doFileArgument(IFile file)
-                throws Exception {
-            BatchCLI.this.doFileArgument(file);
-        }
-
-        public void doFile(IFile file)
-                throws Exception {
-            BatchCLI.this.doFile(file);
-        }
-
-        public void doFile(IFile file, InputStream in)
-                throws Exception {
-            BatchCLI.this.doFile(file, in);
-        }
-
-    }
-
-    Methods methods;
-
-    public Methods methods() {
-        if (methods == null)
-            methods = new Methods();
-        return methods;
     }
 
 }
