@@ -86,7 +86,7 @@ public class R_Text
                 throw new RenderException(tr._("Can\'t guess parser for number class: ") + type);
             }
 
-            ControlAdapters.autocommitForFocus(text, new CommitAdapter(rc.interact(text)) {
+            ControlAdapters.autocommitForFocus(text, new CommitAdapter(rc.getUserDialogs(text)) {
                 @Override
                 public void commit(EventObject event)
                         throws CommitException {

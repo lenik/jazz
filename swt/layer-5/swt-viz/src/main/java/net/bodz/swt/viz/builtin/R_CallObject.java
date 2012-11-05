@@ -74,7 +74,7 @@ public class R_CallObject
                         }
                     } catch (ReflectiveOperationException ex) {
                         String mesg = tr._("Failed to invoke call");
-                        rc.interact(button).alert(mesg, ex);
+                        rc.getUserDialogs(button).alert(mesg, ex);
                     }
                 }
             });

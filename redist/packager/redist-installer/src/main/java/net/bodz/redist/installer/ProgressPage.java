@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.gui.dialog.IUserDialog;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
+import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.log.AbstractLogSink;
 import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
@@ -35,7 +35,7 @@ import net.bodz.swt.c.composite.DetailSwitchEvent;
 import net.bodz.swt.c.composite.DetailSwitchListener;
 import net.bodz.swt.c.composite.WindowComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.ia.SwtDialog;
+import net.bodz.swt.c3.dialog.SwtDialogs;
 import net.bodz.swt.c3.pageflow.AbstractPage;
 import net.bodz.swt.c3.pageflow.IPage;
 import net.bodz.swt.c3.pageflow.PageException;
@@ -127,8 +127,8 @@ class ProgressPage
                         if (index != -1) {
                             Object data = logList.getData(String.valueOf(index));
                             if (data != null) {
-                                IUserDialog UI = session.getUserInterface();
-                                UI.alert("Log Detail: " + data, data);
+                                IUserDialogs dialogs = session.getUserDialogs();
+                                dialogs.alert("Log Detail: " + data, data);
                             }
                         }
                     }
@@ -265,14 +265,14 @@ class ProgressPage
             @Override
             public void run() {
                 int state = CANCELED;
-                SwtDialog _UI = new SwtDialog(new Shell(new Display()));
+                SwtDialogs _dialogs = new SwtDialogs(new Shell(new Display()));
                 try {
                     session.loadRegistry();
                     if (rootJob != null) {
                         if (logger0.isDebugEnabled())
                             rootJob.dump(Stdio.cout);
-                        Observer observer = new Observer(_UI);
-                        rootJob.setUserInterface(_UI);
+                        Observer observer = new Observer(_dialogs);
+                        rootJob.setUserDialogs(_dialogs);
                         observer.bind(rootJob);
                         rootJob.run();
                     }
@@ -280,7 +280,7 @@ class ProgressPage
                     if (jobState == IJob.TERMINATED)
                         state = DONE;
                 } catch (Exception e) {
-                    _UI.alert(tr._("Install Error"), e);
+                    _dialogs.alert(tr._("Install Error"), e);
                 } finally {
                     rootJob = null;
                     jobThread = null;
@@ -304,12 +304,12 @@ class ProgressPage
     class Observer
             extends JobObserver {
 
-        final IUserDialog UI;
+        final IUserDialogs userDialogs;
 
-        public Observer(IUserDialog UI) {
-            if (UI == null)
-                throw new NullPointerException("UI");
-            this.UI = UI;
+        public Observer(IUserDialogs userDialogs) {
+            if (userDialogs == null)
+                throw new NullPointerException("userDialogs");
+            this.userDialogs = userDialogs;
         }
 
         @Override
@@ -349,13 +349,13 @@ class ProgressPage
 
         @Override
         public void exceptionThrown(Exception ex) {
-            UI.alert(tr._("Failed to install: ") + ex.getMessage(), ex);
+            userDialogs.alert(tr._("Failed to install: ") + ex.getMessage(), ex);
         }
 
         @Override
         public void recoverException(RecoverableExceptionEvent e) {
             Exception ex = e.getException();
-            int answer = UI.ask(
+            int answer = userDialogs.ask(
                     tr._("Error happens: ") + ex.getMessage()
                             + tr._(", continue?"), e, DirectiveCommands.ignore, DirectiveCommands.cancel,
                     DirectiveCommands.debug);

@@ -5,9 +5,9 @@ import net.bodz.bas.err.UnexpectedException;
 public abstract class AbstractTryBlock
         extends TryBlock {
 
-    protected final IUserDialog UI;
+    protected final IUserDialogs UI;
 
-    public AbstractTryBlock(IUserDialog ui, int maxRetry, boolean tryImmediately) {
+    public AbstractTryBlock(IUserDialogs ui, int maxRetry, boolean tryImmediately) {
         super(maxRetry, false);
         if (ui == null)
             throw new NullPointerException("interaction");
@@ -16,11 +16,11 @@ public abstract class AbstractTryBlock
             _run();
     }
 
-    public AbstractTryBlock(IUserDialog ui) {
+    public AbstractTryBlock(IUserDialogs ui) {
         this(ui, INFINITE, true);
     }
 
-    public AbstractTryBlock(IUserDialog ui, int maxRetry) {
+    public AbstractTryBlock(IUserDialogs ui, int maxRetry) {
         this(ui, maxRetry, true);
     }
 

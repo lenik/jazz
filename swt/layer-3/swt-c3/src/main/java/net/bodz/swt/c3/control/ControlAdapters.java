@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
-import net.bodz.swt.c3.ia.SwtDialog;
+import net.bodz.swt.c3.dialog.SwtDialogs;
 
 public class ControlAdapters
         extends net.bodz.swt.c.control.ControlAdapters {
@@ -59,7 +59,7 @@ public class ControlAdapters
                 Desktop.getDesktop().browse(uri);
             } catch (Exception ex) {
                 Shell shell = ((Control) e.widget).getShell();
-                new SwtDialog(shell).alert(ex.getMessage(), ex);
+                new SwtDialogs(shell).alert(ex.getMessage(), ex);
             }
         }
     }

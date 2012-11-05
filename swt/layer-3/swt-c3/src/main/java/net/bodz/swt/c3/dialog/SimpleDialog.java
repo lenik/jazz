@@ -31,7 +31,6 @@ import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.ia.SwtDialog;
 
 public abstract class SimpleDialog
         extends Dialog
@@ -54,7 +53,7 @@ public abstract class SimpleDialog
     private Composite userBar;
     private Composite basicBar;
 
-    private SwtDialog ia;
+    private SwtDialogs dialogs;
 
     private Object result;
     private boolean canceled;
@@ -75,7 +74,7 @@ public abstract class SimpleDialog
             setText(title);
         icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif");
         image = icon;
-        ia = new SwtDialog(parent, SWT.APPLICATION_MODAL);
+        dialogs = new SwtDialogs(parent, SWT.APPLICATION_MODAL);
     }
 
     /**
@@ -212,14 +211,14 @@ public abstract class SimpleDialog
         try {
             fireValidation();
         } catch (ValidationException e) {
-            ia.alert(tr._("Check Failure"), e);
+            dialogs.alert(tr._("Check Failure"), e);
             return;
         }
         if (value == EVALUATE) {
             try {
                 value = evaluate();
             } catch (Exception e) {
-                ia.alert("Evaluation exception", e);
+                dialogs.alert("Evaluation exception", e);
                 return;
             }
         }

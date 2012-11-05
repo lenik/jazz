@@ -61,7 +61,7 @@ public class Installer
     @Override
     protected void createInitialView(final Composite parent)
             throws GUIException {
-        ISession session = new Session(project, UI, logger);
+        ISession session = new Session(project, userDialogs, logger);
         setSession(session);
         InstallComposite installComposite = new InstallComposite(session, parent, SWT.NONE);
         installComposite.getPageFlow().addBadPathListener(new IBadPathListener() {

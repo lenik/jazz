@@ -3,7 +3,7 @@ package net.bodz.bas.gui.ia;
 import org.junit.Test;
 
 import net.bodz.bas.gui.dialog.AbstractTryBlock;
-import net.bodz.bas.gui.dialog.ConsoleDialog;
+import net.bodz.bas.gui.dialog.ConsoleDialogs;
 
 
 public class TryBlockTest {
@@ -11,7 +11,7 @@ public class TryBlockTest {
     @Test
     public void testMaxRetry()
             throws Exception {
-        new AbstractTryBlock(ConsoleDialog.stderr, 3) {
+        new AbstractTryBlock(ConsoleDialogs.stderr, 3) {
 
             @Override
             protected void body()

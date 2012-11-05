@@ -2,27 +2,27 @@ package net.bodz.swt.viz.ia;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.gui.dialog.AbstractTryBlock;
-import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
-import net.bodz.swt.c3.ia.SwtDialog;
+import net.bodz.swt.c3.dialog.SwtDialogs;
 
 public abstract class DialogTryBlock
         extends AbstractTryBlock {
 
-    public DialogTryBlock(IUserDialog userInterface, int maxRetry, boolean tryImmediately) {
+    public DialogTryBlock(IUserDialogs userInterface, int maxRetry, boolean tryImmediately) {
         super(userInterface, maxRetry, tryImmediately);
     }
 
-    public DialogTryBlock(IUserDialog userInterface, int maxRetry) {
+    public DialogTryBlock(IUserDialogs userInterface, int maxRetry) {
         super(userInterface, maxRetry);
     }
 
-    public DialogTryBlock(IUserDialog userInterface) {
+    public DialogTryBlock(IUserDialogs userInterface) {
         super(userInterface);
     }
 
     public DialogTryBlock(int maxRetry, boolean tryImmediately) {
-        this(new SwtDialog(), maxRetry, tryImmediately);
+        this(new SwtDialogs(), maxRetry, tryImmediately);
     }
 
     public DialogTryBlock(boolean tryImmediately) {

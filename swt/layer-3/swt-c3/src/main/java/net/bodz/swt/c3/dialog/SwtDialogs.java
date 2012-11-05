@@ -1,4 +1,4 @@
-package net.bodz.swt.c3.ia;
+package net.bodz.swt.c3.dialog;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.gui.dialog.AbstractUserDialog;
+import net.bodz.bas.gui.dialog.AbstractUserDialogs;
 import net.bodz.bas.gui.dialog.IDirectiveCommand;
 import net.bodz.bas.gui.viz.IVisualization;
 import net.bodz.bas.gui.viz.RenderException;
@@ -39,12 +39,11 @@ import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.dialog.SimpleDialog;
 import net.bodz.swt.gui.api.ICommand;
 import net.bodz.swt.gui.api.ICommandGroup;
 
-public class SwtDialog
-        extends AbstractUserDialog {
+public class SwtDialogs
+        extends AbstractUserDialogs {
 
     static IVisualization visualization;
 
@@ -59,7 +58,7 @@ public class SwtDialog
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public SwtDialog(Shell parent, int style) {
+    public SwtDialogs(Shell parent, int style) {
         this.parent = parent;
         this.style = style;
     }
@@ -69,15 +68,15 @@ public class SwtDialog
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public SwtDialog(int style) {
+    public SwtDialogs(int style) {
         this(new Shell(), style);
     }
 
-    public SwtDialog(Shell parent) {
+    public SwtDialogs(Shell parent) {
         this(parent, SWT.NONE);
     }
 
-    public SwtDialog() {
+    public SwtDialogs() {
         this(SWT.NONE);
     }
 
@@ -179,7 +178,7 @@ public class SwtDialog
 
         @Override
         protected void addEffects() {
-            SwtDialog.this.addEffects(getShell());
+            SwtDialogs.this.addEffects(getShell());
         }
 
     }

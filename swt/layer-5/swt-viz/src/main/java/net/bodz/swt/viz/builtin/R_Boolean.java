@@ -58,7 +58,7 @@ public class R_Boolean
                 }
             });
         if (!descriptor.isWritable()) {
-            ControlAdapters.autocommitForFocus(check, new CommitAdapter(rc.interact(check)) {
+            ControlAdapters.autocommitForFocus(check, new CommitAdapter(rc.getUserDialogs(check)) {
                 @Override
                 public void commit(EventObject event)
                         throws CommitException {

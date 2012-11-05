@@ -23,7 +23,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.gui.err.QuietValidationException;
 import net.bodz.redist.installer.ConfigPage;
@@ -316,8 +316,8 @@ public class CustomPage
             if (dirFile.isFile())
                 throw new GUIValidationException(dirText, tr._("file exists"));
             else if (!dirFile.exists()) {
-                IUserDialog UI = session.getUserInterface();
-                boolean confirmed = UI.confirm(tr._("Create the directory?"),
+                IUserDialogs dialogs = session.getUserDialogs();
+                boolean confirmed = dialogs.confirm(tr._("Create the directory?"),
                         PackNLS.format("CustomPage.confirmMkdir", dirFile));
                 if (!confirmed) {
                     throw new QuietValidationException(dirText);

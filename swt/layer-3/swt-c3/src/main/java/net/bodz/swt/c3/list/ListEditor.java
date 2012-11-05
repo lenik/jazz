@@ -2,22 +2,22 @@ package net.bodz.swt.c3.list;
 
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.gui.dialog.IUserDialog;
-import net.bodz.swt.c3.ia.SwtDialog;
+import net.bodz.bas.gui.dialog.IUserDialogs;
+import net.bodz.swt.c3.dialog.SwtDialogs;
 
 public class ListEditor
         extends AbstractListEditor<String> {
 
-    private IUserDialog UI;
+    private IUserDialogs userDialogs;
 
     public ListEditor(Composite parent, int style) {
         super(parent, style);
-        UI = new SwtDialog(parent.getShell());
+        userDialogs = new SwtDialogs(parent.getShell());
     }
 
     @Override
     protected String createObject() {
-        return UI.prompt("Enter new item: ");
+        return userDialogs.prompt("Enter new item: ");
     }
 
 }

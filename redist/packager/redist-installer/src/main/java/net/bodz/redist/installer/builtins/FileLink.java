@@ -56,7 +56,7 @@ public class FileLink
             Path dstpath = dst.toPath();
             try {
                 if (dst.exists()) {
-                    boolean confirm = UI.confirm(PackNLS.format("FileLink.fileExist_s", dst));
+                    boolean confirm = userDialogs.confirm(PackNLS.format("FileLink.fileExist_s", dst));
                     if (!confirm) {
                         logger.info(tr._("FileLink skipped: "), dst);
                         return;

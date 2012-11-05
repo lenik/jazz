@@ -65,7 +65,7 @@ public class R_creator
                     parent.clear();
                     // rerenderObject(obj);
                 } catch (ParseException pe) {
-                    rc.interact(parent).alert(tr._("Parse Failure"), pe);
+                    rc.getUserDialogs(parent).alert(tr._("Parse Failure"), pe);
                     text.setFocus();
                 }
             }
