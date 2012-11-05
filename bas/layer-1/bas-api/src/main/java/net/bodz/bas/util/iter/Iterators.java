@@ -18,7 +18,8 @@ public class Iterators {
      * Get an empty iterator.
      */
     public static <T> Iterator<T> empty() {
-        @SuppressWarnings("unchecked") Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
+        @SuppressWarnings("unchecked")
+        Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
         return empty;
     }
 
@@ -53,13 +54,13 @@ public class Iterators {
         return new ArrayIterator<T>(array, start);
     }
 
-    public static <T> Iterator<T> concat(List<Iterator<T>> iterators) {
-        return new ConcatIterator<T>(iterators);
-    }
-
     @SafeVarargs
     public static <T> Iterator<T> concat(Iterator<T>... iterators) {
         return new ConcatIterator<T>(Arrays.asList(iterators));
+    }
+
+    public static <T> Iterator<T> concat(List<Iterator<T>> iterators) {
+        return new ConcatIterator<T>(iterators);
     }
 
     /**

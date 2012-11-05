@@ -14,14 +14,13 @@ import net.bodz.bas.model.NewInstanceCreator;
 public class Iterables {
 
     public static <T> Iterable<T> concat(final List<Iterable<T>> iterables) {
-        final int n = iterables.size();
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {
-                List<Iterator<T>> iterators = new ArrayList<>(n);
+                List<Iterator<T>> iterators = new ArrayList<>(iterables.size());
 
-                for (int i = 0; i < n; i++)
-                    iterators.set(i, iterables.get(i).iterator());
+                for (Iterable<T> iterable : iterables)
+                    iterators.add(iterable.iterator());
 
                 return Iterators.concat(iterators);
             }
