@@ -1,20 +1,14 @@
 package net.bodz.bas.cli.skel;
 
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.rmi.CORBA.Util;
 import javax.script.ScriptException;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ClassOptions;
@@ -23,12 +17,12 @@ import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
 import net.bodz.bas.cli.plugin.CLIPlugins;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.gui.dialog.ConsoleDialog;
-import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.bas.gui.dialog.ConsoleDialogs;
+import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.lang.ControlBreak;
+import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -43,9 +37,8 @@ import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ParserUtil;
+import net.bodz.bas.util.iter.Iterables;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.context.VFSColos;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
@@ -53,7 +46,7 @@ import net.bodz.mda.xjdoc.conv.ClassDocs;
  * Basic CLI Framework
  */
 @RcsKeywords(id = "$Id$")
-public class BasicCLI
+public abstract class BasicCLI
         implements Runnable, IExecutableVarArgsX<String, Exception>, II18nCapable {
 
     /**
@@ -67,7 +60,7 @@ public class BasicCLI
     protected Logger logger = LoggerFactory.getLogger(BasicCLI.class);
     // LogTerms.resolveFile(1);
 
-    protected IUserDialog ia = ConsoleDialog.stdout;
+    protected IUserDialogs dialogs = ConsoleDialogs.stdout;
 
     /**
      * @option hidden
@@ -182,7 +175,6 @@ public class BasicCLI
     }
 
     private transient IOptionGroup classOptionGroup;
-    private List<String> remainArguments = new ArrayList<String>();
 
     public BasicCLI() {
         _vars = new HashMap<String, Object>();
@@ -191,6 +183,10 @@ public class BasicCLI
     public IType getPotatoType()
             throws ScriptException {
         return Traits.getTrait(getClass(), IType.class);
+    }
+
+    protected ArtifactDoc getArtifactDoc() {
+        return null;
     }
 
     public synchronized <T extends BasicCLI> IOptionGroup getOptions()
@@ -202,16 +198,14 @@ public class BasicCLI
         return classOptionGroup;
     }
 
-    public void parseArguments(String... args)
+    public List<String> parseArguments(String... args)
             throws CLIException, ParseException {
         if (logger.isDebugEnabled())
             logger.debug("Parse arguments: " + StringArray.join(", ", args));
 
         IOptionGroup options = getOptions();
-        String[] rejected = options.load(this, args);
-
-        for (String arg : rejected)
-            remainArguments.add(arg);
+        List<String> rejected = options.load(this, args);
+        return rejected;
     }
 
     public void runExtra(String cmdline)
@@ -227,7 +221,7 @@ public class BasicCLI
         try {
             execute(new String[0]);
         } catch (Exception e) {
-            ia.alert(e.getMessage(), e);
+            dialogs.alert(e.getMessage(), e);
         }
     }
 
@@ -239,10 +233,8 @@ public class BasicCLI
             throws Exception {
         parseArguments(args);
 
-        int preRestSize = remainArguments.size(); // make climain() reentrant.
-
         try {
-            parseArguments(args);
+            List<String> remainingArgs = parseArguments(args);
 
             logger.debug("[CLI] Pre-boot");
             _postInit();
@@ -274,17 +266,16 @@ public class BasicCLI
                     logger.debug("var ", name, " = ", value);
                 }
             }
-            String[] rest = remainArguments.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
 
-            logger.debug("[CLI] Execute main method");
-            doMain(rest);
+            try {
+                logger.debug("[CLI] Execute main method");
+                mainImpl(remainingArgs.toArray(new String[0]));
+            } catch (ControlContinue _cont) {
+            }
 
             logger.debug("[CLI] Exit");
-        } catch (ControlBreak b) {
+        } catch (ControlBreak _brk) { // implied ControlExit also.
             return;
-        } finally {
-            while (remainArguments.size() > preRestSize)
-                remainArguments.remove(remainArguments.size() - 1);
         }
     }
 
@@ -308,15 +299,6 @@ public class BasicCLI
     }
 
     /**
-     * return non-null value to enable the `<i>default file is read from stdin</i>' mode.
-     * 
-     * @return <code>null</code>
-     */
-    protected InputStream _getDefaultIn() {
-        return null;
-    }
-
-    /**
      * User main method: the start point after all options are parsed.
      * <p>
      * <b>Default Implementation:</b> Get default input (usually the stdin) if no file is specified,
@@ -324,97 +306,25 @@ public class BasicCLI
      * {@link #doMainManaged(String[])}
      */
     @OverrideOption(group = "basicMain")
-    protected void doMain(String[] args)
-            throws Exception {
-        if (args.length == 0) {
-            InputStream in = _getDefaultIn();
-            if (in != null)
-                doFileArgument(null, in);
-            else
-                _help();
-        } else {
-            doMainManaged(args);
-        }
+    protected abstract void mainImpl(String... args)
+            throws Exception;
+
+    protected Iterable<IFile> expandWildcards(final String... pathnames) {
+        List<Iterable<IFile>> iterables = new ArrayList<>(pathnames.length);
+        for (int i = 0; i < pathnames.length; i++)
+            iterables.set(i, expandWildcards(pathnames[i]));
+        return Iterables.concat(iterables);
     }
 
-    boolean wildcardsEnabled = false;
-
-    /**
-     * 
-     * User repeatable-main method. <i>({@link #_getDefaultIn()} is never used)</i>
-     * <p>
-     * <b>Default Implementation:</b> Expand each wild-card argument when necessary. Next step:
-     * {@link #doFileArgument(File)}
-     */
-    @OverrideOption(group = "basicMain")
-    protected void doMainManaged(String[] args)
-            throws Exception {
-        for (String arg : args) {
-            IFile workdir = VFSColos.workdir.get();
-            IFile file = workdir.getChild(arg);
-
-            // Only wildcards appeared in the base name is supported.
-            // Wildcards in the dir name is ignored.
-            String baseName = file.getName();
-
-            if (baseName.contains("*") || baseName.contains("?")) {
-                if (!wildcardsEnabled)
-                    throw new IllegalArgumentException("Wildcards isn't supported: " + arg);
-
-                if (!(file instanceof JavaioFile))
-                    throw new UnsupportedOperationException("Wildcards is only supported in local filesystem");
-
-                File localFile = ((JavaioFile) file).getLocalFile();
-
-                FileSystem fs = FileSystems.getDefault();
-                PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
-                for (File sibling : localFile.getParentFile().listFiles())
-                    if (pathMatcher.matches(sibling.toPath())) {
-                        logger.debug("Wildcard expansion: ", localFile, " -> ", sibling);
-                        IFile _sibling = new JavaioFile(sibling);
-                        doFileArgument(_sibling);
-                    }
-            } else {
-                doFileArgument(file);
+    protected Iterable<IFile> expandWildcards(final String pathname) {
+        return new Iterable<IFile>() {
+            @Override
+            public Iterator<IFile> iterator() {
+                WildcardExpander expander = new WildcardExpander(pathname);
+                expander.logger = logger; // Utilize the verbose option.
+                return expander;
             }
-        }
-    }
-
-    /**
-     * <b>Default Implementation:</b> Open the file and continue to
-     * {@link #doFileArgument(File, InputStream)}
-     * 
-     * @param file
-     *            canonical file
-     */
-    @OverrideOption(group = "basicMain")
-    protected void doFileArgument(IFile file)
-            throws Exception {
-        assert file != null;
-        InputStream in = file.getInputSource().newInputStream();
-        try {
-            doFileArgument(file, in);
-        } finally {
-            in.close();
-        }
-    }
-
-    /**
-     * If no argument specified, _main(null, stdin) is called.
-     * <p>
-     * <b>Default Implementation:</b> not implemented.
-     * 
-     * @param file
-     *            canonical file or null
-     */
-    @OverrideOption(group = "basicMain")
-    protected void doFileArgument(IFile file, InputStream in)
-            throws Exception {
-        throw new NotImplementedException();
-    }
-
-    protected ArtifactDoc getArtifactDoc() {
-        return null;
+        };
     }
 
 }

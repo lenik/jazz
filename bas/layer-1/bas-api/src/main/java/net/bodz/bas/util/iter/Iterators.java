@@ -1,6 +1,7 @@
 package net.bodz.bas.util.iter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -17,8 +18,7 @@ public class Iterators {
      * Get an empty iterator.
      */
     public static <T> Iterator<T> empty() {
-        @SuppressWarnings("unchecked")
-        Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
+        @SuppressWarnings("unchecked") Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
         return empty;
     }
 
@@ -53,20 +53,13 @@ public class Iterators {
         return new ArrayIterator<T>(array, start);
     }
 
-    @SafeVarargs
-    public static <T> Iterator<T> concat(Iterator<T>... iterators) {
+    public static <T> Iterator<T> concat(List<Iterator<T>> iterators) {
         return new ConcatIterator<T>(iterators);
     }
 
     @SafeVarargs
-    public static <T> Iterator<T> concat(Iterable<T>... iterables) {
-        @SuppressWarnings("unchecked")
-        Iterator<T>[] iterators = new Iterator[iterables.length];
-
-        for (int i = 0; i < iterables.length; i++)
-            iterators[i] = iterables[i].iterator();
-
-        return new ConcatIterator<T>(iterators);
+    public static <T> Iterator<T> concat(Iterator<T>... iterators) {
+        return new ConcatIterator<T>(Arrays.asList(iterators));
     }
 
     /**
@@ -241,7 +234,8 @@ class ArrayIterator<T>
 class ConcatIterator<T>
         extends PrefetchedIterator<T> {
 
-    private Iterator<T>[] iterators;
+    private List<Iterator<T>> iterators;
+    private int num;
 
     private int currentIteratorIndex;
     private Iterator<T> currentIterator;
@@ -250,19 +244,21 @@ class ConcatIterator<T>
      * As iterators are only for (fast-forward) iterating, i.e., it won't accept to add new
      * elements, so its safe-varargs definitely.
      */
-    public ConcatIterator(Iterator<T>[] iterators) {
+    public ConcatIterator(List<Iterator<T>> iterators) {
         if (iterators == null)
             throw new NullPointerException("iterators");
         this.iterators = iterators;
+        this.num = iterators.size();
     }
 
     @Override
     protected T fetch() {
         if (currentIterator == null) {
-            if (currentIteratorIndex >= iterators.length)
+            if (currentIteratorIndex < num) {
+                currentIterator = iterators.get(currentIteratorIndex++);
+                return fetch();
+            } else
                 return end();
-            currentIterator = iterators[currentIteratorIndex++];
-            return fetch();
         }
         if (!currentIterator.hasNext()) {
             currentIterator = null;

@@ -1,11 +1,7 @@
 package net.bodz.bas.cli.skel;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -13,15 +9,11 @@ import net.bodz.bas.c.java.io.FileDiff;
 import net.bodz.bas.c.java.io.TempFile;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.sio.WriterPrintOut;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
@@ -333,94 +325,6 @@ public class BatchEditCLI
         }
     }
 
-    /**
-     * @throws NotImplementedException
-     */
-    @Override
-    @Deprecated
-    protected void doFile(IFile file, InputStream in)
-            throws Exception {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * @param file
-     *            canonical file
-     * @param editTmp
-     *            canonical file
-     */
-    @OverrideOption(group = "batchEdit")
-    protected EditResult doEditWithTemp(IFile file, IFile editTmp)
-            throws Exception {
-        EditResult result = doEdit(file, editTmp);
-        if (result == null) // ignored
-            return null;
-        IFile dst = getOutputFile(file);
-        addResult(file, dst, editTmp, result);
-        return null;
-    }
-
-    /**
-     * open file
-     * 
-     * @return PROCESS_IGNORE: file skipped <br>
-     *         PROCESS_EDIT: have the result written to the out file
-     */
-    @OverrideOption(group = "batchEdit")
-    protected EditResult doEdit(IFile inFile, IFile outFile)
-            throws Exception {
-        InputStream in = null;
-        OutputStream out = null;
-        try {
-            in = inFile.getInputSource(inputEncoding).newInputStream();
-            if (outFile != null)
-                out = outFile.getOutputTarget(outputEncoding).newOutputStream();
-            else
-                out = System.out;
-            return doEditByIO(in, out);
-        } finally {
-            if (in != null)
-                in.close();
-            if (out != null)
-                out.close();
-        }
-    }
-
-    /**
-     * Implemented as: read lines and pass to {@link #doEditByLine(Iterable, CharOut)}.
-     * 
-     * @return PROCESS_IGNORE: file skipped <br>
-     *         PROCESS_EDIT: have the result written to the output
-     */
-    @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByIO(InputStream in, OutputStream out)
-            throws Exception {
-        InputStreamSource source = new InputStreamSource(in);
-        source.setCharset(inputEncoding);
-
-        Iterable<String> lines = source.tooling()._for(StreamReading.class).lines(false);
-
-        IPrintOut cout = Stdio.cout;
-        if (out != null) {
-            OutputStreamWriter writer = new OutputStreamWriter(out, outputEncoding.name());
-            cout = new WriterPrintOut(writer);
-        }
-
-        return doEditByLine(lines, cout);
-    }
-
-    /**
-     * Iterated line includes the line term chars.
-     * 
-     * @return PROCESS_IGNORE: file skipped <br>
-     *         PROCESS_EDIT: have the result written to the output
-     */
-    @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByLine(Iterable<String> lines, IPrintOut out)
-            throws Exception {
-        throw new NotImplementedException();
-    }
-
     protected final ProcessResultStat stat = new ProcessResultStat();
 
     protected void addResult(EditResult result)
@@ -542,9 +446,9 @@ public class BatchEditCLI
     }
 
     @Override
-    protected void doMain(String[] args)
+    protected void mainImpl(String[] args)
             throws Exception {
-        super.doMain(args);
+        super.mainImpl(args);
         if (logger.isInfoEnabled(1))
             stat.dumpDetail(logger.getInfoSink(1));
         else if (logger.isInfoEnabled())
@@ -558,53 +462,6 @@ public class BatchEditCLI
             throws Exception {
         logger.status("[start] ", file);
         super.doFileArgument(file);
-    }
-
-    public class Methods
-            extends net.bodz.bas.cli.skel.BatchCLI.Methods {
-
-        public EditResult doEdit(IFile file)
-                throws Exception {
-            return BatchEditCLI.this.doEdit(file);
-        }
-
-        public EditResult doEdit(IFile in, IFile out)
-                throws Exception {
-            return BatchEditCLI.this.doEdit(in, out);
-        }
-
-        public EditResult doEditByIO(InputStream in, OutputStream out)
-                throws Throwable {
-            return BatchEditCLI.this.doEditByIO(in, out);
-        }
-
-        public EditResult doEditByLine(Iterable<String> lines, IPrintOut out)
-                throws Throwable {
-            return BatchEditCLI.this.doEditByLine(lines, out);
-        }
-
-        public final byte[] doEditToBuffer(IStreamInputSource source)
-                throws IOException {
-            InputStream in = source.newInputStream();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            try {
-                // ProcessResult result =
-                doEditByIO(in, out);
-            } catch (Throwable e) {
-                throw new RuntimeException(e.getMessage(), e);
-            } finally {
-                in.close();
-            }
-            return out.toByteArray();
-        }
-
-    }
-
-    @Override
-    public Methods methods() {
-        if (methods == null)
-            methods = new Methods();
-        return (Methods) methods;
     }
 
 }
