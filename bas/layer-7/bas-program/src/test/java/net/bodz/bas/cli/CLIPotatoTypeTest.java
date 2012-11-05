@@ -25,6 +25,11 @@ public class CLIPotatoTypeTest
         return "hello " + t;
     }
 
+    @Override
+    protected void mainImpl(String... args)
+            throws Exception {
+    }
+
     @Test
     public void test1()
             throws Exception {
