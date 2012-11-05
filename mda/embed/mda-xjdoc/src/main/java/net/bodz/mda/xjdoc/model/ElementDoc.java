@@ -11,7 +11,6 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.DomainStrings;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
@@ -99,7 +98,7 @@ public class ElementDoc
 
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
-            throws IOException, NegotiationException {
+            throws IOException {
         ITagBook book = null;
         if (negotiation != null)
             book = negotiation.get(ITagBook.class);
@@ -117,8 +116,7 @@ public class ElementDoc
     }
 
     @Override
-    public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation)
-            throws NegotiationException {
+    public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation) {
         ITagBook book = TagBook.getInstance(negotiation);
         return new FlatfHandler(book, negotiation);
     }

@@ -1,14 +1,15 @@
 package net.bodz.bas.c.java.io;
 
-import static net.bodz.bas.c.java.util.regex.PatternTraits.*;
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.c.java.util.regex.PatternTraits.globTextformMode;
+import static net.bodz.bas.c.java.util.regex.PatternTraits.textformMode;
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
 
 import java.util.regex.Pattern;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 
@@ -34,8 +35,6 @@ public class GlobFilenameFilter
         try {
             return patternParser.parse(pattern, globNegotiation);
         } catch (ParseException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        } catch (NegotiationException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
     }

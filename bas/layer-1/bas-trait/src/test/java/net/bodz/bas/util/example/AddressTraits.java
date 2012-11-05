@@ -3,7 +3,6 @@ package net.bodz.bas.util.example;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.MandatoryException;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
@@ -35,11 +34,7 @@ public class AddressTraits
     @Override
     public Address parse(String text)
             throws ParseException {
-        try {
-            return parse(text, null);
-        } catch (NegotiationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        return parse(text, null);
     }
 
     @Override

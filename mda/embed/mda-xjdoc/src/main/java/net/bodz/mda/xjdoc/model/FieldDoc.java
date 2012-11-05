@@ -3,7 +3,6 @@ package net.bodz.mda.xjdoc.model;
 import java.io.IOException;
 
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class FieldDoc
@@ -26,7 +25,7 @@ public class FieldDoc
 
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
-            throws IOException, NegotiationException {
+            throws IOException {
         out.sectionBegin("field:" + getName());
         super.writeObject(out, negotiation);
         out.sectionEnd();

@@ -59,7 +59,7 @@ public class DoubleTraits
 
     @Override
     public Double newSample(Map<String, Object> classification, INegotiation negotiation)
-            throws CreateException, NegotiationException {
+            throws CreateException {
         String distribution = defaultSampleDistribution;
         IParameter distributionParam = null;
 

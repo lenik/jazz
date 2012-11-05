@@ -6,8 +6,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import javax.script.ScriptException;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.RuntimeConfigurable;
@@ -29,11 +27,7 @@ public class CLITask
 
     public CLITask(BasicCLI app) {
         this.app = app;
-        try {
-            appType = app.getPotatoType();
-        } catch (ScriptException e) {
-            throw new Error(e.getMessage(), e);
-        }
+        this.appType = app.getPotatoType();
     }
 
     private List<String> remainingArguments;
@@ -84,56 +78,53 @@ public class CLITask
             throws BuildException {
         RuntimeConfigurable wrapper = getRuntimeConfigurableWrapper();
         Hashtable<?, ?> attrs = wrapper.getAttributeMap();
-        try {
-            IOptionGroup opts = app.getOptions();
-            List<String> rawArgs = null;
-            for (Map.Entry<?, ?> ent : attrs.entrySet()) {
-                String optnam = (String) ent.getKey();
-                String optarg = (String) ent.getValue();
-                if (optnam.startsWith("arg-")) {
-                    int argIndex = Integer.parseInt(optnam.substring(4));
-                    if (rawArgs == null)
-                        rawArgs = new ArrayList<String>(argIndex + 1);
-                    while (rawArgs.size() <= argIndex)
-                        rawArgs.add(null);
-                    rawArgs.set(argIndex, optarg);
-                    continue;
-                }
 
-                List<String> suggestions = new ArrayList<String>();
-                opts.fillSuggestKeys(optnam, suggestions);
-                if (suggestions.size() != 1) {
-                    // TODO
-                }
-
-                // if (optnam.length() == 1)
-                // opts.load(app, "-" + optnam + optarg);
-                // else
-                // opts.load(app, "--" + optnam, optarg);
-                wrapper.removeAttribute(optnam);
-            }
-            if (rawArgs != null) {
-                for (int i = rawArgs.size() - 1; i >= 0; i--)
-                    if (rawArgs.get(i) == null)
-                        rawArgs.remove(i);
-                String[] argv = rawArgs.toArray(new String[0]);
-                ; // app.addArguments(argv);
+        IOptionGroup opts = app.getOptions();
+        List<String> rawArgs = null;
+        for (Map.Entry<?, ?> ent : attrs.entrySet()) {
+            String optnam = (String) ent.getKey();
+            String optarg = (String) ent.getValue();
+            if (optnam.startsWith("arg-")) {
+                int argIndex = Integer.parseInt(optnam.substring(4));
+                if (rawArgs == null)
+                    rawArgs = new ArrayList<String>(argIndex + 1);
+                while (rawArgs.size() <= argIndex)
+                    rawArgs.add(null);
+                rawArgs.set(argIndex, optarg);
+                continue;
             }
 
-            // children tags
-            Enumeration<RuntimeConfigurable> children = wrapper.getChildren();
-            while (children.hasMoreElements()) {
-                RuntimeConfigurable child = children.nextElement();
-                String name = child.getElementTag();
-                String value = child.getText().toString();
-                if ("arg".equals(name))
-                    ; // app.addArguments(value);
-                else
-                    ;
-                // throw new BuildException("invalid child tag: " + name);
+            List<String> suggestions = new ArrayList<String>();
+            opts.fillSuggestKeys(optnam, suggestions);
+            if (suggestions.size() != 1) {
+                // TODO
             }
-        } catch (CLIException e) {
-            throw new BuildException(e.getMessage(), e);
+
+            // if (optnam.length() == 1)
+            // opts.load(app, "-" + optnam + optarg);
+            // else
+            // opts.load(app, "--" + optnam, optarg);
+            wrapper.removeAttribute(optnam);
+        }
+        if (rawArgs != null) {
+            for (int i = rawArgs.size() - 1; i >= 0; i--)
+                if (rawArgs.get(i) == null)
+                    rawArgs.remove(i);
+            String[] argv = rawArgs.toArray(new String[0]);
+            ; // app.addArguments(argv);
+        }
+
+        // children tags
+        Enumeration<RuntimeConfigurable> children = wrapper.getChildren();
+        while (children.hasMoreElements()) {
+            RuntimeConfigurable child = children.nextElement();
+            String name = child.getElementTag();
+            String value = child.getText().toString();
+            if ("arg".equals(name))
+                ; // app.addArguments(value);
+            else
+                ;
+            // throw new BuildException("invalid child tag: " + name);
         }
 
         super.maybeConfigure();

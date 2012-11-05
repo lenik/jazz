@@ -7,7 +7,6 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
@@ -44,8 +43,7 @@ public class LocaleTraits
     }
 
     @Override
-    public Locale parse(String text, INegotiation negotiation)
-            throws NegotiationException {
+    public Locale parse(String text, INegotiation negotiation) {
         String separator = defaultTextformSeparator;
 
         for (IParameter param : negotiation) {

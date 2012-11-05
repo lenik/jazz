@@ -10,7 +10,6 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.mi.AbstractQueryable;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.optim.ThreadUnsafe;
 
 @ThreadUnsafe
@@ -152,8 +151,7 @@ public abstract class AbstractCommonTraits<T>
     }
 
     @Override
-    public String format(T object, INegotiation negotiation)
-            throws NegotiationException {
+    public String format(T object, INegotiation negotiation) {
         if (negotiation != null)
             negotiation.ignore();
         return format(object);
@@ -161,7 +159,7 @@ public abstract class AbstractCommonTraits<T>
 
     @Override
     public T parse(String text, INegotiation negotiation)
-            throws ParseException, NegotiationException {
+            throws ParseException {
         if (negotiation != null)
             negotiation.ignore();
         return parse(text);
@@ -169,7 +167,7 @@ public abstract class AbstractCommonTraits<T>
 
     @Override
     public void validate(T object, INegotiation negotiation)
-            throws ValidationException, NegotiationException {
+            throws ValidationException {
         if (negotiation != null)
             negotiation.ignore();
         validate(object);
@@ -177,7 +175,7 @@ public abstract class AbstractCommonTraits<T>
 
     @Override
     public Map<String, Object> classify(T object, INegotiation negotiation)
-            throws ClassifyException, NegotiationException {
+            throws ClassifyException {
         if (negotiation != null)
             negotiation.ignore();
         return classify(object);
@@ -198,8 +196,7 @@ public abstract class AbstractCommonTraits<T>
     }
 
     @Override
-    public Iterator<?> search(T object, String query, INegotiation negotiation)
-            throws NegotiationException {
+    public Iterator<?> search(T object, String query, INegotiation negotiation) {
         if (negotiation != null)
             negotiation.ignore();
         return search(object, query);
@@ -207,7 +204,7 @@ public abstract class AbstractCommonTraits<T>
 
     @Override
     public T newSample(Map<String, Object> classification, INegotiation negotiation)
-            throws CreateException, NegotiationException {
+            throws CreateException {
         if (classification != null)
             if (!classification.isEmpty())
                 return null;

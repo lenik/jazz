@@ -4,7 +4,6 @@ import java.beans.ExceptionListener;
 import java.util.Iterator;
 
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface ISearcher<T> {
 
@@ -31,7 +30,6 @@ public interface ISearcher<T> {
      *            Query string which usually contains the keywords to be searched.
      * @return non-<code>null</code> {@link Iterator} of search result.
      */
-    Iterator<?> search(T object, String query, INegotiation negotiation)
-            throws NegotiationException;
+    Iterator<?> search(T object, String query, INegotiation negotiation);
 
 }

@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IParser<T> {
 
@@ -34,6 +33,6 @@ public interface IParser<T> {
      * @return ? extends <code>T</code>
      */
     T parse(String text, INegotiation negotiation)
-            throws ParseException, NegotiationException;
+            throws ParseException;
 
 }

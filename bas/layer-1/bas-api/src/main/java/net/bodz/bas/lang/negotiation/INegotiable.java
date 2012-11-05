@@ -9,7 +9,6 @@ public interface INegotiable {
      *             If the callee don't accept the negotiation, for example, an important parameter
      *             isn't supported by the callee.
      */
-    void negotiate(INegotiation negotiation)
-            throws NegotiationException;
+    void negotiate(INegotiation negotiation);
 
 }

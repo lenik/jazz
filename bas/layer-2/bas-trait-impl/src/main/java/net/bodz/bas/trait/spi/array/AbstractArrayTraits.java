@@ -5,7 +5,6 @@ import java.util.Map;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.lang.negotiation.INegotiable;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 
@@ -62,8 +61,7 @@ public abstract class AbstractArrayTraits<T>
         }
 
         @Override
-        public void negotiate(INegotiation negotiation)
-                throws NegotiationException {
+        public void negotiate(INegotiation negotiation) {
             minLength = negotiation.get(sampleMinLength, minLength);
             maxLength = negotiation.get(sampleMaxLength, maxLength);
         }
@@ -82,7 +80,7 @@ public abstract class AbstractArrayTraits<T>
 
     @Override
     public T newSample(Map<String, Object> classification, INegotiation negotiation)
-            throws CreateException, NegotiationException {
+            throws CreateException {
         ArraySampleParameters sampleParameters = newSampleParameters();
         sampleParameters.negotiate(negotiation);
         return newSample(sampleParameters);

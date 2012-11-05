@@ -8,13 +8,12 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.mda.xjdoc.util.WordTokenizer;
 
 public class FlatfLoader {
 
     public void load(IStreamInputSource inputSource, IFlatfSerializable target, INegotiation negotiation)
-            throws IOException, ParseException, NegotiationException {
+            throws IOException, ParseException {
         Reader reader = inputSource.newReader();
         try {
             FlatfInput in = new FlatfInput(reader);
@@ -25,7 +24,7 @@ public class FlatfLoader {
     }
 
     public void load(IFlatfInput in, IFlatfSerializable target, INegotiation negotiation)
-            throws ParseException, IOException, NegotiationException {
+            throws ParseException, IOException {
         int token;
         String currentSection = in.getSectionName();
         ISectionHandler sectionHandler = target.getSectionHandler(currentSection, negotiation);

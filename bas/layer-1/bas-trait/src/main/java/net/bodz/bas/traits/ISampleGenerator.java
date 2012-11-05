@@ -5,7 +5,6 @@ import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 
 public interface ISampleGenerator<T> {
@@ -43,6 +42,6 @@ public interface ISampleGenerator<T> {
      *         empty.
      */
     T newSample(Map<String, Object> classification, INegotiation negotiation)
-            throws CreateException, NegotiationException;
+            throws CreateException;
 
 }

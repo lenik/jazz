@@ -5,7 +5,6 @@ import java.util.Map;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public class TagBook
         implements ITagBook {
@@ -28,8 +27,7 @@ public class TagBook
         return StringTagType.INSTANCE;
     }
 
-    public static ITagBook getInstance(INegotiation negotiation)
-            throws NegotiationException {
+    public static ITagBook getInstance(INegotiation negotiation) {
         ITagBook instance = null;
         if (negotiation != null)
             instance = negotiation.require(ITagBook.class);

@@ -3,7 +3,7 @@ package net.bodz.bas.lang.negotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 
 public class NegotiationException
-        extends Exception {
+        extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

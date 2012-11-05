@@ -3,7 +3,6 @@ package net.bodz.bas.traits;
 import java.util.Map;
 
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IClassifier<T> {
 
@@ -13,7 +12,7 @@ public interface IClassifier<T> {
             throws ClassifyException;
 
     Map<String, Object> classify(T object, INegotiation negotiation)
-            throws ClassifyException, NegotiationException;
+            throws ClassifyException;
 
     IAttributes getClassAnnotations(String classId);
 
