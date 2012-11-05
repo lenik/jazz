@@ -1,4 +1,4 @@
-package net.bodz.swt.c3.ia;
+package net.bodz.swt.c3.dialog;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,11 +15,12 @@ import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.util.example.Address;
 import net.bodz.bas.util.example.Person;
+import net.bodz.swt.c3.dialog.SwtDialogs;
 
-public class DialogInteractionTest
+public class SwtDialogsTest
         extends Assert {
 
-    SwtDialog ia;
+    SwtDialogs dialogs;
     Person person;
     {
         person = new Person("Lily", 12, true);
@@ -29,40 +30,40 @@ public class DialogInteractionTest
     String lily = "LiLY";
     Person lily2 = person;
 
-    public DialogInteractionTest() {
-        ia = new SwtDialog(new Shell());
+    public SwtDialogsTest() {
+        dialogs = new SwtDialogs(new Shell());
     }
 
     @Test
     public void testAlert() {
-        ia.alert("Hello", "World");
-        ia.alert("Hello", lily);
+        dialogs.alert("Hello", "World");
+        dialogs.alert("Hello", lily);
         IOException ex = new IOException("outer", new RuntimeException("inner"));
-        ia.alert("Exception Sample", ex);
+        dialogs.alert("Exception Sample", ex);
     }
 
     @Test
     public void testConfirm() {
-        boolean b = ia.confirm("Continue?", "Do you want to continue the operation?");
+        boolean b = dialogs.confirm("Continue?", "Do you want to continue the operation?");
         if (b) {
-            b = ia.confirm("Kiss lily?", lily);
+            b = dialogs.confirm("Kiss lily?", lily);
             if (b)
-                ia.alert("Kissed");
+                dialogs.alert("Kissed");
         }
     }
 
     @Test
     public void testAsk() {
-        int answer = ia.ask("Error happens", new ExpectedException(), //
+        int answer = dialogs.ask("Error happens", new ExpectedException(), //
                 DirectiveCommands.retry, DirectiveCommands.ignore, DirectiveCommands.cancel);
         System.out.println("Answer: " + answer);
     }
 
     @Test
     public void testPrompt() {
-        String yourName = ia.prompt("What's your name?");
+        String yourName = dialogs.prompt("What's your name?");
         System.out.println("Your name = " + yourName);
-        Float num = ia.prompt("Enter a number", "Enter a number in decimal", Float.class, 100f);
+        Float num = dialogs.prompt("Enter a number", "Enter a number in decimal", Float.class, 100f);
         if (num == null)
             System.out.println("Canceled");
         else
@@ -118,13 +119,13 @@ public class DialogInteractionTest
 
     @Test
     public void testChoice() {
-        int choice = ia.choice("Choice an animal: ", Arrays.asList(animals));
+        int choice = dialogs.choice("Choice an animal: ", Arrays.asList(animals));
         if (choice == -1)
             System.out.println("nothing choiced");
         else
             System.out.println("Choiced: " + animals[choice]);
 
-        Integer k = ia.choice("Choice a number: ", numbers, 20);
+        Integer k = dialogs.choice("Choice a number: ", numbers, 20);
         if (k == null)
             System.out.println("nothing choiced");
         else
@@ -133,13 +134,13 @@ public class DialogInteractionTest
 
     @Test
     public void testChoices() {
-        int[] choices = ia.choices("Choice animals: ", Arrays.asList(animals));
+        int[] choices = dialogs.choices("Choice animals: ", Arrays.asList(animals));
         if (choices == null)
             System.out.println("nothing choiced");
         else
             System.out.println("Choiced: " + StringArray.joinByDot(choices));
 
-        Set<Integer> kv = ia.choices("Choice numbers: ", numbers, 2, 4);
+        Set<Integer> kv = dialogs.choices("Choice numbers: ", numbers, 2, 4);
         if (kv == null)
             System.out.println("nothing choiced");
         else

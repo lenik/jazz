@@ -32,7 +32,7 @@ import net.bodz.bas.c.java.util.LocaleTraits;
 import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.gui.mda.PreferredSize;
 import net.bodz.bas.loader.boot.BootInfo;
@@ -47,8 +47,8 @@ import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.c3.dialog.AboutDialog;
 import net.bodz.swt.c3.dialog.CreditDialog;
 import net.bodz.swt.c3.dialog.SelectLanguageDialog;
+import net.bodz.swt.c3.dialog.SwtDialogs;
 import net.bodz.swt.c3.dialog.ThreadsMonitor;
-import net.bodz.swt.c3.ia.SwtDialog;
 
 /**
  * @lang en
@@ -82,7 +82,7 @@ public class BasicGUI
     private DynamicControl viewArea;
     private Map<Object, Composite> views;
 
-    protected IUserDialog UI = new SwtDialog();
+    protected IUserDialogs userDialogs = new SwtDialogs();
 
     @Override
     public synchronized void execute(String... args)
@@ -93,7 +93,7 @@ public class BasicGUI
             throw c;
         } catch (Exception e) {
             if (!shell.isDisposed()) {
-                SwtDialog iact = new SwtDialog(shell);
+                SwtDialogs iact = new SwtDialogs(shell);
                 iact.alert(e.getMessage(), e);
             }
             throw e;
@@ -137,7 +137,7 @@ public class BasicGUI
     private static final String KEY_LANG = "net.bodz.bas.preferredLanguage";
 
     @Override
-    protected void doMain(String[] args)
+    protected void mainImpl(String[] args)
             throws Exception {
         // this.args = args;
         views = new HashMap<Object, Composite>();
@@ -160,7 +160,7 @@ public class BasicGUI
         Locale.setDefault(locale);
 
         shell = createShell();// throws GUIExcaption
-        UI = new SwtDialog(shell);
+        userDialogs = new SwtDialogs(shell);
 
         shell.open();
         shell.layout();
@@ -374,7 +374,7 @@ public class BasicGUI
                 try {
                     Desktop.getDesktop().browse(uri);
                 } catch (IOException ex) {
-                    UI.alert(tr._("Can\'t open browser"), ex);
+                    userDialogs.alert(tr._("Can\'t open browser"), ex);
                 }
             }
         });

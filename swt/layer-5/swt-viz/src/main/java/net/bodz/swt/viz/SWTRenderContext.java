@@ -5,14 +5,15 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Control;
 
+import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.swt.c3.ia.SwtDialog;
+import net.bodz.swt.c3.dialog.SwtDialogs;
 import net.bodz.swt.gui.api.ICommand;
 
 public class SWTRenderContext {
 
-    public SwtDialog interact(Control active) {
-        return new SwtDialog(active.getShell());
+    public IUserDialogs getUserDialogs(Control active) {
+        return new SwtDialogs(active.getShell());
     }
 
     public void addEffects(Control control, IRefEntry_SWT<?> entry)

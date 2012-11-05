@@ -23,7 +23,7 @@ public abstract class SessionJob
             throw new NullPointerException("component");
         this.session = session;
         this.component = component;
-        setUserInterface(session.getUserInterface());
+        setUserDialogs(session.getUserDialogs());
         setLogger(session.getLogger());
     }
 

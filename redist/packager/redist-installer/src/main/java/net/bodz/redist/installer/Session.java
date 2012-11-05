@@ -16,7 +16,7 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.c.system.SystemColos;
-import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
@@ -34,7 +34,7 @@ public class Session
     static final String registryPath = "registry.xml";
 
     private final IProject project;
-    protected final IUserDialog UI;
+    protected final IUserDialogs dialogs;
     protected Logger logger;
 
     private Components components;
@@ -50,15 +50,15 @@ public class Session
     // private Stack<Component> stack;
     private TextMap<StatedAttachment> apool;
 
-    public Session(IProject project, IUserDialog userInterface, Logger logger) {
+    public Session(IProject project, IUserDialogs userDialogs, Logger logger) {
         if (project == null)
             throw new NullPointerException("project");
-        if (userInterface == null)
-            throw new NullPointerException("userInterface");
+        if (userDialogs == null)
+            throw new NullPointerException("userDialogs");
         if (logger == null)
             throw new NullPointerException("logger");
         this.project = project;
-        this.UI = userInterface;
+        this.dialogs = userDialogs;
         this.logger = logger;
 
         logger.info(tr._("Collect components"));
@@ -139,8 +139,8 @@ public class Session
     }
 
     @Override
-    public IUserDialog getUserInterface() {
-        return UI;
+    public IUserDialogs getUserDialogs() {
+        return dialogs;
     }
 
     @Override

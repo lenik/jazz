@@ -18,13 +18,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.gui.dialog.IUserDialog;
+import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.i18n.nls.NLS;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.ia.SwtDialog;
+import net.bodz.swt.c3.dialog.SwtDialogs;
 
 public class NavigatorComposite
         extends Composite
@@ -64,7 +64,7 @@ public class NavigatorComposite
 
         @Override
         protected void handleException(Exception e) {
-            UI.alert(tr._("Validate Exception"), e);
+            userDialogs.alert(tr._("Validate Exception"), e);
         }
 
     }
@@ -74,7 +74,7 @@ public class NavigatorComposite
     private History history;
     private AbstractPageFlow pageFlow;
 
-    private IUserDialog UI;
+    private IUserDialogs userDialogs;
 
     private boolean useLegend;
     private Composite legends;
@@ -113,7 +113,7 @@ public class NavigatorComposite
         this.dict = book.getDict();
         this.history = history;
         this.pageFlow = new DefaultPageFlow();
-        this.UI = new SwtDialog(getShell());
+        this.userDialogs = new SwtDialogs(getShell());
 
         labelFormat_sc = tr._("%s");
 

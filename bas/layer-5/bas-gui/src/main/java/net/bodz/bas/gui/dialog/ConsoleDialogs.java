@@ -18,13 +18,13 @@ import net.bodz.bas.gui.err.GUIRuntimeException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.traits.ParserUtil;
 
-public class ConsoleDialog
-        extends AbstractUserDialog {
+public class ConsoleDialogs
+        extends AbstractUserDialogs {
 
     private LineReader lineIn;
     private PrintStream out;
 
-    public ConsoleDialog(InputStream in, PrintStream out) {
+    public ConsoleDialogs(InputStream in, PrintStream out) {
         if (in == null)
             throw new NullPointerException("in");
         if (out == null)
@@ -34,11 +34,11 @@ public class ConsoleDialog
         this.out = out;
     }
 
-    public static final ConsoleDialog stdout;
-    public static final ConsoleDialog stderr;
+    public static final ConsoleDialogs stdout;
+    public static final ConsoleDialogs stderr;
     static {
-        stdout = new ConsoleDialog(System.in, System.out);
-        stderr = new ConsoleDialog(System.in, System.err);
+        stdout = new ConsoleDialogs(System.in, System.out);
+        stderr = new ConsoleDialogs(System.in, System.err);
     }
 
     void print(String title, Object detail) {

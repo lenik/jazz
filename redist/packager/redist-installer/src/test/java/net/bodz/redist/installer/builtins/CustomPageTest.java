@@ -2,7 +2,7 @@ package net.bodz.redist.installer.builtins;
 
 import org.junit.Test;
 
-import net.bodz.bas.gui.dialog.ConsoleDialog;
+import net.bodz.bas.gui.dialog.ConsoleDialogs;
 import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.redist.installer.ISession;
@@ -16,7 +16,7 @@ public class CustomPageTest {
     public void test()
             throws Exception {
         TestProject project = new TestProject();
-        final ISession session = new Session(project, ConsoleDialog.stdout, ConsoleLogger.getInstance());
+        final ISession session = new Session(project, ConsoleDialogs.stdout, ConsoleLogger.getInstance());
         PageTester app = new PageTester(new CustomPage(project, session));
         app.run();
         session.dump(Stdio.cout);

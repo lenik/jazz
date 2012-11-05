@@ -13,7 +13,7 @@ import net.bodz.bas.model.IExecutableX;
  * <li>UserCanceledException
  * </ul>
  */
-public interface IUserDialog {
+public interface IUserDialogs {
 
     void alert(String title);
 

@@ -75,7 +75,7 @@ public class R_File
             }
 
             ControlAdapters.autocommitForFocus(fileText, new CommitAdapter(//
-                    rc.interact(fileText)) {
+                    rc.getUserDialogs(fileText)) {
                 @Override
                 public void commit(EventObject event)
                         throws CommitException {
