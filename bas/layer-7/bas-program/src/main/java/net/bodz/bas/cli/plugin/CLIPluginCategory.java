@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.PluginCategory;
@@ -22,8 +21,7 @@ public class CLIPluginCategory
         super(name, baseType);
     }
 
-    public void help(IPrintOut out, String prefix)
-            throws CLIException {
+    public void help(IPrintOut out, String prefix) {
         List<String> ids = new ArrayList<String>(registry.keySet());
         Collections.sort(ids);
 

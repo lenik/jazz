@@ -1,4 +1,4 @@
-package net.bodz.bas.cli;
+package net.bodz.bas.cli.skel;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Modifier;

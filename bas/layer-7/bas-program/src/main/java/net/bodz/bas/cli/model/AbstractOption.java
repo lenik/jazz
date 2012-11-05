@@ -8,6 +8,8 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.lang.negotiation.ListNegotiation;
+import net.bodz.bas.lang.negotiation.Negotiation;
 import net.bodz.bas.meta.util.ComponentType;
 import net.bodz.bas.potato.model.AbstractElement;
 import net.bodz.bas.trait.Traits;
@@ -156,16 +158,18 @@ public abstract class AbstractOption
     }
 
     @Override
-    public Object parseValue(String string)
+    public Object parseValue(Object context, String string)
             throws ParseException {
         Class<?> valueType = getValueType();
         IParser<?> parser = Traits.getTrait(valueType, IParser.class);
-        Object value = parser.parse(string);
+        ListNegotiation negotiation = Negotiation.list(//
+                Negotiation.parameter(IParser.PARSE_CONTEXT, context));
+        Object value = parser.parse(string, negotiation);
         return value;
     }
 
     @Override
-    public String formatValue(Object value)
+    public String formatValue(Object context, Object value)
             throws FormatException {
         Class<?> valueType = getValueType();
         IFormatter<Object> formatter = Traits.getTrait(valueType, IFormatter.class);

@@ -6,7 +6,14 @@ import net.bodz.bas.cli.model.AbstractOption;
 import net.bodz.bas.err.ParseException;
 
 /**
- * @option -D --define =NAM=VAL --stdout hidden weak
+ * Parse option descriptor into option model.
+ * 
+ * <p>
+ * Example:
+ * 
+ * <pre>
+ *      &#64;option -D --define =NAM=VAL --stdout hidden weak
+ * </pre>
  */
 public class OptionDescriptor {
 
@@ -51,7 +58,7 @@ public class OptionDescriptor {
                 break;
 
             case "default":
-                Object defaultValue = option.parseValue(parameter);
+                Object defaultValue = option.parseValue(null, parameter);
                 option.setDefaultValue(defaultValue);
                 break;
 
