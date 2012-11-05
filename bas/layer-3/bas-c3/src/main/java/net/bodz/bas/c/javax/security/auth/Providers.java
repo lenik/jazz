@@ -27,7 +27,6 @@ import net.bodz.bas.io.tmp.TempOut;
 import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.traits.IParser;
 
-@SuppressWarnings("restriction")
 public class Providers
         implements II18nCapable {
 

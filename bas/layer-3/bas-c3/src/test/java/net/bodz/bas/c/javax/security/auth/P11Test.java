@@ -7,7 +7,6 @@ import sun.security.pkcs11.SunPKCS11;
 
 import net.bodz.bas.util.iter.Iterables;
 
-@SuppressWarnings("restriction")
 public class P11Test {
 
     public static void main(String[] args)

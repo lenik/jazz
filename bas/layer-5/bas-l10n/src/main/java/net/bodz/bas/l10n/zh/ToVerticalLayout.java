@@ -12,8 +12,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.sio.BCharOut;
-
 public class ToVerticalLayout {
 
     static final String verticalLine = "┆";
@@ -54,11 +52,11 @@ public class ToVerticalLayout {
         if (widthProperty != null)
             width = Integer.parseInt(widthProperty);
 
-        BCharOut out = new BCharOut();
+        StringBuilder buf = new StringBuilder();
 
         for (String paragraph : src.split("\n+")) {
             if (paragraph.trim().isEmpty()) {
-                out.println();
+                buf.append("\n");
                 continue;
             }
             paragraph = ConvertCharacterWidth.toFullWidth(paragraph);
@@ -75,14 +73,14 @@ public class ToVerticalLayout {
                 for (int x = 0; x < width; x++) {
                     int index = (width - 1 - x) * height + y;
                     char ch = index < paragraph.length() ? paragraph.charAt(index) : '　';
-                    out.print(verticalLine + ch);
+                    buf.append(verticalLine + ch);
                 }
-                out.println(verticalLine);
+                buf.append(verticalLine + "\n");
             }
-            out.println();
+            buf.append('\n');
         }
 
-        String result = out.toString();
+        String result = buf.toString();
         System.out.println("Result: ");
         System.out.println(result);
         clipboard.setContents(new StringSelection(result), null);

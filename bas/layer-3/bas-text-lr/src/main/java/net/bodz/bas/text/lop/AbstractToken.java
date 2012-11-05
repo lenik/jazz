@@ -2,7 +2,6 @@ package net.bodz.bas.text.lop;
 
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.util.IXYTellable;
 import net.bodz.bas.sio.util.XYPosition;
 
@@ -106,33 +105,33 @@ public abstract class AbstractToken
         Object value = getValue();
         String text = getText();
 
-        BCharOut out = new BCharOut();
+        StringBuilder buf = new StringBuilder();
 
-        out.print(XYPosition.format(this));
-        out.print(": ");
+        buf.append(XYPosition.format(this));
+        buf.append(": ");
 
         if (name != null)
-            out.print(name);
+            buf.append(name);
         else
-            out.print(id);
+            buf.append(id);
 
         if (text != null) {
             if (text.length() == 1 && text.charAt(0) == id)
                 ; // possible (char)ID
             else {
                 String textBrief = Strings.ellipse(text, 20);
-                out.print("(\"");
-                out.print(StringEscape.java(textBrief));
-                out.print("\")");
+                buf.append("(\"");
+                buf.append(StringEscape.java(textBrief));
+                buf.append("\")");
             }
         }
 
         if (value != null) {
-            out.print(" => ");
-            out.print(String.valueOf(value));
+            buf.append(" => ");
+            buf.append(String.valueOf(value));
         }
 
-        return out.toString();
+        return buf.toString();
     }
 
 }

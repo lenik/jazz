@@ -58,19 +58,19 @@ public class FileCopy
 
         @Override
         public String toString() {
-            BCharOut buf = new BCharOut();
+            StringBuilder buf = new StringBuilder();
             if (list == null)
-                buf.print("null list");
+                buf.append("null list");
             else {
-                buf.printf("%d entries, %d bytes", list.length, size);
+                buf.append(String.format("%d entries, %d bytes", list.length, size));
                 if (verbose) {
                     for (int i = 0; i < Math.min(1, list.length); i++) {
                         if (i != 0)
-                            buf.print(", ");
-                        buf.print(list[i]);
+                            buf.append(", ");
+                        buf.append(list[i]);
                     }
                     if (list.length > 10)
-                        buf.print(", ...");
+                        buf.append(", ...");
                 }
             }
             return buf.toString();
@@ -151,12 +151,12 @@ public class FileCopy
 
     @Override
     public String toString() {
-        BCharOut buf = new BCharOut(files.size() * 50);
-        buf.println("FileCopy(" + getName() + ")");
-        buf.println("  base=", baseName, //
-                basePath == null ? "" : ("::" + basePath));
-        buf.println("  removal=", removal);
-        buf.println("  count=", files.size());
+        StringBuilder buf = new StringBuilder(files.size() * 50);
+        buf.append("FileCopy(" + getName() + ")\n");
+        buf.append("  base=" + baseName //
+                + (basePath == null ? "" : ("::" + basePath)) + "\n");
+        buf.append("  removal=" + removal + "\n");
+        buf.append("  count=" + files.size() + "\n");
         return buf.toString();
     }
 

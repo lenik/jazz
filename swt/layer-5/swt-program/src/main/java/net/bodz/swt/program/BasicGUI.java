@@ -137,7 +137,7 @@ public class BasicGUI
     private static final String KEY_LANG = "net.bodz.bas.preferredLanguage";
 
     @Override
-    protected void mainImpl(String[] args)
+    protected void mainImpl(String... args)
             throws Exception {
         // this.args = args;
         views = new HashMap<Object, Composite>();

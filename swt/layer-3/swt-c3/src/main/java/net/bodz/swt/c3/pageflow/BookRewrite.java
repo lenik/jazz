@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.i18n.nls.NLS;
-import net.bodz.bas.sio.BCharOut;
 
 public class BookRewrite
         implements IBook {
@@ -107,15 +106,15 @@ public class BookRewrite
 
     @Override
     public String toString() {
-        BCharOut out = new BCharOut(rules.size() * 30);
-        out.println(getTitle() + ": ");
-        out.println("    Rewrite Rules:");
+        StringBuilder buf = new StringBuilder(rules.size() * 30);
+        buf.append(getTitle() + ": \n");
+        buf.append("    Rewrite Rules: \n");
         for (RewriteRule rule : rules) {
-            out.println("        " + rule);
+            buf.append("        " + rule + "\n");
         }
-        out.println();
-        out.print(next);
-        return out.toString();
+        buf.append("\n");
+        buf.append(next);
+        return buf.toString();
     }
 
 }

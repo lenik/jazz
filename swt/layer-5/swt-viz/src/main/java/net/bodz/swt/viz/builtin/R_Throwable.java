@@ -25,7 +25,6 @@ import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.util.EventHandler;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.bas.potato.ref.IRefEntry;
-import net.bodz.bas.sio.BCharOut;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.control.Controls;
@@ -68,7 +67,7 @@ public class R_Throwable
         final Throwable throwable = (Throwable) entry.get();
         int causeLevel = 0;
         int traceSkipped = 0;
-        BCharOut errbuf = new BCharOut(4000);
+        StringBuilder errbuf = new StringBuilder(4000);
         Throwable th = throwable;
         while (th != null) {
             String mesg = String.valueOf(th); // th.getMessage();
@@ -82,7 +81,7 @@ public class R_Throwable
             final Label mesgLabel = new Label(comp, SWT.NONE);
             mesgLabel.setText(mesg);
             mesgLabel.setForeground(errorColor);
-            errbuf.println(mesg);
+            errbuf.append(mesg + "\n");
 
             // Empty skip =
             new EmptyComposite(comp, SWT.NONE);
@@ -101,8 +100,8 @@ public class R_Throwable
                 Label traceLabel = new Label(callstackComp, SWT.NONE);
                 String textline = traceElement.toString();
                 traceLabel.setText(textline);
-                errbuf.print("    ");
-                errbuf.println(textline);
+                errbuf.append("    ");
+                errbuf.append(textline + "\n");
                 if (usingColors) {
                     Color bg = traceLabel.getBackground();
                     int red = Math.min(255, (bg.getRed() * (9 + i % 3)) / 10);
@@ -112,7 +111,7 @@ public class R_Throwable
                     traceLabel.setBackground(bg);
                 }
             }
-            errbuf.println();
+            errbuf.append("\n");
             traceSkipped = stackTrace.length;
             callstackComp.setFixedSize(0, 0);
 
