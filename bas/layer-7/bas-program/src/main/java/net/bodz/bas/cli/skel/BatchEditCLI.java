@@ -446,9 +446,8 @@ public class BatchEditCLI
     }
 
     @Override
-    protected void mainImpl(String[] args)
+    protected void mainImpl(String... args)
             throws Exception {
-        super.mainImpl(args);
         if (logger.isInfoEnabled(1))
             stat.dumpDetail(logger.getInfoSink(1));
         else if (logger.isInfoEnabled())

@@ -13,20 +13,20 @@ public class WriterOutputStreamTest
     @Test
     public void testWrite()
             throws IOException {
-        StringWriter sw = new StringWriter();
-        WriterOutputStream out = new WriterOutputStream(sw, "utf-8");
+        StringWriter buf = new StringWriter();
+        WriterOutputStream out = new WriterOutputStream(buf, "utf-8");
         out.write('a');
-        assertEquals("a", sw.toString());
+        assertEquals("a", buf.toString());
         out.write("bc".getBytes("ascii"));
-        assertEquals("abc", sw.toString());
+        assertEquals("abc", buf.toString());
 
         byte[] hello = "你好".getBytes("utf-8");
         for (int i = 0; i < hello.length; i++)
             out.write(hello[i]);
-        assertEquals("abc你好", sw.toString());
+        assertEquals("abc你好", buf.toString());
 
-        sw = new StringWriter();
-        out = new WriterOutputStream(sw, "ascii") {
+        buf = new StringWriter();
+        out = new WriterOutputStream(buf, "ascii") {
             @Override
             protected void handleMalformed(ByteBuffer buffer)
                     throws IOException {
@@ -40,10 +40,10 @@ public class WriterOutputStreamTest
             }
         };
         out.write('s');
-        assertEquals("s", sw.toString());
+        assertEquals("s", buf.toString());
         for (int i = 0; i < 3; i++)
             out.write(hello[i]);
-        assertEquals("sMMM", sw.toString());
+        assertEquals("sMMM", buf.toString());
     }
 
 }

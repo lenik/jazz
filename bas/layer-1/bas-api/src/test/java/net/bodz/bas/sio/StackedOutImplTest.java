@@ -22,6 +22,7 @@ public class StackedOutImplTest
         out.leave();
         out.println("e");
         assertEquals("a\n  b\n    c\n  d\ne\n", buffer.toString());
+        out.close();
     }
 
 }

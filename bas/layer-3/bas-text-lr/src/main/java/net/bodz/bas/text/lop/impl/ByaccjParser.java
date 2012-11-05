@@ -20,7 +20,6 @@ import net.bodz.bas.text.lop.AbstractParser;
  * </ul>
  * </code>
  */
-@SuppressWarnings("unused")
 // TODO
 public abstract class ByaccjParser
         extends AbstractParser {

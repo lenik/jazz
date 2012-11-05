@@ -1,6 +1,5 @@
 package net.bodz.bas.mem;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -10,13 +9,10 @@ public class JavaSerializedType
     @Override
     public Object get(Memory memory, int offset)
             throws MemoryAccessException {
-        MemoryInputStream min = new MemoryInputStream(memory, offset, -1);
-        try {
-            ObjectInputStream in = new ObjectInputStream(min);
+        try (MemoryInputStream min = new MemoryInputStream(memory, offset, -1);
+                ObjectInputStream in = new ObjectInputStream(min)) {
             return in.readObject();
-        } catch (IOException e) {
-            throw new MemoryAccessException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             throw new MemoryAccessException(e);
         }
     }
@@ -24,13 +20,11 @@ public class JavaSerializedType
     @Override
     public void put(Memory memory, int offset, Object value)
             throws MemoryAccessException {
-        MemoryOutputStream mout = new MemoryOutputStream(memory, offset, -1);
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(mout);
+        try (MemoryOutputStream mout = new MemoryOutputStream(memory, offset, -1);
+                ObjectOutputStream out = new ObjectOutputStream(mout)) {
             out.writeObject(value);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MemoryAccessException(e);
         }
     }
-
 }

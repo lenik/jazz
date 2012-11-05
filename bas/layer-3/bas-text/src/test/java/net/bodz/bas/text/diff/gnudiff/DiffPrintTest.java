@@ -21,12 +21,13 @@ public class DiffPrintTest {
             throws IOException {
         FileInputStream in = new FileInputStream(filename);
         InputStreamReader reader = new InputStreamReader(in, "utf-8");
-        BufferedReader r = new BufferedReader(reader);
-        List<String> lines = new ArrayList<String>();
-        String line;
-        while ((line = r.readLine()) != null)
-            lines.add(line);
-        return lines;
+        try (BufferedReader r = new BufferedReader(reader)) {
+            List<String> lines = new ArrayList<String>();
+            String line;
+            while ((line = r.readLine()) != null)
+                lines.add(line);
+            return lines;
+        }
     }
 
     public static void main(String[] argv)

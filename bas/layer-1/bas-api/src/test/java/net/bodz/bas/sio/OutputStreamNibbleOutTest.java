@@ -64,6 +64,8 @@ public class OutputStreamNibbleOutTest
 
         out.write4b(seq, 6, 4);
         assertEquals("0122 6789", out.toString());
+        
+        out.close();
     }
 
     @Test

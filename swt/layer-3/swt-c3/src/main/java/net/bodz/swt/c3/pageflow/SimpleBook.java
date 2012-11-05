@@ -115,24 +115,24 @@ public class SimpleBook
 
     @Override
     public String toString() {
-        BCharOut out = new BCharOut(map.size() * 30);
-        out.println(getTitle() + ": ");
-        out.println("    Pages: ");
+        BCharOut buf = new BCharOut(map.size() * 30);
+        buf.println(getTitle() + ": ");
+        buf.println("    Pages: ");
         for (Entry<TreePath, IPage> e : map.entrySet()) {
             TreePath path = e.getKey();
-            out.println("        " + path + " -> " + e.getValue());
+            buf.println("        " + path + " -> " + e.getValue());
         }
         if (methods != null && !methods.isEmpty())
-            out.println("    Methods: ");
+            buf.println("    Methods: ");
         for (PageMethod method : methods)
-            out.println("        " + method);
+            buf.println("        " + method);
         if (dict != null)
-            out.println("    Dict: " + dict.getName());
+            buf.println("    Dict: " + dict.getName());
         if (next != null) {
-            out.println();
-            out.println(next);
+            buf.println();
+            buf.println(next);
         }
-        return out.toString();
+        return buf.toString();
     }
 
 }
