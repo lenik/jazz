@@ -1,9 +1,9 @@
 package net.bodz.bas.cli.model;
 
-import net.bodz.bas.cli.skel.CLIException;
+import net.bodz.bas.cli.skel.CLISyntaxException;
 
 public class AmbiguousOptionKeyException
-        extends CLIException {
+        extends CLISyntaxException {
 
     private static final long serialVersionUID = 1L;
 

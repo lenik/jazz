@@ -158,23 +158,27 @@ public abstract class AbstractOption
     }
 
     @Override
-    public Object parseValue(Object context, String string)
+    public Object parseValue(Object context, String... parameters)
             throws ParseException {
+        String param1 = parameters[0];
+
         Class<?> valueType = getValueType();
         IParser<?> parser = Traits.getTrait(valueType, IParser.class);
+
         ListNegotiation negotiation = Negotiation.list(//
                 Negotiation.parameter(IParser.PARSE_CONTEXT, context));
-        Object value = parser.parse(string, negotiation);
+
+        Object value = parser.parse(param1, negotiation);
         return value;
     }
 
     @Override
-    public String formatValue(Object context, Object value)
+    public String[] formatValue(Object context, Object value)
             throws FormatException {
         Class<?> valueType = getValueType();
         IFormatter<Object> formatter = Traits.getTrait(valueType, IFormatter.class);
-        String string = formatter.format(value);
-        return string;
+        String param1 = formatter.format(value);
+        return new String[] { param1 };
     }
 
     @Override

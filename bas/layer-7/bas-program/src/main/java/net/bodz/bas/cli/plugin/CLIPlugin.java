@@ -2,7 +2,7 @@ package net.bodz.bas.cli.plugin;
 
 import java.util.Map;
 
-import net.bodz.bas.cli.skel.CLIException;
+import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.IPlugin;
@@ -24,6 +24,6 @@ public interface CLIPlugin
      * @see #boot()
      */
     void setParameters(Map<String, Object> parameters)
-            throws CLIException, ParseException;
+            throws CLISyntaxException, ParseException;
 
 }

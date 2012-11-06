@@ -5,6 +5,7 @@ import java.util.Set;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.model.IElement;
+import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.util.order.IPriority;
 
 public interface IOption
@@ -102,11 +103,11 @@ public interface IOption
     /**
      * Parse a single option value.
      * 
-     * @param string
+     * @param parameters
      *            The value string to be parsed.
      * @return Parsed result.
      */
-    Object parseValue(Object context, String string)
+    Object parseValue(Object context, String... parameters)
             throws ParseException;
 
     /**
@@ -114,9 +115,9 @@ public interface IOption
      * 
      * @param value
      *            to be formatted.
-     * @return Non-<code>null</code> formatted value string.
+     * @return Non-<code>null</code> formatted parameter array.
      */
-    String formatValue(Object context, Object value)
+    String[] formatValue(Object context, Object value)
             throws FormatException;
 
     /**
@@ -132,5 +133,7 @@ public interface IOption
      *         is used.
      */
     Object getDefaultValue();
+
+    IProperty property();
 
 }

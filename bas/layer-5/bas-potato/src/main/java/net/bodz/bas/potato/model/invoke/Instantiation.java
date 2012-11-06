@@ -19,12 +19,12 @@ public class Instantiation
     }
 
     @Override
-    protected Class<?> getReturnType() {
+    public Class<?> getReturnType() {
         return constructor.getDeclaringClass();
     }
 
     @Override
-    protected Class<?> getParameterType(int index) {
+    public Class<?> getParameterType(int index) {
         return parameterTypes[index];
     }
 

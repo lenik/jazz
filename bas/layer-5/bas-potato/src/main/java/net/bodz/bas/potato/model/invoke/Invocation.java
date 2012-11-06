@@ -28,12 +28,12 @@ public class Invocation
     }
 
     @Override
-    protected Class<?> getReturnType() {
+    public Class<?> getReturnType() {
         return method.getReturnType();
     }
 
     @Override
-    protected Class<?> getParameterType(int index) {
+    public Class<?> getParameterType(int index) {
         return parameterTypes[index];
     }
 
