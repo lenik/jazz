@@ -21,8 +21,8 @@ public class BeanProperty
      *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
      *             <code>null</code>.
      */
-    public BeanProperty(Class<?> declaringType, PropertyDescriptor propertyDescriptor) {
-        super(declaringType, propertyDescriptor.getName());
+    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor) {
+        super(beanClass, propertyDescriptor.getName());
         this.propertyDescriptor = propertyDescriptor;
     }
 

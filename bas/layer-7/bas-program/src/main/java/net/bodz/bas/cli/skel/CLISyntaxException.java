@@ -1,23 +1,23 @@
 package net.bodz.bas.cli.skel;
 
-public class CLIException
+public class CLISyntaxException
         extends Exception {
 
     private static final long serialVersionUID = -7537357433011384587L;
 
-    public CLIException() {
+    public CLISyntaxException() {
         super();
     }
 
-    public CLIException(String message, Throwable cause) {
+    public CLISyntaxException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public CLIException(String message) {
+    public CLISyntaxException(String message) {
         super(message);
     }
 
-    public CLIException(Throwable cause) {
+    public CLISyntaxException(Throwable cause) {
         super(cause);
     }
 

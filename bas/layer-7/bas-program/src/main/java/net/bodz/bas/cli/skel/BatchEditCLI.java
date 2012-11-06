@@ -238,7 +238,7 @@ public class BatchEditCLI
     }
 
     protected void addResult(IFile src, EditResult result)
-            throws IOException, CLIException {
+            throws IOException, CLISyntaxException {
         addResult(src, getOutputFile(src), result);
     }
 

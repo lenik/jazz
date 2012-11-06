@@ -1,5 +1,9 @@
 package net.bodz.bas.cli.model;
 
+/**
+ * @deprecated See {@link net.bodz.bas.potato.model.invoke.Invocation}
+ */
+@Deprecated
 public class MethodCall {
 
     public Object[] parameters;

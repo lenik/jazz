@@ -6,7 +6,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.cli.model.OptionGroupFactory;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
-import net.bodz.bas.cli.skel.CLIException;
+import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.AbstractPlugin;
@@ -21,7 +21,7 @@ public class AbstractCLIPlugin
 
     @Override
     public void setParameters(Map<String, Object> parameters)
-            throws CLIException, ParseException {
+            throws CLISyntaxException, ParseException {
         if (parameters.isEmpty())
             return;
         IOptionGroup group = getOptions();
@@ -37,7 +37,7 @@ public class AbstractCLIPlugin
         Map<?, ?> properties = System.getProperties();
         try {
             opts.load(this, (Map<String, ?>) properties);
-        } catch (CLIException e) {
+        } catch (CLISyntaxException e) {
             throw new Error(e.getMessage(), e);
         } catch (ParseException e) {
             throw new Error(e.getMessage(), e);

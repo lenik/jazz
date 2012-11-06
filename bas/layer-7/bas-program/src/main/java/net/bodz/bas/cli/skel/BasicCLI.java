@@ -12,6 +12,7 @@ import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
+import net.bodz.bas.cli.model.OptionApplier;
 import net.bodz.bas.cli.model.OptionGroupFactory;
 import net.bodz.bas.cli.plugin.CLIPlugins;
 import net.bodz.bas.err.ParseException;
@@ -149,7 +150,7 @@ public abstract class BasicCLI
      * @option -h weak
      */
     protected final void _help()
-            throws CLIException {
+            throws CLISyntaxException {
         _help(Stdio.cerr);
         throw new ControlBreak();
     }
@@ -193,12 +194,13 @@ public abstract class BasicCLI
     }
 
     public List<String> parseArguments(String... args)
-            throws CLIException, ParseException {
+            throws CLISyntaxException, ParseException {
         if (logger.isDebugEnabled())
             logger.debug("Parse arguments: " + StringArray.join(", ", args));
 
         IOptionGroup options = getOptions();
-        List<String> rejected = options.load(this, args);
+        OptionApplier applier = new OptionApplier(options);
+        List<String> rejected = applier.apply(args);
         return rejected;
     }
 
@@ -234,22 +236,13 @@ public abstract class BasicCLI
             _postInit();
             _boot();
 
-            // if (bootProc != null) {
-            // t.p("load-config post");
-            // try {
-            // bootProc.load(0, Integer.MAX_VALUE);
-            // } catch (LoadException e) {
-            // throw new CLIException(e);
-            // }
-            // }
-
             if (logger.isDebugEnabled()) {
                 for (Entry<String, IOption> entry : classOptionGroup.getLocalOptionMap().entrySet()) {
                     IOption option = entry.getValue();
                     String optionName = option.getName();
                     if (!optionName.equals(entry.getKey()))
                         continue;
-                    Object optionValue = option.parse(this);
+                    Object optionValue = option.property().getValue(this);
                     if (optionValue instanceof MethodCall)
                         continue;
                     logger.debug(optionName, " = ", Util.dispval(optionValue));

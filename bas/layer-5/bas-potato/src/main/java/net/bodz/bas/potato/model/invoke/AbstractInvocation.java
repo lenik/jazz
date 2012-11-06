@@ -14,8 +14,8 @@ import net.bodz.bas.util.primitive.Primitives;
  * </ul>
  */
 public abstract class AbstractInvocation
-        implements Serializable, II18nCapable // , IPropertyChangeSource
-{
+        // extends AbstractElement
+        implements Serializable, II18nCapable, IInvocation {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,29 +26,33 @@ public abstract class AbstractInvocation
 
     // private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    // public AbstractInvocation(Class<?> declaringType, String name, int parameterCount) {
+    // super(declaringType, name);
+    // }
+
     public AbstractInvocation(int parameterCount) {
         this.parameterCount = parameterCount;
         this.parameters = new Object[parameterCount];
     }
 
-    protected abstract Class<?> getReturnType();
-
+    @Override
     public Object getReturnValue() {
         return returnValue;
     }
 
+    @Override
     public void setReturnValue(Object returnValue) {
         // Object old = this.returnValue;
         this.returnValue = returnValue;
         // pcs.firePropertyChange("returnValue", old, returnValue);
     }
 
-    protected abstract Class<?> getParameterType(int index);
-
+    @Override
     public Object[] getParameters() {
         return parameters;
     }
 
+    @Override
     public void setParameters(Object[] parameters) {
         if (parameters == null)
             throw new NullPointerException("parameters");
@@ -60,10 +64,12 @@ public abstract class AbstractInvocation
         // pcs.firePropertyChange("parameters", old, parameters);
     }
 
+    @Override
     public Object getParameter(int index) {
         return parameters[index];
     }
 
+    @Override
     public void setParameter(int index, Object value) {
         if (value != null) {
             Class<?> type = getParameterType(index);
@@ -76,8 +82,5 @@ public abstract class AbstractInvocation
         parameters[index] = value;
         // pcs.fireIndexedPropertyChange("parameter[" + index + "], old, value);
     }
-
-    public abstract Object invoke()
-            throws Exception;
 
 }

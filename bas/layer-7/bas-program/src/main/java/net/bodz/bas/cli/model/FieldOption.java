@@ -2,6 +2,9 @@ package net.bodz.bas.cli.model;
 
 import java.lang.reflect.Field;
 
+import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.spi.reflect.ReflectProperty;
+
 public class FieldOption
         extends AbstractOption {
 
@@ -9,6 +12,11 @@ public class FieldOption
 
     public FieldOption(Field field) {
         super(field.getDeclaringClass(), field.getName(), field, field.getType());
+    }
+
+    @Override
+    public IProperty property() {
+        return new ReflectProperty(field);
     }
 
 }
