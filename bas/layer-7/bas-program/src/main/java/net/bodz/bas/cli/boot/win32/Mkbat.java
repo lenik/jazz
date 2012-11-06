@@ -15,6 +15,7 @@ import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.skel.BatchEditCLI;
+import net.bodz.bas.cli.skel.CLIAccessor;
 import net.bodz.bas.cli.skel.EditResult;
 import net.bodz.bas.collection.set.ArraySet;
 import net.bodz.bas.err.IdentifiedException;
@@ -106,7 +107,7 @@ public class Mkbat
     @Override
     protected void _boot()
             throws Exception {
-        force = parameters().isForce();
+        force = CLIAccessor.isForce(Mkbat.this);
 
         ClassLoader initSysLoader = Caller.getCallerClassLoader(0);
         if (classpathList != null)
