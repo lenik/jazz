@@ -165,12 +165,29 @@ public class FileFinder
             }
 
             if (included)
-                return file;
+                return callback(file) ? file : end();
             else
                 return fetch();
         }
 
     } // RecIter
+
+    /**
+     * Callback function for each included file.
+     * 
+     * @return <code>false</code> to quit the iteration.
+     */
+    protected boolean callback(IFile file) {
+        return true;
+    }
+
+    /**
+     * Exception may be thrown within iterating.
+     */
+    @Override
+    public Iterator<IFile> iterator() {
+        return new RecursiveIterator();
+    }
 
     public Collection<String> list()
             throws IOException {
@@ -192,14 +209,6 @@ public class FileFinder
             list.add(file);
         }
         return list;
-    }
-
-    /**
-     * Exception may be thrown within iterating.
-     */
-    @Override
-    public Iterator<IFile> iterator() {
-        return new RecursiveIterator();
     }
 
 }

@@ -2,11 +2,11 @@ package net.bodz.bas.cli.skel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.java.nio.WildcardsExpander;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
@@ -29,6 +29,7 @@ import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.codehint.ChainUsage;
 import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.model.IExecutableVarArgsX;
+import net.bodz.bas.model.ITransformer;
 import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.bas.potato.model.IType;
 import net.bodz.bas.sio.IPrintOut;
@@ -37,6 +38,7 @@ import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.util.iter.Iterables;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.VFS;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 
@@ -296,22 +298,30 @@ public abstract class BasicCLI
     protected abstract void mainImpl(String... args)
             throws Exception;
 
-    protected Iterable<IFile> expandWildcards(final String... pathnames) {
-        List<Iterable<IFile>> iterables = new ArrayList<>(pathnames.length);
+    protected Iterable<IFile> expandFiles(final String... pathnames) {
+        return Iterables.transform(expandWildcards(pathnames), _resolver);
+    }
+
+    private static final ITransformer<String, IFile> _resolver = new ITransformer<String, IFile>() {
+        @Override
+        public IFile transform(String pathname)
+                throws RuntimeException {
+            IFile file = VFS.resolve(pathname);
+            return file;
+        }
+    };
+
+    protected Iterable<String> expandWildcards(final String... pathnames) {
+        List<Iterable<String>> iterables = new ArrayList<>(pathnames.length);
         for (int i = 0; i < pathnames.length; i++)
             iterables.set(i, expandWildcards(pathnames[i]));
         return Iterables.concat(iterables);
     }
 
-    protected Iterable<IFile> expandWildcards(final String pathname) {
-        return new Iterable<IFile>() {
-            @Override
-            public Iterator<IFile> iterator() {
-                WildcardExpander expander = new WildcardExpander(pathname);
-                expander.logger = logger; // Utilize the verbose option.
-                return expander;
-            }
-        };
+    protected Iterable<String> expandWildcards(final String pathname) {
+        WildcardsExpander expander = new WildcardsExpander(pathname);
+        expander.logger = logger; // Utilize the verbose option.
+        return expander;
     }
 
 }

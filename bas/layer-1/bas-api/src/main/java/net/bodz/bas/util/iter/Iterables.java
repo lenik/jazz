@@ -9,6 +9,7 @@ import java.util.List;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.model.ICreator;
 import net.bodz.bas.model.IFilter;
+import net.bodz.bas.model.ITransformer;
 import net.bodz.bas.model.NewInstanceCreator;
 
 public class Iterables {
@@ -112,7 +113,11 @@ public class Iterables {
     }
 
     public static <T> Iterable<T> filter(Iterable<T> iterable, IFilter<T> filter) {
-        return new FilterIterable<>(iterable, filter);
+        return new FilteredIterable<>(iterable, filter);
+    }
+
+    public static <S, T> Iterable<T> transform(Iterable<S> iterable, ITransformer<S, T> transformer) {
+        return new TransformedIterable<>(iterable, transformer);
     }
 
 }
@@ -217,13 +222,13 @@ class MitableIterable<T, X extends Throwable>
 
 }
 
-class FilterIterable<T>
+class FilteredIterable<T>
         implements Iterable<T> {
 
     final Iterable<T> orig;
     final IFilter<T> filter;
 
-    public FilterIterable(Iterable<T> orig, IFilter<T> filter) {
+    public FilteredIterable(Iterable<T> orig, IFilter<T> filter) {
         this.orig = orig;
         this.filter = filter;
     }
@@ -231,7 +236,26 @@ class FilterIterable<T>
     @Override
     public Iterator<T> iterator() {
         Iterator<T> iterator = orig.iterator();
-        return new FilterIterator<T>(iterator, filter);
+        return new FilteredIterator<T>(iterator, filter);
+    }
+
+}
+
+class TransformedIterable<S, T>
+        implements Iterable<T> {
+
+    final Iterable<S> orig;
+    final ITransformer<S, T> transformer;
+
+    public TransformedIterable(Iterable<S> orig, ITransformer<S, T> transformer) {
+        this.orig = orig;
+        this.transformer = transformer;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        Iterator<S> iterator = orig.iterator();
+        return new TransformedIterator<S, T>(iterator, transformer);
     }
 
 }
