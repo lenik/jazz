@@ -2,20 +2,15 @@ package net.bodz.bas.cli.skel;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
 
 import net.bodz.bas.c.java.io.FileDiff;
-import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.resource.tools.StreamReading;
-import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
-import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 
@@ -65,73 +60,37 @@ public class BatchEditCLI
     /**
      * show diff between original and modified files, default using gnudiff.
      * 
-     * @option -X weak =DIFF-ALG default=gnudiff
+     * @option --diff =DIFF-ALG default=gnudiff
      */
     DiffComparator diffAlgorithm;
 
     /**
      * Simdiff, ED, Context, Unified, Normal.
      * 
-     * @option -Xf =FORMAT
+     * @option =FORMAT
      */
     DiffFormat diffFormat = DiffFormats.Simdiff;
 
     /**
      * Write diff output to specified file.
      * 
-     * @option -Xo =FILE
+     * @option =FILE
      */
     IPrintOut diffOutput = Stdio.cout;
 
     /**
      * Diff between src/dst/out, when output to different file.
      * 
-     * @option -X3
+     * @option
      */
     boolean diff3 = false;
 
     /**
      * Diff between src/out rather then src/dst, only used when output directory is different.
      * 
-     * @option -X2
+     * @option
      */
     boolean diffWithDest = false;
-
-    /**
-     * Set up {@link #fileFilter} and {@link #psh}.
-     */
-    @Override
-    void _postInit() {
-        super._postInit();
-    }
-
-    private boolean diff(IFile a, IFile b)
-            throws IOException {
-        assert a != null;
-        assert b != null;
-
-        if (a.exists() && !b.exists()) {
-            logger.info("[new ]", a);
-            return true;
-        } else if (!a.exists() && b.exists()) {
-            logger.info("[miss]", a);
-            return true;
-        }
-        if (diffAlgorithm == null) {
-            if (FileDiff.equals(a.getInputSource(), b.getInputSource()))
-                return false;
-            logger.info("[edit] ", a);
-            return true;
-        }
-        List<String> al = a.getInputSource(inputEncoding).tooling()._for(StreamReading.class).listLines();
-        List<String> bl = b.getInputSource(outputEncoding).tooling()._for(StreamReading.class).listLines();
-        List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
-        if (diffs.size() == 0)
-            return false;
-        logger.info("[edit] ", a);
-        diffFormat.format(al, bl, diffs, diffOutput);
-        return true;
-    }
 
     private IFile _getOutputFile(String relative, IFile in)
             throws FileResolveException {
@@ -159,123 +118,24 @@ public class BatchEditCLI
         return getOutputFile(relative, currentStartFile);
     }
 
-    protected FileHandler handle(String name, IFile file) {
-        FileHandler handler = new FileHandler(name, file);
-        handler.setOutDir(outputDirectory);
-        handler.setTmpPrefix(getClass().getSimpleName());
-        return handler;
-    }
-
-    /**
-     * display progress info and calc stat
-     * 
-     * @param file
-     *            canonical file
-     */
     @Override
-    protected void _processFile(IFile file) {
-        Throwable err = null;
-        try {
-            logger.info("[proc] ", file);
-            EditResult result = BatchEditCLI.this.doEdit(file);
-            addResult(file, result);
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Error e) {
-            throw e;
-        } catch (IOException e) {
-            err = e;
-        } catch (Throwable e) {
-            err = e;
-            throw new RuntimeException(e.getMessage(), e);
-        } finally {
-            // err before addResult() or raised inside addResult()
-            if (err != null) {
-                stat.add(EditResult.err(err));
-                logger.error("[fail] ", file, ": ", err);
-            }
-        }
-    }
-
-    /**
-     * <ul>
-     * <li>create edit tmp file
-     * <li>display diff
-     * <li>do result operation
-     * </ul>
-     * 
-     * @param file
-     *            canonical file
-     */
-    @OverrideOption(group = "batchEdit")
-    protected EditResult doEdit(IFile file)
-            throws Exception {
-        IFile editTmp = _getEditTmp(file);
-        try {
-            EditResult result = doEditWithTemp(file, editTmp);
-            addResult(file, getOutputFile(file), editTmp, result);
-            return null;
-        } finally {
-            if (editTmp != null)
-                editTmp.delete();
-        }
+    protected FileHandler beginFile(String fileName) {
+        FileHandler handler = super.beginFile(fileName);
+        handler.setOutDir(outputDirectory);
+        return handler;
     }
 
     protected final ProcessResultStat stat = new ProcessResultStat();
 
-    protected void addResult(EditResult result)
-            throws IOException {
-        addResult(null, null, null, result);
-    }
-
-    protected void addResult(IFile src, EditResult result)
-            throws IOException, CLISyntaxException {
-        addResult(src, getOutputFile(src), result);
-    }
-
-    protected void addResult(IFile src, IFile dst, EditResult result)
-            throws IOException {
-        addResult(src, dst, null, result);
-    }
-
-    protected void addResult(IFile src, IFile dst, IFile edit, EditResult result)
-            throws IOException {
-        logger._debugf(1, "FF", "x");
-        logger._debug(3, "F", "X");
-        if (result == null)
-            logger._info(1, "[skip] ", src);
-        else {
-            if (src != null)
-                applyResult(src, dst, edit, result);
-            stat.add(result);
-            if (result.done)
-                logger.info("[", result.getOperationName(), "] ", dst);
-            if (result.error) {
-                String tags;
-                if (result.tags.length == 0)
-                    tags = "";
-                else
-                    tags = "|" + StringArray.join("|", result.tags);
-                if (result.cause != null)
-                    logger.error("[fail", tags, "] ", src, ": ", result.cause);
-                else
-                    logger.error("[fail", tags, "] ", src);
-            }
-        }
-    }
-
     private void applyResult(IFile src, IFile dst, IFile edit, EditResult result)
             throws IOException {
-        assert result != null;
 
-        boolean diffPrinted = false;
         if (result.operation == EditResult.SAVE) {
             assert result.changed == null;
             if (edit == null)
                 throw new IllegalUsageError("can\'t save: not a batch editor");
             if (!diff3 && !diffWithDest) {
                 result.changed = diff(src, edit);
-                diffPrinted = true;
             } else
                 result.changed = FileDiff.equals(src, edit);
             if (result.changed)
@@ -339,16 +199,6 @@ public class BatchEditCLI
         default:
             throw new UnexpectedException("invalid operation: " + result.operation);
         }
-    }
-
-    @Override
-    protected void mainImpl(String... args)
-            throws Exception {
-        if (logger.isInfoEnabled(1))
-            stat.dumpDetail(logger.getInfoSink(1));
-        else if (logger.isInfoEnabled())
-            stat.dumpBrief(logger.getInfoSink());
-        // System.exit(stat.errors);
     }
 
 }

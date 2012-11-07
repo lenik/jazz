@@ -17,28 +17,28 @@ import net.bodz.bas.vfs.util.TempFile;
 public class FileHandler
         implements Closeable {
 
-    String name;
-    IFile file;
-    IFile tmpFile;
-    IFile outFile;
-    IFile destFile;
+    private String name;
+    private IFile file;
+    private IFile tmpFile;
+    private IFile outFile;
+    private IFile destFile;
 
-    IFile tmpDir = TempFile.getTempRoot();
-    String tmpPrefix;
-    IFile outDir;
+    private IFile tmpDir = TempFile.getTempRoot();
+    private String tmpPrefix;
+    private IFile outDir;
 
-    FileHandleResult result = FileHandleResult.ignored;
-    ExceptionLog exceptions;
-    Boolean diff;
-    Set<String> tags = new TreeSet<String>();
+    private FileHandleResult result = FileHandleResult.ignored;
+    private ExceptionLog exceptions;
+    private Boolean diff;
+    private Set<String> tags = new TreeSet<String>();
 
-    boolean appendMode = false;
-    InputStream inputStream;
-    Reader reader;
-    OutputStream outputStream;
-    Writer writer;
-    OutputStream tempOutputStream;
-    Writer tempWriter;
+    private boolean appendMode = false;
+    private InputStream inputStream;
+    private Reader reader;
+    private OutputStream outputStream;
+    private Writer writer;
+    private OutputStream tempOutputStream;
+    private Writer tempWriter;
 
     public FileHandler(String name, IFile file) {
         if (name == null)
@@ -309,7 +309,7 @@ public class FileHandler
             tempWriter = null;
     }
 
-    boolean _close(Closeable closable) {
+    private boolean _close(Closeable closable) {
         if (closable == null)
             return false;
         try {
