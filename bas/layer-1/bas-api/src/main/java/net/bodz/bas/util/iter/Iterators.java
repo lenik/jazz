@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import net.bodz.bas.model.IFilter;
+import net.bodz.bas.model.ITransformer;
 import net.bodz.bas.util.exception.Err;
 
 public class Iterators {
@@ -18,8 +19,7 @@ public class Iterators {
      * Get an empty iterator.
      */
     public static <T> Iterator<T> empty() {
-        @SuppressWarnings("unchecked")
-        Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
+        @SuppressWarnings("unchecked") Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
         return empty;
     }
 
@@ -135,7 +135,7 @@ public class Iterators {
     }
 
     public static <T> Iterator<T> filter(Iterator<T> iterator, IFilter<T> filter) {
-        return new FilterIterator<T>(iterator, filter);
+        return new FilteredIterator<T>(iterator, filter);
     }
 
 }
@@ -384,13 +384,13 @@ class MitorIterator<T>
 
 }
 
-class FilterIterator<T>
+class FilteredIterator<T>
         extends PrefetchedIterator<T> {
 
     final Iterator<T> orig;
     IFilter<T> filter;
 
-    public FilterIterator(Iterator<T> orig, IFilter<T> filter) {
+    public FilteredIterator(Iterator<T> orig, IFilter<T> filter) {
         if (orig == null)
             throw new NullPointerException("orig");
         if (filter == null)
@@ -407,6 +407,36 @@ class FilterIterator<T>
                 return obj;
         }
         return end();
+    }
+
+}
+
+class TransformedIterator<S, T>
+        implements Iterator<T> {
+
+    final Iterator<S> orig;
+    final ITransformer<S, T> transformer;
+
+    public TransformedIterator(Iterator<S> orig, ITransformer<S, T> transformer) {
+        this.orig = orig;
+        this.transformer = transformer;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return orig.hasNext();
+    }
+
+    @Override
+    public T next() {
+        S src = orig.next();
+        T dst = transformer.transform(src);
+        return dst;
+    }
+
+    @Override
+    public void remove() {
+        orig.remove();
     }
 
 }
