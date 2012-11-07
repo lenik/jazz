@@ -34,6 +34,8 @@ public class FileFinder
     private int order = FILE | DIR;
     private Comparator<IFile> comparator;
 
+    private List<IFileFoundListener> fileFoundListeners = new ArrayList<>();
+
     class Filter
             implements IFileFilter {
 
@@ -127,14 +129,19 @@ public class FileFinder
         this.comparator = comparator;
     }
 
-    class RecursiveIterator
+    class RecIter
             extends PrefetchedIterator<IFile> {
 
         StackedIterator<IFile> stack;
+        boolean canceled;
 
-        public RecursiveIterator() {
+        public RecIter() {
             Iterator<IFile> startIter = Iterators.iterate(startFiles);
             stack = new StackedIterator<IFile>(startIter);
+        }
+
+        public FileFinder getFinder() {
+            return FileFinder.this;
         }
 
         @Override
@@ -164,35 +171,37 @@ public class FileFinder
                 }
             }
 
-            if (included)
-                return callback(file) ? file : end();
-            else
-                return fetch();
+            if (included) {
+                if (!fileFoundListeners.isEmpty()) {
+                    FileFoundEvent event = new FileFoundEvent(this, file);
+                    for (IFileFoundListener listener : fileFoundListeners) {
+                        listener.fileFound(event);
+                        if (canceled)
+                            return end();
+                        if (event.isExcluded())
+                            included = false;
+                    } // for listener
+                }
+                if (included)
+                    return file;
+            }
+            return fetch();
         }
 
     } // RecIter
-
-    /**
-     * Callback function for each included file.
-     * 
-     * @return <code>false</code> to quit the iteration.
-     */
-    protected boolean callback(IFile file) {
-        return true;
-    }
 
     /**
      * Exception may be thrown within iterating.
      */
     @Override
     public Iterator<IFile> iterator() {
-        return new RecursiveIterator();
+        return new RecIter();
     }
 
     public Collection<String> list()
             throws IOException {
         List<String> list = new ArrayList<String>();
-        RecursiveIterator iter = new RecursiveIterator();
+        RecIter iter = new RecIter();
         while (iter.hasNext()) {
             IFile file = iter.next();
             list.add(file.getName());
@@ -203,12 +212,22 @@ public class FileFinder
     public Collection<IFile> listFiles()
             throws IOException {
         List<IFile> list = new ArrayList<IFile>();
-        RecursiveIterator iter = new RecursiveIterator();
+        RecIter iter = new RecIter();
         while (iter.hasNext()) {
             IFile file = iter.next();
             list.add(file);
         }
         return list;
+    }
+
+    public void addFileFoundListener(IFileFoundListener listener) {
+        if (listener == null)
+            throw new NullPointerException("listener");
+        fileFoundListeners.add(listener);
+    }
+
+    public void removeFileFoundListener(IFileFoundListener listener) {
+        fileFoundListeners.remove(listener);
     }
 
 }
