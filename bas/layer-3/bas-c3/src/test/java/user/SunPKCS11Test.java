@@ -1,13 +1,15 @@
-package net.bodz.bas.c.javax.security.auth;
+package user;
 
 import java.security.KeyStore;
 import java.security.Provider.Service;
 
 import sun.security.pkcs11.SunPKCS11;
 
+import net.bodz.bas.c.javax.security.auth.Providers;
 import net.bodz.bas.util.iter.Iterables;
 
-public class P11Test {
+@SuppressWarnings("restriction")
+public class SunPKCS11Test {
 
     public static void main(String[] args)
             throws Throwable {
