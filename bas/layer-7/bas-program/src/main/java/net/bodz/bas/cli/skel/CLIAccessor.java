@@ -61,52 +61,52 @@ public class CLIAccessor {
         instance.rootLast = rootLast;
     }
 
-    public static FileMaskedModifiers getInclusiveMask(BatchCLI instance) {
-        return instance.inclusiveMask;
+    public static FileMaskedModifiers getIncludeMask(BatchCLI instance) {
+        return instance.includeMask;
     }
 
-    public static void setInclusiveMask(BatchCLI instance, FileMaskedModifiers inclusiveMask) {
-        instance.inclusiveMask = inclusiveMask;
+    public static void setIncludeMask(BatchCLI instance, FileMaskedModifiers includeMask) {
+        instance.includeMask = includeMask;
     }
 
-    public static FileMaskedModifiers getExclusiveMask(BatchCLI instance) {
-        return instance.exclusiveMask;
+    public static FileMaskedModifiers getExcludeMask(BatchCLI instance) {
+        return instance.excludeMask;
     }
 
-    public static void setExclusiveMask(BatchCLI instance, FileMaskedModifiers exclusiveMask) {
-        instance.exclusiveMask = exclusiveMask;
+    public static void setExcludeMask(BatchCLI instance, FileMaskedModifiers excludeMask) {
+        instance.excludeMask = excludeMask;
     }
 
-    public static GlobPattern getFileInclusivePattern(BatchCLI instance) {
-        return instance.fileInclusivePattern;
+    public static GlobPattern getIncludeName(BatchCLI instance) {
+        return instance.includeName;
     }
 
-    public static void setFileInclusivePattern(BatchCLI instance, GlobPattern fileInclusivePattern) {
-        instance.fileInclusivePattern = fileInclusivePattern;
+    public static void setIncludeName(BatchCLI instance, GlobPattern includeName) {
+        instance.includeName = includeName;
     }
 
-    public static GlobPattern getFileExclusivePattern(BatchCLI instance) {
-        return instance.fileExclusivePattern;
+    public static GlobPattern getExcludeName(BatchCLI instance) {
+        return instance.excludeName;
     }
 
-    public static void setFileExclusivePattern(BatchCLI instance, GlobPattern fileExclusivePattern) {
-        instance.fileExclusivePattern = fileExclusivePattern;
+    public static void setExcludeName(BatchCLI instance, GlobPattern excludeName) {
+        instance.excludeName = excludeName;
     }
 
-    public static Pattern getPathInclusivePattern(BatchCLI instance) {
-        return instance.pathInclusivePattern;
+    public static Pattern getIncludePath(BatchCLI instance) {
+        return instance.includePath;
     }
 
-    public static void setPathInclusivePattern(BatchCLI instance, Pattern pathInclusivePattern) {
-        instance.pathInclusivePattern = pathInclusivePattern;
+    public static void setIncludePath(BatchCLI instance, Pattern includePath) {
+        instance.includePath = includePath;
     }
 
-    public static Pattern getPathExclusivePattern(BatchCLI instance) {
-        return instance.pathExclusivePattern;
+    public static Pattern getExcludePath(BatchCLI instance) {
+        return instance.excludePath;
     }
 
-    public static void setPathExclusivePattern(BatchCLI instance, Pattern pathExclusivePattern) {
-        instance.pathExclusivePattern = pathExclusivePattern;
+    public static void setExcludePath(BatchCLI instance, Pattern excludePath) {
+        instance.excludePath = excludePath;
     }
 
     public static boolean isFilterDirectories(BatchCLI instance) {
