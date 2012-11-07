@@ -14,7 +14,7 @@ public class TestConfig {
     // <property name="packoutdir" value="${env.TMP}/PackagerTaskTest" />
     // <property name="packoutjar" value="${env.TMP}/PackagerTaskTest/a.jar" />
 
-    public static File tmp = TempFile.getTmpDir();
+    public static File tmp = TempFile.getTempRoot();
     public static File outDir = new File(tmp, "pack.dir");
     public static File outDirZip = new File(tmp, "pack.dir.zip");
     public static File outJar = new File(tmp, "pack.jar");

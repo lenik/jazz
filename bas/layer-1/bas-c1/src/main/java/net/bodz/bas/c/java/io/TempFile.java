@@ -6,7 +6,7 @@ import java.io.IOException;
 public class TempFile {
 
     private static String tempPath;
-    private static File tempFile = null;
+    private static File tempRoot = null;
     static {
         tempPath = System.getenv("TEMP");
         if (tempPath == null) {
@@ -14,24 +14,24 @@ public class TempFile {
             if (tempPath == null)
                 tempPath = "/tmp";
         }
-        tempFile = new File(tempPath);
+        tempRoot = new File(tempPath);
     }
 
     /**
      * @see File#createTempFile(String, String)
      * @see File#createTempFile(String, String, File)
      */
-    public static File getTmpDir() {
-        assert tempFile != null;
-        if (!tempFile.exists())
-            if (!tempFile.mkdirs())
-                throw new RuntimeException("Can't initialize temporary directory: " + tempFile);
-        return tempFile;
+    public static File getTempRoot() {
+        assert tempRoot != null;
+        if (!tempRoot.exists())
+            if (!tempRoot.mkdirs())
+                throw new RuntimeException("Can't initialize temporary directory: " + tempRoot);
+        return tempRoot;
     }
 
     public static File createTempFile(String prefix, String suffix)
             throws IOException {
-        return File.createTempFile(prefix, suffix, tempFile);
+        return File.createTempFile(prefix, suffix, tempRoot);
     }
 
     public static File createTempFile(String prefix, String suffix, File directory)
@@ -41,7 +41,7 @@ public class TempFile {
 
     public static File createTempDirectory(String prefix, String suffix)
             throws IOException {
-        return createTempDirectory(prefix, suffix, tempFile);
+        return createTempDirectory(prefix, suffix, tempRoot);
     }
 
     public static File createTempDirectory(String prefix, String suffix, File directory)

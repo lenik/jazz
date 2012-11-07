@@ -15,7 +15,7 @@ public class FileCopyTest
 
     public FileCopyTest()
             throws Exception {
-        File tmp = TempFile.getTmpDir();
+        File tmp = TempFile.getTempRoot();
         File localdir = new File(tmp, "localdir");
         localdir.mkdirs();
         File catfile = new File(localdir, "cat");
