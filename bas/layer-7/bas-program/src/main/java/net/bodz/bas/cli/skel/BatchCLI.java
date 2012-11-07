@@ -3,11 +3,11 @@ package net.bodz.bas.cli.skel;
 import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
 import net.bodz.bas.lang.ControlBreak;
-import net.bodz.bas.util.iter.PrefetchedIterator;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.IPath;
@@ -53,63 +53,63 @@ public abstract class BatchCLI
     /**
      * Process children files before the parent directory.
      * 
-     * @option -rl
+     * @option
      */
     boolean rootLast;
 
     /**
      * Include specified type of files, default non-hidden files
      * 
-     * @option -lm =FILEMASK
+     * @option =FILEMASK
      */
-    FileMaskedModifiers inclusiveMask = new FileMaskedModifiers("f/fH");
+    FileMaskedModifiers includeMask = new FileMaskedModifiers("f/fH");
 
     /**
      * Exclude specified type of files.
      * 
      * @option -IM =FILEMASK
      */
-    FileMaskedModifiers exclusiveMask;
+    FileMaskedModifiers excludeMask;
 
     /**
      * Include these filenames.
      * 
-     * @option -If =WILDCARDS
+     * @option =WILDCARDS
      */
-    GlobPattern fileInclusivePattern;
+    GlobPattern includeName;
 
     /**
      * exclude these filenames
      * 
-     * @option -IF =WILDCARDS
+     * @option =WILDCARDS
      */
-    GlobPattern fileExclusivePattern;
+    GlobPattern excludeName;
 
     /**
      * Include these pathnames.
      * 
-     * @option -Ip =REGEXP
+     * @option =REGEXP
      */
-    Pattern pathInclusivePattern;
+    Pattern includePath;
 
     /**
      * Exclude these pathnames
      * 
-     * @option -IP =REGEXP
+     * @option =REGEXP
      */
-    Pattern pathExclusivePattern;
+    Pattern excludePath;
 
     /**
      * Don't recurse into excluded directories.
      * 
-     * @option -rp
+     * @option
      */
     boolean prune;
 
     /**
-     * Using custom file filter, this will override other --I* options.
+     * Using custom file filter, this will override other --include/exclude* options.
      * 
-     * @option -Ic =CLASS(FileFilter)
+     * @option =CLASS(FileFilter)
      */
     // @ParseBy(GetInstanceParser.class)
     IFileFilter fileFilter;
@@ -122,35 +122,38 @@ public abstract class BatchCLI
     // @ParseBy(GetInstanceParser.class)
     Comparator<IFile> sortComparator;
 
-    /**
-     * Set up {@link #fileFilter} and {@link #psh}.
-     */
+    class DefaultFileFilter
+            implements IFileFilter {
+
+        @Override
+        public boolean accept(IFile file) {
+            if (includeMask != null)
+                if (!includeMask.test(file))
+                    return false;
+            if (excludeMask != null)
+                if (excludeMask.test(file))
+                    return false;
+            if (includeName != null)
+                if (!includeName.matcher(file.getName()).matches())
+                    return false;
+            if (excludeName != null)
+                if (excludeName.matcher(file.getName()).matches())
+                    return false;
+            if (includePath != null)
+                if (!includePath.matcher(file.getPath().toString()).find())
+                    return false;
+            if (excludePath != null)
+                if (excludePath.matcher(file.getPath().toString()).find())
+                    return false;
+            return true;
+        }
+
+    }
+
     @Override
     void _postInit() {
-        fileFilter = new IFileFilter() {
-            @Override
-            public boolean accept(IFile file) {
-                if (inclusiveMask != null)
-                    if (!inclusiveMask.test(file))
-                        return false;
-                if (exclusiveMask != null)
-                    if (exclusiveMask.test(file))
-                        return false;
-                if (fileInclusivePattern != null)
-                    if (!fileInclusivePattern.matcher(file.getName()).matches())
-                        return false;
-                if (fileExclusivePattern != null)
-                    if (fileExclusivePattern.matcher(file.getName()).matches())
-                        return false;
-                if (pathInclusivePattern != null)
-                    if (!pathInclusivePattern.matcher(file.getPath().toString()).find())
-                        return false;
-                if (pathExclusivePattern != null)
-                    if (pathExclusivePattern.matcher(file.getPath().toString()).find())
-                        return false;
-                return true;
-            }
-        };
+        if (fileFilter == null)
+            fileFilter = new DefaultFileFilter();
     }
 
     /** canonical file */
@@ -162,20 +165,23 @@ public abstract class BatchCLI
         return relativePath.getLocalPath();
     }
 
-    class TreeScanner
-            extends PrefetchedIterator<IFile> {
+    class ManagedFileFinder
+            extends FileFinder {
 
         @Override
-        protected IFile fetch() {
-            currentStartFile = file;
-            FileFinder finder = new FileFinder(fileFilter, prune, recursive, file);
-            if (rootLast)
-                finder.setOrder(FileFinder.FILE | FileFinder.DIR_POST);
-            if (sortComparator != null)
-                finder.setComparator(sortComparator);
-            for (IFile f : finder)
-                _processFile(f);
+        public Iterator<IFile> iterator() {
+            return super.iterator();
         }
+
+    }
+
+    protected Iterable<IFile> scanFiles(IFile start) {
+        FileFinder finder = new FileFinder(fileFilter, prune, recursive, start);
+        if (rootLast)
+            finder.setOrder(FileFinder.FILE | FileFinder.DIR_POST);
+        if (sortComparator != null)
+            finder.setComparator(sortComparator);
+        return finder;
     }
 
     /**

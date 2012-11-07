@@ -194,13 +194,12 @@ public class FileFinder
         return list;
     }
 
+    /**
+     * Exception may be thrown within iterating.
+     */
     @Override
     public Iterator<IFile> iterator() {
-        try {
-            return listFiles().iterator();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return new RecursiveIterator();
     }
 
 }

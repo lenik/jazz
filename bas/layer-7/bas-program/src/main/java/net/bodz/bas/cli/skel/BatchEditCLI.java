@@ -1,12 +1,10 @@
 package net.bodz.bas.cli.skel;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.FileDiff;
-import net.bodz.bas.c.java.io.TempFile;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.UnexpectedException;
@@ -20,7 +18,6 @@ import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 /**
  * Batch File Processor
@@ -108,16 +105,6 @@ public class BatchEditCLI
         super._postInit();
     }
 
-    /**
-     * @return canonical file
-     */
-    protected IFile _getEditTmp(IFile file)
-            throws IOException {
-        String dotExt = file.getPath().getExtension(true);
-        File tmpFile = File.createTempFile(tmpPrefix, dotExt, tmpDir);
-        return new JavaioFile(tmpFile);
-    }
-
     private boolean diff(IFile a, IFile b)
             throws IOException {
         assert a != null;
@@ -146,9 +133,6 @@ public class BatchEditCLI
         return true;
     }
 
-    private File tmpDir = TempFile.getTmpDir();
-    private String tmpPrefix = getClass().getSimpleName();
-
     private IFile _getOutputFile(String relative, IFile in)
             throws FileResolveException {
         if (outputDirectory == null)
@@ -173,6 +157,13 @@ public class BatchEditCLI
     protected IFile getOutputFile(String relative)
             throws FileResolveException {
         return getOutputFile(relative, currentStartFile);
+    }
+
+    protected FileHandler handle(String name, IFile file) {
+        FileHandler handler = new FileHandler(name, file);
+        handler.setOutDir(outputDirectory);
+        handler.setTmpPrefix(getClass().getSimpleName());
+        return handler;
     }
 
     /**
@@ -358,14 +349,6 @@ public class BatchEditCLI
         else if (logger.isInfoEnabled())
             stat.dumpBrief(logger.getInfoSink());
         // System.exit(stat.errors);
-    }
-
-    @Override
-    @OverrideOption(group = "batchEdit")
-    protected void doFileArgument(final IFile file)
-            throws Exception {
-        logger.status("[start] ", file);
-        super.doFileArgument(file);
     }
 
 }
