@@ -36,7 +36,7 @@ public class LibInstaller {
 
     private static File deflDir;
     static {
-        deflDir = new File(TempFile.getTmpDir(), "BundledLib");
+        deflDir = new File(TempFile.getTempRoot(), "BundledLib");
         deflDir.mkdirs();
     }
 

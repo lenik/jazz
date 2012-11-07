@@ -44,7 +44,7 @@ public class CTAProject
 
     private void setup()
             throws IOException {
-        File testHome = TempFile.getTmpDir();
+        File testHome = TempFile.getTempRoot();
 
         define("BASE_A",
                 new BaseDirVariable(tr._("Apples"), new File(testHome, PackNLS
