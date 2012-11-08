@@ -16,4 +16,23 @@ public interface IFilenameFilter {
      */
     boolean accept(IFile dir, String name);
 
+    IFilenameFilter TRUE = new TrueFilenameFilter();
+    IFilenameFilter FALSE = new FalseFilenameFilter();
+
+}
+
+class TrueFilenameFilter
+        implements IFilenameFilter {
+    @Override
+    public boolean accept(IFile dir, String name) {
+        return true;
+    }
+}
+
+class FalseFilenameFilter
+        implements IFilenameFilter {
+    @Override
+    public boolean accept(IFile dir, String name) {
+        return false;
+    }
 }

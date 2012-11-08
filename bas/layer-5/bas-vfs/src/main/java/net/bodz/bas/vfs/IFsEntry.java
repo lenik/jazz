@@ -3,24 +3,20 @@ package net.bodz.bas.vfs;
 import java.io.File;
 
 import net.bodz.bas.traits.IAttributes;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 public interface IFsEntry
         extends Cloneable {
 
-    /**
-     * Extension attributes.
-     * 
-     * @return <code>null</code> If no attribute.
-     */
-    IAttributes getAttributes();
-
     IFsEntry clone();
 
     /**
-     * @return non-<code>null</code> file container where this file entry belongs to.
+     * Get the VFS device which this file entry belongs to.
+     * 
+     * @return Non-<code>null</code> vfs device.
      */
-    IFileSystem getFileSystem();
+    IVfsDevice getDevice();
 
     /**
      * @return non-<code>null</code> path which denotes this file entry.
@@ -35,25 +31,11 @@ public interface IFsEntry
     String getName();
 
     /**
-     * Get the creation time of an fs entry.
+     * Extension attributes.
      * 
-     * @return <code>null</code> if create-time is unknown.
+     * @return <code>null</code> If no attribute.
      */
-    Long getCreationTime();
-
-    /**
-     * Get the last modified time of an fs entry.
-     * 
-     * @return <code>null</code> if last-modified-time is unknown.
-     */
-    Long getLastModifiedTime();
-
-    /**
-     * Change the last modified time of an fs entry.
-     * 
-     * @return <code>false</code> If failed to set the last modified time attribute.
-     */
-    boolean setLastModifiedTime(long lastModifiedTime);
+    IAttributes getAttributes();
 
     /**
      * Get modifier bits of interesting selection only.
@@ -77,6 +59,27 @@ public interface IFsEntry
      * @see FileModifier
      */
     int getModifiers();
+
+    /**
+     * Get the creation time of an fs entry.
+     * 
+     * @return <code>null</code> if create-time is unknown.
+     */
+    Long getCreationTime();
+
+    /**
+     * Get the last modified time of an fs entry.
+     * 
+     * @return <code>null</code> if last-modified-time is unknown.
+     */
+    Long getLastModifiedTime();
+
+    /**
+     * Change the last modified time of an fs entry.
+     * 
+     * @return <code>false</code> If failed to set the last modified time attribute.
+     */
+    boolean setLastModifiedTime(long lastModifiedTime);
 
     /**
      * @return <code>null</code> if the existence of this file is unknown.
@@ -111,7 +114,7 @@ public interface IFsEntry
 
     boolean isAutoCreateParents();
 
-    void setAutoCreateParents(boolean autoCreateTree);
+    void setAutoCreateParents(boolean autoCreateParents);
 
     /**
      * Delete the fs entry, maybe file or directory.
@@ -147,6 +150,7 @@ public interface IFsEntry
      * 
      * @see File#renameTo(File)
      */
-    boolean renameTo(IPath newPath);
+    boolean renameTo(String destLocalPath)
+            throws BadPathException;
 
 }

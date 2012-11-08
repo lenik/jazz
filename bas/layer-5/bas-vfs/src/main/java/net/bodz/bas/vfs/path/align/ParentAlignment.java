@@ -24,25 +24,32 @@ public class ParentAlignment
         this.keepInRoot = keepInRoot;
     }
 
-    @Override
-    public IPath align(IPath context) {
-        IPath parent = context.getParent(parents);
-        if (parent == null)
-            if (keepInRoot)
-                return context.getRoot();
-            else
-                return null;
-        else
-            return parent;
+    public int getParents() {
+        return parents;
     }
 
     @Override
-    public String decorate(String localPath) {
-        StringBuilder buf = new StringBuilder(parents * 3 + localPath.length());
-        for (int i = 0; i < parents; i++)
-            buf.append("../");
-        buf.append(localPath);
-        return buf.toString();
+    public IPath align(IPath context) {
+        IPath parent = context.getParent(parents);
+        if (parent != null)
+            return parent;
+        if (keepInRoot)
+            return context.getRoot();
+        else
+            return null;
+    }
+
+    @Override
+    public String format(String barePath) {
+        if (parents == 0) {
+            return barePath;
+        } else {
+            StringBuilder buf = new StringBuilder(parents * 3 + barePath.length());
+            for (int i = 0; i < parents; i++)
+                buf.append("../");
+            buf.append(barePath);
+            return buf.toString();
+        }
     }
 
 }

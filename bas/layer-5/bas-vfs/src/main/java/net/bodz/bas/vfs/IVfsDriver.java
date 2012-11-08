@@ -3,65 +3,10 @@ package net.bodz.bas.vfs;
 import org.apache.commons.vfs.Capability;
 import org.apache.commons.vfs.FileSystem;
 
-import net.bodz.bas.traits.IAttributes;
-import net.bodz.bas.vfs.path.BadPathException;
-import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathFormat;
-
 /**
  * @see org.apache.commons.vfs.FileSystem
  */
-public interface IFileSystem {
-
-    /**
-     * Return the underlying device on which this volume is implemented.
-     * 
-     * @return <code>null</code> If this volume is a top-level (physical) volume.
-     */
-    IFile getDeviceFile();
-
-    /**
-     * For some file systems (like DOS) there are more then one root.
-     * 
-     * @return non-<code>null</code> root file array.
-     */
-    IFile[] getRootFiles();
-
-    /**
-     * This returns the path attributes from the root files.
-     * 
-     * @return non-<code>null</code> root path array.
-     */
-    IPath[] getRootPaths();
-
-    /**
-     * @param localPath
-     *            non-<code>null</code> path string with-in this volume.
-     * @return non-<code>null</code> {@link IPath} reference.
-     * @throws NullPointerException
-     *             If <code>localPath</code> is <code>null</code>.
-     * @throws BadPathException
-     *             If <code>localPath</code> is invalid.
-     */
-    IPath parse(String localPath)
-            throws BadPathException;
-
-    /**
-     * @param localPath
-     *            non-<code>null</code> path string with-in this volume.
-     * @return non-<code>null</code> {@link IFile} reference.
-     * @throws NullPointerException
-     *             If <code>localPath</code> is <code>null</code>.
-     * @throws VFSException
-     *             If <code>localPath</code> is invalid.
-     */
-    IFile resolve(String localPath)
-            throws FileResolveException;
-
-    /**
-     * @see FileSystem#getAttribute(String)
-     */
-    IAttributes getAttributes();
+public interface IVfsDriver {
 
     // /**
     // * @see FileProvider#getCapabilities()
@@ -130,10 +75,5 @@ public interface IFileSystem {
 
     // File replicateFile(IFile file, FileSelector selector)
     // throws IOException
-
-    /**
-     * Format the given path with-in the volume.
-     */
-    String format(IPath path, PathFormat pathFormat);
 
 }

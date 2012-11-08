@@ -73,16 +73,16 @@ public class ByteArrayResource
     }
 
     @Override
+    public ICharIn newCharIn()
+            throws IOException {
+        return new DecodedCharIn(newByteIn(), getCharset().newDecoder());
+    }
+
+    @Override
     public ICharOut newCharOut()
             throws IOException {
         ICharOut cout = new EncodedCharOut(newByteOut(), getCharset().newEncoder());
         return cout;
-    }
-
-    @Override
-    public ICharIn newCharIn()
-            throws IOException {
-        return new DecodedCharIn(newByteIn(), getCharset().newDecoder());
     }
 
 }

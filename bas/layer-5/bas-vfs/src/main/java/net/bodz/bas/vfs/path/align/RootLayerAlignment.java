@@ -11,8 +11,9 @@ public class RootLayerAlignment
     }
 
     @Override
-    public String decorate(String localPath) {
-        return "//" + localPath;
+    public String format(String localPath) {
+        // return "##/" + localPath;
+        return "<root-layer>/" + localPath;
     }
 
 }

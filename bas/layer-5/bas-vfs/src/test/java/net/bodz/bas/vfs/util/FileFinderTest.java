@@ -2,13 +2,15 @@ package net.bodz.bas.vfs.util;
 
 import org.junit.Assert;
 
+import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
 
 public class FileFinderTest
         extends Assert {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+            throws FileResolveException {
         IFile start = VFS.resolve("/tmp");
         FileFinder finder = new FileFinder(start);
         finder.setMaxDepth(1000);

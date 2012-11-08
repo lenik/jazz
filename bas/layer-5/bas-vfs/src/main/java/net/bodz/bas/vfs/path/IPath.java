@@ -6,10 +6,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileSystem;
-import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.IVfsDevice;
+import net.bodz.bas.vfs.IVfsDriver;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 /**
@@ -22,30 +23,39 @@ public interface IPath
     char SEPARATOR_CHAR = '/';
 
     /**
+     * Get the parent device where this path residues in.
+     * 
+     * @return The VFS device where this path residues in, <code>null</code> if not applicable.
+     */
+    IVfsDevice getDevice();
+
+    /**
+     * This maybe implemented as:
+     * 
+     * <pre>
+     * getDevice().resolve(this.getLocalPath())
+     * </pre>
+     * 
+     * @return Non-null {@link IFile file} this path been resolved to.
+     * @throws IllegalUsageException
+     *             If this is a relative path.
+     */
+    IFile resolve()
+            throws FileResolveException;
+
+    /**
      * The alignment is used to anchor one path to another.
      * 
-     * @return non-<code>null</code> value.
+     * @return Non-<code>null</code> value.
      */
     IPathAlignment getAlignment();
 
     /**
-     * @return non-<code>null</code> file system.
-     */
-    IFileSystem getFileSystem();
-
-    /**
-     * The same as:
+     * If there is no parent layer, this path represents the current layer.
      * 
-     * <pre>
-     * getFileSystem().resolve(this.getLocalPath)
-     * </pre>
-     * 
-     * @return non-null {@link IFile} which this path refers to.
-     * @throws VFSException
-     *             If error occurred when resolve the path.
+     * @return Non-<code>null</code> path.
      */
-    IFile toFile()
-            throws FileResolveException;
+    IPath getRootLayer();
 
     /**
      * The same as
@@ -59,11 +69,10 @@ public interface IPath
     IPath getParentLayer();
 
     /**
-     * If there is no parent layer, this path represents the current layer.
-     * 
-     * @return non-<code>null</code> path.
+     * @return Non-<code>null</code> root path, a root should have no parent, and generally has no
+     *         entry.
      */
-    IPath getRootLayer();
+    IPath getRoot();
 
     /**
      * Generally the parent path is the path without the last entry.
@@ -78,53 +87,32 @@ public interface IPath
     IPath getParent(int n);
 
     /**
-     * @return non-<code>null</code> root path, a root should have no parent, and generally has no
-     *         entry.
-     */
-    IPath getRoot();
-
-    /**
-     * The alignment of the given <code>path</code> is depended on whether the specified
-     * <code>path</code> is starts with `/'.
-     */
-    IPath join(String path)
-            throws BadPathException;
-
-    /**
-     * Join two path, using the alignment of the specified <code>path</code>.
-     * 
-     * @throws NullPointerException
-     *             If <code>path</code> is <code>null</code>.
-     */
-    IPath join(IPath path)
-            throws BadPathException;
-
-    /**
-     * The relative path biased from <code>basePath</code>.
-     */
-    IPath getRelativePath(IPath basePath);
-
-    /**
      * Get the local path with-in this layer.
      * <p>
-     * You can get the same path object by calling {@link IFileSystem#parse(String)} of
-     * {@link #getFileSystem() this file system} with the local path.
+     * You can get the same path object by calling {@link IVfsDriver#parse(String)} of
+     * {@link #getDevice() this file system} with the local path.
      * 
-     * @return non-<code>null</code> path string.
+     * @return Non-<code>null</code> path string.
      */
     String getLocalPath();
 
     /**
-     * @return non-<code>null</code> entry array of local path.
+     * Get local entry array.
+     * 
+     * @return Non-<code>null</code> entry array of local path.
      */
     String[] getLocalEntries();
 
     /**
+     * Get the number of local entries.
+     * 
      * @return Count of entries of local path.
      */
     int getLocalEntryCount();
 
     /**
+     * Get local entry element by index.
+     * 
      * @param index
      *            0-based entry index.
      * @return The indexed entry.
@@ -159,7 +147,7 @@ public interface IPath
     String getStrippedName();
 
     /**
-     * Get the extension name, without dot(.).
+     * Get the extension name, without dot(<code>.</code>).
      * 
      * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
      *         an extension.
@@ -167,23 +155,91 @@ public interface IPath
     String getExtension();
 
     /**
+     * Get the extension name, with or without dot(<code>.</code>).
+     * 
      * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
      *         an extension.
      */
     String getExtension(boolean withDot);
 
     /**
+     * Get the enhanced-extension name, with or without dot(<code>.</code>).
+     * 
+     * An enhanced extension may contains many words, like ".tar.gz".
+     * 
+     * @param maxWords
+     *            Only less then these words maybe treated as extension name.
      * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
      *         an extension.
+     * @throws IllegalArgumentException
+     *             If <code>maxWords</code> is less than 1.
      */
     String getExtension(boolean withDot, int maxWords);
+
+    /**
+     * Join this path and the special path.
+     * 
+     * The alignment of the result path is equal to this, if <code>spec</code> is a relative path.
+     * Otherwise, the alignment of the result path is equal to spec.
+     * 
+     * @param spec
+     *            Non-<code>null</code> special path after this path.
+     * @return Joined path.
+     */
+    IPath join(String spec)
+            throws BadPathException;
+
+    /**
+     * Join this path and special paths.
+     * 
+     * This is the same as nesting {@link #join(String)} calls, with <code>null</code> spec skipped.
+     * 
+     * @param specs
+     *            Special path arrays. Null element is ignored.
+     * @return Joined path.
+     */
+    IPath join(String... specs)
+            throws BadPathException;
+
+    /**
+     * Join two path, using the alignment of the other path.
+     * 
+     * @throws NullPointerException
+     *             If <code>path</code> is <code>null</code>.
+     */
+    IPath join(IPath spec)
+            throws BadPathException;
+
+    /**
+     * Join this path and special paths.
+     * 
+     * This is the same as nesting {@link #join(IPath)} calls, with <code>null</code> spec skipped.
+     * 
+     * @param specs
+     *            Special path arrays. Null element is ignored.
+     * @return Joined path.
+     */
+    IPath join(IPath... specs)
+            throws BadPathException;
+
+    /**
+     * Get the path relative to the specified base path.
+     * 
+     * @param basePath
+     *            The base path which the returned path will be relative to.
+     * @return The relative aligned path. Returns <code>null</code> if this path isn't relative to
+     *         the <code>basePath</code>.
+     * @throws NullPointerException
+     *             If <code>basePath</code> is <code>null</code>.
+     */
+    IPath getRelativePathTo(IPath basePath);
 
     /**
      * Get full path with all parent layers.
      * 
      * @return non-null URL string, which can be resolved to the same path.
      */
-    String getURL();
+    String getURLString();
 
     /**
      * Convert this path object to a {@link URL}.
@@ -219,8 +275,18 @@ public interface IPath
      * </pre>.
      * 
      * @param pathFormat
-     *            non-<code>null</code> {@link PathFormat} object.
+     *            Non-<code>null</code> {@link PathFormat} object.
      */
     String format(PathFormat pathFormat);
+
+    /**
+     * Get the default string representation of this path.
+     * 
+     * This should be the same as the {@link PathFormats#DEFAULT default}
+     * {@link #format(PathFormat) format}.
+     * 
+     * @return Default string representation of this path.
+     */
+    String toString();
 
 }

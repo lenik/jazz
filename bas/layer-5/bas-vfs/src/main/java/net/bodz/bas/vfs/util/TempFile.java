@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
+import net.bodz.bas.vfs.impl.jdk.JdkFile;
 
 public class TempFile {
 
@@ -14,27 +14,27 @@ public class TempFile {
 
     public static IFile getTempRoot() {
         File tempRoot = _TempFile.getTempRoot();
-        return new JavaioFile(tempRoot);
+        return new JdkFile(tempRoot);
     }
 
     public static IFile createTempFile()
             throws IOException {
         File tempFile = _TempFile.createTempFile();
-        return new JavaioFile(tempFile);
+        return new JdkFile(tempFile);
     }
 
     public static IFile createTempFile(String prefix, String suffix)
             throws IOException {
         File tempFile = _TempFile.createTempFile(prefix, suffix);
-        return new JavaioFile(tempFile);
+        return new JdkFile(tempFile);
     }
 
     public static IFile createTempFile(String prefix, String suffix, IFile directory)
             throws IOException {
-        if (directory instanceof JavaioFile) {
-            File localDir = ((JavaioFile) directory).getLocalFile();
+        if (directory instanceof JdkFile) {
+            File localDir = ((JdkFile) directory).getOrigFile();
             File tempFile = _TempFile.createTempFile(prefix, suffix, localDir);
-            return new JavaioFile(tempFile);
+            return new JdkFile(tempFile);
         } else {
             // return createTempFile(prefix, suffix);
             throw new UnsupportedOperationException("Can't create tmp file in non-local tmp dir");
@@ -44,21 +44,21 @@ public class TempFile {
     public static IFile createTempDirectory()
             throws IOException {
         File tempDir = _TempFile.createTempDirectory();
-        return new JavaioFile(tempDir);
+        return new JdkFile(tempDir);
     }
 
     public static IFile createTempDirectory(String prefix, String suffix)
             throws IOException {
         File tempDir = _TempFile.createTempDirectory(prefix, suffix);
-        return new JavaioFile(tempDir);
+        return new JdkFile(tempDir);
     }
 
     public static IFile createTempDirectory(String prefix, String suffix, IFile directory)
             throws IOException {
-        if (directory instanceof JavaioFile) {
-            File localDir = ((JavaioFile) directory).getLocalFile();
+        if (directory instanceof JdkFile) {
+            File localDir = ((JdkFile) directory).getOrigFile();
             File tempDir = _TempFile.createTempDirectory(prefix, suffix, localDir);
-            return new JavaioFile(tempDir);
+            return new JdkFile(tempDir);
         } else {
             // return createTempDirectory(prefix, suffix);
             throw new UnsupportedOperationException("Can't create tmp file in non-local tmp dir");

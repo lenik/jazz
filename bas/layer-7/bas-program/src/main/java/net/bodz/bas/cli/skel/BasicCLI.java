@@ -37,6 +37,7 @@ import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.util.iter.Iterables;
+import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
@@ -306,7 +307,12 @@ public abstract class BasicCLI
         @Override
         public IFile transform(String pathname)
                 throws RuntimeException {
-            IFile file = VFS.resolve(pathname);
+            IFile file;
+            try {
+                file = VFS.resolve(pathname);
+            } catch (FileResolveException e) {
+                throw e.toRuntimeException();
+            }
             return file;
         }
     };

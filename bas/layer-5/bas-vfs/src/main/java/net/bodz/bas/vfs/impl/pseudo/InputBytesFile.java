@@ -1,16 +1,16 @@
-package net.bodz.bas.vfs.impl.fake;
+package net.bodz.bas.vfs.impl.pseudo;
 
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.err.ReadOnlyException;
-import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 
 public class InputBytesFile
-        extends FakeFile {
+        extends PseudoFile {
+
+    private static final long serialVersionUID = 1L;
 
     private final byte[] bytes;
 
@@ -19,15 +19,13 @@ public class InputBytesFile
     }
 
     public InputBytesFile(String name, byte[] bytes) {
-        super(name);
-        if (bytes == null)
-            throw new NullPointerException("bytes");
+        super(name, new ByteArrayResource(bytes));
         this.bytes = bytes;
     }
 
     @Override
     public InputBytesFile clone() {
-        InputBytesFile o = new InputBytesFile(pathString, bytes);
+        InputBytesFile o = new InputBytesFile(getName(), bytes);
         o.populate(this);
         return o;
     }
@@ -47,20 +45,7 @@ public class InputBytesFile
     }
 
     @Override
-    public IStreamResource getResource(Charset charset) {
-        throw new UnsupportedOperationException("Read-only resource.");
-    }
-
-    @Override
-    public IStreamInputSource getInputSource(Charset charset) {
-        ByteArrayResource resource = new ByteArrayResource(bytes);
-        resource.setCharset(charset);
-        return resource;
-    }
-
-    @Override
     public IStreamOutputTarget getOutputTarget(boolean append, Charset charset) {
-        // return new ByteArrayResource(bytes);
         throw new ReadOnlyException();
     }
 

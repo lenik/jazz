@@ -37,6 +37,7 @@ public class OutputStreamTarget
             @Override
             public void close()
                     throws IOException {
+                // Don't close the stream in the resource.
             }
         };
     }

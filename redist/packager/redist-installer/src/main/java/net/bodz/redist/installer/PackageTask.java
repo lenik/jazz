@@ -13,7 +13,7 @@ import net.bodz.bas.util.exception.ExceptionBuffer;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
+import net.bodz.bas.vfs.impl.jdk.JdkFile;
 
 /**
  * Ant task for package Distins-Project
@@ -42,7 +42,7 @@ public class PackageTask
     }
 
     public void setOutDir(File outdir) {
-        IFile folder = new JavaioFile(outdir);
+        IFile folder = new JdkFile(outdir);
         folder.setAutoCreateParents(true);
         setResFolder(folder);
     }

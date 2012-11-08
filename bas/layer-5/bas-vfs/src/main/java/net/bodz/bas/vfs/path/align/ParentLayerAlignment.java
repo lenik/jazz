@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs.path.align;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.path.IPath;
 
 public class ParentLayerAlignment
@@ -39,8 +38,9 @@ public class ParentLayerAlignment
     }
 
     @Override
-    public String decorate(String localPath) {
-        throw new NotImplementedException();
+    public String format(String barePath) {
+        // return "::/" + barePath;
+        return "<parent-layer>/" + barePath;
     }
 
 }

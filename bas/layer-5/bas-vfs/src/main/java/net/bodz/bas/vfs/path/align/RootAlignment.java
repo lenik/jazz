@@ -11,8 +11,8 @@ public class RootAlignment
     }
 
     @Override
-    public String decorate(String localPath) {
-        return "/" + localPath;
+    public String format(String barePath) {
+        return "/" + barePath;
     }
 
 }

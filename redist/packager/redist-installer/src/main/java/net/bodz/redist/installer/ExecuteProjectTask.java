@@ -18,7 +18,7 @@ import net.bodz.bas.util.exception.ExceptionBuffer;
 import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
+import net.bodz.bas.vfs.impl.jdk.JdkFile;
 
 public abstract class ExecuteProjectTask
         extends Task
@@ -51,12 +51,12 @@ public abstract class ExecuteProjectTask
     }
 
     public void setPackDir(File outdir) {
-        JavaioFile src = new JavaioFile(outdir);
+        JdkFile src = new JdkFile(outdir);
         setResFolder(src);
     }
 
     public void setPackJar(File zipFile) {
-        IFile src = new JavaioFile(zipFile);
+        IFile src = new JdkFile(zipFile);
         setResFolder(src);
     }
 

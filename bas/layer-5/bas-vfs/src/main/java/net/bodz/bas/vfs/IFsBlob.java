@@ -3,10 +3,9 @@ package net.bodz.bas.vfs;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.io.resource.IStreamResourceWrapper;
-import net.bodz.bas.sugar.IToolable;
 
 public interface IFsBlob
-        extends IFsEntry, IStreamResourceWrapper, IToolable {
+        extends IFsEntry, IStreamResourceWrapper {
 
     /**
      * Clone the status, but no blob data.

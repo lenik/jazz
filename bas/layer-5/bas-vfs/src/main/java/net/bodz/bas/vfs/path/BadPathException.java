@@ -1,9 +1,7 @@
 package net.bodz.bas.vfs.path;
 
-import net.bodz.bas.vfs.FileResolveException;
-
 public class BadPathException
-        extends FileResolveException {
+        extends IllegalArgumentException {
 
     private static final long serialVersionUID = 1L;
 
