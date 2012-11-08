@@ -6,7 +6,7 @@ import java.io.IOException;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.tools.StreamWriting;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
+import net.bodz.bas.vfs.impl.jdk.JdkFile;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.ISession;
 
@@ -46,7 +46,7 @@ public class CreateFile
         @Override
         protected void _run() {
             File dest = new File(session.getFile(base), path);
-            JavaioFile destFile = new JavaioFile(dest);
+            JdkFile destFile = new JdkFile(dest);
 
             try {
                 boolean append = CreateFile.this.append && dest.exists();

@@ -25,7 +25,7 @@ public class VFS {
     public static IFile resolve(String path)
             throws FileResolveException {
         IPath p = parse(path);
-        return p.toFile();
+        return p.resolve();
     }
 
 }

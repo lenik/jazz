@@ -1,34 +1,38 @@
-package net.bodz.bas.vfs.impl.fake;
+package net.bodz.bas.vfs.impl.pseudo;
 
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.object.ObjectInfo;
-import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.builtin.StringSource;
+import net.bodz.bas.io.resource.builtin.CharArrayResource;
 
 public class InputStringFile
-        extends FakeFile {
+        extends PseudoFile {
 
-    private final String text;
+    private static final long serialVersionUID = 1L;
 
-    private Long sizeInBytes;
+    private final char[] charArray;
+    private transient String text;
+
+    private Long encodedSize;
 
     public InputStringFile(String text) {
         this(ObjectInfo.getSimpleId(text), text);
     }
 
     public InputStringFile(String name, String text) {
-        super(name);
-        if (text == null)
-            throw new NullPointerException("text");
+        this(name, text.toCharArray());
         this.text = text;
+    }
+
+    public InputStringFile(String name, char[] charArray) {
+        super(name, new CharArrayResource(charArray));
+        this.charArray = charArray;
     }
 
     @Override
     public InputStringFile clone() {
-        InputStringFile o = new InputStringFile(getName(), text);
+        InputStringFile o = new InputStringFile(getName(), charArray);
         o.populate(this);
         return o;
     }
@@ -43,7 +47,13 @@ public class InputStringFile
         return false;
     }
 
+    public char[] getCharArray() {
+        return charArray;
+    }
+
     public String getText() {
+        if (text == null)
+            text = new String(charArray);
         return text;
     }
 
@@ -52,22 +62,17 @@ public class InputStringFile
         Charset oldCharset = getPreferredCharset();
         if (!oldCharset.equals(charset)) {
             super.setPreferredCharset(charset);
-            sizeInBytes = null;
+            encodedSize = null;
         }
     }
 
     @Override
     public Long getLength() {
-        if (sizeInBytes == null) {
-            byte[] bytes = text.getBytes(getPreferredCharset());
-            sizeInBytes = Long.valueOf(bytes.length);
+        if (encodedSize == null) {
+            byte[] bytes = getText().getBytes(getPreferredCharset());
+            encodedSize = Long.valueOf(bytes.length);
         }
-        return sizeInBytes;
-    }
-
-    @Override
-    public IStreamInputSource getInputSource(Charset charset) {
-        return new StringSource(text);
+        return encodedSize;
     }
 
     @Override
@@ -75,8 +80,4 @@ public class InputStringFile
         throw new UnsupportedOperationException("Read-Only");
     }
 
-    @Override
-    public IStreamResource getResource(Charset charset) {
-        throw new UnsupportedOperationException("Read-Only");
-    }
 }

@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import net.bodz.bas.io.resource.tools.StreamLoading;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.vfs.impl.url.URLFile;
+import net.bodz.bas.vfs.impl.jdk.URLFile;
 
 @RcsKeywords(id = "$Id$")
 public class BuildInfoUtil {
@@ -23,7 +23,7 @@ public class BuildInfoUtil {
         URL url = clazz.getResource(resname);
         if (url == null)
             throw new NullPointerException("BuildInfo resource isn't existed: " + resname);
-        return new URLFile(url).tooling()._for(StreamLoading.class).loadProperties();
+        return URLFile.resolve(url).tooling()._for(StreamLoading.class).loadProperties();
     }
 
 }

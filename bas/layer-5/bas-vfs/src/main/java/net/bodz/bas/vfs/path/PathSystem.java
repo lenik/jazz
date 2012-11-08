@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import net.bodz.bas.util.order.IPriority;
 import net.bodz.bas.util.order.PriorityComparator;
+import net.bodz.bas.vfs.context.VFSColos;
 
 public class PathSystem
         implements IPathSystem {
@@ -18,6 +19,8 @@ public class PathSystem
     public PathSystem() {
         protocols = new HashMap<String, IPathParser>();
         fallbacks = new TreeSet<PathParserKey>(PriorityComparator.INSTANCE);
+
+        contextPath = VFSColos.workdir.get().getPath();
     }
 
     @Override

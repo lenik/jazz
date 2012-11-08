@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.url;
+package net.bodz.bas.vfs.impl.jdk;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -6,31 +6,38 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.Collections;
 
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.IFileSystem;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.path.IPath;
+import net.bodz.bas.vfs.util.IFileFilter;
+import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public class URLFile
-        extends AbstractFile.TransientPath {
+        extends AbstractFile {
 
-    private final URL url;
+    private static final long serialVersionUID = 1L;
+    private static URLVfsDevice device = URLVfsDevice.getInstance();
 
-    public URLFile(URL url) {
-        super(url.getPath());
-        this.url = url;
+    private final URLPath path;
+
+    public URLFile(URLPath path) {
+        super(device, path.getBaseName());
+        this.path = path;
     }
 
-    @Override
-    public IFileSystem getFileSystem() {
-        return URLFileSystem.getInstance();
+    public static URLFile resolve(URL url) {
+        return new URLPath(url).resolve();
     }
 
     @Override
     public URLFile clone() {
-        return new URLFile(url).populate(this);
+        return new URLFile(path).populate(this);
     }
 
     @Override
@@ -40,7 +47,13 @@ public class URLFile
     }
 
     @Override
+    public IPath getPath() {
+        return path;
+    }
+
+    @Override
     public Long getLastModifiedTime() {
+        URL url = path.toURL();
         try {
             return url.openConnection().getLastModified();
         } catch (IOException e) {
@@ -73,6 +86,7 @@ public class URLFile
 
     @Override
     public boolean delete() {
+        URL url = path.toURL();
         try {
             URLConnection connection = url.openConnection();
 
@@ -96,8 +110,11 @@ public class URLFile
         }
     }
 
+    // -o IFsBlob
+
     @Override
     public Long getLength() {
+        URL url = path.toURL();
         try {
             URLConnection connection = url.openConnection();
 
@@ -111,22 +128,40 @@ public class URLFile
     }
 
     @Override
+    public IStreamResource getResource(Charset charset) {
+        URL url = path.toURL();
+        URLResource resource = new URLResource(url);
+        resource.setCharset(charset);
+        return resource;
+    }
+
+    // -o IFsTree
+
+    @Override
     public URLFile getChild(String entryName)
             throws FileResolveException {
         URL url;
         try {
-            url = new URL(this.url, entryName);
+            url = new URL(path.toURL(), entryName);
         } catch (MalformedURLException e) {
             throw new FileResolveException(e.getMessage(), e);
         }
-        return new URLFile(url);
+        URLPath childURL = new URLPath(url);
+        return childURL.resolve();
     }
 
     @Override
-    public IStreamResource getResource(Charset charset) {
-        URLResource resource = new URLResource(url);
-        resource.setCharset(charset);
-        return resource;
+    public Iterable<? extends IFile> children(IFilenameFilter nameFilter)
+            throws VFSException {
+        // TODO URL maybe opened like directory stream.
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Iterable<? extends IFile> children(IFileFilter nameFilter)
+            throws VFSException {
+        // TODO URL maybe opened like directory stream.
+        return Collections.emptyList();
     }
 
 }

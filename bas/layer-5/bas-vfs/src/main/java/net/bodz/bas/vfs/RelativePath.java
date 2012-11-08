@@ -1,7 +1,6 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.vfs.impl.fake.FakeFileSystem;
-import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.vfs.path.DefaultPath;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
@@ -12,20 +11,21 @@ public class RelativePath
     private static final long serialVersionUID = 1L;
 
     public RelativePath(String localPath, IPathAlignment alignment) {
-        super(null, localPath, alignment);
+        super(null /* dev */, localPath, alignment);
+    }
+
+    public RelativePath(String localPath, int parents) {
+        this(localPath, new ParentAlignment(parents));
     }
 
     @Override
-    public IFileSystem getFileSystem() {
-        return FakeFileSystem.getInstance();
+    public IVfsDevice getDevice() {
+        return null;
     }
 
     @Override
-    public IFile toFile()
-            throws BadPathException {
-        String path = getAlignment().decorate(localPath);
-        // XXX - Is `FakeVolume` suitable to use here?
-        return FakeFileSystem.getInstance().resolve(path);
+    public IFile resolve() {
+        throw new IllegalUsageException("You can't resolve a relative path.");
     }
 
     public static RelativePath parse(String decoratedPath) {

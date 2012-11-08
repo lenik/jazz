@@ -20,6 +20,10 @@ public class CharArrayResource
     private final int offset;
     private final int length;
 
+    public CharArrayResource(char[] array) {
+        this(array, 0, array.length);
+    }
+
     /**
      * @throws NullPointerException
      *             If <code>array</code> is <code>null</code>.

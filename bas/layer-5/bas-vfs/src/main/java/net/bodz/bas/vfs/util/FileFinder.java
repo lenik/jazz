@@ -156,9 +156,10 @@ public class FileFinder
                 included = userFilter.accept(file);
 
             if (file.isTree() && depth < maxDepth) {
-                List<? extends IFile> children;
+                List<IFile> children = new ArrayList<IFile>();
                 try {
-                    children = file.listChildren(filter);
+                    for (IFile child : file.children(filter))
+                        children.add(child);
                 } catch (VFSException e) {
                     throw new RuntimizedException(e);
                 }

@@ -11,15 +11,15 @@ import net.bodz.bas.vfs.path.AbstractGenericPathParser;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
-public class ApacheVFSPathParser
+public class ApachePathParser
         extends AbstractGenericPathParser {
 
-    private final ApacheFileSystem fileSystem;
+    private final ApacheVfsDevice device;
     private final Set<String> schemes;
 
-    public ApacheVFSPathParser()
+    public ApachePathParser()
             throws FileSystemException {
-        fileSystem = new ApacheFileSystem();
+        device = ApacheVfsDevice.getInstance();
         Set<String> tmpset = new HashSet<String>();
         for (String scheme : VFS.getManager().getSchemes())
             tmpset.add(scheme);
@@ -35,7 +35,7 @@ public class ApacheVFSPathParser
     public IPath parse(String path)
             throws BadPathException {
         String uri = path;
-        return fileSystem.parse(uri);
+        return device.parse(uri);
     }
 
 }

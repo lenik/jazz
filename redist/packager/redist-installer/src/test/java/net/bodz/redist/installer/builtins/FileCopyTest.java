@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import net.bodz.bas.c.java.io.TempFile;
 import net.bodz.bas.io.resource.tools.StreamWriting;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
+import net.bodz.bas.vfs.impl.jdk.JdkFile;
 import net.bodz.redist.installer.SessionException;
 import net.bodz.redist.installer.TestProject;
 
@@ -20,7 +20,7 @@ public class FileCopyTest
         localdir.mkdirs();
         File catfile = new File(localdir, "cat");
 
-        new JavaioFile(catfile).tooling()._for(StreamWriting.class).write("a black fat cat. ");
+        new JdkFile(catfile).tooling()._for(StreamWriting.class).write("a black fat cat. ");
 
         FileCopy copy = new FileCopy(TestProject.BASE_A, "copytest", localdir, catfile);
         section.add(copy);

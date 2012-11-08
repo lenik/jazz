@@ -7,9 +7,11 @@ import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.context.ClassContextId;
 import net.bodz.bas.context.ContextLocal;
 import net.bodz.bas.context.IContextId;
+import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
+import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.path.BadPathException;
 
 public class WorkingDirColo
         extends ContextLocal<IFile> {
@@ -17,7 +19,7 @@ public class WorkingDirColo
     @Override
     public IFile getRoot() {
         File systemWorkDir = SystemColos.workdir.get();
-        return new JavaioFile(systemWorkDir);
+        return new JdkFile(systemWorkDir);
     }
 
     public static boolean isAbsolutePath(String path) {
@@ -66,23 +68,31 @@ public class WorkingDirColo
     }
 
     /**
-     * @param path
-     *            Followed from current cwd, if <code>path</code> is relative.
+     * Change current workdir to the special path.
+     * 
+     * @param spec
+     *            Followed from current cwd, if <code>spec</code> is relative.
      * @throws IllegalArgumentException
      *             If target <code>path</code> isn't a {@link IFile#isDirectory() directory}.
+     * @throws BadPathException
+     *             If the special path is illegal.
+     * @throws FileResolveException
+     *             If it's failed to resolve the special path.
      */
-    public void chdir(IContextId context, String path) {
-        if (path == null)
-            throw new NullPointerException("path");
+    public void chdir(IContextId context, String spec) {
+        if (spec == null)
+            throw new NullPointerException("spec");
         IFile cwd = get(context);
-        if (isRelativePath(path))
-            cwd = cwd.getChild(path);
+
+        if (isRelativePath(spec))
+            cwd = cwd.resolve(spec);
         else
-            cwd = VFS.resolve(path);
+            cwd = VFS.resolve(spec);
+
         chdir(context, cwd);
     }
 
-    // Shortcuts for DefaultContext
+    // Shortcuts for default context.
 
     public IFile join(String name) {
         return join(getDefaultContext(), name);
@@ -96,7 +106,7 @@ public class WorkingDirColo
         chdir(getDefaultContext(), path);
     }
 
-    // Shortcuts for ClassContext
+    // Shortcuts for class context
 
     public IFile join(Class<?> classContext, String name) {
         return join(ClassContextId.getInstance(classContext), name);

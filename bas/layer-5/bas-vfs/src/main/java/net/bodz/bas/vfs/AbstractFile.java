@@ -3,59 +3,39 @@ package net.bodz.bas.vfs;
 import static net.bodz.bas.vfs.FileModifier.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.charset.Charset;
-import java.util.List;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
 import net.bodz.bas.sugar.Tooling;
-import net.bodz.bas.util.iter.Iterators;
-import net.bodz.bas.util.iter.Mitors;
-import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.tools.HeuristicProbing;
 import net.bodz.bas.vfs.tools.IProbing;
 import net.bodz.bas.vfs.tools.LazyProbing;
-import net.bodz.bas.vfs.util.IFileFilter;
 import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public abstract class AbstractFile
         extends AbstractFsEntry
-        implements IFile {
+        implements IFile, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Charset preferredCharset = Charset.defaultCharset();
 
     /**
-     * @param volume
-     *            non-<code>null</code> volume object which this file residues on.
+     * @param device
+     *            Non-<code>null</code> device object which this file residues on.
      * @param path
-     *            non-<code>null</code> path.
+     *            Non-<code>null</code> path.
      */
-    public AbstractFile(IFileSystem volume, IPath path) {
-        super(volume, path);
+    public AbstractFile(IVfsDevice device, String baseName) {
+        super(device, baseName);
     }
-
-    /**
-     * This is only used by {@link TransientVolume}.
-     */
-    AbstractFile(IPath path) {
-        super(path);
-    }
-
-    /**
-     * This is only used by {@link TransientPath}.
-     */
-    AbstractFile(String baseName) {
-        super(baseName);
-    }
-
-    @Override
-    public abstract IFile clone();
 
     @Override
     protected AbstractFile populate(Object obj) {
@@ -73,7 +53,7 @@ public abstract class AbstractFile
         if (parentPath == null)
             return null;
         try {
-            return parentPath.toFile();
+            return parentPath.resolve();
         } catch (FileResolveException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
@@ -194,6 +174,20 @@ public abstract class AbstractFile
         return bits;
     }
 
+    @Override
+    public boolean renameTo(String destLocalPath)
+            throws BadPathException {
+        String fromLocalPath = getPath().getLocalPath();
+        try {
+            getDevice().rename(fromLocalPath, destLocalPath);
+            return true;
+        } catch (VFSException e) {
+            return false;
+        }
+    }
+
+    // -o IFsBlob
+
     /**
      * @return <code>null</code> If no resource available for this fs-entry.
      */
@@ -274,25 +268,16 @@ public abstract class AbstractFile
     @Override
     public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
         if (isAutoCreateParents()) {
-            try {
-                IFile parent = getParentFile();
-                if (parent != null)
-                    parent.createTree();
-            } catch (FileResolveException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
+            IFile parent = getParentFile();
+            if (parent != null)
+                parent.createTree();
         }
         IStreamResource resource = getResource(charset);
         resource.setAppendMode(appendMode);
         return resource;
     }
 
-    @Override
-    public Tooling tooling() {
-        return new Tooling(this);
-    }
-
-    // IFsTree
+    // -o IFsTree
 
     @Override
     public boolean createTree() {
@@ -301,52 +286,26 @@ public abstract class AbstractFile
 
     @Override
     public boolean isIterable() {
-        return false;
+        return isTree();
     }
 
     @Override
-    public IFile getChild(String childName)
-            throws FileResolveException {
-        return null;
+    public IFile resolve(String spec)
+            throws BadPathException, FileResolveException {
+        return getPath().join(spec).resolve();
     }
 
-    /**
-     * @def Return an empty iterator.
-     */
     @Override
-    public Mitorx<? extends IFile, VFSException> childIterator(IFilenameFilter nameFilter)
+    public Iterable<? extends IFile> children()
             throws VFSException {
-        return Mitors.empty();
+        return children(IFilenameFilter.TRUE);
     }
 
-    @Override
-    public Mitorx<? extends IFile, VFSException> childIterator(IFileFilter fileFilter)
-            throws VFSException {
-        return Mitors.empty();
-    }
-
-    /**
-     * @def Return IteratorToList.toList(childIterator((IFilter<String>) null)).
-     */
-    @Override
-    public List<? extends IFile> listChildren()
-            throws VFSException {
-        return Iterators.toList(childIterator((IFilenameFilter) null));
-    }
-
-    /**
-     * @def Return as IteratorToList.toList(childIterator(entryNameFilter)).
-     */
-    @Override
-    public List<? extends IFile> listChildren(IFilenameFilter entryNameFilter)
-            throws VFSException {
-        return Iterators.toList(childIterator(entryNameFilter));
-    }
+    // -o IToolable
 
     @Override
-    public List<? extends IFile> listChildren(IFileFilter fileFilter)
-            throws VFSException {
-        return Iterators.toList(childIterator(fileFilter));
+    public Tooling tooling() {
+        return new Tooling(this);
     }
 
     @Override
@@ -365,106 +324,6 @@ public abstract class AbstractFile
         if (!preferredCharset.equals(o.preferredCharset))
             return false;
         return super.equals(o);
-    }
-
-    /**
-     * Abstract implementation of {@link IFile}, with transient volume support.
-     * <p>
-     * This is only useful if you don't want to allocate an {@link IFileSystem} instance before it's
-     * used. And construct one on-demand, for optimization purpose.
-     */
-    @GeneratedByCopyPaste(AbstractFsEntry.TransientVolume.class)
-    public abstract static class TransientVolume
-            extends AbstractFile {
-
-        public TransientVolume(IPath path) {
-            super(path);
-        }
-
-        /**
-         * This constructor is only used by {@link TransientPath}.
-         */
-        TransientVolume(String baseName) {
-            super(baseName);
-        }
-
-        @Override
-        public abstract IFileSystem getFileSystem();
-
-    }
-
-    /**
-     * Abstract implementation of {@link IFile}, with transient path support.
-     * <p>
-     * This is only useful if you don't want to allocate a {@link IPath} instance before it's used.
-     * And construct one on-demand, for optimization purpose.
-     */
-    @GeneratedByCopyPaste(AbstractFsEntry.TransientPath.class)
-    public abstract static class TransientPath
-            extends TransientVolume {
-
-        protected String pathString;
-
-        /**
-         * Creates a new fs entry with transient path.
-         * 
-         * The <code>pathString</code> should be in correct format to keep this fs entry in a good
-         * state. Otherwise, {@link IllegalStateException} may be thrown when {@link #getPath()} is
-         * called.
-         * 
-         * @param pathString
-         *            non-<code>null</code> path string.
-         */
-        public TransientPath(String pathString) {
-            super(getBaseName(pathString));
-            this.pathString = pathString;
-        }
-
-        static String getBaseName(String path) {
-            int lastSlash = path.lastIndexOf('/');
-            if (lastSlash == -1)
-                return path;
-            else
-                return path.substring(lastSlash + 1);
-        }
-
-        @Override
-        public abstract IFileSystem getFileSystem();
-
-        /**
-         * Constructs an {@link IPath} object on the fly.
-         * 
-         * @throws IllegalStateException
-         *             If the <code>pathString</code> specified in the constructor is invalid.
-         */
-        @Override
-        public IPath getPath() {
-            try {
-                return constructPath(pathString);
-            } catch (BadPathException e) {
-                throw new IllegalStateException(e.getMessage(), e);
-            }
-        }
-
-        /**
-         * @throws BadPathException
-         *             If <code>pathString</code> is invalid.
-         */
-        protected abstract IPath constructPath(String pathString);
-
-        @Override
-        public boolean renameTo(IPath newPath) {
-            // newPath.toString();
-            String newPathStr = newPath.getURL();
-            pathString = newPathStr;
-            return true;
-        }
-
-        @Override
-        public String toString() {
-            return pathString;
-        }
-
     }
 
 }

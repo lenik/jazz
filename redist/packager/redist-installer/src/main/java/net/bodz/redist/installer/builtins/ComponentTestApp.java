@@ -2,7 +2,7 @@ package net.bodz.redist.installer.builtins;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.impl.ConsoleLogger;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
+import net.bodz.bas.vfs.impl.jdk.JdkFile;
 import net.bodz.redist.installer.ConsoleExecutor;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.SessionException;
@@ -22,7 +22,7 @@ public class ComponentTestApp
     ConsoleExecutor buildExecutor() {
         ConsoleExecutor executor = new ConsoleExecutor(project, ConsoleLogger.getInstance());
         ISession session = executor.getSession();
-        session.addResFolder(0, new JavaioFile(TestConfig.outDir/* , true */));
+        session.addResFolder(0, new JdkFile(TestConfig.outDir/* , true */));
         return executor;
     }
 

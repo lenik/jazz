@@ -1,10 +1,7 @@
 package net.bodz.bas.vfs;
 
-import java.util.List;
-
-import net.bodz.bas.model.IFilter;
 import net.bodz.bas.sugar.IToolable;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.util.IFileFilter;
 import net.bodz.bas.vfs.util.IFilenameFilter;
 
@@ -17,51 +14,41 @@ public interface IFile
     @Override
     IFile getParentFile();
 
+    /**
+     * @throws NullPointerException
+     *             If <code>childName</code> is <code>null</code>.
+     */
     @Override
-    IFile getChild(String childName)
-            throws FileResolveException;
+    IFile getChild(String childName);
 
-    @Override
-    Mitorx<? extends IFile, VFSException> childIterator(IFilenameFilter nameFilter)
-            throws VFSException;
+    /**
+     * The same as: <code>getPath().join(path).resolve()</code>.
+     */
+    IFile resolve(String path)
+            throws BadPathException, FileResolveException;
 
-    Mitorx<? extends IFile, VFSException> childIterator(IFileFilter fileFilter)
+    /**
+     * @throws UnsupportedOperationException
+     *             If not iterable.
+     * @see #isIterable()
+     */
+    Iterable<? extends IFile> children()
             throws VFSException;
 
     /**
-     * List all children files.
-     * <p>
-     * To ignore hidden files, pass an file system option, or filtered them using
-     * {@link #listChildren(IFilter)}.
-     * 
-     * @return List of all children files.
-     *         <p>
-     *         The behavior of modifying the list is undetermined.
-     * @throws VFSException
-     *             If failed to list.
-     *             <p>
-     *             This maybe caused by no permission.
+     * @throws UnsupportedOperationException
+     *             If not iterable.
+     * @see #isIterable()
      */
-    @Override
-    List<? extends IFile> listChildren()
+    Iterable<? extends IFile> children(IFilenameFilter nameFilter)
             throws VFSException;
 
     /**
-     * List children files with a name filter.
-     * 
-     * @return List of children files which passed the filter.
-     *         <p>
-     *         The behavior of modifying the list is undetermined.
-     * @throws VFSException
-     *             If failed to list.
-     *             <p>
-     *             This maybe caused by no permission.
+     * @throws UnsupportedOperationException
+     *             If not iterable.
+     * @see #isIterable()
      */
-    @Override
-    List<? extends IFile> listChildren(IFilenameFilter nameFilter)
-            throws VFSException;
-
-    List<? extends IFile> listChildren(IFileFilter fileFilter)
+    Iterable<? extends IFile> children(IFileFilter nameFilter)
             throws VFSException;
 
 }

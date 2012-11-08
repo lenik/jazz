@@ -162,7 +162,7 @@ public abstract class BatchCLI
 
     protected String getRelativeName(IFile in) {
         // FilePath.getRelativeName(in.getPath().toString(), currentStartFile);
-        IPath relativePath = in.getPath().getRelativePath(currentStartFile.getPath());
+        IPath relativePath = in.getPath().getRelativePathTo(currentStartFile.getPath());
         return relativePath.getLocalPath();
     }
 
@@ -204,7 +204,7 @@ public abstract class BatchCLI
         for (String arg : expandWildcards(args)) {
             IFile filearg = VFS.resolve(arg);
             for (IFile file : scanFiles(filearg)) {
-                file.getPath().getRelativePath(filearg);
+                file.getPath().getRelativePathTo(filearg);
                 FileHandler handler = beginFile(file);
                 try {
                     processImpl(handler);
