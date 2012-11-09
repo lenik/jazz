@@ -1,4 +1,4 @@
-package net.bodz.bas.util.iter;
+package net.bodz.bas.err;
 
 public class IteratorTargetException
         extends RuntimeException {

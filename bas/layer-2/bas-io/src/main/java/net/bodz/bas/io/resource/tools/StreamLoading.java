@@ -10,7 +10,7 @@ import java.util.Properties;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.Iterators;
+import net.bodz.bas.util.iter.Mitors;
 import net.bodz.bas.util.iter.Mitorx;
 
 public class StreamLoading
@@ -47,7 +47,7 @@ public class StreamLoading
 
     public List<Object> listObjects(int maxItems)
             throws IOException {
-        return Iterators.toListLimited(objectIterator(), maxItems);
+        return Mitors.toListLimited(objectIterator(), maxItems);
     }
 
     public Mitorx<Object, IOException> objectIterator()

@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.util.iter.PrefetchedIterator;
+import net.bodz.bas.c.java.util.PrefetchedIterator;
 
 public class PreorderTreeMap<K, V>
         extends TreeMap<K, V>

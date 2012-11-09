@@ -18,7 +18,7 @@ import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.Iterators;
+import net.bodz.bas.util.iter.Mitors;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.util.iter.OverlappedMitor;
 
@@ -227,7 +227,7 @@ public class StreamReading
                 } catch (IOException e) {
                     throw new RuntimeIOException(e);
                 }
-                return Iterators.convert(mitor);
+                return Mitors.convert(mitor);
             }
 
         };
@@ -235,7 +235,7 @@ public class StreamReading
 
     public List<byte[]> listByteBlocks(int maxBlocks)
             throws IOException {
-        return Iterators.toListLimited(byteBlocks(false), maxBlocks);
+        return Mitors.toListLimited(byteBlocks(false), maxBlocks);
     }
 
     /**
@@ -303,7 +303,7 @@ public class StreamReading
                 } catch (IOException e) {
                     throw new RuntimeIOException(e);
                 }
-                return Iterators.convert(immIter);
+                return Mitors.convert(immIter);
             }
 
         };
@@ -315,7 +315,7 @@ public class StreamReading
     @GeneratedByCopyPaste
     public List<char[]> listCharBlocks(int maxBlocks)
             throws IOException {
-        return Iterators.toListLimited(charBlocks(false), maxBlocks);
+        return Mitors.toListLimited(charBlocks(false), maxBlocks);
     }
 
     @Override
@@ -367,7 +367,7 @@ public class StreamReading
                 } catch (IOException e) {
                     throw new RuntimeIOException(e);
                 }
-                return Iterators.convert(mitor);
+                return Mitors.convert(mitor);
             }
 
         };
@@ -376,13 +376,13 @@ public class StreamReading
     @Override
     public List<String> listLines()
             throws IOException {
-        return Iterators.toList(_lines(false));
+        return Mitors.toList(_lines(false));
     }
 
     @Override
     public List<String> listLines(boolean chopped, int maxLines)
             throws IOException {
-        return Iterators.toListLimited(_lines(chopped), maxLines);
+        return Mitors.toListLimited(_lines(chopped), maxLines);
     }
 
     public byte[] digest(MessageDigest digest)

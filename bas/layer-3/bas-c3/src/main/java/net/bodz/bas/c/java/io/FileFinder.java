@@ -10,8 +10,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.util.iter.Iterators;
-import net.bodz.bas.util.iter.PrefetchedIterator;
+import net.bodz.bas.c.java.util.Iterators;
+import net.bodz.bas.c.java.util.PrefetchedIterator;
 import net.bodz.bas.util.iter.StackedIterator;
 
 public class FileFinder

@@ -4,9 +4,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
+import net.bodz.bas.c.java.util.Iterables;
 import net.bodz.bas.c.reflect.query.predicate.*;
 import net.bodz.bas.util.iter.AbstractMitable;
-import net.bodz.bas.util.iter.Iterables;
 
 public abstract class FieldSelection
         extends AbstractMitable<Field> {

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.nio.WildcardsExpander;
+import net.bodz.bas.c.java.util.Iterables;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
@@ -36,7 +37,6 @@ import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ParserUtil;
-import net.bodz.bas.util.iter.Iterables;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
@@ -304,15 +304,10 @@ public abstract class BasicCLI
     }
 
     private static final ITransformer<String, IFile> _resolver = new ITransformer<String, IFile>() {
+        /** @throws FileResolveException */
         @Override
-        public IFile transform(String pathname)
-                throws RuntimeException {
-            IFile file;
-            try {
-                file = VFS.resolve(pathname);
-            } catch (FileResolveException e) {
-                throw e.toRuntimeException();
-            }
+        public IFile transform(String pathname) {
+            IFile file = VFS.resolve(pathname);
             return file;
         }
     };

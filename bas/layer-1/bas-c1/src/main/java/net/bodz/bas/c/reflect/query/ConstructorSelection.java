@@ -3,7 +3,7 @@ package net.bodz.bas.c.reflect.query;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import net.bodz.bas.util.iter.Iterables;
+import net.bodz.bas.c.java.util.Iterables;
 
 public abstract class ConstructorSelection
         extends _TypeVectorSelection<Constructor<?>, ConstructorSelection> {

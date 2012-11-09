@@ -1,7 +1,9 @@
-package net.bodz.bas.util.exception;
+package net.bodz.bas.util.err;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.util.exception.Err;
 
 public class ErrTest
         extends Assert {

@@ -1,4 +1,4 @@
-package net.bodz.bas.util.iter;
+package net.bodz.bas.c.java.util;
 
 import java.util.Iterator;
 

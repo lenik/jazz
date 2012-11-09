@@ -7,12 +7,12 @@ import net.bodz.bas.vfs.path.IPath;
 public class JdkPathParser
         extends AbstractPathParser {
 
-    private JdkVfsDevice fileSystem = JdkVfsDevice.getInstance();
+    private JdkVfsDevice device = JdkVfsDevice.getInstance();
 
     @Override
     public IPath parse(String path)
             throws BadPathException {
-        return fileSystem.parse(path);
+        return device.parse(path);
     }
 
 }
