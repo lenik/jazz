@@ -1,7 +1,8 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.path;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.vfs.path.DefaultPath;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IVfsDevice;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 

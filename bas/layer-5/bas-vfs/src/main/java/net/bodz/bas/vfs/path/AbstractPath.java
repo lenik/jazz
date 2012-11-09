@@ -13,7 +13,6 @@ import net.bodz.bas.meta.source.PoorImpl;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVfsDevice;
-import net.bodz.bas.vfs.RelativePath;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 

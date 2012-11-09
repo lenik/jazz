@@ -3,7 +3,6 @@ package net.bodz.bas.vfs.path;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.vfs.RelativePath;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
