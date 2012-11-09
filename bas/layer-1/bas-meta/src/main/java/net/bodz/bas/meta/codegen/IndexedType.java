@@ -13,12 +13,13 @@ import java.lang.annotation.Target;
  * 
  * The result index file is <code>META-INF/services/&lt;base-type&gt;</code> by default.
  */
+// @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface IndexedType {
 
-    String section() default "services";
+    String prefix() default "META-INF/services/";
 
     boolean includeAbstract() default false;
 
