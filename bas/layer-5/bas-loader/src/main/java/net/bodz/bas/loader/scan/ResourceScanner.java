@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import net.bodz.bas.lang.fn.Pred1;
-
 public class ResourceScanner {
 
     private ClassLoader classLoader;
@@ -89,7 +87,7 @@ public class ResourceScanner {
         }
     }
 
-    public void scanTypenames(String packageName, final Pred1<String> typeNameCallback)
+    public void scanTypeNames(String packageName, final ITypeNameCallback callback)
             throws IOException {
         setFilter(ClassOrDirFileFilter.INSTANCE);
         String packageDir = packageName.replace('.', '/');
@@ -98,7 +96,7 @@ public class ResourceScanner {
             String rawName = resourceName.substring(0, resourceName.length() - 6);
             String fqcn = rawName.replace('/', '.');
             // fqcn = fqcn.replace('$', '.');
-            typeNameCallback.eval(fqcn);
+            callback.typeName(fqcn);
         }
     }
 

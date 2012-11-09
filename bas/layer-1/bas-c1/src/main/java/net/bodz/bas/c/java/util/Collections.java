@@ -5,6 +5,14 @@ import java.util.*;
 public class Collections
         extends _Collections {
 
+    public static boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
+
+    public static boolean isEmpty(Map<?, ?> map) {
+        return map == null || map.isEmpty();
+    }
+
     @SafeVarargs
     public static <T> List<T> toList(T... elements) {
         return toArrayList(elements);

@@ -1,6 +1,7 @@
 package net.bodz.bas.c.type;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.Enumeration;
@@ -9,10 +10,11 @@ import java.util.Set;
 
 import net.bodz.bas.c.java.net.URLContent;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.meta.codegen.IndexedType;
 
 public class TypeExtensions {
 
-    String resourcePrefix = "META-INF/extension/";
+    String resourcePrefix = "META-INF/services/";
 
     boolean includeAbstract;
     ClassLoader defaultClassLoader;
@@ -91,15 +93,17 @@ public class TypeExtensions {
                 ClassLoader classLoader = getClassLoader(baseType, fqcn);
                 extClass = Class.forName(fqcn, true, classLoader);
 
-                if (!baseType.isAssignableFrom(extClass))
-                    throw new IllegalUsageException(String.format("Invalid type extension for %s: %s.", //
-                            baseType.getName(), fqcn));
+                if (!baseType.isAnnotation())
+                    if (!baseType.isAssignableFrom(extClass))
+                        throw new IllegalUsageException(String.format("Invalid type extension for %s: %s.", //
+                                baseType.getName(), fqcn));
 
                 if (!includeAbstract)
                     if (Modifier.isAbstract(extClass.getModifiers()))
                         continue;
 
-                @SuppressWarnings("unchecked") Class<? extends T> casted = (Class<? extends T>) extClass;
+                @SuppressWarnings("unchecked")
+                Class<? extends T> casted = (Class<? extends T>) extClass;
                 classes.add(casted);
             }
         }
@@ -107,11 +111,29 @@ public class TypeExtensions {
         return classes;
     }
 
+    public static <T> Iterable<Class<? extends T>> forClass(Class<T> baseType)
+            throws ClassNotFoundException, IOException {
+        boolean includeAbstract = false;
+        IndexedType indexing = baseType.getAnnotation(IndexedType.class);
+        if (indexing != null)
+            includeAbstract = indexing.includeAbstract();
+        return forClass(baseType, includeAbstract);
+    }
+
     public static <T> Iterable<Class<? extends T>> forClass(Class<T> baseType, boolean includeAbstract)
             throws IOException, ClassNotFoundException {
         TypeExtensions exts = new TypeExtensions();
         exts.setIncludeAbstract(includeAbstract);
         return exts.list(baseType);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static Iterable<Class<?>> forClassWithAnnotation(Class<? extends Annotation> annotationType)
+            throws IOException, ClassNotFoundException {
+        TypeExtensions exts = new TypeExtensions();
+        exts.setIncludeAbstract(true);
+        Iterable list = exts.list(annotationType);
+        return list;
     }
 
 }

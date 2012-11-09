@@ -1,7 +1,6 @@
 package net.bodz.bas.meta.codegen;
 
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -14,7 +13,7 @@ import java.lang.annotation.Target;
  * The result index file is <code>META-INF/services/&lt;base-type&gt;</code> by default.
  */
 // @Documented
-@Inherited
+// @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface IndexedType {
