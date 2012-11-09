@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.codehint;
+package net.bodz.bas.meta.decl;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,11 +7,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A poor-implemented method should be optimized by concrete classes.
+ * A pure function won't modify environment.
  */
 @Documented
-@Retention(RetentionPolicy.SOURCE)
-@Target({ ElementType.METHOD, ElementType.TYPE })
-public @interface PoorImpl {
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Pure {
 
 }

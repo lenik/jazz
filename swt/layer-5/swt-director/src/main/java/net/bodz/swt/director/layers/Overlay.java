@@ -4,7 +4,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.meta.optim.Pure;
+import net.bodz.bas.meta.decl.Pure;
 
 public interface Overlay
         extends Paintable {

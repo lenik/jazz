@@ -3,9 +3,9 @@ package net.bodz.bas.log;
 import net.bodz.bas.log.impl.PrintStreamLogSink;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
-import net.bodz.bas.meta.codehint.ChainOrder;
-import net.bodz.bas.meta.codehint.ChainUsage;
-import net.bodz.bas.meta.codehint.OverrideOption;
+import net.bodz.bas.meta.source.ChainOrder;
+import net.bodz.bas.meta.source.ChainUsage;
+import net.bodz.bas.meta.source.OverrideOption;
 
 public abstract class AbstractLogComposite
         // extends SkippedCallerBase

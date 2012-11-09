@@ -3,7 +3,7 @@ package net.bodz.bas.flow.unit.builtins.text;
 import java.io.IOException;
 import java.util.Arrays;
 
-import net.bodz.bas.meta.optim.Stateless;
+import net.bodz.bas.meta.decl.Stateless;
 import net.bodz.bas.text.codec.builtin.HexCodec;
 
 @Stateless

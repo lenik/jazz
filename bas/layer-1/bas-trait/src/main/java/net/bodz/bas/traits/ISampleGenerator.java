@@ -5,7 +5,7 @@ import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.meta.util.ReferredType;
+import net.bodz.bas.meta.decl.ParameterType;
 
 public interface ISampleGenerator<T> {
 
@@ -27,7 +27,7 @@ public interface ISampleGenerator<T> {
      * <li><code>"performance"</code> for Performance Test</li>
      * </ul>
      */
-    @ReferredType(String.class)
+    @ParameterType(String.class)
     String sampleUsage = "sample.usage";
 
     /**

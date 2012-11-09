@@ -10,7 +10,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.mi.AbstractQueryable;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.meta.optim.ThreadUnsafe;
+import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 @ThreadUnsafe
 public abstract class AbstractCommonTraits<T>

@@ -1,9 +1,9 @@
 package net.bodz.bas.flow.unit.metadata;
 
-import net.bodz.bas.meta.stereo.MetaData;
+import net.bodz.bas.meta.stereo.IMetadata;
 
 public interface IUnitMetadata
-        extends MetaData {
+        extends IMetadata {
 
     String getName();
 

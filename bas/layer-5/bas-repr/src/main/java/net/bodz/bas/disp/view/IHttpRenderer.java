@@ -5,9 +5,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.bodz.bas.meta.stereo.TypeIndex;
+import net.bodz.bas.meta.codegen.IndexedType;
 
-@TypeIndex
+@IndexedType
 public interface IHttpRenderer
         extends IRenderer {
 

@@ -5,6 +5,6 @@ package net.bodz.bas.meta.stereo;
  * 
  * Meta instance shall be singleton.
  */
-public interface MetaData {
+public interface IMetadata {
 
 }

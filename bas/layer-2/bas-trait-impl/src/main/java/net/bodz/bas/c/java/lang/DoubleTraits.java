@@ -7,7 +7,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.meta.util.ReferredType;
+import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
@@ -21,7 +21,7 @@ public class DoubleTraits
      * @see #normalSampleDistribution
      * @see #gaussianSampleDistribution
      */
-    @ReferredType(String.class)
+    @ParameterType(String.class)
     public static final String sampleDistribution = "sample.distribution";
     public static final String normalSampleDistribution = "normal";
     public static final String gaussianSampleDistribution = "gaussian";

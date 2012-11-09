@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.util;
+package net.bodz.bas.meta.decl;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,12 +7,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Describe which type the component elements are defined in the collection.
+ * Declared on parameter-id.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
-public @interface ComponentType {
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
+public @interface ParameterType {
 
     Class<?> value();
 

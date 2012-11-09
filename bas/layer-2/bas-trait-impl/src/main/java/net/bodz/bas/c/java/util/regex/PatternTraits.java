@@ -6,7 +6,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.meta.util.ReferredType;
+import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 
@@ -19,7 +19,7 @@ public class PatternTraits
      * @see #javaTextformMode
      * @see #globTextformMode
      */
-    @ReferredType(String.class)
+    @ParameterType(String.class)
     public static final String textformMode = "textform.mode";
     public static final String javaTextformMode = "java";
     public static final String globTextformMode = "glob";
@@ -28,7 +28,7 @@ public class PatternTraits
     /**
      * The flags passed to {@link Pattern#compile(String, int)}.
      */
-    @ReferredType(Integer.class)
+    @ParameterType(Integer.class)
     public static final String regexFlags = "regex.flags";
     public static final int defeaultRegexFlags = 0;
 

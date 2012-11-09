@@ -3,9 +3,9 @@ package net.bodz.bas.disp.req;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.meta.stereo.TypeIndex;
+import net.bodz.bas.meta.codegen.IndexedType;
 
-@TypeIndex
+@IndexedType
 public abstract class HttpRequestProcessor {
 
     public abstract void apply(HttpServletRequest request)

@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs;
 
-public class VFSServiceProvider {
+public interface VFSServiceProvider {
 
     // Service
 

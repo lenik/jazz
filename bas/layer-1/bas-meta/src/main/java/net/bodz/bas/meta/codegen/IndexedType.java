@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.stereo;
+package net.bodz.bas.meta.codegen;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface TypeIndex {
+public @interface IndexedType {
 
     String section() default "services";
 
