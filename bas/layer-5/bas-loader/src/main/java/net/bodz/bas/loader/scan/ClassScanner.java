@@ -3,14 +3,16 @@ package net.bodz.bas.loader.scan;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Inherited;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.object.IdentityObjectSet;
-import net.bodz.bas.lang.fn.Pred1;
+import net.bodz.bas.err.IllegalUsageException;
 
 public class ClassScanner
         extends ResourceScanner {
@@ -18,7 +20,7 @@ public class ClassScanner
     public static final int SUBCLASSES = 1;
     public static final int ANNOTATED_CLASSES = 2;
 
-    Set<Class<?>> parsedClasses = new HashSet<Class<?>>();
+    Set<Class<?>> analyzedClasses = new HashSet<Class<?>>();
     Set<Class<?>> rootClasses = new HashSet<Class<?>>();
     Map<Class<?>, Set<Class<?>>> subclassesMap = new HashMap<Class<?>, Set<Class<?>>>();
     Map<Class<?>, Set<Class<?>>> annotatedClassesMap = new HashMap<Class<?>, Set<Class<?>>>();
@@ -27,15 +29,32 @@ public class ClassScanner
         super(ClassOrDirFileFilter.INSTANCE);
     }
 
-    public synchronized Set<Class<?>> getSubclasses(Class<?> clazz) {
-        Set<Class<?>> subclasses = subclassesMap.get(clazz);
+    /**
+     * Get all classes whose parent class is the specified class.
+     * 
+     * @param parentClass
+     *            The parent class.
+     * @return Non-<code>null</code> set of subclasses. If there is no subclass of the given parent
+     *         class, an empty set is returned.
+     */
+    public synchronized Set<Class<?>> getSubclasses(Class<?> parentClass) {
+        Set<Class<?>> subclasses = subclassesMap.get(parentClass);
         if (subclasses == null) {
             subclasses = new HashSet<Class<?>>();
-            subclassesMap.put(clazz, subclasses);
+            subclassesMap.put(parentClass, subclasses);
         }
         return subclasses;
     }
 
+    /**
+     * Get all classes with the specific annotation type.
+     * 
+     * @param annotationType
+     *            The annotation type.
+     * @return Non-<code>null</code> set of classes which is annotated with the specific annotation
+     *         type. If no class is annotated with the given annotation type, an empty set is
+     *         returned.
+     */
     public synchronized Set<Class<?>> getAnnotatedClasses(Class<?> annotationType) {
         Set<Class<?>> annotatedClasses = annotatedClassesMap.get(annotationType);
         if (annotatedClasses == null) {
@@ -45,106 +64,123 @@ public class ClassScanner
         return annotatedClasses;
     }
 
-    public Set<Class<?>> getClosure(Class<?> clazz) {
-        return getClosure(clazz, -1);
+    /**
+     * Get all classes
+     */
+    public Set<Class<?>> getDerivations(Class<?> clazz) {
+        return getDerivations(clazz, -1);
     }
 
-    public Set<Class<?>> getClosure(Class<?> clazz, int selection) {
-        Set<Class<?>> closure = new HashSet<Class<?>>();
-        _getClosure(clazz, closure, selection);
-        return closure;
+    public Set<Class<?>> getDerivations(Class<?> clazz, int selection) {
+        Set<Class<?>> derivations = new HashSet<Class<?>>();
+        findDerivations(derivations, clazz, selection);
+        return derivations;
     }
 
-    void _getClosure(Class<?> clazz, Set<Class<?>> closure, int selection) {
-        if (closure.add(clazz)) {
+    void findDerivations(Set<Class<?>> markSet, Class<?> clazz, int selection) {
+        if (markSet.add(clazz)) {
             if ((selection & SUBCLASSES) != 0) {
                 // assert !clazz.isAnnotation();
                 for (Class<?> subclass : getSubclasses(clazz))
-                    _getClosure(subclass, closure, selection);
+                    findDerivations(markSet, subclass, selection);
             }
             if ((selection & ANNOTATED_CLASSES) != 0) {
-                // assert clazz.isAnnotation();
-                Set<Class<?>> annotatedClasses = annotatedClassesMap.get(clazz);
-                // It's very possible that clazz is not an annotation at all.
-                if (annotatedClasses != null)
+                Set<Class<?>> annotatedSet = annotatedClassesMap.get(clazz);
+                if (!(Collections.isEmpty(annotatedSet) || clazz.isAnnotation()))
+                    throw new IllegalUsageException(String.format(//
+                            "A non-annotation %s is used to annotate on: ", clazz, annotatedSet));
+
+                if (annotatedSet != null) {
+                    int sel = selection;
+                    boolean inheritedAnnotation = clazz.isAnnotationPresent(Inherited.class);
+                    if (!inheritedAnnotation)
+                        sel &= ~SUBCLASSES;
+
                     for (Class<?> annotatedClass : getAnnotatedClasses(clazz))
-                        _getClosure(annotatedClass, closure, selection);
+                        findDerivations(markSet, annotatedClass, sel);
+                }
             }
         }
     }
 
-    public synchronized int parse(Class<?> clazz) {
-        return _parse(clazz);
+    /**
+     * Analyze the given class and all its parents, interfaces, annotations.
+     */
+    public synchronized int analyze(Class<?> clazz) {
+        return _analyze(clazz);
     }
 
-    private int _parse(Class<?> clazz) {
+    private int _analyze(Class<?> clazz) {
         int counter = 0;
-        if (parsedClasses.add(clazz)) {
+        if (analyzedClasses.add(clazz)) {
             Class<?> superclass = clazz.getSuperclass();
             if (superclass != null) {
                 Set<Class<?>> subclasses = getSubclasses(superclass);
                 if (subclasses.add(clazz))
                     counter++;
-                counter += _parse(superclass);
+                counter += _analyze(superclass);
             } else
                 rootClasses.add(clazz);
 
             for (Class<?> iface : clazz.getInterfaces()) {
-                Set<Class<?>> set = getSubclasses(iface);
-                if (set.add(clazz))
+                Set<Class<?>> subclasses = getSubclasses(iface);
+                if (subclasses.add(clazz))
                     counter++;
-                counter += _parse(iface); // iface is also parsed in full-scan.
+                counter += _analyze(iface); // iface is also parsed in full-scan.
             }
 
-            for (Annotation annotation : clazz.getAnnotations()) {
+            Annotation[] annotations;
+            annotations = clazz.getAnnotations();
+            // annotations = clazz.getDeclaredAnnotations();
+            for (Annotation annotation : annotations) {
                 Class<? extends Annotation> annotationType = annotation.annotationType();
-                Set<Class<?>> set = getAnnotatedClasses(annotationType);
-                if (set.add(clazz))
+                Set<Class<?>> annotatedSet = getAnnotatedClasses(annotationType);
+                if (annotatedSet.add(clazz))
                     counter++;
                 // @A @interface B, and @B class C, then @A class C.
-                // counter += _parse(annotationType); // annotationType is also parsed in full-scan.
+                // annotationType is also analyzed in full-scan.
+                // counter += _analyze(annotationType);
             }
         }
         return counter;
     }
 
-    class TypeResolver
-            extends Pred1<String> {
+    class ResolveTypeAdapter
+            implements ITypeNameCallback {
 
-        final Pred1<Class<?>> target;
+        final ITypeCallback typeCallback;
 
-        public TypeResolver(Pred1<Class<?>> target) {
-            if (target == null)
-                throw new NullPointerException("target");
-            this.target = target;
+        public ResolveTypeAdapter(ITypeCallback typeCallback) {
+            if (typeCallback == null)
+                throw new NullPointerException("typeCallback");
+            this.typeCallback = typeCallback;
         }
 
         @Override
-        public boolean test(String fqcn) {
+        public boolean typeName(String fqcn) {
             Class<?> clazz;
             try {
                 clazz = Class.forName(fqcn, false, getClassLoader());
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e.getMessage(), e);
+            } catch (ClassNotFoundException | NoClassDefFoundError e) {
+                throw new RuntimeException("Failed to resolve class: " + fqcn, e);
             }
-            return target.test(clazz);
+            return typeCallback.type(clazz);
         }
-
     }
 
-    public void scanTypes(String packageName, final Pred1<Class<?>> typeCallback)
+    public void scanTypes(String packageName, final ITypeCallback typeCallback)
             throws IOException {
-        TypeResolver typeResolver = new TypeResolver(typeCallback);
-        scanTypenames(packageName, typeResolver);
+        ResolveTypeAdapter typeResolver = new ResolveTypeAdapter(typeCallback);
+        scanTypeNames(packageName, typeResolver);
     }
 
     public void scan(String packageName)
             throws IOException {
-        scanTypes(packageName, new Pred1<Class<?>>() {
+        scanTypes(packageName, new ITypeCallback() {
             @Override
-            public boolean test(Class<?> clazz) {
-                int adds = _parse(clazz);
-                return adds > 0;
+            public boolean type(Class<?> clazz) {
+                int addCount = _analyze(clazz);
+                return addCount > 0;
             }
         });
     }

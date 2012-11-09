@@ -3,7 +3,6 @@ package net.bodz.bas.c.type;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
@@ -11,8 +10,8 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.io.FileContent;
 import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.loader.DefaultClassLoader;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.loader.scan.ClassScanner;
 import net.bodz.bas.loader.scan.m2.TestClassLoader;
 import net.bodz.bas.log.Logger;
@@ -26,151 +25,46 @@ public abstract class TypeCollector<T> {
 
     static Logger logger = LoggerFactory.getLogger(TypeCollector.class);
 
-    protected final Class<T> baseClass;
-    protected ClassScanner scanner = new ClassScanner();
+    final Class<?> baseClass;
+    boolean includeAbstract = true;
+    boolean includeNonPublic = false;
+
+    ClassScanner scanner;
+    List<String> packageNames = new ArrayList<String>();
+    boolean scanned;
 
     boolean showPaths;
     List<Class<?>> extensions;
-    Map<File, List<String>> commitMap;
+    Map<File, List<String>> fileContentMap;
 
     public TypeCollector() {
-        this(null);
+        this(null, null);
     }
 
-    public TypeCollector(Boolean global) {
+    public TypeCollector(Class<?> baseClass, Boolean global) {
         if (global == null)
             global = getClass().getName().contains(".uber.");
 
         URLClassLoader mainLoader = (URLClassLoader) DefaultClassLoader.getInstance();
-        if (!global)
-            mainLoader = restrictLoader(mainLoader, getClass());
+        if (!global) {
+            mainLoader = new URLClassLoader(new URL[] { //
+                    ClassResource.getRootURL(getClass()), //
+                    });
+        }
 
         URLClassLoader testLoader = TestClassLoader.createMavenTestClassLoader(mainLoader);
+
+        scanner = createClassScanner();
         scanner.setClassLoader(testLoader);
 
-        baseClass = TypeParam.infer1(getClass(), TypeCollector.class, 0);
-        try {
-            scanner.scan("net.bodz");
-            scanner.scan("user");
-        } catch (IOException e) {
-            throw new Error(e.getMessage(), e);
-        }
+        if (baseClass != null)
+            this.baseClass = baseClass;
+        else
+            this.baseClass = TypeParam.infer1(getClass(), TypeCollector.class, 0);
     }
 
-    static URLClassLoader restrictLoader(URLClassLoader loader, Class<?> clazz) {
-        String implClass = clazz.getName().replace('.', '/') + ".class";
-        URL _url = loader.getResource(implClass);
-
-        String _path = _url.toString();
-        if (!_path.endsWith(implClass))
-            throw new UnexpectedException("Unexpected URL:  " + _url);
-        _path = _path.substring(0, _path.length() - implClass.length());
-        if (_path.endsWith("/") || _path.endsWith("\\"))
-            _path = _path.substring(0, _path.length() - 1);
-        if (_path.endsWith("!"))
-            _path = _path.substring(0, _path.length() - 1);
-
-        URL folderUrl;
-        try {
-            folderUrl = new URL(_path);
-        } catch (MalformedURLException e) {
-            throw new UnexpectedException(e);
-        }
-
-        loader = new URLClassLoader(new URL[] { folderUrl });
-        return loader;
-    }
-
-    public void collect()
-            throws IOException {
-        TypeCollector<T> wired = this;
-        wired._collect();
-    }
-
-    synchronized void _collect()
-            throws IOException {
-        commitMap = new HashMap<File, List<String>>();
-        extensions = new ArrayList<>();
-        scan();
-        commit(commitMap);
-        if (showPaths)
-            for (Class<?> extension : extensions) {
-                MavenProjectOrigin pomDir = MavenProjectOrigin.fromClass(extension);
-                File sourceFile = pomDir.getSourceFile(extension);
-                System.out.println(sourceFile);
-            }
-        commitMap = null;
-        extensions = null;
-    }
-
-    protected void scan() {
-        List<Class<?>> serviceList = new ArrayList<Class<?>>(getExtensions(baseClass, true));
-        // Collections.sort(serviceList, ClassNameComparator.getInstance());
-        for (Class<?> serviceImpl : serviceList) {
-            publish(baseClass, serviceImpl);
-        }
-    }
-
-    /**
-     * @return <code>false</code> if the serviceImpl is ignored. For example, it's not a service, or
-     *         it's in a jar.
-     */
-    protected boolean publish(Class<?> baseClass, Class<?> extension) {
-        logger.info("    Extension: " + extension);
-
-        IndexedType indexing = extension.getAnnotation(IndexedType.class);
-        if (indexing == null) {
-            logger.debug("        (Not indexed-type, skipped)");
-            return false;
-        }
-
-        extensions.add(extension);
-
-        int mod = extension.getModifiers();
-        if (Modifier.isAbstract(mod)) {
-            if (indexing.includeAbstract())
-                logger.debug("    (Included abstract class)");
-            else
-                return false;
-        }
-
-        MavenProjectOrigin pomDir = MavenProjectOrigin.fromClass(extension);
-        File resdir = pomDir.getResourceDir(extension);
-        if (resdir == null)
-            return false;
-
-        File sfile;
-
-        sfile = new File(resdir, indexing.prefix() + baseClass.getName());
-
-        List<String> lines = commitMap.get(sfile);
-        if (lines == null) {
-            lines = new ArrayList<String>();
-            commitMap.put(sfile, lines);
-        }
-
-        lines.add(extension.getName());
-        return true;
-    }
-
-    protected Collection<Class<?>> getExtensions(Class<?> base, boolean includeAbstract) {
-        List<Class<?>> list = new ArrayList<Class<?>>();
-
-        for (Class<?> clazz : scanner.getClosure(base)) {
-            int mod = clazz.getModifiers();
-            if (Modifier.isAbstract(mod))
-                if (!includeAbstract)
-                    continue;
-            if (!Modifier.isPublic(mod))
-                continue;
-            // defined in code-block, or inner class with-in enclosing instance.
-            if (clazz.isAnonymousClass() || clazz.isLocalClass() || clazz.isMemberClass())
-                continue;
-            if (clazz.isAnnotationPresent(ExcludedFromIndex.class))
-                continue;
-            list.add(clazz);
-        }
-        return list;
+    protected ClassScanner createClassScanner() {
+        return new ClassScanner();
     }
 
     public boolean isShowPaths() {
@@ -181,9 +75,106 @@ public abstract class TypeCollector<T> {
         this.showPaths = showPaths;
     }
 
-    protected static void commit(Map<File, List<String>> files)
+    public boolean isIncludeAbstract() {
+        return includeAbstract;
+    }
+
+    public void setIncludeAbstract(boolean includeAbstract) {
+        this.includeAbstract = includeAbstract;
+    }
+
+    public boolean isIncludeNonPublic() {
+        return includeNonPublic;
+    }
+
+    public void setIncludeNonPublic(boolean includeNonPublic) {
+        this.includeNonPublic = includeNonPublic;
+    }
+
+    public ClassScanner getScanner() {
+        return scanner;
+    }
+
+    public void addPackageToScan(String packageName) {
+        packageNames.add(packageName);
+    }
+
+    public void removePackageToScan(String packageName) {
+        packageNames.remove(packageName);
+    }
+
+    protected void scanTypes()
             throws IOException {
-        for (Entry<File, List<String>> entry : files.entrySet()) {
+        for (String packageName : packageNames)
+            scanner.scan(packageName);
+    }
+
+    protected void createExtensionFiles() {
+        IndexedType indexing = baseClass.getAnnotation(IndexedType.class);
+
+        logger.info("For " + baseClass.getCanonicalName());
+
+        for (Class<?> extension : getScannedExtensions(baseClass)) {
+            logger.info("    Extension: " + extension.getCanonicalName());
+
+            if (indexing == null) {
+                logger.debug("        (Not indexed-type, skipped)");
+                continue;
+            }
+
+            extensions.add(extension);
+
+            int mod = extension.getModifiers();
+            if (Modifier.isAbstract(mod)) {
+                if (indexing.includeAbstract())
+                    logger.debug("    (Included abstract class)");
+                else
+                    continue;
+            }
+
+            MavenProjectOrigin pomDir = MavenProjectOrigin.fromClass(extension);
+            File resdir = pomDir.getResourceDir(extension);
+            if (resdir == null)
+                continue;
+
+            File sfile;
+
+            sfile = new File(resdir, indexing.prefix() + baseClass.getName());
+
+            List<String> lines = fileContentMap.get(sfile);
+            if (lines == null) {
+                lines = new ArrayList<String>();
+                fileContentMap.put(sfile, lines);
+            }
+
+            lines.add(extension.getName());
+        }
+    }
+
+    protected Collection<Class<?>> getScannedExtensions(Class<?> base) {
+        List<Class<?>> list = new ArrayList<Class<?>>();
+
+        for (Class<?> derivation : scanner.getDerivations(base)) {
+            int mod = derivation.getModifiers();
+            if (Modifier.isAbstract(mod))
+                if (!includeAbstract)
+                    continue;
+            if (!Modifier.isPublic(mod))
+                if (!includeNonPublic)
+                    continue;
+            // defined in code-block, or inner class with-in enclosing instance.
+            if (derivation.isAnonymousClass() || derivation.isLocalClass() || derivation.isMemberClass())
+                continue;
+            if (derivation.isAnnotationPresent(ExcludedFromIndex.class))
+                continue;
+            list.add(derivation);
+        }
+        return list;
+    }
+
+    protected static void saveFiles(Map<File, List<String>> fileContentMap)
+            throws IOException {
+        for (Entry<File, List<String>> entry : fileContentMap.entrySet()) {
             File file = entry.getKey();
 
             List<String> lines = entry.getValue();
@@ -207,6 +198,29 @@ public abstract class TypeCollector<T> {
             file.getParentFile().mkdirs();
             FileContent.createUtf8(file, content);
         }
+    }
+
+    public void collect()
+            throws IOException {
+        TypeCollector<T> wired = this;
+        wired._collect();
+    }
+
+    synchronized void _collect()
+            throws IOException {
+        fileContentMap = new HashMap<File, List<String>>();
+        extensions = new ArrayList<>();
+        scanTypes();
+        createExtensionFiles();
+        saveFiles(fileContentMap);
+        if (showPaths)
+            for (Class<?> extension : extensions) {
+                MavenProjectOrigin pomDir = MavenProjectOrigin.fromClass(extension);
+                File sourceFile = pomDir.getSourceFile(extension);
+                System.out.println(sourceFile);
+            }
+        fileContentMap = null;
+        extensions = null;
     }
 
 }
