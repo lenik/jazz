@@ -64,7 +64,7 @@ public class TaskTestApp {
             throws IOException {
         this();
         Class<?> callerClass = Caller.getCallerClass(caller);
-        URL url = ClassResource.classDataURL(callerClass);
+        URL url = ClassResource.getDataURL(callerClass);
         if ("jar".equals(url.getProtocol())) {
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.
@@ -81,7 +81,7 @@ public class TaskTestApp {
         Class<?> callerClass = Caller.getCallerClass(caller);
         URL xmlURL;
         if (resourceName == null)
-            xmlURL = ClassResource.classDataURL(callerClass, "xml");
+            xmlURL = ClassResource.getDataURL(callerClass, "xml");
         else
             xmlURL = callerClass.getResource(resourceName);
         File buildFile = FileURL.getFile(xmlURL); // Must be a File, not resource in zip.

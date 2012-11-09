@@ -297,7 +297,7 @@ public class Mkbat
 
     static {
         try {
-            batTempl = ClassResource.classData(Mkbat.class, "batTempl");
+            batTempl = ClassResource.getData(Mkbat.class, "batTempl");
             batTemplBody = batTempl.tooling()._for(StreamReading.class).readTextContents();
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);

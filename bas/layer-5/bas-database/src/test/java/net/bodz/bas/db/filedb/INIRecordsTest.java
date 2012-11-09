@@ -19,7 +19,7 @@ public class INIRecordsTest
     IStreamInputSource source;
 
     public INIRecordsTest() {
-        source = ClassResource.classData(getClass(), "1");
+        source = ClassResource.getData(getClass(), "1");
     }
 
     @Test

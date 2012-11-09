@@ -12,7 +12,7 @@ public class ClassResourceTest
     @Test
     public void testClassData()
             throws Exception {
-        URLResource classData = ClassResource.classData(getClass(), "data");
+        URLResource classData = ClassResource.getData(getClass(), "data");
         String actual = classData.tooling()._for(StreamReading.class).readTextContents();
         assertEquals("Hello, world!", actual);
     }

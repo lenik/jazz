@@ -57,7 +57,7 @@ public class JFlexLexerTest
     @Test
     public void test1()
             throws Exception {
-        String text = ClassResource.classData(getClass(), "1")//
+        String text = ClassResource.getData(getClass(), "1")//
                 .tooling()._for(StreamReading.class).readTextContents();
         TD[] expected = {
                 //

@@ -6,15 +6,14 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.spi.CharsetProvider;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.TreeMap;
 
 import net.bodz.bas.err.IllegalArgumentTypeException;
 
 /**
- * Literal Charset Provider Literal charset is designed for debug or special purpose.
+ * Literal Charset Provider
  * 
- * @see ServiceLoader#load(Class)
+ * Literal charset is designed for debug or special purpose.
  */
 public class BasCharsetProvider
         extends CharsetProvider {

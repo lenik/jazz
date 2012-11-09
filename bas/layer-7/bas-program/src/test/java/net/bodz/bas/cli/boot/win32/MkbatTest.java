@@ -16,7 +16,7 @@ public class MkbatTest {
             System.err.println("can't find project base");
             return;
         }
-        URL outurl = ClassResource.classDataURL(MkbatTest.class, "out");
+        URL outurl = ClassResource.getDataURL(MkbatTest.class, "out");
         File outdir = FilePath.canoniOf(outurl);
         outdir.mkdirs();
 
