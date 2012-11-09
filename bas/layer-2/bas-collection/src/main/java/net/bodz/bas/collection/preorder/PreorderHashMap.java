@@ -3,9 +3,9 @@ package net.bodz.bas.collection.preorder;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.java.util.Iterables;
 import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.Pair;
-import net.bodz.bas.util.iter.Iterables;
 
 /**
  * The {@link IPreorder#compare(Object, Object)} is not used.

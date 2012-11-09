@@ -2,11 +2,11 @@ package net.bodz.bas.potato.model.invoke;
 
 import java.util.Iterator;
 
+import net.bodz.bas.c.java.util.PrefetchedIterator;
 import net.bodz.bas.potato.ref.AbstractRefEntry;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IRefcomp;
-import net.bodz.bas.util.iter.PrefetchedIterator;
 
 public class InvocationRefcomp
         extends AbstractRefEntry<Object>

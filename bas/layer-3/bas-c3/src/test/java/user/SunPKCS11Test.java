@@ -5,8 +5,8 @@ import java.security.Provider.Service;
 
 import sun.security.pkcs11.SunPKCS11;
 
+import net.bodz.bas.c.java.util.Iterables;
 import net.bodz.bas.c.javax.security.auth.Providers;
-import net.bodz.bas.util.iter.Iterables;
 
 @SuppressWarnings("restriction")
 public class SunPKCS11Test {

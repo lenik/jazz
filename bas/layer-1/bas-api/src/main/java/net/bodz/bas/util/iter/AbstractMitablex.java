@@ -9,7 +9,7 @@ public abstract class AbstractMitablex<T, X extends Throwable>
     @Override
     public Iterator<T> iterator() {
         Mitorx<? extends T, ? extends X> mitor = iterator(true);
-        return (Iterator<T>) Iterators.convert(mitor);
+        return Mitors.convert(mitor);
     }
 
     public T first()

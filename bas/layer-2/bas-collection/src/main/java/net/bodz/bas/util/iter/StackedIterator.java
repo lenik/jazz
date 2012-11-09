@@ -3,6 +3,7 @@ package net.bodz.bas.util.iter;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.c.java.util.NestedIterator;
 import net.bodz.bas.collection.list.LinkedStack;
 import net.bodz.bas.collection.list.Stack;
 

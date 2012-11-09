@@ -3,7 +3,7 @@ package net.bodz.bas.c.reflect.query;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import net.bodz.bas.util.iter.Iterables;
+import net.bodz.bas.c.java.util.Iterables;
 
 /**
  * @see ReflectQuery#selectMethods(Class)

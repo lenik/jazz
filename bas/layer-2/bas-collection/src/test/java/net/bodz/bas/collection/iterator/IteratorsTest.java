@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import net.bodz.bas.util.iter.Iterables;
+import net.bodz.bas.c.java.util.Iterables;
 
 public class IteratorsTest
         extends IteratorTestBase {

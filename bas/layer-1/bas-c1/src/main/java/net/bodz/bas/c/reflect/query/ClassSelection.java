@@ -6,13 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.c.java.util.Iterables;
 import net.bodz.bas.c.reflect.query.predicate.IStringPredicate;
 import net.bodz.bas.c.reflect.query.predicate.StringEndsWith;
 import net.bodz.bas.c.reflect.query.predicate.StringEquals;
 import net.bodz.bas.c.reflect.query.predicate.StringStartsWith;
 import net.bodz.bas.util.iter.AbstractMitable;
 import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.Iterables;
 import net.bodz.bas.util.iter.Mitorx;
 
 public class ClassSelection

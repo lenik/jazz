@@ -1,4 +1,4 @@
-package net.bodz.bas.util.iter;
+package net.bodz.bas.c.java.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,11 +9,10 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.model.IFilter;
 import net.bodz.bas.model.ITransformer;
-import net.bodz.bas.util.exception.Err;
 
 public class Iterators {
 
-    static final int defaultAppxSize = 16;
+    public static final int defaultAppxSize = 16;
 
     /**
      * Get an empty iterator.
@@ -21,6 +20,16 @@ public class Iterators {
     public static <T> Iterator<T> empty() {
         @SuppressWarnings("unchecked") Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
         return empty;
+    }
+
+    /**
+     * One time iterator.
+     * 
+     * @param object
+     *            The object to repeat.
+     */
+    public static <T> Iterator<T> once(T object) {
+        return repeat(object, 1);
     }
 
     /**
@@ -33,16 +42,6 @@ public class Iterators {
      */
     public static <T> Iterator<T> repeat(T object, int count) {
         return new RepeatIterator<T>(object, count);
-    }
-
-    /**
-     * One time iterator.
-     * 
-     * @param object
-     *            The object to repeat.
-     */
-    public static <T> Iterator<T> once(T object) {
-        return new RepeatIterator<T>(object, 1);
     }
 
     @SafeVarargs
@@ -70,16 +69,6 @@ public class Iterators {
         return new EnumIterator<T>(enm);
     }
 
-    /**
-     * Convert an immediate iterator (Mitor) to a standard iterator.
-     * 
-     * Whether the converted iterator is overlapped is undetermined.
-     */
-    public static <T> Iterator<T> convert(Mitorx<? extends T, ?> mitor) {
-        MitorIterator<T> iterator = new MitorIterator<T>(mitor);
-        return iterator;
-    }
-
     public static <T> List<T> toList(Iterator<T> iterator) {
         return toList(iterator, defaultAppxSize);
     }
@@ -93,20 +82,6 @@ public class Iterators {
         return list;
     }
 
-    public static <T, X extends Exception> List<T> toList(Mitorx<T, X> iterator)
-            throws X {
-        return toList(iterator, defaultAppxSize);
-    }
-
-    public static <T, X extends Exception> List<T> toList(Mitorx<T, X> iterator, int appxSize)
-            throws X {
-        List<T> list = new ArrayList<T>(appxSize);
-        T o;
-        while ((o = iterator._next()) != null || !iterator.isEnded())
-            list.add(iterator.deoverlap(o));
-        return list;
-    }
-
     public static <T> List<T> toListLimited(Iterator<T> iterator, int limit) {
         return toListLimited(iterator, limit, defaultAppxSize);
     }
@@ -117,20 +92,6 @@ public class Iterators {
             T o = iterator.next();
             list.add(o);
         }
-        return list;
-    }
-
-    public static <T, X extends Exception> List<T> toListLimited(Mitorx<T, X> iterator, int limit)
-            throws X {
-        return toListLimited(iterator, limit, defaultAppxSize);
-    }
-
-    public static <T, X extends Exception> List<T> toListLimited(Mitorx<T, X> iterator, int limit, int appxSize)
-            throws X {
-        List<T> list = new ArrayList<T>(appxSize);
-        T o;
-        while (limit-- > 0 && ((o = iterator._next()) != null || !iterator.isEnded()))
-            list.add(iterator.deoverlap(o));
         return list;
     }
 
@@ -297,84 +258,6 @@ class EnumIterator<T>
     @Override
     public T next() {
         return enumration.nextElement();
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
-}
-
-class MitorIterator<T>
-        implements Iterator<T> {
-
-    private final Mitorx<? extends T, ?> mitor;
-
-    private static final int UNKNOWN = 0;
-    private static final int ITERATED = 1;
-    private static final int ENDED = 2;
-    private int state = UNKNOWN;
-
-    private T lastIteratedValue;
-
-    public MitorIterator(IMitablex<T, ?> mitable, boolean allowOverlap) {
-        if (mitable == null)
-            throw new NullPointerException("mitable");
-        this.mitor = mitable.iterator(allowOverlap);
-    }
-
-    public MitorIterator(Mitorx<? extends T, ?> mitor) {
-        if (mitor == null)
-            throw new NullPointerException("mitor");
-        this.mitor = mitor;
-    }
-
-    @Override
-    public boolean hasNext() {
-        switch (state) {
-        case UNKNOWN:
-        default:
-            try {
-                lastIteratedValue = mitor._next();
-            } catch (Throwable e) {
-                throw Err.throwOrWrap(IteratorTargetException.class, e);
-            }
-            if (lastIteratedValue == null)
-                if (mitor.isEnded()) {
-                    state = ENDED;
-                    return false;
-                }
-            state = ITERATED;
-        case ITERATED:
-            return true;
-        case ENDED:
-            return false;
-        }
-    }
-
-    @Override
-    public T next() {
-        switch (state) {
-        case UNKNOWN:
-        default:
-            try {
-                lastIteratedValue = mitor._next();
-            } catch (Throwable e) {
-                throw Err.throwOrWrap(IteratorTargetException.class, e);
-            }
-            if (lastIteratedValue == null)
-                if (mitor.isEnded()) {
-                    state = ENDED;
-                    throw new NoSuchElementException();
-                }
-            return lastIteratedValue;
-        case ITERATED:
-            state = UNKNOWN;
-            return lastIteratedValue;
-        case ENDED:
-            throw new NoSuchElementException();
-        }
     }
 
     @Override

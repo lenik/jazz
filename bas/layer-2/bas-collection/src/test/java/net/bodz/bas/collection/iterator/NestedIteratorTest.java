@@ -6,7 +6,7 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.util.iter.NestedIterator;
+import net.bodz.bas.c.java.util.NestedIterator;
 
 public class NestedIteratorTest
         extends Assert {

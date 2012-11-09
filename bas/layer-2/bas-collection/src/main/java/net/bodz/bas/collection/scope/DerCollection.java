@@ -4,7 +4,7 @@ import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.bodz.bas.util.iter.Iterators;
+import net.bodz.bas.c.java.util.Iterators;
 
 public class DerCollection<E>
         extends AbstractCollection<E> {

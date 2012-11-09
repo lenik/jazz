@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.c.java.util.Iterators;
 import net.bodz.bas.collection.list.DyingList;
 import net.bodz.bas.collection.list.SortedList;
 import net.bodz.bas.util.order.ComparableComparator;

@@ -20,12 +20,12 @@ import javax.security.auth.callback.CallbackHandler;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.net.CURL;
 import net.bodz.bas.c.java.net.CURL.Alpha;
+import net.bodz.bas.c.java.util.PrefetchedIterator;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.iter.PrefetchedIterator;
 
 public class CertSelector
         implements II18nCapable {

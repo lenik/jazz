@@ -9,9 +9,9 @@ import java.util.List;
 
 import net.bodz.bas.c.java.io.PruneFileFilter;
 import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.c.java.util.Iterators;
+import net.bodz.bas.c.java.util.PrefetchedIterator;
 import net.bodz.bas.err.RuntimizedException;
-import net.bodz.bas.util.iter.Iterators;
-import net.bodz.bas.util.iter.PrefetchedIterator;
 import net.bodz.bas.util.iter.StackedIterator;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFSException;

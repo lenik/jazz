@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.c.java.util.Iterators;
+import net.bodz.bas.c.java.util.PrefetchedIterator;
 import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.util.iter.Iterators;
-import net.bodz.bas.util.iter.PrefetchedIterator;
 import net.bodz.bas.util.iter.StackedIterator;
 
 public class WildcardsExpander
