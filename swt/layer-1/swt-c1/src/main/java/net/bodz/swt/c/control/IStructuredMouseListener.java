@@ -1,6 +1,7 @@
 package net.bodz.swt.c.control;
 
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.internal.SWTEventListener;
 
 public interface IStructuredMouseListener

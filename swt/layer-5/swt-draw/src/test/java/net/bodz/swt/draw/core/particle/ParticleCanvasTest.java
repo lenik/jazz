@@ -5,8 +5,8 @@ import org.junit.Test;
 
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.draw.geom_i.particle.GridParticleBounds2d;
-import net.bodz.swt.draw.geom_i.particle.Particle2dCanvas;
 import net.bodz.swt.draw.geom_i.particle.GridParticleBounds2d.HFirst;
+import net.bodz.swt.draw.geom_i.particle.Particle2dCanvas;
 
 public class ParticleCanvasTest
         extends WidgetTester {

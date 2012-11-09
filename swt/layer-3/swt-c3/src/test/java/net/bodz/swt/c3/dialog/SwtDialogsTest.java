@@ -15,7 +15,6 @@ import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.util.example.Address;
 import net.bodz.bas.util.example.Person;
-import net.bodz.swt.c3.dialog.SwtDialogs;
 
 public class SwtDialogsTest
         extends Assert {
