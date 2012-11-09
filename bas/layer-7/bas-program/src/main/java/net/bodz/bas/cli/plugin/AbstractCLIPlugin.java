@@ -3,9 +3,9 @@ package net.bodz.bas.cli.plugin;
 import java.util.Map;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.cli.model.OptionGroupFactory;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
+import net.bodz.bas.cli.model.OptionGroupFactory;
 import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;

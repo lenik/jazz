@@ -3,9 +3,9 @@ package net.bodz.swt.draw.app;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 
+import net.bodz.swt.c.canvas.Canvas;
 import net.bodz.swt.c.canvas.DecoratedCanvasMode;
 import net.bodz.swt.c.canvas.ICanvasMode;
-import net.bodz.swt.c.canvas.Canvas;
 
 public class SubCanvasMode
         extends DecoratedCanvasMode {

@@ -5,7 +5,6 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.system.UserDirColo;
 import net.bodz.bas.context.ClassContextId;
 
 public class UserDirColoTest
