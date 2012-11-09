@@ -1,5 +1,6 @@
 package net.bodz.bas.disp;
 
+import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.util.order.IPriority;
 
 /**
@@ -9,6 +10,7 @@ import net.bodz.bas.util.order.IPriority;
  * 
  * @see org.kohsuke.stapler.Dispatcher
  */
+@IndexedType
 public interface IDispatcher
         extends IPathDispatchable, IPriority {
 

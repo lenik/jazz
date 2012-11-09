@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
  * 
  * The result index file is <code>META-INF/services/&lt;base-type&gt;</code> by default.
  */
+@IndexedType(includeAbstract = true)
 // @Documented
 // @Inherited
 @Retention(RetentionPolicy.RUNTIME)
