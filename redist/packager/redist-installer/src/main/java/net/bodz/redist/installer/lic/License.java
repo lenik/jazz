@@ -11,7 +11,7 @@ public class License
         implements II18nCapable {
 
     static String get(String name) {
-        URLResource licenseURL = ClassResource.classData(License.class, name);
+        URLResource licenseURL = ClassResource.getData(License.class, name);
         licenseURL.setCharset("utf-8");
         try {
             String license = licenseURL.tooling()._for(StreamReading.class).readTextContents();

@@ -15,7 +15,7 @@ public class CSVRecordsTest
     @Test
     public void test1()
             throws IOException {
-        URLResource classData = ClassResource.classData(getClass(), "1");
+        URLResource classData = ClassResource.getData(getClass(), "1");
         CSVRecords csv = new CSVRecords(classData);
         Mitorx<? extends String[], IOException> it = csv.iterator(true);
         String[] head = it._next();

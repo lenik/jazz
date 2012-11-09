@@ -39,7 +39,7 @@ public class MultiTextMapsTest
     @Test
     public void test1()
             throws IOException {
-        IStreamInputSource source = ClassResource.classData(getClass(), "1");
+        IStreamInputSource source = ClassResource.getData(getClass(), "1");
         MultiTextMaps maps = new MultiTextMaps(source);
 
         for (Map<String, String> pm : maps) {
