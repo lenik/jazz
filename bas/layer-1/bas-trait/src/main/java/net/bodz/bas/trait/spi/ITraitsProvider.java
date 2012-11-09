@@ -2,10 +2,12 @@ package net.bodz.bas.trait.spi;
 
 import net.bodz.bas.lang.mi.IQueryProxy;
 import net.bodz.bas.lang.mi.QueryException;
+import net.bodz.bas.meta.codegen.IndexedType;
 
 /**
  * Provide to resolve specific traits for a given class or object.
  */
+@IndexedType
 public interface ITraitsProvider
         extends IQueryProxy {
 
