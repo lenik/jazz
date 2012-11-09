@@ -10,7 +10,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.Negotiation;
-import net.bodz.bas.meta.util.ComponentType;
+import net.bodz.bas.meta.decl.ItemType;
 import net.bodz.bas.potato.model.AbstractElement;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IFormatter;
@@ -44,7 +44,7 @@ public abstract class AbstractOption
             throw new NullPointerException("type");
         this.type = type;
 
-        ComponentType _componentType = member.getAnnotation(ComponentType.class);
+        ItemType _componentType = member.getAnnotation(ItemType.class);
         if (_componentType != null)
             valueType = _componentType.value();
         else if (type.isArray())

@@ -3,9 +3,9 @@ package net.bodz.bas.disp.view;
 import java.io.IOException;
 
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.meta.stereo.TypeIndex;
+import net.bodz.bas.meta.codegen.IndexedType;
 
-@TypeIndex
+@IndexedType
 public interface IRenderer {
 
     Class<?> getType();

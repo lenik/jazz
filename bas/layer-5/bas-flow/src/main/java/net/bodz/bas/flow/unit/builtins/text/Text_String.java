@@ -2,7 +2,7 @@ package net.bodz.bas.flow.unit.builtins.text;
 
 import java.io.IOException;
 
-import net.bodz.bas.meta.optim.Stateless;
+import net.bodz.bas.meta.decl.Stateless;
 
 @Stateless
 public class Text_String

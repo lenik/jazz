@@ -4,7 +4,7 @@ import net.bodz.bas.c.java.lang.CharacterTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.meta.util.ReferredType;
+import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
 
@@ -14,7 +14,7 @@ public class CharArrayTraits
     /**
      * The character sample generator.
      */
-    @ReferredType(ISampleGenerator.class)
+    @ParameterType(ISampleGenerator.class)
     public static final String sampleCharSample = "sample.charSample";
     public static final ISampleGenerator<Character> defaultSampleCharSample = new CharacterTraits();
 

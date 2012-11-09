@@ -14,7 +14,7 @@ import net.bodz.bas.err.RuntimeIOException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.util.iter.AbstractMitorx;

@@ -8,7 +8,7 @@ import net.bodz.bas.flow.stream.IReceiver;
 import net.bodz.bas.flow.unit.GenericUnit_1v;
 import net.bodz.bas.flow.unit.IOutPort;
 import net.bodz.bas.flow.unit.WireOutPort;
-import net.bodz.bas.meta.optim.Stateless;
+import net.bodz.bas.meta.decl.Stateless;
 
 @Stateless
 public class TeeUnit

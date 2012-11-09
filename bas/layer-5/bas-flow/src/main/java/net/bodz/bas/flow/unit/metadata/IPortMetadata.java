@@ -2,10 +2,10 @@ package net.bodz.bas.flow.unit.metadata;
 
 import java.util.Collection;
 
-import net.bodz.bas.meta.stereo.MetaData;
+import net.bodz.bas.meta.stereo.IMetadata;
 
-public interface IPortMeta
-        extends MetaData {
+public interface IPortMetadata
+        extends IMetadata {
 
     /**
      * @return display name

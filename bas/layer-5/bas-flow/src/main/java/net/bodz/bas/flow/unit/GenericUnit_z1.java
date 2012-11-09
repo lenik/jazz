@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.flow.stream.IReceiver;
-import net.bodz.bas.flow.unit.metadata.IPortMeta;
+import net.bodz.bas.flow.unit.metadata.IPortMetadata;
 import net.bodz.bas.flow.unit.metadata.StrictPortMeta;
 
 public abstract class GenericUnit_z1
@@ -43,7 +43,7 @@ public abstract class GenericUnit_z1
     }
 
     @Override
-    public IPortMeta getOutPortMeta() {
+    public IPortMetadata getOutPortMeta() {
         return new StrictPortMeta("out", Object.class);
     }
 

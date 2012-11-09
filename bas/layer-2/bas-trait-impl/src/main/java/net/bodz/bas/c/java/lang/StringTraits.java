@@ -6,7 +6,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-import net.bodz.bas.meta.util.ReferredType;
+import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
@@ -17,21 +17,21 @@ public class StringTraits
     /**
      * The min length of the sample char array, in Integer.
      */
-    @ReferredType(Integer.class)
+    @ParameterType(Integer.class)
     public static final String sampleMinLength = "sample.minLength";
     public static final int defaultSampleMinLength = 0;
 
     /**
      * The max length of the sample char array, in Integer.
      */
-    @ReferredType(Integer.class)
+    @ParameterType(Integer.class)
     public static final String sampleMaxLength = "sample.maxLength";
     public static final int defaultSampleMaxLength = 32;
 
     /**
      * The character sample generator.
      */
-    @ReferredType(ISampleGenerator.class)
+    @ParameterType(ISampleGenerator.class)
     public static final String sampleCharSample = "sample.charSample";
     public static final ISampleGenerator<Character> defaultSampleCharSample = new CharacterTraits();
 

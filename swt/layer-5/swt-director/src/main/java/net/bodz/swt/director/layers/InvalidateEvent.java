@@ -4,7 +4,7 @@ import java.util.EventObject;
 
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.meta.optim.Const;
+import net.bodz.bas.meta.decl.Const;
 
 public class InvalidateEvent
         extends EventObject {

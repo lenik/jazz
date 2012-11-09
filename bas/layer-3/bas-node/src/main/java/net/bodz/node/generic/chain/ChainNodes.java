@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.err.CheckFailure;
-import net.bodz.bas.meta.optim.Pure;
+import net.bodz.bas.meta.decl.Pure;
 
 public class ChainNodes {
 

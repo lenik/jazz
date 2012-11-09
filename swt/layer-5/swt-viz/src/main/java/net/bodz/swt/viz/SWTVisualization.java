@@ -12,8 +12,8 @@ import org.eclipse.swt.widgets.Control;
 import net.bodz.bas.gui.viz.AbstractVisualization;
 import net.bodz.bas.gui.viz.IRenderer;
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.meta.codehint.ChainUsage;
-import net.bodz.bas.meta.codehint.OverrideOption;
+import net.bodz.bas.meta.source.ChainUsage;
+import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.swt.viz.builtin.*;
 

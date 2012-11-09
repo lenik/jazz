@@ -6,7 +6,7 @@ import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.flow.stream.IReceiverEx;
-import net.bodz.bas.flow.unit.metadata.IPortMeta;
+import net.bodz.bas.flow.unit.metadata.IPortMetadata;
 import net.bodz.bas.flow.unit.metadata.PortMetaEntryLoader;
 
 public abstract class AbstractInPort
@@ -20,13 +20,13 @@ public abstract class AbstractInPort
         this.index = index;
     }
 
-    private static ClassLocal<IPortMeta> metas = ClassLocals.createMap(//
-            IPortMeta.class.getCanonicalName(), PortMetaEntryLoader.INSTANCE);
+    private static ClassLocal<IPortMetadata> metas = ClassLocals.createMap(//
+            IPortMetadata.class.getCanonicalName(), PortMetaEntryLoader.INSTANCE);
 
     @Override
-    public IPortMeta getInPortMeta() {
+    public IPortMetadata getInPortMeta() {
         Class<? extends AbstractPort> clazz = getClass();
-        IPortMeta meta = metas.load(clazz);
+        IPortMetadata meta = metas.load(clazz);
         return meta;
     }
 

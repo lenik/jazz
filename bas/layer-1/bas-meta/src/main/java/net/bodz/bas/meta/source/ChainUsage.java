@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.codehint;
+package net.bodz.bas.meta.source;
 
 public enum ChainUsage {
 

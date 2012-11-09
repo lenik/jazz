@@ -2,7 +2,7 @@ package net.bodz.bas.flow.unit;
 
 import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
-import net.bodz.bas.flow.unit.metadata.IPortMeta;
+import net.bodz.bas.flow.unit.metadata.IPortMetadata;
 import net.bodz.bas.flow.unit.metadata.PortMetaEntryLoader;
 
 public abstract class AbstractOutPort
@@ -16,13 +16,13 @@ public abstract class AbstractOutPort
         this.index = index;
     }
 
-    private static ClassLocal<IPortMeta> metas = ClassLocals.createMap(//
-            IPortMeta.class.getCanonicalName(), PortMetaEntryLoader.INSTANCE);
+    private static ClassLocal<IPortMetadata> metas = ClassLocals.createMap(//
+            IPortMetadata.class.getCanonicalName(), PortMetaEntryLoader.INSTANCE);
 
     @Override
-    public IPortMeta getOutPortMeta() {
+    public IPortMetadata getOutPortMeta() {
         Class<? extends AbstractPort> clazz = getClass();
-        IPortMeta meta = metas.load(clazz);
+        IPortMetadata meta = metas.load(clazz);
         return meta;
     }
 

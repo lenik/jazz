@@ -5,7 +5,7 @@ import java.util.Map;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.lang.negotiation.INegotiable;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.meta.util.ReferredType;
+import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 
 public abstract class AbstractArrayTraits<T>
@@ -14,14 +14,14 @@ public abstract class AbstractArrayTraits<T>
     /**
      * The min length of the sample char array, in Integer.
      */
-    @ReferredType(Integer.class)
+    @ParameterType(Integer.class)
     public static final String sampleMinLength = "sample.minLength";
     public static final int defaultSampleMinLength = 0;
 
     /**
      * The max length of the sample char array, in Integer.
      */
-    @ReferredType(Integer.class)
+    @ParameterType(Integer.class)
     public static final String sampleMaxLength = "sample.maxLength";
     public static final int defaultSampleMaxLength = 32;
 

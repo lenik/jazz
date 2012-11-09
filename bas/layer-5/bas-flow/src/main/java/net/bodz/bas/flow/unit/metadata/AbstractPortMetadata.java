@@ -2,7 +2,7 @@ package net.bodz.bas.flow.unit.metadata;
 
 
 public abstract class AbstractPortMetadata
-        implements IPortMeta {
+        implements IPortMetadata {
 
     private final String name;
 

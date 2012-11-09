@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.misc;
+package net.bodz.bas.meta.compile;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
