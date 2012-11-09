@@ -2,7 +2,7 @@ package net.bodz.bas.uber;
 
 import net.bodz.bas.c.type.TypeCollector;
 
-public abstract class NetBodzTypeCollector<T>
+public class NetBodzTypeCollector<T>
         extends TypeCollector<T> {
 
     public NetBodzTypeCollector() {

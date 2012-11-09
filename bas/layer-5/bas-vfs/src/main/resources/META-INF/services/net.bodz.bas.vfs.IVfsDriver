@@ -1,0 +1,4 @@
+net.bodz.bas.vfs.impl.apachevfs.ApacheVfsDriver
+net.bodz.bas.vfs.impl.jdk.JdkVfsDriver
+net.bodz.bas.vfs.impl.jdk.URLVfsDriver
+net.bodz.bas.vfs.impl.pseudo.PseudoVfsDriver
