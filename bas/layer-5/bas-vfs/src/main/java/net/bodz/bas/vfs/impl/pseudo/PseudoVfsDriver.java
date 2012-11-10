@@ -9,11 +9,13 @@ import net.bodz.bas.vfs.path.IPathSystem;
 public class PseudoVfsDriver
         extends AbstractVfsDriver {
 
+    PseudoVfsDevice defaultDevice;
     Map<String, PseudoVfsDevice> devices;
 
     public PseudoVfsDriver() {
         devices = new HashMap<String, PseudoVfsDevice>();
-        devices.put("default", PseudoVfsDevice.getDefaultInstance());
+        defaultDevice = new PseudoVfsDevice(this);
+        devices.put("default", defaultDevice);
     }
 
     @Override
@@ -25,10 +27,14 @@ public class PseudoVfsDriver
     public synchronized PseudoVfsDevice getDevice(String sessionName) {
         PseudoVfsDevice device = devices.get(sessionName);
         if (device == null) {
-            device = new PseudoVfsDevice();
+            device = new PseudoVfsDevice(this);
             devices.put(sessionName, device);
         }
         return device;
+    }
+
+    public PseudoVfsDevice getDefaultDevice() {
+        return defaultDevice;
     }
 
     private static final PseudoVfsDriver instance = new PseudoVfsDriver();
