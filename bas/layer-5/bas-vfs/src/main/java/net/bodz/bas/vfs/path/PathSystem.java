@@ -24,7 +24,7 @@ public class PathSystem
     }
 
     @Override
-    public boolean addPathResolver(String protocol, IPathParser resolver) {
+    public boolean addPathParser(String protocol, IPathParser resolver) {
         if (protocol == null)
             throw new NullPointerException("protocol");
         if (resolver == null)
@@ -39,20 +39,20 @@ public class PathSystem
     }
 
     @Override
-    public void removePathResolver(String protocol) {
+    public void removePathParser(String protocol) {
         if (protocol == null)
             throw new NullPointerException("protocol");
         protocols.remove(protocol);
     }
 
     @Override
-    public void addGenericPathResolver(IGenericPathParser resolver, int priority) {
+    public void addGenericPathParser(IGenericPathParser resolver, int priority) {
         PathParserKey key = new PathParserKey(priority, resolver);
         fallbacks.add(key);
     }
 
     @Override
-    public void removeGenericPathResolver(IGenericPathParser resolver) {
+    public void removeGenericPathParser(IGenericPathParser resolver) {
         fallbacks.remove(resolver);
     }
 

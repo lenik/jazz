@@ -72,17 +72,30 @@ public class PseudoVfsDevice
      * In File object, it's safely to change the path value.
      */
     @Override
-    public boolean rename(String localPathFrom, String localPathTo) {
-        // Nothing to do.
+    public synchronized boolean rename(String localPathFrom, String localPathTo) {
         if (localPathFrom.equals(localPathTo))
             return false;
-        else
+
+        PseudoFile fileFrom = registeredFiles.get(localPathFrom);
+        PseudoFile fileTo = registeredFiles.get(localPathTo);
+
+        // The file to be renamed is detached, nothing to do here.
+        if (fileFrom == null)
             return true;
+
+        // The dest file is already existed, don't rename.
+        if (fileTo != null && fileTo != fileFrom)
+            // OPTIM logException...
+            return false;
+
+        registeredFiles.remove(localPathFrom);
+        fileFrom.setName(localPathTo);
+        return true;
     }
 
-    private static final PseudoVfsDevice instance = new PseudoVfsDevice();
+    private static PseudoVfsDevice instance = new PseudoVfsDevice();
 
-    public static PseudoVfsDevice getInstance() {
+    public static PseudoVfsDevice getDefaultInstance() {
         return instance;
     }
 

@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
+import net.bodz.bas.vfs.IVfsDevice;
 import net.bodz.bas.vfs.path.DefaultPath;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
@@ -10,8 +11,8 @@ public class PseudoPath
 
     private PseudoFile file;
 
-    public PseudoPath(String localPath, PseudoFile file) {
-        super(PseudoVfsDevice.getInstance(), localPath, IPathAlignment.ROOT);
+    public PseudoPath(IVfsDevice device, String localPath, PseudoFile file) {
+        super(device, localPath, IPathAlignment.ROOT);
         if (file == null)
             throw new NullPointerException("file");
         this.file = file;

@@ -105,12 +105,4 @@ public class ApacheVfsDevice
         }
     }
 
-    private static ApacheVfsDevice instance;
-
-    public static synchronized ApacheVfsDevice getInstance() {
-        if (instance == null)
-            instance = new ApacheVfsDevice(ApacheVfsDriver.getInstance());
-        return instance;
-    }
-
 }

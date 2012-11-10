@@ -10,7 +10,7 @@ public abstract class AbstractFsEntry
         implements IFsEntry {
 
     private final IVfsDevice device;
-    private final String baseName;
+    private String baseName;
 
     private boolean autoCreateParents;
 
@@ -55,6 +55,12 @@ public abstract class AbstractFsEntry
     @Override
     public String getName() {
         return baseName;
+    }
+
+    protected void setName(String baseName) {
+        if (baseName == null)
+            throw new NullPointerException("baseName");
+        this.baseName = baseName;
     }
 
     @Override
