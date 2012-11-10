@@ -25,4 +25,11 @@ public @interface IndexedType {
 
     boolean includeNonPublic() default false;
 
+    /**
+     * No longer index this type.
+     * 
+     * The collector utility should try to remove all types belong to the obsoleted indexed type.
+     */
+    boolean obsoleted() default false;
+
 }

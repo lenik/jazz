@@ -37,6 +37,7 @@ public abstract class TypeCollector<T> {
     boolean showPaths;
     List<Class<?>> extensions;
     Map<File, List<String>> fileContentMap;
+    boolean deleteEmptyFiles = true;
 
     public TypeCollector() {
         this(null, null);
@@ -138,9 +139,7 @@ public abstract class TypeCollector<T> {
             if (resdir == null)
                 continue;
 
-            File sfile;
-
-            sfile = new File(resdir, indexing.prefix() + baseClass.getName());
+            File sfile = new File(resdir, indexing.prefix() + baseClass.getName());
 
             List<String> lines = fileContentMap.get(sfile);
             if (lines == null) {
@@ -148,7 +147,11 @@ public abstract class TypeCollector<T> {
                 fileContentMap.put(sfile, lines);
             }
 
-            lines.add(extension.getName());
+            if (indexing.obsoleted()) {
+                // lines.add("# " + extension.getName());
+            } else {
+                lines.add(extension.getName());
+            }
         }
     }
 
@@ -173,13 +176,19 @@ public abstract class TypeCollector<T> {
         return list;
     }
 
-    protected static void saveFiles(Map<File, List<String>> fileContentMap)
+    protected void saveFiles(Map<File, List<String>> fileContentMap)
             throws IOException {
         for (Entry<File, List<String>> entry : fileContentMap.entrySet()) {
             File file = entry.getKey();
 
             List<String> lines = entry.getValue();
             Collections.sort(lines);
+
+            if (lines.isEmpty() && deleteEmptyFiles) {
+                if (file.delete())
+                    logger.info("Deleted " + file);
+                continue;
+            }
 
             StringBuilder buf = new StringBuilder(lines.size() * 100);
             for (String line : new LinkedHashSet<String>(lines)) {
@@ -195,9 +204,13 @@ public abstract class TypeCollector<T> {
                     continue;
             }
 
-            logger.info("Update " + file);
-            file.getParentFile().mkdirs();
-            FileContent.createUtf8(file, content);
+            try {
+                file.getParentFile().mkdirs();
+                FileContent.createUtf8(file, content);
+                logger.info("Updated " + file);
+            } catch (IOException e) {
+                logger.error("Failed to update " + file, e);
+            }
         }
     }
 
