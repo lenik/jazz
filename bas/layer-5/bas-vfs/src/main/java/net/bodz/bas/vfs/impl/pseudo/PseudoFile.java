@@ -27,7 +27,15 @@ public abstract class PseudoFile
      *             If <code>localPath</code> is <code>null</code>.
      */
     public PseudoFile(String localPath, IStreamResource resource) {
-        super(PseudoVfsDevice.getInstance(), FilePath.getBaseName(localPath));
+        this(PseudoVfsDevice.getDefaultInstance(), localPath, resource);
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>localPath</code> is <code>null</code>.
+     */
+    public PseudoFile(PseudoVfsDevice device, String localPath, IStreamResource resource) {
+        super(device, FilePath.getBaseName(localPath));
 
         if (resource == null)
             throw new NullPointerException("resource");
@@ -56,7 +64,18 @@ public abstract class PseudoFile
 
     @Override
     public IPath getPath() {
-        return new PseudoPath(localPath, this);
+        return new PseudoPath(getDevice(), localPath, this);
+    }
+
+    /**
+     * You can rename a detached pseudo file directly.
+     * 
+     * @param baseName
+     *            The new base name.
+     */
+    @Override
+    public void setName(String baseName) {
+        super.setName(baseName);
     }
 
     @Override

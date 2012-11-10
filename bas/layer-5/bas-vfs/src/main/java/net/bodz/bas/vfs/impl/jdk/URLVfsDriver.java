@@ -1,19 +1,16 @@
 package net.bodz.bas.vfs.impl.jdk;
 
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.vfs.AbstractVfsDriver;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVfsDevice;
+import net.bodz.bas.vfs.path.IGenericPathParser;
+import net.bodz.bas.vfs.path.IPathSystem;
 
 public class URLVfsDriver
         extends AbstractVfsDriver {
 
     @Override
-    public IVfsDevice getDevice(IFile deviceFile) {
-        if (deviceFile != null)
-            throw new IllegalUsageException("Device file is not applicable for URL VFS device.");
-        else
-            return URLVfsDevice.getInstance();
+    public void configure(IPathSystem pathSystem) {
+        URLPathParser parser = new URLPathParser();
+        pathSystem.addGenericPathParser(parser, IGenericPathParser.NORMAL_PRIORITY);
     }
 
     private static URLVfsDriver instance = new URLVfsDriver();

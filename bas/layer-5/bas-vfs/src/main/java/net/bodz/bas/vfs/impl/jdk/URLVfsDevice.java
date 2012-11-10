@@ -43,7 +43,7 @@ public class URLVfsDevice
 
     @Override
     public String format(String localPath, PathFormat pathFormat) {
-        return null;
+        return localPath;
     }
 
     @Override

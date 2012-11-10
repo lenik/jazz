@@ -5,10 +5,9 @@ import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.VFS;
 
 import net.bodz.bas.err.IllegalConfigException;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.vfs.AbstractVfsDriver;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVfsDevice;
+import net.bodz.bas.vfs.path.IGenericPathParser;
+import net.bodz.bas.vfs.path.IPathSystem;
 
 /**
  * Apache-VFS File System.
@@ -16,7 +15,8 @@ import net.bodz.bas.vfs.IVfsDevice;
 public class ApacheVfsDriver
         extends AbstractVfsDriver {
 
-    private final FileSystemManager fileSystemManager;
+    private FileSystemManager fileSystemManager;
+    private ApacheVfsDevice device;
 
     public ApacheVfsDriver()
             throws FileSystemException {
@@ -27,29 +27,33 @@ public class ApacheVfsDriver
         if (manager == null)
             throw new NullPointerException("manager");
         this.fileSystemManager = manager;
-    }
-
-    @Override
-    public IVfsDevice getDevice(IFile deviceFile) {
-        if (deviceFile != null)
-            throw new IllegalUsageException("Device file is not applicable for Apache VFS device.");
-        return ApacheVfsDevice.getInstance();
+        this.device = new ApacheVfsDevice(this);
     }
 
     public FileSystemManager getFileSystemManager() {
         return fileSystemManager;
     }
 
-    private static ApacheVfsDriver driver;
+    @Override
+    public void configure(IPathSystem pathSystem) {
+        ApachePathParser parser = new ApachePathParser(this);
+        pathSystem.addGenericPathParser(parser, IGenericPathParser.LOW_PRIORITY);
+    }
+
+    public ApacheVfsDevice getDevice() {
+        return device;
+    }
+
+    private static ApacheVfsDriver instance;
 
     public static synchronized ApacheVfsDriver getInstance() {
-        if (driver == null)
+        if (instance == null)
             try {
-                driver = new ApacheVfsDriver();
+                instance = new ApacheVfsDriver();
             } catch (FileSystemException e) {
                 throw new IllegalConfigException(e.getMessage(), e);
             }
-        return driver;
+        return instance;
     }
 
 }

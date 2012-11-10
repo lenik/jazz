@@ -5,47 +5,46 @@ import net.bodz.bas.c.system.UserDirColo;
 public interface IPathSystem {
 
     /**
-     * Set the path resolver of specific protocol, if the protocol is in use, return false.
+     * Set the path parser of specific protocol, if the protocol is in use, return false.
      * 
      * @return <code>false</code> If the protocol name is in use.
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    boolean addPathResolver(String protocol, IPathParser resolver);
+    boolean addPathParser(String protocol, IPathParser parser);
 
     /**
-     * Remove a path resolver by protocol.
+     * Remove a path parser by protocol.
      * 
      * @throws NullPointerException
      *             If <code>protocol</code> is <code>null</code>.
      */
-    void removePathResolver(String protocol);
+    void removePathParser(String protocol);
 
     /**
-     * Add a generic path resolver when no protocol is matched.
+     * Add a generic path parser when no protocol is matched.
      * 
-     * @param resolver
+     * @param parser
      *            A generic path resolver to be added.
      * @param priority
-     *            The priority of this generic path resolver, smaller integer will be evaluated
-     *            first.
+     *            The priority of this generic path parser, smaller integer will be evaluated first.
      * @throws NullPointerException
      *             If <code>resolver</code> is <code>null</code>.
      * @see IGenericPathParser#LOW_PRIORITY
      * @see IGenericPathParser#NORMAL_PRIORITY
      * @see IGenericPathParser#HIGH_PRIORITY
      */
-    void addGenericPathResolver(IGenericPathParser resolver, int priority);
+    void addGenericPathParser(IGenericPathParser parser, int priority);
 
     /**
-     * Remove a generic path resolver.
+     * Remove a generic path parser.
      * 
-     * @param resolver
+     * @param parser
      *            A generic path resolver to be removed.
      * @throws NullPointerException
      *             If <code>resolver</code> is <code>null</code>.
      */
-    void removeGenericPathResolver(IGenericPathParser resolver);
+    void removeGenericPathParser(IGenericPathParser parser);
 
     /**
      * Get the context path (or "current directory").

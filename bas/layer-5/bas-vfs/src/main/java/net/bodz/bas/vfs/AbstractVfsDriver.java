@@ -18,6 +18,4 @@ public abstract class AbstractVfsDriver
         return 0;
     }
 
-    public abstract IVfsDevice getDevice(IFile deviceFile);
-
 }
