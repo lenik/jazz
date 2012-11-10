@@ -14,8 +14,7 @@ import net.bodz.bas.util.order.PriorityComparator;
  * This facade is commonly used by HttpServlet or Filter, which accepts the initial URL prefix, and
  * pass down the rest of the tokens.
  */
-public class DispatchService
-        extends AbstractDispatcher {
+public class DispatchService {
 
     static Logger logger = LoggerFactory.getLogger(DispatchService.class);
 
@@ -44,7 +43,6 @@ public class DispatchService
 
     private static int maxDispatches = 100;
 
-    @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
         if (previous == null)

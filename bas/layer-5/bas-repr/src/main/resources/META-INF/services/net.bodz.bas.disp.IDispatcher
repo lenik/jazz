@@ -1,4 +1,3 @@
-net.bodz.bas.disp.DispatchService
 net.bodz.bas.disp.FieldDispatcher
 net.bodz.bas.disp.builtin.DynamicDispatcher
 net.bodz.bas.disp.builtin.ListDispatcher
