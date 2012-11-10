@@ -27,7 +27,7 @@ public abstract class PseudoFile
      *             If <code>localPath</code> is <code>null</code>.
      */
     public PseudoFile(String localPath, IStreamResource resource) {
-        this(PseudoVfsDevice.getDefaultInstance(), localPath, resource);
+        this(PseudoVfsDriver.getInstance().getDefaultDevice(), localPath, resource);
     }
 
     /**

@@ -18,8 +18,8 @@ public class PseudoVfsDevice
     List<PseudoFile> rootFiles = new ArrayList<PseudoFile>();
     Map<String, PseudoFile> registeredFiles;
 
-    public PseudoVfsDevice() {
-        super(PseudoVfsDriver.getInstance());
+    public PseudoVfsDevice(PseudoVfsDriver driver) {
+        super(driver);
         registeredFiles = new TreeMap<>();
     }
 
@@ -91,12 +91,6 @@ public class PseudoVfsDevice
         registeredFiles.remove(localPathFrom);
         fileFrom.setName(localPathTo);
         return true;
-    }
-
-    private static PseudoVfsDevice instance = new PseudoVfsDevice();
-
-    public static PseudoVfsDevice getDefaultInstance() {
-        return instance;
     }
 
 }

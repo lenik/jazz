@@ -30,4 +30,10 @@ public class MemoryVfsDriver
         return device;
     }
 
+    private static MemoryVfsDriver instance = new MemoryVfsDriver();
+
+    public static MemoryVfsDriver getInstance() {
+        return instance;
+    }
+
 }

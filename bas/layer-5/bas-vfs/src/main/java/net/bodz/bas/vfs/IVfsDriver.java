@@ -6,7 +6,7 @@ import org.apache.commons.vfs.FileSystem;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.vfs.path.IPathSystem;
 
-@IndexedType
+@IndexedType(obsoleted = true)
 public interface IVfsDriver {
 
     void configure(IPathSystem pathSystem);
