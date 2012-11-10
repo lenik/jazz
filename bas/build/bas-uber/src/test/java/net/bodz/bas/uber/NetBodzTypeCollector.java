@@ -14,8 +14,8 @@ public class NetBodzTypeCollector<T>
     }
 
     {
-        addPackageToScan("net.bodz");
-        addPackageToScan("user");
+        includePackageToScan("net.bodz");
+        includePackageToScan("user");
     }
 
 }

@@ -6,22 +6,19 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedType;
 
-public class UberTypeCollector {
+public class EveryIndexedTypeCollector {
 
-    static Logger logger = LoggerFactory.getLogger(UberTypeCollector.class);
+    static Logger logger = LoggerFactory.getLogger(EveryIndexedTypeCollector.class);
 
     public static void main(String[] args)
             throws Exception {
         for (Class<?> base : TypeExtensions.forClassWithAnnotation(IndexedType.class)) {
             logger.info("Indexed-Type: ", base);
 
-            @SuppressWarnings({ "rawtypes", "unchecked" })
+            @SuppressWarnings({ "rawtypes", "unchecked" })//
             TypeCollector<?> collector = new NetBodzTypeCollector(base, null);
 
             collector.collect();
-            // Check it later.
-            // for (Class<?> extension : TypeExtensions.forClass(base))
-            // logger.info("    Extension: ", extension);
         }
     }
 

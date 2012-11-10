@@ -30,7 +30,8 @@ public abstract class TypeCollector<T> {
     boolean includeNonPublic = false;
 
     ClassScanner scanner;
-    List<String> packageNames = new ArrayList<String>();
+    List<String> includePackages = new ArrayList<String>();
+    List<String> excludePackages = new ArrayList<String>();
     boolean scanned;
 
     boolean showPaths;
@@ -95,17 +96,17 @@ public abstract class TypeCollector<T> {
         return scanner;
     }
 
-    public void addPackageToScan(String packageName) {
-        packageNames.add(packageName);
+    public void includePackageToScan(String packageName) {
+        includePackages.add(packageName);
     }
 
-    public void removePackageToScan(String packageName) {
-        packageNames.remove(packageName);
+    public void excludePackageToScan(String packageName) {
+        excludePackages.remove(packageName);
     }
 
     protected void scanTypes()
             throws IOException {
-        for (String packageName : packageNames)
+        for (String packageName : includePackages)
             scanner.scan(packageName);
     }
 
