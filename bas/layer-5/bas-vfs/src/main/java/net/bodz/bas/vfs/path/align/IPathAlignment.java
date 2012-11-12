@@ -1,11 +1,14 @@
 package net.bodz.bas.vfs.path.align;
 
+import java.io.Serializable;
+
 import net.bodz.bas.vfs.path.IPath;
 
 /**
  * The alignment determines how to anchor to the context path.
  */
-public interface IPathAlignment {
+public interface IPathAlignment
+        extends Serializable {
 
     /**
      * Get the aligned context path (or, parent-path).

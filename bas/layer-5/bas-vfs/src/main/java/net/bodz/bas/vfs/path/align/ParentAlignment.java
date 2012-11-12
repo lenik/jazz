@@ -5,6 +5,8 @@ import net.bodz.bas.vfs.path.IPath;
 public class ParentAlignment
         extends TruncateOnlyAlignment {
 
+    private static final long serialVersionUID = 1L;
+
     private final int parents;
     private final boolean keepInRoot;
 

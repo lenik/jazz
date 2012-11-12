@@ -5,6 +5,8 @@ import net.bodz.bas.vfs.path.IPath;
 public class RootLayerAlignment
         extends TruncateOnlyAlignment {
 
+    private static final long serialVersionUID = 1L;
+
     @Override
     public IPath align(IPath context) {
         return context.getRootLayer();

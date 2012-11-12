@@ -5,6 +5,8 @@ import net.bodz.bas.vfs.path.IPath;
 public class ParentLayerAlignment
         extends TruncateOnlyAlignment {
 
+    private static final long serialVersionUID = 1L;
+
     public static final int FAIL_DEFAULT = 0;
     public static final int FAIL_ROOT = 1;
     public static final int FAIL_PARENT = 2;
