@@ -3,7 +3,6 @@ package net.bodz.bas.vfs.impl.apachevfs;
 import org.apache.commons.vfs.FileName;
 
 import net.bodz.bas.vfs.path.DefaultPath;
-import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 public class ApachePath
         extends DefaultPath {
@@ -13,12 +12,12 @@ public class ApachePath
     private final FileName fileName;
 
     public ApachePath(ApacheVfsDevice device, String uri) {
-        super(device, uri, IPathAlignment.ROOT_LAYER);
+        super(device, uri);
         this.fileName = null;
     }
 
     public ApachePath(ApacheVfsDevice device, FileName fileName) {
-        super(device, fileName.getURI(), IPathAlignment.ROOT_LAYER);
+        super(device, fileName.getURI());
         this.fileName = fileName;
     }
 
