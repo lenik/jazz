@@ -10,21 +10,21 @@ import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.util.IFileFilter;
 import net.bodz.bas.vfs.util.IFilenameFilter;
 
-public class MemFile
+public class MemoryFile
         extends AbstractFile {
 
     private static final long serialVersionUID = 1L;
 
     private MemoryVfsDevice device;
 
-    public MemFile(MemoryVfsDevice device, String baseName) {
+    public MemoryFile(MemoryVfsDevice device, String baseName) {
         super(device, baseName);
         this.device = device;
     }
 
     @Override
-    public MemFile clone() {
-        return new MemFile(device, getName());
+    public MemoryFile clone() {
+        return new MemoryFile(device, getName());
     }
 
     @Override
