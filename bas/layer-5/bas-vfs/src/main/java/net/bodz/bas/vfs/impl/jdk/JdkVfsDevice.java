@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.vfs.AbstractVfsDevice;
-import net.bodz.bas.vfs.path.DefaultPath;
-import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
-import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 public class JdkVfsDevice
         extends AbstractVfsDevice {
@@ -29,8 +26,8 @@ public class JdkVfsDevice
     }
 
     @Override
-    public IPath parse(String localPath) {
-        return new DefaultPath(this, localPath, IPathAlignment.ROOT);
+    public JdkPath parse(String localPath) {
+        return new JdkPath(this, localPath);
     }
 
     @Override
