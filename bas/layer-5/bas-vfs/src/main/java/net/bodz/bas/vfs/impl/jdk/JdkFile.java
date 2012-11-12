@@ -14,9 +14,6 @@ import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.VFSException;
-import net.bodz.bas.vfs.path.DefaultPath;
-import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.util.FileFilterAdapter;
 import net.bodz.bas.vfs.util.FilenameFilterAdapterWithDir;
 import net.bodz.bas.vfs.util.IFileFilter;
@@ -70,8 +67,8 @@ public class JdkFile
     }
 
     @Override
-    public IPath getPath() {
-        IPath path = new DefaultPath(device, origFile.getPath(), IPathAlignment.ROOT_LAYER);
+    public JdkPath getPath() {
+        JdkPath path = new JdkPath(device, origFile.getPath());
         return path;
     }
 
@@ -80,7 +77,8 @@ public class JdkFile
         File parentFile = origFile.getParentFile();
         if (parentFile == null)
             return null;
-        return new JdkFile(parentFile);
+        else
+            return new JdkFile(parentFile);
     }
 
     @Override
