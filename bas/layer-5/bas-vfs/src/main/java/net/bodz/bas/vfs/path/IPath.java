@@ -114,7 +114,8 @@ public interface IPath
      * Get local entry element by index.
      * 
      * @param index
-     *            0-based entry index.
+     *            0-based entry index. Negative integer for reversed index, i.e., <code>-1</code> to
+     *            get the last entry.
      * @return The indexed entry.
      * @throws IndexOutOfBoundsException
      *             If <code>index</code> is out of range.

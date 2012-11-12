@@ -32,6 +32,11 @@ public abstract class AbstractPath
         return getDevice().resolve(getLocalPath());
     }
 
+    @Override
+    public IPathAlignment getAlignment() {
+        return IPathAlignment.ROOT_LAYER;
+    }
+
     /**
      * Create a path with another local path.
      * 
