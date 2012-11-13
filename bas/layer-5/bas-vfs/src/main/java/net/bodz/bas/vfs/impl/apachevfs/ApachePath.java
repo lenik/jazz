@@ -2,22 +2,17 @@ package net.bodz.bas.vfs.impl.apachevfs;
 
 import org.apache.commons.vfs.FileName;
 
-import net.bodz.bas.vfs.path.DefaultPath;
+import net.bodz.bas.vfs.path.ProtocolPath;
 
 public class ApachePath
-        extends DefaultPath {
+        extends ProtocolPath {
 
     private static final long serialVersionUID = 1L;
 
     private final FileName fileName;
 
-    public ApachePath(ApacheVfsDevice device, String uri) {
-        super(device, uri);
-        this.fileName = null;
-    }
-
-    public ApachePath(ApacheVfsDevice device, FileName fileName) {
-        super(device, fileName.getURI());
+    public ApachePath(FileName fileName) {
+        super(fileName.getScheme(), fileName.getPath());
         this.fileName = fileName;
     }
 

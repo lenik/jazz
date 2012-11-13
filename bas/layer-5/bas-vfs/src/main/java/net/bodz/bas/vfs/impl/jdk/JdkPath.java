@@ -1,15 +1,22 @@
 package net.bodz.bas.vfs.impl.jdk;
 
-import net.bodz.bas.vfs.IVfsDevice;
-import net.bodz.bas.vfs.path.DefaultPath;
+import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.ProtocolPath;
+import net.bodz.bas.vfs.path.IPath;
 
 public class JdkPath
-        extends DefaultPath {
+        extends ProtocolPath {
 
     private static final long serialVersionUID = 1L;
 
-    public JdkPath(IVfsDevice device, String localPath) {
-        super(device, localPath);
+    public JdkPath(String protocol, String localPath) {
+        super(protocol, localPath);
+    }
+
+    @Override
+    protected IPath parseLocal(String localPath)
+            throws BadPathException {
+        return new JdkPath(getProtocol(), localPath);
     }
 
 }

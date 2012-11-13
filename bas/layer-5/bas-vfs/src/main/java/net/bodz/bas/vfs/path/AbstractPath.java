@@ -11,8 +11,6 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.source.PoorImpl;
 import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVfsDevice;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
@@ -22,31 +20,13 @@ public abstract class AbstractPath
     private static final long serialVersionUID = 1L;
 
     @Override
-    public IVfsDevice getDevice() {
+    public String getDeviceName() {
         return null;
-    }
-
-    @Override
-    public IFile resolve()
-            throws FileResolveException {
-        return getDevice().resolve(getLocalPath());
     }
 
     @Override
     public IPathAlignment getAlignment() {
         return IPathAlignment.ROOT_LAYER;
-    }
-
-    /**
-     * Create a path with another local path.
-     * 
-     * @param localPath
-     *            Non-<code>null</code> path with-in the same volume.
-     * @return Non-<code>null</code> {@link IPath} instance.
-     */
-    protected IPath parseLocal(String localPath)
-            throws BadPathException {
-        return getDevice().parse(localPath);
     }
 
     @Override
@@ -63,11 +43,19 @@ public abstract class AbstractPath
 
     @Override
     public final IPath getParentLayer() {
-        IFile deviceFile = getDevice().getDeviceFile();
-        if (deviceFile != null)
-            return deviceFile.getPath();
         return null;
     }
+
+    /**
+     * Create a path with another local path.
+     * 
+     * @param localPath
+     *            Non-<code>null</code> path with-in the same volume.
+     * @return Non-<code>null</code> {@link IPath} instance.
+     */
+    @Deprecated
+    protected abstract IPath parseLocal(String localPath)
+            throws BadPathException;
 
     @Override
     public IPath getRoot() {
@@ -300,7 +288,18 @@ public abstract class AbstractPath
 
     @Override
     public String format(PathFormat pathFormat) {
-        return getDevice().format(getLocalPath(), pathFormat);
+        StringBuilder result = new StringBuilder(200);
+        result.append(getProtocol());
+        result.append(":");
+        format(result, pathFormat);
+        return result.toString();
+    }
+
+    protected void format(StringBuilder result, PathFormat format) {
+        String deviceName = getDeviceName();
+        result.append(deviceName);
+        result.append(':');
+        result.append(getLocalPath());
     }
 
     /**
