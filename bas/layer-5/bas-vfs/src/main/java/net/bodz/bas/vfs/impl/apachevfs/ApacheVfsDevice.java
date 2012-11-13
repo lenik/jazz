@@ -20,20 +20,26 @@ public class ApacheVfsDevice
         extends AbstractVfsDevice {
 
     private final FileSystemManager fileSystemManager;
+    private final String scheme;
 
     List<ApacheFile> rootFiles = new ArrayList<ApacheFile>();
 
-    public ApacheVfsDevice(ApacheVfsDriver driver) {
+    public ApacheVfsDevice(ApacheVfsDriver driver, String scheme) {
         super(driver);
-        fileSystemManager = driver.getFileSystemManager();
+        this.fileSystemManager = driver.getFileSystemManager();
+        this.scheme = scheme;
     }
 
     public FileSystemManager getFileSystemManager() {
         return fileSystemManager;
     }
 
+    public String getScheme() {
+        return scheme;
+    }
+
     /**
-     * It's impossible to get the parent layer in Apache VFS, though this delegate.
+     * It's impossible to get the parent layer in Apache VFS, through this delegate.
      */
     @Override
     public IFile getDeviceFile() {
@@ -48,6 +54,7 @@ public class ApacheVfsDevice
     @Override
     public ApachePath parse(String localPath)
             throws BadPathException {
+        fileSystemManager.resolveURI(localPath);
         String uri = localPath;
         ApachePath path = new ApachePath(this, uri);
         return path;

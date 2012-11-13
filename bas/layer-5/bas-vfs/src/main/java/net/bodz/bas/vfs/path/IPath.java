@@ -6,10 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVfsDevice;
 import net.bodz.bas.vfs.IVfsDriver;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
@@ -22,26 +19,14 @@ public interface IPath
     String SEPARATOR = "/";
     char SEPARATOR_CHAR = '/';
 
-    /**
-     * Get the parent device where this path residues in.
-     * 
-     * @return The VFS device where this path residues in, <code>null</code> if not applicable.
-     */
-    IVfsDevice getDevice();
+    String getProtocol();
 
     /**
-     * This maybe implemented as:
+     * Get the device name. The device name is used to select the device in the driver.
      * 
-     * <pre>
-     * getDevice().resolve(this.getLocalPath())
-     * </pre>
-     * 
-     * @return Non-null {@link IFile file} this path been resolved to.
-     * @throws IllegalUsageException
-     *             If this is a relative path.
+     * @return Device name, maybe <code>null</code> if the path doesn't rely on a specific device.
      */
-    IFile resolve()
-            throws FileResolveException;
+    String getDeviceName();
 
     /**
      * The alignment is used to anchor one path to another.
@@ -58,11 +43,7 @@ public interface IPath
     IPath getRootLayer();
 
     /**
-     * The same as
-     * 
-     * <pre>
-     * getVolume().getDeviceFile().getPath()
-     * </pre>
+     * Get the parent layer path, or the path of the device file.
      * 
      * @return <code>null</code> If this is the root layer.
      */

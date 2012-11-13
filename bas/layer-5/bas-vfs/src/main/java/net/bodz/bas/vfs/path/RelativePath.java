@@ -1,12 +1,10 @@
 package net.bodz.bas.vfs.path;
 
-import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
 public class RelativePath
-        extends DefaultPath {
+        extends MultiEntryPath {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,12 +16,12 @@ public class RelativePath
     }
 
     public RelativePath(String localPath, int parents) {
-        super(null /* dev */, localPath);
+        super(localPath);
         this.alignment = new ParentAlignment(parents);
     }
 
     public RelativePath(String localPath, IPathAlignment alignment) {
-        super(null/* dev */, localPath);
+        super(localPath);
 
         if (alignment == null)
             throw new NullPointerException("alignment");
@@ -32,13 +30,19 @@ public class RelativePath
     }
 
     @Override
-    public IFile resolve() {
-        throw new IllegalUsageException("You can't resolve a relative path.");
+    public String getProtocol() {
+        return null;
     }
 
     @Override
     public IPathAlignment getAlignment() {
         return alignment;
+    }
+
+    @Override
+    protected IPath parseLocal(String localPath)
+            throws BadPathException {
+        return new RelativePath(localPath);
     }
 
     public static RelativePath parse(String decoratedPath) {

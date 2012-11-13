@@ -3,16 +3,16 @@ package net.bodz.bas.vfs.impl.jdk;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.bodz.bas.vfs.IVfsDevice;
-import net.bodz.bas.vfs.path.AbstractPath;
-import net.bodz.bas.vfs.path.align.IPathAlignment;
+import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
+import net.bodz.bas.vfs.path.ProtocolPath;
 
 public class URLPath
-        extends AbstractPath {
+        extends ProtocolPath {
 
     private static final long serialVersionUID = 1L;
 
-    URL url;
+    private URL url;
 
     public URLPath(String url)
             throws MalformedURLException {
@@ -20,31 +20,14 @@ public class URLPath
     }
 
     public URLPath(URL url) {
+        super(url.getProtocol(), url.getPath());
+        this.url = url;
     }
 
     @Override
-    public IPathAlignment getAlignment() {
-        return IPathAlignment.ROOT_LAYER;
-    }
+    protected IPath parseLocal(String localPath)
+            throws BadPathException {
 
-    @Override
-    public IVfsDevice getDevice() {
-        return URLVfsDevice.getInstance();
-    }
-
-    @Override
-    public URLFile resolve() {
-        return new URLFile(this);
-    }
-
-    @Override
-    public String getLocalPath() {
-        return null;
-    }
-
-    @Override
-    public String[] getLocalEntries() {
-        return null;
     }
 
     @Override

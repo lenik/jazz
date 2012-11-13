@@ -8,7 +8,6 @@ import java.util.TreeMap;
 
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.path.BadPathException;
-import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class PseudoVfsDevice
@@ -46,7 +45,7 @@ public class PseudoVfsDevice
     }
 
     @Override
-    public IPath parse(String localPath)
+    public PseudoPath parse(String localPath)
             throws BadPathException {
         PseudoFile pseudoFile = resolve(localPath);
         return pseudoFile.getPath();
