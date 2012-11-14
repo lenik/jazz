@@ -51,7 +51,7 @@ public class JdkVfsDriver
     @Override
     public JdkFile resolve(IPath path)
             throws FileResolveException {
-        String driveName = path.getDeviceName();
+        String driveName = path.getScopeName();
         JdkVfsDevice drive = getDrive(driveName);
         JdkFile file = drive.resolve(path.getLocalPath());
         return file;

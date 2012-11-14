@@ -6,22 +6,22 @@ import java.util.Map;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileSystem;
-import net.bodz.bas.vfs.MultiSessionVfsDriver;
+import net.bodz.bas.vfs.ScopedVfsDriver;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 /**
- * mem:session/local-path
+ * mem:scope:local-path
  */
 public class MemoryVfsDriver
-        extends MultiSessionVfsDriver {
+        extends ScopedVfsDriver {
 
     String protocol;
-    Map<String, MemoryVfsDevice> devices;
+    Map<String, MemoryVfsDevice> scopeDeviceMap;
 
     public MemoryVfsDriver(String protocol) {
         this.protocol = protocol;
-        this.devices = new HashMap<String, MemoryVfsDevice>();
+        this.scopeDeviceMap = new HashMap<String, MemoryVfsDevice>();
     }
 
     @Override
@@ -29,27 +29,32 @@ public class MemoryVfsDriver
         system.addDriver(protocol, this);
     }
 
-    public synchronized MemoryVfsDevice getDevice(String session) {
-        MemoryVfsDevice device = devices.get(session);
+    public synchronized MemoryVfsDevice getDevice(String scope) {
+        MemoryVfsDevice device = scopeDeviceMap.get(scope);
         if (device == null) {
-            device = new MemoryVfsDevice(this, session, protocol);
-            devices.put(session, device);
+            device = new MemoryVfsDevice(this, scope, protocol);
+            scopeDeviceMap.put(scope, device);
         }
         return device;
     }
 
     @Override
-    protected IPath parse(String session, String path)
+    protected String getScopeSeparator() {
+        return MemoryPath.SCOPE_SEPARATOR;
+    }
+
+    @Override
+    protected IPath parse(String scope, String path)
             throws BadPathException {
-        MemoryVfsDevice device = getDevice(session);
+        MemoryVfsDevice device = getDevice(scope);
         return device.parse(path);
     }
 
     @Override
     public IFile resolve(IPath path)
             throws FileResolveException {
-        String session = path.getDeviceName();
-        MemoryVfsDevice device = getDevice(session);
+        String scope = path.getScopeName();
+        MemoryVfsDevice device = getDevice(scope);
         return device.resolve(path.getLocalPath());
     }
 

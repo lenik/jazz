@@ -11,23 +11,29 @@ public class PseudoPath
         extends ProtocolPath {
 
     private static final long serialVersionUID = 1L;
+    public static final String SCOPE_SEPARATOR = ":";
 
-    private String session;
+    private String scope;
     private PseudoFile file;
 
-    public PseudoPath(String protocol, String session, String localPath, PseudoFile file) {
+    public PseudoPath(String protocol, String scope, String localPath, PseudoFile file) {
         super(protocol, localPath);
-        if (session == null)
-            throw new NullPointerException("session");
+        if (scope == null)
+            throw new NullPointerException("scope");
         if (file == null)
             throw new NullPointerException("file");
-        this.session = session;
+        this.scope = scope;
         this.file = file;
     }
 
     @Override
-    public String getDeviceName() {
-        return session;
+    public String getScopeName() {
+        return scope;
+    }
+
+    @Override
+    public String getScopeSeparator() {
+        return SCOPE_SEPARATOR;
     }
 
     @Override
@@ -37,7 +43,7 @@ public class PseudoPath
             return this;
         else {
             PseudoVfsDriver driver = PseudoVfsDriver.getInstance();
-            PseudoVfsDevice device = driver.getDevice(session);
+            PseudoVfsDevice device = driver.getDevice(scope);
             assert device != null;
             return device.parse(entries);
         }

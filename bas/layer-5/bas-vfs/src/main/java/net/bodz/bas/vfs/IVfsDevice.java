@@ -68,7 +68,7 @@ public interface IVfsDevice {
      * with "../", "./", etc., they are not converted to parent alignments.
      * 
      * @param localPath
-     *            non-<code>null</code> path string with-in this volume.
+     *            non-<code>null</code> path string with-in this device.
      * @return non-<code>null</code> {@link IFile} reference.
      * @throws NullPointerException
      *             If <code>localPath</code> is <code>null</code>.
