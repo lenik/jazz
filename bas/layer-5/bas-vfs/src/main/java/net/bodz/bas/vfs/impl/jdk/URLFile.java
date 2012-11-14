@@ -8,6 +8,7 @@ import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.Collections;
 
+import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.vfs.AbstractFile;
@@ -20,8 +21,6 @@ import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public class URLFile
         extends AbstractFile {
-
-    private static final long serialVersionUID = 1L;
 
     private static URLVfsDriver driver = URLVfsDriver.getInstance();
 
@@ -124,8 +123,11 @@ public class URLFile
         try {
             URLConnection connection = url.openConnection();
 
-            // TODO - connection.getContentLengthLong();
-            long length = connection.getContentLength();
+            long length;
+            if (SystemProperties.javaVersion7OrAbove)
+                length = connection.getContentLengthLong();
+            else
+                length = connection.getContentLength();
 
             return length == -1 ? null : length;
         } catch (IOException e) {
