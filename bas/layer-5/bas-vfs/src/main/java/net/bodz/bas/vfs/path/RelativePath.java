@@ -1,5 +1,7 @@
 package net.bodz.bas.vfs.path;
 
+import java.util.Arrays;
+
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
@@ -11,17 +13,17 @@ public class RelativePath
     // int parents;
     IPathAlignment alignment;
 
-    public RelativePath(String localPath) {
-        this(localPath, 0);
+    public RelativePath(String[] entries) {
+        this(0, entries);
     }
 
-    public RelativePath(String localPath, int parents) {
-        super(localPath);
+    public RelativePath(int parents, String[] entries) {
+        super(entries);
         this.alignment = new ParentAlignment(parents);
     }
 
-    public RelativePath(String localPath, IPathAlignment alignment) {
-        super(localPath);
+    public RelativePath(IPathAlignment alignment, String[] entries) {
+        super(entries);
 
         if (alignment == null)
             throw new NullPointerException("alignment");
@@ -40,48 +42,77 @@ public class RelativePath
     }
 
     @Override
-    protected IPath createLocal(String localPath)
-            throws BadPathException {
-        return new RelativePath(localPath);
+    public RelativePath getRoot() {
+        return new RelativePath(IPathAlignment.ROOT, new String[0]);
     }
 
-    public static RelativePath parse(String decoratedPath) {
-        IPathAlignment alignment;
-        String localPath;
-
-        if (decoratedPath.startsWith("/")) {
-            alignment = IPathAlignment.ROOT;
-            if (decoratedPath.startsWith("//"))
-                alignment = IPathAlignment.ROOT_LAYER;
-
-            int nonSlash = 1;
-            while (decoratedPath.charAt(nonSlash) == '/')
-                nonSlash++;
-
-            localPath = decoratedPath.substring(nonSlash);
-
-        } else if (decoratedPath.startsWith("../")) {
-
-            int parents = 1;
-            int dds = 3;
-            while (decoratedPath.substring(dds, 3).equals("../")) {
-                parents++;
-                dds += 3;
-            }
-
-            localPath = decoratedPath.substring(dds);
-            if (localPath.equals("..")) {
-                localPath = "";
-                parents++;
-            }
-            alignment = new ParentAlignment(parents);
-
+    @Override
+    public IPath getParent(int n) {
+        if (entries.length >= n) {
+            String[] parentEntries = Arrays.copyOf(entries, entries.length - n);
+            return createLocal(parentEntries); // with the same alignment.
         } else {
-            localPath = decoratedPath;
-            alignment = IPathAlignment.RELATIVE;
+            if (getAlignment() == IPathAlignment.ROOT)
+                return createLocal(new String[0]);
+            ParentAlignment alignment = (ParentAlignment) getAlignment();
+            int moreParents = n - entries.length;
+            int parents = alignment.getParents() + moreParents;
+            return new RelativePath(parents, new String[0]);
+        }
+    }
+
+    /**
+     * @param entries
+     *            The local entries. These entries should not start with "." or ".." entries.
+     */
+    @Override
+    protected IPath createLocal(String[] entries)
+            throws BadPathException {
+        return new RelativePath(getAlignment(), entries);
+    }
+
+    public static RelativePath parse(String pathstr) {
+        if (pathstr == null)
+            throw new NullPointerException("pathstr");
+
+        IPathAlignment alignment = null;
+
+        if (pathstr.startsWith("/")) {
+            alignment = IPathAlignment.ROOT;
+            pathstr = pathstr.substring(1);
         }
 
-        return new RelativePath(localPath, alignment);
+        int parents = 0;
+        int slash;
+        L: while (!pathstr.isEmpty()) {
+            slash = pathstr.indexOf('/');
+            switch (slash) {
+            case -1:
+                break L;
+            case 0:
+                break;
+            case 1:
+                if (pathstr.charAt(0) == '.')
+                    break;
+                else
+                    break L;
+            case 2:
+                if (pathstr.charAt(0) == '.' && pathstr.charAt(1) == '.') {
+                    parents++;
+                    break;
+                } else
+                    break L;
+            default:
+                break L;
+            }
+            pathstr = pathstr.substring(slash + 1);
+        }
+
+        if (alignment != null)
+            alignment = new ParentAlignment(parents);
+
+        String[] entries = pathstr.split(SEPARATOR);
+        return new RelativePath(alignment, entries);
     }
 
 }
