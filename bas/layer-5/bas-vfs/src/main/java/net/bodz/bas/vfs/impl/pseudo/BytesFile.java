@@ -8,8 +8,6 @@ import net.bodz.bas.io.resource.builtin.BytesResource;
 public class BytesFile
         extends PseudoFile {
 
-    private static final long serialVersionUID = 1L;
-
     private BytesResource resource;
 
     public BytesFile() {

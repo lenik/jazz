@@ -14,8 +14,6 @@ import net.bodz.bas.vfs.util.IFilenameFilter;
 public abstract class PseudoFile
         extends AbstractFile {
 
-    private static final long serialVersionUID = 1L;
-
     private String localPath;
     private IStreamResource resource;
     private long creationTime;

@@ -13,8 +13,6 @@ import net.bodz.bas.vfs.util.IFilenameFilter;
 public class FilterFile
         extends AbstractFile {
 
-    private static final long serialVersionUID = 1L;
-
     public FilterFile(FilterVfsDevice device, String baseName) {
         super(device, baseName);
     }

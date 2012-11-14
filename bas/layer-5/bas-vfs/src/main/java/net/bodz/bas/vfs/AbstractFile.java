@@ -3,7 +3,6 @@ package net.bodz.bas.vfs;
 import static net.bodz.bas.vfs.FileModifier.*;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.UnexpectedException;
@@ -21,9 +20,7 @@ import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public abstract class AbstractFile
         extends AbstractFsEntry
-        implements IFile, Serializable {
-
-    private static final long serialVersionUID = 1L;
+        implements IFile /* , Serializable */{
 
     private Charset preferredCharset = Charset.defaultCharset();
 
