@@ -27,8 +27,6 @@ import net.bodz.bas.vfs.util.IFilenameFilter;
 public class ApacheFile
         extends AbstractFile {
 
-    private static final long serialVersionUID = 1L;
-
     private FileObject fileObject;
 
     ApacheFile(ApacheVfsDevice device, FileObject fileObject) {
@@ -54,7 +52,7 @@ public class ApacheFile
     @Override
     public ApachePath getPath() {
         FileName fileName = fileObject.getName();
-        return new ApachePath(getDevice(), fileName);
+        return new ApachePath(fileName);
     }
 
     @Override

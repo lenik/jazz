@@ -13,8 +13,6 @@ import net.bodz.bas.vfs.util.IFilenameFilter;
 public class MemoryFile
         extends AbstractFile {
 
-    private static final long serialVersionUID = 1L;
-
     private MemoryVfsDevice device;
 
     public MemoryFile(MemoryVfsDevice device, String baseName) {

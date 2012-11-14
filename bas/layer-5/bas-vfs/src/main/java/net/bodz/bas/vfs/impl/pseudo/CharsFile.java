@@ -8,8 +8,6 @@ import net.bodz.bas.io.resource.builtin.CharsResource;
 public class CharsFile
         extends PseudoFile {
 
-    private static final long serialVersionUID = 1L;
-
     private CharsResource resource;
 
     public CharsFile() {

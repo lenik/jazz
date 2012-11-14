@@ -26,7 +26,6 @@ public class JdkFile
         extends AbstractFile
         implements IFsTree {
 
-    private static final long serialVersionUID = 1L;
     private static JdkVfsDriver driver = JdkVfsDriver.getInstance();
 
     private final java.io.File origFile;

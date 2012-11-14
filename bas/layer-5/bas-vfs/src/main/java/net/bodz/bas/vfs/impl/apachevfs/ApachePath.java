@@ -45,12 +45,14 @@ public class ApachePath
     }
 
     @Override
-    public IPath getParent() {
-        FileName parentFileName = fileName.getParent();
-        if (parentFileName == null)
-            return null;
-        else
-            return new ApachePath(parentFileName);
+    public IPath getParent(int n) {
+        FileName fileName = this.fileName;
+        for (int i = 0; i < n; i++) {
+            fileName = fileName.getParent();
+            if (fileName == null)
+                return null;
+        }
+        return new ApachePath(fileName);
     }
 
 }

@@ -9,8 +9,6 @@ import net.bodz.bas.io.resource.builtin.CharArrayResource;
 public class InputStringFile
         extends PseudoFile {
 
-    private static final long serialVersionUID = 1L;
-
     private final char[] charArray;
     private transient String text;
 

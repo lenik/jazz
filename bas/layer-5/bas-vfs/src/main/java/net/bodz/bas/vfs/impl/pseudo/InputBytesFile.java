@@ -10,8 +10,6 @@ import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 public class InputBytesFile
         extends PseudoFile {
 
-    private static final long serialVersionUID = 1L;
-
     private final byte[] bytes;
 
     public InputBytesFile(byte[] bytes) {
