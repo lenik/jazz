@@ -2,30 +2,37 @@ package net.bodz.bas.vfs;
 
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.IPathSystem;
-import net.bodz.bas.vfs.path.PathSystem;
 
 public class VFS {
 
-    private static IPathSystem pathSystem;
+    private static IFileSystem fileSystem;
 
     static {
-        pathSystem = new PathSystem();
+        fileSystem = new FileSystem();
     }
 
-    public static IPathSystem getPathSystem() {
-        return pathSystem;
+    public static IFileSystem getFileSystem() {
+        return fileSystem;
+    }
+
+    public static IVfsDriver getDriver(String protocol) {
+        return fileSystem.getDriver(protocol);
     }
 
     public static IPath parse(String path)
             throws BadPathException {
-        return pathSystem.parse(path);
+        return fileSystem.parse(path);
     }
 
     public static IFile resolve(String path)
-            throws FileResolveException {
+            throws BadPathException, FileResolveException {
         IPath p = parse(path);
-        return p.resolve();
+        return fileSystem.resolve(p);
+    }
+
+    public static IFile resolve(IPath path)
+            throws FileResolveException {
+        return fileSystem.resolve(path);
     }
 
 }

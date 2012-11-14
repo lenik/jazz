@@ -1,35 +1,34 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.vfs.AbstractVfsDevice;
+import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IVfsDriver;
 import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class PseudoVfsDevice
         extends AbstractVfsDevice {
 
-    List<PseudoFile> rootFiles = new ArrayList<PseudoFile>();
+    PseudoFile rootFile = null;
     Map<String, PseudoFile> registeredFiles;
 
-    public PseudoVfsDevice(PseudoVfsDriver driver) {
-        super(driver);
+    public PseudoVfsDevice(IVfsDriver driver, String name, String protocol) {
+        super(driver, name, protocol);
         registeredFiles = new TreeMap<>();
     }
 
     @Override
-    public List<? extends PseudoFile> getRootFiles() {
-        return Collections.unmodifiableList(rootFiles);
+    public IFile getRootFile() {
+        return rootFile;
     }
 
-    public void setRootFiles(List<PseudoFile> rootFiles) {
-        if (rootFiles == null)
-            throw new NullPointerException("rootFiles");
-        this.rootFiles = rootFiles;
+    public void setRootFile(PseudoFile rootFile) {
+        this.rootFile = rootFile;
     }
 
     public void addPesudoFile(String localPath, PseudoFile pseudoFile) {
@@ -59,6 +58,12 @@ public class PseudoVfsDevice
             throw new BadPathException("Not registered pseudo file path: " + localPath);
         else
             return pseudoFile;
+    }
+
+    @Override
+    public PseudoFile resolve(IPath _path)
+            throws FileResolveException {
+        return resolve(_path.getLocalPath());
     }
 
     @Override

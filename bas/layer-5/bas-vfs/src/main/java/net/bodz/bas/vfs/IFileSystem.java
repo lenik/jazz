@@ -1,8 +1,12 @@
-package net.bodz.bas.vfs.path;
+package net.bodz.bas.vfs;
 
 import net.bodz.bas.c.system.UserDirColo;
+import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 
-public interface IPathSystem {
+public interface IFileSystem {
+
+    IVfsDriver getDriver(String protocol);
 
     /**
      * Set the path parser of specific protocol, if the protocol is in use, return false.
@@ -11,7 +15,7 @@ public interface IPathSystem {
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    boolean addPathParser(String protocol, IPathParser parser);
+    boolean addDriver(String protocol, IVfsDriver driver);
 
     /**
      * Remove a path parser by protocol.
@@ -19,12 +23,12 @@ public interface IPathSystem {
      * @throws NullPointerException
      *             If <code>protocol</code> is <code>null</code>.
      */
-    void removePathParser(String protocol);
+    void removeDriver(String protocol);
 
     /**
      * Add a generic path parser when no protocol is matched.
      * 
-     * @param parser
+     * @param driver
      *            A generic path resolver to be added.
      * @param priority
      *            The priority of this generic path parser, smaller integer will be evaluated first.
@@ -34,17 +38,17 @@ public interface IPathSystem {
      * @see IGenericPathParser#NORMAL_PRIORITY
      * @see IGenericPathParser#HIGH_PRIORITY
      */
-    void addGenericPathParser(IGenericPathParser parser, int priority);
+    void addGenericDriver(IVfsDriver driver, int priority);
 
     /**
      * Remove a generic path parser.
      * 
-     * @param parser
+     * @param driver
      *            A generic path resolver to be removed.
      * @throws NullPointerException
      *             If <code>resolver</code> is <code>null</code>.
      */
-    void removeGenericPathParser(IGenericPathParser parser);
+    void removeGenericDriver(IVfsDriver driver);
 
     /**
      * Get the context path (or "current directory").
@@ -81,5 +85,8 @@ public interface IPathSystem {
      */
     IPath parse(String path)
             throws BadPathException;
+
+    IFile resolve(IPath path)
+            throws FileResolveException;
 
 }

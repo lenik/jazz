@@ -4,12 +4,12 @@ import org.apache.commons.vfs.Capability;
 import org.apache.commons.vfs.FileSystem;
 
 import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.vfs.path.IPathSystem;
 
 @IndexedType(obsoleted = true)
-public interface IVfsDriver {
+public interface IVfsDriver
+        extends IVfsProtocolHandler {
 
-    void configure(IPathSystem pathSystem);
+    void configure(IFileSystem system);
 
     // /**
     // * @see FileProvider#getCapabilities()

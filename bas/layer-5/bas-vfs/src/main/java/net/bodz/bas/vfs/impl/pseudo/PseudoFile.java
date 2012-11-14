@@ -62,8 +62,14 @@ public abstract class PseudoFile
     }
 
     @Override
+    public PseudoVfsDevice getDevice() {
+        return (PseudoVfsDevice) super.getDevice();
+    }
+
+    @Override
     public PseudoPath getPath() {
-        return new PseudoPath(getDevice(), localPath, this);
+        PseudoVfsDevice device = getDevice();
+        return new PseudoPath(device.getProtocol(), device.getName(), localPath, this);
     }
 
     /**

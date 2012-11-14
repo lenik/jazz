@@ -1,7 +1,6 @@
 package net.bodz.bas.vfs;
 
 import java.io.File;
-import java.util.List;
 
 import org.apache.commons.vfs.FileSystem;
 
@@ -16,6 +15,10 @@ import net.bodz.bas.vfs.path.PathFormat;
 public interface IVfsDevice {
 
     IVfsDriver getDriver();
+
+    String getName();
+
+    String getProtocol();
 
     /**
      * Return the underlying device on which this volume is implemented.
@@ -34,14 +37,14 @@ public interface IVfsDevice {
      * 
      * @return non-<code>null</code> root file array.
      */
-    List<? extends IFile> getRootFiles();
+    IFile getRootFile();
 
     /**
      * This returns the path attributes from the root files.
      * 
      * @return non-<code>null</code> root path array.
      */
-    List<? extends IPath> getRootPaths();
+    IPath getRootPath();
 
     /**
      * Parse a local path string.
@@ -72,6 +75,18 @@ public interface IVfsDevice {
      */
     IFile resolve(String localPath)
             throws BadPathException, FileResolveException;
+
+    /**
+     * Resolve a parsed path to a file.
+     * 
+     * @param _path
+     *            Must be of concrete path type.
+     * @return Non-<code>null</code> file reference.
+     * @throws ClassCastException
+     *             If the path isn't instance of concrete path type.
+     */
+    IFile resolve(IPath _path)
+            throws FileResolveException;
 
     /**
      * Format the given path with-in the volume.

@@ -9,8 +9,9 @@ import java.util.Arrays;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.meta.source.PoorImpl;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
@@ -22,6 +23,12 @@ public abstract class AbstractPath
     @Override
     public String getDeviceName() {
         return null;
+    }
+
+    @Override
+    public IFile resolve()
+            throws FileResolveException {
+        return VFS.resolve(this);
     }
 
     @Override
@@ -42,7 +49,7 @@ public abstract class AbstractPath
     }
 
     @Override
-    public final IPath getParentLayer() {
+    public IPath getParentLayer() {
         return null;
     }
 
@@ -53,14 +60,13 @@ public abstract class AbstractPath
      *            Non-<code>null</code> path with-in the same volume.
      * @return Non-<code>null</code> {@link IPath} instance.
      */
-    @Deprecated
-    protected abstract IPath parseLocal(String localPath)
+    protected abstract IPath createLocal(String localPath)
             throws BadPathException;
 
     @Override
     public IPath getRoot() {
         try {
-            return parseLocal("");
+            return createLocal("");
         } catch (BadPathException e) {
             throw new UnexpectedException("Bad root path", e);
         }
@@ -74,13 +80,12 @@ public abstract class AbstractPath
             if (last == -1)
                 return null;
             String parent = localPath.substring(0, last);
-            return parseLocal(parent);
+            return createLocal(parent);
         } catch (BadPathException e) {
             throw new UnexpectedException("Bad parent path", e);
         }
     }
 
-    @PoorImpl
     @Override
     public IPath getParent(int n) {
         IPath np = this;
@@ -182,7 +187,7 @@ public abstract class AbstractPath
                 joinedLocalPath = localPath1 + SEPARATOR + spec;
         }
 
-        return parseLocal(joinedLocalPath);
+        return createLocal(joinedLocalPath);
     }
 
     @Override

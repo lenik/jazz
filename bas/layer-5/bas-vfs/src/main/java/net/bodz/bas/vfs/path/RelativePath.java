@@ -40,7 +40,7 @@ public class RelativePath
     }
 
     @Override
-    protected IPath parseLocal(String localPath)
+    protected IPath createLocal(String localPath)
             throws BadPathException {
         return new RelativePath(localPath);
     }

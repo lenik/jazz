@@ -23,9 +23,9 @@ public class ProtocolPath
     }
 
     @Override
-    protected IPath parseLocal(String localPath)
+    protected IPath createLocal(String[] entries)
             throws BadPathException {
-        return new ProtocolPath(protocol, localPath);
+        return new ProtocolPath(protocol, entries);
     }
 
 }
