@@ -8,6 +8,7 @@ public class MemoryPath
         extends ProtocolPath {
 
     private static final long serialVersionUID = 1L;
+    public static final String SCOPE_SEPARATOR = ":";
 
     public MemoryPath(String protocol, String localPath) {
         super(protocol, localPath);

@@ -6,27 +6,27 @@ import java.util.Map;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileSystem;
-import net.bodz.bas.vfs.MultiSessionVfsDriver;
+import net.bodz.bas.vfs.ScopedVfsDriver;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 /**
- * pseudo:session/local-path
+ * pseudo:scope/local-path
  */
 public class PseudoVfsDriver
-        extends MultiSessionVfsDriver {
+        extends ScopedVfsDriver {
 
-    public static final String DEFAULT_SESSION = "default";
+    public static final String DEFAULT_SCOPE = "default";
 
     String protocol;
     PseudoVfsDevice defaultDevice;
-    Map<String, PseudoVfsDevice> devices;
+    Map<String, PseudoVfsDevice> scopeDeviceMap;
 
     public PseudoVfsDriver(String protocol) {
         this.protocol = protocol;
-        devices = new HashMap<String, PseudoVfsDevice>();
-        defaultDevice = new PseudoVfsDevice(this, DEFAULT_SESSION, protocol);
-        devices.put(DEFAULT_SESSION, defaultDevice);
+        scopeDeviceMap = new HashMap<String, PseudoVfsDevice>();
+        defaultDevice = new PseudoVfsDevice(this, DEFAULT_SCOPE, protocol);
+        scopeDeviceMap.put(DEFAULT_SCOPE, defaultDevice);
     }
 
     @Override
@@ -34,11 +34,11 @@ public class PseudoVfsDriver
         system.addDriver(protocol, this);
     }
 
-    public synchronized PseudoVfsDevice getDevice(String sessionName) {
-        PseudoVfsDevice device = devices.get(sessionName);
+    public synchronized PseudoVfsDevice getDevice(String scopeName) {
+        PseudoVfsDevice device = scopeDeviceMap.get(scopeName);
         if (device == null) {
-            device = new PseudoVfsDevice(this, sessionName, protocol);
-            devices.put(sessionName, device);
+            device = new PseudoVfsDevice(this, scopeName, protocol);
+            scopeDeviceMap.put(scopeName, device);
         }
         return device;
     }
@@ -48,9 +48,14 @@ public class PseudoVfsDriver
     }
 
     @Override
-    protected IPath parse(String session, String path)
+    protected String getScopeSeparator() {
+        return PseudoPath.SCOPE_SEPARATOR;
+    }
+
+    @Override
+    protected IPath parse(String scope, String path)
             throws BadPathException {
-        PseudoVfsDevice device = getDevice(session);
+        PseudoVfsDevice device = getDevice(scope);
         return device.parse(path);
     }
 

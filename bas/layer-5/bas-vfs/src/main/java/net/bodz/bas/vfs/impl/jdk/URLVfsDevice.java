@@ -4,7 +4,9 @@ import java.net.MalformedURLException;
 
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class URLVfsDevice
@@ -34,10 +36,11 @@ public class URLVfsDevice
     }
 
     @Override
-    public URLFile resolve(String localPath)
-            throws BadPathException, FileResolveException {
-        URLPath urlPath = parse(localPath);
-        return urlPath.resolve();
+    public IFile resolve(IPath _path)
+            throws FileResolveException {
+        URLPath path = (URLPath) _path;
+        String url = path.toString();
+        return new URLPath(url);
     }
 
     @Override

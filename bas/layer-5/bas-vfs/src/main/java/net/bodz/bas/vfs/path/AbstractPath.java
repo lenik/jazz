@@ -21,8 +21,13 @@ public abstract class AbstractPath
     private static final long serialVersionUID = 1L;
 
     @Override
-    public String getDeviceName() {
+    public String getScopeName() {
         return null;
+    }
+
+    @Override
+    public String getScopeSeparator() {
+        return SEPARATOR;
     }
 
     @Override
@@ -301,9 +306,8 @@ public abstract class AbstractPath
     }
 
     protected void format(StringBuilder result, PathFormat format) {
-        String deviceName = getDeviceName();
+        String deviceName = getScopeName();
         result.append(deviceName);
-        result.append(':');
         result.append(getLocalPath());
     }
 

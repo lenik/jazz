@@ -35,6 +35,29 @@ public class URLPath
     }
 
     @Override
+    public String getScopeName() {
+        StringBuilder buf = new StringBuilder();
+        buf.append("//");
+
+        String userInfo = url.getUserInfo();
+        if (userInfo != null) {
+            buf.append(userInfo);
+            buf.append("@");
+        }
+
+        String host = url.getHost();
+        buf.append(host);
+
+        int port = url.getPort();
+        if (port != -1) {
+            buf.append(':');
+            buf.append(port);
+        }
+
+        return buf.toString();
+    }
+
+    @Override
     public String getLocalPath() {
         String path = url.getPath();
         // String pathWithQuery= url.getFile();

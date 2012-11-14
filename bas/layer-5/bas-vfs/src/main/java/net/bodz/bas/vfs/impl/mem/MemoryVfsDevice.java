@@ -5,6 +5,7 @@ import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVfsDriver;
 import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class MemoryVfsDevice
@@ -26,8 +27,8 @@ public class MemoryVfsDevice
     }
 
     @Override
-    public MemoryFile resolve(String localPath)
-            throws BadPathException, FileResolveException {
+    public MemoryFile resolve(IPath _path)
+            throws FileResolveException {
         return null;
     }
 
