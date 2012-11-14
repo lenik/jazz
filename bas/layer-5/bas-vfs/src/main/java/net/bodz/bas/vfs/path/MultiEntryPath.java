@@ -56,7 +56,7 @@ public abstract class MultiEntryPath
     }
 
     @Override
-    public IPath getParent() {
+    public final IPath getParent() {
         return getParent(1);
     }
 

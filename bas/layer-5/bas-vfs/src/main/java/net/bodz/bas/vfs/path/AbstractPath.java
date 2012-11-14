@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 
-import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.vfs.FileResolveException;
@@ -242,7 +241,7 @@ public abstract class AbstractPath
             if (p1 > p2) {
                 int abs2 = -p2 + basePath2.getLocalEntryCount();
                 int goUp = p1 - (-abs2);
-                RelativePath path = new RelativePath(getLocalPath(), goUp);
+                RelativePath path = new RelativePath(goUp, getLocalEntries());
                 return path;
             } else {
                 return null;
@@ -263,9 +262,8 @@ public abstract class AbstractPath
 
         int goUp2 = entries2.length - gcd;
         String[] goDown1v = Arrays.copyOfRange(entries1, gcd, entries1.length);
-        String goDown1 = StringArray.join(SEPARATOR, goDown1v);
 
-        RelativePath relativePath = new RelativePath(goDown1, goUp2);
+        RelativePath relativePath = new RelativePath(goUp2, goDown1v);
         return relativePath;
     }
 
