@@ -1,9 +1,5 @@
 package net.bodz.bas.vfs.impl.apachevfs;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
@@ -14,6 +10,7 @@ import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class ApacheVfsDevice
@@ -22,10 +19,10 @@ public class ApacheVfsDevice
     private final FileSystemManager fileSystemManager;
     private final String scheme;
 
-    List<ApacheFile> rootFiles = new ArrayList<ApacheFile>();
+    ApacheFile rootFile = null;
 
     public ApacheVfsDevice(ApacheVfsDriver driver, String scheme) {
-        super(driver);
+        super(driver, "", scheme);
         this.fileSystemManager = driver.getFileSystemManager();
         this.scheme = scheme;
     }
@@ -47,36 +44,52 @@ public class ApacheVfsDevice
     }
 
     @Override
-    public List<? extends ApacheFile> getRootFiles() {
-        return Collections.unmodifiableList(rootFiles);
+    public ApacheFile getRootFile() {
+        return rootFile;
     }
 
     @Override
     public ApachePath parse(String localPath)
             throws BadPathException {
-        fileSystemManager.resolveURI(localPath);
-        String uri = localPath;
-        ApachePath path = new ApachePath(this, uri);
+        String qPath = localPath;
+        String fqPath = getProtocol() + ":" + qPath;
+
+        FileName fileName;
+        try {
+            fileName = fileSystemManager.resolveURI(fqPath);
+        } catch (FileSystemException e) {
+            throw new BadPathException(e.getMessage(), e);
+        }
+
+        ApachePath path = new ApachePath(fileName);
         return path;
     }
 
-    public ApachePath resolve(FileName fileName)
-            throws BadPathException {
-        String uri = fileName.getURI();
-        ApachePath path = new ApachePath(this, uri);
-        return path;
+    ApacheFile _resolveUri(String fqPath)
+            throws BadPathException, FileResolveException {
+        FileObject fileObject;
+        try {
+            fileObject = fileSystemManager.resolveFile(fqPath);
+        } catch (FileSystemException e) {
+            throw new FileResolveException(e.getMessage(), e);
+        }
+        return new ApacheFile(this, fileObject);
     }
 
     @Override
     public ApacheFile resolve(String localPath)
+            throws BadPathException, FileResolveException {
+        String qPath = localPath;
+        String fqPath = getProtocol() + ":" + qPath;
+        return _resolveUri(fqPath);
+    }
+
+    @Override
+    public ApacheFile resolve(IPath _path)
             throws FileResolveException {
-        FileObject fileObject;
-        try {
-            fileObject = fileSystemManager.resolveFile(localPath);
-        } catch (FileSystemException e) {
-            throw new FileResolveException("Failed to resolve file", e);
-        }
-        return new ApacheFile(this, fileObject);
+        ApachePath path = (ApachePath) _path;
+        String fqPath = path.toString();
+        return _resolveUri(fqPath);
     }
 
     @Override

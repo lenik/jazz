@@ -18,9 +18,9 @@ public class MemoryPath
     }
 
     @Override
-    protected IPath parseLocal(String localPath)
+    protected IPath createLocal(String[] entries)
             throws BadPathException {
-        return new MemoryPath(getProtocol(), localPath);
+        return new MemoryPath(getProtocol(), entries);
     }
 
 }

@@ -1,7 +1,10 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
 import net.bodz.bas.util.Nullables;
+import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.ProtocolPath;
 
 public class PseudoPath
@@ -28,16 +31,22 @@ public class PseudoPath
     }
 
     @Override
-    protected PseudoPath parseLocal(String localPath)
+    protected IPath createLocal(String[] entries)
             throws BadPathException {
-        if (Nullables.equals(getLocalPath(), localPath))
+        if (Nullables.equals(getLocalPath(), entries))
             return this;
         else {
             PseudoVfsDriver driver = PseudoVfsDriver.getInstance();
             PseudoVfsDevice device = driver.getDevice(session);
             assert device != null;
-            return device.parse(localPath);
+            return device.parse(entries);
         }
+    }
+
+    @Override
+    public IFile resolve()
+            throws FileResolveException {
+        return file;
     }
 
 }

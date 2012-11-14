@@ -27,7 +27,7 @@ public class JdkFile
         implements IFsTree {
 
     private static final long serialVersionUID = 1L;
-    private static final JdkVfsDevice device = JdkVfsDevice.getInstance();
+    private static JdkVfsDriver driver = JdkVfsDriver.getInstance();
 
     private final java.io.File origFile;
 
@@ -46,6 +46,10 @@ public class JdkFile
      *            non-<code>null</code> {@link java.io.File} object.
      */
     public JdkFile(File jdkFile) {
+        this(driver.getDrive(jdkFile), jdkFile);
+    }
+
+    JdkFile(JdkVfsDevice device, File jdkFile) {
         super(device, jdkFile.getName());
         this.origFile = jdkFile;
     }
@@ -63,12 +67,13 @@ public class JdkFile
 
     @Override
     public JdkVfsDevice getDevice() {
-        return device;
+        return (JdkVfsDevice) super.getDevice();
     }
 
     @Override
     public JdkPath getPath() {
-        JdkPath path = new JdkPath(device, origFile.getPath());
+        JdkVfsDevice device = getDevice();
+        JdkPath path = new JdkPath(device.getProtocol(), origFile.getPath());
         return path;
     }
 

@@ -7,7 +7,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.IVfsDriver;
+import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 /**
@@ -27,6 +27,12 @@ public interface IPath
      * @return Device name, maybe <code>null</code> if the path doesn't rely on a specific device.
      */
     String getDeviceName();
+
+    /**
+     * Resolve this path using the default VFS manager.
+     */
+    IFile resolve()
+            throws FileResolveException;
 
     /**
      * The alignment is used to anchor one path to another.
@@ -69,9 +75,6 @@ public interface IPath
 
     /**
      * Get the local path with-in this layer.
-     * <p>
-     * You can get the same path object by calling {@link IVfsDriver#parse(String)} of
-     * {@link #getDevice() this file system} with the local path.
      * 
      * @return Non-<code>null</code> path string.
      */

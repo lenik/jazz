@@ -22,11 +22,12 @@ public class URLFile
         extends AbstractFile {
 
     private static final long serialVersionUID = 1L;
-    private static URLVfsDevice device = URLVfsDevice.getInstance();
+
+    private static URLVfsDriver driver = URLVfsDriver.getInstance();
 
     private final URLPath path;
 
-    public URLFile(URLPath path) {
+    public URLFile(URLVfsDevice device, URLPath path) {
         super(device, path.getBaseName());
         this.path = path;
     }
@@ -36,8 +37,13 @@ public class URLFile
     }
 
     @Override
+    public URLVfsDevice getDevice() {
+        return (URLVfsDevice) super.getDevice();
+    }
+
+    @Override
     public URLFile clone() {
-        return new URLFile(path).populate(this);
+        return new URLFile(getDevice(), path).populate(this);
     }
 
     @Override

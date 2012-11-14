@@ -1,8 +1,6 @@
 package net.bodz.bas.vfs.impl.jdk;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
@@ -12,15 +10,16 @@ import net.bodz.bas.vfs.path.PathFormat;
 public class URLVfsDevice
         extends AbstractVfsDevice {
 
-    List<URLFile> rootFiles = new ArrayList<>();
+    // String hostspec; // == device-name.
+    URLFile rootFile;
 
-    public URLVfsDevice() {
-        super(URLVfsDriver.getInstance());
+    public URLVfsDevice(URLVfsDriver driver, String hostspec, String protocol) {
+        super(driver, hostspec, protocol);
     }
 
     @Override
-    public List<? extends URLFile> getRootFiles() {
-        return rootFiles;
+    public URLFile getRootFile() {
+        return rootFile;
     }
 
     @Override
@@ -50,12 +49,6 @@ public class URLVfsDevice
     public boolean rename(String localPathFrom, String localPathTo)
             throws BadPathException {
         return false;
-    }
-
-    private static final URLVfsDevice instance = new URLVfsDevice();
-
-    public static URLVfsDevice getInstance() {
-        return instance;
     }
 
 }

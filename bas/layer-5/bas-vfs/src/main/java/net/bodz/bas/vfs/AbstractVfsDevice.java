@@ -1,26 +1,38 @@
 package net.bodz.bas.vfs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.bodz.bas.traits.EmptyAttributes;
 import net.bodz.bas.traits.IAttributes;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 public abstract class AbstractVfsDevice
         implements IVfsDevice {
 
     private final IVfsDriver driver;
+    private final String name;
+    private final String protocol;
 
-    public AbstractVfsDevice(IVfsDriver driver) {
+    public AbstractVfsDevice(IVfsDriver driver, String name, String protocol) {
         if (driver == null)
             throw new NullPointerException("driver");
         this.driver = driver;
+        this.name = name;
+        this.protocol = protocol;
     }
 
     @Override
     public IVfsDriver getDriver() {
         return driver;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getProtocol() {
+        return protocol;
     }
 
     @Override
@@ -34,12 +46,19 @@ public abstract class AbstractVfsDevice
     }
 
     @Override
-    public final List<? extends IPath> getRootPaths() {
-        List<? extends IFile> rootFiles = getRootFiles();
-        List<IPath> rootPaths = new ArrayList<IPath>(rootFiles.size());
-        for (IFile rootFile : rootFiles)
-            rootPaths.add(rootFile.getPath());
-        return rootPaths;
+    public final IPath getRootPath() {
+        IFile rootFile = getRootFile();
+        if (rootFile == null)
+            return null;
+        else
+            return rootFile.getPath();
+    }
+
+    @Override
+    public IFile resolve(String localPath)
+            throws BadPathException, FileResolveException {
+        IPath path = parse(localPath);
+        return resolve(path);
     }
 
     @Override

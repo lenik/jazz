@@ -2,6 +2,7 @@ package net.bodz.bas.vfs.impl.apachevfs;
 
 import org.apache.commons.vfs.FileName;
 
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.ProtocolPath;
 
 public class ApachePath
@@ -34,10 +35,22 @@ public class ApachePath
     }
 
     /**
-     * It's impossible to get the parent layer in Apache VFS, though this delegate.
+     * The ApachePath is a root-layered path.
+     * 
+     * @return <code>null</code>.
      */
-    // public IPath getParentLayer() {
-    // return null;
-    // }
+    @Override
+    public IPath getParentLayer() {
+        return null;
+    }
+
+    @Override
+    public IPath getParent() {
+        FileName parentFileName = fileName.getParent();
+        if (parentFileName == null)
+            return null;
+        else
+            return new ApachePath(parentFileName);
+    }
 
 }

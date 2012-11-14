@@ -3,6 +3,7 @@ package net.bodz.bas.vfs;
 import org.apache.commons.vfs.Capability;
 
 public abstract class AbstractVfsDriver
+        extends AbstractVfsProtocolHandler
         implements IVfsDriver {
 
     @Override

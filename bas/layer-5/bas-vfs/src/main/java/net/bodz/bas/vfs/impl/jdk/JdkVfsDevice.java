@@ -1,38 +1,41 @@
 package net.bodz.bas.vfs.impl.jdk;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.bodz.bas.vfs.AbstractVfsDevice;
+import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class JdkVfsDevice
         extends AbstractVfsDevice {
 
-    public JdkVfsDevice() {
-        super(JdkVfsDriver.getInstance());
+    private JdkFile rootFile;
+
+    public JdkVfsDevice(JdkVfsDriver driver, File rootFile) {
+        super(driver, rootFile.getName(), null);
+        new JdkFile(this, rootFile);
     }
 
     @Override
-    public List<? extends JdkFile> getRootFiles() {
-        File[] roots = File.listRoots();
-        List<JdkFile> rootFiles = new ArrayList<JdkFile>(roots.length);
-        for (int i = 0; i < roots.length; i++) {
-            JdkFile rootFile = new JdkFile(roots[i]);
-            rootFiles.add(rootFile);
-        }
-        return rootFiles;
+    public JdkFile getRootFile() {
+        return rootFile;
     }
 
     @Override
     public JdkPath parse(String localPath) {
-        return new JdkPath(this, localPath);
+        return new JdkPath(getProtocol(), localPath);
     }
 
     @Override
     public JdkFile resolve(String localPath) {
         return new JdkFile(localPath);
+    }
+
+    @Override
+    public JdkFile resolve(IPath _path)
+            throws FileResolveException {
+        return resolve(_path.getLocalPath());
     }
 
     @Override
@@ -45,12 +48,6 @@ public class JdkVfsDevice
         File fileFrom = new File(localPathFrom);
         File fileTo = new File(localPathTo);
         return fileFrom.renameTo(fileTo);
-    }
-
-    private static final JdkVfsDevice instance = new JdkVfsDevice();
-
-    public static JdkVfsDevice getInstance() {
-        return instance;
     }
 
 }
