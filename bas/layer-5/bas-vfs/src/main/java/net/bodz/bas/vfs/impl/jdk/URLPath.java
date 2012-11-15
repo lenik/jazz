@@ -35,7 +35,7 @@ public class URLPath
     }
 
     @Override
-    public String getScopeName() {
+    public String getDeviceSpec() {
         StringBuilder buf = new StringBuilder();
         buf.append("//");
 
@@ -55,6 +55,11 @@ public class URLPath
         }
 
         return buf.toString();
+    }
+
+    @Override
+    public String getDeviceSpecSeparator() {
+        return "/";
     }
 
     @Override

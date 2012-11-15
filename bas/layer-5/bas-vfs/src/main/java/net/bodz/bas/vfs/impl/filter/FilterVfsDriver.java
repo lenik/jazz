@@ -25,13 +25,13 @@ public class FilterVfsDriver
     }
 
     @Override
-    protected IPath parse(String scope, String localPath)
+    protected FilterPath parse(String scope, String localPath)
             throws BadPathException {
         return null;
     }
 
     @Override
-    public IFile resolve(IPath path)
+    public IFile resolve(IPath _path)
             throws FileResolveException {
         return null;
     }

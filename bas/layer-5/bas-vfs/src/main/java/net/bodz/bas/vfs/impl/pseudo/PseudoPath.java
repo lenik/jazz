@@ -1,10 +1,10 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
-import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.ProtocolPath;
 
 public class PseudoPath
@@ -27,26 +27,33 @@ public class PseudoPath
     }
 
     @Override
-    public String getScopeName() {
+    public String getDeviceSpec() {
         return scope;
     }
 
     @Override
-    public String getScopeSeparator() {
+    public String getDeviceSpecSeparator() {
         return SCOPE_SEPARATOR;
     }
 
     @Override
-    protected IPath createLocal(String[] entries)
+    protected PseudoPath createLocal(String localPath)
             throws BadPathException {
-        if (Nullables.equals(getLocalPath(), entries))
+        if (Nullables.equals(getLocalPath(), localPath))
             return this;
         else {
             PseudoVfsDriver driver = PseudoVfsDriver.getInstance();
             PseudoVfsDevice device = driver.getDevice(scope);
             assert device != null;
-            return device.parse(entries);
+            return device.parse(localPath);
         }
+    }
+
+    @Override
+    protected PseudoPath createLocal(String[] entries)
+            throws BadPathException {
+        String localPath = StringArray.join(SEPARATOR, entries);
+        return createLocal(localPath);
     }
 
     @Override

@@ -2,6 +2,7 @@ package net.bodz.bas.vfs.path;
 
 import java.util.Arrays;
 
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
@@ -72,6 +73,10 @@ public class RelativePath
     }
 
     public static RelativePath parse(String pathstr) {
+        return parse(0, pathstr);
+    }
+
+    public static RelativePath parse(int parents, String pathstr) {
         if (pathstr == null)
             throw new NullPointerException("pathstr");
 
@@ -82,7 +87,6 @@ public class RelativePath
             pathstr = pathstr.substring(1);
         }
 
-        int parents = 0;
         int slash;
         L: while (!pathstr.isEmpty()) {
             slash = pathstr.indexOf('/');
@@ -108,11 +112,17 @@ public class RelativePath
             pathstr = pathstr.substring(slash + 1);
         }
 
-        if (alignment != null)
+        if (alignment == null)
             alignment = new ParentAlignment(parents);
 
         String[] entries = pathstr.split(SEPARATOR);
         return new RelativePath(alignment, entries);
+    }
+
+    @Override
+    public String format(PathFormat pathFormat) {
+        String localPath = StringArray.join(SEPARATOR, entries);
+        return getAlignment().format(localPath);
     }
 
 }

@@ -3,7 +3,6 @@ package net.bodz.bas.vfs.impl.mem;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVfsDriver;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
@@ -11,8 +10,12 @@ import net.bodz.bas.vfs.path.PathFormat;
 public class MemoryVfsDevice
         extends AbstractVfsDevice {
 
-    public MemoryVfsDevice(IVfsDriver driver, String name, String protocol) {
-        super(driver, name, protocol);
+    public MemoryVfsDevice(MemoryVfsDriver driver, String scopeName) {
+        super(driver, driver.protocol, scopeName);
+    }
+
+    public String getScopeName() {
+        return getDeviceSpec();
     }
 
     @Override

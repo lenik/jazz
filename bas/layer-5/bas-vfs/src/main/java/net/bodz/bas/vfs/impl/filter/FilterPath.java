@@ -13,16 +13,16 @@ public class FilterPath
     public static final String SCOPE_SEPARATOR = ":";
 
     String protocol;
-    String filterDescriptor;
+    String filterSpec;
     String encodedPath;
 
-    public FilterPath(String protocol, String filterDescriptor, String encodedPath) {
-        if (filterDescriptor == null)
-            throw new NullPointerException("filterDescriptor");
+    public FilterPath(String protocol, String filterSpec, String encodedPath) {
+        if (filterSpec == null)
+            throw new NullPointerException("filterSpec");
         if (encodedPath == null)
             throw new NullPointerException("encodedPath");
         this.protocol = protocol;
-        this.filterDescriptor = filterDescriptor;
+        this.filterSpec = filterSpec;
         this.encodedPath = encodedPath;
     }
 
@@ -32,8 +32,8 @@ public class FilterPath
     }
 
     @Override
-    public String getScopeName() {
-        return filterDescriptor;
+    public String getDeviceSpec() {
+        return filterSpec;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class FilterPath
     public IPath getParentLayer() {
         IFileSystem system = VFS.getFileSystem(); // parameter?
         FilterVfsDriver driver = (FilterVfsDriver) system.getDriver(protocol);
-        FilterVfsDevice device = driver.getDevice(filterDescriptor);
+        FilterVfsDevice device = driver.getDevice(filterSpec);
         IVfsFilter filter = device.getFilter();
         IPath destPath = filter.decodePath(encodedPath);
         return destPath;
@@ -59,7 +59,7 @@ public class FilterPath
     @Override
     protected FilterPath createLocal(String localPath)
             throws BadPathException {
-        return new FilterPath(protocol, filterDescriptor, localPath);
+        return new FilterPath(protocol, filterSpec, localPath);
     }
 
 }

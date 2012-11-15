@@ -9,15 +9,15 @@ public abstract class AbstractVfsDevice
         implements IVfsDevice {
 
     private final IVfsDriver driver;
-    private final String name;
+    private final String deviceSpec;
     private final String protocol;
 
-    public AbstractVfsDevice(IVfsDriver driver, String name, String protocol) {
+    public AbstractVfsDevice(IVfsDriver driver, String protocol, String deviceSpec) {
         if (driver == null)
             throw new NullPointerException("driver");
         this.driver = driver;
-        this.name = name;
         this.protocol = protocol;
+        this.deviceSpec = deviceSpec;
     }
 
     @Override
@@ -26,13 +26,13 @@ public abstract class AbstractVfsDevice
     }
 
     @Override
-    public String getName() {
-        return name;
+    public String getProtocol() {
+        return protocol;
     }
 
     @Override
-    public String getProtocol() {
-        return protocol;
+    public String getDeviceSpec() {
+        return deviceSpec;
     }
 
     @Override

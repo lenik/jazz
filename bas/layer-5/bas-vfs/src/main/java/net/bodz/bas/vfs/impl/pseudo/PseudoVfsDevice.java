@@ -6,7 +6,6 @@ import java.util.TreeMap;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVfsDriver;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
@@ -17,9 +16,13 @@ public class PseudoVfsDevice
     PseudoFile rootFile = null;
     Map<String, PseudoFile> registeredFiles;
 
-    public PseudoVfsDevice(IVfsDriver driver, String name, String protocol) {
-        super(driver, name, protocol);
+    public PseudoVfsDevice(PseudoVfsDriver driver, String scopeName) {
+        super(driver, driver.protocol, scopeName);
         registeredFiles = new TreeMap<>();
+    }
+
+    public String getScopeName() {
+        return getDeviceSpec();
     }
 
     @Override

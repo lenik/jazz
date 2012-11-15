@@ -70,7 +70,7 @@ public class URLVfsDriver
     }
 
     @Override
-    public URLFile resolve(IPath path)
+    public URLFile resolve(IPath _path)
             throws FileResolveException {
         return null;
     }
