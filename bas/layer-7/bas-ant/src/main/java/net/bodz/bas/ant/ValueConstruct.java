@@ -57,7 +57,7 @@ public class ValueConstruct
         URL[] urls = new URL[paths.length];
         for (int i = 0; i < paths.length; i++) {
             File loc = new File(paths[i]);
-            URL url = FileURL.getURL(loc);
+            URL url = FileURL.getURL(loc, null);
             urls[i] = url;
         }
         URLClassLoaders.addURL(loader, urls);
