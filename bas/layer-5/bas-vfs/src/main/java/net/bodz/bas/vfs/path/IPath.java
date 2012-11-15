@@ -22,13 +22,13 @@ public interface IPath
     String getProtocol();
 
     /**
-     * Get the scope name. The scope name is used to select the device in the driver.
+     * Get the device specifier.
      * 
-     * @return Scope name. Return <code>null</code> if the scope name is not available.
+     * @return Device specifier. Return <code>null</code> if the device specifier is not available.
      */
-    String getScopeName();
+    String getDeviceSpec();
 
-    String getScopeSeparator();
+    String getDeviceSpecSeparator();
 
     /**
      * Resolve this path using the default VFS manager.

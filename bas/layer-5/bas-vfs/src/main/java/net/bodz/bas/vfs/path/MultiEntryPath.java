@@ -22,7 +22,7 @@ public abstract class MultiEntryPath
     }
 
     @Override
-    protected final IPath createLocal(String localPath)
+    protected IPath createLocal(String localPath)
             throws BadPathException {
         return createLocal(localPath);
     }

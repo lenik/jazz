@@ -29,11 +29,11 @@ public class MemoryVfsDriver
         system.addDriver(protocol, this);
     }
 
-    public synchronized MemoryVfsDevice getDevice(String scope) {
-        MemoryVfsDevice device = scopeDeviceMap.get(scope);
+    public synchronized MemoryVfsDevice getDevice(String scopeName) {
+        MemoryVfsDevice device = scopeDeviceMap.get(scopeName);
         if (device == null) {
-            device = new MemoryVfsDevice(this, scope, protocol);
-            scopeDeviceMap.put(scope, device);
+            device = new MemoryVfsDevice(this, scopeName);
+            scopeDeviceMap.put(scopeName, device);
         }
         return device;
     }
@@ -44,16 +44,17 @@ public class MemoryVfsDriver
     }
 
     @Override
-    protected IPath parse(String scope, String path)
+    protected MemoryPath parse(String scope, String path)
             throws BadPathException {
         MemoryVfsDevice device = getDevice(scope);
         return device.parse(path);
     }
 
     @Override
-    public IFile resolve(IPath path)
+    public IFile resolve(IPath _path)
             throws FileResolveException {
-        String scope = path.getScopeName();
+        MemoryPath path = (MemoryPath) _path;
+        String scope = path.getDeviceSpec();
         MemoryVfsDevice device = getDevice(scope);
         return device.resolve(path.getLocalPath());
     }

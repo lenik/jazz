@@ -51,15 +51,16 @@ public class ApacheVfsDriver
     }
 
     @Override
-    protected IPath _parse(String protocol, String qPath)
+    protected ApachePath _parse(String protocol, String qPath)
             throws BadPathException {
         ApacheVfsDevice device = getDevice(protocol);
         return device.parse(qPath);
     }
 
     @Override
-    public IFile resolve(IPath path)
+    public IFile resolve(IPath _path)
             throws FileResolveException {
+        ApachePath path = (ApachePath) _path;
         String scheme = path.getProtocol();
         ApacheVfsDevice device = getDevice(scheme);
         ApacheFile file = device.resolve(path.getLocalPath());

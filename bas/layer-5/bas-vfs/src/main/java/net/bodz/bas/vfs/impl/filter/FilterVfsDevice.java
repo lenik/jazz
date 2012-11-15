@@ -10,10 +10,14 @@ import net.bodz.bas.vfs.path.PathFormat;
 public class FilterVfsDevice
         extends AbstractVfsDevice {
 
-    IVfsFilter filter;
+    private IVfsFilter filter;
 
-    public FilterVfsDevice(FilterVfsDriver driver, String descriptor, String protocol) {
-        super(driver, descriptor, protocol);
+    public FilterVfsDevice(FilterVfsDriver driver, String filterSpec) {
+        super(driver, driver.protocol, filterSpec);
+    }
+
+    public String getFilterSpec() {
+        return getDeviceSpec();
     }
 
     public IVfsFilter getFilter() {
@@ -26,7 +30,7 @@ public class FilterVfsDevice
     }
 
     @Override
-    public IPath parse(String localPath)
+    public FilterPath parse(String localPath)
             throws BadPathException {
         return null;
     }

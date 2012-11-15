@@ -25,7 +25,7 @@ public class PseudoVfsDriver
     public PseudoVfsDriver(String protocol) {
         this.protocol = protocol;
         scopeDeviceMap = new HashMap<String, PseudoVfsDevice>();
-        defaultDevice = new PseudoVfsDevice(this, DEFAULT_SCOPE, protocol);
+        defaultDevice = new PseudoVfsDevice(this, DEFAULT_SCOPE);
         scopeDeviceMap.put(DEFAULT_SCOPE, defaultDevice);
     }
 
@@ -37,7 +37,7 @@ public class PseudoVfsDriver
     public synchronized PseudoVfsDevice getDevice(String scopeName) {
         PseudoVfsDevice device = scopeDeviceMap.get(scopeName);
         if (device == null) {
-            device = new PseudoVfsDevice(this, scopeName, protocol);
+            device = new PseudoVfsDevice(this, scopeName);
             scopeDeviceMap.put(scopeName, device);
         }
         return device;
@@ -53,14 +53,14 @@ public class PseudoVfsDriver
     }
 
     @Override
-    protected IPath parse(String scope, String path)
+    protected PseudoPath parse(String scope, String path)
             throws BadPathException {
         PseudoVfsDevice device = getDevice(scope);
         return device.parse(path);
     }
 
     @Override
-    public IFile resolve(IPath path)
+    public IFile resolve(IPath _path)
             throws FileResolveException {
         return null;
     }

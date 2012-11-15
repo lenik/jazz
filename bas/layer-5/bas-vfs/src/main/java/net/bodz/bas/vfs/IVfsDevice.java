@@ -16,9 +16,9 @@ public interface IVfsDevice {
 
     IVfsDriver getDriver();
 
-    String getName();
-
     String getProtocol();
+
+    String getDeviceSpec();
 
     /**
      * Return the underlying device on which this volume is implemented.
@@ -54,7 +54,7 @@ public interface IVfsDevice {
      * 
      * @param localPath
      *            Non-<code>null</code> path string with-in this volume.
-     * @return Non-<code>null</code> {@link IPath} reference.
+     * @return Non-<code>null</code> {@link IPath path} reference.
      * @throws NullPointerException
      *             If <code>localPath</code> is <code>null</code>.
      */
@@ -80,7 +80,7 @@ public interface IVfsDevice {
      * Resolve a parsed path to a file.
      * 
      * @param _path
-     *            Must be of concrete path type.
+     *            The path to be resolved.
      * @return Non-<code>null</code> file reference.
      * @throws ClassCastException
      *             If the path isn't instance of concrete path type.

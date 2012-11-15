@@ -12,9 +12,25 @@ public class JdkVfsDevice
 
     private JdkFile rootFile;
 
+    /**
+     * The root name maybe: "" (for /), "c:" (for c:/).
+     */
     public JdkVfsDevice(JdkVfsDriver driver, File rootFile) {
-        super(driver, rootFile.getName(), null);
-        new JdkFile(this, rootFile);
+        super(driver, driver.protocol, rootFile.getName());
+        this.rootFile = new JdkFile(this, rootFile);
+    }
+
+    /**
+     * Get the name of the drive.
+     * 
+     * For DOS drives, the drive name contains the colon(:).
+     * 
+     * For *NIX, the drive name is an empty string.
+     * 
+     * @return Non-<code>null</code> drive name.
+     */
+    public String getDriveName() {
+        return getDeviceSpec();
     }
 
     @Override

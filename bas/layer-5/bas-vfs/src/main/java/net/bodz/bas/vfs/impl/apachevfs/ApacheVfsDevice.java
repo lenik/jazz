@@ -22,7 +22,7 @@ public class ApacheVfsDevice
     ApacheFile rootFile = null;
 
     public ApacheVfsDevice(ApacheVfsDriver driver, String scheme) {
-        super(driver, "", scheme);
+        super(driver, scheme, null);
         this.fileSystemManager = driver.getFileSystemManager();
         this.scheme = scheme;
     }

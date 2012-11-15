@@ -15,8 +15,22 @@ public class URLVfsDevice
     // String hostspec; // == device-name.
     URLFile rootFile;
 
-    public URLVfsDevice(URLVfsDriver driver, String hostspec, String protocol) {
-        super(driver, hostspec, protocol);
+    /**
+     * @param hostSpec
+     *            Like <code>"//www.example.com:80"</code>.
+     */
+    public URLVfsDevice(URLVfsDriver driver, String protocol, String hostSpec) {
+        super(driver, protocol, hostSpec);
+    }
+
+    public String getHostSpec() {
+        String deviceSpec = getDeviceSpec();
+        if (deviceSpec == null)
+            return null;
+        if (!deviceSpec.startsWith("//"))
+            return null;
+        String hostSpec = deviceSpec.substring(2);
+        return hostSpec;
     }
 
     @Override
@@ -38,8 +52,7 @@ public class URLVfsDevice
     @Override
     public IFile resolve(IPath _path)
             throws FileResolveException {
-        URLPath path = (URLPath) _path;
-        String url = path.toString();
+        String url = _path.toString();
         return new URLPath(url);
     }
 
