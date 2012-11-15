@@ -204,7 +204,7 @@ public abstract class BatchCLI
         for (String arg : expandWildcards(args)) {
             IFile filearg = VFS.resolve(arg);
             for (IFile file : scanFiles(filearg)) {
-                file.getPath().getRelativePathTo(filearg);
+                file.getPath().getRelativePathTo(filearg.getPath());
                 FileHandler handler = beginFile(file);
                 try {
                     processImpl(handler);
