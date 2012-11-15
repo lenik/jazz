@@ -36,23 +36,21 @@ public class URLPath
 
     @Override
     public String getDeviceSpec() {
+        String userInfo = url.getUserInfo();
+        String authority = url.getAuthority();
+
+        if (userInfo == null && authority == null)
+            return null;
+
         StringBuilder buf = new StringBuilder();
         buf.append("//");
 
-        String userInfo = url.getUserInfo();
         if (userInfo != null) {
             buf.append(userInfo);
             buf.append("@");
         }
-
-        String host = url.getHost();
-        buf.append(host);
-
-        int port = url.getPort();
-        if (port != -1) {
-            buf.append(':');
-            buf.append(port);
-        }
+        if (authority != null)
+            buf.append(authority);
 
         return buf.toString();
     }
