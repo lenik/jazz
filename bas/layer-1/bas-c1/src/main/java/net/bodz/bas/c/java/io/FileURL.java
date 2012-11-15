@@ -5,14 +5,22 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
+import net.bodz.bas.err.UnexpectedException;
+
 public class FileURL {
 
-    public static URL getURL(File file) {
+    public static URL getURL(String pathname, URL fallback) {
+        File file = new File(pathname);
+        return getURL(file, fallback);
+    }
+
+    public static URL getURL(File file, URL fallback) {
         URI uri = file.toURI();
         try {
             return uri.toURL();
         } catch (MalformedURLException e) {
-            return null;
+            // throw new UnexpectedException("Can't convert File to URL", e);
+            return fallback;
         }
     }
 
@@ -27,7 +35,7 @@ public class FileURL {
             URL truncatedURL = new URL(s);
             return FilePath.canoniOf(truncatedURL);
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new UnexpectedException(e);
         }
     }
 
@@ -71,7 +79,7 @@ public class FileURL {
         try {
             truncatedURL = new URL(s);
         } catch (MalformedURLException e) {
-            throw new IllegalArgumentException("Unexpected: truncated url became invalid: " + s, e);
+            throw new UnexpectedException("Truncated url became invalid: " + s, e);
         }
         File dir = FilePath.canoniOf(truncatedURL);
         return dir;
