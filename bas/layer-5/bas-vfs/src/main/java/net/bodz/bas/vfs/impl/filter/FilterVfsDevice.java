@@ -5,7 +5,6 @@ import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathFormat;
 
 public class FilterVfsDevice
         extends AbstractVfsDevice {
@@ -38,11 +37,6 @@ public class FilterVfsDevice
     @Override
     public IFile resolve(IPath _path)
             throws FileResolveException {
-        return null;
-    }
-
-    @Override
-    public String format(String localPath, PathFormat pathFormat) {
         return null;
     }
 

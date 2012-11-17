@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.impl.apachevfs;
 import org.apache.commons.vfs.FileName;
 
 import net.bodz.bas.vfs.path.IPath;
+import net.bodz.bas.vfs.path.PathFormat;
 import net.bodz.bas.vfs.path.ProtocolPath;
 
 public class ApachePath
@@ -53,6 +54,15 @@ public class ApachePath
                 return null;
         }
         return new ApachePath(fileName);
+    }
+
+    @Override
+    protected String formatLocal(PathFormat format) {
+        // if (format.getEncodeOptions() != 0) ...
+        if (format.isDisplaySafe())
+            return fileName.getFriendlyURI();
+        else
+            return fileName.getURI();
     }
 
 }

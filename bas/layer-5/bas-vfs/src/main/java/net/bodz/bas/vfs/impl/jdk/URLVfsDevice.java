@@ -7,7 +7,6 @@ import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathFormat;
 
 public class URLVfsDevice
         extends AbstractVfsDevice {
@@ -52,13 +51,8 @@ public class URLVfsDevice
     @Override
     public IFile resolve(IPath _path)
             throws FileResolveException {
-        String url = _path.toString();
-        return new URLPath(url);
-    }
-
-    @Override
-    public String format(String localPath, PathFormat pathFormat) {
-        return localPath;
+        URLPath path = (URLPath) _path;
+        return new URLFile(this, path);
     }
 
     @Override

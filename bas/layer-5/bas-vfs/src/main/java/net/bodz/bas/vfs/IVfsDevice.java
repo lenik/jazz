@@ -7,7 +7,6 @@ import org.apache.commons.vfs.FileSystem;
 import net.bodz.bas.traits.IAttributes;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathFormat;
 
 /**
  * @see org.apache.commons.vfs.FileSystem
@@ -87,11 +86,6 @@ public interface IVfsDevice {
      */
     IFile resolve(IPath _path)
             throws FileResolveException;
-
-    /**
-     * Format the given path with-in the volume.
-     */
-    String format(String localPath, PathFormat pathFormat);
 
     /**
      * Renames the file denoted by the local pathnames.

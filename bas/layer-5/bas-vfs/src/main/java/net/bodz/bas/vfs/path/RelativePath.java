@@ -120,9 +120,10 @@ public class RelativePath
     }
 
     @Override
-    public String format(PathFormat pathFormat) {
+    protected String formatLocal(PathFormat format) {
         String localPath = StringArray.join(SEPARATOR, entries);
-        return getAlignment().format(localPath);
+        String alignFormat = getAlignment().format(localPath);
+        return alignFormat;
     }
 
 }
