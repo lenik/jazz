@@ -11,7 +11,6 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathFormat;
 
 public class ApacheVfsDevice
         extends AbstractVfsDevice {
@@ -90,20 +89,6 @@ public class ApacheVfsDevice
         ApachePath path = (ApachePath) _path;
         String fqPath = path.toString();
         return _resolveUri(fqPath);
-    }
-
-    @Override
-    public String format(String localPath, PathFormat pathFormat) {
-        String uri = localPath;
-        try {
-            FileName fileName = fileSystemManager.resolveURI(uri);
-            if (pathFormat.isDisplaySafe())
-                return fileName.getFriendlyURI();
-            else
-                return fileName.toString();
-        } catch (FileSystemException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
     }
 
     @Override

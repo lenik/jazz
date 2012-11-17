@@ -7,6 +7,7 @@ import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.path.AbstractPath;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
+import net.bodz.bas.vfs.path.PathFormat;
 
 public class URLPath
         extends AbstractPath {
@@ -93,6 +94,34 @@ public class URLPath
         URLVfsDriver driver = URLVfsDriver.getInstance();
         URLFile file = driver.resolve(this);
         return file;
+    }
+
+    @Override
+    protected void format(StringBuilder result, PathFormat format) {
+        String userInfo = url.getUserInfo();
+        String authority = url.getAuthority();
+        if (userInfo != null || authority != null) {
+            if (userInfo != null && !format.isDisplaySafe()) {
+                result.append(userInfo);
+                result.append('@');
+            }
+            if (authority != null)
+                result.append(authority);
+            result.append(getDeviceSpecSeparator());
+        }
+        String local = formatLocal(format);
+        result.append(local);
+    }
+
+    @Override
+    protected String formatLocal(PathFormat format) {
+        // URL.file == the filename part + query.
+        String localPath = url.getFile();
+        if (format.getEncodeOptions() != 0) {
+            // format.getEncodeCharset();
+            // ...
+        }
+        return localPath;
     }
 
 }

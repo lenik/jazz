@@ -5,7 +5,6 @@ import java.io.File;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathFormat;
 
 public class JdkVfsDevice
         extends AbstractVfsDevice {
@@ -52,11 +51,6 @@ public class JdkVfsDevice
     public JdkFile resolve(IPath _path)
             throws FileResolveException {
         return resolve(_path.getLocalPath());
-    }
-
-    @Override
-    public String format(String localPath, PathFormat pathFormat) {
-        return localPath;
     }
 
     @Override

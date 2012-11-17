@@ -295,7 +295,7 @@ public abstract class AbstractPath
     }
 
     @Override
-    public String format(PathFormat pathFormat) {
+    public final String format(PathFormat pathFormat) {
         StringBuilder result = new StringBuilder(200);
         String protocol = getProtocol();
         if (protocol != null) {
@@ -312,7 +312,17 @@ public abstract class AbstractPath
             result.append(deviceSpec);
             result.append(getDeviceSpecSeparator());
         }
-        result.append(getLocalPath());
+        String local = formatLocal(format);
+        result.append(local);
+    }
+
+    /**
+     * Format local path.
+     * 
+     * @return Non-<code>null</code> formatted local path with the specific format.
+     */
+    protected String formatLocal(PathFormat format) {
+        return getLocalPath();
     }
 
     /**
