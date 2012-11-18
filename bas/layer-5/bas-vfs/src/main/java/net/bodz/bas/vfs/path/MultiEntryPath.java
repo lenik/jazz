@@ -24,7 +24,8 @@ public abstract class MultiEntryPath
     @Override
     protected IPath createLocal(String localPath)
             throws BadPathException {
-        return createLocal(localPath);
+        String[] entries = StringArray.splitRaw(localPath, "/");
+        return createLocal(entries);
     }
 
     protected abstract IPath createLocal(String[] entries)
@@ -41,7 +42,10 @@ public abstract class MultiEntryPath
     void setLocalPath(String localPath) {
         if (localPath == null)
             throw new NullPointerException("localPath");
-        entries = localPath.split(SEPARATOR);
+        if (localPath.isEmpty())
+            entries = new String[0];
+        else
+            entries = StringArray.splitRaw(localPath, SEPARATOR);
     }
 
     @Override

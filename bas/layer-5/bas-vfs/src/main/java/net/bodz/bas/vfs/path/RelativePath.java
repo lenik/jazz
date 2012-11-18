@@ -115,7 +115,7 @@ public class RelativePath
         if (alignment == null)
             alignment = new ParentAlignment(parents);
 
-        String[] entries = pathstr.split(SEPARATOR);
+        String[] entries = StringArray.splitRaw(pathstr, SEPARATOR);
         return new RelativePath(alignment, entries);
     }
 

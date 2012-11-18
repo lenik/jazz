@@ -4,9 +4,9 @@ import java.io.File;
 import java.net.URL;
 
 import net.bodz.bas.vfs.impl.jdk.JdkFile;
-import net.bodz.bas.vfs.impl.jdk.URLPath;
 import net.bodz.bas.vfs.impl.pseudo.InputBytesFile;
 import net.bodz.bas.vfs.impl.pseudo.InputStringFile;
+import net.bodz.bas.vfs.impl.url.URLPath;
 
 public class FileWrapper {
 
@@ -22,7 +22,7 @@ public class FileWrapper {
             return new JdkFile((File) var);
 
         if (var instanceof URL)
-            return new URLPath((URL) var).resolve();
+            return URLPath.parse((URL) var).resolve();
 
         if (var instanceof String)
             return new InputStringFile((String) var);

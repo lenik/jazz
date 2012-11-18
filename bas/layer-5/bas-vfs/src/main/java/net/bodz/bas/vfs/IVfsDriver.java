@@ -9,6 +9,8 @@ import net.bodz.bas.meta.codegen.IndexedType;
 public interface IVfsDriver
         extends IVfsProtocolHandler {
 
+    // IFileSystem getFileSystem();
+
     void configure(IFileSystem system);
 
     // /**

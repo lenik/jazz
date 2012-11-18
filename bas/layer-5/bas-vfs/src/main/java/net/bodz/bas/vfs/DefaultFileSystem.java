@@ -2,6 +2,7 @@ package net.bodz.bas.vfs;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.TreeSet;
 
 import net.bodz.bas.util.order.IPriority;
@@ -10,19 +11,19 @@ import net.bodz.bas.vfs.context.VFSColos;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
-public class FileSystem
+public class DefaultFileSystem
         implements IFileSystem {
 
     private final Map<String, IVfsDriver> protocols;
     private final TreeSet<VfsDriverKey> fallbacks;
 
-    private IPath contextPath;
-
-    public FileSystem() {
+    public DefaultFileSystem() {
         protocols = new HashMap<String, IVfsDriver>();
         fallbacks = new TreeSet<VfsDriverKey>(PriorityComparator.INSTANCE);
 
-        contextPath = VFSColos.workdir.get().getPath();
+        for (IVfsDriverProvider provider : ServiceLoader.load(IVfsDriverProvider.class))
+            for (IVfsDriver driver : provider.getDrivers())
+                driver.configure(this);
     }
 
     @Override
@@ -113,17 +114,15 @@ public class FileSystem
     }
 
     @Override
-    public IPath getContextPath() {
-        if (contextPath == null)
-            throw new IllegalStateException("Default context wasn't set");
-        return contextPath;
+    public synchronized IPath getContextPath() {
+        IFile contextFile = VFSColos.workdir.get();
+        return contextFile.getPath();
     }
 
     @Override
     public void setContextPath(IPath contextPath) {
-        if (contextPath == null)
-            throw new NullPointerException("contextPath");
-        this.contextPath = contextPath;
+        IFile contextFile = resolve(contextPath);
+        VFSColos.workdir.set(contextFile);
     }
 
 }

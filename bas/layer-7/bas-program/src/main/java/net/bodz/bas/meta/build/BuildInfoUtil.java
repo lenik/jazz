@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import net.bodz.bas.io.resource.tools.StreamLoading;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.vfs.impl.jdk.URLFile;
+import net.bodz.bas.vfs.impl.url.URLFile;
 
 @RcsKeywords(id = "$Id$")
 public class BuildInfoUtil {

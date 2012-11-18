@@ -289,7 +289,9 @@ public abstract class AbstractFile
     @Override
     public IFile resolve(String spec)
             throws BadPathException, FileResolveException {
-        return getPath().join(spec).resolve();
+        IPath joinedPath = getPath().join(spec);
+        IFile file = VFS.resolve(joinedPath);
+        return file;
     }
 
     @Override

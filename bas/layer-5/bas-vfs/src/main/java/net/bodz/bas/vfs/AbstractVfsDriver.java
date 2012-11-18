@@ -6,6 +6,13 @@ public abstract class AbstractVfsDriver
         extends AbstractVfsProtocolHandler
         implements IVfsDriver {
 
+    // IFileSystem fileSystem;
+
+    // @Override
+    // public IFileSystem getFileSystem() {
+    // return fileSystem;
+    // }
+
     @Override
     public boolean hasCapability(Capability capability) {
         return false;

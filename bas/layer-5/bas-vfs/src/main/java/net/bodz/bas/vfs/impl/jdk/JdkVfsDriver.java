@@ -15,12 +15,19 @@ import net.bodz.bas.vfs.path.IPath;
 public class JdkVfsDriver
         extends AbstractVfsDriver {
 
-    String protocol;
-    JdkVfsDevice superDrive;
-    Map<String, JdkVfsDevice> driveMap = new HashMap<>();
+    /**
+     * The drive length is 1 char for windows drives.
+     */
+    public static final int MAX_DRIVE_LENGTH = 2;
+
+    final String protocol;
+    final JdkVfsDevice superDrive;
+    final Map<String, JdkVfsDevice> driveMap;
 
     public JdkVfsDriver(String protocol) {
         this.protocol = protocol;
+        superDrive = new JdkVfsDevice(this, null);
+        driveMap = new HashMap<>();
     }
 
     @Override
@@ -35,7 +42,7 @@ public class JdkVfsDriver
         int colon = _path.indexOf(':');
         String drive;
         String localPath;
-        if (colon != -1) {
+        if (colon != -1 && colon < MAX_DRIVE_LENGTH) {
             drive = _path.substring(0, colon);
             localPath = _path.substring(colon + 1);
             // if (drive.length() == 0) drive = null;
@@ -43,6 +50,9 @@ public class JdkVfsDriver
             drive = null;
             localPath = _path;
         }
+
+        while (localPath.startsWith("/"))
+            localPath = localPath.substring(1);
 
         JdkVfsDevice device = getDrive(drive);
         return device.parse(localPath);
@@ -93,8 +103,7 @@ public class JdkVfsDriver
 
         JdkVfsDevice device = driveMap.get(driveName);
         if (device == null) {
-            File rootJdkFile = new File(driveName + "/");
-            device = new JdkVfsDevice(this, rootJdkFile);
+            device = new JdkVfsDevice(this, driveName);
             driveMap.put(driveName, device);
         }
         return device;

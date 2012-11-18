@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.impl.filter;
 
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.AbstractPath;
@@ -43,7 +44,7 @@ public class FilterPath
 
     @Override
     public String[] getLocalEntries() {
-        return encodedPath.split("/");
+        return StringArray.splitRaw(encodedPath, "/");
     }
 
     @Override

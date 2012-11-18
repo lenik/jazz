@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 
+import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.vfs.FileResolveException;
@@ -185,10 +186,11 @@ public abstract class AbstractPath
         if (spec.startsWith(SEPARATOR))
             joinedLocalPath = spec;
         else {
-            if (localPath1.endsWith(SEPARATOR))
-                joinedLocalPath = localPath1 + spec;
+            String localDir1 = StringPart.beforeLast(localPath1, SEPARATOR);
+            if (localDir1 == null)
+                joinedLocalPath = spec;
             else
-                joinedLocalPath = localPath1 + SEPARATOR + spec;
+                joinedLocalPath = localDir1 + SEPARATOR + spec;
         }
 
         return createLocal(joinedLocalPath);
@@ -330,7 +332,7 @@ public abstract class AbstractPath
      */
     @Override
     public String toString() {
-        return format(PathFormats.DEFAULT);
+        return format(PathFormats.REPR);
     }
 
 }
