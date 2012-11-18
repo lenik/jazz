@@ -13,11 +13,11 @@ import net.bodz.bas.util.PluginTypeEx;
 public class CLIPluginCategory
         extends PluginCategory {
 
-    public CLIPluginCategory(Class<? extends CLIPlugin> baseType) {
+    public CLIPluginCategory(Class<? extends ICLIPlugin> baseType) {
         super(baseType);
     }
 
-    public CLIPluginCategory(String name, Class<? extends CLIPlugin> baseType) {
+    public CLIPluginCategory(String name, Class<? extends ICLIPlugin> baseType) {
         super(name, baseType);
     }
 
@@ -45,8 +45,8 @@ public class CLIPluginCategory
             out.println();
 
             try {
-                CLIPlugin tmp = (CLIPlugin) pluginClass.newInstance();
-                tmp.help(out, prefix + "    ");
+                ICLIPlugin tmp = (ICLIPlugin) pluginClass.newInstance();
+                tmp.formatHelpText(out, prefix + "    ");
             } catch (CreateException e) {
                 out.println(prefix + "    (failed to instantiate: " + e + ")");
             }

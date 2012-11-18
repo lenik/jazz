@@ -1,5 +1,6 @@
 package net.bodz.bas.util;
 
+import net.bodz.bas.cli.plugin.ICLIPlugin;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.model.IFactory;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
@@ -10,34 +11,34 @@ import net.bodz.mda.xjdoc.model1.ArtifactDoc;
  */
 public class PluginTypeEx {
 
-    private final Class<? extends IPlugin> clazz;
-    private final IFactory<IPlugin> factory;
+    private final Class<? extends ICLIPlugin> clazz;
+    private final IFactory<ICLIPlugin> factory;
     private final ArtifactDoc artifactDoc;
 
     @SuppressWarnings("unchecked")
-    public PluginTypeEx(IFactory<IPlugin> factory) {
+    public PluginTypeEx(IFactory<ICLIPlugin> factory) {
         assert factory != null;
         this.factory = factory;
         Class<?> type = factory.getType();
-        if (!IPlugin.class.isAssignableFrom(type))
+        if (!ICLIPlugin.class.isAssignableFrom(type))
             throw new IllegalArgumentException("wrong factory which create " + type);
-        this.clazz = (Class<? extends IPlugin>) type;
+        this.clazz = (Class<? extends ICLIPlugin>) type;
         this.artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
     }
 
-    public PluginTypeEx(Class<? extends IPlugin> clazz) {
-        this(new Factories.Ctor<IPlugin>(clazz));
+    public PluginTypeEx(Class<? extends ICLIPlugin> clazz) {
+        this(new Factories.Ctor<ICLIPlugin>(clazz));
     }
 
-    public PluginTypeEx(Class<? extends IPlugin> clazz, Object outer) {
-        this(new Factories.Ctor<IPlugin>(clazz, outer));
+    public PluginTypeEx(Class<? extends ICLIPlugin> clazz, Object outer) {
+        this(new Factories.Ctor<ICLIPlugin>(clazz, outer));
     }
 
-    public PluginTypeEx(IPlugin staticInstance) {
-        this(new IFactory.Static<IPlugin>(staticInstance));
+    public PluginTypeEx(ICLIPlugin staticInstance) {
+        this(new IFactory.Static<ICLIPlugin>(staticInstance));
     }
 
-    public Class<? extends IPlugin> getType() {
+    public Class<? extends ICLIPlugin> getType() {
         return clazz;
     }
 
@@ -49,7 +50,7 @@ public class PluginTypeEx {
         return artifactDoc.getReleaseDescription().getVersion().toString();
     }
 
-    public IPlugin newInstance(Object... args)
+    public ICLIPlugin newInstance(Object... args)
             throws CreateException {
         return factory.create(args);
     }

@@ -278,7 +278,7 @@ public class Mkbat
         byte[] batData = expansion.getBytes();
 
         ByteArrayResource batDataRes = new ByteArrayResource(batData);
-        byte[] batFixed = fix_BatBB.methods().doEditToBuffer(batDataRes);
+        byte[] batFixed = fix_BatBB.doEditToBuffer(batDataRes);
 
         ByteArrayResource batFixedRes = new ByteArrayResource(batFixed);
 

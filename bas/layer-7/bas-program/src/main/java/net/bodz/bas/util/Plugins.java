@@ -3,6 +3,7 @@ package net.bodz.bas.util;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.type.TypePrMap;
+import net.bodz.bas.cli.plugin.ICLIPlugin;
 import net.bodz.bas.err.CreateException;
 
 public class Plugins {
@@ -16,7 +17,7 @@ public class Plugins {
         categories = new TypePrMap<PluginCategory>();
     }
 
-    public boolean registerCategory(PluginCategory category) {
+    public boolean addCategory(PluginCategory category) {
         Class<?> baseType = category.getBaseType();
         if (categories.containsKey(baseType))
             return false;
@@ -24,12 +25,12 @@ public class Plugins {
         return true;
     }
 
-    public boolean registerCategory(String name, Class<? extends IPlugin> baseType) {
+    public boolean addCategory(String name, Class<? extends ICLIPlugin> baseType) {
         PluginCategory category = new PluginCategory(name, baseType);
-        return registerCategory(category);
+        return addCategory(category);
     }
 
-    public PluginCategory getOrCreateCategory(Class<? extends IPlugin> type, boolean strict) {
+    public PluginCategory getOrCreateCategory(Class<? extends ICLIPlugin> type, boolean strict) {
         PluginCategory pluginType;
         if (strict)
             pluginType = categories.get(type);
@@ -42,7 +43,7 @@ public class Plugins {
         return (PluginCategory) pluginType;
     }
 
-    public PluginCategory getOrCreateCategory(Class<? extends IPlugin> pluginTypeClass) {
+    public PluginCategory getOrCreateCategory(Class<? extends ICLIPlugin> pluginTypeClass) {
         return getOrCreateCategory(pluginTypeClass, false);
     }
 
@@ -56,23 +57,23 @@ public class Plugins {
     }
 
     public void register(String pluginId, PluginTypeEx typeEx) {
-        Class<? extends IPlugin> type = typeEx.getType();
+        Class<? extends ICLIPlugin> type = typeEx.getType();
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, typeEx);
     }
 
-    public void register(String pluginId, Class<? extends IPlugin> type) {
+    public void register(String pluginId, Class<? extends ICLIPlugin> type) {
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, type);
     }
 
-    public void register(String pluginId, Class<? extends IPlugin> type, Object outer) {
+    public void register(String pluginId, Class<? extends ICLIPlugin> type, Object outer) {
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, type, outer);
     }
 
-    public <T> void register(String pluginId, IPlugin staticInstance) {
-        Class<? extends IPlugin> type = staticInstance.getClass();
+    public <T> void register(String pluginId, ICLIPlugin staticInstance) {
+        Class<? extends ICLIPlugin> type = staticInstance.getClass();
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, staticInstance);
     }
@@ -110,7 +111,7 @@ public class Plugins {
         return find(type, pluginId);
     }
 
-    public IPlugin load(Class<? extends IPlugin> type, String pluginId, Object... args)
+    public ICLIPlugin load(Class<? extends ICLIPlugin> type, String pluginId, Object... args)
             throws PluginException {
         PluginTypeEx typeEx = find(type, pluginId);
         if (typeEx == null)
