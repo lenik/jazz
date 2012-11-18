@@ -1,13 +1,11 @@
 package net.bodz.bas.vfs.path;
 
-import net.bodz.bas.vfs.util.FeatureOption;
-
 public class PathFormats {
 
     /**
-     * The default path format is generally the same as the request path.
+     * The representation path format is generally the same as the request path.
      */
-    public static final PathFormat DEFAULT;
+    public static final PathFormat REPR;
 
     /**
      * The display path format looks pretty and suitable for dispaly purpose.
@@ -23,11 +21,24 @@ public class PathFormats {
     public static final PathFormat VERBOSE;
 
     static {
-        DEFAULT = new PathFormat();
-        DISPLAY = new PathFormat( //
-                new FeatureOption(PathFormat.KEY_DISPLAY_SAFE, true));
-        VERBOSE = new PathFormat(//
-                new FeatureOption(PathFormat.KEY_DISPLAY_SAFE, false));
+        REPR = new PathFormat();
+        // REPR.setEncodeOptions(PathFormat.ENCODE_ALL);
+        REPR.setSpaceMode(PathSpaceMode.asPlus);
+        REPR.setDisplaySafe(false);
+        REPR.setRange(true);
+        REPR.lock();
+
+        DISPLAY = new PathFormat();
+        DISPLAY.setSpaceMode(PathSpaceMode.normalized);
+        DISPLAY.setDisplaySafe(true);
+        DISPLAY.setRange(false);
+        DISPLAY.lock();
+
+        VERBOSE = new PathFormat();
+        VERBOSE.setSpaceMode(PathSpaceMode.preserved);
+        VERBOSE.setDisplaySafe(false);
+        VERBOSE.setRange(true);
+        VERBOSE.lock();
     }
 
 }
