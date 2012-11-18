@@ -8,11 +8,16 @@ import java.util.Collection;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamOutputTargetWrapper;
 
 public class StreamDumping
         implements IStreamDumping {
 
     private final IStreamOutputTarget target;
+
+    public StreamDumping(IStreamOutputTargetWrapper wrapper) {
+        this(wrapper.getOutputTarget());
+    }
 
     public StreamDumping(IStreamOutputTarget target) {
         if (target == null)
