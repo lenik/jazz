@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamOutputTargetWrapper;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
@@ -19,6 +20,10 @@ public class StreamWriting
     private boolean appendMode;
     private boolean autoFlush;
     private int blockSize = 4096;
+
+    public StreamWriting(IStreamOutputTargetWrapper wrapper) {
+        this(wrapper.getOutputTarget());
+    }
 
     public StreamWriting(IStreamOutputTarget target) {
         if (target == null)

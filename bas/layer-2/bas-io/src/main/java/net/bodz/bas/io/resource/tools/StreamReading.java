@@ -14,6 +14,7 @@ import net.bodz.bas.err.RuntimeIOException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamInputSourceWrapper;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
@@ -27,6 +28,10 @@ public class StreamReading
 
     private final IStreamInputSource source;
     private int blockSize = 4096;
+
+    public StreamReading(IStreamInputSourceWrapper wrapper) {
+        this(wrapper.getInputSource());
+    }
 
     public StreamReading(IStreamInputSource source) {
         if (source == null)
