@@ -57,126 +57,6 @@ public class StringPart {
         return trimRight(s, 0);
     }
 
-    /**
-     * @return <code>null</code> if <code>pattern</code> isn't contained
-     */
-    public static String before(String s, String literalPattern) {
-        int pos = s.indexOf(literalPattern);
-        if (pos == -1)
-            return null;
-        return s.substring(0, pos);
-    }
-
-    /**
-     * @return <code>null</code> if <code>pattern</code> isn't contained
-     */
-    public static String before(String s, char literalPattern) {
-        int pos = s.indexOf(literalPattern);
-        if (pos == -1)
-            return null;
-        return s.substring(0, pos);
-    }
-
-    /**
-     * @return <code>null</code> if <code>charCategory</code> isn't contained
-     */
-    public static String before(String s, byte charCategory) {
-        int pos = StringSearch.indexOf(s, charCategory);
-        if (pos == -1)
-            return null;
-        return s.substring(0, pos);
-    }
-
-    /**
-     * @return <code>null</code> if <code>pattern</code> isn't contained
-     */
-    public static String beforeLast(String s, String literalPattern) {
-        int pos = s.lastIndexOf(literalPattern);
-        if (pos == -1)
-            return null;
-        return s.substring(0, pos);
-    }
-
-    /**
-     * @return <code>null</code> if <code>pattern</code> isn't contained
-     */
-    public static String beforeLast(String s, char literalPattern) {
-        int pos = s.lastIndexOf(literalPattern);
-        if (pos == -1)
-            return null;
-        return s.substring(0, pos);
-    }
-
-    /**
-     * @return <code>null</code> if <code>charCategory</code> isn't contained
-     */
-    public static String beforeLast(String s, byte charCategory) {
-        int pos = StringSearch.lastIndexOf(s, charCategory);
-        if (pos == -1)
-            return null;
-        return s.substring(0, pos);
-    }
-
-    /**
-     * @return <code>null</code> if <code>pattern</code> isn't contained
-     */
-    public static String after(String s, String literalPattern) {
-        int pos = s.indexOf(literalPattern);
-        if (pos == -1)
-            return null;
-        return s.substring(pos + literalPattern.length());
-    }
-
-    /**
-     * @return <code>null</code> if <code>pattern</code> isn't contained
-     */
-    public static String after(String s, char literalPattern) {
-        int pos = s.indexOf(literalPattern);
-        if (pos == -1)
-            return null;
-        return s.substring(pos + 1);
-    }
-
-    /**
-     * @return <code>null</code> if <code>charCategory</code> isn't contained
-     */
-    public static String after(String s, byte charCategory) {
-        int pos = StringSearch.indexOf(s, charCategory);
-        if (pos == -1)
-            return null;
-        return s.substring(pos + 1);
-    }
-
-    /**
-     * @return <code>null</code> if <code>pattern</code> isn't contained
-     */
-    public static String afterLast(String s, String literalPattern) {
-        int pos = s.lastIndexOf(literalPattern);
-        if (pos == -1)
-            return null;
-        return s.substring(pos + literalPattern.length());
-    }
-
-    /**
-     * @return <code>null</code> if <code>pattern</code> isn't contained
-     */
-    public static String afterLast(String s, char literalPattern) {
-        int pos = s.lastIndexOf(literalPattern);
-        if (pos == -1)
-            return null;
-        return s.substring(pos + 1);
-    }
-
-    /**
-     * @return <code>null</code> if <code>charCategory</code> isn't contained
-     */
-    public static String afterLast(String s, byte charCategory) {
-        int pos = StringSearch.lastIndexOf(s, charCategory);
-        if (pos == -1)
-            return null;
-        return s.substring(pos + 1);
-    }
-
     public static String ltrim(String s, String prefix) {
         if (s.startsWith(prefix))
             s = s.substring(prefix.length());
@@ -187,6 +67,174 @@ public class StringPart {
         if (s.endsWith(suffix))
             s = s.substring(0, s.length() - suffix.length());
         return s;
+    }
+
+    /**
+     * @return <code>null</code> if <code>literalPattern</code> isn't found
+     */
+    public static String before(String s, String literalPattern) {
+        return before(s, literalPattern, null);
+    }
+
+    public static String before(String s, String literalPattern, String fallback) {
+        int pos = s.indexOf(literalPattern);
+        if (pos == -1)
+            return fallback;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>literalPattern</code> isn't found
+     */
+    public static String before(String s, char literalPattern) {
+        return before(s, literalPattern, null);
+    }
+
+    public static String before(String s, char literalPattern, String fallback) {
+        int pos = s.indexOf(literalPattern);
+        if (pos == -1)
+            return fallback;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>charCategory</code> isn't found
+     */
+    public static String before(String s, byte charCategory) {
+        return before(s, charCategory, null);
+    }
+
+    public static String before(String s, byte charCategory, String fallback) {
+        int pos = StringSearch.indexOf(s, charCategory);
+        if (pos == -1)
+            return fallback;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>literalPattern</code> isn't found
+     */
+    public static String beforeLast(String s, String literalPattern) {
+        return beforeLast(s, literalPattern, null);
+    }
+
+    public static String beforeLast(String s, String literalPattern, String fallback) {
+        int pos = s.lastIndexOf(literalPattern);
+        if (pos == -1)
+            return fallback;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't found
+     */
+    public static String beforeLast(String s, char literalPattern) {
+        return beforeLast(s, literalPattern, null);
+    }
+
+    public static String beforeLast(String s, char literalPattern, String fallback) {
+        int pos = s.lastIndexOf(literalPattern);
+        if (pos == -1)
+            return fallback;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>charCategory</code> isn't found
+     */
+    public static String beforeLast(String s, byte charCategory) {
+        return beforeLast(s, charCategory, null);
+    }
+
+    public static String beforeLast(String s, byte charCategory, String fallback) {
+        int pos = StringSearch.lastIndexOf(s, charCategory);
+        if (pos == -1)
+            return fallback;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't found
+     */
+    public static String after(String s, String literalPattern) {
+        return after(s, literalPattern, null);
+    }
+
+    public static String after(String s, String literalPattern, String fallback) {
+        int pos = s.indexOf(literalPattern);
+        if (pos == -1)
+            return fallback;
+        return s.substring(pos + literalPattern.length());
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't found
+     */
+    public static String after(String s, char literalPattern) {
+        return after(s, literalPattern, null);
+    }
+
+    public static String after(String s, char literalPattern, String fallback) {
+        int pos = s.indexOf(literalPattern);
+        if (pos == -1)
+            return fallback;
+        return s.substring(pos + 1);
+    }
+
+    /**
+     * @return <code>null</code> if <code>charCategory</code> isn't found
+     */
+    public static String after(String s, byte charCategory) {
+        return after(s, charCategory, null);
+    }
+
+    public static String after(String s, byte charCategory, String fallback) {
+        int pos = StringSearch.indexOf(s, charCategory);
+        if (pos == -1)
+            return fallback;
+        return s.substring(pos + 1);
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't found
+     */
+    public static String afterLast(String s, String literalPattern) {
+        return afterLast(s, literalPattern, null);
+    }
+
+    public static String afterLast(String s, String literalPattern, String fallback) {
+        int pos = s.lastIndexOf(literalPattern);
+        if (pos == -1)
+            return fallback;
+        return s.substring(pos + literalPattern.length());
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't found
+     */
+    public static String afterLast(String s, char literalPattern) {
+        return afterLast(s, literalPattern, null);
+    }
+
+    public static String afterLast(String s, char literalPattern, String fallback) {
+        int pos = s.lastIndexOf(literalPattern);
+        if (pos == -1)
+            return fallback;
+        return s.substring(pos + 1);
+    }
+
+    /**
+     * @return <code>null</code> if <code>charCategory</code> isn't found
+     */
+    public static String afterLast(String s, byte charCategory) {
+        return afterLast(s, charCategory, null);
+    }
+
+    public static String afterLast(String s, byte charCategory, String fallback) {
+        int pos = StringSearch.lastIndexOf(s, charCategory);
+        if (pos == -1)
+            return fallback;
+        return s.substring(pos + 1);
     }
 
 }
