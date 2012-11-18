@@ -9,11 +9,6 @@
     <version>2.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-api</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <optional>true</optional>
@@ -39,17 +34,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-jvmhack</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-context</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-collection</artifactId>
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
