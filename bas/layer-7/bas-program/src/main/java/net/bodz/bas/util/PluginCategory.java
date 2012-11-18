@@ -3,6 +3,7 @@ package net.bodz.bas.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.cli.plugin.ICLIPlugin;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
@@ -13,12 +14,12 @@ import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 public class PluginCategory {
 
     private final String categoryName;
-    private final Class<? extends IPlugin> categoryBaseType;
+    private final Class<? extends ICLIPlugin> categoryBaseType;
     private final ArtifactDoc categoryDoc;
 
     protected Map<String, PluginTypeEx> registry;
 
-    public PluginCategory(String name, Class<? extends IPlugin> baseType) {
+    public PluginCategory(String name, Class<? extends ICLIPlugin> baseType) {
         assert baseType != null;
         this.categoryName = name;
         this.categoryBaseType = baseType;
@@ -26,7 +27,7 @@ public class PluginCategory {
         registry = new HashMap<String, PluginTypeEx>();
     }
 
-    public PluginCategory(Class<? extends IPlugin> baseType) {
+    public PluginCategory(Class<? extends ICLIPlugin> baseType) {
         this(baseType.getSimpleName(), baseType);
     }
 
@@ -34,7 +35,7 @@ public class PluginCategory {
         return categoryName;
     }
 
-    public Class<? extends IPlugin> getBaseType() {
+    public Class<? extends ICLIPlugin> getBaseType() {
         return categoryBaseType;
     }
 
@@ -63,15 +64,15 @@ public class PluginCategory {
         registry.put(pluginId, typeEx);
     }
 
-    public void register(String pluginId, Class<? extends IPlugin> type) {
+    public void register(String pluginId, Class<? extends ICLIPlugin> type) {
         register(pluginId, new PluginTypeEx(type));
     }
 
-    public void register(String pluginId, Class<? extends IPlugin> type, Object outer) {
+    public void register(String pluginId, Class<? extends ICLIPlugin> type, Object outer) {
         register(pluginId, new PluginTypeEx(type, outer));
     }
 
-    public void register(String pluginId, IPlugin pluginInstance) {
+    public void register(String pluginId, ICLIPlugin pluginInstance) {
         register(pluginId, new PluginTypeEx(pluginInstance));
     }
 

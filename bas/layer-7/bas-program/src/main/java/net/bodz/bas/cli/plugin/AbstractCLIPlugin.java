@@ -9,11 +9,11 @@ import net.bodz.bas.cli.model.OptionGroupFactory;
 import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.util.AbstractPlugin;
+import net.bodz.mda.xjdoc.model1.ArtifactElement;
 
 public class AbstractCLIPlugin
-        extends AbstractPlugin
-        implements CLIPlugin {
+        extends ArtifactElement
+        implements ICLIPlugin {
 
     protected IOptionGroup getOptions() {
         return OptionGroupFactory.getClassOptions(getClass());
@@ -45,7 +45,7 @@ public class AbstractCLIPlugin
     }
 
     @Override
-    public void help(IPrintOut out, String prefix) {
+    public void formatHelpText(IPrintOut out, String prefix) {
         IOptionGroup opts = getOptions();
         Map<String, IOption> map = opts.getLocalOptionMap();
         int maxlen = 0;
