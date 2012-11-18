@@ -1,6 +1,5 @@
 package net.bodz.bas.c.string;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,65 +25,23 @@ public class StringArrayTest
     }
 
     @Test
-    public void testSplit_Comma()
-            throws IOException {
+    public void testSplitRawByChar() {
         class D {
-            void o(String input, String expected)
-                    throws IOException {
-                String[] args = input.split("\\|", 3);
-                char[] delim = args[0].toCharArray();
-                int limit = Integer.parseInt(args[1]);
-                input = args[2];
-                String[] result = StringArray.split(input, delim, limit, //
-                        StringArray.TRIM | StringArray.QUOTE | StringArray.DEQUOTE);
-                String actual = StringArray.join("|", result);
-                assertEquals(expected, actual);
+            void o(String string, char sep, int limit, String... expected) {
+                String[] actual = StringArray.splitRaw(string, sep, limit);
+                assertArrayEquals(expected, actual);
             }
         }
         D d = new D();
-        d.o(",|0|a,b,c", "a|b|c"); // 1
-        d.o(",|0|a,b,c,,,", "a|b|c");
-        d.o(",|1|a,b,c", "a,b,c");
-        d.o(",|2|a,b,c", "a|b,c");
-        d.o(",|3|a,b,c", "a|b|c");
-        d.o(",|4|a,b,c", "a|b|c");
-        d.o(",|2| a , b , c", "a|b , c");
-        d.o(",|2| a \t\n ,\nb,\n c\n\n", "a|b,\n c");
-        d.o(",|2|,,", "|,");
-        d.o(",|2|,   ,\n\n", "|,");
+        d.o("a:b:c", ':', 0);
+        d.o("a:b:c", ':', 1, "a:b:c");
+        d.o("a:b:c", ':', 2, "a", "b:c");
+        d.o("a:b:c", ':', 3, "a", "b", "c");
+        d.o("a:b:c", ':', 4, "a", "b", "c");
+        d.o("a:b:c", ':', -1, "a", "b", "c");
 
-        d.o(",|0|a,\"b\",c", "a|b|c"); // 11
-        d.o(",|0|a,\"b, \\\"j,k,l\\\", bb\",c,,,", "a|b, \"j,k,l\", bb|c");
-    }
-
-    @Test
-    public void testSplitQuoted()
-            throws IOException {
-        class D {
-            void o(String input, String expected)
-                    throws IOException {
-                String[] args = input.split("\\|", 2);
-                int limit = Integer.parseInt(args[0]);
-                input = args[1];
-                String[] result = StringArray.split(input, null, limit, //
-                        StringArray.QUOTE | StringArray.DEQUOTE);
-                String actual = StringArray.join("|", result);
-                assertEquals(expected, actual);
-            }
-        }
-        D d = new D();
-        d.o("0|a b c", "a|b|c"); // 1
-        d.o("0|a b c   ", "a|b|c");
-        d.o("1|a b c", "a b c");
-        d.o("2|a b c", "a|b c");
-        d.o("3|a b c", "a|b|c");
-        d.o("4|a b c", "a|b|c");
-        d.o("2| a   b   c", "a|b   c");
-        d.o("2| a \t\n  \nb \n c\n\n", "a|b \n c");
-        d.o("2|  ", "");
-        d.o("2|  x  \n\n", "x");
-        d.o("0|a \"b\" c", "a|b|c"); // 11
-        d.o("0|a \"b  \\\"j k l\\\"  bb\" c   ", "a|b  \"j k l\"  bb|c");
+        d.o("a:b:", ':', 2, "a", "b:");
+        d.o("a:b:", ':', -1, "a", "b", "");
     }
 
     @Test

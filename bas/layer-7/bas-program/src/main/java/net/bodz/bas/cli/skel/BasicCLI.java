@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.java.nio.WildcardsExpander;
 import net.bodz.bas.c.java.util.Iterables;
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.c.string.StringQuoted;
 import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
@@ -211,7 +212,7 @@ public abstract class BasicCLI
             throws Throwable {
         String[] args = {};
         if (cmdline != null)
-            args = StringArray.split(cmdline);
+            args = StringQuoted.split(cmdline);
         execute(args);
     }
 
