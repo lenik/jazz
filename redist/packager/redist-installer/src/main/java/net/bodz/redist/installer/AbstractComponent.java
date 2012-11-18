@@ -9,8 +9,8 @@ import java.util.Set;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 public abstract class AbstractComponent
         implements IComponent, II18nCapable {

@@ -11,7 +11,7 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public class MethodDoc
-        extends ElementDoc {
+        extends JavaElementDoc {
 
     final ClassDoc classDoc;
     final MethodId methodId;

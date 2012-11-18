@@ -14,7 +14,7 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public class ClassDoc
-        extends ElementDoc
+        extends JavaElementDoc
         implements IClassDoc {
 
     Map<String, FieldDoc> fieldDocs;

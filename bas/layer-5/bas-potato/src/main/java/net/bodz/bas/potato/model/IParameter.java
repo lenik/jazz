@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.model;
 
 public interface IParameter
-        extends IElement {
+        extends IPotatoElement {
 
     /**
      * @return non-<code>null</code>

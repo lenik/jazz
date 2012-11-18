@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import net.bodz.bas.c.reflect.MethodSignature;
 
 public class DecoratedMethod
-        extends DecoratedElement
+        extends DecoratedPotatoElement
         implements IMethod {
 
     private static final long serialVersionUID = 1L;

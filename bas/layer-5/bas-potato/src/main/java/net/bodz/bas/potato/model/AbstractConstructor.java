@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import net.bodz.bas.c.reflect.MethodSignature;
 
 public abstract class AbstractConstructor
-        extends AbstractElement
+        extends AbstractPotatoElement
         implements IConstructor {
 
     public AbstractConstructor(Class<?> declaringType) {

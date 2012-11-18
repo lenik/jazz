@@ -32,7 +32,6 @@ import net.bodz.bas.meta.source.ChainUsage;
 import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.model.IExecutableVarArgsX;
 import net.bodz.bas.model.ITransformer;
-import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.bas.potato.model.IType;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
@@ -43,6 +42,7 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 /**
  * Basic CLI Framework

@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.mda.tagbook;
 
-import net.bodz.bas.potato.model.IElement;
+import net.bodz.bas.potato.model.IPotatoElement;
 import net.bodz.mda.xjdoc.tags.DocTagType;
 import net.bodz.mda.xjdoc.tags.TagBook;
 import net.bodz.mda.xjdoc.tags.URLTagType;
@@ -13,7 +13,7 @@ import net.bodz.mda.xjdoc.tags.WordsTagType;
  * 
  * @name The Potato Tag Book
  * @tags tags predefined meta-model
- * @see IElement
+ * @see IPotatoElement
  */
 public class PotatoBook
         extends TagBook {

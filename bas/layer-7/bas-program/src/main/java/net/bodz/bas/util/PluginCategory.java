@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 /**
  * Plugin Category

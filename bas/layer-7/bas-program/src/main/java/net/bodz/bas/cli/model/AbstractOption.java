@@ -11,13 +11,13 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.Negotiation;
 import net.bodz.bas.meta.decl.ItemType;
-import net.bodz.bas.potato.model.AbstractElement;
+import net.bodz.bas.potato.model.AbstractPotatoElement;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
 
 public abstract class AbstractOption
-        extends AbstractElement
+        extends AbstractPotatoElement
         implements IOption {
 
     int priority;

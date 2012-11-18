@@ -2,7 +2,7 @@ package net.bodz.bas.potato.spi.bean;
 
 import java.beans.FeatureDescriptor;
 
-import net.bodz.bas.potato.model.IElement;
+import net.bodz.bas.potato.model.IPotatoElement;
 
 public class FeatureDescriptorUtil {
 
@@ -35,7 +35,7 @@ public class FeatureDescriptorUtil {
     }
 
     public static void initFeatureDescriptorFromPotatoElement(FeatureDescriptor featureDescriptor,
-            IElement potatoElement) {
+            IPotatoElement potatoElement) {
 
         featureDescriptor.setName(potatoElement.getName());
         featureDescriptor.setDisplayName(potatoElement.getDisplayName().toString());

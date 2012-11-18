@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.model;
 
 public abstract class SimpleMethod
-        extends SimpleElement
+        extends SimplePotatoElement
         implements IMethod {
 
     Class<?> returnType;

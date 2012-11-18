@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import net.bodz.bas.c.reflect.MethodSignature;
 
 public abstract class AbstractMethod
-        extends AbstractElement
+        extends AbstractPotatoElement
         implements IMethod {
 
     transient IParameter[] parameters;

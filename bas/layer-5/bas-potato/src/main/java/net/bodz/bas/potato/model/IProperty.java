@@ -5,7 +5,7 @@ import java.beans.PropertyDescriptor;
 import net.bodz.bas.util.event.IPropertyChangeListener;
 
 public interface IProperty
-        extends IElement {
+        extends IPotatoElement {
 
     /**
      * The property type.

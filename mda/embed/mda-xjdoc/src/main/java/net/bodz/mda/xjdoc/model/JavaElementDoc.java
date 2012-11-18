@@ -19,17 +19,17 @@ import net.bodz.mda.xjdoc.tags.ITagBook;
 import net.bodz.mda.xjdoc.tags.ITagType;
 import net.bodz.mda.xjdoc.tags.TagBook;
 
-public class ElementDoc
-        implements IElementDoc, IFlatfSerializable {
+public class JavaElementDoc
+        implements IJavaElementDoc, IFlatfSerializable {
 
     String name;
     DomainString text;
     Map<String, Object> tagMap = new LinkedHashMap<String, Object>();
 
-    public ElementDoc() {
+    public JavaElementDoc() {
     }
 
-    public ElementDoc(String name) {
+    public JavaElementDoc(String name) {
         this.name = name;
     }
 

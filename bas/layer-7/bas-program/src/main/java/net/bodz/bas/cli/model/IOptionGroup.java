@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.bodz.bas.potato.model.IEditableElement;
+import net.bodz.bas.i18n.dom1.IEditableElement;
 
 public interface IOptionGroup
         extends IEditableElement {

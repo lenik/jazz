@@ -7,7 +7,7 @@ import java.util.Collections;
 import net.bodz.bas.c.string.Strings;
 
 public abstract class AbstractEvent
-        extends AbstractElement
+        extends AbstractPotatoElement
         implements IEvent {
 
     private final String ucfirstName;

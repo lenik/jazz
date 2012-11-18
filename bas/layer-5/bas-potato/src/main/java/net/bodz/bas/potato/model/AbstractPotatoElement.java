@@ -2,22 +2,14 @@ package net.bodz.bas.potato.model;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom1.AbstractElement;
 
-public abstract class AbstractElement
-        implements IEditableElement {
+public abstract class AbstractPotatoElement
+        extends AbstractElement
+        implements IPotatoElement {
 
     private final Class<?> declaringClass;
-    private String name;
-
-    private DomainString displayName;
-    private DomainString description;
-    private DomainString helpDoc;
-
-    private Set<String> tags;
 
     /**
      * @param declaringType
@@ -25,75 +17,14 @@ public abstract class AbstractElement
      * @param name
      *            May be <code>null</code>.
      */
-    public AbstractElement(Class<?> declaringType, String name) {
+    public AbstractPotatoElement(Class<?> declaringType, String name) {
+        super(name);
         this.declaringClass = declaringType;
-        this.name = name;
     }
 
     @Override
     public Class<?> getDeclaringClass() {
         return declaringClass;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public DomainString getDisplayName() {
-        return displayName;
-    }
-
-    @Override
-    public void setDisplayName(DomainString displayName) {
-        this.displayName = displayName;
-    }
-
-    @Override
-    public DomainString getDescription() {
-        return description;
-    }
-
-    @Override
-    public void setDescription(DomainString description) {
-        this.description = description;
-    }
-
-    @Override
-    public DomainString getHelpDoc() {
-        return helpDoc;
-    }
-
-    @Override
-    public void setHelpDoc(DomainString helpDoc) {
-        this.helpDoc = helpDoc;
-    }
-
-    @Override
-    public int getPreferenceLevel() {
-        return 0;
-    }
-
-    @Override
-    public int getModifiers() {
-        return 0;
-    }
-
-    @Override
-    public Set<String> getTags() {
-        if (tags == null) {
-            synchronized (this) {
-                if (tags == null) {
-                    tags = new TreeSet<String>();
-                }
-            }
-        }
-        return tags;
-    }
-
-    public void setTags(Set<String> tags) {
-        this.tags = tags;
     }
 
     private static final Annotation[] EMPTY_ANNOTATION = new Annotation[0];

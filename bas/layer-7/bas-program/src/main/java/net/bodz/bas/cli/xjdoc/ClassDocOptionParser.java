@@ -16,7 +16,7 @@ import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.ElementDoc;
+import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 
@@ -299,7 +299,7 @@ public class ClassDocOptionParser {
         return true;
     }
 
-    boolean parseOptionDoc(AbstractOption option, ElementDoc doc)
+    boolean parseOptionDoc(AbstractOption option, JavaElementDoc doc)
             throws ParseException {
         if (doc == null)
             return annotatedOnly ? false : true;

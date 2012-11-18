@@ -5,10 +5,11 @@ import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom1.IEditableElement;
 
-public class SimpleElement
+public class SimplePotatoElement
         extends SimpleAnnotatedElement
-        implements IEditableElement {
+        implements IPotatoElement, IEditableElement {
 
     Class<?> declaringClass;
     String name;
@@ -88,6 +89,16 @@ public class SimpleElement
     @Override
     public Set<String> getTags() {
         return tags;
+    }
+
+    @Override
+    public void addTag(String tag) {
+        tags.add(tag);
+    }
+
+    @Override
+    public void removeTag(String tag) {
+        tags.remove(tag);
     }
 
 }

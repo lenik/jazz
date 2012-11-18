@@ -5,13 +5,13 @@ import java.util.Map;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.model.AbstractDecorator;
 
-public abstract class DecoratedElementDoc
-        extends AbstractDecorator<IElementDoc>
-        implements IElementDoc {
+public abstract class DecoratedJavaElementDoc
+        extends AbstractDecorator<IJavaElementDoc>
+        implements IJavaElementDoc {
 
     private static final long serialVersionUID = 1L;
 
-    public DecoratedElementDoc(IElementDoc _orig) {
+    public DecoratedJavaElementDoc(IJavaElementDoc _orig) {
         super(_orig);
     }
 

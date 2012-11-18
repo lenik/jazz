@@ -1,11 +1,11 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.potato.model.IElement;
+import net.bodz.bas.potato.model.IPotatoElement;
 import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.model.IType;
 
 public interface IRefDescriptor
-        extends IElement {
+        extends IPotatoElement {
 
     IProperty getDeclaringProperty();
 

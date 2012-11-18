@@ -5,11 +5,11 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.preorder.PrefixMap;
-import net.bodz.bas.potato.model.AbstractElement;
+import net.bodz.bas.potato.model.AbstractPotatoElement;
 import net.bodz.bas.util.Pair;
 
 public class DefaultOptionGroup
-        extends AbstractElement
+        extends AbstractPotatoElement
         implements IOptionGroup {
 
     final IOptionGroup parent;
