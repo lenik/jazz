@@ -46,7 +46,7 @@ public abstract class AbstractVfsDevice
     }
 
     @Override
-    public final IPath getRootPath() {
+    public IPath getRootPath() {
         IFile rootFile = getRootFile();
         if (rootFile == null)
             return null;

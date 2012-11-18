@@ -8,7 +8,7 @@ public class VFS {
     private static IFileSystem fileSystem;
 
     static {
-        fileSystem = new FileSystem();
+        fileSystem = new DefaultFileSystem();
     }
 
     public static IFileSystem getFileSystem() {

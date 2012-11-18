@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.jdk;
+package net.bodz.bas.vfs.impl.url;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -22,8 +22,6 @@ import net.bodz.bas.vfs.util.IFilenameFilter;
 public class URLFile
         extends AbstractFile {
 
-    private static URLVfsDriver driver = URLVfsDriver.getInstance();
-
     private final URLPath path;
 
     public URLFile(URLVfsDevice device, URLPath path) {
@@ -32,7 +30,9 @@ public class URLFile
     }
 
     public static URLFile resolve(URL url) {
-        return new URLPath(url).resolve();
+        URLPath path = URLPath.parse(url);
+        URLVfsDriver driver = URLVfsDriver.getInstance();
+        return driver.resolve(path);
     }
 
     @Override
@@ -154,7 +154,7 @@ public class URLFile
         } catch (MalformedURLException e) {
             throw new FileResolveException(e.getMessage(), e);
         }
-        URLPath childURL = new URLPath(url);
+        URLPath childURL = URLPath.parse(url);
         return childURL.resolve();
     }
 

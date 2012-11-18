@@ -26,8 +26,6 @@ public class JdkFile
         extends AbstractFile
         implements IFsTree {
 
-    private static JdkVfsDriver driver = JdkVfsDriver.getInstance();
-
     private final java.io.File origFile;
 
     /**
@@ -45,11 +43,11 @@ public class JdkFile
      *            non-<code>null</code> {@link java.io.File} object.
      */
     public JdkFile(File jdkFile) {
-        this(driver.getDrive(jdkFile), jdkFile);
+        this(JdkVfsDriver.getInstance().getDrive(jdkFile), jdkFile);
     }
 
-    JdkFile(JdkVfsDevice device, File jdkFile) {
-        super(device, jdkFile.getName());
+    JdkFile(JdkVfsDevice driveDevice, File jdkFile) {
+        super(driveDevice, jdkFile.getName());
         this.origFile = jdkFile;
     }
 
@@ -72,7 +70,19 @@ public class JdkFile
     @Override
     public JdkPath getPath() {
         JdkVfsDevice device = getDevice();
-        JdkPath path = new JdkPath(device.getProtocol(), origFile.getPath());
+
+        String driveName = device.getDriveName();
+        String origPath = origFile.getPath();
+
+        String localPath;
+        if (driveName == null)
+            localPath = origPath;
+        else {
+            assert origPath.startsWith(driveName);
+            localPath = origPath.substring(driveName.length());
+        }
+
+        JdkPath path = new JdkPath(device.getProtocol(), driveName, localPath);
         return path;
     }
 
