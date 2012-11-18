@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import net.bodz.bas.util.event.IPropertyChangeListener;
 
 public class DecoratedProperty
-        extends DecoratedElement
+        extends DecoratedPotatoElement
         implements IProperty {
 
     private static final long serialVersionUID = 1L;

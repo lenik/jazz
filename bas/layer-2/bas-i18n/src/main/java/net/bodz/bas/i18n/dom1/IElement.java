@@ -1,18 +1,10 @@
-package net.bodz.bas.potato.model;
+package net.bodz.bas.i18n.dom1;
 
 import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
 
-public interface IElement
-        extends IAnnotatedElement {
-
-    /**
-     * The type where this element is declared.
-     * 
-     * @return The declaring type.
-     */
-    Class<?> getDeclaringClass();
+public interface IElement {
 
     /**
      * The unique name of the potato element.

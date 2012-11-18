@@ -5,7 +5,7 @@ import java.util.Map;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.sugar.IWrappedAsable;
 
-public interface IElementDoc
+public interface IJavaElementDoc
         extends IWrappedAsable<Object> {
 
     /**

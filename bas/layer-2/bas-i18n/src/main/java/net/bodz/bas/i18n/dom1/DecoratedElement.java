@@ -1,27 +1,18 @@
-package net.bodz.bas.potato.model;
+package net.bodz.bas.i18n.dom1;
 
 import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.model.AbstractDecorator;
 
 public class DecoratedElement
-        extends DecoratedAnnotatedElement
+        extends AbstractDecorator<IElement>
         implements IElement {
 
     private static final long serialVersionUID = 1L;
 
     public DecoratedElement(IElement _orig) {
         super(_orig);
-    }
-
-    @Override
-    public IElement getWrapped() {
-        return (IElement) _orig; // super.getWrapped();
-    }
-
-    @Override
-    public Class<?> getDeclaringClass() {
-        return getWrapped().getDeclaringClass();
     }
 
     @Override

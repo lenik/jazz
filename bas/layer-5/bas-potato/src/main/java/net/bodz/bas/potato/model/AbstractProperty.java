@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import net.bodz.bas.util.event.IPropertyChangeListener;
 
 public abstract class AbstractProperty
-        extends AbstractElement
+        extends AbstractPotatoElement
         implements IProperty {
 
     public AbstractProperty(Class<?> declaringType, String propertyName) {

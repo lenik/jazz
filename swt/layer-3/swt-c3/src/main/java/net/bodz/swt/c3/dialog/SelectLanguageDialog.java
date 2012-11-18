@@ -13,8 +13,8 @@ import org.eclipse.swt.widgets.Shell;
 import net.bodz.bas.c.java.util.LocaleTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.bas.potato.mda.tagbook.ArtifactDoc;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 public class SelectLanguageDialog
         extends SimpleDialog {

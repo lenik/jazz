@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.model;
 
 public interface IFieldDoc
-        extends IElementDoc {
+        extends IJavaElementDoc {
 
     IClassDoc getClassDoc();
 

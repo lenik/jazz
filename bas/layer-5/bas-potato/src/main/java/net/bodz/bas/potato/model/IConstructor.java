@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import net.bodz.bas.c.reflect.MethodSignature;
 
 public interface IConstructor
-        extends IElement {
+        extends IPotatoElement {
 
     /**
      * The name of the constructor is meaningless, and it's undetermined in potato context.

@@ -1,11 +1,11 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.potato.model.DecoratedElement;
+import net.bodz.bas.potato.model.DecoratedPotatoElement;
 import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.model.IType;
 
 public class DecoratedRefDescriptor
-        extends DecoratedElement
+        extends DecoratedPotatoElement
         implements IRefDescriptor {
 
     private static final long serialVersionUID = 1L;

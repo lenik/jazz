@@ -6,7 +6,7 @@ import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class FieldDoc
-        extends ElementDoc
+        extends JavaElementDoc
         implements IFieldDoc {
 
     final ClassDoc classDoc;

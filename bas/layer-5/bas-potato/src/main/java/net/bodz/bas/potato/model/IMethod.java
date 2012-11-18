@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import net.bodz.bas.c.reflect.MethodSignature;
 
 public interface IMethod
-        extends IElement {
+        extends IPotatoElement {
 
     Class<?> getReturnType();
 

@@ -6,7 +6,7 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public interface IClassDoc
-        extends IElementDoc {
+        extends IJavaElementDoc {
 
     ImportMap getImports();
 

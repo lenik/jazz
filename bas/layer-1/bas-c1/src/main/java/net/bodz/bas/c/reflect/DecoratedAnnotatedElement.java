@@ -1,14 +1,13 @@
-package net.bodz.bas.potato.model;
+package net.bodz.bas.c.reflect;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
-import java.util.Map;
 
 import net.bodz.bas.model.AbstractDecorator;
 
 public abstract class DecoratedAnnotatedElement
         extends AbstractDecorator<AnnotatedElement>
-        implements IAnnotatedElement {
+        implements AnnotatedElement {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,19 +33,6 @@ public abstract class DecoratedAnnotatedElement
     @Override
     public Annotation[] getDeclaredAnnotations() {
         return getWrapped().getDeclaredAnnotations();
-    }
-
-    @Override
-    public void findAnnotations(Map<Class<? extends Annotation>, Annotation> map) {
-        AnnotatedElement wrapped = getWrapped();
-        if (wrapped instanceof IAnnotatedElement) {
-            IAnnotatedElement _wrapped = (IAnnotatedElement) wrapped;
-            _wrapped.findAnnotations(map);
-        } else {
-            Annotation[] annotations = wrapped.getAnnotations();
-            for (Annotation annotation : annotations)
-                map.put(annotation.getClass(), annotation);
-        }
     }
 
 }

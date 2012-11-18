@@ -2,10 +2,10 @@ package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.model.IType;
-import net.bodz.bas.potato.model.SimpleElement;
+import net.bodz.bas.potato.model.SimplePotatoElement;
 
 public class VariableDescriptor
-        extends SimpleElement
+        extends SimplePotatoElement
         implements IRefDescriptor {
 
     Class<?> valueType;

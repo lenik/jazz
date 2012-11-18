@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.util;
+package net.bodz.mda.xjdoc.model1;
 
 import java.io.Serializable;
 import java.util.Map.Entry;

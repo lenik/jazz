@@ -1,20 +1,20 @@
 package net.bodz.bas.potato.model.invoke;
 
 import net.bodz.bas.c.reflect.MethodSignature;
-import net.bodz.bas.potato.model.DecoratedElement;
-import net.bodz.bas.potato.model.IElement;
+import net.bodz.bas.potato.model.DecoratedPotatoElement;
+import net.bodz.bas.potato.model.IPotatoElement;
 import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 
 public abstract class AbstractInvocationDescriptor
-        extends DecoratedElement
+        extends DecoratedPotatoElement
         implements IRefDescriptor {
 
     private static final long serialVersionUID = 1L;
 
     IRefDescriptor[] parameterDescriptors;
 
-    public AbstractInvocationDescriptor(IElement methodElement, IRefDescriptor[] parameterDescriptors) {
+    public AbstractInvocationDescriptor(IPotatoElement methodElement, IRefDescriptor[] parameterDescriptors) {
         super(methodElement);
         this.parameterDescriptors = parameterDescriptors;
     }

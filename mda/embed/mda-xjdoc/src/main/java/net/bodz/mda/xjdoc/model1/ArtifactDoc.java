@@ -1,4 +1,4 @@
-package net.bodz.bas.potato.mda.tagbook;
+package net.bodz.mda.xjdoc.model1;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -7,16 +7,15 @@ import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.ReleaseDescription;
-import net.bodz.mda.xjdoc.model.DecoratedElementDoc;
-import net.bodz.mda.xjdoc.model.IElementDoc;
-import net.bodz.mda.xjdoc.util.Author;
+import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
 public class ArtifactDoc
-        extends DecoratedElementDoc {
+        extends DecoratedJavaElementDoc {
 
     private static final long serialVersionUID = 1L;
 
-    public ArtifactDoc(IElementDoc _orig) {
+    public ArtifactDoc(IJavaElementDoc _orig) {
         super(_orig);
     }
 

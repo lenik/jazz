@@ -4,12 +4,12 @@ import java.util.Set;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.potato.model.IElement;
+import net.bodz.bas.potato.model.IPotatoElement;
 import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.util.order.IPriority;
 
 public interface IOption
-        extends IElement, IPriority {
+        extends IPotatoElement, IPriority {
 
     /**
      * CLI name (or "cn" for short). Like "foo-bar" for "fooBar".

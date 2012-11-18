@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import java.util.Collection;
 
 public interface IEvent
-        extends IElement {
+        extends IPotatoElement {
 
     Class<?> getEventClass();
 

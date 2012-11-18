@@ -10,7 +10,7 @@ import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.ElementDoc;
+import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.tags.ITagBook;
@@ -108,7 +108,7 @@ public class ClassDocBuilder {
         return classDoc;
     }
 
-    void populate(ElementDoc elementDoc, AbstractJavaEntity javaEntity, INegotiation negotiation) {
+    void populate(JavaElementDoc elementDoc, AbstractJavaEntity javaEntity, INegotiation negotiation) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
             DomainString text = XDomainString.parseParaLang(comment);

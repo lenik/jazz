@@ -7,7 +7,7 @@ import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeArray;
 
 public abstract class AbstractType
-        extends AbstractElement
+        extends AbstractPotatoElement
         implements IType {
 
     public AbstractType(String name) {
