@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.build;
+package net.bodz.bas.cli.meta;
 
 import java.io.IOException;
 import java.net.URL;
@@ -8,7 +8,6 @@ import net.bodz.bas.io.resource.tools.StreamLoading;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.vfs.impl.url.URLFile;
 
-@RcsKeywords(id = "$Id$")
 public class BuildInfoUtil {
 
     /**

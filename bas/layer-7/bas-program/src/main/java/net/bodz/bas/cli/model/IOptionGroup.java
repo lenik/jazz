@@ -1,10 +1,12 @@
 package net.bodz.bas.cli.model;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.i18n.dom1.IEditableElement;
 
 public interface IOptionGroup
@@ -112,5 +114,8 @@ public interface IOptionGroup
             throws ConflictedUsageIdException;
 
     void removeUsage(SyntaxUsage usage);
+
+    List<String> parse(OptionGroupParseFlags flags, Object context, String... args)
+            throws CLISyntaxException;
 
 }

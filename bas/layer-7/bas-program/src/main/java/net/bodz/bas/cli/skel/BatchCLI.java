@@ -209,7 +209,7 @@ public abstract class BatchCLI
                 try {
                     processImpl(handler);
                 } catch (Exception exception) {
-                    handler.getExceptions().log(exception);
+                    handler.getExceptionLog().log(exception);
                 }
                 endFile(handler);
             }

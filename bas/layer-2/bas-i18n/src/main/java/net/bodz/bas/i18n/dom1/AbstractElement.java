@@ -1,12 +1,15 @@
 package net.bodz.bas.i18n.dom1;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.i18n.dom.DomainString;
 
 public abstract class AbstractElement
-        implements IEditableElement {
+        implements IEditableElement, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String name;
 

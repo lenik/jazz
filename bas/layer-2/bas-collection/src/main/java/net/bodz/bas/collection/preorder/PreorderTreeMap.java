@@ -22,6 +22,8 @@ public class PreorderTreeMap<K, V>
     }
 
     /**
+     * Get the exact key.
+     * 
      * Use {@link #meet(Object)} instead to get a nearest node in the preorder map.
      * <p>
      * {@inheritDoc}

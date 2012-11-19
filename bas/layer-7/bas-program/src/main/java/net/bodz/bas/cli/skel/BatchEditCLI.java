@@ -125,7 +125,7 @@ public class BatchEditCLI
         return handler;
     }
 
-    protected final ProcessResultStat stat = new ProcessResultStat();
+    protected final FileHandleResultStat stat = new FileHandleResultStat();
 
     private void applyResult(IFile src, IFile dst, IFile edit, EditResult result)
             throws IOException {

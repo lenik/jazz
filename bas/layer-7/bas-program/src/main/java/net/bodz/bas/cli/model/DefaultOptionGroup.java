@@ -5,12 +5,10 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.preorder.PrefixMap;
-import net.bodz.bas.potato.model.AbstractPotatoElement;
 import net.bodz.bas.util.Pair;
 
 public class DefaultOptionGroup
-        extends AbstractPotatoElement
-        implements IOptionGroup {
+        extends AbstractOptionGroup {
 
     final IOptionGroup parent;
     final Map<String, IOption> nameMap = new TreeMap<String, IOption>();
@@ -20,6 +18,11 @@ public class DefaultOptionGroup
     public DefaultOptionGroup(IOptionGroup parent, Class<?> declaringClass) {
         super(declaringClass, Strings.hyphenatize(declaringClass.getSimpleName()));
         this.parent = parent;
+    }
+
+    @Override
+    protected IOption getLocalOption(String optionKey) {
+        return prefixMap.get(optionKey);
     }
 
     @Override
@@ -33,64 +36,11 @@ public class DefaultOptionGroup
     }
 
     @Override
-    public IOption getOption(String optionKey) {
-        IOption option = prefixMap.get(optionKey);
-        if (option != null)
-            return option;
-        else if (parent == null)
-            return null;
-        else
-            return parent.getOption(optionKey);
-    }
-
-    @Override
-    public IOption getUniqueOption(String prefix)
-            throws AmbiguousOptionKeyException {
-        if (prefix == null)
-            throw new NullPointerException("optionKeyPrefix");
-        if (prefix.startsWith("no-"))
-            prefix = prefix.substring(3);
-        if (prefix.isEmpty())
-            throw new IllegalArgumentException("prefix is empty");
-
-        IOption option = getOption(prefix);
-        if (option != null)
-            return option;
-
-        List<String> optionKeys = getSuggestKeys(prefix);
-        if (optionKeys.isEmpty())
-            return null;
-
-        if (optionKeys.size() > 1) {
-            StringBuilder suggestions = new StringBuilder();
-            for (String key : optionKeys) {
-                suggestions.append(key);
-                suggestions.append('\n');
-            }
-            throw new AmbiguousOptionKeyException(prefix, suggestions.toString());
-        }
-        String optionKey = optionKeys.get(0);
-        return prefixMap.get(optionKey);
-    }
-
-    public List<String> getSuggestKeys(String optionKeyPrefix) {
-        List<String> suggestKeys = new ArrayList<String>();
-        fillSuggestKeys(optionKeyPrefix, suggestKeys);
-        return suggestKeys;
-    }
-
-    @Override
     public void fillSuggestKeys(String prefix, Collection<String> suggestKeys) {
         if (parent != null)
             parent.fillSuggestKeys(prefix, suggestKeys);
         for (String optionKey : prefixMap.joinKeys(prefix))
             suggestKeys.add(optionKey);
-    }
-
-    public Map<String, IOption> getSuggestMap(String prefix) {
-        Map<String, IOption> map = new LinkedHashMap<String, IOption>();
-        fillSuggestMap(prefix, map);
-        return map;
     }
 
     @Override
@@ -102,12 +52,6 @@ public class DefaultOptionGroup
             IOption option = entry.getValue();
             suggestMap.put(key, option);
         }
-    }
-
-    public Set<String> getEnabledKeys(IOption option) {
-        Set<String> enabledKeys = new LinkedHashSet<String>();
-        fillEnabledKeys(option, enabledKeys);
-        return enabledKeys;
     }
 
     @Override
@@ -214,12 +158,6 @@ public class DefaultOptionGroup
     @Override
     public Map<String, SyntaxUsage> getLocalUsageMap() {
         return usageMap;
-    }
-
-    public Set<String> getUsageIds() {
-        Set<String> usageIds = new LinkedHashSet<String>();
-        fillUsageIds(usageIds);
-        return usageIds;
     }
 
     @Override

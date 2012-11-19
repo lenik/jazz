@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.build;
+package net.bodz.bas.cli.meta;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 public @interface BuildInfo {
 
     /**
-     * resource name, which defines proeprties of counters
+     * Resource name, which contains counters
      */
     String value();
 
