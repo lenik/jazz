@@ -1,31 +1,104 @@
 package net.bodz.bas.cli.model;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.model.AbstractPotatoElement;
 import net.bodz.bas.potato.model.IProperty;
 
-public class OptionApplier {
+public abstract class AbstractOptionGroup
+        extends AbstractPotatoElement
+        implements IOptionGroup {
 
-    final IOptionGroup optionGroup;
-    Object context;
-    boolean stopAtFirstNonOption;
-
-    public OptionApplier(IOptionGroup optionGroup) {
-        if (optionGroup == null)
-            throw new NullPointerException("optionGroup");
-        this.optionGroup = optionGroup;
+    public AbstractOptionGroup(Class<?> declaringType, String name) {
+        super(declaringType, name);
     }
 
-    public OptionApplier(IOptionGroup optionGroup, Object context) {
-        this(optionGroup);
-        this.context = context;
+    /**
+     * Get the explicitly declared local option.
+     * 
+     * @param optionKey
+     *            Explicitly declared local option key.
+     * @return <code>null</code> if the local option isn't existed.
+     */
+    protected abstract IOption getLocalOption(String optionKey);
+
+    @Override
+    public IOption getOption(String optionKey) {
+        IOption option = getLocalOption(optionKey);
+        if (option != null)
+            return option;
+
+        IOptionGroup parent = getParent();
+        if (parent == null)
+            return null;
+        else
+            return parent.getOption(optionKey);
     }
 
-    public List<String> apply(String... args)
+    @Override
+    public IOption getUniqueOption(String prefix)
+            throws AmbiguousOptionKeyException {
+        if (prefix == null)
+            throw new NullPointerException("optionKeyPrefix");
+        if (prefix.startsWith("no-"))
+            prefix = prefix.substring(3);
+        if (prefix.isEmpty())
+            throw new IllegalArgumentException("prefix is empty");
+
+        IOption option = getOption(prefix);
+        if (option != null)
+            return option;
+
+        List<String> optionKeys = getSuggestKeys(prefix);
+        if (optionKeys.isEmpty())
+            return null;
+
+        if (optionKeys.size() > 1) {
+            StringBuilder suggestions = new StringBuilder();
+            for (String key : optionKeys) {
+                suggestions.append(key);
+                suggestions.append('\n');
+            }
+            throw new AmbiguousOptionKeyException(prefix, suggestions.toString());
+        }
+        String optionKey = optionKeys.get(0);
+        return getLocalOption(optionKey);
+    }
+
+    public List<String> getSuggestKeys(String optionKeyPrefix) {
+        List<String> suggestKeys = new ArrayList<String>();
+        fillSuggestKeys(optionKeyPrefix, suggestKeys);
+        return suggestKeys;
+    }
+
+    public Map<String, IOption> getSuggestMap(String prefix) {
+        Map<String, IOption> map = new LinkedHashMap<String, IOption>();
+        fillSuggestMap(prefix, map);
+        return map;
+    }
+
+    public Set<String> getEnabledKeys(IOption option) {
+        Set<String> enabledKeys = new LinkedHashSet<String>();
+        fillEnabledKeys(option, enabledKeys);
+        return enabledKeys;
+    }
+
+    public Set<String> getUsageIds() {
+        Set<String> usageIds = new LinkedHashSet<String>();
+        fillUsageIds(usageIds);
+        return usageIds;
+    }
+
+    @Override
+    public List<String> parse(OptionGroupParseFlags flags, Object context, String... args)
             throws CLISyntaxException {
         List<String> rejected = new ArrayList<String>();
 
@@ -43,11 +116,11 @@ public class OptionApplier {
                 if (eq != -1)
                     arg = arg.substring(0, eq);
 
-                option = optionGroup.getUniqueOption(arg);
+                option = this.getUniqueOption(arg);
 
                 boolean maybeNegative = arg.startsWith("no-");
                 if (option == null && maybeNegative) {
-                    option = optionGroup.getUniqueOption(arg.substring(3));
+                    option = this.getUniqueOption(arg.substring(3));
                     argValue = false;
                 }
 
@@ -57,7 +130,7 @@ public class OptionApplier {
 
                 for (int j = 0; j < argLen; j++) {
                     String shortKey = arg.substring(j, j + 1);
-                    IOption shortOption = optionGroup.getOption(shortKey);
+                    IOption shortOption = this.getOption(shortKey);
                     if (shortOption == null)
                         throw new NoSuchOptionException(shortKey);
 
@@ -76,7 +149,7 @@ public class OptionApplier {
                     continue;
 
             } else {
-                if (stopAtFirstNonOption) {
+                if (flags.isStopAtFirstNonOption()) {
                     for (int j = i; j < args.length; j++)
                         rejected.add(args[j]);
                     break;
@@ -124,22 +197,6 @@ public class OptionApplier {
                     property.getDeclaringClass().getSimpleName(), property.getName(), //
                     value), e);
         }
-    }
-
-    public Object getContext() {
-        return context;
-    }
-
-    public void setContext(Object context) {
-        this.context = context;
-    }
-
-    public boolean isStopAtFirstNonOption() {
-        return stopAtFirstNonOption;
-    }
-
-    public void setStopAtFirstNonOption(boolean stopAtFirstNonOption) {
-        this.stopAtFirstNonOption = stopAtFirstNonOption;
     }
 
 }

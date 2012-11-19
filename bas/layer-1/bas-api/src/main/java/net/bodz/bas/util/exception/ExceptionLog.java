@@ -10,7 +10,7 @@ public class ExceptionLog
 
     private static final long serialVersionUID = 1L;
 
-    class LogItem
+    public class LogItem
             implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -21,6 +21,14 @@ public class ExceptionLog
         public LogItem(long time, Throwable exception) {
             this.time = time;
             this.exception = exception;
+        }
+
+        public long getTime() {
+            return time;
+        }
+
+        public Throwable getException() {
+            return exception;
         }
 
     }

@@ -141,6 +141,31 @@ public class Arrays
     }
 
     /**
+     * Concat
+     */
+    public static <T> T concat(Class<?> arrayType, T array, Object... elements) {
+        if (arrayType == null)
+            throw new NullPointerException("arrayType");
+        if (array == null)
+            throw new NullPointerException("array");
+        if (elements == null)
+            throw new NullPointerException("elements");
+
+        Class<?> valType = arrayType.getComponentType();
+        int len = Array.getLength(array);
+
+        if (elements.length == 0) {
+            T copy = (T) Array.newInstance(valType, elements.length);
+            System.arraycopy(array, 0, copy, 0, len);
+            return copy;
+        }
+
+        @SuppressWarnings("unchecked")
+        T result = (T) concat((Object[]) array, elements);
+        return result;
+    }
+
+    /**
      * Concat multiple arrays.
      * 
      * @throws NullPointerException

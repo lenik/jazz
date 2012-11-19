@@ -9,9 +9,11 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypeComparator;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.util.exception.ExceptionLog.LogItem;
 
-public class ProcessResultStat {
+public class FileHandleResultStat {
 
     private int ignored;
     private int total;
@@ -23,64 +25,59 @@ public class ProcessResultStat {
     private int copied;
     private int errorred;
 
-    private Map<String, Integer> tagStat;
-    private Map<Class<?>, Integer> errStat;
+    private Map<String, Integer> tagStat = new TreeMap<String, Integer>();
+    private Map<Class<?>, Integer> errorStat = new HashMap<Class<?>, Integer>();
 
-    public ProcessResultStat() {
-        tagStat = new TreeMap<String, Integer>();
-        errStat = new HashMap<Class<?>, Integer>();
-    }
-
-    public void add(EditResult result) {
-        if (result == null) {
+    public void commit(FileHandler handler) {
+        FileHandleResult result = handler.getResult();
+        switch (result) {
+        case ignored:
             ignored++;
-            return;
+            break;
+        case saved:
+            saved++;
+            break;
+        case deleted:
+            deleted++;
+            break;
+        case renamed:
+            renamed++;
+            break;
+        case moved:
+            moved++;
+            break;
+        case copied:
+            copied++;
+            break;
+        default:
+            throw new UnexpectedException("Unknown file handle result: " + result);
         }
-        total++;
-        if (result.changed != null) {
-            if (result.changed)
-                changed++;
-        }
-        if (result.done)
-            switch (result.operation) {
-            case EditResult.SAVE:
-                throw new IllegalStateException();
-            case EditResult.SAVE_DIFF:
-            case EditResult.SAVE_SAME:
-                saved++;
-            case EditResult.DELETE:
-                deleted++;
-                break;
-            case EditResult.RENAME:
-                renamed++;
-                break;
-            case EditResult.MOVE:
-                moved++;
-                break;
-            case EditResult.COPY:
-                copied++;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown operation: " + result.operation);
-            }
 
-        if (result.tags != null)
-            for (String tag : result.tags) {
-                Integer tagCount = tagStat.get(tag);
-                if (tagCount == null)
-                    tagCount = 0;
-                tagStat.put(tag, ++tagCount);
-            }
-        if (result.error) {
-            errorred++;
-            if (result.cause != null) {
-                Class<? extends Throwable> errType = result.cause.getClass();
-                Integer errCount = errStat.get(errType);
+        if (handler.isErrored()) {
+            for (LogItem logItem : handler.getExceptionLog()) {
+                Class<? extends Throwable> errorType = logItem.getException().getClass();
+                Integer errCount = errorStat.get(errorType);
                 if (errCount == null)
                     errCount = 0;
-                errStat.put(errType, ++errCount);
+                errorStat.put(errorType, ++errCount);
             }
+            errorred++;
         }
+
+        Boolean diff = handler.getDiff();
+        if (diff == null)
+            throw new IllegalStateException();
+        if (diff)
+            changed++;
+
+        for (String tag : handler.getTags()) {
+            Integer tagCount = tagStat.get(tag);
+            if (tagCount == null)
+                tagCount = 0;
+            tagStat.put(tag, ++tagCount);
+        }
+
+        total++;
     }
 
     public void dumpBrief(IPrintOut out) {
@@ -136,10 +133,10 @@ public class ProcessResultStat {
         if (errorred > 0)
             dumpField(out, 4, "Errors", errorred, total - errorred);
 
-        List<Class<?>> errTypes = new ArrayList<Class<?>>(errStat.keySet());
+        List<Class<?>> errTypes = new ArrayList<Class<?>>(errorStat.keySet());
         Collections.sort(errTypes, TypeComparator.getInstance());
         for (Class<?> errType : errTypes) {
-            int count = errStat.get(errType);
+            int count = errorStat.get(errType);
             dumpField(out, 8, errType.getName(), count);
         }
     }

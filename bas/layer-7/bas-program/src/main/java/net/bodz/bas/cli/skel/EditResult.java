@@ -2,6 +2,7 @@ package net.bodz.bas.cli.skel;
 
 import net.bodz.bas.vfs.IFile;
 
+@Deprecated
 public class EditResult {
 
     public static final int NONE = 0;
@@ -12,12 +13,11 @@ public class EditResult {
     public static final int RENAME = 30;
     public static final int MOVE = 40;
     public static final int COPY = 50;
+    public int operation;
 
     protected String[] tags;
 
     public Boolean changed;
-
-    public int operation;
 
     /** dest pathname for RENAME, MOVE, COPY */
     public IFile dest;

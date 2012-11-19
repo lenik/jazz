@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.program;
+package net.bodz.bas.cli.meta;
 
 public class StartModeUtil {
 

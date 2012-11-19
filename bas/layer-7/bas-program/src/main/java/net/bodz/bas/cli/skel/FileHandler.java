@@ -28,17 +28,18 @@ public class FileHandler
     private IFile outDir;
 
     private FileHandleResult result = FileHandleResult.ignored;
-    private ExceptionLog exceptions;
+    private ExceptionLog exceptions = new ExceptionLog();;
     private Boolean diff;
     private Set<String> tags = new TreeSet<String>();
 
     private boolean appendMode = false;
-    private InputStream inputStream;
-    private Reader reader;
-    private OutputStream outputStream;
-    private Writer writer;
-    private OutputStream tempOutputStream;
-    private Writer tempWriter;
+
+    private transient InputStream inputStream;
+    private transient Reader reader;
+    private transient OutputStream outputStream;
+    private transient Writer writer;
+    private transient OutputStream tempOutputStream;
+    private transient Writer tempWriter;
 
     public FileHandler(String name, IFile file) {
         if (name == null)
@@ -179,12 +180,10 @@ public class FileHandler
     }
 
     public void logException(Throwable exception) {
-        getExceptions().log(exception);
+        getExceptionLog().log(exception);
     }
 
-    public ExceptionLog getExceptions() {
-        if (exceptions == null)
-            exceptions = new ExceptionLog();
+    public ExceptionLog getExceptionLog() {
         return exceptions;
     }
 

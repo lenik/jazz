@@ -1,4 +1,4 @@
-package net.bodz.bas.test;
+package net.bodz.bas.meta.source;
 
 public @interface TestBy {
 

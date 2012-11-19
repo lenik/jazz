@@ -8,14 +8,15 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.nio.WildcardsExpander;
 import net.bodz.bas.c.java.util.Iterables;
+import net.bodz.bas.c.object.SimpleObjectFormatter;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.string.StringQuoted;
 import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
-import net.bodz.bas.cli.model.OptionApplier;
 import net.bodz.bas.cli.model.OptionGroupFactory;
+import net.bodz.bas.cli.model.OptionGroupParseFlags;
 import net.bodz.bas.cli.plugin.CLIPlugins;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
@@ -203,8 +204,7 @@ public abstract class BasicCLI
             logger.debug("Parse arguments: " + StringArray.join(", ", args));
 
         IOptionGroup options = getOptions();
-        OptionApplier applier = new OptionApplier(options);
-        List<String> rejected = applier.apply(args);
+        List<String> rejected = options.parse(OptionGroupParseFlags.DEFAULT, this, args);
         return rejected;
     }
 
@@ -249,7 +249,7 @@ public abstract class BasicCLI
                     Object optionValue = option.property().getValue(this);
                     if (optionValue instanceof MethodCall)
                         continue;
-                    logger.debug(optionName, " = ", Util.dispval(optionValue));
+                    logger.debug(optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
                 }
                 for (Entry<String, Object> entry : _vars.entrySet()) {
                     String name = entry.getKey();

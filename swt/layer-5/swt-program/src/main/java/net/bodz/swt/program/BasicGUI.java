@@ -29,6 +29,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.c.java.util.LocaleTraits;
+import net.bodz.bas.cli.meta.StartMode;
 import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
@@ -36,7 +37,6 @@ import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.gui.mda.PreferredSize;
 import net.bodz.bas.loader.boot.BootInfo;
-import net.bodz.bas.meta.program.StartMode;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
