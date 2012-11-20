@@ -62,7 +62,7 @@ public class StatNode
             String counterName = counter.getName();
 
             ICounterDef<?> def = counter.getDefinition();
-            Number initValue = def.getInitValue();
+            Number initValue = def.getZero();
             SubCounterMode mode = modeOverride != null ? modeOverride : def.getSubCounterMode();
 
             @SuppressWarnings("unchecked")//

@@ -1,10 +1,6 @@
 package net.bodz.bas.db.stat;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 public class StatDump {
@@ -22,6 +18,14 @@ public class StatDump {
 
         scanUsedCounters(root);
 
+        if (formatter.removeZeroColumns) {
+            Set<String> zeroCounters = new HashSet<String>(usedCounterDefs.keySet());
+            removeNonZeroCounters(zeroCounters, root);
+            for (String zeroCounter : zeroCounters)
+                usedCounterDefs.remove(zeroCounter);
+        }
+
+        // Create index map
         for (String name : usedCounterDefs.keySet()) {
             int nextIndex = counterIndex.size();
             counterIndex.put(name, nextIndex);
@@ -48,18 +52,47 @@ public class StatDump {
             scanUsedCounters(child);
     }
 
+    void removeNonZeroCounters(Set<String> names, StatNode node) {
+        for (ICounter<?> counter : node.getCounters()) {
+            String name = counter.getName();
+            Number value = counter.getValue();
+
+            ICounterDef<Number> def = (ICounterDef<Number>) counter.getDefinition();
+            boolean zero = def.appxEquals(def.getZero(), value);
+            if (!zero)
+                names.remove(name);
+        }
+
+        for (StatNode child : node.getChildMap().values())
+            removeNonZeroCounters(names, child);
+    }
+
     void scan(String prefix, String nodeName, StatNode node) {
         StatDumpField[] fields = new StatDumpField[this.fieldCount];
 
         for (ICounter<?> counter : node.getCounters()) {
             String counterName = counter.getName();
+            Integer fieldIndex = counterIndex.get(counterName);
+            if (fieldIndex == null)
+                continue;
+
+            ICounterDef<Number> def = (ICounterDef<Number>) usedCounterDefs.get(counterName);
+            Number value = counter.getValue();
 
             StatDumpField field = new StatDumpField();
-            field.def = usedCounterDefs.get(counterName);
-            field.value = counter.getValue().toString();
+            field.def = def;
 
-            int index = counterIndex.get(counterName);
-            fields[index] = field;
+            if (formatter.isConvertZeroToSpace()) {
+                boolean zero = def.appxEquals(def.getZero(), value);
+                if (zero)
+                    field.value = "";
+                else
+                    field.value = value.toString();
+            } else {
+                field.value = value.toString();
+            }
+
+            fields[fieldIndex] = field;
         }
 
         StatDumpLine line = new StatDumpLine(prefix, nodeName, fields);

@@ -15,31 +15,47 @@ public abstract class CounterDef<T extends Number>
 
     private static final long serialVersionUID = 1L;
 
+    private String name;
+    private int userLevel;
+
     private final Class<T> valueType;
-    private final T initValue;
-    private final int precision;
-    private final int scale;
-    private final String unit;
-    private final SubCounterMode subCounterMode = SubCounterMode.sumUp;
+    private final T zero;
+    private final T one;
 
-    public CounterDef(String name, Class<T> valueType, T initValue, int precision, int scale) {
-        this(name, valueType, initValue, precision, scale, null);
-    }
+    private int precision;
+    private int scale;
+    private String unit;
 
-    public CounterDef(String name, Class<T> valueType, T initValue, int precision, int scale, String unit) {
-        super(name);
+    private SubCounterMode subCounterMode = SubCounterMode.sumUp;
+
+    public CounterDef(String name, Class<T> valueType, T zero, T one) {
+        this.name = name;
 
         if (valueType == null)
             throw new NullPointerException("valueType");
         this.valueType = valueType;
 
-        if (initValue == null)
+        if (zero == null)
             throw new NullPointerException("initValue");
-        this.initValue = initValue;
+        this.zero = zero;
 
-        this.precision = precision;
-        this.scale = scale;
-        this.unit = unit;
+        if (one == null)
+            throw new NullPointerException("one");
+        this.one = one;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getUserLevel() {
+        return userLevel;
+    }
+
+    public void setUserLevel(int userLevel) {
+        this.userLevel = userLevel;
     }
 
     @Override
@@ -47,9 +63,18 @@ public abstract class CounterDef<T extends Number>
         return valueType;
     }
 
+    public boolean appxEquals(T a, T b) {
+        return a.equals(b);
+    }
+
     @Override
-    public T getInitValue() {
-        return initValue;
+    public T getZero() {
+        return zero;
+    }
+
+    @Override
+    public T getOne() {
+        return one;
     }
 
     @Override
@@ -57,9 +82,17 @@ public abstract class CounterDef<T extends Number>
         return precision;
     }
 
+    public void setPrecision(int precision) {
+        this.precision = precision;
+    }
+
     @Override
     public int getScale() {
         return scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
     }
 
     @Override
@@ -67,14 +100,24 @@ public abstract class CounterDef<T extends Number>
         return unit;
     }
 
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
     @Override
     public SubCounterMode getSubCounterMode() {
         return subCounterMode;
     }
 
+    public void setSubCounterMode(SubCounterMode subCounterMode) {
+        if (subCounterMode == null)
+            throw new NullPointerException("subCounterMode");
+        this.subCounterMode = subCounterMode;
+    }
+
     @Override
     public ICounter<T> createCounter(String name) {
-        return new Counter<T>(this, name, initValue);
+        return new Counter<T>(this, name, zero);
     }
 
     public static final ByteCounterDef GENERIC_BYTE = new ByteCounterDef("generic");
@@ -194,11 +237,7 @@ class ByteCounterDef
     private static final long serialVersionUID = 1L;
 
     public ByteCounterDef(String name) {
-        super(name, Byte.class, (byte) 0, 3, 0);
-    }
-
-    public ByteCounterDef(String name, byte initValue) {
-        super(name, Byte.class, initValue, 3, 0);
+        super(name, Byte.class, (byte) 0, (byte) 1);
     }
 
     @Override
@@ -258,11 +297,7 @@ class ShortCounterDef
     private static final long serialVersionUID = 1L;
 
     public ShortCounterDef(String name) {
-        super(name, Short.class, (short) 0, 5, 0);
-    }
-
-    public ShortCounterDef(String name, short initValue) {
-        super(name, Short.class, initValue, 5, 0);
+        super(name, Short.class, (short) 0, (short) 1);
     }
 
     @Override
@@ -323,11 +358,7 @@ class IntegerCounterDef
     private static final long serialVersionUID = 1L;
 
     public IntegerCounterDef(String name) {
-        super(name, Integer.class, 0, 10, 0);
-    }
-
-    public IntegerCounterDef(String name, int initValue) {
-        super(name, Integer.class, initValue, 10, 0);
+        super(name, Integer.class, 0, 1);
     }
 
     @Override
@@ -390,11 +421,7 @@ class LongCounterDef
     // unsigned: 18,446,744,073,709,551,616 (20 digits)
     // signed: 9,223,372,036,854,775,808 (19 digits)
     public LongCounterDef(String name) {
-        super(name, Long.class, 0L, 19, 0);
-    }
-
-    public LongCounterDef(String name, long initValue) {
-        super(name, Long.class, initValue, 19, 0);
+        super(name, Long.class, 0L, 1L);
     }
 
     @Override
@@ -454,12 +481,16 @@ class FloatCounterDef
 
     private static final long serialVersionUID = 1L;
 
+    static final float epsilon = Float.MIN_VALUE * 10;
+
     public FloatCounterDef(String name) {
-        super(name, Float.class, 0.0f, 10, 3);
+        super(name, Float.class, 0.0f, 1.0f);
     }
 
-    public FloatCounterDef(String name, float initValue) {
-        super(name, Float.class, initValue, 10, 3);
+    @Override
+    public boolean appxEquals(Float a, Float b) {
+        float diff = Math.abs(a - b);
+        return diff < epsilon;
     }
 
     @Override
@@ -519,12 +550,16 @@ class DoubleCounterDef
 
     private static final long serialVersionUID = 1L;
 
+    static final double epsilon = Double.MIN_VALUE * 10;
+
     public DoubleCounterDef(String name) {
-        super(name, Double.class, 0.0, 20, 6);
+        super(name, Double.class, 0.0, 1.0);
     }
 
-    public DoubleCounterDef(String name, double initValue) {
-        super(name, Double.class, initValue, 20, 6);
+    @Override
+    public boolean appxEquals(Double a, Double b) {
+        double diff = Math.abs(a - b);
+        return diff < epsilon;
     }
 
     @Override
@@ -585,11 +620,7 @@ class BigIntegerCounterDef
     private static final long serialVersionUID = 1L;
 
     public BigIntegerCounterDef(String name) {
-        super(name, BigInteger.class, BigInteger.ZERO, 0, 0);
-    }
-
-    public BigIntegerCounterDef(String name, BigInteger initValue) {
-        super(name, BigInteger.class, initValue, 0, 6);
+        super(name, BigInteger.class, BigInteger.ZERO, BigInteger.ONE);
     }
 
     @Override
@@ -654,12 +685,7 @@ class BigDecimalCounterDef
     private static final long serialVersionUID = 1L;
 
     public BigDecimalCounterDef(String name, MathContext mathContext) {
-        super(name, BigDecimal.class, BigDecimal.ZERO, mathContext.getPrecision(), 0);
-    }
-
-    public BigDecimalCounterDef(String name, BigDecimal initValue) {
-        super(name, BigDecimal.class, initValue, //
-                MathContext.UNLIMITED.getPrecision(), 0);
+        super(name, BigDecimal.class, BigDecimal.ZERO, BigDecimal.ONE);
     }
 
     @Override

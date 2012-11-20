@@ -57,6 +57,22 @@ public class StatFormatter {
         this.quoted = quoted;
     }
 
+    public boolean isRemoveZeroColumns() {
+        return removeZeroColumns;
+    }
+
+    public void setRemoveZeroColumns(boolean removeZeroColumns) {
+        this.removeZeroColumns = removeZeroColumns;
+    }
+
+    public boolean isConvertZeroToSpace() {
+        return convertZeroToSpace;
+    }
+
+    public void setConvertZeroToSpace(boolean convertZeroToSpace) {
+        this.convertZeroToSpace = convertZeroToSpace;
+    }
+
     public String format(StatNode root) {
         StatDump dump = new StatDump(root, this);
 
