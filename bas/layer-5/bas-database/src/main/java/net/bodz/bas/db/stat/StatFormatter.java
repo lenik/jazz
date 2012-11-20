@@ -14,6 +14,8 @@ public class StatFormatter {
     boolean showUnits = false;
     boolean showTreeLines = true;
     boolean quoted = false;
+    boolean removeZeroColumns = false;
+    boolean convertZeroToSpace = false;
 
     public StatDumpFormat getFormat() {
         return format;
@@ -56,7 +58,7 @@ public class StatFormatter {
     }
 
     public String format(StatNode root) {
-        StatDump dump = new StatDump(showTreeLines, root);
+        StatDump dump = new StatDump(root, this);
 
         int pathWidth;
         int[] fieldWidths;

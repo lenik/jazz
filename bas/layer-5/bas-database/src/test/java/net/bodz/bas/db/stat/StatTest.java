@@ -38,9 +38,9 @@ public class StatTest
         aux.resolveCounter("mod1/total", true).setValue(50L);
         aux.resolveCounter("mod2/total", true).setValue(150L);
 
-        ICounter<Object> total = root.resolveCounter("total");
-        ICounter<Object> mainTotal = root.resolveCounter("main/total");
-        ICounter<Object> auxTotal = root.resolveCounter("aux/total");
+        ICounter<Number> total = root.resolveCounter("total");
+        ICounter<Number> mainTotal = root.resolveCounter("main/total");
+        ICounter<Number> auxTotal = root.resolveCounter("aux/total");
 
         // System.out.println(total.getValue());
         assertEquals(300L, total.getValue());

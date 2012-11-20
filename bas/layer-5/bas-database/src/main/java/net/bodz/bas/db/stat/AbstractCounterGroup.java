@@ -22,7 +22,7 @@ public class AbstractCounterGroup
     }
 
     @Override
-    public <T> ICounter<T> getCounter(String name) {
+    public <T extends Number> ICounter<T> getCounter(String name) {
         ICounter<T> counter = (ICounter<T>) counterMap.get(name);
         return counter;
     }

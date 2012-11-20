@@ -9,7 +9,7 @@ import java.util.Map;
 import net.bodz.bas.i18n.dom1.AbstractElement;
 import net.bodz.bas.util.primitive.Primitives;
 
-public abstract class CounterDef<T>
+public abstract class CounterDef<T extends Number>
         extends AbstractElement
         implements ICounterDef<T> {
 
@@ -110,7 +110,7 @@ public abstract class CounterDef<T>
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> ICounterDef<T> getGenericDef(Class<T> valueType) {
+    public static <T extends Number> ICounterDef<T> getGenericDef(Class<T> valueType) {
         Class<?> unboxed = Primitives.unbox(valueType);
         Integer keyIndex = typeMap.get(unboxed);
 
@@ -147,7 +147,7 @@ public abstract class CounterDef<T>
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> ICounterDef<T> create(String name, Class<T> valueType) {
+    public static <T extends Number> ICounterDef<T> create(String name, Class<T> valueType) {
         Class<?> unboxed = Primitives.unbox(valueType);
         Integer keyIndex = typeMap.get(unboxed);
 

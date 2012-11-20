@@ -14,7 +14,7 @@ public enum SubCounterMode {
 
     ;
 
-    <T> ICounter<T> create(ICounter<T> _parent, String name, T initValue) {
+    <T extends Number> ICounter<T> create(ICounter<T> _parent, String name, T initValue) {
         if (_parent == null)
             throw new NullPointerException("parent");
 
