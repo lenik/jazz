@@ -36,7 +36,8 @@ public class StatTest
         main.resolveCounter("c/total", true).setValue(200L);
 
         aux.resolveCounter("mod1/total", true).setValue(50L);
-        aux.resolveCounter("mod2/total", true).setValue(150L);
+        aux.resolveCounter("mod2/total", true).setValue(0L);
+        aux.resolveCounter("mod3/total", true).setValue(150L);
 
         ICounter<Number> total = root.resolveCounter("total");
         ICounter<Number> mainTotal = root.resolveCounter("main/total");

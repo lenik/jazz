@@ -9,8 +9,6 @@ public interface ICounterDef<T extends Number>
 
     Class<T> getValueType();
 
-    T getInitValue();
-
     int getPrecision();
 
     int getScale();
@@ -20,6 +18,12 @@ public interface ICounterDef<T extends Number>
     SubCounterMode getSubCounterMode();
 
     ICounter<T> createCounter(String name);
+
+    boolean appxEquals(T a, T b);
+
+    T getZero();
+
+    T getOne();
 
     T add(T a, T b);
 
