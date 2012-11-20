@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.bodz.bas.i18n.dom1.IElement;
 
-public interface ICounterDef<T>
+public interface ICounterDef<T extends Number>
         extends IElement, Serializable {
 
     Class<T> getValueType();

@@ -9,17 +9,23 @@ import java.util.Map.Entry;
 
 public class StatDump {
 
-    boolean treeMode;
+    StatFormatter formatter;
+
     Map<String, ICounterDef<?>> usedCounterDefs = new LinkedHashMap<>();
     Map<String, Integer> counterIndex = new HashMap<>();
 
     int fieldCount;
     List<StatDumpLine> lines = new ArrayList<StatDumpLine>();
 
-    public StatDump(boolean treeMode, StatNode root) {
-        this.treeMode = treeMode;
+    public StatDump(StatNode root, StatFormatter formatter) {
+        this.formatter = formatter;
 
         scanUsedCounters(root);
+
+        for (String name : usedCounterDefs.keySet()) {
+            int nextIndex = counterIndex.size();
+            counterIndex.put(name, nextIndex);
+        }
         fieldCount = counterIndex.size();
 
         scan("", "", root);
@@ -36,9 +42,6 @@ public class StatDump {
 
             ICounterDef<?> def = counter.getDefinition();
             usedCounterDefs.put(name, def);
-
-            int nextIndex = counterIndex.size();
-            counterIndex.put(name, nextIndex);
         }
 
         for (StatNode child : node.getChildMap().values())
@@ -62,7 +65,7 @@ public class StatDump {
         StatDumpLine line = new StatDumpLine(prefix, nodeName, fields);
         lines.add(line);
 
-        if (treeMode) {
+        if (formatter.isShowTreeLines()) {
             List<Entry<String, StatNode>> entries = new ArrayList<>(node.getChildMap().entrySet());
             int entryCount = entries.size();
 

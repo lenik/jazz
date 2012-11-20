@@ -62,10 +62,11 @@ public class StatNode
             String counterName = counter.getName();
 
             ICounterDef<?> def = counter.getDefinition();
-            Object initValue = def.getInitValue();
+            Number initValue = def.getInitValue();
             SubCounterMode mode = modeOverride != null ? modeOverride : def.getSubCounterMode();
 
-            @SuppressWarnings("unchecked") ICounter<Object> _counter = (ICounter<Object>) counter;
+            @SuppressWarnings("unchecked")//
+            ICounter<Number> _counter = (ICounter<Number>) counter;
 
             ICounter<?> subCounter = mode.create(_counter, counterName, initValue);
 
@@ -76,15 +77,15 @@ public class StatNode
         return childNode;
     }
 
-    public <T> ICounter<T> resolveCounter(String path) {
+    public <T extends Number> ICounter<T> resolveCounter(String path) {
         return resolveCounter(path, false, null);
     }
 
-    public <T> ICounter<T> resolveCounter(String path, boolean autoCreate) {
+    public <T extends Number> ICounter<T> resolveCounter(String path, boolean autoCreate) {
         return resolveCounter(path, autoCreate, null);
     }
 
-    public <T> ICounter<T> resolveCounter(String path, boolean autoCreate, SubCounterMode modeOverride) {
+    public <T extends Number> ICounter<T> resolveCounter(String path, boolean autoCreate, SubCounterMode modeOverride) {
         if (path == null)
             throw new NullPointerException("path");
 

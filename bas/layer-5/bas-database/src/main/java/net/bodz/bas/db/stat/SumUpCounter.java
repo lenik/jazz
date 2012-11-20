@@ -1,6 +1,6 @@
 package net.bodz.bas.db.stat;
 
-public class SumUpCounter<T>
+public class SumUpCounter<T extends Number>
         implements ICounter<T> {
 
     private static final long serialVersionUID = 1L;

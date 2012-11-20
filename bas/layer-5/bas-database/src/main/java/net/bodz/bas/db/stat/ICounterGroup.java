@@ -6,6 +6,6 @@ public interface ICounterGroup {
 
     Collection<ICounter<?>> getCounters();
 
-    <T> ICounter<T> getCounter(String name);
+    <T extends Number> ICounter<T> getCounter(String name);
 
 }
