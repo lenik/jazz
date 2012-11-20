@@ -37,4 +37,26 @@ public interface ICounterDef<T extends Number>
 
     T divide(T a, double k);
 
+    /**
+     * Get the min number.
+     * 
+     * @param a
+     *            Non-<code>null</code> number.
+     * @param a
+     *            Non-<code>null</code> number.
+     * @return The maximum number.
+     */
+    T min(T a, T b);
+
+    /**
+     * Get the max number.
+     * 
+     * @param a
+     *            Non-<code>null</code> number.
+     * @param a
+     *            Non-<code>null</code> number.
+     * @return The maximum number.
+     */
+    T max(T a, T b);
+
 }
