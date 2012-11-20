@@ -54,36 +54,44 @@ public class StatNode
         return children.get(name);
     }
 
-    public synchronized StatNode getOrDeriveChild(String name) {
-        StatNode childNode = children.get(name);
-        if (childNode == null) {
-            childNode = new StatNode(this, name);
+    public synchronized StatNode createChild(String name, SubCounterMode modeOverride) {
+        StatNode childNode = new StatNode(this, name);
 
-            // initialize sub counters.
-            for (ICounter<?> counter : getCounters()) {
-                ICounterDef<?> def = counter.getDefinition();
-                String counterName = counter.getName();
-                ICounter<?> subCounter = def.createSubCounter(counter, counterName);
-                childNode.putCounter(counterName, subCounter);
-            }
+        // initialize sub counters.
+        for (ICounter<?> counter : getCounters()) {
+            String counterName = counter.getName();
 
-            children.put(name, childNode);
+            ICounterDef<?> def = counter.getDefinition();
+            Object initValue = def.getInitValue();
+            SubCounterMode mode = modeOverride != null ? modeOverride : def.getSubCounterMode();
+
+            @SuppressWarnings("unchecked") ICounter<Object> _counter = (ICounter<Object>) counter;
+
+            ICounter<?> subCounter = mode.create(_counter, counterName, initValue);
+
+            childNode.putCounter(counterName, subCounter);
         }
+
+        children.put(name, childNode);
         return childNode;
     }
 
     public <T> ICounter<T> resolveCounter(String path) {
-        return resolveCounter(path, false);
+        return resolveCounter(path, false, null);
     }
 
-    public <T> ICounter<T> resolveCounter(String path, boolean autoDerive) {
+    public <T> ICounter<T> resolveCounter(String path, boolean autoCreate) {
+        return resolveCounter(path, autoCreate, null);
+    }
+
+    public <T> ICounter<T> resolveCounter(String path, boolean autoCreate, SubCounterMode modeOverride) {
         if (path == null)
             throw new NullPointerException("path");
 
         String[] entries = StringArray.splitRaw(path, '/');
         String lastEntry = entries[entries.length - 1];
 
-        StatNode node = resolve(entries, 0, entries.length - 1, autoDerive);
+        StatNode node = resolve(entries, 0, entries.length - 1, autoCreate, modeOverride);
         if (node == null)
             return null;
 
@@ -91,17 +99,21 @@ public class StatNode
         return counter;
     }
 
-    StatNode resolve(String[] entries, int off, int len, boolean autoDerive) {
+    StatNode resolve(String[] entries, int off, int len, boolean autoCreate, SubCounterMode modeOverride) {
         StatNode node = this;
+
         for (int i = off; i < len; i++) {
             String entry = entries[i];
-            if (autoDerive)
-                node = node.getOrDeriveChild(entry);
-            else {
-                node = node.getChild(entry);
-                if (node == null)
-                    break;
-            }
+
+            StatNode childNode = node.getChild(entry);
+
+            if (childNode == null)
+                if (autoCreate)
+                    childNode = node.createChild(entry, modeOverride);
+                else
+                    return null;
+
+            node = childNode;
         }
         return node;
     }

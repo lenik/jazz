@@ -21,8 +21,6 @@ public interface ICounterDef<T>
 
     ICounter<T> createCounter(String name);
 
-    ICounter<T> createSubCounter(ICounter<?> parent, String name);
-
     T add(T a, T b);
 
     T sub(T a, T b);

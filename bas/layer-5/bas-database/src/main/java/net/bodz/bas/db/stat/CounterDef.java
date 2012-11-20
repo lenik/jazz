@@ -6,7 +6,6 @@ import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.i18n.dom1.AbstractElement;
 import net.bodz.bas.util.primitive.Primitives;
 
@@ -76,30 +75,6 @@ public abstract class CounterDef<T>
     @Override
     public ICounter<T> createCounter(String name) {
         return new Counter<T>(this, name, initValue);
-    }
-
-    @Override
-    public ICounter<T> createSubCounter(ICounter<?> _parent, String name) {
-        if (_parent == null)
-            throw new NullPointerException("parent");
-
-        @SuppressWarnings("unchecked")//
-        ICounter<T> parent = (ICounter<T>) _parent;
-
-        switch (subCounterMode) {
-        case init:
-            return new Counter<T>(this, name, initValue);
-
-        case setUp:
-            return new SetUpCounter<T>(parent, initValue);
-
-        case sumUp:
-            return new SumUpCounter<T>(parent, initValue);
-
-        case averageUp:
-        default:
-            throw new NotImplementedException();
-        }
     }
 
     public static final ByteCounterDef GENERIC_BYTE = new ByteCounterDef("generic");
