@@ -8,6 +8,8 @@ public class VariableDescriptor
         extends SimplePotatoElement
         implements IRefDescriptor {
 
+    private static final long serialVersionUID = 1L;
+
     Class<?> valueType;
     IType potatoType;
 

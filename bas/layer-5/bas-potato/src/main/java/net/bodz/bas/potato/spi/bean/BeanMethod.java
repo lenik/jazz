@@ -34,8 +34,8 @@ public class BeanMethod
     }
 
     @Override
-    public int getPreferenceLevel() {
-        return FeatureDescriptorUtil.getFeaturePreferenceLevel(methodDescriptor);
+    public int getUserLevel() {
+        return FeatureDescriptorUtil.getFeatureUserLevel(methodDescriptor);
     }
 
     // IPotatoParameter[] getParameters() {

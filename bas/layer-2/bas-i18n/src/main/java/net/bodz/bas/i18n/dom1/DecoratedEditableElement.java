@@ -33,6 +33,26 @@ public class DecoratedEditableElement
     }
 
     @Override
+    public void setUserLevel(int userLevel) {
+        getWrapped().setUserLevel(userLevel);
+    }
+
+    @Override
+    public void setModifiers(int modifiers) {
+        getWrapped().setModifiers(modifiers);
+    }
+
+    @Override
+    public int getUserLevel() {
+        return getWrapped().getUserLevel();
+    }
+
+    @Override
+    public int getModifiers() {
+        return getWrapped().getModifiers();
+    }
+
+    @Override
     public void addTag(String tag) {
         getWrapped().addTag(tag);
     }

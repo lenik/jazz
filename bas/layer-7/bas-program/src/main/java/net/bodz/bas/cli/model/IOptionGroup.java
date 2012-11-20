@@ -7,10 +7,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.cli.skel.CLISyntaxException;
-import net.bodz.bas.i18n.dom1.IEditableElement;
+import net.bodz.bas.i18n.dom1.IElement;
 
 public interface IOptionGroup
-        extends IEditableElement {
+        extends IElement {
 
     /**
      * Get the parent option group.

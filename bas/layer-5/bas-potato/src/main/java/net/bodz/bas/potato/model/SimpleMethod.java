@@ -4,6 +4,8 @@ public abstract class SimpleMethod
         extends SimplePotatoElement
         implements IMethod {
 
+    private static final long serialVersionUID = 1L;
+
     Class<?> returnType;
     Class<?>[] parameterTypes;
 

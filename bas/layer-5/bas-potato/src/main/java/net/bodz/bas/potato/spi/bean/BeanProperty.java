@@ -44,8 +44,8 @@ public class BeanProperty
     }
 
     @Override
-    public int getPreferenceLevel() {
-        return FeatureDescriptorUtil.getFeaturePreferenceLevel(propertyDescriptor);
+    public int getUserLevel() {
+        return FeatureDescriptorUtil.getFeatureUserLevel(propertyDescriptor);
     }
 
     @Override

@@ -6,7 +6,7 @@ import net.bodz.bas.potato.model.IPotatoElement;
 
 public class FeatureDescriptorUtil {
 
-    public static int getFeaturePreferenceLevel(FeatureDescriptor feature) {
+    public static int getFeatureUserLevel(FeatureDescriptor feature) {
         int pref = 1; // normal
         if (feature.isPreferred())
             pref--;
@@ -41,7 +41,7 @@ public class FeatureDescriptorUtil {
         featureDescriptor.setDisplayName(potatoElement.getDisplayName().toString());
         featureDescriptor.setShortDescription(potatoElement.getDescription().toString());
 
-        int pref = potatoElement.getPreferenceLevel();
+        int pref = potatoElement.getUserLevel();
         applyPreferenceLevelToFeature(featureDescriptor, pref);
     }
 

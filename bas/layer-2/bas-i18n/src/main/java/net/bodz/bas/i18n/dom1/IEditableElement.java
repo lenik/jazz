@@ -1,9 +1,11 @@
 package net.bodz.bas.i18n.dom1;
 
+import java.io.Serializable;
+
 import net.bodz.bas.i18n.dom.DomainString;
 
 public interface IEditableElement
-        extends IElement {
+        extends IElement, Serializable {
 
     void setDisplayName(DomainString displayName);
 
@@ -11,9 +13,9 @@ public interface IEditableElement
 
     void setHelpDoc(DomainString helpDoc);
 
-    // void setPreferenceLevel(int preferenceLevel);
+    void setUserLevel(int userLevel);
 
-    // void setModifiers(int modifiers);
+    void setModifiers(int modifiers);
 
     void addTag(String tag);
 
