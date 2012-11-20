@@ -241,6 +241,15 @@ class ByteCounterDef
         return (byte) Math.round(a / k);
     }
 
+    @Override
+    public Byte min(Byte a, Byte b) {
+        return a <= b ? a : b;
+    }
+
+    @Override
+    public Byte max(Byte a, Byte b) {
+        return a >= b ? a : b;
+    }
 }
 
 class ShortCounterDef
@@ -296,6 +305,16 @@ class ShortCounterDef
         return (short) Math.round(a / k);
     }
 
+    @Override
+    public Short min(Short a, Short b) {
+        return a <= b ? a : b;
+    }
+
+    @Override
+    public Short max(Short a, Short b) {
+        return a >= b ? a : b;
+    }
+
 }
 
 class IntegerCounterDef
@@ -349,6 +368,16 @@ class IntegerCounterDef
     @Override
     public Integer divide(Integer a, double k) {
         return (int) Math.round(a / k);
+    }
+
+    @Override
+    public Integer min(Integer a, Integer b) {
+        return a <= b ? a : b;
+    }
+
+    @Override
+    public Integer max(Integer a, Integer b) {
+        return a >= b ? a : b;
     }
 
 }
@@ -408,6 +437,16 @@ class LongCounterDef
         return (long) Math.round(a / k);
     }
 
+    @Override
+    public Long min(Long a, Long b) {
+        return a <= b ? a : b;
+    }
+
+    @Override
+    public Long max(Long a, Long b) {
+        return a >= b ? a : b;
+    }
+
 }
 
 class FloatCounterDef
@@ -463,6 +502,16 @@ class FloatCounterDef
         return (float) (a / k);
     }
 
+    @Override
+    public Float min(Float a, Float b) {
+        return a <= b ? a : b;
+    }
+
+    @Override
+    public Float max(Float a, Float b) {
+        return a >= b ? a : b;
+    }
+
 }
 
 class DoubleCounterDef
@@ -516,6 +565,16 @@ class DoubleCounterDef
     @Override
     public Double divide(Double a, double k) {
         return (double) (a / k);
+    }
+
+    @Override
+    public Double min(Double a, Double b) {
+        return a <= b ? a : b;
+    }
+
+    @Override
+    public Double max(Double a, Double b) {
+        return a >= b ? a : b;
     }
 
 }
@@ -577,6 +636,16 @@ class BigIntegerCounterDef
         return result.toBigInteger();
     }
 
+    @Override
+    public BigInteger min(BigInteger a, BigInteger b) {
+        return a.compareTo(b) <= 0 ? a : b;
+    }
+
+    @Override
+    public BigInteger max(BigInteger a, BigInteger b) {
+        return a.compareTo(b) >= 0 ? a : b;
+    }
+
 }
 
 class BigDecimalCounterDef
@@ -631,6 +700,16 @@ class BigDecimalCounterDef
     @Override
     public BigDecimal divide(BigDecimal a, double k) {
         return a.divide(BigDecimal.valueOf(k));
+    }
+
+    @Override
+    public BigDecimal min(BigDecimal a, BigDecimal b) {
+        return a.compareTo(b) <= 0 ? a : b;
+    }
+
+    @Override
+    public BigDecimal max(BigDecimal a, BigDecimal b) {
+        return a.compareTo(b) >= 0 ? a : b;
     }
 
 }
