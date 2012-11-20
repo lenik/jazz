@@ -1,43 +1,27 @@
-package net.bodz.bas.potato.model;
+package net.bodz.bas.i18n.dom1;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.XDomainString;
-import net.bodz.bas.i18n.dom1.IEditableElement;
 
-public class SimplePotatoElement
-        extends SimpleAnnotatedElement
-        implements IPotatoElement, IEditableElement {
+public class SimpleElement
+        extends AbstractElement
+        implements IEditableElement {
 
     private static final long serialVersionUID = 1L;
 
-    Class<?> declaringClass;
     String name;
-    DomainString displayName = new XDomainString();
-    DomainString description = new XDomainString();
-    DomainString helpDoc = new XDomainString();
+    DomainString displayName;
+    DomainString description;
+    DomainString helpDoc;
     int userLevel;
     int modifiers;
-    Set<String> tags = new HashSet<String>();
-
-    @Override
-    public Class<?> getDeclaringClass() {
-        return declaringClass;
-    }
-
-    public void setDeclaringClass(Class<?> declaringClass) {
-        this.declaringClass = declaringClass;
-    }
+    Set<String> tags;
 
     @Override
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
@@ -91,18 +75,25 @@ public class SimplePotatoElement
     }
 
     @Override
-    public Set<String> getTags() {
+    public synchronized Set<String> getTags() {
+        if (tags == null)
+            tags = new HashSet<String>();
         return tags;
     }
 
     @Override
     public void addTag(String tag) {
-        tags.add(tag);
+        if (tag == null)
+            throw new NullPointerException("tag");
+        getTags().add(tag);
     }
 
     @Override
     public void removeTag(String tag) {
-        tags.remove(tag);
+        if (tag == null)
+            throw new NullPointerException("tag");
+        if (tags != null)
+            tags.remove(tag);
     }
 
 }

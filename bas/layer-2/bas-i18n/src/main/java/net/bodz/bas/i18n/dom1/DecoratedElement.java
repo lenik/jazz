@@ -36,8 +36,8 @@ public class DecoratedElement
     }
 
     @Override
-    public int getPreferenceLevel() {
-        return getWrapped().getPreferenceLevel();
+    public int getUserLevel() {
+        return getWrapped().getUserLevel();
     }
 
     @Override

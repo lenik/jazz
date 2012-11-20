@@ -8,16 +8,34 @@ import net.bodz.mda.xjdoc.conv.ClassDocs;
 public abstract class ArtifactElement
         extends AbstractElement {
 
-    ArtifactDoc artifactDoc;
+    transient ArtifactDoc artifactDoc;
+
+    transient DomainString displayName;
+    transient DomainString description;
+    transient DomainString helpDoc;
 
     public ArtifactElement() {
         artifactDoc = ClassDocs.loadFromResource(getClass()).as(ArtifactDoc.class);
 
-        // String description = artifactDoc.getTextHeader();
         DomainString header = DomainStrings.getTextHeader(artifactDoc.getText());
         DomainString body = DomainStrings.getTextBody(artifactDoc.getText());
-        setDescription(header);
-        setHelpDoc(body);
+        description = header;
+        helpDoc = body;
+    }
+
+    @Override
+    public DomainString getDisplayName() {
+        return artifactDoc.getLabel();
+    }
+
+    @Override
+    public DomainString getDescription() {
+        return description;
+    }
+
+    @Override
+    public DomainString getHelpDoc() {
+        return helpDoc;
     }
 
 }

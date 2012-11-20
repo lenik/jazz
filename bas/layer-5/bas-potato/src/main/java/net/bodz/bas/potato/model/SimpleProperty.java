@@ -6,6 +6,8 @@ public abstract class SimpleProperty
         extends SimplePotatoElement
         implements IProperty {
 
+    private static final long serialVersionUID = 1L;
+
     Class<?> propertyType;
     boolean readable;
     boolean writable;

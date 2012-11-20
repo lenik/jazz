@@ -31,16 +31,16 @@ public interface IElement {
     DomainString getHelpDoc();
 
     /**
-     * The preference level controls whether this element is displayed. When user specifies a
-     * display preference, then only elements with preference level smaller then the the display
-     * preference is displayed. For negative preference levels, they are hidden by default and only
-     * shown if show-hidden is enabled.
+     * The user level controls whether this element is displayed. When user specifies a display user
+     * level, then only elements with user level smaller then the the display user level is
+     * displayed. For negative user levels, they are hidden by default and only shown if show-hidden
+     * is enabled.
      * <p>
      * Preference level compared to Java Beans' {@link java.beans.PropertyDescriptor}:
      * <table>
      * <tr>
      * <th>Java Bean</th>
-     * <th>Preference Level</th>
+     * <th>User Level</th>
      * </tr>
      * <tr>
      * <td> {@link java.beans.FeatureDescriptor#isHidden()}</td>
@@ -60,7 +60,7 @@ public interface IElement {
      * </tr>
      * </table>
      */
-    int getPreferenceLevel();
+    int getUserLevel();
 
     /**
      * @see java.lang.reflect.Modifier

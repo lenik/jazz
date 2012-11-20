@@ -3,12 +3,13 @@ package net.bodz.bas.potato.model;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
-import net.bodz.bas.i18n.dom1.AbstractElement;
+import net.bodz.mda.xjdoc.model1.ArtifactElement;
 
 public abstract class AbstractPotatoElement
-        extends AbstractElement
+        extends ArtifactElement
         implements IPotatoElement {
 
+    private String name;
     private final Class<?> declaringClass;
 
     /**
@@ -18,8 +19,13 @@ public abstract class AbstractPotatoElement
      *            May be <code>null</code>.
      */
     public AbstractPotatoElement(Class<?> declaringType, String name) {
-        super(name);
+        this.name = name;
         this.declaringClass = declaringType;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
