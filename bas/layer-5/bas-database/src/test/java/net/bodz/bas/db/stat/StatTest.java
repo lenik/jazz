@@ -24,4 +24,32 @@ public class StatTest
         assertEquals(4L, (long) fooTotal.getValue());
     }
 
+    @Test
+    public void overlappedBranches() {
+        TestCounterSpec spec = new TestCounterSpec();
+        StatNode root = new StatNode(spec);
+
+        StatNode main = root.createChild("main", SubCounterMode.setUp);
+        StatNode aux = root.createChild("aux", SubCounterMode.init);
+
+        main.resolveCounter("java/total", true).setValue(100L);
+        main.resolveCounter("c/total", true).setValue(200L);
+
+        aux.resolveCounter("mod1/total", true).setValue(50L);
+        aux.resolveCounter("mod2/total", true).setValue(150L);
+
+        ICounter<Object> total = root.resolveCounter("total");
+        ICounter<Object> mainTotal = root.resolveCounter("main/total");
+        ICounter<Object> auxTotal = root.resolveCounter("aux/total");
+
+        // System.out.println(total.getValue());
+        assertEquals(300L, total.getValue());
+
+        // System.out.println(mainTotal.getValue());
+        assertEquals(300L, mainTotal.getValue());
+
+        // System.out.println(auxTotal.getValue());
+        assertEquals(200L, auxTotal.getValue());
+    }
+
 }
