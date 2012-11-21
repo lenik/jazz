@@ -4,7 +4,7 @@ import net.bodz.jna.win32.User32.POINT;
 import net.bodz.jna.win32.User32.POINTByValue;
 import net.bodz.jna.win32.W32API.HWND;
 
-public class User32Util
+public class User32Utils
         implements IWin32 {
 
     public static HWND GetWindowAt(HWND parent, POINTByValue point) {

@@ -12,6 +12,16 @@ import com.sun.jna.win32.W32APITypeMapper;
 
 public class Win32Config {
 
+    static final boolean win32;
+    static {
+        String osName = System.getProperty("os.name");
+        win32 = (osName.startsWith("Windows"));
+    }
+
+    public static boolean isWin32() {
+        return win32;
+    }
+
     static final boolean ascii;
     static final Charset unicodeCharset;
     static final Map<String, Object> _options;

@@ -7,15 +7,15 @@ public class StackTraceTest
         extends Assert {
 
     @Test
-    public void test1()
+    public void getCurrentThread()
             throws Exception {
-        StackTrace.dump(System.err);
+        StackTrace.get();
     }
 
     @Test
-    public void test2()
+    public void getAnotherThread()
             throws Exception {
-        StackTrace.dump(Thread.currentThread(), System.err);
+        StackTrace.get(Thread.currentThread());
     }
 
 }
