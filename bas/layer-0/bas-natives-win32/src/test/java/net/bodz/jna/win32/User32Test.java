@@ -1,6 +1,8 @@
 package net.bodz.jna.win32;
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 import net.bodz.jna.win32.GDI32.RECT;
@@ -13,6 +15,11 @@ import com.sun.jna.Pointer;
 public class User32Test
         extends Assert
         implements IWin32 {
+
+    @Before
+    public void checkWin32() {
+        Assume.assumeTrue(Win32Config.isWin32());
+    }
 
     @Test
     public void testGetCursorPos()
