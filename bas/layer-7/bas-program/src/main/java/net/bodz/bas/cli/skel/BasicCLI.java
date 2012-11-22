@@ -142,7 +142,7 @@ public abstract class BasicCLI
             throw new RuntimeException(e.getMessage(), e);
         }
         ReleaseDescription release = artifactDoc.getReleaseDescription();
-        out.printf("[%s] %s\n", artifactDoc.getLabel(), artifactDoc.getTextHeader());
+        out.printf("[%s] %s\n", artifactDoc.getLabel(), artifactDoc.getText().getHeadPar());
         out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
                 artifactDoc.getAuthor(), //
                 artifactDoc.getVersion(), //

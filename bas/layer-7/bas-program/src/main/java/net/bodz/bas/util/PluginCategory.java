@@ -40,7 +40,7 @@ public class PluginCategory {
     }
 
     public String getDescription() {
-        return categoryDoc.getTextHeader();
+        return categoryDoc.getText().getHeadPar();
     }
 
     public Map<String, PluginTypeEx> getRegistry() {

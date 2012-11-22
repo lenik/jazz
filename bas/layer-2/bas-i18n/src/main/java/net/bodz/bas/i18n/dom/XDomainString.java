@@ -3,6 +3,7 @@ package net.bodz.bas.i18n.dom;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.StringHtml;
+import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.i18n.LocaleColo;
 
 public class XDomainString
@@ -29,14 +30,88 @@ public class XDomainString
         super(other);
     }
 
-    @Override
-    public XDomainString clone() {
-        return new XDomainString(this);
+    public static XDomainString of(String plainString) {
+        return new XDomainString(plainString);
     }
 
     @Override
     protected XDomainString createNode(String domain, String value) {
         return new XDomainString(domain, value);
+    }
+
+    @Override
+    public XDomainString clone() {
+        return new XDomainString(this);
+    }
+
+    /**
+     * Get locale string.
+     */
+    @Override
+    public String toString() {
+        String path = LocaleColo.getInstance().getPath();
+        String leaf = get(path);
+        return leaf;
+    }
+
+    @Override
+    public String toPlainText() {
+        String str = toString();
+        return StringHtml.toPlain(str);
+    }
+
+    /**
+     * @see ParaLangUtil#parseParaLang(DomainString, String)
+     */
+    public static XDomainString parseParaLang(String plText) {
+        XDomainString ds = new XDomainString();
+        ParaLangUtil.parseParaLang(ds, plText);
+        return ds;
+    }
+
+    @Override
+    public String toParaLangString() {
+        return toParaLangString("\n");
+    }
+
+    @Override
+    public String toParaLangString(String separator) {
+        return ParaLangUtil.formatParaLangString(this, separator);
+    }
+
+    /**
+     * A multi-lang string is formatted as:
+     * 
+     * <pre>
+     * "default-locale"
+     * LOCALE1 "string for locale1"
+     *         "more..."
+     * LOCALE2 "string for locale2"
+     *         "more..."
+     * </pre>
+     * 
+     * @param mlstr
+     *            multi-lang string to be parsed.
+     * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
+     */
+    public static XDomainString parseMultiLang(String mlstr) {
+        if (mlstr == null)
+            return null;
+        MultiLangStringParser parser = new MultiLangStringParser();
+        return parser.parse(mlstr);
+    }
+
+    @Override
+    public String toMultiLangString() {
+        return toMultiLangString("\n", null);
+    }
+
+    @Override
+    public String toMultiLangString(String langSeparator, String lineSeparator) {
+        MultiLangStringFormatter formatter = new MultiLangStringFormatter();
+        formatter.setDomainSeparator(langSeparator);
+        formatter.setLineSeparator(lineSeparator);
+        return formatter.format(this);
     }
 
     @Override
@@ -99,78 +174,26 @@ public class XDomainString
         }
     }
 
-    /**
-     * Get locale string.
-     */
     @Override
-    public String toString() {
-        String path = LocaleColo.getInstance().getPath();
-        String leaf = get(path);
-        return leaf;
+    public DomainString headPar() {
+        return DomainStrings.headPar(this);
     }
 
     @Override
-    public String toPlainText() {
+    public DomainString tailPar() {
+        return DomainStrings.tailPar(this);
+    }
+
+    @Override
+    public String getHeadPar() {
         String str = toString();
-        return StringHtml.toPlain(str);
+        return StringPart.getHeadPar(str);
     }
 
     @Override
-    public String toParaLangString() {
-        return toParaLangString("\n");
-    }
-
-    @Override
-    public String toParaLangString(String separator) {
-        return ParaLangUtil.formatParaLangString(this, separator);
-    }
-
-    @Override
-    public String toMultiLangString() {
-        return toMultiLangString("\n", null);
-    }
-
-    @Override
-    public String toMultiLangString(String langSeparator, String lineSeparator) {
-        MultiLangStringFormatter formatter = new MultiLangStringFormatter();
-        formatter.setDomainSeparator(langSeparator);
-        formatter.setLineSeparator(lineSeparator);
-        return formatter.format(this);
-    }
-
-    /**
-     * @see ParaLangUtil#parseParaLang(DomainString, String)
-     */
-    public static XDomainString parseParaLang(String plText) {
-        XDomainString ds = new XDomainString();
-        ParaLangUtil.parseParaLang(ds, plText);
-        return ds;
-    }
-
-    /**
-     * A multi-lang string is formatted as:
-     * 
-     * <pre>
-     * "default-locale"
-     * LOCALE1 "string for locale1"
-     *         "more..."
-     * LOCALE2 "string for locale2"
-     *         "more..."
-     * </pre>
-     * 
-     * @param mlstr
-     *            multi-lang string to be parsed.
-     * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
-     */
-    public static XDomainString parseMultiLang(String mlstr) {
-        if (mlstr == null)
-            return null;
-        MultiLangStringParser parser = new MultiLangStringParser();
-        return parser.parse(mlstr);
-    }
-
-    public static XDomainString of(String plainString) {
-        return new XDomainString(plainString);
+    public String getTailPar() {
+        String str = toString();
+        return StringPart.getTailPar(str);
     }
 
 }

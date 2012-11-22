@@ -41,7 +41,7 @@ public abstract class AbstractPage
     @Override
     public String getPageTitle() {
         Class<?> clazz = getClass();
-        String header = classDoc.getTextHeader().toString();
+        String header = classDoc.getText().getHeadPar();
         if (!Nullables.isEmpty(header))
             return header;
         else

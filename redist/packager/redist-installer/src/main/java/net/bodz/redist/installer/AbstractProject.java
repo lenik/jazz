@@ -58,7 +58,7 @@ public class AbstractProject
 
         setName(clazz.getName());
         setText(artifactDoc.getLabel().toString());
-        setDoc(artifactDoc.getTextHeader());
+        setDoc(artifactDoc.getText().getHeadPar());
         URL iconURL = artifactDoc.getIcon();
         if (iconURL != null) {
             ImageData icon = SWTResources.getImageData(iconURL);

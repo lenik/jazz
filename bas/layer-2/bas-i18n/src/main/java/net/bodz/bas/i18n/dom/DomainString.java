@@ -20,12 +20,24 @@ public interface DomainString
 
     String toMultiLangString(String langSeparator, String lineSeparator);
 
+    String dumpContent();
+
     DomainString append(DomainString other);
 
     DomainString concat(DomainString other);
 
+    /**
+     * For domain strings A(default1,en1) and B(default3,et4), the result of join will be
+     * C(default13,en13,et14).
+     */
     DomainString join(DomainString other);
 
-    String dumpContent();
+    DomainString headPar();
+
+    DomainString tailPar();
+
+    String getHeadPar();
+
+    String getTailPar();
 
 }
