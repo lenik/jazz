@@ -2,10 +2,15 @@ package net.bodz.mda.xjdoc.model1;
 
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom1.AbstractElement;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
 
-public abstract class ArtifactElement
-        extends AbstractElement {
+/**
+ * An artifact is a "product"-like component, with well created documents.
+ * 
+ * The default implementation get the documents from some "reflective" sources.
+ */
+public abstract class AbstractArtifactElement
+        extends AbstractElement
+        implements IArtifactElement {
 
     transient ArtifactDoc _artifactDoc;
 
@@ -13,13 +18,14 @@ public abstract class ArtifactElement
     transient DomainString description;
     transient DomainString helpDoc;
 
-    public ArtifactElement() {
+    public AbstractArtifactElement() {
     }
 
-    public synchronized ArtifactDoc getArtifactDoc() {
-        if (_artifactDoc == null)
-            _artifactDoc = ClassDocs.loadFromResource(getClass()).as(ArtifactDoc.class);
-        return _artifactDoc;
+    public abstract ArtifactDoc getArtifactDoc();
+
+    @Override
+    public String getName() {
+        return getArtifactDoc().getName();
     }
 
     @Override
@@ -27,6 +33,9 @@ public abstract class ArtifactElement
         return getArtifactDoc().getLabel();
     }
 
+    /**
+     * The default description is the header line of the text.
+     */
     @Override
     public synchronized DomainString getDescription() {
         if (description == null) {
@@ -36,6 +45,9 @@ public abstract class ArtifactElement
         return description;
     }
 
+    /**
+     * The default helpDoc is from the text without the header line.
+     */
     @Override
     public synchronized DomainString getHelpDoc() {
         if (helpDoc == null) {

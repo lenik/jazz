@@ -2,7 +2,7 @@ package net.bodz.bas.cli.xjdoc;
 
 import java.util.StringTokenizer;
 
-import net.bodz.bas.cli.model.AbstractOption;
+import net.bodz.bas.cli.model.TransientOption;
 import net.bodz.bas.err.ParseException;
 
 /**
@@ -17,7 +17,7 @@ import net.bodz.bas.err.ParseException;
  */
 public class OptionDescriptor {
 
-    public static void apply(AbstractOption option, String descriptor)
+    public static void apply(TransientOption option, String descriptor)
             throws ParseException {
         StringTokenizer tokens = new StringTokenizer(descriptor, " ");
 

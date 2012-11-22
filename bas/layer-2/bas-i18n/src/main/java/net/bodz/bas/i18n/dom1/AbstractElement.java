@@ -3,6 +3,7 @@ package net.bodz.bas.i18n.dom1;
 import java.util.Collections;
 import java.util.Set;
 
+import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.i18n.dom.DomainString;
 
 public abstract class AbstractElement
@@ -10,7 +11,8 @@ public abstract class AbstractElement
 
     @Override
     public String getName() {
-        return getClass().getSimpleName();
+        String id = ObjectInfo.getSimpleId(this);
+        return id;
     }
 
     @Override

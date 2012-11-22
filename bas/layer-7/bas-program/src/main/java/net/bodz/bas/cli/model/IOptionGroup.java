@@ -76,19 +76,6 @@ public interface IOptionGroup
     Entry<String, IOption> checkForConflict(IOption option);
 
     /**
-     * Add an option.
-     */
-    void addOption(IOption option)
-            throws ConflictedOptionKeyException;
-
-    /**
-     * Remove an option.
-     * 
-     * @return Removed occurrences from internal map.
-     */
-    int removeOption(IOption option);
-
-    /**
      * Get syntax usage map.
      * 
      * @return Non-<code>null</code> usage map: id => {@link SyntaxUsage}.
@@ -109,11 +96,6 @@ public interface IOptionGroup
      * @return The syntax usage with specified id.
      */
     SyntaxUsage getUsage(String usageId);
-
-    void addUsage(SyntaxUsage usage)
-            throws ConflictedUsageIdException;
-
-    void removeUsage(SyntaxUsage usage);
 
     List<String> parse(OptionGroupParseFlags flags, Object context, String... args)
             throws CLISyntaxException;

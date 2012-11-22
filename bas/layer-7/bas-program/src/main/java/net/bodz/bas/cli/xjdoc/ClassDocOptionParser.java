@@ -145,7 +145,7 @@ public class ClassDocOptionParser {
         this.includeProperties = includeProperties;
     }
 
-    public IOptionGroup parseTree(Class<?> clazz)
+    public IEditableOptionGroup parseTree(Class<?> clazz)
             throws ParseException {
         return parseTree(clazz, null);
     }
@@ -153,7 +153,7 @@ public class ClassDocOptionParser {
     /**
      * Scan options from a class.
      */
-    public IOptionGroup parseTree(Class<?> clazz, IOptionGroup parent)
+    public IEditableOptionGroup parseTree(Class<?> clazz, IEditableOptionGroup parent)
             throws ParseException {
 
         if (includeInterfaces) {
@@ -171,14 +171,14 @@ public class ClassDocOptionParser {
             }
         }
 
-        IOptionGroup group = parse(clazz, parent);
+        IEditableOptionGroup group = parse(clazz, parent);
         return group;
     }
 
     /**
      * parent = parent.parent...parent
      */
-    IOptionGroup compact(IOptionGroup group) {
+    IEditableOptionGroup compact(IEditableOptionGroup group) {
         if (inheritance == OptionGroupInheritance.reduceEmptyParents)
             // parent = parent.parent...parent
             while (group.getLocalOptionMap().isEmpty()) {
@@ -189,7 +189,7 @@ public class ClassDocOptionParser {
         return group;
     }
 
-    public IOptionGroup parse(Class<?> clazz, IOptionGroup parent)
+    public IEditableOptionGroup parse(Class<?> clazz, IEditableOptionGroup parent)
             throws ParseException {
         ClassDoc classDoc;
         try {
@@ -200,17 +200,17 @@ public class ClassDocOptionParser {
         return parse(clazz, classDoc, parent);
     }
 
-    IOptionGroup parse(Class<?> clazz, ClassDoc classDoc, IOptionGroup parent)
+    IEditableOptionGroup parse(Class<?> clazz, ClassDoc classDoc, IEditableOptionGroup parent)
             throws ParseException {
         if (clazz == null)
             throw new NullPointerException("clazz");
 
-        IOptionGroup group = null;
+        IEditableOptionGroup group = null;
         if (inheritance == OptionGroupInheritance.flatten)
             group = parent;
 
         if (group == null)
-            group = new DefaultOptionGroup(parent, clazz);
+            group = new TransientOptionGroup(parent, clazz);
 
         // In flatten-mode: override parent's name/description/docs.
         DomainString _name = (DomainString) classDoc.getTag("name");
@@ -299,7 +299,7 @@ public class ClassDocOptionParser {
         return true;
     }
 
-    boolean parseOptionDoc(AbstractOption option, JavaElementDoc doc)
+    boolean parseOptionDoc(TransientOption option, JavaElementDoc doc)
             throws ParseException {
         if (doc == null)
             return annotatedOnly ? false : true;
@@ -314,6 +314,7 @@ public class ClassDocOptionParser {
         if (name != null)
             option.setDisplayName(name);
 
+        // option.setArtifactDoc(doc);
         DomainString header = doc.getText().headPar();
         DomainString body = doc.getText().tailPar();
         option.setDescription(header);

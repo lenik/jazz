@@ -11,14 +11,19 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.Negotiation;
 import net.bodz.bas.meta.decl.ItemType;
-import net.bodz.bas.potato.model.AbstractPotatoElement;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
+import net.bodz.mda.xjdoc.model1.TransientArtifactElement;
 
-public abstract class AbstractOption
-        extends AbstractPotatoElement
+public abstract class TransientOption
+        extends TransientArtifactElement
         implements IOption {
+
+    private static final long serialVersionUID = 1L;
+
+    Class<?> declaringType;
+    String name;
 
     int priority;
     IOptionGroup group;
@@ -37,8 +42,9 @@ public abstract class AbstractOption
 
     Object defaultValue;
 
-    public AbstractOption(Class<?> declaringType, String name, AnnotatedElement member, Class<?> type) {
-        super(declaringType, Strings.hyphenatize(name));
+    public TransientOption(Class<?> declaringType, String name, AnnotatedElement member, Class<?> type) {
+        this.declaringType = declaringType;
+        this.name = Strings.hyphenatize(name);
 
         if (type == null)
             throw new NullPointerException("type");
