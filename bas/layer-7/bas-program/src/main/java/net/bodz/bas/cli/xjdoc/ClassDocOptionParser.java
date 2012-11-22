@@ -16,8 +16,8 @@ import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
+import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 
 public class ClassDocOptionParser {
@@ -216,8 +216,8 @@ public class ClassDocOptionParser {
         DomainString _name = (DomainString) classDoc.getTag("name");
         if (_name != null)
             group.setDisplayName(_name);
-        DomainString _header = classDoc.getTextHeader();
-        DomainString _body = classDoc.getTextBody();
+        DomainString _header = classDoc.getText().headPar();
+        DomainString _body = classDoc.getText().tailPar();
         group.setDescription(_header);
         group.setHelpDoc(_body);
 
@@ -314,8 +314,8 @@ public class ClassDocOptionParser {
         if (name != null)
             option.setDisplayName(name);
 
-        DomainString header = doc.getTextHeader();
-        DomainString body = doc.getTextBody();
+        DomainString header = doc.getText().headPar();
+        DomainString body = doc.getText().tailPar();
         option.setDescription(header);
         option.setHelpDoc(body);
 

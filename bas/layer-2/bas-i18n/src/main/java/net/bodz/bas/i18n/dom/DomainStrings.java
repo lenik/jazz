@@ -30,8 +30,8 @@ public class DomainStrings {
         return result;
     }
 
-    public static DomainString getTextHeader(DomainString text) {
-        DomainString header = new XDomainString();
+    public static DomainString headPar(DomainString text) {
+        DomainString par = new XDomainString();
         for (Entry<String, String> entry : text.entrySet()) {
             String domain = entry.getKey();
             String _text = entry.getValue();
@@ -43,13 +43,13 @@ public class DomainStrings {
             else
                 _header = _text.substring(0, parbreak);
 
-            header.put(domain, _header.trim());
+            par.put(domain, _header.trim());
         }
-        return header;
+        return par;
     }
 
-    public static DomainString getTextBody(DomainString text) {
-        DomainString body = new XDomainString();
+    public static DomainString tailPar(DomainString text) {
+        DomainString par = new XDomainString();
         for (Entry<String, String> entry : text.entrySet()) {
             String domain = entry.getKey();
             String _text = entry.getValue();
@@ -61,9 +61,9 @@ public class DomainStrings {
             else
                 _body = _text.substring(parbreak + 1);
 
-            body.put(domain, _body.trim());
+            par.put(domain, _body.trim());
         }
-        return body;
+        return par;
     }
 
     static int indexOfParbreak(String s) {

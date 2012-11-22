@@ -43,7 +43,7 @@ public class PluginTypeEx {
     }
 
     public String getDescription() {
-        return artifactDoc.getTextBody();
+        return artifactDoc.getText().getHeadPar();
     }
 
     public String getVersion() {

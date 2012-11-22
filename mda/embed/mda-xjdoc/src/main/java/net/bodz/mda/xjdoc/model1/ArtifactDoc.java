@@ -34,24 +34,6 @@ public class ArtifactDoc
         return label;
     }
 
-    public String getTextHeader() {
-        String header = getText().toString();
-        header = header.trim();
-        int newline = header.indexOf('\n');
-        if (newline != -1)
-            header = header.substring(0, newline).trim();
-        return header;
-    }
-
-    public String getTextBody() {
-        String body = getText().toString();
-        body = body.trim();
-        int newline = body.indexOf('\n');
-        if (newline != -1)
-            body = body.substring(newline + 1).trim();
-        return body;
-    }
-
     public ReleaseDescription getReleaseDescription() {
         ReleaseDescription release = new ReleaseDescription();
 

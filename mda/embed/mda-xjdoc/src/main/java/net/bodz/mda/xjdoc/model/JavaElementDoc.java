@@ -1,6 +1,5 @@
 package net.bodz.mda.xjdoc.model;
 
-import java.beans.Transient;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,7 +8,6 @@ import java.util.Map.Entry;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.DomainStrings;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -53,16 +51,6 @@ public class JavaElementDoc
     @Override
     public void setText(DomainString text) {
         this.text = text;
-    }
-
-    @Transient
-    public DomainString getTextHeader() {
-        return DomainStrings.getTextHeader(text);
-    }
-
-    @Transient
-    public DomainString getTextBody() {
-        return DomainStrings.getTextBody(text);
     }
 
     @Override

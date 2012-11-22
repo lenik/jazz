@@ -237,4 +237,20 @@ public class StringPart {
         return s.substring(pos + 1);
     }
 
+    public static String getHeadPar(String str) {
+        String par = str.trim();
+        int newline = par.indexOf('\n');
+        if (newline != -1)
+            par = par.substring(0, newline).trim();
+        return par;
+    }
+
+    public static String getTailPar(String str) {
+        String par = str.trim();
+        int newline = par.indexOf('\n');
+        if (newline != -1)
+            par = par.substring(newline + 1).trim();
+        return par;
+    }
+
 }
