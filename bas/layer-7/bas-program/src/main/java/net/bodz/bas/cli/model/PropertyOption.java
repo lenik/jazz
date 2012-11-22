@@ -6,7 +6,9 @@ import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.spi.bean.BeanProperty;
 
 public class PropertyOption
-        extends AbstractOption {
+        extends TransientOption {
+
+    private static final long serialVersionUID = 1L;
 
     Class<?> beanClass;
     PropertyDescriptor propertyDescriptor;

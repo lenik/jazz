@@ -9,10 +9,10 @@ import net.bodz.bas.cli.model.OptionGroupFactory;
 import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.mda.xjdoc.model1.ArtifactElement;
+import net.bodz.mda.xjdoc.model1.ArtifactObject;
 
 public class AbstractCLIPlugin
-        extends ArtifactElement
+        extends ArtifactObject
         implements ICLIPlugin {
 
     protected IOptionGroup getOptions() {

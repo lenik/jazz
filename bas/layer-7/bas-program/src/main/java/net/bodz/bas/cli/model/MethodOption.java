@@ -6,7 +6,9 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.potato.model.IProperty;
 
 public class MethodOption
-        extends AbstractOption {
+        extends TransientOption {
+
+    private static final long serialVersionUID = 1L;
 
     final Method method;
 

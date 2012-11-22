@@ -6,18 +6,31 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.util.Pair;
+import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
-public class DefaultOptionGroup
-        extends AbstractOptionGroup {
+public class TransientOptionGroup
+        extends AbstractOptionGroup
+        implements IEditableOptionGroup {
 
-    final IOptionGroup parent;
+    private static final long serialVersionUID = 1L;
+
+    Class<?> declaringClass;
+    String name;
+
+    final IEditableOptionGroup parent;
     final Map<String, IOption> nameMap = new TreeMap<String, IOption>();
     final PrefixMap<IOption> prefixMap = new PrefixMap<IOption>();
     final Map<String, SyntaxUsage> usageMap = new LinkedHashMap<String, SyntaxUsage>();
 
-    public DefaultOptionGroup(IOptionGroup parent, Class<?> declaringClass) {
-        super(declaringClass, Strings.hyphenatize(declaringClass.getSimpleName()));
+    public TransientOptionGroup(IEditableOptionGroup parent, Class<?> declaringClass) {
+        this.declaringClass = declaringClass;
+        this.name = Strings.hyphenatize(declaringClass.getSimpleName());
         this.parent = parent;
+    }
+
+    @Override
+    public ArtifactDoc getArtifactDoc() {
+        return null;
     }
 
     @Override
@@ -26,7 +39,7 @@ public class DefaultOptionGroup
     }
 
     @Override
-    public IOptionGroup getParent() {
+    public IEditableOptionGroup getParent() {
         return parent;
     }
 

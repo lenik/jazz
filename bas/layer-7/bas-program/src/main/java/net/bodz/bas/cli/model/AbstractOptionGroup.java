@@ -1,5 +1,6 @@
 package net.bodz.bas.cli.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -10,16 +11,18 @@ import java.util.Set;
 import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.potato.model.AbstractPotatoElement;
 import net.bodz.bas.potato.model.IProperty;
+import net.bodz.mda.xjdoc.model1.TransientArtifactElement;
 
+/**
+ * Though {@link AbstractOptionGroup} is-a {@link Serializable}, the serialization on this object
+ * (of any subclass) won't work because of the underlying transient fields.
+ */
 public abstract class AbstractOptionGroup
-        extends AbstractPotatoElement
+        extends TransientArtifactElement
         implements IOptionGroup {
 
-    public AbstractOptionGroup(Class<?> declaringType, String name) {
-        super(declaringType, name);
-    }
+    private static final long serialVersionUID = 1L;
 
     /**
      * Get the explicitly declared local option.

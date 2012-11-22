@@ -20,7 +20,9 @@ public class ClassLocals {
      * @see ClassLocal#ClassLocal(IMapEntryLoader)
      */
     public static <T> ClassLocal<T> createMap(IMapEntryLoader<Class<?>, T> entryLoader) {
-        return createMap(entryLoader.getClass().getCanonicalName(), entryLoader);
+        // Canonical name maybe null, so here we use normal name.
+        String className = entryLoader.getClass().getName();
+        return createMap(className, entryLoader);
     }
 
     /**
@@ -41,7 +43,9 @@ public class ClassLocals {
      * @see ClassLocal#ClassLocal(Class)
      */
     public static <T> ClassLocal<T> createMap(Class<?> metadataClass) {
-        return createMap(metadataClass.getCanonicalName(), metadataClass);
+        // Canonical name of the metadata class maybe null.
+        String className = metadataClass.getName();
+        return createMap(className, metadataClass);
     }
 
     /**
@@ -72,8 +76,12 @@ public class ClassLocals {
      * @see ClassLocal#ClassLocal(Method)
      */
     public static <T> ClassLocal<T> createMap(Method parserMethod) {
+        // Canonical name maybe null.
+        String className = parserMethod.getDeclaringClass().getName();
+
         String signature = new MethodSignature(parserMethod).toString();
-        String id = parserMethod.getDeclaringClass().getCanonicalName() + "." + signature;
+        String id = className + "." + signature;
+
         return createMap(id, parserMethod);
     }
 

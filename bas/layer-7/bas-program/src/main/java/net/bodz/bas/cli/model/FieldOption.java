@@ -6,7 +6,9 @@ import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.spi.reflect.ReflectProperty;
 
 public class FieldOption
-        extends AbstractOption {
+        extends TransientOption {
+
+    private static final long serialVersionUID = 1L;
 
     Field field;
 
