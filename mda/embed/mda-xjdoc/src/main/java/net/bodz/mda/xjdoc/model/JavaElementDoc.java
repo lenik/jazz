@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -139,6 +140,12 @@ public class JavaElementDoc
         @Override
         public void attribute(String name, String string)
                 throws ParseException {
+            if (".".equals(name)) {
+                DomainString text = XDomainString.parseParaLang(string);
+                setText(text);
+                return;
+            }
+
             String tagName, suffix;
             int dot = name.indexOf('.');
             if (dot == -1) {

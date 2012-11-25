@@ -20,7 +20,7 @@ import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 
-public class ClassDocOptionParser {
+public class ClassDocToOptions {
 
     boolean annotatedOnly = true;
 
@@ -145,20 +145,20 @@ public class ClassDocOptionParser {
         this.includeProperties = includeProperties;
     }
 
-    public IEditableOptionGroup parseTree(Class<?> clazz)
+    public IEditableOptionGroup convertTree(Class<?> clazz)
             throws ParseException {
-        return parseTree(clazz, null);
+        return convertTree(clazz, null);
     }
 
     /**
      * Scan options from a class.
      */
-    public IEditableOptionGroup parseTree(Class<?> clazz, IEditableOptionGroup parent)
+    public IEditableOptionGroup convertTree(Class<?> clazz, IEditableOptionGroup parent)
             throws ParseException {
 
         if (includeInterfaces) {
             for (Class<?> iface : clazz.getInterfaces()) {
-                parent = parse(iface, parent);
+                parent = convert(iface, parent);
                 parent = compact(parent);
             }
         }
@@ -166,12 +166,12 @@ public class ClassDocOptionParser {
         if (includeSuperclass) {
             Class<?> superclass = clazz.getSuperclass();
             if (superclass != null) {
-                parent = parse(superclass, parent);
+                parent = convert(superclass, parent);
                 parent = compact(parent);
             }
         }
 
-        IEditableOptionGroup group = parse(clazz, parent);
+        IEditableOptionGroup group = convert(clazz, parent);
         return group;
     }
 
@@ -189,21 +189,24 @@ public class ClassDocOptionParser {
         return group;
     }
 
-    public IEditableOptionGroup parse(Class<?> clazz, IEditableOptionGroup parent)
+    public IEditableOptionGroup convert(Class<?> clazz, IEditableOptionGroup parent)
             throws ParseException {
         ClassDoc classDoc;
         try {
-            classDoc = ClassDocs.loadFromResource(clazz);
+            classDoc = ClassDocs.loadFromResource(clazz, true);
+
         } catch (ClassDocLoadException e) {
             throw new ParseException(e.getMessage(), e);
         }
-        return parse(clazz, classDoc, parent);
+        return convert(clazz, classDoc, parent);
     }
 
-    IEditableOptionGroup parse(Class<?> clazz, ClassDoc classDoc, IEditableOptionGroup parent)
+    IEditableOptionGroup convert(Class<?> clazz, ClassDoc classDoc, IEditableOptionGroup parent)
             throws ParseException {
         if (clazz == null)
             throw new NullPointerException("clazz");
+        if (classDoc == null)
+            throw new NullPointerException("classDoc");
 
         IEditableOptionGroup group = null;
         if (inheritance == OptionGroupInheritance.flatten)
@@ -216,6 +219,11 @@ public class ClassDocOptionParser {
         DomainString _name = (DomainString) classDoc.getTag("name");
         if (_name != null)
             group.setDisplayName(_name);
+
+        DomainString t = classDoc.getText();
+        if (t == null)
+            throw new NullPointerException("t");
+
         DomainString _header = classDoc.getText().headPar();
         DomainString _body = classDoc.getText().tailPar();
         group.setDescription(_header);
@@ -223,8 +231,9 @@ public class ClassDocOptionParser {
 
         // Import syntax usages into group.
         Map<String, SyntaxUsage> usageMap = (Map<String, SyntaxUsage>) classDoc.getTag("usage");
-        for (SyntaxUsage usage : usageMap.values())
-            group.addUsage(usage);
+        if (usageMap != null)
+            for (SyntaxUsage usage : usageMap.values())
+                group.addUsage(usage);
 
         if (includeFields) {
             Field[] fields = clazz.getDeclaredFields();
@@ -238,7 +247,7 @@ public class ClassDocOptionParser {
                 FieldOption option = new FieldOption(field);
                 FieldDoc fieldDoc = classDoc.getFieldDoc(field.getName());
 
-                if (parseOptionDoc(option, fieldDoc))
+                if (convertElement(option, fieldDoc))
                     group.addOption(option);
             }
         }
@@ -255,7 +264,7 @@ public class ClassDocOptionParser {
                 MethodOption option = new MethodOption(method);
                 MethodDoc methodDoc = classDoc.getMethodDoc(method);
 
-                if (parseOptionDoc(option, methodDoc))
+                if (convertElement(option, methodDoc))
                     group.addOption(option);
             }
         }
@@ -278,7 +287,7 @@ public class ClassDocOptionParser {
                 PropertyOption option = new PropertyOption(property);
                 MethodDoc getterDoc = classDoc.getMethodDoc(getter);
 
-                if (parseOptionDoc(option, getterDoc))
+                if (convertElement(option, getterDoc))
                     group.addOption(option);
             }
         }
@@ -299,16 +308,20 @@ public class ClassDocOptionParser {
         return true;
     }
 
-    boolean parseOptionDoc(TransientOption option, JavaElementDoc doc)
+    /**
+     * @return <code>false</code> if nothing done.
+     */
+    boolean convertElement(TransientOption option, JavaElementDoc doc)
             throws ParseException {
         if (doc == null)
             return annotatedOnly ? false : true;
 
         String descriptor = (String) doc.getTag("option");
-        if (descriptor != null)
-            OptionDescriptor.apply(option, descriptor);
-        else if (annotatedOnly)
-            return false;
+        if (descriptor == null)
+            if (annotatedOnly)
+                return false;
+
+        OptionDescriptor.apply(option, descriptor);
 
         DomainString name = (DomainString) doc.getTag("name");
         if (name != null)

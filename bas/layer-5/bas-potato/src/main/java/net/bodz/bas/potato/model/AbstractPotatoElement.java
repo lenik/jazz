@@ -3,6 +3,7 @@ package net.bodz.bas.potato.model;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
@@ -27,7 +28,7 @@ public abstract class AbstractPotatoElement
     @Override
     public ArtifactDoc getArtifactDoc() {
         // TODO ClassDocs.loadFromResource(getClass()).as(ArtifactDoc.class);
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override

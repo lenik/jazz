@@ -1,6 +1,5 @@
 package net.bodz.bas.trait.spi.extra;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.trait.spi.AbstractTraitsProvider;
 
@@ -12,10 +11,13 @@ public class ExtraTraitsProvider
         return PRIORITY_NORMAL;
     }
 
+    /**
+     * TODO Not implemented.
+     */
     @Override
     public <T> T getTrait(Class<?> objType, Class<T> traitsType)
             throws QueryException {
-        throw new NotImplementedException();
+        return null;
     }
 
 }

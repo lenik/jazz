@@ -3,7 +3,7 @@ package net.bodz.bas.cli.model;
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
-import net.bodz.bas.cli.xjdoc.ClassDocOptionParser;
+import net.bodz.bas.cli.xjdoc.ClassDocToOptions;
 import net.bodz.bas.cli.xjdoc.OptionGroupInheritance;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
@@ -15,7 +15,7 @@ public class OptionGroupFactory {
     static {
         clOptions = ClassLocals.createMap(new IMapEntryLoader<Class<?>, IOptionGroup>() {
 
-            ClassDocOptionParser parser = new ClassDocOptionParser();
+            ClassDocToOptions parser = new ClassDocToOptions();
             {
                 parser.setInheritance(OptionGroupInheritance.reflective);
             }
@@ -25,7 +25,7 @@ public class OptionGroupFactory {
                     throws LazyLoadException {
                 IOptionGroup options;
                 try {
-                    options = parser.parseTree(clazz);
+                    options = parser.convertTree(clazz);
                 } catch (ParseException e) {
                     throw new LazyLoadException(e.getMessage(), e);
                 }

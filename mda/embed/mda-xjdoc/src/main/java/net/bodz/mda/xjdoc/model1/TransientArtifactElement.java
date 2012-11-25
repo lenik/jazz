@@ -31,6 +31,8 @@ public class TransientArtifactElement
 
     @Override
     public ArtifactDoc getArtifactDoc() {
+        if (artifactDoc == null)
+            throw new IllegalStateException("artifactDoc hasn't been initialized.");
         return artifactDoc;
     }
 

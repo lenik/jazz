@@ -186,7 +186,7 @@ public abstract class BatchCLI
 
     protected FileHandler beginFile(String fileName) {
         IFile cwd = VFSColos.workdir.get();
-        IFile file = cwd.getChild(fileName);
+        IFile file = cwd.resolve(fileName);
         FileHandler handler = new FileHandler(fileName, file);
         handler.setTmpPrefix(getClass().getSimpleName());
         return handler;
@@ -202,10 +202,12 @@ public abstract class BatchCLI
     protected void mainImpl(String... args)
             throws Exception {
         for (String arg : expandWildcards(args)) {
-            IFile filearg = VFS.resolve(arg);
-            for (IFile file : scanFiles(filearg)) {
-                file.getPath().getRelativePathTo(filearg.getPath());
-                FileHandler handler = beginFile(file);
+            IFile argFile = VFS.resolve(arg);
+            for (IFile foundFile : scanFiles(argFile)) {
+                IPath foundRelativePath = foundFile.getPath().getRelativePathTo(argFile.getPath());
+                String argname = arg + "/" + foundRelativePath.toString();
+
+                FileHandler handler = beginFile(argname);
                 try {
                     processImpl(handler);
                 } catch (Exception exception) {

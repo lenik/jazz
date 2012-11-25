@@ -55,6 +55,13 @@ public abstract class TransientOption
             valueType = _componentType.value();
         else if (type.isArray())
             valueType = type.getComponentType();
+        else
+            valueType = type;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -170,6 +177,8 @@ public abstract class TransientOption
 
         Class<?> valueType = getValueType();
         IParser<?> parser = Traits.getTrait(valueType, IParser.class);
+        if (parser == null)
+            throw new ParseException("Don't know how to parse " + valueType);
 
         ListNegotiation negotiation = Negotiation.list(//
                 Negotiation.parameter(IParser.PARSE_CONTEXT, context));

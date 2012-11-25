@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.preorder.PrefixMap;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.util.Pair;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
@@ -30,7 +31,7 @@ public class TransientOptionGroup
 
     @Override
     public ArtifactDoc getArtifactDoc() {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
