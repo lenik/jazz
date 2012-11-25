@@ -28,6 +28,7 @@ layer-3/ 工具和杂项
     bas-memory
     bas-snmjava
     bas-c3
+    bas-m2
 
 layer-5/ 框架基础
     bas-bean
@@ -43,7 +44,6 @@ layer-5/ 框架基础
     
 layer-7/ 应用框架
     bas-ant
-    bas-m2
     bas-netserv
     bas-program
     bas-unitperf
