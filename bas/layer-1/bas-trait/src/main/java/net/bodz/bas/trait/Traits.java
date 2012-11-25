@@ -54,6 +54,9 @@ public class Traits {
      */
     public static <T> T getTrait(Class<?> objType, Class<T> traitType)
             throws QueryException {
+        if (objType == null)
+            throw new NullPointerException("objType");
+
         List<ITraitsProvider> nonDefinedTraitsProviders = null;
         int index = 0;
         for (ITraitsProvider provider : traitsProviders) {

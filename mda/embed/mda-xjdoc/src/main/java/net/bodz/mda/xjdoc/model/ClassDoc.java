@@ -5,11 +5,13 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfOutput;
+import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
@@ -17,10 +19,9 @@ public class ClassDoc
         extends JavaElementDoc
         implements IClassDoc {
 
-    Map<String, FieldDoc> fieldDocs;
-    Map<MethodId, MethodDoc> methodDocs;
-
-    ImportMap imports;
+    private ImportMap imports;
+    private Map<String, FieldDoc> fieldDocs;
+    private Map<MethodId, MethodDoc> methodDocs;
 
     public ClassDoc(String fqcn) {
         super(fqcn);
@@ -166,6 +167,51 @@ public class ClassDoc
         out.getCharOut().write(bodyBuffer.toString());
 
         // out.sectionEnd();
+    }
+
+    @Override
+    public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation) {
+        if (sectionName == null)
+            return super.getSectionHandler(sectionName, negotiation);
+
+        if (sectionName.startsWith("field:")) {
+            String fieldName = sectionName.substring(6);
+            FieldDoc fieldDoc = getFieldDoc(fieldName);
+            if (fieldDoc == null) {
+                fieldDoc = new FieldDoc(this, fieldName);
+                setFieldDoc(fieldName, fieldDoc);
+            }
+            return fieldDoc.getSectionHandler(null, negotiation);
+        }
+
+        if (sectionName.startsWith("method:")) {
+            String _id = sectionName.substring(7);
+
+            String methodName = StringPart.before(_id, "(");
+            String types = StringPart.beforeLast(StringPart.after(_id, "("), ")");
+            String typev[] = types.split(",");
+
+            MethodId methodId = new MethodId(methodName, typev.length);
+            for (int i = 0; i < typev.length; i++) {
+                String type = typev[i];
+                int dims = 0;
+                while (type.endsWith("[]")) {
+                    type = type.substring(0, type.length() - 2);
+                    dims++;
+                }
+                String fqcn = imports.normalize(type);
+                methodId.setParameterType(i, fqcn, dims);
+            }
+
+            MethodDoc methodDoc = getMethodDoc(methodId);
+            if (methodDoc == null) {
+                methodDoc = new MethodDoc(this, methodId);
+                setMethodDoc(methodId, methodDoc);
+            }
+            return methodDoc.getSectionHandler(null, negotiation);
+        }
+
+        throw new IllegalArgumentException("Illegal section name: " + sectionName);
     }
 
     @Override

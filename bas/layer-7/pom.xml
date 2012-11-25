@@ -19,5 +19,39 @@
         <module>bas-vcs</module>
         <module>maven-bas-plugin</module>
     </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.bodz.mda</groupId>
+                <artifactId>mda-xjdoc-maven-plugin</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>main-ff</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+                            <outputDirectory>${basedir}/target/classes</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-ff</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <testClasses>true</testClasses>
+                            <sourceDirectory>${basedir}/src/test/java</sourceDirectory>
+                            <outputDirectory>${basedir}/target/test-classes</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <name>BAS :: Layer 7</name>
 </project>

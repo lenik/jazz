@@ -18,6 +18,8 @@ public class AnnotationTraitsProvider
 
     @Override
     public <T> T getTrait(Class<?> objType, Class<T> traitType) {
+        if (objType == null)
+            throw new NullPointerException("objType");
         TraitClass traitClassAnnotation = objType.getAnnotation(TraitClass.class);
         if (traitClassAnnotation == null)
             return null;

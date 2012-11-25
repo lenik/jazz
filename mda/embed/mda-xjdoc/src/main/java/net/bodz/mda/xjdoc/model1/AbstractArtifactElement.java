@@ -21,6 +21,9 @@ public abstract class AbstractArtifactElement
     public AbstractArtifactElement() {
     }
 
+    /**
+     * @return Non-<code>null</code> {@link ArtifactDoc}.
+     */
     public abstract ArtifactDoc getArtifactDoc();
 
     @Override
