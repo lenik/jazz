@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-ant</module>
-        <module>bas-m2</module>
         <module>bas-netserv</module>
         <module>bas-program</module>
         <module>bas-unitperf</module>

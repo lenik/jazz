@@ -14,6 +14,7 @@
     <modules>
         <module>bas-c3</module>
         <module>bas-log</module>
+        <module>bas-m2</module>
         <module>bas-memory</module>
         <module>bas-node</module>
         <module>bas-snmjava</module>
