@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import net.bodz.bas.trait.Traits;
 
-public class TraitsProviderTest
+public class TraitsProviderLoaderTest
         extends Assert {
 
     static Set<Class<?>> providerClasses;
@@ -32,8 +32,8 @@ public class TraitsProviderTest
     }
 
     @Test
-    public void testLoadProvider_BasFriend() {
-        assertTrue(providerClasses.contains(BasFriendTraitsProvider.class));
+    public void testLoadProvider_BasCFriend() {
+        assertTrue(providerClasses.contains(BasCompanionTraitsProvider.class));
     }
 
     @Test
