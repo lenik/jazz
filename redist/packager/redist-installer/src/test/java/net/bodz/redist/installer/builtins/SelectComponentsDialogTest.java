@@ -24,7 +24,7 @@ public class SelectComponentsDialogTest {
             System.out.println("Canceled");
         else
             for (IComponent c : selection) {
-                System.out.printf("Selected: %s - %s\n", c.getId(), c.getText());
+                System.out.printf("Selected: %s - %s\n", c.getId(), c.getDescription());
             }
     }
 

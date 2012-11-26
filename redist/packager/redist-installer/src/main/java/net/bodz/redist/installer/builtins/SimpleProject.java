@@ -61,8 +61,8 @@ public class SimpleProject
 
     public static final String BASE_PROGRAMS = "BASE_PROGRAMS";
 
-    public SimpleProject(Class<?> clazz) {
-        super(clazz);
+    public SimpleProject(Class<?> artifactClass) {
+        super(artifactClass);
 
         add(new DisplayLogo());
         add(new LicenseAgreement());

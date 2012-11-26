@@ -7,6 +7,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.IComponent;
@@ -33,9 +34,9 @@ public class LogoPage
     @Override
     public String getPageTitle() {
         IProject project = session.getProject();
-        String text = project.getText();
+        DomainString name = project.getDisplayName();
         IVersion version = project.getVersion();
-        return tr._("Welcome to install ") + text + " " + version;
+        return tr._("Welcome to install ") + name + " " + version;
     }
 
     @Override

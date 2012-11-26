@@ -6,9 +6,10 @@ import java.util.Set;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.collection.tree.TreeNode;
+import net.bodz.bas.i18n.dom1.IElement;
 
 public interface IComponent
-        extends TreeNode<IComponent> {
+        extends IElement, TreeNode<IComponent> {
 
     /**
      * id must be unique in the component tree.
@@ -24,12 +25,6 @@ public interface IComponent
     void setId(String id);
 
     ImageData getImage();
-
-    String getName();
-
-    String getText();
-
-    String getDoc();
 
     /**
      * Change the selection state of feature component will cause refresh all the sibling nodes.

@@ -26,6 +26,7 @@ import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.gui.err.QuietValidationException;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.IProject;
@@ -40,9 +41,6 @@ import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.ServiceContext;
 
-/**
- * @test CustomPageTest
- */
 public class CustomPage
         extends ConfigPage {
 
@@ -104,10 +102,9 @@ public class CustomPage
                     if (items != null && items.length != 0) {
                         TreeItem item = items[0];
                         IComponent c = (IComponent) item.getData();
-                        String doc = c.getDoc();
-                        if (doc == null)
-                            doc = c.getName();
-                        descriptionLabel.setText(doc);
+                        DomainString text = c.getDescription();
+                        if (text != null)
+                            descriptionLabel.setText(text.toString());
                     }
                 }
             }
@@ -234,8 +231,9 @@ public class CustomPage
         item.setData(component);
         component.setViewData(item);
 
-        String text = component.getText();
-        item.setText(text);
+        DomainString text = component.getDescription();
+        if (text != null)
+            item.setText(text.toString());
 
         ImageData image = component.getImage();
         if (image != null) {

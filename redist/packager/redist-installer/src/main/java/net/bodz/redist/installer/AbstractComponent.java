@@ -10,9 +10,11 @@ import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 public abstract class AbstractComponent
+        extends AbstractArtifactElement
         implements IComponent, II18nCapable {
 
     private String id;
@@ -20,9 +22,6 @@ public abstract class AbstractComponent
     private Object registryData;
 
     private ImageData image;
-    private String name;
-    private String text;
-    private String doc;
 
     private boolean enabled = true;
     private boolean visible;
@@ -35,16 +34,15 @@ public abstract class AbstractComponent
     private Set<IComponent> dependancy;
 
     public AbstractComponent(boolean visible, boolean defaultSelection) {
-        Class<?> clazz = getClass();
-        ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
-
-        name = clazz.getSimpleName();
-        text = artifactDoc.getLabel().toString();
-        doc = artifactDoc.getText().toString();
-        if (doc == null)
-            doc = text;
         this.visible = visible;
         this.selection = defaultSelection;
+    }
+
+    @Override
+    public ArtifactDoc getArtifactDoc() {
+        Class<?> clazz = getClass();
+        ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
+        return artifactDoc;
     }
 
     public String getId() {
@@ -61,30 +59,6 @@ public abstract class AbstractComponent
 
     protected void setImage(ImageData image) {
         this.image = image;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    protected void setName(String name) {
-        this.name = name;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    protected void setText(String text) {
-        this.text = text;
-    }
-
-    public String getDoc() {
-        return doc;
-    }
-
-    protected void setDoc(String doc) {
-        this.doc = doc;
     }
 
     @Override
