@@ -5,6 +5,7 @@ import java.util.*;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.trait.spi.ITraitsProvider;
 import net.bodz.bas.trait.util.TraitProviderComparator;
+import net.bodz.bas.util.primitive.Primitives;
 
 public class Traits {
 
@@ -56,6 +57,10 @@ public class Traits {
             throws QueryException {
         if (objType == null)
             throw new NullPointerException("objType");
+        if (traitType == null)
+            throw new NullPointerException("traitType");
+
+        objType = Primitives.box(objType);
 
         List<ITraitsProvider> nonDefinedTraitsProviders = null;
         int index = 0;
@@ -106,6 +111,13 @@ public class Traits {
      */
     public static <T> T getTrait(Class<?> objType, Object obj, Class<T> traitType)
             throws QueryException {
+        if (objType == null)
+            throw new NullPointerException("objType");
+        if (traitType == null)
+            throw new NullPointerException("traitType");
+
+        objType = Primitives.box(objType);
+
         for (ITraitsProvider traitProvider : traitsProviders) {
             T trait = traitProvider.getTrait(objType, obj, traitType);
             if (trait != null)
