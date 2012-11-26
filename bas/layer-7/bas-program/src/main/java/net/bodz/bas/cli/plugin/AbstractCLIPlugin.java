@@ -33,10 +33,10 @@ public class AbstractCLIPlugin
     @Override
     public void initialize() {
         super.initialize();
-        IOptionGroup opts = getOptions();
+        IOptionGroup pptionGroup = getOptions();
         Map<?, ?> properties = System.getProperties();
         try {
-            opts.load(this, (Map<String, ?>) properties);
+            pptionGroup.load(this, (Map<String, ?>) properties);
         } catch (CLISyntaxException e) {
             throw new Error(e.getMessage(), e);
         } catch (ParseException e) {

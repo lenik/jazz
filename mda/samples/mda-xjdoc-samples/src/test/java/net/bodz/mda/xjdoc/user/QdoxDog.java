@@ -1,6 +1,7 @@
 package net.bodz.mda.xjdoc.user;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
 
 import java.io.File;
 
