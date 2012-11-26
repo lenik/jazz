@@ -181,7 +181,7 @@ public abstract class TransientOption
             throw new ParseException("Don't know how to parse " + valueType);
 
         ListNegotiation negotiation = Negotiation.list(//
-                Negotiation.parameter(IParser.PARSE_CONTEXT, context));
+                Negotiation.option(IParser.PARSE_CONTEXT, context));
 
         Object value = parser.parse(param1, negotiation);
         return value;
