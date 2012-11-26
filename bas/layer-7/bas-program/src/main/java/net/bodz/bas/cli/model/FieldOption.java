@@ -14,6 +14,7 @@ public class FieldOption
 
     public FieldOption(Field field) {
         super(field.getDeclaringClass(), field.getName(), field, field.getType());
+        this.field = field;
     }
 
     @Override

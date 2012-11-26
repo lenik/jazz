@@ -50,9 +50,9 @@ public abstract class TransientOption
             throw new NullPointerException("type");
         this.type = type;
 
-        ItemType _componentType = member.getAnnotation(ItemType.class);
-        if (_componentType != null)
-            valueType = _componentType.value();
+        ItemType _itemType = member.getAnnotation(ItemType.class);
+        if (_itemType != null)
+            valueType = _itemType.value();
         else if (type.isArray())
             valueType = type.getComponentType();
         else

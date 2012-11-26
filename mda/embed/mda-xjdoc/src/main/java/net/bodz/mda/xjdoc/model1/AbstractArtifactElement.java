@@ -43,7 +43,8 @@ public abstract class AbstractArtifactElement
     public synchronized DomainString getDescription() {
         if (description == null) {
             DomainString text = getArtifactDoc().getText();
-            description = text.headPar();
+            if (text != null)
+                description = text.headPar();
         }
         return description;
     }
@@ -55,7 +56,8 @@ public abstract class AbstractArtifactElement
     public synchronized DomainString getHelpDoc() {
         if (helpDoc == null) {
             DomainString text = getArtifactDoc().getText();
-            helpDoc = text.tailPar();
+            if (text != null)
+                helpDoc = text.tailPar();
         }
         return helpDoc;
     }

@@ -220,14 +220,11 @@ public class ClassDocToOptions {
         if (_name != null)
             group.setDisplayName(_name);
 
-        DomainString t = classDoc.getText();
-        if (t == null)
-            throw new NullPointerException("t");
-
-        DomainString _header = classDoc.getText().headPar();
-        DomainString _body = classDoc.getText().tailPar();
-        group.setDescription(_header);
-        group.setHelpDoc(_body);
+        DomainString text = classDoc.getText();
+        if (text != null) {
+            group.setDescription(text.headPar());
+            group.setHelpDoc(text.tailPar());
+        }
 
         // Import syntax usages into group.
         Map<String, SyntaxUsage> usageMap = (Map<String, SyntaxUsage>) classDoc.getTag("usage");

@@ -41,7 +41,9 @@ public class ArtifactDoc
         if (label != null)
             release.setName(label.toString());
 
-        release.setDescription(getText().toString());
+        DomainString text = getText();
+        if (text != null)
+            release.setDescription(text.toString());
 
         release.setVersion(getVersion());
 
