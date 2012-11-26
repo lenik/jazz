@@ -9,14 +9,11 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.java.nio.WildcardsExpander;
 import net.bodz.bas.c.java.util.Iterables;
 import net.bodz.bas.c.object.SimpleObjectFormatter;
-import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.string.StringQuoted;
+import net.bodz.bas.cli.model.ArtifactObjectWithOptions;
 import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
-import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
-import net.bodz.bas.cli.model.OptionGroupFactory;
-import net.bodz.bas.cli.model.OptionGroupParseFlags;
 import net.bodz.bas.cli.plugin.CLIPlugins;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
@@ -31,7 +28,6 @@ import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.source.ChainUsage;
 import net.bodz.bas.meta.source.OverrideOption;
-import net.bodz.bas.model.IExecutableVarArgsX;
 import net.bodz.bas.model.ITransformer;
 import net.bodz.bas.potato.model.IType;
 import net.bodz.bas.sio.IPrintOut;
@@ -50,7 +46,8 @@ import net.bodz.mda.xjdoc.model1.ArtifactDoc;
  */
 @RcsKeywords(id = "$Id$")
 public abstract class BasicCLI
-        implements Runnable, IExecutableVarArgsX<String, Exception>, II18nCapable {
+        extends ArtifactObjectWithOptions
+        implements IProgram, Runnable, II18nCapable {
 
     /**
      * @option --stdout hidden weak
@@ -93,7 +90,7 @@ public abstract class BasicCLI
         logger.setDelta(logger.getDelta() - 1);
     }
 
-    protected Map<String, Object> _vars;
+    protected Map<String, Object> variableMap;
 
     /**
      * Define variable.
@@ -115,7 +112,7 @@ public abstract class BasicCLI
             Class<?> type = _getVarType(nam);
             val = ParserUtil.parse(type, exp);
         }
-        _vars.put(nam, val);
+        variableMap.put(nam, val);
     }
 
     protected Class<?> _getVarType(String name) {
@@ -167,7 +164,7 @@ public abstract class BasicCLI
         HelpPageFormatter formatter = new HelpPageFormatter();
         formatter.setDescriptionColumn(29);
 
-        String doc = formatter.format(getOptions());
+        String doc = formatter.format(this);
         out.print(doc);
 
         if (plugins != null)
@@ -176,36 +173,12 @@ public abstract class BasicCLI
         out.flush();
     }
 
-    private transient IOptionGroup classOptionGroup;
-
     public BasicCLI() {
-        _vars = new HashMap<String, Object>();
+        variableMap = new HashMap<String, Object>();
     }
 
     public IType getPotatoType() {
         return Traits.getTrait(getClass(), IType.class);
-    }
-
-    protected ArtifactDoc getArtifactDoc() {
-        return null;
-    }
-
-    public synchronized <T extends BasicCLI> IOptionGroup getOptions() {
-        if (classOptionGroup == null) {
-            Class<T> clazz = (Class<T>) this.getClass();
-            classOptionGroup = OptionGroupFactory.getClassOptions(clazz);
-        }
-        return classOptionGroup;
-    }
-
-    public List<String> parseArguments(String... args)
-            throws CLISyntaxException, ParseException {
-        if (logger.isDebugEnabled())
-            logger.debug("Parse arguments: " + StringArray.join(", ", args));
-
-        IOptionGroup options = getOptions();
-        List<String> rejected = options.parse(OptionGroupParseFlags.DEFAULT, this, args);
-        return rejected;
     }
 
     public void runExtra(String cmdline)
@@ -231,17 +204,17 @@ public abstract class BasicCLI
     @Override
     public synchronized void execute(String... args)
             throws Exception {
-        parseArguments(args);
+        accept(args);
 
         try {
-            List<String> remainingArgs = parseArguments(args);
+            List<String> remainingArgs = accept(args);
 
             logger.debug("[CLI] Pre-boot");
             _postInit();
             _boot();
 
             if (logger.isDebugEnabled()) {
-                for (Entry<String, IOption> entry : classOptionGroup.getLocalOptionMap().entrySet()) {
+                for (Entry<String, IOption> entry : getLocalOptionMap().entrySet()) {
                     IOption option = entry.getValue();
                     String optionName = option.getName();
                     if (!optionName.equals(entry.getKey()))
@@ -251,7 +224,7 @@ public abstract class BasicCLI
                         continue;
                     logger.debug(optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
                 }
-                for (Entry<String, Object> entry : _vars.entrySet()) {
+                for (Entry<String, Object> entry : variableMap.entrySet()) {
                     String name = entry.getKey();
                     Object value = entry.getValue();
                     logger.debug("var ", name, " = ", value);

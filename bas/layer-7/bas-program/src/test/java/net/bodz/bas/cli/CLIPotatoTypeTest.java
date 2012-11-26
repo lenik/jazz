@@ -45,7 +45,7 @@ public class CLIPotatoTypeTest
         assertEquals("set myName", "Linda", myName);
         assertEquals("set yourAge", 17, yourAge);
 
-        parseArguments("--serial", "--no-serial", "--no-serial");
+        accept("--serial", "--no-serial", "--no-serial");
         assertEquals("serials", 3, serial.length);
         assertTrue(serial[0]);
         assertFalse(serial[1]);

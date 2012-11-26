@@ -22,11 +22,11 @@ import net.bodz.bas.potato.model.IType;
 public class CLITask
         extends Task {
 
-    protected final BasicCLI app;
+    protected final BasicCLI program;
     protected final IType appType;
 
     public CLITask(BasicCLI app) {
-        this.app = app;
+        this.program = app;
         this.appType = app.getPotatoType();
     }
 
@@ -59,7 +59,7 @@ public class CLITask
 
     protected Object get(String cliFieldName) {
         try {
-            return appType.getProperty(cliFieldName).getValue(app);
+            return appType.getProperty(cliFieldName).getValue(program);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -67,7 +67,7 @@ public class CLITask
 
     protected void set(String cliFieldName, Object newValue) {
         try {
-            appType.getProperty(cliFieldName).setValue(app, newValue);
+            appType.getProperty(cliFieldName).setValue(program, newValue);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -79,7 +79,7 @@ public class CLITask
         RuntimeConfigurable wrapper = getRuntimeConfigurableWrapper();
         Hashtable<?, ?> attrs = wrapper.getAttributeMap();
 
-        IOptionGroup opts = app.getOptions();
+        IOptionGroup opts = program;
         List<String> rawArgs = null;
         for (Map.Entry<?, ?> ent : attrs.entrySet()) {
             String optnam = (String) ent.getKey();
@@ -136,11 +136,11 @@ public class CLITask
         try {
             if (remainingArguments != null && !remainingArguments.isEmpty()) {
                 String[] moreargv = remainingArguments.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
-                app.parseArguments(moreargv);
+                program.accept(moreargv);
             }
             // adapting attributes
             if (logLevel != 0) {
-                Logger logger = (Logger) appType.getProperty("logger").getValue(app);
+                Logger logger = (Logger) appType.getProperty("logger").getValue(program);
                 logger.setDelta(logLevel);
             }
         } catch (CLISyntaxException e) {
@@ -151,7 +151,7 @@ public class CLITask
             throw new BuildException(e.getMessage(), e);
         }
         try {
-            app.runExtra(tailArguments);
+            program.runExtra(tailArguments);
         } catch (Throwable e) {
             throw new BuildException(e.getMessage(), e);
         }
