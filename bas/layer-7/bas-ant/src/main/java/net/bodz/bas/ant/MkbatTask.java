@@ -23,7 +23,7 @@ public class MkbatTask
 
     public MkbatTask() {
         super(new Mkbat());
-        mkbat = (Mkbat) super.app;
+        mkbat = (Mkbat) super.program;
         addArguments("-rq", "--");
         classpathList = new ArrayList<Path>();
         findmainList = new ArrayList<Path>();

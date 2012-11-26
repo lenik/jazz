@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.cli.skel.CLISyntaxException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom1.IElement;
 
 public interface IOptionGroup
@@ -97,7 +98,10 @@ public interface IOptionGroup
      */
     SyntaxUsage getUsage(String usageId);
 
-    List<String> parse(OptionGroupParseFlags flags, Object context, String... args)
-            throws CLISyntaxException;
+    /**
+     * @return List of rejected arguments.
+     */
+    List<String> accept(OptionGroupParseFlags flags, Object context, String... args)
+            throws CLISyntaxException, ParseException;
 
 }
