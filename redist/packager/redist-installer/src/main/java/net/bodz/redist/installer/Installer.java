@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Composite;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.gui.mda.PreferredSize;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
@@ -75,9 +76,9 @@ public class Installer
 
     @Override
     protected String getTitle() {
-        String text = project.getText();
+        DomainString displayName = project.getDisplayName();
         IVersion version = project.getVersion();
-        return text + tr._(" Installer ") + version;
+        return displayName + tr._(" Installer ") + version;
     }
 
     public ISession getSession() {

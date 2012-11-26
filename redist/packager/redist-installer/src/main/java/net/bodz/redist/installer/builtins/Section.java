@@ -25,8 +25,8 @@ public class Section
         setSelection(selection);
         setImage(image);
         setName(name);
-        setText(text);
-        setDoc(doc);
+        setDescription(text);
+        setHelpDoc(doc);
         for (IComponent child : children)
             add(child);
     }

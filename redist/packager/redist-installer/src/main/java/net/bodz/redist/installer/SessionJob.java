@@ -67,7 +67,7 @@ public abstract class SessionJob
 
     public String getDescription() {
         String jobTypeName = Reflects.getNamedSuperclass(getClass()).getSimpleName();
-        return String.format("%s for %s (%s)", jobTypeName, component.getText(), component.getId());
+        return String.format("%s for %s (%s)", jobTypeName, component.getDescription(), component.getId());
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.util.Indices;
 import net.bodz.redist.installer.util.MissingDependancyBuffer.Entry;
@@ -80,10 +81,10 @@ public class SelectComponentsDialog
                 indent = indents[i];
             IComponent c = components[i];
             String s = indent == null ? "" : indent;
-            s += c.getText();
-            String doc = c.getDoc();
-            if (doc != null)
-                s += " - " + doc;
+            s += c.getDisplayName();
+            DomainString description = c.getDescription();
+            if (description != null)
+                s += " - " + description;
             list.add(s);
         }
     }

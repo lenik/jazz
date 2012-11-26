@@ -30,35 +30,24 @@ public class AbstractProject
         extends RequiredSection
         implements IProject {
 
+    private ArtifactDoc artifactDoc;
+
     private ImageData logo;
     private IVersion version;
     private String updateTime;
     private Author company;
 
-    public AbstractProject(Class<?> clazz, IComponent... children) {
+    public AbstractProject(Class<?> artifactClass, IComponent... children) {
         super("root", tr._("Project Root"), children);
-        if (clazz != null)
-            loadInfo(clazz);
-        this.variables = new TreeTextMap<Variable>();
-    }
 
-    @Override
-    public double getProgressScaleToParent() {
-        return super.getProgressScaleToParent();
-    }
-
-    protected void loadInfo(Class<?> clazz) {
-        LogoImage alogo = clazz.getAnnotation(LogoImage.class);
+        LogoImage alogo = artifactClass.getAnnotation(LogoImage.class);
         if (alogo != null) {
             String respath = alogo.value();
-            logo = SWTResources.getImageDataRes(clazz, respath);
+            logo = SWTResources.getImageDataRes(artifactClass, respath);
         }
 
-        ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
+        artifactDoc = ClassDocs.loadFromResource(artifactClass).as(ArtifactDoc.class);
 
-        setName(clazz.getName());
-        setText(artifactDoc.getLabel().toString());
-        setDoc(artifactDoc.getText().getHeadPar());
         URL iconURL = artifactDoc.getIcon();
         if (iconURL != null) {
             ImageData icon = SWTResources.getImageData(iconURL);
@@ -67,6 +56,13 @@ public class AbstractProject
         version = artifactDoc.getVersion();
         company = artifactDoc.getAuthor();
         updateTime = artifactDoc.getReleaseDateString();
+
+        this.variables = new TreeTextMap<Variable>();
+    }
+
+    @Override
+    public ArtifactDoc getArtifactDoc() {
+        return artifactDoc;
     }
 
     @Override
