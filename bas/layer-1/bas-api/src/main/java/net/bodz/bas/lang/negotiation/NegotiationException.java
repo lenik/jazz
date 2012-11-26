@@ -10,30 +10,22 @@ public class NegotiationException
     private final IParameter parameter;
 
     public NegotiationException(IParameter parameter) {
-        super();
-        if (parameter == null)
-            throw new NullPointerException("parameter");
+        super("Parameter " + parameter.getId());
         this.parameter = parameter;
     }
 
     public NegotiationException(IParameter parameter, String message, Throwable cause) {
-        super(message, cause);
-        if (parameter == null)
-            throw new NullPointerException("parameter");
+        super("Parameter " + parameter.getId() + ": " + message, cause);
         this.parameter = parameter;
     }
 
     public NegotiationException(IParameter parameter, String message) {
-        super(message);
-        if (parameter == null)
-            throw new NullPointerException("parameter");
+        super("Parameter " + parameter.getId() + ": " + message);
         this.parameter = parameter;
     }
 
     public NegotiationException(IParameter parameter, Throwable cause) {
-        super(cause);
-        if (parameter == null)
-            throw new NullPointerException("parameter");
+        super("Parameter " + parameter.getId(), cause);
         this.parameter = parameter;
     }
 

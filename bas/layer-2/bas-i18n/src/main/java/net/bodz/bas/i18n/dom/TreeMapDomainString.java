@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import net.bodz.bas.c.string.StringHtml;
+import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.i18n.LocaleColo;
 
 public class TreeMapDomainString
@@ -94,6 +95,22 @@ public class TreeMapDomainString
     }
 
     @Override
+    public String dumpContent() {
+        StringBuilder sb = new StringBuilder();
+        for (Entry<String, String> entry : entrySet()) {
+            String domainPath = entry.getKey();
+            String value = entry.getValue();
+            if (value == null) {
+                // sb.append(domainPath + ": (intermediate)\n");
+                continue;
+            }
+            sb.append(domainPath + ": " + value);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    @Override
     public DomainString concat(DomainString other) {
         TreeMapDomainString copy = clone();
         return copy.append(other);
@@ -101,12 +118,29 @@ public class TreeMapDomainString
 
     @Override
     public DomainString join(DomainString other) {
-        return null;
+        return DomainStrings.join(this, other);
     }
 
     @Override
-    public String dumpContent() {
-        return null;
+    public DomainString headPar() {
+        return DomainStrings.headPar(this);
+    }
+
+    @Override
+    public DomainString tailPar() {
+        return DomainStrings.tailPar(this);
+    }
+
+    @Override
+    public String getHeadPar() {
+        String str = toString();
+        return StringPart.getHeadPar(str);
+    }
+
+    @Override
+    public String getTailPar() {
+        String str = toString();
+        return StringPart.getTailPar(str);
     }
 
     @Override
