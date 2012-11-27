@@ -28,7 +28,7 @@ import net.bodz.swt.c.layout.LineLayout;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.viz.SWTRenderContext;
 import net.bodz.swt.viz.SWTRenderer;
-import net.bodz.swt.viz.SwtStylesheet;
+import net.bodz.swt.viz.SwtStyleData;
 
 public class R_creator
         extends SWTRenderer {
@@ -39,7 +39,7 @@ public class R_creator
     Image getIcon(AnnotatedElement... tries)
             throws CreateException {
         for (AnnotatedElement elm : tries) {
-            SwtStylesheet hint = SwtStylesheet.get(elm);
+            SwtStyleData hint = SwtStyleData.get(elm);
             if (hint == null)
                 continue;
             Image icon = hint.getIcon();
@@ -80,7 +80,7 @@ public class R_creator
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, IRefEntry<?> entry, SwtStylesheet stylesheet, Composite parent,
+    public Control render(final SWTRenderContext rc, IRefEntry<?> entry, SwtStyleData stylesheet, Composite parent,
             int style)
             throws RenderException, SWTException {
 
@@ -89,8 +89,8 @@ public class R_creator
         IParser<?> parser;
         try {
             parser = Traits.getTrait(type, IParser.class);
-            SwtStylesheet hint = SwtStylesheet.get(type);
-            Image icon = SwtStylesheet.get(type).getIcon();
+            SwtStyleData hint = SwtStyleData.get(type);
+            Image icon = SwtStyleData.get(type).getIcon();
 
         } catch (CreateException e) {
             throw new IllegalUsageError(tr._("failed to get parser for ") + type);
@@ -107,7 +107,7 @@ public class R_creator
         }
 
         for (Constructor<?> ctor : type.getConstructors()) {
-            SwtStylesheet hint = SwtStylesheet.get(ctor);
+            SwtStyleData hint = SwtStyleData.get(ctor);
             String label = hint.getLabel();
             if (label == null) {
                 String pt = TypeName.join(", ", true, ctor.getParameterTypes());

@@ -7,19 +7,19 @@ import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.swt.viz.IRefEntry_SWT;
-import net.bodz.swt.viz.SwtStylesheet;
+import net.bodz.swt.viz.SwtStyleData;
 
 public class SwtStyleHelper {
 
     public void addEffects(Control control, IRefEntry_SWT<?> entry)
             throws RenderException {
-        SwtStylesheet stylesheet = entry.getStylesheet();
+        SwtStyleData stylesheet = entry.getStylesheet();
         if (stylesheet == null)
             return;
         addEffects(control, stylesheet);
     }
 
-    public void addEffects(Control control, SwtStylesheet hint) {
+    public void addEffects(Control control, SwtStyleData hint) {
         Device device = control.getDisplay();
         if (hint.doc != null)
             control.setToolTipText(hint.doc);

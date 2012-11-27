@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.gui.mda.Border;
 import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.gui.xjdoc.Border;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.model.meta.MaxLength;
 import net.bodz.bas.potato.ref.IRefDescriptor;
@@ -25,13 +25,13 @@ import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.SWTRenderContext;
 import net.bodz.swt.viz.SWTRenderer;
-import net.bodz.swt.viz.SwtStylesheet;
+import net.bodz.swt.viz.SwtStyleData;
 
 public class R_Text
         extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, SwtStylesheet stylesheet,
+    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, SwtStyleData stylesheet,
             Composite parent, int style)
             throws RenderException, SWTException {
 

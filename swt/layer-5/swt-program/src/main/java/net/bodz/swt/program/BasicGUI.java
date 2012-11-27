@@ -35,7 +35,7 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.bas.gui.mda.PreferredSize;
+import net.bodz.bas.gui.xjdoc.PreferredSize;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 import net.bodz.swt.c.control.Controls;

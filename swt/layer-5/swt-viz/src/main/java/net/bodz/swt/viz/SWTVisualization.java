@@ -69,7 +69,7 @@ public abstract class SWTVisualization
         }
     }
 
-    public Control render(SWTRenderContext rc, IRefEntry<?> entry, SwtStylesheet stylesheet, Composite parent, int style)
+    public Control render(SWTRenderContext rc, IRefEntry<?> entry, SwtStyleData stylesheet, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");

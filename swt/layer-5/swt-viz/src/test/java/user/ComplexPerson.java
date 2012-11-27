@@ -1,7 +1,7 @@
 package user;
 
-import net.bodz.bas.gui.mda.Color;
-import net.bodz.bas.gui.mda.Label;
+import net.bodz.bas.gui.xjdoc.Color;
+import net.bodz.bas.gui.xjdoc.Label;
 import net.bodz.bas.model.meta.MaxLength;
 
 public class ComplexPerson {

@@ -28,13 +28,13 @@ import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.SWTRenderContext;
 import net.bodz.swt.viz.SWTRenderer;
-import net.bodz.swt.viz.SwtStylesheet;
+import net.bodz.swt.viz.SwtStyleData;
 
 public class R_File
         extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, SwtStylesheet stylesheet,
+    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, SwtStyleData stylesheet,
             final Composite parent, final int style)
             throws RenderException, SWTException {
 

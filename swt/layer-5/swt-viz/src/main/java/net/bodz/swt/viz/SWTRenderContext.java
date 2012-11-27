@@ -18,13 +18,13 @@ public class SWTRenderContext {
 
     public void addEffects(Control control, IRefEntry_SWT<?> entry)
             throws RenderException {
-        SwtStylesheet stylesheet = entry.getStylesheet();
+        SwtStyleData stylesheet = entry.getStylesheet();
         if (stylesheet == null)
             return;
         addEffects(control, stylesheet);
     }
 
-    public void addEffects(Control control, SwtStylesheet hint) {
+    public void addEffects(Control control, SwtStyleData hint) {
         Device device = control.getDisplay();
         if (hint.doc != null)
             control.setToolTipText(hint.doc);

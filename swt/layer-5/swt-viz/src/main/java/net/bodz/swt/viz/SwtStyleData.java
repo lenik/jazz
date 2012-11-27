@@ -4,17 +4,18 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
+import javax.swing.Icon;
+
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 
 import net.bodz.bas.c.reflect.AnnotatedElements;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.gui.mda.*;
-import net.bodz.bas.model.IFactory;
+import net.bodz.bas.gui.xjdoc.Order;
+import net.bodz.bas.gui.xjdoc.StyleData;
 import net.bodz.bas.model.meta.MenuContrib;
 import net.bodz.bas.model.meta.View;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
@@ -23,51 +24,40 @@ import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.a.ColorAnnotation;
 import net.bodz.swt.gui.a.FontAnnotation;
 import net.bodz.swt.gui.a.IconAnnotation;
-import net.bodz.swt.gui.a.LabelAnnotation;
 
-public class SwtStylesheet {
+public class SwtStyleData
+        extends StyleData {
 
-    public String doc;
-
-    public int order;
-    public Boolean enabled;
-    public Boolean visible;
-    public int tabOrder;
-    private IFactory<?> iconFactory;
-    private IFactory<String> labelFactory;
-    private IFactory<?> fontFactory;
     public RGB color;
     public RGB backColor;
-    public Point preferredSize;
-    public int border;
 
     private String menuItem;
     private String toolItem;
     private String viewId;
 
-    public SwtStylesheet() {
+    public SwtStyleData() {
     }
 
-    public SwtStylesheet(SwtStylesheet copy) {
-        if (copy == null)
+    public SwtStyleData(SwtStyleData other) {
+        if (other == null)
             return;
-        this.doc = copy.doc;
+        this.doc = other.doc;
 
-        this.enabled = copy.enabled;
-        this.visible = copy.visible;
-        this.order = copy.order;
-        this.tabOrder = copy.tabOrder;
-        this.iconFactory = copy.iconFactory;
-        this.labelFactory = copy.labelFactory;
-        this.fontFactory = copy.fontFactory;
-        this.color = copy.color;
-        this.backColor = copy.backColor;
-        this.preferredSize = copy.preferredSize;
-        this.border = copy.border;
+        this.iconFactory = other.iconFactory;
+        this.labelFactory = other.labelFactory;
+        this.fontFactory = other.fontFactory;
+        this.enabled = other.enabled;
+        this.visible = other.visible;
+        this.order = other.order;
+        this.tabOrder = other.tabOrder;
+        this.color = other.color;
+        this.backColor = other.backColor;
+        this.preferredSize = other.preferredSize;
+        this.border = other.border;
 
-        this.menuItem = copy.menuItem;
-        this.toolItem = copy.toolItem;
-        this.viewId = copy.viewId;
+        this.menuItem = other.menuItem;
+        this.toolItem = other.toolItem;
+        this.viewId = other.viewId;
     }
 
     static String MORE = "MORE";
@@ -78,31 +68,19 @@ public class SwtStylesheet {
         return id;
     }
 
-    public SwtStylesheet(SwtStylesheet copy, AnnotatedElement aobject) {
+    public SwtStyleData(SwtStyleData copy, AnnotatedElement aobject) {
         this(copy);
 
         ClassDoc classDoc = ClassDocs.loadFromResource(aobject.getClass());
         this.doc = classDoc.getText().toString();
 
-        Visible _visible = aobject.getAnnotation(Visible.class);
-        if (_visible != null)
-            this.visible = _visible.value();
-
         Order _order = aobject.getAnnotation(Order.class);
         if (_order != null)
             this.order = _order.value();
 
-        TabOrder _tabOrder = aobject.getAnnotation(TabOrder.class);
-        if (_tabOrder != null)
-            this.tabOrder = _tabOrder.value();
-
         Icon _icon = aobject.getAnnotation(Icon.class);
         if (_icon != null)
             this.iconFactory = IconAnnotation.getIconFactory(_icon.value(), _icon.factory());
-
-        Label _label = aobject.getAnnotation(Label.class);
-        if (_label != null)
-            this.labelFactory = LabelAnnotation.getLabelFactory(_label.value(), _label.factory());
 
         Font _font = aobject.getAnnotation(Font.class);
         if (_font != null)
@@ -118,14 +96,6 @@ public class SwtStylesheet {
                 this.backColor = back;
         }
 
-        PreferredSize _preferredSize = aobject.getAnnotation(PreferredSize.class);
-        if (_preferredSize != null)
-            this.preferredSize = new Point(_preferredSize.width(), _preferredSize.height());
-
-        Border _border = aobject.getAnnotation(Border.class);
-        if (_border != null)
-            this.border = _border.value();
-
         MenuContrib _menu = aobject.getAnnotation(MenuContrib.class);
         if (_menu != null)
             this.menuItem = prep(menuItem, aobject);
@@ -135,23 +105,23 @@ public class SwtStylesheet {
             this.viewId = prep(viewId, aobject);
     }
 
-    protected SwtStylesheet(AnnotatedElement elm) {
+    protected SwtStyleData(AnnotatedElement elm) {
         this(null, elm);
     }
 
-    public static SwtStylesheet get(AnnotatedElement elm) {
+    public static SwtStyleData get(AnnotatedElement elm) {
         // parent...
-        return new SwtStylesheet(elm);
+        return new SwtStyleData(elm);
     }
 
-    public static SwtStylesheet get(PropertyDescriptor property) {
+    public static SwtStyleData get(PropertyDescriptor property) {
         Method readf = property.getReadMethod();
         Method writef = property.getWriteMethod();
-        SwtStylesheet hint = null;
+        SwtStyleData hint = null;
         if (readf != null)
-            hint = new SwtStylesheet(hint, readf);
+            hint = new SwtStyleData(hint, readf);
         if (writef != null)
-            hint = new SwtStylesheet(hint, writef);
+            hint = new SwtStyleData(hint, writef);
         return hint;
     }
 
