@@ -14,15 +14,13 @@ import net.bodz.bas.meta.decl.ItemType;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
-import net.bodz.mda.xjdoc.model1.TransientArtifactElement;
+import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
+import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 public abstract class TransientOption
-        extends TransientArtifactElement
+        extends AbstractArtifactElement
         implements IOption {
 
-    private static final long serialVersionUID = 1L;
-
-    Class<?> declaringType;
     String name;
 
     int priority;
@@ -42,15 +40,16 @@ public abstract class TransientOption
 
     Object defaultValue;
 
-    public TransientOption(Class<?> declaringType, String name, AnnotatedElement member, Class<?> type) {
-        this.declaringType = declaringType;
+    public TransientOption(String name, Class<?> type, AnnotatedElement annotations, ArtifactDoc artifactDoc) {
+        super(artifactDoc);
+
         this.name = Strings.hyphenatize(name);
 
         if (type == null)
             throw new NullPointerException("type");
         this.type = type;
 
-        ItemType _itemType = member.getAnnotation(ItemType.class);
+        ItemType _itemType = annotations.getAnnotation(ItemType.class);
         if (_itemType != null)
             valueType = _itemType.value();
         else if (type.isArray())

@@ -4,16 +4,17 @@ import java.lang.reflect.Method;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.potato.model.IProperty;
+import net.bodz.mda.xjdoc.model.MethodDoc;
+import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 public class MethodOption
         extends TransientOption {
 
-    private static final long serialVersionUID = 1L;
+    private final Method method;
 
-    final Method method;
-
-    public MethodOption(Method method) {
-        super(method.getDeclaringClass(), method.getName(), method, method.getReturnType());
+    public MethodOption(Method method, MethodDoc methodDoc) {
+        super(method.getName(), method.getReturnType(), method, //
+                methodDoc.as(ArtifactDoc.class));
         this.method = method;
     }
 

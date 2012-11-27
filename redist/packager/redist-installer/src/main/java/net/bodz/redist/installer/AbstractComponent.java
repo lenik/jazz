@@ -17,6 +17,11 @@ public abstract class AbstractComponent
         extends AbstractArtifactElement
         implements IComponent, II18nCapable {
 
+    protected static final int ENABLED = 1;
+    protected static final int VISIBLE = 2;
+    protected static final int SELECTED = 4;
+    protected static final int READ_ONLY = 8;
+
     private String id;
     private Object viewData;
     private Object registryData;
@@ -25,17 +30,20 @@ public abstract class AbstractComponent
 
     private boolean enabled = true;
     private boolean visible;
-    private boolean readOnly = false;
-    private boolean selection;
+    private boolean readOnly;
+    private boolean selected;
     private long size;
     private long moreSize;
 
     private List<IComponent> children;
     private Set<IComponent> dependancy;
 
-    public AbstractComponent(boolean visible, boolean defaultSelection) {
-        this.visible = visible;
-        this.selection = defaultSelection;
+    public AbstractComponent(int flags, ArtifactDoc artifactDoc) {
+        super(artifactDoc);
+        this.enabled = (flags & ENABLED) != 0;
+        this.visible = (flags & VISIBLE) != 0;
+        this.selected = (flags & SELECTED) != 0;
+        this.readOnly = (flags & READ_ONLY) != 0;
     }
 
     @Override
@@ -90,12 +98,12 @@ public abstract class AbstractComponent
         this.readOnly = readOnly;
     }
 
-    public boolean getSelection() {
-        return selection;
+    public boolean getSelected() {
+        return selected;
     }
 
-    public void setSelection(boolean selection) {
-        this.selection = selection;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public long getSize() {

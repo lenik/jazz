@@ -14,6 +14,7 @@ import net.bodz.mda.xjdoc.tags.WordsTagType;
  * @name The Potato Tag Book
  * @tags tags predefined meta-model
  * @see IPotatoElement
+ * @site http://www.example.com
  */
 public class PotatoBook
         extends TagBook {
@@ -21,7 +22,7 @@ public class PotatoBook
     {
         // setTagType("author", DocTagType.INSTANCE.repeat());
         setTagType("name", DocTagType.getInstance());
-        setTagType("siteLink", URLTagType.getInstance());
+        setTagType("site", URLTagType.getInstance());
         setTagType("tags", WordsTagType.getInstance());
     }
 
