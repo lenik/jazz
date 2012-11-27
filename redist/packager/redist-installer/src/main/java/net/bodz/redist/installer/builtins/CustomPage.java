@@ -90,7 +90,7 @@ public class CustomPage
                     TreeItem item = (TreeItem) e.item;
                     IComponent c = (IComponent) item.getData();
                     if (c.isReadOnly()) {
-                        boolean orig = c.getSelection();
+                        boolean orig = c.isSelected();
                         item.setChecked(orig);
                         e.doit = false;
                         return;
@@ -242,7 +242,7 @@ public class CustomPage
             item.setImage(new Image(pageContainer.getDisplay(), image));
         }
 
-        boolean defaultSelection = component.getSelection();
+        boolean defaultSelection = component.isSelected();
         Scheme scheme = session.getScheme();
         if (scheme != null)
             defaultSelection = scheme.isIncluded(component);
@@ -303,7 +303,7 @@ public class CustomPage
             for (IComponent c : add) {
                 TreeItem item = (TreeItem) c.getViewData();
                 TreeItems.setState(item, FULL);
-                c.setSelection(true);
+                c.setSelected(true);
             }
         }
 

@@ -65,7 +65,7 @@ public class Schemes {
 
         @Override
         public boolean isIncluded(IComponent component) {
-            return component.getSelection() && component.isReadOnly();
+            return component.isSelected() && component.isReadOnly();
         }
 
     }
@@ -84,7 +84,7 @@ public class Schemes {
 
         @Override
         public boolean isIncluded(IComponent component) {
-            return component.getSelection();
+            return component.isSelected();
         }
 
     }
@@ -122,7 +122,7 @@ public class Schemes {
 
         @Override
         public boolean isIncluded(IComponent component) {
-            return component.getSelection();
+            return component.isSelected();
         }
 
         @Override

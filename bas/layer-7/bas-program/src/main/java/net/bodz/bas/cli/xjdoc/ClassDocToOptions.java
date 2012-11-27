@@ -10,19 +10,24 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
-import net.bodz.bas.cli.model.*;
+import net.bodz.bas.cli.model.FieldOption;
+import net.bodz.bas.cli.model.IEditableOptionGroup;
+import net.bodz.bas.cli.model.MethodOption;
+import net.bodz.bas.cli.model.PropertyOption;
+import net.bodz.bas.cli.model.SyntaxUsage;
+import net.bodz.bas.cli.model.TransientOptionGroup;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
-import net.bodz.mda.xjdoc.model.JavaElementDoc;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 
 public class ClassDocToOptions {
 
-    boolean annotatedOnly = true;
+    boolean xjdocRequired = true;
 
     boolean includeSuperclass = true;
     boolean includeInterfaces = false;
@@ -38,12 +43,12 @@ public class ClassDocToOptions {
     /**
      * Exclude members without &#64;option javadoc annotation.
      */
-    public boolean isAnnotatedOnly() {
-        return annotatedOnly;
+    public boolean isXjdocRequired() {
+        return xjdocRequired;
     }
 
-    public void setAnnotatedOnly(boolean annotatedOnly) {
-        this.annotatedOnly = annotatedOnly;
+    public void setXjdocRequired(boolean xjdocRequired) {
+        this.xjdocRequired = xjdocRequired;
     }
 
     /**
@@ -241,11 +246,14 @@ public class ClassDocToOptions {
                 if (includeNonPublic)
                     field.setAccessible(true);
 
-                FieldOption option = new FieldOption(field);
                 FieldDoc fieldDoc = classDoc.getFieldDoc(field.getName());
+                String descriptor = getDescriptor(fieldDoc);
+                if (descriptor == null)
+                    continue;
 
-                if (convertElement(option, fieldDoc))
-                    group.addOption(option);
+                FieldOption option = new FieldOption(field, fieldDoc);
+                OptionDescriptor.apply(option, descriptor);
+                group.addOption(option);
             }
         }
 
@@ -258,11 +266,14 @@ public class ClassDocToOptions {
                 if (includeNonPublic)
                     method.setAccessible(true);
 
-                MethodOption option = new MethodOption(method);
                 MethodDoc methodDoc = classDoc.getMethodDoc(method);
+                String descriptor = getDescriptor(methodDoc);
+                if (descriptor == null)
+                    continue;
 
-                if (convertElement(option, methodDoc))
-                    group.addOption(option);
+                MethodOption option = new MethodOption(method, methodDoc);
+                OptionDescriptor.apply(option, descriptor);
+                group.addOption(option);
             }
         }
 
@@ -281,11 +292,14 @@ public class ClassDocToOptions {
             for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
                 Method getter = property.getReadMethod();
 
-                PropertyOption option = new PropertyOption(property);
                 MethodDoc getterDoc = classDoc.getMethodDoc(getter);
+                String descriptor = getDescriptor(getterDoc);
+                if (descriptor == null)
+                    continue;
 
-                if (convertElement(option, getterDoc))
-                    group.addOption(option);
+                PropertyOption option = new PropertyOption(property, getterDoc);
+                OptionDescriptor.apply(option, descriptor);
+                group.addOption(option);
             }
         }
         return group;
@@ -305,32 +319,12 @@ public class ClassDocToOptions {
         return true;
     }
 
-    /**
-     * @return <code>false</code> if nothing done.
-     */
-    boolean convertElement(TransientOption option, JavaElementDoc doc)
-            throws ParseException {
-        if (doc == null)
-            return annotatedOnly ? false : true;
-
+    String getDescriptor(IJavaElementDoc doc) {
         String descriptor = (String) doc.getTag("option");
         if (descriptor == null)
-            if (annotatedOnly)
-                return false;
-
-        OptionDescriptor.apply(option, descriptor);
-
-        DomainString name = (DomainString) doc.getTag("name");
-        if (name != null)
-            option.setDisplayName(name);
-
-        // option.setArtifactDoc(doc);
-        DomainString header = doc.getText().headPar();
-        DomainString body = doc.getText().tailPar();
-        option.setDescription(header);
-        option.setHelpDoc(body);
-
-        return true;
+            if (!xjdocRequired)
+                descriptor = "";
+        return descriptor;
     }
 
 }

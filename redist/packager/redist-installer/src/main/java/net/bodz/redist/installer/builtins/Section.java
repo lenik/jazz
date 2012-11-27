@@ -1,7 +1,6 @@
 package net.bodz.redist.installer.builtins;
 
-import org.eclipse.swt.graphics.ImageData;
-
+import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.ISession;
@@ -9,24 +8,9 @@ import net.bodz.redist.installer.ISession;
 public class Section
         extends AbstractComponent {
 
-    private static ImageData sectionImage = null;
-
-    public Section(boolean visible, boolean readOnly, boolean selection, String name, ImageData image, String text,
-            String doc, IComponent... children) {
-        super(true, selection);
-        if (image == null)
-            image = sectionImage;
-        if (text == null)
-            throw new NullPointerException("text");
-        if (doc == null)
-            doc = text;
-        setVisible(visible);
-        setReadOnly(readOnly);
-        setSelection(selection);
-        setImage(image);
+    public Section(String name, int flags, ArtifactDoc artifactDoc, IComponent... children) {
+        super(flags, artifactDoc);
         setName(name);
-        setDescription(text);
-        setHelpDoc(doc);
         for (IComponent child : children)
             add(child);
     }

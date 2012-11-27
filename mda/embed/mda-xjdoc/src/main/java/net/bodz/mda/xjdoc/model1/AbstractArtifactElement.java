@@ -12,7 +12,7 @@ public abstract class AbstractArtifactElement
         extends AbstractElement
         implements IArtifactElement {
 
-    transient ArtifactDoc _artifactDoc;
+    transient ArtifactDoc artifactDoc;
 
     transient DomainString displayName;
     transient DomainString description;
@@ -21,10 +21,18 @@ public abstract class AbstractArtifactElement
     public AbstractArtifactElement() {
     }
 
+    public AbstractArtifactElement(ArtifactDoc artifactDoc) {
+        if (artifactDoc == null)
+            throw new NullPointerException("artifactDoc");
+        this.artifactDoc = artifactDoc;
+    }
+
     /**
      * @return Non-<code>null</code> {@link ArtifactDoc}.
      */
-    public abstract ArtifactDoc getArtifactDoc();
+    public ArtifactDoc getArtifactDoc() {
+        return artifactDoc;
+    }
 
     @Override
     public String getName() {
@@ -33,7 +41,7 @@ public abstract class AbstractArtifactElement
 
     @Override
     public DomainString getDisplayName() {
-        return getArtifactDoc().getLabel();
+        return getArtifactDoc().getDisplayName();
     }
 
     /**

@@ -234,7 +234,7 @@ public class AbstractProject
         if (dependancy == null)
             return true;
         L: for (IComponent parent : dependancy) {
-            if (!parent.getSelection())
+            if (!parent.isSelected())
                 switch (missingCallback.each(parent, level)) {
                 case TreeCallback.OK:
                     break;

@@ -3,8 +3,6 @@ package net.bodz.redist.installer;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.swt.graphics.ImageData;
-
 import net.bodz.bas.collection.tree.TreeNode;
 import net.bodz.bas.i18n.dom1.IElement;
 
@@ -24,8 +22,6 @@ public interface IComponent
      */
     void setId(String id);
 
-    ImageData getImage();
-
     /**
      * Change the selection state of feature component will cause refresh all the sibling nodes.
      */
@@ -38,10 +34,10 @@ public interface IComponent
     boolean isReadOnly();
 
     /** Initial selection */
-    boolean getSelection();
+    boolean isSelected();
 
     /** Instance variable */
-    void setSelection(boolean selection);
+    void setSelected(boolean selection);
 
     long getSize();
 

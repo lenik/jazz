@@ -23,7 +23,7 @@ public class CreateFile
     }
 
     public CreateFile(String base, String path, IStreamInputSource source, boolean append) {
-        super(false, true);
+        super(SELECTED);
         if (base == null)
             throw new NullPointerException("base");
         if (path == null)

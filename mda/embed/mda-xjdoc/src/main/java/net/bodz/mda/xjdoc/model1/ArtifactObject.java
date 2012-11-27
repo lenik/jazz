@@ -8,11 +8,11 @@ public class ArtifactObject
 
     @Override
     public synchronized ArtifactDoc getArtifactDoc() {
-        if (_artifactDoc == null) {
+        if (artifactDoc == null) {
             ClassDoc classDoc = ClassDocs.loadFromResource(getClass(), true);
-            _artifactDoc = classDoc.as(ArtifactDoc.class);
+            artifactDoc = classDoc.as(ArtifactDoc.class);
         }
-        return _artifactDoc;
+        return artifactDoc;
     }
 
 }

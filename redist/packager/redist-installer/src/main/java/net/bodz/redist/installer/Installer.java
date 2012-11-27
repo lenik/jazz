@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.bas.gui.mda.PreferredSize;
+import net.bodz.bas.gui.xjdoc.PreferredSize;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.meta.build.IVersion;

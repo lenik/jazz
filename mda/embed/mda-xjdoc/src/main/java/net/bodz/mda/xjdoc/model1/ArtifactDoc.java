@@ -1,12 +1,13 @@
 package net.bodz.mda.xjdoc.model1;
 
+import java.net.URI;
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.meta.build.IVersion;
-import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -15,13 +16,32 @@ public class ArtifactDoc
 
     private static final long serialVersionUID = 1L;
 
+    static final DateFormat RELEASE_DATE_FORMAT = Dates.YYYY_MM_DD;
+
     public ArtifactDoc(IJavaElementDoc _orig) {
         super(_orig);
     }
 
+    public Set<String> getUsedLangs() {
+        return getText().keySet();
+    }
+
+    public DomainString getDisplayName() {
+        DomainString displayName = (DomainString) getTag("name");
+        return displayName;
+    }
+
+    public List<Author> getAuthors() {
+        List<Author> authors = (List<Author>) getTag("author");
+        return authors;
+    }
+
     public Author getAuthor() {
-        Author author = (Author) getTag("author");
-        return author;
+        List<Author> authors = getAuthors();
+        if (authors.isEmpty())
+            return null;
+        else
+            return authors.get(0);
     }
 
     public IVersion getVersion() {
@@ -29,62 +49,16 @@ public class ArtifactDoc
         return version;
     }
 
-    public DomainString getLabel() {
-        DomainString label = (DomainString) getTag("label");
-        return label;
-    }
-
-    public ReleaseDescription getReleaseDescription() {
-        ReleaseDescription release = new ReleaseDescription();
-
-        DomainString label = getLabel();
-        if (label != null)
-            release.setName(label.toString());
-
-        DomainString text = getText();
-        if (text != null)
-            release.setDescription(text.toString());
-
-        release.setVersion(getVersion());
-
-        Author author = getAuthor();
-        if (author != null) {
-            release.setAuthor(author.getName().toString());
-        }
-
-        Object copyright = getTag("copyright");
-        if (copyright != null)
-            release.setCopyright(copyright.toString());
-
-        // String releaseNotes = (String) getTag("release.notes");
-        // release.setReleaseNotes(releaseNotes);
-
-        return release;
-    }
-
-    public Date getReleaseDate() {
+    public List<URI> getSiteLinks() {
         return null;
     }
 
-    static final DateFormat RELEASE_DATE_FORMAT;
-    static {
-        RELEASE_DATE_FORMAT = Dates.YYYY_MM_DD;
-    }
-
-    public String getReleaseDateString() {
-        Date releaseDate = getReleaseDate();
-        if (releaseDate == null)
-            return "recently";
+    public URI getSiteLink() {
+        List<URI> siteLinks = getSiteLinks();
+        if (siteLinks.isEmpty())
+            return null;
         else
-            return RELEASE_DATE_FORMAT.format(releaseDate);
-    }
-
-    public String getWebSite() {
-        return "http://example.com";
-    }
-
-    public String[] getLangs() {
-        return null;
+            return siteLinks.get(0);
     }
 
 }
