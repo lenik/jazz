@@ -10,8 +10,8 @@ import user.School;
 import user.SimplePerson;
 
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.bas.gui.mda.PreferredSize;
 import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.gui.xjdoc.PreferredSize;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
 

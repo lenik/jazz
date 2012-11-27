@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.bas.gui.mda.Icon;
+import net.bodz.bas.gui.xjdoc.Icon;
 
 /**
  * Test page 1

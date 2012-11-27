@@ -2,7 +2,7 @@ package net.bodz.swt.gui.a;
 
 import org.eclipse.swt.graphics.Point;
 
-import net.bodz.bas.gui.mda.PreferredSize;
+import net.bodz.bas.gui.xjdoc.PreferredSize;
 
 public class PreferredSizeAnnotation {
 

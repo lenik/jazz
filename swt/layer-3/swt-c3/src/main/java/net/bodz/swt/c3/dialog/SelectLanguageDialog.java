@@ -30,7 +30,7 @@ public class SelectLanguageDialog
         while (declType != null) {
             ArtifactDoc typeDoc = ClassDocs.loadFromResource(declType).as(ArtifactDoc.class);
 
-            for (String lang : typeDoc.getLangs())
+            for (String lang : typeDoc.getUsedLangs())
                 langNames.add(lang);
 
             declType = declType.getSuperclass();

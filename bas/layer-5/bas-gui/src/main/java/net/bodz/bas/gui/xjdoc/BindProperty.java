@@ -1,4 +1,4 @@
-package net.bodz.bas.gui.mda;
+package net.bodz.bas.gui.xjdoc;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

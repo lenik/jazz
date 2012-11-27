@@ -6,11 +6,11 @@ import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.swt.viz.IRefEntry_SWT;
-import net.bodz.swt.viz.SwtStylesheet;
+import net.bodz.swt.viz.SwtStyleData;
 
 public class SWTInject {
 
-    public static int styleFx(int style, SwtStylesheet hint) {
+    public static int styleFx(int style, SwtStyleData hint) {
         if (hint != null) {
             if (hint.border != 0)
                 style |= SWT.BORDER;
@@ -22,7 +22,7 @@ public class SWTInject {
         return styleFx(style, entry.getStylesheet());
     }
 
-    public void inject(Widget widget, SwtStylesheet data)
+    public void inject(Widget widget, SwtStyleData data)
             throws InjectException {
         if (widget instanceof Item)
             inject((Item) widget, data);
@@ -34,7 +34,7 @@ public class SWTInject {
             inject((ToolTip) widget, data);
     }
 
-    public void inject(Item item, SwtStylesheet data)
+    public void inject(Item item, SwtStyleData data)
             throws InjectException {
         try {
             Image icon = data.getIcon();
@@ -75,21 +75,21 @@ public class SWTInject {
         }
     }
 
-    public void inject(Menu menu, SwtStylesheet data) {
+    public void inject(Menu menu, SwtStyleData data) {
         if (data.visible != null)
             menu.setVisible(data.visible);
         if (data.enabled != null)
             menu.setEnabled(data.enabled);
     }
 
-    public void inject(ScrollBar bar, SwtStylesheet data) {
+    public void inject(ScrollBar bar, SwtStyleData data) {
         if (data.visible != null)
             bar.setVisible(data.visible);
         if (data.enabled != null)
             bar.setEnabled(data.enabled);
     }
 
-    public void inject(ToolTip tooltip, SwtStylesheet data) {
+    public void inject(ToolTip tooltip, SwtStyleData data) {
         if (data.visible != null)
             tooltip.setVisible(data.visible);
     }

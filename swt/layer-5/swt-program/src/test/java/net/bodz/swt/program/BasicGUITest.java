@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.junit.Test;
 
-import net.bodz.bas.gui.mda.Visible;
+import net.bodz.bas.gui.xjdoc.Visible;
 import net.bodz.swt.c.resources.SWTResources;
 
 public class BasicGUITest
