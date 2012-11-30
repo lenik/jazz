@@ -3,6 +3,9 @@ package net.bodz.bas.i18n.unit;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.List;
+
+import net.bodz.bas.c.string.StringPart;
 
 public class Measure
         implements Serializable, IMeasureUnits {
@@ -21,6 +24,38 @@ public class Measure
             throw new NullPointerException("unit");
         this.value = value;
         this.unit = unit;
+    }
+
+    public static Measure parse(String str) {
+        if (str == null)
+            throw new NullPointerException("str");
+
+        str = str.trim();
+        if (str.isEmpty())
+            throw new IllegalArgumentException("Measure string is empty");
+
+        String num = StringPart.peekDecimal(str);
+        if (num.isEmpty())
+            throw new IllegalArgumentException("Measure isn't begin with a number");
+
+        String suffix = str.substring(num.length()).trim();
+
+        MeasureUnit unit = null;
+        if (!suffix.isEmpty()) {
+            List<MeasureUnit> units = MeasureUnit.forSymbol(suffix);
+            switch (units.size()) {
+            case 0: // illegal unit. assume the str isn't a measure.
+                return null;
+            case 1:
+                unit = units.get(0);
+            default:
+                // warn: ambiguous unit symbol...
+                throw new IllegalArgumentException("Ambiguous unit symbol: " + suffix);
+            }
+        }
+
+        double value = Double.parseDouble(num);
+        return new Measure(value, unit);
     }
 
     public double getValue() {
@@ -67,5 +102,7 @@ public class Measure
         else
             return v + " " + unit;
     }
+
+    public static final Measure NaN = new Measure(Double.NaN);
 
 }

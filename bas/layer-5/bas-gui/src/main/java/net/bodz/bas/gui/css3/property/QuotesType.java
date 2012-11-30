@@ -1,6 +1,6 @@
 package net.bodz.bas.gui.css3.property;
 
-public enum QuotesMode {
+public enum QuotesType {
 
     /**
      * The 'open-quote' and 'close-quote' values of the 'content' property produce no quotation

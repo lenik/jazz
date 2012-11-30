@@ -19,23 +19,23 @@ public class SwtStyleHelper {
         addEffects(control, stylesheet);
     }
 
-    public void addEffects(Control control, SwtStyleClass hint) {
+    public void addEffects(Control control, SwtStyleClass style) {
         Device device = control.getDisplay();
-        if (hint.doc != null)
-            control.setToolTipText(hint.doc);
-        if (hint.visible != null)
-            control.setVisible(hint.visible);
-        if (hint.enabled != null)
-            control.setEnabled(hint.enabled);
-        if (hint.color != null)
-            control.setForeground(new Color(device, hint.color));
-        if (hint.backColor != null)
-            control.setBackground(new Color(device, hint.backColor));
-        Font font = hint.getFont(device);
+        if (style.doc != null)
+            control.setToolTipText(style.doc);
+        if (style.visible != null)
+            control.setVisible(style.visible);
+        if (style.enabled != null)
+            control.setEnabled(style.enabled);
+        if (style.color != null)
+            control.setForeground(new Color(device, style.color));
+        if (style.backColor != null)
+            control.setBackground(new Color(device, style.backColor));
+        Font font = style.getFont(device);
         if (font != null)
             control.setFont(font);
-        if (hint.preferredSize != null)
-            control.setSize(hint.preferredSize);
+        if (style.preferredSize != null)
+            control.setSize(style.preferredSize);
     }
 
 }

@@ -33,7 +33,7 @@ public class OidDispatcher
 
         while (index < tokens.available()) {
             String token = tokens.peek(index);
-            if (!StringPred.isNumber(token))
+            if (!StringPred.isInteger(token))
                 break;
 
             int ord = Integer.parseInt(token);

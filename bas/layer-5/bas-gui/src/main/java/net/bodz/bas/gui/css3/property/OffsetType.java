@@ -20,4 +20,9 @@ public enum OffsetType {
      */
     percentage,
 
+    /**
+     * (Only on 'max-width', 'max-height') No limit on the width or height of the box.
+     */
+    none,
+
 }

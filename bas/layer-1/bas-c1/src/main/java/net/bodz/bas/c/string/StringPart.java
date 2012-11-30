@@ -253,4 +253,33 @@ public class StringPart {
         return par;
     }
 
+    public static String peekDecimal(String str) {
+        int len = str.length();
+        int numEnd = 0;
+        if (str.charAt(0) == '-')
+            numEnd++;
+
+        int dots = 0;
+        L: while (numEnd < len) {
+            char ch = str.charAt(numEnd);
+
+            switch (ch) {
+            case '.':
+                if (++dots != 1)
+                    break L;
+                else
+                    break;
+
+            default:
+                if (ch >= '0' && ch <= '9')
+                    break;
+                else
+                    break L;
+            }
+            numEnd++;
+        }
+
+        return str.substring(0, numEnd);
+    }
+
 }
