@@ -5,10 +5,10 @@ import javax.vecmath.Vector2f;
 import net.bodz.bas.c.javax.vecmath.ColumnVectors;
 import net.bodz.bas.geom.spec0_f.tr.MatrixTransformer2d;
 import net.bodz.bas.geom.spec1_f.Point2d;
-import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFillPattern;
-import net.bodz.bas.gui.spec0.IFont;
-import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.style.IColor;
+import net.bodz.bas.gui.style.IFillPattern;
+import net.bodz.bas.gui.style.IFont;
+import net.bodz.bas.gui.style.IStroke;
 
 public abstract class AbstractDrawContext2d
         implements IDrawContext2d {

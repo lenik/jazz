@@ -83,7 +83,7 @@ public class GridVisualization
         GridLayout gridLayout = new GridLayout(3, false);
         grid.setLayout(gridLayout);
         for (IRefEntry<?> ent : struct.getRefEntries()) {
-            SwtStyleData styl = null;
+            SwtStyleClass styl = null;
             if (ent instanceof IRefEntry_SWT<?>)
                 styl = ((IRefEntry_SWT<?>) ent).getStylesheet();
             renderChild(rc, grid, ent, styl);
@@ -91,7 +91,7 @@ public class GridVisualization
         return grid;
     }
 
-    void renderChild(final SWTRenderContext rc, Composite grid, IRefEntry<?> entry, SwtStyleData stylesheet)
+    void renderChild(final SWTRenderContext rc, Composite grid, IRefEntry<?> entry, SwtStyleClass stylesheet)
             throws RenderException, SWTException {
         IRefDescriptor descriptor = entry.getDescriptor();
         String name = descriptor.getName();

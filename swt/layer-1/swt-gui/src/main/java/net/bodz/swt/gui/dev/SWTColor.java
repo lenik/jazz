@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
-import net.bodz.bas.gui.spec0.IColor;
+import net.bodz.bas.gui.style.IColor;
 
 public class SWTColor
         implements IColor, Serializable {

@@ -6,10 +6,10 @@ import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
-import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFillPattern;
-import net.bodz.bas.gui.spec0.IFont;
-import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.style.IColor;
+import net.bodz.bas.gui.style.IFillPattern;
+import net.bodz.bas.gui.style.IFont;
+import net.bodz.bas.gui.style.IStroke;
 
 public interface IDrawContext2d
         extends ITransformedView2d {
