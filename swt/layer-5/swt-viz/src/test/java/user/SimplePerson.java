@@ -1,6 +1,5 @@
 package user;
 
-import net.bodz.bas.gui.xjdoc.Label;
 
 public class SimplePerson {
 
@@ -20,7 +19,9 @@ public class SimplePerson {
         this.sex = sex;
     }
 
-    @Label("&Age")
+    /**
+     * @name &Age
+     */
     public int getAge() {
         return age;
     }

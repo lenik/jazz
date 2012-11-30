@@ -13,7 +13,7 @@ public class SwtStyleHelper {
 
     public void addEffects(Control control, IRefEntry_SWT<?> entry)
             throws RenderException {
-        SwtStyleClass stylesheet = entry.getStylesheet();
+        SwtStyleClass stylesheet = entry.getStyle();
         if (stylesheet == null)
             return;
         addEffects(control, stylesheet);

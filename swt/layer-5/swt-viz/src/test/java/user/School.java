@@ -1,26 +1,27 @@
 package user;
 
-import net.bodz.bas.gui.xjdoc.Border;
-import net.bodz.bas.gui.xjdoc.Color;
-import net.bodz.bas.gui.xjdoc.Label;
-
 public class School {
 
     /**
-     * School Identifier
+     * School Identifier.
+     * 
+     * @style color: blue; background-color: #ccccff
      */
-    @Color(value = "blue", back = "#ccccff")
     public final String id;
 
     public School(String id) {
         this.id = id;
     }
 
-    @Label("Lucy Girl")
-    @Border
+    /**
+     * @name Lucy Girl
+     * @style border: 1px solid
+     */
     public SimplePerson lucy;
 
-    @Label("Lily Girl")
+    /**
+     * @name Lily Girl
+     */
     public ComplexPerson lily;
 
     @Override

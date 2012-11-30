@@ -85,7 +85,7 @@ public class GridVisualization
         for (IRefEntry<?> ent : struct.getRefEntries()) {
             SwtStyleClass styl = null;
             if (ent instanceof IRefEntry_SWT<?>)
-                styl = ((IRefEntry_SWT<?>) ent).getStylesheet();
+                styl = ((IRefEntry_SWT<?>) ent).getStyle();
             renderChild(rc, grid, ent, styl);
         }
         return grid;

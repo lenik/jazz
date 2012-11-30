@@ -1,5 +1,7 @@
 package user;
 
+import net.bodz.bas.model.meta.MaxLength;
+
 /**
  * Age/Sex/Location
  */
@@ -13,6 +15,34 @@ public class ASL {
         super();
         this.age = age;
         this.sex = sex;
+        this.location = location;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    /**
+     * @name Is male?
+     */
+    public boolean isSex() {
+        return sex;
+    }
+
+    public void setSex(boolean sex) {
+        this.sex = sex;
+    }
+
+    @MaxLength(30)
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
         this.location = location;
     }
 

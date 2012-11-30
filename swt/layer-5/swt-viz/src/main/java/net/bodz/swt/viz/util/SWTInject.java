@@ -6,23 +6,22 @@ import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.swt.viz.IRefEntry_SWT;
-import net.bodz.swt.viz.SwtStyleData;
+import net.bodz.swt.viz.SwtStyleClass;
 
 public class SWTInject {
 
-    public static int styleFx(int style, SwtStyleData style) {
+    public static int styleFx(int styleBits, SwtStyleClass style) {
         if (style != null) {
-            if (style.getBorderWidth()
-                style |= SWT.BORDER;
+            styleBits |= SWT.BORDER;
         }
-        return style;
+        return styleBits;
     }
 
-    public static int styleFx(int style, IRefEntry_SWT<?> entry) {
-        return styleFx(style, entry.getStylesheet());
+    public static int styleFx(int styleBits, IRefEntry_SWT<?> entry) {
+        return styleFx(styleBits, entry.getStyle());
     }
 
-    public void inject(Widget widget, SwtStyleData data)
+    public void inject(Widget widget, SwtStyleClass data)
             throws InjectException {
         if (widget instanceof Item)
             inject((Item) widget, data);
@@ -34,14 +33,14 @@ public class SWTInject {
             inject((ToolTip) widget, data);
     }
 
-    public void inject(Item item, SwtStyleData data)
+    public void inject(Item item, SwtStyleClass style)
             throws InjectException {
         try {
-            Image icon = data.getIcon();
+            Image icon = style.getIcon();
             if (icon != null)
                 item.setImage(icon);
 
-            String label = data.getLabel();
+            String label = style.getLabel();
             if (label != null) {
                 // toolitem bugfix.
                 boolean notext = item instanceof ToolItem && icon != null;
@@ -55,10 +54,10 @@ public class SWTInject {
 
             } else if (item instanceof ToolItem) {
                 ToolItem toolItem = (ToolItem) item;
-                Image hot = data.getIcon("hot");
+                Image hot = style.getIcon("hot");
                 if (hot != null)
                     toolItem.setHotImage(hot);
-                Image disabled = data.getIcon("disabled");
+                Image disabled = style.getIcon("disabled");
                 if (disabled != null)
                     toolItem.setDisabledImage(disabled);
                 // toolItem.setToolTipText(doc);
@@ -75,23 +74,23 @@ public class SWTInject {
         }
     }
 
-    public void inject(Menu menu, SwtStyleData data) {
-        if (data.visible != null)
-            menu.setVisible(data.visible);
-        if (data.enabled != null)
-            menu.setEnabled(data.enabled);
+    public void inject(Menu menu, SwtStyleClass style) {
+        if (style.visible != null)
+            menu.setVisible(style.visible);
+        if (style.enabled != null)
+            menu.setEnabled(style.enabled);
     }
 
-    public void inject(ScrollBar bar, SwtStyleData data) {
-        if (data.visible != null)
-            bar.setVisible(data.visible);
-        if (data.enabled != null)
-            bar.setEnabled(data.enabled);
+    public void inject(ScrollBar bar, SwtStyleClass style) {
+        if (style.visible != null)
+            bar.setVisible(style.visible);
+        if (style.enabled != null)
+            bar.setEnabled(style.enabled);
     }
 
-    public void inject(ToolTip tooltip, SwtStyleData data) {
-        if (data.visible != null)
-            tooltip.setVisible(data.visible);
+    public void inject(ToolTip tooltip, SwtStyleClass style) {
+        if (style.visible != null)
+            tooltip.setVisible(style.visible);
     }
 
 }
