@@ -50,7 +50,7 @@ public interface NLS
      * @return <code>true</code> If the dict key is defined.
      */
     @Override
-    boolean containsKey(String key);
+    boolean containsKey(Object key);
 
     /**
      * Get the value of the dict entry with the specified <code>key</code>.
@@ -61,7 +61,7 @@ public interface NLS
      *         returned, too.
      */
     @Override
-    Object get(String key);
+    Object get(Object key);
 
     /**
      * Get the value of the dict entry in string format with the specified <code>key</code>
@@ -73,7 +73,7 @@ public interface NLS
      *         returned, too.
      */
     @Override
-    Object get(String key, Object defaultValue);
+    Object get(Object key, Object defaultValue);
 
     /**
      * Get the value of the dict entry with the specified <code>key</code>, and format it to string.

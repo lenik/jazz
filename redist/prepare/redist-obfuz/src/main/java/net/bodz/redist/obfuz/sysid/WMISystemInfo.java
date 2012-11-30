@@ -8,10 +8,10 @@ import java.util.HashMap;
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.system.SystemInfo;
-import net.bodz.bas.util.variant.HashVariantMap;
+import net.bodz.bas.util.variant.VariantMap;
 
 public class WMISystemInfo
-        extends HashVariantMap<String> {
+        extends VariantMap<String> {
 
     public WMISystemInfo() {
         super(new HashMap<String, Object>());

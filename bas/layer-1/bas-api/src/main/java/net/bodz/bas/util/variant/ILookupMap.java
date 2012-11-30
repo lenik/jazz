@@ -1,13 +1,20 @@
 package net.bodz.bas.util.variant;
 
+import java.util.Map;
 import java.util.Set;
 
 public interface ILookupMap<K, V> {
 
     Set<K> keySet();
 
-    boolean containsKey(K key);
+    /**
+     * @see Map#containsKey(Object)
+     */
+    boolean containsKey(Object key);
 
-    V get(K key);
+    /**
+     * @see Map#get(Object)
+     */
+    V get(Object key);
 
 }

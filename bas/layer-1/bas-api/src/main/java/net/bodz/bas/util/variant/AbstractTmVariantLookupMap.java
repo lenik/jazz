@@ -7,11 +7,9 @@ import java.util.Date;
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.util.primitive.*;
 
-/**
- * @see cg.VariantLookupMapGenerator
- */
-public abstract class AbstractVariantLookupMap_MatrixImpl<K>
-        implements IVariantLookupMap<K> {
+// @GeneratedBy(cg.VariantLookupMapGenerator.class)
+public abstract class AbstractTmVariantLookupMap<K>
+        extends AbstractVariantLookupMap<K> {
 
     @Override
     public byte getByte(K key) {

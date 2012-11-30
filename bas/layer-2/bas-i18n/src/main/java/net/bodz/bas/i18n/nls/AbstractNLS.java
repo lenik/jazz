@@ -6,10 +6,10 @@ import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.LocaleColo;
-import net.bodz.bas.util.variant.AbstractVariantLookupMap;
+import net.bodz.bas.util.variant.AbstractTmVariantLookupMap;
 
 public abstract class AbstractNLS
-        extends AbstractVariantLookupMap<String>
+        extends AbstractTmVariantLookupMap<String>
         implements NLS {
 
     private final NLS parent;
@@ -107,21 +107,21 @@ public abstract class AbstractNLS
      * 
      * @def localGet(key) != null
      */
-    protected boolean localContainsKey(String key) {
+    protected boolean localContainsKey(Object key) {
         return localGet(key) != null;
     }
 
     /**
      * The local get(key, def) implementation for the dict chain.
      */
-    protected abstract Object localGet(String key, Object def);
+    protected abstract Object localGet(Object key, Object def);
 
     /**
      * The local get(key) implementation for the dict chain.
      * 
      * @def localGet(key, null)
      */
-    protected Object localGet(String key) {
+    protected Object localGet(Object key) {
         return localGet(key, null);
     }
 
@@ -132,7 +132,7 @@ public abstract class AbstractNLS
     }
 
     @Override
-    public final boolean containsKey(String key) {
+    public final boolean containsKey(Object key) {
         if (localContainsKey(key))
             return true;
         if (parent != null)
@@ -141,7 +141,7 @@ public abstract class AbstractNLS
     }
 
     @Override
-    public final Object get(String key) {
+    public final Object get(Object key) {
         Object value = localGet(key);
         if (value != null || localContainsKey(key))
             return value;
@@ -151,7 +151,7 @@ public abstract class AbstractNLS
     }
 
     @Override
-    public final Object get(String key, Object def) {
+    public final Object get(Object key, Object def) {
         Object value = localGet(key);
         if (value != null || localContainsKey(key))
             return value;
