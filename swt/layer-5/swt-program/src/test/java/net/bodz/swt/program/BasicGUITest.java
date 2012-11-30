@@ -12,23 +12,23 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.junit.Test;
 
-import net.bodz.bas.gui.xjdoc.Visible;
 import net.bodz.swt.c.resources.SWTResources;
 
 public class BasicGUITest
         extends BasicGUI {
 
-    @Visible(false)
+    /**
+     * @style display: none
+     */
     String greeting = "Hello";
 
     /**
-     * @font Arial
-     * @font.height 20
+     * @style font-family: sans; font-size: 20px
      */
     String name = "Caynoh";
 
     /**
-     * @color red
+     * @style color: red
      */
     int age = 13;
 

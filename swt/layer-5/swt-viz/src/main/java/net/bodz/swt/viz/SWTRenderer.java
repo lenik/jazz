@@ -32,7 +32,7 @@ public abstract class SWTRenderer
 
             SwtStyleClass stylesheet = null;
             if (entry instanceof IRefEntry_SWT<?>)
-                stylesheet = ((IRefEntry_SWT<?>) entry).getStylesheet();
+                stylesheet = ((IRefEntry_SWT<?>) entry).getStyle();
 
             // XXX - or create a new swt-context to include the object-context?
             SWTRenderContext rc = null; // (SWTRenderContext) context;

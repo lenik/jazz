@@ -5,7 +5,6 @@ import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.bas.gui.xjdoc.PreferredSize;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.meta.build.IVersion;
@@ -17,12 +16,12 @@ import net.bodz.swt.program.BasicGUI;
 
 /**
  * @name boDz Product Installer
- * @website http://www.bodz.net/products/SWT-Installer
+ * @site http://www.bodz.net/products/SWT-Installer
+ * @style width: 500; height: 400
+ * @image logo2.jpg
+ * @icon icon.gif
  */
-// @Icon("icon.gif")
-@LogoImage("logo2.jpg")
 @MainVersion({ 1, 0 })
-@PreferredSize(width = 500, height = 400)
 @RcsKeywords(id = "$Id$")
 public class Installer
         extends BasicGUI {

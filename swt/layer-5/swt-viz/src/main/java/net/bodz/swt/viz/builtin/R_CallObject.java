@@ -42,7 +42,7 @@ public class R_CallObject
 
         final InvocationRefcomp refcomp = (InvocationRefcomp) entry;
         InvocationDescriptor descriptor = refcomp.getDescriptor();
-        SwtStyleClass hint = descriptor.getStylesheet();
+        SwtStyleClass hint = descriptor.getStyle();
 
         final Composite comp = gridStyle.renderStruct(rc, refcomp, parent, style);
         final Composite opbar = new Composite(comp, SWT.NONE);
