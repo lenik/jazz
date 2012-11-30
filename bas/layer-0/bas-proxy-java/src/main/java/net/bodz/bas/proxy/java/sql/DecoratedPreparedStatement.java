@@ -7,13 +7,13 @@ import java.net.URL;
 import java.sql.*;
 import java.util.Calendar;
 
-public class PreparedStatementDecorator
-        extends StatementDecorator
+public class DecoratedPreparedStatement
+        extends DecoratedStatement
         implements PreparedStatement {
 
     private static final long serialVersionUID = 1L;
 
-    public PreparedStatementDecorator(PreparedStatement _orig) {
+    public DecoratedPreparedStatement(PreparedStatement _orig) {
         super(_orig);
     }
 

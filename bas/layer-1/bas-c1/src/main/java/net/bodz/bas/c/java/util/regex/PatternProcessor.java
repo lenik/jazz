@@ -4,10 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.meta.source.OverrideOption;
-import net.bodz.bas.proxy.java.lang.StringBuilderDecorator;
+import net.bodz.bas.proxy.java.lang.DecoratedStringBuilder;
 
 public class PatternProcessor
-        extends StringBuilderDecorator {
+        extends DecoratedStringBuilder {
 
     protected Pattern pattern;
     protected String source;

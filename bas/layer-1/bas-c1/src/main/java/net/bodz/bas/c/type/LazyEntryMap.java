@@ -2,10 +2,10 @@ package net.bodz.bas.c.type;
 
 import java.util.Map;
 
-import net.bodz.bas.proxy.java.util.MapDecorator;
+import net.bodz.bas.proxy.java.util.DecoratedMap;
 
 public class LazyEntryMap<K, V>
-        extends MapDecorator<K, V> {
+        extends DecoratedMap<K, V> {
 
     private static final long serialVersionUID = 1L;
 

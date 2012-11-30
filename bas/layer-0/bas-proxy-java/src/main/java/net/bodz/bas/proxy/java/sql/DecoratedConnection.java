@@ -7,7 +7,7 @@ import java.util.concurrent.Executor;
 
 import net.bodz.bas.model.IWrapper;
 
-public class ConnectionDecorator
+public class DecoratedConnection
         extends AbstractJavasqlWrapper<Connection>
         implements IWrapper<Connection>, Connection {
 
@@ -15,7 +15,7 @@ public class ConnectionDecorator
 
     Connection _orig;
 
-    public ConnectionDecorator(Connection _orig) {
+    public DecoratedConnection(Connection _orig) {
         super(_orig);
     }
 

@@ -2,12 +2,12 @@ package net.bodz.bas.proxy.java.lang;
 
 import net.bodz.bas.model.IWrapper;
 
-public class StringBuilderDecorator
+public class DecoratedStringBuilder
         implements Appendable, IWrapper<StringBuilder> {
 
     private StringBuilder _orig;
 
-    public StringBuilderDecorator(StringBuilder _orig) {
+    public DecoratedStringBuilder(StringBuilder _orig) {
         this._orig = _orig;
     }
 

@@ -2,7 +2,7 @@ package net.bodz.bas.c.java.util;
 
 import java.util.Map;
 
-import net.bodz.bas.proxy.java.util.MapDecorator;
+import net.bodz.bas.proxy.java.util.DecoratedMap;
 
 /**
  * Entries are created/initialized when {@link #get(Object) get()} method is called.
@@ -11,7 +11,7 @@ import net.bodz.bas.proxy.java.util.MapDecorator;
  * {@link Map#values() values} of a lazy map only returns initialized ones.
  */
 public abstract class LazyMap<K, V>
-        extends MapDecorator<K, V> {
+        extends DecoratedMap<K, V> {
 
     private static final long serialVersionUID = 1L;
 

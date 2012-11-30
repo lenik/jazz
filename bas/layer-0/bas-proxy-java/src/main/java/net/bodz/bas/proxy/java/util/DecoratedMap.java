@@ -6,13 +6,13 @@ import java.util.Set;
 
 import net.bodz.bas.model.AbstractDecorator;
 
-public class MapDecorator<K, V>
+public abstract class DecoratedMap<K, V>
         extends AbstractDecorator<Map<K, V>>
         implements Map<K, V> {
 
     private static final long serialVersionUID = 1L;
 
-    public MapDecorator(Map<K, V> _orig) {
+    public DecoratedMap(Map<K, V> _orig) {
         super(_orig);
     }
 

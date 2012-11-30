@@ -8,13 +8,13 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.Map;
 
-public class ResultSetDecorator
+public class DecoratedResultSet
         extends AbstractJavasqlWrapper<ResultSet>
         implements ResultSet {
 
     private static final long serialVersionUID = 1L;
 
-    public ResultSetDecorator(ResultSet _orig) {
+    public DecoratedResultSet(ResultSet _orig) {
         super(_orig);
     }
 

@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 
-public class StatementDecorator
+public class DecoratedStatement
         extends AbstractJavasqlWrapper<Statement>
         implements Statement {
 
     private static final long serialVersionUID = 1L;
 
-    public StatementDecorator(Statement _orig) {
+    public DecoratedStatement(Statement _orig) {
         super(_orig);
     }
 
