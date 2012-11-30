@@ -10,9 +10,9 @@ import net.bodz.swt.viz.SwtStyleData;
 
 public class SWTInject {
 
-    public static int styleFx(int style, SwtStyleData hint) {
-        if (hint != null) {
-            if (hint.border != 0)
+    public static int styleFx(int style, SwtStyleData style) {
+        if (style != null) {
+            if (style.getBorderWidth()
                 style |= SWT.BORDER;
         }
         return style;

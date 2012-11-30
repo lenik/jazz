@@ -1,5 +1,6 @@
 package net.bodz.bas.gui.xjdoc;
 
+import net.bodz.bas.gui.css3.Css3StyleAttributes;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -16,8 +17,8 @@ public class StyleDoc
         super(_orig.getWrapped());
     }
 
-    public StyleData getStyle() {
-        StyleData style = new StyleData();
+    public Css3StyleAttributes getStyle() {
+        Css3StyleAttributes style = new Css3StyleAttributes();
 
     }
 

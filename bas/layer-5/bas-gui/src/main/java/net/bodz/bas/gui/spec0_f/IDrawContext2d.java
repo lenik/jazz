@@ -1,9 +1,10 @@
 package net.bodz.bas.gui.spec0_f;
 
-import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFillPattern;
-import net.bodz.bas.gui.spec0.IFont;
-import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.dom.IShape2dLayer;
+import net.bodz.bas.gui.style.IColor;
+import net.bodz.bas.gui.style.IFillPattern;
+import net.bodz.bas.gui.style.IFont;
+import net.bodz.bas.gui.style.IStroke;
 
 public interface IDrawContext2d {
 
