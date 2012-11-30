@@ -54,12 +54,12 @@ public class SimpleRequest
     }
 
     @Override
-    public boolean containsKey(String key) {
+    public boolean containsKey(Object key) {
         return map.containsKey(key);
     }
 
     @Override
-    public Object get(String key) {
+    public Object get(Object key) {
         return map.get(key);
     }
 

@@ -8,13 +8,13 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.Map;
 
-public class CallableStatementDecorator
-        extends PreparedStatementDecorator
+public class DecoratedCallableStatement
+        extends DecoratedPreparedStatement
         implements CallableStatement {
 
     private static final long serialVersionUID = 1L;
 
-    public CallableStatementDecorator(CallableStatement _orig) {
+    public DecoratedCallableStatement(CallableStatement _orig) {
         super(_orig);
     }
 

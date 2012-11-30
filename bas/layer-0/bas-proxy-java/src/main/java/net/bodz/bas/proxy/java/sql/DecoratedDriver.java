@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 
 import net.bodz.bas.model.AbstractDecorator;
 
-public class DriverDecorator
+public class DecoratedDriver
         extends AbstractDecorator<Driver>
         implements Driver {
 
     private static final long serialVersionUID = 1L;
 
-    public DriverDecorator(Driver _orig) {
+    public DecoratedDriver(Driver _orig) {
         super(_orig);
     }
 
