@@ -2,7 +2,7 @@ package net.bodz.bas.c.string;
 
 public class StringPred {
 
-    public static boolean isNumber(String str) {
+    public static boolean isInteger(String str) {
         int i = str.length();
         while (--i >= 0) {
             char c = str.charAt(i);

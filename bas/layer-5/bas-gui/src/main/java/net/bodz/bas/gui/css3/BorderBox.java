@@ -2,8 +2,6 @@ package net.bodz.bas.gui.css3;
 
 import java.io.Serializable;
 
-import net.bodz.bas.gui.css3.property.BorderCollapseMode;
-
 public class BorderBox
         implements Serializable {
 
@@ -13,7 +11,6 @@ public class BorderBox
     Border right;
     Border bottom;
     Border left;
-    BorderCollapseMode collapse;
 
     public Border getTop() {
         return top;
@@ -45,14 +42,6 @@ public class BorderBox
 
     public void setLeft(Border left) {
         this.left = left;
-    }
-
-    public BorderCollapseMode getCollapse() {
-        return collapse;
-    }
-
-    public void setCollapse(BorderCollapseMode collapse) {
-        this.collapse = collapse;
     }
 
 }

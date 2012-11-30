@@ -136,7 +136,7 @@ public class OidTree<T>
         int[] vector = new int[split.length];
         for (int i = 0; i < vector.length; i++) {
             String token = split[i];
-            if (!StringPred.isNumber(token))
+            if (!StringPred.isInteger(token))
                 return null;
 
             int num = Integer.parseInt(split[i]);

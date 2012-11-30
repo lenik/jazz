@@ -14,9 +14,6 @@ public class MeasureUnitParser
             return unit;
 
         List<MeasureUnit> units = MeasureUnit.forSymbol(nameOrSymbol);
-        if (units == null)
-            return null;
-
         if (units.size() != 1)
             throw new ParseException("Ambiguous unit symbol: " + nameOrSymbol);
 

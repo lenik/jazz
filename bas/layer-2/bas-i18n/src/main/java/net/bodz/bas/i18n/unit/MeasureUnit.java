@@ -92,6 +92,9 @@ public abstract class MeasureUnit
         return nameMap.get(name);
     }
 
+    /**
+     * @return Non-<code>null</code> list of units with the specific symbol.
+     */
     public static List<MeasureUnit> forSymbol(String symbol) {
         List<MeasureUnit> list = symbolMap.get(symbol);
         if (list == null)

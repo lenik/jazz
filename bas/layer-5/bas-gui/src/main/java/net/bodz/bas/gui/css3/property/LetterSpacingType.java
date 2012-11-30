@@ -1,6 +1,6 @@
 package net.bodz.bas.gui.css3.property;
 
-public enum LetterSpacingMode {
+public enum LetterSpacingType {
 
     /**
      * The spacing is the normal spacing for the current font. This value allows the user agent to
