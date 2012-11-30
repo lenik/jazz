@@ -1,9 +1,9 @@
 package cg;
 
-import net.bodz.bas.util.variant.AbstractVariantLookupMap_MatrixImpl;
+import net.bodz.bas.util.variant.AbstractTmVariantLookupMap;
 
 /**
- * @see AbstractVariantLookupMap_MatrixImpl
+ * @see AbstractTmVariantLookupMap
  */
 public class VariantLookupMapGenerator {
 

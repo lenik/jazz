@@ -49,15 +49,24 @@ public class ResourceBundleNLS
         return "rb:" + baseName;
     }
 
+    /**
+     * @param key
+     *            The resource key, non-<code>null</code>.
+     */
     @Override
-    protected boolean localContainsKey(String key) {
-        return resourceBundle.containsKey(key);
+    protected boolean localContainsKey(Object key) {
+        return resourceBundle.containsKey(key.toString());
     }
 
+    /**
+     * @param key
+     *            The resource key, non-<code>null</code>.
+     */
     @Override
-    protected Object localGet(String key, Object def) {
-        if (resourceBundle.containsKey(key))
-            return resourceBundle.getString(key);
+    protected Object localGet(Object key, Object def) {
+        String skey = key.toString();
+        if (resourceBundle.containsKey(skey))
+            return resourceBundle.getString(skey);
         else
             return def;
     }

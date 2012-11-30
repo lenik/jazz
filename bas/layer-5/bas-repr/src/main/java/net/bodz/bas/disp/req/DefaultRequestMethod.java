@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.util.variant.IVariantLookupMap;
-import net.bodz.bas.util.variant.Map2VariantMap;
+import net.bodz.bas.util.variant.VariantMap;
 
 /**
  * Find method name in the dispatch path, translate into request attributes and remove them from
@@ -29,7 +29,7 @@ public class DefaultRequestMethod
         implements IRequestMethod {
 
     String methodName;
-    Map2VariantMap<String> parameters;
+    VariantMap<String> parameters;
 
     DefaultRequestMethod() {
     }
@@ -40,7 +40,7 @@ public class DefaultRequestMethod
         if (parameterMap == null)
             throw new NullPointerException("parameterMap");
         this.methodName = methodName;
-        this.parameters = new Map2VariantMap<String>(parameterMap);
+        this.parameters = new VariantMap<String>(parameterMap);
     }
 
     @Override

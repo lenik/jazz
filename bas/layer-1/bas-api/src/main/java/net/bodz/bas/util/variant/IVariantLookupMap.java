@@ -9,10 +9,7 @@ public interface IVariantLookupMap<K>
 
     String format(K formatKey, Object... args);
 
-    @Override
-    Object get(K key);
-
-    Object get(K key, Object defaultValue);
+    Object get(Object key, Object defaultValue);
 
     /**
      * Get the value as a scalar.

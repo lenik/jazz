@@ -46,7 +46,7 @@ public final class CombinedNLS
     }
 
     @Override
-    protected boolean localContainsKey(String key) {
+    protected boolean localContainsKey(Object key) {
         for (int i = 0; i < children.length; i++)
             if (children[i].containsKey(key))
                 return true;
@@ -54,7 +54,7 @@ public final class CombinedNLS
     }
 
     @Override
-    protected Object localGet(String key) {
+    protected Object localGet(Object key) {
         for (int i = 0; i < children.length; i++) {
             NLS dict = children[i];
             Object value = dict.get(key);
@@ -65,7 +65,7 @@ public final class CombinedNLS
     }
 
     @Override
-    protected Object localGet(String key, Object def) {
+    protected Object localGet(Object key, Object def) {
         Object value = localGet(key);
         return value == null ? def : value;
     }

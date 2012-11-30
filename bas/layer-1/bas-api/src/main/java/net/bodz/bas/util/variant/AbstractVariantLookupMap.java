@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 import net.bodz.bas.util.Nullables;
 
 public abstract class AbstractVariantLookupMap<K>
-        extends AbstractVariantLookupMap_MatrixImpl<K> {
+        implements IVariantLookupMap<K> {
 
     @Override
     public String format(K formatKey, Object... args) {
@@ -14,7 +14,7 @@ public abstract class AbstractVariantLookupMap<K>
     }
 
     @Override
-    public Object get(K key, Object defaultValue) {
+    public Object get(Object key, Object defaultValue) {
         Object value = get(key);
         if (value == null)
             return containsKey(key) ? null : defaultValue;
