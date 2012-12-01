@@ -16,6 +16,9 @@ import net.bodz.redist.installer.builtins.Section;
 public class TestProject
         extends CTAProject {
 
+    /**
+     * Test source and classes
+     */
     public Section testSection;
 
     public FileCopy copyTestClassesFiles;
@@ -31,7 +34,7 @@ public class TestProject
                 new File(parent, "tests"));
         define("BASE_TEST", var);
 
-        testSection = new OptionalSection("test", "Test source and classes");
+        testSection = new OptionalSection("test");
         {
             MavenProjectOrigin testPo = MavenProjectOrigin.fromClass(TestProject.class);
             File testBinDir = testPo.find("target/bin");

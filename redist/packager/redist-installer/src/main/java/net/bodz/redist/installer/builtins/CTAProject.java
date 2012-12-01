@@ -30,7 +30,14 @@ public class CTAProject
     public static final String BASE_B = "BASE_B";
     public static final String BASE_C = "BASE_C";
 
+    /**
+     * Core Java Class Files
+     */
     public Section classesSection;
+
+    /**
+     * Core Java Source Files
+     */
     public Section sourceSection;
 
     public CTAProject() {
@@ -46,21 +53,15 @@ public class CTAProject
             throws IOException {
         File testHome = TempFile.getTempRoot();
 
-        define("BASE_A",
-                new BaseDirVariable(tr._("Apples"), new File(testHome, PackNLS
-                        .getString("CTAProject.a"))));
-        define("BASE_B",
-                new BaseDirVariable(tr._("Bees"), new File(testHome, PackNLS
-                        .getString("CTAProject.b"))));
-        define("BASE_C",
-                new BaseDirVariable(tr._("Cakes"), new File(testHome, PackNLS
-                        .getString("CTAProject.c"))));
+        define("BASE_A", new BaseDirVariable(tr._("Apples"), new File(testHome, PackNLS.getString("CTAProject.a"))));
+        define("BASE_B", new BaseDirVariable(tr._("Bees"), new File(testHome, PackNLS.getString("CTAProject.b"))));
+        define("BASE_C", new BaseDirVariable(tr._("Cakes"), new File(testHome, PackNLS.getString("CTAProject.c"))));
 
         FileFilter filter = FileCopy.NoSVN;
 
         MavenProjectOrigin redistPo = MavenProjectOrigin.fromClass(IComponent.class);
 
-        classesSection = new RequiredSection("bin", "Core Java Class Files");
+        classesSection = new RequiredSection("bin");
         {
             File binDir = redistPo.find("target/bin");
             FileFinder binfiles = new FileFinder(filter, binDir);
@@ -68,7 +69,7 @@ public class CTAProject
             classesSection.add(copyClassFiles);
         }
 
-        sourceSection = new DefaultSection("src", "Core Java Source Files");
+        sourceSection = new DefaultSection("src");
         {
             File srcDir = redistPo.find("src/main/java");
             FileFinder srcfiles = new FileFinder(filter, srcDir);
