@@ -11,11 +11,17 @@ public class ComponentTestApp
         implements II18nCapable {
 
     protected final CTAProject project;
+
+    /**
+     * Test Section
+     * 
+     * Components under test should put them here.
+     */
     protected final Section section;
 
     public ComponentTestApp() {
         project = new CTAProject();
-        section = new DefaultSection("test", tr._("Test Section"), tr._("Components under test should put them here"));
+        section = new DefaultSection("test");
         project.add(section);
     }
 

@@ -26,6 +26,9 @@ import net.bodz.redist.installer.builtins.RequiredSection;
 import net.bodz.redist.installer.lic.License;
 import net.bodz.swt.c.resources.SWTResources;
 
+/**
+ * Project Root
+ */
 public class AbstractProject
         extends RequiredSection
         implements IProject {
@@ -38,7 +41,7 @@ public class AbstractProject
     private Author company;
 
     public AbstractProject(Class<?> artifactClass, IComponent... children) {
-        super("root", tr._("Project Root"), children);
+        super("root", children);
 
         LogoImage alogo = artifactClass.getAnnotation(LogoImage.class);
         if (alogo != null) {
