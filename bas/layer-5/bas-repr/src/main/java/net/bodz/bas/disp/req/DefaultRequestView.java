@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.util.variant.IVariantLookupMap;
-import net.bodz.bas.util.variant.Map2VariantLookupMap;
+import net.bodz.bas.util.variant.VariantMap;
 import net.bodz.bas.vfs.util.ContentType;
 import net.bodz.bas.vfs.util.ContentTypes;
 
@@ -16,14 +16,14 @@ public class DefaultRequestView
 
     private String viewName;
     private ContentType contentType = ContentTypes.text_html;
-    private Map2VariantLookupMap<String> parameters;
+    private IVariantLookupMap<String> parameters;
 
     DefaultRequestView() {
     }
 
     public DefaultRequestView(String viewName, Map<String, Object> parameterMap) {
         this.viewName = viewName;
-        this.parameters = new Map2VariantLookupMap<>(parameterMap);
+        this.parameters = new VariantMap<>(parameterMap);
     }
 
     @Override

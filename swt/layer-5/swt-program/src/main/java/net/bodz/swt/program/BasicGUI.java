@@ -35,7 +35,6 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.bas.gui.xjdoc.PreferredSize;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 import net.bodz.swt.c.control.Controls;
@@ -389,13 +388,15 @@ public class BasicGUI
         return bottomBar;
     }
 
+    static URL WWW_BODZ_NET = new URL("http://www.bodz.net/");
+
     protected String getBannerString() {
         ArtifactDoc artifactDoc = getArtifactDoc();
         String author = artifactDoc.getAuthor().toString();
-        String webSite = artifactDoc.getWebSite();
-        if (webSite == null)
-            webSite = "http://www.bodz.net/";
-        String banner = GUINLS.format("BasicGUI.banner", author, webSite, webSite);
+        URL site = artifactDoc.getSiteLink();
+        if (site == null)
+            site = WWW_BODZ_NET;
+        String banner = GUINLS.format("BasicGUI.banner", author, site, site);
         return banner;
     }
 

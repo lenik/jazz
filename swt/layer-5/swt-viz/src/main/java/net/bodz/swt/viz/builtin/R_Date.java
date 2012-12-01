@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.gui.xjdoc.Border;
 import net.bodz.bas.model.meta.MaxLength;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
@@ -23,7 +22,7 @@ import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.swt.viz.SWTRenderContext;
 import net.bodz.swt.viz.SWTRenderer;
-import net.bodz.swt.viz.SwtStyleClass;
+import net.bodz.swt.viz.SwtVizStyleClass;
 
 public class R_Date
         extends SWTRenderer {
@@ -33,7 +32,7 @@ public class R_Date
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, SwtStyleClass stylesheet,
+    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, SwtVizStyleClass style,
             Composite parent, int style)
             throws RenderException, SWTException {
 

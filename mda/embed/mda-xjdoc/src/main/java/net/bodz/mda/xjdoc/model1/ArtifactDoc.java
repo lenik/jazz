@@ -1,6 +1,6 @@
 package net.bodz.mda.xjdoc.model1;
 
-import java.net.URI;
+import java.net.URL;
 import java.text.DateFormat;
 import java.util.List;
 import java.util.Set;
@@ -49,12 +49,12 @@ public class ArtifactDoc
         return version;
     }
 
-    public List<URI> getSiteLinks() {
+    public List<URL> getSiteLinks() {
         return null;
     }
 
-    public URI getSiteLink() {
-        List<URI> siteLinks = getSiteLinks();
+    public URL getSiteLink() {
+        List<URL> siteLinks = getSiteLinks();
         if (siteLinks.isEmpty())
             return null;
         else
