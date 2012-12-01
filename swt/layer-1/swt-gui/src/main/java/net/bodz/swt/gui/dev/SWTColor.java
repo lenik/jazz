@@ -1,14 +1,12 @@
 package net.bodz.swt.gui.dev;
 
-import java.io.Serializable;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
-import net.bodz.bas.gui.style.IColor;
+import net.bodz.bas.gui.style.color.AbstractRGBA32Color;
 
 public class SWTColor
-        implements IColor, Serializable {
+        extends AbstractRGBA32Color {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,16 +37,40 @@ public class SWTColor
         return color.equals(c);
     }
 
-    public int getBlue() {
-        return color.getBlue();
+    @Override
+    public int getAlpha8() {
+        return 0;
     }
 
-    public int getGreen() {
+    @Override
+    public void setAlpha8(int alpha8) {
+    }
+
+    @Override
+    public int getRed8() {
+        return color.getRed();
+    }
+
+    @Override
+    public void setRed8(int red8) {
+    }
+
+    @Override
+    public int getGreen8() {
         return color.getGreen();
     }
 
-    public int getRed() {
-        return color.getRed();
+    @Override
+    public void setGreen8(int green8) {
+    }
+
+    @Override
+    public int getBlue8() {
+        return color.getBlue();
+    }
+
+    @Override
+    public void setBlue8(int blue8) {
     }
 
     public RGB getRGB() {

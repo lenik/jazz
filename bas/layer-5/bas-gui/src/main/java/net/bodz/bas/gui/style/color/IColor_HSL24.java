@@ -8,16 +8,22 @@ public interface IColor_HSL24
     /**
      * 0..359
      */
-    int getHue();
+    int getHue8();
+
+    void setHue8(int hue8);
 
     /**
      * 0..99
      */
-    int getSaturation();
+    int getSaturation8();
+
+    void setSaturation8(int hue8);
 
     /**
      * 0..99
      */
-    int getLight();
+    int getLightness8();
+
+    void setLightness8(int lightness8);
 
 }
