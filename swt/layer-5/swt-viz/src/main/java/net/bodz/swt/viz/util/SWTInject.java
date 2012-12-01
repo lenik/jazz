@@ -6,11 +6,11 @@ import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.swt.viz.IRefEntry_SWT;
-import net.bodz.swt.viz.SwtStyleClass;
+import net.bodz.swt.viz.SwtVizStyleClass;
 
 public class SWTInject {
 
-    public static int styleFx(int styleBits, SwtStyleClass style) {
+    public static int styleFx(int styleBits, SwtVizStyleClass style) {
         if (style != null) {
             styleBits |= SWT.BORDER;
         }
@@ -21,7 +21,7 @@ public class SWTInject {
         return styleFx(styleBits, entry.getStyle());
     }
 
-    public void inject(Widget widget, SwtStyleClass data)
+    public void inject(Widget widget, SwtVizStyleClass data)
             throws InjectException {
         if (widget instanceof Item)
             inject((Item) widget, data);
@@ -33,7 +33,7 @@ public class SWTInject {
             inject((ToolTip) widget, data);
     }
 
-    public void inject(Item item, SwtStyleClass style)
+    public void inject(Item item, SwtVizStyleClass style)
             throws InjectException {
         try {
             Image icon = style.getIcon();
@@ -74,23 +74,48 @@ public class SWTInject {
         }
     }
 
-    public void inject(Menu menu, SwtStyleClass style) {
-        if (style.visible != null)
-            menu.setVisible(style.visible);
-        if (style.enabled != null)
-            menu.setEnabled(style.enabled);
+    public void inject(Menu menu, SwtVizStyleClass style) {
+        if (style.getVisibility() != null)
+            switch (style.getVisibility()) {
+            case visible:
+                menu.setVisible(true);
+                break;
+            case hidden:
+                menu.setVisible(false);
+                break;
+            default:
+            }
+
+        if (style.getEnabled() != null)
+            menu.setEnabled(style.getEnabled());
     }
 
-    public void inject(ScrollBar bar, SwtStyleClass style) {
-        if (style.visible != null)
-            bar.setVisible(style.visible);
-        if (style.enabled != null)
-            bar.setEnabled(style.enabled);
+    public void inject(ScrollBar bar, SwtVizStyleClass style) {
+        if (style.getVisibility() != null)
+            switch (style.getVisibility()) {
+            case visible:
+                bar.setVisible(true);
+                break;
+            case hidden:
+                bar.setVisible(false);
+                break;
+            default:
+            }
+
+        if (style.getEnabled() != null)
+            bar.setEnabled(style.getEnabled());
     }
 
-    public void inject(ToolTip tooltip, SwtStyleClass style) {
-        if (style.visible != null)
-            tooltip.setVisible(style.visible);
+    public void inject(ToolTip tooltip, SwtVizStyleClass style) {
+        if (style.getVisibility() != null)
+            switch (style.getVisibility()) {
+            case visible:
+                tooltip.setVisible(true);
+                break;
+            case hidden:
+                tooltip.setVisible(false);
+                break;
+            }
     }
 
 }

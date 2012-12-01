@@ -33,7 +33,7 @@ import net.bodz.swt.gui.api.AbstractCommand;
 import net.bodz.swt.gui.api.ICommand;
 import net.bodz.swt.viz.SWTRenderContext;
 import net.bodz.swt.viz.SWTRenderer;
-import net.bodz.swt.viz.SwtStyleClass;
+import net.bodz.swt.viz.SwtVizStyleClass;
 
 /**
  * @test R_ThrowableTest
@@ -51,7 +51,7 @@ public class R_Throwable
     static boolean showDebug = SystemProperties.isDevelopMode();
 
     @Override
-    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, final SwtStyleClass stylesheet,
+    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, final SwtVizStyleClass stylesheet,
             final Composite parent, final int style)
             throws RenderException, SWTException {
 
