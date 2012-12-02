@@ -1,4 +1,4 @@
-package net.bodz.swt.gui.dev;
+package net.bodz.swt.gui.spec1;
 
 import org.eclipse.swt.graphics.GC;
 
@@ -7,18 +7,18 @@ import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
-import net.bodz.bas.gui.dev.AbstractDrawContext2d;
-import net.bodz.bas.gui.style.IColor;
-import net.bodz.bas.gui.style.IFillPattern;
-import net.bodz.bas.gui.style.IFont;
-import net.bodz.bas.gui.style.IStroke;
+import net.bodz.bas.gui.spec0.IColor;
+import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFontType;
+import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.spec1_f.AbstractDrawContext2d;
 
-public class SWTDrawContext2d
+public class SwtDrawContext2d
         extends AbstractDrawContext2d {
 
     private final GC gc;
 
-    public SWTDrawContext2d(GC gc) {
+    public SwtDrawContext2d(GC gc) {
         assert gc != null;
         this.gc = gc;
     }
@@ -32,35 +32,35 @@ public class SWTDrawContext2d
     }
 
     @Override
-    public SWTColor getColor() {
-        return new SWTColor(gc.getForeground());
+    public SwtColor getColor() {
+        return new SwtColor(gc.getForeground());
     }
 
     @Override
     public void setColor(IColor color) {
-        SWTColor sc = (SWTColor) color;
+        SwtColor sc = (SwtColor) color;
         gc.setForeground(sc.color);
     }
 
     @Override
-    public SWTColor getFillColor() {
-        return new SWTColor(gc.getBackground());
+    public SwtColor getFillColor() {
+        return new SwtColor(gc.getBackground());
     }
 
     @Override
     public void setFillColor(IColor fillColor) {
-        SWTColor sc = (SWTColor) fillColor;
+        SwtColor sc = (SwtColor) fillColor;
         gc.setBackground(sc.color);
     }
 
     @Override
-    public SWTStroke getStroke() {
-        return new SWTStroke.Ref(gc);
+    public SwtStroke getStroke() {
+        return new SwtStroke.Ref(gc);
     }
 
     @Override
     public void setStroke(IStroke _stroke) {
-        SWTStroke stroke = (SWTStroke) _stroke;
+        SwtStroke stroke = (SwtStroke) _stroke;
         gc.setLineCap(stroke.getCap());
         gc.setLineDash(stroke.getDash());
         gc.setLineJoin(stroke.getJoin());
@@ -70,34 +70,34 @@ public class SWTDrawContext2d
 
     @Override
     public IFillPattern getPattern() {
-        return new SWTFillPattern(gc.getForegroundPattern());
+        return new SwtFillPattern(gc.getForegroundPattern());
     }
 
     @Override
     public void setPattern(IFillPattern pattern) {
-        SWTFillPattern sp = (SWTFillPattern) pattern;
+        SwtFillPattern sp = (SwtFillPattern) pattern;
         gc.setForegroundPattern(sp.pattern);
     }
 
     @Override
-    public SWTFillPattern getFillPattern() {
-        return new SWTFillPattern(gc.getBackgroundPattern());
+    public SwtFillPattern getFillPattern() {
+        return new SwtFillPattern(gc.getBackgroundPattern());
     }
 
     @Override
     public void setFillPattern(IFillPattern fillPattern) {
-        SWTFillPattern sp = (SWTFillPattern) fillPattern;
+        SwtFillPattern sp = (SwtFillPattern) fillPattern;
         gc.setBackgroundPattern(sp.pattern);
     }
 
     @Override
-    public IFont getFont() {
-        return new SWTFont(gc.getFont());
+    public IFontType getFont() {
+        return new SwtFontType(gc.getFont());
     }
 
     @Override
-    public void setFont(IFont font) {
-        SWTFont sf = (SWTFont) font;
+    public void setFont(IFontType font) {
+        SwtFontType sf = (SwtFontType) font;
         gc.setFont(sf.font);
     }
 

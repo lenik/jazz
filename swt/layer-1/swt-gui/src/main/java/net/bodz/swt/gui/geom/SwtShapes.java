@@ -6,7 +6,7 @@ import net.bodz.bas.geom.spec0_f.IPointSet2d;
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 
-public class SWTShapes {
+public class SwtShapes {
 
     public static Rectangle convert(Rectangle2d o) {
         if (o == null)

@@ -1,4 +1,4 @@
-package net.bodz.swt.gui.dev;
+package net.bodz.swt.gui.spec1;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -12,12 +12,12 @@ import org.junit.Test;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.swt.c.test.WidgetTester;
 
-public class SWTRegionTest
+public class SwtRegionTest
         extends WidgetTester {
 
     @Test
     public void test1() {
-        final SWTRegion region = new SWTRegion();
+        final SwtRegion region = new SwtRegion();
         region.add(new Rectangle2d(100, 100, 80, 80));
         region.add(new Rectangle2d(200, 200, 100, 100));
         region.remove(new Rectangle2d(150, 150, 70, 80));

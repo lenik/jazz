@@ -1,20 +1,20 @@
-package net.bodz.swt.gui.dev;
+package net.bodz.swt.gui.spec1;
 
 import java.io.Serializable;
 
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 
-import net.bodz.bas.gui.style.IFont;
+import net.bodz.bas.gui.spec0.IFontType;
 
-public class SWTFont
-        implements IFont, Serializable {
+public class SwtFontType
+        implements IFontType, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     final Font font;
 
-    public SWTFont(Font font) {
+    public SwtFontType(Font font) {
         assert font != null;
         this.font = font;
     }
@@ -31,8 +31,8 @@ public class SWTFont
         Font c;
         if (object instanceof Font)
             c = (Font) object;
-        else if (object instanceof SWTFont)
-            c = ((SWTFont) object).font;
+        else if (object instanceof SwtFontType)
+            c = ((SwtFontType) object).font;
         else
             return false;
 

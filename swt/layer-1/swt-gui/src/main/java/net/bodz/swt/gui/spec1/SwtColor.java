@@ -1,18 +1,18 @@
-package net.bodz.swt.gui.dev;
+package net.bodz.swt.gui.spec1;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
-import net.bodz.bas.gui.style.color.AbstractRGBA32Color;
+import net.bodz.bas.gui.spec0.color.AbstractRGBA32Color;
 
-public class SWTColor
+public class SwtColor
         extends AbstractRGBA32Color {
 
     private static final long serialVersionUID = 1L;
 
     public Color color;
 
-    public SWTColor(Color color) {
+    public SwtColor(Color color) {
         assert color != null;
         this.color = color;
     }
@@ -29,8 +29,8 @@ public class SWTColor
         Color c;
         if (object instanceof Color)
             c = (Color) object;
-        else if (object instanceof SWTColor)
-            c = ((SWTColor) object).color;
+        else if (object instanceof SwtColor)
+            c = ((SwtColor) object).color;
         else
             return false;
 

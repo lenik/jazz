@@ -1,13 +1,13 @@
-package net.bodz.swt.gui.dev;
+package net.bodz.swt.gui.spec1;
 
 import java.io.Serializable;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 
-import net.bodz.bas.gui.style.IStroke;
+import net.bodz.bas.gui.spec0.IStroke;
 
-public abstract class SWTStroke
+public abstract class SwtStroke
         implements IStroke, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +51,7 @@ public abstract class SWTStroke
     public abstract void setWidth(int width);
 
     public static class Static
-            extends SWTStroke {
+            extends SwtStroke {
 
         static final long serialVersionUID = 6619194642540979332L;
 
@@ -118,7 +118,7 @@ public abstract class SWTStroke
     }
 
     public static class Ref
-            extends SWTStroke {
+            extends SwtStroke {
 
         static final long serialVersionUID = 7504085295029360367L;
 
