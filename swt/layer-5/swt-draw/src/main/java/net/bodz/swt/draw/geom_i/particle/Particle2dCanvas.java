@@ -20,8 +20,8 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.util.ints.IntIterable;
 import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.swt.gui.dev.SWTRegion;
-import net.bodz.swt.gui.geom.SWTShapes;
+import net.bodz.swt.gui.geom.SwtShapes;
+import net.bodz.swt.gui.spec1.SwtRegion;
 
 public class Particle2dCanvas
         extends Canvas
@@ -227,8 +227,8 @@ public class Particle2dCanvas
 
     private static boolean paintStat = false;
 
-    protected SWTRegion createRegion(Rectangle2d rect) {
-        SWTRegion region = new SWTRegion();
+    protected SwtRegion createRegion(Rectangle2d rect) {
+        SwtRegion region = new SwtRegion();
         region.add(rect);
         return region;
     }
@@ -282,7 +282,7 @@ public class Particle2dCanvas
             System.out.println(buf);
         }
         if (paintBg) {
-            SWTRegion region = createRegion(SWTShapes.convert(viewRect));
+            SwtRegion region = createRegion(SwtShapes.convert(viewRect));
             geomsIter = geoms.iterator();
             while (geomsIter.hasNext()) {
                 int geom = geomsIter.next();
@@ -290,7 +290,7 @@ public class Particle2dCanvas
                 // geomRect.translate(-viewOffset.x, -viewOffset.y);
                 geomRect.x -= viewOffset.x;
                 geomRect.y -= viewOffset.y;
-                region.remove(SWTShapes.convert(geomRect));
+                region.remove(SwtShapes.convert(geomRect));
             }
             Region _region = region.getRegion();
             gc.setClipping(_region);

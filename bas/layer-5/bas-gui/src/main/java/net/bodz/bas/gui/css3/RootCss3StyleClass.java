@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.bodz.bas.gui.css3.property.*;
-import net.bodz.bas.gui.style.IColor;
+import net.bodz.bas.gui.spec0.IColor;
 import net.bodz.bas.i18n.unit.Measure;
 import net.bodz.bas.util.Pair;
 

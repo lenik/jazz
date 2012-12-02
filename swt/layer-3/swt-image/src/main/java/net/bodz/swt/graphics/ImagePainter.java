@@ -3,8 +3,8 @@ package net.bodz.swt.graphics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 
-import net.bodz.bas.gui.dev.IDrawContext2d;
-import net.bodz.swt.gui.dev.SWTDrawContext2d;
+import net.bodz.bas.gui.spec1_f.IDrawContext2d;
+import net.bodz.swt.gui.spec1.SwtDrawContext2d;
 
 public abstract class ImagePainter {
 
@@ -53,7 +53,7 @@ public abstract class ImagePainter {
     }
 
     public IDrawContext2d getDrawContext() {
-        IDrawContext2d ctx = new SWTDrawContext2d(gc);
+        IDrawContext2d ctx = new SwtDrawContext2d(gc);
         return ctx;
     }
 

@@ -9,12 +9,12 @@ import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.geom.spec0_f.tr.MatrixTransformer2d;
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec2_f.Composite2d;
-import net.bodz.bas.gui.dev.IDrawContext2d;
-import net.bodz.swt.gui.dev.SWTDrawContext2d;
-import net.bodz.swt.gui.state.SWTContext;
+import net.bodz.bas.gui.spec1_f.IDrawContext2d;
+import net.bodz.swt.gui.spec1.SwtDrawContext2d;
+import net.bodz.swt.gui.state.SwtContext;
 
 public class GraphDesignerContext
-        extends SWTContext {
+        extends SwtContext {
 
     public Composite2d shapes;
 
@@ -38,7 +38,7 @@ public class GraphDesignerContext
     public MatrixTransformer2d transformer;
 
     public IDrawContext2d getContext2d(GC gc, MatrixTransformer2d transformer) {
-        SWTDrawContext2d ctx = new SWTDrawContext2d(gc);
+        SwtDrawContext2d ctx = new SwtDrawContext2d(gc);
         if (transformer != null)
             ctx.setTransformer(transformer);
         return ctx;

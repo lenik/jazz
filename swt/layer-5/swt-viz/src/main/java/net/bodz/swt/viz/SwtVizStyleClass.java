@@ -1,7 +1,7 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.style.ControlStyleClass;
-import net.bodz.bas.gui.style.IControlStyleClass;
+import net.bodz.bas.gui.spec0.ControlStyleClass;
+import net.bodz.bas.gui.spec0.IControlStyleClass;
 
 public class SwtVizStyleClass
         extends ControlStyleClass
