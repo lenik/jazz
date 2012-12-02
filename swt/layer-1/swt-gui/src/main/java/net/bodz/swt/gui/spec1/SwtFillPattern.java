@@ -1,19 +1,19 @@
-package net.bodz.swt.gui.dev;
+package net.bodz.swt.gui.spec1;
 
 import java.io.Serializable;
 
 import org.eclipse.swt.graphics.Pattern;
 
-import net.bodz.bas.gui.style.IFillPattern;
+import net.bodz.bas.gui.spec0.IFillPattern;
 
-public class SWTFillPattern
+public class SwtFillPattern
         implements IFillPattern, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     public Pattern pattern;
 
-    public SWTFillPattern(Pattern pattern) {
+    public SwtFillPattern(Pattern pattern) {
         assert pattern != null;
         this.pattern = pattern;
     }
@@ -30,8 +30,8 @@ public class SWTFillPattern
         Pattern pat;
         if (object instanceof Pattern)
             pat = (Pattern) object;
-        else if (object instanceof SWTFillPattern)
-            pat = ((SWTFillPattern) object).pattern;
+        else if (object instanceof SwtFillPattern)
+            pat = ((SwtFillPattern) object).pattern;
         else
             return false;
 
