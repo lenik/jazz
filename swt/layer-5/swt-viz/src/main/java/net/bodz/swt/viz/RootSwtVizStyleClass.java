@@ -1,6 +1,6 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.style.RootControlStyleClass;
+import net.bodz.bas.gui.spec0.RootControlStyleClass;
 
 public class RootSwtVizStyleClass
         extends RootControlStyleClass

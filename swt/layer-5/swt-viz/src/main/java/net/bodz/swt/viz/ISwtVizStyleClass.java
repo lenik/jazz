@@ -1,6 +1,6 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.style.IControlStyleClass;
+import net.bodz.bas.gui.spec0.IControlStyleClass;
 
 public interface ISwtVizStyleClass
         extends IControlStyleClass {
