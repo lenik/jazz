@@ -1,5 +1,9 @@
 package net.bodz.bas.gui.css3;
 
+import java.util.regex.Pattern;
+
+import net.bodz.bas.err.ParseException;
+
 public abstract class AbstractPropertiesMapper {
 
     /**
@@ -56,6 +60,46 @@ public abstract class AbstractPropertiesMapper {
             return inherited;
         E val = Enum.valueOf(enumClass, str);
         return val;
+    }
+
+    static Pattern cCommentPattern;
+    static {
+        cCommentPattern = Pattern.compile(//
+                "/\\* .*? \\*/", Pattern.COMMENTS | Pattern.DOTALL);
+    }
+
+    /**
+     * Parse CSS-like style script.
+     * <p>
+     * 
+     * Example:
+     * 
+     * <pre>
+     * color: red; 
+     * font-size: large;
+     * </pre>.
+     */
+    public void parse(String script)
+            throws ParseException {
+        if (script == null)
+            throw new NullPointerException("script");
+        script = cCommentPattern.matcher(script).replaceAll("");
+
+        for (String statement : script.split(";")) {
+
+            statement = statement.trim();
+            if (statement.isEmpty())
+                continue;
+
+            int colon = statement.indexOf(':');
+            if (colon == -1)
+                throw new ParseException("No colon in the statement: " + statement);
+
+            String key = statement.substring(0, colon).trim();
+            String value = statement.substring(colon + 1).trim();
+
+            setProperty(key, value);
+        }
     }
 
 }

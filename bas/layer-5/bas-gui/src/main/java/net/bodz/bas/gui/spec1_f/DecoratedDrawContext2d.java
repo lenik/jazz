@@ -6,9 +6,9 @@ import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
 import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFillType;
 import net.bodz.bas.gui.spec0.IFontType;
-import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.spec0.IStrokeType;
 
 public abstract class DecoratedDrawContext2d
         extends DecoratedTransformedView2d
@@ -46,32 +46,32 @@ public abstract class DecoratedDrawContext2d
     }
 
     @Override
-    public IStroke getStroke() {
+    public IStrokeType getStroke() {
         return getWrapped().getStroke();
     }
 
     @Override
-    public void setStroke(IStroke stroke) {
+    public void setStroke(IStrokeType stroke) {
         getWrapped().setStroke(stroke);
     }
 
     @Override
-    public IFillPattern getPattern() {
+    public IFillType getPattern() {
         return getWrapped().getPattern();
     }
 
     @Override
-    public void setPattern(IFillPattern pattern) {
+    public void setPattern(IFillType pattern) {
         getWrapped().setPattern(pattern);
     }
 
     @Override
-    public IFillPattern getFillPattern() {
+    public IFillType getFillPattern() {
         return getWrapped().getFillPattern();
     }
 
     @Override
-    public void setFillPattern(IFillPattern fillPattern) {
+    public void setFillPattern(IFillType fillPattern) {
         getWrapped().setFillPattern(fillPattern);
     }
 

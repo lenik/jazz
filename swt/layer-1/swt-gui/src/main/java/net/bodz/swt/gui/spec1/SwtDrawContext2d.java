@@ -8,9 +8,9 @@ import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
 import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFillType;
 import net.bodz.bas.gui.spec0.IFontType;
-import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.spec0.IStrokeType;
 import net.bodz.bas.gui.spec1_f.AbstractDrawContext2d;
 
 public class SwtDrawContext2d
@@ -59,7 +59,7 @@ public class SwtDrawContext2d
     }
 
     @Override
-    public void setStroke(IStroke _stroke) {
+    public void setStroke(IStrokeType _stroke) {
         SwtStroke stroke = (SwtStroke) _stroke;
         gc.setLineCap(stroke.getCap());
         gc.setLineDash(stroke.getDash());
@@ -69,12 +69,12 @@ public class SwtDrawContext2d
     }
 
     @Override
-    public IFillPattern getPattern() {
+    public IFillType getPattern() {
         return new SwtFillPattern(gc.getForegroundPattern());
     }
 
     @Override
-    public void setPattern(IFillPattern pattern) {
+    public void setPattern(IFillType pattern) {
         SwtFillPattern sp = (SwtFillPattern) pattern;
         gc.setForegroundPattern(sp.pattern);
     }
@@ -85,7 +85,7 @@ public class SwtDrawContext2d
     }
 
     @Override
-    public void setFillPattern(IFillPattern fillPattern) {
+    public void setFillPattern(IFillType fillPattern) {
         SwtFillPattern sp = (SwtFillPattern) fillPattern;
         gc.setBackgroundPattern(sp.pattern);
     }

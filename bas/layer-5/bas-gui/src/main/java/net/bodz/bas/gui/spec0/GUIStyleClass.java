@@ -1,18 +1,30 @@
 package net.bodz.bas.gui.spec0;
 
 import net.bodz.bas.gui.css3.Css3StyleClass;
+import net.bodz.bas.gui.css3.ICss3StyleClass;
 
-public class ControlStyleClass
+public class GUIStyleClass
         extends Css3StyleClass
-        implements IControlStyleClass {
+        implements IGUIStyleClass {
 
-    public ControlStyleClass(IControlStyleClass parent) {
+    public GUIStyleClass(IGUIStyleClass parent) {
         super(parent);
     }
 
     @Override
-    public IControlStyleClass getParent() {
-        return (IControlStyleClass) super.getParent();
+    public IGUIStyleClass getParent() {
+        return (IGUIStyleClass) super.getParent();
+    }
+
+    @Override
+    public void setParent(ICss3StyleClass parent) {
+        if (parent == null)
+            parent = new StrictGUIStyleClass();
+        else {
+            if (!(parent instanceof IGUIStyleClass))
+                throw new IllegalArgumentException("Incompatible parent: " + parent);
+        }
+        super.setParent(parent);
     }
 
     @Override

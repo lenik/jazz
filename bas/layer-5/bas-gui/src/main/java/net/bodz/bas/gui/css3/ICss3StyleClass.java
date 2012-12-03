@@ -11,4 +11,6 @@ public interface ICss3StyleClass
      */
     ICss3StyleClass getParent();
 
+    void setParent(ICss3StyleClass parent);
+
 }

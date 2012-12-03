@@ -2,7 +2,7 @@ package net.bodz.bas.gui.css3;
 
 import java.io.Serializable;
 
-import net.bodz.bas.gui.css3.property.StrokePatternMode;
+import net.bodz.bas.gui.css3.property.BorderStyleMode;
 import net.bodz.bas.gui.spec0.IColor;
 import net.bodz.bas.i18n.unit.Measure;
 
@@ -11,7 +11,7 @@ public class Border
 
     private static final long serialVersionUID = 1L;
 
-    StrokePatternMode style;
+    BorderStyleMode style;
     Measure width;
     IColor color;
     boolean useCurrentColor = true;

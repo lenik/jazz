@@ -6,18 +6,23 @@ import java.util.Map;
 public class Css3StyleClass
         extends MappedCss3StyleClass {
 
-    private final ICss3StyleClass parent;
+    private ICss3StyleClass parent;
     private Map<String, String> map = new LinkedHashMap<String, String>();
 
     public Css3StyleClass(ICss3StyleClass parent) {
-        if (parent == null)
-            throw new NullPointerException("parent");
-        this.parent = parent;
+        setParent(parent);
     }
 
     @Override
     public ICss3StyleClass getParent() {
         return parent;
+    }
+
+    @Override
+    public void setParent(ICss3StyleClass parent) {
+        if (parent == null)
+            parent = new StrictCss3StyleClass();
+        this.parent = parent;
     }
 
     @Override

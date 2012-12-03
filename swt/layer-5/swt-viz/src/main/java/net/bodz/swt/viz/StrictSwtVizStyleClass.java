@@ -1,12 +1,10 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.spec0.RootControlStyleClass;
+import net.bodz.bas.gui.spec0.StrictGUIStyleClass;
 
-public class RootSwtVizStyleClass
-        extends RootControlStyleClass
+public class StrictSwtVizStyleClass
+        extends StrictGUIStyleClass
         implements ISwtVizStyleClass {
-
-    private static final long serialVersionUID = 1L;
 
     String menuItem;
     String toolItem;

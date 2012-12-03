@@ -1,12 +1,10 @@
 package net.bodz.bas.gui.spec0;
 
-import net.bodz.bas.gui.css3.RootCss3StyleClass;
+import net.bodz.bas.gui.css3.StrictCss3StyleClass;
 
-public class RootControlStyleClass
-        extends RootCss3StyleClass
-        implements IControlStyleClass {
-
-    private static final long serialVersionUID = 1L;
+public class StrictGUIStyleClass
+        extends StrictCss3StyleClass
+        implements IGUIStyleClass {
 
     Boolean enabled;
     Boolean readOnly;
@@ -14,8 +12,8 @@ public class RootControlStyleClass
     String tooltip;
 
     @Override
-    public IControlStyleClass getParent() {
-        return (IControlStyleClass) super.getParent();
+    public IGUIStyleClass getParent() {
+        return (IGUIStyleClass) super.getParent();
     }
 
     @Override
