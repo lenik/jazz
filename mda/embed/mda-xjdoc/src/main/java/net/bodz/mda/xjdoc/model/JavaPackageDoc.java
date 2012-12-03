@@ -5,14 +5,14 @@ import java.io.IOException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
-public class PackageDoc
+public class JavaPackageDoc
         extends JavaElementDoc {
 
-    public PackageDoc() {
+    public JavaPackageDoc() {
         super();
     }
 
-    public PackageDoc(String name) {
+    public JavaPackageDoc(String name) {
         super(name);
     }
 

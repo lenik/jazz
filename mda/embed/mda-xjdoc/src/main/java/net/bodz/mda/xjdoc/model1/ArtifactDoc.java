@@ -2,12 +2,15 @@ package net.bodz.mda.xjdoc.model1;
 
 import java.net.URL;
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.meta.build.IVersion;
+import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -15,8 +18,6 @@ public class ArtifactDoc
         extends DecoratedJavaElementDoc {
 
     private static final long serialVersionUID = 1L;
-
-    static final DateFormat RELEASE_DATE_FORMAT = Dates.YYYY_MM_DD;
 
     public ArtifactDoc(IJavaElementDoc _orig) {
         super(_orig);
@@ -59,6 +60,57 @@ public class ArtifactDoc
             return null;
         else
             return siteLinks.get(0);
+    }
+
+    // optional...
+
+    public Set<String> getLangs() {
+        Set<String> langs = new TreeSet<String>();
+        // getTag("lang")...
+        return langs;
+    }
+
+    public ReleaseDescription getReleaseDescription() {
+        ReleaseDescription release = new ReleaseDescription();
+
+        DomainString displayName = getDisplayName();
+        if (displayName != null)
+            release.setName(displayName.toString());
+
+        DomainString text = getText();
+        if (text != null)
+            release.setDescription(text.toString());
+
+        release.setVersion(getVersion());
+
+        Author author = getAuthor();
+        if (author != null) {
+            release.setAuthor(author.getName().toString());
+        }
+
+        Object copyright = getTag("copyright");
+        if (copyright != null)
+            release.setCopyright(copyright.toString());
+
+        // String releaseNotes = (String) getTag("release.notes");
+        // release.setReleaseNotes(releaseNotes);
+
+        return release;
+    }
+
+    public Date getReleaseDate() {
+        // getTag("release-date");
+        return null;
+    }
+
+    static final DateFormat RELEASE_DATE_FORMAT = Dates.YYYY_MM_DD;
+
+    public String getReleaseDateString() {
+        Date releaseDate = getReleaseDate();
+        if (releaseDate == null)
+            return "recently";
+        else
+            return RELEASE_DATE_FORMAT.format(releaseDate);
     }
 
 }

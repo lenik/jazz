@@ -1,6 +1,7 @@
 package net.bodz.redist.obfuz.util;
 
 import java.math.BigInteger;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -28,7 +29,7 @@ public class ActivationByTargetString
     private final String prefix;
     private final byte[] prefixBytes;
     private final int segments;
-    private final String website;
+    private final URL website;
 
     private Preferences preferences;
     private String hostId;
@@ -50,7 +51,7 @@ public class ActivationByTargetString
         this.prefixBytes = prefix.getBytes(encoding);
         this.segments = _activation.segments();
 
-        this.website = artifactDoc.getWebSite();
+        this.website = artifactDoc.getSiteLink();
 
         String productId = _activation.productId();
         if (productId.isEmpty())
@@ -101,7 +102,7 @@ public class ActivationByTargetString
         hostId = buf.toString();
     }
 
-    public String getWebsite() {
+    public URL getWebsite() {
         return website;
     }
 
