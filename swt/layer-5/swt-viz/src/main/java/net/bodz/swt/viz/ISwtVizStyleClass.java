@@ -1,9 +1,9 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.spec0.IControlStyleClass;
+import net.bodz.bas.gui.spec0.IGUIStyleClass;
 
 public interface ISwtVizStyleClass
-        extends IControlStyleClass {
+        extends IGUIStyleClass {
 
     @Override
     ISwtVizStyleClass getParent();

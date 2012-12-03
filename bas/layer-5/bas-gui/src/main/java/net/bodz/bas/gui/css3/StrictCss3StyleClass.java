@@ -1,6 +1,5 @@
 package net.bodz.bas.gui.css3;
 
-import java.io.Serializable;
 import java.util.List;
 
 import net.bodz.bas.gui.css3.property.*;
@@ -8,10 +7,10 @@ import net.bodz.bas.gui.spec0.IColor;
 import net.bodz.bas.i18n.unit.Measure;
 import net.bodz.bas.util.Pair;
 
-public class RootCss3StyleClass
-        implements Serializable, ICss3StyleClass {
+public class StrictCss3StyleClass
+        implements ICss3StyleClass {
 
-    private static final long serialVersionUID = 1L;
+    ICss3StyleClass parent;
 
     OffsetType widthType;
     OffsetType heightType;
@@ -119,7 +118,12 @@ public class RootCss3StyleClass
 
     @Override
     public ICss3StyleClass getParent() {
-        return null;
+        return parent;
+    }
+
+    @Override
+    public void setParent(ICss3StyleClass parent) {
+        this.parent = parent;
     }
 
     @Override

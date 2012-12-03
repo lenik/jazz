@@ -2,11 +2,11 @@ package net.bodz.bas.gui.spec0;
 
 import net.bodz.bas.gui.css3.ICss3StyleClass;
 
-public interface IControlStyleClass
+public interface IGUIStyleClass
         extends ICss3StyleClass {
 
     @Override
-    IControlStyleClass getParent();
+    IGUIStyleClass getParent();
 
     Boolean getEnabled();
 

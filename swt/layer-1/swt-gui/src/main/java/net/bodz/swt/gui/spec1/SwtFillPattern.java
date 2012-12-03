@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 import org.eclipse.swt.graphics.Pattern;
 
-import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFillType;
 
 public class SwtFillPattern
-        implements IFillPattern, Serializable {
+        implements IFillType, Serializable {
 
     private static final long serialVersionUID = 1L;
 

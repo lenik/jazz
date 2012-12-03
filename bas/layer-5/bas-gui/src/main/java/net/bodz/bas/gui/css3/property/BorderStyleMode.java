@@ -1,6 +1,9 @@
 package net.bodz.bas.gui.css3.property;
 
-public enum StrokePatternMode {
+import net.bodz.bas.gui.spec0.IStrokeType;
+import net.bodz.bas.meta.source.boDzFeature;
+
+public enum BorderStyleMode {
 
     /** No border; the computed border width is zero. */
     none,
@@ -9,13 +12,13 @@ public enum StrokePatternMode {
     hidden,
 
     /** The border is a series of dots. */
-    dotted,
+    dotted(1, 1),
 
     /** The border is a series of short line segments. */
-    dashed,
+    dashed(3, 1),
 
     /** The border is a single line segment. */
-    solid,
+    solid(1),
 
     /**
      * The border is two solid lines. The sum of the two lines and the space between them equals the
@@ -37,5 +40,31 @@ public enum StrokePatternMode {
      * canvas.
      */
     outset,
+
+    /**
+     * @see IStrokeType#getDashPattern()
+     */
+    @boDzFeature
+    pattern,
+
+    ;
+
+    private final float[] dashPatternf;
+    private final int[] dashPattern;
+
+    BorderStyleMode(int... dashPattern) {
+        this.dashPattern = dashPattern;
+        dashPatternf = new float[dashPattern.length];
+        for (int i = 0; i < dashPattern.length; i++)
+            dashPatternf[i] = dashPattern[i];
+    }
+
+    public float[] getDashPatternf() {
+        return dashPatternf;
+    }
+
+    public int[] getDashPattern() {
+        return dashPattern;
+    }
 
 }

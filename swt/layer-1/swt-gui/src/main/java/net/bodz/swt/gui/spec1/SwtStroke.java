@@ -5,10 +5,10 @@ import java.io.Serializable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 
-import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.spec0.IStrokeType;
 
 public abstract class SwtStroke
-        implements IStroke, Serializable {
+        implements IStrokeType, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -56,13 +56,9 @@ public abstract class SwtStroke
         static final long serialVersionUID = 6619194642540979332L;
 
         public int cap;
-
         public int[] dash;
-
         public int join;
-
         public int style;
-
         public int width;
 
         @Override

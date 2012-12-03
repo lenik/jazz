@@ -7,9 +7,9 @@ import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
 import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFillType;
 import net.bodz.bas.gui.spec0.IFontType;
-import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.spec0.IStrokeType;
 
 public interface IDrawContext2d
         extends ITransformedView2d {
@@ -24,17 +24,17 @@ public interface IDrawContext2d
 
     void setFillColor(IColor fillColor);
 
-    IStroke getStroke();
+    IStrokeType getStroke();
 
-    void setStroke(IStroke stroke);
+    void setStroke(IStrokeType stroke);
 
-    IFillPattern getPattern();
+    IFillType getPattern();
 
-    void setPattern(IFillPattern pattern);
+    void setPattern(IFillType pattern);
 
-    IFillPattern getFillPattern();
+    IFillType getFillPattern();
 
-    void setFillPattern(IFillPattern fillPattern);
+    void setFillPattern(IFillType fillPattern);
 
     IFontType getFont();
 

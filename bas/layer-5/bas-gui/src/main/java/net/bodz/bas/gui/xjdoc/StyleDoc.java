@@ -1,7 +1,8 @@
 package net.bodz.bas.gui.xjdoc;
 
-import net.bodz.bas.gui.css3.RootCss3StyleClass;
-import net.bodz.bas.gui.css3.ICss3Properties;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.gui.spec0.GUIStyleClass;
+import net.bodz.bas.gui.spec0.IGUIStyleClass;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -18,9 +19,16 @@ public class StyleDoc
         super(_orig.getWrapped());
     }
 
-    public ICss3Properties getStyle() {
-        ICss3Properties style = new RootCss3StyleClass();
-
+    public IGUIStyleClass getStyle() {
+        GUIStyleClass style = new GUIStyleClass(null);
+        String script = (String) getTag("style");
+        if (script != null)
+            try {
+                style.parse(script);
+            } catch (ParseException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        return style;
     }
 
 }

@@ -6,9 +6,9 @@ import net.bodz.bas.c.javax.vecmath.ColumnVectors;
 import net.bodz.bas.geom.spec0_f.tr.MatrixTransformer2d;
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFillPattern;
+import net.bodz.bas.gui.spec0.IFillType;
 import net.bodz.bas.gui.spec0.IFontType;
-import net.bodz.bas.gui.spec0.IStroke;
+import net.bodz.bas.gui.spec0.IStrokeType;
 
 public abstract class AbstractDrawContext2d
         implements IDrawContext2d {
@@ -17,9 +17,9 @@ public abstract class AbstractDrawContext2d
 
     IColor color;
     IColor fillColor;
-    IStroke stroke;
-    IFillPattern pattern;
-    IFillPattern fillPattern;
+    IStrokeType stroke;
+    IFillType pattern;
+    IFillType fillPattern;
     IFontType font;
 
     public MatrixTransformer2d getTransformer() {
@@ -51,32 +51,32 @@ public abstract class AbstractDrawContext2d
     }
 
     @Override
-    public IStroke getStroke() {
+    public IStrokeType getStroke() {
         return stroke;
     }
 
     @Override
-    public void setStroke(IStroke stroke) {
+    public void setStroke(IStrokeType stroke) {
         this.stroke = stroke;
     }
 
     @Override
-    public IFillPattern getPattern() {
+    public IFillType getPattern() {
         return pattern;
     }
 
     @Override
-    public void setPattern(IFillPattern pattern) {
+    public void setPattern(IFillType pattern) {
         this.pattern = pattern;
     }
 
     @Override
-    public IFillPattern getFillPattern() {
+    public IFillType getFillPattern() {
         return fillPattern;
     }
 
     @Override
-    public void setFillPattern(IFillPattern fillPattern) {
+    public void setFillPattern(IFillType fillPattern) {
         this.fillPattern = fillPattern;
     }
 
