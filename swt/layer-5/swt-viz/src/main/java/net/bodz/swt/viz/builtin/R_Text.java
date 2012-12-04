@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import net.bodz.bas.gui.css3.Border;
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.gui.xjdoc.Border;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.model.meta.MaxLength;
 import net.bodz.bas.potato.ref.IRefDescriptor;

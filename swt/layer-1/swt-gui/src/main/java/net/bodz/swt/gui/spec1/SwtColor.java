@@ -1,22 +1,46 @@
 package net.bodz.swt.gui.spec1;
 
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 
 import net.bodz.bas.gui.spec0.color.AbstractRGBA32Color;
+import net.bodz.bas.gui.spec0.color.IColor_RGB24;
+import net.bodz.bas.model.IDisposable;
 
 public class SwtColor
-        extends AbstractRGBA32Color {
+        extends AbstractRGBA32Color
+        implements IDisposable {
 
     private static final long serialVersionUID = 1L;
 
     public Color color;
+
+    public SwtColor(Device device, IColor_RGB24 color) {
+        if (device == null)
+            device = Display.getCurrent();
+        this.color = new Color(device, color.getRed8(), color.getGreen8(), color.getBlue8());
+    }
 
     public SwtColor(Color color) {
         assert color != null;
         this.color = color;
     }
 
+    public static Color convert(Device device, IColor_RGB24 color) {
+        Color _color = new Color(device, color.getRed8(), color.getGreen8(), color.getBlue8());
+        return _color;
+    }
+
+    // TODO should finalize be necessary..?
+    // @Override
+    // protected void finalize()
+    // throws Throwable {
+    // dispose();
+    // }
+
+    @Override
     public void dispose() {
         color.dispose();
     }

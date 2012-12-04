@@ -1,7 +1,5 @@
 package net.bodz.swt.viz.builtin;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -33,8 +31,8 @@ public class R_CallObject
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
-            int style)
+    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass styleClass, Composite parent,
+            int _style)
             throws RenderException, SWTException {
 
         if (!(entry instanceof InvocationRefcomp))
@@ -42,9 +40,9 @@ public class R_CallObject
 
         final InvocationRefcomp refcomp = (InvocationRefcomp) entry;
         InvocationDescriptor descriptor = refcomp.getDescriptor();
-        SwtVizStyleClass hint = descriptor.getStyle();
+        SwtVizStyleClass style = descriptor.getStyle();
 
-        final Composite comp = gridStyle.renderStruct(rc, refcomp, parent, style);
+        final Composite comp = gridStyle.renderStruct(rc, refcomp, parent, _style);
         final Composite opbar = new Composite(comp, SWT.NONE);
         opbar.setLayoutData(new GridData(//
                 SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -54,7 +52,7 @@ public class R_CallObject
         opbar.setLayout(rowLayout);
         {
             final Button button = new Button(opbar, SWT.NONE);
-            String label = hint.getLabel();
+            String label = style.getLabel();
             if (label == null)
                 label = entry.getName();
             // hint.getIcon();

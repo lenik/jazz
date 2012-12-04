@@ -58,13 +58,30 @@ public class GUIStyleClass
     }
 
     @Override
-    public String getTooltip() {
-        return getProperty("tooltip");
+    public IFontType getFontType() {
+        return null;
     }
 
     @Override
-    public void setTooltip(String tooltip) {
-        setProperty("tooltip", tooltip);
+    public void setFontType(IFontType fontType) {
+    }
+
+    @Override
+    public IStrokeType getStrokeType() {
+        return null;
+    }
+
+    @Override
+    public void setStrokeType(IStrokeType strokeType) {
+    }
+
+    @Override
+    public IFillType getFillType() {
+        return null;
+    }
+
+    @Override
+    public void setFillType(IFillType fillType) {
     }
 
 }

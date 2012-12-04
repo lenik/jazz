@@ -2,11 +2,11 @@ package net.bodz.swt.gui.a;
 
 import java.lang.reflect.AnnotatedElement;
 
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.gui.xjdoc.Font;
 import net.bodz.bas.model.IFactory;
 
 public class FontAnnotation {

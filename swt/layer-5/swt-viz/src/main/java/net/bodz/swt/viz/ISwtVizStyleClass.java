@@ -8,6 +8,12 @@ public interface ISwtVizStyleClass
     @Override
     ISwtVizStyleClass getParent();
 
+    // @Override
+    // SwtColor getColor();
+
+    // @Override
+    // SwtColor getBackgroundColor();
+
     String getMenuItem();
 
     void setMenuItem(String menuItem);

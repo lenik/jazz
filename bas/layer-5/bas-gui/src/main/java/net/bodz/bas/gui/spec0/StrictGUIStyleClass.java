@@ -9,7 +9,9 @@ public class StrictGUIStyleClass
     Boolean enabled;
     Boolean readOnly;
     Integer tabOrder;
-    String tooltip;
+    IFontType fontType;
+    IStrokeType strokeType;
+    IFillType fillType;
 
     @Override
     public IGUIStyleClass getParent() {
@@ -47,13 +49,33 @@ public class StrictGUIStyleClass
     }
 
     @Override
-    public String getTooltip() {
-        return tooltip;
+    public IFontType getFontType() {
+        return fontType;
     }
 
     @Override
-    public void setTooltip(String tooltip) {
-        this.tooltip = tooltip;
+    public void setFontType(IFontType fontType) {
+        this.fontType = fontType;
+    }
+
+    @Override
+    public IStrokeType getStrokeType() {
+        return strokeType;
+    }
+
+    @Override
+    public void setStrokeType(IStrokeType strokeType) {
+        this.strokeType = strokeType;
+    }
+
+    @Override
+    public IFillType getFillType() {
+        return fillType;
+    }
+
+    @Override
+    public void setFillType(IFillType fillType) {
+        this.fillType = fillType;
     }
 
 }

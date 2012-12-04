@@ -20,8 +20,16 @@ public interface IGUIStyleClass
 
     void setTabOrder(Integer tabOrder);
 
-    String getTooltip();
+    IFontType getFontType();
 
-    void setTooltip(String tooltip);
+    void setFontType(IFontType fontType);
+
+    IStrokeType getStrokeType();
+
+    void setStrokeType(IStrokeType strokeType);
+
+    IFillType getFillType();
+
+    void setFillType(IFillType fillType);
 
 }
