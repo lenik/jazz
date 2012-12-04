@@ -91,18 +91,18 @@ public class SimplePotatoElement
     }
 
     @Override
-    public Set<String> getTags() {
+    public Set<String> getTagNames() {
         return tags;
     }
 
     @Override
-    public void addTag(String tag) {
-        tags.add(tag);
+    public void addTagName(String tagName) {
+        tags.add(tagName);
     }
 
     @Override
-    public void removeTag(String tag) {
-        tags.remove(tag);
+    public void removeTagName(String tagName) {
+        tags.remove(tagName);
     }
 
 }

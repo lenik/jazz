@@ -17,8 +17,8 @@ public interface IEditableElement
 
     void setModifiers(int modifiers);
 
-    void addTag(String tag);
+    void addTagName(String tagName);
 
-    void removeTag(String tag);
+    void removeTagName(String tagName);
 
 }

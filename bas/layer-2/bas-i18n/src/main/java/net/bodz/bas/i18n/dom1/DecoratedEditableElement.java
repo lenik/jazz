@@ -53,13 +53,13 @@ public class DecoratedEditableElement
     }
 
     @Override
-    public void addTag(String tag) {
-        getWrapped().addTag(tag);
+    public void addTagName(String tag) {
+        getWrapped().addTagName(tag);
     }
 
     @Override
-    public void removeTag(String tag) {
-        getWrapped().removeTag(tag);
+    public void removeTagName(String tag) {
+        getWrapped().removeTagName(tag);
     }
 
 }

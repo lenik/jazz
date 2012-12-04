@@ -22,7 +22,7 @@ public abstract class TransientArtifactElement
 
     transient int userLevel;
     transient int modifiers;
-    transient Set<String> tags = new HashSet<String>();
+    transient Set<String> tagNames = new HashSet<String>();
 
     public TransientArtifactElement() {
     }
@@ -85,22 +85,22 @@ public abstract class TransientArtifactElement
     }
 
     @Override
-    public Set<String> getTags() {
-        return tags;
+    public Set<String> getTagNames() {
+        return tagNames;
     }
 
     @Override
-    public void addTag(String tag) {
-        if (tag == null)
-            throw new NullPointerException("tag");
-        tags.add(tag);
+    public void addTagName(String tagName) {
+        if (tagName == null)
+            throw new NullPointerException("tagName");
+        tagNames.add(tagName);
     }
 
     @Override
-    public void removeTag(String tag) {
-        if (tag == null)
-            throw new NullPointerException("tag");
-        tags.remove(tag);
+    public void removeTagName(String tagName) {
+        if (tagName == null)
+            throw new NullPointerException("tagName");
+        tagNames.remove(tagName);
     }
 
 }
