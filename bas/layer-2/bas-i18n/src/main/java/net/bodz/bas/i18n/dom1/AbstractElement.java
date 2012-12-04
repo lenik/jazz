@@ -41,7 +41,7 @@ public abstract class AbstractElement
     }
 
     @Override
-    public Set<String> getTags() {
+    public Set<String> getTagNames() {
         return Collections.emptySet();
     }
 

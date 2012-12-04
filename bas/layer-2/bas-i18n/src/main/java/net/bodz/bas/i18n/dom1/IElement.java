@@ -72,6 +72,6 @@ public interface IElement {
      * 
      * @return Empty string array if no tag is specified.
      */
-    Set<String> getTags();
+    Set<String> getTagNames();
 
 }

@@ -46,8 +46,8 @@ public class DecoratedElement
     }
 
     @Override
-    public Set<String> getTags() {
-        return getWrapped().getTags();
+    public Set<String> getTagNames() {
+        return getWrapped().getTagNames();
     }
 
 }

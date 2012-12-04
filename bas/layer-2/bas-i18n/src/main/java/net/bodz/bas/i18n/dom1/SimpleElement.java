@@ -17,7 +17,7 @@ public class SimpleElement
     DomainString helpDoc;
     int userLevel;
     int modifiers;
-    Set<String> tags;
+    Set<String> tagNames;
 
     @Override
     public String getName() {
@@ -75,25 +75,25 @@ public class SimpleElement
     }
 
     @Override
-    public synchronized Set<String> getTags() {
-        if (tags == null)
-            tags = new HashSet<String>();
-        return tags;
+    public synchronized Set<String> getTagNames() {
+        if (tagNames == null)
+            tagNames = new HashSet<String>();
+        return tagNames;
     }
 
     @Override
-    public void addTag(String tag) {
-        if (tag == null)
-            throw new NullPointerException("tag");
-        getTags().add(tag);
+    public void addTagName(String tagName) {
+        if (tagName == null)
+            throw new NullPointerException("tagName");
+        getTagNames().add(tagName);
     }
 
     @Override
-    public void removeTag(String tag) {
-        if (tag == null)
-            throw new NullPointerException("tag");
-        if (tags != null)
-            tags.remove(tag);
+    public void removeTagName(String tagName) {
+        if (tagName == null)
+            throw new NullPointerException("tagName");
+        if (tagNames != null)
+            tagNames.remove(tagName);
     }
 
 }
