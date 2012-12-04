@@ -14,7 +14,7 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 
-public abstract class SWTRenderer
+public abstract class SwtRenderer
         implements IRenderer, II18nCapable {
 
     /**
@@ -27,15 +27,15 @@ public abstract class SWTRenderer
         if (entry == null)
             throw new NullPointerException("render var");
         try {
-            if (context != null && !(context instanceof SWTRenderContext))
-                throw new OutOfDomainException("context", context, SWTRenderContext.class);
+            if (context != null && !(context instanceof SwtRenderContext))
+                throw new OutOfDomainException("context", context, SwtRenderContext.class);
 
             SwtVizStyleClass stylesheet = null;
             if (entry instanceof IRefEntry_SWT<?>)
                 stylesheet = ((IRefEntry_SWT<?>) entry).getStyle();
 
             // XXX - or create a new swt-context to include the object-context?
-            SWTRenderContext rc = null; // (SWTRenderContext) context;
+            SwtRenderContext rc = null; // (SWTRenderContext) context;
 
             return render(rc, entry, stylesheet, null, SWT.NONE);
 
@@ -44,7 +44,7 @@ public abstract class SWTRenderer
         }
     }
 
-    public abstract Control render(SWTRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
+    public abstract Control render(SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
             int style)
             throws RenderException, SWTException;
 

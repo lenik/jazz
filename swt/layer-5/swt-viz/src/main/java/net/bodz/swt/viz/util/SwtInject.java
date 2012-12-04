@@ -8,7 +8,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.swt.viz.IRefEntry_SWT;
 import net.bodz.swt.viz.SwtVizStyleClass;
 
-public class SWTInject {
+public class SwtInject {
 
     public static int styleFx(int styleBits, SwtVizStyleClass style) {
         if (style != null) {

@@ -20,19 +20,19 @@ import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
-import net.bodz.swt.viz.SWTRenderContext;
-import net.bodz.swt.viz.SWTRenderer;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtRenderer;
 import net.bodz.swt.viz.SwtVizStyleClass;
 
 public class R_Date
-        extends SWTRenderer {
+        extends SwtRenderer {
 
     protected String format(Date date) {
         return String.valueOf(date);
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, SwtVizStyleClass style,
+    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, SwtVizStyleClass style,
             Composite parent, int style)
             throws RenderException, SWTException {
 

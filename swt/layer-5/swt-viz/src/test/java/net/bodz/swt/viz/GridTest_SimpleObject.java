@@ -41,7 +41,7 @@ public class GridTest_SimpleObject
             }
         };
 
-        SWTRenderContext rc = new SWTRenderContext();
+        SwtRenderContext rc = new SwtRenderContext();
         IRefEntry_SWT<School> schoolVar = GUIVars.wrap(school);
         GridVisualization style = new GridVisualization();
         try {

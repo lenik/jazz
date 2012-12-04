@@ -11,7 +11,7 @@ import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.layout.LineLayout;
 import net.bodz.swt.c.test.WidgetTester;
 
-public class SWTControls
+public class SwtControls
         extends WidgetTester {
 
     @Test

@@ -1,7 +1,5 @@
 package net.bodz.swt.viz;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import java.io.File;
 import java.util.Date;
 
@@ -17,7 +15,7 @@ import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.swt.viz.builtin.*;
 
-public abstract class SWTVisualization
+public abstract class SwtVisualization
         extends AbstractVisualization {
 
     private static final long serialVersionUID = 4665944902525510516L;
@@ -34,7 +32,7 @@ public abstract class SWTVisualization
 
     }
 
-    public SWTVisualization() {
+    public SwtVisualization() {
         setup();
     }
 
@@ -52,38 +50,38 @@ public abstract class SWTVisualization
     }
 
     @Override
-    public SWTRenderer put(Class<?> key, IRenderer value) {
-        if (!(value instanceof SWTRenderer))
+    public SwtRenderer put(Class<?> key, IRenderer value) {
+        if (!(value instanceof SwtRenderer))
             throw new IllegalArgumentException(tr._("not a SWTRenderer: ") + value);
-        return (SWTRenderer) super.put(key, value);
+        return (SwtRenderer) super.put(key, value);
     }
 
     @Override
     public Control render(Object context, IRefEntry<?> entry)
             throws RenderException {
         try {
-            SWTRenderContext rc = null; // new SWTRenderContext();
+            SwtRenderContext rc = null; // new SWTRenderContext();
             return render(rc, entry);
         } catch (SWTException e) {
             throw new RenderException(e);
         }
     }
 
-    public Control render(SWTRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent, int style)
+    public Control render(SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");
-        SWTRenderer renderer = findRenderer(entry);
+        SwtRenderer renderer = findRenderer(entry);
         if (renderer == null) {
-            String errmesg = tr._("Don\'t know how to render ") + entry.getName();
-            entry = GUIVars.wrap(errmesg);
+            String errMesg = tr._("Don\'t know how to render ") + entry.getName();
+            entry = GUIVars.wrap(errMesg);
             renderer = findRenderer(entry);
-            throw new RenderException(errmesg); // XXX -
+            throw new RenderException(errMesg); // XXX -
         }
         return renderer.render(rc, entry, stylesheet, parent, style);
     }
 
-    public Control render(SWTRenderContext rc, Object constantValue, Composite parent, int style)
+    public Control render(SwtRenderContext rc, Object constantValue, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");
@@ -92,8 +90,8 @@ public abstract class SWTVisualization
     }
 
     @Override
-    protected SWTRenderer findRenderer(IRefEntry<?> entry) {
-        return (SWTRenderer) super.findRenderer(entry);
+    protected SwtRenderer findRenderer(IRefEntry<?> entry) {
+        return (SwtRenderer) super.findRenderer(entry);
     }
 
 }

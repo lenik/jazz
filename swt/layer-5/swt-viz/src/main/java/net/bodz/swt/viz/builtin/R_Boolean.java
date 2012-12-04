@@ -20,15 +20,15 @@ import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.SWTRenderContext;
-import net.bodz.swt.viz.SWTRenderer;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtRenderer;
 import net.bodz.swt.viz.SwtVizStyleClass;
 
 public class R_Boolean
-        extends SWTRenderer {
+        extends SwtRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, SwtVizStyleClass stylesheet,
+    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, SwtVizStyleClass stylesheet,
             Composite parent, int style)
             throws RenderException, SWTException {
 

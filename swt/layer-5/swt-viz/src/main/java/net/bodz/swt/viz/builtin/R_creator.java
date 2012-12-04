@@ -26,12 +26,12 @@ import net.bodz.bas.traits.IParser;
 import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.LineLayout;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.viz.SWTRenderContext;
-import net.bodz.swt.viz.SWTRenderer;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtRenderer;
 import net.bodz.swt.viz.SwtVizStyleClass;
 
 public class R_creator
-        extends SWTRenderer {
+        extends SwtRenderer {
 
     static String createIcon = "/icons/full/obj16/add_obj.gif";
     static String deleteIcon = "/icons/full/obj16/delete_obj.gif";
@@ -49,7 +49,7 @@ public class R_creator
         return null;
     }
 
-    public Control renderTextParserCreator(final SWTRenderContext rc, final DynamicControl parent, final int style,
+    public Control renderTextParserCreator(final SwtRenderContext rc, final DynamicControl parent, final int style,
             final IParser<?> parser) {
         Composite comp = new Composite(parent, style);
         comp.setLayout(new LineLayout());
@@ -80,7 +80,7 @@ public class R_creator
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
+    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
             int style)
             throws RenderException, SWTException {
 
