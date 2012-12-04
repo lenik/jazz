@@ -19,12 +19,12 @@ import net.bodz.bas.potato.model.invoke.InvocationDescriptor;
 import net.bodz.bas.potato.model.invoke.InvocationRefcomp;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.swt.viz.GridVisualization;
-import net.bodz.swt.viz.SWTRenderContext;
-import net.bodz.swt.viz.SWTRenderer;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtRenderer;
 import net.bodz.swt.viz.SwtVizStyleClass;
 
 public class R_CallObject
-        extends SWTRenderer {
+        extends SwtRenderer {
 
     protected final GridVisualization gridStyle;
 
@@ -33,7 +33,7 @@ public class R_CallObject
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
+    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
             int style)
             throws RenderException, SWTException {
 

@@ -1,7 +1,5 @@
 package net.bodz.swt.viz;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Image;
@@ -91,7 +89,7 @@ public class GridVisualization
         return grid;
     }
 
-    void renderChild(final SWTRenderContext rc, Composite grid, IRefEntry<?> entry, SwtVizStyleClass stylesheet)
+    void renderChild(final SwtRenderContext rc, Composite grid, IRefEntry<?> entry, SwtVizStyleClass style)
             throws RenderException, SWTException {
         IRefDescriptor descriptor = entry.getDescriptor();
         String name = descriptor.getName();
@@ -99,7 +97,7 @@ public class GridVisualization
         // Column #1
         Label iconLabel = new Label(grid, SWT.NONE);
         try {
-            Image icon = stylesheet == null ? null : stylesheet.getIcon();
+            Image icon = style == null ? null : style.getIcon();
             if (icon == null) {
                 String iconPath;
                 int modifiers = descriptor.getModifiers();
@@ -124,7 +122,7 @@ public class GridVisualization
 
         // Column #2
         Label label = new Label(grid, SWT.NONE);
-        String labelString = stylesheet == null ? null : stylesheet.getLabel();
+        String labelString = style == null ? null : style.getLabel();
         if (labelString == null)
             labelString = name;
         if (labelString != null)
@@ -132,7 +130,7 @@ public class GridVisualization
 
         // Column #3
         Control child;
-        child = GridVisualization.this.render(rc, entry, grid, styleFx(SWT.NONE, stylesheet));
+        child = GridVisualization.this.render(rc, entry, grid, styleFx(SWT.NONE, style));
 
         Point iconz = iconLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point labelz = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -152,7 +150,7 @@ public class GridVisualization
         label.setLayoutData(labeld);
         child.setLayoutData(childd);
 
-        rc.addEffects(child, stylesheet);
+        rc.addEffects(child, style);
     }
 
 }

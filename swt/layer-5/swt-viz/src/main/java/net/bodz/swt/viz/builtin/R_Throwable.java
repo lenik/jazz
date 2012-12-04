@@ -31,15 +31,15 @@ import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.api.AbstractCommand;
 import net.bodz.swt.gui.api.ICommand;
-import net.bodz.swt.viz.SWTRenderContext;
-import net.bodz.swt.viz.SWTRenderer;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtRenderer;
 import net.bodz.swt.viz.SwtVizStyleClass;
 
 /**
  * @test R_ThrowableTest
  */
 public class R_Throwable
-        extends SWTRenderer {
+        extends SwtRenderer {
 
     static final String expandedIcon = "/icons/full/obj16/remove_correction.gif";
     static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";
@@ -51,7 +51,7 @@ public class R_Throwable
     static boolean showDebug = SystemProperties.isDevelopMode();
 
     @Override
-    public Control render(final SWTRenderContext rc, final IRefEntry<?> entry, final SwtVizStyleClass stylesheet,
+    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, final SwtVizStyleClass stylesheet,
             final Composite parent, final int style)
             throws RenderException, SWTException {
 
