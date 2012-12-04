@@ -6,7 +6,7 @@ import net.bodz.bas.gui.spec0.IGUIStyleClass;
 
 public class SwtVizStyleClass
         extends GUIStyleClass
-        implements ISwtVizStyleClass {
+        implements ISwtVizStyleClass /* , IDisposable */{
 
     public SwtVizStyleClass(IGUIStyleClass parent) {
         super(parent);
@@ -27,6 +27,20 @@ public class SwtVizStyleClass
         }
         super.setParent(parent);
     }
+
+    // @Override
+    // public SwtColor getColor() {
+    // IColor color = super.getColor();
+    // SwtColor swtColor = (SwtColor) color;
+    // return swtColor;
+    // }
+
+    // @Override
+    // public SwtColor getBackgroundColor() {
+    // IColor color = super.getBackgroundColor();
+    // SwtColor swtColor = (SwtColor) color;
+    // return swtColor;
+    // }
 
     @Override
     public String getMenuItem() {

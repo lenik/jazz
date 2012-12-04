@@ -21,7 +21,7 @@ import net.bodz.swt.viz.builtin.R_CallObject;
 import net.bodz.swt.viz.util.ModifierIcon;
 
 public class GridVisualization
-        extends SWTVisualization {
+        extends SwtVisualization {
 
     private static final long serialVersionUID = -6476584130668546414L;
 
@@ -74,17 +74,17 @@ public class GridVisualization
         retvalIcons = new ModifierIcon("/icons/full/obj16/field_default_obj.gif");
     }
 
-    public Composite renderStruct(final SWTRenderContext rc, IRefcomp<?> struct, Composite parent, int style)
+    public Composite renderStruct(final SwtRenderContext rc, IRefcomp<?> struct, Composite parent, int _style)
             throws RenderException, SWTException {
-        Composite grid = new Composite(parent, style);
+        Composite grid = new Composite(parent, _style);
         // icon label control
         GridLayout gridLayout = new GridLayout(3, false);
         grid.setLayout(gridLayout);
         for (IRefEntry<?> ent : struct.getRefEntries()) {
-            SwtVizStyleClass styl = null;
+            SwtVizStyleClass style = null;
             if (ent instanceof IRefEntry_SWT<?>)
-                styl = ((IRefEntry_SWT<?>) ent).getStyle();
-            renderChild(rc, grid, ent, styl);
+                style = ((IRefEntry_SWT<?>) ent).getStyle();
+            renderChild(rc, grid, ent, style);
         }
         return grid;
     }

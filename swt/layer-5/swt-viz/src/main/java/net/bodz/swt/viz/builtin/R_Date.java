@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import net.bodz.bas.gui.css3.Border;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.bas.model.meta.MaxLength;
 import net.bodz.bas.potato.ref.IRefDescriptor;
@@ -32,7 +33,7 @@ public class R_Date
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, SwtVizStyleClass style,
+    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, SwtVizStyleClass styleClass,
             Composite parent, int style)
             throws RenderException, SWTException {
 

@@ -39,10 +39,10 @@ public class R_creator
     Image getIcon(AnnotatedElement... tries)
             throws CreateException {
         for (AnnotatedElement elm : tries) {
-            SwtVizStyleClass hint = SwtVizStyleClass.get(elm);
-            if (hint == null)
+            SwtVizStyleClass style = SwtVizStyleClass.get(elm);
+            if (style == null)
                 continue;
-            Image icon = hint.getIcon();
+            Image icon = style.getIcon();
             if (icon == null)
                 continue;
         }
@@ -80,8 +80,8 @@ public class R_creator
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
-            int style)
+    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass styleClass, Composite parent,
+            int _style)
             throws RenderException, SWTException {
 
         Menu createMenu = new Menu(parent);
@@ -89,7 +89,7 @@ public class R_creator
         IParser<?> parser;
         try {
             parser = Traits.getTrait(type, IParser.class);
-            SwtVizStyleClass hint = SwtVizStyleClass.get(type);
+            SwtVizStyleClass style = SwtVizStyleClass.get(type);
             Image icon = SwtVizStyleClass.get(type).getIcon();
 
         } catch (CreateException e) {
@@ -107,14 +107,14 @@ public class R_creator
         }
 
         for (Constructor<?> ctor : type.getConstructors()) {
-            SwtVizStyleClass hint = SwtVizStyleClass.get(ctor);
-            String label = hint.getLabel();
+            SwtVizStyleClass style = SwtVizStyleClass.get(ctor);
+            String label = style.getLabel();
             if (label == null) {
                 String pt = TypeName.join(", ", true, ctor.getParameterTypes());
                 label = tr._("new(") + pt + ")";
             }
         }
-        Composite comp = new Composite(parent, style);
+        Composite comp = new Composite(parent, _style);
         Button createButton = new Button(comp, SWT.FLAT);
         createButton.setImage(SWTResources.getImageRes("/icons/full/obj16/add_obj.gif"));
         createButton.addSelectionListener(new SelectionAdapter() {

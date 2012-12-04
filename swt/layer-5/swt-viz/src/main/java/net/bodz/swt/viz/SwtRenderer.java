@@ -30,22 +30,22 @@ public abstract class SwtRenderer
             if (context != null && !(context instanceof SwtRenderContext))
                 throw new OutOfDomainException("context", context, SwtRenderContext.class);
 
-            SwtVizStyleClass stylesheet = null;
+            SwtVizStyleClass style = null;
             if (entry instanceof IRefEntry_SWT<?>)
-                stylesheet = ((IRefEntry_SWT<?>) entry).getStyle();
+                style = ((IRefEntry_SWT<?>) entry).getStyle();
 
             // XXX - or create a new swt-context to include the object-context?
             SwtRenderContext rc = null; // (SWTRenderContext) context;
 
-            return render(rc, entry, stylesheet, null, SWT.NONE);
+            return render(rc, entry, style, null, SWT.NONE);
 
         } catch (SWTException e) {
             throw new RenderException(e);
         }
     }
 
-    public abstract Control render(SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent,
-            int style)
+    public abstract Control render(SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet,
+            Composite parent, int swtStyle)
             throws RenderException, SWTException;
 
     protected void bindProperty(final IRefEntry<?> entry, final Control control, final IValueChangeListener listener) {
