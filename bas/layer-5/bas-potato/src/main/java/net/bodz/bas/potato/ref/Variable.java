@@ -38,7 +38,7 @@ public class Variable<T>
     }
 
     @Override
-    public void set(Object value) {
+    public void set(T value) {
         this.value = valueType.cast(value);
     }
 
