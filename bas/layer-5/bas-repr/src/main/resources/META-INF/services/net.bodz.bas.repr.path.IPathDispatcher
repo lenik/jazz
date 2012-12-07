@@ -1,0 +1,8 @@
+net.bodz.bas.repr.path.builtin.FieldPathDispatcher
+net.bodz.bas.repr.path.builtin.ListPathDispatcher
+net.bodz.bas.repr.path.builtin.MapPathDispatcher
+net.bodz.bas.repr.path.builtin.MethodPathDispatcher
+net.bodz.bas.repr.path.builtin.NamedNodePathDispatcher
+net.bodz.bas.repr.path.builtin.OidPathDispatcher
+net.bodz.bas.repr.path.builtin.OverriddenPathDispatcher
+net.bodz.bas.repr.path.builtin.PropertyPathDispatcher
