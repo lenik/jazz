@@ -17,7 +17,7 @@ public class ConstVariable<T>
     }
 
     @Override
-    public void set(Object value) {
+    public void set(T value) {
         throw new ReadOnlyException("Can't mutate a const ref");
     }
 

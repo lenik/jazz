@@ -9,6 +9,10 @@ public interface Ref<T> {
 
     T get();
 
+    /**
+     * @throws ClassCastException
+     *             If value's type is illegal.
+     */
     void set(T value);
 
     void remove();

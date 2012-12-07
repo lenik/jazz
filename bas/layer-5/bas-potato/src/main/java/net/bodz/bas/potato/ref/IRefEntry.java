@@ -11,12 +11,4 @@ public interface IRefEntry<T>
 
     // void setName(String name);
 
-    /**
-     * 
-     * @throws ClassCastException
-     *             If value's type is illegal.
-     */
-    @Override
-    void set(Object value);
-
 }
