@@ -11,6 +11,8 @@ import java.lang.annotation.Target;
  * The annotation is inheritable, so only need to annotate on the base type.
  * 
  * The result index file is <code>META-INF/services/&lt;base-type&gt;</code> by default.
+ * 
+ * @see EveryIndexedTypeCollector
  */
 @IndexedType(includeAbstract = true)
 // @Documented

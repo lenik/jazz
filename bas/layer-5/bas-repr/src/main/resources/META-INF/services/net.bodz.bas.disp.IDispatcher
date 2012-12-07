@@ -1,8 +1,0 @@
-net.bodz.bas.disp.FieldDispatcher
-net.bodz.bas.disp.builtin.DynamicDispatcher
-net.bodz.bas.disp.builtin.ListDispatcher
-net.bodz.bas.disp.builtin.MapDispatcher
-net.bodz.bas.disp.builtin.MethodDispatcher
-net.bodz.bas.disp.builtin.NamedNodeDispatcher
-net.bodz.bas.disp.builtin.OidDispatcher
-net.bodz.bas.disp.builtin.PropertyDispatcher
