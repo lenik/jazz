@@ -3,8 +3,8 @@ package net.bodz.bas.util.order;
 import java.util.Comparator;
 import java.util.Map.Entry;
 
-public class EntryKeyComparator<K, V>
-        extends AbstractNonNullComparator<Entry<K, V>> {
+public class EntryKeyComparator<K>
+        extends AbstractNonNullComparator<Entry<K, ?>> {
 
     final Comparator<? super K> cmp;
 
@@ -15,14 +15,14 @@ public class EntryKeyComparator<K, V>
     }
 
     @Override
-    public int compareNonNull(Entry<K, V> o1, Entry<K, V> o2) {
+    public int compareNonNull(Entry<K, ?> o1, Entry<K, ?> o2) {
         K ak = o1.getKey();
         K bk = o2.getKey();
         return cmp.compare(ak, bk);
     }
 
-    public static final <K, V> EntryKeyComparator<K, V> getNaturalInstance() {
-        return new EntryKeyComparator<K, V>(ComparableComparator.getRawInstance());
+    public static final <K> EntryKeyComparator<K> getNaturalInstance() {
+        return new EntryKeyComparator<K>(ComparableComparator.getRawInstance());
     }
 
 }
