@@ -10,6 +10,8 @@ public class URLSchemes {
      * VFS-Protocol => JDK-Protocol
      * 
      * These protocol names are found in the package name: sun.net.www.protocol.*.Handler
+     * 
+     * See also: sun.net.www.protocol.jar.Handler
      */
     static final Set<String> schemeNames;
     static final Map<String, URLFormat> schemeFormatMap;
