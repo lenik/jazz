@@ -1,31 +1,23 @@
 package net.bodz.bas.c.java.io;
 
-import java.io.File;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 public class FilePathTest
         extends Assert {
 
-    static Object[] _(Object... args) {
-        return args;
-    }
-
     @Test
     public void testGetRelativeName() {
         class D {
-            void o(Object[] input, String expected) {
-                File start = new File((String) input[0]);
-                File file = new File((String) input[1]);
-                String actual = FilePath.getRelativeName(file, start);
+            void o(String expected, String ref, String path) {
+                String actual = FilePath.getRelativePath(path, ref);
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o(_("a", "a/b"), "b");
-        d.o(_("a/", "a/b"), "b");
-        d.o(_("a/b", "a/b"), "");
+        d.o("..",/* input */"a/b", "a");
+        d.o(".",/* input */"a/b", "a/");
+        d.o("b",/* input */"a/b", "a/b");
     }
 
 }

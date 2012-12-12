@@ -67,30 +67,57 @@ public class FilePath {
     /**
      * @param path
      *            Should be in canonical form
-     * @param origPath
+     * @param ref
      *            The start directory where <code>path</code> is originated. Should be in canonical
      *            form, with no trailing slash (/) unless it's the root.
-     * @return <code>null</code> if the given <code>path</code> isn't with-in the
-     *         <code>origPath</code>, or the relative representation of <code>path</code> relative
-     *         to <code>origPath</code>.
+     * @return The relative representation of <code>path</code> relative to <code>ref</code>.
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    public static String getRelativeName(String path, String origPath, char fileSeparator) {
-        int len = origPath.length();
-        while (origPath.charAt(len - 1) == fileSeparator)
-            origPath = origPath.substring(0, --len);
-        if (!path.startsWith(origPath))
-            return null;
-        if (path.length() == len)
-            return ".";
-        if (path.charAt(len) == fileSeparator) {
-            String relative = path.substring(len + 1);
-            if (relative.isEmpty())
-                relative = ".";
-            return relative;
+    public static String getRelativePath(String path, String ref, char fileSeparator) {
+        if (ref.startsWith(path))
+            if (ref.length() > path.length() && ref.charAt(path.length()) == '/') {
+                ref = ref.substring(path.length());
+                StringBuilder result = new StringBuilder(ref.length());
+                for (int i = 0; i < ref.length(); i++)
+                    if (ref.charAt(i) == '/') {
+                        if (result.length() != 0)
+                            result.append('/');
+                        result.append("..");
+                    }
+                return result.toString();
+            }
+
+        int clen = Math.min(path.length(), ref.length());
+        for (int i = 0; i < clen; i++) {
+            if (path.charAt(i) != ref.charAt(i)) {
+                clen = i;
+                break;
+            }
         }
-        return null;
+
+        int lastSlash = path.lastIndexOf('/', clen);
+        if (lastSlash == -1)
+            clen = 0;
+        else
+            clen = lastSlash + 1;
+
+        StringBuilder result = new StringBuilder(ref.length() + path.length() - clen);
+        // result.append(path.substring(0, clen));
+
+        path = path.substring(clen);
+        ref = ref.substring(clen);
+
+        int refLen = ref.length();
+        for (int i = 0; i < refLen; i++)
+            if (ref.charAt(i) == '/')
+                result.append("../");
+        result.append(path);
+
+        if (result.length() == 0)
+            return ".";
+        else
+            return result.toString();
     }
 
     /**
@@ -100,8 +127,8 @@ public class FilePath {
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    public static String getRelativeName(String path, String origPath) {
-        return getRelativeName(path, origPath, fileSeparator);
+    public static String getRelativePath(String path, String ref) {
+        return getRelativePath(path, ref, fileSeparator);
     }
 
     /**
@@ -111,10 +138,10 @@ public class FilePath {
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    public static String getRelativeName(File file, File origFile) {
+    public static String getRelativePath(File file, File ref) {
         String path = canoniOf(file).getPath();
-        String origPath = canoniOf(origFile).getPath();
-        return getRelativeName(path, origPath, fileSeparator);
+        String refPath = canoniOf(ref).getPath();
+        return getRelativePath(path, refPath, fileSeparator);
     }
 
     /**
@@ -124,9 +151,8 @@ public class FilePath {
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    public static String getRelativeName(URL url, URL origUrl) {
-        String relativeName = getRelativeName(url.getPath(), origUrl.getPath(), '/');
-        return relativeName;
+    public static String getRelativePath(URL url, URL ref) {
+        return getRelativePath(url.getPath(), ref.getPath(), '/');
     }
 
     /**
@@ -136,8 +162,8 @@ public class FilePath {
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    public static String getRelativeName(URI uri, URI origUri) {
-        return getRelativeName(uri.getPath(), origUri.getPath(), '/');
+    public static String getRelativePath(URI uri, URI ref) {
+        return getRelativePath(uri.getPath(), ref.getPath(), '/');
     }
 
     /**

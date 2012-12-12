@@ -82,7 +82,7 @@ public abstract class DerSortedMap<K, V>
 
         @Override
         public Iterator<Entry<K, V>> iterator() {
-            return Iterators2.weave(new EntryKeyComparator<K, V>(comparator()), //
+            return Iterators2.weave(new EntryKeyComparator<K>(comparator()), //
                     new PIterator(), //
                     qsm.entrySet().iterator());
         }
