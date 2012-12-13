@@ -12,12 +12,13 @@
     <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-t2</module>
         <module>bas-context</module>
         <module>bas-geom</module>
         <module>bas-i18n</module>
         <module>bas-io</module>
         <module>bas-script</module>
+        <module>bas-std</module>
+        <module>bas-t2</module>
         <module>bas-trait-impl</module>
     </modules>
     <name>BAS :: Layer 2</name>

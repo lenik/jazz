@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.util;
+package net.bodz.bas.std.rfc.mime;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,16 +14,16 @@ public class ContentTypes {
         if (preferredExtension == null)
             throw new NullPointerException("preferredExtension");
 
-        ContentType contentType = new ContentType(name, preferredExtension);
+        ContentType m = new ContentType(name, preferredExtension);
 
-        nameMap.put(name, contentType);
+        nameMap.put(name, m);
 
-        extensionMap.put(preferredExtension, contentType);
+        extensionMap.put(preferredExtension, m);
         if (altExtensions != null)
             for (String extension : altExtensions)
-                extensionMap.put(extension, contentType);
+                extensionMap.put(extension, m);
 
-        return contentType;
+        return m;
     }
 
     /** Atom feeds */

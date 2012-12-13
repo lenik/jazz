@@ -5,8 +5,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.vfs.util.ContentType;
-import net.bodz.bas.vfs.util.ContentTypes;
+import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.std.rfc.mime.ContentTypes;
 
 public class RequestUtils {
 

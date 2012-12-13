@@ -15,8 +15,9 @@ layer-2/ 基础数据类型扩展
     bas-t2
     bas-context
     bas-geom
-    bas-i18n
     bas-io
+    bas-i18n
+    bas-std
     bas-trait-impl
     bas-script
     

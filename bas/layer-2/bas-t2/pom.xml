@@ -18,5 +18,5 @@
             <artifactId>collections-generic</artifactId>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Collection</name>
+    <name>BAS :: Layer 2 :: T2</name>
 </project>
