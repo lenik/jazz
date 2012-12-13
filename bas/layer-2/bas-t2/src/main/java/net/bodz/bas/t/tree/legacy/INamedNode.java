@@ -1,9 +1,11 @@
-package net.bodz.bas.repr.naming;
+package net.bodz.bas.t.tree.legacy;
 
 import java.util.Collection;
 
+import net.bodz.bas.t.order.IPriority;
+
 public interface INamedNode
-        extends INamed/* , IOperational */{
+        extends IPriority {
 
     /**
      * The priority is used for reversed object lookup.

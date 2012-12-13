@@ -1,4 +1,4 @@
-package net.bodz.bas.repr.naming;
+package net.bodz.bas.t.tree.legacy;
 
 import java.util.Comparator;
 

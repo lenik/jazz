@@ -23,7 +23,7 @@ public class PathDispatchServiceTest
                 //
                 ListPathDispatcher.class, //
                 MapPathDispatcher.class, //
-                NamedNodePathDispatcher.class, //
+                TreeNodePathDispatcher.class, //
                 FieldPathDispatcher.class, //
                 PropertyPathDispatcher.class, //
                 MethodPathDispatcher.class, //

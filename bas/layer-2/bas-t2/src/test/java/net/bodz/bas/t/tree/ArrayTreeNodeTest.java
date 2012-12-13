@@ -3,6 +3,10 @@ package net.bodz.bas.t.tree;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.t.tree.legacy.ArrayTreeNode;
+import net.bodz.bas.t.tree.legacy.ITreeCallback;
+import net.bodz.bas.t.tree.legacy.TreeNodes;
+
 public class ArrayTreeNodeTest
         extends Assert {
 

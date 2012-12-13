@@ -1,4 +1,4 @@
-package net.bodz.bas.t.tree;
+package net.bodz.bas.t.tree.legacy;
 
 import java.util.ArrayList;
 import java.util.Collections;

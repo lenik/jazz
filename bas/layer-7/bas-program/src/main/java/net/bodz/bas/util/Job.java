@@ -11,7 +11,7 @@ import net.bodz.bas.err.RecoverableExceptionListener;
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.log.Logger;
-import net.bodz.bas.t.tree.ITreeNode;
+import net.bodz.bas.t.tree.legacy.ITreeNode;
 
 public abstract class Job
         implements IJob, ITreeNode<Job> {

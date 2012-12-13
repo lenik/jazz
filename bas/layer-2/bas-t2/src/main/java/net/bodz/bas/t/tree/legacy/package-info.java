@@ -5,5 +5,5 @@
  * 
  * @author Lenik
  */
-package net.bodz.bas.repr.naming;
+package net.bodz.bas.t.tree.legacy;
 
