@@ -1,7 +1,7 @@
 package net.bodz.bas.err;
 
 public class CreateException
-        extends Exception {
+        extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
