@@ -1,14 +1,38 @@
 package net.bodz.bas.t.tree;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
-public interface ITreeNode<self_t> {
+public interface ITreeNode {
+
+    boolean isMutable();
 
     /**
-     * Returned list should not be modified, that is, it may be a copy of the actual children.
+     * Get the parent node.
      * 
-     * @return may <code>null</code> if no child.
+     * @return <code>null</code> if this node doesn't have a parent.
      */
-    List<? extends self_t> getChildren();
+    ITreeNode getParent();
+
+    int size();
+
+    boolean isEmpty();
+
+    boolean contains(String childKey);
+
+    boolean contains(ITreeNode child);
+
+    ITreeNode getChild(String key);
+
+    ITreeNode getDescendant(String path);
+
+    Set<String> childKeySet();
+
+    Collection<ITreeNode> children();
+
+    String keyOf(ITreeNode child);
+
+    List<String> keysOf(ITreeNode child);
 
 }

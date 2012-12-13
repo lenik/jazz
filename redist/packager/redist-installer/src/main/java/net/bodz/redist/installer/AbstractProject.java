@@ -14,7 +14,7 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.meta.build.IVersion;
-import net.bodz.bas.t.tree.ITreeCallback;
+import net.bodz.bas.t.tree.legacy.ITreeCallback;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 import net.bodz.mda.xjdoc.model1.Author;

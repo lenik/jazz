@@ -1,6 +1,6 @@
-package net.bodz.bas.t.tree;
+package net.bodz.bas.t.tree.legacy;
 
-import static net.bodz.bas.t.tree.ITreeCallback.*;
+import static net.bodz.bas.t.tree.legacy.ITreeCallback.*;
 
 import java.util.List;
 

@@ -1,16 +1,15 @@
-package net.bodz.bas.repr.naming;
+package net.bodz.bas.t.tree.legacy;
 
 import java.util.Map.Entry;
 
-import net.bodz.bas.c.type.TypePrMap;
 import net.bodz.bas.err.IllegalUsageException;
 
 public class ReverseLookupRegistry {
 
-    private TypePrMap<NamedNodeSet> typemap;
+    private TypePoMap<NamedNodeSet> typemap;
 
     public ReverseLookupRegistry() {
-        typemap = new TypePrMap<NamedNodeSet>();
+        typemap = new TypePoMap<NamedNodeSet>();
     }
 
     public synchronized <T> void register(INamedNode node) {
@@ -53,7 +52,7 @@ public class ReverseLookupRegistry {
 
         while (floorEntry != null) {
             Class<?> baseType = floorEntry.getKey();
-            NamedNodeSet nodesForSameType = (NamedNodeSet) floorEntry.getValue();
+            NamedNodeSet nodesForSameType = floorEntry.getValue();
 
             if (nodesForSameType != null && !nodesForSameType.isEmpty())
                 return nodesForSameType.iterator().next();
@@ -83,7 +82,7 @@ public class ReverseLookupRegistry {
 
         while (floorEntry != null) {
             Class<?> baseType = floorEntry.getKey();
-            NamedNodeSet nodeSet = (NamedNodeSet) floorEntry.getValue();
+            NamedNodeSet nodeSet = floorEntry.getValue();
 
             if (nodeSet != null) {
                 for (INamedNode _node : nodeSet) {

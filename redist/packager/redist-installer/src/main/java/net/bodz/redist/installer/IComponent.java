@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.i18n.dom1.IElement;
-import net.bodz.bas.t.tree.ITreeNode;
+import net.bodz.bas.t.tree.legacy.ITreeNode;
 
 public interface IComponent
         extends IElement, ITreeNode<IComponent> {

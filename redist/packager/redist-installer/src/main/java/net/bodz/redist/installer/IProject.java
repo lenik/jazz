@@ -5,7 +5,7 @@ import java.util.Map;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.meta.build.IVersion;
-import net.bodz.bas.t.tree.ITreeCallback;
+import net.bodz.bas.t.tree.legacy.ITreeCallback;
 import net.bodz.mda.xjdoc.model1.Author;
 
 public interface IProject
