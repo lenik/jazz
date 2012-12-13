@@ -1,6 +1,7 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
-import static net.bodz.bas.rtx.Negotiation.*;
+import static net.bodz.bas.rtx.Negotiation.list;
+import static net.bodz.bas.rtx.Negotiation.option;
 
 import java.io.File;
 
