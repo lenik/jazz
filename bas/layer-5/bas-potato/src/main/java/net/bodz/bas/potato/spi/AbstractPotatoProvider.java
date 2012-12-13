@@ -3,12 +3,12 @@ package net.bodz.bas.potato.spi;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.potato.model.IConstructorMap;
 import net.bodz.bas.potato.model.IEventMap;
 import net.bodz.bas.potato.model.IMethodMap;
 import net.bodz.bas.potato.model.IPropertyMap;
 import net.bodz.bas.potato.model.IType;
+import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.trait.spi.AbstractTraitsProvider;
 
 public abstract class AbstractPotatoProvider

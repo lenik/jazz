@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.Random;
 
 import net.bodz.bas.c.java.util.Arrays;
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.util.Nullables;
 
 public class ArrayWrapper<T>
         extends AbstractArrayWrapper<T[], T> {

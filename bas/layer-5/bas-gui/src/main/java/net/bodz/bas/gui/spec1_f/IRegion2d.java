@@ -2,7 +2,7 @@ package net.bodz.bas.gui.spec1_f;
 
 import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
-import net.bodz.bas.model.IDisposable;
+import net.bodz.bas.t.object.IDisposable;
 
 public interface IRegion2d
         extends IDisposable {

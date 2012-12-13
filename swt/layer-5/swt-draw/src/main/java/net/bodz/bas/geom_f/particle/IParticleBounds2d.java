@@ -2,7 +2,7 @@ package net.bodz.bas.geom_f.particle;
 
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
-import net.bodz.bas.util.ints.IntIterable;
+import net.bodz.bas.t._int.IntIterable;
 
 public interface IParticleBounds2d {
 

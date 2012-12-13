@@ -2,7 +2,7 @@ package net.bodz.redist.obfuz.util;
 
 import java.util.Date;
 
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.c.object.Nullables;
 
 public class Registrant {
 

@@ -6,9 +6,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.scope.DerArrayList;
-import net.bodz.bas.t.scope.DerList;
-
 public class DerListTest
         extends Assert {
 

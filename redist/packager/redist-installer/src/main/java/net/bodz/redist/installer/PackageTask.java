@@ -8,9 +8,9 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 import net.bodz.bas.ant.TaskLogger;
+import net.bodz.bas.err.ExceptionBuffer;
+import net.bodz.bas.err.RecoverableExceptionEvent;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.util.exception.ExceptionBuffer;
-import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.impl.jdk.JdkFile;

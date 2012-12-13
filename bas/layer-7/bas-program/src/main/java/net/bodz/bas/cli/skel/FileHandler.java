@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.bodz.bas.util.exception.ExceptionLog;
+import net.bodz.bas.err.ExceptionLog;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.util.TempFile;
 

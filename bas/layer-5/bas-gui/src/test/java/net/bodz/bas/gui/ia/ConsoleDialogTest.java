@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.err.ExpectedException;
+import net.bodz.bas.fn.IExecutableX;
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
-import net.bodz.bas.model.IExecutableX;
 
 public class ConsoleDialogTest
         extends Assert {

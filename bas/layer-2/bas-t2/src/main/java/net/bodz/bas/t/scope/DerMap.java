@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.java.util.Iterators;
-import net.bodz.bas.c.java.util.PrefetchedIterator;
+import net.bodz.bas.t.iterator.Iterators;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 /**
  * @test DerMapTest

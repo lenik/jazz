@@ -8,9 +8,9 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.lang.fn.Proc1;
-import net.bodz.bas.util.primitive.IntMath;
-import net.bodz.bas.util.primitive.IntegerCollection;
+import net.bodz.bas.c.primitive.IntMath;
+import net.bodz.bas.c.primitive.IntegerCollection;
+import net.bodz.bas.fn.legacy.Proc1;
 
 public class PermutationTest
         extends Assert {

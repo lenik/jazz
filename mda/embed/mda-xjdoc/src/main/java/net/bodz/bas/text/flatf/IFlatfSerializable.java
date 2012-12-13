@@ -2,7 +2,7 @@ package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
 
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 
 public interface IFlatfSerializable {
 

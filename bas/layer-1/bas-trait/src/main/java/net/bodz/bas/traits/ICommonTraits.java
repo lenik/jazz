@@ -1,6 +1,6 @@
 package net.bodz.bas.traits;
 
-import net.bodz.bas.lang.mi.IQueryable;
+import net.bodz.bas.rtx.IQueryable;
 
 public interface ICommonTraits<T>
         extends IQueryable {

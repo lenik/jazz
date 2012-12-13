@@ -4,10 +4,10 @@ import java.util.Map;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.decl.ParameterType;
+import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.INegotiation.IParameter;
+import net.bodz.bas.rtx.NegotiationException;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;

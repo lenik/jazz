@@ -3,7 +3,7 @@ package net.bodz.swt.c.canvas;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 
-import net.bodz.bas.model.AbstractDecorator;
+import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedCanvasMode
         extends AbstractDecorator<ICanvasMode>

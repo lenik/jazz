@@ -1,8 +1,8 @@
 package net.bodz.bas.c.reflect;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.type.TypeVectorComparator;
-import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.order.AbstractNonNullComparator;
+import net.bodz.bas.t.order.AbstractNonNullComparator;
 
 public class MethodSignatureComparator
         extends AbstractNonNullComparator<MethodSignature> {

@@ -7,9 +7,9 @@ import java.util.NoSuchElementException;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.util.ints.IntIterable;
-import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.bas.util.ints.PrefetchedIntIterator;
+import net.bodz.bas.t._int.IntIterable;
+import net.bodz.bas.t._int.IntIterator;
+import net.bodz.bas.t._int.PrefetchedIntIterator;
 
 public abstract class AbstractParticleBounds2d
         implements IParticleBounds2d {

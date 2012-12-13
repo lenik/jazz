@@ -6,7 +6,7 @@ import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.LocaleColo;
-import net.bodz.bas.util.variant.AbstractTmVariantLookupMap;
+import net.bodz.bas.t.variant.AbstractTmVariantLookupMap;
 
 public abstract class AbstractNLS
         extends AbstractTmVariantLookupMap<String>

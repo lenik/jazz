@@ -2,7 +2,7 @@ package net.bodz.bas.repr.path.util;
 
 import java.util.Iterator;
 
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.c.object.Nullables;
 
 public class SuffixTokens
         implements Iterable<String> {

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public interface IStreamLoading
         extends Cloneable {

@@ -1,6 +1,6 @@
 package net.bodz.bas.trait.spi;
 
-import net.bodz.bas.lang.mi.QueryException;
+import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.trait.util.TraitImplCache;
 
 public class FriendTraitsProvider

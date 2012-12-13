@@ -4,8 +4,8 @@ import net.bodz.bas.c.java.util.array.ArrayWrapper;
 import net.bodz.bas.c.java.util.array.IArrayWrapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.lang.fn.Proc1;
-import net.bodz.bas.util.ints.IntSList;
+import net.bodz.bas.fn.legacy.Proc1;
+import net.bodz.bas.t._int.IntSList;
 
 public class Permutation {
 

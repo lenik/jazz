@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c3.pageflow.AbstractPage;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.PageMethod;
@@ -60,7 +60,7 @@ class DonePage
     }
 
     @Override
-    public TreePath service(ServiceContext context)
+    public PathEntries service(ServiceContext context)
             throws PageException {
         boolean reboot = session.getFlags().isSet(ISession.REBOOT);
         setMethods(new PageMethod(reboot ? "reboot" : "quit"));

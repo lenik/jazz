@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.lang.fn.Pred1;
+import net.bodz.bas.fn.legacy.Pred1;
 
 public class ReflectReverseSearchTest
         extends Assert {

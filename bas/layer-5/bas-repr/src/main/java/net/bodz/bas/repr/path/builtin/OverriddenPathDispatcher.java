@@ -1,10 +1,10 @@
 package net.bodz.bas.repr.path.builtin;
 
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
-import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathDispatchException;
 
 public class OverriddenPathDispatcher
         extends AbstractPathDispatcher {

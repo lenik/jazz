@@ -5,8 +5,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.potato.model.AbstractProperty;
-import net.bodz.bas.util.event.IPropertyChangeListener;
-import net.bodz.bas.util.event.IPropertyChangeSource;
+import net.bodz.bas.t.event.IPropertyChangeListener;
+import net.bodz.bas.t.event.IPropertyChangeSource;
 
 public class ReflectProperty
         extends AbstractProperty {

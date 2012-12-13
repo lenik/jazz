@@ -3,8 +3,6 @@ package net.bodz.bas.t.list;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.list.List1s;
-
 public class List1sTest
         extends Assert {
 

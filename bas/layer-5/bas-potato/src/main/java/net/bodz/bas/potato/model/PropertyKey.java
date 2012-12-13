@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.c.object.Nullables;
 
 public final class PropertyKey
         implements Serializable {

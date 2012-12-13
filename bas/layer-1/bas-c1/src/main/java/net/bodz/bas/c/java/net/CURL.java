@@ -13,7 +13,7 @@ import java.util.TreeMap;
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.lang.fn.Filt1;
+import net.bodz.bas.fn.legacy.Filt1;
 
 /**
  * <pre>

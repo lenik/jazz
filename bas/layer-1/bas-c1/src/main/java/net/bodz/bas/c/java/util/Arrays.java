@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Random;
 
 import net.bodz.bas.c.java.util.array.*;
-import net.bodz.bas.lang.fn.Func1;
-import net.bodz.bas.util.Pair;
-import net.bodz.bas.util.ints.IntIterable;
-import net.bodz.bas.util.ints.IntIterator;
+import net.bodz.bas.fn.legacy.Func1;
+import net.bodz.bas.t._int.IntIterable;
+import net.bodz.bas.t._int.IntIterator;
+import net.bodz.bas.t.pojo.Pair;
 
 public class Arrays
         extends _Arrays {

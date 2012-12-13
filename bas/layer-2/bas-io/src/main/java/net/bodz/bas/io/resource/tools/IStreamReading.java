@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import java.util.List;
 
 import net.bodz.bas.err.RuntimeIOException;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public interface IStreamReading
         extends Cloneable {

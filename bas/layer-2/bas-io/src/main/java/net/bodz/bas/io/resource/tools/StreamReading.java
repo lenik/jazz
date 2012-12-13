@@ -18,10 +18,10 @@ import net.bodz.bas.io.resource.IStreamInputSourceWrapper;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.Mitors;
-import net.bodz.bas.util.iter.Mitorx;
-import net.bodz.bas.util.iter.OverlappedMitor;
+import net.bodz.bas.t.iterator.immed.AbstractMitorx;
+import net.bodz.bas.t.iterator.immed.Mitors;
+import net.bodz.bas.t.iterator.immed.Mitorx;
+import net.bodz.bas.t.iterator.immed.OverlappedMitor;
 
 public class StreamReading
         implements IStreamReading {

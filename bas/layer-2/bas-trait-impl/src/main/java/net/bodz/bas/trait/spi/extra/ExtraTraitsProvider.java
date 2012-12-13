@@ -1,6 +1,6 @@
 package net.bodz.bas.trait.spi.extra;
 
-import net.bodz.bas.lang.mi.QueryException;
+import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.trait.spi.AbstractTraitsProvider;
 
 public class ExtraTraitsProvider

@@ -1,7 +1,7 @@
 package net.bodz.bas.trait.spi;
 
-import net.bodz.bas.lang.mi.IQueryable;
-import net.bodz.bas.lang.mi.QueryException;
+import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.rtx.QueryException;
 
 /**
  * A simple direct cast traits providier.

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public class HistoryTest {
 
@@ -14,24 +14,24 @@ public class HistoryTest {
         History history = new History(10);
         assertNull(history.get());
 
-        history.go(new TreePath("hello"));
-        assertEquals("s1", new TreePath("hello"), history.get());
+        history.go(new PathEntries("hello"));
+        assertEquals("s1", new PathEntries("hello"), history.get());
 
-        history.go(new TreePath("world"));
-        assertEquals("s2", new TreePath("world"), history.get());
+        history.go(new PathEntries("world"));
+        assertEquals("s2", new PathEntries("world"), history.get());
 
         assertTrue(history.has(-1));
         history.jump(-1);
-        assertEquals("s1", new TreePath("hello"), history.get());
+        assertEquals("s1", new PathEntries("hello"), history.get());
 
-        history.go(new TreePath("new world"));
-        assertEquals("s2", new TreePath("new world"), history.get());
+        history.go(new PathEntries("new world"));
+        assertEquals("s2", new PathEntries("new world"), history.get());
 
-        history.go(new TreePath("look"));
+        history.go(new PathEntries("look"));
         history.jump(-1);
         System.out.println(history.toString());
 
-        history.go(new TreePath("truncate"));
+        history.go(new PathEntries("truncate"));
         System.out.println(history.toString());
     }
 

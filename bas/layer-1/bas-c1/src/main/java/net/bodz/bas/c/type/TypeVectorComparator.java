@@ -3,9 +3,9 @@ package net.bodz.bas.c.type;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
-import net.bodz.bas.util.order.AbstractNonNullComparator;
-import net.bodz.bas.util.order.RefinedOrderComparator;
-import net.bodz.bas.util.order.ReorderComparator;
+import net.bodz.bas.t.order.AbstractNonNullComparator;
+import net.bodz.bas.t.order.RefinedOrderComparator;
+import net.bodz.bas.t.order.ReorderComparator;
 
 public class TypeVectorComparator
         extends AbstractNonNullComparator<Class<?>[]> {

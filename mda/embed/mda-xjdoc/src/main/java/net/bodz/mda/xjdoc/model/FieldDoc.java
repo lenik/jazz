@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
 
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class FieldDoc

@@ -3,7 +3,7 @@ package net.bodz.swt.draw.geom_i.particle;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.util.ints.IntIterable;
+import net.bodz.bas.t._int.IntIterable;
 
 public interface IParticleBounds2d {
 

@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.t.preorder.PrefixMap;
-import net.bodz.bas.util.Pair;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;

@@ -2,7 +2,7 @@ package net.bodz.bas.util;
 
 import net.bodz.bas.cli.plugin.ICLIPlugin;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.model.IFactory;
+import net.bodz.bas.t.factory.IFactory;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 

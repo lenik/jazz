@@ -11,8 +11,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+import net.bodz.bas.c.annotation.AnnotationUtil;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.util.annotation.AnnotationUtil;
 import net.sf.cglib.core.NamingPolicy;
 import net.sf.cglib.core.Predicate;
 import net.sf.cglib.proxy.Enhancer;

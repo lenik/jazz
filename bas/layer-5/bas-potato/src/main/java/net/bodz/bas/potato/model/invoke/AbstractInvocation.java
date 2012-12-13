@@ -2,8 +2,8 @@ package net.bodz.bas.potato.model.invoke;
 
 import java.io.Serializable;
 
+import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.util.primitive.Primitives;
 
 /**
  * Property names:

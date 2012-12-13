@@ -1,7 +1,7 @@
 package net.bodz.bas.context;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.util.Nullables;
 
 public class ClassContextId
         extends AbstractContextId {

@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.TreeSet;
 
-import net.bodz.bas.util.order.IPriority;
-import net.bodz.bas.util.order.PriorityComparator;
+import net.bodz.bas.t.order.IPriority;
+import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.vfs.context.VFSColos;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;

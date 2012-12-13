@@ -5,8 +5,6 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.scope.CMap;
-
 public class CMapTest
         extends Assert {
 

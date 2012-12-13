@@ -3,7 +3,7 @@ package net.bodz.bas.variant.map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public class SimpleRequestTest
         extends Assert {
@@ -13,7 +13,7 @@ public class SimpleRequestTest
         SimpleRequest req = new SimpleRequest(null, "abc://def?name=lenik&age=13#mid");
         assertEquals("abc", req.getProtocol());
         assertEquals("mid", req.getAnchor());
-        assertEquals(new TreePath("def"), req.getPath());
+        assertEquals(new PathEntries("def"), req.getPath());
         assertEquals("lenik", req.getString("name"));
         assertEquals(13, req.getInt("age"));
     }

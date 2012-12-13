@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 
 public interface IXMLForm<T> {
 

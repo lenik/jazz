@@ -1,6 +1,6 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.rtx.Negotiation.*;
 
 import java.io.File;
 
@@ -14,7 +14,7 @@ import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;

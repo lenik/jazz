@@ -1,6 +1,6 @@
 package net.bodz.bas.c.type;
 
-import net.bodz.bas.util.order.AbstractNonNullComparator;
+import net.bodz.bas.t.order.AbstractNonNullComparator;
 
 /**
  * Compare two classes by their tree position.

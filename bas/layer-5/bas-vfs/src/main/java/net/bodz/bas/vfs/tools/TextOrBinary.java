@@ -1,9 +1,9 @@
 package net.bodz.bas.vfs.tools;
 
+import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.c.string.CharFeature;
-import net.bodz.bas.util.bits.IBits;
-import net.bodz.bas.util.bits.Int_leBits;
-import net.bodz.bas.util.primitive.IntMath;
+import net.bodz.bas.t._bit.IBits;
+import net.bodz.bas.t._bit.Int_leBits;
 
 public class TextOrBinary {
 

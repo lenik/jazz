@@ -7,7 +7,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.mda.xjdoc.util.WordTokenizer;
 
 public class FlatfLoader {

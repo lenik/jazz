@@ -4,8 +4,8 @@ import java.util.Map;
 
 import org.eclipse.swt.graphics.ImageData;
 
-import net.bodz.bas.collection.tree.TreeCallback;
 import net.bodz.bas.meta.build.IVersion;
+import net.bodz.bas.t.tree.ITreeCallback;
 import net.bodz.mda.xjdoc.model1.Author;
 
 public interface IProject
@@ -52,18 +52,18 @@ public interface IProject
      * @throws IllegalStateException
      *             if loop detected
      */
-    void findDependents(IComponent c, TreeCallback<IComponent> callback);
+    void findDependents(IComponent c, ITreeCallback<IComponent> callback);
 
     /**
      * @throws IllegalStateException
      *             if loop detected
      */
-    void findDependentsBy(IComponent c, TreeCallback<IComponent> callback);
+    void findDependentsBy(IComponent c, ITreeCallback<IComponent> callback);
 
     /**
      * @throws IllegalStateException
      *             if loop detected
      */
-    void analyseDependency(TreeCallback<IComponent> missingCallback);
+    void analyseDependency(ITreeCallback<IComponent> missingCallback);
 
 }

@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.meta.decl.ParameterType;
+import net.bodz.bas.rtx.INegotiation;
 
 public interface ISampleGenerator<T> {
 

@@ -1,9 +1,9 @@
 package net.bodz.bas.flow.unit.metadata;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.meta.stereo.MetaClass;
-import net.bodz.bas.util.Nullables;
 
 public abstract class MetaClassEntryLoader<T>
         implements IMapEntryLoader<Class<?>, T> {

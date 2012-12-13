@@ -4,7 +4,7 @@ import java.beans.ExceptionListener;
 import java.io.Writer;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 
 public interface IFormatter<T> {
 

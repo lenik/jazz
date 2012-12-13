@@ -9,7 +9,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 
-import net.bodz.bas.util.order.ComparableComparator;
+import net.bodz.bas.t.order.ComparableComparator;
 
 public class EchoReferencesTask
         extends Task {

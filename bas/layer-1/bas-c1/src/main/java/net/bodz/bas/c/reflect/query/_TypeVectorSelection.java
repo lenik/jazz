@@ -4,7 +4,7 @@ import java.lang.reflect.Modifier;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.query.predicate.*;
-import net.bodz.bas.util.iter.AbstractMitable;
+import net.bodz.bas.t.iterator.immed.AbstractMitable;
 
 public abstract class _TypeVectorSelection<T, $ extends _TypeVectorSelection<T, $>>
         extends AbstractMitable<T> {

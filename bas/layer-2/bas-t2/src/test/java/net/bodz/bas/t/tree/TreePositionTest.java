@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.t.list.LinkedStack;
-import net.bodz.bas.t.tree.ArrayTreeNode;
-import net.bodz.bas.t.tree.TreePosition;
 
 /**
  * @see TreePosition

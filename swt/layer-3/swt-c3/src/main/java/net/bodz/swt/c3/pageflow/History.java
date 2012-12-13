@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.ListIterator;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public class History {
 
-    private LinkedList<TreePath> list;
+    private LinkedList<PathEntries> list;
     private int capacity;
     private int currentIndex;
 
@@ -23,7 +23,7 @@ public class History {
             throw new OutOfDomainException("max", capacity, 1);
         this.capacity = capacity;
         // int initialCapacity = Math.min(100, max);
-        list = new LinkedList<TreePath>();
+        list = new LinkedList<PathEntries>();
         currentIndex = -1;
     }
 
@@ -42,14 +42,14 @@ public class History {
     /**
      * @return <code>null</code> if no current path.
      */
-    public TreePath get() {
+    public PathEntries get() {
         return get(0);
     }
 
     /**
      * @return <code>null</code> if no current path.
      */
-    public TreePath get(int delta) {
+    public PathEntries get(int delta) {
         int i = currentIndex + delta;
         if (i < 0 || i >= list.size())
             return null;
@@ -64,9 +64,9 @@ public class History {
     /**
      * @return previous path.
      */
-    TreePath go(TreePath newpath) {
+    PathEntries go(PathEntries newpath) {
         int changes = 0;
-        TreePath prev = get();
+        PathEntries prev = get();
         if (newpath == null)
             throw new NullPointerException("currentPath");
 
@@ -80,13 +80,13 @@ public class History {
         }
 
         while (list.size() > currentIndex + 1) { // drop forwards
-            TreePath removed = list.removeLast();
+            PathEntries removed = list.removeLast();
             fireHistoryRemoved(removed);
             changes |= HistoryChangeEvent.DROP_FORWARDS;
         }
 
         while (list.size() > capacity) { // drop backwards
-            TreePath removed = list.removeFirst();
+            PathEntries removed = list.removeFirst();
             fireHistoryRemoved(removed);
             currentIndex--;
             changes |= HistoryChangeEvent.DROP_BACKWARDS;
@@ -116,14 +116,14 @@ public class History {
         return false;
     }
 
-    public List<TreePath> list(int offset, int count) {
+    public List<PathEntries> list(int offset, int count) {
         int start = Math.max(0, currentIndex + offset);
         int end = Math.min(list.size(), start + count);
         int num = end - start;
-        List<TreePath> copy = new ArrayList<TreePath>(num);
-        ListIterator<TreePath> iter = list.listIterator(start);
+        List<PathEntries> copy = new ArrayList<PathEntries>(num);
+        ListIterator<PathEntries> iter = list.listIterator(start);
         while (num > 0) {
-            TreePath path = iter.next();
+            PathEntries path = iter.next();
             copy.add(path);
         }
         return copy;
@@ -133,7 +133,7 @@ public class History {
     public String toString() {
         StringBuffer buf = new StringBuffer(list.size() * 32);
         int relative = -currentIndex;
-        for (TreePath path : list) {
+        for (PathEntries path : list) {
             buf.append(relative + ". " + path + "\n");
             relative++;
         }
@@ -170,7 +170,7 @@ public class History {
             historyRemovedListeners.remove(l);
     }
 
-    protected void fireHistoryRemoved(TreePath path) {
+    protected void fireHistoryRemoved(PathEntries path) {
         if (historyRemovedListeners != null) {
             int refCount = Collections.frequency(list, path);
             HistoryRemovedEvent e = new HistoryRemovedEvent(this, path, refCount);

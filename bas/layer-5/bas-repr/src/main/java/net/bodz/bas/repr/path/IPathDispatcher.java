@@ -1,7 +1,7 @@
 package net.bodz.bas.repr.path;
 
 import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.util.order.IPriority;
+import net.bodz.bas.t.order.IPriority;
 
 /**
  * URI-style path dispatcher.

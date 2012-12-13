@@ -7,7 +7,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.NoSuchKeyException;
-import net.bodz.bas.lang.ref.AbstractRef;
+import net.bodz.bas.t.ref.AbstractRef;
 
 public class BeanPropertyRef<T>
         extends AbstractRef<T> {

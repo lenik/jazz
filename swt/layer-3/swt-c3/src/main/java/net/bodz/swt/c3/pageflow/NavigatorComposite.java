@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Label;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.i18n.nls.NLS;
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.resources.SWTResources;
@@ -45,7 +45,7 @@ public class NavigatorComposite
         }
 
         @Override
-        protected void showTurn(TreePath prev, TreePath path)
+        protected void showTurn(PathEntries prev, PathEntries path)
                 throws PageException {
             if (prev != null) {
                 IPage prevPage = book.getPage(prev);
@@ -214,7 +214,7 @@ public class NavigatorComposite
 
         setupEvents();
 
-        TreePath initPath = book.getFirst();
+        PathEntries initPath = book.getFirst();
         if (initPath != null)
             pageFlow.go(initPath);
     }
@@ -261,7 +261,7 @@ public class NavigatorComposite
             @Override
             public void historyRemoved(HistoryRemovedEvent event) {
                 if (event.getRefCount() == 0) {
-                    TreePath path = event.getPath();
+                    PathEntries path = event.getPath();
                     // Log page drops...
                     pageContainer.remove(path);
                 }
@@ -321,7 +321,7 @@ public class NavigatorComposite
         }
 
         void refreshMethods() {
-            TreePath path = pageContainer.getActivePath();
+            PathEntries path = pageContainer.getActivePath();
             IPage page = pageContainer.getActivePage();
             boolean locked = false;
             if (page != null)
@@ -349,7 +349,7 @@ public class NavigatorComposite
 
     RefreshAdapter refresh = new RefreshAdapter();
 
-    void showPage(final TreePath path)
+    void showPage(final PathEntries path)
             throws PageException {
         pageContainer.go(path); // Ex.
         refresh.refreshIcon();
@@ -357,7 +357,7 @@ public class NavigatorComposite
         refresh.refreshMethods();
     }
 
-    void createMethodButtons(Composite bar, TreePath contextPath, Collection<PageMethod> methods, boolean disabled) {
+    void createMethodButtons(Composite bar, PathEntries contextPath, Collection<PageMethod> methods, boolean disabled) {
         if (methods != null) {
             int index = 0;
             for (final PageMethod method : methods) {

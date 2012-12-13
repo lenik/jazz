@@ -1,6 +1,6 @@
 package net.bodz.redist.obfuz.pm;
 
-import net.bodz.bas.collection.preorder.PrefixMap;
+import net.bodz.bas.t.preorder.PrefixMap;
 
 public class ProtectionModels {
 

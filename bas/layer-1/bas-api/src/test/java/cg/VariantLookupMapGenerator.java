@@ -1,6 +1,6 @@
 package cg;
 
-import net.bodz.bas.util.variant.AbstractTmVariantLookupMap;
+import net.bodz.bas.t.variant.AbstractTmVariantLookupMap;
 
 /**
  * @see AbstractTmVariantLookupMap

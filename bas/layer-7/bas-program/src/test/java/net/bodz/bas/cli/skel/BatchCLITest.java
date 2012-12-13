@@ -5,8 +5,8 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
-import net.bodz.bas.lang.negotiation.Negotiation;
 import net.bodz.bas.potato.mda.tagbook.PotatoBook;
+import net.bodz.bas.rtx.Negotiation;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.IFile;

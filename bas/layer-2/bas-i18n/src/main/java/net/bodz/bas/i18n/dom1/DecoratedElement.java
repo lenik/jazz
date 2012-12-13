@@ -3,7 +3,7 @@ package net.bodz.bas.i18n.dom1;
 import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.model.AbstractDecorator;
+import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedElement
         extends AbstractDecorator<IElement>

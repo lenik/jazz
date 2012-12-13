@@ -1,7 +1,7 @@
 package net.bodz.bas.trait.spi;
 
-import net.bodz.bas.lang.mi.IQueryable;
 import net.bodz.bas.meta.lang.TraitClass;
+import net.bodz.bas.rtx.IQueryable;
 
 public class AnnotationTraitsProvider
         extends AbstractTraitsProvider {

@@ -4,7 +4,7 @@ import java.io.FileDescriptor;
 import java.net.InetAddress;
 import java.security.Permission;
 
-import net.bodz.bas.model.IWrapper;
+import net.bodz.bas.t.model.IWrapper;
 
 public class SecurityManagerProxy
         extends SecurityManager

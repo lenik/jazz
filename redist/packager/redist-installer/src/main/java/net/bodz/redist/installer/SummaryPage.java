@@ -8,8 +8,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c3.pageflow.AbstractPage;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.PageMethod;
@@ -50,7 +50,7 @@ class SummaryPage
     }
 
     @Override
-    public TreePath service(ServiceContext context)
+    public PathEntries service(ServiceContext context)
             throws PageException {
         BCharOut buf = new BCharOut();
         session.dump(buf);

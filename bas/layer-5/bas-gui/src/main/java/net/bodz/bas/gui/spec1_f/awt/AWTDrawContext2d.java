@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import net.bodz.bas.geom.spec1_f.*;
 import net.bodz.bas.gui.spec1_f.AbstractDrawContext2d;
-import net.bodz.bas.util.Pair;
+import net.bodz.bas.t.pojo.Pair;
 
 public class AWTDrawContext2d
         extends AbstractDrawContext2d {

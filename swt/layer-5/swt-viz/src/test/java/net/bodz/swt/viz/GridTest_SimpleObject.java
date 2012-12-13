@@ -5,6 +5,7 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Label;
 import org.junit.Test;
 
+import user.ASL;
 import user.ComplexPerson;
 import user.School;
 import user.SimplePerson;
@@ -27,7 +28,7 @@ public class GridTest_SimpleObject
         school.lucy = new SimplePerson("Lucy", 12, false);
         school.lily = new ComplexPerson();
         school.lily.name = "Lily";
-        school.lily.setASL(20, false, "Hometown");
+        school.lily.setASL(new ASL(20, false, "Hometown"));
     }
 
     @Test

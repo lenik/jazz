@@ -3,7 +3,7 @@ package net.bodz.bas.db.filedb;
 import java.io.IOException;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.util.iter.AbstractMitablex;
+import net.bodz.bas.t.iterator.immed.AbstractMitablex;
 
 public abstract class AbstractSeqRecords<T>
         extends AbstractMitablex<T, IOException>

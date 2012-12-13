@@ -3,8 +3,6 @@ package net.bodz.bas.t.buffer;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.buffer.CharRing;
-
 @Deprecated
 public class CharRingTest
         extends Assert {

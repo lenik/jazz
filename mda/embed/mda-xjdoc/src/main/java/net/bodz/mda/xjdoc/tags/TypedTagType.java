@@ -1,6 +1,6 @@
 package net.bodz.mda.xjdoc.tags;
 
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 public class TypedTagType

@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class StreamReadingTest
         extends Assert {

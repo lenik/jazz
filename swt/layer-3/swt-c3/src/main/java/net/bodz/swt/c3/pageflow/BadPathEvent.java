@@ -2,16 +2,16 @@ package net.bodz.swt.c3.pageflow;
 
 import java.util.EventObject;
 
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public class BadPathEvent
         extends EventObject {
 
     private static final long serialVersionUID = 2285635185383477276L;
 
-    public TreePath path;
+    public PathEntries path;
 
-    public BadPathEvent(IPageContext pageContext, TreePath path) {
+    public BadPathEvent(IPageContext pageContext, PathEntries path) {
         super(pageContext);
         this.path = path;
     }

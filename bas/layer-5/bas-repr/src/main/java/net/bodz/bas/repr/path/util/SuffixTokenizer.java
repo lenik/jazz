@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.path.util;
 
-import net.bodz.bas.c.java.util.PrefetchedIterator;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 /**
  * Example: The suffixes in <code>filename.foo*bar~cat-dog.spec+1.xml:ex</code> are: (The order is

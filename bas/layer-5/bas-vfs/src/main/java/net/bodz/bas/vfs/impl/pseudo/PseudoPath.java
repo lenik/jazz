@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.util.Nullables;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;

@@ -1,14 +1,13 @@
 package net.bodz.mda.xjdoc.user;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.list;
-import static net.bodz.bas.lang.negotiation.Negotiation.option;
+import static net.bodz.bas.rtx.Negotiation.*;
 
 import java.io.File;
 
 import org.junit.Assert;
 
 import net.bodz.bas.io.resource.builtin.StringSource;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.snm.MavenProjectOrigin;
 import net.bodz.bas.text.flatf.FlatfOutput;

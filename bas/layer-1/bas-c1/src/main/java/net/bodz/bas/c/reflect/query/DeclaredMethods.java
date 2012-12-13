@@ -2,8 +2,8 @@ package net.bodz.bas.c.reflect.query;
 
 import java.lang.reflect.Method;
 
-import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.AbstractMitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class DeclaredMethods
         extends MethodSelection {

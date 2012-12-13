@@ -3,9 +3,6 @@ package net.bodz.bas.repr.path;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.repr.path.ITokenQueue;
-import net.bodz.bas.repr.path.TokenQueue;
-
 public class TokenQueueTest
         extends Assert {
 

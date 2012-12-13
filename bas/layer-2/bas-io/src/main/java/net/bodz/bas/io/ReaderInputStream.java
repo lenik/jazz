@@ -9,8 +9,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
+import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.util.primitive.IntMath;
 
 public class ReaderInputStream
         extends InputStream {

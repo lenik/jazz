@@ -8,7 +8,7 @@ import java.util.HashMap;
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.system.SystemInfo;
-import net.bodz.bas.util.variant.VariantMap;
+import net.bodz.bas.t.variant.VariantMap;
 
 public class WMISystemInfo
         extends VariantMap<String> {

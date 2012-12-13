@@ -11,7 +11,7 @@ import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.model.IFactory;
+import net.bodz.bas.t.factory.IFactory;
 import net.bodz.bas.util.Factories;
 
 public class ValueConstruct

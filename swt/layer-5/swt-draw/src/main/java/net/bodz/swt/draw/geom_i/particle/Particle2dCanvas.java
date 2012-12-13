@@ -18,8 +18,8 @@ import org.eclipse.swt.widgets.ScrollBar;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.util.ints.IntIterable;
-import net.bodz.bas.util.ints.IntIterator;
+import net.bodz.bas.t._int.IntIterable;
+import net.bodz.bas.t._int.IntIterator;
 import net.bodz.swt.gui.geom.SwtShapes;
 import net.bodz.swt.gui.spec1.SwtRegion;
 

@@ -1,16 +1,16 @@
 package net.bodz.bas.t.tree;
 
-import static net.bodz.bas.t.tree.TreeCallback.*;
+import static net.bodz.bas.t.tree.ITreeCallback.*;
 
 import java.util.List;
 
 public class TreeNodes {
 
-    public static <N extends TreeNode<? extends N>> void traverse(N start, TreeCallback<? super N> callback) {
+    public static <N extends ITreeNode<? extends N>> void traverse(N start, ITreeCallback<? super N> callback) {
         _traverse(start, callback, 0);
     }
 
-    static <N extends TreeNode<? extends N>> int _traverse(N start, TreeCallback<? super N> callback, int level) {
+    static <N extends ITreeNode<? extends N>> int _traverse(N start, ITreeCallback<? super N> callback, int level) {
         int status = callback.each(start, level);
         if (status != OK)
             return status;

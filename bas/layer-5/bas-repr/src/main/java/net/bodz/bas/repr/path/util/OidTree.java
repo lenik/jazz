@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
 
-import net.bodz.bas.c.java.util.PrefetchedIterator;
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.repr.naming.INamedNode;
 import net.bodz.bas.repr.naming.NamedNode;
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class OidTree<T>
         extends NamedNode

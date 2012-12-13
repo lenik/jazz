@@ -2,9 +2,9 @@ package net.bodz.bas.sio.bits;
 
 import java.io.IOException;
 
-import net.bodz.bas.util.bits.Byte_leBits;
-import net.bodz.bas.util.bits.ISimpleBits;
-import net.bodz.bas.util.bits.Int_leBits;
+import net.bodz.bas.t._bit.Byte_leBits;
+import net.bodz.bas.t._bit.ISimpleBits;
+import net.bodz.bas.t._bit.Int_leBits;
 
 public abstract class AbstractBitOut
         implements IBitOut {

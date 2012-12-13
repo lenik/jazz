@@ -3,8 +3,8 @@ package net.bodz.bas.proxy.java.sql;
 import java.sql.SQLException;
 import java.sql.Wrapper;
 
-import net.bodz.bas.model.AbstractDecorator;
-import net.bodz.bas.model.IWrapper;
+import net.bodz.bas.t.model.AbstractDecorator;
+import net.bodz.bas.t.model.IWrapper;
 
 public abstract class AbstractJavasqlWrapper<T>
         extends AbstractDecorator<T>

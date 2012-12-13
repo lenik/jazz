@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class AutoTagType

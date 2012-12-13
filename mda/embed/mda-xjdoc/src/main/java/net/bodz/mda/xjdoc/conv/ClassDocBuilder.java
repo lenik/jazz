@@ -1,6 +1,6 @@
 package net.bodz.mda.xjdoc.conv;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.rtx.Negotiation.*;
 
 import java.util.Map;
 
@@ -8,10 +8,10 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
+import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.tags.ITagBook;
 import net.bodz.mda.xjdoc.tags.ITagType;

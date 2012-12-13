@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.java.util.Iterables;
+import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.t.preorder.testtype.*;
 
 public class TypeVectorPrMapTest

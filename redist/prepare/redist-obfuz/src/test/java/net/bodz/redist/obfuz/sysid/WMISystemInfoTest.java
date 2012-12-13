@@ -3,7 +3,7 @@ package net.bodz.redist.obfuz.sysid;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.util.MapDump;
-import net.bodz.bas.util.order.ComparableComparator;
+import net.bodz.bas.t.order.ComparableComparator;
 
 public class WMISystemInfoTest {
 

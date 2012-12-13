@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.model.invoke;
 
-import net.bodz.bas.lang.ref.Ref;
 import net.bodz.bas.potato.model.IMethod;
+import net.bodz.bas.t.ref.Ref;
 
 public class Invocation
         extends AbstractInvocation {

@@ -7,13 +7,13 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.i18n.nls.NLS;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public class SimpleBook
         extends AbstractBook {
 
-    private Map<TreePath, IPage> map;
-    private TreePath first;
+    private Map<PathEntries, IPage> map;
+    private PathEntries first;
     private List<PageMethod> methods;
     private NLS dict;
 
@@ -31,59 +31,59 @@ public class SimpleBook
 
     public SimpleBook(String title, IBook next) {
         super(title, next);
-        map = new HashMap<TreePath, IPage>();
+        map = new HashMap<PathEntries, IPage>();
         methods = new ArrayList<PageMethod>(4);
         dict = GUINLS;
     }
 
     @Override
-    protected TreePath _getFirst() {
+    protected PathEntries _getFirst() {
         return first;
     }
 
     public void setFirst(String first) {
-        this.first = new TreePath(first);
+        this.first = new PathEntries(first);
     }
 
     public void setFirst(Class<?> first) {
-        this.first = new TreePath(first.getName());
+        this.first = new PathEntries(first.getName());
     }
 
-    public void setFirst(TreePath first) {
+    public void setFirst(PathEntries first) {
         this.first = first;
     }
 
     @Override
-    protected boolean _contains(TreePath path) {
+    protected boolean _contains(PathEntries path) {
         return map.containsKey(path);
     }
 
     @Override
-    protected IPage _getPage(TreePath path) {
+    protected IPage _getPage(PathEntries path) {
         return map.get(path);
     }
 
-    public Set<TreePath> getPaths() {
+    public Set<PathEntries> getPaths() {
         return map.keySet();
     }
 
     public void add(String path, IPage page) {
-        add(new TreePath(path), page);
+        add(new PathEntries(path), page);
     }
 
     public void add(Class<?> clazz, IPage page) {
-        add(new TreePath(clazz.getName()), page);
+        add(new PathEntries(clazz.getName()), page);
     }
 
-    public void add(TreePath path, IPage page) {
+    public void add(PathEntries path, IPage page) {
         map.put(path, page);
     }
 
     public boolean remove(String path) {
-        return remove(new TreePath(path));
+        return remove(new PathEntries(path));
     }
 
-    public boolean remove(TreePath path) {
+    public boolean remove(PathEntries path) {
         return map.remove(path) != null;
     }
 
@@ -118,8 +118,8 @@ public class SimpleBook
         BCharOut buf = new BCharOut(map.size() * 30);
         buf.println(getTitle() + ": ");
         buf.println("    Pages: ");
-        for (Entry<TreePath, IPage> e : map.entrySet()) {
-            TreePath path = e.getKey();
+        for (Entry<PathEntries, IPage> e : map.entrySet()) {
+            PathEntries path = e.getKey();
             buf.println("        " + path + " -> " + e.getValue());
         }
         if (methods != null && !methods.isEmpty())

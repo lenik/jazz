@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-import net.bodz.bas.model.IWrapper;
+import net.bodz.bas.t.model.IWrapper;
 
 public class DecoratedConnection
         extends AbstractJavasqlWrapper<Connection>

@@ -6,10 +6,10 @@ import java.util.List;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.gui.util.IQuietHint;
-import net.bodz.bas.t.tree.TreePath;
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
 
@@ -35,16 +35,16 @@ public abstract class AbstractPageFlow
             throw new NullPointerException("history");
     }
 
-    public TreePath getLocation() {
+    public PathEntries getLocation() {
         return this.history.get();
     }
 
     public boolean go(int pageCount) {
-        TreePath prev = history.get();
+        PathEntries prev = history.get();
         if (!history.jump(pageCount))
             return false;
         try {
-            TreePath next = history.get();
+            PathEntries next = history.get();
             if (prev != null)
                 _leave(prev, next);
             if (next != null)
@@ -57,15 +57,15 @@ public abstract class AbstractPageFlow
         return true;
     }
 
-    public boolean go(TreePath next) {
+    public boolean go(PathEntries next) {
         // XXX - source?
         SimpleRequest request = new SimpleRequest(this, next);
         return submit(request);
     }
 
     public boolean submit(SimpleRequest request) {
-        TreePath prev = history.get();
-        TreePath next = request.getPath();
+        PathEntries prev = history.get();
+        PathEntries next = request.getPath();
         if (next == null)
             throw new NullPointerException("request.path");
         try {
@@ -83,7 +83,7 @@ public abstract class AbstractPageFlow
                 _leave(prev, next);
             }
 
-            TreePath referrer = prev;
+            PathEntries referrer = prev;
             while (true) {
                 if (!book.contains(next)) {
                     fireBadPath(next);
@@ -95,7 +95,7 @@ public abstract class AbstractPageFlow
 
                 ServiceContext context = createServiceContext(request, referrer);
                 IPage nextPage = book.getPage(next);
-                TreePath redirect = nextPage.service(context);
+                PathEntries redirect = nextPage.service(context);
                 if (redirect == null)
                     break;
                 referrer = next;
@@ -110,7 +110,7 @@ public abstract class AbstractPageFlow
         return true;
     }
 
-    protected ServiceContext createServiceContext(final SimpleRequest request, final TreePath referrer) {
+    protected ServiceContext createServiceContext(final SimpleRequest request, final PathEntries referrer) {
         return new ServiceContext() {
 
             @Override
@@ -124,14 +124,14 @@ public abstract class AbstractPageFlow
             }
 
             @Override
-            public TreePath getReferrerPath() {
+            public PathEntries getReferrerPath() {
                 return referrer;
             }
 
         };
     }
 
-    private void _leave(TreePath prev, TreePath next)
+    private void _leave(PathEntries prev, PathEntries next)
             throws PageException {
         assert prev != null;
         assert book.contains(prev);
@@ -141,7 +141,7 @@ public abstract class AbstractPageFlow
         prevPage.leave(next);
     }
 
-    private void _enter(TreePath prev, TreePath next)
+    private void _enter(PathEntries prev, PathEntries next)
             throws PageException {
         assert next != null;
         assert book.contains(next);
@@ -151,7 +151,7 @@ public abstract class AbstractPageFlow
             fireLocationChange(prev, next);
     }
 
-    protected abstract void showTurn(TreePath prev, TreePath path)
+    protected abstract void showTurn(PathEntries prev, PathEntries path)
             throws PageException;
 
     protected void handleException(Exception e) {
@@ -180,7 +180,7 @@ public abstract class AbstractPageFlow
         }
     }
 
-    static String getPageInfo(TreePath path, IPage page) {
+    static String getPageInfo(PathEntries path, IPage page) {
         String pageTitle = page.getPageTitle();
         return path + " => " + pageTitle;
     }
@@ -196,7 +196,7 @@ public abstract class AbstractPageFlow
             locationChangeListeners.remove(l);
     }
 
-    protected void fireLocationChange(TreePath prev, TreePath next) {
+    protected void fireLocationChange(PathEntries prev, PathEntries next) {
         if (Nullables.equals(prev, next))
             return;
         if (locationChangeListeners != null) {
@@ -218,7 +218,7 @@ public abstract class AbstractPageFlow
             badPathListeners.remove(l);
     }
 
-    protected void fireBadPath(TreePath path) {
+    protected void fireBadPath(PathEntries path) {
         if (badPathListeners != null) {
             BadPathEvent e = new BadPathEvent(pageContext, path);
             for (IBadPathListener l : badPathListeners) {

@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Display;
 
 import net.bodz.bas.gui.spec0.color.AbstractRGBA32Color;
 import net.bodz.bas.gui.spec0.color.IColor_RGB24;
-import net.bodz.bas.model.IDisposable;
+import net.bodz.bas.t.object.IDisposable;
 
 public class SwtColor
         extends AbstractRGBA32Color

@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.model;
 
-import net.bodz.bas.util.event.IPropertyChangeListener;
+import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public abstract class SimpleProperty
         extends SimplePotatoElement
