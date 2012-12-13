@@ -1,7 +1,9 @@
 package net.bodz.bas.c.java.io;
 
-import static net.bodz.bas.c.java.util.regex.PatternTraits.*;
-import static net.bodz.bas.rtx.Negotiation.*;
+import static net.bodz.bas.c.java.util.regex.PatternTraits.globTextformMode;
+import static net.bodz.bas.c.java.util.regex.PatternTraits.textformMode;
+import static net.bodz.bas.rtx.Negotiation.list;
+import static net.bodz.bas.rtx.Negotiation.option;
 
 import java.util.regex.Pattern;
 

@@ -1,7 +1,5 @@
 package net.bodz.bas.repr.path.builtin;
 
-import java.util.List;
-
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
