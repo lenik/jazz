@@ -1,14 +1,14 @@
 package net.bodz.bas.c.type;
 
 import net.bodz.bas.c.type.order.TypePreorder;
-import net.bodz.bas.t.preorder.PreorderSet;
+import net.bodz.bas.t.preorder.PreorderTreeMap;
 
-public class TypePrSet
-        extends PreorderSet<Class<?>> {
+public class TypePoMap<V>
+        extends PreorderTreeMap<Class<?>, V> {
 
     private static final long serialVersionUID = 1L;
 
-    public TypePrSet() {
+    public TypePoMap() {
         super(TypePreorder.getInstance());
     }
 

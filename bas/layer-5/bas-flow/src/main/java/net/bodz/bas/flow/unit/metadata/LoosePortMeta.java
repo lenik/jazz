@@ -2,7 +2,7 @@ package net.bodz.bas.flow.unit.metadata;
 
 import java.util.Collection;
 
-import net.bodz.bas.c.type.TypePrSet;
+import net.bodz.bas.c.type.TypePoSet;
 
 /**
  * Multi-Type Port
@@ -10,22 +10,22 @@ import net.bodz.bas.c.type.TypePrSet;
 public class LoosePortMeta
         extends AbstractPortMetadata {
 
-    private final TypePrSet baseTypes;
+    private final TypePoSet baseTypes;
 
     public LoosePortMeta(String name, Class<?>... baseTypes) {
         super(name);
-        this.baseTypes = new TypePrSet();
+        this.baseTypes = new TypePoSet();
         for (Class<?> baseType : baseTypes)
             this.baseTypes.add(baseType);
     }
 
     public LoosePortMeta(String name, Collection<Class<?>> baseTypes) {
         super(name);
-        this.baseTypes = new TypePrSet();
+        this.baseTypes = new TypePoSet();
         this.baseTypes.addAll(baseTypes);
     }
 
-    public LoosePortMeta(String name, TypePrSet baseTypes) {
+    public LoosePortMeta(String name, TypePoSet baseTypes) {
         super(name);
         this.baseTypes = baseTypes;
     }

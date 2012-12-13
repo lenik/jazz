@@ -11,7 +11,7 @@ import org.junit.Test;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.t.preorder.testtype.*;
 
-public class TypeVectorPrMapTest
+public class TypeVectorPoMapTest
         extends Assert {
 
     static Class<?>[] r(Class<?>... classes) {
@@ -54,7 +54,7 @@ public class TypeVectorPrMapTest
 
     @Test
     public void test1() {
-        TypeVectorPrMap<Object> map = new TypeVectorPrMap<Object>();
+        TypeVectorPoMap<Object> map = new TypeVectorPoMap<Object>();
         map.putAll(orig);
 
         // dump entry order

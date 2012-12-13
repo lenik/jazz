@@ -7,7 +7,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TypePrMapTest
+public class TypePoMapTest
         extends Assert {
 
     Map<Class<?>, Object> orig = new HashMap<Class<?>, Object>();
@@ -19,7 +19,7 @@ public class TypePrMapTest
 
     @Test
     public void testFloor() {
-        TypePrMap<Object> map = new TypePrMap<Object>();
+        TypePoMap<Object> map = new TypePoMap<Object>();
         map.putAll(orig);
         assertEquals("Number", map.meet(Float.class));
         assertEquals("Integer", map.meet(Integer.class));
