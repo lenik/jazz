@@ -13,9 +13,9 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.i18n.nls.II18nCapable;
+import net.bodz.bas.t.tree.TreePath;
 import net.bodz.bas.util.Nullables;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;

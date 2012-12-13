@@ -1,6 +1,6 @@
 package net.bodz.bas.c.type.order;
 
-import net.bodz.bas.collection.preorder.AbstractPreorder;
+import net.bodz.bas.t.preorder.AbstractPreorder;
 
 public class TypeVectorPreorder
         extends AbstractPreorder<Class<?>[]> {

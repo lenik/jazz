@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.i18n.nls.NLS;
+import net.bodz.bas.t.tree.TreePath;
 
 public class BookRewrite
         implements IBook {

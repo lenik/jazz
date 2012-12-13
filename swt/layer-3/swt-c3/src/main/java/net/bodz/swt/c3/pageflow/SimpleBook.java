@@ -5,9 +5,9 @@ import static net.bodz.swt.nls.GUINLS.GUINLS;
 import java.util.*;
 import java.util.Map.Entry;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.i18n.nls.NLS;
 import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.t.tree.TreePath;
 
 public class SimpleBook
         extends AbstractBook {

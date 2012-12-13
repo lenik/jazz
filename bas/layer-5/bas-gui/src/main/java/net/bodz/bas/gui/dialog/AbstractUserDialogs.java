@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.collection.map.IndexMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.model.IExecutableX;
+import net.bodz.bas.t.map.IndexMap;
 
 public abstract class AbstractUserDialogs
         implements IUserDialogs, II18nCapable {

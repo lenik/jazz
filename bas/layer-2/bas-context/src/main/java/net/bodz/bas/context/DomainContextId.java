@@ -1,6 +1,6 @@
 package net.bodz.bas.context;
 
-import net.bodz.bas.collection.preorder.DomainNamePreorder;
+import net.bodz.bas.t.preorder.DomainNamePreorder;
 
 public class DomainContextId
         extends PreorderContextId<String> {

@@ -1,7 +1,7 @@
 package net.bodz.bas.c.type;
 
 import net.bodz.bas.c.type.order.TypePreorder;
-import net.bodz.bas.collection.preorder.PreorderSet;
+import net.bodz.bas.t.preorder.PreorderSet;
 
 public class TypePrSet
         extends PreorderSet<Class<?>> {

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.t.tree.TreePath;
 
 public class HistoryTest {
 
