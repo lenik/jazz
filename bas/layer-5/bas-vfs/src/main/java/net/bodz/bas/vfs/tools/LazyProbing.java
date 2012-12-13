@@ -2,8 +2,8 @@ package net.bodz.bas.vfs.tools;
 
 import java.io.IOException;
 
+import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.util.ContentType;
 
 public class LazyProbing
         implements IProbing {
@@ -20,7 +20,7 @@ public class LazyProbing
     public String getContentType()
             throws IOException {
         String extension = file.getPath().getExtension(false, 1);
-        ContentType contentType = ContentType.getInstanceByExtension(extension);
+        ContentType contentType = ContentType.forExtension(extension);
         return contentType.getName();
     }
 

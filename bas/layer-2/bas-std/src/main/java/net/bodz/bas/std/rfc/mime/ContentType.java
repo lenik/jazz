@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.util;
+package net.bodz.bas.std.rfc.mime;
 
 import java.io.Serializable;
 
@@ -72,11 +72,11 @@ public class ContentType
         return name;
     }
 
-    public static ContentType getInstance(String name) {
+    public static ContentType forName(String name) {
         return ContentTypes.nameMap.get(name);
     }
 
-    public static ContentType getInstanceByExtension(String extension) {
+    public static ContentType forExtension(String extension) {
         if (extension == null)
             return null;
         extension = extension.toLowerCase();

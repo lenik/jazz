@@ -1,7 +1,7 @@
 package net.bodz.bas.repr.req;
 
+import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.t.variant.IVariantLookupMap;
-import net.bodz.bas.vfs.util.ContentType;
 
 public interface IRequestView {
 

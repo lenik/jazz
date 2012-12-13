@@ -5,10 +5,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.variant.IVariantLookupMap;
 import net.bodz.bas.t.variant.VariantMap;
-import net.bodz.bas.vfs.util.ContentType;
-import net.bodz.bas.vfs.util.ContentTypes;
 
 public class DefaultRequestView
         extends HttpRequestProcessor
@@ -76,7 +76,7 @@ public class DefaultRequestView
         // Content-type by browser.
         String acceptContentType = request.getHeader("Accept-Content-Type");
         if (acceptContentType != null) {
-            ContentType contentType = ContentType.getInstance(acceptContentType);
+            ContentType contentType = ContentType.forName(acceptContentType);
             if (contentType != null)
                 setContentType(contentType);
         }
