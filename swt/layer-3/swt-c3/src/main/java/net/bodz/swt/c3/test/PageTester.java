@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.t.tree.TreePath;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.pageflow.*;
 

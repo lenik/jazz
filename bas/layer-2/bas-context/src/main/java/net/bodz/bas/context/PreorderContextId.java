@@ -1,6 +1,6 @@
 package net.bodz.bas.context;
 
-import net.bodz.bas.collection.preorder.IPreorder;
+import net.bodz.bas.t.preorder.IPreorder;
 import net.bodz.bas.util.Nullables;
 
 public class PreorderContextId<T>

@@ -2,12 +2,12 @@ package net.bodz.bas.repr.path.builtin;
 
 import java.util.List;
 
-import net.bodz.bas.collection.tree.TreeNode;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
+import net.bodz.bas.t.tree.TreeNode;
 
 public class NamedNodePathDispatcher
         extends AbstractPathDispatcher {

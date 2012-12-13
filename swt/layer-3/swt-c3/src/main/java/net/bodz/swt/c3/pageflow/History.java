@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.t.tree.TreePath;
 
 public class History {
 

@@ -12,7 +12,7 @@ layer-1/ 核心语言增强与语言工具
     bas-trait
     
 layer-2/ 基础数据类型扩展
-    bas-collection
+    bas-t2
     bas-context
     bas-geom
     bas-i18n

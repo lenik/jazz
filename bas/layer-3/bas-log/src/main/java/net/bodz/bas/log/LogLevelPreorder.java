@@ -1,6 +1,6 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.collection.preorder.AbstractPreorder;
+import net.bodz.bas.t.preorder.AbstractPreorder;
 
 public class LogLevelPreorder
         extends AbstractPreorder<LogLevel> {

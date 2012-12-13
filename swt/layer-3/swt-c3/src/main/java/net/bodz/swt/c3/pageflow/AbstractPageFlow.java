@@ -6,9 +6,9 @@ import java.util.List;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.gui.util.IQuietHint;
+import net.bodz.bas.t.tree.TreePath;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;

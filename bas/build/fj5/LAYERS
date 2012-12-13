@@ -17,7 +17,7 @@
     bas-bits
     bas-c2
     bas-closure
-    bas-collection
+    bas-t2
     bas-context
     bas-io
     bas-nio

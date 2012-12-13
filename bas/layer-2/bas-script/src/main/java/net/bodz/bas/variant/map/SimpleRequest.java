@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.t.tree.TreePath;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.util.variant.AbstractTmVariantLookupMap;
 

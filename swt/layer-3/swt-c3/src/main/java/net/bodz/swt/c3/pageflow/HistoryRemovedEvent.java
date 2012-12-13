@@ -2,7 +2,7 @@ package net.bodz.swt.c3.pageflow;
 
 import java.util.EventObject;
 
-import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.t.tree.TreePath;
 
 public class HistoryRemovedEvent
         extends EventObject {

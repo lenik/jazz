@@ -16,13 +16,13 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.*;
 
 import net.bodz.bas.c.java.net.URLClassLoaders;
-import net.bodz.bas.collection.map.IndexMap;
 import net.bodz.bas.err.IllegalArgumentTypeException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.t.map.IndexMap;
 
 public class StrictDeviceResources
         implements II18nCapable {

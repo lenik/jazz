@@ -23,12 +23,12 @@ import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.c.type.TypePrSet;
-import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
+import net.bodz.bas.t.preorder.PrefixSet;
 
 public class PropertyBeanTask
         extends Task
