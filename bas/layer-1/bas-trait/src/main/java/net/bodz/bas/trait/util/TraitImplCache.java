@@ -3,7 +3,7 @@ package net.bodz.bas.trait.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.lang.mi.IQueryable;
+import net.bodz.bas.rtx.IQueryable;
 
 public class TraitImplCache {
 

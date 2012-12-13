@@ -2,8 +2,8 @@ package net.bodz.bas.unitperf;
 
 import org.junit.Assert;
 
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-import net.bodz.bas.lang.negotiation.Negotiation;
+import net.bodz.bas.rtx.INegotiation.IParameter;
+import net.bodz.bas.rtx.Negotiation;
 import net.bodz.bas.traits.ISampleGenerator;
 
 public class PerformanceTestCase

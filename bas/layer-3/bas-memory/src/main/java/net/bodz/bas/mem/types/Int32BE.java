@@ -1,10 +1,10 @@
 package net.bodz.bas.mem.types;
 
+import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.mem.AbstractType;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem.MemoryAccessException;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
-import net.bodz.bas.util.primitive.IntMath;
 
 public class Int32BE
         extends AbstractType {

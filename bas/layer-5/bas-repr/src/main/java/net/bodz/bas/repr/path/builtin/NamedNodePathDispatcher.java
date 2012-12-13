@@ -3,11 +3,11 @@ package net.bodz.bas.repr.path.builtin;
 import java.util.List;
 
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
-import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
-import net.bodz.bas.t.tree.TreeNode;
+import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.t.tree.ITreeNode;
 
 public class NamedNodePathDispatcher
         extends AbstractPathDispatcher {
@@ -27,14 +27,14 @@ public class NamedNodePathDispatcher
         if (obj == null)
             throw new PathDispatchException("null target.");
 
-        if (!(obj instanceof TreeNode<?>))
+        if (!(obj instanceof ITreeNode<?>))
             return null;
 
         String key = tokens.peek();
         if (key == null)
             return null;
 
-        TreeNode<?> locator = (TreeNode<?>) obj;
+        ITreeNode<?> locator = (ITreeNode<?>) obj;
 
         List<?> children = locator.getChildren();
         // TODO locator.getChildType().parse(key);

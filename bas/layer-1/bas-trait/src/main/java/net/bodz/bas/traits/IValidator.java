@@ -1,6 +1,6 @@
 package net.bodz.bas.traits;
 
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 
 public interface IValidator<T> {
 

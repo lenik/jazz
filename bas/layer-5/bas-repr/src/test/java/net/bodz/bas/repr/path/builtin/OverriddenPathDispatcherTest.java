@@ -3,13 +3,11 @@ package net.bodz.bas.repr.path.builtin;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
+import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.repr.path.ITokenQueue;
-import net.bodz.bas.repr.path.builtin.FieldPathDispatcher;
-import net.bodz.bas.repr.path.builtin.OverriddenPathDispatcher;
+import net.bodz.bas.repr.path.PathDispatchException;
 
 public class OverriddenPathDispatcherTest
         extends Assert

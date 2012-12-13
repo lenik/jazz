@@ -14,10 +14,10 @@ import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
-import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
+import net.bodz.bas.repr.path.PathDispatchException;
 
 public class MethodPathDispatcher
         extends AbstractPathDispatcher {

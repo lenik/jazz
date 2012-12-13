@@ -8,7 +8,7 @@ import net.bodz.bas.flow.unit.GenericUnit_z1;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.io.resource.tools.IStreamReading;
 import net.bodz.bas.io.resource.tools.StreamReading;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class InputStreamSourceUnit
         extends GenericUnit_z1 {

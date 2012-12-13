@@ -7,8 +7,8 @@ import net.bodz.bas.geom.spec0_f.IBoundingBox2d;
 import net.bodz.bas.geom.spec0_f.IPositionAttributes2d;
 import net.bodz.bas.geom.spec0_f.ITransformable2d;
 import net.bodz.bas.gui.spec1_f.IDrawable2d;
-import net.bodz.bas.model.ICloneable;
 import net.bodz.bas.sugar.IDecoratable;
+import net.bodz.bas.t.object.ICloneable;
 
 public interface IShape2dComponent
         extends Serializable, //

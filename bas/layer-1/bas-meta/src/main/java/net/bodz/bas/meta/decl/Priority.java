@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @see net.bodz.bas.util.order.IPriority
+ * @see net.bodz.bas.t.order.IPriority
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

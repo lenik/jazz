@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.bodz.bas.i18n.nls.CombinedNLS;
 import net.bodz.bas.i18n.nls.NLS;
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public abstract class AbstractBook
         implements IBook {
@@ -27,7 +27,7 @@ public abstract class AbstractBook
     }
 
     @Override
-    public final boolean contains(TreePath path) {
+    public final boolean contains(PathEntries path) {
         if (_contains(path))
             return true;
         if (next != null)
@@ -36,7 +36,7 @@ public abstract class AbstractBook
     }
 
     @Override
-    public IPage getPage(TreePath path) {
+    public IPage getPage(PathEntries path) {
         IPage page = _getPage(path);
         if (page != null)
             return page;
@@ -46,8 +46,8 @@ public abstract class AbstractBook
     }
 
     @Override
-    public TreePath getFirst() {
-        TreePath first = _getFirst();
+    public PathEntries getFirst() {
+        PathEntries first = _getFirst();
         if (first != null)
             return first;
         if (next != null)
@@ -90,14 +90,14 @@ public abstract class AbstractBook
         return all;
     }
 
-    protected abstract IPage _getPage(TreePath path);
+    protected abstract IPage _getPage(PathEntries path);
 
-    protected boolean _contains(TreePath path) {
+    protected boolean _contains(PathEntries path) {
         IPage page = _getPage(path);
         return page != null;
     }
 
-    protected TreePath _getFirst() {
+    protected PathEntries _getFirst() {
         return null;
     }
 

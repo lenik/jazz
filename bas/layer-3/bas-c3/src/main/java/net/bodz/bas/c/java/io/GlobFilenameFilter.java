@@ -1,13 +1,13 @@
 package net.bodz.bas.c.java.io;
 
 import static net.bodz.bas.c.java.util.regex.PatternTraits.*;
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.rtx.Negotiation.*;
 
 import java.util.regex.Pattern;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.util.Pair;
+import net.bodz.bas.t.pojo.Pair;
 
 public class StringArray {
 

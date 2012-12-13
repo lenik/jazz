@@ -7,10 +7,10 @@ import java.util.*;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.mi.AbstractQueryable;
-import net.bodz.bas.lang.mi.QueryException;
-import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
+import net.bodz.bas.rtx.AbstractQueryable;
+import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.QueryException;
 
 @ThreadUnsafe
 public abstract class AbstractCommonTraits<T>

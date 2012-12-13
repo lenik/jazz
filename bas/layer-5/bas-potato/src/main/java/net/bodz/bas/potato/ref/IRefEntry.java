@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.lang.ref.Ref;
+import net.bodz.bas.t.ref.Ref;
 
 public interface IRefEntry<T>
         extends Ref<T>, IValueChangeSource {

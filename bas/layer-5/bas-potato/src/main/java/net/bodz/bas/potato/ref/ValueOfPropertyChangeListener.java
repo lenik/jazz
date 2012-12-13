@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.util.event.IPropertyChangeListener;
-import net.bodz.bas.util.event.PropertyChangeEvent;
+import net.bodz.bas.t.event.IPropertyChangeListener;
+import net.bodz.bas.t.event.PropertyChangeEvent;
 
 public class ValueOfPropertyChangeListener
         implements IPropertyChangeListener {

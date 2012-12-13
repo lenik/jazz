@@ -8,8 +8,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.t.tree.TreePath;
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.StackComposite;
 
@@ -18,9 +18,9 @@ public class PageContainer
 
     private IBook book;
     private Composite nonpage;
-    private Map<TreePath, Control> pageMap;
+    private Map<PathEntries, Control> pageMap;
 
-    private TreePath activePath;
+    private PathEntries activePath;
     private IPage activePage;
 
     public PageContainer(IBook book, Composite parent, int style) {
@@ -29,10 +29,10 @@ public class PageContainer
             throw new NullPointerException("book");
         this.book = book;
         this.nonpage = new EmptyComposite(parent, SWT.NONE);
-        this.pageMap = new HashMap<TreePath, Control>();
+        this.pageMap = new HashMap<PathEntries, Control>();
     }
 
-    public boolean remove(TreePath path) {
+    public boolean remove(PathEntries path) {
         Control pageControl = pageMap.remove(path);
         if (pageControl == null)
             return false;
@@ -43,17 +43,17 @@ public class PageContainer
     public boolean remove(Control pageControl) {
         if (pageControl == null)
             throw new NullPointerException("pageControl");
-        for (Map.Entry<TreePath, Control> e : pageMap.entrySet()) {
+        for (Map.Entry<PathEntries, Control> e : pageMap.entrySet()) {
             Control c = e.getValue();
             if (pageControl.equals(c)) {
-                TreePath path = e.getKey();
+                PathEntries path = e.getKey();
                 return remove(path);
             }
         }
         return false;
     }
 
-    public void go(TreePath path)
+    public void go(PathEntries path)
             throws PageException {
         if (Nullables.equals(activePath, path))
             return;
@@ -88,7 +88,7 @@ public class PageContainer
         activePage = page;
     }
 
-    public TreePath getActivePath() {
+    public PathEntries getActivePath() {
         return activePath;
     }
 

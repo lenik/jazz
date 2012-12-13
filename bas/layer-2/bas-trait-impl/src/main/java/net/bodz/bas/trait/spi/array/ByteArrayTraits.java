@@ -3,9 +3,9 @@ package net.bodz.bas.trait.spi.array;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.meta.decl.ParameterType;
+import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.INegotiation.IParameter;
 import net.bodz.bas.traits.IParser;
 
 public class ByteArrayTraits

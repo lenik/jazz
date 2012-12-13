@@ -22,11 +22,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.gui.err.QuietValidationException;
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.IProject;
@@ -201,7 +201,7 @@ public class CustomPage
     }
 
     @Override
-    public TreePath service(ServiceContext context)
+    public PathEntries service(ServiceContext context)
             throws PageException {
         // refreshBaseDirs();
         refreshTree();

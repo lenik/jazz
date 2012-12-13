@@ -3,7 +3,7 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.model.AbstractDecorator;
+import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedCharOut
         extends AbstractDecorator<ICharOut>

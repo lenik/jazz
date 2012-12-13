@@ -3,7 +3,7 @@ package net.bodz.bas.potato.model;
 import java.beans.EventSetDescriptor;
 import java.io.Serializable;
 
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.c.object.Nullables;
 
 public class EventKey
         implements Serializable {

@@ -3,7 +3,7 @@ package net.bodz.bas.meta.build;
 import java.text.ParseException;
 import java.util.Date;
 
-import net.bodz.bas.util.annotation.AnnotationParseUtil;
+import net.bodz.bas.c.annotation.AnnotationParseUtil;
 
 public class RcsKeywordsUtil
         extends AnnotationParseUtil {

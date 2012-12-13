@@ -3,8 +3,6 @@ package net.bodz.bas.t.buffer;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.buffer.ByteRing;
-
 @Deprecated
 public class ByteRingTest
         extends Assert {

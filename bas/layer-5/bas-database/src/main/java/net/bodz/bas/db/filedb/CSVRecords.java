@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.AbstractMitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class CSVRecords
         extends AbstractSeqRecords<String[]> {

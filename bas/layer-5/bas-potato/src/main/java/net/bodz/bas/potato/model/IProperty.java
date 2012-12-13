@@ -2,7 +2,7 @@ package net.bodz.bas.potato.model;
 
 import java.beans.PropertyDescriptor;
 
-import net.bodz.bas.util.event.IPropertyChangeListener;
+import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public interface IProperty
         extends IPotatoElement {

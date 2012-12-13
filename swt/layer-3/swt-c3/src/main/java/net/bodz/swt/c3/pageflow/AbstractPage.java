@@ -13,10 +13,10 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.t.tree.TreePath;
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.swt.gui.a.IconAnnotation;
@@ -70,7 +70,7 @@ public abstract class AbstractPage
     }
 
     @Override
-    public TreePath service(ServiceContext context)
+    public PathEntries service(ServiceContext context)
             throws PageException {
         return null;
     }
@@ -79,7 +79,7 @@ public abstract class AbstractPage
      * Do nothing in default implementation.
      */
     @Override
-    public void enter(TreePath prev)
+    public void enter(PathEntries prev)
             throws PageException {
     }
 
@@ -87,7 +87,7 @@ public abstract class AbstractPage
      * Do nothing in default implementation.
      */
     @Override
-    public void leave(TreePath next)
+    public void leave(PathEntries next)
             throws PageException {
     }
 

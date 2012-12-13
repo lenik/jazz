@@ -1,6 +1,5 @@
 package net.bodz.bas.potato.spi.reflect;
 
-import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.potato.model.IConstructorMap;
 import net.bodz.bas.potato.model.IEventMap;
 import net.bodz.bas.potato.model.IMethodMap;
@@ -11,6 +10,7 @@ import net.bodz.bas.potato.spi.builtin.DefaultConstructorMap;
 import net.bodz.bas.potato.spi.builtin.DefaultMethodMap;
 import net.bodz.bas.potato.spi.builtin.DefaultPropertyMap;
 import net.bodz.bas.potato.spi.builtin.NullEventMap;
+import net.bodz.bas.rtx.QueryException;
 
 public class ReflectPotatoProvider
         extends AbstractPotatoProvider {

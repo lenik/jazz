@@ -9,7 +9,7 @@ import net.bodz.bas.io.resource.builtin.ReaderSource;
 import net.bodz.bas.io.resource.tools.IStreamReading;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class ReaderSourceUnit
         extends GenericUnit_z1 {

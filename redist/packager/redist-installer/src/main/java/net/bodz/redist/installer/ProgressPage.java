@@ -16,7 +16,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.err.RecoverableExceptionEvent;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.log.AbstractLogSink;
@@ -25,12 +25,12 @@ import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.util.DurationChangeEvent;
 import net.bodz.bas.util.IJob;
 import net.bodz.bas.util.JobObserver;
 import net.bodz.bas.util.ProgressChangeEvent;
 import net.bodz.bas.util.StatusChangeEvent;
-import net.bodz.bas.util.exception.RecoverableExceptionEvent;
 import net.bodz.swt.c.composite.DetailSwitchEvent;
 import net.bodz.swt.c.composite.DetailSwitchListener;
 import net.bodz.swt.c.composite.WindowComposite;
@@ -253,7 +253,7 @@ class ProgressPage
      * Execute the install immediately when entered into this page
      */
     @Override
-    public TreePath service(ServiceContext context)
+    public PathEntries service(ServiceContext context)
             throws PageException {
         logList.removeAll();
         setState(BLOCK);

@@ -5,9 +5,6 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.list.SortedArrayList;
-import net.bodz.bas.t.list.SortedList;
-
 public class SortedListTest
         extends Assert {
 

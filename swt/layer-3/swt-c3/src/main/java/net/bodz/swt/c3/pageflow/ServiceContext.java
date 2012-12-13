@@ -1,6 +1,6 @@
 package net.bodz.swt.c3.pageflow;
 
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.variant.map.SimpleRequest;
 
 public interface ServiceContext {
@@ -9,6 +9,6 @@ public interface ServiceContext {
 
     SimpleRequest getRequest();
 
-    TreePath getReferrerPath();
+    PathEntries getReferrerPath();
 
 }

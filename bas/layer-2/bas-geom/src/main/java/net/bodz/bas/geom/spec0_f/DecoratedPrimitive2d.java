@@ -11,7 +11,7 @@ import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
-import net.bodz.bas.model.AbstractDecorator;
+import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedPrimitive2d
         extends AbstractDecorator<IPrimitive2d>

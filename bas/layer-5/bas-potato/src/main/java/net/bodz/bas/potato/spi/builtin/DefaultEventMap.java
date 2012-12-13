@@ -9,7 +9,7 @@ import java.util.TreeMap;
 import net.bodz.bas.potato.model.IEvent;
 import net.bodz.bas.potato.model.IEventMap;
 import net.bodz.bas.potato.spi.bean.BeanEvent;
-import net.bodz.bas.util.order.ComparableComparator;
+import net.bodz.bas.t.order.ComparableComparator;
 
 public class DefaultEventMap
         implements IEventMap {

@@ -6,7 +6,7 @@ import java.util.TreeSet;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
-import net.bodz.bas.util.order.PriorityComparator;
+import net.bodz.bas.t.order.PriorityComparator;
 
 @ExcludedFromIndex
 public class CompositePathDispatcher

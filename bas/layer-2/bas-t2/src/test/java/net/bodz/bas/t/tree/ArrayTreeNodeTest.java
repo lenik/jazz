@@ -3,10 +3,6 @@ package net.bodz.bas.t.tree;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.tree.ArrayTreeNode;
-import net.bodz.bas.t.tree.TreeCallback;
-import net.bodz.bas.t.tree.TreeNodes;
-
 public class ArrayTreeNodeTest
         extends Assert {
 
@@ -28,7 +24,7 @@ public class ArrayTreeNodeTest
     @Test
     public void test1()
             throws Exception {
-        TreeNodes.traverse(helloTree, new TreeCallback<ArrayTreeNode>() {
+        TreeNodes.traverse(helloTree, new ITreeCallback<ArrayTreeNode>() {
             @Override
             public int each(ArrayTreeNode node, int level) {
                 for (int i = 0; i < level; i++)

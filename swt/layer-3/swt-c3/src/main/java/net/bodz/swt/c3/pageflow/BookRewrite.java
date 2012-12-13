@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.bodz.bas.i18n.nls.NLS;
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public class BookRewrite
         implements IBook {
@@ -34,18 +34,18 @@ public class BookRewrite
     }
 
     @Override
-    public TreePath getFirst() {
+    public PathEntries getFirst() {
         return next.getFirst();
     }
 
     @Override
-    public boolean contains(TreePath path) {
+    public boolean contains(PathEntries path) {
         path = resolve(path);
         return next.contains(path);
     }
 
     @Override
-    public IPage getPage(TreePath path) {
+    public IPage getPage(PathEntries path) {
         path = resolve(path);
         return next.getPage(path);
     }
@@ -79,7 +79,7 @@ public class BookRewrite
         rules.remove(index);
     }
 
-    public TreePath resolve(TreePath treePath) {
+    public PathEntries resolve(PathEntries treePath) {
         if (treePath == null)
             return null;
         String path = treePath.getPath();
@@ -96,7 +96,7 @@ public class BookRewrite
                     continue R;
             }
         } while (false);
-        return new TreePath(path);
+        return new PathEntries(path);
     }
 
     @Override

@@ -4,21 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.t.tree.TreePath;
-import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.variant.AbstractTmVariantLookupMap;
+import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.t.pojo.PathEntries;
+import net.bodz.bas.t.variant.AbstractTmVariantLookupMap;
 
 public class SimpleRequest
         extends AbstractTmVariantLookupMap<String> {
 
     private final Object source;
     private String protocol;
-    private TreePath path;
+    private PathEntries path;
     private String anchor;
 
     private Map<String, Object> map;
 
-    public SimpleRequest(Object source, TreePath path) {
+    public SimpleRequest(Object source, PathEntries path) {
         this(source, path, null);
     }
 
@@ -26,7 +26,7 @@ public class SimpleRequest
         this(source, null, url);
     }
 
-    public SimpleRequest(Object source, TreePath context, String spec) {
+    public SimpleRequest(Object source, PathEntries context, String spec) {
         this.map = new HashMap<String, Object>();
         this.source = source;
         parseURL(context, spec);
@@ -40,7 +40,7 @@ public class SimpleRequest
      * @param parameters
      *            referenced parameters map, <code>null</code> to construct a new one.
      */
-    public SimpleRequest(Object source, String protocol, TreePath path, String anchor, Map<String, Object> parameters) {
+    public SimpleRequest(Object source, String protocol, PathEntries path, String anchor, Map<String, Object> parameters) {
         this.map = parameters;
         this.source = source;
         this.protocol = protocol;
@@ -75,11 +75,11 @@ public class SimpleRequest
         this.protocol = protocol;
     }
 
-    public TreePath getPath() {
+    public PathEntries getPath() {
         return path;
     }
 
-    public void setPath(TreePath path) {
+    public void setPath(PathEntries path) {
         this.path = path;
     }
 
@@ -95,7 +95,7 @@ public class SimpleRequest
         return map;
     }
 
-    protected void parseURL(TreePath context, String spec) {
+    protected void parseURL(PathEntries context, String spec) {
         String query = null;
 
         if (spec != null) {
@@ -118,14 +118,14 @@ public class SimpleRequest
             }
         }
 
-        TreePath path = context;
+        PathEntries path = context;
 
         if (spec != null)
             if (context != null) {
-                TreePath siblingParent = context.getParent();
-                path = new TreePath(siblingParent, spec);
+                PathEntries siblingParent = context.getParent();
+                path = new PathEntries(siblingParent, spec);
             } else
-                path = new TreePath(spec);
+                path = new PathEntries(spec);
         if (path != null)
             path = path.getCanonical();
         this.path = path;

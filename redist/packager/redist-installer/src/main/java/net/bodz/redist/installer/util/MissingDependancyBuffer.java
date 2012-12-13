@@ -3,11 +3,11 @@ package net.bodz.redist.installer.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.collection.tree.TreeCallback;
+import net.bodz.bas.t.tree.ITreeCallback;
 import net.bodz.redist.installer.IComponent;
 
 public class MissingDependancyBuffer
-        implements TreeCallback<IComponent> {
+        implements ITreeCallback<IComponent> {
 
     public static class Entry {
 

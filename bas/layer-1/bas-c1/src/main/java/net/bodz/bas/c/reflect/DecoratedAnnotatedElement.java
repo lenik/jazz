@@ -3,7 +3,7 @@ package net.bodz.bas.c.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 
-import net.bodz.bas.model.AbstractDecorator;
+import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedAnnotatedElement
         extends AbstractDecorator<AnnotatedElement>

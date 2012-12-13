@@ -5,8 +5,6 @@ import java.nio.ByteBuffer;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.buffer.Buffers;
-
 public class BuffersTest
         extends Assert {
 

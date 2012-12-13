@@ -6,7 +6,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.potato.model.IProperty;
-import net.bodz.bas.util.order.IPriority;
+import net.bodz.bas.t.order.IPriority;
 
 public interface IOption
         extends IElement, IPriority {

@@ -13,8 +13,8 @@ import org.eclipse.swt.graphics.ImageData;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.object.IdentityObjectSet;
-import net.bodz.bas.collection.tree.TreeCallback;
 import net.bodz.bas.meta.build.IVersion;
+import net.bodz.bas.t.tree.ITreeCallback;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 import net.bodz.mda.xjdoc.model1.Author;
@@ -161,12 +161,12 @@ public class AbstractProject
     }
 
     @Override
-    public void findDependents(IComponent parent, TreeCallback<IComponent> callback) {
+    public void findDependents(IComponent parent, ITreeCallback<IComponent> callback) {
         IdentityObjectSet uniq = new IdentityObjectSet();
         findDependents(parent, callback, 0, uniq);
     }
 
-    boolean findDependents(IComponent parent, TreeCallback<IComponent> callback, int level, IdentityObjectSet uniq) {
+    boolean findDependents(IComponent parent, ITreeCallback<IComponent> callback, int level, IdentityObjectSet uniq) {
         if (parent == null)
             throw new NullPointerException("null component in level " + level);
         if (uniq.contains(parent))
@@ -177,11 +177,11 @@ public class AbstractProject
             return true;
         L: for (IComponent child : children) {
             switch (callback.each(child, level)) {
-            case TreeCallback.OK:
+            case ITreeCallback.OK:
                 break;
-            case TreeCallback.BREAK:
+            case ITreeCallback.BREAK:
                 break L;
-            case TreeCallback.CANCEL:
+            case ITreeCallback.CANCEL:
                 return false;
             }
             if (!findDependents(child, callback, level + 1, uniq))
@@ -191,14 +191,14 @@ public class AbstractProject
     }
 
     @Override
-    public void findDependentsBy(IComponent child, TreeCallback<IComponent> callback) {
+    public void findDependentsBy(IComponent child, ITreeCallback<IComponent> callback) {
         if (bydeps == null)
             refreshDependants();
         IdentityObjectSet uniq = new IdentityObjectSet();
         findDependentsBy(child, callback, 0, uniq);
     }
 
-    boolean findDependentsBy(IComponent child, TreeCallback<IComponent> callback, int level, IdentityObjectSet uniq) {
+    boolean findDependentsBy(IComponent child, ITreeCallback<IComponent> callback, int level, IdentityObjectSet uniq) {
         if (child == null)
             throw new NullPointerException("null component in rev-level " + level);
         if (uniq.contains(child))
@@ -209,11 +209,11 @@ public class AbstractProject
             return true;
         L: for (IComponent parent : parents) {
             switch (callback.each(parent, level)) {
-            case TreeCallback.OK:
+            case ITreeCallback.OK:
                 break;
-            case TreeCallback.BREAK:
+            case ITreeCallback.BREAK:
                 break L;
-            case TreeCallback.CANCEL:
+            case ITreeCallback.CANCEL:
                 return false;
             }
             if (!findDependentsBy(parent, callback, level + 1, uniq))
@@ -223,12 +223,12 @@ public class AbstractProject
     }
 
     @Override
-    public void analyseDependency(TreeCallback<IComponent> missingCallback) {
+    public void analyseDependency(ITreeCallback<IComponent> missingCallback) {
         IdentityObjectSet uniq = new IdentityObjectSet();
         analyseDependency(this, missingCallback, 0, uniq);
     }
 
-    boolean analyseDependency(IComponent child, TreeCallback<IComponent> missingCallback, int level,
+    boolean analyseDependency(IComponent child, ITreeCallback<IComponent> missingCallback, int level,
             IdentityObjectSet uniq) {
         if (uniq.contains(child))
             throw new IllegalStateException(tr._("Loop detected: ") + child);
@@ -239,11 +239,11 @@ public class AbstractProject
         L: for (IComponent parent : dependancy) {
             if (!parent.isSelected())
                 switch (missingCallback.each(parent, level)) {
-                case TreeCallback.OK:
+                case ITreeCallback.OK:
                     break;
-                case TreeCallback.BREAK:
+                case ITreeCallback.BREAK:
                     break L;
-                case TreeCallback.CANCEL:
+                case ITreeCallback.CANCEL:
                     return false;
                 }
             if (!analyseDependency(parent, missingCallback, level + 1, uniq))

@@ -5,11 +5,11 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.order.AbstractNonNullComparator;
+import net.bodz.bas.t.order.AbstractNonNullComparator;
 
 public class HelpPageFormatter {
 

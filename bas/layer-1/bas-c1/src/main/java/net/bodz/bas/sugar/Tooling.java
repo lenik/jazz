@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.model.IFactory;
+import net.bodz.bas.t.factory.IFactory;
 
 public final class Tooling {
 

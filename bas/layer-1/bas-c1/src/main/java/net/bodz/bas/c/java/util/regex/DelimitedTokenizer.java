@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.util.iter.AbstractMitablex;
-import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.AbstractMitablex;
+import net.bodz.bas.t.iterator.immed.AbstractMitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class DelimitedTokenizer
         extends AbstractMitablex<String, IOException> {

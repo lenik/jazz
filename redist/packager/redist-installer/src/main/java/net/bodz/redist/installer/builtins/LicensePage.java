@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.ISession;
@@ -78,7 +78,7 @@ public class LicensePage
     }
 
     @Override
-    public TreePath service(ServiceContext context)
+    public PathEntries service(ServiceContext context)
             throws PageException {
         String license = session.getProject().getLicense();
         text.setText(license);

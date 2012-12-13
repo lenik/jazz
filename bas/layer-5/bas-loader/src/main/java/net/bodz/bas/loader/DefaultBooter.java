@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.c.java.net.URLClassLoaders;
+import net.bodz.bas.fn.legacy.Pred1;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.lang.fn.Pred1;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.sio.IPrintOut;

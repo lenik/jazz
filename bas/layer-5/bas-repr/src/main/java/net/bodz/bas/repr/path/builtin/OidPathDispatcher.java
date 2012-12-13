@@ -2,10 +2,10 @@ package net.bodz.bas.repr.path.builtin;
 
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
-import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
+import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.util.OidTree;
 
 public class OidPathDispatcher

@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.pageflow.*;
 
@@ -20,8 +20,8 @@ public class PageTester
     private NavigatorComposite navigator;
     private SimpleBook book;
 
-    static final TreePath START = new TreePath("start");
-    static final TreePath DEBUG = new TreePath("debug");
+    static final PathEntries START = new PathEntries("start");
+    static final PathEntries DEBUG = new PathEntries("debug");
 
     public PageTester() {
         book = new SimpleBook();
@@ -78,10 +78,10 @@ public class PageTester
         }
 
         @Override
-        public TreePath service(ServiceContext context)
+        public PathEntries service(ServiceContext context)
                 throws PageException {
             IBook book = context.getPageContext().getBook();
-            TreePath referrer = context.getReferrerPath();
+            PathEntries referrer = context.getReferrerPath();
             prevLabel.setText(GUINLS.format("PageTestApp.youFromA_s", referrer));
 
             // debug request must come from an existing page.

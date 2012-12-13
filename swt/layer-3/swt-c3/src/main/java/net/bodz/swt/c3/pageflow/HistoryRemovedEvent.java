@@ -2,7 +2,7 @@ package net.bodz.swt.c3.pageflow;
 
 import java.util.EventObject;
 
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public class HistoryRemovedEvent
         extends EventObject {
@@ -11,16 +11,16 @@ public class HistoryRemovedEvent
 
     public static final int REMOVED = 1;
 
-    private final TreePath path;
+    private final PathEntries path;
     private final int refCount;
 
-    public HistoryRemovedEvent(History history, TreePath path, int refCount) {
+    public HistoryRemovedEvent(History history, PathEntries path, int refCount) {
         super(history);
         this.path = path;
         this.refCount = refCount;
     }
 
-    public TreePath getPath() {
+    public PathEntries getPath() {
         return path;
     }
 

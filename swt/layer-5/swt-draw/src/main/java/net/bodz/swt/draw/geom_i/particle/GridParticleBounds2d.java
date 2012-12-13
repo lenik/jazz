@@ -3,12 +3,12 @@ package net.bodz.swt.draw.geom_i.particle;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
+import net.bodz.bas.c.object.EmptyConsts;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.err.ReadOnlyException;
-import net.bodz.bas.util.EmptyConsts;
-import net.bodz.bas.util.ints.IntIterable;
-import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.bas.util.ints.PrefetchedIntIterator;
+import net.bodz.bas.t._int.IntIterable;
+import net.bodz.bas.t._int.IntIterator;
+import net.bodz.bas.t._int.PrefetchedIntIterator;
 
 public abstract class GridParticleBounds2d
         extends AbstractParticleBounds2d {

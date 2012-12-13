@@ -13,10 +13,10 @@ import org.apache.commons.vfs.FileSelectInfo;
 import org.apache.commons.vfs.FileSelector;
 import org.apache.commons.vfs.FileSystemException;
 
-import net.bodz.bas.c.java.util.Iterables;
+import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.JavaioStreamResource;
-import net.bodz.bas.model.ITransformer;
+import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;

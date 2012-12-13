@@ -3,7 +3,7 @@ package net.bodz.bas.sugar;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.util.example.Person;
+import net.bodz.bas.t.pojo.eg.Person;
 
 public class ToolingTest
         extends Assert {

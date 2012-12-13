@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.bodz.bas.util.order.NaturalComparator;
+import net.bodz.bas.t.order.NaturalComparator;
 
 public class SortedList<E>
         extends AbstractList<E>

@@ -6,9 +6,9 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
-import net.bodz.bas.util.ints.IntIterable;
-import net.bodz.bas.util.ints.IntIterator;
-import net.bodz.bas.util.ints.PrefetchedIntIterator;
+import net.bodz.bas.t._int.IntIterable;
+import net.bodz.bas.t._int.IntIterator;
+import net.bodz.bas.t._int.PrefetchedIntIterator;
 
 public abstract class AbstractParticleBounds2d
         implements IParticleBounds2d {

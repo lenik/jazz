@@ -12,7 +12,7 @@ import org.junit.Test;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.db.filedb.MultiTextMaps.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class MultiTextMapsTest
         extends Assert {

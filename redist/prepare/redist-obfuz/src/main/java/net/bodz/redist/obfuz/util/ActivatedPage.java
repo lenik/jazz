@@ -6,7 +6,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c3.pageflow.AbstractPage;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.PageMethod;
@@ -43,7 +43,7 @@ public class ActivatedPage
     }
 
     @Override
-    public TreePath service(ServiceContext context)
+    public PathEntries service(ServiceContext context)
             throws PageException {
         ActivationByTargetString abts = abtsProvider.getABTS();
         if (abts != null)

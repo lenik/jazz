@@ -1,6 +1,6 @@
 package net.bodz.bas.type.java.util.regex;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.rtx.Negotiation.*;
 
 import java.util.regex.Pattern;
 
@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.util.regex.PatternTraits;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 
 public class PatternTraitsTest
         extends PatternTraits {

@@ -6,8 +6,8 @@ import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.i18n.dom1.AbstractElement;
-import net.bodz.bas.util.primitive.Primitives;
 
 public abstract class CounterDef<T extends Number>
         extends AbstractElement

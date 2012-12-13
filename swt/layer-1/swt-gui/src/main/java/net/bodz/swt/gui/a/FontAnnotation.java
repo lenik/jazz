@@ -7,7 +7,7 @@ import org.eclipse.swt.graphics.FontData;
 
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.model.IFactory;
+import net.bodz.bas.t.factory.IFactory;
 
 public class FontAnnotation {
 

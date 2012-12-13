@@ -3,7 +3,7 @@ package net.bodz.mda.xjdoc.model;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.model.AbstractDecorator;
+import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedJavaElementDoc
         extends AbstractDecorator<IJavaElementDoc>

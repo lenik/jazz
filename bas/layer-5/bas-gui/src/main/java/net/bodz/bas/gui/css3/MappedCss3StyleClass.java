@@ -11,7 +11,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.gui.css3.property.*;
 import net.bodz.bas.gui.spec0.IColor;
 import net.bodz.bas.i18n.unit.Measure;
-import net.bodz.bas.util.Pair;
+import net.bodz.bas.t.pojo.Pair;
 
 public abstract class MappedCss3StyleClass
         extends AbstractPropertiesMapper

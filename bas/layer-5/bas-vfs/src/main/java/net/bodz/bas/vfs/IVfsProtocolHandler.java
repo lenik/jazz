@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.util.order.IPriority;
+import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 

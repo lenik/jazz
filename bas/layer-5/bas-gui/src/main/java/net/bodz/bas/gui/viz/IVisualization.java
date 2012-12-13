@@ -1,7 +1,7 @@
 package net.bodz.bas.gui.viz;
 
-import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.rtx.INegotiation;
 
 public interface IVisualization {
 

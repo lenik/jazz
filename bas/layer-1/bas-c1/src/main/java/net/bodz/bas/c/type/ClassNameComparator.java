@@ -1,6 +1,6 @@
 package net.bodz.bas.c.type;
 
-import net.bodz.bas.util.order.AbstractOrderComparator;
+import net.bodz.bas.t.order.AbstractOrderComparator;
 
 public class ClassNameComparator
         extends AbstractOrderComparator<Class<?>, String> {

@@ -2,7 +2,7 @@ package net.bodz.bas.potato.ref;
 
 import java.util.Map;
 
-import net.bodz.bas.lang.ref.AbstractRef;
+import net.bodz.bas.t.ref.AbstractRef;
 
 public abstract class AbstractRefEntry<T>
         extends AbstractRef<T>

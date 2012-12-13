@@ -1,7 +1,7 @@
 package net.bodz.bas.gui.util;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.model.AbstractFactory;
+import net.bodz.bas.t.factory.AbstractFactory;
 
 public class VoidFactory_String
         extends AbstractFactory<String> {

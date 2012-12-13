@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.lang.ControlReturn;
+import net.bodz.bas.err.control.ControlReturn;
 
 /**
  * The {@link Class#getDeclaredFields()} and {@link Class#getDeclaredMethods()} must return the

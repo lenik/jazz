@@ -1,12 +1,13 @@
 package net.bodz.bas.util.example;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.rtx.Negotiation.*;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.MandatoryException;
+import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.MandatoryException;
+import net.bodz.bas.t.pojo.eg.Address;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ICommonTraits;
 import net.bodz.bas.traits.IFormatter;

@@ -11,12 +11,12 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.gui.css3.Border;
 import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.model.meta.MaxLength;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
+import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.IValidator;

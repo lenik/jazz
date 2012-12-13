@@ -6,10 +6,10 @@ import java.io.FilenameFilter;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import net.bodz.bas.c.java.util.Iterables;
+import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
-import net.bodz.bas.model.ITransformer;
+import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsTree;

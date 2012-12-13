@@ -2,7 +2,7 @@ package net.bodz.bas.c.java.io;
 
 import java.io.Serializable;
 
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.c.object.Nullables;
 
 public class NameExtension
         implements Serializable {

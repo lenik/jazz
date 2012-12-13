@@ -11,7 +11,7 @@ import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.model.IPropertyMap;
 import net.bodz.bas.potato.spi.bean.BeanProperty;
 import net.bodz.bas.potato.spi.reflect.ReflectProperty;
-import net.bodz.bas.util.order.ComparableComparator;
+import net.bodz.bas.t.order.ComparableComparator;
 
 public class DefaultPropertyMap
         implements IPropertyMap {

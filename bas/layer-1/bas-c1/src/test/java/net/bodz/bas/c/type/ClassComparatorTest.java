@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.util.Permutation;
-import net.bodz.bas.lang.fn.Proc1;
+import net.bodz.bas.fn.legacy.Proc1;
 
 public class ClassComparatorTest
         extends Assert {

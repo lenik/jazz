@@ -7,7 +7,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 
 public interface IPage {
 
@@ -29,13 +29,13 @@ public interface IPage {
      * @return <code>null</code> stay with-in current page, otherwise redirect to the returned path
      *         if any.
      */
-    TreePath service(ServiceContext context)
+    PathEntries service(ServiceContext context)
             throws PageException;
 
-    void enter(TreePath prev)
+    void enter(PathEntries prev)
             throws PageException;
 
-    void leave(TreePath next)
+    void leave(PathEntries next)
             throws PageException;
 
     /**

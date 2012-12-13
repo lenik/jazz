@@ -1,6 +1,6 @@
 package net.bodz.bas.proxy.java.lang;
 
-import net.bodz.bas.model.IWrapper;
+import net.bodz.bas.t.model.IWrapper;
 
 public class DecoratedStringBuilder
         implements Appendable, IWrapper<StringBuilder> {

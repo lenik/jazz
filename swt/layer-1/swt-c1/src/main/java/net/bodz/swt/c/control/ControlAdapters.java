@@ -8,7 +8,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.lang.fn.Pred1;
+import net.bodz.bas.fn.legacy.Pred1;
 import net.bodz.swt.c.canvas.ViewportCanvas;
 
 public class ControlAdapters {

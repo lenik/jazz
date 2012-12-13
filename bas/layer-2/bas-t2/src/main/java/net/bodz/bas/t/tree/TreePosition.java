@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.c.java.util.PrefetchedIterator;
+import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 import net.bodz.bas.t.list.ArrayStack;
-import net.bodz.bas.util.Nullables;
 
-public class TreePosition<N extends TreeNode<? extends N>>
+public class TreePosition<N extends ITreeNode<? extends N>>
         implements Iterable<N> {
 
-    static class Dim<N extends TreeNode<? extends N>>
+    static class Dim<N extends ITreeNode<? extends N>>
             implements Cloneable {
 
         public final N node;
@@ -61,7 +61,7 @@ public class TreePosition<N extends TreeNode<? extends N>>
         this(null, 0);
     }
 
-    static <N extends TreeNode<? extends N>> List<Dim<N>> toDims(N parent, int... childIndices)
+    static <N extends ITreeNode<? extends N>> List<Dim<N>> toDims(N parent, int... childIndices)
             throws IndexOutOfBoundsException {
         List<Dim<N>> list = new ArrayList<Dim<N>>(childIndices.length);
         for (int childIndex : childIndices) {
@@ -102,14 +102,14 @@ public class TreePosition<N extends TreeNode<? extends N>>
         list.addAll(dims);
     }
 
-    static class Iter<N extends TreeNode<? extends N>>
+    static class Iter<N extends ITreeNode<? extends N>>
             extends PrefetchedIterator<N> {
 
         private final ArrayStack<Dim<N>> stack;
-        private final TreeNodePredicator<? super N> pred;
+        private final ITreeNodePredicate<? super N> pred;
         private final List<TreePosition<N>> posBuf;
 
-        public Iter(List<Dim<N>> dims, TreeNodePredicator<? super N> pred, List<TreePosition<N>> posBuf) {
+        public Iter(List<Dim<N>> dims, ITreeNodePredicate<? super N> pred, List<TreePosition<N>> posBuf) {
             if (dims == null)
                 throw new NullPointerException("dims");
             this.stack = new ArrayStack<Dim<N>>();
@@ -178,7 +178,7 @@ public class TreePosition<N extends TreeNode<? extends N>>
      * @param posRef
      *            save a copy of position of previous node just returned by {@link Iterator#next()}.
      */
-    public Iterator<N> iterator(TreeNodePredicator<? super N> pred, List<TreePosition<N>> posBuf) {
+    public Iterator<N> iterator(ITreeNodePredicate<? super N> pred, List<TreePosition<N>> posBuf) {
         return new Iter<N>(list, pred, posBuf);
     }
 

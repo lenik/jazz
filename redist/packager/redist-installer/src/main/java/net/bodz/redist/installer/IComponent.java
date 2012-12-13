@@ -3,11 +3,11 @@ package net.bodz.redist.installer;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.collection.tree.TreeNode;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.t.tree.ITreeNode;
 
 public interface IComponent
-        extends IElement, TreeNode<IComponent> {
+        extends IElement, ITreeNode<IComponent> {
 
     /**
      * id must be unique in the component tree.

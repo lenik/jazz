@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Date;
 
 import net.bodz.bas.c.object.ITreeDump;
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.object.TreeDumps;
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.util.Nullables;
 
 public class PathArrival
         implements IPathArrival {

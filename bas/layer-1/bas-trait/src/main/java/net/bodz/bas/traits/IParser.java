@@ -5,7 +5,7 @@ import java.text.ParsePosition;
 import java.util.logging.Logger;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 
 public interface IParser<T> {
 

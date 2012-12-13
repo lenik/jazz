@@ -3,8 +3,6 @@ package net.bodz.bas.t.preorder;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.preorder.PrefixMap;
-
 public class PrefixMapTest
         extends Assert {
 

@@ -1,8 +1,9 @@
 package net.bodz.bas.util.example;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.MandatoryException;
+import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.MandatoryException;
+import net.bodz.bas.t.pojo.eg.Address;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;

@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.bodz.bas.util.iter.Iterators2;
-import net.bodz.bas.util.order.EntryKeyComparator;
+import net.bodz.bas.t.iterator.WeaveIterator;
+import net.bodz.bas.t.order.EntryKeyComparator;
 
 public abstract class DerSortedMap<K, V>
         extends DerMap<K, V>
@@ -82,7 +82,7 @@ public abstract class DerSortedMap<K, V>
 
         @Override
         public Iterator<Entry<K, V>> iterator() {
-            return Iterators2.weave(new EntryKeyComparator<K>(comparator()), //
+            return WeaveIterator.from(new EntryKeyComparator<K>(comparator()), //
                     new PIterator(), //
                     qsm.entrySet().iterator());
         }

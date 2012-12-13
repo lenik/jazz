@@ -13,8 +13,8 @@ import org.junit.Test;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
-import net.bodz.bas.util.example.Address;
-import net.bodz.bas.util.example.Person;
+import net.bodz.bas.t.pojo.eg.Address;
+import net.bodz.bas.t.pojo.eg.Person;
 
 public class SwtDialogsTest
         extends Assert {

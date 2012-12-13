@@ -1,11 +1,11 @@
 package net.bodz.swt.c3.pageflow;
 
-import net.bodz.bas.t.tree.TreePath;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.variant.map.SimpleRequest;
 
 public interface IPageFlow {
 
-    TreePath getLocation();
+    PathEntries getLocation();
 
     /**
      * Go to relative page in history.
@@ -17,7 +17,7 @@ public interface IPageFlow {
      */
     boolean go(int pageCount);
 
-    boolean go(TreePath next);
+    boolean go(PathEntries next);
 
     boolean submit(SimpleRequest request);
 

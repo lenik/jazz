@@ -1,7 +1,7 @@
 package net.bodz.bas.traits;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.trait.Traits;
 
 public class ParserUtil {

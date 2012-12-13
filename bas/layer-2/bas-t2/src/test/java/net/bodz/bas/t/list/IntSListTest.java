@@ -3,7 +3,7 @@ package net.bodz.bas.t.list;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.util.ints.IntSList;
+import net.bodz.bas.t._int.IntSList;
 
 public class IntSListTest
         extends Assert {

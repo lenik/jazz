@@ -3,9 +3,9 @@ package net.bodz.bas.trait.spi.array;
 import java.util.Map;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.lang.negotiation.INegotiable;
-import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.meta.decl.ParameterType;
+import net.bodz.bas.rtx.INegotiable;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.traits.AbstractCommonTraits;
 
 public abstract class AbstractArrayTraits<T>

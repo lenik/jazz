@@ -6,14 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.c.java.util.Iterables;
 import net.bodz.bas.c.reflect.query.predicate.IStringPredicate;
 import net.bodz.bas.c.reflect.query.predicate.StringEndsWith;
 import net.bodz.bas.c.reflect.query.predicate.StringEquals;
 import net.bodz.bas.c.reflect.query.predicate.StringStartsWith;
-import net.bodz.bas.util.iter.AbstractMitable;
-import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.t.iterator.Iterables;
+import net.bodz.bas.t.iterator.immed.AbstractMitable;
+import net.bodz.bas.t.iterator.immed.AbstractMitorx;
+import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class ClassSelection
         extends AbstractMitable<Class<?>> {

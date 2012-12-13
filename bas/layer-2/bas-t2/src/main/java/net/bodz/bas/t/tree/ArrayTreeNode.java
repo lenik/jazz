@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ArrayTreeNode
-        implements TreeNode<ArrayTreeNode> {
+        implements ITreeNode<ArrayTreeNode> {
 
     private Object var;
 

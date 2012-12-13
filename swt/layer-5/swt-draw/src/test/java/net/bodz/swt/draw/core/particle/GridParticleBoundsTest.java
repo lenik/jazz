@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.util.Arrays;
-import net.bodz.bas.util.ints.IntIterable;
+import net.bodz.bas.t._int.IntIterable;
 import net.bodz.swt.draw.geom_i.particle.GridParticleBounds2d.HFirst;
 
 public class GridParticleBoundsTest

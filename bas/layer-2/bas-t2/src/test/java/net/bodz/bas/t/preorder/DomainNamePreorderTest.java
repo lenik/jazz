@@ -3,9 +3,6 @@ package net.bodz.bas.t.preorder;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.preorder.DomainNamePreorder;
-import net.bodz.bas.t.preorder.IPreorder;
-
 public class DomainNamePreorderTest
         extends Assert {
 

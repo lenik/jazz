@@ -3,7 +3,7 @@ package net.bodz.mda.xjdoc.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 
 import com.thoughtworks.qdox.model.Type;
 

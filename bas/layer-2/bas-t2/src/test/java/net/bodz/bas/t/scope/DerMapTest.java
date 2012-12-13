@@ -6,9 +6,6 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.scope.DerHashMap;
-import net.bodz.bas.t.scope.DerMap;
-
 public class DerMapTest
         extends Assert {
 

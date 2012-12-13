@@ -3,8 +3,8 @@ package net.bodz.bas.trait.spi.array;
 import net.bodz.bas.c.java.lang.CharacterTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.meta.decl.ParameterType;
+import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
 

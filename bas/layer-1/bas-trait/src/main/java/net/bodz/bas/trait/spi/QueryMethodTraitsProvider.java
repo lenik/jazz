@@ -3,7 +3,7 @@ package net.bodz.bas.trait.spi;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import net.bodz.bas.lang.mi.QueryException;
+import net.bodz.bas.rtx.QueryException;
 
 /**
  * The GetTraitsMethod traits provider allow user to define type traits by declare a getTraits

@@ -2,8 +2,8 @@ package net.bodz.redist.installer;
 
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.gui.err.GUIException;
+import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c3.pageflow.IBook;
 import net.bodz.swt.c3.pageflow.IPage;
 import net.bodz.swt.c3.pageflow.NavigatorComposite;
@@ -45,12 +45,12 @@ public class InstallComposite
             }
 
             @Override
-            protected boolean _contains(TreePath path) {
+            protected boolean _contains(PathEntries path) {
                 return _getPage(path) != null;
             }
 
             @Override
-            protected IPage _getPage(TreePath path) {
+            protected IPage _getPage(PathEntries path) {
                 IPage page = super._getPage(path);
                 if (page == null) {
                     String s = path.getPath();

@@ -3,8 +3,6 @@ package net.bodz.bas.t.set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.set.IntRange;
-
 public class IntRangeTest
         extends Assert {
 

@@ -2,8 +2,8 @@ package net.bodz.bas.t.node.chain;
 
 import java.util.Iterator;
 
-import net.bodz.bas.c.java.util.PrefetchedIterator;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class ChainIterator<NT extends IChainNode>
         //

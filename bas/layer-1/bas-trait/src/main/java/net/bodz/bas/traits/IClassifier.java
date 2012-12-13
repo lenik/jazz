@@ -2,7 +2,7 @@ package net.bodz.bas.traits;
 
 import java.util.Map;
 
-import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.rtx.INegotiation;
 
 public interface IClassifier<T> {
 

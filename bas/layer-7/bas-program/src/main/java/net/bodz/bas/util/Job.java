@@ -3,17 +3,18 @@ package net.bodz.bas.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.err.RecoverableExceptionEvent;
+import net.bodz.bas.err.RecoverableExceptionListener;
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.log.Logger;
-import net.bodz.bas.t.tree.TreeNode;
-import net.bodz.bas.util.exception.RecoverableExceptionEvent;
-import net.bodz.bas.util.exception.RecoverableExceptionListener;
+import net.bodz.bas.t.tree.ITreeNode;
 
 public abstract class Job
-        implements IJob, TreeNode<Job> {
+        implements IJob, ITreeNode<Job> {
 
     protected Logger logger;
     protected IUserDialogs userDialogs = ConsoleDialogs.stdout;

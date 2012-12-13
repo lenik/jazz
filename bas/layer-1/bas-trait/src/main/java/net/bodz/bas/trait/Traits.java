@@ -2,10 +2,10 @@ package net.bodz.bas.trait;
 
 import java.util.*;
 
-import net.bodz.bas.lang.mi.QueryException;
+import net.bodz.bas.c.primitive.Primitives;
+import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.trait.spi.ITraitsProvider;
 import net.bodz.bas.trait.util.TraitProviderComparator;
-import net.bodz.bas.util.primitive.Primitives;
 
 public class Traits {
 
