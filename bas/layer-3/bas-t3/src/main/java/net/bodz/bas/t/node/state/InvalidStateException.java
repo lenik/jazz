@@ -1,0 +1,24 @@
+package net.bodz.bas.t.node.state;
+
+public class InvalidStateException
+        extends RuntimeException {
+
+    static final long serialVersionUID = -1082822725269575429L;
+
+    public InvalidStateException() {
+        super();
+    }
+
+    public InvalidStateException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public InvalidStateException(String message) {
+        super(message);
+    }
+
+    public InvalidStateException(Throwable cause) {
+        super(cause);
+    }
+
+}
