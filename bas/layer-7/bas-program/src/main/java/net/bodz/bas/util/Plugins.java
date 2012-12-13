@@ -2,7 +2,7 @@ package net.bodz.bas.util;
 
 import java.util.Map.Entry;
 
-import net.bodz.bas.c.type.TypePrMap;
+import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.cli.plugin.ICLIPlugin;
 import net.bodz.bas.err.CreateException;
 
@@ -11,10 +11,10 @@ public class Plugins {
     /**
      * base-type -> category
      */
-    protected TypePrMap<PluginCategory> categories;
+    protected TypePoMap<PluginCategory> categories;
 
     public Plugins() {
-        categories = new TypePrMap<PluginCategory>();
+        categories = new TypePoMap<PluginCategory>();
     }
 
     public boolean addCategory(PluginCategory category) {

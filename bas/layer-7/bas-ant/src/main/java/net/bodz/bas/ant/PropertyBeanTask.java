@@ -22,7 +22,7 @@ import org.apache.tools.ant.types.Path;
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.system.SystemColos;
-import net.bodz.bas.c.type.TypePrSet;
+import net.bodz.bas.c.type.TypePoSet;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
@@ -60,10 +60,10 @@ public class PropertyBeanTask
     private boolean unique = true;
     private String duplicatedMessage;
 
-    private TypePrSet refTypes;
-    static TypePrSet defaultRefTypes;
+    private TypePoSet refTypes;
+    static TypePoSet defaultRefTypes;
     static {
-        defaultRefTypes = new TypePrSet();
+        defaultRefTypes = new TypePoSet();
         // defaultRefTypes.add(ResourceCollection.class); // interface
         Class<?>[] types = { DataType.class, };
         for (Class<?> type : types)
@@ -77,7 +77,7 @@ public class PropertyBeanTask
 
     public PropertyBeanTask() {
         vCtor = new ValueConstruct();
-        refTypes = new TypePrSet();
+        refTypes = new TypePoSet();
         refTypes.addAll(defaultRefTypes);
         duplicatedMessage = "(duplicated node, terminated)";
     }

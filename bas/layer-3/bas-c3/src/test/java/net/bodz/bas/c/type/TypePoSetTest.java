@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 @Deprecated
-public class TypePrSetTest
+public class TypePoSetTest
         extends Assert {
 
     static String join(String delim, Set<?> set) {
@@ -24,7 +24,7 @@ public class TypePrSetTest
 
     @Test
     public void test1() {
-        TypePrSet set = new TypePrSet();
+        TypePoSet set = new TypePoSet();
         set.add(Number.class);
         set.add(Object.class);
         set.add(String.class);
