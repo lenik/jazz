@@ -66,7 +66,7 @@ public class ClassResource {
         String classBytesUrl = getClassBytesURL(clazz).toString();
 
         assert classBytesUrl.endsWith(".class");
-        String classDirUrl = classBytesUrl.substring(0, classBytesUrl.length() - 6) + ".dir";
+        String classDirUrl = classBytesUrl.substring(0, classBytesUrl.length() - 6) + ".d";
 
         try {
             return new URL(classDirUrl);
