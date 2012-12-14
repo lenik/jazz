@@ -191,15 +191,23 @@ public class FilePath {
     }
 
     /**
-     * @return <code>null</code> if file has no extension.
+     * Get the extension name from the given path string.
+     * 
+     * @param path
+     *            The path string, can't be <code>null</code>.
+     * @param includeDot
+     *            Whether dot(.) is included in the return value.
+     * @return If file has no extension, returns <code>null</code> if includeDot is
+     *         <code>false</code>, or "." if includeDot is <code>true</code>.
      * @throws NullPointerException
      *             If <code>path</code> is <code>null</code>.
      */
     public static String getExtension(String path, boolean includeDot) {
         int dot = path.lastIndexOf('.');
-        if (dot != -1)
+        if (dot == -1)
+            return includeDot ? "." : null;
+        else
             return path.substring(includeDot ? dot : dot + 1);
-        return null;
     }
 
     public static String getExtension(File file, boolean includeDot) {
@@ -207,12 +215,17 @@ public class FilePath {
     }
 
     /**
-     * @return without dot, "" if file has no extension.
+     * @return The extension name without the dot(.). If file has no extension, returns
+     *         <code>null</code>.
      */
     public static String getExtension(String path) {
         return getExtension(path, false);
     }
 
+    /**
+     * @return The extension name without the dot(.). If file has no extension, returns
+     *         <code>null</code>.
+     */
     public static String getExtension(File file) {
         return getExtension(file.getPath());
     }
