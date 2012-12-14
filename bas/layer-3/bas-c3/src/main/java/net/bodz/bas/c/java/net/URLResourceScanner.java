@@ -16,7 +16,7 @@ import java.util.zip.ZipFile;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.UnexpectedException;
 
-public class URLScanner {
+public class URLResourceScanner {
 
     boolean recursive;
     boolean keepOrder = true;
@@ -25,7 +25,7 @@ public class URLScanner {
     boolean dotForStart = false;
     boolean includeDirectories = true;
 
-    public URLScanner(boolean recursive) {
+    public URLResourceScanner(boolean recursive) {
         this.recursive = recursive;
     }
 
@@ -43,6 +43,30 @@ public class URLScanner {
 
     public void setKeepOrder(boolean keepOrder) {
         this.keepOrder = keepOrder;
+    }
+
+    public boolean isIncludeStart() {
+        return includeStart;
+    }
+
+    public void setIncludeStart(boolean includeStart) {
+        this.includeStart = includeStart;
+    }
+
+    public boolean isDotForStart() {
+        return dotForStart;
+    }
+
+    public void setDotForStart(boolean dotForStart) {
+        this.dotForStart = dotForStart;
+    }
+
+    public boolean isIncludeDirectories() {
+        return includeDirectories;
+    }
+
+    public void setIncludeDirectories(boolean includeDirectories) {
+        this.includeDirectories = includeDirectories;
     }
 
     public Map<String, URL> scan(URL start)
