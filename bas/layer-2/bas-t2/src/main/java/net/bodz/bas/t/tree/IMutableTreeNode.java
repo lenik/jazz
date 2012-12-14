@@ -1,7 +1,5 @@
 package net.bodz.bas.t.tree;
 
-import net.bodz.bas.err.CreateException;
-
 public interface IMutableTreeNode
         extends ITreeNode {
 
@@ -12,9 +10,6 @@ public interface IMutableTreeNode
      *            The new parent.
      */
     void setParent(ITreeNode parent);
-
-    ITreeNode newChild()
-            throws CreateException;
 
     String addChild(ITreeNode child);
 

@@ -29,7 +29,7 @@ public interface ITreeNode {
 
     Set<String> childKeySet();
 
-    Collection<ITreeNode> children();
+    Collection<? extends ITreeNode> children();
 
     String keyOf(ITreeNode child);
 

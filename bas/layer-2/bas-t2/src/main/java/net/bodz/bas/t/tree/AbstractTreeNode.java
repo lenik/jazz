@@ -1,8 +1,9 @@
 package net.bodz.bas.t.tree;
 
+import java.util.Collection;
 import java.util.List;
 
-public abstract class AbstractTreeNode
+public abstract class AbstractTreeNode<node_t extends ITreeNode>
         implements ITreeNode {
 
     @Override
@@ -11,7 +12,7 @@ public abstract class AbstractTreeNode
     }
 
     @Override
-    public ITreeNode getParent() {
+    public node_t getParent() {
         return null;
     }
 
@@ -33,7 +34,7 @@ public abstract class AbstractTreeNode
     }
 
     @Override
-    public ITreeNode getDescendant(String path) {
+    public node_t getDescendant(String path) {
         int slash = path.indexOf('/');
         if (slash == -1)
             return getChild(path);
@@ -44,7 +45,7 @@ public abstract class AbstractTreeNode
             return null;
 
         path = path.substring(slash + 1);
-        return child.getDescendant(path);
+        return (node_t) child.getDescendant(path);
     }
 
     @Override
@@ -55,5 +56,11 @@ public abstract class AbstractTreeNode
         else
             return keys.get(0);
     }
+
+    @Override
+    public abstract node_t getChild(String key);
+
+    @Override
+    public abstract Collection<? extends node_t> children();
 
 }

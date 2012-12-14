@@ -4,26 +4,32 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class AbstractMutableTreeNode
-        extends AbstractTreeNode
+import net.bodz.bas.err.CreateException;
+
+public abstract class AbstractMutableTreeNode<node_t extends ITreeNode>
+        extends AbstractTreeNode<node_t>
         implements IMutableTreeNode, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private ITreeNode parent;
+    private node_t parent;
 
     @Override
-    public ITreeNode getParent() {
+    public node_t getParent() {
         return parent;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void setParent(ITreeNode parent) {
-        this.parent = parent;
+        this.parent = (node_t) parent;
     }
 
+    protected abstract node_t newChild()
+            throws CreateException;
+
     @Override
-    public synchronized ITreeNode resolve(String path) {
+    public synchronized node_t resolve(String path) {
         if (path == null)
             throw new NullPointerException("path");
 
@@ -37,7 +43,7 @@ public abstract class AbstractMutableTreeNode
             path = path.substring(slash + 1);
         }
 
-        ITreeNode child = getChild(key);
+        node_t child = getChild(key);
         if (child == null) {
             child = newChild();
             putChild(key, child);
@@ -46,7 +52,7 @@ public abstract class AbstractMutableTreeNode
         if (path == null)
             return child;
         else
-            return child.getDescendant(path);
+            return (node_t) child.getDescendant(path);
     }
 
     @Override
