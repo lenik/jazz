@@ -64,7 +64,7 @@ public class TaskTestApp {
             throws IOException {
         this();
         Class<?> callerClass = Caller.getCallerClass(caller);
-        URL url = ClassResource.getDataURL(callerClass);
+        URL url = ClassResource.getClassBytesURL(callerClass);
         if ("jar".equals(url.getProtocol())) {
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.

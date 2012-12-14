@@ -10,7 +10,7 @@ public class ClassResourceTest
         extends Assert {
 
     @Test
-    public void testClassData()
+    public void testGetData()
             throws Exception {
         URLResource classData = ClassResource.getData(getClass(), "data");
         String actual = classData.tooling()._for(StreamReading.class).readTextContents();
