@@ -51,7 +51,7 @@ public class JarStuffTest
 
         classpath = JarLocations.getBaseClasspath(Object.class);
         System.out.println("[outbase] Object.class => " + classpath);
-        assertEquals("jar", FilePath.getExtension(classpath.getName()));
+        assertEquals(".jar", FilePath.getExtension(classpath, true));
     }
 
     @Test

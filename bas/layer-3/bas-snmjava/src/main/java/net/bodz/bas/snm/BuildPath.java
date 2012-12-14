@@ -24,9 +24,6 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.xml.XMLs;
 
-/**
- * @test {@link BuildPathTest}
- */
 public class BuildPath {
 
     public static class SourceFolder {
@@ -290,7 +287,7 @@ public class BuildPath {
                 File parentDir = classPath.getParentFile();
                 String classPathFileName = classPath.getName();
                 String classPathNameOnly = FilePath.stripExtension(classPathFileName);
-                String classPathExtension = FilePath.getExtension(classPathFileName);
+                String classPathExtension = FilePath.getExtension(classPathFileName, true);
                 for (String trySrcSuffix : trySrcSuffixes) {
                     String srcName = classPathNameOnly + trySrcSuffix;
                     File srcPath = new File(parentDir, srcName + classPathExtension);
