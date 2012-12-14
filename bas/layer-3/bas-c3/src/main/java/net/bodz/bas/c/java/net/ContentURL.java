@@ -14,31 +14,35 @@ import net.bodz.bas.std.rfc.mime.StringContent;
 
 public class ContentURL {
 
-    public static URL create(String name, String string) {
+    public static URL create(String path, String string) {
         StringContent content = new StringContent(string);
-        return create(name, content);
+        return create(path, content);
     }
 
-    public static URL create(String name, String contentType, String string) {
+    public static URL create(String path, String contentType, String string) {
         ContentType _contentType = ContentType.forName(contentType);
         StringContent content = new StringContent(_contentType, string);
-        return create(name, content);
+        return create(path, content);
     }
 
-    public static URL create(String name, byte[] bytes) {
+    public static URL create(String path, byte[] bytes) {
         ByteArrayContent content = new ByteArrayContent(bytes);
-        return create(name, content);
+        return create(path, content);
     }
 
-    public static URL create(String name, String contentType, byte[] bytes) {
+    public static URL create(String path, String contentType, byte[] bytes) {
         ContentType _contentType = ContentType.forName(contentType);
         ByteArrayContent content = new ByteArrayContent(_contentType, bytes);
-        return create(name, content);
+        return create(path, content);
     }
 
-    public static URL create(String name, final IContent content) {
+    public static URL create(String path, final IContent content) {
+        if (path == null)
+            throw new NullPointerException("path");
+        if (!path.startsWith("/"))
+            throw new IllegalArgumentException("Path isn't begin with /: " + path);
         try {
-            return new URL("c", null, 0, name, new URLStreamHandler() {
+            return new URL("c", null, 0, path, new URLStreamHandler() {
                 @Override
                 protected URLConnection openConnection(URL url)
                         throws IOException {
