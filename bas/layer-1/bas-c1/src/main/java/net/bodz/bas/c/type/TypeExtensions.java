@@ -8,7 +8,7 @@ import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import net.bodz.bas.c.java.net.URLContent;
+import net.bodz.bas.c.java.net.URLData;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.codegen.IndexedType;
 
@@ -76,7 +76,7 @@ public class TypeExtensions {
         while (resources.hasMoreElements()) {
             URL url = resources.nextElement();
 
-            for (String line : URLContent.readUtf8Lines(url)) {
+            for (String line : URLData.readUtf8Lines(url)) {
                 String fqcn = line.trim();
 
                 if (fqcn.isEmpty())
