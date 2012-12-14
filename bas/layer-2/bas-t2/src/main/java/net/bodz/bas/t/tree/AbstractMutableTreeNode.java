@@ -33,6 +33,11 @@ public abstract class AbstractMutableTreeNode<node_t extends ITreeNode>
         if (path == null)
             throw new NullPointerException("path");
 
+        if (path.isEmpty()) {
+            @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+            return _this;
+        }
+
         int slash = path.indexOf('/');
         String key;
         if (slash == -1) {
