@@ -127,7 +127,7 @@ public class SimpleRequest
             } else
                 path = new PathEntries(spec);
         if (path != null)
-            path = path.getCanonical();
+            path = path.canonicalize();
         this.path = path;
 
         while (query != null) {

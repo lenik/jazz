@@ -25,13 +25,14 @@ public class PathEntries
     private final int parentCount;
 
     private final String[] entries;
+    private final boolean canonicalized;
 
     /**
      * @param path
      *            will be canonicalized.
      */
     public PathEntries(String path) {
-        this(ENTRY_SEPARATOR, path, true);
+        this(path, ENTRY_SEPARATOR, true);
     }
 
     /**
@@ -42,20 +43,21 @@ public class PathEntries
      * </ul>
      * XXX - escapes...
      */
-    public PathEntries(String separator, String path, boolean canonicalize) {
+    public PathEntries(String path, String separator, boolean canonicalize) {
         this(path.startsWith(separator) ? ABSOLUTE : 0, //
                 (path.startsWith(separator) ? path.substring(1) : path).split(separator), //
                 canonicalize);
     }
 
     public PathEntries(PathEntries parent, String child) {
-        this(parent, new PathEntries(child));
+        this(parent, new PathEntries(child, parent.separator, parent.canonicalized));
     }
 
     public PathEntries(PathEntries parent, PathEntries child) {
         if (parent == null || child.isAbsolute()) {
             parentCount = child.parentCount;
             entries = child.entries;
+            canonicalized = child.canonicalized;
         } else {
             int reduce = Math.min(parent.entries.length, child.parentCount);
             int pn = parent.entries.length - reduce;
@@ -67,6 +69,8 @@ public class PathEntries
                 parentCount = parent.parentCount + child.parentCount - reduce;
             System.arraycopy(parent.entries, 0, entries, 0, pn);
             System.arraycopy(child.entries, 0, entries, pn, child.entries.length);
+
+            canonicalized = parent.canonicalized && child.canonicalized;
         }
     }
 
@@ -99,6 +103,7 @@ public class PathEntries
         }
         this.parentCount = parentCount;
         this.entries = entries;
+        this.canonicalized = canonicalize;
     }
 
     public boolean isAbsolute() {
@@ -111,10 +116,6 @@ public class PathEntries
 
     public int getParentCount() {
         return parentCount;
-    }
-
-    public PathEntries getCanonical() {
-        return new PathEntries(parentCount, entries, true);
     }
 
     public PathEntries getParent() {
@@ -142,6 +143,26 @@ public class PathEntries
             buf.append(entries[i]);
         }
         return buf.toString();
+    }
+
+    public String[] getEntries() {
+        return entries;
+    }
+
+    public int getEntryCount() {
+        return entries.length;
+    }
+
+    public String getEntry(int index) {
+        return entries[index];
+    }
+
+    public boolean isCanonicalized() {
+        return canonicalized;
+    }
+
+    public PathEntries canonicalize() {
+        return new PathEntries(parentCount, entries, true);
     }
 
     @Override
