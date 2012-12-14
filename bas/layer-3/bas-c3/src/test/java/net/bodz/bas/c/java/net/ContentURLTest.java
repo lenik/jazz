@@ -19,7 +19,7 @@ public class ContentURLTest
         URL url = ContentURL.create("hello1", helloContent);
         assertEquals("c:hello1", url.toExternalForm());
 
-        List<String> lines = URLContent.readUtf8Lines(url);
+        List<String> lines = URLData.readUtf8Lines(url);
         assertEquals(1, lines.size());
 
         String line = lines.get(0);
