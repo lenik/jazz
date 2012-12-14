@@ -68,7 +68,7 @@ public class JarStuffTest
     @Test
     public void testGetSrcURL_rtjar()
             throws IOException {
-        String classRes = ClassResource.getDataURL(Object.class).toString();
+        String classRes = ClassResource.getClassBytesURL(Object.class).toString();
         URL srcurl = BuildPath.getSrcURL(Object.class);
         if (srcurl != null) {
             String srcRes = srcurl.toString();

@@ -16,7 +16,7 @@ public class JarLocations {
      */
     public static File getBaseClasspath(Class<?> clazz) {
         String remove = clazz.getName().replace('.', '/') + ".class";
-        URL url = ClassResource.getDataURL(clazz);
+        URL url = ClassResource.getClassBytesURL(clazz);
         return FileURL.getFile(url, remove);
     }
 

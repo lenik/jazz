@@ -10,20 +10,37 @@ import net.bodz.bas.io.resource.builtin.URLResource;
 public class ClassResource {
 
     public static URL getRootURL(Class<?> clazz) {
-        String classResName = clazz.getName().replace('.', '/') + ".class";
-        URL classResUrl = clazz.getClassLoader().getResource(classResName);
+        String classBytesName = clazz.getName().replace('.', '/') + ".class";
+        URL classBytesUrl = clazz.getClassLoader().getResource(classBytesName);
 
-        String rootPath = classResUrl.toString();
-        if (!rootPath.endsWith(classResName))
-            throw new UnexpectedException("Unexpected URL:  " + classResUrl);
+        String rootUrl = classBytesUrl.toString();
 
-        rootPath = rootPath.substring(0, rootPath.length() - classResName.length());
-        rootPath = StringPart.chomp(rootPath, "/");
-        rootPath = StringPart.chomp(rootPath, "\\");
-        rootPath = StringPart.chomp(rootPath, "!");
+        assert rootUrl.endsWith(classBytesName);
+        rootUrl = rootUrl.substring(0, rootUrl.length() - classBytesName.length());
+
+        rootUrl = StringPart.chomp(rootUrl, "/");
+        rootUrl = StringPart.chomp(rootUrl, "\\");
+        rootUrl = StringPart.chomp(rootUrl, "!");
 
         try {
-            return new URL(rootPath);
+            return new URL(rootUrl);
+        } catch (MalformedURLException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
+    public static URL getPackageURL(Class<?> clazz) {
+        URL classBytes = getClassBytesURL(clazz);
+        String classBytesUrl = classBytes.toString();
+
+        int lastSlash = classBytesUrl.lastIndexOf('/');
+        if (lastSlash == -1)
+            throw new UnexpectedException("No slash found in: " + classBytesUrl);
+
+        String packageUrl = classBytesUrl.substring(0, lastSlash);
+
+        try {
+            return new URL(packageUrl);
         } catch (MalformedURLException e) {
             throw new UnexpectedException(e);
         }
@@ -32,8 +49,30 @@ public class ClassResource {
     /**
      * The class bytes resource of the <code>clazz</code>.
      */
-    public static URLResource getData(Class<?> clazz) {
-        return new URLResource(getDataURL(clazz));
+    public static URLResource getClassBytes(Class<?> clazz) {
+        return new URLResource(getClassBytesURL(clazz));
+    }
+
+    /**
+     * Same as {@link #getDataURLBySuffix(Class, String)} with ".class" as <code>extension</code>.
+     */
+    public static URL getClassBytesURL(Class<?> clazz) {
+        String classSimpleName = clazz.getSimpleName();
+        URL url = clazz.getResource(classSimpleName + ".class");
+        return url;
+    }
+
+    public static URL getClassDirURL(Class<?> clazz) {
+        String classBytesUrl = getClassBytesURL(clazz).toString();
+
+        assert classBytesUrl.endsWith(".class");
+        String classDirUrl = classBytesUrl.substring(0, classBytesUrl.length() - 6) + ".dir";
+
+        try {
+            return new URL(classDirUrl);
+        } catch (MalformedURLException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
     /**
@@ -42,15 +81,6 @@ public class ClassResource {
      */
     public static URLResource getData(Class<?> clazz, String extension) {
         return new URLResource(getDataURL(clazz, extension));
-    }
-
-    /**
-     * Same as {@link #getDataURLBySuffix(Class, String)} with ".class" as <code>extension</code>.
-     */
-    public static URL getDataURL(Class<?> clazz) {
-        String classSimpleName = clazz.getSimpleName();
-        URL url = clazz.getResource(classSimpleName + ".class");
-        return url;
     }
 
     /**
