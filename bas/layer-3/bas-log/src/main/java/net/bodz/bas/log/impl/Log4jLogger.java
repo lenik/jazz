@@ -19,7 +19,7 @@ public class Log4jLogger
 
     private final Logger log4j;
 
-    static final String callerFQCN = AbstractLogger.class.getName();
+    static final String fqcn = AbstractLogger.class.getName();
 
     public Log4jLogger(Logger log4j) {
         if (log4j == null)
@@ -65,31 +65,49 @@ public class Log4jLogger
         return NullLogSink.getInstance();
     }
 
+    private String getCallerFQCN() {
+        StackTraceElement[] stackTrace = new Exception().getStackTrace();
+        String lastLogClass = fqcn;
+        for (int i = 1; i < stackTrace.length; i++) {
+            StackTraceElement element = stackTrace[i];
+            String className = element.getClassName();
+            if (!className.startsWith("net.bodz.bas.log."))
+                break;
+            lastLogClass = className;
+        }
+        return lastLogClass;
+    }
+
     @Override
     public boolean _fatal(int delta, Throwable t, Object message) {
-        log4j.log(callerFQCN, Level.FATAL, message, t);
+        if (log4j.isEnabledFor(Level.FATAL))
+            log4j.log(getCallerFQCN(), Level.FATAL, message, t);
         return false;
     }
 
     @Override
     public boolean _error(int delta, Throwable t, Object message) {
-        log4j.log(callerFQCN, Level.ERROR, message, t);
+        if (log4j.isEnabledFor(Level.ERROR))
+            log4j.log(getCallerFQCN(), Level.ERROR, message, t);
         return false;
     }
 
     @Override
     public void _warn(int delta, Throwable t, Object message) {
-        log4j.log(callerFQCN, Level.WARN, message, t);
+        if (log4j.isEnabledFor(Level.WARN))
+            log4j.log(getCallerFQCN(), Level.WARN, message, t);
     }
 
     @Override
     public void _info(int delta, Throwable t, Object message) {
-        log4j.log(callerFQCN, Level.INFO, message, t);
+        if (log4j.isEnabledFor(Level.INFO))
+            log4j.log(getCallerFQCN(), Level.INFO, message, t);
     }
 
     @Override
     public void _debug(int delta, Throwable t, Object message) {
-        log4j.log(callerFQCN, Level.DEBUG, message, t);
+        if (log4j.isDebugEnabled())
+            log4j.log(getCallerFQCN(), Level.DEBUG, message, t);
     }
 
     public static Log4jLogger getInstance(Class<?> clazz) {
