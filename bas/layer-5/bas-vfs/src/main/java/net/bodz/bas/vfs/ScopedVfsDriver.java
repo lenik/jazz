@@ -6,7 +6,8 @@ import net.bodz.bas.vfs.path.IPath;
 public abstract class ScopedVfsDriver
         extends AbstractVfsDriver {
 
-    String SCOPE_SEPARATOR = getScopeSeparator();
+    String scopeSeparator = getScopeSeparator();
+    int scopeSepLen = scopeSeparator.length();
 
     protected String getScopeSeparator() {
         return IPath.SEPARATOR;
@@ -17,13 +18,13 @@ public abstract class ScopedVfsDriver
         String scope;
         String localPath;
 
-        int slash = _path.indexOf(SCOPE_SEPARATOR);
-        if (slash == -1) {
+        int scopeSepPos = _path.indexOf(scopeSeparator);
+        if (scopeSepPos == -1) {
             scope = _path;
             localPath = "";
         } else {
-            scope = _path.substring(0, slash);
-            localPath = _path.substring(slash + 1);
+            scope = _path.substring(0, scopeSepPos);
+            localPath = _path.substring(scopeSepPos + scopeSepLen);
         }
 
         return parse(scope, localPath);
