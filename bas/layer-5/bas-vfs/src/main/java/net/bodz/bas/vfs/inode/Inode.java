@@ -13,6 +13,14 @@ public class Inode
     InodeDataType dataType;
     Serializable data;
 
+    // short uid;
+    // short gid;
+    // int permission;
+    boolean readable = true;
+    boolean writable = true;
+    boolean executable = true;
+    boolean hidden = false;
+
     int modifiers;
     long creationTime;
     long lastModifiedTime;
@@ -45,6 +53,38 @@ public class Inode
             dataType = InodeDataType.charArray;
         else
             throw new UnsupportedOperationException("data can only be byte[] or char[].");
+    }
+
+    public boolean isReadable() {
+        return readable;
+    }
+
+    public void setReadable(boolean readable) {
+        this.readable = readable;
+    }
+
+    public boolean isWritable() {
+        return writable;
+    }
+
+    public void setWritable(boolean writable) {
+        this.writable = writable;
+    }
+
+    public boolean isExecutable() {
+        return executable;
+    }
+
+    public void setExecutable(boolean executable) {
+        this.executable = executable;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     public long getCreationTime() {

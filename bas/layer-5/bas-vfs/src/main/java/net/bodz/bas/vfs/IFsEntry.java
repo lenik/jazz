@@ -38,27 +38,27 @@ public interface IFsEntry
     IAttributes getAttributes();
 
     /**
-     * Get modifier bits of interesting selection only.
+     * Get flag bits of interesting selection only.
      * <p>
-     * Some modifier bits are expensive to test, so only the interesting bits should be specified to
+     * Some flag bits are expensive to test, so only the interesting bits should be specified to
      * reduce the test cost.
      * 
      * @param mask
-     *            Bit mask to select which file modifiers are interesting and will be tested.
+     *            Bit mask to select which file flags are interesting and will be tested.
      * @return Modifier bits, may contains the bits which are not interesting.
      *         <p>
      *         If you want to restrict the returned bits to only the <code>mask</code> specified,
      *         then a post bit-wise AND operation should be performed.
-     * @see FileModifier
+     * @see FileFlags
      */
-    int getModifiers(int mask);
+    int getFlags(int mask);
 
     /**
-     * Get all file modifiers.
+     * Get all file flags.
      * 
-     * @see FileModifier
+     * @see FileFlags
      */
-    int getModifiers();
+    int getFlags();
 
     /**
      * Get the creation time of an fs entry.
@@ -96,9 +96,15 @@ public interface IFsEntry
 
     boolean isReadable();
 
+    boolean setReadable(boolean readable);
+
     boolean isWritable();
 
+    boolean setWritable(boolean writable);
+
     boolean isHidden();
+
+    boolean setHidden(boolean hidden);
 
     /**
      * Get the parent fs entry which this entry resides in.
@@ -118,9 +124,9 @@ public interface IFsEntry
 
     /**
      * Delete the fs entry, maybe file or directory.
-     * 
-     * If this is a directory, then only the directory represented by this fs entry is deleted. No
-     * parent will be deleted.
+     * <p>
+     * The directory can only be deleted if it's empty. Delete an empty directory should preserve
+     * any empty parent dirs.
      * 
      * @return <code>true</code> if and only if the entry is successfully deleted.
      * @see File#delete()

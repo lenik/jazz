@@ -1,10 +1,10 @@
 package net.bodz.bas.vfs;
 
 /**
- * This class defines bit constants for file modifiers, and static helper functions to encode/decode
- * with the modifier string.
+ * This class defines bit constants for file flags, and static helper functions to encode/decode
+ * with the flag string.
  * <p>
- * There serveral kind of modifiers:
+ * There serveral kind of flags:
  * <ul>
  * <li>Access permissions, like rwx
  * <li>System file type (used by Win32) like archiva, system, hidden.
@@ -13,9 +13,9 @@ package net.bodz.bas.vfs;
  * <li>File content type: text/binary
  * </ul>
  * 
- * And more modifier may be added in future.
+ * And more flag may be added in future.
  */
-public class FileModifier {
+public class FileFlags {
 
     public static final int READABLE = 0x00000001;
     public static final int WRITABLE = 0x00000002;
@@ -163,16 +163,15 @@ public class FileModifier {
     private static char[] bitchars = "rwx-HAS-zseEfd--TB--------------".toCharArray();
 
     /**
-     * Convert the modifier bits to a readable string.
+     * Convert the flag bits to a readable string.
      * 
-     * A full-length modifier string display '-' at the corresponding position if that bit isn't set
-     * , but that's too verbose and hard to read. So only the defined bits are converted and
-     * included in the result string.
+     * A full-length flag string display '-' at the corresponding position if that bit isn't set ,
+     * but that's too verbose and hard to read. So only the defined bits are converted and included
+     * in the result string.
      * 
      * @param bits
-     *            The modifier bits to be formatted.
-     * @return Non-empty modifier string. If there is no bits, a single <code>'-'</code> is
-     *         returned.
+     *            The flag bits to be formatted.
+     * @return Non-empty flag string. If there is no bits, a single <code>'-'</code> is returned.
      */
     public static String format(int bits) {
         if (bits == 0)
@@ -189,13 +188,13 @@ public class FileModifier {
     }
 
     /**
-     * Normalize a modifier string.
+     * Normalize a flag string.
      * <p>
-     * This function parse and re-format a given modifier string, to make a comparable normalized
+     * This function parse and re-format a given flag string, to make a comparable normalized
      * string.
      * 
      * @param Non
-     *            -<code>null</code> modifier string.
+     *            -<code>null</code> flag string.
      * @return Non-<code>null</code> normalized string.
      */
     public static String normalize(String str) {
@@ -203,13 +202,13 @@ public class FileModifier {
     }
 
     /**
-     * In common cases, some modifier bits needs to reuse some existing tests.
+     * In common cases, some flag bits needs to reuse some existing tests.
      * <p>
      * This function will add missing dependencies which are required by most of file systesm.
      * 
      * @param mask
-     *            The mask modifier bits to be checked.
-     * @return Fixed mask bits contains all the necessary dependency modifier bits.
+     *            The mask flag bits to be checked.
+     * @return Fixed mask bits contains all the necessary dependency flag bits.
      */
     public static int addDependencies(int mask) {
         if ((mask & CNTTYPE) != 0)

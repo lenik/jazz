@@ -164,6 +164,126 @@ public class MemoryFile
     }
 
     @Override
+    public Boolean exists() {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public boolean isTree() {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public boolean isBlob() {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        Serializable data = inode.getData();
+        return data != null;
+    }
+
+    @Override
+    public boolean isReadable() {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        else
+            return inode.isReadable();
+    }
+
+    @Override
+    public boolean setReadable(boolean readable) {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        inode.setReadable(readable);
+        return true;
+    }
+
+    @Override
+    public boolean isWritable() {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        else
+            return inode.isWritable();
+    }
+
+    @Override
+    public boolean setWritable(boolean writable) {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        inode.setWritable(writable);
+        return true;
+    }
+
+    @Override
+    public boolean isExecutable() {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        else
+            return inode.isExecutable();
+    }
+
+    @Override
+    public boolean setExecutable(boolean executable) {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        inode.setExecutable(executable);
+        return true;
+    }
+
+    @Override
+    public boolean isHidden() {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        else
+            return inode.isHidden();
+    }
+
+    @Override
+    public boolean setHidden(boolean hidden) {
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        inode.setHidden(hidden);
+        return true;
+    }
+
+    @Override
+    public boolean isIterable() {
+        return true;
+    }
+
+    @Override
+    public boolean setIterable(boolean iterable) {
+        return false;
+    }
+
+    @Override
+    public boolean delete() {
+        Inode inode = getInode();
+        if (inode != null && inode.isEmpty()) {
+            inode.detach();
+            inode = null;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean renameTo(String destLocalPath)
             throws BadPathException {
         if (!isExisted())
