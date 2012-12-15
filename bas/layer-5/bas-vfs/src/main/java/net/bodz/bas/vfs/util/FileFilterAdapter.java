@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.util;
 import java.io.File;
 import java.io.FileFilter;
 
+import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.impl.jdk.JdkFile;
 
 public class FileFilterAdapter

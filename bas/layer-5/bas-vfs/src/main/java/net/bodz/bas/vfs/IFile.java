@@ -2,8 +2,6 @@ package net.bodz.bas.vfs;
 
 import net.bodz.bas.sugar.IToolable;
 import net.bodz.bas.vfs.path.BadPathException;
-import net.bodz.bas.vfs.util.IFileFilter;
-import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public interface IFile
         extends IFsBlob, IFsTree, IToolable {

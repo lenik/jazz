@@ -12,12 +12,12 @@ import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileFilter;
+import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.util.FileFilterAdapter;
 import net.bodz.bas.vfs.util.FilenameFilterAdapterWithDir;
-import net.bodz.bas.vfs.util.IFileFilter;
-import net.bodz.bas.vfs.util.IFilenameFilter;
 
 /**
  * @see LocalFileResource

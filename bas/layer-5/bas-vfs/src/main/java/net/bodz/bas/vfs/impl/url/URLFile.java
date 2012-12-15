@@ -16,10 +16,10 @@ import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileFilter;
+import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.util.IFileFilter;
-import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public class URLFile
         extends AbstractFile {

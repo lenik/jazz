@@ -13,10 +13,9 @@ import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.tools.HeuristicProbing;
-import net.bodz.bas.vfs.tools.IProbing;
-import net.bodz.bas.vfs.tools.LazyProbing;
-import net.bodz.bas.vfs.util.IFilenameFilter;
+import net.bodz.bas.vfs.util.content.HeuristicProbing;
+import net.bodz.bas.vfs.util.content.IProbing;
+import net.bodz.bas.vfs.util.content.LazyProbing;
 
 public abstract class AbstractFile
         extends AbstractFsEntry

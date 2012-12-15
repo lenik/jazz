@@ -10,7 +10,7 @@ import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.util.IFileFilter;
+import net.bodz.bas.vfs.IFileFilter;
 
 /**
  * Why put getter/setter here?
