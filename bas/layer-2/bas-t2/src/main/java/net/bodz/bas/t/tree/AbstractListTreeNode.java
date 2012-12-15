@@ -15,11 +15,12 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
 
     private List<node_t> list;
 
-    public AbstractListTreeNode() {
-        this(new ArrayList<node_t>());
+    public AbstractListTreeNode(node_t parent) {
+        this(parent, new ArrayList<node_t>());
     }
 
-    public AbstractListTreeNode(List<node_t> list) {
+    public AbstractListTreeNode(node_t parent, List<node_t> list) {
+        super(parent);
         if (list == null)
             throw new NullPointerException("list");
         this.list = list;
@@ -86,6 +87,10 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
 
     @Override
     public void putChild(String key, ITreeNode child) {
+        ITreeNode childParent = child.getParent();
+        if (childParent != null)
+            throw new IllegalStateException("Child node is already attached: " + child);
+
         if (!StringPred.isInteger(key))
             throw new IllegalArgumentException("key isn't integer: " + key);
 
@@ -104,8 +109,14 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
     public node_t removeChild(String key) {
         if (StringPred.isInteger(key)) {
             int index = Integer.parseInt(key);
-            if (index >= 0 && index < list.size())
-                return list.remove(index);
+            if (index >= 0 && index < list.size()) {
+                node_t child = list.remove(index);
+                if (child.isMutable()) {
+                    IMutableTreeNode _child = (IMutableTreeNode) child;
+                    _child.detach();
+                }
+                return child;
+            }
         }
         return null;
     }

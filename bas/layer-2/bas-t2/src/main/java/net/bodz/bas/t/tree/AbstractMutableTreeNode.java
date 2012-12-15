@@ -14,15 +14,36 @@ public abstract class AbstractMutableTreeNode<node_t extends ITreeNode>
 
     private node_t parent;
 
+    public AbstractMutableTreeNode(node_t parent) {
+        this.parent = parent;
+    }
+
     @Override
     public node_t getParent() {
         return parent;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void setParent(ITreeNode parent) {
-        this.parent = (node_t) parent;
+    public node_t detach() {
+        if (parent != null && parent.isMutable()) {
+            IMutableTreeNode _parent = (IMutableTreeNode) parent;
+            for (String key : _parent.keysOf(this))
+                _parent.removeChild(key);
+        }
+        parent = null;
+
+        @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+        return _this;
+    }
+
+    @Override
+    public void attach(ITreeNode parent, String key) {
+        detach();
+
+        if (parent != null && parent.isMutable()) {
+            IMutableTreeNode _parent = (IMutableTreeNode) parent;
+            _parent.putChild(key, this);
+        }
     }
 
     protected abstract node_t newChild()

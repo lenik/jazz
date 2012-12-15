@@ -3,13 +3,12 @@ package net.bodz.bas.t.tree;
 public interface IMutableTreeNode
         extends ITreeNode {
 
-    /**
-     * Re-attach the parent node.
-     * 
-     * @param parent
-     *            The new parent.
-     */
-    void setParent(ITreeNode parent);
+    @Override
+    ITreeNode getParent();
+
+    ITreeNode detach();
+
+    void attach(ITreeNode parent, String key);
 
     String addChild(ITreeNode child);
 
