@@ -1,9 +1,8 @@
-package net.bodz.bas.t.tree;
+package net.bodz.bas.t.pojo;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.pojo.PathEntries;
 
 public class PathEntriesTest
         extends Assert {
