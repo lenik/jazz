@@ -9,18 +9,18 @@ public class ListTreeNode
 
     private static final long serialVersionUID = 1L;
 
-    public ListTreeNode() {
-        super();
+    public ListTreeNode(ITreeNode parent) {
+        super(parent);
     }
 
-    public ListTreeNode(List<ITreeNode> list) {
-        super(list);
+    public ListTreeNode(ITreeNode parent, List<ITreeNode> list) {
+        super(parent, list);
     }
 
     @Override
     protected ITreeNode newChild()
             throws CreateException {
-        return new ListTreeNode();
+        return new ListTreeNode(this);
     }
 
 }

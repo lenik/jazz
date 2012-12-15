@@ -9,18 +9,18 @@ public class MapTreeNode
 
     private static final long serialVersionUID = 1L;
 
-    public MapTreeNode() {
-        super();
+    public MapTreeNode(ITreeNode parent) {
+        super(parent);
     }
 
-    public MapTreeNode(Map<String, ITreeNode> map) {
-        super(map);
+    public MapTreeNode(ITreeNode parent, Map<String, ITreeNode> map) {
+        super(parent, map);
     }
 
     @Override
     protected ITreeNode newChild()
             throws CreateException {
-        return new MapTreeNode();
+        return new MapTreeNode(this);
     }
 
 }

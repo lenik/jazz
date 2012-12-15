@@ -12,11 +12,12 @@ public abstract class AbstractMapTreeNode<node_t extends ITreeNode>
 
     private Map<String, node_t> map;
 
-    public AbstractMapTreeNode() {
-        this(new TreeMap<String, node_t>());
+    public AbstractMapTreeNode(node_t parent) {
+        this(parent, new TreeMap<String, node_t>());
     }
 
-    public AbstractMapTreeNode(Map<String, node_t> map) {
+    public AbstractMapTreeNode(node_t parent, Map<String, node_t> map) {
+        super(parent);
         if (map == null)
             throw new NullPointerException("map");
         this.map = map;
