@@ -11,7 +11,7 @@ public class BasCompanionTraitsProviderTest
     @Test
     public void getIntegerTraits() {
         BasCompanionTraitsProvider provider = new BasCompanionTraitsProvider();
-        IParser parser = provider.getTrait(Integer.class, IParser.class);
+        IParser<Integer> parser = provider.getTrait(Integer.class, IParser.class);
         assertNotNull(parser);
     }
 

@@ -115,6 +115,7 @@ public class SwtInject {
             case hidden:
                 tooltip.setVisible(false);
                 break;
+            case collapse:
             }
     }
 
