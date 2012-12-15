@@ -11,7 +11,7 @@ public class PseudoPath
         extends ProtocolPath {
 
     private static final long serialVersionUID = 1L;
-    public static final String SCOPE_SEPARATOR = ":";
+    public static final String SCOPE_SEPARATOR = ":/";
 
     private String scope;
     private PseudoFile file;
@@ -50,9 +50,11 @@ public class PseudoPath
     }
 
     @Override
-    protected PseudoPath createLocal(String[] entries)
+    protected PseudoPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
         String localPath = StringArray.join(SEPARATOR, entries);
+        if (entered)
+            localPath += SEPARATOR;
         return createLocal(localPath);
     }
 

@@ -17,6 +17,7 @@ public interface IPath
         extends Serializable {
 
     String SEPARATOR = "/";
+    int SEPARATOR_LEN = SEPARATOR.length();
     char SEPARATOR_CHAR = '/';
 
     String getProtocol();
@@ -164,10 +165,33 @@ public interface IPath
     String getExtension(boolean withDot, int maxWords);
 
     /**
+     * Whether the path is ended with '/'. An entered path also means it is a directory.
+     * 
+     * @return <code>true</code> if the path is ended with slash.
+     */
+    boolean isEntered();
+
+    /**
+     * Return the same path in entered form.
+     * 
+     * @return this object or entered form.
+     */
+    IPath enter();
+
+    /**
      * Join this path and the special path.
      * 
      * The alignment of the result path is equal to this, if <code>spec</code> is a relative path.
      * Otherwise, the alignment of the result path is equal to spec.
+     * 
+     * <p>
+     * Examples:
+     * <ul>
+     * <li>foo/bar + red/apple = foo/red/apple
+     * <li>foo/bar/ + red/apple = foo/bar/red/apple
+     * <li>foo/bar + /red/apple = /red/apple
+     * <li>foo + red/apple = red/apple
+     * </ul>
      * 
      * @param spec
      *            Non-<code>null</code> special path after this path.

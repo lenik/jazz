@@ -23,8 +23,8 @@ public class HostQueryURLPath
         }
     }
 
-    public HostQueryURLPath(String scheme, String[] entries) {
-        super(scheme, entries);
+    public HostQueryURLPath(String scheme, String[] entries, boolean entered) {
+        super(scheme, entries, entered);
 
         String localPath = getLocalPath();
         int quest = localPath.lastIndexOf('?');
@@ -37,9 +37,9 @@ public class HostQueryURLPath
     }
 
     @Override
-    protected HostQueryURLPath createLocal(String[] entries)
+    protected HostQueryURLPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
-        return new HostQueryURLPath(realPath, entries);
+        return new HostQueryURLPath(realPath, entries, entered);
     }
 
     @Override

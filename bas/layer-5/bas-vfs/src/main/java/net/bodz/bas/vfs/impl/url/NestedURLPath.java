@@ -18,17 +18,17 @@ public class NestedURLPath
         this.nestedPath = nestedPath;
     }
 
-    public NestedURLPath(String scheme, IPath nestedPath, String[] entries) {
-        super(scheme, entries);
+    public NestedURLPath(String scheme, IPath nestedPath, String[] entries, boolean entered) {
+        super(scheme, entries, entered);
         if (nestedPath == null)
             throw new NullPointerException("nestedPath");
         this.nestedPath = nestedPath;
     }
 
     @Override
-    protected NestedURLPath createLocal(String[] entries)
+    protected NestedURLPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
-        return new NestedURLPath(scheme, nestedPath, entries);
+        return new NestedURLPath(scheme, nestedPath, entries, entered);
     }
 
     @Override

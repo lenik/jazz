@@ -48,7 +48,7 @@ public interface IFile
      *             If not iterable.
      * @see #isIterable()
      */
-    Iterable<? extends IFile> children(IFileFilter nameFilter)
+    Iterable<? extends IFile> children(IFileFilter fileFilter)
             throws VFSException;
 
 }

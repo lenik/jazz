@@ -9,13 +9,14 @@ public abstract class MultiEntryPath
 
     private static final long serialVersionUID = 1L;
 
-    String[] entries;
+    protected String[] entries;
 
     public MultiEntryPath(String localPath) {
         setLocalPath(localPath);
     }
 
-    public MultiEntryPath(String[] entries) {
+    public MultiEntryPath(String[] entries, boolean entered) {
+        super(entered);
         if (entries == null)
             throw new NullPointerException("entries");
         setLocalEntries(entries);
@@ -24,11 +25,21 @@ public abstract class MultiEntryPath
     @Override
     protected IPath createLocal(String localPath)
             throws BadPathException {
-        String[] entries = StringArray.splitRaw(localPath, "/");
-        return createLocal(entries);
+        boolean entered = localPath.endsWith(SEPARATOR);
+
+        while (localPath.startsWith(SEPARATOR))
+            localPath = localPath.substring(SEPARATOR_LEN);
+
+        if (entered)
+            do {
+                localPath = localPath.substring(0, localPath.length() - SEPARATOR_LEN);
+            } while (localPath.endsWith(SEPARATOR));
+
+        String[] entries = StringArray.splitRaw(localPath, SEPARATOR);
+        return createLocal(entries, entered);
     }
 
-    protected abstract IPath createLocal(String[] entries)
+    protected abstract IPath createLocal(String[] entries, boolean entered)
             throws BadPathException;
 
     @Override
@@ -36,16 +47,22 @@ public abstract class MultiEntryPath
         return StringArray.join(SEPARATOR, entries);
     }
 
-    /**
-     * @TODO SEPARATOR should be escaped.
-     */
     void setLocalPath(String localPath) {
         if (localPath == null)
             throw new NullPointerException("localPath");
-        if (localPath.isEmpty())
+
+        boolean entered = localPath.endsWith(SEPARATOR);
+
+        while (localPath.endsWith(SEPARATOR))
+            localPath = localPath.substring(0, localPath.length() - SEPARATOR_LEN);
+
+        if (localPath.isEmpty()) {
             entries = new String[0];
-        else
+            setEntered(true);
+        } else {
             entries = StringArray.splitRaw(localPath, SEPARATOR);
+            setEntered(entered);
+        }
     }
 
     @Override
@@ -69,7 +86,7 @@ public abstract class MultiEntryPath
         if (entries.length < n)
             return null;
         String[] parentEntries = Arrays.copyOf(entries, entries.length - n);
-        return createLocal(parentEntries);
+        return createLocal(parentEntries, false);
     }
 
 }

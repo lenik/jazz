@@ -18,7 +18,7 @@ public class JdkVfsDriver
     /**
      * The drive length is 1 char for windows drives.
      */
-    public static final int MAX_DRIVE_LENGTH = 2;
+    public static final int MAX_DRIVE_LENGTH = 1;
 
     final String protocol;
     final JdkVfsDevice superDrive;
@@ -42,7 +42,7 @@ public class JdkVfsDriver
         int colon = _path.indexOf(':');
         String drive;
         String localPath;
-        if (colon != -1 && colon < MAX_DRIVE_LENGTH) {
+        if (colon != -1 && colon <= MAX_DRIVE_LENGTH) {
             drive = _path.substring(0, colon);
             localPath = _path.substring(colon + 1);
             // if (drive.length() == 0) drive = null;
@@ -63,8 +63,8 @@ public class JdkVfsDriver
             throws FileResolveException {
         JdkPath path = (JdkPath) _path;
         String driveName = path.getDeviceSpec();
-        JdkVfsDevice drive = getDrive(driveName);
-        JdkFile file = drive.resolve(path.getLocalPath());
+        JdkVfsDevice device = getDrive(driveName);
+        JdkFile file = device.resolve(path.getLocalPath());
         return file;
     }
 

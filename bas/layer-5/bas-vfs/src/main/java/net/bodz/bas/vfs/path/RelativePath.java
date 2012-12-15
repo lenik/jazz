@@ -14,17 +14,17 @@ public class RelativePath
     // int parents;
     IPathAlignment alignment;
 
-    public RelativePath(String[] entries) {
-        this(0, entries);
+    public RelativePath(String[] entries, boolean entered) {
+        this(0, entries, entered);
     }
 
-    public RelativePath(int parents, String[] entries) {
-        super(entries);
+    public RelativePath(int parents, String[] entries, boolean entered) {
+        super(entries, entered);
         this.alignment = new ParentAlignment(parents);
     }
 
-    public RelativePath(IPathAlignment alignment, String[] entries) {
-        super(entries);
+    public RelativePath(IPathAlignment alignment, String[] entries, boolean entered) {
+        super(entries, entered);
 
         if (alignment == null)
             throw new NullPointerException("alignment");
@@ -44,22 +44,26 @@ public class RelativePath
 
     @Override
     public RelativePath getRoot() {
-        return new RelativePath(IPathAlignment.ROOT, new String[0]);
+        return new RelativePath(IPathAlignment.ROOT, new String[0], true);
     }
 
     @Override
     public IPath getParent(int n) {
+        if (n == 0)
+            return this;
+
         if (entries.length >= n) {
             String[] parentEntries = Arrays.copyOf(entries, entries.length - n);
-            return createLocal(parentEntries); // with the same alignment.
-        } else {
-            if (getAlignment() == IPathAlignment.ROOT)
-                return createLocal(new String[0]);
-            ParentAlignment alignment = (ParentAlignment) getAlignment();
-            int moreParents = n - entries.length;
-            int parents = alignment.getParents() + moreParents;
-            return new RelativePath(parents, new String[0]);
+            return createLocal(parentEntries, false); // with the same alignment.
         }
+
+        if (getAlignment() == IPathAlignment.ROOT)
+            return createLocal(new String[0], true);
+
+        ParentAlignment alignment = (ParentAlignment) getAlignment();
+        int moreParents = n - entries.length;
+        int parents = alignment.getParents() + moreParents;
+        return new RelativePath(parents, new String[0], false);
     }
 
     /**
@@ -67,9 +71,9 @@ public class RelativePath
      *            The local entries. These entries should not start with "." or ".." entries.
      */
     @Override
-    protected IPath createLocal(String[] entries)
+    protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
-        return new RelativePath(getAlignment(), entries);
+        return new RelativePath(getAlignment(), entries, entered);
     }
 
     public static RelativePath parse(String pathstr) {
@@ -82,26 +86,30 @@ public class RelativePath
 
         IPathAlignment alignment = null;
 
-        if (pathstr.startsWith("/")) {
+        boolean entered = pathstr.endsWith("/");
+
+        if (pathstr.startsWith(SEPARATOR)) {
             alignment = IPathAlignment.ROOT;
-            pathstr = pathstr.substring(1);
+            pathstr = pathstr.substring(SEPARATOR_LEN);
         }
+        while (pathstr.endsWith(SEPARATOR))
+            pathstr = pathstr.substring(0, pathstr.length() - SEPARATOR_LEN);
 
         int slash;
         L: while (!pathstr.isEmpty()) {
-            slash = pathstr.indexOf('/');
+            slash = pathstr.indexOf(SEPARATOR_CHAR);
             switch (slash) {
             case -1:
                 break L;
             case 0:
                 break;
             case 1:
-                if (pathstr.charAt(0) == '.')
+                if (pathstr.charAt(0) == '.') // "./", ignore
                     break;
                 else
                     break L;
             case 2:
-                if (pathstr.charAt(0) == '.' && pathstr.charAt(1) == '.') {
+                if (pathstr.charAt(0) == '.' && pathstr.charAt(1) == '.') { // "../", parent+1
                     parents++;
                     break;
                 } else
@@ -116,7 +124,7 @@ public class RelativePath
             alignment = new ParentAlignment(parents);
 
         String[] entries = StringArray.splitRaw(pathstr, SEPARATOR);
-        return new RelativePath(alignment, entries);
+        return new RelativePath(alignment, entries, entered);
     }
 
     @Override

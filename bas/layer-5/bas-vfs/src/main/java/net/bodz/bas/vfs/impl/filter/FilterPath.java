@@ -18,12 +18,14 @@ public class FilterPath
     String encodedPath;
 
     public FilterPath(String protocol, String filterSpec, String encodedPath) {
+        super(encodedPath.endsWith(SEPARATOR));
         if (filterSpec == null)
             throw new NullPointerException("filterSpec");
-        if (encodedPath == null)
-            throw new NullPointerException("encodedPath");
         this.protocol = protocol;
         this.filterSpec = filterSpec;
+
+        while (encodedPath.endsWith(SEPARATOR))
+            encodedPath = encodedPath.substring(0, encodedPath.length() - SEPARATOR_LEN);
         this.encodedPath = encodedPath;
     }
 

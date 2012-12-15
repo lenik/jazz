@@ -42,8 +42,8 @@ public class HostPathQueryURLPath
     }
 
     public HostPathQueryURLPath(String scheme, String user, String password, String host, int port,
-            String[] localEntries) {
-        super(scheme, localEntries);
+            String[] localEntries, boolean entered) {
+        super(scheme, localEntries, entered);
         this.user = user;
         this.password = password;
         this.host = host;
@@ -81,8 +81,8 @@ public class HostPathQueryURLPath
     }
 
     @Override
-    protected HostPathQueryURLPath createLocal(String[] entries) {
-        return new HostPathQueryURLPath(scheme, user, password, host, port, entries);
+    protected HostPathQueryURLPath createLocal(String[] entries, boolean entered) {
+        return new HostPathQueryURLPath(scheme, user, password, host, port, entries, entered);
     }
 
     public String getUserInfo() {

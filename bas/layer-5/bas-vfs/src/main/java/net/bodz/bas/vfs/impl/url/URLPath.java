@@ -37,13 +37,13 @@ public abstract class URLPath
         this.scheme = scheme;
     }
 
-    public URLPath(String scheme, String[] entries) {
-        super(entries);
+    public URLPath(String scheme, String[] entries, boolean entered) {
+        super(entries, entered);
         this.scheme = scheme;
     }
 
     @Override
-    protected abstract URLPath createLocal(String[] entries)
+    protected abstract URLPath createLocal(String[] entries, boolean entered)
             throws BadPathException;
 
     @Override
