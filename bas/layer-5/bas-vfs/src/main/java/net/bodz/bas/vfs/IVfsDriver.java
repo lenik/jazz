@@ -3,9 +3,7 @@ package net.bodz.bas.vfs;
 import org.apache.commons.vfs.Capability;
 import org.apache.commons.vfs.FileSystem;
 
-import net.bodz.bas.meta.codegen.IndexedType;
-
-@IndexedType(obsoleted = true)
+// @IndexedType(obsoleted = true) // See IVfsDriverProvider
 public interface IVfsDriver
         extends IVfsProtocolHandler {
 
