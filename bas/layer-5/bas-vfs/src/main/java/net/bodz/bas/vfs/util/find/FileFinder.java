@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.util;
+package net.bodz.bas.vfs.util.find;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import net.bodz.bas.t.iterator.Iterators;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 import net.bodz.bas.t.iterator.StackedIterator;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.VFSException;
 
 public class FileFinder

@@ -7,13 +7,13 @@ import java.util.regex.Pattern;
 import net.bodz.bas.c.java.util.regex.GlobPattern;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.context.VFSColos;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.util.FileFinder;
-import net.bodz.bas.vfs.util.FileFoundEvent;
-import net.bodz.bas.vfs.util.IFileFilter;
-import net.bodz.bas.vfs.util.IFileFoundListener;
+import net.bodz.bas.vfs.util.find.FileFinder;
+import net.bodz.bas.vfs.util.find.FileFoundEvent;
+import net.bodz.bas.vfs.util.find.IFileFoundListener;
 
 /**
  * Batch File Scanner

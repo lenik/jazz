@@ -1,6 +1,5 @@
-package net.bodz.bas.vfs.util;
+package net.bodz.bas.vfs;
 
-import net.bodz.bas.vfs.IFile;
 
 public interface IFilenameFilter {
 

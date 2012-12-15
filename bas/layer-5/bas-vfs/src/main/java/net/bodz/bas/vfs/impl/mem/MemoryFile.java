@@ -11,11 +11,11 @@ import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 import net.bodz.bas.io.resource.builtin.CharArrayResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileFilter;
+import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.inode.Inode;
 import net.bodz.bas.vfs.path.BadPathException;
-import net.bodz.bas.vfs.util.IFileFilter;
-import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public class MemoryFile
         extends AbstractFile {

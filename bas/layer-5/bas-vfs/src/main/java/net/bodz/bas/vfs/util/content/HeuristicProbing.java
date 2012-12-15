@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.tools;
+package net.bodz.bas.vfs.util.content;
 
 import java.io.IOException;
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFilenameFilter;
 
 public class FilenameFilterAdapterWithDir
         implements FilenameFilter {

@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public interface IFsTree
         extends IFsEntry {

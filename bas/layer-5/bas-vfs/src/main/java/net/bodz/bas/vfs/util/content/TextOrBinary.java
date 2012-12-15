@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.tools;
+package net.bodz.bas.vfs.util.content;
 
 import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.c.string.CharFeature;
