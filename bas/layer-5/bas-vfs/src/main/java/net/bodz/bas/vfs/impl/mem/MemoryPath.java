@@ -8,7 +8,7 @@ public class MemoryPath
         extends ProtocolPath {
 
     private static final long serialVersionUID = 1L;
-    public static final String SCOPE_SEPARATOR = ":";
+    public static final String SCOPE_SEPARATOR = ":/";
 
     private String scope;
 
@@ -17,8 +17,8 @@ public class MemoryPath
         this.scope = scope;
     }
 
-    public MemoryPath(String protocol, String scope, String[] entries) {
-        super(protocol, entries);
+    public MemoryPath(String protocol, String scope, String[] entries, boolean entered) {
+        super(protocol, entries, entered);
         this.scope = scope;
     }
 
@@ -33,9 +33,9 @@ public class MemoryPath
     }
 
     @Override
-    protected IPath createLocal(String[] entries)
+    protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
-        return new MemoryPath(getProtocol(), scope, entries);
+        return new MemoryPath(getProtocol(), scope, entries, entered);
     }
 
 }
