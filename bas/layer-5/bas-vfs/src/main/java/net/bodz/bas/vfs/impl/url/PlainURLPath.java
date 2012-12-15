@@ -11,8 +11,8 @@ public class PlainURLPath
         super(scheme, localPath);
     }
 
-    public PlainURLPath(String scheme, String[] entries) {
-        super(scheme, entries);
+    public PlainURLPath(String scheme, String[] entries, boolean entered) {
+        super(scheme, entries, entered);
     }
 
     @Override
@@ -26,9 +26,9 @@ public class PlainURLPath
     }
 
     @Override
-    protected PlainURLPath createLocal(String[] entries)
+    protected PlainURLPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
-        return new PlainURLPath(scheme, entries);
+        return new PlainURLPath(scheme, entries, entered);
     }
 
     @Override

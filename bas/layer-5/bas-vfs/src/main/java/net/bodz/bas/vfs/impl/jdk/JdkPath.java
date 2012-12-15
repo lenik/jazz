@@ -17,8 +17,8 @@ public class JdkPath
         this.driveName = driveName;
     }
 
-    public JdkPath(String protocol, String driveName, String[] entries) {
-        super(protocol, entries);
+    public JdkPath(String protocol, String driveName, String[] entries, boolean entered) {
+        super(protocol, entries, entered);
         this.driveName = driveName;
     }
 
@@ -37,9 +37,9 @@ public class JdkPath
     }
 
     @Override
-    protected IPath createLocal(String[] entries)
+    protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
-        return new JdkPath(getProtocol(), driveName, entries);
+        return new JdkPath(getProtocol(), driveName, entries, entered);
     }
 
     @Override

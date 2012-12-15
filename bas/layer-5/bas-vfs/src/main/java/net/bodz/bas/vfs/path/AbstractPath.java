@@ -20,6 +20,15 @@ public abstract class AbstractPath
 
     private static final long serialVersionUID = 1L;
 
+    private boolean entered;
+
+    public AbstractPath() {
+    }
+
+    public AbstractPath(boolean entered) {
+        this.entered = entered;
+    }
+
     @Override
     public String getDeviceSpec() {
         return null;
@@ -71,7 +80,7 @@ public abstract class AbstractPath
     @Override
     public IPath getRoot() {
         try {
-            return createLocal("");
+            return createLocal(SEPARATOR);
         } catch (BadPathException e) {
             throw new UnexpectedException("Bad root path", e);
         }
@@ -176,21 +185,41 @@ public abstract class AbstractPath
     }
 
     @Override
+    public boolean isEntered() {
+        return entered;
+    }
+
+    public void setEntered(boolean entered) {
+        this.entered = entered;
+    }
+
+    @Override
+    public IPath enter() {
+        if (entered)
+            return this;
+        else
+            return createLocal(getLocalPath() + "/");
+    }
+
+    @Override
     public IPath join(String spec)
             throws BadPathException {
         if (spec == null)
             throw new NullPointerException("spec");
-        String localPath1 = getLocalPath();
+        String localPath = getLocalPath();
 
         String joinedLocalPath;
         if (spec.startsWith(SEPARATOR))
             joinedLocalPath = spec;
         else {
-            String localDir1 = StringPart.beforeLast(localPath1, SEPARATOR);
-            if (localDir1 == null)
+            String localDir = localPath;
+            if (!entered)
+                localDir = StringPart.beforeLast(localDir, SEPARATOR);
+
+            if (localDir == null)
                 joinedLocalPath = spec;
             else
-                joinedLocalPath = localDir1 + SEPARATOR + spec;
+                joinedLocalPath = localDir + SEPARATOR + spec;
         }
 
         return createLocal(joinedLocalPath);
@@ -243,7 +272,7 @@ public abstract class AbstractPath
             if (p1 > p2) {
                 int abs2 = -p2 + basePath2.getLocalEntryCount();
                 int goUp = p1 - (-abs2);
-                RelativePath path = new RelativePath(goUp, getLocalEntries());
+                RelativePath path = new RelativePath(goUp, getLocalEntries(), isEntered());
                 return path;
             } else {
                 return null;
@@ -265,7 +294,7 @@ public abstract class AbstractPath
         int goUp2 = entries2.length - gcd;
         String[] goDown1v = Arrays.copyOfRange(entries1, gcd, entries1.length);
 
-        RelativePath relativePath = new RelativePath(goUp2, goDown1v);
+        RelativePath relativePath = new RelativePath(goUp2, goDown1v, isEntered());
         return relativePath;
     }
 

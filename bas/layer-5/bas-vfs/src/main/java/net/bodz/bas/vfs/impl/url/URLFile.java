@@ -150,6 +150,7 @@ public class URLFile
             throws FileResolveException {
         URL url;
         try {
+            // XXX entered...?
             url = new URL(path.toURL(), entryName);
         } catch (MalformedURLException e) {
             throw new FileResolveException(e.getMessage(), e);

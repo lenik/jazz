@@ -12,8 +12,8 @@ public class ProtocolPath
         this.protocol = protocol;
     }
 
-    public ProtocolPath(String protocol, String[] entries) {
-        super(entries);
+    public ProtocolPath(String protocol, String[] entries, boolean entered) {
+        super(entries, entered);
         this.protocol = protocol;
     }
 
@@ -23,9 +23,9 @@ public class ProtocolPath
     }
 
     @Override
-    protected IPath createLocal(String[] entries)
+    protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
-        return new ProtocolPath(protocol, entries);
+        return new ProtocolPath(protocol, entries, entered);
     }
 
 }
