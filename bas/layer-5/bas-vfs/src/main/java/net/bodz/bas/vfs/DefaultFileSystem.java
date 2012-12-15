@@ -14,11 +14,11 @@ import net.bodz.bas.vfs.path.IPath;
 public class DefaultFileSystem
         implements IFileSystem {
 
-    private final Map<String, IVfsDriver> protocols;
+    private final Map<String, IVfsDriver> driverMap;
     private final TreeSet<VfsDriverKey> fallbacks;
 
     public DefaultFileSystem() {
-        protocols = new HashMap<String, IVfsDriver>();
+        driverMap = new HashMap<String, IVfsDriver>();
         fallbacks = new TreeSet<VfsDriverKey>(PriorityComparator.INSTANCE);
 
         for (IVfsDriverProvider provider : ServiceLoader.load(IVfsDriverProvider.class))
@@ -26,9 +26,13 @@ public class DefaultFileSystem
                 driver.configure(this);
     }
 
+    public Map<String, IVfsDriver> getDriverMap() {
+        return driverMap;
+    }
+
     @Override
     public IVfsDriver getDriver(String protocol) {
-        IVfsDriver driver = protocols.get(protocol);
+        IVfsDriver driver = driverMap.get(protocol);
         if (driver == null) {
             for (VfsDriverKey fallback : fallbacks)
                 if (fallback.driver.accepts(protocol)) {
@@ -45,11 +49,11 @@ public class DefaultFileSystem
             throw new NullPointerException("protocol");
         if (driver == null)
             throw new NullPointerException("driver");
-        IVfsDriver inuse = protocols.get(protocol);
+        IVfsDriver inuse = driverMap.get(protocol);
         if (inuse != null) {
             return false;
         } else {
-            protocols.put(protocol, driver);
+            driverMap.put(protocol, driver);
             return true;
         }
     }
@@ -58,7 +62,7 @@ public class DefaultFileSystem
     public void removeDriver(String protocol) {
         if (protocol == null)
             throw new NullPointerException("protocol");
-        protocols.remove(protocol);
+        driverMap.remove(protocol);
     }
 
     @Override
@@ -80,7 +84,7 @@ public class DefaultFileSystem
         int colon = path.indexOf(':');
         String protocol = colon == -1 ? null : path.substring(0, colon);
 
-        IVfsDriver explicitDriver = protocols.get(protocol);
+        IVfsDriver explicitDriver = driverMap.get(protocol);
         if (explicitDriver != null) {
             // assert explicitDriver.accepts(protocol);
             // String protocolSpecificPath = path.substring(colon + 1);
