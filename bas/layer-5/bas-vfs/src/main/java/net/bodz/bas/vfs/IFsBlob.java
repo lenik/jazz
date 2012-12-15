@@ -40,6 +40,8 @@ public interface IFsBlob
 
     boolean isExecutable();
 
+    boolean setExecutable(boolean executable);
+
     /**
      * Get the file length.
      * <p>

@@ -1,8 +1,10 @@
 package net.bodz.bas.vfs.impl.url;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
@@ -92,25 +94,46 @@ public class URLFile
     @Override
     public boolean delete() {
         URL url = path.toURL();
-        try {
-            URLConnection connection = url.openConnection();
 
-            if (connection instanceof HttpURLConnection) {
-                HttpURLConnection http = (HttpURLConnection) connection;
-                http.setRequestMethod("DELETE");
-                int responseCode = http.getResponseCode();
-                if (responseCode < 300)
-                    return true;
-                if (responseCode == 404) // Not found
-                    return false;
-                // http.getErrorStream();
-                throw new IOException(http.getResponseMessage());
-            } // HTTP
-
-            else
+        switch (url.getProtocol()) {
+        case "file":
+            File file;
+            try {
+                file = new File(url.toURI());
+            } catch (URISyntaxException e) {
                 return false;
+            }
+            return file.delete();
 
-        } catch (Exception e) {
+        case "jar":
+            // jar/zip is read-only.
+            return false;
+
+        case "http":
+        case "https":
+            try {
+                URLConnection connection = url.openConnection();
+
+                if (connection instanceof HttpURLConnection) {
+                    HttpURLConnection http = (HttpURLConnection) connection;
+                    http.setRequestMethod("DELETE");
+                    int responseCode = http.getResponseCode();
+                    if (responseCode < 300)
+                        return true;
+                    if (responseCode == 404) // Not found
+                        return false;
+                    // http.getErrorStream();
+                    throw new IOException(http.getResponseMessage());
+                } // HTTP
+
+                else
+                    return false;
+
+            } catch (Exception e) {
+                return false;
+            }
+
+        default:
             return false;
         }
     }

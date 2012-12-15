@@ -21,12 +21,12 @@ public class FileMaskedModifiers
     public FileMaskedModifiers(String s) {
         int slash = s.indexOf('/');
         if (slash == -1) {
-            this.modifiers = this.mask = FileModifier.parse(s);
+            this.modifiers = this.mask = FileFlags.parse(s);
         } else {
             String modifiersStr = s.substring(0, slash);
             String maskStr = s.substring(slash + 1);
-            this.mask = FileModifier.parse(maskStr);
-            this.modifiers = FileModifier.parse(modifiersStr) & mask;
+            this.mask = FileFlags.parse(maskStr);
+            this.modifiers = FileFlags.parse(modifiersStr) & mask;
         }
     }
 
@@ -45,14 +45,14 @@ public class FileMaskedModifiers
     public boolean test(IFile file) {
         if (this.mask == 0)
             return true;
-        int modifiers = file.getModifiers();
+        int modifiers = file.getFlags();
         return (modifiers & mask) == this.modifiers;
     }
 
     public boolean test(File file) {
         if (this.mask == 0)
             return true;
-        int modifiers = new JdkFile(file).getModifiers(mask);
+        int modifiers = new JdkFile(file).getFlags(mask);
         return modifiers == this.modifiers;
     }
 
@@ -81,7 +81,7 @@ public class FileMaskedModifiers
 
     @Override
     public String toString() {
-        return FileModifier.format(modifiers) + "/" + FileModifier.format(mask);
+        return FileFlags.format(modifiers) + "/" + FileFlags.format(mask);
     }
 
 }

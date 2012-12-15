@@ -4,70 +4,70 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @see FileModifier
+ * @see FileFlags
  */
 public class FileModifierTest
         extends Assert {
 
     @Test
     public void formatNone() {
-        String actual = FileModifier.format(0);
+        String actual = FileFlags.format(0);
         assertEquals("-", actual);
     }
 
     @Test
     public void formatSingleField() {
-        String actual = FileModifier.format(FileModifier.EXECUTABLE);
+        String actual = FileFlags.format(FileFlags.EXECUTABLE);
         assertEquals("x", actual);
     }
 
     @Test
     public void formatMultipleFields() {
-        String actual = FileModifier.format(//
-                FileModifier.READABLE //
-                        | FileModifier.EXECUTABLE //
-                        | FileModifier.EMPTY //
-                        | FileModifier.DIRECTORY);
+        String actual = FileFlags.format(//
+                FileFlags.READABLE //
+                        | FileFlags.EXECUTABLE //
+                        | FileFlags.EMPTY //
+                        | FileFlags.DIRECTORY);
         assertEquals("rxed", actual);
     }
 
     @Test
     public void parseNone() {
-        int actual = FileModifier.parse("");
+        int actual = FileFlags.parse("");
         assertEquals(0, actual);
 
-        actual = FileModifier.parse("-");
+        actual = FileFlags.parse("-");
         assertEquals(0, actual);
     }
 
     @Test
     public void parseSimple() {
-        assertEquals(FileModifier.READABLE, //
-                FileModifier.parse("r"));
+        assertEquals(FileFlags.READABLE, //
+                FileFlags.parse("r"));
     }
 
     @Test
     public void parseSequence() {
-        assertEquals(FileModifier.READABLE //
-                | FileModifier.WRITABLE //
-                | FileModifier.EXECUTABLE, //
-                FileModifier.parse("rwx"));
+        assertEquals(FileFlags.READABLE //
+                | FileFlags.WRITABLE //
+                | FileFlags.EXECUTABLE, //
+                FileFlags.parse("rwx"));
     }
 
     @Test
     public void parseReversed() {
-        assertEquals(FileModifier.READABLE //
-                | FileModifier.WRITABLE //
-                | FileModifier.EXECUTABLE, //
-                FileModifier.parse("xwr"));
+        assertEquals(FileFlags.READABLE //
+                | FileFlags.WRITABLE //
+                | FileFlags.EXECUTABLE, //
+                FileFlags.parse("xwr"));
     }
 
     @Test
     public void parseDuplicated() {
-        assertEquals(FileModifier.READABLE //
-                | FileModifier.WRITABLE //
-                | FileModifier.EXECUTABLE, //
-                FileModifier.parse("rwxwxwwxw--xw-xw-x"));
+        assertEquals(FileFlags.READABLE //
+                | FileFlags.WRITABLE //
+                | FileFlags.EXECUTABLE, //
+                FileFlags.parse("rwxwxwwxw--xw-xw-x"));
     }
 
 }

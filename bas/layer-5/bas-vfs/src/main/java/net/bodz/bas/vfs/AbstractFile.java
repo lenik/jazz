@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs;
 
-import static net.bodz.bas.vfs.FileModifier.*;
+import static net.bodz.bas.vfs.FileFlags.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -23,6 +23,9 @@ public abstract class AbstractFile
         implements IFile /* , Serializable */{
 
     private Charset preferredCharset = Charset.defaultCharset();
+
+    private transient int flags;
+    private transient int knownMask;
 
     /**
      * @param device
@@ -86,6 +89,11 @@ public abstract class AbstractFile
     }
 
     @Override
+    public boolean setExecutable(boolean executable) {
+        return false;
+    }
+
+    @Override
     public Long getLength() {
         return null;
     }
@@ -105,7 +113,16 @@ public abstract class AbstractFile
     }
 
     @Override
-    public int getModifiers(int mask) {
+    public int getFlags(int mask) {
+        int unknownMask = (mask & ~knownMask);
+        if (unknownMask != 0) {
+            int unknownFlags = retrieveFlags(unknownMask);
+            flags = (flags & ~unknownMask) | unknownFlags;
+        }
+        return flags & mask;
+    }
+
+    protected int retrieveFlags(int mask) {
         int bits = 0;
 
         if ((mask & MASK_ACCESSIBLE) != 0) {
@@ -284,6 +301,11 @@ public abstract class AbstractFile
     @Override
     public boolean isIterable() {
         return isTree();
+    }
+
+    @Override
+    public boolean setIterable(boolean iterable) {
+        return false;
     }
 
     @Override

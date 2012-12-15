@@ -156,6 +156,14 @@ public class JdkFile
     }
 
     @Override
+    public boolean setIterable(boolean iterable) {
+        if (origFile.isDirectory())
+            return origFile.setExecutable(iterable);
+        else
+            return false;
+    }
+
+    @Override
     public boolean delete() {
         return origFile.delete();
     }

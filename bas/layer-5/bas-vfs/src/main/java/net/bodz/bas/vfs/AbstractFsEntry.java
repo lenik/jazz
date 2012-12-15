@@ -84,8 +84,8 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public int getModifiers() {
-        return getModifiers(FileModifier.MASK_ALL);
+    public int getFlags() {
+        return getFlags(FileFlags.MASK_ALL);
     }
 
     @Override
@@ -119,12 +119,27 @@ public abstract class AbstractFsEntry
     }
 
     @Override
+    public boolean setReadable(boolean readable) {
+        return false;
+    }
+
+    @Override
     public boolean isWritable() {
         return false;
     }
 
     @Override
+    public boolean setWritable(boolean writable) {
+        return false;
+    }
+
+    @Override
     public boolean isHidden() {
+        return false;
+    }
+
+    @Override
+    public boolean setHidden(boolean hidden) {
         return false;
     }
 
