@@ -63,7 +63,7 @@ public class ApacheVfsDriver
         ApachePath path = (ApachePath) _path;
         String scheme = path.getProtocol();
         ApacheVfsDevice device = getDevice(scheme);
-        ApacheFile file = device.resolve(path.getLocalPath());
+        ApacheFile file = device.resolve(path);
         return file;
     }
 

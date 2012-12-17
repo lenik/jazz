@@ -56,7 +56,7 @@ public class MemoryVfsDriver
         MemoryPath path = (MemoryPath) _path;
         String scope = path.getDeviceSpec();
         MemoryVfsDevice device = getDevice(scope);
-        return device.resolve(path.getLocalPath());
+        return device.resolve(path);
     }
 
     private static MemoryVfsDriver instance = new MemoryVfsDriver("mem");

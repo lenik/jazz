@@ -159,7 +159,7 @@ public class URLFile
     }
 
     @Override
-    public IStreamResource getResource(Charset charset) {
+    protected IStreamResource newResource(Charset charset) {
         URL url = path.toURL();
         URLResource resource = new URLResource(url);
         resource.setCharset(charset);

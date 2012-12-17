@@ -114,7 +114,7 @@ public abstract class PseudoFile
 // -o IFsBlob
 
     @Override
-    public IStreamResource getResource(Charset charset) {
+    protected IStreamResource newResource(Charset charset) {
         return resource;
     }
 

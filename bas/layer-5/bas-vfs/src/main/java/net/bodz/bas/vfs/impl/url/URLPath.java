@@ -9,7 +9,7 @@ import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.MultiEntryPath;
+import net.bodz.bas.vfs.path.AbstractMultiEntryPath;
 import net.bodz.bas.vfs.path.PathFormats;
 
 /**
@@ -21,7 +21,7 @@ import net.bodz.bas.vfs.path.PathFormats;
  * </ul>
  */
 public abstract class URLPath
-        extends MultiEntryPath {
+        extends AbstractMultiEntryPath {
 
     private static final long serialVersionUID = 1L;
 

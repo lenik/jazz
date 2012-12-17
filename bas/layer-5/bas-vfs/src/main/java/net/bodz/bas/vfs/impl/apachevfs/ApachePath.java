@@ -4,10 +4,10 @@ import org.apache.commons.vfs.FileName;
 
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
-import net.bodz.bas.vfs.path.ProtocolPath;
+import net.bodz.bas.vfs.path.MultiEntryPath;
 
 public class ApachePath
-        extends ProtocolPath {
+        extends MultiEntryPath {
 
     private static final long serialVersionUID = 1L;
 

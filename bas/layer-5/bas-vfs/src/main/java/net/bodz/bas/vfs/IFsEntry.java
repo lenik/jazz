@@ -120,7 +120,7 @@ public interface IFsEntry
 
     boolean isAutoCreateParents();
 
-    void setAutoCreateParents(boolean autoCreateParents);
+    void autoCreateParents();
 
     /**
      * Delete the fs entry, maybe file or directory.
