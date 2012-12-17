@@ -40,7 +40,7 @@ public class TypeVectorPoMapTest
                 buf.append(", ");
             buf.append(c.getSimpleName());
         }
-        return buf.toString();
+        return buf == null ? "" : buf.toString();
     }
 
     void dumpOrig() {

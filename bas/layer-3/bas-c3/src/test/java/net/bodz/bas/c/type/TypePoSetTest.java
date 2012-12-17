@@ -19,7 +19,10 @@ public class TypePoSetTest
                 buf.append(delim);
             buf.append(o);
         }
-        return buf.toString();
+        if (buf == null)
+            return "";
+        else
+            return buf.toString();
     }
 
     @Test
