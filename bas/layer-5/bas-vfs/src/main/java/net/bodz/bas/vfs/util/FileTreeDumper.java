@@ -9,8 +9,14 @@ import net.bodz.bas.vfs.IFile;
 public class FileTreeDumper {
 
     boolean treeGraph = true;
+    TreeLineChars treeLineChars = TreeLineChars.smooth;
     boolean maxDepth;
-    boolean appendSymbol;
+    boolean showHidden;
+
+    boolean showFullPath;
+    boolean showSize;
+    boolean appendSymbol = true;
+
     boolean colorized;
 
     public boolean isTreeGraph() {
@@ -21,12 +27,46 @@ public class FileTreeDumper {
         this.treeGraph = treeGraph;
     }
 
+    public TreeLineChars getTreeLineChars() {
+        return treeLineChars;
+    }
+
+    public void setTreeLineChars(TreeLineChars treeLineChars) {
+        if (treeLineChars == null)
+            throw new NullPointerException("treeLineChars");
+        this.treeLineChars = treeLineChars;
+    }
+
     public boolean isMaxDepth() {
         return maxDepth;
     }
 
     public void setMaxDepth(boolean maxDepth) {
         this.maxDepth = maxDepth;
+    }
+
+    public boolean isShowHidden() {
+        return showHidden;
+    }
+
+    public void setShowHidden(boolean showHidden) {
+        this.showHidden = showHidden;
+    }
+
+    public boolean isShowFullPath() {
+        return showFullPath;
+    }
+
+    public void setShowFullPath(boolean showFullPath) {
+        this.showFullPath = showFullPath;
+    }
+
+    public boolean isShowSize() {
+        return showSize;
+    }
+
+    public void setShowSize(boolean showSize) {
+        this.showSize = showSize;
     }
 
     /**
@@ -57,22 +97,44 @@ public class FileTreeDumper {
     }
 
     void dump(IPrintOut out, String prefix, Boolean theLast, IFile file, int depth) {
-        out.print(prefix);
-        if (theLast != null)
-            out.print(theLast ? " `- " : " |- ");
-        out.print(getText(file));
-        out.println();
+
+        if (showHidden || !file.isHidden()) {
+            out.print(prefix);
+
+            if (treeGraph && theLast != null)
+                out.print(theLast ? treeLineChars.treeLastBranch : treeLineChars.treeBranch);
+
+            if (showSize) {
+                Long length = file.getLength();
+                if (length != null)
+                    out.printf("[%8d]", length);
+            }
+
+            out.print(getText(file));
+
+            if (appendSymbol) {
+                if (file.isTree())
+                    out.print("/");
+                else if (file.isExecutable())
+                    out.print("*");
+                // else if (file.isPipe()) ...
+            }
+
+            out.println();
+        }
 
         if (file.isTree()) {
 
-            if (theLast != null)
-                prefix += theLast ? "    " : " |  ";
+            if (treeGraph && theLast != null)
+                prefix += theLast ? treeLineChars.treeSkip : treeLineChars.treeLine;
+
             depth++;
 
             Iterable<? extends IFile> children = file.children();
             List<IFile> list = new ArrayList<IFile>();
             for (IFile child : children)
-                list.add(child);
+                if (showHidden || !child.isHidden())
+                    list.add(child);
 
             int size = list.size();
             for (int i = 0; i < size; i++) {
