@@ -4,6 +4,8 @@ import java.net.URL;
 
 import org.junit.Test;
 
+import net.bodz.bas.snm.eclipse.SJEclipse;
+
 public class SJEclipseTest {
 
     @Test

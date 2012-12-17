@@ -18,14 +18,9 @@ import net.bodz.bas.jvm.exit.CatchExit;
 import net.bodz.bas.jvm.exit.ExitableProgram;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.Classpath;
-import net.bodz.bas.loader.DefaultBooter;
-import net.bodz.bas.loader.LoadUtil;
-import net.bodz.bas.loader.boot.BootInfo;
-import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.charset.BasCharsetProvider;
 
-@BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher
         implements ILauncher {
 

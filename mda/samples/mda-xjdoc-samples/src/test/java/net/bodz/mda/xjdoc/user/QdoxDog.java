@@ -7,10 +7,10 @@ import java.io.File;
 
 import org.junit.Assert;
 
+import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.snm.MavenProjectOrigin;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.conv.ClassDocFlatfLoader;

@@ -5,7 +5,8 @@ import java.net.URL;
 
 import org.junit.Test;
 
-import net.bodz.bas.snm.BuildPath.SourceFolder;
+import net.bodz.bas.snm.eclipse.EclipseProject;
+import net.bodz.bas.snm.eclipse.BuildPath.SourceFolder;
 
 public class EclipseProjectTest {
 

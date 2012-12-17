@@ -7,8 +7,10 @@ import java.util.regex.Pattern;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import net.bodz.bas.snm.BuildPath.ClassContainer;
-import net.bodz.bas.snm.BuildPath.SourceResource;
+import net.bodz.bas.snm.eclipse.BuildPath;
+import net.bodz.bas.snm.eclipse.EclipseProject;
+import net.bodz.bas.snm.eclipse.BuildPath.ClassContainer;
+import net.bodz.bas.snm.eclipse.BuildPath.SourceResource;
 
 public class BuildPathTest {
 

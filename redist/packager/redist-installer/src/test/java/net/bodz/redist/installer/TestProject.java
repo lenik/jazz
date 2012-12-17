@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import net.bodz.bas.c.java.io.FileFinder;
-import net.bodz.bas.snm.MavenProjectOrigin;
+import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.redist.installer.builtins.CTAProject;
 import net.bodz.redist.installer.builtins.FileCopy;
 import net.bodz.redist.installer.builtins.OptionalSection;
