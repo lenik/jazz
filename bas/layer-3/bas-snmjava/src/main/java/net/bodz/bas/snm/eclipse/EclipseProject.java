@@ -1,4 +1,4 @@
-package net.bodz.bas.snm;
+package net.bodz.bas.snm.eclipse;
 
 import java.io.File;
 import java.net.URL;
@@ -9,8 +9,8 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.snm.BuildPath.ClassContainer;
-import net.bodz.bas.snm.BuildPath.SourceFolder;
+import net.bodz.bas.snm.eclipse.BuildPath.ClassContainer;
+import net.bodz.bas.snm.eclipse.BuildPath.SourceFolder;
 
 public class EclipseProject {
 

@@ -9,7 +9,7 @@ import org.apache.tools.ant.types.Path;
 
 import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.snm.EclipseProject;
+import net.bodz.bas.snm.eclipse.EclipseProject;
 
 public class ProjectInfo {
 

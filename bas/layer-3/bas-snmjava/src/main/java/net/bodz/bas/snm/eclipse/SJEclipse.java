@@ -1,4 +1,4 @@
-package net.bodz.bas.snm;
+package net.bodz.bas.snm.eclipse;
 
 import java.io.File;
 import java.io.FilenameFilter;

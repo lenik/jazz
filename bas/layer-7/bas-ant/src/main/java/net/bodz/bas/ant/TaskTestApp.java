@@ -15,7 +15,7 @@ import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.snm.JarLocations;
+import net.bodz.bas.snm.eclipse.JarLocations;
 
 /**
  * Example unit test for ant task:

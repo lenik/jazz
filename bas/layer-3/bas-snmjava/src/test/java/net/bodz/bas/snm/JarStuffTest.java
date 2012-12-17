@@ -14,6 +14,9 @@ import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringFeature;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.snm.eclipse.BuildPath;
+import net.bodz.bas.snm.eclipse.EclipseProject;
+import net.bodz.bas.snm.eclipse.JarLocations;
 
 public class JarStuffTest
         extends Assert {
