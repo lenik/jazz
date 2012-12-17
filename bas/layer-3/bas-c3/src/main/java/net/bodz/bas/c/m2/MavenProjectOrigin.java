@@ -1,4 +1,4 @@
-package net.bodz.bas.snm;
+package net.bodz.bas.c.m2;
 
 import java.io.File;
 
