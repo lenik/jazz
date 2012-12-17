@@ -3,10 +3,10 @@ package net.bodz.bas.vfs.impl.jdk;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
-import net.bodz.bas.vfs.path.ProtocolPath;
+import net.bodz.bas.vfs.path.MultiEntryPath;
 
 public class JdkPath
-        extends ProtocolPath {
+        extends MultiEntryPath {
 
     private static final long serialVersionUID = 1L;
 

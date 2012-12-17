@@ -64,7 +64,7 @@ public class JdkVfsDriver
         JdkPath path = (JdkPath) _path;
         String driveName = path.getDeviceSpec();
         JdkVfsDevice device = getDrive(driveName);
-        JdkFile file = device.resolve(path.getLocalPath());
+        JdkFile file = device.resolve(path);
         return file;
     }
 

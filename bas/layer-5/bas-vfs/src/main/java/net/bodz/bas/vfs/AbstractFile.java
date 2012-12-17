@@ -7,9 +7,11 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.LocaleColos;
+import net.bodz.bas.io.resource.IOpenResourceListener;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.resource.OpenResourceEvent;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -224,8 +226,27 @@ public abstract class AbstractFile
     /**
      * @return <code>null</code> If no resource available for this fs-entry.
      */
+    protected abstract IStreamResource newResource(Charset charset);
+
     @Override
-    public abstract IStreamResource getResource(Charset charset);
+    public final IStreamResource getResource(Charset charset) {
+        IStreamResource resource = newResource(charset);
+        if (resource == null)
+            return null;
+
+        if (isAutoCreateParents())
+            resource.addOpenResourceListener(new IOpenResourceListener() {
+                @Override
+                public void openResource(OpenResourceEvent event)
+                        throws IOException {
+                    IFile parent = getParentFile();
+                    if (parent != null)
+                        if (!parent.createTree())
+                            throw new IOException("Can't create parents for " + this);
+                }
+            });
+        return resource;
+    }
 
     @Override
     public final IStreamInputSource getInputSource() {
@@ -280,12 +301,10 @@ public abstract class AbstractFile
 
     @Override
     public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
-        if (isAutoCreateParents()) {
-            IFile parent = getParentFile();
-            if (parent != null)
-                parent.createTree();
-        }
         IStreamResource resource = getResource(charset);
+        if (resource == null)
+            throw new NullPointerException("resource");
+
         resource.setAppendMode(appendMode);
         return resource;
     }

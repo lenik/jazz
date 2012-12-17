@@ -36,7 +36,7 @@ public class ApacheFile
 
     @Override
     public IFile clone() {
-        ApacheVfsDevice device = (ApacheVfsDevice) getDevice();
+        ApacheVfsDevice device = getDevice();
         return new ApacheFile(device, fileObject).populate(this);
     }
 
@@ -150,7 +150,7 @@ public class ApacheFile
     // -o IFsBlob
 
     @Override
-    public IStreamResource getResource(Charset charset) {
+    protected IStreamResource newResource(Charset charset) {
         _Resource resource = new _Resource();
         resource.setCharset(charset);
         return resource;
@@ -160,7 +160,7 @@ public class ApacheFile
             extends JavaioStreamResource {
 
         @Override
-        public InputStream newInputStream()
+        protected InputStream _newInputStream()
                 throws IOException {
             FileContent content = fileObject.getContent();
             checkOpen(content);
@@ -169,7 +169,7 @@ public class ApacheFile
         }
 
         @Override
-        public OutputStream newOutputStream()
+        protected OutputStream _newOutputStream()
                 throws IOException {
             FileContent content = fileObject.getContent();
             checkOpen(content);

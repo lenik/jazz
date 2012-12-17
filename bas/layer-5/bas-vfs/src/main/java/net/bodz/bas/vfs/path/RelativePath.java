@@ -7,7 +7,7 @@ import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
 public class RelativePath
-        extends MultiEntryPath {
+        extends AbstractMultiEntryPath {
 
     private static final long serialVersionUID = 1L;
 

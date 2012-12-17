@@ -2,10 +2,10 @@ package net.bodz.bas.vfs.impl.mem;
 
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.ProtocolPath;
+import net.bodz.bas.vfs.path.MultiEntryPath;
 
 public class MemoryPath
-        extends ProtocolPath {
+        extends MultiEntryPath {
 
     private static final long serialVersionUID = 1L;
     public static final String SCOPE_SEPARATOR = ":/";

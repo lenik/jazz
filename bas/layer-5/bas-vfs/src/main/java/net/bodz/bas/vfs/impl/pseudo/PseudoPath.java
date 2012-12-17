@@ -5,10 +5,10 @@ import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
-import net.bodz.bas.vfs.path.ProtocolPath;
+import net.bodz.bas.vfs.path.MultiEntryPath;
 
 public class PseudoPath
-        extends ProtocolPath {
+        extends MultiEntryPath {
 
     private static final long serialVersionUID = 1L;
     public static final String SCOPE_SEPARATOR = ":/";

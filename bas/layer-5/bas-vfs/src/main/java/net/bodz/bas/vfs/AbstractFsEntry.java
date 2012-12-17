@@ -159,8 +159,8 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public void setAutoCreateParents(boolean autoCreateParents) {
-        this.autoCreateParents = autoCreateParents;
+    public void autoCreateParents() {
+        autoCreateParents = true;
     }
 
     /**

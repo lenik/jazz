@@ -177,7 +177,7 @@ public class JdkFile
 // -o IFsBlob
 
     @Override
-    public IStreamResource getResource(Charset charset) {
+    protected IStreamResource newResource(Charset charset) {
         LocalFileResource resource = new LocalFileResource(origFile);
         resource.setCharset(charset);
         return resource;

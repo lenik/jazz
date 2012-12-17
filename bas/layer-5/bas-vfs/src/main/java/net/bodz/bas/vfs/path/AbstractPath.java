@@ -138,8 +138,10 @@ public abstract class AbstractPath
     @Override
     public String getBaseName() {
         int n = getLocalEntryCount();
-        assert n > 0;
-        return getLocalEntry(n - 1);
+        if (n == 0)
+            return "";
+        else
+            return getLocalEntry(n - 1);
     }
 
     @Override
@@ -334,6 +336,8 @@ public abstract class AbstractPath
             result.append(":");
         }
         format(result, pathFormat);
+        if (entered)
+            result.append(SEPARATOR);
         return result.toString();
     }
 

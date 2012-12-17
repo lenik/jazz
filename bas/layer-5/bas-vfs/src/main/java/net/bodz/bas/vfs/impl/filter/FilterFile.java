@@ -40,7 +40,7 @@ public class FilterFile
     }
 
     @Override
-    public IStreamResource getResource(Charset charset) {
+    protected IStreamResource newResource(Charset charset) {
         return null;
     }
 

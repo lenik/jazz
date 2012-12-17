@@ -92,7 +92,7 @@ public class MemoryFile
     }
 
     @Override
-    public IStreamResource getResource(Charset charset) {
+    protected IStreamResource newResource(Charset charset) {
         Inode inode = getInode();
         if (inode == null)
             return null;
@@ -312,6 +312,8 @@ public class MemoryFile
             Inode rootInode = getDevice().getRootInode();
             String localPath = path.getLocalPath();
             inode = rootInode.resolve(localPath);
+            if (inode == null)
+                return false;
         }
         return true;
     }
