@@ -140,8 +140,6 @@ public class CURL {
     }
 
     public String formatParameters() {
-        if (parameters == null || parameters.isEmpty())
-            return null;
         StringBuffer buf = null;
         for (Entry<String, String> e : parameters.entrySet()) {
             if (buf == null)
@@ -156,7 +154,10 @@ public class CURL {
                 buf.append(encode(value));
             }
         }
-        return buf.toString();
+        if (buf == null)
+            return "";
+        else
+            return buf.toString();
     }
 
     public static Map<String, String> parseParameters(String s) {
