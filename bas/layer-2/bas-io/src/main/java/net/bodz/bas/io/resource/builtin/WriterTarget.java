@@ -8,6 +8,7 @@ import java.io.Writer;
 import net.bodz.bas.io.WriterOutputStream;
 import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
 import net.bodz.bas.sio.IByteOut;
+import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.WriterPrintOut;
@@ -31,7 +32,7 @@ public class WriterTarget
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */
     @Override
-    public Writer newWriter()
+    public Writer _newWriter()
             throws IOException {
         return new FilterWriter(out) {
             @Override
@@ -42,21 +43,27 @@ public class WriterTarget
     }
 
     @Override
-    public OutputStream newOutputStream()
+    protected OutputStream _newOutputStream()
             throws IOException {
-        return new WriterOutputStream(newWriter(), getCharset());
+        return new WriterOutputStream(_newWriter(), getCharset());
     }
 
     @Override
-    public IByteOut newByteOut()
+    protected IByteOut _newByteOut()
             throws IOException {
-        return new OutputStreamByteOut(newOutputStream());
+        return new OutputStreamByteOut(_newOutputStream());
     }
 
     @Override
-    public IPrintOut newPrintOut()
+    protected ICharOut _newCharOut()
             throws IOException {
-        return new WriterPrintOut(newWriter());
+        return _newPrintOut();
+    }
+
+    @Override
+    protected IPrintOut _newPrintOut()
+            throws IOException {
+        return new WriterPrintOut(_newWriter());
     }
 
 }

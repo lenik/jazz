@@ -32,37 +32,37 @@ public class VFileResource
     }
 
     @Override
-    public InputStream newInputStream()
+    protected InputStream _newInputStream()
             throws IOException {
         return vfile.getContent().getInputStream();
     }
 
     @Override
-    public OutputStream newOutputStream()
+    protected OutputStream _newOutputStream()
             throws IOException {
         return vfile.getContent().getOutputStream(isAppendMode());
     }
 
     @Override
-    public IByteIn newByteIn()
+    protected IByteIn _newByteIn()
             throws IOException {
-        return new InputStreamByteIn(newInputStream());
+        return new InputStreamByteIn(_newInputStream());
     }
 
     @Override
-    public IByteOut newByteOut()
+    protected IByteOut _newByteOut()
             throws IOException {
-        return new OutputStreamByteOut(newOutputStream());
+        return new OutputStreamByteOut(_newOutputStream());
     }
 
     @Override
-    public ICharIn newCharIn()
+    protected ICharIn _newCharIn()
             throws IOException {
         return new ReaderCharIn(newReader());
     }
 
     @Override
-    public IPrintOut newCharOut()
+    protected IPrintOut _newCharOut()
             throws IOException {
         return new WriterPrintOut(newWriter());
     }

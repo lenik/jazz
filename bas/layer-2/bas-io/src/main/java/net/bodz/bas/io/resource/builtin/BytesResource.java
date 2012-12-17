@@ -49,9 +49,8 @@ public class BytesResource
      * @return {@link OutputStream} with {@link OutputStream#close()} filtered out.
      */
     @Override
-    public OutputStream newOutputStream()
+    protected OutputStream _newOutputStream()
             throws IOException {
-
         if (bytes == null)
             bytes = new ByteArrayOutputStream();
 
@@ -62,34 +61,40 @@ public class BytesResource
     }
 
     @Override
-    public Writer newWriter()
+    protected Writer _newWriter()
             throws IOException {
         return new OutputStreamWriter(newOutputStream(), getCharset());
     }
 
     @Override
-    public IByteOut newByteOut()
+    protected IByteOut _newByteOut()
             throws IOException {
         return new OutputStreamByteOut(newOutputStream());
     }
 
     @Override
-    public IPrintOut newPrintOut()
+    protected ICharOut _newCharOut()
+            throws IOException {
+        return newPrintOut();
+    }
+
+    @Override
+    protected IPrintOut _newPrintOut()
             throws IOException {
         return new WriterPrintOut(newWriter());
     }
 
     @Override
-    public IByteIn newByteIn()
+    protected IByteIn _newByteIn()
             throws IOException {
         byte[] snapshot = bytes.toByteArray();
         return new BByteIn(snapshot);
     }
 
     @Override
-    public ICharIn newCharIn()
+    public ICharIn _newCharIn()
             throws IOException {
-        IByteIn byteIn = newByteIn();
+        IByteIn byteIn = _newByteIn();
         DecodedCharIn charIn = new DecodedCharIn(byteIn, getCharset());
         return charIn;
     }

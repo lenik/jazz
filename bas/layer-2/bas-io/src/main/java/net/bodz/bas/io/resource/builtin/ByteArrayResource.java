@@ -59,29 +59,29 @@ public class ByteArrayResource
     }
 
     @Override
-    public IByteIn newByteIn()
+    public IByteIn _newByteIn()
             throws IOException {
         ByteBuffer byteBuffer = ByteBuffer.wrap(array, offset, length);
         return new ByteBufferByteIn(byteBuffer);
     }
 
     @Override
-    public IByteOut newByteOut()
+    public IByteOut _newByteOut()
             throws IOException {
         ByteBuffer byteBuffer = ByteBuffer.wrap(array, offset, length);
         return new ByteBufferByteOut(byteBuffer);
     }
 
     @Override
-    public ICharIn newCharIn()
+    public ICharIn _newCharIn()
             throws IOException {
-        return new DecodedCharIn(newByteIn(), getCharset().newDecoder());
+        return new DecodedCharIn(_newByteIn(), getCharset().newDecoder());
     }
 
     @Override
-    public ICharOut newCharOut()
+    public ICharOut _newCharOut()
             throws IOException {
-        ICharOut cout = new EncodedCharOut(newByteOut(), getCharset().newEncoder());
+        ICharOut cout = new EncodedCharOut(_newByteOut(), getCharset().newEncoder());
         return cout;
     }
 

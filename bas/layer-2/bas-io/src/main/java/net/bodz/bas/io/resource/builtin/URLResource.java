@@ -50,13 +50,13 @@ public class URLResource
     }
 
     @Override
-    public InputStream newInputStream()
+    protected InputStream _newInputStream()
             throws IOException {
         return url.openStream();
     }
 
     @Override
-    public OutputStream newOutputStream()
+    protected OutputStream _newOutputStream()
             throws IOException {
         if (isAppendMode())
             throw new IOException("Append to a URL resource isn't possible. ");

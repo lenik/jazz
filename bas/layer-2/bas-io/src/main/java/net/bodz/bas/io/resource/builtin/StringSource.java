@@ -25,7 +25,7 @@ public class StringSource
     }
 
     @Override
-    public ICharIn newCharIn()
+    public ICharIn _newCharIn()
             throws IOException {
         return new StringCharIn(string);
     }
@@ -43,9 +43,9 @@ public class StringSource
     // }
 
     @Override
-    public IByteIn newByteIn()
+    public IByteIn _newByteIn()
             throws IOException {
-        ICharIn charIn = newCharIn();
+        ICharIn charIn = _newCharIn();
         CharsetEncoder encoder = getCharset().newEncoder();
         return new EncodedByteIn(charIn, encoder);
     }

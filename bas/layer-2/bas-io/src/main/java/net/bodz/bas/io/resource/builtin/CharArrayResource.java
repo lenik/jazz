@@ -55,29 +55,29 @@ public class CharArrayResource
     }
 
     @Override
-    public ICharIn newCharIn()
+    public ICharIn _newCharIn()
             throws IOException {
         CharBuffer charBuffer = CharBuffer.wrap(array, offset, length);
         return new CharBufferCharIn(charBuffer);
     }
 
     @Override
-    public ICharOut newCharOut()
+    public ICharOut _newCharOut()
             throws IOException {
         CharBuffer charBuffer = CharBuffer.wrap(array, offset, length);
         return new CharBufferCharOut(charBuffer);
     }
 
     @Override
-    public IByteIn newByteIn()
+    public IByteIn _newByteIn()
             throws IOException {
-        return new EncodedByteIn(newCharIn(), getCharset().newEncoder());
+        return new EncodedByteIn(_newCharIn(), getCharset().newEncoder());
     }
 
     @Override
-    public IByteOut newByteOut()
+    public IByteOut _newByteOut()
             throws IOException {
-        return new DecodedByteOut(newCharOut(), getCharset().newDecoder());
+        return new DecodedByteOut(_newCharOut(), getCharset().newDecoder());
     }
 
 }

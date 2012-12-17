@@ -49,7 +49,7 @@ public class CharsResource
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */
     @Override
-    public Writer newWriter()
+    protected Writer _newWriter()
             throws IOException {
         if (chars == null)
             chars = new StringWriter();
@@ -59,34 +59,40 @@ public class CharsResource
     }
 
     @Override
-    public OutputStream newOutputStream()
+    protected OutputStream _newOutputStream()
             throws IOException {
-        return new WriterOutputStream(newWriter(), getCharset());
+        return new WriterOutputStream(_newWriter(), getCharset());
     }
 
     @Override
-    public IByteOut newByteOut()
+    protected IByteOut _newByteOut()
             throws IOException {
-        return new OutputStreamByteOut(newOutputStream());
+        return new OutputStreamByteOut(_newOutputStream());
     }
 
     @Override
-    public IPrintOut newPrintOut()
+    protected ICharOut _newCharOut()
             throws IOException {
-        return new WriterPrintOut(newWriter());
+        return _newPrintOut();
     }
 
     @Override
-    public ICharIn newCharIn()
+    protected IPrintOut _newPrintOut()
+            throws IOException {
+        return new WriterPrintOut(_newWriter());
+    }
+
+    @Override
+    protected ICharIn _newCharIn()
             throws IOException {
         String snapshot = chars.toString();
         return new StringCharIn(snapshot);
     }
 
     @Override
-    public IByteIn newByteIn()
+    protected IByteIn _newByteIn()
             throws IOException {
-        ICharIn charIn = newCharIn();
+        ICharIn charIn = _newCharIn();
         EncodedByteIn byteIn = new EncodedByteIn(charIn, getCharset());
         return byteIn;
     }
