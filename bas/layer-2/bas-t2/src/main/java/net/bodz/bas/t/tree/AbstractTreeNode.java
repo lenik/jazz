@@ -34,6 +34,9 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode>
     }
 
     @Override
+    public abstract node_t getChild(String key);
+
+    @Override
     public node_t getDescendant(String path) {
         int slash = path.indexOf('/');
         if (slash == -1)
@@ -49,6 +52,40 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode>
     }
 
     @Override
+    public node_t resolve(String path) {
+        if (path == null)
+            throw new NullPointerException("path");
+
+        if (path.isEmpty()) {
+            @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+            return _this;
+        }
+
+        int slash = path.indexOf('/');
+        String key;
+        if (slash == -1) {
+            key = path;
+            path = null;
+        } else {
+            key = path.substring(0, slash);
+            path = path.substring(slash + 1);
+        }
+
+        return _resolve(key, path);
+    }
+
+    protected node_t _resolve(String firstPathEntry, String remainingPath) {
+        node_t child = getChild(firstPathEntry);
+        if (child == null)
+            return null;
+        else
+            return (node_t) child.resolve(remainingPath);
+    }
+
+    @Override
+    public abstract Collection<? extends node_t> children();
+
+    @Override
     public String keyOf(ITreeNode child) {
         List<String> keys = keysOf(child);
         if (keys.isEmpty())
@@ -56,11 +93,5 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode>
         else
             return keys.get(0);
     }
-
-    @Override
-    public abstract node_t getChild(String key);
-
-    @Override
-    public abstract Collection<? extends node_t> children();
 
 }
