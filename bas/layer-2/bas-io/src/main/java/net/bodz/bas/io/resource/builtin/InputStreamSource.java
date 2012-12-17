@@ -27,7 +27,7 @@ public class InputStreamSource
      * @return {@link InputStream} with {@link InputStream#close()} filtered out.
      */
     @Override
-    public InputStream newInputStream()
+    protected InputStream _newInputStream()
             throws IOException {
         return new FilterInputStream(in) {
             @Override
@@ -38,19 +38,19 @@ public class InputStreamSource
     }
 
     @Override
-    public Reader newReader()
+    protected Reader _newReader()
             throws IOException {
         return new InputStreamReader(newInputStream(), getCharset());
     }
 
     @Override
-    public IByteIn newByteIn()
+    public IByteIn _newByteIn()
             throws IOException {
         return new InputStreamByteIn(newInputStream());
     }
 
     @Override
-    public ICharIn newCharIn()
+    public ICharIn _newCharIn()
             throws IOException {
         return new ReaderCharIn(newReader());
     }

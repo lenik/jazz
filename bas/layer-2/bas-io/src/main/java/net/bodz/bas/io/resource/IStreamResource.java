@@ -6,4 +6,8 @@ public interface IStreamResource
     @Override
     IStreamResource clone();
 
+    void addOpenResourceListener(IOpenResourceListener listener);
+
+    void removeOpenResourceListener(IOpenResourceListener listener);
+
 }

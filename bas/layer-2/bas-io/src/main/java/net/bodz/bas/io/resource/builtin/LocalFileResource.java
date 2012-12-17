@@ -54,13 +54,13 @@ public class LocalFileResource
     }
 
     @Override
-    public InputStream newInputStream()
+    protected InputStream _newInputStream()
             throws IOException {
         return new FileInputStream(file);
     }
 
     @Override
-    public OutputStream newOutputStream()
+    protected OutputStream _newOutputStream()
             throws IOException {
         return new FileOutputStream(file, isAppendMode());
     }
@@ -68,16 +68,26 @@ public class LocalFileResource
     // private AbstractRandomInputSource arisImpl;
     // private AbstractRandomOutputTarget arotImpl;
 
+    protected ZipFile _newZipFile()
+            throws BadFormatException, IOException {
+        return new ZipFile(file);
+    }
+
     @Override
-    public JarFile newJarFile()
+    public final ZipFile newZipFile()
+            throws BadFormatException, IOException {
+        return _newZipFile();
+    }
+
+    protected JarFile _newJarFile()
             throws BadFormatException, IOException {
         return new JarFile(file);
     }
 
     @Override
-    public ZipFile newZipFile()
+    public final JarFile newJarFile()
             throws BadFormatException, IOException {
-        return new ZipFile(file);
+        return _newJarFile();
     }
 
 }

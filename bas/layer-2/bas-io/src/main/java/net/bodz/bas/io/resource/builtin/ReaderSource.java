@@ -31,7 +31,7 @@ public class ReaderSource
      * @return {@link Reader} with {@link Reader#close()} filtered out.
      */
     @Override
-    public Reader newReader()
+    protected Reader _newReader()
             throws IOException {
         return new FilterReader(in) {
             @Override
@@ -42,19 +42,19 @@ public class ReaderSource
     }
 
     @Override
-    public InputStream newInputStream()
+    protected InputStream _newInputStream()
             throws IOException {
         return new ReaderInputStream(newReader(), getCharset());
     }
 
     @Override
-    public IByteIn newByteIn()
+    public IByteIn _newByteIn()
             throws IOException {
         return new InputStreamByteIn(newInputStream());
     }
 
     @Override
-    public ICharIn newCharIn()
+    public ICharIn _newCharIn()
             throws IOException {
         return new ReaderCharIn(newReader());
     }

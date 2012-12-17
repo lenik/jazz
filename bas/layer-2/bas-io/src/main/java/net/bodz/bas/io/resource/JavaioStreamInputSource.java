@@ -14,27 +14,27 @@ public abstract class JavaioStreamInputSource
         extends AbstractStreamInputSource {
 
     @Override
-    public abstract InputStream newInputStream()
+    protected abstract InputStream _newInputStream()
             throws IOException;
 
     @Override
-    public Reader newReader()
+    protected Reader _newReader()
             throws IOException {
         InputStream in = newInputStream();
         return new InputStreamReader(in, getCharset());
     }
 
     @Override
-    public IByteIn newByteIn()
+    public IByteIn _newByteIn()
             throws IOException {
         InputStream in = newInputStream();
         return new InputStreamByteIn(in);
     }
 
     @Override
-    public ICharIn newCharIn()
+    public ICharIn _newCharIn()
             throws IOException {
-        IByteIn in = newByteIn();
+        IByteIn in = _newByteIn();
         return new DecodedCharIn(in, getCharset().newDecoder());
     }
 

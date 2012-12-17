@@ -11,61 +11,61 @@ public abstract class JavaioStreamResource
     // IStreamInputSource
 
     @Override
-    public abstract InputStream newInputStream()
+    protected abstract InputStream _newInputStream()
             throws IOException;
 
     @Override
-    public Reader newReader()
+    protected Reader _newReader()
             throws IOException {
-        InputStream in = newInputStream();
+        InputStream in = _newInputStream();
         return new InputStreamReader(in, getCharset());
     }
 
     @Override
-    public IByteIn newByteIn()
+    public IByteIn _newByteIn()
             throws IOException {
-        InputStream in = newInputStream();
+        InputStream in = _newInputStream();
         return new InputStreamByteIn(in);
     }
 
     @Override
-    public ICharIn newCharIn()
+    public ICharIn _newCharIn()
             throws IOException {
-        IByteIn in = newByteIn();
+        IByteIn in = _newByteIn();
         return new DecodedCharIn(in, getCharset().newDecoder());
     }
 
     // IStreamOutputTarget
 
     @Override
-    public abstract OutputStream newOutputStream()
+    protected abstract OutputStream _newOutputStream()
             throws IOException;
 
     @Override
-    public Writer newWriter()
+    protected Writer _newWriter()
             throws IOException {
-        OutputStream out = newOutputStream();
+        OutputStream out = _newOutputStream();
         return new OutputStreamWriter(out, getCharset());
     }
 
     @Override
-    public IByteOut newByteOut()
+    protected IByteOut _newByteOut()
             throws IOException {
-        OutputStream out = newOutputStream();
+        OutputStream out = _newOutputStream();
         return new OutputStreamByteOut(out);
     }
 
     @Override
-    public IPrintOut newPrintOut()
+    protected IPrintOut _newPrintOut()
             throws IOException {
         PrintStream ps = newPrintStream();
         return new PrintStreamPrintOut(ps);
     }
 
     @Override
-    public ICharOut newCharOut()
+    protected ICharOut _newCharOut()
             throws IOException {
-        Writer writer = newWriter();
+        Writer writer = _newWriter();
         return new WriterCharOut(writer);
     }
 

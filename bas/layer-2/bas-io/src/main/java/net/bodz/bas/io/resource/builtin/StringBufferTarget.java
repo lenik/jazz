@@ -1,6 +1,5 @@
 package net.bodz.bas.io.resource.builtin;
 
-import java.io.IOException;
 import java.nio.charset.CharsetDecoder;
 
 import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
@@ -29,15 +28,18 @@ public class StringBufferTarget
     }
 
     @Override
-    public BufCharOut newPrintOut()
-            throws IOException {
+    protected ICharOut _newCharOut() {
+        return _newPrintOut();
+    }
+
+    @Override
+    protected BufCharOut _newPrintOut() {
         return new BufCharOut(buffer);
     }
 
     @Override
-    public IByteOut newByteOut()
-            throws IOException {
-        ICharOut charOut = newCharOut();
+    protected IByteOut _newByteOut() {
+        ICharOut charOut = _newCharOut();
         CharsetDecoder decoder = getCharset().newDecoder();
         return new DecodedByteOut(charOut, decoder);
     }
