@@ -27,6 +27,18 @@ public interface ITreeNode {
 
     ITreeNode getDescendant(String path);
 
+    /**
+     * Get or create the node by path.
+     * 
+     * @param path
+     *            Path of the node to be resolved. Can't be <code>null</code>.
+     * @return The resolved node. If the <code>path</code> is empty, returns this node. All missing
+     *         nodes along the path should be created implicitly. If it's failed to create any
+     *         missing node, <code>null</code> is returned.
+     * 
+     */
+    ITreeNode resolve(String path);
+
     Set<String> childKeySet();
 
     Collection<? extends ITreeNode> children();

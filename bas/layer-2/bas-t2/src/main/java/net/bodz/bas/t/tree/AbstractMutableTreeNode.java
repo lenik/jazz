@@ -50,35 +50,17 @@ public abstract class AbstractMutableTreeNode<node_t extends ITreeNode>
             throws CreateException;
 
     @Override
-    public synchronized node_t resolve(String path) {
-        if (path == null)
-            throw new NullPointerException("path");
-
-        if (path.isEmpty()) {
-            @SuppressWarnings("unchecked") node_t _this = (node_t) this;
-            return _this;
-        }
-
-        int slash = path.indexOf('/');
-        String key;
-        if (slash == -1) {
-            key = path;
-            path = null;
-        } else {
-            key = path.substring(0, slash);
-            path = path.substring(slash + 1);
-        }
-
-        node_t child = getChild(key);
+    protected node_t _resolve(String firstPathEntry, String remainingPath) {
+        node_t child = getChild(firstPathEntry);
         if (child == null) {
             child = newChild();
-            putChild(key, child);
+            putChild(firstPathEntry, child);
         }
 
-        if (path == null)
+        if (remainingPath == null)
             return child;
         else
-            return (node_t) child.getDescendant(path);
+            return (node_t) child.resolve(remainingPath);
     }
 
     @Override
