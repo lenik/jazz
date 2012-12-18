@@ -5,10 +5,10 @@ import java.util.Arrays;
 
 import net.bodz.bas.err.OutOfDomainException;
 
-public class BByteIn
-        extends AbstractByteIn {
+public class BCharIn
+        extends AbstractCharIn {
 
-    private final byte[] src;
+    private final char[] src;
     private final int start;
     private final int end;
 
@@ -18,7 +18,7 @@ public class BByteIn
      * @throws NullPointerException
      *             If <code>byteArray</code> is <code>null</code>.
      */
-    public BByteIn(byte[] buf) {
+    public BCharIn(char[] buf) {
         if (buf == null)
             throw new NullPointerException("buf");
         this.src = buf;
@@ -32,7 +32,7 @@ public class BByteIn
      * @throws IndexOutOfBoundsException
      *             If <code>start</code> or <code>end</code> is out of bound.
      */
-    public BByteIn(byte[] buf, int off, int len) {
+    public BCharIn(char[] buf, int off, int len) {
         if (buf == null)
             throw new NullPointerException("buf");
         if (off < 0 || off > buf.length)
@@ -54,7 +54,7 @@ public class BByteIn
     }
 
     @Override
-    public int read(byte[] dst, int dstOffset, int len)
+    public int read(char[] dst, int dstOffset, int len)
             throws IOException {
         int cbRead = Math.min(len, end - position);
         if (cbRead <= 0)
@@ -66,7 +66,7 @@ public class BByteIn
 
     @Override
     public int hashCode() {
-        int hash = 0x93cfab31;
+        int hash = 0x7b8108a5;
         hash += src.hashCode();
         hash += start * 3;
         hash += end * 53;
@@ -76,9 +76,9 @@ public class BByteIn
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof BByteIn))
+        if (!(obj instanceof BCharIn))
             return false;
-        BByteIn o = (BByteIn) obj;
+        BCharIn o = (BCharIn) obj;
         if (start != o.start || end != o.end || position != o.position)
             return false;
         if (!Arrays.equals(src, o.src))
