@@ -49,37 +49,37 @@ public class CharsResource
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */
     @Override
-    protected Writer _newWriter()
+    protected Writer _newWriter(boolean append)
             throws IOException {
         if (chars == null)
             chars = new StringWriter();
-        if (!isAppendMode())
+        if (!append) // CharsResource append
             chars.getBuffer().setLength(0);
         return chars;
     }
 
     @Override
-    protected OutputStream _newOutputStream()
+    protected OutputStream _newOutputStream(boolean append)
             throws IOException {
-        return new WriterOutputStream(_newWriter(), getCharset());
+        return new WriterOutputStream(_newWriter(append), getCharset());
     }
 
     @Override
-    protected IByteOut _newByteOut()
+    protected IByteOut _newByteOut(boolean append)
             throws IOException {
-        return new OutputStreamByteOut(_newOutputStream());
+        return new OutputStreamByteOut(_newOutputStream(append));
     }
 
     @Override
-    protected ICharOut _newCharOut()
+    protected ICharOut _newCharOut(boolean append)
             throws IOException {
-        return _newPrintOut();
+        return _newPrintOut(append);
     }
 
     @Override
-    protected IPrintOut _newPrintOut()
+    protected IPrintOut _newPrintOut(boolean append)
             throws IOException {
-        return new WriterPrintOut(_newWriter());
+        return new WriterPrintOut(_newWriter(append));
     }
 
     @Override

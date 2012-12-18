@@ -38,9 +38,9 @@ public class VFileResource
     }
 
     @Override
-    protected OutputStream _newOutputStream()
+    protected OutputStream _newOutputStream(boolean append)
             throws IOException {
-        return vfile.getContent().getOutputStream(isAppendMode());
+        return vfile.getContent().getOutputStream(append);
     }
 
     @Override
@@ -50,9 +50,9 @@ public class VFileResource
     }
 
     @Override
-    protected IByteOut _newByteOut()
+    protected IByteOut _newByteOut(boolean append)
             throws IOException {
-        return new OutputStreamByteOut(_newOutputStream());
+        return new OutputStreamByteOut(_newOutputStream(append));
     }
 
     @Override
@@ -62,9 +62,9 @@ public class VFileResource
     }
 
     @Override
-    protected IPrintOut _newCharOut()
+    protected IPrintOut _newCharOut(boolean append)
             throws IOException {
-        return new WriterPrintOut(newWriter());
+        return new WriterPrintOut(newWriter(append));
     }
 
 }

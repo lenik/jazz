@@ -5,6 +5,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.java.io.DataOutputAdapter;
+import net.bodz.bas.c.java.io.IDataOutput;
+import net.bodz.bas.c.java.io.IObjectOutput;
+import net.bodz.bas.c.java.io.ObjectOutputAdapter;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
 import net.bodz.bas.sio.*;
@@ -21,6 +25,10 @@ public abstract class StreamResourceImplHelper {
         charset = getPreferredCharset();
         if (charset == null)
             throw new NullPointerException("preferredCharset");
+    }
+
+    public Tooling tooling() {
+        return new Tooling(this);
     }
 
     /**
@@ -59,19 +67,29 @@ public abstract class StreamResourceImplHelper {
         openResourceListeners.remove(listener);
     }
 
-    protected boolean isAppendMode() {
-        return false;
-    }
-
-    protected void fireOpenResource(boolean output)
+    protected void fireOpenResource1(boolean output, boolean append)
             throws IOException {
-        OpenResourceEvent event = new OpenResourceEvent(this, output, isAppendMode());
+        OpenResourceEvent event = new OpenResourceEvent(this, output, append);
         for (IOpenResourceListener listener : openResourceListeners)
             listener.openResource(event);
     }
 
-    public Tooling tooling() {
-        return new Tooling(this);
+    protected void beforeOpenInput()
+            throws IOException {
+        fireOpenResource1(false, false);
+    }
+
+    protected void beforeOpenOutput(boolean append)
+            throws IOException {
+        fireOpenResource1(true, append);
+    }
+
+    protected void afterOpenInput(AutoCloseable in)
+            throws IOException {
+    }
+
+    protected void afterOpenOutput(AutoCloseable out)
+            throws IOException {
     }
 
     // input
@@ -81,8 +99,10 @@ public abstract class StreamResourceImplHelper {
 
     public final IByteIn newByteIn()
             throws IOException {
-        fireOpenResource(false);
-        return _newByteIn();
+        beforeOpenInput();
+        IByteIn in = _newByteIn();
+        afterOpenInput(in);
+        return in;
     }
 
     protected abstract ICharIn _newCharIn()
@@ -90,8 +110,10 @@ public abstract class StreamResourceImplHelper {
 
     public final ICharIn newCharIn()
             throws IOException {
-        fireOpenResource(false);
-        return _newCharIn();
+        beforeOpenInput();
+        ICharIn in = _newCharIn();
+        afterOpenInput(in);
+        return in;
     }
 
     /**
@@ -107,8 +129,10 @@ public abstract class StreamResourceImplHelper {
 
     public final InputStream newInputStream()
             throws IOException {
-        fireOpenResource(false);
-        return _newInputStream();
+        beforeOpenInput();
+        InputStream in = _newInputStream();
+        afterOpenInput(in);
+        return in;
     }
 
     /**
@@ -124,8 +148,10 @@ public abstract class StreamResourceImplHelper {
 
     public final Reader newReader()
             throws IOException {
-        fireOpenResource(false);
-        return _newReader();
+        beforeOpenInput();
+        Reader in = _newReader();
+        afterOpenInput(in);
+        return in;
     }
 
     /**
@@ -143,28 +169,36 @@ public abstract class StreamResourceImplHelper {
 
     public final BufferedReader newBufferedReader()
             throws IOException {
-        fireOpenResource(false);
-        return _newBufferedReader();
+        beforeOpenInput();
+        BufferedReader in = _newBufferedReader();
+        afterOpenInput(in);
+        return in;
     }
 
     /**
      * @def new DataInputStream(newInputStream())
      */
-    protected DataInput _newDataInput()
+    protected DataInputStream _newDataInput()
             throws IOException {
         InputStream inputStream = _newInputStream();
         if (inputStream == null)
             throw new NullPointerException("inputStream");
-        if (inputStream instanceof DataInput)
-            return (DataInput) inputStream;
-        DataInputStream dataIn = new DataInputStream(inputStream);
+
+        DataInputStream dataIn;
+        if (inputStream instanceof DataInputStream)
+            dataIn = (DataInputStream) inputStream;
+        else
+            dataIn = new DataInputStream(inputStream);
+
         return dataIn;
     }
 
-    public final DataInput newDataInput()
+    public final DataInputStream newDataInput()
             throws IOException {
-        fireOpenResource(false);
-        return _newDataInput();
+        beforeOpenInput();
+        DataInputStream in = _newDataInput();
+        afterOpenInput(in);
+        return in;
     }
 
     /**
@@ -182,8 +216,10 @@ public abstract class StreamResourceImplHelper {
 
     public final ObjectInput newObjectInput()
             throws IOException {
-        fireOpenResource(false);
-        return _newObjectInput();
+        beforeOpenInput();
+        ObjectInput in = _newObjectInput();
+        afterOpenInput(in);
+        return in;
     }
 
     /**
@@ -201,8 +237,10 @@ public abstract class StreamResourceImplHelper {
 
     public final LAReader newLAReader()
             throws IOException {
-        fireOpenResource(false);
-        return _newLAReader();
+        beforeOpenInput();
+        LAReader in = _newLAReader();
+        afterOpenInput(in);
+        return in;
     }
 
     /**
@@ -220,73 +258,126 @@ public abstract class StreamResourceImplHelper {
 
     public final LineReader newLineReader()
             throws IOException {
-        fireOpenResource(false);
-        return _newLineReader();
+        beforeOpenInput();
+        LineReader in = _newLineReader();
+        afterOpenInput(in);
+        return in;
     }
 
     // output
 
-    protected abstract IByteOut _newByteOut()
+    protected boolean isAppendMode() {
+        return false;
+    }
+
+    // IByteOut
+
+    protected abstract IByteOut _newByteOut(boolean append)
             throws IOException;
+
+    public final IByteOut newByteOut(boolean append)
+            throws IOException {
+        beforeOpenOutput(append);
+        IByteOut out = _newByteOut(append);
+        afterOpenOutput(out);
+        return out;
+    }
 
     public final IByteOut newByteOut()
             throws IOException {
-        fireOpenResource(true);
-        return _newByteOut();
+        return newByteOut(isAppendMode());
     }
 
-    protected abstract ICharOut _newCharOut()
+    // (CharOut
+
+    protected abstract ICharOut _newCharOut(boolean append)
             throws IOException;
+
+    public final ICharOut newCharOut(boolean append)
+            throws IOException {
+        beforeOpenOutput(append);
+        ICharOut out = _newCharOut(append);
+        afterOpenOutput(out);
+        return out;
+    }
 
     public final ICharOut newCharOut()
             throws IOException {
-        fireOpenResource(true);
-        return _newCharOut();
+        return newCharOut(isAppendMode());
     }
 
-    protected IPrintOut _newPrintOut()
+    // IPrintOut
+
+    protected IPrintOut _newPrintOut(boolean append)
             throws IOException {
-        ICharOut charOut = newCharOut();
+        ICharOut charOut = newCharOut(append);
         return PrintOutImpl.from(charOut);
+    }
+
+    public final IPrintOut newPrintOut(boolean append)
+            throws IOException {
+        beforeOpenOutput(append);
+        IPrintOut out = _newPrintOut(append);
+        afterOpenOutput(out);
+        return out;
     }
 
     public final IPrintOut newPrintOut()
             throws IOException {
-        fireOpenResource(true);
-        return _newPrintOut();
+        return newPrintOut(isAppendMode());
     }
 
-    protected Writer _newWriter()
+    // Writer
+
+    protected Writer _newWriter(boolean append)
             throws IOException {
-        ICharOut charOut = newCharOut();
+        ICharOut charOut = newCharOut(append);
         if (charOut == null)
             throw new NullPointerException("charOut");
         return new CharOutWriter(charOut);
     }
 
-    public final Writer newWriter()
+    public final Writer newWriter(boolean append)
             throws IOException {
-        fireOpenResource(true);
-        return _newWriter();
+        beforeOpenOutput(append);
+        Writer out = _newWriter(append);
+        afterOpenOutput(out);
+        return out;
     }
 
-    protected OutputStream _newOutputStream()
+    public final Writer newWriter()
             throws IOException {
-        IByteOut byteOut = newByteOut();
+        return newWriter(isAppendMode());
+    }
+
+    // OutputStream
+
+    protected OutputStream _newOutputStream(boolean append)
+            throws IOException {
+        IByteOut byteOut = newByteOut(append);
         if (byteOut == null)
             throw new NullPointerException("byteOut");
         return new ByteOutOutputStream(byteOut);
     }
 
-    public final OutputStream newOutputStream()
+    public final OutputStream newOutputStream(boolean append)
             throws IOException {
-        fireOpenResource(true);
-        return _newOutputStream();
+        beforeOpenOutput(append);
+        OutputStream out = _newOutputStream(append);
+        afterOpenOutput(out);
+        return out;
     }
 
-    protected PrintStream _newPrintStream()
+    public final OutputStream newOutputStream()
             throws IOException {
-        OutputStream outputStream = _newOutputStream();
+        return newOutputStream(isAppendMode());
+    }
+
+    // PrintStream
+
+    protected PrintStream _newPrintStream(boolean append)
+            throws IOException {
+        OutputStream outputStream = _newOutputStream(append);
         if (outputStream == null)
             throw new NullPointerException("outputStream");
         if (outputStream instanceof PrintStream)
@@ -294,54 +385,105 @@ public abstract class StreamResourceImplHelper {
         return new PrintStream(outputStream);
     }
 
-    public final PrintStream newPrintStream()
+    public final PrintStream newPrintStream(boolean append)
             throws IOException {
-        fireOpenResource(true);
-        return _newPrintStream();
+        beforeOpenOutput(append);
+        PrintStream out = _newPrintStream(append);
+        afterOpenOutput(out);
+        return out;
     }
 
-    protected IByteOutEx _newByteOutNative()
+    public final PrintStream newPrintStream()
             throws IOException {
-        IByteOut byteOut = newByteOut();
+        return newPrintStream(isAppendMode());
+    }
+
+    // IByteOutEx
+
+    protected IByteOutEx _newByteOutNative(boolean append)
+            throws IOException {
+        IByteOut byteOut = newByteOut(append);
         return ByteOutExImpl.from(byteOut);
+    }
+
+    public final IByteOutEx newByteOutNative(boolean append)
+            throws IOException {
+        beforeOpenOutput(append);
+        IByteOutEx out = _newByteOutNative(append);
+        afterOpenOutput(out);
+        return out;
     }
 
     public final IByteOutEx newByteOutNative()
             throws IOException {
-        fireOpenResource(true);
-        return _newByteOutNative();
+        return newByteOutNative(isAppendMode());
     }
 
-    protected DataOutput _newDataOutput()
+    // IDataOutput
+
+    protected IDataOutput _newDataOutput(boolean append)
             throws IOException {
-        OutputStream outputStream = _newOutputStream();
+        OutputStream outputStream = _newOutputStream(append);
         if (outputStream == null)
             throw new NullPointerException("outputStream");
-        if (outputStream instanceof DataOutput)
-            return (DataOutput) outputStream;
-        return new DataOutputStream(outputStream);
+
+        if (outputStream instanceof IDataOutput)
+            return (IDataOutput) outputStream;
+
+        DataOutputStream dos;
+        if (outputStream instanceof DataOutputStream)
+            dos = (DataOutputStream) outputStream;
+        else
+            dos = new DataOutputStream(outputStream);
+
+        IDataOutput dataOut = new DataOutputAdapter(dos);
+        return dataOut;
     }
 
-    public final DataOutput newDataOutput()
+    public final IDataOutput newDataOutput(boolean append)
             throws IOException {
-        fireOpenResource(true);
-        return _newDataOutput();
+        beforeOpenOutput(append);
+        IDataOutput out = _newDataOutput(append);
+        afterOpenOutput(out);
+        return out;
     }
 
-    protected ObjectOutput _newObjectOutput()
+    public final IDataOutput newDataOutput()
             throws IOException {
-        OutputStream outputStream = _newOutputStream();
+        return newDataOutput(isAppendMode());
+    }
+
+    // IObjectOutput
+
+    protected IObjectOutput _newObjectOutput(boolean append)
+            throws IOException {
+        OutputStream outputStream = _newOutputStream(append);
         if (outputStream == null)
             throw new NullPointerException("outputStream");
-        if (outputStream instanceof ObjectOutput)
-            return (ObjectOutput) outputStream;
-        return new ObjectOutputStream(outputStream);
+
+        if (outputStream instanceof IObjectOutput)
+            return (IObjectOutput) outputStream;
+
+        ObjectOutputStream oos;
+        if (outputStream instanceof ObjectOutputStream)
+            oos = (ObjectOutputStream) outputStream;
+        else
+            oos = new ObjectOutputStream(outputStream);
+
+        return new ObjectOutputAdapter(oos);
     }
 
-    public final ObjectOutput newObjectOutput()
+    public final IObjectOutput newObjectOutput(boolean append)
             throws IOException {
-        fireOpenResource(true);
-        return _newObjectOutput();
+        beforeOpenOutput(append);
+        IObjectOutput out = _newObjectOutput(append);
+        afterOpenOutput(out);
+        return out;
+    }
+
+    public final IObjectOutput newObjectOutput()
+            throws IOException {
+        return newObjectOutput(isAppendMode());
     }
 
 }

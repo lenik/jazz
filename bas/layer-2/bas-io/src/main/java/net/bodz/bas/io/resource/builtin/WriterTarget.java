@@ -29,10 +29,12 @@ public class WriterTarget
     }
 
     /**
+     * @param append
+     *            Ignored. Append mode is meaningless for pure streaming.
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */
     @Override
-    public Writer _newWriter()
+    public Writer _newWriter(boolean append)
             throws IOException {
         return new FilterWriter(out) {
             @Override
@@ -43,27 +45,27 @@ public class WriterTarget
     }
 
     @Override
-    protected OutputStream _newOutputStream()
+    protected OutputStream _newOutputStream(boolean append)
             throws IOException {
-        return new WriterOutputStream(_newWriter(), getCharset());
+        return new WriterOutputStream(_newWriter(append), getCharset());
     }
 
     @Override
-    protected IByteOut _newByteOut()
+    protected IByteOut _newByteOut(boolean append)
             throws IOException {
-        return new OutputStreamByteOut(_newOutputStream());
+        return new OutputStreamByteOut(_newOutputStream(append));
     }
 
     @Override
-    protected ICharOut _newCharOut()
+    protected ICharOut _newCharOut(boolean append)
             throws IOException {
-        return _newPrintOut();
+        return _newPrintOut(append);
     }
 
     @Override
-    protected IPrintOut _newPrintOut()
+    protected IPrintOut _newPrintOut(boolean append)
             throws IOException {
-        return new WriterPrintOut(_newWriter());
+        return new WriterPrintOut(_newWriter(append));
     }
 
 }

@@ -9,17 +9,6 @@ public abstract class AbstractStreamResource
     private boolean appendMode;
 
     @Override
-    public AbstractStreamResource clone() {
-        try {
-            AbstractStreamResource o = (AbstractStreamResource) super.clone();
-            o.appendMode = appendMode;
-            return o;
-        } catch (CloneNotSupportedException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
-    }
-
-    @Override
     public boolean isAppendMode() {
         return appendMode;
     }
@@ -27,6 +16,16 @@ public abstract class AbstractStreamResource
     @Override
     public void setAppendMode(boolean appendMode) {
         this.appendMode = appendMode;
+    }
+
+    @Override
+    public AbstractStreamResource clone() {
+        try {
+            AbstractStreamResource o = (AbstractStreamResource) super.clone();
+            return o;
+        } catch (CloneNotSupportedException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
 }
