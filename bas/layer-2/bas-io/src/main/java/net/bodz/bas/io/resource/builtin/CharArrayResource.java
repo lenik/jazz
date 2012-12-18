@@ -3,18 +3,13 @@ package net.bodz.bas.io.resource.builtin;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.resource.AbstractStreamResource;
 import net.bodz.bas.sio.CharBufferCharIn;
 import net.bodz.bas.sio.CharBufferCharOut;
-import net.bodz.bas.sio.IByteIn;
-import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.util.DecodedByteOut;
-import net.bodz.bas.sio.util.EncodedByteIn;
 
 public class CharArrayResource
-        extends AbstractStreamResource {
+        extends AbstractTextStreamResource {
 
     private final char[] array;
     private final int offset;
@@ -67,18 +62,6 @@ public class CharArrayResource
         // XXX CharArrayResource append
         CharBuffer charBuffer = CharBuffer.wrap(array, offset, length);
         return new CharBufferCharOut(charBuffer);
-    }
-
-    @Override
-    public IByteIn _newByteIn()
-            throws IOException {
-        return new EncodedByteIn(_newCharIn(), getCharset().newEncoder());
-    }
-
-    @Override
-    public IByteOut _newByteOut(boolean append)
-            throws IOException {
-        return new DecodedByteOut(_newCharOut(append), getCharset().newDecoder());
     }
 
 }
