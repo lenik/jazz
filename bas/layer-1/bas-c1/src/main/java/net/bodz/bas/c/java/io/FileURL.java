@@ -3,18 +3,19 @@ package net.bodz.bas.c.java.io;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.bodz.bas.err.UnexpectedException;
 
 public class FileURL {
 
-    public static URL getURL(String pathname, URL fallback) {
+    public static URL toURL(String pathname, URL fallback) {
         File file = new File(pathname);
-        return getURL(file, fallback);
+        return toURL(file, fallback);
     }
 
-    public static URL getURL(File file, URL fallback) {
+    public static URL toURL(File file, URL fallback) {
         URI uri = file.toURI();
         try {
             return uri.toURL();
@@ -44,18 +45,31 @@ public class FileURL {
      * 
      * @return the accessible file part of url
      */
-    public static File getFile(URL url) {
+    public static File toFile(URL url) {
         if (url == null)
             return null;
-        String protocol = url.getProtocol();
-        if ("jar".equals(protocol))
+
+        switch (url.getProtocol()) {
+        case "file":
+            return new File(url.getFile());
+
+        case "jar":
             return getJarFile(url);
-        return FilePath.canoniOf(url);
+
+        default:
+            URI uri;
+            try {
+                uri = url.toURI();
+            } catch (URISyntaxException e) {
+                throw new IllegalArgumentException(e.getMessage(), e);
+            }
+            return new File(uri);
+        }
     }
 
-    public static File getFile(URL url, String removeSubPath) {
+    public static File toFile(URL url, String removeSubPath) {
         if (removeSubPath == null || removeSubPath.isEmpty())
-            return getFile(url);
+            return toFile(url);
 
         // jar:file:/C:/abc/dir/example.jar!/com/example/Name.class
 

@@ -137,7 +137,7 @@ public class SJEclipse {
         for (ModulesRoot mroot : searches) {
             File find = mroot.findexp(exp);
             if (find != null)
-                return FileURL.getURL(find, null);
+                return FileURL.toURL(find, null);
         }
         if (errorFail)
             throw new Error("can\'t find, prefix=" + prefix);

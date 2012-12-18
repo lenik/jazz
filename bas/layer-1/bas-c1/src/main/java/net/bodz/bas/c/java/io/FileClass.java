@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.jar.Manifest;
 
@@ -17,13 +15,7 @@ public class FileClass {
     public static File getClassFile(Class<?> clazz) {
         String resName = clazz.getName().replace('.', '/') + ".class";
         URL url = clazz.getClassLoader().getResource(resName);
-        URI uri;
-        try {
-            uri = url.toURI();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-        File file = new File(uri);
+        File file = FileURL.toFile(url);
         return file;
     }
 

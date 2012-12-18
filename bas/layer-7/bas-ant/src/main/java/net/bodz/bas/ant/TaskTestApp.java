@@ -84,7 +84,7 @@ public class TaskTestApp {
             xmlURL = ClassResource.getDataURL(callerClass, "xml");
         else
             xmlURL = callerClass.getResource(resourceName);
-        File buildFile = FileURL.getFile(xmlURL); // Must be a File, not resource in zip.
+        File buildFile = FileURL.toFile(xmlURL); // Must be a File, not resource in zip.
         if (!buildFile.exists())
             throw new IllegalUsageException("The build file for test isn\'t existed: " + buildFile);
         load(buildFile);

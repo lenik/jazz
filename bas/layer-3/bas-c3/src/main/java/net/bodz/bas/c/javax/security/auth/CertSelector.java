@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.*;
 import java.security.KeyStore.Builder;
@@ -18,6 +17,7 @@ import java.util.List;
 import javax.security.auth.callback.CallbackHandler;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.net.CURL;
 import net.bodz.bas.c.java.net.CURL.Alpha;
 import net.bodz.bas.c.object.Nullables;
@@ -107,9 +107,7 @@ public class CertSelector
                     try {
                         URL url = new URL(storePath);
                         // create a temp file when necessary?
-                        storeFile = new File(url.toURI());
-                    } catch (URISyntaxException e) {
-                        throw new IllegalArgumentException(e);
+                        storeFile = FileURL.toFile(url);
                     } catch (MalformedURLException e) {
                         throw new IllegalArgumentException(e);
                     }

@@ -63,7 +63,7 @@ public class MkbatTask
             String[] paths = classpath.list();
             for (int i = 0; i < paths.length; i++) {
                 File file = new File(paths[i]);
-                URL url = FileURL.getURL(file, null);
+                URL url = FileURL.toURL(file, null);
                 mkbat.addClasspath(url);
             }
         }

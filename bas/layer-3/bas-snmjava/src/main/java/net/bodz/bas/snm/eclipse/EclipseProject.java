@@ -72,7 +72,7 @@ public class EclipseProject {
         URL[] urls = new URL[classpaths.size()];
         int i = 0;
         for (File classpath : classpaths) {
-            URL url = FileURL.getURL(classpath, null);
+            URL url = FileURL.toURL(classpath, null);
             urls[i++] = url;
         }
         return urls;

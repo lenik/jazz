@@ -2,7 +2,6 @@ package net.bodz.bas.c.java.io;
 
 import java.io.File;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.bodz.bas.c.string.StringPart;
@@ -47,11 +46,7 @@ public class FilePath {
             throws NullPointerException {
         if (url == null)
             throw new NullPointerException();
-        try {
-            return canoniOf(url.toURI());
-        } catch (URISyntaxException e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
+        return canoniOf(url.getFile());
     }
 
     public static File canoniOf(File parent, String childPath) {

@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +13,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.*;
 
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.err.IllegalArgumentTypeException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.sio.IPrintOut;
@@ -33,8 +31,8 @@ public class StrictDeviceResources
 
     Device device;
 
-    Map<URI, Image> imageCache;
-    Map<URI, ImageData> imageDataCache;
+    Map<File, Image> imageCache;
+    Map<File, ImageData> imageDataCache;
 
     Map<RGB, Color> colorCache;
     Map<FontData, Font> fontCache;
@@ -47,13 +45,13 @@ public class StrictDeviceResources
         this.device = device;
         if (reuse == null) {
             if (weakCache) {
-                imageCache = new WeakHashMap<URI, Image>();
-                imageDataCache = new WeakHashMap<URI, ImageData>();
+                imageCache = new WeakHashMap<File, Image>();
+                imageDataCache = new WeakHashMap<File, ImageData>();
                 colorCache = new WeakHashMap<RGB, Color>();
                 fontCache = new WeakHashMap<FontData, Font>();
             } else {
-                imageCache = new HashMap<URI, Image>();
-                imageDataCache = new HashMap<URI, ImageData>();
+                imageCache = new HashMap<File, Image>();
+                imageDataCache = new HashMap<File, ImageData>();
                 colorCache = new HashMap<RGB, Color>();
                 fontCache = new HashMap<FontData, Font>();
             }
@@ -82,30 +80,24 @@ public class StrictDeviceResources
 
     public ImageData getImageData(File file)
             throws IOException {
-        URI uri = file.toURI();
-        ImageData imageData = imageDataCache.get(uri);
+        ImageData imageData = imageDataCache.get(file);
         if (imageData != null)
             return imageData;
         FileInputStream in = new FileInputStream(file);
         imageData = getImageData(in);
-        imageDataCache.put(uri, imageData);
+        imageDataCache.put(file, imageData);
         return imageData;
     }
 
     public ImageData getImageData(URL url)
             throws IOException {
-        URI uri;
-        try {
-            uri = url.toURI();
-        } catch (URISyntaxException e) {
-            throw new UnexpectedException(e);
+        File file = FileURL.toFile(url);
+        ImageData imageData = imageDataCache.get(file);
+        if (imageData == null) {
+            InputStream in = url.openStream();
+            imageData = getImageData(in);
+            imageDataCache.put(file, imageData);
         }
-        ImageData imageData = imageDataCache.get(uri);
-        if (imageData != null)
-            return imageData;
-        InputStream in = url.openStream();
-        imageData = getImageData(in);
-        imageDataCache.put(uri, imageData);
         return imageData;
     }
 
@@ -216,13 +208,12 @@ public class StrictDeviceResources
      */
     public Image getImage(File file)
             throws IOException {
-        URI uri = file.toURI();
-        Image image = imageCache.get(uri);
-        if (image != null)
-            return image;
-        FileInputStream in = new FileInputStream(file);
-        image = getImage(in);
-        imageCache.put(uri, image);
+        Image image = imageCache.get(file);
+        if (image == null) {
+            FileInputStream in = new FileInputStream(file);
+            image = getImage(in);
+            imageCache.put(file, image);
+        }
         return image;
     }
 
@@ -231,18 +222,13 @@ public class StrictDeviceResources
      */
     public Image getImage(URL url)
             throws IOException {
-        URI uri;
-        try {
-            uri = url.toURI();
-        } catch (URISyntaxException e) {
-            throw new UnexpectedException(e);
+        File file = FileURL.toFile(url);
+        Image image = imageCache.get(file);
+        if (image == null) {
+            InputStream in = url.openStream();
+            image = getImage(in);
+            imageCache.put(file, image);
         }
-        Image image = imageCache.get(uri);
-        if (image != null)
-            return image;
-        InputStream in = url.openStream();
-        image = getImage(in);
-        imageCache.put(uri, image);
         return image;
     }
 

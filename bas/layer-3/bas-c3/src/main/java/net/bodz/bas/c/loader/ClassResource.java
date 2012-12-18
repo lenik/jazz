@@ -2,9 +2,9 @@ package net.bodz.bas.c.loader;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.builtin.URLResource;
@@ -13,11 +13,7 @@ public class ClassResource {
 
     public static File getRootFile(Class<?> clazz) {
         URL rootURL = getRootURL(clazz);
-        try {
-            return new File(rootURL.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        return FileURL.toFile(rootURL);
     }
 
     public static URL getRootURL(Class<?> clazz) {

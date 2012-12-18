@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +66,7 @@ public class BuildPath {
         URL selfurl = virtualProjectForClass.getResource(selfResourceName);
         if (selfurl == null)
             throw new UnexpectedException("Self resource error, maybe class extension isn't '.class'? ");
-        File defaultClasspath = FileURL.getFile(selfurl, selfResourceName);
+        File defaultClasspath = FileURL.toFile(selfurl, selfResourceName);
         Library defaultLibrary = new Library();
         defaultLibrary.path = defaultClasspath;
         addLibrary(defaultLibrary);
@@ -386,7 +385,7 @@ public class BuildPath {
         public SourceResource(ClassContainer container, URL url) {
             this.container = container;
             this.url = url;
-            this.file = u2f(url, null);
+            this.file = FileURL.toFile(url);
         }
 
         public ClassContainer getContainer() {
@@ -465,14 +464,6 @@ public class BuildPath {
         try {
             return file.toURI().toURL();
         } catch (MalformedURLException e) {
-            return fallback;
-        }
-    }
-
-    static File u2f(URL url, File fallback) {
-        try {
-            return new File(url.toURI());
-        } catch (URISyntaxException e) {
             return fallback;
         }
     }

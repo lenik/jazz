@@ -1,12 +1,12 @@
 package net.bodz.bas.loader.scan.m2;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.bodz.bas.c.java.io.FileURL;
 
 public class UCLDumper {
 
@@ -22,13 +22,7 @@ public class UCLDumper {
                 URLClassLoader ucl = (URLClassLoader) cl;
                 for (URL url : ucl.getURLs()) {
                     if ("file".equals(url.getProtocol())) {
-                        URI uri;
-                        try {
-                            uri = url.toURI();
-                        } catch (URISyntaxException e) {
-                            throw new RuntimeException(e.getMessage(), e);
-                        }
-                        File file = new File(uri);
+                        File file = FileURL.toFile(url);
                         list.add(file);
                     }
                 }
