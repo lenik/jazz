@@ -38,6 +38,22 @@ public class IntMath {
         return num;
     }
 
+    public static int min(int a, long b) {
+        if (b > Integer.MAX_VALUE)
+            return a;
+
+        int _b = (int) b;
+        return (a <= _b) ? a : _b;
+    }
+
+    public static int min(long a, int b) {
+        if (a > Integer.MAX_VALUE)
+            return b;
+
+        int _a = (int) a;
+        return (_a <= b) ? _a : b;
+    }
+
     public static int ones(int bits) {
         int c = 0;
         while (bits != 0) {
@@ -70,6 +86,46 @@ public class IntMath {
 
     public static int zeros(long bits) {
         return Long.SIZE - ones(bits);
+    }
+
+    public static int min2eGreaterOrEqualsTo(int n) {
+        int msb = msb(n);
+        if (msb == n)
+            return msb;
+        else
+            return msb << 1;
+    }
+
+    public static int msb(int n) {
+        while (n != 0) {
+            int and = n & (n - 1);
+            if (and == 0)
+                break;
+            n = and;
+        }
+        return n;
+    }
+
+    public static long msb(long n) {
+        while (n != 0) {
+            long and = n & (n - 1);
+            if (and == 0)
+                break;
+            n = and;
+        }
+        return n;
+    }
+
+    public static int lsb(int n) {
+        int xor = n ^ (n - 1);
+        xor++;
+        return xor >> 1;
+    }
+
+    public static long lsb(long n) {
+        long xor = n ^ (n - 1);
+        xor++;
+        return xor >> 1;
     }
 
     private static final Number[] facConsts;
@@ -136,18 +192,6 @@ public class IntMath {
             result = result.multiply(bigI);
         }
         return result;
-    }
-
-    public static int min(int a, long b) {
-        if (b > Integer.MAX_VALUE)
-            return a;
-        return Math.min(a, (int) b);
-    }
-
-    public static int min(long a, int b) {
-        if (a > Integer.MAX_VALUE)
-            return b;
-        return Math.min(b, (int) a);
     }
 
 }
