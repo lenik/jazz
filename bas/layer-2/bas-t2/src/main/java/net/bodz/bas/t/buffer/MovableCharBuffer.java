@@ -13,6 +13,10 @@ public class MovableCharBuffer {
     int start;
     int end;
 
+    public MovableCharBuffer() {
+        this(0, 32);
+    }
+
     public MovableCharBuffer(int initialSize) {
         this(initialSize, getRecommendCapacity(initialSize));
     }
