@@ -6,13 +6,14 @@ import java.util.Arrays;
 import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.err.OutOfDomainException;
 
-public class MovableByteBuffer {
+public class MovableByteBuffer
+        implements IMovableBuffer {
 
-    static final int SIZE_MAX = 0x7fff_fff0;
+    public static final int SIZE_MAX = 0x7fff_fff0;
 
-    byte[] buf;
-    int start;
-    int end;
+    private byte[] buf;
+    private int start;
+    private int end;
 
     public MovableByteBuffer() {
         this(0, 32);
@@ -69,14 +70,17 @@ public class MovableByteBuffer {
         return end;
     }
 
+    @Override
     public int size() {
         return end - start;
     }
 
+    @Override
     public int capacity() {
         return buf.length;
     }
 
+    @Override
     public synchronized void trimToSize() {
         if (start != 0 || end != buf.length)
             buf = Arrays.copyOfRange(buf, start, end);
@@ -100,11 +104,13 @@ public class MovableByteBuffer {
         }
     }
 
+    @Override
     public synchronized void ensureSize(int size) {
         if (size > end - start)
             resize(size);
     }
 
+    @Override
     public synchronized void resize(int size) {
         if (size < 0)
             throw new IllegalArgumentException("Size is negative: " + size);

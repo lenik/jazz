@@ -39,6 +39,9 @@ public abstract class AbstractFile
     }
 
     @Override
+    public abstract IFile clone();
+
+    @Override
     protected AbstractFile populate(Object obj) {
         super.populate(obj);
         if (obj instanceof AbstractFile) {
@@ -223,11 +226,6 @@ public abstract class AbstractFile
         return getResource(charset);
     }
 
-    /**
-     * @return <code>null</code> If no resource available for this fs-entry.
-     */
-    protected abstract IStreamResource newResource(Charset charset);
-
     @Override
     public final IStreamResource getResource(Charset charset) {
         IStreamResource resource = newResource(charset);
@@ -247,6 +245,11 @@ public abstract class AbstractFile
             });
         return resource;
     }
+
+    /**
+     * @return <code>null</code> If no resource available for this fs-entry.
+     */
+    protected abstract IStreamResource newResource(Charset charset);
 
     @Override
     public final IStreamInputSource getInputSource() {

@@ -6,11 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.io.resource.JavaioStreamResource;
 
 public class URLResource
@@ -54,6 +53,17 @@ public class URLResource
     }
 
     @Override
+    public Long getLength() {
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url);
+            return file.length();
+        default:
+            return null;
+        }
+    }
+
+    @Override
     protected InputStream _newInputStream()
             throws IOException {
         return url.openStream();
@@ -68,17 +78,11 @@ public class URLResource
             throws IOException {
         switch (url.getProtocol()) {
         case "file":
-            File file;
-            try {
-                file = new File(url.toURI());
-            } catch (URISyntaxException e) {
-                throw new UnexpectedException(e.getMessage(), e);
-            }
+            File file = FileURL.toFile(url);
             return new FileOutputStream(file, append);
 
         default:
             return url.openConnection().getOutputStream();
         }
     }
-
 }

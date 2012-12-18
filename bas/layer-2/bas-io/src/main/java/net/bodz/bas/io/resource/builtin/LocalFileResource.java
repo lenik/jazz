@@ -54,6 +54,11 @@ public class LocalFileResource
     }
 
     @Override
+    public Long getLength() {
+        return file.length();
+    }
+
+    @Override
     protected InputStream _newInputStream()
             throws IOException {
         return new FileInputStream(file);
