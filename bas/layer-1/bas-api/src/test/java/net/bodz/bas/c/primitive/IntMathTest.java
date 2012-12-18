@@ -9,6 +9,42 @@ public class IntMathTest
         extends Assert {
 
     @Test
+    public void testMsb() {
+        class D {
+            void o(int input, int expected) {
+                int actual = IntMath.msb(input);
+                assertEquals(expected, actual);
+            }
+        }
+        D d = new D();
+        d.o(0, 0);
+        d.o(0b1, 0b1);
+        d.o(0b10, 0b10);
+        d.o(0b1100, 0b1000);
+        d.o(0b100111000, 0b100000000);
+        d.o(0x400a_3c00, 0x4000_0000);
+        d.o(0x800a_3c00, 0x8000_0000);
+    }
+
+    @Test
+    public void testLsb() {
+        class D {
+            void o(int input, int expected) {
+                int actual = IntMath.lsb(input);
+                assertEquals(expected, actual);
+            }
+        }
+        D d = new D();
+        d.o(0, 0);
+        d.o(0b1, 0b1);
+        d.o(0b10, 0b10);
+        d.o(0b1100, 0b0100);
+        d.o(0b100111000, 0b1000);
+        d.o(0x400a_3c00, 0x400);
+        d.o(0x800a_3c00, 0x400);
+    }
+
+    @Test
     public void testOnesInt() {
         class D {
             void o(Integer input, int expected) {
@@ -16,12 +52,12 @@ public class IntMathTest
                 assertEquals(expected, actual);
             }
         }
-        D d = new D(); //
-        d.o(0, 0); //
-        d.o(0xFFFFFFFF, 32); //
-        d.o(0x00000001, 1); //
-        d.o(0x00101010, 3); //
-        d.o(0x88888888, 8); //
+        D d = new D();
+        d.o(0, 0);
+        d.o(0xFFFFFFFF, 32);
+        d.o(0x00000001, 1);
+        d.o(0x00101010, 3);
+        d.o(0x88888888, 8);
     }
 
     @Test
@@ -32,12 +68,12 @@ public class IntMathTest
                 assertEquals(expected, actual);
             }
         }
-        D d = new D(); //
-        d.o(0, 32); //
-        d.o(0xFFFFFFFF, 0); //
-        d.o(0x00000001, 31); //
-        d.o(0x00101010, 29); //
-        d.o(0x88888888, 24); //
+        D d = new D();
+        d.o(0, 32);
+        d.o(0xFFFFFFFF, 0);
+        d.o(0x00000001, 31);
+        d.o(0x00101010, 29);
+        d.o(0x88888888, 24);
     }
 
     // @Test
