@@ -60,9 +60,9 @@ public class LocalFileResource
     }
 
     @Override
-    protected OutputStream _newOutputStream()
+    protected OutputStream _newOutputStream(boolean append)
             throws IOException {
-        return new FileOutputStream(file, isAppendMode());
+        return new FileOutputStream(file, append);
     }
 
     // private AbstractRandomInputSource arisImpl;

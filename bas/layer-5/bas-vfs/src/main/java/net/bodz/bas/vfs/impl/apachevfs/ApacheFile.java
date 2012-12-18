@@ -169,11 +169,11 @@ public class ApacheFile
         }
 
         @Override
-        protected OutputStream _newOutputStream()
+        protected OutputStream _newOutputStream(boolean append)
                 throws IOException {
             FileContent content = fileObject.getContent();
             checkOpen(content);
-            OutputStream out = content.getOutputStream(isAppendMode());
+            OutputStream out = content.getOutputStream(append);
             return out;
         }
 

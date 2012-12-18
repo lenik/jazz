@@ -1,12 +1,16 @@
 package net.bodz.bas.io.resource.builtin;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.JavaioStreamResource;
 
 public class URLResource
@@ -55,12 +59,26 @@ public class URLResource
         return url.openStream();
     }
 
+    /**
+     * @param append
+     *            Ignored for non-file protocol URL.
+     */
     @Override
-    protected OutputStream _newOutputStream()
+    protected OutputStream _newOutputStream(boolean append)
             throws IOException {
-        if (isAppendMode())
-            throw new IOException("Append to a URL resource isn't possible. ");
-        return url.openConnection().getOutputStream();
+        switch (url.getProtocol()) {
+        case "file":
+            File file;
+            try {
+                file = new File(url.toURI());
+            } catch (URISyntaxException e) {
+                throw new UnexpectedException(e.getMessage(), e);
+            }
+            return new FileOutputStream(file, append);
+
+        default:
+            return url.openConnection().getOutputStream();
+        }
     }
 
 }

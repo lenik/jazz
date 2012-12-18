@@ -23,13 +23,13 @@ public abstract class AbstractStreamInputSource
     }
 
     @Override
-    public IByteOut _newByteOut()
+    public IByteOut _newByteOut(boolean append)
             throws IOException {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public ICharOut _newCharOut()
+    public ICharOut _newCharOut(boolean append)
             throws IOException {
         throw new UnsupportedOperationException();
     }

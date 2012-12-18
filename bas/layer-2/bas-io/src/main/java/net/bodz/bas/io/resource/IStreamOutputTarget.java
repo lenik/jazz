@@ -1,14 +1,15 @@
 package net.bodz.bas.io.resource;
 
-import java.io.DataOutput;
 import java.io.IOException;
-import java.io.ObjectOutput;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 
+import net.bodz.bas.c.java.io.IDataOutput;
+import net.bodz.bas.c.java.io.IObjectOutput;
+import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
@@ -23,7 +24,8 @@ public interface IStreamOutputTarget
     @Override
     IStreamOutputTarget clone();
 
-    @Override
+    boolean isAppendMode();
+
     void setAppendMode(boolean appendMode);
 
     @Override
@@ -38,8 +40,10 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
-    @Override
     ICharOut newCharOut()
+            throws IOException;
+
+    IByteOut newByteOut()
             throws IOException;
 
     /**
@@ -51,7 +55,19 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
+    IPrintOut newPrintOut(boolean append)
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
     IByteOutEx newByteOutNative()
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
+    IByteOutEx newByteOutNative(boolean append)
             throws IOException;
 
     /**
@@ -63,13 +79,31 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
-    DataOutput newDataOutput()
+    OutputStream newOutputStream(boolean append)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    ObjectOutput newObjectOutput()
+    IDataOutput newDataOutput()
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
+    IDataOutput newDataOutput(boolean append)
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
+    IObjectOutput newObjectOutput()
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
+    IObjectOutput newObjectOutput(boolean append)
             throws IOException;
 
     /**
@@ -81,7 +115,19 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
+    PrintStream newPrintStream(boolean append)
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
     Writer newWriter()
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
+    Writer newWriter(boolean append)
             throws IOException;
 
 }

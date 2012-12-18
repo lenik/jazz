@@ -62,8 +62,9 @@ public class CharArrayResource
     }
 
     @Override
-    public ICharOut _newCharOut()
+    public ICharOut _newCharOut(boolean append)
             throws IOException {
+        // XXX CharArrayResource append
         CharBuffer charBuffer = CharBuffer.wrap(array, offset, length);
         return new CharBufferCharOut(charBuffer);
     }
@@ -75,9 +76,9 @@ public class CharArrayResource
     }
 
     @Override
-    public IByteOut _newByteOut()
+    public IByteOut _newByteOut(boolean append)
             throws IOException {
-        return new DecodedByteOut(_newCharOut(), getCharset().newDecoder());
+        return new DecodedByteOut(_newCharOut(append), getCharset().newDecoder());
     }
 
 }

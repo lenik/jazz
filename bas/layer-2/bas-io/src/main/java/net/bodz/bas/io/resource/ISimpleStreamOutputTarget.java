@@ -14,10 +14,6 @@ public interface ISimpleStreamOutputTarget
 
     ISimpleStreamOutputTarget clone();
 
-    boolean isAppendMode();
-
-    void setAppendMode(boolean appendMode);
-
     Charset getCharset();
 
     /**
@@ -30,13 +26,13 @@ public interface ISimpleStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
-    IByteOut newByteOut()
+    IByteOut newByteOut(boolean append)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    ICharOut newCharOut()
+    ICharOut newCharOut(boolean append)
             throws IOException;
 
 }

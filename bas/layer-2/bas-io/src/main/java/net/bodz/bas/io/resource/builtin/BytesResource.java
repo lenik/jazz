@@ -49,39 +49,40 @@ public class BytesResource
      * @return {@link OutputStream} with {@link OutputStream#close()} filtered out.
      */
     @Override
-    protected OutputStream _newOutputStream()
+    protected OutputStream _newOutputStream(boolean append)
             throws IOException {
         if (bytes == null)
             bytes = new ByteArrayOutputStream();
 
-        if (!isAppendMode())
+        // XXX BytesResource append
+        if (!append)
             bytes.reset();
 
         return bytes;
     }
 
     @Override
-    protected Writer _newWriter()
+    protected Writer _newWriter(boolean append)
             throws IOException {
-        return new OutputStreamWriter(newOutputStream(), getCharset());
+        return new OutputStreamWriter(newOutputStream(append), getCharset());
     }
 
     @Override
-    protected IByteOut _newByteOut()
+    protected IByteOut _newByteOut(boolean append)
             throws IOException {
-        return new OutputStreamByteOut(newOutputStream());
+        return new OutputStreamByteOut(newOutputStream(append));
     }
 
     @Override
-    protected ICharOut _newCharOut()
+    protected ICharOut _newCharOut(boolean append)
             throws IOException {
-        return newPrintOut();
+        return newPrintOut(append);
     }
 
     @Override
-    protected IPrintOut _newPrintOut()
+    protected IPrintOut _newPrintOut(boolean append)
             throws IOException {
-        return new WriterPrintOut(newWriter());
+        return new WriterPrintOut(newWriter(append));
     }
 
     @Override

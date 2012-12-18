@@ -1,11 +1,12 @@
 package net.bodz.bas.sio;
 
+import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
 public interface ICharOut
-        extends ISimpleCharOut, Flushable, AutoCloseable {
+        extends ISimpleCharOut, Flushable, Closeable {
 
     /**
      * @throws NullPointerException

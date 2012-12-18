@@ -38,34 +38,34 @@ public abstract class JavaioStreamResource
     // IStreamOutputTarget
 
     @Override
-    protected abstract OutputStream _newOutputStream()
+    protected abstract OutputStream _newOutputStream(boolean append)
             throws IOException;
 
     @Override
-    protected Writer _newWriter()
+    protected Writer _newWriter(boolean append)
             throws IOException {
-        OutputStream out = _newOutputStream();
+        OutputStream out = _newOutputStream(append);
         return new OutputStreamWriter(out, getCharset());
     }
 
     @Override
-    protected IByteOut _newByteOut()
+    protected IByteOut _newByteOut(boolean append)
             throws IOException {
-        OutputStream out = _newOutputStream();
+        OutputStream out = _newOutputStream(append);
         return new OutputStreamByteOut(out);
     }
 
     @Override
-    protected IPrintOut _newPrintOut()
+    protected IPrintOut _newPrintOut(boolean append)
             throws IOException {
-        PrintStream ps = newPrintStream();
+        PrintStream ps = newPrintStream(append);
         return new PrintStreamPrintOut(ps);
     }
 
     @Override
-    protected ICharOut _newCharOut()
+    protected ICharOut _newCharOut(boolean append)
             throws IOException {
-        Writer writer = _newWriter();
+        Writer writer = _newWriter(append);
         return new WriterCharOut(writer);
     }
 

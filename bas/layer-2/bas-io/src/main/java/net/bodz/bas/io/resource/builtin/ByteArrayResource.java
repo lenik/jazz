@@ -66,8 +66,10 @@ public class ByteArrayResource
     }
 
     @Override
-    public IByteOut _newByteOut()
+    public IByteOut _newByteOut(boolean append)
             throws IOException {
+        if (append) // XXX ByteArrayResource append mode
+            throw new UnsupportedOperationException();
         ByteBuffer byteBuffer = ByteBuffer.wrap(array, offset, length);
         return new ByteBufferByteOut(byteBuffer);
     }
@@ -79,9 +81,9 @@ public class ByteArrayResource
     }
 
     @Override
-    public ICharOut _newCharOut()
+    public ICharOut _newCharOut(boolean append)
             throws IOException {
-        ICharOut cout = new EncodedCharOut(_newByteOut(), getCharset().newEncoder());
+        ICharOut cout = new EncodedCharOut(_newByteOut(append), getCharset().newEncoder());
         return cout;
     }
 

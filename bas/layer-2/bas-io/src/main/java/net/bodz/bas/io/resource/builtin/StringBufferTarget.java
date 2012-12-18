@@ -28,18 +28,20 @@ public class StringBufferTarget
     }
 
     @Override
-    protected ICharOut _newCharOut() {
-        return _newPrintOut();
+    protected ICharOut _newCharOut(boolean append) {
+        return _newPrintOut(append);
     }
 
     @Override
-    protected BufCharOut _newPrintOut() {
+    protected BufCharOut _newPrintOut(boolean append) {
+        if (!append)
+            buffer.setLength(0);
         return new BufCharOut(buffer);
     }
 
     @Override
-    protected IByteOut _newByteOut() {
-        ICharOut charOut = _newCharOut();
+    protected IByteOut _newByteOut(boolean append) {
+        ICharOut charOut = _newCharOut(append);
         CharsetDecoder decoder = getCharset().newDecoder();
         return new DecodedByteOut(charOut, decoder);
     }
