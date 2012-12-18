@@ -1,48 +1,43 @@
 package net.bodz.bas.io.resource.builtin;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.StringCharIn;
-import net.bodz.bas.sio.WriterPrintOut;
+import net.bodz.bas.t.buffer.MovableCharBuffer;
 
 public class CharsResource
         extends AbstractTextStreamResource {
 
-    StringWriter chars;
+    MovableCharBuffer buffer;
 
     public CharsResource() {
         this(null);
     }
 
-    public CharsResource(StringWriter chars) {
-        this.chars = chars;
+    public CharsResource(MovableCharBuffer buffer) {
+        this.buffer = buffer;
     }
 
     public boolean isAllocated() {
-        return chars != null;
+        return buffer != null;
     }
 
     public void unallocate() {
-        chars = null;
+        buffer = null;
     }
 
-    public String getData() {
-        if (chars == null)
-            return null;
-        else
-            return chars.getBuffer().toString();
+    public MovableCharBuffer getBuffer() {
+        return buffer;
     }
 
     public int getLength() {
-        if (chars == null)
+        if (buffer == null)
             return 0;
         else
-            return chars.getBuffer().length();
+            return buffer.size();
     }
 
     /**
@@ -51,11 +46,33 @@ public class CharsResource
     @Override
     protected Writer _newWriter(boolean append)
             throws IOException {
-        if (chars == null)
-            chars = new StringWriter();
-        if (!append) // CharsResource append
-            chars.getBuffer().setLength(0);
-        return chars;
+        if (buffer == null)
+            buffer = new MovableCharBuffer();
+
+        int pos;
+        if (append) {
+            pos = buffer.size();
+        } else {
+            buffer.resize(pos = 0);
+        }
+
+        return new MovableCharBufferWriter(buffer, pos);
+    }
+
+    @Override
+    protected IPrintOut _newPrintOut(boolean append)
+            throws IOException {
+        if (buffer == null)
+            buffer = new MovableCharBuffer();
+
+        int pos;
+        if (append) {
+            pos = buffer.size();
+        } else {
+            buffer.resize(pos = 0);
+        }
+
+        return new MovableCharBufferPrintOut(buffer, pos);
     }
 
     @Override
@@ -65,16 +82,12 @@ public class CharsResource
     }
 
     @Override
-    protected IPrintOut _newPrintOut(boolean append)
-            throws IOException {
-        return new WriterPrintOut(_newWriter(append));
-    }
-
-    @Override
     protected ICharIn _newCharIn()
             throws IOException {
-        String snapshot = chars.toString();
-        return new StringCharIn(snapshot);
+        if (buffer == null)
+            throw new IllegalStateException("Resource isn't created, yet");
+        else
+            return new MovableCharBufferCharIn(buffer);
     }
 
 }

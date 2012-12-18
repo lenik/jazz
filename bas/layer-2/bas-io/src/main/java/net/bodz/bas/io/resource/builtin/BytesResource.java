@@ -1,47 +1,42 @@
 package net.bodz.bas.io.resource.builtin;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.sio.BByteIn;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.OutputStreamByteOut;
+import net.bodz.bas.t.buffer.MovableByteBuffer;
 
 public class BytesResource
         extends AbstractBinaryStreamResource {
 
-    ByteArrayOutputStream bytes;
+    MovableByteBuffer buffer;
 
     public BytesResource() {
         this(null);
     }
 
-    public BytesResource(ByteArrayOutputStream bytes) {
-        this.bytes = bytes;
+    public BytesResource(MovableByteBuffer buffer) {
+        this.buffer = buffer;
     }
 
     public boolean isAllocated() {
-        return bytes != null;
+        return buffer != null;
     }
 
     public void unallocate() {
-        bytes = null;
+        buffer = null;
     }
 
-    public byte[] getData() {
-        if (bytes == null)
-            return null;
-        else
-            return bytes.toByteArray();
+    public MovableByteBuffer getBuffer() {
+        return buffer;
     }
 
     public int getLength() {
-        if (bytes == null)
+        if (buffer == null)
             return 0;
         else
-            return bytes.size();
+            return buffer.size();
     }
 
     /**
@@ -50,27 +45,42 @@ public class BytesResource
     @Override
     protected OutputStream _newOutputStream(boolean append)
             throws IOException {
-        if (bytes == null)
-            bytes = new ByteArrayOutputStream();
+        if (buffer == null)
+            buffer = new MovableByteBuffer();
 
-        // XXX BytesResource append
-        if (!append)
-            bytes.reset();
+        int pos;
+        if (append) {
+            pos = buffer.size();
+        } else {
+            buffer.resize(pos = 0);
+        }
 
-        return bytes;
+        return new MovableByteBufferOutputStream(buffer, pos);
     }
 
     @Override
     protected IByteOut _newByteOut(boolean append)
             throws IOException {
-        return new OutputStreamByteOut(newOutputStream(append));
+        if (buffer == null)
+            buffer = new MovableByteBuffer();
+
+        int pos;
+        if (append) {
+            pos = buffer.size();
+        } else {
+            buffer.resize(pos = 0);
+        }
+
+        return new MovableByteBufferByteOut(buffer, pos);
     }
 
     @Override
     protected IByteIn _newByteIn()
             throws IOException {
-        byte[] snapshot = bytes.toByteArray();
-        return new BByteIn(snapshot);
+        if (buffer == null)
+            throw new IllegalStateException("Resource isn't created, yet.");
+        else
+            return new MovableByteBufferByteIn(buffer);
     }
 
 }
