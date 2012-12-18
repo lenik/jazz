@@ -1,17 +1,17 @@
 package net.bodz.bas.io.resource.builtin;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import net.bodz.bas.io.WriterOutputStream;
-import net.bodz.bas.io.resource.AbstractStreamResource;
-import net.bodz.bas.sio.*;
-import net.bodz.bas.sio.util.EncodedByteIn;
+import net.bodz.bas.sio.ICharIn;
+import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.sio.StringCharIn;
+import net.bodz.bas.sio.WriterPrintOut;
 
 public class CharsResource
-        extends AbstractStreamResource {
+        extends AbstractTextStreamResource {
 
     StringWriter chars;
 
@@ -59,18 +59,6 @@ public class CharsResource
     }
 
     @Override
-    protected OutputStream _newOutputStream(boolean append)
-            throws IOException {
-        return new WriterOutputStream(_newWriter(append), getCharset());
-    }
-
-    @Override
-    protected IByteOut _newByteOut(boolean append)
-            throws IOException {
-        return new OutputStreamByteOut(_newOutputStream(append));
-    }
-
-    @Override
     protected ICharOut _newCharOut(boolean append)
             throws IOException {
         return _newPrintOut(append);
@@ -87,14 +75,6 @@ public class CharsResource
             throws IOException {
         String snapshot = chars.toString();
         return new StringCharIn(snapshot);
-    }
-
-    @Override
-    protected IByteIn _newByteIn()
-            throws IOException {
-        ICharIn charIn = _newCharIn();
-        EncodedByteIn byteIn = new EncodedByteIn(charIn, getCharset());
-        return byteIn;
     }
 
 }

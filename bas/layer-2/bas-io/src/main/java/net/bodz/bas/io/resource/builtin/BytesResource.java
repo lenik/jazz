@@ -3,15 +3,14 @@ package net.bodz.bas.io.resource.builtin;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
-import net.bodz.bas.io.resource.AbstractStreamResource;
-import net.bodz.bas.sio.*;
-import net.bodz.bas.sio.util.DecodedCharIn;
+import net.bodz.bas.sio.BByteIn;
+import net.bodz.bas.sio.IByteIn;
+import net.bodz.bas.sio.IByteOut;
+import net.bodz.bas.sio.OutputStreamByteOut;
 
 public class BytesResource
-        extends AbstractStreamResource {
+        extends AbstractBinaryStreamResource {
 
     ByteArrayOutputStream bytes;
 
@@ -62,27 +61,9 @@ public class BytesResource
     }
 
     @Override
-    protected Writer _newWriter(boolean append)
-            throws IOException {
-        return new OutputStreamWriter(newOutputStream(append), getCharset());
-    }
-
-    @Override
     protected IByteOut _newByteOut(boolean append)
             throws IOException {
         return new OutputStreamByteOut(newOutputStream(append));
-    }
-
-    @Override
-    protected ICharOut _newCharOut(boolean append)
-            throws IOException {
-        return newPrintOut(append);
-    }
-
-    @Override
-    protected IPrintOut _newPrintOut(boolean append)
-            throws IOException {
-        return new WriterPrintOut(newWriter(append));
     }
 
     @Override
@@ -90,14 +71,6 @@ public class BytesResource
             throws IOException {
         byte[] snapshot = bytes.toByteArray();
         return new BByteIn(snapshot);
-    }
-
-    @Override
-    public ICharIn _newCharIn()
-            throws IOException {
-        IByteIn byteIn = _newByteIn();
-        DecodedCharIn charIn = new DecodedCharIn(byteIn, getCharset());
-        return charIn;
     }
 
 }
