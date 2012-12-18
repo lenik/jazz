@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 
-public abstract class _PagedBuffer
+public abstract class AbstractPagedBuffer
         implements IPagedBuffer {
 
     protected abstract MemPage getFirst();

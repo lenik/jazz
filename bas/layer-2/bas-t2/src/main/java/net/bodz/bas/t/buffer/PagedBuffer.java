@@ -3,7 +3,7 @@ package net.bodz.bas.t.buffer;
 import java.nio.ByteBuffer;
 
 public class PagedBuffer
-        extends _PagedBuffer {
+        extends AbstractPagedBuffer {
 
     int preferredPageSize;
     MemPage head;
