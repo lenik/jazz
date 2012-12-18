@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
@@ -97,12 +96,7 @@ public class URLFile
 
         switch (url.getProtocol()) {
         case "file":
-            File file;
-            try {
-                file = new File(url.toURI());
-            } catch (URISyntaxException e) {
-                return false;
-            }
+            File file = new File(url.getFile());
             return file.delete();
 
         case "jar":

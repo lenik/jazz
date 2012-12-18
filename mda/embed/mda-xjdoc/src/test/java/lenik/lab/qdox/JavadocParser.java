@@ -2,10 +2,11 @@ package lenik.lab.qdox;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import user.ExampleClass;
+
+import net.bodz.bas.c.java.io.FileURL;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 
@@ -15,12 +16,7 @@ public class JavadocParser {
             throws FileNotFoundException {
         String classResourceName = clazz.getSimpleName() + ".class";
         URL classResource = clazz.getResource(classResourceName);
-        File classFile;
-        try {
-            classFile = new File(classResource.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        File classFile = FileURL.toFile(classResource);
         String path = classFile.getPath();
         path = path.replace("/target/classes/", "/src/main/java/");
         path = path.replace("/target/test-classes/", "/src/test/java/");

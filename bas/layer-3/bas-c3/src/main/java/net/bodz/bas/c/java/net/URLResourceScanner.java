@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.UnexpectedException;
 
@@ -82,12 +83,8 @@ public class URLResourceScanner {
 
         switch (start.getProtocol()) {
         case "file":
-            try {
-                File startFile = new File(start.toURI());
-                scanFiles(map, relativePath, startFile, 0);
-            } catch (URISyntaxException e) {
-                throw new UnexpectedException(e.getMessage(), e);
-            }
+            File startFile = FileURL.toFile(start);
+            scanFiles(map, relativePath, startFile, 0);
             break;
 
         case "zip":
