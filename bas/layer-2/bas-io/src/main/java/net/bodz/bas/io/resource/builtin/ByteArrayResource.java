@@ -12,8 +12,8 @@ public class ByteArrayResource
         extends AbstractBinaryStreamResource {
 
     private final byte[] array;
-    private final int offset;
-    private final int length;
+    private final int start;
+    private final int end;
 
     /**
      * @throws NullPointerException
@@ -37,26 +37,31 @@ public class ByteArrayResource
         if (length < 0 || (offset + length) > array.length)
             throw new IndexOutOfBoundsException("Bad length: " + length);
         this.array = array;
-        this.offset = offset;
-        this.length = length;
+        this.start = offset;
+        this.end = offset + length;
     }
 
-    public byte[] array() {
+    public byte[] getArray() {
         return array;
     }
 
-    public int arrayOffset() {
-        return offset;
+    public int getArrayOffset() {
+        return start;
     }
 
-    public int arrayLength() {
-        return length;
+    public int size() {
+        return end - start;
+    }
+
+    @Override
+    public Long getLength() {
+        return (long) (end - start);
     }
 
     @Override
     public IByteIn _newByteIn()
             throws IOException {
-        ByteBuffer byteBuffer = ByteBuffer.wrap(array, offset, length);
+        ByteBuffer byteBuffer = ByteBuffer.wrap(array, start, end - start);
         return new ByteBufferByteIn(byteBuffer);
     }
 
@@ -65,7 +70,7 @@ public class ByteArrayResource
             throws IOException {
         if (append) // XXX ByteArrayResource append mode
             throw new UnsupportedOperationException();
-        ByteBuffer byteBuffer = ByteBuffer.wrap(array, offset, length);
+        ByteBuffer byteBuffer = ByteBuffer.wrap(array, start, end - start);
         return new ByteBufferByteOut(byteBuffer);
     }
 

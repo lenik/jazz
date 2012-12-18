@@ -1,14 +1,10 @@
 package net.bodz.bas.vfs.impl.mem;
 
-import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.builtin.ByteArrayResource;
-import net.bodz.bas.io.resource.builtin.CharArrayResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
@@ -20,8 +16,12 @@ import net.bodz.bas.vfs.path.BadPathException;
 public class MemoryFile
         extends AbstractFile {
 
+    static final int INODE_TEXT_MODE = 2;
+
     private MemoryPath path;
     private transient Inode inode;
+
+    private boolean textMode;
 
     public MemoryFile(MemoryVfsDevice device, MemoryPath path) {
         super(device, path.getBaseName());
@@ -65,8 +65,12 @@ public class MemoryFile
     @Override
     public Iterable<? extends IFile> children(IFilenameFilter nameFilter)
             throws VFSException {
+        Inode inode = getInode();
+        if (inode == null)
+            return null;
+
         List<IFile> files = new ArrayList<>();
-        for (String childName : getInode().childKeySet())
+        for (String childName : inode.childKeySet())
             if (nameFilter.accept(this, childName)) {
                 IFile childFile = getChild(childName);
                 files.add(childFile);
@@ -77,8 +81,12 @@ public class MemoryFile
     @Override
     public Iterable<? extends IFile> children(IFileFilter fileFilter)
             throws VFSException {
+        Inode inode = getInode();
+        if (inode == null)
+            return null;
+
         List<IFile> files = new ArrayList<>();
-        for (String childName : getInode().childKeySet()) {
+        for (String childName : inode.childKeySet()) {
             IFile childFile = getChild(childName);
             if (fileFilter.accept(childFile))
                 files.add(childFile);
@@ -89,30 +97,6 @@ public class MemoryFile
     @Override
     public MemoryPath getPath() {
         return path;
-    }
-
-    @Override
-    protected IStreamResource newResource(Charset charset) {
-        Inode inode = getInode();
-        if (inode == null)
-            return null;
-
-        Serializable data = inode.getData();
-        if (data == null)
-            return null;
-
-        switch (getInode().getDataType()) {
-        case byteArray:
-            byte[] byteArray = (byte[]) data;
-            return new ByteArrayResource(byteArray);
-
-        case charArray:
-            char[] charArray = (char[]) data;
-            return new CharArrayResource(charArray);
-
-        default:
-            throw new UnexpectedException();
-        }
     }
 
     @Override
@@ -146,21 +130,13 @@ public class MemoryFile
     public Long getLength() {
         Inode inode = getInode();
         if (inode == null)
-            return 0L; // null
-
-        Serializable data = inode.getData();
-        if (data == null)
-            return 0L; // null;
-
-        switch (inode.getDataType()) {
-        case byteArray:
-            byte[] byteArray = (byte[]) data;
-            return (long) byteArray.length;
-
-        case charArray:
-        default:
             return null;
-        }
+
+        IStreamResource data = (IStreamResource) inode.getData();
+        if (data == null)
+            return null;
+
+        return data.getLength();
     }
 
     @Override
@@ -186,7 +162,7 @@ public class MemoryFile
         Inode inode = getInode();
         if (inode == null)
             return false;
-        Serializable data = inode.getData();
+        IStreamResource data = (IStreamResource) inode.getData();
         return data != null;
     }
 
@@ -262,9 +238,21 @@ public class MemoryFile
         return true;
     }
 
+    public boolean isTextMode() {
+        return textMode;
+    }
+
+    public void setTextMode(boolean textMode) {
+        this.textMode = textMode;
+    }
+
     @Override
     public boolean isIterable() {
-        return true;
+        Inode inode = getInode();
+        if (inode == null)
+            return false;
+        else
+            return true;
     }
 
     @Override
@@ -307,15 +295,25 @@ public class MemoryFile
 
     @Override
     public boolean createTree() {
+        Inode inode = createInode();
+        return inode != null;
+    }
+
+    Inode createInode() {
         Inode inode = getInode();
         if (inode == null) {
             Inode rootInode = getDevice().getRootInode();
             String localPath = path.getLocalPath();
             inode = rootInode.resolve(localPath);
-            if (inode == null)
-                return false;
         }
-        return true;
+        return inode;
+    }
+
+    @Override
+    protected IStreamResource newResource(Charset charset) {
+        MemoryStreamResource resource = new MemoryStreamResource(this);
+        resource.setCharset(charset);
+        return resource;
     }
 
 }

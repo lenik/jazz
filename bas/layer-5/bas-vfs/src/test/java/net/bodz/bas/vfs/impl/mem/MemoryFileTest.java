@@ -33,9 +33,9 @@ public class MemoryFileTest
         foo.autoCreateParents();
         foo.tooling()._for(StreamWriting.class).write("Foo Data");
 
-        IFile bar = targetDir.resolve("bar");
+        IFile bar = targetDir.resolve("sub/bar");
         bar.autoCreateParents();
-        bar.tooling()._for(StreamWriting.class).write("Bar Data");
+        bar.tooling()._for(StreamWriting.class).write("Bar is very long.");
 
         IFile root = VFS.resolve("mem:test:/createFiles");
         FileTreeDumper dumper = new FileTreeDumper();

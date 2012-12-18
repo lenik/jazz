@@ -12,8 +12,8 @@ public class CharArrayResource
         extends AbstractTextStreamResource {
 
     private final char[] array;
-    private final int offset;
-    private final int length;
+    private final int start;
+    private final int end;
 
     public CharArrayResource(char[] array) {
         this(array, 0, array.length);
@@ -25,34 +25,39 @@ public class CharArrayResource
      * @throws IndexOutOfBoundsException
      *             If either <code>off</code> or <code>len</code> is out of range.
      */
-    public CharArrayResource(char[] array, int offset, int length) {
+    public CharArrayResource(char[] array, int off, int len) {
         if (array == null)
             throw new NullPointerException("array");
-        if (offset < 0 || offset > array.length)
-            throw new IndexOutOfBoundsException("Bad offset: " + offset);
-        if (length < 0 || (offset + length) > array.length)
-            throw new IndexOutOfBoundsException("Bad length: " + length);
+        if (off < 0 || off > array.length)
+            throw new IndexOutOfBoundsException("Bad off: " + off);
+        if (len < 0 || (off + len) > array.length)
+            throw new IndexOutOfBoundsException("Bad len: " + len);
         this.array = array;
-        this.offset = offset;
-        this.length = length;
+        this.start = off;
+        this.end = off + len;
     }
 
-    public char[] array() {
+    public char[] getArray() {
         return array;
     }
 
-    public int arrayOffset() {
-        return offset;
+    public int getArrayOffset() {
+        return start;
     }
 
-    public int arrayLength() {
-        return length;
+    public int size() {
+        return end - start;
+    }
+
+    @Override
+    public Long getLength() {
+        return (long) (end - start);
     }
 
     @Override
     public ICharIn _newCharIn()
             throws IOException {
-        CharBuffer charBuffer = CharBuffer.wrap(array, offset, length);
+        CharBuffer charBuffer = CharBuffer.wrap(array, start, end - start);
         return new CharBufferCharIn(charBuffer);
     }
 
@@ -60,7 +65,7 @@ public class CharArrayResource
     public ICharOut _newCharOut(boolean append)
             throws IOException {
         // XXX CharArrayResource append
-        CharBuffer charBuffer = CharBuffer.wrap(array, offset, length);
+        CharBuffer charBuffer = CharBuffer.wrap(array, start, end - start);
         return new CharBufferCharOut(charBuffer);
     }
 

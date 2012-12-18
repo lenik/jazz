@@ -33,11 +33,12 @@ public class CharsResource
         return buffer;
     }
 
-    public int getLength() {
+    @Override
+    public Long getLength() {
         if (buffer == null)
-            return 0;
+            return null;
         else
-            return buffer.size();
+            return (long) buffer.size();
     }
 
     /**

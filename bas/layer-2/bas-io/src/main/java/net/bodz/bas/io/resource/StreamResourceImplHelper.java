@@ -67,7 +67,7 @@ public abstract class StreamResourceImplHelper {
         openResourceListeners.remove(listener);
     }
 
-    protected void fireOpenResource1(boolean output, boolean append)
+    protected void fireOpenResource(boolean output, boolean append)
             throws IOException {
         OpenResourceEvent event = new OpenResourceEvent(this, output, append);
         for (IOpenResourceListener listener : openResourceListeners)
@@ -76,12 +76,12 @@ public abstract class StreamResourceImplHelper {
 
     protected void beforeOpenInput()
             throws IOException {
-        fireOpenResource1(false, false);
+        fireOpenResource(false, false);
     }
 
     protected void beforeOpenOutput(boolean append)
             throws IOException {
-        fireOpenResource1(true, append);
+        fireOpenResource(true, append);
     }
 
     protected void afterOpenInput(AutoCloseable in)

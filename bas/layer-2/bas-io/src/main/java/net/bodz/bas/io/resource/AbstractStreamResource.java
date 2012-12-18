@@ -19,13 +19,19 @@ public abstract class AbstractStreamResource
     }
 
     @Override
-    public AbstractStreamResource clone() {
+    public Long getLength() {
+        return null;
+    }
+
+    @Override
+    public IStreamResource clone() {
+        IStreamResource o;
         try {
-            AbstractStreamResource o = (AbstractStreamResource) super.clone();
-            return o;
+            o = (AbstractStreamResource) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
+        return o;
     }
 
 }
