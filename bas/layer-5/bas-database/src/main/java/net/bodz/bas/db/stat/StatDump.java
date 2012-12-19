@@ -3,6 +3,8 @@ package net.bodz.bas.db.stat;
 import java.util.*;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.string.TreeLineChars;
+
 public class StatDump {
 
     StatFormatter formatter;
@@ -98,18 +100,20 @@ public class StatDump {
         StatDumpLine line = new StatDumpLine(prefix, nodeName, fields);
         lines.add(line);
 
-        if (formatter.isShowTreeLines()) {
+        if (formatter.isTreeGraph()) {
+            TreeLineChars treeLineChars = formatter.getTreeLineChars();
+
             List<Entry<String, StatNode>> entries = new ArrayList<>(node.getChildMap().entrySet());
             int entryCount = entries.size();
 
             if (!prefix.isEmpty()) {
-                boolean lastParent = prefix.endsWith(" `- ");
+                boolean lastParent = prefix.endsWith(treeLineChars.treeLastBranch);
                 prefix = prefix.substring(0, prefix.length() - 4);
-                prefix += lastParent ? "    " : " |  ";
+                prefix += lastParent ? treeLineChars.treeSkip : treeLineChars.treeLine;
             }
 
             for (int i = 0; i < entryCount; i++) {
-                String childPrefix = i == entryCount - 1 ? " `- " : " |- ";
+                String childPrefix = i == entryCount - 1 ? treeLineChars.treeLastBranch : treeLineChars.treeBranch;
 
                 Entry<String, StatNode> entry = entries.get(i);
                 String childNodeName = entry.getKey();

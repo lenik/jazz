@@ -23,10 +23,10 @@ public class StatFormatterTest
         StatNode root = createModel1();
         StatFormatter fmt = new StatFormatter();
         fmt.setFormat(StatDumpFormat.csv);
-        fmt.setShowTreeLines(false);
+        fmt.setTreeGraph(false);
         fmt.setShowTitle(true);
         String result = fmt.format(root);
-        System.out.println(result);
+        System.out.print(result);
     }
 
 // @Test
@@ -34,11 +34,11 @@ public class StatFormatterTest
         StatNode root = createModel1();
         StatFormatter fmt = new StatFormatter();
         fmt.setFormat(StatDumpFormat.csv);
-        fmt.setShowTreeLines(false);
+        fmt.setTreeGraph(false);
         fmt.setShowTitle(true);
         fmt.setQuoted(true);
         String result = fmt.format(root);
-        System.out.println(result);
+        System.out.print(result);
     }
 
     @Test
@@ -46,10 +46,10 @@ public class StatFormatterTest
         StatNode root = createModel1();
         StatFormatter fmt = new StatFormatter();
         fmt.setFormat(StatDumpFormat.table);
-        fmt.setShowTreeLines(true);
+        fmt.setTreeGraph(true);
         fmt.setShowTitle(true);
         String result = fmt.format(root);
-        System.out.println(result);
+        System.out.print(result);
     }
 
 }

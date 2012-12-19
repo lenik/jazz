@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.string.TreeLineChars;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.vfs.IFile;
 

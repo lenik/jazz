@@ -4,15 +4,20 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.TreeLineChars;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
 
 public class StatFormatter {
 
     StatDumpFormat format = StatDumpFormat.csv;
+
+    boolean treeGraph = true;
+    TreeLineChars treeLineChars = TreeLineChars.smooth;
+
     boolean showTitle = true;
     boolean showUnits = false;
-    boolean showTreeLines = true;
+
     boolean quoted = false;
     boolean removeZeroColumns = false;
     boolean convertZeroToSpace = false;
@@ -41,12 +46,22 @@ public class StatFormatter {
         this.showUnits = showUnits;
     }
 
-    public boolean isShowTreeLines() {
-        return showTreeLines;
+    public boolean isTreeGraph() {
+        return treeGraph;
     }
 
-    public void setShowTreeLines(boolean showTreeLines) {
-        this.showTreeLines = showTreeLines;
+    public void setTreeGraph(boolean treeGraph) {
+        this.treeGraph = treeGraph;
+    }
+
+    public TreeLineChars getTreeLineChars() {
+        return treeLineChars;
+    }
+
+    public void setTreeLineChars(TreeLineChars treeLineChars) {
+        if (treeLineChars == null)
+            throw new NullPointerException("treeLineChars");
+        this.treeLineChars = treeLineChars;
     }
 
     public boolean isQuoted() {
