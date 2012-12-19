@@ -21,73 +21,75 @@ public interface IStreamReading
     IStreamReading setBlockSize(int blockSize);
 
     /**
-     * Read the entire contents.
+     * Read all bytes.
      * 
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      * @throws OutOfMemoryError
      *             If the contents is too large to read.
      */
-    byte[] readBinaryContents()
-            throws IOException, OutOfMemoryError;
-
-    /**
-     * Read the entire contents.
-     * 
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
-     * @throws OutOfMemoryError
-     *             If the contents is too large to read.
-     */
-    String readTextContents()
+    byte[] read()
             throws IOException, OutOfMemoryError;
 
     /**
      * @return non-<code>null</code> byte array containing the read contents.
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      */
-    byte[] readBytes(int maxBytesToRead)
+    byte[] read(int maxBytesToRead)
             throws IOException;
 
     /**
      * @return non-<code>null</code> char array containing the read contents.
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
+     */
+    char[] readChars()
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> char array containing the read contents.
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      */
     char[] readChars(int maxCharsToRead)
             throws IOException;
 
     /**
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * Read the entire contents.
+     * 
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
+     * 
+     * @throws OutOfMemoryError
+     *             If the contents is too large to read.
      */
-    Mitorx<byte[], ? extends IOException> byteBlocks(boolean allowOverlap)
+    String readString()
+            throws IOException, OutOfMemoryError;
+
+    /**
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
+     */
+    Mitorx<byte[], ? extends IOException> blocks(boolean allowOverlap)
             throws IOException;
 
     /**
      * @return Overlap-allowed{@link Iterable} which may throw {@link RuntimeIOException}.
      */
-    Iterable<byte[]> byteBlocks()
+    Iterable<byte[]> blocks()
             throws IOException;
 
     /**
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      */
-    List<byte[]> listByteBlocks(int maxBlocks)
+    List<byte[]> readBlocks(int maxBlocks)
             throws IOException;
 
     /**
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      */
     Mitorx<char[], ? extends IOException> charBlocks(boolean allowOverlap)
             throws IOException;
@@ -98,19 +100,17 @@ public interface IStreamReading
     Iterable<char[]> charBlocks();
 
     /**
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      */
-    List<char[]> listCharBlocks(int maxBlocks)
+    List<char[]> readCharBlocks(int maxBlocks)
             throws IOException;
 
     /**
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      * @param allowOverlap
      *            Unused.
-     * @throws IOException
      */
     Mitorx<String, ? extends IOException> _lines(boolean chopped)
             throws IOException;
@@ -128,28 +128,26 @@ public interface IStreamReading
     Iterable<String> lines(boolean chopped);
 
     /**
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      */
-    List<String> listLines()
+    List<String> readLines()
             throws IOException;
 
     /**
-     * @throws FileNotFoundException
-     *             If file doesn't exist.
-     * @throws IOException
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
      */
-    List<String> listLines(boolean chopped, int maxLines)
+    List<String> readLines(boolean chopped, int maxLines)
             throws IOException;
 
-    public byte[] digest(MessageDigest digest)
+    byte[] digest(MessageDigest digest)
             throws IOException;
 
-    public byte[] md5()
+    byte[] md5()
             throws IOException;
 
-    public byte[] sha1()
+    byte[] sha1()
             throws IOException;
 
 }

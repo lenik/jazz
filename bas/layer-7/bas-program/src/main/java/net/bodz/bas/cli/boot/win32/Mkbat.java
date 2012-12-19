@@ -286,7 +286,7 @@ public class Mkbat
             logger.info("bat label boundary fixed: ", batFile);
         if (force) {
             logger.info("write ", batFile);
-            batFile.tooling()._for(StreamWriting.class).writeBytes(batFixed);
+            batFile.tooling()._for(StreamWriting.class).write(batFixed);
         } else if (FileDiff.copyDiff(batFixedRes, batFile.getResource()))
             logger.info("save ", batFile);
     }
@@ -298,7 +298,7 @@ public class Mkbat
     static {
         try {
             batTempl = ClassResource.getData(Mkbat.class, "batTempl");
-            batTemplBody = batTempl.tooling()._for(StreamReading.class).readTextContents();
+            batTemplBody = batTempl.tooling()._for(StreamReading.class).readString();
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);
         }

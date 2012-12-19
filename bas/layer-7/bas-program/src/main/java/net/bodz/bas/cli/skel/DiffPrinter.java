@@ -67,8 +67,8 @@ public class DiffPrinter {
             logger.info("[edit] ", file1);
             return true;
         }
-        List<String> al = file1.getInputSource().tooling()._for(StreamReading.class).listLines();
-        List<String> bl = file2.getInputSource().tooling()._for(StreamReading.class).listLines();
+        List<String> al = file1.getInputSource().tooling()._for(StreamReading.class).readLines();
+        List<String> bl = file2.getInputSource().tooling()._for(StreamReading.class).readLines();
         List<DiffInfo> diffs = algorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;

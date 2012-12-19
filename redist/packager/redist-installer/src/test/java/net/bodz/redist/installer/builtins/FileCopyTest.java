@@ -20,7 +20,7 @@ public class FileCopyTest
         localdir.mkdirs();
         File catfile = new File(localdir, "cat");
 
-        new JdkFile(catfile).tooling()._for(StreamWriting.class).write("a black fat cat. ");
+        new JdkFile(catfile).tooling()._for(StreamWriting.class).writeString("a black fat cat. ");
 
         FileCopy copy = new FileCopy(TestProject.BASE_A, "copytest", localdir, catfile);
         section.add(copy);

@@ -22,7 +22,7 @@ public class HeuristicProbing
         byte[] block;
         try {
             IStreamReading readPrep = file.tooling()._for(StreamReading.class);
-            block = readPrep.readBytes(TextOrBinary.textLookSize);
+            block = readPrep.read(TextOrBinary.textLookSize);
         } catch (IOException e) {
             return super.isText();
         }

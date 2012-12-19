@@ -34,7 +34,7 @@ public class InputStreamSourceUnit
     @Override
     public void reset()
             throws IOException {
-        blocks = readPreparation.byteBlocks(allowOverlap);
+        blocks = readPreparation.blocks(allowOverlap);
     }
 
     @Override

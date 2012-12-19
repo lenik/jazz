@@ -83,7 +83,7 @@ public class LibInstaller {
             installedLibFile = new File(installDir, libFilename);
             try {
                 new LocalFileResource(installedLibFile)//
-                        .tooling()._for(StreamWriting.class).writeBytes(libResource);
+                        .tooling()._for(StreamWriting.class).write(libResource);
                 installedLibraries.put(libname, installedLibFile);
             } catch (IOException e) {
                 throw new Error(e.getMessage(), e);
