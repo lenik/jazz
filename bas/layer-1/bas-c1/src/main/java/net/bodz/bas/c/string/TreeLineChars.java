@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.util;
+package net.bodz.bas.c.string;
 
 public class TreeLineChars {
 
