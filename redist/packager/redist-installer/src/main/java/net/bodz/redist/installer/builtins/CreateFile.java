@@ -56,7 +56,7 @@ public class CreateFile
                 else
                     logger.infof(tr._("Create file %s: %s"), dest, abbr);
 
-                destFile.tooling()._for(StreamWriting.class).setAppendMode(append).writeBytes(source);
+                destFile.tooling()._for(StreamWriting.class).setAppendMode(append).write(source);
             } catch (IOException e) {
                 recoverException(e);
             }

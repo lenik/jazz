@@ -209,7 +209,7 @@ public class Providers
                 return provider;
             } catch (ProviderException e) {
                 LocalFileResource res = new LocalFileResource(file);
-                String config = res.tooling()._for(StreamReading.class).readTextContents();
+                String config = res.tooling()._for(StreamReading.class).readString();
                 System.err.println(tr._("Config error: ") + e.getMessage());
                 System.err.println(config);
                 throw e;

@@ -62,7 +62,7 @@ public class StreamReading
     }
 
     @Override
-    public byte[] readBinaryContents()
+    public byte[] read()
             throws IOException, OutOfMemoryError {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte block[] = new byte[blockSize];
@@ -81,31 +81,8 @@ public class StreamReading
         return buffer.toByteArray();
     }
 
-    /**
-     * @seecopy {@link #readBinaryContents()}
-     */
-    @GeneratedByCopyPaste
     @Override
-    public String readTextContents()
-            throws IOException, OutOfMemoryError {
-        CharArrayWriter buffer = new CharArrayWriter();
-        char block[] = new char[blockSize];
-        ICharIn in = source.newCharIn();
-        try {
-            while (true) {
-                int readSize = block.length;
-                int n = in.read(block, 0, readSize);
-                if (n == -1)
-                    break;
-                buffer.write(block, 0, n);
-            }
-        } finally {
-            in.close();
-        }
-        return buffer.toString();
-    }
-
-    public byte[] readBytes(int maxBytesToRead)
+    public byte[] read(int maxBytesToRead)
             throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte block[] = new byte[blockSize];
@@ -130,9 +107,34 @@ public class StreamReading
     }
 
     /**
-     * @seecopy {@link #readBytes(int)}
+     * @seecopy {@link #read()}
      */
     @GeneratedByCopyPaste
+    @Override
+    public char[] readChars()
+            throws IOException, OutOfMemoryError {
+        CharArrayWriter buffer = new CharArrayWriter();
+        char block[] = new char[blockSize];
+        ICharIn in = source.newCharIn();
+        try {
+            while (true) {
+                int readSize = block.length;
+                int n = in.read(block, 0, readSize);
+                if (n == -1)
+                    break;
+                buffer.write(block, 0, n);
+            }
+        } finally {
+            in.close();
+        }
+        return buffer.toCharArray();
+    }
+
+    /**
+     * @seecopy {@link #read(int)}
+     */
+    @GeneratedByCopyPaste
+    @Override
     public char[] readChars(int maxCharsToRead)
             throws IOException {
         CharArrayWriter buffer = new CharArrayWriter();
@@ -157,7 +159,31 @@ public class StreamReading
         return buffer.toCharArray();
     }
 
-    public String readTill(char term)
+    /**
+     * @seecopy {@link #read()}
+     */
+    @GeneratedByCopyPaste
+    @Override
+    public String readString()
+            throws IOException, OutOfMemoryError {
+        CharArrayWriter buffer = new CharArrayWriter();
+        char block[] = new char[blockSize];
+        ICharIn in = source.newCharIn();
+        try {
+            while (true) {
+                int readSize = block.length;
+                int n = in.read(block, 0, readSize);
+                if (n == -1)
+                    break;
+                buffer.write(block, 0, n);
+            }
+        } finally {
+            in.close();
+        }
+        return buffer.toString();
+    }
+
+    public String readStringTill(char term)
             throws IOException {
         StringBuilder buffer = new StringBuilder();
         ICharIn in = source.newCharIn();
@@ -174,7 +200,8 @@ public class StreamReading
         return buffer.toString();
     }
 
-    public Mitorx<byte[], IOException> byteBlocks(final boolean allowOverlap)
+    @Override
+    public Mitorx<byte[], IOException> blocks(final boolean allowOverlap)
             throws IOException {
         final byte[] block = new byte[blockSize];
         final IByteIn in = source.newByteIn();
@@ -185,6 +212,7 @@ public class StreamReading
                 return Arrays.copyOf(o, o.length);
             }
 
+            @Override
             public byte[] _next()
                     throws IOException {
                 int off = 0;
@@ -220,7 +248,7 @@ public class StreamReading
     }
 
     @Override
-    public Iterable<byte[]> byteBlocks()
+    public Iterable<byte[]> blocks()
             throws IOException {
         return new Iterable<byte[]>() {
 
@@ -228,7 +256,7 @@ public class StreamReading
             public Iterator<byte[]> iterator() {
                 Mitorx<byte[], IOException> mitor;
                 try {
-                    mitor = byteBlocks(true);
+                    mitor = blocks(true);
                 } catch (IOException e) {
                     throw new RuntimeIOException(e);
                 }
@@ -238,13 +266,14 @@ public class StreamReading
         };
     }
 
-    public List<byte[]> listByteBlocks(int maxBlocks)
+    @Override
+    public List<byte[]> readBlocks(int maxBlocks)
             throws IOException {
-        return Mitors.toListLimited(byteBlocks(false), maxBlocks);
+        return Mitors.toListLimited(blocks(false), maxBlocks);
     }
 
     /**
-     * @seecopy {@link #byteBlocks(boolean)}
+     * @seecopy {@link #blocks(boolean)}
      */
     @GeneratedByCopyPaste
     public Mitorx<char[], IOException> charBlocks(final boolean allowOverlap)
@@ -258,6 +287,7 @@ public class StreamReading
                 return Arrays.copyOf(o, o.length);
             }
 
+            @Override
             public char[] _next()
                     throws IOException {
                 int off = 0;
@@ -293,7 +323,7 @@ public class StreamReading
     }
 
     /**
-     * @seecopy {@link #byteBlocks()}
+     * @seecopy {@link #blocks()}
      */
     @GeneratedByCopyPaste
     @Override
@@ -315,10 +345,11 @@ public class StreamReading
     }
 
     /**
-     * @seecopy {@link #listByteBlocks(int)}
+     * @seecopy {@link #readBlocks(int)}
      */
     @GeneratedByCopyPaste
-    public List<char[]> listCharBlocks(int maxBlocks)
+    @Override
+    public List<char[]> readCharBlocks(int maxBlocks)
             throws IOException {
         return Mitors.toListLimited(charBlocks(false), maxBlocks);
     }
@@ -379,20 +410,21 @@ public class StreamReading
     }
 
     @Override
-    public List<String> listLines()
+    public List<String> readLines()
             throws IOException {
         return Mitors.toList(_lines(false));
     }
 
     @Override
-    public List<String> listLines(boolean chopped, int maxLines)
+    public List<String> readLines(boolean chopped, int maxLines)
             throws IOException {
         return Mitors.toListLimited(_lines(chopped), maxLines);
     }
 
+    @Override
     public byte[] digest(MessageDigest digest)
             throws IOException {
-        Mitorx<byte[], ? extends IOException> blocks = byteBlocks(true);
+        Mitorx<byte[], ? extends IOException> blocks = blocks(true);
         byte[] block;
         try {
             while ((block = blocks._next()) != null || !blocks.isEnded())
@@ -403,12 +435,14 @@ public class StreamReading
         return digest.digest();
     }
 
+    @Override
     public byte[] md5()
             throws IOException {
         MessageDigest md5 = Cryptos.getMD5();
         return digest(md5);
     }
 
+    @Override
     public byte[] sha1()
             throws IOException {
         MessageDigest sha1 = Cryptos.getSHA1();

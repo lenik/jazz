@@ -28,7 +28,7 @@ public class JdkFileTest
         // System.out.println(rawFile);
         assertTrue(rawFile.exists());
 
-        String contents = file.tooling()._for(StreamReading.class).readTextContents();
+        String contents = file.tooling()._for(StreamReading.class).readString();
         assertEquals("Bar!\n", contents);
     }
 

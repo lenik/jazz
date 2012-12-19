@@ -63,7 +63,7 @@ public class JarStuffTest
         URL src = BuildPath.getSrcURL(JarStuffTest.class);
         if (src != null) {
             String code = new URLResource(src)//
-                    .tooling()._for(StreamReading.class).readTextContents();
+                    .tooling()._for(StreamReading.class).readString();
             assertEquals(1, StringFeature.count(code, magic));
         }
     }

@@ -21,10 +21,10 @@ public interface IStreamWriting
 
     IStreamWriting setBlockSize(int blockSize);
 
-    void writeBytes(byte[] bytes, int off, int len)
+    void write(byte[] bytes, int off, int len)
             throws IOException;
 
-    void writeBytes(byte[] bytes)
+    void write(byte[] bytes)
             throws IOException;
 
     void writeChars(char[] chars, int off, int len)
@@ -33,10 +33,10 @@ public interface IStreamWriting
     void writeChars(char[] chars)
             throws IOException;
 
-    void writeBytes(IStreamInputSource in, int maxLength)
+    void write(IStreamInputSource in, int maxLength)
             throws IOException;
 
-    void writeBytes(IStreamInputSource in)
+    void write(IStreamInputSource in)
             throws IOException;
 
     void writeChars(IStreamInputSource in, int maxLength)
@@ -45,7 +45,7 @@ public interface IStreamWriting
     void writeChars(IStreamInputSource in)
             throws IOException;
 
-    void write(String string)
+    void writeString(String string)
             throws IOException;
 
 }

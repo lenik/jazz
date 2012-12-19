@@ -102,8 +102,8 @@ public class FileDiff {
             throws IOException {
         Object ret;
         if (diff != null) {
-            List<String> al = src.tooling()._for(StreamReading.class).listLines();
-            List<String> bl = dst.tooling()._for(StreamReading.class).listLines();
+            List<String> al = src.tooling()._for(StreamReading.class).readLines();
+            List<String> bl = dst.tooling()._for(StreamReading.class).readLines();
             List<DiffInfo> diffs = diff.diffCompare(al, bl);
             if (diffs.size() == 0)
                 return null;

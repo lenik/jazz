@@ -31,11 +31,11 @@ public class MemoryFileTest
 
         IFile foo = targetDir.resolve("foo");
         foo.autoCreateParents();
-        foo.tooling()._for(StreamWriting.class).write("Foo Data");
+        foo.tooling()._for(StreamWriting.class).writeString("Foo Data");
 
         IFile bar = targetDir.resolve("sub/bar");
         bar.autoCreateParents();
-        bar.tooling()._for(StreamWriting.class).write("Bar is very long.");
+        bar.tooling()._for(StreamWriting.class).writeString("Bar is very long.");
 
         IFile root = VFS.resolve("mem:test:/createFiles");
         FileTreeDumper dumper = new FileTreeDumper();

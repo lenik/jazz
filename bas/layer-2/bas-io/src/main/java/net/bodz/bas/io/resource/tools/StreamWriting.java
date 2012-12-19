@@ -76,7 +76,7 @@ public class StreamWriting
     }
 
     @Override
-    public void writeBytes(byte[] bytes, int off, int len)
+    public void write(byte[] bytes, int off, int len)
             throws IOException {
         if (bytes == null)
             throw new NullPointerException("bytes");
@@ -89,9 +89,9 @@ public class StreamWriting
     }
 
     @Override
-    public void writeBytes(byte[] bytes)
+    public void write(byte[] bytes)
             throws IOException {
-        writeBytes(bytes, 0, bytes.length);
+        write(bytes, 0, bytes.length);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class StreamWriting
     }
 
     @Override
-    public void writeBytes(IStreamInputSource source, int maxLength)
+    public void write(IStreamInputSource source, int maxLength)
             throws IOException {
         if (source == null)
             throw new NullPointerException("source");
@@ -142,7 +142,7 @@ public class StreamWriting
     }
 
     @Override
-    public void writeBytes(IStreamInputSource source)
+    public void write(IStreamInputSource source)
             throws IOException {
         if (source == null)
             throw new NullPointerException("source");
@@ -166,7 +166,7 @@ public class StreamWriting
     }
 
     /**
-     * @seecopy {@link #writeBytes(IStreamInputSource, int)}
+     * @seecopy {@link #write(IStreamInputSource, int)}
      */
     @GeneratedByCopyPaste
     @Override
@@ -198,7 +198,7 @@ public class StreamWriting
     }
 
     /**
-     * @seecopy {@link #writeBytes(IStreamInputSource)}
+     * @seecopy {@link #write(IStreamInputSource)}
      */
     @GeneratedByCopyPaste
     @Override
@@ -226,7 +226,7 @@ public class StreamWriting
     }
 
     @Override
-    public void write(String string)
+    public void writeString(String string)
             throws IOException {
         ICharOut out = target.newCharOut();
         try {
