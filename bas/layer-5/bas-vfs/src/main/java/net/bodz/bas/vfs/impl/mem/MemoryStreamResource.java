@@ -5,13 +5,9 @@ import java.io.IOException;
 
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.ProxyStreamResource;
-import net.bodz.bas.io.resource.builtin.BytesResource;
-import net.bodz.bas.io.resource.builtin.CharsResource;
-import net.bodz.bas.t.buffer.MovableByteBuffer;
-import net.bodz.bas.t.buffer.MovableCharBuffer;
-import net.bodz.bas.vfs.inode.Inode;
+import net.bodz.bas.vfs.util.Inode;
 
-public class MemoryStreamResource
+class MemoryStreamResource
         extends ProxyStreamResource {
 
     private final MemoryFile file;
@@ -24,7 +20,7 @@ public class MemoryStreamResource
     }
 
     @Override
-    public IStreamResource clone() {
+    public MemoryStreamResource clone() {
         MemoryStreamResource o = new MemoryStreamResource(file);
         o.setCharset(getCharset());
         o.setAppendMode(isAppendMode());
@@ -53,20 +49,7 @@ public class MemoryStreamResource
     protected void beforeOpenOutput(boolean append)
             throws IOException {
         super.beforeOpenOutput(append);
-
-        Inode inode = file.createInode();
-        if (inode == null)
-            throw new IOException("Failed to create inode.");
-
-        IStreamResource data;
-        if (file.isTextMode()) {
-            MovableCharBuffer buffer = new MovableCharBuffer();
-            data = new CharsResource(buffer);
-        } else {
-            MovableByteBuffer buffer = new MovableByteBuffer();
-            data = new BytesResource(buffer);
-        }
-        inode.setData(data);
+        file.touch(false);
     }
 
 }

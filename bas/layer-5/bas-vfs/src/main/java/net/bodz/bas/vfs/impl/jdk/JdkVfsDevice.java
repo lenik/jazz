@@ -1,7 +1,9 @@
 package net.bodz.bas.vfs.impl.jdk;
 
 import java.io.File;
+import java.io.IOException;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.path.IPath;
@@ -66,9 +68,25 @@ public class JdkVfsDevice
 
     @Override
     public boolean rename(String localPathFrom, String localPathTo) {
+        if (localPathFrom == null)
+            throw new NullPointerException("localPathFrom");
+        if (localPathTo == null)
+            throw new NullPointerException("localPathTo");
+
+        if (localPathFrom.equals(localPathTo))
+            return true;
+
         File fileFrom = new File(localPathFrom);
         File fileTo = new File(localPathTo);
+
         return fileFrom.renameTo(fileTo);
+    }
+
+    @Override
+    public boolean createLink(String localPath, String target, boolean symbolic)
+            throws IOException {
+        // java.nio.file.Files.createSymbolicLink(link, target, attrs);
+        throw new NotImplementedException();
     }
 
 }

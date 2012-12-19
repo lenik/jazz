@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs;
 
 import java.io.File;
+import java.io.IOException;
 
 import net.bodz.bas.traits.IAttributes;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -156,7 +157,10 @@ public interface IFsEntry
      * 
      * @see File#renameTo(File)
      */
-    boolean renameTo(String destLocalPath)
+    boolean renameTo(String destSpec)
             throws BadPathException;
+
+    boolean createLink(String targetSpec, boolean symbolic)
+            throws IOException;
 
 }

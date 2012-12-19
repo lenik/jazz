@@ -1,10 +1,13 @@
 package net.bodz.bas.vfs.impl.apachevfs;
 
+import java.io.IOException;
+
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
@@ -94,20 +97,43 @@ public class ApacheVfsDevice
     @Override
     public boolean rename(String localPathFrom, String localPathTo)
             throws BadPathException {
-        ApacheFile fileFrom = resolve(localPathFrom);
-        ApacheFile fileTo = resolve(localPathTo);
-        FileObject objFrom = fileFrom.getFileObject();
-        FileObject objTo = fileTo.getFileObject();
+        if (localPathFrom == null)
+            throw new NullPointerException("localPathFrom");
+        if (localPathTo == null)
+            throw new NullPointerException("localPathTo");
 
-        if (!objFrom.canRenameTo(objTo))
+        if (localPathFrom.equals(localPathTo))
+            return true;
+
+        ApacheFile src = resolve(localPathFrom);
+        ApacheFile dest = resolve(localPathTo);
+
+        FileObject srcObj = src.getFileObject();
+        FileObject destObj = dest.getFileObject();
+
+        if (!srcObj.canRenameTo(destObj))
             return false;
 
         try {
-            objFrom.moveTo(objTo);
+            srcObj.moveTo(destObj);
             return true;
         } catch (FileSystemException e) {
             throw new VFSException("Failed to move", e);
         }
+    }
+
+    @Override
+    public boolean createLink(String localPath, String target, boolean symbolic)
+            throws IOException {
+        if (localPath == null)
+            throw new NullPointerException("localPath");
+        if (target == null)
+            throw new NullPointerException("target");
+
+        ApacheFile linkFile = resolve(localPath);
+        FileObject linkObj = linkFile.getFileObject();
+
+        throw new NotImplementedException();
     }
 
 }

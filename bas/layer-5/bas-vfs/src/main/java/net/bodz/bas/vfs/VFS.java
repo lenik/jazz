@@ -21,11 +21,15 @@ public class VFS {
 
     public static IPath parse(String path)
             throws BadPathException {
+        if (path == null)
+            throw new NullPointerException("path");
         return fileSystem.parse(path);
     }
 
     public static IFile resolve(String path)
             throws BadPathException, FileResolveException {
+        if (path == null)
+            throw new NullPointerException("path");
         IPath p = parse(path);
         return fileSystem.resolve(p);
     }
