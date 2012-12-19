@@ -22,13 +22,6 @@ public class InputBytesFile
     }
 
     @Override
-    public InputBytesFile clone() {
-        InputBytesFile o = new InputBytesFile(getName(), bytes);
-        o.populate(this);
-        return o;
-    }
-
-    @Override
     public boolean isReadable() {
         return true;
     }

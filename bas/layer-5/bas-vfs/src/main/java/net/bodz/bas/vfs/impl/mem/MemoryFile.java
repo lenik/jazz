@@ -105,19 +105,19 @@ public class MemoryFile
     }
 
     @Override
-    public Long getCreationTime() {
+    public long getCreationTime() {
         Inode inode = getInode();
         if (inode == null)
-            return null;
+            return 0L;
         else
             return inode.getCreationTime();
     }
 
     @Override
-    public Long getLastModifiedTime() {
+    public long getLastModifiedTime() {
         Inode inode = getInode();
         if (inode == null)
-            return null;
+            return 0L;
         else
             return inode.getLastModifiedTime();
     }

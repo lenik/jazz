@@ -9,14 +9,6 @@ public interface IFsBlob
         extends IFsEntry, IStreamResourceWrapper {
 
     /**
-     * Clone the status, but no blob data.
-     * 
-     * @return The cloned object with a separate status copy.
-     */
-    @Override
-    IFsBlob clone();
-
-    /**
      * Get the preferred charset which will be used to access the blob in text mode.
      * 
      * @return <code>null</code> if {@link Charset} is unknown.

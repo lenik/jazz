@@ -2,15 +2,15 @@ package net.bodz.bas.vfs;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttributeView;
 
-import net.bodz.bas.traits.IAttributes;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
-public interface IFsEntry
-        extends Cloneable {
-
-    IFsEntry clone();
+public interface IFsEntry {
 
     /**
      * Get the VFS device which this file entry belongs to.
@@ -30,13 +30,6 @@ public interface IFsEntry
      * @return <code>null</code> if file doesn't have a name
      */
     String getName();
-
-    /**
-     * Extension attributes.
-     * 
-     * @return <code>null</code> If no attribute.
-     */
-    IAttributes getAttributes();
 
     /**
      * Get flag bits of interesting selection only.
@@ -62,18 +55,31 @@ public interface IFsEntry
     int getFlags();
 
     /**
+     * Returns a file attribute view of a given type.
+     * 
+     * @return <code>null</code> if the attribute view type is not available.
+     */
+    <V extends FileAttributeView> V getAttributeView(Path path, Class<V> type, LinkOption... options);
+
+    /**
+     * @return <code>null</code> if the file attributes is not available.
+     */
+    <A extends BasicFileAttributes> A getAttributes(Path path, Class<A> type, LinkOption... options)
+            throws IOException;
+
+    /**
      * Get the creation time of an fs entry.
      * 
-     * @return <code>null</code> if create-time is unknown.
+     * @return <code>0</code> if create-time is unknown.
      */
-    Long getCreationTime();
+    long getCreationTime();
 
     /**
      * Get the last modified time of an fs entry.
      * 
-     * @return <code>null</code> if last-modified-time is unknown.
+     * @return <code>0</code> if last-modified-time is unknown.
      */
-    Long getLastModifiedTime();
+    long getLastModifiedTime();
 
     /**
      * Change the last modified time of an fs entry.
@@ -118,10 +124,6 @@ public interface IFsEntry
      */
     IFsDir getParentFile()
             throws FileResolveException;
-
-    boolean isAutoCreateParents();
-
-    void autoCreateParents();
 
     /**
      * Delete the fs entry, maybe file or directory.

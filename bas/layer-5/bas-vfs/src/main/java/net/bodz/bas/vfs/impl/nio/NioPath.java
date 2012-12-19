@@ -1,22 +1,51 @@
 package net.bodz.bas.vfs.impl.nio;
 
+import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.MultiEntryPath;
+import net.bodz.bas.vfs.path.PathFormat;
 
 public class NioPath
         extends MultiEntryPath {
 
     private static final long serialVersionUID = 1L;
 
-    String scheme;
+    private String driveName;
 
-    public NioPath(String protocol, String scheme, String localPath) {
+    public NioPath(String protocol, String driveName, String localPath) {
         super(protocol, localPath);
-        this.scheme = scheme;
+        this.driveName = driveName;
     }
 
-    public NioPath(String protocol, String scheme, String[] entries, boolean entered) {
+    public NioPath(String protocol, String driveName, String[] entries, boolean entered) {
         super(protocol, entries, entered);
-        this.scheme = scheme;
+        this.driveName = driveName;
+    }
+
+    public String getDriveName() {
+        return driveName;
+    }
+
+    @Override
+    public String getDeviceSpec() {
+        return driveName;
+    }
+
+    @Override
+    public String getDeviceSpecSeparator() {
+        return ":";
+    }
+
+    @Override
+    protected IPath createLocal(String[] entries, boolean entered)
+            throws BadPathException {
+        return new NioPath(getProtocol(), driveName, entries, entered);
+    }
+
+    @Override
+    protected String formatLocal(PathFormat format) {
+        String localPath = getLocalPath();
+        return SEPARATOR + localPath;
     }
 
 }

@@ -29,13 +29,6 @@ public class InputStringFile
     }
 
     @Override
-    public InputStringFile clone() {
-        InputStringFile o = new InputStringFile(getName(), charArray);
-        o.populate(this);
-        return o;
-    }
-
-    @Override
     public boolean isReadable() {
         return true;
     }

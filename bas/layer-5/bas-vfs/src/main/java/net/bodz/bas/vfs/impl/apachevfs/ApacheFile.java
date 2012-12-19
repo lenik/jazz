@@ -34,12 +34,6 @@ public class ApacheFile
         this.fileObject = fileObject;
     }
 
-    @Override
-    public IFile clone() {
-        ApacheVfsDevice device = getDevice();
-        return new ApacheFile(device, fileObject).populate(this);
-    }
-
     public FileObject getFileObject() {
         return fileObject;
     }
@@ -56,12 +50,12 @@ public class ApacheFile
     }
 
     @Override
-    public Long getLastModifiedTime() {
+    public long getLastModifiedTime() {
         try {
             FileContent content = fileObject.getContent();
             return content.getLastModifiedTime();
         } catch (FileSystemException e) {
-            return null;
+            return 0L;
         }
     }
 

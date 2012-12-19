@@ -3,12 +3,6 @@ package net.bodz.bas.vfs;
 public interface IFsDir
         extends IFsEntry {
 
-    @Override
-    IFsDir clone();
-
-    /**
-     * 
-     */
     boolean isIterable();
 
     boolean setIterable(boolean iterable);
