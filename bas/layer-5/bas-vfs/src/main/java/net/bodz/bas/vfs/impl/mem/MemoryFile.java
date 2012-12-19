@@ -16,8 +16,7 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.VFSException;
-import net.bodz.bas.vfs.inode.Inode;
-import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.util.Inode;
 
 public class MemoryFile
         extends AbstractFile {
@@ -318,28 +317,6 @@ public class MemoryFile
     }
 
     @Override
-    public boolean renameTo(String destLocalPath)
-            throws BadPathException {
-        if (!isExisted())
-            return false;
-
-        MemoryFile destFile = (MemoryFile) getDevice().resolve(destLocalPath);
-        if (destFile.isExisted())
-            return false;
-
-        String destName = destFile.getName();
-        MemoryFile destParentFile = (MemoryFile) destFile.getParentFile();
-        if (!destParentFile.mkdirs())
-            return false;
-
-        Inode srcNode = getInode();
-        Inode destParentNode = destParentFile.getInode();
-        srcNode.detach();
-        srcNode.attach(destParentNode, destName);
-        return true;
-    }
-
-    @Override
     public boolean mkdirs() {
         Inode inode = createInode();
         return inode != null;
@@ -362,7 +339,7 @@ public class MemoryFile
 
     @Override
     protected IStreamResource newResource(Charset charset) {
-        MemoryStreamResource resource = new MemoryStreamResource(this);
+        IStreamResource resource = new MemoryStreamResource(this);
         resource.setCharset(charset);
         return resource;
     }

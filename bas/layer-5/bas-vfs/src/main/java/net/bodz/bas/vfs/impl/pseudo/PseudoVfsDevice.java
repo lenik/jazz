@@ -1,8 +1,10 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
@@ -91,6 +93,12 @@ public class PseudoVfsDevice
         registeredFiles.remove(localPathFrom);
         fileFrom.setName(localPathTo);
         return true;
+    }
+
+    @Override
+    public boolean createLink(String localPath, String target, boolean symbolic)
+            throws IOException {
+        throw new NotImplementedException();
     }
 
 }

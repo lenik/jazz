@@ -1,12 +1,15 @@
 package net.bodz.bas.vfs.impl.url;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -87,7 +90,13 @@ public class URLVfsDevice
     }
 
     @Override
-    public IFile resolve(IPath _path)
+    public URLFile resolve(String localPath)
+            throws BadPathException, FileResolveException {
+        return (URLFile) super.resolve(localPath);
+    }
+
+    @Override
+    public URLFile resolve(IPath _path)
             throws FileResolveException {
         URLPath path = (URLPath) _path;
         return new URLFile(this, path);
@@ -101,12 +110,30 @@ public class URLVfsDevice
         if (localPathTo == null)
             throw new NullPointerException("localPathTo");
 
-        // You can't rename a remote file.
-        // TODO Try to rename a local file:/// file?
         if (localPathFrom.equals(localPathTo))
             return true;
-        else
+
+        URLPath srcPath = parse(localPathFrom);
+        URLPath destPath = parse(localPathTo);
+        URL srcURL = srcPath.toURL();
+        URL destURL = destPath.toURL();
+
+        assert srcURL.getProtocol().equals(destURL.getProtocol());
+        switch (srcURL.getProtocol()) {
+        case "file":
+            File srcFile = FileURL.toFile(srcURL);
+            File destFile = FileURL.toFile(destURL);
+            return srcFile.renameTo(destFile);
+
+        default:
             return false;
+        }
+    }
+
+    @Override
+    public boolean createLink(String localPath, String target, boolean symbolic)
+            throws IOException {
+        throw new NotImplementedException();
     }
 
 }

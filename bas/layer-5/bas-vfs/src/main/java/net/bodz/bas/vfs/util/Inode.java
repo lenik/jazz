@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.inode;
+package net.bodz.bas.vfs.util;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.t.tree.AbstractMapTreeNode;

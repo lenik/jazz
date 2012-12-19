@@ -205,15 +205,37 @@ public abstract class AbstractFile
     }
 
     @Override
-    public boolean renameTo(String destLocalPath)
+    public final boolean renameTo(String destSpec)
             throws BadPathException {
+        IFile dest = resolve(destSpec);
+        return renameTo(dest);
+    }
+
+    public final boolean renameTo(IFile dest) {
+        if (dest == null)
+            throw new NullPointerException("dest");
+
+        IVfsDevice srcDev = getDevice();
+        IVfsDevice destDev = dest.getDevice();
+        if (srcDev != destDev)
+            return false;
+        if (!srcDev.equals(destDev))
+            return false;
+
         String fromLocalPath = getPath().getLocalPath();
+        String destLocalPath = dest.getPath().getLocalPath();
         try {
             getDevice().rename(fromLocalPath, destLocalPath);
             return true;
         } catch (VFSException e) {
             return false;
         }
+    }
+
+    @Override
+    public boolean createLink(String targetSpec, boolean symbolic)
+            throws IOException {
+        return false;
     }
 
     // -o IFsBlob

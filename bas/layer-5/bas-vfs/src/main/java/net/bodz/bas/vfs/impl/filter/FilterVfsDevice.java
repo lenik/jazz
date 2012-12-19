@@ -1,5 +1,7 @@
 package net.bodz.bas.vfs.impl.filter;
 
+import java.io.IOException;
+
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
@@ -43,6 +45,12 @@ public class FilterVfsDevice
     @Override
     public boolean rename(String localPathFrom, String localPathTo)
             throws BadPathException {
+        return false;
+    }
+
+    @Override
+    public boolean createLink(String localPath, String target, boolean symbolic)
+            throws IOException {
         return false;
     }
 

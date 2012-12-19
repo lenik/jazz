@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.commons.vfs.FileSystem;
 
@@ -101,6 +102,9 @@ public interface IVfsDevice {
     boolean rename(String localPathFrom, String localPathTo)
             throws BadPathException;
 
+    boolean createLink(String localPath, String target, boolean symbolic)
+            throws IOException;
+
     /**
      * @param watchFile
      *            non-<code>null</code> file to watch changes for, generally it's a folder whose
@@ -126,25 +130,6 @@ public interface IVfsDevice {
      *             If any parameter is <code>null</code>.
      */
     void removeFileListener(IFile watchFile, IFileListener listener)
-            throws VFSException;
-
-    /**
-     * @throws VFSException
-     *             If the file system doesn't support junction, or failed to setup the junction.
-     * @throws NullPointerException
-     *             If any parameter is <code>null</code>.
-     * @see org.apache.commons.vfs.FileSystem#addJunction(String, org.apache.commons.vfs.FileObject)
-     */
-    void addJunction(String junctionPoint, IFile targetFile)
-            throws VFSException;
-
-    /**
-     * @throws VFSException
-     *             If the file system doesn't support junction, or failed to remove the junction.
-     * @throws NullPointerException
-     *             If any parameter is <code>null</code>.
-     */
-    void removeJunction(String junctionPoint)
             throws VFSException;
 
     // File replicateFile(IFile file, FileSelector selector)

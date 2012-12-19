@@ -1,10 +1,13 @@
 package net.bodz.bas.vfs.impl.mem;
 
+import java.io.IOException;
+
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.inode.Inode;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
+import net.bodz.bas.vfs.util.Inode;
 
 public class MemoryVfsDevice
         extends AbstractVfsDevice {
@@ -49,8 +52,30 @@ public class MemoryVfsDevice
     @Override
     public boolean rename(String localPathFrom, String localPathTo)
             throws BadPathException {
-        MemoryFile file = (MemoryFile) resolve(localPathFrom);
-        return file.renameTo(localPathTo);
+        MemoryFile src = (MemoryFile) resolve(localPathFrom);
+        MemoryFile dest = (MemoryFile) resolve(localPathTo);
+
+        if (!src.isExisted())
+            return false;
+        if (dest.isExisted())
+            return false;
+
+        String destName = dest.getName();
+        MemoryFile destParentFile = (MemoryFile) dest.getParentFile();
+        if (!destParentFile.mkdirs())
+            return false;
+
+        Inode srcNode = src.getInode();
+        Inode destParentNode = destParentFile.getInode();
+        srcNode.detach();
+        srcNode.attach(destParentNode, destName);
+        return true;
+    }
+
+    @Override
+    public boolean createLink(String localPath, String target, boolean symbolic)
+            throws IOException {
+        throw new NotImplementedException();
     }
 
 }

@@ -73,16 +73,4 @@ public abstract class AbstractVfsDevice
         throw new UnsupportedOperationException("file-listener");
     }
 
-    @Override
-    public synchronized void addJunction(String junctionPoint, IFile targetFile)
-            throws VFSException {
-        throw new UnsupportedOperationException("junction");
-    }
-
-    @Override
-    public synchronized void removeJunction(String junctionPoint)
-            throws VFSException {
-        throw new UnsupportedOperationException("junction");
-    }
-
 }
