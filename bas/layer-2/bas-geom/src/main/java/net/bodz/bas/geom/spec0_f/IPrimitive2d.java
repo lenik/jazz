@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.sugar.IDecoratable;
+import net.bodz.bas.t.object.ISnapShot;
 
 public interface IPrimitive2d
         extends Serializable, //
@@ -11,13 +12,22 @@ public interface IPrimitive2d
         IPickable2d, //
         IBoundingBox2d, //
         IBoundingBall2d, //
-        ISnapshotable2d, //
         ITransformable2d, //
         IPolygonizable2d, //
         ICroppable2d, //
+        ISnapShot, //
         IDecoratable<Object> {
 
     float EPSILON = 1e-7f;
+
+    @Override
+    public IPrimitive2d snap();
+
+    @Override
+    public IPrimitive2d shot();
+
+    @Override
+    public IPrimitive2d snapshot();
 
     /**
      * Test if empty, or negative sized.

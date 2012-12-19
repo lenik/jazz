@@ -30,8 +30,8 @@ public class Composite2d
     @Override
     public Composite2d shot() {
         List<IPrimitive2d> copy = new ArrayList<IPrimitive2d>(primitives.size());
-        for (IPrimitive2d shape : primitives) {
-            IPrimitive2d shotdShape = shape.shot();
+        for (IPrimitive2d primitive : primitives) {
+            IPrimitive2d shotdShape = primitive.shot();
             copy.add(shotdShape);
         }
         return new Composite2d(copy);
@@ -40,8 +40,8 @@ public class Composite2d
     @Override
     public Composite2d snapshot() {
         List<IPrimitive2d> copy = new ArrayList<IPrimitive2d>(primitives.size());
-        for (IPrimitive2d shape : primitives) {
-            IPrimitive2d shotdShape = shape.snapshot();
+        for (IPrimitive2d primitive : primitives) {
+            IPrimitive2d shotdShape = primitive.snapshot();
             copy.add(shotdShape);
         }
         return new Composite2d(copy);
@@ -50,8 +50,8 @@ public class Composite2d
     @Override
     public Composite2d snap() {
         List<IPrimitive2d> copy = new ArrayList<IPrimitive2d>(primitives.size());
-        for (IPrimitive2d shape : primitives) {
-            IPrimitive2d shotdShape = shape.snap();
+        for (IPrimitive2d primitive : primitives) {
+            IPrimitive2d shotdShape = primitive.snap();
             copy.add(shotdShape);
         }
         return new Composite2d(copy);
