@@ -18,8 +18,8 @@ import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.VFSException;
-import net.bodz.bas.vfs.util.FileFilterAdapter;
-import net.bodz.bas.vfs.util.FilenameFilterAdapterWithDir;
+import net.bodz.bas.vfs.util.Vfs2JdkFileFilter;
+import net.bodz.bas.vfs.util.Vfs2JdkFilenameFilter;
 
 /**
  * @see LocalFileResource
@@ -51,13 +51,6 @@ public class JdkFile
     JdkFile(JdkVfsDevice driveDevice, File jdkFile) {
         super(driveDevice, jdkFile.getName());
         this.origFile = jdkFile;
-    }
-
-    @Override
-    public JdkFile clone() {
-        JdkFile o = new JdkFile(origFile);
-        o.populate(this);
-        return o;
     }
 
     public java.io.File getOrigFile() {
@@ -103,7 +96,7 @@ public class JdkFile
     }
 
     @Override
-    public Long getLastModifiedTime() {
+    public long getLastModifiedTime() {
         return origFile.lastModified();
     }
 
@@ -215,7 +208,7 @@ public class JdkFile
     @Override
     public Iterable<? extends IFile> children(IFilenameFilter nameFilter)
             throws VFSException {
-        FilenameFilter adapter = new FilenameFilterAdapterWithDir(nameFilter, this);
+        FilenameFilter adapter = new Vfs2JdkFilenameFilter(nameFilter, this);
         String[] childNames = origFile.list(adapter);
         return convertNames(Arrays.asList(childNames));
     }
@@ -223,7 +216,7 @@ public class JdkFile
     @Override
     public Iterable<? extends IFile> children(IFileFilter fileFilter)
             throws VFSException {
-        FileFilter adapter = new FileFilterAdapter(fileFilter);
+        FileFilter adapter = new Vfs2JdkFileFilter(fileFilter);
         File[] childFiles = origFile.listFiles(adapter);
         return convertFiles(Arrays.asList(childFiles));
     }

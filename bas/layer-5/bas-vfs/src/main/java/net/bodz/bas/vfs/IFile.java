@@ -7,9 +7,6 @@ public interface IFile
         extends IFsBlob, IFsDir, IToolable {
 
     @Override
-    IFile clone();
-
-    @Override
     IFile getParentFile();
 
     /**

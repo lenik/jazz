@@ -20,13 +20,6 @@ public class BytesFile
     }
 
     @Override
-    public BytesFile clone() {
-        BytesFile o = new BytesFile(getName(), resource);
-        o.populate(this);
-        return o;
-    }
-
-    @Override
     public Boolean exists() {
         return resource.isAllocated();
     }

@@ -39,19 +39,6 @@ public abstract class AbstractFile
     }
 
     @Override
-    public abstract IFile clone();
-
-    @Override
-    protected AbstractFile populate(Object obj) {
-        super.populate(obj);
-        if (obj instanceof AbstractFile) {
-            AbstractFile o = (AbstractFile) obj;
-            this.preferredCharset = o.preferredCharset;
-        }
-        return this;
-    }
-
-    @Override
     public IFile getParentFile() {
         IPath parentPath = getPath().getParent();
         if (parentPath == null)

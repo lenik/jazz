@@ -44,22 +44,6 @@ public abstract class PseudoFile
     }
 
     @Override
-    public IFile clone() {
-        return (IFile) nativeClone();
-    }
-
-    @Override
-    protected PseudoFile populate(Object obj) {
-        super.populate(obj);
-        if (obj instanceof PseudoFile) {
-            PseudoFile o = (PseudoFile) obj;
-            this.creationTime = o.creationTime;
-            this.lastModifiedTime = o.lastModifiedTime;
-        }
-        return this;
-    }
-
-    @Override
     public PseudoVfsDevice getDevice() {
         return (PseudoVfsDevice) super.getDevice();
     }
@@ -92,7 +76,7 @@ public abstract class PseudoFile
     }
 
     @Override
-    public Long getCreationTime() {
+    public long getCreationTime() {
         return creationTime;
     }
 
@@ -101,7 +85,7 @@ public abstract class PseudoFile
     }
 
     @Override
-    public Long getLastModifiedTime() {
+    public long getLastModifiedTime() {
         return lastModifiedTime;
     }
 

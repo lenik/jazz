@@ -6,13 +6,13 @@ import java.io.FilenameFilter;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFilenameFilter;
 
-public class FilenameFilterAdapterWithDir
+public class Vfs2JdkFilenameFilter
         implements FilenameFilter {
 
     private final IFilenameFilter vfsFilter;
     private final IFile parentDir;
 
-    public FilenameFilterAdapterWithDir(IFilenameFilter vfsFilter, IFile parentDir) {
+    public Vfs2JdkFilenameFilter(IFilenameFilter vfsFilter, IFile parentDir) {
         if (vfsFilter == null)
             throw new NullPointerException("vfsFilter");
         this.vfsFilter = vfsFilter;
@@ -21,6 +21,7 @@ public class FilenameFilterAdapterWithDir
 
     @Override
     public boolean accept(File dir, String name) {
+        // dir is ignored.
         return vfsFilter.accept(this.parentDir, name);
     }
 

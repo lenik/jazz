@@ -20,13 +20,6 @@ public class CharsFile
     }
 
     @Override
-    public CharsFile clone() {
-        CharsFile o = new CharsFile(getName(), resource);
-        o.populate(this);
-        return o;
-    }
-
-    @Override
     public Boolean exists() {
         return resource.isAllocated();
     }

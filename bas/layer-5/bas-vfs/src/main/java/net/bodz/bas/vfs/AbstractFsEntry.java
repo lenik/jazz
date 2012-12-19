@@ -1,8 +1,12 @@
 package net.bodz.bas.vfs;
 
+import java.io.IOException;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttributeView;
+
 import net.bodz.bas.traits.Attributes;
-import net.bodz.bas.traits.EmptyAttributes;
-import net.bodz.bas.traits.IAttributes;
 import net.bodz.bas.vfs.path.IPath;
 
 public abstract class AbstractFsEntry
@@ -11,8 +15,6 @@ public abstract class AbstractFsEntry
 
     private final IVfsDevice device;
     private String baseName;
-
-    private boolean autoCreateParents;
 
     public AbstractFsEntry(IVfsDevice device, String baseName) {
         if (device == null)
@@ -32,22 +34,6 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public abstract IFsEntry clone();
-
-    /**
-     * Populate this object with states recognizable from given object.
-     * 
-     * @return this
-     */
-    protected AbstractFsEntry populate(Object obj) {
-        if (obj instanceof AbstractFsEntry) {
-            AbstractFsEntry o = (AbstractFsEntry) obj;
-            this.autoCreateParents = o.autoCreateParents;
-        }
-        return this;
-    }
-
-    @Override
     public IVfsDevice getDevice() {
         return device;
     }
@@ -64,18 +50,13 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public IAttributes getAttributes() {
-        return EmptyAttributes.getInstance();
+    public long getCreationTime() {
+        return 0L;
     }
 
     @Override
-    public Long getCreationTime() {
-        return null;
-    }
-
-    @Override
-    public Long getLastModifiedTime() {
-        return null;
+    public long getLastModifiedTime() {
+        return 0L;
     }
 
     @Override
@@ -86,6 +67,17 @@ public abstract class AbstractFsEntry
     @Override
     public int getFlags() {
         return getFlags(FileFlags.MASK_ALL);
+    }
+
+    @Override
+    public <V extends FileAttributeView> V getAttributeView(Path path, Class<V> type, LinkOption... options) {
+        return null;
+    }
+
+    @Override
+    public <A extends BasicFileAttributes> A getAttributes(Path path, Class<A> type, LinkOption... options)
+            throws IOException {
+        return null;
     }
 
     @Override
@@ -151,16 +143,6 @@ public abstract class AbstractFsEntry
     @Override
     public boolean deleteOnExit() {
         return false;
-    }
-
-    @Override
-    public boolean isAutoCreateParents() {
-        return autoCreateParents;
-    }
-
-    @Override
-    public void autoCreateParents() {
-        autoCreateParents = true;
     }
 
     /**

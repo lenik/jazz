@@ -1,7 +1,9 @@
 package net.bodz.bas.vfs.impl.nio;
 
 import java.io.File;
+import java.io.IOException;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.path.IPath;
@@ -22,6 +24,19 @@ public class NioVfsDevice
         super(driver, driver.protocol, driveName);
         File root = new File(driveName + "/");
         this.rootFile = new NioFile(this, root);
+    }
+
+    /**
+     * Get the name of the drive.
+     * 
+     * For DOS drives, the drive name contains the colon(:).
+     * 
+     * For *NIX, the drive name is an empty string.
+     * 
+     * @return Non-<code>null</code> drive name.
+     */
+    public String getDriveName() {
+        return getDeviceSpec();
     }
 
     @Override
@@ -49,6 +64,29 @@ public class NioVfsDevice
     public NioFile resolve(IPath _path)
             throws FileResolveException {
         return resolve(_path.getLocalPath());
+    }
+
+    @Override
+    public boolean rename(String localPathFrom, String localPathTo) {
+        if (localPathFrom == null)
+            throw new NullPointerException("localPathFrom");
+        if (localPathTo == null)
+            throw new NullPointerException("localPathTo");
+
+        if (localPathFrom.equals(localPathTo))
+            return true;
+
+        File fileFrom = new File(localPathFrom);
+        File fileTo = new File(localPathTo);
+
+        return fileFrom.renameTo(fileTo);
+    }
+
+    @Override
+    public boolean createLink(String localPath, String target, boolean symbolic)
+            throws IOException {
+        // java.nio.file.Files.createSymbolicLink(link, target, attrs);
+        throw new NotImplementedException();
     }
 
 }

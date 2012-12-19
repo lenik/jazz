@@ -44,28 +44,17 @@ public class URLFile
     }
 
     @Override
-    public URLFile clone() {
-        return new URLFile(getDevice(), path).populate(this);
-    }
-
-    @Override
-    protected URLFile populate(Object obj) {
-        super.populate(obj);
-        return this;
-    }
-
-    @Override
     public IPath getPath() {
         return path;
     }
 
     @Override
-    public Long getLastModifiedTime() {
+    public long getLastModifiedTime() {
         URL url = path.toURL();
         try {
             return url.openConnection().getLastModified();
         } catch (IOException e) {
-            return null;
+            return 0L;
         }
     }
 
