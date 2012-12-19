@@ -1,11 +1,10 @@
 package net.bodz.bas.vfs;
 
-
-public interface IFsTree
+public interface IFsDir
         extends IFsEntry {
 
     @Override
-    IFsTree clone();
+    IFsDir clone();
 
     /**
      * 
@@ -37,10 +36,17 @@ public interface IFsTree
             throws VFSException;
 
     /**
-     * Create the tree represent by this object, along with all parents which are not existed.
+     * Create all parent dirs and this dir.
      * 
-     * @return <code>true</code> If the tree is existed or succeeded to create.
+     * @return <code>true</code> if the dir is existed or the creation is succeeded.
      */
-    boolean createTree();
+    boolean mkdirs();
+
+    /**
+     * Create this dir only.
+     * 
+     * @return <code>true</code> if the dir is existed or the creation is succeeded.
+     */
+    boolean mkdir();
 
 }

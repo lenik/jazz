@@ -4,7 +4,7 @@ import net.bodz.bas.sugar.IToolable;
 import net.bodz.bas.vfs.path.BadPathException;
 
 public interface IFile
-        extends IFsBlob, IFsTree, IToolable {
+        extends IFsBlob, IFsDir, IToolable {
 
     @Override
     IFile clone();

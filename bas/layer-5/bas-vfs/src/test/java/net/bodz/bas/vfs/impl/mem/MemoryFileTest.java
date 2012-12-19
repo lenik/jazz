@@ -17,7 +17,7 @@ public class MemoryFileTest
     @Test
     public void createTree() {
         IFile targetDir = VFS.resolve("mem:test:/createTree/a/b/c/d");
-        targetDir.createTree();
+        targetDir.mkdirs();
 
         IFile root = VFS.resolve("mem:test:/createTree");
         FileTreeDumper dumper = new FileTreeDumper();

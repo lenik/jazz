@@ -9,6 +9,8 @@ import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.Collections;
 
+import net.bodz.bas.c.java.io.FileData;
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
@@ -73,7 +75,7 @@ public class URLFile
     }
 
     @Override
-    public boolean isTree() {
+    public boolean isDirectory() {
         return true;
     }
 
@@ -137,18 +139,60 @@ public class URLFile
     @Override
     public Long getLength() {
         URL url = path.toURL();
-        try {
-            URLConnection connection = url.openConnection();
 
-            long length;
-            if (SystemProperties.javaVersion7OrAbove)
-                length = connection.getContentLengthLong();
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url);
+            if (file.isFile())
+                return file.length();
             else
-                length = connection.getContentLength();
+                return null;
 
-            return length == -1 ? null : length;
-        } catch (IOException e) {
-            return null;
+            // case "jar":
+            // case "zip":
+            // ZipFile...
+        default:
+            try {
+                URLConnection connection = url.openConnection();
+
+                long length;
+                if (SystemProperties.javaVersion7OrAbove)
+                    length = connection.getContentLengthLong();
+                else
+                    length = connection.getContentLength();
+
+                return length == -1 ? null : length;
+            } catch (IOException e) {
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public boolean setLength(long newLength)
+            throws IOException {
+        URL url = path.toURL();
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url);
+            return FileData.setLength(file, newLength);
+
+        default:
+            return false;
+        }
+    }
+
+    @Override
+    public boolean touch(boolean updateLastModifiedTime)
+            throws IOException {
+        URL url = path.toURL();
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url);
+            return FileData.touch(file, updateLastModifiedTime);
+
+        default:
+            return false;
         }
     }
 
@@ -160,7 +204,7 @@ public class URLFile
         return resource;
     }
 
-    // -o IFsTree
+    // -o IFsDir
 
     @Override
     public URLFile getChild(String entryName)
@@ -188,6 +232,30 @@ public class URLFile
             throws VFSException {
         // TODO URL maybe opened like directory stream.
         return Collections.emptyList();
+    }
+
+    @Override
+    public boolean mkdir() {
+        URL url = path.toURL();
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url);
+            return file.mkdir();
+        default:
+            return false;
+        }
+    }
+
+    @Override
+    public boolean mkdirs() {
+        URL url = path.toURL();
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url);
+            return file.mkdirs();
+        default:
+            return false;
+        }
     }
 
 }

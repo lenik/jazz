@@ -12,7 +12,7 @@ import net.bodz.bas.err.ExceptionBuffer;
 import net.bodz.bas.err.RecoverableExceptionEvent;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFsTree;
+import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.impl.jdk.JdkFile;
 
 /**
@@ -23,7 +23,7 @@ public class PackageTask
         implements II18nCapable {
 
     private IProject project;
-    private IFsTree output;
+    private IFsDir output;
     private int verboseLevel;
 
     public PackageTask() {
@@ -35,7 +35,7 @@ public class PackageTask
         project = (IProject) projectClass.newInstance();
     }
 
-    public void setResFolder(IFsTree resFolder) {
+    public void setResFolder(IFsDir resFolder) {
         if (this.output != null)
             throw new BuildException(tr._("Output is already specified: ") + output);
         this.output = resFolder;

@@ -9,8 +9,6 @@ import net.bodz.bas.err.OutOfDomainException;
 public class MovableByteBuffer
         implements IMovableBuffer {
 
-    public static final int SIZE_MAX = 0x7fff_fff0;
-
     private byte[] buf;
     private int start;
     private int end;

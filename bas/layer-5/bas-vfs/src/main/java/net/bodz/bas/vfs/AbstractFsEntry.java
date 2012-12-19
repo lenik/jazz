@@ -109,7 +109,7 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public boolean isTree() {
+    public boolean isDirectory() {
         return false;
     }
 

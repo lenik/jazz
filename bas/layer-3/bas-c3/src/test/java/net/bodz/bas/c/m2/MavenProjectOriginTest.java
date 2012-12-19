@@ -5,7 +5,7 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.java.io.FileClass;
+import net.bodz.bas.c.type.ClassResource;
 
 public class MavenProjectOriginTest
         extends Assert {
@@ -14,7 +14,7 @@ public class MavenProjectOriginTest
 
     @Test
     public void testGetClassFile() {
-        File file = FileClass.getClassFile(MavenProjectOriginTest.class);
+        File file = ClassResource.getClassBytesFile(MavenProjectOriginTest.class);
         assertTrue(file.exists());
     }
 

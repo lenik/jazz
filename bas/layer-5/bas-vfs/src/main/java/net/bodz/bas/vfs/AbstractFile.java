@@ -112,6 +112,18 @@ public abstract class AbstractFile
     }
 
     @Override
+    public boolean setLength(long newLength)
+            throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean touch(boolean updateLastModifiedTime)
+            throws IOException {
+        return false;
+    }
+
+    @Override
     public boolean isSeekable() {
         return false;
     }
@@ -165,7 +177,7 @@ public abstract class AbstractFile
         }
 
         if (0 != (mask & MASK_OBJTYPE))
-            if (isTree())
+            if (isDirectory())
                 bits |= DIRECTORY;
             else
                 bits |= FILE;
@@ -239,7 +251,7 @@ public abstract class AbstractFile
                         throws IOException {
                     IFile parent = getParentFile();
                     if (parent != null)
-                        if (!parent.createTree())
+                        if (!parent.mkdirs())
                             throw new IOException("Can't create parents for " + this);
                 }
             });
@@ -312,16 +324,31 @@ public abstract class AbstractFile
         return resource;
     }
 
-    // -o IFsTree
+    // -o IFsDir
 
     @Override
-    public boolean createTree() {
-        return false;
+    public boolean mkdir() {
+        return isDirectory();
+    }
+
+    @Override
+    public boolean mkdirs() {
+        if (isDirectory())
+            return true;
+
+        if (isExisted())
+            return mkdir();
+
+        IFile parentFile = getParentFile();
+        if (parentFile.mkdirs())
+            return mkdir();
+        else
+            return false;
     }
 
     @Override
     public boolean isIterable() {
-        return isTree();
+        return isDirectory();
     }
 
     @Override

@@ -22,7 +22,7 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFsTree;
+import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.impl.jdk.JdkFile;
 import net.bodz.bas.xml.XMLs;
 import net.bodz.redist.installer.util.Flags;
@@ -43,7 +43,7 @@ public class Session
     private Flags flags;
     private TextMap<Object> variables;
 
-    private List<IFsTree> resFolders;
+    private List<IFsDir> resFolders;
     private List<ClassLoader> searchLoaders;
 
     // Execution Variables
@@ -77,7 +77,7 @@ public class Session
             variables.put(name, defaultValue);
         }
 
-        resFolders = new ArrayList<IFsTree>();
+        resFolders = new ArrayList<IFsDir>();
 
         // addResFolder(new JavaioFile(FilePath.canoniOf(".")/*, true*/));
         addResFolder(new JdkFile(SystemColos.workdir.get()/* , true */));
@@ -190,12 +190,12 @@ public class Session
     }
 
     @Override
-    public List<IFsTree> getResFolders() {
+    public List<IFsDir> getResFolders() {
         return resFolders;
     }
 
     @Override
-    public boolean addResFolder(IFsTree resFolder) {
+    public boolean addResFolder(IFsDir resFolder) {
         if (resFolders.contains(resFolder))
             return false;
         resFolders.add(resFolder);
@@ -203,7 +203,7 @@ public class Session
     }
 
     @Override
-    public void addResFolder(int index, IFsTree resFolder) {
+    public void addResFolder(int index, IFsDir resFolder) {
         resFolders.add(index, resFolder);
     }
 
@@ -211,7 +211,7 @@ public class Session
     public IFile newResource(String resPath)
             throws IOException {
         assert !resFolders.isEmpty();
-        IFsTree output = resFolders.get(0);
+        IFsDir output = resFolders.get(0);
         return (IFile) output.getChild(resPath);
     }
 
@@ -219,7 +219,7 @@ public class Session
     public IFile findResource(String path, boolean autoCreate)
             throws IOException {
         IFile firstUnknownLink = null;
-        for (IFsTree resFolder : resFolders) {
+        for (IFsDir resFolder : resFolders) {
             // if path.isAsbolute...
             IFile link = (IFile) resFolder.getChild(path);
             Boolean exists = link.exists();
@@ -324,7 +324,7 @@ public class Session
         out.println(tr._("Session "), this, ": ");
         out.println(tr._("  Project = "), project);
         out.println(tr._("  Scheme = "), scheme);
-        for (IFsTree resFolder : resFolders)
+        for (IFsDir resFolder : resFolders)
             out.println(tr._("  Resource Folder = "), resFolder);
         for (Map.Entry<String, Object> e : variables.entrySet())
             out.printf(tr._("  Var %s = %s\n"), e.getKey(), e.getValue());

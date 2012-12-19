@@ -8,7 +8,7 @@ import java.net.URLClassLoader;
 import java.util.*;
 import java.util.Map.Entry;
 
-import net.bodz.bas.c.java.io.FileContent;
+import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.loader.DefaultClassLoader;
@@ -199,14 +199,14 @@ public abstract class TypeCollector<T> {
 
             // The same?
             if (file.exists() == Boolean.TRUE) {
-                String old = FileContent.readUtf8(file);
+                String old = FileData.readString(file);
                 if (content.equals(old))
                     continue;
             }
 
             try {
                 file.getParentFile().mkdirs();
-                FileContent.createUtf8(file, content);
+                FileData.writeString(file, content);
                 logger.info("Updated " + file);
             } catch (IOException e) {
                 logger.error("Failed to update " + file, e);

@@ -92,7 +92,7 @@ public interface IFsEntry
 
     boolean isBlob();
 
-    boolean isTree();
+    boolean isDirectory();
 
     boolean isReadable();
 
@@ -111,11 +111,11 @@ public interface IFsEntry
      * <p>
      * Generally, this is the same as: <code>getPath().getParent().toFile()</code>.
      * 
-     * @return Parent {@link IFsTree} object or <code>null</code> if there's none.
+     * @return Parent {@link IFsDir} object or <code>null</code> if there's none.
      * @throws VFSException
      *             If faield to resolve the parent file.
      */
-    IFsTree getParentFile()
+    IFsDir getParentFile()
             throws FileResolveException;
 
     boolean isAutoCreateParents();

@@ -44,7 +44,7 @@ public class FileFinder
         public boolean accept(IFile file) {
             if (userFilter == null)
                 return true;
-            if (file.isTree())
+            if (file.isDirectory())
                 if (!prune)
                     return true;
             return userFilter.accept(file);
@@ -153,10 +153,10 @@ public class FileFinder
 
             IFile file = stack.next();
             boolean included = true;
-            if (!prune && userFilter != null && file.isTree())
+            if (!prune && userFilter != null && file.isDirectory())
                 included = userFilter.accept(file);
 
-            if (file.isTree() && depth < maxDepth) {
+            if (file.isDirectory() && depth < maxDepth) {
                 List<IFile> children = new ArrayList<IFile>();
                 try {
                     for (IFile child : file.children(filter))

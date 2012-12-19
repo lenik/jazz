@@ -113,7 +113,7 @@ public class FileTreeDumper {
             out.print(getText(file));
 
             if (appendSymbol) {
-                if (file.isTree())
+                if (file.isDirectory())
                     out.print("/");
                 else if (file.isExecutable())
                     out.print("*");
@@ -123,7 +123,7 @@ public class FileTreeDumper {
             out.println();
         }
 
-        if (file.isTree()) {
+        if (file.isDirectory()) {
 
             if (treeGraph && theLast != null)
                 prefix += theLast ? treeLineChars.treeSkip : treeLineChars.treeLine;

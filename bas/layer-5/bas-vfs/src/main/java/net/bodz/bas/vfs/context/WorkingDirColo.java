@@ -62,7 +62,7 @@ public class WorkingDirColo
     public void chdir(IContextId context, IFile dir) {
         if (dir == null)
             throw new NullPointerException("dir");
-        if (!dir.isTree())
+        if (!dir.isDirectory())
             throw new IllegalArgumentException("Not a directory: " + dir);
         set(context, dir);
     }

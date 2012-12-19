@@ -8,19 +8,18 @@ public class Inode
 
     private static final long serialVersionUID = 1L;
 
-    Object data;
+    private Object data;
 
-    // short uid;
-    // short gid;
-    // int permission;
-    boolean readable = true;
-    boolean writable = true;
-    boolean executable = true;
-    boolean hidden = false;
+    // private short uid;
+    // private short gid;
+    // private int permission;
+    private boolean readable = true;
+    private boolean writable = true;
+    private boolean executable = true;
+    private boolean hidden = false;
 
-    int modifiers;
-    long creationTime;
-    long lastModifiedTime;
+    private long creationTime = System.currentTimeMillis();
+    private long lastModifiedTime = creationTime;
 
     public Inode(Inode parent) {
         super(parent);
@@ -38,6 +37,7 @@ public class Inode
 
     public void setData(Object data) {
         this.data = data;
+        lastModifiedTime = System.currentTimeMillis();
     }
 
     public boolean isReadable() {
