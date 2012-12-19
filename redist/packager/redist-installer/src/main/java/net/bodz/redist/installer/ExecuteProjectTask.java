@@ -17,7 +17,7 @@ import net.bodz.bas.err.RecoverableExceptionEvent;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFsTree;
+import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.impl.jdk.JdkFile;
 
 public abstract class ExecuteProjectTask
@@ -26,7 +26,7 @@ public abstract class ExecuteProjectTask
 
     private IProject project;
     private String scheme;
-    private IFsTree resFolder;
+    private IFsDir resFolder;
     private WithNamedParameters parameters;
     private int verboseLevel;
 
@@ -44,7 +44,7 @@ public abstract class ExecuteProjectTask
         this.scheme = scheme;
     }
 
-    public void setResFolder(IFsTree resFolder) {
+    public void setResFolder(IFsDir resFolder) {
         if (this.resFolder != null)
             throw new BuildException(tr._("ResFolder is already specified: ") + resFolder);
         this.resFolder = resFolder;

@@ -9,7 +9,7 @@ import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.vfs.IFsEntry;
-import net.bodz.bas.vfs.IFsTree;
+import net.bodz.bas.vfs.IFsDir;
 import net.bodz.redist.installer.util.Flags;
 
 public interface ISession {
@@ -50,15 +50,15 @@ public interface ISession {
 
     String expand(String s);
 
-    List<IFsTree> getResFolders();
+    List<IFsDir> getResFolders();
 
-    boolean addResFolder(IFsTree resFolder);
+    boolean addResFolder(IFsDir resFolder);
 
     /**
      * @param beforeIndex
      *            set to 0 if you want to make the resFolder as default output.
      */
-    void addResFolder(int beforeIndex, IFsTree resFolder);
+    void addResFolder(int beforeIndex, IFsDir resFolder);
 
     IFsEntry newResource(String resPath)
             throws IOException;

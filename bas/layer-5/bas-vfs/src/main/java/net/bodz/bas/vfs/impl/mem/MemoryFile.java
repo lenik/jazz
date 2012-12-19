@@ -1,10 +1,16 @@
 package net.bodz.bas.vfs.impl.mem;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.resource.builtin.BytesResource;
+import net.bodz.bas.io.resource.builtin.CharsResource;
+import net.bodz.bas.t.buffer.IMovableBuffer;
+import net.bodz.bas.t.buffer.MovableByteBuffer;
+import net.bodz.bas.t.buffer.MovableCharBuffer;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
@@ -140,6 +146,46 @@ public class MemoryFile
     }
 
     @Override
+    public boolean setLength(long newLength)
+            throws IOException {
+        if (!touch(true))
+            return false;
+
+        if (newLength > IMovableBuffer.SIZE_MAX)
+            throw new OutOfMemoryError();
+        int newSize = (int) newLength;
+
+        Inode inode = getInode();
+        IMovableBuffer data = (IMovableBuffer) inode.getData();
+
+        data.resize(newSize);
+        return true;
+    }
+
+    @Override
+    public boolean touch(boolean updateLastModifiedTime)
+            throws IOException {
+        Inode inode = createInode();
+        if (inode == null)
+            throw new IOException("Failed to create inode.");
+
+        IStreamResource data;
+        if (isTextMode()) {
+            MovableCharBuffer buffer = new MovableCharBuffer();
+            data = new CharsResource(buffer);
+        } else {
+            MovableByteBuffer buffer = new MovableByteBuffer();
+            data = new BytesResource(buffer);
+        }
+        inode.setData(data);
+
+        if (updateLastModifiedTime)
+            inode.setLastModifiedTime(System.currentTimeMillis());
+
+        return true;
+    }
+
+    @Override
     public Boolean exists() {
         Inode inode = getInode();
         if (inode == null)
@@ -149,7 +195,7 @@ public class MemoryFile
     }
 
     @Override
-    public boolean isTree() {
+    public boolean isDirectory() {
         Inode inode = getInode();
         if (inode == null)
             return false;
@@ -283,7 +329,7 @@ public class MemoryFile
 
         String destName = destFile.getName();
         MemoryFile destParentFile = (MemoryFile) destFile.getParentFile();
-        if (!destParentFile.createTree())
+        if (!destParentFile.mkdirs())
             return false;
 
         Inode srcNode = getInode();
@@ -294,9 +340,14 @@ public class MemoryFile
     }
 
     @Override
-    public boolean createTree() {
+    public boolean mkdirs() {
         Inode inode = createInode();
         return inode != null;
+    }
+
+    @Override
+    public boolean mkdir() {
+        return mkdirs();
     }
 
     Inode createInode() {

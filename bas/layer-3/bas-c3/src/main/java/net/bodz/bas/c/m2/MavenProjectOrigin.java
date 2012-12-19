@@ -2,9 +2,9 @@ package net.bodz.bas.c.m2;
 
 import java.io.File;
 
-import net.bodz.bas.c.java.io.FileClass;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.err.UnexpectedException;
 
 /**
@@ -31,7 +31,7 @@ public class MavenProjectOrigin {
     public static MavenProjectOrigin fromClass(Class<?> clazz) {
         String fname = clazz.getName().replace('.', '/') + ".class";
 
-        File classFile = FileClass.getClassFile(clazz);
+        File classFile = ClassResource.getClassBytesFile(clazz);
         String path = classFile.getPath();
         path = FilePath.toUnixStyle(path);
 
@@ -49,7 +49,7 @@ public class MavenProjectOrigin {
     }
 
     public File getSourceFile(Class<?> clazz) {
-        File classFile = FileClass.getClassFile(clazz);
+        File classFile = ClassResource.getClassBytesFile(clazz);
 
         // foo/target/classes/ => foo/src/main/java/
         // foo/target/test-classes/ => foo/src/test/java/
@@ -86,7 +86,7 @@ public class MavenProjectOrigin {
     }
 
     public File getResourceDir(Class<?> clazz) {
-        File classFile = FileClass.getClassFile(clazz);
+        File classFile = ClassResource.getClassBytesFile(clazz);
 
         // foo/target/classes/ => foo/src/main/java/
         // foo/target/test-classes/ => foo/src/test/java/

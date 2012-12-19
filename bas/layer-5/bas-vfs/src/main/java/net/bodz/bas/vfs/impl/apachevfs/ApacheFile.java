@@ -58,7 +58,8 @@ public class ApacheFile
     @Override
     public Long getLastModifiedTime() {
         try {
-            return fileObject.getContent().getLastModifiedTime();
+            FileContent content = fileObject.getContent();
+            return content.getLastModifiedTime();
         } catch (FileSystemException e) {
             return null;
         }
@@ -67,7 +68,8 @@ public class ApacheFile
     @Override
     public boolean setLastModifiedTime(long date) {
         try {
-            fileObject.getContent().setLastModifiedTime(date);
+            FileContent fileContent = fileObject.getContent();
+            fileContent.setLastModifiedTime(date);
             return true;
         } catch (FileSystemException e) {
             return false;
@@ -93,7 +95,7 @@ public class ApacheFile
     }
 
     @Override
-    public boolean isTree() {
+    public boolean isDirectory() {
         try {
             return fileObject.getType().hasChildren();
         } catch (FileSystemException e) {
@@ -114,6 +116,37 @@ public class ApacheFile
     public boolean isWritable() {
         try {
             return fileObject.isWriteable();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Long getLength() {
+        try {
+            if (!fileObject.exists())
+                return 0L;
+
+            FileContent fileContent = fileObject.getContent();
+
+            long size = fileContent.getSize();
+            return size;
+        } catch (FileSystemException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean touch(boolean updateLastModifiedTime)
+            throws IOException {
+        try {
+            fileObject.createFile();
+
+            // Apache VFS: createFile() does nothing if file is already existed.
+            if (updateLastModifiedTime)
+                setLastModifiedTime(System.currentTimeMillis());
+
+            return true;
         } catch (FileSystemException e) {
             return false;
         }
@@ -184,10 +217,22 @@ public class ApacheFile
 
     }
 
-    // -o IFsTree
+    // -o IFsDir
 
     @Override
-    public boolean createTree() {
+    public boolean mkdir() {
+        try {
+            if (fileObject.getParent().exists()) {
+                fileObject.createFolder();
+                return true;
+            }
+        } catch (FileSystemException e) {
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mkdirs() {
         try {
             fileObject.createFolder();
             return true;

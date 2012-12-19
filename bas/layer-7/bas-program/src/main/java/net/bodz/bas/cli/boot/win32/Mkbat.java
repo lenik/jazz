@@ -200,7 +200,7 @@ public class Mkbat
         String batName = ProgramNameUtil.getProgramName(clazz, false);
 
         IFile batFile = getOutputFile(batName + ".bat");
-        batFile.getParentFile().createTree();
+        batFile.getParentFile().mkdirs();
 
         String name = clazz.getName();
 

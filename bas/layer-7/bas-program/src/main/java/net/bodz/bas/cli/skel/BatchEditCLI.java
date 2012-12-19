@@ -101,7 +101,7 @@ public class BatchEditCLI
         out.setPreferredCharset(outputEncoding);
 
         IFile outdir = out.getParentFile();
-        if (!outdir.isTree())
+        if (!outdir.isDirectory())
             throw new Error("Invalid output directory: " + outdir);
 
         return out;
@@ -181,7 +181,7 @@ public class BatchEditCLI
 
             IFile dstdir = dst.getParentFile();
             if (dstdir != null)
-                dstdir.createTree();
+                dstdir.mkdirs();
             if (!diffPrinted)
                 if (diff3) {
                     diff(src, edit);

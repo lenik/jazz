@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.io.resource.IStreamResourceWrapper;
@@ -61,6 +62,32 @@ public interface IFsBlob
      * @return <code>0</code> if the file length is unknown, or the file length in bytes.
      */
     long length();
+
+    /**
+     * Trim the file to the length, or extend the file, the extension part may be filled with
+     * unknown bytes.
+     * 
+     * @param newLength
+     *            New length to be set. The length should be >= <code>0</code>.
+     * @return <code>false</code> If the given file object does not denote an existing, writable
+     *         regular file and a new regular file of that name cannot be created, or if some other
+     *         error occurs while opening or creating the file.
+     * @exception IOException
+     *                If an I/O error occurs
+     */
+    boolean setLength(long newLength)
+            throws IOException;
+
+    /**
+     * Create a non-existed file, or update the last modification time of the file represented by
+     * this object.
+     * 
+     * @param update
+     * @return <code>true</code> if the blob is updated, or created if it's not existed. Otherwise,
+     *         if the blob entry is read-only, or it's a dir-only entry, returns <code>false</code>.
+     */
+    boolean touch(boolean updateLastModifiedTime)
+            throws IOException;
 
     /**
      * Return whether this file is random seekable.

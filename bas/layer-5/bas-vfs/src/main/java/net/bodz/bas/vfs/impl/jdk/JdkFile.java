@@ -3,9 +3,11 @@ package net.bodz.bas.vfs.impl.jdk;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
+import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
@@ -14,7 +16,7 @@ import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.IFsTree;
+import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.util.FileFilterAdapter;
 import net.bodz.bas.vfs.util.FilenameFilterAdapterWithDir;
@@ -24,7 +26,7 @@ import net.bodz.bas.vfs.util.FilenameFilterAdapterWithDir;
  */
 public class JdkFile
         extends AbstractFile
-        implements IFsTree {
+        implements IFsDir {
 
     private final java.io.File origFile;
 
@@ -116,7 +118,7 @@ public class JdkFile
     }
 
     @Override
-    public boolean isTree() {
+    public boolean isDirectory() {
         return origFile.isDirectory();
     }
 
@@ -143,6 +145,18 @@ public class JdkFile
     @Override
     public Long getLength() {
         return origFile.length();
+    }
+
+    @Override
+    public boolean setLength(long newLength)
+            throws IOException {
+        return FileData.setLength(origFile, newLength);
+    }
+
+    @Override
+    public boolean touch(boolean updateLastModifiedTime)
+            throws IOException {
+        return FileData.touch(origFile, updateLastModifiedTime);
     }
 
     @Override
@@ -235,7 +249,12 @@ public class JdkFile
     }
 
     @Override
-    public boolean createTree() {
+    public boolean mkdir() {
+        return origFile.mkdir();
+    }
+
+    @Override
+    public boolean mkdirs() {
         return origFile.mkdirs();
     }
 

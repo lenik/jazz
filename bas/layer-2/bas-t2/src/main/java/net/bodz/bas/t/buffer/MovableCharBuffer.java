@@ -8,8 +8,6 @@ import net.bodz.bas.err.OutOfDomainException;
 public class MovableCharBuffer
         implements IMovableBuffer {
 
-    public static final int SIZE_MAX = 0x7fff_fff0;
-
     private char[] buf;
     private int start;
     private int end;

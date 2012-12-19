@@ -2,6 +2,8 @@ package net.bodz.bas.t.buffer;
 
 public interface IMovableBuffer {
 
+    int SIZE_MAX = 0x7fff_fff0;
+
     int size();
 
     int capacity();
