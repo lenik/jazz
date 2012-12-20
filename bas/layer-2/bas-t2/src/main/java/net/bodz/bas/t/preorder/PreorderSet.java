@@ -14,6 +14,7 @@ public abstract class PreorderSet<E>
     private final IPreorder<E> preorder;
 
     public PreorderSet(IPreorder<E> preorder) {
+        super(preorder);
         if (preorder == null)
             throw new NullPointerException("preorder");
         this.preorder = preorder;

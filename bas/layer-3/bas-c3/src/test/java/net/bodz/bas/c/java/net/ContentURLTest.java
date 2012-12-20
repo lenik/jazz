@@ -16,8 +16,8 @@ public class ContentURLTest
     public void testGetContent()
             throws IOException {
         StringContent helloContent = new StringContent("hello");
-        URL url = ContentURL.create("hello1", helloContent);
-        assertEquals("c:hello1", url.toExternalForm());
+        URL url = ContentURL.create("/hello1", helloContent);
+        assertEquals("c:/hello1", url.toExternalForm());
 
         List<String> lines = URLData.readUtf8Lines(url);
         assertEquals(1, lines.size());

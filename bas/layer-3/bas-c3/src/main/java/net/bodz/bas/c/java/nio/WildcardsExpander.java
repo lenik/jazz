@@ -1,6 +1,7 @@
 package net.bodz.bas.c.java.nio;
 
 import java.io.File;
+import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
@@ -20,47 +21,65 @@ public class WildcardsExpander
 
     static Logger _logger = LoggerFactory.getLogger(WildcardsExpander.class);
     public Logger logger = _logger;
-    boolean wildcardsEnabled = true;
 
-    String expr;
-    Path start;
-    boolean bareName;
-    PathMatcher matcher;
+    private boolean wildcardsEnabled = true;
+
+    private String expr;
+    private Path startPath;
+    private boolean bareName;
+    private PathMatcher matcher;
 
     public WildcardsExpander(String expr) {
+        this(null, expr);
+    }
+
+    public WildcardsExpander(String start, String expr) {
         this.expr = expr;
 
         int quest = expr.indexOf('?');
         int aster = expr.indexOf('*');
-        int known = quest == -1 || aster == -1 ? Math.max(quest, aster) : Math.min(quest, aster);
-        if (known == -1) {
-            setStartPath(expr);
-        } else {
-            if (!wildcardsEnabled)
-                throw new IllegalArgumentException("Wildcards isn't supported: " + expr);
-
-            int slash = expr.lastIndexOf('/', known);
-            String knownDir;
-            if (slash == -1) {
-                bareName = true;
-                // knownDir = ".";
-                knownDir = SystemColos.workdir.get().toString();
-                expr = knownDir + "/" + expr;
-            } else {
-                knownDir = expr.substring(0, slash);
-            }
-            setStartPath(knownDir);
-            matcher = FileSystems.getDefault().getPathMatcher("glob:" + expr);
+        int anyPattern = quest == -1 || aster == -1 ? Math.max(quest, aster) : Math.min(quest, aster);
+        if (anyPattern == -1) {
+            setStartPath(start, expr);
+            return;
         }
+
+        if (!wildcardsEnabled)
+            throw new IllegalArgumentException("Wildcards isn't supported: " + expr);
+
+        int slash = expr.lastIndexOf('/', anyPattern);
+        String knownDir;
+        if (slash == -1) {
+            bareName = true;
+            // knownDir = ".";
+            knownDir = SystemColos.workdir.get().toString();
+            expr = knownDir + "/" + expr;
+        } else {
+            knownDir = expr.substring(0, slash);
+        }
+        setStartPath(start, knownDir);
+        matcher = FileSystems.getDefault().getPathMatcher("glob:" + expr);
     }
 
-    void setStartPath(String path) {
-        start = FileSystems.getDefault().getPath(path);
+    void setStartPath(String start, String spec) {
+        FileSystem fileSystem = FileSystems.getDefault();
+
+        if (start == null || spec.startsWith("/"))
+            startPath = fileSystem.getPath(spec);
+        else
+            startPath = fileSystem.getPath(start, spec);
     }
 
     @Override
     public Iterator<String> iterator() {
         return new Iter();
+    }
+
+    public List<String> list() {
+        List<String> list = new ArrayList<String>();
+        for (String item : this)
+            list.add(item);
+        return list;
     }
 
     class Iter
@@ -69,7 +88,7 @@ public class WildcardsExpander
         StackedIterator<Path> stack = new StackedIterator<>();
 
         public Iter() {
-            Iterator<Path> startIterator = Iterators.iterate(start);
+            Iterator<Path> startIterator = Iterators.iterate(startPath);
             stack.push(startIterator);
         }
 
@@ -95,13 +114,13 @@ public class WildcardsExpander
                     return fetch();
             }
 
-            Path relativePath = start.relativize(path);
+            Path relativePath = startPath.relativize(path);
             String name = relativePath.toString();
             if (!bareName) {
                 if (name.isEmpty())
-                    name = start.toString();
+                    name = startPath.toString();
                 else
-                    name = start.toString() + "/" + name;
+                    name = startPath.toString() + "/" + name;
             }
 
             logger.debug("Wildcard expansion: ", expr, " -> ", name);

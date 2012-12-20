@@ -43,7 +43,10 @@ public class PreorderTreeMap<K, V>
         while (floo != null) {
             if (preorder.isLessOrEquals(floo.getKey(), key))
                 return floo;
+
+            // TODO: optim: test-key = super.higherEntry(floo.key).
             key = preorder.getPreceding(key);
+
             if (key == null)
                 break;
             floo = super.floorEntry(key);
@@ -71,7 +74,7 @@ public class PreorderTreeMap<K, V>
 
     // @Override
     public Map.Entry<K, V> reduceToMeetEntry(K key) {
-        K meetKey = meetKey(key);
+        K meetKey = reduceToMeetKey(key);
         if (meetKey == null)
             return null;
         return super.floorEntry(meetKey);

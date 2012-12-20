@@ -1,4 +1,4 @@
-package net.bodz.bas.t.preorder.testtype;
+package net.bodz.bas.c.type.testtype;
 
 public class CJzKI
         extends CJz
