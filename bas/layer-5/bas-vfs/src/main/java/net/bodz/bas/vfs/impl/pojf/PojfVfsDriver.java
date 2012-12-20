@@ -112,7 +112,7 @@ public class PojfVfsDriver
         return device;
     }
 
-    private static final PojfVfsDriver instance = new PojfVfsDriver("file");
+    private static final PojfVfsDriver instance = new PojfVfsDriver("pojf");
 
     public static PojfVfsDriver getInstance() {
         return instance;

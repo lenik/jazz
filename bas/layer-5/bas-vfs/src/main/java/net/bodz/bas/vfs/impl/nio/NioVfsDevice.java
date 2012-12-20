@@ -1,9 +1,11 @@
 package net.bodz.bas.vfs.impl.nio;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.path.IPath;
@@ -20,22 +22,23 @@ public class NioVfsDevice
      * @param driveName
      *            Drive name. <code>null</code> for linux root, or [a-z] for DOS drives.
      */
-    public NioVfsDevice(NioVfsDriver driver, String driveName) {
-        super(driver, driver.protocol, driveName);
-        File root = new File(driveName + "/");
-        this.rootFile = new NioFile(this, root);
+    public NioVfsDevice(NioVfsDriver driver, String rootName, Path rootPath) {
+        super(driver, driver.protocol, rootName);
+        this.rootFile = new NioFile(this, //
+                rootPath.getFileName() == null ? "" : rootPath.getFileName().toString(), // ""
+                rootPath);
     }
 
     /**
-     * Get the name of the drive.
+     * Get the root name.
      * 
-     * For DOS drives, the drive name contains the colon(:).
+     * For Win32, the root name can be "C:", "D:", etc.
      * 
-     * For *NIX, the drive name is an empty string.
+     * For *NIX, the root name should be "".
      * 
-     * @return Non-<code>null</code> drive name.
+     * @return Non-<code>null</code> root name.
      */
-    public String getDriveName() {
+    public String getRootName() {
         return getDeviceSpec();
     }
 
@@ -46,18 +49,20 @@ public class NioVfsDevice
 
     @Override
     public NioPath parse(String localPath) {
-        return new NioPath(getProtocol(), getDriveName(), localPath);
+        return new NioPath(getProtocol(), getRootName(), localPath);
+    }
+
+    public Path resolvePath(String localPath) {
+        String rootName = getRootName();
+        String pathstr = rootName + "/" + localPath;
+        Path path = Paths.get(pathstr);
+        return path;
     }
 
     @Override
     public NioFile resolve(String localPath) {
-        String jdkPath;
-        String driveName = getDriveName();
-        if (driveName == null)
-            jdkPath = "/" + localPath;
-        else
-            jdkPath = driveName + ":/" + localPath;
-        return new NioFile(jdkPath);
+        Path path = resolvePath(localPath);
+        return new NioFile(path);
     }
 
     @Override
@@ -67,7 +72,8 @@ public class NioVfsDevice
     }
 
     @Override
-    public boolean rename(String localPathFrom, String localPathTo) {
+    public boolean move(String localPathFrom, String localPathTo, CopyOption... options)
+            throws IOException {
         if (localPathFrom == null)
             throw new NullPointerException("localPathFrom");
         if (localPathTo == null)
@@ -76,17 +82,28 @@ public class NioVfsDevice
         if (localPathFrom.equals(localPathTo))
             return true;
 
-        File fileFrom = new File(localPathFrom);
-        File fileTo = new File(localPathTo);
+        Path pathFrom = resolvePath(localPathFrom);
+        Path pathTo = resolvePath(localPathTo);
 
-        return fileFrom.renameTo(fileTo);
+        Files.move(pathFrom, pathTo, options);
+        return true;
     }
 
     @Override
-    public boolean createLink(String localPath, String target, boolean symbolic)
+    public boolean createLink(String _localPath, String target, boolean symbolic)
             throws IOException {
-        // java.nio.file.Files.createSymbolicLink(link, target, attrs);
-        throw new NotImplementedException();
+
+        NioPath localPath = parse(_localPath);
+        Path link = localPath.toPath();
+
+        Path targetPath = Paths.get(target);
+
+        if (symbolic)
+            Files.createSymbolicLink(link, targetPath);
+        else
+            Files.createLink(link, targetPath);
+
+        return true;
     }
 
 }
