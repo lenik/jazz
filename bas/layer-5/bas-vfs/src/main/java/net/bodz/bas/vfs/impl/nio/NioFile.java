@@ -12,9 +12,14 @@ import java.nio.file.attribute.*;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
+import net.bodz.bas.c.java.nio.DeviceAttributeView;
+import net.bodz.bas.c.java.nio.DeviceAttributes;
+import net.bodz.bas.c.java.nio.FilePermissionAttributeView;
+import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.FileResource;
+import net.bodz.bas.io.resource.builtin.PathResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
@@ -26,13 +31,14 @@ import net.bodz.bas.vfs.util.Vfs2NioFileFilter;
 import net.bodz.bas.vfs.util.Vfs2NioFilenameFilter;
 
 /**
- * @see LocalFileResource
+ * @see FileResource
  */
 public class NioFile
         extends AbstractFile
         implements IFsDir {
 
     private final Path _path;
+    private NioExtraFileAttributes extraAttrs;
 
     /**
      * @param _pathstr
@@ -40,8 +46,12 @@ public class NioFile
      * @throws NullPointerException
      *             if <code>jdkPath</code> is <code>null</code>
      */
-    public NioFile(String _pathstr) {
+    private NioFile(String _pathstr) {
         this(Paths.get(_pathstr));
+    }
+
+    public NioFile(File _file) {
+        this(_file.toPath());
     }
 
     /**
@@ -49,11 +59,13 @@ public class NioFile
      *            non-<code>null</code> {@link java.io.File} object.
      */
     public NioFile(Path _path) {
-        this(NioVfsDriver.getInstance().getDrive(_path), _path);
+        this(NioVfsDriver.getInstance().getRootDevice(_path), //
+                _path.getFileName() == null ? "" : _path.getFileName().toString(), // ""
+                _path);
     }
 
-    NioFile(NioVfsDevice driveDevice, Path _path) {
-        super(driveDevice, _path.getFileName().toString());
+    NioFile(NioVfsDevice rootDevice, String baseName, Path _path) {
+        super(rootDevice, baseName);
         this._path = _path;
     }
 
@@ -70,18 +82,13 @@ public class NioFile
     public NioPath getPath() {
         NioVfsDevice device = getDevice();
 
-        String driveName = device.getDriveName();
+        String rootName = device.getRootName();
         String _pathstr = _path.toString();
 
-        String localPath;
-        if (driveName == null)
-            localPath = _pathstr;
-        else {
-            assert _pathstr.startsWith(driveName);
-            localPath = _pathstr.substring(driveName.length());
-        }
+        assert _pathstr.startsWith(rootName);
+        String localPath = _pathstr.substring(rootName.length() + 1);
 
-        NioPath path = new NioPath(device.getProtocol(), driveName, localPath);
+        NioPath path = new NioPath(device.getProtocol(), rootName, localPath);
         return path;
     }
 
@@ -96,7 +103,10 @@ public class NioFile
 
     @Override
     public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
-        return Files.getFileAttributeView(_path, type, options);
+        if (type == DeviceAttributeView.class || type == FilePermissionAttributeView.class)
+            return type.cast(extraAttrs);
+        else
+            return Files.getFileAttributeView(_path, type, options);
     }
 
     @Override
@@ -104,25 +114,28 @@ public class NioFile
             throws IOException {
         BasicFileAttributes attributes = null;
 
-        if (type.equals(BasicFileAttributes.class)) {
+        if (type == DeviceAttributes.class || type == FilePermissionAttributes.class)
+            attributes = type.cast(extraAttrs);
+
+        else if (type.equals(BasicFileAttributes.class)) {
             BasicFileAttributeView view = getAttributeView(BasicFileAttributeView.class, options);
             if (view != null)
                 attributes = view.readAttributes();
         }
 
-        if (type.equals(DosFileAttributes.class)) {
+        else if (type.equals(DosFileAttributes.class)) {
             DosFileAttributeView view = getAttributeView(DosFileAttributeView.class, options);
             if (view != null)
                 attributes = view.readAttributes();
         }
 
-        if (type.equals(PosixFileAttributes.class)) {
+        else if (type.equals(PosixFileAttributes.class)) {
             PosixFileAttributeView view = getAttributeView(PosixFileAttributeView.class, options);
             if (view != null)
                 attributes = view.readAttributes();
         }
 
-        return null;
+        return type.cast(attributes);
     }
 
     @Override
@@ -185,7 +198,7 @@ public class NioFile
 
     @Override
     protected IStreamResource newResource(Charset charset) {
-        LocalFileResource resource = new LocalFileResource(_path);
+        PathResource resource = new PathResource(_path);
         resource.setCharset(charset);
         return resource;
     }

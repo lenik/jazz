@@ -1,51 +1,52 @@
 package net.bodz.bas.vfs.impl.nio;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.MultiEntryPath;
-import net.bodz.bas.vfs.path.PathFormat;
 
 public class NioPath
         extends MultiEntryPath {
 
     private static final long serialVersionUID = 1L;
 
-    private String driveName;
+    private final String rootName;
 
-    public NioPath(String protocol, String driveName, String localPath) {
+    public NioPath(String protocol, String rootName, String localPath) {
         super(protocol, localPath);
-        this.driveName = driveName;
+        this.rootName = rootName;
     }
 
-    public NioPath(String protocol, String driveName, String[] entries, boolean entered) {
+    public NioPath(String protocol, String rootName, String[] entries, boolean entered) {
         super(protocol, entries, entered);
-        this.driveName = driveName;
+        this.rootName = rootName;
     }
 
-    public String getDriveName() {
-        return driveName;
+    public String getRootName() {
+        return rootName;
     }
 
     @Override
     public String getDeviceSpec() {
-        return driveName;
+        return rootName;
     }
 
     @Override
     public String getDeviceSpecSeparator() {
-        return ":";
+        return "/";
     }
 
     @Override
     protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
-        return new NioPath(getProtocol(), driveName, entries, entered);
+        return new NioPath(getProtocol(), rootName, entries, entered);
     }
 
-    @Override
-    protected String formatLocal(PathFormat format) {
-        String localPath = getLocalPath();
-        return SEPARATOR + localPath;
+    public Path toPath() {
+        String _pathstr = rootName + "/" + getLocalPath();
+        return Paths.get(_pathstr);
     }
 
 }
