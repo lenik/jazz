@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.resource.AbstractStreamInputSource;
 import net.bodz.bas.sio.IByteIn;
@@ -27,7 +28,7 @@ public class InputStreamSource
      * @return {@link InputStream} with {@link InputStream#close()} filtered out.
      */
     @Override
-    protected InputStream _newInputStream()
+    protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
         return new FilterInputStream(in) {
             @Override
@@ -38,21 +39,24 @@ public class InputStreamSource
     }
 
     @Override
-    protected Reader _newReader()
+    protected Reader _newReader(OpenOption... options)
             throws IOException {
-        return new InputStreamReader(newInputStream(), getCharset());
+        InputStream in = newInputStream(options);
+        return new InputStreamReader(in, getCharset());
     }
 
     @Override
-    public IByteIn _newByteIn()
+    public IByteIn _newByteIn(OpenOption... options)
             throws IOException {
-        return new InputStreamByteIn(newInputStream());
+        InputStream in = newInputStream(options);
+        return new InputStreamByteIn(in);
     }
 
     @Override
-    public ICharIn _newCharIn()
+    public ICharIn _newCharIn(OpenOption... options)
             throws IOException {
-        return new ReaderCharIn(newReader());
+        Reader in = newReader(options);
+        return new ReaderCharIn(in);
     }
 
 }

@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.OpenOption;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
+import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.err.BadFormatException;
 import net.bodz.bas.io.resource.IRandomInputSource;
 import net.bodz.bas.io.resource.IRandomOutputTarget;
@@ -59,40 +61,41 @@ public class LocalFileResource
     }
 
     @Override
-    protected InputStream _newInputStream()
+    protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
         return new FileInputStream(file);
     }
 
     @Override
-    protected OutputStream _newOutputStream(boolean append)
+    protected OutputStream _newOutputStream(OpenOption... options)
             throws IOException {
-        return new FileOutputStream(file, append);
+        CommonOpenConfig config = CommonOpenConfig.parse(options);
+        return new FileOutputStream(file, config.isAppend());
     }
 
     // private AbstractRandomInputSource arisImpl;
     // private AbstractRandomOutputTarget arotImpl;
 
-    protected ZipFile _newZipFile()
+    protected ZipFile _newZipFile(OpenOption... options)
             throws BadFormatException, IOException {
         return new ZipFile(file);
     }
 
     @Override
-    public final ZipFile newZipFile()
+    public final ZipFile newZipFile(OpenOption... options)
             throws BadFormatException, IOException {
-        return _newZipFile();
+        return _newZipFile(options);
     }
 
-    protected JarFile _newJarFile()
+    protected JarFile _newJarFile(OpenOption... options)
             throws BadFormatException, IOException {
         return new JarFile(file);
     }
 
     @Override
-    public final JarFile newJarFile()
+    public final JarFile newJarFile(OpenOption... options)
             throws BadFormatException, IOException {
-        return _newJarFile();
+        return _newJarFile(options);
     }
 
 }

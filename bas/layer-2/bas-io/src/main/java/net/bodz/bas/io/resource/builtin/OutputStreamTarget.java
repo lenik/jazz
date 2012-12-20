@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
 import net.bodz.bas.sio.IByteOut;
@@ -34,7 +35,7 @@ public class OutputStreamTarget
      * @return {@link OutputStream} with {@link OutputStream#close()} filtered out.
      */
     @Override
-    protected OutputStream _newOutputStream(boolean append)
+    protected OutputStream _newOutputStream(OpenOption... options)
             throws IOException {
         return new FilterOutputStream(out) {
             @Override
@@ -46,27 +47,30 @@ public class OutputStreamTarget
     }
 
     @Override
-    protected Writer _newWriter(boolean append)
+    protected Writer _newWriter(OpenOption... options)
             throws IOException {
-        return new OutputStreamWriter(_newOutputStream(append), getCharset());
+        OutputStream outputStream = _newOutputStream(options);
+        return new OutputStreamWriter(outputStream, getCharset());
     }
 
     @Override
-    protected IByteOut _newByteOut(boolean append)
+    protected IByteOut _newByteOut(OpenOption... options)
             throws IOException {
-        return new OutputStreamByteOut(_newOutputStream(append));
+        OutputStream outputStream = _newOutputStream(options);
+        return new OutputStreamByteOut(outputStream);
     }
 
     @Override
-    protected ICharOut _newCharOut(boolean append)
+    protected ICharOut _newCharOut(OpenOption... options)
             throws IOException {
-        return _newPrintOut(append);
+        return _newPrintOut(options);
     }
 
     @Override
-    protected IPrintOut _newPrintOut(boolean append)
+    protected IPrintOut _newPrintOut(OpenOption... options)
             throws IOException {
-        return new WriterPrintOut(_newWriter(append));
+        Writer writer = _newWriter(options);
+        return new WriterPrintOut(writer);
     }
 
 }

@@ -2,6 +2,7 @@ package net.bodz.bas.vfs.impl.mem;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.ProxyStreamResource;
@@ -17,14 +18,6 @@ class MemoryStreamResource
         if (file == null)
             throw new NullPointerException("file");
         this.file = file;
-    }
-
-    @Override
-    public MemoryStreamResource clone() {
-        MemoryStreamResource o = new MemoryStreamResource(file);
-        o.setCharset(getCharset());
-        o.setAppendMode(isAppendMode());
-        return o;
     }
 
     @Override
@@ -46,9 +39,9 @@ class MemoryStreamResource
     }
 
     @Override
-    protected void beforeOpenOutput(boolean append)
+    protected void beforeOpenOutput(OpenOption... options)
             throws IOException {
-        super.beforeOpenOutput(append);
+        super.beforeOpenOutput(options);
         file.touch(false);
     }
 

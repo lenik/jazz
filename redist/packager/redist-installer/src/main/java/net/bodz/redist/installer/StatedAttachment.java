@@ -1,6 +1,7 @@
 package net.bodz.redist.installer;
 
 import java.io.*;
+import java.nio.file.StandardOpenOption;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
@@ -415,7 +416,7 @@ public class StatedAttachment
         public OutputStream _getOut()
                 throws IOException {
             if (out == null) {
-                IStreamOutputTarget outputTarget = link.getOutputTarget(false);
+                IStreamOutputTarget outputTarget = link.getOutputTarget();
                 out = outputTarget.newOutputStream();
             }
             return out;
@@ -447,7 +448,7 @@ public class StatedAttachment
         public PrintStream getOut()
                 throws IOException {
             if (out == null) {
-                IStreamOutputTarget outputTarget = link.getOutputTarget(false);
+                IStreamOutputTarget outputTarget = link.getOutputTarget();
                 OutputStream _out = outputTarget.newOutputStream();
                 if (encoding == null)
                     out = new PrintStream(_out);
@@ -483,7 +484,7 @@ public class StatedAttachment
         public Writer getWriter()
                 throws IOException {
             if (writer == null)
-                writer = link.getOutputTarget(false, encoding).newWriter();
+                writer = link.getOutputTarget(encoding).newWriter();
             return writer;
         }
 
@@ -511,7 +512,7 @@ public class StatedAttachment
         public ObjectOutputStream getObjectOut()
                 throws IOException {
             if (objout == null) {
-                OutputStream out = link.getOutputTarget(false).newOutputStream();
+                OutputStream out = link.getOutputTarget().newOutputStream();
                 objout = new ObjectOutputStream(out);
             }
             return objout;
@@ -544,7 +545,7 @@ public class StatedAttachment
         public ZipOutputStream getZipOut()
                 throws IOException {
             if (zout == null) {
-                OutputStream out = link.getOutputTarget(false).newOutputStream();
+                OutputStream out = link.getOutputTarget().newOutputStream();
                 zout = new ZipOutputStream(out);
             }
             return zout;
@@ -577,7 +578,7 @@ public class StatedAttachment
         public JarOutputStream getJarOut()
                 throws IOException {
             if (jout == null) {
-                OutputStream out = link.getOutputTarget(true).newOutputStream();
+                OutputStream out = link.getOutputTarget().newOutputStream(StandardOpenOption.APPEND);
                 jout = new JarOutputStream(out);
             }
             return jout;
@@ -607,7 +608,7 @@ public class StatedAttachment
         public ZipFile getZipFile()
                 throws IOException {
             if (zipFile == null) {
-                zipFile = link.getInputSource().openZipFile();
+                zipFile = link.getInputSource().newZipFile();
             }
             return zipFile;
         }
@@ -636,7 +637,7 @@ public class StatedAttachment
         public JarFile getJarFile()
                 throws IOException {
             if (jarFile == null) {
-                jarFile = link.getInputSource().openJarFile();
+                jarFile = link.getInputSource().newJarFile();
             }
             return jarFile;
         }

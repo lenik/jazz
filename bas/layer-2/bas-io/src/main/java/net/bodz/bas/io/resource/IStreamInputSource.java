@@ -8,6 +8,7 @@ import java.io.ObjectInput;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
@@ -15,9 +16,6 @@ import net.bodz.bas.sugar.IToolable;
 
 public interface IStreamInputSource
         extends ISimpleStreamInputSource, IToolable {
-
-    @Override
-    IStreamInputSource clone();
 
     /**
      * Set the charset of the file.
@@ -41,43 +39,43 @@ public interface IStreamInputSource
     /**
      * @return non-<code>null</code> value.
      */
-    InputStream newInputStream()
+    InputStream newInputStream(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    DataInput newDataInput()
+    DataInput newDataInput(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    ObjectInput newObjectInput()
+    ObjectInput newObjectInput(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    Reader newReader()
+    Reader newReader(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    BufferedReader newBufferedReader()
+    BufferedReader newBufferedReader(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    LineReader newLineReader()
+    LineReader newLineReader(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    LAReader newLAReader()
+    LAReader newLAReader(OpenOption... options)
             throws IOException;
 
 }

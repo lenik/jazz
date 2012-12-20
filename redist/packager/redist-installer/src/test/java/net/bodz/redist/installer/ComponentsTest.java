@@ -26,7 +26,6 @@ public class ComponentsTest
         ProjectExecutor executor = new ConsoleExecutor(project);
         ISession session = executor.getSession();
         JdkFile outDir = new JdkFile(TestConfig.outDir);
-        outDir.setAutoCreateParents(true); // resFileLink<true>
         session.addResFolder(0, outDir);
         executor.pack();
 

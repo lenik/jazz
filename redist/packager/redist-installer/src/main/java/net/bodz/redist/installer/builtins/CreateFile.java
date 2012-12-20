@@ -2,6 +2,8 @@ package net.bodz.redist.installer.builtins;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -49,14 +51,17 @@ public class CreateFile
             JdkFile destFile = new JdkFile(dest);
 
             try {
-                boolean append = CreateFile.this.append && dest.exists();
+                OpenOption[] options = {};
+                if (CreateFile.this.append)
+                    options = new OpenOption[] { StandardOpenOption.APPEND };
+
                 String abbr = Strings.ellipse(String.valueOf(source), 40);
                 if (append)
                     logger.infof(tr._("Append to %s: %s"), dest, abbr);
                 else
                     logger.infof(tr._("Create file %s: %s"), dest, abbr);
 
-                destFile.tooling()._for(StreamWriting.class).setAppendMode(append).write(source);
+                destFile.tooling()._for(StreamWriting.class).setOpenOptions(options).write(source);
             } catch (IOException e) {
                 recoverException(e);
             }

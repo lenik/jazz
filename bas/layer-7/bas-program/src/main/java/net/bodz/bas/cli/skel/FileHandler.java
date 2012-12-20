@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.file.OpenOption;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -32,7 +33,8 @@ public class FileHandler
     private Boolean diff;
     private Set<String> tags = new TreeSet<String>();
 
-    private boolean appendMode = false;
+    private OpenOption[] srcOpenOptions = {};
+    private OpenOption[] destOpenOptions = {};
 
     private transient InputStream inputStream;
     private transient Reader reader;
@@ -243,13 +245,20 @@ public class FileHandler
         outFile.setPreferredCharset(outputCharset);
     }
 
-    public boolean isAppendMode() {
-        getOrCreateOutFile();
-        return appendMode;
+    public OpenOption[] getSrcOpenOptions() {
+        return srcOpenOptions;
     }
 
-    public void setAppendMode(boolean appendMode) {
-        this.appendMode = appendMode;
+    public void setSrcOpenOptions(OpenOption... srcOpenOptions) {
+        this.srcOpenOptions = srcOpenOptions;
+    }
+
+    public OpenOption[] getDestOpenOptions() {
+        return destOpenOptions;
+    }
+
+    public void setDestOpenOptions(OpenOption... destOpenOptions) {
+        this.destOpenOptions = destOpenOptions;
     }
 
     public InputStream openInputStream()
@@ -257,7 +266,7 @@ public class FileHandler
         if (inputStream == null) {
             if (reader != null)
                 throw new IllegalStateException("Input file is already opened in text mode.");
-            inputStream = file.getInputSource().newInputStream();
+            inputStream = file.getInputSource().newInputStream(srcOpenOptions);
         }
         return inputStream;
     }
@@ -267,7 +276,7 @@ public class FileHandler
         if (reader == null) {
             if (inputStream != null)
                 throw new IllegalStateException("Input file is already opened in binary mode.");
-            reader = file.getInputSource().newReader();
+            reader = file.getInputSource().newReader(srcOpenOptions);
         }
         return reader;
     }
@@ -277,7 +286,7 @@ public class FileHandler
         if (outputStream == null) {
             if (writer != null)
                 throw new IllegalStateException("Output file is already opened in text mode.");
-            outputStream = file.getOutputTarget(appendMode).newOutputStream();
+            outputStream = file.getOutputTarget().newOutputStream(destOpenOptions);
         }
         return outputStream;
     }
@@ -287,7 +296,7 @@ public class FileHandler
         if (writer != null) {
             if (outputStream != null)
                 throw new IllegalStateException("Output file is already opened in binary mode.");
-            writer = file.getOutputTarget(appendMode).newWriter();
+            writer = file.getOutputTarget().newWriter(destOpenOptions);
         }
         return writer;
     }

@@ -2,6 +2,7 @@ package net.bodz.bas.io.resource.builtin;
 
 import java.io.IOException;
 import java.nio.CharBuffer;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.sio.CharBufferCharIn;
 import net.bodz.bas.sio.CharBufferCharOut;
@@ -55,14 +56,14 @@ public class CharArrayResource
     }
 
     @Override
-    public ICharIn _newCharIn()
+    public ICharIn _newCharIn(OpenOption... options)
             throws IOException {
         CharBuffer charBuffer = CharBuffer.wrap(array, start, end - start);
         return new CharBufferCharIn(charBuffer);
     }
 
     @Override
-    public ICharOut _newCharOut(boolean append)
+    public ICharOut _newCharOut(OpenOption... options)
             throws IOException {
         // XXX CharArrayResource append
         CharBuffer charBuffer = CharBuffer.wrap(array, start, end - start);

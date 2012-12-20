@@ -2,6 +2,7 @@ package net.bodz.bas.io.resource.builtin;
 
 import java.io.IOException;
 import java.nio.charset.CharsetEncoder;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.resource.AbstractStreamInputSource;
 import net.bodz.bas.sio.IByteIn;
@@ -25,7 +26,7 @@ public class StringSource
     }
 
     @Override
-    public ICharIn _newCharIn()
+    public ICharIn _newCharIn(OpenOption... options)
             throws IOException {
         return new StringCharIn(string);
     }
@@ -43,9 +44,9 @@ public class StringSource
     // }
 
     @Override
-    public IByteIn _newByteIn()
+    public IByteIn _newByteIn(OpenOption... options)
             throws IOException {
-        ICharIn charIn = _newCharIn();
+        ICharIn charIn = _newCharIn(options);
         CharsetEncoder encoder = getCharset().newEncoder();
         return new EncodedByteIn(charIn, encoder);
     }

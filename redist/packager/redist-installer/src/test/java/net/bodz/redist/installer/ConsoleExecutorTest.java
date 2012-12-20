@@ -23,7 +23,6 @@ public class ConsoleExecutorTest
     public void testPack()
             throws SessionException {
         IFile outdir = new JdkFile(TestConfig.outDir);
-        outdir.autoCreateParents();
         session.addResFolder(0, outdir);
         session.dump(Stdio.cout);
         pack();

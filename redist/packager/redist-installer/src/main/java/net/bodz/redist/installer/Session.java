@@ -309,7 +309,7 @@ public class Session
                 logger.info(tr._("Registry data to save: "), registry);
                 IFile registryLink = newResource(registryPath);
                 logger.info(tr._("Saving registry to "), registryLink);
-                OutputStream out = registryLink.getOutputTarget(false).newOutputStream();
+                OutputStream out = registryLink.getOutputTarget().newOutputStream();
                 XMLs.encode(registry, out, new ExWarn());
                 out.close();
                 logger.info(tr._("Registry saved"));

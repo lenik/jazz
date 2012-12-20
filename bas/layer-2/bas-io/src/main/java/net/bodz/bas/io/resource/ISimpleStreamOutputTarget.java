@@ -2,6 +2,7 @@ package net.bodz.bas.io.resource;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharOut;
@@ -9,10 +10,7 @@ import net.bodz.bas.sio.ICharOut;
 /**
  * 相当于一个只写的File对象，其打开操作可定制。
  */
-public interface ISimpleStreamOutputTarget
-        extends Cloneable {
-
-    ISimpleStreamOutputTarget clone();
+public interface ISimpleStreamOutputTarget {
 
     Charset getCharset();
 
@@ -26,13 +24,13 @@ public interface ISimpleStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
-    IByteOut newByteOut(boolean append)
+    IByteOut newByteOut(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    ICharOut newCharOut(boolean append)
+    ICharOut newCharOut(OpenOption... options)
             throws IOException;
 
 }

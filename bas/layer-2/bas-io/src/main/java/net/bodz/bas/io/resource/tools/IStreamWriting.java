@@ -1,17 +1,16 @@
 package net.bodz.bas.io.resource.tools;
 
 import java.io.IOException;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
 
 public interface IStreamWriting
         extends Cloneable {
 
-    IStreamWriting clone();
+    OpenOption[] getOpenOptions();
 
-    boolean isAppendMode();
-
-    IStreamWriting setAppendMode(boolean appendMode);
+    IStreamWriting setOpenOptions(OpenOption... openOptions);
 
     boolean isAutoFlush();
 

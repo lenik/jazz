@@ -3,6 +3,7 @@ package net.bodz.bas.io.resource.builtin;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.WriterOutputStream;
 import net.bodz.bas.io.resource.AbstractStreamResource;
@@ -16,25 +17,25 @@ public abstract class AbstractTextStreamResource
         extends AbstractStreamResource {
 
     @Override
-    protected OutputStream _newOutputStream(boolean append)
+    protected IByteIn _newByteIn(OpenOption... options)
             throws IOException {
-        Writer writer = _newWriter(append);
-        return new WriterOutputStream(writer, getCharset());
-    }
-
-    @Override
-    protected IByteIn _newByteIn()
-            throws IOException {
-        ICharIn charIn = _newCharIn();
+        ICharIn charIn = _newCharIn(options);
         EncodedByteIn byteIn = new EncodedByteIn(charIn, getCharset());
         return byteIn;
     }
 
     @Override
-    protected IByteOut _newByteOut(boolean append)
+    protected IByteOut _newByteOut(OpenOption... options)
             throws IOException {
-        OutputStream outputStream = _newOutputStream(append);
+        OutputStream outputStream = _newOutputStream(options);
         return new OutputStreamByteOut(outputStream);
+    }
+
+    @Override
+    protected OutputStream _newOutputStream(OpenOption... options)
+            throws IOException {
+        Writer writer = _newWriter(options);
+        return new WriterOutputStream(writer, getCharset());
     }
 
 }

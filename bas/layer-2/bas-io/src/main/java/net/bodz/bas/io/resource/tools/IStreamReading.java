@@ -2,6 +2,7 @@ package net.bodz.bas.io.resource.tools;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.OpenOption;
 import java.security.MessageDigest;
 import java.util.List;
 
@@ -11,7 +12,9 @@ import net.bodz.bas.t.iterator.immed.Mitorx;
 public interface IStreamReading
         extends Cloneable {
 
-    IStreamReading clone();
+    OpenOption[] getOpenOptions();
+
+    IStreamReading setOpenOptions(OpenOption... options);
 
     int getBlockSize();
 

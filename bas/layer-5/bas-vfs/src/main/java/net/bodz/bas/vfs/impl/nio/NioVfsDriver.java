@@ -76,7 +76,7 @@ public class NioVfsDriver
             NioVfsDevice drive = getDrive(deviceName);
 
             NioFile rootFile = drive.getRootFile();
-            assert rootFile.getOrigFile().equals(root);
+            assert rootFile.getInternalPath().equals(root);
 
             drives.add(drive);
         }

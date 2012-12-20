@@ -8,8 +8,10 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.io.resource.JavaioStreamResource;
 
 public class URLResource
@@ -64,7 +66,7 @@ public class URLResource
     }
 
     @Override
-    protected InputStream _newInputStream()
+    protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
         return url.openStream();
     }
@@ -74,12 +76,15 @@ public class URLResource
      *            Ignored for non-file protocol URL.
      */
     @Override
-    protected OutputStream _newOutputStream(boolean append)
+    protected OutputStream _newOutputStream(OpenOption... options)
             throws IOException {
+
+        CommonOpenConfig config = CommonOpenConfig.parse(options);
+
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url);
-            return new FileOutputStream(file, append);
+            return new FileOutputStream(file, config.isAppend());
 
         default:
             return url.openConnection().getOutputStream();

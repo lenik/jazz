@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.OpenOption;
 import java.util.Arrays;
 
 import org.apache.commons.vfs.FileContent;
@@ -13,6 +14,7 @@ import org.apache.commons.vfs.FileSelectInfo;
 import org.apache.commons.vfs.FileSelector;
 import org.apache.commons.vfs.FileSystemException;
 
+import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.JavaioStreamResource;
@@ -187,7 +189,7 @@ public class ApacheFile
             extends JavaioStreamResource {
 
         @Override
-        protected InputStream _newInputStream()
+        protected InputStream _newInputStream(OpenOption... options)
                 throws IOException {
             FileContent content = fileObject.getContent();
             checkOpen(content);
@@ -196,11 +198,14 @@ public class ApacheFile
         }
 
         @Override
-        protected OutputStream _newOutputStream(boolean append)
+        protected OutputStream _newOutputStream(OpenOption... options)
                 throws IOException {
             FileContent content = fileObject.getContent();
             checkOpen(content);
-            OutputStream out = content.getOutputStream(append);
+
+            CommonOpenConfig config = CommonOpenConfig.parse(options);
+
+            OutputStream out = content.getOutputStream(config.isAppend());
             return out;
         }
 
