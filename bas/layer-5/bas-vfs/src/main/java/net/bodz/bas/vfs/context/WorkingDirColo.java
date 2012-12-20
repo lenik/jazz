@@ -10,7 +10,7 @@ import net.bodz.bas.context.IContextId;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.bas.vfs.path.BadPathException;
 
 public class WorkingDirColo
@@ -19,7 +19,7 @@ public class WorkingDirColo
     @Override
     public IFile getRoot() {
         File systemWorkDir = SystemColos.workdir.get();
-        return new JdkFile(systemWorkDir);
+        return new PojfFile(systemWorkDir);
     }
 
     public static boolean isAbsolutePath(String path) {

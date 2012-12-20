@@ -3,7 +3,7 @@ package net.bodz.bas.vfs;
 import java.io.File;
 import java.io.Serializable;
 
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 
 public class FileMaskedModifiers
         implements Serializable {
@@ -52,7 +52,7 @@ public class FileMaskedModifiers
     public boolean test(File file) {
         if (this.mask == 0)
             return true;
-        int modifiers = new JdkFile(file).getFlags(mask);
+        int modifiers = new PojfFile(file).getFlags(mask);
         return modifiers == this.modifiers;
     }
 

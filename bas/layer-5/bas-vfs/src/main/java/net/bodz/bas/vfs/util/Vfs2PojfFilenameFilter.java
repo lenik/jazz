@@ -6,13 +6,13 @@ import java.io.FilenameFilter;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFilenameFilter;
 
-public class Vfs2JdkFilenameFilter
+public class Vfs2PojfFilenameFilter
         implements FilenameFilter {
 
     private final IFilenameFilter vfsFilter;
     private final IFile parentDir;
 
-    public Vfs2JdkFilenameFilter(IFilenameFilter vfsFilter, IFile parentDir) {
+    public Vfs2PojfFilenameFilter(IFilenameFilter vfsFilter, IFile parentDir) {
         if (vfsFilter == null)
             throw new NullPointerException("vfsFilter");
         this.vfsFilter = vfsFilter;

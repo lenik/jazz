@@ -4,14 +4,14 @@ import java.io.File;
 import java.io.FileFilter;
 
 import net.bodz.bas.vfs.IFileFilter;
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 
-public class Vfs2JdkFileFilter
+public class Vfs2PojfFileFilter
         implements FileFilter {
 
     private final IFileFilter vfsFilter;
 
-    public Vfs2JdkFileFilter(IFileFilter vfsFilter) {
+    public Vfs2PojfFileFilter(IFileFilter vfsFilter) {
         if (vfsFilter == null)
             throw new NullPointerException("vfsFilter");
         this.vfsFilter = vfsFilter;
@@ -19,7 +19,7 @@ public class Vfs2JdkFileFilter
 
     @Override
     public boolean accept(File pathname) {
-        JdkFile file = new JdkFile(pathname);
+        PojfFile file = new PojfFile(pathname);
         return vfsFilter.accept(file);
     }
 

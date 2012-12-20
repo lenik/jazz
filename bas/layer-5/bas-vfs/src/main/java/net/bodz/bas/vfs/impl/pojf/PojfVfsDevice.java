@@ -1,7 +1,8 @@
-package net.bodz.bas.vfs.impl.jdk;
+package net.bodz.bas.vfs.impl.pojf;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
@@ -11,19 +12,19 @@ import net.bodz.bas.vfs.path.IPath;
 /**
  * Represent a drive (if exist).
  */
-public class JdkVfsDevice
+public class PojfVfsDevice
         extends AbstractVfsDevice {
 
-    private JdkFile rootFile;
+    private PojfFile rootFile;
 
     /**
      * @param driveName
      *            Drive name. <code>null</code> for linux root, or [a-z] for DOS drives.
      */
-    public JdkVfsDevice(JdkVfsDriver driver, String driveName) {
+    public PojfVfsDevice(PojfVfsDriver driver, String driveName) {
         super(driver, driver.protocol, driveName);
         File root = new File(driveName + "/");
-        this.rootFile = new JdkFile(this, root);
+        this.rootFile = new PojfFile(this, root);
     }
 
     /**
@@ -40,34 +41,34 @@ public class JdkVfsDevice
     }
 
     @Override
-    public JdkFile getRootFile() {
+    public PojfFile getRootFile() {
         return rootFile;
     }
 
     @Override
-    public JdkPath parse(String localPath) {
-        return new JdkPath(getProtocol(), getDriveName(), localPath);
+    public PojfPath parse(String localPath) {
+        return new PojfPath(getProtocol(), getDriveName(), localPath);
     }
 
     @Override
-    public JdkFile resolve(String localPath) {
+    public PojfFile resolve(String localPath) {
         String jdkPath;
         String driveName = getDriveName();
         if (driveName == null)
             jdkPath = "/" + localPath;
         else
             jdkPath = driveName + ":/" + localPath;
-        return new JdkFile(jdkPath);
+        return new PojfFile(jdkPath);
     }
 
     @Override
-    public JdkFile resolve(IPath _path)
+    public PojfFile resolve(IPath _path)
             throws FileResolveException {
         return resolve(_path.getLocalPath());
     }
 
     @Override
-    public boolean rename(String localPathFrom, String localPathTo) {
+    public boolean move(String localPathFrom, String localPathTo, CopyOption... options) {
         if (localPathFrom == null)
             throw new NullPointerException("localPathFrom");
         if (localPathTo == null)

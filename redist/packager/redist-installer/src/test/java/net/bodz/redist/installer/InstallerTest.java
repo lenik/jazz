@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.util.JobConfig;
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.redist.installer.builtins.TestConfig;
 
 public class InstallerTest {
@@ -22,7 +22,7 @@ public class InstallerTest {
             public void setSession(ISession session) {
                 super.setSession(session);
                 session.getLogger().setLevel(LogLevel.DEBUG);
-                session.addResFolder(new JdkFile(TestConfig.outDir));
+                session.addResFolder(new PojfFile(TestConfig.outDir));
                 TestConfig.setTestBaseDir(session);
             }
         };

@@ -23,7 +23,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsDir;
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.bas.xml.XMLs;
 import net.bodz.redist.installer.util.Flags;
 
@@ -80,15 +80,15 @@ public class Session
         resFolders = new ArrayList<IFsDir>();
 
         // addResFolder(new JavaioFile(FilePath.canoniOf(".")/*, true*/));
-        addResFolder(new JdkFile(SystemColos.workdir.get()/* , true */));
+        addResFolder(new PojfFile(SystemColos.workdir.get()/* , true */));
 
         MavenProjectOrigin installerPo = MavenProjectOrigin.fromClass(Installer.class);
         MavenProjectOrigin userPo = MavenProjectOrigin.fromClass(project.getClass());
 
-        IFile projectResBase = new JdkFile(userPo.getResourceDir(project.getClass()));
+        IFile projectResBase = new PojfFile(userPo.getResourceDir(project.getClass()));
         addResFolder(projectResBase);
 
-        IFile installerResBase = new JdkFile(installerPo.getResourceDir(Installer.class));
+        IFile installerResBase = new PojfFile(installerPo.getResourceDir(Installer.class));
         addResFolder(installerResBase);
 
         searchLoaders = new ArrayList<ClassLoader>();

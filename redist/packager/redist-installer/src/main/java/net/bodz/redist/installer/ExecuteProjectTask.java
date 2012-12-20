@@ -18,7 +18,7 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsDir;
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 
 public abstract class ExecuteProjectTask
         extends Task
@@ -51,12 +51,12 @@ public abstract class ExecuteProjectTask
     }
 
     public void setPackDir(File outdir) {
-        JdkFile src = new JdkFile(outdir);
+        PojfFile src = new PojfFile(outdir);
         setResFolder(src);
     }
 
     public void setPackJar(File zipFile) {
-        IFile src = new JdkFile(zipFile);
+        IFile src = new PojfFile(zipFile);
         setResFolder(src);
     }
 
