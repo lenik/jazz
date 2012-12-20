@@ -19,11 +19,8 @@ public class InputBytesFile
     public InputBytesFile(String name, byte[] bytes) {
         super(name, new ByteArrayResource(bytes));
         this.bytes = bytes;
-    }
-
-    @Override
-    public boolean isReadable() {
-        return true;
+        this.inode.setReadable(true);
+        this.inode.setWritable(false);
     }
 
     public byte[] getBytes() {

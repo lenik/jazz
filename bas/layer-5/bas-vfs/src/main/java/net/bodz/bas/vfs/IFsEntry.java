@@ -3,9 +3,9 @@ package net.bodz.bas.vfs;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.LinkOption;
-import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileAttributeView;
+import java.nio.file.attribute.FileTime;
 
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -55,40 +55,6 @@ public interface IFsEntry {
     int getFlags();
 
     /**
-     * Returns a file attribute view of a given type.
-     * 
-     * @return <code>null</code> if the attribute view type is not available.
-     */
-    <V extends FileAttributeView> V getAttributeView(Path path, Class<V> type, LinkOption... options);
-
-    /**
-     * @return <code>null</code> if the file attributes is not available.
-     */
-    <A extends BasicFileAttributes> A getAttributes(Path path, Class<A> type, LinkOption... options)
-            throws IOException;
-
-    /**
-     * Get the creation time of an fs entry.
-     * 
-     * @return <code>0</code> if create-time is unknown.
-     */
-    long getCreationTime();
-
-    /**
-     * Get the last modified time of an fs entry.
-     * 
-     * @return <code>0</code> if last-modified-time is unknown.
-     */
-    long getLastModifiedTime();
-
-    /**
-     * Change the last modified time of an fs entry.
-     * 
-     * @return <code>false</code> If failed to set the last modified time attribute.
-     */
-    boolean setLastModifiedTime(long lastModifiedTime);
-
-    /**
      * @return <code>null</code> if the existence of this file is unknown.
      */
     Boolean exists();
@@ -97,21 +63,53 @@ public interface IFsEntry {
 
     boolean isNotExisted();
 
+    /**
+     * Returns a file attribute view of a given type.
+     * 
+     * @return <code>null</code> if the attribute view type is not available.
+     */
+    <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options);
+
+    /**
+     * @return <code>null</code> if the file attributes is not available.
+     */
+    <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
+            throws IOException;
+
+    /**
+     * Get the creation time of an fs entry.
+     * 
+     * @return <code>0</code> if create-time is unknown.
+     */
+    FileTime getCreationTime();
+
+    /**
+     * Get the last modified time of an fs entry.
+     * 
+     * @return <code>0</code> if last-modified-time is unknown.
+     */
+    FileTime getLastModifiedTime();
+
+    /**
+     * Change the last modified time of an fs entry.
+     * 
+     * @return <code>false</code> If failed to set the last modified time attribute.
+     */
+    boolean setLastModifiedTime(FileTime lastModifiedTime)
+            throws IOException;
+
     boolean isBlob();
 
     boolean isDirectory();
 
-    boolean isReadable();
-
-    boolean setReadable(boolean readable);
-
-    boolean isWritable();
-
-    boolean setWritable(boolean writable);
-
     boolean isHidden();
 
-    boolean setHidden(boolean hidden);
+    boolean setHidden(boolean hidden)
+            throws IOException;
+
+    boolean isReadable();
+
+    boolean isWritable();
 
     /**
      * Get the parent fs entry which this entry resides in.

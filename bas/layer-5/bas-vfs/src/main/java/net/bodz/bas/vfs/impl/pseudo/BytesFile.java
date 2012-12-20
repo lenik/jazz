@@ -17,6 +17,8 @@ public class BytesFile
     public BytesFile(String name, BytesResource resource) {
         super(name, resource);
         this.resource = resource;
+        this.inode.setReadable(true);
+        this.inode.setWritable(true);
     }
 
     @Override
@@ -30,16 +32,6 @@ public class BytesFile
             return (long) resource.getLength();
         else
             return null;
-    }
-
-    @Override
-    public boolean isReadable() {
-        return true;
-    }
-
-    @Override
-    public boolean isWritable() {
-        return true;
     }
 
     @Override

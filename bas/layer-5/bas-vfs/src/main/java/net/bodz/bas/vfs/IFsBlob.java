@@ -33,7 +33,12 @@ public interface IFsBlob
 
     boolean isExecutable();
 
-    boolean setExecutable(boolean executable);
+    /**
+     * Return whether this file is random seekable.
+     * 
+     * @return <code>true</code> If this file is ramdom seekable.
+     */
+    boolean isSeekable();
 
     /**
      * Get the file length.
@@ -71,21 +76,15 @@ public interface IFsBlob
             throws IOException;
 
     /**
-     * Create a non-existed file, or update the last modification time of the file represented by
+     * Create a non-existed file, and update the last modification time of the file represented by
      * this object.
      * 
-     * @param update
+     * @param touch
+     *            Update the last modification time if the file is already existed.
      * @return <code>true</code> if the blob is updated, or created if it's not existed. Otherwise,
      *         if the blob entry is read-only, or it's a dir-only entry, returns <code>false</code>.
      */
-    boolean touch(boolean updateLastModifiedTime)
+    boolean mkblob(boolean touch)
             throws IOException;
-
-    /**
-     * Return whether this file is random seekable.
-     * 
-     * @return <code>true</code> If this file is ramdom seekable.
-     */
-    boolean isSeekable();
 
 }

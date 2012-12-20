@@ -26,16 +26,8 @@ public class InputStringFile
     public InputStringFile(String name, char[] charArray) {
         super(name, new CharArrayResource(charArray));
         this.charArray = charArray;
-    }
-
-    @Override
-    public boolean isReadable() {
-        return true;
-    }
-
-    @Override
-    public boolean isWritable() {
-        return false;
+        this.inode.setReadable(true);
+        this.inode.setWritable(false);
     }
 
     public char[] getCharArray() {

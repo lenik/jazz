@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttributeView;
+import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
 
 import org.apache.commons.vfs.FileContent;
@@ -30,10 +34,12 @@ public class ApacheFile
         extends AbstractFile {
 
     private FileObject fileObject;
+    private ApacheFileAttributes attributes;
 
     ApacheFile(ApacheVfsDevice device, FileObject fileObject) {
         super(device, fileObject.getName().getBaseName());
         this.fileObject = fileObject;
+        this.attributes = new ApacheFileAttributes(fileObject);
     }
 
     public FileObject getFileObject() {
@@ -52,24 +58,20 @@ public class ApacheFile
     }
 
     @Override
-    public long getLastModifiedTime() {
-        try {
-            FileContent content = fileObject.getContent();
-            return content.getLastModifiedTime();
-        } catch (FileSystemException e) {
-            return 0L;
-        }
+    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
     }
 
     @Override
-    public boolean setLastModifiedTime(long date) {
-        try {
-            FileContent fileContent = fileObject.getContent();
-            fileContent.setLastModifiedTime(date);
-            return true;
-        } catch (FileSystemException e) {
-            return false;
-        }
+    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
+            throws IOException {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
     }
 
     @Override
@@ -82,65 +84,16 @@ public class ApacheFile
     }
 
     @Override
-    public boolean isBlob() {
-        try {
-            return fileObject.getType().hasContent();
-        } catch (FileSystemException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isDirectory() {
-        try {
-            return fileObject.getType().hasChildren();
-        } catch (FileSystemException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isReadable() {
-        try {
-            return fileObject.isReadable();
-        } catch (FileSystemException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isWritable() {
-        try {
-            return fileObject.isWriteable();
-        } catch (FileSystemException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public Long getLength() {
-        try {
-            if (!fileObject.exists())
-                return 0L;
-
-            FileContent fileContent = fileObject.getContent();
-
-            long size = fileContent.getSize();
-            return size;
-        } catch (FileSystemException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public boolean touch(boolean updateLastModifiedTime)
+    public boolean mkblob(boolean touch)
             throws IOException {
         try {
             fileObject.createFile();
 
             // Apache VFS: createFile() does nothing if file is already existed.
-            if (updateLastModifiedTime)
-                setLastModifiedTime(System.currentTimeMillis());
+            if (touch) {
+                FileTime lastModifiedTime = FileTime.fromMillis(System.currentTimeMillis());
+                setLastModifiedTime(lastModifiedTime);
+            }
 
             return true;
         } catch (FileSystemException e) {
@@ -160,20 +113,6 @@ public class ApacheFile
     @Override
     public boolean deleteOnExit() {
         return false;
-    }
-
-    @Override
-    public boolean isHidden() {
-        try {
-            return fileObject.isHidden();
-        } catch (FileSystemException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isExecutable() {
-        return false; // unknown...
     }
 
     // -o IFsBlob

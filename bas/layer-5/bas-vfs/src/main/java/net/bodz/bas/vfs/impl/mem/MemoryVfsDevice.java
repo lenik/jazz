@@ -5,9 +5,9 @@ import java.io.IOException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.inode.Inode;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.util.Inode;
 
 public class MemoryVfsDevice
         extends AbstractVfsDevice {
@@ -27,8 +27,16 @@ public class MemoryVfsDevice
         return getDeviceSpec();
     }
 
-    public Inode getRootInode() {
+    private Inode getRootInode() {
         return rootInode;
+    }
+
+    public Inode findInode(String localPath) {
+        return rootInode.getDescendant(localPath);
+    }
+
+    public Inode resolveInode(String localPath) {
+        return rootInode.resolve(localPath);
     }
 
     @Override

@@ -7,6 +7,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.nio.file.LinkOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttributeView;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
@@ -20,16 +23,17 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.VFSException;
-import net.bodz.bas.vfs.path.IPath;
 
 public class URLFile
         extends AbstractFile {
 
     private final URLPath path;
+    private URLFileAttributes attributes;
 
     public URLFile(URLVfsDevice device, URLPath path) {
         super(device, path.getBaseName());
         this.path = path;
+        this.attributes = new URLFileAttributes(this);
     }
 
     public static URLFile resolve(URL url) {
@@ -44,33 +48,8 @@ public class URLFile
     }
 
     @Override
-    public IPath getPath() {
+    public URLPath getPath() {
         return path;
-    }
-
-    @Override
-    public long getLastModifiedTime() {
-        URL url = path.toURL();
-        try {
-            return url.openConnection().getLastModified();
-        } catch (IOException e) {
-            return 0L;
-        }
-    }
-
-    @Override
-    public boolean isBlob() {
-        return true;
-    }
-
-    @Override
-    public boolean isDirectory() {
-        return true;
-    }
-
-    @Override
-    public boolean isReadable() {
-        return true;
     }
 
     static String _getName(URL url) {
@@ -79,6 +58,23 @@ public class URLFile
         if (slash != -1)
             name = name.substring(slash + 1);
         return name;
+    }
+
+    @Override
+    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
+    }
+
+    @Override
+    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
+            throws IOException {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
     }
 
     @Override
@@ -172,13 +168,13 @@ public class URLFile
     }
 
     @Override
-    public boolean touch(boolean updateLastModifiedTime)
+    public boolean mkblob(boolean touch)
             throws IOException {
         URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url);
-            return FileData.touch(file, updateLastModifiedTime);
+            return FileData.touch(file, touch);
 
         default:
             return false;

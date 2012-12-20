@@ -1,6 +1,10 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.LinkOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttributeView;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FilePath;
@@ -10,14 +14,15 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.inode.Inode;
+import net.bodz.bas.vfs.inode.InodeType;
 
 public abstract class PseudoFile
         extends AbstractFile {
 
     private String localPath;
-    private IStreamResource resource;
-    private long creationTime;
-    private long lastModifiedTime;
+    protected Inode inode;
+    private PseudoFileAttributes attributes;
 
     /**
      * @throws NullPointerException
@@ -38,9 +43,9 @@ public abstract class PseudoFile
             throw new NullPointerException("resource");
 
         this.localPath = localPath;
-        this.resource = resource;
-
-        creationTime = lastModifiedTime = System.currentTimeMillis();
+        this.inode = new Inode(null);
+        inode.setType(InodeType.blob);
+        inode.setData(resource);
     }
 
     @Override
@@ -66,32 +71,24 @@ public abstract class PseudoFile
     }
 
     @Override
+    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
+    }
+
+    @Override
+    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
+            throws IOException {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
+    }
+
+    @Override
     public Boolean exists() {
-        return true;
-    }
-
-    @Override
-    public boolean isBlob() {
-        return true;
-    }
-
-    @Override
-    public long getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(long creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    @Override
-    public long getLastModifiedTime() {
-        return lastModifiedTime;
-    }
-
-    @Override
-    public boolean setLastModifiedTime(long date) {
-        this.lastModifiedTime = date;
         return true;
     }
 
@@ -99,7 +96,7 @@ public abstract class PseudoFile
 
     @Override
     protected IStreamResource newResource(Charset charset) {
-        return resource;
+        return (IStreamResource) inode.getData();
     }
 
     // -o IFsTree

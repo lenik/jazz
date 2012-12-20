@@ -5,8 +5,6 @@ public interface IFsDir
 
     boolean isIterable();
 
-    boolean setIterable(boolean iterable);
-
     /**
      * @return <code>null</code> If <code>childName</code> isn't existed, or the folder isn't
      *         accessible.

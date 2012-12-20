@@ -1,12 +1,14 @@
 package net.bodz.bas.vfs.impl.nio;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.attribute.FileTime;
+import java.nio.file.attribute.*;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
@@ -93,99 +95,60 @@ public class NioFile
     }
 
     @Override
+    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        return Files.getFileAttributeView(_path, type, options);
+    }
+
+    @Override
+    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
+            throws IOException {
+        BasicFileAttributes attributes = null;
+
+        if (type.equals(BasicFileAttributes.class)) {
+            BasicFileAttributeView view = getAttributeView(BasicFileAttributeView.class, options);
+            if (view != null)
+                attributes = view.readAttributes();
+        }
+
+        if (type.equals(DosFileAttributes.class)) {
+            DosFileAttributeView view = getAttributeView(DosFileAttributeView.class, options);
+            if (view != null)
+                attributes = view.readAttributes();
+        }
+
+        if (type.equals(PosixFileAttributes.class)) {
+            PosixFileAttributeView view = getAttributeView(PosixFileAttributeView.class, options);
+            if (view != null)
+                attributes = view.readAttributes();
+        }
+
+        return null;
+    }
+
+    @Override
     public Boolean exists() {
         // LinkOption.NOFOLLOW_LINKS
         return Files.exists(_path);
     }
 
     @Override
-    public long getLastModifiedTime() {
-        try {
-            FileTime lastModifiedTime = Files.getLastModifiedTime(_path);
-            return lastModifiedTime.toMillis();
-        } catch (IOException e) {
-            return 0L;
-        }
-    }
-
-    @Override
-    public boolean setLastModifiedTime(long date) {
-        FileTime fileTime = FileTime.fromMillis(date);
-        try {
-            Files.setLastModifiedTime(_path, fileTime);
-        } catch (IOException e) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean isBlob() {
-        return Files.isRegularFile(_path);
-    }
-
-    @Override
-    public boolean isDirectory() {
-        return Files.isDirectory(_path);
-    }
-
-    @Override
-    public boolean isReadable() {
-        return Files.isReadable(_path);
-    }
-
-    @Override
-    public boolean isWritable() {
-        return Files.isWritable(_path);
-    }
-
-    @Override
-    public boolean isHidden() {
-        try {
-            return Files.isHidden(_path);
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isExecutable() {
-        return Files.isExecutable(_path);
-    }
-
-    @Override
-    public Long getLength() {
-        return _path.toFile().length();
-    }
-
-    @Override
     public boolean setLength(long newLength)
             throws IOException {
-        return FileData.setLength(_path, newLength);
-    }
-
-    @Override
-    public boolean touch(boolean updateLastModifiedTime)
-            throws IOException {
-        return FileData.touch(_path, updateLastModifiedTime);
-    }
-
-    @Override
-    public boolean isSeekable() {
-        return true;
-    }
-
-    @Override
-    public boolean isIterable() {
-        return isDirectory() && isReadable();
-    }
-
-    @Override
-    public boolean setIterable(boolean iterable) {
-        if (!isDirectory())
+        File file = _path.toFile();
+        if (file != null)
+            return FileData.setLength(file, newLength);
+        else
             return false;
-        // return _path.setExecutable(iterable);
-        return false;
+    }
+
+    @Override
+    public boolean mkblob(boolean touch)
+            throws IOException {
+        File file = _path.toFile();
+        if (file != null)
+            return FileData.touch(file, touch);
+        else
+            return false;
     }
 
     @Override
@@ -206,6 +169,7 @@ public class NioFile
         if (!Files.exists(_path))
             return false;
         Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
             public void run() {
                 try {
                     Files.delete(_path);

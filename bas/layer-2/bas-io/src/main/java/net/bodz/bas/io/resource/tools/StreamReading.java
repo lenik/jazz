@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
 import java.io.IOException;
+import java.nio.file.OpenOption;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -11,7 +12,6 @@ import java.util.List;
 
 import net.bodz.bas.c.java.security.Cryptos;
 import net.bodz.bas.err.RuntimeIOException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamInputSourceWrapper;
@@ -27,6 +27,7 @@ public class StreamReading
         implements IStreamReading {
 
     private final IStreamInputSource source;
+    private OpenOption[] openOptions = {};
     private int blockSize = 4096;
 
     public StreamReading(IStreamInputSourceWrapper wrapper) {
@@ -40,14 +41,14 @@ public class StreamReading
     }
 
     @Override
-    public IStreamReading clone() {
-        StreamReading clone;
-        try {
-            clone = (StreamReading) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
-        return clone;
+    public OpenOption[] getOpenOptions() {
+        return openOptions;
+    }
+
+    @Override
+    public IStreamReading setOpenOptions(OpenOption... options) {
+        this.openOptions = options;
+        return this;
     }
 
     public int getBlockSize() {
@@ -66,7 +67,7 @@ public class StreamReading
             throws IOException, OutOfMemoryError {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte block[] = new byte[blockSize];
-        IByteIn in = source.newByteIn();
+        IByteIn in = source.newByteIn(openOptions);
         try {
             while (true) {
                 int readSize = block.length;
@@ -86,7 +87,7 @@ public class StreamReading
             throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte block[] = new byte[blockSize];
-        IByteIn in = source.newByteIn();
+        IByteIn in = source.newByteIn(openOptions);
         int remaining = maxBytesToRead;
         try {
             while (remaining != 0) {
@@ -115,7 +116,7 @@ public class StreamReading
             throws IOException, OutOfMemoryError {
         CharArrayWriter buffer = new CharArrayWriter();
         char block[] = new char[blockSize];
-        ICharIn in = source.newCharIn();
+        ICharIn in = source.newCharIn(openOptions);
         try {
             while (true) {
                 int readSize = block.length;
@@ -139,7 +140,7 @@ public class StreamReading
             throws IOException {
         CharArrayWriter buffer = new CharArrayWriter();
         char block[] = new char[blockSize];
-        ICharIn in = source.newCharIn();
+        ICharIn in = source.newCharIn(openOptions);
         int remaining = maxCharsToRead;
         try {
             while (remaining != 0) {
@@ -168,7 +169,7 @@ public class StreamReading
             throws IOException, OutOfMemoryError {
         CharArrayWriter buffer = new CharArrayWriter();
         char block[] = new char[blockSize];
-        ICharIn in = source.newCharIn();
+        ICharIn in = source.newCharIn(openOptions);
         try {
             while (true) {
                 int readSize = block.length;
@@ -186,7 +187,7 @@ public class StreamReading
     public String readStringTill(char term)
             throws IOException {
         StringBuilder buffer = new StringBuilder();
-        ICharIn in = source.newCharIn();
+        ICharIn in = source.newCharIn(openOptions);
         int c;
         try {
             while ((c = in.read()) >= 0) {
@@ -204,7 +205,7 @@ public class StreamReading
     public Mitorx<byte[], IOException> blocks(final boolean allowOverlap)
             throws IOException {
         final byte[] block = new byte[blockSize];
-        final IByteIn in = source.newByteIn();
+        final IByteIn in = source.newByteIn(openOptions);
         return new OverlappedMitor<byte[], IOException>() {
 
             @Override
@@ -279,7 +280,7 @@ public class StreamReading
     public Mitorx<char[], IOException> charBlocks(final boolean allowOverlap)
             throws IOException {
         final char[] block = new char[blockSize];
-        final ICharIn in = source.newCharIn();
+        final ICharIn in = source.newCharIn(openOptions);
         return new OverlappedMitor<char[], IOException>() {
 
             @Override
@@ -358,7 +359,7 @@ public class StreamReading
     public Mitorx<String, ? extends IOException> _lines(boolean chopped)
             throws IOException {
         if (chopped) {
-            final BufferedReader bufferedReader = source.newBufferedReader();
+            final BufferedReader bufferedReader = source.newBufferedReader(openOptions);
             return new AbstractMitorx<String, IOException>() {
 
                 public String _next()
@@ -371,7 +372,7 @@ public class StreamReading
 
             };
         } else {
-            final LineReader lineReader = source.newLineReader();
+            final LineReader lineReader = source.newLineReader(openOptions);
             return new AbstractMitorx<String, IOException>() {
 
                 public String _next()

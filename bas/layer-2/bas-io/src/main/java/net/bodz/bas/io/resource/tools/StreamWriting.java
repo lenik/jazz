@@ -65,12 +65,10 @@ public class StreamWriting
         return this;
     }
 
-    @Override
     public int getBlockSize() {
         return blockSize;
     }
 
-    @Override
     public StreamWriting setBlockSize(int blockSize) {
         if (blockSize <= 0)
             throw new IllegalArgumentException("blockSize must be positive: " + blockSize);
@@ -83,7 +81,7 @@ public class StreamWriting
             throws IOException {
         if (bytes == null)
             throw new NullPointerException("bytes");
-        IByteOut out = target.newByteOut();
+        IByteOut out = target.newByteOut(openOptions);
         try {
             out.write(bytes, off, len);
         } finally {
@@ -102,7 +100,7 @@ public class StreamWriting
             throws IOException {
         if (chars == null)
             throw new NullPointerException("chars");
-        ICharOut out = target.newCharOut();
+        ICharOut out = target.newCharOut(openOptions);
         try {
             out.write(chars, off, len);
         } finally {
@@ -126,7 +124,7 @@ public class StreamWriting
         byte[] block = new byte[blockSize];
         IByteIn in = source.newByteIn();
         try {
-            IByteOut out = target.newByteOut();
+            IByteOut out = target.newByteOut(openOptions);
             try {
                 int limit = maxLength;
                 while (limit > 0) {
@@ -152,7 +150,7 @@ public class StreamWriting
         byte[] block = new byte[blockSize];
         IByteIn in = source.newByteIn();
         try {
-            IByteOut out = target.newByteOut();
+            IByteOut out = target.newByteOut(openOptions);
             try {
                 while (true) {
                     int actual = in.read(block, 0, block.length);
@@ -182,7 +180,7 @@ public class StreamWriting
         char[] block = new char[blockSize];
         ICharIn in = source.newCharIn();
         try {
-            ICharOut out = target.newCharOut();
+            ICharOut out = target.newCharOut(openOptions);
             try {
                 int limit = maxLength;
                 while (limit > 0) {
@@ -212,7 +210,7 @@ public class StreamWriting
         char[] block = new char[blockSize];
         ICharIn in = source.newCharIn();
         try {
-            ICharOut out = target.newCharOut();
+            ICharOut out = target.newCharOut(openOptions);
             try {
                 while (true) {
                     int actual = in.read(block, 0, block.length);
@@ -231,7 +229,7 @@ public class StreamWriting
     @Override
     public void writeString(String string)
             throws IOException {
-        ICharOut out = target.newCharOut();
+        ICharOut out = target.newCharOut(openOptions);
         try {
             out.write(string);
         } finally {
