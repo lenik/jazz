@@ -110,7 +110,7 @@ public abstract class AbstractFsEntry
     public final boolean isBlob() {
         try {
             BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
-            return attrs == null ? null : attrs.isRegularFile();
+            return attrs == null ? false : attrs.isRegularFile();
         } catch (IOException e) {
             return false;
         }
@@ -120,7 +120,7 @@ public abstract class AbstractFsEntry
     public final boolean isDirectory() {
         try {
             BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
-            return attrs == null ? null : attrs.isDirectory();
+            return attrs == null ? false : attrs.isDirectory();
         } catch (IOException e) {
             return false;
         }
@@ -130,7 +130,7 @@ public abstract class AbstractFsEntry
     public final boolean isHidden() {
         try {
             DosFileAttributes attrs = this.readAttributes(DosFileAttributes.class);
-            return attrs == null ? null : attrs.isHidden();
+            return attrs == null ? false : attrs.isHidden();
         } catch (IOException e) {
             return false;
         }

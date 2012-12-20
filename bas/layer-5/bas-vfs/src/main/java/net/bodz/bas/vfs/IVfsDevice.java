@@ -2,6 +2,7 @@ package net.bodz.bas.vfs;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
 
 import org.apache.commons.vfs.FileSystem;
 
@@ -99,11 +100,11 @@ public interface IVfsDevice {
      * 
      * @see File#renameTo(File)
      */
-    boolean rename(String localPathFrom, String localPathTo)
-            throws BadPathException;
+    boolean move(String localPathFrom, String localPathTo, CopyOption... options)
+            throws BadPathException, IOException;
 
     boolean createLink(String localPath, String target, boolean symbolic)
-            throws IOException;
+            throws BadPathException, IOException;
 
     /**
      * @param watchFile

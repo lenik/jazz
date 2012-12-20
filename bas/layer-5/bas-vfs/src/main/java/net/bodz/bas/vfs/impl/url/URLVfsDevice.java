@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.CopyOption;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.err.NotImplementedException;
@@ -103,7 +104,7 @@ public class URLVfsDevice
     }
 
     @Override
-    public boolean rename(String localPathFrom, String localPathTo)
+    public boolean move(String localPathFrom, String localPathTo, CopyOption... options)
             throws BadPathException {
         if (localPathFrom == null)
             throw new NullPointerException("localPathFrom");

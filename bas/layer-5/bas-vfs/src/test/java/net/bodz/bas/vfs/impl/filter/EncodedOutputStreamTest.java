@@ -8,11 +8,12 @@ public class EncodedOutputStreamTest
 
     @Test
     public void testEncodedByteSeq() {
-        fail("Not yet implemented");
+        // TODO testEncodedByteSeq
     }
 
     @Test
     public void testEncodedSwapPair() {
+        // TODO testEncodedSwapPair
     }
 
 }

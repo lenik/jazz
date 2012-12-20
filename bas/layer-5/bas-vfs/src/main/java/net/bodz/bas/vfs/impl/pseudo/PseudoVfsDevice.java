@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
 import java.io.IOException;
+import java.nio.file.CopyOption;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -74,7 +75,7 @@ public class PseudoVfsDevice
      * In File object, it's safely to change the path value.
      */
     @Override
-    public synchronized boolean rename(String localPathFrom, String localPathTo) {
+    public synchronized boolean move(String localPathFrom, String localPathTo, CopyOption... options) {
         if (localPathFrom.equals(localPathTo))
             return false;
 

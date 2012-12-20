@@ -16,7 +16,7 @@ import net.bodz.bas.c.java.nio.DeviceAttributes;
 import net.bodz.bas.c.java.nio.FilePermissionAttributeView;
 import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 
-public class ApacheFileAttributes
+public class FileObjectAttributes
         implements BasicFileAttributeView, BasicFileAttributes, //
         DosFileAttributeView, DosFileAttributes, //
         FilePermissionAttributeView, FilePermissionAttributes, //
@@ -24,7 +24,7 @@ public class ApacheFileAttributes
 
     private final FileObject fileObject;
 
-    public ApacheFileAttributes(FileObject fileObject) {
+    public FileObjectAttributes(FileObject fileObject) {
         if (fileObject == null)
             throw new NullPointerException("fileObject");
         this.fileObject = fileObject;
@@ -36,7 +36,7 @@ public class ApacheFileAttributes
     }
 
     @Override
-    public ApacheFileAttributes readAttributes() {
+    public FileObjectAttributes readAttributes() {
         return this;
     }
 
