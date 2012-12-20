@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.jdk;
+package net.bodz.bas.vfs.impl.pojf;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
@@ -21,58 +21,58 @@ import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.VFSException;
-import net.bodz.bas.vfs.util.Vfs2JdkFileFilter;
-import net.bodz.bas.vfs.util.Vfs2JdkFilenameFilter;
+import net.bodz.bas.vfs.util.Vfs2PojfFileFilter;
+import net.bodz.bas.vfs.util.Vfs2PojfFilenameFilter;
 
 /**
- * @see LocalFileResource
+ * @see FileResource
  */
-public class JdkFile
+public class PojfFile
         extends AbstractFile
         implements IFsDir {
 
-    private final java.io.File origFile;
-    private JdkFileAttributes attributes;
+    private final java.io.File _file;
+    private PojfFileAttributes attributes;
 
     /**
-     * @param jdkPath
+     * @param _pathstr
      *            The pathname of a {@link java.io.File}.
      * @throws NullPointerException
-     *             if <code>jdkPath</code> is <code>null</code>
+     *             if <code>pojfPath</code> is <code>null</code>
      */
-    public JdkFile(String jdkPath) {
-        this(new File(jdkPath));
+    public PojfFile(String _pathstr) {
+        this(new File(_pathstr));
     }
 
     /**
-     * @param jdkFile
+     * @param _file
      *            non-<code>null</code> {@link java.io.File} object.
      */
-    public JdkFile(File jdkFile) {
-        this(JdkVfsDriver.getInstance().getDrive(jdkFile), jdkFile);
+    public PojfFile(File _file) {
+        this(PojfVfsDriver.getInstance().getDrive(_file), _file);
     }
 
-    JdkFile(JdkVfsDevice driveDevice, File jdkFile) {
-        super(driveDevice, jdkFile.getName());
-        this.origFile = jdkFile;
-        this.attributes = new JdkFileAttributes(jdkFile);
+    PojfFile(PojfVfsDevice driveDevice, File _file) {
+        super(driveDevice, _file.getName());
+        this._file = _file;
+        this.attributes = new PojfFileAttributes(_file);
     }
 
-    public java.io.File getOrigFile() {
-        return origFile;
-    }
-
-    @Override
-    public JdkVfsDevice getDevice() {
-        return (JdkVfsDevice) super.getDevice();
+    public java.io.File getInternalFile() {
+        return _file;
     }
 
     @Override
-    public JdkPath getPath() {
-        JdkVfsDevice device = getDevice();
+    public PojfVfsDevice getDevice() {
+        return (PojfVfsDevice) super.getDevice();
+    }
+
+    @Override
+    public PojfPath getPath() {
+        PojfVfsDevice device = getDevice();
 
         String driveName = device.getDriveName();
-        String origPath = origFile.getPath();
+        String origPath = _file.getPath();
 
         String localPath;
         if (driveName == null)
@@ -82,22 +82,22 @@ public class JdkFile
             localPath = origPath.substring(driveName.length());
         }
 
-        JdkPath path = new JdkPath(device.getProtocol(), driveName, localPath);
+        PojfPath path = new PojfPath(device.getProtocol(), driveName, localPath);
         return path;
     }
 
     @Override
-    public JdkFile getParentFile() {
-        File parentFile = origFile.getParentFile();
+    public PojfFile getParentFile() {
+        File parentFile = _file.getParentFile();
         if (parentFile == null)
             return null;
         else
-            return new JdkFile(parentFile);
+            return new PojfFile(parentFile);
     }
 
     @Override
     public Boolean exists() {
-        return origFile.exists();
+        return _file.exists();
     }
 
     @Override
@@ -119,29 +119,29 @@ public class JdkFile
 
     @Override
     public Long getLength() {
-        return origFile.length();
+        return _file.length();
     }
 
     @Override
     public boolean setLength(long newLength)
             throws IOException {
-        return FileData.setLength(origFile, newLength);
+        return FileData.setLength(_file, newLength);
     }
 
     @Override
     public boolean mkblob(boolean touch)
             throws IOException {
-        return FileData.touch(origFile, touch);
+        return FileData.touch(_file, touch);
     }
 
     @Override
     public boolean delete() {
-        return origFile.delete();
+        return _file.delete();
     }
 
     @Override
     public boolean deleteOnExit() {
-        origFile.deleteOnExit();
+        _file.deleteOnExit();
         return true;
     }
 
@@ -149,7 +149,7 @@ public class JdkFile
 
     @Override
     protected IStreamResource newResource(Charset charset) {
-        LocalFileResource resource = new LocalFileResource(origFile);
+        FileResource resource = new FileResource(_file);
         resource.setCharset(charset);
         return resource;
     }
@@ -157,85 +157,85 @@ public class JdkFile
     // -o IFsTree
 
     @Override
-    public JdkFile getChild(String entryName) {
-        File file = new File(this.origFile, entryName);
-        return new JdkFile(file);
+    public PojfFile getChild(String entryName) {
+        File file = new File(this._file, entryName);
+        return new PojfFile(file);
     }
 
     @Override
     public Iterable<? extends IFile> children()
             throws VFSException {
-        String[] childNames = origFile.list();
+        String[] childNames = _file.list();
         return convertNames(Arrays.asList(childNames));
     }
 
     @Override
     public Iterable<? extends IFile> children(IFilenameFilter nameFilter)
             throws VFSException {
-        FilenameFilter adapter = new Vfs2JdkFilenameFilter(nameFilter, this);
-        String[] childNames = origFile.list(adapter);
+        FilenameFilter adapter = new Vfs2PojfFilenameFilter(nameFilter, this);
+        String[] childNames = _file.list(adapter);
         return convertNames(Arrays.asList(childNames));
     }
 
     @Override
     public Iterable<? extends IFile> children(IFileFilter fileFilter)
             throws VFSException {
-        FileFilter adapter = new Vfs2JdkFileFilter(fileFilter);
-        File[] childFiles = origFile.listFiles(adapter);
+        FileFilter adapter = new Vfs2PojfFileFilter(fileFilter);
+        File[] childFiles = _file.listFiles(adapter);
         return convertFiles(Arrays.asList(childFiles));
     }
 
     Iterable<? extends IFile> convertNames(Iterable<String> names) {
-        return Iterables.transform(names, new ITransformer<String, JdkFile>() {
+        return Iterables.transform(names, new ITransformer<String, PojfFile>() {
             @Override
-            public JdkFile transform(String input)
+            public PojfFile transform(String input)
                     throws RuntimeException {
-                return JdkFile.this.getChild(input);
+                return PojfFile.this.getChild(input);
             }
         });
     }
 
     Iterable<? extends IFile> convertFiles(Iterable<File> files) {
-        return Iterables.transform(files, new ITransformer<File, JdkFile>() {
+        return Iterables.transform(files, new ITransformer<File, PojfFile>() {
             @Override
-            public JdkFile transform(File input)
+            public PojfFile transform(File input)
                     throws RuntimeException {
-                return new JdkFile(input);
+                return new PojfFile(input);
             }
         });
     }
 
     @Override
     public boolean mkdir() {
-        return origFile.mkdir();
+        return _file.mkdir();
     }
 
     @Override
     public boolean mkdirs() {
-        return origFile.mkdirs();
+        return _file.mkdirs();
     }
 
     @Override
     public int hashCode() {
         int hash = 0x4c691595;
-        hash += origFile.hashCode();
+        hash += _file.hashCode();
         hash += super.hashCode();
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof JdkFile))
+        if (!(obj instanceof PojfFile))
             return false;
-        JdkFile o = (JdkFile) obj;
-        if (!origFile.equals(o.origFile))
+        PojfFile o = (PojfFile) obj;
+        if (!_file.equals(o._file))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return origFile.toString();
+        return _file.toString();
     }
 
 }

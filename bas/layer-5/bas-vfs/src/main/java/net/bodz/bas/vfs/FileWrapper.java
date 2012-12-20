@@ -3,7 +3,7 @@ package net.bodz.bas.vfs;
 import java.io.File;
 import java.net.URL;
 
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.bas.vfs.impl.pseudo.InputBytesFile;
 import net.bodz.bas.vfs.impl.pseudo.InputStringFile;
 import net.bodz.bas.vfs.impl.url.URLPath;
@@ -19,7 +19,7 @@ public class FileWrapper {
      */
     public static IFile toFile(Object var) {
         if (var instanceof File)
-            return new JdkFile((File) var);
+            return new PojfFile((File) var);
 
         if (var instanceof URL)
             return URLPath.parse((URL) var).resolve();

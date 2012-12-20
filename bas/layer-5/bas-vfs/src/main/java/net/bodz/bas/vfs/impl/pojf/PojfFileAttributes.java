@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.jdk;
+package net.bodz.bas.vfs.impl.pojf;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import net.bodz.bas.c.java.nio.DeviceAttributes;
 import net.bodz.bas.c.java.nio.FilePermissionAttributeView;
 import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 
-public class JdkFileAttributes
+public class PojfFileAttributes
         implements //
         BasicFileAttributeView, BasicFileAttributes, //
         FilePermissionAttributeView, FilePermissionAttributes, //
@@ -21,7 +21,7 @@ public class JdkFileAttributes
 
     private File file;
 
-    public JdkFileAttributes(File file) {
+    public PojfFileAttributes(File file) {
         if (file == null)
             throw new NullPointerException("file");
         this.file = file;
@@ -33,7 +33,7 @@ public class JdkFileAttributes
     }
 
     @Override
-    public JdkFileAttributes readAttributes() {
+    public PojfFileAttributes readAttributes() {
         return this;
     }
 

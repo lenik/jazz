@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.jdk;
+package net.bodz.bas.vfs.impl.pojf;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,7 +12,10 @@ import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
-public class JdkVfsDriver
+/**
+ * POJF: Plain Old Java File
+ */
+public class PojfVfsDriver
         extends AbstractVfsDriver {
 
     /**
@@ -21,12 +24,12 @@ public class JdkVfsDriver
     public static final int MAX_DRIVE_LENGTH = 1;
 
     final String protocol;
-    final JdkVfsDevice superDrive;
-    final Map<String, JdkVfsDevice> driveMap;
+    final PojfVfsDevice superDrive;
+    final Map<String, PojfVfsDevice> driveMap;
 
-    public JdkVfsDriver(String protocol) {
+    public PojfVfsDriver(String protocol) {
         this.protocol = protocol;
-        superDrive = new JdkVfsDevice(this, null);
+        superDrive = new PojfVfsDevice(this, null);
         driveMap = new HashMap<>();
     }
 
@@ -36,7 +39,7 @@ public class JdkVfsDriver
     }
 
     @Override
-    protected JdkPath _parse(String protocol, String _path)
+    protected PojfPath _parse(String protocol, String _path)
             throws BadPathException {
         // Ignore the protocol.
         int colon = _path.indexOf(':');
@@ -54,29 +57,29 @@ public class JdkVfsDriver
         while (localPath.startsWith("/"))
             localPath = localPath.substring(1);
 
-        JdkVfsDevice device = getDrive(drive);
+        PojfVfsDevice device = getDrive(drive);
         return device.parse(localPath);
     }
 
     @Override
-    public JdkFile resolve(IPath _path)
+    public PojfFile resolve(IPath _path)
             throws FileResolveException {
-        JdkPath path = (JdkPath) _path;
+        PojfPath path = (PojfPath) _path;
         String driveName = path.getDeviceSpec();
-        JdkVfsDevice device = getDrive(driveName);
-        JdkFile file = device.resolve(path);
+        PojfVfsDevice device = getDrive(driveName);
+        PojfFile file = device.resolve(path);
         return file;
     }
 
-    public List<JdkVfsDevice> getDrives() {
-        List<JdkVfsDevice> drives = new ArrayList<JdkVfsDevice>();
+    public List<PojfVfsDevice> getDrives() {
+        List<PojfVfsDevice> drives = new ArrayList<PojfVfsDevice>();
 
         for (File root : File.listRoots()) {
             String deviceName = getDriveName(root);
-            JdkVfsDevice drive = getDrive(deviceName);
+            PojfVfsDevice drive = getDrive(deviceName);
 
-            JdkFile rootFile = drive.getRootFile();
-            assert rootFile.getOrigFile().equals(root);
+            PojfFile rootFile = drive.getRootFile();
+            assert rootFile.getInternalFile().equals(root);
 
             drives.add(drive);
         }
@@ -92,26 +95,26 @@ public class JdkVfsDriver
             return pathname.substring(0, colon);
     }
 
-    public JdkVfsDevice getDrive(File jdkFile) {
-        String deviceName = getDriveName(jdkFile);
+    public PojfVfsDevice getDrive(File _file) {
+        String deviceName = getDriveName(_file);
         return getDrive(deviceName);
     }
 
-    public synchronized JdkVfsDevice getDrive(String driveName) {
+    public synchronized PojfVfsDevice getDrive(String driveName) {
         if (driveName == null)
             return superDrive;
 
-        JdkVfsDevice device = driveMap.get(driveName);
+        PojfVfsDevice device = driveMap.get(driveName);
         if (device == null) {
-            device = new JdkVfsDevice(this, driveName);
+            device = new PojfVfsDevice(this, driveName);
             driveMap.put(driveName, device);
         }
         return device;
     }
 
-    private static final JdkVfsDriver instance = new JdkVfsDriver("file");
+    private static final PojfVfsDriver instance = new PojfVfsDriver("file");
 
-    public static JdkVfsDriver getInstance() {
+    public static PojfVfsDriver getInstance() {
         return instance;
     }
 

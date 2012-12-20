@@ -7,7 +7,7 @@ import org.junit.Test;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.redist.installer.builtins.TestConfig;
 
 public class ConsoleExecutorTest
@@ -22,7 +22,7 @@ public class ConsoleExecutorTest
     @Test
     public void testPack()
             throws SessionException {
-        IFile outdir = new JdkFile(TestConfig.outDir);
+        IFile outdir = new PojfFile(TestConfig.outDir);
         session.addResFolder(0, outdir);
         session.dump(Stdio.cout);
         pack();
@@ -31,7 +31,7 @@ public class ConsoleExecutorTest
     @Test
     public void testInstall()
             throws SessionException {
-        session.addResFolder(new JdkFile(TestConfig.outDir));
+        session.addResFolder(new PojfFile(TestConfig.outDir));
         session.setScheme(Schemes.MAXIMUM);
         TestConfig.setTestBaseDir(session);
         install();
@@ -40,7 +40,7 @@ public class ConsoleExecutorTest
     @Test
     public void testUninstall()
             throws SessionException {
-        session.addResFolder(new JdkFile(TestConfig.outDir));
+        session.addResFolder(new PojfFile(TestConfig.outDir));
         // uninstaller should get the installed base dir from system registry.
         session.setScheme(Schemes.MAXIMUM);
         TestConfig.setTestBaseDir(session);

@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.jdk;
+package net.bodz.bas.vfs.impl.pojf;
 
 import java.io.File;
 import java.net.URL;
@@ -12,13 +12,13 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.IPath;
 
-public class JdkFileTest
+public class PojfFileTest
         extends Assert {
 
     @Test
     public void readFooTxt()
             throws Exception {
-        URL url = JdkFileTest.class.getResource("foo.txt");
+        URL url = PojfFileTest.class.getResource("foo.txt");
         IPath _path = VFS.parse(url.toString());
         // NestedURLPath path = (NestedURLPath) _path;
         IFile file = VFS.resolve(_path);

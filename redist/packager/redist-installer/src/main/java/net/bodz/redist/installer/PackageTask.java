@@ -13,7 +13,7 @@ import net.bodz.bas.err.RecoverableExceptionEvent;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsDir;
-import net.bodz.bas.vfs.impl.jdk.JdkFile;
+import net.bodz.bas.vfs.impl.pojf.PojfFile;
 
 /**
  * Ant task for package Distins-Project
@@ -42,7 +42,7 @@ public class PackageTask
     }
 
     public void setOutDir(File outdir) {
-        IFile folder = new JdkFile(outdir);
+        IFile folder = new PojfFile(outdir);
         setResFolder(folder);
     }
 
