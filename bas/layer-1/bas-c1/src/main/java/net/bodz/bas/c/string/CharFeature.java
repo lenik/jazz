@@ -33,6 +33,9 @@ public class CharFeature {
     public static int getDigits(int radix, int num, boolean fullUsedOnly) {
         if (radix < 2)
             throw new IllegalArgumentException("radix must be >= 2");
+        if (num == 0)
+            return 1;
+
         int digits = 0;
         num = Math.abs(num);
         while (num != 0) {
@@ -64,7 +67,7 @@ public class CharFeature {
                 15, 14, 14, 14, 14, 13, 13, 13, 13, 13, 13, 13, 12, 12 };
     }
 
-    public static int _getDigits(int radix, int num) {
+    public static int calcDigits(int radix, int num) {
         if (num == Integer.MAX_VALUE)
             return intDigits[radix];
         num = Math.abs(num);
@@ -74,7 +77,7 @@ public class CharFeature {
         return 1 + (int) r;
     }
 
-    public static int _getDigits(int radix, long maxValue) {
+    public static int calcDigits(int radix, long maxValue) {
         if (maxValue == Long.MAX_VALUE)
             return longDigits[radix];
         double r = Math.log(maxValue) / Math.log(radix);
@@ -83,11 +86,13 @@ public class CharFeature {
 
     public static void main(String[] args) {
         for (int radix = 2; radix < 20; radix++) {
-            for (int i = 0; i < 10000; i++) {
-                int n1 = getDigits(radix, i);
-                int n2 = _getDigits(radix, i);
+            for (int num = 0; num < 10000; num++) {
+                int n1 = getDigits(radix, num);
+                int n2 = calcDigits(radix, num);
                 if (n1 != n2) {
-                    System.out.printf("r=%d %d = %d, %d\n", radix, i, n1, n2);
+                    String str = Integer.toString(num, radix);
+                    System.out.printf("radix %d: number %d (%s) has %d digits, but log/calc gives %d digits\n", //
+                            radix, num, str, n1, n2);
                 }
             }
         }

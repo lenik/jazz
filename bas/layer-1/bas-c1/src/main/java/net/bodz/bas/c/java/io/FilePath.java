@@ -263,4 +263,61 @@ public class FilePath {
         return path;
     }
 
+    static File[] environPathArray;
+    static String[] environPathExtArray;
+    static {
+        String ps = System.getProperty("path.separator");
+        if (ps == null)
+            ps = ":";
+        String pathenv = System.getenv("PATH");
+        if (pathenv == null)
+            environPathArray = new File[0];
+        else {
+            String[] v = pathenv.split(ps);
+            environPathArray = new File[v.length];
+            for (int i = 0; i < v.length; i++)
+                environPathArray[i] = new File(v[i]);
+        }
+
+        String pathextenv = System.getenv("PATHEXT");
+        if (pathextenv == null)
+            environPathExtArray = new String[0];
+        else {
+            String[] v = pathextenv.split(ps);
+            // sysExts = new String[v.length];
+            // for (int i = 0; i < v.length; i++)
+            // sysExts[i] = "." + v[i];
+            environPathExtArray = v;
+        }
+    }
+
+    /**
+     * Find program using system default PATHEXT (win32 only).
+     * 
+     * @return <code>null</code> if couldn't find name.
+     */
+    public static File which(String name, File... paths) {
+        return which(name, environPathExtArray, paths);
+    }
+
+    /**
+     * @return <code>null</code> if couldn't find name.
+     */
+    public static File which(String name, String[] pathExts, File... paths) {
+        if (paths == null || paths.length == 0)
+            paths = environPathArray;
+        for (File path : paths) {
+            File f = new File(path, name);
+            if (f.isFile())
+                return f;
+            if (pathExts != null)
+                for (String ext : pathExts) {
+                    f = new File(path, name + ext);
+                    if (f.isFile())
+                        return f;
+                }
+        }
+        return null;
+    }
+
 }

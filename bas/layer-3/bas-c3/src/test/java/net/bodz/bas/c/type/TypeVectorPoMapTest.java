@@ -8,27 +8,27 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.type.testtype.*;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.t.preorder.testtype.*;
 
 public class TypeVectorPoMapTest
         extends Assert {
 
-    static Class<?>[] r(Class<?>... classes) {
+    static Class<?>[] array(Class<?>... classes) {
         return classes;
     }
 
     Map<Class<?>[], Object> orig = new HashMap<Class<?>[], Object>();
     {
-        orig.put(r(Cat.class, Dog.class), "Cat, Dog");
-        orig.put(r(C.class, Dog.class), "C, Dog");
-        orig.put(r(Cat.class, D.class), "Cat, D");
-        orig.put(r(C.class, D.class), "C, D");
-        orig.put(r(CI.class, Dx.class), "CI, Dx");
-        orig.put(r(CI.class, DxKI.class), "CI, DxKI");
-        orig.put(r(CJz.class, DxKI.class), "CJz, DxKI");
-        orig.put(r(CJz.class, DIJy.class), "CJz, DIJy");
-        orig.put(r(CJzKI.class, DIJ.class), "CJzKI, DIJ");
+        orig.put(array(Cat.class, Dog.class), "Cat, Dog");
+        orig.put(array(C.class, Dog.class), "C, Dog");
+        orig.put(array(Cat.class, D.class), "Cat, D");
+        orig.put(array(C.class, D.class), "C, D");
+        orig.put(array(CI.class, Dx.class), "CI, Dx");
+        orig.put(array(CI.class, DxKI.class), "CI, DxKI");
+        orig.put(array(CJz.class, DxKI.class), "CJz, DxKI");
+        orig.put(array(CJz.class, DIJy.class), "CJz, DIJy");
+        orig.put(array(CJzKI.class, DIJ.class), "CJzKI, DIJ");
     }
 
     static String joinSimpleName(Class<?>[] classes) {
@@ -65,21 +65,21 @@ public class TypeVectorPoMapTest
 
         List<Object> children;
 
-        assertEquals("CI, DxKI", map.meet(r(CI.class, DxKIx.class)));
+        assertEquals("CI, DxKI", map.meet(array(CI.class, DxKIx.class)));
 
-        children = Iterables.toList(map.join(r(CI.class, D.class)));
+        children = Iterables.toList(map.join(array(CI.class, D.class)));
         assertEquals(2, children.size());
         assertEquals("CI, Dx", children.get(0));
         assertEquals("CI, DxKI", children.get(1));
 
-        children = Iterables.toList(map.join(r(CJ.class, I.class)));
+        children = Iterables.toList(map.join(array(CJ.class, I.class)));
         assertEquals(3, children.size());
         // DIJy extends DIJ, but CJz order take precedence.
         assertEquals("CJz, DIJy", children.get(0)); // DIJy
         assertEquals("CJz, DxKI", children.get(1));
         assertEquals("CJzKI, DIJ", children.get(2)); // DIJ
 
-        assertEquals(null, map.meet(r(CJzKI.class, Dx.class)));
+        assertEquals(null, map.meet(array(CJzKI.class, Dx.class)));
     }
 
 }

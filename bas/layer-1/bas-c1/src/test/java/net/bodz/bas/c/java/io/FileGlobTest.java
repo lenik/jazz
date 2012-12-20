@@ -6,13 +6,13 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FileWildTest
+public class FileGlobTest
         extends Assert {
 
     @Test
     public void testListFiles() {
 
-        List<File> find = FileWild.listFiles("K:/workspace/net.bodz/*/mod/*/src/net/bodz");
+        List<File> find = FileGlob.listFiles("K:/workspace/net.bodz/*/mod/*/src/net/bodz");
         if (find == null)
             System.out.println("no match");
         else

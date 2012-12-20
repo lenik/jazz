@@ -8,7 +8,6 @@ import org.junit.Test;
 public class FileGCDTest
         extends Assert {
 
-    @Test
     void testFindBase(String expected, String a, String b) {
         File fa = a == null ? null : new File(a);
         File fb = b == null ? null : new File(b);
