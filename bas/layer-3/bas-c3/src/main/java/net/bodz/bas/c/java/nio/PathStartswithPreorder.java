@@ -9,6 +9,10 @@ public class PathStartswithPreorder
 
     @Override
     public int compare(Path o1, Path o2) {
+        int cmp = precompare(o1, o2);
+        if (cmp != UNKNOWN)
+            return cmp;
+
         String s1 = o1.toString();
         String s2 = o2.toString();
         return s1.compareTo(s2);

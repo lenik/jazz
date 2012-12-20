@@ -1,7 +1,10 @@
 package net.bodz.bas.t.preorder;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import net.bodz.bas.t.iterator.PrefetchedIterator;
@@ -133,9 +136,29 @@ public class PreorderTreeMap<K, V>
             return entry.getValue();
     }
 
+    public Map<K, V> joinMap(K key) {
+        Map<K, V> map = new LinkedHashMap<K, V>();
+
+        Map.Entry<K, V> entry = joinEntry_fast(key);
+
+        while (entry != null) {
+            K _key = entry.getKey();
+            map.put(_key, entry.getValue());
+
+            entry = higherEntry(_key);
+            if (entry == null)
+                break;
+
+            if (!preorder.isLessOrEquals(_key, entry.getKey()))
+                break;
+        }
+
+        return map;
+    }
+
     @Override
     public Iterable<Map.Entry<K, V>> joinEntries(final K key) {
-        final Map.Entry<K, V> start = ceilingEntry(key);
+        final Map.Entry<K, V> start = joinEntry_fast(key);
 
         class Iter
                 extends PrefetchedIterator<Map.Entry<K, V>> {
@@ -165,12 +188,19 @@ public class PreorderTreeMap<K, V>
         };
     }
 
+    public Set<K> joinKeySet(K key) {
+        Set<K> set = new HashSet<K>();
+        for (K k : joinKeys(key))
+            set.add(k);
+        return set;
+    }
+
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
     @Override
     public Iterable<K> joinKeys(final K key) {
-        final K start = ceilingKey(key);
+        final K start = joinKey_fast(key);
 
         class Iter
                 extends PrefetchedIterator<K> {
@@ -200,12 +230,20 @@ public class PreorderTreeMap<K, V>
         };
     }
 
+    @Override
+    public Set<V> joinValueSet(K key) {
+        Set<V> list = new HashSet<V>();
+        for (V val : join(key))
+            list.add(val);
+        return list;
+    }
+
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
     @Override
     public Iterable<V> join(final K key) {
-        final Map.Entry<K, V> start = ceilingEntry(key);
+        final Map.Entry<K, V> start = joinEntry_fast(key);
 
         class HigherIter
                 extends PrefetchedIterator<V> {

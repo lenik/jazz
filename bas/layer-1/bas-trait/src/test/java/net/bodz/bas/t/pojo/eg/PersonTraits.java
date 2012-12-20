@@ -1,6 +1,5 @@
-package net.bodz.bas.util.example;
+package net.bodz.bas.t.pojo.eg;
 
-import net.bodz.bas.t.pojo.eg.Person;
 import net.bodz.bas.traits.AbstractCommonTraits;
 
 public class PersonTraits

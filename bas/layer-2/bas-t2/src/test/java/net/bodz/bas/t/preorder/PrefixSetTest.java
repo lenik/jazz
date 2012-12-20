@@ -50,11 +50,11 @@ public class PrefixSetTest
     public void testHasChildren() {
         class D {
             void T(String input) {
-                assertNotNull(set.ceiling(input));
+                assertNotNull(set.join_fast(input));
             }
 
             void F(String input) {
-                assertNull(set.ceiling(input));
+                assertNull(set.join_fast(input));
             }
         }
         D d = new D(); //
@@ -74,8 +74,8 @@ public class PrefixSetTest
         set.add("cat");
         set.add("catx");
         set.add("catz");
-        assertEquals("catx", set.floor("catxy"));
-        assertEquals("cat", set.floor("caty"));
+        assertEquals("catx", set.meet("catxy"));
+        assertEquals("cat", set.meet("caty"));
     }
 
 }

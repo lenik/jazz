@@ -22,7 +22,14 @@ public class LogLevelPreorder
     public int precompare(LogLevel o1, LogLevel o2) {
         if (o1.getGroup() != o2.getGroup())
             return UNKNOWN;
-        return o1.getPriority() - o2.getPriority();
+
+        int diff = o1.getPriority() - o2.getPriority();
+        if (diff < 0)
+            return LESS_THAN;
+        else if (diff > 0)
+            return GREATER_THAN;
+
+        return compareIdentity(o1, o2);
     }
 
     private static final LogLevelPreorder instance = new LogLevelPreorder();

@@ -1,4 +1,4 @@
-package net.bodz.bas.c.type.order;
+package net.bodz.bas.c.type;
 
 import net.bodz.bas.t.preorder.AbstractPreorder;
 

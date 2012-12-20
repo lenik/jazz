@@ -26,16 +26,20 @@ public class FileStartswithPreorder
     public int precompare(File o1, File o2) {
         if (o1.equals(o2))
             return EQUALS;
+
         String path1 = o1.getPath();
         String path2 = o2.getPath();
+
         if (o1.isDirectory())
             path1 += "/";
         if (o2.isDirectory())
             path2 += "/";
+
         if (path1.startsWith(path2))
             return GREATER_THAN;
         if (path2.startsWith(path1))
             return LESS_THAN;
+
         return UNKNOWN;
     }
 

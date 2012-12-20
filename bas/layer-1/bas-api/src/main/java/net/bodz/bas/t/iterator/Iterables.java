@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.fn.IFilter;
@@ -63,6 +64,14 @@ public class Iterables {
 
     public static <T> Iterable<T> otp(Enumeration<T> enumeration) {
         return new OtpEnumWrapper<T>(enumeration);
+    }
+
+    public static <T> Set<T> toSet(Iterable<T> iterable) {
+        return Iterators.toSet(iterable.iterator());
+    }
+
+    public static <T> Set<T> toSet(Iterable<T> iterable, int appxSize) {
+        return Iterators.toSet(iterable.iterator(), appxSize);
     }
 
     public static <T> List<T> toList(Iterable<T> iterable) {
