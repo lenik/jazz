@@ -1,6 +1,7 @@
 package net.bodz.bas.io.resource.tools;
 
 import java.io.IOException;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -17,7 +18,8 @@ public class StreamWriting
 
     private final IStreamOutputTarget target;
 
-    private boolean appendMode;
+    private OpenOption[] openOptions = {};
+
     private boolean autoFlush;
     private int blockSize = 4096;
 
@@ -42,13 +44,13 @@ public class StreamWriting
     }
 
     @Override
-    public boolean isAppendMode() {
-        return appendMode;
+    public OpenOption[] getOpenOptions() {
+        return openOptions;
     }
 
     @Override
-    public StreamWriting setAppendMode(boolean appendMode) {
-        this.appendMode = appendMode;
+    public StreamWriting setOpenOptions(OpenOption... openOptions) {
+        this.openOptions = openOptions;
         return this;
     }
 
@@ -68,6 +70,7 @@ public class StreamWriting
         return blockSize;
     }
 
+    @Override
     public StreamWriting setBlockSize(int blockSize) {
         if (blockSize <= 0)
             throw new IllegalArgumentException("blockSize must be positive: " + blockSize);

@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.Writer;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharOut;
@@ -17,34 +18,34 @@ public abstract class JavaioStreamOutputTarget
         extends AbstractStreamOutputTarget {
 
     @Override
-    protected abstract OutputStream _newOutputStream(boolean append)
+    protected abstract OutputStream _newOutputStream(OpenOption... options)
             throws IOException;
 
     @Override
-    protected Writer _newWriter(boolean append)
+    protected Writer _newWriter(OpenOption... options)
             throws IOException {
-        OutputStream out = _newOutputStream(append);
+        OutputStream out = _newOutputStream(options);
         return new OutputStreamWriter(out, getCharset());
     }
 
     @Override
-    protected IByteOut _newByteOut(boolean append)
+    protected IByteOut _newByteOut(OpenOption... options)
             throws IOException {
-        OutputStream out = _newOutputStream(append);
+        OutputStream out = _newOutputStream(options);
         return new OutputStreamByteOut(out);
     }
 
     @Override
-    protected IPrintOut _newPrintOut(boolean append)
+    protected IPrintOut _newPrintOut(OpenOption... options)
             throws IOException {
-        PrintStream ps = newPrintStream(append);
+        PrintStream ps = newPrintStream(options);
         return new PrintStreamPrintOut(ps);
     }
 
     @Override
-    protected ICharOut _newCharOut(boolean append)
+    protected ICharOut _newCharOut(OpenOption... options)
             throws IOException {
-        Writer writer = _newWriter(append);
+        Writer writer = _newWriter(options);
         return new WriterCharOut(writer);
     }
 

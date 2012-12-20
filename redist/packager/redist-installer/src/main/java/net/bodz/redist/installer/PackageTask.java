@@ -43,13 +43,11 @@ public class PackageTask
 
     public void setOutDir(File outdir) {
         IFile folder = new JdkFile(outdir);
-        folder.autoCreateParents();
         setResFolder(folder);
     }
 
     public void setOutJar(File zipFile) {
         IFile outjar = new ZipResFolder(zipFile);
-        outjar.autoCreateParents();
         setResFolder(outjar);
     }
 

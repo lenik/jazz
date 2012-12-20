@@ -2,7 +2,9 @@ package net.bodz.bas.io.resource.builtin;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.OpenOption;
 
+import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
@@ -44,13 +46,15 @@ public class BytesResource
      * @return {@link OutputStream} with {@link OutputStream#close()} filtered out.
      */
     @Override
-    protected OutputStream _newOutputStream(boolean append)
+    protected OutputStream _newOutputStream(OpenOption... options)
             throws IOException {
         if (buffer == null)
             buffer = new MovableByteBuffer();
 
+        CommonOpenConfig config = CommonOpenConfig.parse(options);
+
         int pos;
-        if (append) {
+        if (config.isAppend()) {
             pos = buffer.size();
         } else {
             buffer.resize(pos = 0);
@@ -60,13 +64,15 @@ public class BytesResource
     }
 
     @Override
-    protected IByteOut _newByteOut(boolean append)
+    protected IByteOut _newByteOut(OpenOption... options)
             throws IOException {
         if (buffer == null)
             buffer = new MovableByteBuffer();
 
+        CommonOpenConfig config = CommonOpenConfig.parse(options);
+
         int pos;
-        if (append) {
+        if (config.isAppend()) {
             pos = buffer.size();
         } else {
             buffer.resize(pos = 0);
@@ -76,7 +82,7 @@ public class BytesResource
     }
 
     @Override
-    protected IByteIn _newByteIn()
+    protected IByteIn _newByteIn(OpenOption... options)
             throws IOException {
         if (buffer == null)
             throw new IllegalStateException("Resource isn't created, yet.");

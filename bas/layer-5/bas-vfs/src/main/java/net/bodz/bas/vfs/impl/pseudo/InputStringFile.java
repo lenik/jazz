@@ -67,7 +67,7 @@ public class InputStringFile
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
         throw new UnsupportedOperationException("Read-Only");
     }
 

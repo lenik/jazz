@@ -4,6 +4,7 @@ import java.io.FilterReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.ReaderInputStream;
 import net.bodz.bas.io.resource.AbstractStreamInputSource;
@@ -31,7 +32,7 @@ public class ReaderSource
      * @return {@link Reader} with {@link Reader#close()} filtered out.
      */
     @Override
-    protected Reader _newReader()
+    protected Reader _newReader(OpenOption... options)
             throws IOException {
         return new FilterReader(in) {
             @Override
@@ -42,21 +43,21 @@ public class ReaderSource
     }
 
     @Override
-    protected InputStream _newInputStream()
+    protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
-        return new ReaderInputStream(newReader(), getCharset());
+        return new ReaderInputStream(newReader(options), getCharset());
     }
 
     @Override
-    public IByteIn _newByteIn()
+    public IByteIn _newByteIn(OpenOption... options)
             throws IOException {
-        return new InputStreamByteIn(newInputStream());
+        return new InputStreamByteIn(newInputStream(options));
     }
 
     @Override
-    public ICharIn _newCharIn()
+    public ICharIn _newCharIn(OpenOption... options)
             throws IOException {
-        return new ReaderCharIn(newReader());
+        return new ReaderCharIn(newReader(options));
     }
 
 }

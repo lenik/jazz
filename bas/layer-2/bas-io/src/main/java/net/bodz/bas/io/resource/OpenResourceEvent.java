@@ -1,5 +1,6 @@
 package net.bodz.bas.io.resource;
 
+import java.nio.file.OpenOption;
 import java.util.EventObject;
 
 public class OpenResourceEvent
@@ -8,20 +9,20 @@ public class OpenResourceEvent
     private static final long serialVersionUID = 1L;
 
     boolean output;
-    boolean append;
+    OpenOption[] options;
 
-    public OpenResourceEvent(Object source, boolean output, boolean append) {
+    public OpenResourceEvent(Object source, boolean output, OpenOption... options) {
         super(source);
         this.output = output;
-        this.append = append;
+        this.options = options;
     }
 
     public boolean isOutput() {
         return output;
     }
 
-    public boolean isAppend() {
-        return append;
+    public OpenOption[] getOptions() {
+        return options;
     }
 
 }

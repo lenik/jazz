@@ -14,7 +14,7 @@ public abstract class AbstractSeqRecords<T>
     protected AbstractSeqRecords(IStreamInputSource source) {
         if (source == null)
             throw new NullPointerException("source");
-        this.source = source.clone();
+        this.source = source;
     }
 
 }

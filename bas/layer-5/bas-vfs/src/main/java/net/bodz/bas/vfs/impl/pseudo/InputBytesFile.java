@@ -36,7 +36,7 @@ public class InputBytesFile
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(boolean append, Charset charset) {
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
         throw new ReadOnlyException();
     }
 

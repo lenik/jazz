@@ -1,7 +1,9 @@
 package net.bodz.bas.io.resource.builtin;
 
 import java.nio.charset.CharsetDecoder;
+import java.nio.file.OpenOption;
 
+import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
 import net.bodz.bas.sio.BufCharOut;
 import net.bodz.bas.sio.IByteOut;
@@ -28,20 +30,22 @@ public class StringBufferTarget
     }
 
     @Override
-    protected ICharOut _newCharOut(boolean append) {
-        return _newPrintOut(append);
+    protected ICharOut _newCharOut(OpenOption... options) {
+        return _newPrintOut(options);
     }
 
     @Override
-    protected BufCharOut _newPrintOut(boolean append) {
-        if (!append)
+    protected BufCharOut _newPrintOut(OpenOption... options) {
+        CommonOpenConfig config = CommonOpenConfig.parse(options);
+
+        if (!config.isAppend())
             buffer.setLength(0);
         return new BufCharOut(buffer);
     }
 
     @Override
-    protected IByteOut _newByteOut(boolean append) {
-        ICharOut charOut = _newCharOut(append);
+    protected IByteOut _newByteOut(OpenOption... options) {
+        ICharOut charOut = _newCharOut(options);
         CharsetDecoder decoder = getCharset().newDecoder();
         return new DecodedByteOut(charOut, decoder);
     }

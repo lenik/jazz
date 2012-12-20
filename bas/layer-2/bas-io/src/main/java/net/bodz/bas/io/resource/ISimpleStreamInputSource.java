@@ -2,14 +2,12 @@ package net.bodz.bas.io.resource;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 
-public interface ISimpleStreamInputSource
-        extends Cloneable {
-
-    ISimpleStreamInputSource clone();
+public interface ISimpleStreamInputSource {
 
     Charset getCharset();
 
@@ -22,13 +20,13 @@ public interface ISimpleStreamInputSource
     /**
      * @return non-<code>null</code> value.
      */
-    IByteIn newByteIn()
+    IByteIn newByteIn(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    ICharIn newCharIn()
+    ICharIn newCharIn(OpenOption... options)
             throws IOException;
 
 }

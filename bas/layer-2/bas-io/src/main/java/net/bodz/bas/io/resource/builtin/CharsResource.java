@@ -2,7 +2,9 @@ package net.bodz.bas.io.resource.builtin;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.OpenOption;
 
+import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
@@ -45,13 +47,15 @@ public class CharsResource
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */
     @Override
-    protected Writer _newWriter(boolean append)
+    protected Writer _newWriter(OpenOption... options)
             throws IOException {
         if (buffer == null)
             buffer = new MovableCharBuffer();
 
+        CommonOpenConfig config = CommonOpenConfig.parse(options);
+
         int pos;
-        if (append) {
+        if (config.isAppend()) {
             pos = buffer.size();
         } else {
             buffer.resize(pos = 0);
@@ -61,13 +65,15 @@ public class CharsResource
     }
 
     @Override
-    protected IPrintOut _newPrintOut(boolean append)
+    protected IPrintOut _newPrintOut(OpenOption... options)
             throws IOException {
         if (buffer == null)
             buffer = new MovableCharBuffer();
 
+        CommonOpenConfig config = CommonOpenConfig.parse(options);
+
         int pos;
-        if (append) {
+        if (config.isAppend()) {
             pos = buffer.size();
         } else {
             buffer.resize(pos = 0);
@@ -77,13 +83,13 @@ public class CharsResource
     }
 
     @Override
-    protected ICharOut _newCharOut(boolean append)
+    protected ICharOut _newCharOut(OpenOption... options)
             throws IOException {
-        return _newPrintOut(append);
+        return _newPrintOut(options);
     }
 
     @Override
-    protected ICharIn _newCharIn()
+    protected ICharIn _newCharIn(OpenOption... options)
             throws IOException {
         if (buffer == null)
             throw new IllegalStateException("Resource isn't created, yet");

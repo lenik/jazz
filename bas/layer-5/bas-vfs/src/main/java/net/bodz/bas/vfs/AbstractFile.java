@@ -5,6 +5,7 @@ import static net.bodz.bas.vfs.FileFlags.*;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IOpenResourceListener;
@@ -253,17 +254,21 @@ public abstract class AbstractFile
         if (resource == null)
             return null;
 
-        if (isAutoCreateParents())
-            resource.addOpenResourceListener(new IOpenResourceListener() {
-                @Override
-                public void openResource(OpenResourceEvent event)
-                        throws IOException {
+        resource.addOpenResourceListener(new IOpenResourceListener() {
+            @Override
+            public void openResource(OpenResourceEvent event)
+                    throws IOException {
+
+                CommonOpenConfig config = CommonOpenConfig.parse(event.getOptions());
+
+                if (config.isCreateParents()) {
                     IFile parent = getParentFile();
                     if (parent != null)
                         if (!parent.mkdirs())
                             throw new IOException("Can't create parents for " + this);
                 }
-            });
+            }
+        });
         return resource;
     }
 
@@ -294,42 +299,25 @@ public abstract class AbstractFile
 
     @Override
     public final IStreamOutputTarget getOutputTarget() {
-        // There no preferred-append-mode.
-        return getOutputTarget(false);
-    }
-
-    @Override
-    public final IStreamOutputTarget getOutputTarget(String charsetName) {
-        return getOutputTarget(false, charsetName);
-    }
-
-    @Override
-    public final IStreamOutputTarget getOutputTarget(Charset charset) {
-        return getOutputTarget(false, charset);
-    }
-
-    @Override
-    public final IStreamOutputTarget getOutputTarget(boolean appendMode) {
         Charset charset = getPreferredCharset();
         if (charset == null)
             charset = LocaleColos.charset.get();
         // There no preferred-append-mode.
-        return getOutputTarget(appendMode, charset);
+        return getOutputTarget(charset);
     }
 
     @Override
-    public final IStreamOutputTarget getOutputTarget(boolean appendMode, String charsetName) {
+    public final IStreamOutputTarget getOutputTarget(String charsetName) {
         Charset charset = Charset.forName(charsetName);
-        return getOutputTarget(appendMode, charset);
+        return getOutputTarget(charset);
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
         IStreamResource resource = getResource(charset);
         if (resource == null)
             throw new NullPointerException("resource");
 
-        resource.setAppendMode(appendMode);
         return resource;
     }
 

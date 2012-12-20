@@ -1,6 +1,7 @@
 package net.bodz.bas.io.resource;
 
 import java.io.*;
+import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectOutput;
@@ -29,108 +30,105 @@ public abstract class ProxyStreamResource
     }
 
     @Override
-    public abstract IStreamResource clone();
-
-    @Override
-    protected IByteIn _newByteIn()
+    protected IByteIn _newByteIn(OpenOption... options)
             throws IOException {
-        return getWrapped().newByteIn();
+        return getWrapped().newByteIn(options);
     }
 
     @Override
-    protected IByteOut _newByteOut(boolean append)
+    protected IByteOut _newByteOut(OpenOption... options)
             throws IOException {
-        return getWrapped().newByteOut(append);
+        return getWrapped().newByteOut(options);
     }
 
     @Override
-    protected ICharIn _newCharIn()
+    protected ICharIn _newCharIn(OpenOption... options)
             throws IOException {
-        return getWrapped().newCharIn();
+        return getWrapped().newCharIn(options);
     }
 
     @Override
-    protected ICharOut _newCharOut(boolean append)
+    protected ICharOut _newCharOut(OpenOption... options)
             throws IOException {
-        return getWrapped().newCharOut(append);
+        return getWrapped().newCharOut(options);
     }
 
     @Override
-    protected InputStream _newInputStream()
+    protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
-        return getWrapped().newInputStream();
+        return getWrapped().newInputStream(options);
     }
 
     @Override
-    protected IPrintOut _newPrintOut(boolean append)
+    protected IPrintOut _newPrintOut(OpenOption... options)
             throws IOException {
-        return getWrapped().newPrintOut(append);
+        return getWrapped().newPrintOut(options);
     }
 
     @Override
-    protected ObjectInput _newObjectInput()
+    protected ObjectInput _newObjectInput(OpenOption... options)
             throws IOException {
-        return getWrapped().newObjectInput();
+        return getWrapped().newObjectInput(options);
     }
 
     @Override
-    protected Reader _newReader()
+    protected Reader _newReader(OpenOption... options)
             throws IOException {
-        return getWrapped().newReader();
+        return getWrapped().newReader(options);
     }
 
     @Override
-    protected IByteOutEx _newByteOutNative(boolean append)
+    protected IByteOutEx _newByteOutNative(OpenOption... options)
             throws IOException {
-        return getWrapped().newByteOutNative(append);
+        return getWrapped().newByteOutNative(options);
     }
 
     @Override
-    protected BufferedReader _newBufferedReader()
+    protected BufferedReader _newBufferedReader(OpenOption... options)
             throws IOException {
-        return getWrapped().newBufferedReader();
+        return getWrapped().newBufferedReader(options);
     }
 
     @Override
-    protected LineReader _newLineReader()
+    protected LineReader _newLineReader(OpenOption... options)
             throws IOException {
-        return getWrapped().newLineReader();
+        return getWrapped().newLineReader(options);
     }
 
     @Override
-    protected LAReader _newLAReader()
+    protected LAReader _newLAReader(OpenOption... options)
             throws IOException {
-        return getWrapped().newLAReader();
+        return getWrapped().newLAReader(options);
     }
 
     @Override
-    protected OutputStream _newOutputStream(boolean append)
+    protected OutputStream _newOutputStream(OpenOption... options)
             throws IOException {
-        return getWrapped().newOutputStream(append);
+        return getWrapped().newOutputStream(options);
     }
 
     @Override
-    protected IDataOutput _newDataOutput(boolean append)
+    protected IDataOutput _newDataOutput(OpenOption... options)
             throws IOException {
-        return getWrapped().newDataOutput(append);
+        return getWrapped().newDataOutput(options);
     }
 
     @Override
-    protected IObjectOutput _newObjectOutput(boolean append)
+    protected IObjectOutput _newObjectOutput(OpenOption... options)
             throws IOException {
-        return getWrapped().newObjectOutput(append);
+        return getWrapped().newObjectOutput(options);
     }
 
     @Override
-    protected PrintStream _newPrintStream(boolean append)
+    protected PrintStream _newPrintStream(OpenOption... options)
             throws IOException {
-        return getWrapped().newPrintStream(append);
+        return getWrapped().newPrintStream(options);
     }
 
     @Override
-    protected Writer _newWriter(boolean append)
+    protected Writer _newWriter(OpenOption... options)
             throws IOException {
-        return getWrapped().newWriter(append);
+        return getWrapped().newWriter(options);
     }
 
 }
