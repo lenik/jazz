@@ -16,10 +16,6 @@ public interface IStreamWriting
 
     IStreamWriting setAutoFlush(boolean autoFlush);
 
-    int getBlockSize();
-
-    IStreamWriting setBlockSize(int blockSize);
-
     void write(byte[] bytes, int off, int len)
             throws IOException;
 

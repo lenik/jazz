@@ -4,8 +4,11 @@ import static net.bodz.bas.vfs.FileFlags.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.DeviceAttributes;
+import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IOpenResourceListener;
@@ -71,32 +74,42 @@ public abstract class AbstractFile
     }
 
     @Override
-    public boolean isHidden() {
-        return false;
+    public final boolean isExecutable() {
+        try {
+            FilePermissionAttributes attrs = this.readAttributes(FilePermissionAttributes.class);
+            return attrs == null ? false : attrs.isExecutable();
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean isExecutable() {
-        return false;
-    }
-
-    @Override
-    public boolean setExecutable(boolean executable) {
-        return false;
+    public final boolean isSeekable() {
+        try {
+            DeviceAttributes attrs = this.readAttributes(DeviceAttributes.class);
+            return attrs == null ? false : attrs.isRandomAccessible();
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override
     public Long getLength() {
-        return null;
+        try {
+            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
+            return attrs == null ? null : attrs.size();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     @Override
     public final long length() {
-        Long len = getLength();
-        if (len == null)
+        Long length = getLength();
+        if (length == null)
             return 0;
         else
-            return len.longValue();
+            return length.longValue();
     }
 
     @Override
@@ -106,13 +119,8 @@ public abstract class AbstractFile
     }
 
     @Override
-    public boolean touch(boolean updateLastModifiedTime)
+    public boolean mkblob(boolean touch)
             throws IOException {
-        return false;
-    }
-
-    @Override
-    public boolean isSeekable() {
         return false;
     }
 
@@ -349,8 +357,9 @@ public abstract class AbstractFile
     }
 
     @Override
-    public boolean setIterable(boolean iterable) {
-        return false;
+    public Iterable<? extends IFile> children()
+            throws VFSException {
+        return children(IFilenameFilter.TRUE);
     }
 
     @Override
@@ -359,12 +368,6 @@ public abstract class AbstractFile
         IPath joinedPath = getPath().join(spec);
         IFile file = VFS.resolve(joinedPath);
         return file;
-    }
-
-    @Override
-    public Iterable<? extends IFile> children()
-            throws VFSException {
-        return children(IFilenameFilter.TRUE);
     }
 
     // -o IToolable

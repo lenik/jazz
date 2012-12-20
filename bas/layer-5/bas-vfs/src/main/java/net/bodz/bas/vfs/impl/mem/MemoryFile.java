@@ -2,12 +2,14 @@ package net.bodz.bas.vfs.impl.mem;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.LinkOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttributeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.builtin.BytesResource;
-import net.bodz.bas.io.resource.builtin.CharsResource;
 import net.bodz.bas.t.buffer.IMovableBuffer;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
@@ -16,21 +18,26 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.VFSException;
-import net.bodz.bas.vfs.util.Inode;
+import net.bodz.bas.vfs.inode.Inode;
+import net.bodz.bas.vfs.inode.InodeType;
+import net.bodz.bas.vfs.path.IPath;
 
 public class MemoryFile
         extends AbstractFile {
 
-    static final int INODE_TEXT_MODE = 2;
+    public static final int MOVABLE_BYTE_BUFFER = 1;
+    public static final int MOVABLE_CHAR_BUFFER = 2;
 
     private MemoryPath path;
     private transient Inode inode;
+    private MemoryFileAttributes attributes;
 
     private boolean textMode;
 
     public MemoryFile(MemoryVfsDevice device, MemoryPath path) {
         super(device, path.getBaseName());
         this.path = path;
+        this.attributes = new MemoryFileAttributes(this);
     }
 
     public MemoryFile(MemoryVfsDevice device, MemoryPath path, Inode inode) {
@@ -39,26 +46,36 @@ public class MemoryFile
     }
 
     @Override
-    public MemoryFile clone() {
-        return new MemoryFile(getDevice(), path);
-    }
-
-    @Override
     public MemoryVfsDevice getDevice() {
         return (MemoryVfsDevice) super.getDevice();
     }
 
+    @Override
+    public MemoryPath getPath() {
+        return path;
+    }
+
     public synchronized Inode getInode() {
         if (inode == null) {
-            Inode n = getDevice().getRootInode();
-            for (String entry : path.getLocalEntries()) {
-                n = n.getChild(entry);
-                if (n == null)
-                    return null;
-            }
-            inode = n;
+            inode = getDevice().findInode(path.getLocalPath());
         }
         return inode;
+    }
+
+    @Override
+    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
+    }
+
+    @Override
+    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options) {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
     }
 
     @Override
@@ -100,54 +117,9 @@ public class MemoryFile
     }
 
     @Override
-    public MemoryPath getPath() {
-        return path;
-    }
-
-    @Override
-    public long getCreationTime() {
-        Inode inode = getInode();
-        if (inode == null)
-            return 0L;
-        else
-            return inode.getCreationTime();
-    }
-
-    @Override
-    public long getLastModifiedTime() {
-        Inode inode = getInode();
-        if (inode == null)
-            return 0L;
-        else
-            return inode.getLastModifiedTime();
-    }
-
-    @Override
-    public boolean setLastModifiedTime(long lastModifiedTime) {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        inode.setLastModifiedTime(lastModifiedTime);
-        return true;
-    }
-
-    @Override
-    public Long getLength() {
-        Inode inode = getInode();
-        if (inode == null)
-            return null;
-
-        IStreamResource data = (IStreamResource) inode.getData();
-        if (data == null)
-            return null;
-
-        return data.getLength();
-    }
-
-    @Override
     public boolean setLength(long newLength)
             throws IOException {
-        if (!touch(true))
+        if (!mkblob(true))
             return false;
 
         if (newLength > IMovableBuffer.SIZE_MAX)
@@ -155,31 +127,59 @@ public class MemoryFile
         int newSize = (int) newLength;
 
         Inode inode = getInode();
-        IMovableBuffer data = (IMovableBuffer) inode.getData();
 
-        data.resize(newSize);
-        return true;
+        boolean followSymLink = false;
+        if (followSymLink)
+            while (inode.getType() == InodeType.symbolicLink) {
+                String targetSpec = (String) inode.getData();
+                inode = inode.resolve(targetSpec);
+                if (inode == null)
+                    throw new IllegalUsageException();
+            }
+
+        switch (inode.getType()) {
+        case blob:
+        case mixed:
+            IMovableBuffer data = (IMovableBuffer) inode.getData();
+            data.resize(newSize);
+            return true;
+
+        case none:
+        case directory:
+            return false;
+
+        default:
+            return false;
+        }
+    }
+
+    public boolean isTextMode() {
+        return textMode;
+    }
+
+    public void setTextMode(boolean textMode) {
+        this.textMode = textMode;
     }
 
     @Override
-    public boolean touch(boolean updateLastModifiedTime)
+    public boolean mkblob(boolean touch)
             throws IOException {
         Inode inode = createInode();
         if (inode == null)
             throw new IOException("Failed to create inode.");
 
-        IStreamResource data;
+        inode.setType(InodeType.blob);
+
         if (isTextMode()) {
             MovableCharBuffer buffer = new MovableCharBuffer();
-            data = new CharsResource(buffer);
+            inode.setData(MOVABLE_BYTE_BUFFER, buffer);
         } else {
             MovableByteBuffer buffer = new MovableByteBuffer();
-            data = new BytesResource(buffer);
+            inode.setData(MOVABLE_CHAR_BUFFER, buffer);
         }
-        inode.setData(data);
 
-        if (updateLastModifiedTime)
-            inode.setLastModifiedTime(System.currentTimeMillis());
+        if (touch)
+            inode.touch();
 
         return true;
     }
@@ -194,115 +194,12 @@ public class MemoryFile
     }
 
     @Override
-    public boolean isDirectory() {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        else
-            return true;
-    }
-
-    @Override
-    public boolean isBlob() {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        IStreamResource data = (IStreamResource) inode.getData();
-        return data != null;
-    }
-
-    @Override
-    public boolean isReadable() {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        else
-            return inode.isReadable();
-    }
-
-    @Override
-    public boolean setReadable(boolean readable) {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        inode.setReadable(readable);
-        return true;
-    }
-
-    @Override
-    public boolean isWritable() {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        else
-            return inode.isWritable();
-    }
-
-    @Override
-    public boolean setWritable(boolean writable) {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        inode.setWritable(writable);
-        return true;
-    }
-
-    @Override
-    public boolean isExecutable() {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        else
-            return inode.isExecutable();
-    }
-
-    @Override
-    public boolean setExecutable(boolean executable) {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        inode.setExecutable(executable);
-        return true;
-    }
-
-    @Override
-    public boolean isHidden() {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        else
-            return inode.isHidden();
-    }
-
-    @Override
-    public boolean setHidden(boolean hidden) {
-        Inode inode = getInode();
-        if (inode == null)
-            return false;
-        inode.setHidden(hidden);
-        return true;
-    }
-
-    public boolean isTextMode() {
-        return textMode;
-    }
-
-    public void setTextMode(boolean textMode) {
-        this.textMode = textMode;
-    }
-
-    @Override
     public boolean isIterable() {
         Inode inode = getInode();
         if (inode == null)
             return false;
         else
             return true;
-    }
-
-    @Override
-    public boolean setIterable(boolean iterable) {
-        return false;
     }
 
     @Override
@@ -330,9 +227,7 @@ public class MemoryFile
     Inode createInode() {
         Inode inode = getInode();
         if (inode == null) {
-            Inode rootInode = getDevice().getRootInode();
-            String localPath = path.getLocalPath();
-            inode = rootInode.resolve(localPath);
+            inode = getDevice().resolveInode(path.getLocalPath());
         }
         return inode;
     }
@@ -342,6 +237,34 @@ public class MemoryFile
         IStreamResource resource = new MemoryStreamResource(this);
         resource.setCharset(charset);
         return resource;
+    }
+
+    @Override
+    public boolean createLink(String targetSpec, boolean symbolic)
+            throws IOException {
+        Inode inode = createInode();
+        if (inode == null)
+            throw new IOException("Failed to create inode.");
+
+        if (symbolic) {
+            inode.setType(InodeType.symbolicLink);
+            inode.setData(targetSpec);
+            inode.touch();
+        } else {
+            IPath targetPath = getPath().join(targetSpec);
+
+            Inode targetInode = getDevice().findInode(targetPath.getLocalPath());
+            if (targetInode == null)
+                throw new IOException("Target isn't existed: " + targetSpec);
+
+            InodeType type = targetInode.getType();
+            int dataType = targetInode.getDataType();
+            Object data = targetInode.getData();
+
+            inode.setType(type);
+            inode.setData(dataType, data);
+        }
+        return true;
     }
 
 }

@@ -16,13 +16,6 @@ public interface IStreamReading
 
     IStreamReading setOpenOptions(OpenOption... options);
 
-    int getBlockSize();
-
-    /**
-     * @return this self.
-     */
-    IStreamReading setBlockSize(int blockSize);
-
     /**
      * Read all bytes.
      * 

@@ -5,6 +5,9 @@ import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.LinkOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttributeView;
 import java.util.Arrays;
 
 import net.bodz.bas.c.java.io.FileData;
@@ -29,6 +32,7 @@ public class JdkFile
         implements IFsDir {
 
     private final java.io.File origFile;
+    private JdkFileAttributes attributes;
 
     /**
      * @param jdkPath
@@ -51,6 +55,7 @@ public class JdkFile
     JdkFile(JdkVfsDevice driveDevice, File jdkFile) {
         super(driveDevice, jdkFile.getName());
         this.origFile = jdkFile;
+        this.attributes = new JdkFileAttributes(jdkFile);
     }
 
     public java.io.File getOrigFile() {
@@ -96,43 +101,20 @@ public class JdkFile
     }
 
     @Override
-    public long getLastModifiedTime() {
-        return origFile.lastModified();
+    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
     }
 
     @Override
-    public boolean setLastModifiedTime(long date) {
-        return origFile.setLastModified(date);
-    }
-
-    @Override
-    public boolean isBlob() {
-        return origFile.isFile();
-    }
-
-    @Override
-    public boolean isDirectory() {
-        return origFile.isDirectory();
-    }
-
-    @Override
-    public boolean isReadable() {
-        return origFile.canRead();
-    }
-
-    @Override
-    public boolean isWritable() {
-        return origFile.canWrite();
-    }
-
-    @Override
-    public boolean isHidden() {
-        return origFile.isHidden();
-    }
-
-    @Override
-    public boolean isExecutable() {
-        return origFile.canExecute();
+    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
+            throws IOException {
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
     }
 
     @Override
@@ -147,27 +129,9 @@ public class JdkFile
     }
 
     @Override
-    public boolean touch(boolean updateLastModifiedTime)
+    public boolean mkblob(boolean touch)
             throws IOException {
-        return FileData.touch(origFile, updateLastModifiedTime);
-    }
-
-    @Override
-    public boolean isSeekable() {
-        return true;
-    }
-
-    @Override
-    public boolean isIterable() {
-        return origFile.isDirectory() && origFile.canExecute();
-    }
-
-    @Override
-    public boolean setIterable(boolean iterable) {
-        if (origFile.isDirectory())
-            return origFile.setExecutable(iterable);
-        else
-            return false;
+        return FileData.touch(origFile, touch);
     }
 
     @Override

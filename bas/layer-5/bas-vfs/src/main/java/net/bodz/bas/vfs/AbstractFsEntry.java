@@ -1,11 +1,13 @@
 package net.bodz.bas.vfs;
 
 import java.io.IOException;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileAttributeView;
+import java.nio.file.attribute.DosFileAttributeView;
+import java.nio.file.attribute.DosFileAttributes;
+import java.nio.file.attribute.FileTime;
 
+import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.traits.Attributes;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -50,18 +52,38 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public long getCreationTime() {
-        return 0L;
+    public final FileTime getCreationTime() {
+        try {
+            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
+            return attrs == null ? null : attrs.creationTime();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     @Override
-    public long getLastModifiedTime() {
-        return 0L;
+    public final FileTime getLastModifiedTime() {
+        try {
+            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
+            return attrs == null ? null : attrs.lastModifiedTime();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     @Override
-    public boolean setLastModifiedTime(long lastModifiedTime) {
-        return false;
+    public final boolean setLastModifiedTime(FileTime lastModifiedTime)
+            throws IOException {
+        BasicFileAttributeView view = this.getAttributeView(BasicFileAttributeView.class);
+        if (view == null)
+            return false;
+
+        BasicFileAttributes attrs = view.readAttributes();
+        FileTime creationTime = attrs.creationTime();
+        FileTime lastAccessTime = attrs.lastAccessTime();
+
+        view.setTimes(lastModifiedTime, lastAccessTime, creationTime);
+        return true;
     }
 
     @Override
@@ -70,69 +92,78 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public <V extends FileAttributeView> V getAttributeView(Path path, Class<V> type, LinkOption... options) {
-        return null;
-    }
-
-    @Override
-    public <A extends BasicFileAttributes> A getAttributes(Path path, Class<A> type, LinkOption... options)
-            throws IOException {
-        return null;
-    }
-
-    @Override
     public Boolean exists() {
         return null;
     }
 
     @Override
-    public boolean isExisted() {
+    public final boolean isExisted() {
         return exists() == Boolean.TRUE;
     }
 
     @Override
-    public boolean isNotExisted() {
+    public final boolean isNotExisted() {
         return exists() == Boolean.FALSE;
     }
 
     @Override
-    public boolean isBlob() {
-        return false;
+    public final boolean isBlob() {
+        try {
+            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
+            return attrs == null ? null : attrs.isRegularFile();
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean isDirectory() {
-        return false;
+    public final boolean isDirectory() {
+        try {
+            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
+            return attrs == null ? null : attrs.isDirectory();
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean isReadable() {
-        return false;
+    public final boolean isHidden() {
+        try {
+            DosFileAttributes attrs = this.readAttributes(DosFileAttributes.class);
+            return attrs == null ? null : attrs.isHidden();
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean setReadable(boolean readable) {
-        return false;
+    public final boolean setHidden(boolean hidden)
+            throws IOException {
+        DosFileAttributeView view = this.getAttributeView(DosFileAttributeView.class);
+        if (view == null)
+            return false;
+        view.setHidden(true);
+        return true;
     }
 
     @Override
-    public boolean isWritable() {
-        return false;
+    public final boolean isReadable() {
+        try {
+            FilePermissionAttributes attrs = this.readAttributes(FilePermissionAttributes.class);
+            return attrs == null ? false : attrs.isReadable();
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean setWritable(boolean writable) {
-        return false;
-    }
-
-    @Override
-    public boolean isHidden() {
-        return false;
-    }
-
-    @Override
-    public boolean setHidden(boolean hidden) {
-        return false;
+    public final boolean isWritable() {
+        try {
+            FilePermissionAttributes attrs = this.readAttributes(FilePermissionAttributes.class);
+            return attrs == null ? false : attrs.isWritable();
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override

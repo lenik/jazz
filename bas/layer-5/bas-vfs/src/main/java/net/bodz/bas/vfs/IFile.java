@@ -17,12 +17,6 @@ public interface IFile
     IFile getChild(String childName);
 
     /**
-     * The same as: <code>getPath().join(path).resolve()</code>.
-     */
-    IFile resolve(String path)
-            throws BadPathException, FileResolveException;
-
-    /**
      * @throws UnsupportedOperationException
      *             If not iterable.
      * @see #isIterable()
@@ -45,5 +39,11 @@ public interface IFile
      */
     Iterable<? extends IFile> children(IFileFilter fileFilter)
             throws VFSException;
+
+    /**
+     * The same as: <code>getPath().join(path).resolve()</code>.
+     */
+    IFile resolve(String path)
+            throws BadPathException, FileResolveException;
 
 }

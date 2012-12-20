@@ -1,6 +1,10 @@
 package net.bodz.bas.vfs.impl.filter;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.LinkOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttributeView;
 
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.vfs.AbstractFile;
@@ -15,6 +19,17 @@ public class FilterFile
 
     public FilterFile(FilterVfsDevice device, String baseName) {
         super(device, baseName);
+    }
+
+    @Override
+    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        return null;
+    }
+
+    @Override
+    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
+            throws IOException {
+        return null;
     }
 
     @Override
