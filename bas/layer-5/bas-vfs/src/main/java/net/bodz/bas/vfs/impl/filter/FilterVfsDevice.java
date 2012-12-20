@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.impl.filter;
 
 import java.io.IOException;
+import java.nio.file.CopyOption;
 
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
@@ -43,7 +44,7 @@ public class FilterVfsDevice
     }
 
     @Override
-    public boolean rename(String localPathFrom, String localPathTo)
+    public boolean move(String localPathFrom, String localPathTo, CopyOption... options)
             throws BadPathException {
         return false;
     }

@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.impl.mem;
 
 import java.io.IOException;
+import java.nio.file.CopyOption;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
@@ -58,7 +59,7 @@ public class MemoryVfsDevice
     }
 
     @Override
-    public boolean rename(String localPathFrom, String localPathTo)
+    public boolean move(String localPathFrom, String localPathTo, CopyOption... options)
             throws BadPathException {
         MemoryFile src = (MemoryFile) resolve(localPathFrom);
         MemoryFile dest = (MemoryFile) resolve(localPathTo);

@@ -1,27 +1,21 @@
 package net.bodz.bas.vfs.impl.apachevfs;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.file.LinkOption;
-import java.nio.file.OpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileAttributeView;
 import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
 
-import org.apache.commons.vfs.FileContent;
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSelectInfo;
 import org.apache.commons.vfs.FileSelector;
 import org.apache.commons.vfs.FileSystemException;
 
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.JavaioStreamResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.FileResolveException;
@@ -34,12 +28,12 @@ public class ApacheFile
         extends AbstractFile {
 
     private FileObject fileObject;
-    private ApacheFileAttributes attributes;
+    private FileObjectAttributes attributes;
 
     ApacheFile(ApacheVfsDevice device, FileObject fileObject) {
         super(device, fileObject.getName().getBaseName());
         this.fileObject = fileObject;
-        this.attributes = new ApacheFileAttributes(fileObject);
+        this.attributes = new FileObjectAttributes(fileObject);
     }
 
     public FileObject getFileObject() {
@@ -119,40 +113,9 @@ public class ApacheFile
 
     @Override
     protected IStreamResource newResource(Charset charset) {
-        _Resource resource = new _Resource();
+        FileObjectResource resource = new FileObjectResource(fileObject);
         resource.setCharset(charset);
         return resource;
-    }
-
-    class _Resource
-            extends JavaioStreamResource {
-
-        @Override
-        protected InputStream _newInputStream(OpenOption... options)
-                throws IOException {
-            FileContent content = fileObject.getContent();
-            checkOpen(content);
-            InputStream in = content.getInputStream();
-            return in;
-        }
-
-        @Override
-        protected OutputStream _newOutputStream(OpenOption... options)
-                throws IOException {
-            FileContent content = fileObject.getContent();
-            checkOpen(content);
-
-            CommonOpenConfig config = CommonOpenConfig.parse(options);
-
-            OutputStream out = content.getOutputStream(config.isAppend());
-            return out;
-        }
-
-        void checkOpen(FileContent fileContent) {
-            if (fileContent.isOpen())
-                throw new IllegalStateException("File is already opened: " + getPath());
-        }
-
     }
 
     // -o IFsDir

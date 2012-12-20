@@ -23,7 +23,16 @@ public class Vfs2NioFilenameFilter
     @Override
     public boolean accept(Path entry)
             throws IOException {
-        String name = entry.getFileName().toString();
+        Path fileName = entry.getFileName();
+
+        String name;
+
+        // NOTICE: Path "/" has a null filename.
+        if (fileName == null)
+            name = "";
+        else
+            name = fileName.toString();
+
         return vfsFilter.accept(parentDir, name);
     }
 

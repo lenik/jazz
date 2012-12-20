@@ -158,9 +158,9 @@ public interface IFsEntry {
      * @see File#renameTo(File)
      */
     boolean renameTo(String destSpec)
-            throws BadPathException;
+            throws BadPathException, IOException;
 
     boolean createLink(String targetSpec, boolean symbolic)
-            throws IOException;
+            throws BadPathException, IOException;
 
 }

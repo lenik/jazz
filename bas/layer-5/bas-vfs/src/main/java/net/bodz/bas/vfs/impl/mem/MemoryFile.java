@@ -32,7 +32,7 @@ public class MemoryFile
     private transient Inode inode;
     private MemoryFileAttributes attributes;
 
-    private boolean textMode;
+    private boolean charOriented;
 
     public MemoryFile(MemoryVfsDevice device, MemoryPath path) {
         super(device, path.getBaseName());
@@ -153,12 +153,12 @@ public class MemoryFile
         }
     }
 
-    public boolean isTextMode() {
-        return textMode;
+    public boolean isCharOriented() {
+        return charOriented;
     }
 
-    public void setTextMode(boolean textMode) {
-        this.textMode = textMode;
+    public void setCharOriented(boolean charOriented) {
+        this.charOriented = charOriented;
     }
 
     @Override
@@ -170,12 +170,12 @@ public class MemoryFile
 
         inode.setType(InodeType.blob);
 
-        if (isTextMode()) {
+        if (isCharOriented()) {
             MovableCharBuffer buffer = new MovableCharBuffer();
-            inode.setData(MOVABLE_BYTE_BUFFER, buffer);
+            inode.setData(MOVABLE_CHAR_BUFFER, buffer);
         } else {
             MovableByteBuffer buffer = new MovableByteBuffer();
-            inode.setData(MOVABLE_CHAR_BUFFER, buffer);
+            inode.setData(MOVABLE_BYTE_BUFFER, buffer);
         }
 
         if (touch)

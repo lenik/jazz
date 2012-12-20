@@ -202,12 +202,13 @@ public abstract class AbstractFile
 
     @Override
     public final boolean renameTo(String destSpec)
-            throws BadPathException {
+            throws BadPathException, IOException {
         IFile dest = resolve(destSpec);
         return renameTo(dest);
     }
 
-    public final boolean renameTo(IFile dest) {
+    public final boolean renameTo(IFile dest)
+            throws BadPathException, IOException {
         if (dest == null)
             throw new NullPointerException("dest");
 
@@ -221,7 +222,7 @@ public abstract class AbstractFile
         String fromLocalPath = getPath().getLocalPath();
         String destLocalPath = dest.getPath().getLocalPath();
         try {
-            getDevice().rename(fromLocalPath, destLocalPath);
+            getDevice().move(fromLocalPath, destLocalPath);
             return true;
         } catch (VFSException e) {
             return false;

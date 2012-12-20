@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.impl.apachevfs;
 
 import java.io.IOException;
+import java.nio.file.CopyOption;
 
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
@@ -95,7 +96,7 @@ public class ApacheVfsDevice
     }
 
     @Override
-    public boolean rename(String localPathFrom, String localPathTo)
+    public boolean move(String localPathFrom, String localPathTo, CopyOption... options)
             throws BadPathException {
         if (localPathFrom == null)
             throw new NullPointerException("localPathFrom");
