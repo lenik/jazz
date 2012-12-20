@@ -6,7 +6,7 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
@@ -23,7 +23,7 @@ public class JdkFileTest
         // NestedURLPath path = (NestedURLPath) _path;
         IFile file = VFS.resolve(_path);
 
-        LocalFileResource resource = (LocalFileResource) file.getResource();
+        FileResource resource = (FileResource) file.getResource();
         File rawFile = resource.getFile();
         // System.out.println(rawFile);
         assertTrue(rawFile.exists());

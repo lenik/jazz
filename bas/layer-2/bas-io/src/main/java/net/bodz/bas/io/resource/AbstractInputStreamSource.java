@@ -11,7 +11,7 @@ import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.InputStreamByteIn;
 import net.bodz.bas.sio.util.DecodedCharIn;
 
-public abstract class JavaioStreamInputSource
+public abstract class AbstractInputStreamSource
         extends AbstractStreamInputSource {
 
     @Override

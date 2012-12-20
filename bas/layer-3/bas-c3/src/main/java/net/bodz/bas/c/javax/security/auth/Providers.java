@@ -21,7 +21,7 @@ import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.io.tmp.TempOut;
 import net.bodz.bas.traits.AbstractParser;
@@ -208,7 +208,7 @@ public class Providers
                 SunPKCS11 provider = new SunPKCS11(file.getPath());
                 return provider;
             } catch (ProviderException e) {
-                LocalFileResource res = new LocalFileResource(file);
+                FileResource res = new FileResource(file);
                 String config = res.tooling()._for(StreamReading.class).readString();
                 System.err.println(tr._("Config error: ") + e.getMessage());
                 System.err.println(config);

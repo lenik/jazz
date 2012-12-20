@@ -14,7 +14,7 @@ import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.PrintStreamPrintOut;
 import net.bodz.bas.sio.WriterCharOut;
 
-public abstract class JavaioStreamOutputTarget
+public abstract class AbstractOutputStreamTarget
         extends AbstractStreamOutputTarget {
 
     @Override
