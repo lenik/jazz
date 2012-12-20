@@ -9,7 +9,7 @@ import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.t.iterator.immed.AbstractMitorx;
 import net.bodz.bas.t.iterator.immed.Mitorx;
@@ -59,7 +59,7 @@ public abstract class AbstractMultiMapsFormat<K, V>
     }
 
     public AbstractMultiMapsFormat(File file, String encoding, int flags) {
-        this(new LocalFileResource(file, encoding), flags);
+        this(new FileResource(file, encoding), flags);
     }
 
     public AbstractMultiMapsFormat(URL url, String encoding) {

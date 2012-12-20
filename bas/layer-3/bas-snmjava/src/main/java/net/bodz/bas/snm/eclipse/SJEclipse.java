@@ -12,7 +12,7 @@ import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.util.regex.Patterns;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.RuntimeIOException;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.snm.abc.ModulesRoot;
 
@@ -105,7 +105,7 @@ public class SJEclipse {
         for (String link : linkDir.list(linkFilter)) {
             File linkFile = new File(linkDir, link);
             try {
-                String s = new LocalFileResource(linkFile)//
+                String s = new FileResource(linkFile)//
                         .tooling()._for(StreamReading.class).lines(true).iterator().next();
                 assert s != null;
                 int eq = s.indexOf('=');

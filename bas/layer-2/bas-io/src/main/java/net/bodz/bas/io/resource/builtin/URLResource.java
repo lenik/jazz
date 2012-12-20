@@ -12,10 +12,10 @@ import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.nio.CommonOpenConfig;
-import net.bodz.bas.io.resource.JavaioStreamResource;
+import net.bodz.bas.io.resource.AbstractInputOutputStreamResource;
 
 public class URLResource
-        extends JavaioStreamResource {
+        extends AbstractInputOutputStreamResource {
 
     private final URL url;
 

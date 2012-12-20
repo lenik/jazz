@@ -13,7 +13,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.sio.ICharOut;
@@ -189,7 +189,7 @@ public class ClassDocBuilderMojo
                 } else {
                     log.debug("Generate " + classDocFile);
                     classDocFile.getParentFile().mkdirs();
-                    outTarget = new LocalFileResource(classDocFile);
+                    outTarget = new FileResource(classDocFile);
                 }
                 // outTarget.setCharset("utf-8");
                 try {

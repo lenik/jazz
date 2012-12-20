@@ -8,7 +8,7 @@ import java.util.TreeMap;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.t.iterator.immed.AbstractMitorx;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
@@ -25,7 +25,7 @@ public class INIRecords
     }
 
     public INIRecords(File file, String encoding) {
-        this(new LocalFileResource(file, encoding), false);
+        this(new FileResource(file, encoding), false);
     }
 
     @Override

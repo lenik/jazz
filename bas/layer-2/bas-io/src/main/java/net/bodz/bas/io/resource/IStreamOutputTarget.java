@@ -1,5 +1,6 @@
 package net.bodz.bas.io.resource;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -69,6 +70,12 @@ public interface IStreamOutputTarget
      * @return non-<code>null</code> value.
      */
     Writer newWriter(OpenOption... options)
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
+    BufferedWriter newBufferedWriter(OpenOption... options)
             throws IOException;
 
 }

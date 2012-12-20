@@ -6,10 +6,10 @@ import java.nio.file.OpenOption;
 import net.bodz.bas.sio.*;
 import net.bodz.bas.sio.util.DecodedCharIn;
 
-public abstract class JavaioStreamResource
+public abstract class AbstractInputOutputStreamResource
         extends AbstractStreamResource {
 
-    // IStreamInputSource
+    // -o IStreamInputSource
 
     @Override
     protected abstract InputStream _newInputStream(OpenOption... options)
@@ -36,7 +36,7 @@ public abstract class JavaioStreamResource
         return new DecodedCharIn(in, getCharset().newDecoder());
     }
 
-    // IStreamOutputTarget
+    // -o IStreamOutputTarget
 
     @Override
     protected abstract OutputStream _newOutputStream(OpenOption... options)
@@ -59,7 +59,7 @@ public abstract class JavaioStreamResource
     @Override
     protected IPrintOut _newPrintOut(OpenOption... options)
             throws IOException {
-        PrintStream ps = newPrintStream(options);
+        PrintStream ps = _newPrintStream(options);
         return new PrintStreamPrintOut(ps);
     }
 

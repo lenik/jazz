@@ -36,7 +36,7 @@ public abstract class StreamResourceImplHelper {
      * @return Preferred non-<code>null</code> {@link Charset}, the default implementation returns
      *         UTF-8 charset.
      */
-    public Charset getPreferredCharset() {
+    private Charset getPreferredCharset() {
         return utf8Charset;
     }
 
@@ -339,6 +339,22 @@ public abstract class StreamResourceImplHelper {
             throws IOException {
         beforeOpenOutput(options);
         Writer out = _newWriter(options);
+        afterOpenOutput(out);
+        return out;
+    }
+
+    // BufferedWriter
+
+    protected BufferedWriter _newBufferedWriter(OpenOption... options)
+            throws IOException {
+        Writer writer = _newWriter(options);
+        return new BufferedWriter(writer);
+    }
+
+    public final BufferedWriter newBufferedWriter(OpenOption... options)
+            throws IOException {
+        beforeOpenOutput(options);
+        BufferedWriter out = _newBufferedWriter(options);
         afterOpenOutput(out);
         return out;
     }
