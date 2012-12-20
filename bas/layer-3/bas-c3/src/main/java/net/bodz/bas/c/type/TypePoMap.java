@@ -1,6 +1,5 @@
 package net.bodz.bas.c.type;
 
-import net.bodz.bas.c.type.order.TypePreorder;
 import net.bodz.bas.t.preorder.PreorderTreeMap;
 
 public class TypePoMap<V>

@@ -1,11 +1,6 @@
 package net.bodz.bas.t.iterator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.fn.ITransformer;
@@ -18,7 +13,8 @@ public class Iterators {
      * Get an empty iterator.
      */
     public static <T> Iterator<T> empty() {
-        @SuppressWarnings("unchecked") Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
+        @SuppressWarnings("unchecked")
+        Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
         return empty;
     }
 
@@ -67,6 +63,19 @@ public class Iterators {
      */
     public static <T> Iterator<T> convert(Enumeration<? extends T> enm) {
         return new EnumIterator<T>(enm);
+    }
+
+    public static <T> Set<T> toSet(Iterator<T> iterator) {
+        return toSet(iterator, defaultAppxSize);
+    }
+
+    public static <T> Set<T> toSet(Iterator<T> iterator, int appxSize) {
+        Set<T> set = new HashSet<T>(appxSize);
+        while (iterator.hasNext()) {
+            T o = iterator.next();
+            set.add(o);
+        }
+        return set;
     }
 
     public static <T> List<T> toList(Iterator<T> iterator) {

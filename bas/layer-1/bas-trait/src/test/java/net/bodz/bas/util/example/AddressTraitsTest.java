@@ -8,12 +8,12 @@ import org.junit.Test;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.rtx.MandatoryException;
 import net.bodz.bas.t.pojo.eg.Address;
+import net.bodz.bas.t.pojo.eg.CountryAliasUtil;
+import net.bodz.bas.t.pojo.eg.PostCodeUtil;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ICommonTraits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.example.AddressTraits.CountryAliasUtil;
-import net.bodz.bas.util.example.AddressTraits.PostCodeUtil;
 
 public class AddressTraitsTest
         extends Assert {

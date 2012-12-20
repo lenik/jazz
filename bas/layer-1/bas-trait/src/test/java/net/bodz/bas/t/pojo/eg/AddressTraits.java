@@ -1,9 +1,8 @@
-package net.bodz.bas.util.example;
+package net.bodz.bas.t.pojo.eg;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.rtx.MandatoryException;
-import net.bodz.bas.t.pojo.eg.Address;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
@@ -67,22 +66,6 @@ public class AddressTraits
     @Override
     public String format(Address a) {
         return a.getCountry() + ":" + a.getCity() + ":" + a.getAddress();
-    }
-
-    static class CountryAliasUtil {
-        public String unalias(String alias) {
-            if ("cn".equals(alias))
-                return "China";
-            return alias;
-        }
-    }
-
-    static class PostCodeUtil {
-        public String getCityFromCode(int code) {
-            if (code == 310000)
-                return "Zhejiang";
-            throw new IllegalArgumentException("Invalid post code: " + code);
-        }
     }
 
 }

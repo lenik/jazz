@@ -50,11 +50,11 @@ public class PrefixMapTest
     public void test_hasChildren() {
         class D {
             void T(String input) {
-                assertNotNull(map.ceilingKey(input));
+                assertNotNull(map.join_fast(input));
             }
 
             void F(String input) {
-                assertNull(map.ceilingKey(input));
+                assertNull(map.join_fast(input));
             }
         }
         D d = new D(); //

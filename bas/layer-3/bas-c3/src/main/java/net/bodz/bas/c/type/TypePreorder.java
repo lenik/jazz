@@ -1,4 +1,4 @@
-package net.bodz.bas.c.type.order;
+package net.bodz.bas.c.type;
 
 import net.bodz.bas.t.preorder.AbstractPreorder;
 
@@ -7,10 +7,9 @@ public class TypePreorder
 
     @Override
     public int compare(Class<?> o1, Class<?> o2) {
-        int _cmp = precompare(o1, o2);
-        if (_cmp != UNKNOWN)
-            return _cmp;
-
+        // int _cmp = precompare(o1, o2);
+        // if (_cmp != UNKNOWN)
+        // return _cmp;
         String name1 = o1.getName();
         String name2 = o2.getName();
         return name1.compareTo(name2);

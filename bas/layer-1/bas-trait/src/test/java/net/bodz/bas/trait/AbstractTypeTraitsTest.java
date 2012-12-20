@@ -5,8 +5,8 @@ import org.junit.Test;
 
 import net.bodz.bas.meta.lang.TraitClass;
 import net.bodz.bas.t.pojo.eg.Person;
+import net.bodz.bas.t.pojo.eg.PersonTraits;
 import net.bodz.bas.traits.ICommonTraits;
-import net.bodz.bas.util.example.PersonTraits;
 
 @TraitClass(PersonTraits.class)
 public class AbstractTypeTraitsTest

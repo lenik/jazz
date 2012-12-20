@@ -1,9 +1,17 @@
 package net.bodz.bas.t.preorder;
 
+import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.err.IllegalUsageException;
 
 public abstract class AbstractPreorder<T>
         implements IPreorder<T> {
+
+    public int __compare(T o1, T o2) {
+        int cmp = precompare(o1, o2);
+        if (cmp == UNKNOWN)
+            cmp = 0;
+        return cmp;
+    }
 
     @Override
     public boolean isGreaterOrEquals(T o1, T o2) {
@@ -122,6 +130,13 @@ public abstract class AbstractPreorder<T>
                 return secondMin;
         }
         throw new IllegalUsageException("Search too many precedings, max=" + searchPrecedesMax);
+    }
+
+    protected static final int compareIdentity(Object o1, Object o2) {
+        assert o1 != o2;
+        int id1 = System.identityHashCode(o1);
+        int id2 = System.identityHashCode(o2);
+        return IntMath.signum(id1 - id2);
     }
 
 }
