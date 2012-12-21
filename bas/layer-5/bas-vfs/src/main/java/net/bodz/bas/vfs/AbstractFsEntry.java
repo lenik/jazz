@@ -127,6 +127,16 @@ public abstract class AbstractFsEntry
     }
 
     @Override
+    public final boolean isSymLink() {
+        try {
+            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
+            return attrs == null ? false : attrs.isSymbolicLink();
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    @Override
     public final boolean isHidden() {
         try {
             DosFileAttributes attrs = this.readAttributes(DosFileAttributes.class);
@@ -174,6 +184,21 @@ public abstract class AbstractFsEntry
     @Override
     public boolean deleteOnExit() {
         return false;
+    }
+
+    @Override
+    public boolean createLink(String targetSpec, boolean symbolic)
+            throws IOException {
+        String localPath = getPath().getLocalPath();
+        return getDevice().createLink(localPath, targetSpec, symbolic);
+    }
+
+    @Override
+    public String readSymLink()
+            throws IOException {
+        String localPath = getPath().getLocalPath();
+        String targetSpec = getDevice().readSymbolicLink(localPath);
+        return targetSpec;
     }
 
     /**

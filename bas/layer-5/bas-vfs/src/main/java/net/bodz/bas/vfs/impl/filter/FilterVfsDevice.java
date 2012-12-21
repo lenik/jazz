@@ -2,6 +2,7 @@ package net.bodz.bas.vfs.impl.filter;
 
 import java.io.IOException;
 import java.nio.file.CopyOption;
+import java.nio.file.NotLinkException;
 
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
@@ -53,6 +54,12 @@ public class FilterVfsDevice
     public boolean createLink(String localPath, String target, boolean symbolic)
             throws IOException {
         return false;
+    }
+
+    @Override
+    public String readSymbolicLink(String localPath)
+            throws NotLinkException, IOException {
+        return null;
     }
 
 }

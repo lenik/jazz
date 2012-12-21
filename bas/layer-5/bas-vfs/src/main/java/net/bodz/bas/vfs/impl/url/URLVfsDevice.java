@@ -5,9 +5,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.CopyOption;
+import java.nio.file.NotLinkException;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileURL;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
@@ -103,6 +104,16 @@ public class URLVfsDevice
         return new URLFile(this, path);
     }
 
+    public String _parse(String localPath) {
+        URLPath joined = (URLPath) rootPath.join(localPath);
+        return joined.getURLString();
+    }
+
+    public URL _resolve(String localPath) {
+        URLPath joined = (URLPath) rootPath.join(localPath);
+        return joined.toURL();
+    }
+
     @Override
     public boolean move(String localPathFrom, String localPathTo, CopyOption... options)
             throws BadPathException {
@@ -114,10 +125,8 @@ public class URLVfsDevice
         if (localPathFrom.equals(localPathTo))
             return true;
 
-        URLPath srcPath = parse(localPathFrom);
-        URLPath destPath = parse(localPathTo);
-        URL srcURL = srcPath.toURL();
-        URL destURL = destPath.toURL();
+        URL srcURL = _resolve(localPathFrom);
+        URL destURL = _resolve(localPathTo);
 
         assert srcURL.getProtocol().equals(destURL.getProtocol());
         switch (srcURL.getProtocol()) {
@@ -132,9 +141,23 @@ public class URLVfsDevice
     }
 
     @Override
-    public boolean createLink(String localPath, String target, boolean symbolic)
+    public boolean createLink(String localPath, String targetSpec, boolean symbolic)
             throws IOException {
-        throw new NotImplementedException();
+        URL link = _resolve(localPath);
+        switch (link.getProtocol()) {
+        case "file":
+            File linkFile = FileURL.toFile(link);
+            return FilePath.createLink(linkFile, targetSpec, symbolic);
+
+        default:
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    @Override
+    public String readSymbolicLink(String localPath)
+            throws NotLinkException, IOException {
+        return null;
     }
 
 }

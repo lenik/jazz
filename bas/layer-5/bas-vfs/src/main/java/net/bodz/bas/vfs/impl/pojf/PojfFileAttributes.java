@@ -66,7 +66,8 @@ public class PojfFileAttributes
 
     @Override
     public boolean isSymbolicLink() {
-        return false;
+        Path _path = file.toPath();
+        return Files.isSymbolicLink(_path);
     }
 
     @Override

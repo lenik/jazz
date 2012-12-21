@@ -13,12 +13,12 @@ import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 import net.bodz.bas.vfs.inode.Inode;
 
-class MemoryStreamResource
+class MemoryResource
         extends ProxyStreamResource {
 
     private final MemoryFile file;
 
-    public MemoryStreamResource(MemoryFile file) {
+    public MemoryResource(MemoryFile file) {
         super(null);
         if (file == null)
             throw new NullPointerException("file");

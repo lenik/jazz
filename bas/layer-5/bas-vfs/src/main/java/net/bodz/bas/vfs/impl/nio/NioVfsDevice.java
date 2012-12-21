@@ -1,13 +1,16 @@
 package net.bodz.bas.vfs.impl.nio;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 /**
@@ -90,20 +93,21 @@ public class NioVfsDevice
     }
 
     @Override
-    public boolean createLink(String _localPath, String target, boolean symbolic)
+    public boolean createLink(String _localPath, String targetSpec, boolean symbolic)
             throws IOException {
-
         NioPath localPath = parse(_localPath);
         Path link = localPath.toPath();
+        File linkFile = link.toFile();
+        return FilePath.createLink(linkFile, targetSpec, symbolic);
+    }
 
-        Path targetPath = Paths.get(target);
-
-        if (symbolic)
-            Files.createSymbolicLink(link, targetPath);
-        else
-            Files.createLink(link, targetPath);
-
-        return true;
+    @Override
+    public String readSymbolicLink(String _localPath)
+            throws BadPathException, IOException {
+        NioPath localPath = parse(_localPath);
+        Path link = localPath.toPath();
+        Path target = Files.readSymbolicLink(link);
+        return target.toString();
     }
 
 }

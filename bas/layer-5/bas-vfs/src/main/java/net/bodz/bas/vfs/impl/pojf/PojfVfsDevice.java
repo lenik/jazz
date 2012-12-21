@@ -3,8 +3,12 @@ package net.bodz.bas.vfs.impl.pojf;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.NotLinkException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.path.IPath;
@@ -50,15 +54,25 @@ public class PojfVfsDevice
         return new PojfPath(getProtocol(), getDriveName(), localPath);
     }
 
-    @Override
-    public PojfFile resolve(String localPath) {
-        String jdkPath;
+    public String _parse(String localPath) {
+        String _pathstr;
         String driveName = getDriveName();
         if (driveName == null)
-            jdkPath = "/" + localPath;
+            _pathstr = "/" + localPath;
         else
-            jdkPath = driveName + ":/" + localPath;
-        return new PojfFile(jdkPath);
+            _pathstr = driveName + ":/" + localPath;
+        return _pathstr;
+    }
+
+    public File _resolve(String localPath) {
+        String _path = _parse(localPath);
+        return new File(_path);
+    }
+
+    @Override
+    public PojfFile resolve(String localPath) {
+        File file = _resolve(localPath);
+        return new PojfFile(this, file);
     }
 
     @Override
@@ -77,8 +91,8 @@ public class PojfVfsDevice
         if (localPathFrom.equals(localPathTo))
             return true;
 
-        File fileFrom = new File(localPathFrom);
-        File fileTo = new File(localPathTo);
+        File fileFrom = _resolve(localPathFrom);
+        File fileTo = _resolve(localPathTo);
 
         return fileFrom.renameTo(fileTo);
     }
@@ -86,8 +100,27 @@ public class PojfVfsDevice
     @Override
     public boolean createLink(String localPath, String target, boolean symbolic)
             throws IOException {
-        // java.nio.file.Files.createSymbolicLink(link, target, attrs);
-        throw new NotImplementedException();
+
+        File _linkFile = _resolve(localPath);
+        if (_linkFile.exists())
+            return false;
+
+        Path _link = _linkFile.toPath();
+
+        Path _target = Paths.get(target);
+
+        if (symbolic)
+            Files.createSymbolicLink(_link, _target);
+        else
+            Files.createLink(_link, _target);
+        return true;
+    }
+
+    @Override
+    public String readSymbolicLink(String localPath)
+            throws NotLinkException, IOException {
+        File _linkFile = _resolve(localPath);
+        return FilePath.getSymLinkTarget(_linkFile);
     }
 
 }

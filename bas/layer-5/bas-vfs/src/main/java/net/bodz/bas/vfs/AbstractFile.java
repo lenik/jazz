@@ -229,12 +229,6 @@ public abstract class AbstractFile
         }
     }
 
-    @Override
-    public boolean createLink(String targetSpec, boolean symbolic)
-            throws IOException {
-        return false;
-    }
-
     // -o IFsBlob
 
     /**
