@@ -1,5 +1,6 @@
 package net.bodz.bas.cli.skel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -266,11 +267,24 @@ public abstract class BasicCLI
     protected abstract void mainImpl(String... args)
             throws Exception;
 
-    protected Iterable<IFile> expandFiles(final String... pathnames) {
-        return Iterables.transform(expandWildcards(pathnames), _resolver);
+    protected Iterable<File> expandPojfFiles(final String... pathnames) {
+        return Iterables.transform(expandWildcards(pathnames), pojfFileResolver);
     }
 
-    private static final ITransformer<String, IFile> _resolver = new ITransformer<String, IFile>() {
+    protected Iterable<IFile> expandFiles(final String... pathnames) {
+        return Iterables.transform(expandWildcards(pathnames), vfsFileResolver);
+    }
+
+    static final ITransformer<String, File> pojfFileResolver = new ITransformer<String, File>() {
+        /** @throws FileResolveException */
+        @Override
+        public File transform(String pathname) {
+            File file = new File(pathname);
+            return file;
+        }
+    };
+
+    static final ITransformer<String, IFile> vfsFileResolver = new ITransformer<String, IFile>() {
         /** @throws FileResolveException */
         @Override
         public IFile transform(String pathname) {
