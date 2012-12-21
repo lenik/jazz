@@ -131,8 +131,14 @@ public class URLVfsDevice
         assert srcURL.getProtocol().equals(destURL.getProtocol());
         switch (srcURL.getProtocol()) {
         case "file":
-            File srcFile = FileURL.toFile(srcURL);
-            File destFile = FileURL.toFile(destURL);
+            File srcFile = FileURL.toFile(srcURL, null);
+            if (srcFile == null)
+                throw new IllegalArgumentException("Illegal src file URL: " + srcURL);
+
+            File destFile = FileURL.toFile(destURL, null);
+            if (destFile == null)
+                throw new IllegalArgumentException("Illegal dest file URL: " + destURL);
+
             return srcFile.renameTo(destFile);
 
         default:
@@ -146,7 +152,9 @@ public class URLVfsDevice
         URL link = _resolve(localPath);
         switch (link.getProtocol()) {
         case "file":
-            File linkFile = FileURL.toFile(link);
+            File linkFile = FileURL.toFile(link, null);
+            if (linkFile == null)
+                throw new IllegalArgumentException("Illegal file URL: " + link);
             return FilePath.createLink(linkFile, targetSpec, symbolic);
 
         default:

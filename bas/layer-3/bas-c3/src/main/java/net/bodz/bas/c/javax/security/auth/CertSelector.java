@@ -106,8 +106,9 @@ public class CertSelector
                 } else if (storePath.contains("://"))
                     try {
                         URL url = new URL(storePath);
-                        // create a temp file when necessary?
-                        storeFile = FileURL.toFile(url);
+                        storeFile = FileURL.toFile(url, null);
+                        if (storeFile == null)
+                            ; // create a temp file when necessary?
                     } catch (MalformedURLException e) {
                         throw new IllegalArgumentException(e);
                     }

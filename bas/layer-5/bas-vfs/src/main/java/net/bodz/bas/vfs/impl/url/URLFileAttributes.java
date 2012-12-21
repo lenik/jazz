@@ -72,8 +72,8 @@ public class URLFileAttributes
     public boolean isRegularFile() {
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return file.isFile();
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.isFile();
 
         default:
             return true;
@@ -84,8 +84,8 @@ public class URLFileAttributes
     public boolean isDirectory() {
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return file.isDirectory();
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.isDirectory();
 
         default:
             return false;
@@ -117,8 +117,9 @@ public class URLFileAttributes
             throws IOException {
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            file.setLastModified(lastModifiedTime.toMillis());
+            File file = FileURL.toFile(url, null);
+            if (file != null)
+                file.setLastModified(lastModifiedTime.toMillis());
             break;
         }
     }
@@ -129,8 +130,8 @@ public class URLFileAttributes
     public boolean isReadable() {
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return file.canRead();
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.canRead();
         default:
             return true;
         }
@@ -140,8 +141,8 @@ public class URLFileAttributes
     public boolean isWritable() {
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return file.canWrite();
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.canWrite();
         default:
             return false;
         }
@@ -151,8 +152,8 @@ public class URLFileAttributes
     public boolean isExecutable() {
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return file.canExecute();
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.canExecute();
         default:
             return false;
         }
@@ -162,12 +163,12 @@ public class URLFileAttributes
     public boolean isDeletable() {
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            File parentFile = file.getParentFile();
-            if (parentFile != null)
-                return parentFile.canWrite();
-            else
+            File file = FileURL.toFile(url, null);
+            if (file == null)
                 return false;
+
+            File parentFile = file.getParentFile();
+            return parentFile == null ? false : parentFile.canWrite();
 
         default:
             return false;

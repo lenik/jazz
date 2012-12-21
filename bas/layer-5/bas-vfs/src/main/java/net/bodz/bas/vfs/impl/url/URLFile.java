@@ -127,8 +127,8 @@ public class URLFile
 
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            if (file.isFile())
+            File file = FileURL.toFile(url, null);
+            if (file != null && file.isFile())
                 return file.length();
             else
                 return null;
@@ -159,8 +159,9 @@ public class URLFile
         URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return FileData.setLength(file, newLength);
+            File file = FileURL.toFile(url, null);
+            if (file != null)
+                return FileData.setLength(file, newLength);
 
         default:
             return false;
@@ -173,8 +174,9 @@ public class URLFile
         URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return FileData.touch(file, touch);
+            File file = FileURL.toFile(url, null);
+            if (file != null)
+                return FileData.touch(file, touch);
 
         default:
             return false;
@@ -224,8 +226,9 @@ public class URLFile
         URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return file.mkdir();
+            File file = FileURL.toFile(url, null);
+            if (file != null)
+                return file.mkdir();
         default:
             return false;
         }
@@ -236,8 +239,9 @@ public class URLFile
         URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return file.mkdirs();
+            File file = FileURL.toFile(url, null);
+            if (file != null)
+                return file.mkdirs();
         default:
             return false;
         }

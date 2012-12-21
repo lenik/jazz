@@ -1,7 +1,6 @@
 package net.bodz.swt.c.resources;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -31,8 +30,8 @@ public class StrictDeviceResources
 
     Device device;
 
-    Map<File, Image> imageCache;
-    Map<File, ImageData> imageDataCache;
+    Map<URL, Image> imageCache;
+    Map<URL, ImageData> imageDataCache;
 
     Map<RGB, Color> colorCache;
     Map<FontData, Font> fontCache;
@@ -45,17 +44,17 @@ public class StrictDeviceResources
         this.device = device;
         if (reuse == null) {
             if (weakCache) {
-                imageCache = new WeakHashMap<File, Image>();
-                imageDataCache = new WeakHashMap<File, ImageData>();
-                colorCache = new WeakHashMap<RGB, Color>();
-                fontCache = new WeakHashMap<FontData, Font>();
+                imageCache = new WeakHashMap<>();
+                imageDataCache = new WeakHashMap<>();
+                colorCache = new WeakHashMap<>();
+                fontCache = new WeakHashMap<>();
             } else {
-                imageCache = new HashMap<File, Image>();
-                imageDataCache = new HashMap<File, ImageData>();
-                colorCache = new HashMap<RGB, Color>();
-                fontCache = new HashMap<FontData, Font>();
+                imageCache = new HashMap<>();
+                imageDataCache = new HashMap<>();
+                colorCache = new HashMap<>();
+                fontCache = new HashMap<>();
             }
-            indexedColors = new IndexMap<Color>();
+            indexedColors = new IndexMap<>();
         } else {
             imageCache = reuse.imageCache;
             imageDataCache = reuse.imageDataCache;
@@ -80,23 +79,20 @@ public class StrictDeviceResources
 
     public ImageData getImageData(File file)
             throws IOException {
-        ImageData imageData = imageDataCache.get(file);
-        if (imageData != null)
-            return imageData;
-        FileInputStream in = new FileInputStream(file);
-        imageData = getImageData(in);
-        imageDataCache.put(file, imageData);
-        return imageData;
+        return getImageData(FileURL.toURL(file));
     }
 
     public ImageData getImageData(URL url)
             throws IOException {
-        File file = FileURL.toFile(url);
-        ImageData imageData = imageDataCache.get(file);
+        ImageData imageData = imageDataCache.get(url);
         if (imageData == null) {
             InputStream in = url.openStream();
-            imageData = getImageData(in);
-            imageDataCache.put(file, imageData);
+            try {
+                imageData = getImageData(in);
+            } finally {
+                in.close();
+            }
+            imageDataCache.put(url, imageData);
         }
         return imageData;
     }
@@ -208,13 +204,8 @@ public class StrictDeviceResources
      */
     public Image getImage(File file)
             throws IOException {
-        Image image = imageCache.get(file);
-        if (image == null) {
-            FileInputStream in = new FileInputStream(file);
-            image = getImage(in);
-            imageCache.put(file, image);
-        }
-        return image;
+        URL url = FileURL.toURL(file);
+        return getImage(url);
     }
 
     /**
@@ -222,12 +213,11 @@ public class StrictDeviceResources
      */
     public Image getImage(URL url)
             throws IOException {
-        File file = FileURL.toFile(url);
-        Image image = imageCache.get(file);
+        Image image = imageCache.get(url);
         if (image == null) {
             InputStream in = url.openStream();
             image = getImage(in);
-            imageCache.put(file, image);
+            imageCache.put(url, image);
         }
         return image;
     }
