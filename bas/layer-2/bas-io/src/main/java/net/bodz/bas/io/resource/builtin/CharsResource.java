@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.OpenOption;
 
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
@@ -52,10 +52,10 @@ public class CharsResource
         if (buffer == null)
             buffer = new MovableCharBuffer();
 
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
+        boolean append = OpenOptions.isAppend(options);
 
         int pos;
-        if (config.isAppend()) {
+        if (append) {
             pos = buffer.size();
         } else {
             buffer.resize(pos = 0);
@@ -70,10 +70,10 @@ public class CharsResource
         if (buffer == null)
             buffer = new MovableCharBuffer();
 
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
+        boolean append = OpenOptions.isAppend(options);
 
         int pos;
-        if (config.isAppend()) {
+        if (append) {
             pos = buffer.size();
         } else {
             buffer.resize(pos = 0);

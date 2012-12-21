@@ -105,7 +105,11 @@ public class FileTreeDumper {
     void dump(IPrintOut out, String prefix, Boolean theLast, IFile file, int depth)
             throws IOException {
 
-        BasicFileAttributeView view = file.getAttributeView(BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
+        BasicFileAttributeView _view = file.getAttributeView(BasicFileAttributeView.class,
+                LinkOption.NOFOLLOW_LINKS);
+        BasicFileAttributes _attrs = _view.readAttributes();
+
+        BasicFileAttributeView view = file.getAttributeView(BasicFileAttributeView.class);
         BasicFileAttributes attrs = view.readAttributes();
 
         if (showHidden || !file.isHidden()) {
@@ -122,7 +126,7 @@ public class FileTreeDumper {
 
             out.print(getText(file));
 
-            if (attrs.isSymbolicLink()) {
+            if (_attrs.isSymbolicLink()) {
                 String targetSpec;
                 try {
                     targetSpec = file.readSymLink();

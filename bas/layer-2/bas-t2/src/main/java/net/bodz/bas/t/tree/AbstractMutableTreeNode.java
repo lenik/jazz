@@ -50,11 +50,11 @@ public abstract class AbstractMutableTreeNode<node_t extends ITreeNode>
             throws CreateException;
 
     @Override
-    protected node_t _resolve(String firstPathEntry, String remainingPath) {
-        node_t child = getChild(firstPathEntry);
+    protected final node_t _resolveChild(String childKey, String remainingPath) {
+        node_t child = getChild(childKey);
         if (child == null) {
             child = newChild();
-            putChild(firstPathEntry, child);
+            putChild(childKey, child);
         }
 
         if (remainingPath == null)

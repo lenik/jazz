@@ -28,7 +28,7 @@ class MemoryResource
     @Override
     public IStreamResource getWrapped()
             throws IOException {
-        Inode inode = file.getInode();
+        Inode inode = file._get(true);
         if (inode == null)
             // 1. for newOut*, the node is already created before getWrapped()
             // 2. for newIn*, null node means non-exist parent dir.

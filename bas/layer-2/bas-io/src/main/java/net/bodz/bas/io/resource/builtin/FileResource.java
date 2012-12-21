@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.resource.AbstractInputOutputStreamResource;
 
 public class FileResource
@@ -63,8 +63,8 @@ public class FileResource
     @Override
     protected OutputStream _newOutputStream(OpenOption... options)
             throws IOException {
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
-        return new FileOutputStream(file, config.isAppend());
+        boolean append = OpenOptions.isAppend(options);
+        return new FileOutputStream(file, append);
     }
 
 }

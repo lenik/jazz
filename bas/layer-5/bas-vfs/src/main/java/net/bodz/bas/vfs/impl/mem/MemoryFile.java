@@ -8,11 +8,13 @@ import java.nio.file.attribute.FileAttributeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.java.nio.LinkOptions;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.t.buffer.IMovableBuffer;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
+import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
@@ -20,6 +22,7 @@ import net.bodz.bas.vfs.IFilenameFilter;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.inode.Inode;
 import net.bodz.bas.vfs.inode.InodeType;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 public class MemoryFile
@@ -55,15 +58,43 @@ public class MemoryFile
         return path;
     }
 
-    public synchronized Inode getInode() {
+    public synchronized Inode _get(boolean followLinks) {
         if (inode == null) {
             inode = getDevice()._find(path.getLocalPath());
+        }
+
+        if (!followLinks)
+            return inode;
+
+        Pair<IPath, Inode> pair = getDevice()._follow(path.getLocalPath());
+        if (pair == null)
+            return null;
+        else
+            return pair.getValue();
+    }
+
+    public synchronized Inode _create() {
+        Inode inode = _get(false);
+        if (inode == null) {
+            inode = getDevice()._resolve(path.getLocalPath());
         }
         return inode;
     }
 
     @Override
     public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        if (LinkOptions.isFollowLinks(options) && isSymLink()) {
+            Pair<IPath, Inode> target = getDevice()._follow(path.getLocalPath());
+            if (target == null)
+                throw new BadPathException(path.toString());
+
+            MemoryPath targetPath = (MemoryPath) target.getFirst();
+            Inode targetInode = target.getSecond();
+            MemoryFile targetFile = new MemoryFile(getDevice(), targetPath, targetInode);
+
+            return targetFile.getAttributeView(type);
+        }
+
         if (type.isInstance(attributes))
             return type.cast(attributes);
         else
@@ -72,6 +103,18 @@ public class MemoryFile
 
     @Override
     public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options) {
+        if (LinkOptions.isFollowLinks(options) && isSymLink()) {
+            Pair<IPath, Inode> target = getDevice()._follow(path.getLocalPath());
+            if (target == null)
+                throw new BadPathException(path.toString());
+
+            MemoryPath targetPath = (MemoryPath) target.getFirst();
+            Inode targetInode = target.getSecond();
+            MemoryFile targetFile = new MemoryFile(getDevice(), targetPath, targetInode);
+
+            return targetFile.readAttributes(type);
+        }
+
         if (type.isInstance(attributes))
             return type.cast(attributes);
         else
@@ -87,7 +130,7 @@ public class MemoryFile
     @Override
     public Iterable<? extends IFile> children(IFilenameFilter nameFilter)
             throws VFSException {
-        Inode inode = getInode();
+        Inode inode = _get(true);
         if (inode == null)
             return null;
 
@@ -103,7 +146,7 @@ public class MemoryFile
     @Override
     public Iterable<? extends IFile> children(IFileFilter fileFilter)
             throws VFSException {
-        Inode inode = getInode();
+        Inode inode = _get(true);
         if (inode == null)
             return null;
 
@@ -126,7 +169,7 @@ public class MemoryFile
             throw new OutOfMemoryError();
         int newSize = (int) newLength;
 
-        Inode inode = getInode();
+        Inode inode = _get(false);
 
         boolean followSymLink = false;
         if (followSymLink)
@@ -164,7 +207,7 @@ public class MemoryFile
     @Override
     public boolean mkblob(boolean touch)
             throws IOException {
-        Inode inode = createInode();
+        Inode inode = _create();
         if (inode == null)
             throw new IOException("Failed to create inode.");
 
@@ -186,7 +229,7 @@ public class MemoryFile
 
     @Override
     public Boolean exists() {
-        Inode inode = getInode();
+        Inode inode = _get(true);
         if (inode == null)
             return false;
         else
@@ -195,7 +238,7 @@ public class MemoryFile
 
     @Override
     public boolean isIterable() {
-        Inode inode = getInode();
+        Inode inode = _get(true);
         if (inode == null)
             return false;
         else
@@ -204,7 +247,7 @@ public class MemoryFile
 
     @Override
     public boolean delete() {
-        Inode inode = getInode();
+        Inode inode = _get(false);
         if (inode != null && inode.isEmpty()) {
             inode.detach();
             inode = null;
@@ -215,21 +258,29 @@ public class MemoryFile
 
     @Override
     public boolean mkdirs() {
-        Inode inode = createInode();
-        return inode != null;
+        Inode inode = _create();
+        if (inode == null)
+            return false;
+
+        switch (inode.getType()) {
+        case none:
+            inode.setType(InodeType.directory);
+        case directory:
+            return true;
+
+        case mixed:
+            return true;
+
+        case symbolicLink:
+        case blob:
+        default:
+            return false;
+        }
     }
 
     @Override
     public boolean mkdir() {
         return mkdirs();
-    }
-
-    Inode createInode() {
-        Inode inode = getInode();
-        if (inode == null) {
-            inode = getDevice()._resolve(path.getLocalPath());
-        }
-        return inode;
     }
 
     @Override
@@ -242,7 +293,7 @@ public class MemoryFile
     @Override
     public boolean createLink(String targetSpec, boolean symbolic)
             throws IOException {
-        Inode inode = createInode();
+        Inode inode = _create();
         if (inode == null)
             throw new IOException("Failed to create inode.");
 

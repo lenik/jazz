@@ -52,8 +52,8 @@ public class FileLink
         protected void _run() {
             File src = new File(session.getFile(srcbase), srcpath);
             File dst = new File(session.getFile(dstbase), dstpath);
-            Path srcpath = src.toPath();
-            Path dstpath = dst.toPath();
+            Path srcPath = src.toPath();
+            Path destPath = dst.toPath();
             try {
                 if (dst.exists()) {
                     boolean confirm = userDialogs.confirm(PackNLS.format("FileLink.fileExist_s", dst));
@@ -71,7 +71,7 @@ public class FileLink
                 if (symbolic) {
                     logger.infof(tr._("Create symlink %s => %s\n"), src, dst);
                     try {
-                        dstpath.createSymbolicLink(srcpath);
+                        Files.createSymbolicLink(destPath, srcPath);
                     } catch (UnsupportedOperationException e) {
                         logger.warn(e);
                         if (SystemInfo.isWin32()) {
@@ -88,7 +88,7 @@ public class FileLink
                     logger.infof(tr._("Create link %s => %s\n"), src, dst);
                     String errmesg = null;
                     try {
-                        dstpath.createLink(srcpath);
+                        Files.createLink(destPath, srcPath);
                     } catch (UnsupportedOperationException e) {
                         logger.warn(e);
                         errmesg = tr._("Hard link isn\'t supported, try full copy.");
@@ -102,7 +102,7 @@ public class FileLink
                             File parentFile = dst.getParentFile();
                             parentFile = FilePath.canoniOf(parentFile);
                             parentFile.mkdirs();
-                            Files.copy(src, dst);
+                            Files.copy(srcPath, destPath);
                         } catch (IOException ex) {
                             throw ex;
                         }

@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs;
 
 import java.io.IOException;
+import java.nio.file.LinkOption;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.DosFileAttributeView;
@@ -129,7 +130,7 @@ public abstract class AbstractFsEntry
     @Override
     public final boolean isSymLink() {
         try {
-            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
+            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
             return attrs == null ? false : attrs.isSymbolicLink();
         } catch (IOException e) {
             return false;

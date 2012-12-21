@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.OpenOption;
 
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.sio.ByteBufferByteIn;
 import net.bodz.bas.sio.ByteBufferByteOut;
 import net.bodz.bas.sio.IByteIn;
@@ -71,8 +71,8 @@ public class ByteArrayResource
     public IByteOut _newByteOut(OpenOption... options)
             throws IOException {
 
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
-        if (config.isAppend()) // XXX ByteArrayResource append mode
+        boolean append = OpenOptions.isAppend(options);
+        if (append) // XXX ByteArrayResource append mode
             throw new UnsupportedOperationException();
 
         ByteBuffer byteBuffer = ByteBuffer.wrap(array, start, end - start);

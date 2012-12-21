@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.OpenOption;
 
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
@@ -51,10 +51,10 @@ public class BytesResource
         if (buffer == null)
             buffer = new MovableByteBuffer();
 
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
+        boolean append = OpenOptions.isAppend(options);
 
         int pos;
-        if (config.isAppend()) {
+        if (append) {
             pos = buffer.size();
         } else {
             buffer.resize(pos = 0);
@@ -69,10 +69,10 @@ public class BytesResource
         if (buffer == null)
             buffer = new MovableByteBuffer();
 
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
+        boolean append = OpenOptions.isAppend(options);
 
         int pos;
-        if (config.isAppend()) {
+        if (append) {
             pos = buffer.size();
         } else {
             buffer.resize(pos = 0);

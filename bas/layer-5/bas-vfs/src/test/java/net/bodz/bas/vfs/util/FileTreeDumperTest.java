@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.sio.Stdio;
@@ -14,8 +13,7 @@ import net.bodz.bas.vfs.impl.nio.NioFile;
 public class FileTreeDumperTest
         extends Assert {
 
-    @Test
-    public void testDump1()
+    public void dumpPomDir()
             throws IOException {
         MavenProjectOrigin pom = MavenProjectOrigin.fromClass(FileTreeDumperTest.class);
         File projectDir = pom.getProjectDir();

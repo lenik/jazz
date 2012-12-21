@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.FileURL;
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.resource.AbstractInputOutputStreamResource;
 
 public class URLResource
@@ -79,12 +79,12 @@ public class URLResource
     protected OutputStream _newOutputStream(OpenOption... options)
             throws IOException {
 
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
+        boolean append = OpenOptions.isAppend(options);
 
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url);
-            return new FileOutputStream(file, config.isAppend());
+            return new FileOutputStream(file, append);
 
         default:
             return url.openConnection().getOutputStream();

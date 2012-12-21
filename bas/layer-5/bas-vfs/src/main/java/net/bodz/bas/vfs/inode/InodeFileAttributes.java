@@ -94,7 +94,7 @@ public abstract class InodeFileAttributes
         switch (inode.getType()) {
         case directory:
         case mixed:
-            return false;
+            return true;
 
         case none:
         case blob:
