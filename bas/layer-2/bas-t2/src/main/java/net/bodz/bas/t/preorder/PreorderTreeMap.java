@@ -136,6 +136,7 @@ public class PreorderTreeMap<K, V>
             return entry.getValue();
     }
 
+    @Override
     public Map<K, V> joinMap(K key) {
         Map<K, V> map = new LinkedHashMap<K, V>();
 
@@ -188,6 +189,7 @@ public class PreorderTreeMap<K, V>
         };
     }
 
+    @Override
     public Set<K> joinKeySet(K key) {
         Set<K> set = new HashSet<K>();
         for (K k : joinKeys(key))

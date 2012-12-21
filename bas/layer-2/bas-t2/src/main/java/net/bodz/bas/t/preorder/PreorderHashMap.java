@@ -1,7 +1,10 @@
 package net.bodz.bas.t.preorder;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.t.iterator.Iterables;
@@ -82,4 +85,28 @@ public class PreorderHashMap<K, V>
         return null;
     }
 
+    @Override
+    public Map<K, V> joinMap(K key) {
+        Map<K, V> map = new LinkedHashMap<K, V>();
+        for (Map.Entry<K, V> entry : joinEntries(key)) {
+            map.put(entry.getKey(), entry.getValue());
+        }
+        return map;
+    }
+
+    @Override
+    public Set<K> joinKeySet(K key) {
+        Set<K> set = new HashSet<K>();
+        for (K k : joinKeys(key))
+            set.add(k);
+        return set;
+    }
+
+    @Override
+    public Set<V> joinValueSet(K key) {
+        Set<V> list = new HashSet<V>();
+        for (V val : join(key))
+            list.add(val);
+        return list;
+    }
 }
