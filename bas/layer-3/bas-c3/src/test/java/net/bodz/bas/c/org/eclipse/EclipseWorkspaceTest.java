@@ -1,4 +1,4 @@
-package net.bodz.bas.snm;
+package net.bodz.bas.c.org.eclipse;
 
 import java.util.Map;
 import java.util.Properties;

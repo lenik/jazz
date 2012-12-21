@@ -1,21 +1,23 @@
 package net.bodz.bas.ant;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
 
+import net.bodz.bas.c.org.eclipse.JavaProject;
+import net.bodz.bas.c.org.eclipse.JavaProjectBaseDir;
 import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.snm.eclipse.EclipseProject;
 
 public class ProjectInfo {
 
     private Project antProject;
 
-    private File projectBase;
+    private File baseDir;
     private Path classpath;
     private Path classpathWithTest;
 
@@ -29,18 +31,18 @@ public class ProjectInfo {
     }
 
     public ProjectInfo(Project antProject)
-            throws ParseException {
+            throws ParseException, IOException {
         this(antProject, SystemColos.workdir.get());
     }
 
     public ProjectInfo(Project antProject, File searchStart)
-            throws ParseException {
+            throws ParseException, IOException {
         if (antProject == null)
             throw new NullPointerException("project");
         this.antProject = antProject;
 
-        projectBase = EclipseProject.findProjectBase(searchStart);
-        if (projectBase == null)
+        baseDir = JavaProjectBaseDir.findParents(searchStart);
+        if (baseDir == null)
             throw new RuntimeException("Can\'t find the eclipse project, search from " + searchStart);
 
         parse();
@@ -50,11 +52,11 @@ public class ProjectInfo {
      * Convert classpath to ant.Path objects.
      */
     void parse()
-            throws ParseException {
-        EclipseProject eproj = new EclipseProject(projectBase);
+            throws ParseException, IOException {
+        JavaProject project = new JavaProject(baseDir);
         classpath = new Path(antProject);
         classpathWithTest = new Path(antProject);
-        for (File f : eproj.getFileClasspath()) {
+        for (File f : project.getClasspath()) {
             boolean nonTest = !f.getName().contains("test"); // test.bin
             Path path = new Path(antProject, f.getPath());
             if (nonTest)
@@ -64,7 +66,7 @@ public class ProjectInfo {
     }
 
     public File getBase() {
-        return projectBase;
+        return baseDir;
     }
 
     public Path getClasspath() {
