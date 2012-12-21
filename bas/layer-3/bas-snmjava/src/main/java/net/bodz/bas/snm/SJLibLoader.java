@@ -1,4 +1,4 @@
-package net.bodz.bas.snm.eclipse;
+package net.bodz.bas.snm;
 
 import java.io.File;
 import java.io.IOException;

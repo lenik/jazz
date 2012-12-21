@@ -15,7 +15,6 @@ import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.snm.eclipse.JarLocations;
 
 /**
  * Example unit test for ant task:
@@ -63,9 +62,11 @@ public class TaskTestApp {
     public TaskTestApp(int caller, String resourceName)
             throws IOException {
         this();
+
         Class<?> callerClass = Caller.getCallerClass(caller);
-        URL url = ClassResource.getClassBytesURL(callerClass);
-        if ("jar".equals(url.getProtocol())) {
+
+        URL classBytesURL = ClassResource.getClassBytesURL(callerClass);
+        if ("jar".equals(classBytesURL.getProtocol())) {
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.
             File altBaseDir = JarLocations.getBaseClasspath(callerClass);
@@ -79,15 +80,18 @@ public class TaskTestApp {
     public void load(int caller, String resourceName)
             throws IOException {
         Class<?> callerClass = Caller.getCallerClass(caller);
+
         URL xmlURL;
         if (resourceName == null)
             xmlURL = ClassResource.getDataURL(callerClass, "xml");
         else
             xmlURL = callerClass.getResource(resourceName);
-        File buildFile = FileURL.toFile(xmlURL); // Must be a File, not resource in zip.
-        if (!buildFile.exists())
+
+        File buildFile = FileURL.toFile(xmlURL, null); // Must be a File, not a resource in zip.
+        if (buildFile != null && buildFile.exists())
+            load(buildFile);
+        else
             throw new IllegalUsageException("The build file for test isn\'t existed: " + buildFile);
-        load(buildFile);
     }
 
     public void load(File buildFile) {

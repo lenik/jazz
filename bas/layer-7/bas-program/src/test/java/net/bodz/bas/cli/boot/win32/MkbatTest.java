@@ -5,22 +5,22 @@ import java.net.URL;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.snm.eclipse.EclipseProject;
+import net.bodz.bas.c.org.eclipse.JavaProjectBaseDir;
 
 public class MkbatTest {
 
     public static void main(String[] args)
             throws Throwable {
-        File projBase = EclipseProject.findProjectBase(Mkbat.class);
-        if (projBase == null) {
-            System.err.println("can't find project base");
+        File baseDir = JavaProjectBaseDir.forClass(Mkbat.class);
+        if (baseDir == null) {
+            System.err.println("can't find project base dir");
             return;
         }
         URL outurl = ClassResource.getDataURL(MkbatTest.class, "out");
         File outdir = FilePath.canoniOf(outurl);
         outdir.mkdirs();
 
-        File lapiBase = new File(projBase.getParentFile(), "net.bodz.lapiota");
+        File lapiBase = new File(baseDir.getParentFile(), "net.bodz.lapiota");
         File moddir = FilePath.canoniOf(lapiBase, "mod/GUI Utilities");
         File indir = new File(moddir, "bin");
         String[] mkbatArgs = { //
