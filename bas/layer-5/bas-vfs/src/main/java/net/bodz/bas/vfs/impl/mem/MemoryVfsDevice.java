@@ -2,11 +2,12 @@ package net.bodz.bas.vfs.impl.mem;
 
 import java.io.IOException;
 import java.nio.file.CopyOption;
+import java.nio.file.NotLinkException;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.inode.Inode;
+import net.bodz.bas.vfs.inode.InodeType;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -28,15 +29,15 @@ public class MemoryVfsDevice
         return getDeviceSpec();
     }
 
-    private Inode getRootInode() {
+    public Inode _root() {
         return rootInode;
     }
 
-    public Inode findInode(String localPath) {
+    public Inode _find(String localPath) {
         return rootInode.getDescendant(localPath);
     }
 
-    public Inode resolveInode(String localPath) {
+    public Inode _resolve(String localPath) {
         return rootInode.resolve(localPath);
     }
 
@@ -84,7 +85,31 @@ public class MemoryVfsDevice
     @Override
     public boolean createLink(String localPath, String target, boolean symbolic)
             throws IOException {
-        throw new NotImplementedException();
+
+        Inode inode = _resolve(localPath);
+        if (inode == null)
+            throw new IOException("Failed to create inode.");
+
+        if (inode.getType() != InodeType.none)
+            return false;
+
+        inode.setType(InodeType.symbolicLink);
+        inode.setData(target);
+        return true;
+    }
+
+    @Override
+    public String readSymbolicLink(String localPath)
+            throws NotLinkException, IOException {
+        Inode inode = _resolve(localPath);
+        if (inode == null)
+            throw new BadPathException(localPath);
+
+        if (inode.getType() != InodeType.symbolicLink)
+            throw new NotLinkException(localPath);
+
+        Object targetSpec = inode.getData();
+        return (String) targetSpec;
     }
 
 }

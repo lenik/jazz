@@ -3,6 +3,7 @@ package net.bodz.bas.vfs;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
+import java.nio.file.NotLinkException;
 
 import org.apache.commons.vfs.FileSystem;
 
@@ -103,8 +104,26 @@ public interface IVfsDevice {
     boolean move(String localPathFrom, String localPathTo, CopyOption... options)
             throws BadPathException, IOException;
 
-    boolean createLink(String localPath, String target, boolean symbolic)
-            throws BadPathException, IOException;
+    /**
+     * Create a (symbolic) link at the specified local path, to the target.
+     * 
+     * @param localPath
+     *            The path of the link file.
+     * @param targetSpec
+     *            Relative path string to the target.
+     * @param symbolic
+     *            Create a symbolic link rather than hard link.
+     * @return <code>false</code> If file is already existed.
+     * @throws UnsupportedOperationException
+     *             If the underlying device doesn't support symbolic link.
+     * @throws BadPathException
+     *             If <code>targetSpec</code> is invalid.
+     */
+    boolean createLink(String localPath, String targetSpec, boolean symbolic)
+            throws IOException;
+
+    String readSymbolicLink(String localPath)
+            throws NotLinkException, IOException;
 
     /**
      * @param watchFile

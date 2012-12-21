@@ -2,6 +2,7 @@ package net.bodz.bas.vfs.impl.apachevfs;
 
 import java.io.IOException;
 import java.nio.file.CopyOption;
+import java.nio.file.NotLinkException;
 
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
@@ -132,8 +133,17 @@ public class ApacheVfsDevice
             throw new NullPointerException("target");
 
         ApacheFile linkFile = resolve(localPath);
+        if (linkFile.exists() == Boolean.TRUE)
+            return false;
+
         FileObject linkObj = linkFile.getFileObject();
 
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public String readSymbolicLink(String localPath)
+            throws NotLinkException, IOException {
         throw new NotImplementedException();
     }
 

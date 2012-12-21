@@ -3,6 +3,7 @@ package net.bodz.bas.vfs;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.LinkOption;
+import java.nio.file.NotLinkException;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileAttributeView;
 import java.nio.file.attribute.FileTime;
@@ -102,6 +103,8 @@ public interface IFsEntry {
 
     boolean isDirectory();
 
+    boolean isSymLink();
+
     boolean isHidden();
 
     boolean setHidden(boolean hidden)
@@ -160,7 +163,31 @@ public interface IFsEntry {
     boolean renameTo(String destSpec)
             throws BadPathException, IOException;
 
+    /**
+     * Create a (symbolic) link to the target.
+     * 
+     * @param targetSpec
+     *            Relative path string to the target.
+     * @param symbolic
+     *            Create a symbolic link rather then hard link.
+     * @return <code>false</code> If file is already existed.
+     * @throws UnsupportedOperationException
+     *             If the underlying device doesn't support symbolic link.
+     * @throws BadPathException
+     *             If <code>targetSpec</code> is invalid.
+     */
     boolean createLink(String targetSpec, boolean symbolic)
-            throws BadPathException, IOException;
+            throws IOException;
+
+    /**
+     * Read the target spec of the symbolic link.
+     * 
+     * @throws UnsupportedOperationException
+     *             If the underlying device doesn't support symbolic link.
+     * @throws NotLinkException
+     *             If this file isn't a symlink.
+     */
+    String readSymLink()
+            throws IOException;
 
 }

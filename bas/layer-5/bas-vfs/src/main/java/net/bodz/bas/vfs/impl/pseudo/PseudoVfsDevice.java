@@ -2,10 +2,10 @@ package net.bodz.bas.vfs.impl.pseudo;
 
 import java.io.IOException;
 import java.nio.file.CopyOption;
+import java.nio.file.NotLinkException;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
@@ -99,7 +99,14 @@ public class PseudoVfsDevice
     @Override
     public boolean createLink(String localPath, String target, boolean symbolic)
             throws IOException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String readSymbolicLink(String localPath)
+            throws NotLinkException, IOException {
+        // PseudoFile file = resolve(localPath).inode;
+        throw new UnsupportedOperationException();
     }
 
 }

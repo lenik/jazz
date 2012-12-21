@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.util;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +15,8 @@ public class FileTreeDumperTest
         extends Assert {
 
     @Test
-    public void testDump1() {
+    public void testDump1()
+            throws IOException {
         MavenProjectOrigin pom = MavenProjectOrigin.fromClass(FileTreeDumperTest.class);
         File projectDir = pom.getProjectDir();
 

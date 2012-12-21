@@ -57,7 +57,7 @@ public class MemoryFile
 
     public synchronized Inode getInode() {
         if (inode == null) {
-            inode = getDevice().findInode(path.getLocalPath());
+            inode = getDevice()._find(path.getLocalPath());
         }
         return inode;
     }
@@ -227,14 +227,14 @@ public class MemoryFile
     Inode createInode() {
         Inode inode = getInode();
         if (inode == null) {
-            inode = getDevice().resolveInode(path.getLocalPath());
+            inode = getDevice()._resolve(path.getLocalPath());
         }
         return inode;
     }
 
     @Override
     protected IStreamResource newResource(Charset charset) {
-        IStreamResource resource = new MemoryStreamResource(this);
+        IStreamResource resource = new MemoryResource(this);
         resource.setCharset(charset);
         return resource;
     }
@@ -253,7 +253,7 @@ public class MemoryFile
         } else {
             IPath targetPath = getPath().join(targetSpec);
 
-            Inode targetInode = getDevice().findInode(targetPath.getLocalPath());
+            Inode targetInode = getDevice()._find(targetPath.getLocalPath());
             if (targetInode == null)
                 throw new IOException("Target isn't existed: " + targetSpec);
 

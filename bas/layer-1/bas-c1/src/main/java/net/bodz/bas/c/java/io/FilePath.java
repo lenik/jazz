@@ -1,8 +1,12 @@
 package net.bodz.bas.c.java.io;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import net.bodz.bas.c.string.StringPart;
 
@@ -318,6 +322,27 @@ public class FilePath {
                 }
         }
         return null;
+    }
+
+    public static boolean createLink(File linkFile, String targetSpec, boolean symbolic)
+            throws IOException {
+        if (linkFile.exists())
+            return false;
+
+        Path _link = linkFile.toPath();
+        Path _target = Paths.get(targetSpec);
+        if (symbolic)
+            Files.createSymbolicLink(_link, _target);
+        else
+            Files.createLink(_link, _target);
+        return true;
+    }
+
+    public static String getSymLinkTarget(File linkFile)
+            throws IOException {
+        Path link = linkFile.toPath();
+        Path target = Files.readSymbolicLink(link);
+        return target.toString();
     }
 
 }

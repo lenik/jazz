@@ -1,5 +1,9 @@
 package net.bodz.bas.vfs.util;
 
+import java.io.IOException;
+import java.nio.file.LinkOption;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,11 +97,16 @@ public class FileTreeDumper {
         this.colorized = colorized;
     }
 
-    public void dump(IPrintOut out, IFile file) {
+    public void dump(IPrintOut out, IFile file)
+            throws IOException {
         dump(out, "", null, file, 0);
     }
 
-    void dump(IPrintOut out, String prefix, Boolean theLast, IFile file, int depth) {
+    void dump(IPrintOut out, String prefix, Boolean theLast, IFile file, int depth)
+            throws IOException {
+
+        BasicFileAttributeView view = file.getAttributeView(BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
+        BasicFileAttributes attrs = view.readAttributes();
 
         if (showHidden || !file.isHidden()) {
             out.print(prefix);
@@ -113,8 +122,19 @@ public class FileTreeDumper {
 
             out.print(getText(file));
 
+            if (attrs.isSymbolicLink()) {
+                String targetSpec;
+                try {
+                    targetSpec = file.readSymLink();
+                } catch (IOException e) {
+                    targetSpec = "<error: " + e.getMessage() + ">";
+                }
+                out.print(" -> ");
+                out.print(targetSpec);
+            }
+
             if (appendSymbol) {
-                if (file.isDirectory())
+                if (attrs.isDirectory())
                     out.print("/");
                 else if (file.isExecutable())
                     out.print("*");
@@ -124,7 +144,7 @@ public class FileTreeDumper {
             out.println();
         }
 
-        if (file.isDirectory()) {
+        if (attrs.isDirectory()) {
 
             if (treeGraph && theLast != null)
                 prefix += theLast ? treeLineChars.treeSkip : treeLineChars.treeLine;
