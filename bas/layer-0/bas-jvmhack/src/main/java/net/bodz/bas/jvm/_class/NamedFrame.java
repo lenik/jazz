@@ -1,4 +1,4 @@
-package net.bodz.bas.loader.crafts;
+package net.bodz.bas.jvm._class;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -11,14 +11,10 @@ import org.objectweb.asm.Opcodes;
 
 import net.bodz.bas.jvm.stack.FrameConstructError;
 import net.bodz.bas.jvm.stack.FrameTemplate_forAsm;
-import net.bodz.bas.loader.CustomClassLoader;
 
 public class NamedFrame {
 
-    static CustomClassLoader frameClassLoader;
-    static {
-        frameClassLoader = new CustomClassLoader();
-    }
+    static AsmClassLoader asmClassLoader = new AsmClassLoader();
 
     /**
      * @throws FrameConstructError
@@ -29,7 +25,7 @@ public class NamedFrame {
         methodName = toSafeName(methodName);
         byte[] bytes = Dump.dump(className, methodName, description);
 
-        Class<?> craftClass = frameClassLoader._defineClass(className, bytes, 0, bytes.length);
+        Class<?> craftClass = asmClassLoader._defineClass(className, bytes, 0, bytes.length);
 
         try {
             Constructor<?> craftCtor = craftClass.getConstructor(String.class, Runnable.class);

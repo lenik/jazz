@@ -1,4 +1,4 @@
-package net.bodz.bas.loader.scan.m2;
+package net.bodz.bas.c.m2;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -6,14 +6,15 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedHashSet;
 
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.err.UnexpectedException;
 
-public class TestClassLoader {
+public class MavenTestClassLoader {
 
     public static URLClassLoader createMavenTestClassLoader(URLClassLoader loader) {
         LinkedHashSet<File> classpaths = new LinkedHashSet<File>();
         LinkedHashSet<File> testClasspaths = new LinkedHashSet<File>();
-        for (File classpath : UCLDumper.getLocalClasspaths(loader)) {
+        for (File classpath : URLClassLoaders.getLocalURLs(loader)) {
             if (classpaths.add(classpath)) {
                 // target/classes/...
                 // target/test-classes/...

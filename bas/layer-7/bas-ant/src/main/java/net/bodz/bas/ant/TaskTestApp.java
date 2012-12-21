@@ -69,7 +69,7 @@ public class TaskTestApp {
         if ("jar".equals(classBytesURL.getProtocol())) {
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.
-            File altBaseDir = JarLocations.getBaseClasspath(callerClass);
+            File altBaseDir = ClassResource.getRootFile(callerClass);
             project.log("Using alternated base dir: " + altBaseDir, Project.MSG_WARN);
             project.setBaseDir(altBaseDir);
         }

@@ -60,7 +60,7 @@ public class ValueConstruct
             URL url = FileURL.toURL(loc, null);
             urls[i] = url;
         }
-        URLClassLoaders.addURL(loader, urls);
+        URLClassLoaders.addURLs(loader, urls);
     }
 
     public Object create()
