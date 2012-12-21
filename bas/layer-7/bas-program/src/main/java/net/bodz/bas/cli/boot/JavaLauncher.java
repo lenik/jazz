@@ -8,16 +8,15 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-import org.apache.commons.lang.ArrayUtils;
-
 import net.bodz.bas.c.java.net.URLClassLoaders;
+import net.bodz.bas.c.java.util.Arrays;
+import net.bodz.bas.c.loader.DefaultClassLoader;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.err.control.Control;
 import net.bodz.bas.err.control.ControlExit;
 import net.bodz.bas.jvm.exit.CatchExit;
 import net.bodz.bas.jvm.exit.ExitableProgram;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.loader.Classpath;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.charset.BasCharsetProvider;
 
@@ -45,7 +44,7 @@ public abstract class JavaLauncher
                 // sysLoader = bootProc.configSysLoader();
                 // sysLoader = bootProc.configLoader(sysLoader);
                 URL[] urls = LoadUtil.find(bootProc.getSysLibs());
-                Classpath.addURL(urls);
+                DefaultClassLoader.addURLs(urls);
             }
             if (LOAD_DUMP)
                 URLClassLoaders.dump(sysLoader, Stdio.cerr);
@@ -144,29 +143,29 @@ public abstract class JavaLauncher
         this.redirectErr = (PrintStream) redirectErr;
     }
 
-    public static final int NONE = 0;
-    public static final int OUT_ONLY = 1;
-    public static final int ERR_ONLY = 2;
-    public static final int BOTH = 3;
-    public static final int BOTH_MIXED = 4;
+    public static final int CAPTURE_NONE = 0;
+    public static final int CAPTURE_OUT_ONLY = 1;
+    public static final int CAPTURE_ERR_ONLY = 2;
+    public static final int CAPTURE_BOTH = 3;
+    public static final int CAPTURE_BOTH_MIXED = 4;
 
     public void capture(int mode) {
         outbuf = null;
         errbuf = null;
         switch (mode) {
-        case NONE:
+        case CAPTURE_NONE:
             break;
-        case OUT_ONLY:
+        case CAPTURE_OUT_ONLY:
             outbuf = new ByteArrayOutputStream();
             break;
-        case ERR_ONLY:
+        case CAPTURE_ERR_ONLY:
             errbuf = new ByteArrayOutputStream();
             break;
-        case BOTH:
+        case CAPTURE_BOTH:
             outbuf = new ByteArrayOutputStream();
             errbuf = new ByteArrayOutputStream();
             break;
-        case BOTH_MIXED:
+        case CAPTURE_BOTH_MIXED:
             outbuf = errbuf = new ByteArrayOutputStream();
             break;
         default:
@@ -201,7 +200,7 @@ public abstract class JavaLauncher
         if (args.length < 1)
             throw new IllegalArgumentException("classname expected");
         final String className = args[0];
-        final String[] _args = (String[]) ArrayUtils.remove(args, 0);
+        final String[] _args = Arrays.shift(args).getSecond();
         new JavaLauncher() {
             @Override
             protected String getMainClassName() {

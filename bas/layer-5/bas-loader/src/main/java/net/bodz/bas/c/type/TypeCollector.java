@@ -13,8 +13,8 @@ import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.loader.DefaultClassLoader;
 import net.bodz.bas.c.m2.MavenProjectOrigin;
+import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.loader.scan.ClassScanner;
-import net.bodz.bas.loader.scan.m2.TestClassLoader;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
@@ -54,7 +54,7 @@ public abstract class TypeCollector<T> {
                     });
         }
 
-        URLClassLoader testLoader = TestClassLoader.createMavenTestClassLoader(mainLoader);
+        URLClassLoader testLoader = MavenTestClassLoader.createMavenTestClassLoader(mainLoader);
 
         scanner = createClassScanner();
         scanner.setClassLoader(testLoader);

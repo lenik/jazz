@@ -1,9 +1,9 @@
-package net.bodz.bas.loader;
+package net.bodz.bas.jvm._class;
 
 import java.nio.ByteBuffer;
 import java.security.ProtectionDomain;
 
-public class CustomClassLoader
+public class AsmClassLoader
         extends ClassLoader {
 
     public Class<?> _defineClass(String name, ByteBuffer b, ProtectionDomain protectionDomain)

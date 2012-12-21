@@ -1,10 +1,10 @@
-package net.bodz.bas.loader;
+package net.bodz.bas.c.loader;
 
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 
-import org.apache.commons.lang.ArrayUtils;
+import net.bodz.bas.c.java.util.Arrays;
 
 public class TempClassLoader
         extends URLClassLoader {
@@ -41,7 +41,7 @@ public class TempClassLoader
         if (parent instanceof URLClassLoader) {
             URLClassLoader ucl = (URLClassLoader) parent;
             URL[] orig = ucl.getURLs();
-            merged = (URL[]) ArrayUtils.addAll(orig, urls);
+            merged = (URL[]) Arrays.concat(orig, urls);
         }
         if (recursive) {
             if (parent != null)

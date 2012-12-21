@@ -13,7 +13,7 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.c.org.eclipse.SJLibLoader;
+import net.bodz.bas.c.loader.TempClassLoader;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.meta.ProgramName;
 import net.bodz.bas.cli.meta.ProgramNameUtil;
@@ -28,16 +28,11 @@ import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.io.resource.tools.StreamWriting;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.loader.DefaultBooter;
-import net.bodz.bas.loader.LoadException;
-import net.bodz.bas.loader.TempClassLoader;
-import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.snm.LoadUtil;
 import net.bodz.bas.t.set.ArraySet;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
@@ -122,7 +117,7 @@ public class Mkbat
 
     @Override
     protected EditResult doEdit(IFile file)
-            throws LoadException, IOException {
+            throws IOException {
         String ext = file.getPath().getExtension(true, 1);
         if (!".java".equals(ext) && !".class".equals(ext))
             return EditResult.pass();

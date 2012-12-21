@@ -1,7 +1,8 @@
-package net.bodz.bas.loader.crafts;
+package net.bodz.bas.jvm._class;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 
 public class NamedFrameTest
         extends Assert {
