@@ -11,7 +11,7 @@ import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.VFS;
 
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.resource.AbstractStreamResource;
 import net.bodz.bas.sio.*;
 
@@ -44,8 +44,8 @@ public class ApacheFileResource
     @Override
     protected OutputStream _newOutputStream(OpenOption... options)
             throws IOException {
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
-        return fileObject.getContent().getOutputStream(config.isAppend());
+        boolean append = OpenOptions.isAppend(options);
+        return fileObject.getContent().getOutputStream(append);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class MemoryFileAttributes
     @Override
     protected Inode getInode() {
         // createInode?...
-        return file.getInode();
+        return file._get(false);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class MemoryFileAttributes
     @Override
     protected Inode resolveSymlink(String targetSpec) {
         MemoryFile targetFile = (MemoryFile) file.resolve(targetSpec);
-        return targetFile.getInode();
+        return targetFile._get(true);
     }
 
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.CopyOption;
 import java.nio.file.NotLinkException;
 
+import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.inode.Inode;
@@ -38,7 +39,42 @@ public class MemoryVfsDevice
     }
 
     public Inode _resolve(String localPath) {
-        return rootInode.resolve(localPath);
+        Inode inode = rootInode.resolve(localPath);
+
+        // Auto init default parents nodes as directories.
+        Inode parent = inode.getParent();
+        while (parent != null) {
+            if (parent.getType() == InodeType.none)
+                parent.setType(InodeType.directory);
+            else
+                break;
+            parent = parent.getParent();
+        }
+
+        return inode;
+    }
+
+    public Pair<IPath, Inode> _follow(String localPath) {
+        Inode inode = _find(localPath);
+        if (inode == null)
+            return null;
+
+        IPath path = parse(localPath);
+
+        while (inode.getType() == InodeType.symbolicLink) {
+            String targetSpec = (String) inode.getData();
+            path = path.join(targetSpec);
+
+            String targetLocalPath = path.getLocalPath();
+            inode = _find(targetLocalPath);
+
+            if (inode == null)
+                return null;
+
+            if (inode.getType() != InodeType.symbolicLink)
+                break;
+        }
+        return Pair.of(path, inode);
     }
 
     @Override
@@ -75,8 +111,8 @@ public class MemoryVfsDevice
         if (!destParentFile.mkdirs())
             return false;
 
-        Inode srcNode = src.getInode();
-        Inode destParentNode = destParentFile.getInode();
+        Inode srcNode = src._get(false);
+        Inode destParentNode = destParentFile._get(false);
         srcNode.detach();
         srcNode.attach(destParentNode, destName);
         return true;

@@ -3,7 +3,7 @@ package net.bodz.bas.io.resource.builtin;
 import java.nio.charset.CharsetDecoder;
 import java.nio.file.OpenOption;
 
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
 import net.bodz.bas.sio.BufCharOut;
 import net.bodz.bas.sio.IByteOut;
@@ -36,9 +36,9 @@ public class StringBufferTarget
 
     @Override
     protected BufCharOut _newPrintOut(OpenOption... options) {
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
+        boolean append = OpenOptions.isAppend(options);
 
-        if (!config.isAppend())
+        if (!append)
             buffer.setLength(0);
         return new BufCharOut(buffer);
     }

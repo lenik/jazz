@@ -6,6 +6,14 @@ import java.util.Set;
 
 public class UnitModeBits {
 
+    public static final int OWNER_MASK = 0700;
+    public static final int GROUP_MASK = 0070;
+    public static final int OTHERS_MASK = 0007;
+
+    public static final int READ_MASK = 0111;
+    public static final int WRITE_MASK = 0222;
+    public static final int EXECUTE_MASK = 0444;
+
     public static final int OWNER_READ = 0100;
     public static final int OWNER_WRITE = 0200;
     public static final int OWNER_EXECUTE = 0400;

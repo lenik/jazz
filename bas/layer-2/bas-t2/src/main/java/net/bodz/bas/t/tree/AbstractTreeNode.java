@@ -43,12 +43,25 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode>
             return getChild(path);
 
         String key = path.substring(0, slash);
-        ITreeNode child = getChild(key);
-        if (child == null)
-            return null;
-
         path = path.substring(slash + 1);
-        return (node_t) child.getDescendant(path);
+
+        @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+        node_t next;
+
+        if (".".equals(key))
+            return getDescendant(path);
+
+        if ("..".equals(key)) {
+            next = getParent();
+            if (next == null)
+                next = _this;
+        } else {
+            next = getChild(key);
+            if (next == null)
+                return null;
+        }
+
+        return (node_t) next.getDescendant(path);
     }
 
     @Override
@@ -56,10 +69,10 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode>
         if (path == null)
             throw new NullPointerException("path");
 
-        if (path.isEmpty()) {
-            @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+        @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+
+        if (path.isEmpty())
             return _this;
-        }
 
         int slash = path.indexOf('/');
         String key;
@@ -71,11 +84,21 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode>
             path = path.substring(slash + 1);
         }
 
-        return _resolve(key, path);
+        if (".".equals(key))
+            return resolve(path);
+
+        if ("..".equals(key)) {
+            node_t next = getParent();
+            if (next == null)
+                next = _this;
+            return (node_t) next.resolve(path);
+        }
+
+        return _resolveChild(key, path);
     }
 
-    protected node_t _resolve(String firstPathEntry, String remainingPath) {
-        node_t child = getChild(firstPathEntry);
+    protected node_t _resolveChild(String childKey, String remainingPath) {
+        node_t child = getChild(childKey);
         if (child == null)
             return null;
         else

@@ -8,7 +8,7 @@ import java.nio.file.OpenOption;
 import org.apache.commons.vfs.FileContent;
 import org.apache.commons.vfs.FileObject;
 
-import net.bodz.bas.c.java.nio.CommonOpenConfig;
+import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.resource.AbstractInputOutputStreamResource;
 
 public class FileObjectResource
@@ -37,9 +37,9 @@ public class FileObjectResource
         FileContent content = fileObject.getContent();
         checkOpen(content);
 
-        CommonOpenConfig config = CommonOpenConfig.parse(options);
+        boolean append = OpenOptions.isAppend(options);
 
-        OutputStream out = content.getOutputStream(config.isAppend());
+        OutputStream out = content.getOutputStream(append);
         return out;
     }
 
