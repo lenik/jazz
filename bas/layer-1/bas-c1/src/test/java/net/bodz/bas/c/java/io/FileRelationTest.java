@@ -5,13 +5,13 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FileGCDTest
+public class FileRelationTest
         extends Assert {
 
     void testFindBase(String expected, String a, String b) {
         File fa = a == null ? null : new File(a);
         File fb = b == null ? null : new File(b);
-        File resultf = FileGCD.getCommonParentFile(fa, fb);
+        File resultf = FileRelation.getCommonParentFile(fa, fb);
         String result = resultf == null ? null : resultf.toString(); // getPath();
         if (result != null)
             result = result.replace('\\', '/');

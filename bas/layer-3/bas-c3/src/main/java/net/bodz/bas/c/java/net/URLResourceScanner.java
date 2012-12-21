@@ -83,7 +83,9 @@ public class URLResourceScanner {
 
         switch (start.getProtocol()) {
         case "file":
-            File startFile = FileURL.toFile(start);
+            File startFile = FileURL.toFile(start, null);
+            if (startFile == null)
+                throw new IllegalArgumentException("Illegal file URL: " + start);
             scanFiles(map, relativePath, startFile, 0);
             break;
 

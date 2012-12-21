@@ -40,7 +40,7 @@ public class ClassResource {
 
     public static File getRootFile(Class<?> clazz) {
         URL rootURL = getRootURL(clazz);
-        return FileURL.toFile(rootURL);
+        return FileURL.toNearestFile(rootURL);
     }
 
     public static URL getRootURL(Class<?> clazz) {
@@ -94,7 +94,7 @@ public class ClassResource {
      */
     public static File getClassBytesFile(Class<?> clazz) {
         URL url = getClassBytesURL(clazz);
-        File file = FileURL.toFile(url);
+        File file = FileURL.toFile(url, null);
         return file;
     }
 

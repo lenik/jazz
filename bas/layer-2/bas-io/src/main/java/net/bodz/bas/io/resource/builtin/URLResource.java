@@ -58,8 +58,8 @@ public class URLResource
     public Long getLength() {
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return file.length();
+            File file = FileURL.toFile(url, null);
+            return file == null ? null : file.length();
         default:
             return null;
         }
@@ -83,8 +83,11 @@ public class URLResource
 
         switch (url.getProtocol()) {
         case "file":
-            File file = FileURL.toFile(url);
-            return new FileOutputStream(file, append);
+            File file = FileURL.toFile(url, null);
+            if (file == null)
+                throw new IOException("Illegal file URL: " + url);
+            else
+                return new FileOutputStream(file, append);
 
         default:
             return url.openConnection().getOutputStream();

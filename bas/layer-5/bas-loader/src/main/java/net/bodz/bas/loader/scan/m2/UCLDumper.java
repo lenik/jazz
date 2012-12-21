@@ -16,21 +16,20 @@ public class UCLDumper {
     }
 
     public static List<File> getLocalClasspaths(ClassLoader cl) {
-        List<File> list = new ArrayList<File>();
+        List<File> localFileList = new ArrayList<File>();
         while (cl != null) {
             if (cl instanceof URLClassLoader) {
                 URLClassLoader ucl = (URLClassLoader) cl;
                 for (URL url : ucl.getURLs()) {
-                    if ("file".equals(url.getProtocol())) {
-                        File file = FileURL.toFile(url);
-                        list.add(file);
-                    }
+                    File localFile = FileURL.toFile(url, null);
+                    if (localFile != null)
+                        localFileList.add(localFile);
                 }
             }
 
             cl = cl.getParent();
         }
-        return list;
+        return localFileList;
     }
 
     static boolean dumpRaw = true;
@@ -38,7 +37,7 @@ public class UCLDumper {
     public static void main(String[] args) {
         if (dumpRaw) {
             ClassLoader scl = ClassLoader.getSystemClassLoader();
-            ClassLoader cl = (URLClassLoader) scl;
+            ClassLoader cl = scl;
             while (cl != null) {
                 System.out.println(cl);
 
