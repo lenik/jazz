@@ -4,7 +4,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.geom.spec0_f.IEditablePointSet2d;
+import net.bodz.bas.geom.spec0_f.IMutablePointSet2d;
 import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.geom.spec0_f.tr.MatrixTransformer2d;
 import net.bodz.bas.geom.spec1_f.Point2d;
@@ -27,7 +27,7 @@ public class GraphDesignerContext
     public IPrimitive2d selshape;
 
     // Edit
-    public IEditablePointSet2d seledit;
+    public IMutablePointSet2d seledit;
     public int selpoint;
     public int selspoint;
 

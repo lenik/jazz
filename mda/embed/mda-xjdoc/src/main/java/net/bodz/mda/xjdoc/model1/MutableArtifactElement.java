@@ -21,7 +21,7 @@ public class MutableArtifactElement
         return artifactDoc;
     }
 
-    protected void setArtifactDoc(ArtifactDoc artifactDoc, boolean applyToElementProperties) {
+    public void setArtifactDoc(ArtifactDoc artifactDoc, boolean applyToElementProperties) {
         this.artifactDoc = artifactDoc;
 
         if (applyToElementProperties) {

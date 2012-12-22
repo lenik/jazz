@@ -3,11 +3,11 @@ package net.bodz.bas.geom.spec1_f;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.geom.spec0_f.IEditablePointRefSet2d;
+import net.bodz.bas.geom.spec0_f.IMutablePointRefSet2d;
 
 public class Polylink2d
         extends AbstractPolygon2d
-        implements IEditablePointRefSet2d {
+        implements IMutablePointRefSet2d {
 
     private static final long serialVersionUID = 1L;
 

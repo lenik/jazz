@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.t.preorder.PrefixMap;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
@@ -13,6 +14,8 @@ import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 public class MutableOptionGroup
         extends AbstractOptionGroup
         implements IMutableOptionGroup {
+
+    private static final long serialVersionUID = 1L;
 
     Class<?> declaringClass;
     String name;
@@ -207,6 +210,38 @@ public class MutableOptionGroup
         usageMap.remove(usageId);
         if (parent != null)
             parent.removeUsage(usage);
+    }
+
+    // -o IMutableElement
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
+    public void setDisplayName(DomainString displayName) {
+        super.setDisplayName(displayName);
+    }
+
+    @Override
+    public void setDescription(DomainString description) {
+        super.setDescription(description);
+    }
+
+    @Override
+    public void setHelpDoc(DomainString helpDoc) {
+        super.setHelpDoc(helpDoc);
+    }
+
+    @Override
+    public void setUserLevel(int userLevel) {
+        super.setUserLevel(userLevel);
+    }
+
+    @Override
+    public void setModifiers(int modifiers) {
+        super.setModifiers(modifiers);
     }
 
 }

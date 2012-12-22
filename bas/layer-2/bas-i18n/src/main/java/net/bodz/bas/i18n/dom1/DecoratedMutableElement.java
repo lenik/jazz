@@ -2,19 +2,24 @@ package net.bodz.bas.i18n.dom1;
 
 import net.bodz.bas.i18n.dom.DomainString;
 
-public class DecoratedEditableElement
+public class DecoratedMutableElement
         extends DecoratedElement
         implements IMutableElement {
 
     private static final long serialVersionUID = 1L;
 
-    public DecoratedEditableElement(IMutableElement _orig) {
+    public DecoratedMutableElement(IMutableElement _orig) {
         super(_orig);
     }
 
     @Override
     public IMutableElement getWrapped() {
         return (IMutableElement) super.getWrapped();
+    }
+
+    @Override
+    public void setName(String name) {
+        getWrapped().setName(name);
     }
 
     @Override
