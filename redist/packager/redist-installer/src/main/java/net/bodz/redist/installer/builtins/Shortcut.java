@@ -32,7 +32,6 @@ public class Shortcut
 
     public Shortcut(String srcbase, String srcpath, String dstbase, String dstpath, String arguments,
             String workingDir, String text, String icon, int iconIndex) {
-        super(false, true);
         if (srcbase == null)
             throw new NullPointerException("srcbase");
         if (dstbase == null)
@@ -46,6 +45,8 @@ public class Shortcut
         this.text = text;
         this.icon = icon;
         this.iconIndex = iconIndex;
+
+        setSelected(true);
     }
 
     class CInstall

@@ -15,7 +15,6 @@ import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.t.tree.legacy.ITreeCallback;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 import net.bodz.mda.xjdoc.model1.Author;
 import net.bodz.redist.installer.Schemes.Custom;
@@ -33,8 +32,6 @@ public class AbstractProject
         extends RequiredSection
         implements IProject {
 
-    private ArtifactDoc artifactDoc;
-
     private ImageData logo;
     private IVersion version;
     private String updateTime;
@@ -49,7 +46,7 @@ public class AbstractProject
             logo = SWTResources.getImageDataRes(artifactClass, respath);
         }
 
-        artifactDoc = ClassDocs.loadFromResource(artifactClass).as(ArtifactDoc.class);
+        ArtifactDoc artifactDoc = getArtifactDoc();
 
         URL iconURL = artifactDoc.getIcon();
         if (iconURL != null) {
@@ -61,11 +58,6 @@ public class AbstractProject
         updateTime = artifactDoc.getReleaseDateString();
 
         this.variables = new TreeTextMap<Variable>();
-    }
-
-    @Override
-    public ArtifactDoc getArtifactDoc() {
-        return artifactDoc;
     }
 
     @Override

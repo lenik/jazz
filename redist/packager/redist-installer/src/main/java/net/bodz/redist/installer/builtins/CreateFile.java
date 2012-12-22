@@ -25,17 +25,19 @@ public class CreateFile
     }
 
     public CreateFile(String base, String path, IStreamInputSource source, boolean append) {
-        super(SELECTED);
         if (base == null)
             throw new NullPointerException("base");
         if (path == null)
             throw new NullPointerException("path");
         if (source == null)
             throw new NullPointerException("source");
+
         this.base = base;
         this.path = path;
         this.append = append;
         this.source = source;
+
+        setSelected(true);
     }
 
     class CInstall

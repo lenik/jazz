@@ -8,7 +8,7 @@ public abstract class ConfigComponent
         extends AbstractComponent {
 
     public ConfigComponent() {
-        super(SELECTED);
+        setSelected(true);
     }
 
     @Override

@@ -7,7 +7,7 @@ public class SimpleComponent
         extends AbstractComponent {
 
     public SimpleComponent() {
-        super(false, true);
+        setSelected(true);
     }
 
     private class CPack
