@@ -5,13 +5,12 @@ import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
+import net.bodz.bas.db.stat.StatNode;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.context.VFSColos;
-import net.bodz.bas.vfs.facade.DefaultVfsFacade;
-import net.bodz.bas.vfs.facade.IVfsFacade;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.util.find.FileFinder;
 import net.bodz.bas.vfs.util.find.FileFoundEvent;
@@ -125,7 +124,7 @@ public abstract class BatchCLI
     // @ParseBy(GetInstanceParser.class)
     Comparator<IFile> sortComparator;
 
-    IVfsFacade vfs = DefaultVfsFacade.getInstance();
+    StatNode statRoot;
 
     class DefaultFileFilter
             implements IFileFilter {
@@ -156,26 +155,45 @@ public abstract class BatchCLI
     }
 
     @Override
-    void _postInit() {
+    protected void _reconfigure()
+            throws Exception {
+        super._reconfigure();
         if (fileFilter == null)
             fileFilter = new DefaultFileFilter();
     }
 
-    /** canonical file */
-    protected IFile currentStartFile;
+    @Override
+    protected void mainImpl(String... args)
+            throws Exception {
 
-    protected String getRelativeName(IFile in) {
-        // FilePath.getRelativeName(in.getPath().toString(), currentStartFile);
-        IPath relativePath = in.getPath().getRelativePathTo(currentStartFile.getPath());
-        return relativePath.getLocalPath();
+        for (String arg : expandWildcards(args)) {
+            IFile argFile = VFS.resolve(arg);
+
+            for (IFile childFile : traverse(argFile)) {
+                IPath childRelativePath = childFile.getPath().getRelativePathTo(argFile.getPath());
+
+                String filename = arg + "/" + childRelativePath.toString();
+
+                FileHandler handler = beginFile(filename);
+                try {
+                    processFile(handler);
+                } catch (Exception exception) {
+                    handler.getExceptionLog().log(exception);
+                }
+                endFile(handler);
+            }
+        }
     }
 
-    protected Iterable<IFile> scanFiles(IFile start) {
+    protected Iterable<IFile> traverse(IFile start) {
         FileFinder finder = new FileFinder(fileFilter, prune, recursive, start);
+
         if (rootLast)
             finder.setOrder(FileFinder.FILE | FileFinder.DIR_POST);
+
         if (sortComparator != null)
             finder.setComparator(sortComparator);
+
         finder.addFileFoundListener(new IFileFoundListener() {
             @Override
             public void fileFound(FileFoundEvent event) {
@@ -188,41 +206,41 @@ public abstract class BatchCLI
     protected void _fileFound(FileFoundEvent event) {
     }
 
-    protected FileHandler beginFile(String fileName) {
+    private IFile contextFile;
+    private String _tmpPrefix = getClass().getSimpleName();
+
+    protected IFile getContextFile() {
+        return contextFile;
+    }
+
+    protected synchronized FileHandler beginFile(String fileName) {
         IFile cwd = VFSColos.workdir.get();
         IFile file = cwd.resolve(fileName);
+
+        if (contextFile != null)
+            throw new IllegalStateException("beginFile/endFile couldn't be nested.");
+        contextFile = file;
+
         FileHandler handler = new FileHandler(fileName, file);
-        handler.setTmpPrefix(getClass().getSimpleName());
+        handler.setTmpPrefix(_tmpPrefix);
         return handler;
     }
 
-    protected void endFile(FileHandler handler) {
-        if (handler.isErrored() && !errorContinue) {
+    protected synchronized void endFile(FileHandler handler) {
+        if (contextFile != null)
+            throw new IllegalStateException("endFile without beginFile.");
 
-        }
-    }
-
-    @Override
-    protected void mainImpl(String... args)
-            throws Exception {
-        for (String arg : expandWildcards(args)) {
-            IFile argFile = VFS.resolve(arg);
-            for (IFile foundFile : scanFiles(argFile)) {
-                IPath foundRelativePath = foundFile.getPath().getRelativePathTo(argFile.getPath());
-                String argname = arg + "/" + foundRelativePath.toString();
-
-                FileHandler handler = beginFile(argname);
-                try {
-                    processImpl(handler);
-                } catch (Exception exception) {
-                    handler.getExceptionLog().log(exception);
-                }
-                endFile(handler);
+        try {
+            statRoot.resolveCounter("...");
+            if (handler.isErrored() && !errorContinue) {
             }
+
+        } finally {
+            contextFile = null;
         }
     }
 
-    protected abstract void processImpl(FileHandler handler)
+    protected abstract void processFile(FileHandler handler)
             throws Exception;
 
 }

@@ -7,6 +7,8 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
@@ -25,6 +27,8 @@ import net.bodz.swt.program.BasicGUI;
 @RcsKeywords(id = "$Id$")
 public class Installer
         extends BasicGUI {
+
+    static final Logger logger = LoggerFactory.getLogger(Installer.class);
 
     /**
      * @option -c
@@ -46,7 +50,7 @@ public class Installer
     }
 
     @Override
-    protected void _boot()
+    protected void reconfigure()
             throws Exception {
         if (majorClass != null) {
             if (project == null) {

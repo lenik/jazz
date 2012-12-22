@@ -136,7 +136,7 @@ public class CLITask
         try {
             if (remainingArguments != null && !remainingArguments.isEmpty()) {
                 String[] moreargv = remainingArguments.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
-                program.accept(moreargv);
+                program.receive(moreargv);
             }
             // adapting attributes
             if (logLevel != 0) {

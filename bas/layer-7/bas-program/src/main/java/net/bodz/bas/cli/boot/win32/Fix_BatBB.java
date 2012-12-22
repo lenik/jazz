@@ -1,12 +1,11 @@
 package net.bodz.bas.cli.boot.win32;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
 import net.bodz.bas.cli.skel.BatchEditCLI;
-import net.bodz.bas.cli.skel.EditResult;
+import net.bodz.bas.cli.skel.FileHandler;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 
@@ -31,19 +30,19 @@ public class Fix_BatBB
     char fillChar = ':';
 
     @Override
-    protected EditResult doEditByIO(InputStream in, OutputStream out)
+    protected void processFile(FileHandler handler)
             throws Exception {
+        OutputStream out = handler.getOutputFile().getOutputTarget().newOutputStream(); // options
+
         int start = 0; // out
 
         ByteBuffer lineBuf = ByteBuffer.allocate(1024);
-        byte[] buf = new byte[4096];
-        int cb;
         boolean leading = true;
         int leadChar = 0;
 
-        while ((cb = in.read(buf, 0, buf.length)) != -1) {
-            for (int i = 0; i < cb; i++) {
-                byte b = buf[i];
+        for (byte[] block : handler.read().blocks()) {
+            for (int i = 0; i < block.length; i++) {
+                byte b = block[i];
                 lineBuf.put(b);
                 if (b == '\n') {
                     lineBuf.flip();
@@ -69,7 +68,8 @@ public class Fix_BatBB
                 }
             }
         }
-        return EditResult.compareAndSave();
+
+        handler.commit();
     }
 
     boolean crossBlocks(int start, int end) {

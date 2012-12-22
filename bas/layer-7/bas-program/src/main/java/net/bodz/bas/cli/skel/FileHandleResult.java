@@ -2,16 +2,16 @@ package net.bodz.bas.cli.skel;
 
 public enum FileHandleResult {
 
-    ignored,
+    IGNORED,
 
-    saved,
+    SAVED,
 
-    deleted,
+    DELETED,
 
-    renamed,
+    RENAMED,
 
-    moved,
+    MOVED,
 
-    copied,
+    COPIED,
 
 }

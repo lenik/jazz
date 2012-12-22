@@ -14,7 +14,6 @@ import net.bodz.bas.cli.model.ArtifactObjectWithOptions;
 import net.bodz.bas.cli.model.HelpPageFormatter;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.MethodCall;
-import net.bodz.bas.cli.plugin.CLIPlugins;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.control.ControlBreak;
 import net.bodz.bas.err.control.ControlContinue;
@@ -27,7 +26,6 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
-import net.bodz.bas.meta.source.ChainUsage;
 import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.model.IType;
 import net.bodz.bas.sio.IPrintOut;
@@ -48,16 +46,12 @@ public abstract class BasicCLI
         extends ArtifactObjectWithOptions
         implements IProgram, Runnable, II18nCapable {
 
+    private static final Logger logger = LoggerFactory.getLogger(BasicCLI.class);
+
     /**
      * @option --stdout hidden weak
      */
     protected IPrintOut _stdout = Stdio.cout;
-
-    /**
-     * @option --logger hidden
-     */
-    protected Logger logger = LoggerFactory.getLogger(BasicCLI.class);
-    // LogTerms.resolveFile(1);
 
     protected IUserDialogs dialogs = ConsoleDialogs.stdout;
 
@@ -118,8 +112,6 @@ public abstract class BasicCLI
         return String.class;
     }
 
-    protected final CLIPlugins plugins = new CLIPlugins();
-
     /**
      * Show version information
      * 
@@ -161,9 +153,6 @@ public abstract class BasicCLI
         String doc = formatter.format(this);
         out.print(doc);
 
-        if (plugins != null)
-            plugins.help(out, "");
-
         out.flush();
     }
 
@@ -198,53 +187,52 @@ public abstract class BasicCLI
     @Override
     public synchronized void execute(String... args)
             throws Exception {
-        accept(args);
 
-        try {
-            List<String> remainingArgs = accept(args);
+        logger.debug("Receive args from cmdline");
+        List<String> remaining = receive(args);
+        args = remaining.toArray(new String[0]);
 
-            logger.debug("[CLI] Pre-boot");
-            _postInit();
-            _boot();
+        logger.debug("Reconfigure...");
+        _reconfigure();
+        reconfigure();
+        logger.debug("Reconfigure done.");
 
-            if (logger.isDebugEnabled()) {
-                for (Entry<String, IOption> entry : getLocalOptionMap().entrySet()) {
-                    IOption option = entry.getValue();
-                    String optionName = option.getName();
-                    if (!optionName.equals(entry.getKey()))
-                        continue;
-                    Object optionValue = option.property().getValue(this);
-                    if (optionValue instanceof MethodCall)
-                        continue;
-                    logger.debug(optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
-                }
-                for (Entry<String, Object> entry : variableMap.entrySet()) {
-                    String name = entry.getKey();
-                    Object value = entry.getValue();
-                    logger.debug("var ", name, " = ", value);
-                }
+        if (logger.isDebugEnabled()) {
+            for (Entry<String, IOption> entry : getLocalOptionMap().entrySet()) {
+                IOption option = entry.getValue();
+                String optionName = option.getName();
+                if (!optionName.equals(entry.getKey()))
+                    continue;
+                Object optionValue = option.property().getValue(this);
+                if (optionValue instanceof MethodCall)
+                    continue;
+                logger.debug(optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
             }
-
-            try {
-                logger.debug("[CLI] Execute main method");
-                mainImpl(remainingArgs.toArray(new String[0]));
-            } catch (ControlContinue _cont) {
+            for (Entry<String, Object> entry : variableMap.entrySet()) {
+                String name = entry.getKey();
+                Object value = entry.getValue();
+                logger.debug("var ", name, " = ", value);
             }
-
-            logger.debug("[CLI] Exit");
-        } catch (ControlBreak _brk) { // implied ControlExit also.
-            return;
         }
+
+        while (true)
+            try {
+                logger.debug("Program Begin");
+                mainImpl(args);
+                logger.debug("Program End");
+                break;
+            } catch (ControlExit c) {
+                break;
+            } catch (ControlContinue c) {
+                continue;
+            }
     }
 
-    /** Do nothing, to be overrided. */
-    @OverrideOption(chain = ChainUsage.PREFERRED)
-    void _postInit()
+    protected void _reconfigure()
             throws Exception {
     }
 
-    /** Do nothing, to be overrided. */
-    protected void _boot()
+    protected void reconfigure()
             throws Exception {
     }
 
@@ -267,6 +255,8 @@ public abstract class BasicCLI
     protected abstract void mainImpl(String... args)
             throws Exception;
 
+    // Helper Methods
+
     protected Iterable<File> expandPojfFiles(final String... pathnames) {
         return Iterables.transform(expandWildcards(pathnames), pojfFileResolver);
     }
@@ -275,7 +265,7 @@ public abstract class BasicCLI
         return Iterables.transform(expandWildcards(pathnames), vfsFileResolver);
     }
 
-    static final ITransformer<String, File> pojfFileResolver = new ITransformer<String, File>() {
+    private static final ITransformer<String, File> pojfFileResolver = new ITransformer<String, File>() {
         /** @throws FileResolveException */
         @Override
         public File transform(String pathname) {
@@ -284,7 +274,7 @@ public abstract class BasicCLI
         }
     };
 
-    static final ITransformer<String, IFile> vfsFileResolver = new ITransformer<String, IFile>() {
+    private static final ITransformer<String, IFile> vfsFileResolver = new ITransformer<String, IFile>() {
         /** @throws FileResolveException */
         @Override
         public IFile transform(String pathname) {

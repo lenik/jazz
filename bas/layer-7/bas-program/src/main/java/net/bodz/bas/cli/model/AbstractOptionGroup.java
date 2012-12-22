@@ -101,7 +101,7 @@ public abstract class AbstractOptionGroup
     }
 
     @Override
-    public List<String> receive(OptionGroupParseFlags flags, Object context, String... args)
+    public List<String> receive(Object context, String[] args, OptionGroupParseFlags flags)
             throws CLISyntaxException {
         List<String> rejected = new ArrayList<String>();
 

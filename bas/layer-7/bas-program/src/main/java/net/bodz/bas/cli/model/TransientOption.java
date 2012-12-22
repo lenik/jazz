@@ -41,8 +41,6 @@ public abstract class TransientOption
     Object defaultValue;
 
     public TransientOption(String name, Class<?> type, AnnotatedElement annotations, ArtifactDoc artifactDoc) {
-        super(artifactDoc);
-
         this.name = Strings.hyphenatize(name);
 
         if (type == null)
@@ -56,6 +54,8 @@ public abstract class TransientOption
             valueType = type.getComponentType();
         else
             valueType = type;
+
+        setArtifactDoc(artifactDoc);
     }
 
     @Override

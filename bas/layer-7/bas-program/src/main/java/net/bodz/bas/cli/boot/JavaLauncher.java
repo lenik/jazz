@@ -5,12 +5,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.java.util.Arrays;
-import net.bodz.bas.c.loader.DefaultClassLoader;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.err.control.Control;
 import net.bodz.bas.err.control.ControlExit;
@@ -39,18 +37,12 @@ public abstract class JavaLauncher
         ClassLoader sysLoader = initSysLoader;
 
         try {
-            BootProc bootProc = BootProc.get(getClass());
-            if (bootProc != null) {
-                // sysLoader = bootProc.configSysLoader();
-                // sysLoader = bootProc.configLoader(sysLoader);
-                URL[] urls = LoadUtil.find(bootProc.getSysLibs());
-                DefaultClassLoader.addURLs(urls);
-            }
             if (LOAD_DUMP)
                 URLClassLoaders.dump(sysLoader, Stdio.cerr);
 
             String mainClassName = getMainClassName();
-            mainClass = DefaultBooter.loadFix(sysLoader, mainClassName);
+
+            mainClass = Class.forName(mainClassName);
         } catch (Exception e) {
             throw new Error(e.getMessage(), e);
         }
