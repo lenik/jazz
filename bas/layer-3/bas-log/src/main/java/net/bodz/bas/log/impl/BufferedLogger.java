@@ -56,10 +56,12 @@ public class BufferedLogger
     public void dump(PrintStream info, PrintStream err) {
         PrintStreamPrintOut infoOut = new PrintStreamPrintOut(info);
         PrintStreamPrintOut errOut;
+
         if (info == err)
             errOut = infoOut;
         else
             errOut = new PrintStreamPrintOut(err);
+
         dump(infoOut, errOut);
     }
 

@@ -33,6 +33,8 @@ public class OutputStreamNibbleOutTest
 
         out.write4b(0xf);
         assertEquals("helloA.f", out.toString());
+
+        out.close();
     }
 
     @Test
@@ -47,6 +49,8 @@ public class OutputStreamNibbleOutTest
 
         out.write4b(7);
         assertEquals("37", out.toString());
+
+        out.close();
     }
 
     @Test
@@ -83,6 +87,8 @@ public class OutputStreamNibbleOutTest
 
         out.write4b(seq, 4, 3);
         assertEquals("0123 4567 8456 45.6", out.toString());
+
+        out.close();
     }
 
 }

@@ -14,37 +14,44 @@ public class TellableInputStreamTest
     @Test
     public void test1()
             throws IOException {
-        TellableInputStream r = new TellableInputStream(new ByteArrayInputStream(hello));
+        TellableInputStream in = new TellableInputStream(new ByteArrayInputStream(hello));
 
-        assertEquals(0, r.tell());
-        r.read();
-        r.read();
-        assertEquals(2, r.tell());
-        r.read(new byte[2]);
-        assertEquals(4, r.tell());
-        r.mark(3);
-        r.read();
-        r.read();
-        r.reset();
-        assertEquals(4, r.tell());
-        r.read();
-        r.reset();
-        assertEquals(4, r.tell());
+        assertEquals(0, in.tell());
+
+        in.read();
+        in.read();
+        assertEquals(2, in.tell());
+
+        in.read(new byte[2]);
+        assertEquals(4, in.tell());
+
+        in.mark(3);
+        in.read();
+        in.read();
+
+        in.reset();
+        assertEquals(4, in.tell());
+        in.read();
+
+        in.reset();
+        assertEquals(4, in.tell());
 
         if (true) {
-            r.read();
-            r.read();
-            r.read();
-            r.read();
-            r.read();
-            r.reset(); // throws
-            assertEquals(4, r.tell());
-            int c = r.read();
+            in.read();
+            in.read();
+            in.read();
+            in.read();
+            in.read();
+            in.reset(); // throws
+            assertEquals(4, in.tell());
+            int c = in.read();
             System.out.println((char) c);
         }
 
-        r.read(new byte[100]);
-        assertEquals(hello.length, r.tell());
+        in.read(new byte[100]);
+        assertEquals(hello.length, in.tell());
+
+        in.close();
     }
 
 }
