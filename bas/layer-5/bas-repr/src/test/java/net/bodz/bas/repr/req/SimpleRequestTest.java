@@ -1,4 +1,4 @@
-package net.bodz.bas.variant.map;
+package net.bodz.bas.repr.req;
 
 import org.junit.Assert;
 import org.junit.Test;

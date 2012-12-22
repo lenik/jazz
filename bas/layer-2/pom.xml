@@ -16,7 +16,6 @@
         <module>bas-geom</module>
         <module>bas-i18n</module>
         <module>bas-io</module>
-        <module>bas-script</module>
         <module>bas-std</module>
         <module>bas-t2</module>
         <module>bas-trait-impl</module>
