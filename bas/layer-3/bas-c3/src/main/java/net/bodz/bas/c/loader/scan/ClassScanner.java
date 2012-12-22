@@ -1,4 +1,4 @@
-package net.bodz.bas.loader.scan;
+package net.bodz.bas.c.loader.scan;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -172,6 +172,19 @@ public class ClassScanner
             throws IOException {
         ResolveTypeAdapter typeResolver = new ResolveTypeAdapter(typeCallback);
         scanTypeNames(packageName, typeResolver);
+    }
+
+    public void scanTypeNames(String packageName, final ITypeNameCallback callback)
+            throws IOException {
+        setFilter(ClassOrDirFileFilter.INSTANCE);
+        String packageDir = packageName.replace('.', '/');
+        for (String resourceName : scanResources(packageDir).keySet()) {
+            assert resourceName.endsWith(".class");
+            String rawName = resourceName.substring(0, resourceName.length() - 6);
+            String fqcn = rawName.replace('/', '.');
+            // fqcn = fqcn.replace('$', '.');
+            callback.typeName(fqcn);
+        }
     }
 
     public void scan(String packageName)

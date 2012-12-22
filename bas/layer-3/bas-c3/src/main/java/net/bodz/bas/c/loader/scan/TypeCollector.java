@@ -1,4 +1,4 @@
-package net.bodz.bas.c.type;
+package net.bodz.bas.c.loader.scan;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.loader.DefaultClassLoader;
 import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
-import net.bodz.bas.loader.scan.ClassScanner;
+import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
