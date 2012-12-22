@@ -55,6 +55,12 @@ public class FileResource
     }
 
     @Override
+    protected void beforeOpenOutput(OpenOption... options)
+            throws IOException {
+        super.beforeOpenOutput(options);
+    }
+
+    @Override
     protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
         return new FileInputStream(file);
