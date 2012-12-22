@@ -25,57 +25,10 @@ import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.Attachment;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.InstallException;
-import net.bodz.redist.installer.RegistryData;
 import net.bodz.redist.installer.util.Utils;
 
 public class FileCopy
         extends AbstractComponent {
-
-    @RegistryData
-    public static class Data {
-
-        String[] list;
-        long size;
-
-        public String[] getList() {
-            return list;
-        }
-
-        public void setList(String[] list) {
-            this.list = list;
-        }
-
-        public long getSumSize() {
-            return size;
-        }
-
-        public void setSumSize(long size) {
-            this.size = size;
-        }
-
-        static final boolean verbose = false;
-
-        @Override
-        public String toString() {
-            StringBuilder buf = new StringBuilder();
-            if (list == null)
-                buf.append("null list");
-            else {
-                buf.append(String.format("%d entries, %d bytes", list.length, size));
-                if (verbose) {
-                    for (int i = 0; i < Math.min(1, list.length); i++) {
-                        if (i != 0)
-                            buf.append(", ");
-                        buf.append(list[i]);
-                    }
-                    if (list.length > 10)
-                        buf.append(", ...");
-                }
-            }
-            return buf.toString();
-        }
-
-    }
 
     private final String baseName;
     private final String basePath;
@@ -90,32 +43,6 @@ public class FileCopy
     /** <code>false</code> to exclude empty parent directories */
     private final boolean dirStruct = true;
 
-    /**
-     * @param basePath
-     *            <code>base-variable/sub/path...</code>, must use / as the file separator.
-     * @param localBase
-     *            used to construct the subpath of local files, by remove localBase from local
-     *            paths. using <code>null</code> to ignore the directory names.
-     */
-    public FileCopy(String baseName, String basePath, File localBase, Collection<File> files) {
-        super(false, true);
-        if (baseName == null)
-            throw new NullPointerException("baseName");
-        if (files == null)
-            throw new NullPointerException("files");
-        this.baseName = baseName;
-        this.basePath = basePath;
-        // this.localBase = localBase;
-        String removal = null;
-        if (localBase != null) {
-            removal = localBase.getPath();
-            if (localBase.isDirectory())
-                removal += File.separator;
-        }
-        this.removal = removal;
-        this.files = files;
-    }
-
     public FileCopy(String baseName, String basePath, File localBase, File... files) {
         this(baseName, basePath, localBase, Arrays.asList(files));
     }
@@ -129,23 +56,34 @@ public class FileCopy
         this(baseName, basePath, FilePath.findBase(finder.getStart()), finder.listFiles());
     }
 
-    private static final String ROOT = null;
+    /**
+     * @param basePath
+     *            <code>base-variable/sub/path...</code>, must use / as the file separator.
+     * @param localBase
+     *            used to construct the subpath of local files, by remove localBase from local
+     *            paths. using <code>null</code> to ignore the directory names.
+     */
+    public FileCopy(String baseName, String basePath, File localBase, Collection<File> files) {
+        if (baseName == null)
+            throw new NullPointerException("baseName");
+        if (files == null)
+            throw new NullPointerException("files");
 
-    public FileCopy(String baseName, File localBase, Collection<File> files) {
-        this(baseName, ROOT, localBase, files);
-    }
+        this.baseName = baseName;
+        this.basePath = basePath;
 
-    public FileCopy(String baseName, File localBase, File... files) {
-        this(baseName, ROOT, localBase, files);
-    }
+        // this.localBase = localBase;
+        String removal = null;
+        if (localBase != null) {
+            removal = localBase.getPath();
+            if (localBase.isDirectory())
+                removal += File.separator;
+        }
 
-    public FileCopy(String baseName, File[] files) {
-        this(baseName, ROOT, null, files);
-    }
+        this.removal = removal;
+        this.files = files;
 
-    public FileCopy(String baseName, FileFinder finder)
-            throws IOException {
-        this(baseName, ROOT, finder);
+        setSelected(true);
     }
 
     @Override
@@ -173,7 +111,7 @@ public class FileCopy
 
     @Override
     public long getSize() {
-        Data data = (Data) getRegistryData();
+        FileCopyData data = (FileCopyData) getRegistryData();
         if (data == null)
             return 0;
         return data.size;
@@ -311,7 +249,7 @@ public class FileCopy
                         return;
                 }
             } // for file
-            Data data = new Data();
+            FileCopyData data = new FileCopyData();
             data.list = list.toArray(new String[0]);
             data.size = sum;
             setRegistryData(data);
@@ -335,7 +273,7 @@ public class FileCopy
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
             logger.infof(tr._("Install %s files to %s\n"), getId(), baseDir);
-            Data data = (Data) getRegistryData();
+            FileCopyData data = (FileCopyData) getRegistryData();
             if (data == null || data.list == null)
                 throw new IllegalStateException(tr._("Missing registry data, which contains the file list to copy."));
 

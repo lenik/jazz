@@ -9,18 +9,11 @@ import java.util.Set;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
-import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 public abstract class AbstractComponent
         extends AbstractArtifactElement
         implements IComponent, II18nCapable {
-
-    protected static final int ENABLED = 1;
-    protected static final int VISIBLE = 2;
-    protected static final int SELECTED = 4;
-    protected static final int READ_ONLY = 8;
 
     private String id;
     private Object viewData;
@@ -38,25 +31,12 @@ public abstract class AbstractComponent
     private List<IComponent> children;
     private Set<IComponent> dependancy;
 
-    public AbstractComponent(int flags, ArtifactDoc artifactDoc) {
-        super(artifactDoc);
-        this.enabled = (flags & ENABLED) != 0;
-        this.visible = (flags & VISIBLE) != 0;
-        this.selected = (flags & SELECTED) != 0;
-        this.readOnly = (flags & READ_ONLY) != 0;
-    }
-
     @Override
-    public ArtifactDoc getArtifactDoc() {
-        Class<?> clazz = getClass();
-        ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
-        return artifactDoc;
-    }
-
     public String getId() {
         return id;
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
     }
@@ -98,7 +78,7 @@ public abstract class AbstractComponent
         this.readOnly = readOnly;
     }
 
-    public boolean getSelected() {
+    public boolean isSelected() {
         return selected;
     }
 

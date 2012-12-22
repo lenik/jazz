@@ -25,7 +25,6 @@ public class FileLink
     private final boolean symbolic;
 
     public FileLink(String srcbase, String srcpath, String dstbase, String dstpath, boolean symbolic) {
-        super(SELECTED);
         if (srcbase == null)
             throw new NullPointerException("srcbase");
         if (srcpath == null)
@@ -39,6 +38,8 @@ public class FileLink
         this.dstbase = dstbase;
         this.dstpath = dstpath;
         this.symbolic = symbolic;
+        
+        setSelected(true);
     }
 
     class CInstall
