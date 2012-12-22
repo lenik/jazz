@@ -12,15 +12,17 @@ import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.model.IProperty;
-import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
+import net.bodz.mda.xjdoc.model1.SemiMutableArtifactElement;
 
 /**
  * Though {@link AbstractOptionGroup} is-a {@link Serializable}, the serialization on this object
  * (of any subclass) won't work because of the underlying transient fields.
  */
 public abstract class AbstractOptionGroup
-        extends AbstractArtifactElement
+        extends SemiMutableArtifactElement
         implements IOptionGroup {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Get the explicitly declared local option.
@@ -99,7 +101,7 @@ public abstract class AbstractOptionGroup
     }
 
     @Override
-    public List<String> accept(OptionGroupParseFlags flags, Object context, String... args)
+    public List<String> receive(OptionGroupParseFlags flags, Object context, String... args)
             throws CLISyntaxException {
         List<String> rejected = new ArrayList<String>();
 

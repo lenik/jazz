@@ -2,7 +2,7 @@ package net.bodz.swt.draw.app.tools;
 
 import org.eclipse.swt.events.KeyEvent;
 
-import net.bodz.bas.geom.spec0_f.IEditablePointSet2d;
+import net.bodz.bas.geom.spec0_f.IMutablePointSet2d;
 import net.bodz.swt.c.canvas.Canvas;
 import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.SubCanvasMode;
@@ -13,7 +13,7 @@ public class EditVertex
     private static final long serialVersionUID = 1L;
 
     // Shape2f shape;
-    IEditablePointSet2d editable;
+    IMutablePointSet2d editable;
     int pointIndex;
 
     public EditVertex(Canvas canvas, ICanvasMode parent) {

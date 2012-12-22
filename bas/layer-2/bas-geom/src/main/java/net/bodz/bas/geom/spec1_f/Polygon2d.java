@@ -3,11 +3,11 @@ package net.bodz.bas.geom.spec1_f;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.geom.spec0_f.IEditablePointSet2d;
+import net.bodz.bas.geom.spec0_f.IMutablePointSet2d;
 
 public class Polygon2d
         extends AbstractPolygon2d
-        implements IEditablePointSet2d {
+        implements IMutablePointSet2d {
 
     private static final long serialVersionUID = 1L;
 

@@ -3,12 +3,12 @@ package net.bodz.bas.geom.spec1_f;
 import java.util.List;
 
 import net.bodz.bas.geom.spec0_f.CurveDirection;
-import net.bodz.bas.geom.spec0_f.IEditablePointRefSet2d;
+import net.bodz.bas.geom.spec0_f.IMutablePointRefSet2d;
 import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.geom.spec0_f.IShapeAmount2d;
 
 public interface IPolygon2d
-        extends IPrimitive2d, IShapeAmount2d, IEditablePointRefSet2d {
+        extends IPrimitive2d, IShapeAmount2d, IMutablePointRefSet2d {
 
     // -o IEditablePointSet2d
 

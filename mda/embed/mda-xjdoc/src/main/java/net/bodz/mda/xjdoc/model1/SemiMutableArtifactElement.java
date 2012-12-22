@@ -1,20 +1,22 @@
 package net.bodz.mda.xjdoc.model1;
 
-import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
-import net.bodz.mda.xjdoc.model.ClassDoc;
+import java.io.Serializable;
 
-public class MutableArtifactObject
-        extends SemiMutableArtifactElement {
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.i18n.dom1.SemiMutableElement;
+
+public abstract class SemiMutableArtifactElement
+        extends SemiMutableElement
+        implements IArtifactElement, Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    transient ArtifactDoc artifactDoc;
     transient boolean artifactDocLoaded;
 
     /**
      * @return Non-<code>null</code> {@link ArtifactDoc}.
      */
-    @Override
     public ArtifactDoc getArtifactDoc() {
         if (artifactDoc == null) {
             synchronized (this) {
@@ -30,9 +32,7 @@ public class MutableArtifactObject
     }
 
     protected ArtifactDoc loadArtifactDoc() {
-        ClassDoc classDoc = ClassDocs.loadFromResource(getClass(), true);
-        ArtifactDoc artifactDoc = classDoc.as(ArtifactDoc.class);
-        return artifactDoc;
+        return null;
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class AbstractCounterGroup
-        implements IEditableCounterGroup, Serializable {
+        implements IMutableCounterGroup, Serializable {
 
     private static final long serialVersionUID = 1L;
 
