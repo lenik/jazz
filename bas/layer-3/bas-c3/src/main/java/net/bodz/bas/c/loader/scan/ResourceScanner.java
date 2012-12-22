@@ -1,4 +1,4 @@
-package net.bodz.bas.loader.scan;
+package net.bodz.bas.c.loader.scan;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import net.bodz.bas.c.loader.DefaultClassLoader;
+
 public class ResourceScanner {
 
     private ClassLoader classLoader;
@@ -16,7 +18,7 @@ public class ResourceScanner {
 
     public ResourceScanner(IFileOrEntryFilter filter) {
         setFilter(filter);
-        classLoader = ClassLoader.getSystemClassLoader();
+        classLoader = DefaultClassLoader.getInstance();
     }
 
     public ClassLoader getClassLoader() {
@@ -84,19 +86,6 @@ public class ResourceScanner {
             } else {
                 processor.process(childFile, childResourceName);
             }
-        }
-    }
-
-    public void scanTypeNames(String packageName, final ITypeNameCallback callback)
-            throws IOException {
-        setFilter(ClassOrDirFileFilter.INSTANCE);
-        String packageDir = packageName.replace('.', '/');
-        for (String resourceName : scanResources(packageDir).keySet()) {
-            assert resourceName.endsWith(".class");
-            String rawName = resourceName.substring(0, resourceName.length() - 6);
-            String fqcn = rawName.replace('/', '.');
-            // fqcn = fqcn.replace('$', '.');
-            callback.typeName(fqcn);
         }
     }
 

@@ -1,4 +1,4 @@
-package net.bodz.bas.loader.scan;
+package net.bodz.bas.c.loader.scan;
 
 import java.io.File;
 import java.util.zip.ZipEntry;

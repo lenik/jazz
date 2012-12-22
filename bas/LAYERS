@@ -36,7 +36,6 @@ layer-5/ 框架基础
     bas-database
     bas-flow
     bas-l10n
-    bas-loader
     bas-potato
     bas-repr
     bas-gui

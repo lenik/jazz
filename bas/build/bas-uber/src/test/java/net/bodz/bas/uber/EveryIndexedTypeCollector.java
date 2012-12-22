@@ -1,6 +1,6 @@
 package net.bodz.bas.uber;
 
-import net.bodz.bas.c.type.TypeCollector;
+import net.bodz.bas.c.loader.scan.TypeCollector;
 import net.bodz.bas.c.type.TypeExtensions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;

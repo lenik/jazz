@@ -1,4 +1,4 @@
-package net.bodz.bas.c.java.net;
+package net.bodz.bas.c.loader.scan;
 
 import java.io.File;
 import java.io.IOException;
