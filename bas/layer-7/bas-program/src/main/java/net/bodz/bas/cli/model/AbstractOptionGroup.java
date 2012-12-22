@@ -12,17 +12,15 @@ import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.model.IProperty;
-import net.bodz.mda.xjdoc.model1.TransientArtifactElement;
+import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
 
 /**
  * Though {@link AbstractOptionGroup} is-a {@link Serializable}, the serialization on this object
  * (of any subclass) won't work because of the underlying transient fields.
  */
 public abstract class AbstractOptionGroup
-        extends TransientArtifactElement
+        extends AbstractArtifactElement
         implements IOptionGroup {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * Get the explicitly declared local option.

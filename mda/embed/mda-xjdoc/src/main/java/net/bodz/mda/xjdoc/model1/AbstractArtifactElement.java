@@ -1,5 +1,6 @@
 package net.bodz.mda.xjdoc.model1;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom1.AbstractElement;
 
@@ -13,6 +14,7 @@ public abstract class AbstractArtifactElement
         implements IArtifactElement {
 
     transient ArtifactDoc artifactDoc;
+    transient boolean artifactDocLoaded;
 
     transient DomainString displayName;
     transient DomainString description;
@@ -21,17 +23,25 @@ public abstract class AbstractArtifactElement
     public AbstractArtifactElement() {
     }
 
-    public AbstractArtifactElement(ArtifactDoc artifactDoc) {
-        if (artifactDoc == null)
-            throw new NullPointerException("artifactDoc");
-        this.artifactDoc = artifactDoc;
-    }
-
     /**
      * @return Non-<code>null</code> {@link ArtifactDoc}.
      */
     public ArtifactDoc getArtifactDoc() {
+        if (artifactDoc == null) {
+            synchronized (this) {
+                if (!artifactDocLoaded) {
+                    artifactDoc = loadArtifactDoc();
+                    artifactDocLoaded = true;
+                }
+            }
+            if (artifactDoc == null)
+                throw new IllegalUsageException("Artifact doc isn't set.");
+        }
         return artifactDoc;
+    }
+
+    protected ArtifactDoc loadArtifactDoc() {
+        return null;
     }
 
     @Override
@@ -41,7 +51,9 @@ public abstract class AbstractArtifactElement
 
     @Override
     public DomainString getDisplayName() {
-        return getArtifactDoc().getDisplayName();
+        if (displayName == null)
+            displayName = getArtifactDoc().getDisplayName();
+        return displayName;
     }
 
     /**
@@ -68,6 +80,23 @@ public abstract class AbstractArtifactElement
                 helpDoc = text.tailPar();
         }
         return helpDoc;
+    }
+
+    protected void setArtifactDoc(ArtifactDoc artifactDoc) {
+        this.artifactDoc = artifactDoc;
+        this.artifactDocLoaded = true;
+    }
+
+    protected void setDisplayName(DomainString displayName) {
+        this.displayName = displayName;
+    }
+
+    protected void setDescription(DomainString description) {
+        this.description = description;
+    }
+
+    protected void setHelpDoc(DomainString helpDoc) {
+        this.helpDoc = helpDoc;
     }
 
 }

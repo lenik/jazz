@@ -1,12 +1,12 @@
 package net.bodz.bas.cli.model;
 
-import net.bodz.bas.i18n.dom1.IEditableElement;
+import net.bodz.bas.i18n.dom1.IMutableElement;
 
-public interface IEditableOptionGroup
-        extends IEditableElement, IOptionGroup {
+public interface IMutableOptionGroup
+        extends IMutableElement, IOptionGroup {
 
     @Override
-    public IEditableOptionGroup getParent();
+    public IMutableOptionGroup getParent();
 
     /**
      * Add an option.

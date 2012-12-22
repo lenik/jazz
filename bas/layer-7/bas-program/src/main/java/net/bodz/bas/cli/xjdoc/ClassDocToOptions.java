@@ -11,11 +11,11 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 
 import net.bodz.bas.cli.model.FieldOption;
-import net.bodz.bas.cli.model.IEditableOptionGroup;
+import net.bodz.bas.cli.model.IMutableOptionGroup;
 import net.bodz.bas.cli.model.MethodOption;
 import net.bodz.bas.cli.model.PropertyOption;
 import net.bodz.bas.cli.model.SyntaxUsage;
-import net.bodz.bas.cli.model.TransientOptionGroup;
+import net.bodz.bas.cli.model.MutableOptionGroup;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
@@ -150,7 +150,7 @@ public class ClassDocToOptions {
         this.includeProperties = includeProperties;
     }
 
-    public IEditableOptionGroup convertTree(Class<?> clazz)
+    public IMutableOptionGroup convertTree(Class<?> clazz)
             throws ParseException {
         return convertTree(clazz, null);
     }
@@ -158,7 +158,7 @@ public class ClassDocToOptions {
     /**
      * Scan options from a class.
      */
-    public IEditableOptionGroup convertTree(Class<?> clazz, IEditableOptionGroup parent)
+    public IMutableOptionGroup convertTree(Class<?> clazz, IMutableOptionGroup parent)
             throws ParseException {
 
         if (includeInterfaces) {
@@ -176,14 +176,14 @@ public class ClassDocToOptions {
             }
         }
 
-        IEditableOptionGroup group = convert(clazz, parent);
+        IMutableOptionGroup group = convert(clazz, parent);
         return group;
     }
 
     /**
      * parent = parent.parent...parent
      */
-    IEditableOptionGroup compact(IEditableOptionGroup group) {
+    IMutableOptionGroup compact(IMutableOptionGroup group) {
         if (inheritance == OptionGroupInheritance.reduceEmptyParents)
             // parent = parent.parent...parent
             while (group.getLocalOptionMap().isEmpty()) {
@@ -194,7 +194,7 @@ public class ClassDocToOptions {
         return group;
     }
 
-    public IEditableOptionGroup convert(Class<?> clazz, IEditableOptionGroup parent)
+    public IMutableOptionGroup convert(Class<?> clazz, IMutableOptionGroup parent)
             throws ParseException {
         ClassDoc classDoc;
         try {
@@ -206,19 +206,19 @@ public class ClassDocToOptions {
         return convert(clazz, classDoc, parent);
     }
 
-    IEditableOptionGroup convert(Class<?> clazz, ClassDoc classDoc, IEditableOptionGroup parent)
+    IMutableOptionGroup convert(Class<?> clazz, ClassDoc classDoc, IMutableOptionGroup parent)
             throws ParseException {
         if (clazz == null)
             throw new NullPointerException("clazz");
         if (classDoc == null)
             throw new NullPointerException("classDoc");
 
-        IEditableOptionGroup group = null;
+        IMutableOptionGroup group = null;
         if (inheritance == OptionGroupInheritance.flatten)
             group = parent;
 
         if (group == null)
-            group = new TransientOptionGroup(parent, clazz);
+            group = new MutableOptionGroup(parent, clazz);
 
         // In flatten-mode: override parent's name/description/docs.
         DomainString _name = (DomainString) classDoc.getTag("name");

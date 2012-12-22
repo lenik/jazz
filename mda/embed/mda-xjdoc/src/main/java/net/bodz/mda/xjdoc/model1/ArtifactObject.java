@@ -7,11 +7,9 @@ public class ArtifactObject
         extends AbstractArtifactElement {
 
     @Override
-    public synchronized ArtifactDoc getArtifactDoc() {
-        if (artifactDoc == null) {
-            ClassDoc classDoc = ClassDocs.loadFromResource(getClass(), true);
-            artifactDoc = classDoc.as(ArtifactDoc.class);
-        }
+    public ArtifactDoc loadArtifactDoc() {
+        ClassDoc classDoc = ClassDocs.loadFromResource(getClass(), true);
+        ArtifactDoc artifactDoc = classDoc.as(ArtifactDoc.class);
         return artifactDoc;
     }
 
