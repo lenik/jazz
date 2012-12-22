@@ -2,6 +2,7 @@ package net.bodz.bas.cli.skel;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.StandardCopyOption;
 
 import net.bodz.bas.c.java.io.FileDiff;
 import net.bodz.bas.err.IllegalUsageError;
@@ -154,17 +155,17 @@ public class BatchEditCLI
             return;
 
         case EditResult.RENAME:
-            if (src.renameTo(dst))
+            if (vfs.move(src, dst))
                 result.setDone();
             return;
 
         case EditResult.MOVE:
-            if (src.move(dst, force))
+            if (vfs.move(src, dst, StandardCopyOption.REPLACE_EXISTING))
                 result.setDone();
             return;
 
         case EditResult.COPY:
-            if (src.copyTo(dst))
+            if (vfs.copy(src, dst))
                 result.setDone();
             return;
 
@@ -190,7 +191,7 @@ public class BatchEditCLI
                     diff(dst, edit);
                 else
                     diff(src, edit);
-            edit.copyTo(dst);
+            vfs.copy(edit, dst);
 
             result.setDone();
             return;
