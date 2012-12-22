@@ -1,15 +1,15 @@
-package net.bodz.bas.cli;
+package net.bodz.bas.cli.model;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.potato.Potatoes;
+import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.model.IType;
 
-public class CLIPotatoTypeTest
-        extends BasicCLI {
+public class PotatoOptionsTest
+        extends ArtifactObjectWithOptions {
 
     /** @option */
     private String myName = "Lucy";
@@ -25,16 +25,14 @@ public class CLIPotatoTypeTest
         return "hello " + t;
     }
 
-    @Override
-    protected void mainImpl(String... args)
-            throws Exception {
-    }
-
     @Test
-    public void test1()
+    public void testReceive()
             throws Exception {
         IType type = Potatoes.getType(getClass());
-        // ScriptClass<Object> sclass = Scripts.getScriptClass(this);
+
+        for (IProperty property : type.getProperties())
+            System.out.println("prop: " + property + ": " + property.getClass());
+
         type.getProperty("myName").getValue(this);
 
         assertEquals("get myName", "Lucy", type.get(this, "myName"));
@@ -45,7 +43,7 @@ public class CLIPotatoTypeTest
         assertEquals("set myName", "Linda", myName);
         assertEquals("set yourAge", 17, yourAge);
 
-        accept("--serial", "--no-serial", "--no-serial");
+        receive("--serial", "--no-serial", "--no-serial");
         assertEquals("serials", 3, serial.length);
         assertTrue(serial[0]);
         assertFalse(serial[1]);

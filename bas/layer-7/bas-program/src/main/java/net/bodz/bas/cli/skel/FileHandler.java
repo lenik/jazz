@@ -2,16 +2,21 @@ package net.bodz.bas.cli.skel;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.file.CopyOption;
 import java.nio.file.OpenOption;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.err.ExceptionLog;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.tools.IStreamReading;
+import net.bodz.bas.io.resource.tools.IStreamWriting;
+import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.resource.tools.StreamWriting;
+import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.util.TempFile;
 
@@ -19,29 +24,30 @@ public class FileHandler
         implements Closeable {
 
     private String name;
-    private IFile file;
-    private IFile tmpFile;
-    private IFile outFile;
-    private IFile destFile;
 
+    private IFile inputFile;
+    // private Charset inputCharset;
+
+    private IFile outputDir;
+    private IFile outputFile;
+    // private Charset outputCharset;
+
+    private boolean writeToTmpBeforeSave;
     private IFile tmpDir = TempFile.getTempRoot();
     private String tmpPrefix;
-    private IFile outDir;
+    private IFile tmpFile;
 
-    private FileHandleResult result = FileHandleResult.ignored;
+    private FileHandleResult result = FileHandleResult.IGNORED;
     private ExceptionLog exceptions = new ExceptionLog();;
     private Boolean diff;
     private Set<String> tags = new TreeSet<String>();
 
-    private OpenOption[] srcOpenOptions = {};
-    private OpenOption[] destOpenOptions = {};
+    private OpenOption[] inputOpenOptions = {};
+    private OpenOption[] outputOpenOptions = {};
+    private CopyOption[] copyOptions = {};
+    private DeleteOption[] deleteOptions = {};
 
-    private transient InputStream inputStream;
-    private transient Reader reader;
-    private transient OutputStream outputStream;
-    private transient Writer writer;
-    private transient OutputStream tempOutputStream;
-    private transient Writer tempWriter;
+    private IPrintOut printOut;
 
     public FileHandler(String name, IFile file) {
         if (name == null)
@@ -49,7 +55,7 @@ public class FileHandler
         if (file == null)
             throw new NullPointerException("file");
         this.name = name;
-        this.file = file;
+        this.inputFile = file;
     }
 
     public String getName() {
@@ -62,59 +68,47 @@ public class FileHandler
         this.name = name;
     }
 
-    public IFile getFile() {
-        return file;
+    public IFile getInputFile() {
+        return inputFile;
     }
 
-    public void setFile(IFile file) {
-        if (file == null)
+    public void setInputFile(IFile inputFile) {
+        if (inputFile == null)
             throw new NullPointerException("file");
-        if (inputStream != null || reader != null)
-            throw new IllegalStateException("Input file is already opened.");
-        this.file = file;
+        this.inputFile = inputFile;
     }
 
-    public IFile getTmpFile() {
-        return tmpFile;
+    public IFile getOutputDir() {
+        return outputDir;
     }
 
-    public void setTmpFile(IFile tmpFile) {
-        this.tmpFile = tmpFile;
-    }
-
-    public IFile getOrCreateTmpFile()
-            throws IOException {
-        if (tmpFile == null) {
-            String prefix = tmpPrefix == null ? name : tmpPrefix;
-            String dotExt = file.getPath().getExtension(true);
-            tmpFile = TempFile.createTempFile(prefix, dotExt, tmpDir);
-        }
-        return tmpFile;
-    }
-
-    public IFile getOutFile() {
-        return outFile;
-    }
-
-    public void setOutFile(IFile outFile) {
-        if (outputStream != null || writer != null)
+    public void setOutputDir(IFile outputDir) {
+        if (outputFile != null)
             throw new IllegalStateException("Out file is already opened.");
-        this.outFile = outFile;
+        this.outputDir = outputDir;
     }
 
-    public IFile getOrCreateOutFile() {
-        if (outFile == null) {
-            outFile = outDir.getChild(name);
+    public IFile getOutputFile() {
+        return outputFile;
+    }
+
+    public void setOutputFile(IFile outputFile) {
+        this.outputFile = outputFile;
+    }
+
+    public IFile resolveOutputFile() {
+        if (outputFile == null) {
+            outputFile = outputDir.getChild(name);
         }
-        return outFile;
+        return outputFile;
     }
 
-    public IFile getDestFile() {
-        return destFile;
+    public boolean isWriteToTmpBeforeSave() {
+        return writeToTmpBeforeSave;
     }
 
-    public void setDestFile(IFile destFile) {
-        this.destFile = destFile;
+    public void setWriteToTmpBeforeSave(boolean writeToTmpBeforeSave) {
+        this.writeToTmpBeforeSave = writeToTmpBeforeSave;
     }
 
     public IFile getTmpDir() {
@@ -137,14 +131,25 @@ public class FileHandler
         this.tmpPrefix = tmpPrefix;
     }
 
-    public IFile getOutDir() {
-        return outDir;
+    public IFile getTmpFile() {
+        return tmpFile;
     }
 
-    public void setOutDir(IFile outDir) {
-        if (outFile != null)
-            throw new IllegalStateException("Out file is already opened.");
-        this.outDir = outDir;
+    public void setTmpFile(IFile tmpFile) {
+        this.tmpFile = tmpFile;
+    }
+
+    public IFile resolveTmpFile()
+            throws IOException {
+        if (tmpFile == null) {
+            String prefix = tmpPrefix == null ? name : tmpPrefix;
+            String dotExt = inputFile.getPath().getExtension(true);
+            tmpFile = TempFile.createTempFile(prefix, dotExt, tmpDir);
+
+            Charset charset = outputFile.getPreferredCharset();
+            tmpFile.setPreferredCharset(charset);
+        }
+        return tmpFile;
     }
 
     public FileHandleResult getResult() {
@@ -158,27 +163,27 @@ public class FileHandler
     }
 
     public void setSaved(Boolean changed) {
-        this.result = FileHandleResult.saved;
+        this.result = FileHandleResult.SAVED;
         this.diff = changed;
     }
 
     public void setDeleted() {
-        this.result = FileHandleResult.deleted;
+        this.result = FileHandleResult.DELETED;
     }
 
     public void setRenamedTo(IFile destFile) {
-        this.result = FileHandleResult.renamed;
-        this.destFile = destFile;
+        this.result = FileHandleResult.RENAMED;
+        this.outputFile = destFile;
     }
 
     public void setMovedTo(IFile destFile) {
-        this.result = FileHandleResult.moved;
-        this.destFile = destFile;
+        this.result = FileHandleResult.MOVED;
+        this.outputFile = destFile;
     }
 
     public void setCopiedTo(IFile destFile) {
-        this.result = FileHandleResult.copied;
-        this.destFile = destFile;
+        this.result = FileHandleResult.COPIED;
+        this.outputFile = destFile;
     }
 
     public void logException(Throwable exception) {
@@ -205,10 +210,6 @@ public class FileHandler
         return tags;
     }
 
-    public void setTags(Set<String> tags) {
-        this.tags = tags;
-    }
-
     public void setTags(String... tags) {
         this.tags.clear();
         for (String tag : tags)
@@ -224,113 +225,128 @@ public class FileHandler
     }
 
     public Charset getInputCharset() {
-        return file.getPreferredCharset();
+        return inputFile.getPreferredCharset();
     }
 
     public void setInputCharset(Charset inputCharset) {
         if (inputCharset == null)
             throw new NullPointerException("inputCharset");
-        file.setPreferredCharset(inputCharset);
+        inputFile.setPreferredCharset(inputCharset);
     }
 
     public Charset getOutputCharset() {
-        getOrCreateOutFile();
-        return outFile.getPreferredCharset();
+        resolveOutputFile();
+        return outputFile.getPreferredCharset();
     }
 
     public void setOutputCharset(Charset outputCharset) {
         if (outputCharset == null)
             throw new NullPointerException("outputCharset");
-        getOrCreateOutFile();
-        outFile.setPreferredCharset(outputCharset);
+        resolveOutputFile();
+        outputFile.setPreferredCharset(outputCharset);
     }
 
-    public OpenOption[] getSrcOpenOptions() {
-        return srcOpenOptions;
+    public OpenOption[] getInputOpenOptions() {
+        return inputOpenOptions;
     }
 
-    public void setSrcOpenOptions(OpenOption... srcOpenOptions) {
-        this.srcOpenOptions = srcOpenOptions;
+    public void setInputOpenOptions(OpenOption... options) {
+        this.inputOpenOptions = options;
     }
 
-    public OpenOption[] getDestOpenOptions() {
-        return destOpenOptions;
+    public OpenOption[] getOutputOpenOptions() {
+        return outputOpenOptions;
     }
 
-    public void setDestOpenOptions(OpenOption... destOpenOptions) {
-        this.destOpenOptions = destOpenOptions;
+    public void setOutputOpenOptions(OpenOption... options) {
+        this.outputOpenOptions = options;
     }
 
-    public InputStream openInputStream()
+    public CopyOption[] getCopyOptions() {
+        return copyOptions;
+    }
+
+    public void setCopyOptions(CopyOption... options) {
+        this.copyOptions = options;
+    }
+
+    public DeleteOption[] getDeleteOptions() {
+        return deleteOptions;
+    }
+
+    public void setDeleteOptions(DeleteOption... options) {
+        this.deleteOptions = options;
+    }
+
+    public IStreamInputSource getInputSource()
             throws IOException {
-        if (inputStream == null) {
-            if (reader != null)
-                throw new IllegalStateException("Input file is already opened in text mode.");
-            inputStream = file.getInputSource().newInputStream(srcOpenOptions);
-        }
-        return inputStream;
+        IStreamInputSource inputSource = getInputFile().getInputSource();
+        return inputSource;
     }
 
-    public Reader openReader()
-            throws IOException {
-        if (reader == null) {
-            if (inputStream != null)
-                throw new IllegalStateException("Input file is already opened in binary mode.");
-            reader = file.getInputSource().newReader(srcOpenOptions);
-        }
-        return reader;
+    public IStreamOutputTarget getOutputTarget() {
+        IFile outFile;
+        if (writeToTmpBeforeSave)
+            try {
+                outFile = resolveTmpFile();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to init the tmp file.", e);
+            }
+        else
+            outFile = getOutputFile();
+
+        IStreamOutputTarget outputTarget = outFile.getOutputTarget();
+        return outputTarget;
     }
 
-    public OutputStream openOutputStream()
+    public synchronized IPrintOut getPrintOut()
             throws IOException {
-        if (outputStream == null) {
-            if (writer != null)
-                throw new IllegalStateException("Output file is already opened in text mode.");
-            outputStream = file.getOutputTarget().newOutputStream(destOpenOptions);
+        if (printOut == null) {
+            printOut = getOutputTarget().newPrintOut(outputOpenOptions);
         }
-        return outputStream;
+        return printOut;
     }
 
-    public Writer openWriter()
+    public IStreamReading read()
             throws IOException {
-        if (writer != null) {
-            if (outputStream != null)
-                throw new IllegalStateException("Output file is already opened in binary mode.");
-            writer = file.getOutputTarget().newWriter(destOpenOptions);
+        IStreamInputSource inputSource = getInputSource();
+        StreamReading reading = inputSource.tooling()._for(StreamReading.class);
+        reading.setOpenOptions(inputOpenOptions);
+        return reading;
+    }
+
+    public IStreamWriting write()
+            throws IOException {
+        IStreamOutputTarget outputTarget = getOutputTarget();
+        StreamWriting writing = outputTarget.tooling()._for(StreamWriting.class);
+        writing.setOpenOptions(outputOpenOptions);
+        return writing;
+    }
+
+    public void commit()
+            throws IOException {
+
+        close();
+
+        if (writeToTmpBeforeSave) {
+            // copy tmp to out.
+            if (tmpFile.isExisted()) {
+                setSaved(null);
+            }
         }
-        return writer;
+
     }
 
     @Override
-    public void close() {
-        if (_close(inputStream))
-            inputStream = null;
-        if (_close(reader))
-            reader = null;
-        if (_close(outputStream))
-            outputStream = null;
-        if (_close(writer))
-            writer = null;
-        if (_close(tempOutputStream))
-            tempOutputStream = null;
-        if (_close(tempWriter))
-            tempWriter = null;
-    }
-
-    private boolean _close(Closeable closable) {
-        if (closable == null)
-            return false;
-        try {
-            closable.close();
-            return true;
-        } catch (IOException e) {
-            logException(e);
-            return false;
-        }
+    public void close()
+            throws IOException {
+        if (printOut != null)
+            printOut.close();
     }
 
     @Override
-    protected void finalize() {
+    protected void finalize()
+            throws Throwable {
         close();
     }
 

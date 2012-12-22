@@ -18,20 +18,18 @@ public class BatchCLITest
         extends BatchCLI {
 
     @Override
-    protected void processImpl(FileHandler handler)
+    protected void processFile(FileHandler handler)
             throws Exception {
         String name = handler.getName();
-        IFile file = handler.getFile();
-        IFile outDir = handler.getOutDir();
-        IFile outFile = handler.getOutFile();
-        IFile destFile = handler.getDestFile();
+        IFile file = handler.getInputFile();
+        IFile outDir = handler.getOutputDir();
+        IFile outFile = handler.getOutputFile();
 
         System.out.println("ProcessImp:");
         System.out.println("    Name: " + name);
         System.out.println("    File: " + file);
         System.out.println("    Out-Dir: " + outDir);
         System.out.println("    Out-File: " + outFile);
-        System.out.println("    Dest-File: " + destFile);
     }
 
     static void printBaseDoc()

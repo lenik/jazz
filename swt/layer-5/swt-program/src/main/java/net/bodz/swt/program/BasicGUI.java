@@ -86,8 +86,6 @@ public class BasicGUI
             throws Exception {
         try {
             super.execute(args);
-        } catch (net.bodz.bas.err.control.Control c) {
-            throw c;
         } catch (Exception e) {
             if (!shell.isDisposed()) {
                 SwtDialogs iact = new SwtDialogs(shell);
