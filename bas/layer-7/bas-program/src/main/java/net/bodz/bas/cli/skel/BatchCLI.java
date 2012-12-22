@@ -10,6 +10,8 @@ import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.context.VFSColos;
+import net.bodz.bas.vfs.facade.DefaultVfsFacade;
+import net.bodz.bas.vfs.facade.IVfsFacade;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.util.find.FileFinder;
 import net.bodz.bas.vfs.util.find.FileFoundEvent;
@@ -122,6 +124,8 @@ public abstract class BatchCLI
      */
     // @ParseBy(GetInstanceParser.class)
     Comparator<IFile> sortComparator;
+
+    IVfsFacade vfs = DefaultVfsFacade.getInstance();
 
     class DefaultFileFilter
             implements IFileFilter {

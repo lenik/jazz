@@ -1,28 +1,30 @@
-package net.bodz.bas.vfs.shell;
+package net.bodz.bas.vfs.facade;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.CopyOption;
+import java.nio.file.OpenOption;
 
+import net.bodz.bas.vfs.FileSystemProxy;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.IPath;
 
-public abstract class AbstractVfsShell
-        implements IVfsShell, IVfsShell_File {
+public abstract class AbstractVfsFacade
+        extends FileSystemProxy
+        implements IVfsFacade {
 
     private static final Charset utf8Charset = Charset.forName("utf-8");
 
-    boolean force;
     Charset charset = utf8Charset;
 
-    @Override
-    public boolean isForce() {
-        return force;
+    public AbstractVfsFacade() {
+        super();
     }
 
-    @Override
-    public void setForce(boolean force) {
-        this.force = force;
+    public AbstractVfsFacade(IFileSystem _orig) {
+        super(_orig);
     }
 
     @Override
@@ -47,6 +49,7 @@ public abstract class AbstractVfsShell
         this.charset = charset;
     }
 
+    @Override
     public IPath parse(String path) {
         return VFS.parse(path);
     }
@@ -56,61 +59,61 @@ public abstract class AbstractVfsShell
     }
 
     @Override
-    public byte[] read(String srcFile, int readSize)
+    public byte[] read(String srcFile, int readSize, OpenOption... options)
             throws IOException {
         IFile src = resolve(srcFile);
-        return read(src, readSize);
+        return read(src, readSize, options);
     }
 
     @Override
-    public char[] readChars(String srcFile, int readSize)
+    public char[] readChars(String srcFile, int readSize, OpenOption... options)
             throws IOException {
         IFile src = resolve(srcFile);
-        return readChars(src, readSize);
+        return readChars(src, readSize, options);
     }
 
     @Override
-    public String readString(String srcFile, int readSize)
+    public String readString(String srcFile, int readSize, OpenOption... options)
             throws IOException {
         IFile src = resolve(srcFile);
-        return readString(src, readSize);
+        return readString(src, readSize, options);
     }
 
     @Override
-    public void write(String dstFile, byte[] buf, int off, int len)
+    public void write(String dstFile, byte[] buf, int off, int len, OpenOption... options)
             throws IOException {
         IFile dst = resolve(dstFile);
-        write(dst, buf, off, len);
+        write(dst, buf, off, len, options);
     }
 
     @Override
-    public void writeChars(String dstFile, char[] buf, int off, int len)
+    public void writeChars(String dstFile, char[] buf, int off, int len, OpenOption... options)
             throws IOException {
         IFile dst = resolve(dstFile);
-        writeChars(dst, buf, off, len);
+        writeChars(dst, buf, off, len, options);
     }
 
     @Override
-    public void writeString(String dstFile, String string)
+    public void writeString(String dstFile, String string, OpenOption... options)
             throws IOException {
         IFile dst = resolve(dstFile);
-        writeString(dst, string);
+        writeString(dst, string, options);
     }
 
     @Override
-    public boolean copy(String srcFile, String dstFile)
-            throws IOException {
-        IFile src = resolve(srcFile);
-        IFile dst = resolve(dstFile);
-        return copy(src, dst);
-    }
-
-    @Override
-    public boolean move(String srcFile, String dstFile)
+    public boolean copy(String srcFile, String dstFile, CopyOption... options)
             throws IOException {
         IFile src = resolve(srcFile);
         IFile dst = resolve(dstFile);
-        return move(src, dst);
+        return copy(src, dst, options);
+    }
+
+    @Override
+    public boolean move(String srcFile, String dstFile, CopyOption... options)
+            throws IOException {
+        IFile src = resolve(srcFile);
+        IFile dst = resolve(dstFile);
+        return move(src, dst, options);
     }
 
     @Override
