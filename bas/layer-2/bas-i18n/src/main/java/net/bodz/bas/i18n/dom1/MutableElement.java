@@ -5,23 +5,28 @@ import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
 
-public class SimpleElement
+public class MutableElement
         extends AbstractElement
-        implements IEditableElement {
+        implements IMutableElement {
 
     private static final long serialVersionUID = 1L;
 
-    String name;
-    DomainString displayName;
-    DomainString description;
-    DomainString helpDoc;
-    int userLevel;
-    int modifiers;
-    Set<String> tagNames;
+    private String name;
+    private DomainString displayName;
+    private DomainString description;
+    private DomainString helpDoc;
+    private int userLevel;
+    private int modifiers;
+    private Set<String> tagNames;
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

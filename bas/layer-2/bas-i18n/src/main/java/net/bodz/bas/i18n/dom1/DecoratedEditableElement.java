@@ -4,17 +4,17 @@ import net.bodz.bas.i18n.dom.DomainString;
 
 public class DecoratedEditableElement
         extends DecoratedElement
-        implements IEditableElement {
+        implements IMutableElement {
 
     private static final long serialVersionUID = 1L;
 
-    public DecoratedEditableElement(IEditableElement _orig) {
+    public DecoratedEditableElement(IMutableElement _orig) {
         super(_orig);
     }
 
     @Override
-    public IEditableElement getWrapped() {
-        return (IEditableElement) super.getWrapped();
+    public IMutableElement getWrapped() {
+        return (IMutableElement) super.getWrapped();
     }
 
     @Override

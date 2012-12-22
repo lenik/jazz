@@ -10,21 +10,19 @@ import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
-public class TransientOptionGroup
+public class MutableOptionGroup
         extends AbstractOptionGroup
-        implements IEditableOptionGroup {
-
-    private static final long serialVersionUID = 1L;
+        implements IMutableOptionGroup {
 
     Class<?> declaringClass;
     String name;
 
-    final IEditableOptionGroup parent;
+    final IMutableOptionGroup parent;
     final Map<String, IOption> nameMap = new TreeMap<String, IOption>();
     final PrefixMap<IOption> prefixMap = new PrefixMap<IOption>();
     final Map<String, SyntaxUsage> usageMap = new LinkedHashMap<String, SyntaxUsage>();
 
-    public TransientOptionGroup(IEditableOptionGroup parent, Class<?> declaringClass) {
+    public MutableOptionGroup(IMutableOptionGroup parent, Class<?> declaringClass) {
         this.declaringClass = declaringClass;
         this.name = Strings.hyphenatize(declaringClass.getSimpleName());
         this.parent = parent;
@@ -43,7 +41,7 @@ public class TransientOptionGroup
     }
 
     @Override
-    public IEditableOptionGroup getParent() {
+    public IMutableOptionGroup getParent() {
         return parent;
     }
 

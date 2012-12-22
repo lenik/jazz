@@ -5,11 +5,11 @@ import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
-import net.bodz.bas.i18n.dom1.IEditableElement;
+import net.bodz.bas.i18n.dom1.IMutableElement;
 
 public class SimplePotatoElement
         extends SimpleAnnotatedElement
-        implements IPotatoElement, IEditableElement {
+        implements IPotatoElement, IMutableElement {
 
     private static final long serialVersionUID = 1L;
 

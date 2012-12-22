@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import net.bodz.bas.i18n.dom.DomainString;
 
-public interface IEditableElement
+public interface IMutableElement
         extends IElement, Serializable {
+
+    void setName(String name);
 
     void setDisplayName(DomainString displayName);
 
