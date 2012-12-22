@@ -15,33 +15,41 @@ public class LineReaderTest
             throws IOException {
         Reader reader = new StringReader("hello, \nworld.\r\nThis is \rCaynoh.");
         // reader = new BufferedReader(reader);
-        LineReader lr = new LineReader(reader);
-        assertEquals((int) 'h', lr.read());
-        assertEquals((int) 'e', lr.read());
-        lr.mark(100);
-        assertEquals((int) 'l', lr.read());
-        assertEquals("lo, \n", lr.readLine());
-        assertEquals("world.\r\n", lr.readLine());
-        lr.reset();
-        assertEquals("llo, \n", lr.readLine());
-        lr.reset();
-        assertEquals("llo, \n", lr.readLine());
-        assertEquals("wor", lr.readLine(3));
-        assertEquals("ld.", lr.readLine(3));
-        assertEquals("\r\n", lr.readLine(3));
-        lr.reset();
-        assertEquals("llo, ", lr.readLine(5));
-        assertEquals((int) '\n', lr.read());
-        assertEquals("world.\r\n", lr.readLine());
+        LineReader _reader = new LineReader(reader);
 
-        assertEquals("This is \r", lr.readLine()); // 'C'aynoh in buffer
-        lr.mark(100);
-        assertEquals((int) 'C', lr.read());
-        assertEquals((int) 'a', lr.read());
-        assertEquals("ynoh.", lr.readLine());
-        assertEquals(-1, lr.read());
-        lr.reset();
-        assertEquals("Caynoh.", lr.readLine());
+        assertEquals('h', _reader.read());
+        assertEquals('e', _reader.read());
+
+        _reader.mark(100);
+        assertEquals('l', _reader.read());
+        assertEquals("lo, \n", _reader.readLine());
+        assertEquals("world.\r\n", _reader.readLine());
+
+        _reader.reset();
+        assertEquals("llo, \n", _reader.readLine());
+
+        _reader.reset();
+        assertEquals("llo, \n", _reader.readLine());
+        assertEquals("wor", _reader.readLine(3));
+        assertEquals("ld.", _reader.readLine(3));
+        assertEquals("\r\n", _reader.readLine(3));
+
+        _reader.reset();
+        assertEquals("llo, ", _reader.readLine(5));
+        assertEquals('\n', _reader.read());
+        assertEquals("world.\r\n", _reader.readLine());
+        assertEquals("This is \r", _reader.readLine()); // 'C'aynoh in buffer
+
+        _reader.mark(100);
+        assertEquals('C', _reader.read());
+        assertEquals('a', _reader.read());
+        assertEquals("ynoh.", _reader.readLine());
+        assertEquals(-1, _reader.read());
+
+        _reader.reset();
+        assertEquals("Caynoh.", _reader.readLine());
+
+        _reader.close();
     }
 
 }

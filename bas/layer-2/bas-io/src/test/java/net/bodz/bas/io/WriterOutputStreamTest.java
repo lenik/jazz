@@ -44,6 +44,8 @@ public class WriterOutputStreamTest
         for (int i = 0; i < 3; i++)
             out.write(hello[i]);
         assertEquals("sMMM", buf.toString());
+
+        out.close();
     }
 
 }
