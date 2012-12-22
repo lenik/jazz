@@ -19,7 +19,6 @@ layer-2/ 基础数据类型扩展
     bas-i18n
     bas-std
     bas-trait-impl
-    bas-script
     
 layer-3/ 工具和杂项
     bas-log

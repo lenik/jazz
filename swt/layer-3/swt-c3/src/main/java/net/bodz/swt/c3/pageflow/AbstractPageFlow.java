@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.Text;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.gui.util.IQuietHint;
+import net.bodz.bas.repr.req.SimpleRequest;
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.bas.variant.map.SimpleRequest;
 import net.bodz.swt.c.control.ControlAdapters;
 
 public abstract class AbstractPageFlow
