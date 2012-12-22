@@ -2,6 +2,7 @@ package net.bodz.bas.vfs.impl.pseudo;
 
 import java.nio.charset.Charset;
 
+import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.BytesResource;
 
@@ -35,7 +36,7 @@ public class BytesFile
     }
 
     @Override
-    public boolean delete() {
+    public boolean delete(DeleteOption... options) {
         if (resource.isAllocated()) {
             resource.unallocate();
             return true;

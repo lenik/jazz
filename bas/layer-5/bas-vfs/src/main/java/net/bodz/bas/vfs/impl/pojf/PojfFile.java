@@ -11,6 +11,8 @@ import java.nio.file.attribute.FileAttributeView;
 import java.util.Arrays;
 
 import net.bodz.bas.c.java.io.FileData;
+import net.bodz.bas.c.java.io.FileTree;
+import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.FileResource;
@@ -40,7 +42,7 @@ public class PojfFile
      * @throws NullPointerException
      *             if <code>pojfPath</code> is <code>null</code>
      */
-    private PojfFile(String _pathstr) {
+    PojfFile(String _pathstr) {
         this(new File(_pathstr));
     }
 
@@ -135,12 +137,12 @@ public class PojfFile
     }
 
     @Override
-    public boolean delete() {
-        return _file.delete();
+    public boolean delete(DeleteOption... options) {
+        return FileTree.delete(_file, options);
     }
 
     @Override
-    public boolean deleteOnExit() {
+    public boolean deleteOnExit(DeleteOption... options) {
         _file.deleteOnExit();
         return true;
     }

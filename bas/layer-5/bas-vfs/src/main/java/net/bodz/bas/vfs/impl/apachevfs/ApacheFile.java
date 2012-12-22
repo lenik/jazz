@@ -14,6 +14,7 @@ import org.apache.commons.vfs.FileSelectInfo;
 import org.apache.commons.vfs.FileSelector;
 import org.apache.commons.vfs.FileSystemException;
 
+import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.t.iterator.Iterables;
@@ -96,7 +97,7 @@ public class ApacheFile
     }
 
     @Override
-    public boolean delete() {
+    public boolean delete(DeleteOption... options) {
         try {
             return fileObject.delete();
         } catch (FileSystemException e) {
@@ -105,7 +106,7 @@ public class ApacheFile
     }
 
     @Override
-    public boolean deleteOnExit() {
+    public boolean deleteOnExit(DeleteOption... options) {
         return false;
     }
 

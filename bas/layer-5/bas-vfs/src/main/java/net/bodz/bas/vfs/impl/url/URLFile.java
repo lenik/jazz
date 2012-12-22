@@ -13,7 +13,9 @@ import java.nio.file.attribute.FileAttributeView;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
+import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
@@ -78,13 +80,16 @@ public class URLFile
     }
 
     @Override
-    public boolean delete() {
+    public boolean delete(DeleteOption... options) {
         URL url = path.toURL();
 
         switch (url.getProtocol()) {
         case "file":
-            File file = new File(url.getFile());
-            return file.delete();
+            File file = FileURL.toFile(url, null);
+            if (file == null)
+                return false;
+            else
+                return FileTree.delete(file, options);
 
         case "jar":
             // jar/zip is read-only.
