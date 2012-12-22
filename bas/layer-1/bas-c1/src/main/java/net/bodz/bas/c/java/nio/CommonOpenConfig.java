@@ -28,7 +28,7 @@ public class CommonOpenConfig {
         collectorMap = new HashMap<>();
         collectorMap.put(StandardOpenOption.class, new StandardOpenOptionCollector());
         collectorMap.put(LinkOption.class, new LinkOptionCollector());
-        collectorMap.put(InstallOption.class, new InstallOptionCollector());
+        collectorMap.put(CreateOption.class, new InstallOptionCollector());
     }
 
     public static CommonOpenConfig parse(OpenOption... options) {
@@ -205,10 +205,10 @@ class LinkOptionCollector
 }
 
 class InstallOptionCollector
-        implements IOpenConfigCollector<InstallOption> {
+        implements IOpenConfigCollector<CreateOption> {
 
     @Override
-    public void collect(CommonOpenConfig config, InstallOption src) {
+    public void collect(CommonOpenConfig config, CreateOption src) {
         switch (src) {
         case CREATE_PARENTS:
             config.createParents = true;
