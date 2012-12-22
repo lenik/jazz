@@ -8,6 +8,8 @@ import java.nio.file.attribute.FileAttributeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.c.java.nio.DeleteOptions;
 import net.bodz.bas.c.java.nio.LinkOptions;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.resource.IStreamResource;
@@ -246,11 +248,15 @@ public class MemoryFile
     }
 
     @Override
-    public boolean delete() {
+    public boolean delete(DeleteOption... options) {
         Inode inode = _get(false);
         if (inode != null && inode.isEmpty()) {
             inode.detach();
             inode = null;
+
+            if (DeleteOptions.isRemoveEmptyParents(options)) {
+                // TODO remove empty parents...
+            }
             return true;
         }
         return false;

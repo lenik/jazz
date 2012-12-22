@@ -12,6 +12,7 @@ import java.nio.file.attribute.*;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
+import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.DeviceAttributeView;
 import net.bodz.bas.c.java.nio.DeviceAttributes;
 import net.bodz.bas.c.java.nio.FilePermissionAttributeView;
@@ -46,7 +47,7 @@ public class NioFile
      * @throws NullPointerException
      *             if <code>jdkPath</code> is <code>null</code>
      */
-    private NioFile(String _pathstr) {
+    NioFile(String _pathstr) {
         this(Paths.get(_pathstr));
     }
 
@@ -165,7 +166,7 @@ public class NioFile
     }
 
     @Override
-    public boolean delete() {
+    public boolean delete(DeleteOption... options) {
         if (!Files.exists(_path))
             return false;
 
@@ -178,7 +179,7 @@ public class NioFile
     }
 
     @Override
-    public boolean deleteOnExit() {
+    public boolean deleteOnExit(DeleteOption... options) {
         if (!Files.exists(_path))
             return false;
         Runtime.getRuntime().addShutdownHook(new Thread() {

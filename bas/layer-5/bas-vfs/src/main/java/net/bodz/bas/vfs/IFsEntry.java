@@ -8,6 +8,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileAttributeView;
 import java.nio.file.attribute.FileTime;
 
+import net.bodz.bas.c.java.nio.TreeDeleteOption;
+import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -129,13 +131,16 @@ public interface IFsEntry {
     /**
      * Delete the fs entry, maybe file or directory.
      * <p>
-     * The directory can only be deleted if it's empty. Delete an empty directory should preserve
-     * any empty parent dirs.
+     * In default mode, i.e.,when the {@link TreeDeleteOption#DELETE_TREE delete tree} option is
+     * specified, the directory can only be deleted if it's empty.
+     * <p>
+     * If {@link TreeDeleteOption#REMOVE_EMPTY_PARENTS remove empty parents} option isn't specified,
+     * delete an empty directory should preserve any empty parent dirs.
      * 
      * @return <code>true</code> if and only if the entry is successfully deleted.
      * @see File#delete()
      */
-    boolean delete();
+    boolean delete(DeleteOption... options);
 
     /**
      * Once deletion has been requested, it is not possible to cancel the request. This method
@@ -147,7 +152,7 @@ public interface IFsEntry {
      * @see File#deleteOnExit()
      */
     @Deprecated
-    boolean deleteOnExit();
+    boolean deleteOnExit(DeleteOption... options);
 
     /**
      * Renames the file denoted by this abstract pathname.

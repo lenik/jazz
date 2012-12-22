@@ -8,6 +8,7 @@ import java.nio.file.attribute.DosFileAttributeView;
 import java.nio.file.attribute.DosFileAttributes;
 import java.nio.file.attribute.FileTime;
 
+import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.traits.Attributes;
 import net.bodz.bas.vfs.path.IPath;
@@ -178,12 +179,12 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public boolean delete() {
+    public boolean delete(DeleteOption... options) {
         return false;
     }
 
     @Override
-    public boolean deleteOnExit() {
+    public boolean deleteOnExit(DeleteOption... options) {
         return false;
     }
 
