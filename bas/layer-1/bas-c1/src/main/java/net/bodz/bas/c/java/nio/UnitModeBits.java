@@ -57,6 +57,8 @@ public class UnitModeBits {
             case OTHERS_EXECUTE:
                 mode |= OTHERS_EXECUTE;
                 break;
+
+            default:
             }
         }
         return mode;
