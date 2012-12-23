@@ -36,6 +36,8 @@ public class SwtStyleHelper {
                 control.setVisible(false);
                 break;
             case collapse:
+                break;
+            default:
             }
 
         if (style.getEnabled() != null)

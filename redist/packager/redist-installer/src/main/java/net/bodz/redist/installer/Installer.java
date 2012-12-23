@@ -6,7 +6,6 @@ import org.eclipse.swt.widgets.Composite;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.IVersion;
@@ -46,7 +45,6 @@ public class Installer
 
     public Installer(IProject project) {
         this.project = project;
-        this.logger.setLevel(LogLevel.INFO);
     }
 
     @Override

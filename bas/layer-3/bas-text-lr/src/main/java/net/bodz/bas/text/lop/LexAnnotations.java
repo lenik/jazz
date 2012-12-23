@@ -69,6 +69,7 @@ public class LexAnnotations {
         String lastState = null;
         for (Entry<AbstractLexMatch, Method> ent : rules.entrySet()) {
             AbstractLexMatch match = ent.getKey();
+
             String state = match.getState();
             if (lastState == null) {
                 acceptor.enter(state);
@@ -76,6 +77,8 @@ public class LexAnnotations {
                 acceptor.leave(lastState);
                 acceptor.enter(state);
             }
+            lastState = state;
+
             Method action = ent.getValue();
             Class<?>[] params = action.getParameterTypes();
             switch (params.length) {

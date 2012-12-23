@@ -42,7 +42,7 @@ public class PojfFile
      * @throws NullPointerException
      *             if <code>pojfPath</code> is <code>null</code>
      */
-    PojfFile(String _pathstr) {
+    public PojfFile(String _pathstr) {
         this(new File(_pathstr));
     }
 

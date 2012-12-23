@@ -185,6 +185,7 @@ class StandardOpenOptionCollector
         case WRITE:
             config.write = true;
             break;
+        default:
         }
     }
 
@@ -199,6 +200,7 @@ class LinkOptionCollector
         case NOFOLLOW_LINKS:
             config.nofollowLinks = true;
             break;
+        default:
         }
     }
 
@@ -213,6 +215,7 @@ class InstallOptionCollector
         case CREATE_PARENTS:
             config.createParents = true;
             break;
+        default:
         }
     }
 
