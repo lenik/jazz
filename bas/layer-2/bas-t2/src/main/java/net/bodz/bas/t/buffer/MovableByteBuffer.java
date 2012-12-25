@@ -1,10 +1,15 @@
 package net.bodz.bas.t.buffer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.sio.IByteIn;
+import net.bodz.bas.sio.IByteOut;
 
 public class MovableByteBuffer
         implements IMovableBuffer {
@@ -171,6 +176,26 @@ public class MovableByteBuffer
     public synchronized String toString(String charset)
             throws UnsupportedEncodingException {
         return new String(buf, start, end - start, charset);
+    }
+
+    public synchronized void writeTo(OutputStream out)
+            throws IOException {
+        out.write(buf, start, end - start);
+    }
+
+    public synchronized void writeTo(IByteOut out)
+            throws IOException {
+        out.write(buf, start, end - start);
+    }
+
+    public synchronized int readFrom(InputStream in)
+            throws IOException {
+        return in.read(buf, start, end - start);
+    }
+
+    public synchronized int readFrom(IByteIn in)
+            throws IOException {
+        return in.read(buf, start, end - start);
     }
 
 }
