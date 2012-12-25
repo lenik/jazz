@@ -41,7 +41,7 @@ public class DiffTest
     @Test
     public void testReverse() {
         GNUDiff diff = new GNUDiff(Arrays.asList(f1), Arrays.asList(f2));
-        List<DiffInfo> script = diff.diff_2(true);
+        List<DiffEntry> script = diff.diff_2(true);
         assertTrue(script != null);
     }
 
@@ -60,11 +60,11 @@ public class DiffTest
         final Integer[] l1 = loadArray(new int[] { 1, 2, 4, 7, 9, 35, 56, 58, 76 });
         final Integer[] l2 = loadArray(new int[] { 1, 2, 4, 76, 9, 35, 56, 58, 7 });
         GNUDiff diff = new GNUDiff(Arrays.asList(l1), Arrays.asList(l2));
-        List<DiffInfo> script = diff.diff_2(false);
+        List<DiffEntry> script = diff.diff_2(false);
         // script should have two changes
         assertTrue(script != null);
-        DiffInfo ch0 = script.get(0);
-        DiffInfo ch1 = script.get(1);
+        DiffEntry ch0 = script.get(0);
+        DiffEntry ch1 = script.get(1);
         assertEquals(1, ch0.inserted);
         assertEquals(1, ch0.deleted);
         assertEquals(3, ch0.index0);
@@ -87,7 +87,7 @@ public class DiffTest
     // @Test
     public void testContext() {
         GNUDiff diff = new GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
-        List<DiffInfo> script = diff.diff_2(false);
+        List<DiffEntry> script = diff.diff_2(false);
         StringWriter wtr = new StringWriter();
         DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2), //
                 new WriterPrintOut(wtr));

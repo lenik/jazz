@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.text.diff.DiffComparator;
-import net.bodz.bas.text.diff.DiffFormat;
+import net.bodz.bas.text.diff.IDiffComparator;
+import net.bodz.bas.text.diff.IDiffFormat;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
@@ -175,19 +175,19 @@ public class CLIAccessor {
         instance.force = force;
     }
 
-    public static DiffComparator getDiffAlgorithm(BatchEditCLI instance) {
+    public static IDiffComparator getDiffAlgorithm(BatchEditCLI instance) {
         return instance.diffAlgorithm;
     }
 
-    public static void setDiffAlgorithm(BatchEditCLI instance, DiffComparator diffAlgorithm) {
+    public static void setDiffAlgorithm(BatchEditCLI instance, IDiffComparator diffAlgorithm) {
         instance.diffAlgorithm = diffAlgorithm;
     }
 
-    public static DiffFormat getDiffFormat(BatchEditCLI instance) {
+    public static IDiffFormat getDiffFormat(BatchEditCLI instance) {
         return instance.diffFormat;
     }
 
-    public static void setDiffFormat(BatchEditCLI instance, DiffFormat diffFormat) {
+    public static void setDiffFormat(BatchEditCLI instance, IDiffFormat diffFormat) {
         instance.diffFormat = diffFormat;
     }
 

@@ -2,16 +2,16 @@ package net.bodz.bas.text.diff.gnudiff;
 
 import java.util.List;
 
-import net.bodz.bas.text.diff.DiffComparator;
-import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffEntry;
+import net.bodz.bas.text.diff.IDiffComparator;
 
 public class GNUDiffComparator
-        implements DiffComparator {
+        implements IDiffComparator {
 
     @Override
-    public List<DiffInfo> diffCompare(List<?> a, List<?> b) {
-        GNUDiff diff = new GNUDiff(a, b);
-        return diff.diff_2(false);
+    public List<DiffEntry> compareDiff(List<?> a, List<?> b) {
+        GNUDiff gnuDiff = new GNUDiff(a, b);
+        return gnuDiff.diff_2(false);
     }
 
 }

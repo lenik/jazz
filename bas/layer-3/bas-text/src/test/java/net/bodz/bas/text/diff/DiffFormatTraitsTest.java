@@ -15,10 +15,10 @@ public class DiffFormatTraitsTest
     @Test
     public void testDefaultStoreInstance()
             throws Exception {
-        IInstanceStore<? super DiffFormat> diffStore = Traits.getTrait(DiffFormat.class, IInstanceStore.class);
+        IInstanceStore<? super IDiffFormat> diffStore = Traits.getTrait(IDiffFormat.class, IInstanceStore.class);
 
         Object Simdiff = diffStore.getInstance("Simdiff");
-        assertEquals(DiffFormats.Simdiff, Simdiff);
+        assertEquals(IDiffFormat.SIMPLE, Simdiff);
     }
 
 }

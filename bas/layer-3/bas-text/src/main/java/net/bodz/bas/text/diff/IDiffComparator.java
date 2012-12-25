@@ -5,8 +5,8 @@ import java.util.List;
 import net.bodz.bas.meta.lang.TraitClass;
 
 @TraitClass(DiffComparatorTraits.class)
-public interface DiffComparator {
+public interface IDiffComparator {
 
-    List<DiffInfo> diffCompare(List<?> a, List<?> b);
+    List<DiffEntry> compareDiff(List<?> a, List<?> b);
 
 }

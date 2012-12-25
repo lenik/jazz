@@ -4,9 +4,8 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.text.diff.DiffComparator;
-import net.bodz.bas.text.diff.DiffFormat;
-import net.bodz.bas.text.diff.DiffFormats;
+import net.bodz.bas.text.diff.IDiffComparator;
+import net.bodz.bas.text.diff.IDiffFormat;
 import net.bodz.bas.vfs.IFile;
 
 /**
@@ -57,14 +56,14 @@ public abstract class BatchEditCLI
      * 
      * @option --diff =DIFF-ALG default=gnudiff
      */
-    DiffComparator diffAlgorithm;
+    IDiffComparator diffAlgorithm;
 
     /**
      * Simdiff, ED, Context, Unified, Normal.
      * 
      * @option =FORMAT
      */
-    DiffFormat diffFormat = DiffFormats.Simdiff;
+    IDiffFormat diffFormat = IDiffFormat.SIMPLE;
 
     /**
      * Write diff output to specified file.

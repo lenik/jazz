@@ -15,7 +15,7 @@ public class DiffComparatorTraitsTest
     @Test
     public void testDefaultStoreInstance()
             throws Exception {
-        IInstanceStore<? super DiffComparator> store = Traits.getTrait(DiffComparator.class, IInstanceStore.class);
+        IInstanceStore<? super IDiffComparator> store = Traits.getTrait(IDiffComparator.class, IInstanceStore.class);
 
         String defaultName = store.getInstanceNames().iterator().next();
         assertEquals("gnudiff", defaultName);
