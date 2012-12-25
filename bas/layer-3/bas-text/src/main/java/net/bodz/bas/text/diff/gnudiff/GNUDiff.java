@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffEntry;
 
 /**
  * A class to compare vectors of objects. The result of comparison is a list of <code>change</code>
@@ -361,7 +361,7 @@ public class GNUDiff {
          *            number of lines in 2nd file
          * @return a linked list of changes - or null
          */
-        public List<DiffInfo> build_script(boolean[] changed0, int len0, boolean[] changed1, int len1);
+        public List<DiffEntry> build_script(boolean[] changed0, int len0, boolean[] changed1, int len1);
     }
 
     /**
@@ -371,8 +371,8 @@ public class GNUDiff {
 
     static class ReverseScript
             implements ScriptBuilder {
-        public List<DiffInfo> build_script(final boolean[] changed0, int len0, final boolean[] changed1, int len1) {
-            List<DiffInfo> script = new ArrayList<DiffInfo>();
+        public List<DiffEntry> build_script(final boolean[] changed0, int len0, final boolean[] changed1, int len1) {
+            List<DiffEntry> script = new ArrayList<DiffEntry>();
             int i0 = 0, i1 = 0;
             while (i0 < len0 || i1 < len1) {
                 if (changed0[1 + i0] || changed1[1 + i1]) {
@@ -385,7 +385,7 @@ public class GNUDiff {
                         ++i1;
 
                     /* Record this change. */
-                    script.add(new DiffInfo(line0, line1, i0 - line0, i1 - line1));
+                    script.add(new DiffEntry(line0, line1, i0 - line0, i1 - line1));
                 }
 
                 /* We have reached lines in the two files that match each other. */
@@ -403,8 +403,8 @@ public class GNUDiff {
          * Scan the tables of which lines are inserted and deleted, producing an edit script in
          * forward order.
          */
-        public List<DiffInfo> build_script(final boolean[] changed0, int len0, final boolean[] changed1, int len1) {
-            List<DiffInfo> script = new ArrayList<DiffInfo>();
+        public List<DiffEntry> build_script(final boolean[] changed0, int len0, final boolean[] changed1, int len1) {
+            List<DiffEntry> script = new ArrayList<DiffEntry>();
             int i0 = len0, i1 = len1;
 
             while (i0 >= 0 || i1 >= 0) {
@@ -418,7 +418,7 @@ public class GNUDiff {
                         --i1;
 
                     /* Record this change. */
-                    script.add(new DiffInfo(i0, i1, line0 - i0, line1 - i1));
+                    script.add(new DiffEntry(i0, i1, line0 - i0, line1 - i1));
                 }
 
                 /* We have reached lines in the two files that match each other. */
@@ -436,7 +436,7 @@ public class GNUDiff {
     /*
      * Report the differences of two files. DEPTH is the current directory depth.
      */
-    public final List<DiffInfo> diff_2(final boolean reverse) {
+    public final List<DiffEntry> diff_2(final boolean reverse) {
         return diff(reverse ? forwardScript : reverseScript);
     }
 
@@ -450,7 +450,7 @@ public class GNUDiff {
      *            an object to build the script from change flags
      * @return the head of a list of changes
      */
-    public List<DiffInfo> diff(final ScriptBuilder bld) {
+    public List<DiffEntry> diff(final ScriptBuilder bld) {
 
         /*
          * Some lines are obviously insertions or deletions because they don't match anything.

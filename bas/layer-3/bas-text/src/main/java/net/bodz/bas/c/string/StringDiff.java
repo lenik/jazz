@@ -1,21 +1,25 @@
-package net.bodz.bas.text.diff;
+package net.bodz.bas.c.string;
 
 import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.text.diff.DiffComparators;
+import net.bodz.bas.text.diff.DiffEntry;
+import net.bodz.bas.text.diff.IDiffComparator;
+import net.bodz.bas.text.diff.IDiffFormat;
 
 public class StringDiff {
 
-    public static void diff(List<?> a, List<?> b, IPrintOut out, DiffFormat format) {
-        DiffComparator alg = DiffComparators.gnudiff;
-        List<DiffInfo> diffs = alg.diffCompare(a, b);
-        format.format(a, b, diffs, out);
+    public static void diff(List<?> a, List<?> b, IPrintOut out, IDiffFormat format) {
+        IDiffComparator alg = DiffComparators.gnudiff;
+        List<DiffEntry> diffs = alg.compareDiff(a, b);
+        format.printDiffs(out, a, b, diffs);
     }
 
     public static void diff(List<?> a, List<?> b, IPrintOut out) {
-        diff(a, b, out, DiffFormats.Simdiff);
+        diff(a, b, out, IDiffFormat.SIMPLE);
     }
 
     public static String diff(List<?> a, List<?> b) {

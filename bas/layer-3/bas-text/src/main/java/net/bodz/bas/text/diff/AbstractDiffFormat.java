@@ -4,15 +4,15 @@ import java.util.List;
 
 import net.bodz.bas.sio.IPrintOut;
 
-public abstract class _DiffFormat
-        implements DiffFormat {
+public abstract class AbstractDiffFormat
+        implements IDiffFormat {
 
     protected List<?> al;
     protected List<?> bl;
     protected IPrintOut out;
 
     @Override
-    public synchronized void format(List<?> al, List<?> bl, List<DiffInfo> diffs, IPrintOut out) {
+    public synchronized void printDiffs(IPrintOut out, List<?> al, List<?> bl, List<DiffEntry> diffs) {
         assert al != null;
         assert bl != null;
         assert diffs != null;
@@ -31,9 +31,9 @@ public abstract class _DiffFormat
         this.out = null;
     }
 
-    protected void formatHunk(List<DiffInfo> diffs, int off, int len) {
+    protected void formatHunk(List<DiffEntry> diffs, int off, int len) {
         while (len-- > 0) {
-            DiffInfo diff = diffs.get(off++);
+            DiffEntry diff = diffs.get(off++);
             for (int d = 0; d < diff.deleted; d++)
                 edit0('-', diff.index0 + d);
             for (int i = 0; i < diff.inserted; i++)

@@ -2,15 +2,12 @@ package net.bodz.bas.text.diff;
 
 import net.bodz.bas.traits.AbstractCommonTraits;
 
-/**
- * @test {@link DiffFormatTraitsTest}
- */
 public class DiffFormatTraits
-        extends AbstractCommonTraits<DiffFormat> {
+        extends AbstractCommonTraits<IDiffFormat> {
 
     public DiffFormatTraits() {
-        super(DiffFormat.class);
-        addStaticFieldsToStore(DiffFormats.class);
+        super(IDiffFormat.class);
+        addStaticFieldsToStore(IDiffFormat.class);
     }
 
     @Override

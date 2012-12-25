@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffEntry;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint.Base;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint.ContextPrint;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint.EdPrint;
@@ -58,7 +58,7 @@ public class DiffPrintTest {
         }
         boolean reverse = style == 'e';
         d.heuristic = true;
-        List<DiffInfo> script = d.diff_2(reverse);
+        List<DiffEntry> script = d.diff_2(reverse);
         if (script == null)
             System.err.println("No differences");
         else {

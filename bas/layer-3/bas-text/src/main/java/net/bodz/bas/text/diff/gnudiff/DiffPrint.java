@@ -7,7 +7,7 @@ import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.fn.legacy.Pred1;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffEntry;
 
 /**
  * A simple framework for printing change lists produced by <code>Diff</code>.
@@ -59,7 +59,7 @@ public class DiffPrint {
          * PRINTFUN takes a subscript which belongs together (with a null link at the end) and
          * prints it.
          */
-        public void print_script(List<DiffInfo> script) {
+        public void print_script(List<DiffEntry> script) {
             int i = 0;
             while (i < script.size()) {
                 int end = hunkfun(script, i);
@@ -72,7 +72,7 @@ public class DiffPrint {
          * the start of the tail.
          */
 
-        protected int hunkfun(List<DiffInfo> changes, int start) {
+        protected int hunkfun(List<DiffEntry> changes, int start) {
             return start + 1;
         }
 
@@ -91,19 +91,19 @@ public class DiffPrint {
          * are set to 0.
          */
 
-        protected void analyze_hunk(List<DiffInfo> list, int start, int end) {
+        protected void analyze_hunk(List<DiffEntry> list, int start, int end) {
             int f0, l0 = 0, f1, l1 = 0, show_from = 0, show_to = 0;
             int i;
             boolean nontrivial = (ignore == null);
 
             show_from = show_to = 0;
 
-            DiffInfo hunk = list.get(start);
+            DiffEntry hunk = list.get(start);
             f0 = hunk.index0;
             f1 = hunk.index1;
 
             while (start < end) {
-                DiffInfo next = list.get(start);
+                DiffEntry next = list.get(start);
                 l0 = next.index0 + next.deleted - 1;
                 l1 = next.index1 + next.inserted - 1;
                 show_from += next.deleted;
@@ -137,7 +137,7 @@ public class DiffPrint {
         protected void print_header(String filea, String fileb) {
         }
 
-        protected abstract void print_hunk(List<DiffInfo> list, int start, int end);
+        protected abstract void print_hunk(List<DiffEntry> list, int start, int end);
 
         protected void print_1_line(String pre, Object linbuf) {
             outfile.println(pre + linbuf.toString());
@@ -187,7 +187,7 @@ public class DiffPrint {
          */
 
         @Override
-        protected void print_hunk(List<DiffInfo> list, int start, int end) {
+        protected void print_hunk(List<DiffEntry> list, int start, int end) {
             /* Determine range of line numbers involved in each file. */
             analyze_hunk(list, start, end);
             if (deletes == 0 && inserts == 0)
@@ -227,7 +227,7 @@ public class DiffPrint {
 
         /** Print a hunk of an ed diff */
         @Override
-        protected void print_hunk(List<DiffInfo> list, int start, int end) {
+        protected void print_hunk(List<DiffEntry> list, int start, int end) {
 
             /* Determine range of line numbers involved in each file. */
             analyze_hunk(list, start, end);
@@ -314,7 +314,7 @@ public class DiffPrint {
         }
 
         @Override
-        protected void print_hunk(List<DiffInfo> list, int start, int end) {
+        protected void print_hunk(List<DiffEntry> list, int start, int end) {
 
             /* Determine range of line numbers involved in each file. */
 
@@ -351,7 +351,7 @@ public class DiffPrint {
                      * Skip past changes that apply (in file 0) only to lines before line I.
                      */
 
-                    DiffInfo next = list.get(off);
+                    DiffEntry next = list.get(off);
                     while (off < end && next.index0 + next.deleted <= i)
                         next = list.get(++off);
 
@@ -381,7 +381,7 @@ public class DiffPrint {
                      * Skip past changes that apply (in file 1) only to lines before line I.
                      */
 
-                    DiffInfo next = list.get(off);
+                    DiffEntry next = list.get(off);
                     while (off < end && next.index1 + next.inserted <= i)
                         next = list.get(++off);
 
@@ -432,7 +432,7 @@ public class DiffPrint {
         }
 
         @Override
-        protected void print_hunk(List<DiffInfo> list, int start, int end) {
+        protected void print_hunk(List<DiffEntry> list, int start, int end) {
             /* Determine range of line numbers involved in each file. */
             analyze_hunk(list, start, end);
 
@@ -478,7 +478,7 @@ public class DiffPrint {
                 } else {
                     /* For each difference, first output the deleted part. */
 
-                    DiffInfo next = list.get(start++);
+                    DiffEntry next = list.get(start++);
                     int k = next.deleted;
                     while (k-- > 0) {
                         outfile.print('-');
