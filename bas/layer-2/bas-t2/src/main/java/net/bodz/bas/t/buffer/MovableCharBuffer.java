@@ -1,9 +1,14 @@
 package net.bodz.bas.t.buffer;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.Arrays;
 
 import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.sio.ICharIn;
+import net.bodz.bas.sio.ICharOut;
 
 public class MovableCharBuffer
         implements IMovableBuffer {
@@ -166,6 +171,26 @@ public class MovableCharBuffer
     @Override
     public synchronized String toString() {
         return new String(buf, start, end - start);
+    }
+
+    public synchronized void writeTo(Writer out)
+            throws IOException {
+        out.write(buf, start, end - start);
+    }
+
+    public synchronized void writeTo(ICharOut out)
+            throws IOException {
+        out.write(buf, start, end - start);
+    }
+
+    public synchronized int readFrom(Reader in)
+            throws IOException {
+        return in.read(buf, start, end - start);
+    }
+
+    public synchronized int readFrom(ICharIn in)
+            throws IOException {
+        return in.read(buf, start, end - start);
     }
 
 }
