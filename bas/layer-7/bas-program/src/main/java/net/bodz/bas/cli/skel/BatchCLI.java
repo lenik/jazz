@@ -1,16 +1,23 @@
 package net.bodz.bas.cli.skel;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
 import net.bodz.bas.db.stat.StatNode;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.builtin.InputStreamSource;
+import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.bas.vfs.context.VFSColos;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.util.find.FileFinder;
 import net.bodz.bas.vfs.util.find.FileFoundEvent;
@@ -124,7 +131,10 @@ public abstract class BatchCLI
     // @ParseBy(GetInstanceParser.class)
     Comparator<IFile> sortComparator;
 
-    StatNode statRoot;
+    private IFile _contextFile;
+    private IPath _contextPath;
+    private String _tmpPrefix = getClass().getSimpleName() + "-";
+    private StatNode _statRoot;
 
     class DefaultFileFilter
             implements IFileFilter {
@@ -168,13 +178,10 @@ public abstract class BatchCLI
 
         for (String arg : expandWildcards(args)) {
             IFile argFile = VFS.resolve(arg);
+            setContextFile(argFile);
 
             for (IFile childFile : traverse(argFile)) {
-                IPath childRelativePath = childFile.getPath().getRelativePathTo(argFile.getPath());
-
-                String filename = arg + "/" + childRelativePath.toString();
-
-                FileHandler handler = beginFile(filename);
+                FileHandler handler = beginFile(childFile);
                 try {
                     processFile(handler);
                 } catch (Exception exception) {
@@ -206,41 +213,74 @@ public abstract class BatchCLI
     protected void _fileFound(FileFoundEvent event) {
     }
 
-    private IFile contextFile;
-    private String _tmpPrefix = getClass().getSimpleName();
-
-    protected IFile getContextFile() {
-        return contextFile;
+    IFile getContextFile() {
+        return _contextFile;
     }
 
-    protected synchronized FileHandler beginFile(String fileName) {
-        IFile cwd = VFSColos.workdir.get();
-        IFile file = cwd.resolve(fileName);
+    IPath getContextPath() {
+        return _contextPath;
+    }
 
-        if (contextFile != null)
-            throw new IllegalStateException("beginFile/endFile couldn't be nested.");
-        contextFile = file;
+    void setContextFile(IFile contextFile) {
+        if (contextFile == null) {
+            this._contextFile = null;
+            this._contextPath = null;
+        } else {
+            this._contextFile = contextFile;
+            this._contextPath = contextFile.getPath();
+        }
+    }
 
-        FileHandler handler = new FileHandler(fileName, file);
+    protected String getPathSpecToContext(IFile file) {
+        IPath _pathSpec = file.getPath().getRelativePathTo(_contextPath);
+        String pathSpec = _pathSpec.toString();
+        return pathSpec;
+    }
+
+    protected synchronized FileHandler beginFile(IFile file) {
+        String pathSpec = getPathSpecToContext(file);
+
+        FileHandler handler = new FileHandler(pathSpec, file, null);
         handler.setTmpPrefix(_tmpPrefix);
+
         return handler;
     }
 
     protected synchronized void endFile(FileHandler handler) {
-        if (contextFile != null)
-            throw new IllegalStateException("endFile without beginFile.");
-
-        try {
-            statRoot.resolveCounter("...");
-            if (handler.isErrored() && !errorContinue) {
-            }
-
-        } finally {
-            contextFile = null;
+        _statRoot.resolveCounter("...");
+        if (handler.isErrored() && !errorContinue) {
         }
     }
 
-    protected abstract void processFile(FileHandler handler)
+    public abstract void processFile(FileHandler handler)
             throws Exception;
+
+    public void process(IStreamInputSource inputSource, IStreamOutputTarget outputTarget)
+            throws Exception {
+        FileHandler handler = new FileHandler(inputSource, outputTarget);
+        processFile(handler);
+    }
+
+    public void processStream(InputStream in, OutputStream out)
+            throws Exception {
+        InputStreamSource inputSource = new InputStreamSource(in);
+        OutputStreamTarget outputTarget = new OutputStreamTarget(out);
+        process(inputSource, outputTarget);
+    }
+
+    /**
+     * The I/O stream rewrite implementation.
+     * 
+     * @return Whether modification to input is made. If any byte written to the output is different
+     *         to the input, this method should returns <code>true</code>. If modification is
+     *         unknown, returns <code>null</code>.
+     */
+    @Deprecated
+    public Boolean processImpl(InputStream in, OutputStream out)
+            throws IOException {
+        // FileHandler handler = new FileHandler(null, sourceFile, targetFile);
+        // handler.save();
+        throw new NotImplementedException();
+    }
 
 }

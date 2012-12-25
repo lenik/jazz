@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.io.resource.builtin.ByteArrayResource;
+import net.bodz.bas.io.resource.builtin.BytesResource;
 
 public class Fix_BatBBTest {
 
@@ -34,9 +36,10 @@ public class Fix_BatBBTest {
         System.out.println("------------------------------");
 
         byte[] inputData = src.getBytes();
-        program.processFile(in, out);
+        BytesResource target = new BytesResource();
+        program.process(new ByteArrayResource(inputData), target);
 
-        String result = new String(out.toByteArray());
+        String result = target.getBuffer().toString();
         result = result.replace(' ', '_');
         System.out.println(result);
         System.out.println("------------------------------");

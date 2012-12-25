@@ -2,6 +2,7 @@ package net.bodz.bas.cli.skel;
 
 import java.nio.charset.Charset;
 
+import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.diff.IDiffComparator;
@@ -24,35 +25,42 @@ public abstract class BatchEditCLI
     Charset outputEncoding = Charset.defaultCharset();
 
     /**
-     * put output files under this directory
+     * Put output files under this directory
      * 
      * @option -O =DIR
      */
     IFile outputDirectory;
 
     /**
-     * backup modified files with given extension
+     * Recreate directory structure in the output.
+     * 
+     * @option
+     */
+    boolean keepDirStruct;
+
+    /**
+     * Backup modified files with given extension
      * 
      * @option =.EXT default=.bak
      */
     String backupExtension;
 
     /**
-     * protected mode, don't modify any files
+     * Preview mode, don't modify any files
      * 
      * @option -P
      */
     boolean dryRun;
 
     /**
-     * force overwrite existing files, this includes --error-continue
+     * Force overwrite existing files, this includes --error-continue
      * 
-     * @option -f
+     * @option -f weak
      */
     boolean force;
 
     /**
-     * show diff between original and modified files, default using gnudiff.
+     * Show diff between original and modified files, default using gnudiff.
      * 
      * @option --diff =DIFF-ALG default=gnudiff
      */
@@ -73,24 +81,41 @@ public abstract class BatchEditCLI
     IPrintOut diffOutput = Stdio.cout;
 
     /**
-     * Diff between src/dst/out, when output to different file.
+     * Diff between src/tmp/dst.
      * 
      * @option
      */
     boolean diff3 = false;
 
     /**
-     * Diff between src/out rather then src/dst, only used when output directory is different.
+     * Diff between tmp/dst rather then src/tmp.
      * 
      * @option
      */
     boolean diffWithDest = false;
 
     @Override
-    protected FileHandler beginFile(String fileName) {
-        FileHandler handler = super.beginFile(fileName);
-        handler.setOutputDir(outputDirectory);
+    protected FileHandler beginFile(IFile file) {
+        FileHandler handler = super.beginFile(file);
+        String pathSpec = handler.getPathSpec();
+        IFile targetFile = getTargetFile(file, pathSpec);
+        handler.setTargetFile(targetFile);
         return handler;
+    }
+
+    protected IFile getTargetFile(IFile sourceFile, String pathSpec) {
+        IFile outputFile;
+        if (outputDirectory == null) {
+            return sourceFile;
+        } else {
+            if (keepDirStruct) {
+                outputFile = outputDirectory.resolve(pathSpec);
+            } else {
+                String baseName = StringPart.afterLast(pathSpec, "/", pathSpec);
+                outputFile = outputDirectory.resolve(baseName);
+            }
+        }
+        return outputFile;
     }
 
 }

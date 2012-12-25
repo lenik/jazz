@@ -30,9 +30,9 @@ public class Fix_BatBB
     char fillChar = ':';
 
     @Override
-    protected void processFile(FileHandler handler)
+    public void processFile(FileHandler handler)
             throws Exception {
-        OutputStream out = handler.getOutputFile().getOutputTarget().newOutputStream(); // options
+        OutputStream out = handler.openOutputStream();
 
         int start = 0; // out
 
@@ -69,7 +69,7 @@ public class Fix_BatBB
             }
         }
 
-        handler.commit();
+        handler.save();
     }
 
     boolean crossBlocks(int start, int end) {

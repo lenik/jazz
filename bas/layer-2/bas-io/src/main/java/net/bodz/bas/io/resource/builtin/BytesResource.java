@@ -2,6 +2,7 @@ package net.bodz.bas.io.resource.builtin;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
@@ -88,6 +89,20 @@ public class BytesResource
             throw new IllegalStateException("Resource isn't created, yet.");
         else
             return new MovableByteBufferByteIn(buffer);
+    }
+
+    public byte[] toByteArray() {
+        return buffer.copy();
+    }
+
+    public String toString(String charset)
+            throws UnsupportedEncodingException {
+        return buffer.toString(charset);
+    }
+
+    @Override
+    public String toString() {
+        return buffer.toString();
     }
 
 }
