@@ -2,47 +2,47 @@ package net.bodz.bas.gui.css3;
 
 import java.io.Serializable;
 
-import net.bodz.bas.i18n.unit.Measure;
+import net.bodz.bas.i18n.unit.std.LengthMeasure;
 
 public class MeasureBox
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    Measure top;
-    Measure right;
-    Measure bottom;
-    Measure left;
+    LengthMeasure top;
+    LengthMeasure right;
+    LengthMeasure bottom;
+    LengthMeasure left;
 
-    public Measure getTop() {
+    public LengthMeasure getTop() {
         return top;
     }
 
-    public void setTop(Measure top) {
+    public void setTop(LengthMeasure top) {
         this.top = top;
     }
 
-    public Measure getRight() {
+    public LengthMeasure getRight() {
         return right;
     }
 
-    public void setRight(Measure right) {
+    public void setRight(LengthMeasure right) {
         this.right = right;
     }
 
-    public Measure getBottom() {
+    public LengthMeasure getBottom() {
         return bottom;
     }
 
-    public void setBottom(Measure bottom) {
+    public void setBottom(LengthMeasure bottom) {
         this.bottom = bottom;
     }
 
-    public Measure getLeft() {
+    public LengthMeasure getLeft() {
         return left;
     }
 
-    public void setLeft(Measure left) {
+    public void setLeft(LengthMeasure left) {
         this.left = left;
     }
 
