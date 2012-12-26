@@ -9,9 +9,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.flow.unit.GenericUnit_11;
 import net.bodz.bas.flow.utils.WhatIf;
-import net.bodz.bas.text.codec.builtin.HexCodec;
 
 public class DecodeUnitTest
         extends Assert {

@@ -14,10 +14,10 @@ import javax.crypto.spec.PBEKeySpec;
 
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
+import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.SystemException;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.text.codec.builtin.HexCodec;
 import net.bodz.redist.obfuz.seals.IdSeededSequence;
 import net.bodz.redist.obfuz.seals.Sequence;
 import net.bodz.redist.obfuz.sysid.SysIdProvider;

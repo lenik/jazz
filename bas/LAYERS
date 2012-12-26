@@ -25,7 +25,7 @@ layer-3/ 工具和杂项
     bas-t3
     bas-text
     bas-text-lr
-    bas-memory
+    bas-data
     bas-c3
     bas-m2
 
@@ -48,7 +48,6 @@ layer-7/ 应用框架
     bas-vcs
 
 incubator/
-    bas-srt
 
 build/
     bas-uber

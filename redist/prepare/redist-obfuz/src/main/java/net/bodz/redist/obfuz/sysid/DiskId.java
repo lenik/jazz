@@ -1,8 +1,8 @@
 package net.bodz.redist.obfuz.sysid;
 
+import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.SystemException;
-import net.bodz.bas.text.codec.builtin.HexCodec;
 
 /**
  * 
