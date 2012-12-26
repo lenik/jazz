@@ -100,7 +100,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-bean</artifactId>
+            <artifactId>bas-c5</artifactId>
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -150,7 +150,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-xml</artifactId>
+            <artifactId>bas-c5</artifactId>
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

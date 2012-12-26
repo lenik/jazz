@@ -37,7 +37,7 @@
     bas-crypto
     bas-data
     bas-srt
-    bas-bean
+    bas-c5
     bas-database
     bas-flow
     bas-i18n
@@ -48,5 +48,5 @@
     bas-potato
     bas-gui
     bas-vfs
-    bas-xml
+    bas-c5
 

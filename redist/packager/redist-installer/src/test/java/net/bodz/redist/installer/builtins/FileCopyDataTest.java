@@ -2,7 +2,7 @@ package net.bodz.redist.installer.builtins;
 
 import org.junit.Test;
 
-import net.bodz.bas.xml.XMLs;
+import net.bodz.bas.c.xml.XMLs;
 
 public class FileCopyDataTest {
 

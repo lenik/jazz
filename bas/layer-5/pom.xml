@@ -20,7 +20,6 @@
         <module>bas-potato</module>
         <module>bas-repr</module>
         <module>bas-vfs</module>
-        <module>bas-xml</module>
     </modules>
     <build>
         <plugins>
