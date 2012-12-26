@@ -10,7 +10,7 @@ import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.gui.css3.property.*;
 import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.i18n.unit.Measure;
+import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 
 public abstract class MappedCss3StyleClass
@@ -36,7 +36,7 @@ public abstract class MappedCss3StyleClass
             return OffsetType.length;
     }
 
-    protected Measure getOffsetProperty(String key, Measure inherited, boolean inheritByDefault) {
+    protected LengthMeasure getOffsetProperty(String key, LengthMeasure inherited, boolean inheritByDefault) {
         String str = getProperty(key);
         if (str == null)
             return inheritByDefault ? inherited : null;
@@ -46,15 +46,15 @@ public abstract class MappedCss3StyleClass
         switch (str) {
         case "auto":
         case "none":
-            return Measure.NaN;
+            return LengthMeasure.NaN;
         }
 
         if (str.endsWith("%"))
             str = StringPart.chop(str).trim();
-        return Measure.parse(str);
+        return LengthMeasure.parseOrNaN(str);
     }
 
-    protected void setOffsetProperty(String key, OffsetType offsetType, Measure offset) {
+    protected void setOffsetProperty(String key, OffsetType offsetType, LengthMeasure offset) {
         Object property = null;
         if (offsetType != null)
             switch (offsetType) {
@@ -92,22 +92,22 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getWidth() {
+    public LengthMeasure getWidth() {
         return getOffsetProperty("width", getParent().getWidth(), false);
     }
 
     @Override
-    public Measure getHeight() {
+    public LengthMeasure getHeight() {
         return getOffsetProperty("height", getParent().getHeight(), false);
     }
 
     @Override
-    public void setWidth(OffsetType widthType, Measure width) {
+    public void setWidth(OffsetType widthType, LengthMeasure width) {
         setOffsetProperty("width", widthType, width);
     }
 
     @Override
-    public void setHeight(OffsetType heightType, Measure height) {
+    public void setHeight(OffsetType heightType, LengthMeasure height) {
         setOffsetProperty("height", heightType, height);
     }
 
@@ -132,44 +132,44 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getTop() {
+    public LengthMeasure getTop() {
         return getOffsetProperty("top", getParent().getTop(), false);
     }
 
     @Override
-    public Measure getRight() {
+    public LengthMeasure getRight() {
         return getOffsetProperty("right", getParent().getRight(), false);
 
     }
 
     @Override
-    public Measure getBottom() {
+    public LengthMeasure getBottom() {
         return getOffsetProperty("bottom", getParent().getBottom(), false);
     }
 
     @Override
-    public Measure getLeft() {
+    public LengthMeasure getLeft() {
         return getOffsetProperty("left", getParent().getLeft(), false);
 
     }
 
     @Override
-    public void setTop(OffsetType topType, Measure top) {
+    public void setTop(OffsetType topType, LengthMeasure top) {
         setOffsetProperty("top", topType, top);
     }
 
     @Override
-    public void setRight(OffsetType rightType, Measure right) {
+    public void setRight(OffsetType rightType, LengthMeasure right) {
         setOffsetProperty("right", rightType, right);
     }
 
     @Override
-    public void setBottom(OffsetType bottomType, Measure bottom) {
+    public void setBottom(OffsetType bottomType, LengthMeasure bottom) {
         setOffsetProperty("bottom", bottomType, bottom);
     }
 
     @Override
-    public void setLeft(OffsetType leftType, Measure left) {
+    public void setLeft(OffsetType leftType, LengthMeasure left) {
         setOffsetProperty("left", leftType, left);
     }
 
@@ -194,42 +194,42 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getMinWidth() {
+    public LengthMeasure getMinWidth() {
         return getOffsetProperty("min-width", getParent().getMinWidth(), false);
     }
 
     @Override
-    public Measure getMaxWidth() {
+    public LengthMeasure getMaxWidth() {
         return getOffsetProperty("max-width", getParent().getMaxWidth(), false);
     }
 
     @Override
-    public Measure getMinHeight() {
+    public LengthMeasure getMinHeight() {
         return getOffsetProperty("min-height", getParent().getMinHeight(), false);
     }
 
     @Override
-    public Measure getMaxHeight() {
+    public LengthMeasure getMaxHeight() {
         return getOffsetProperty("max-height", getParent().getMaxHeight(), false);
     }
 
     @Override
-    public void setMinWidth(OffsetType minWidthType, Measure minWidth) {
+    public void setMinWidth(OffsetType minWidthType, LengthMeasure minWidth) {
         setOffsetProperty("min-width", minWidthType, minWidth);
     }
 
     @Override
-    public void setMaxWidth(OffsetType maxWidthType, Measure maxWidth) {
+    public void setMaxWidth(OffsetType maxWidthType, LengthMeasure maxWidth) {
         setOffsetProperty("max-width", maxWidthType, maxWidth);
     }
 
     @Override
-    public void setMinHeight(OffsetType minHeightType, Measure minHeight) {
+    public void setMinHeight(OffsetType minHeightType, LengthMeasure minHeight) {
         setOffsetProperty("min-height", minHeightType, minHeight);
     }
 
     @Override
-    public void setMaxHeight(OffsetType maxHeightType, Measure maxHeight) {
+    public void setMaxHeight(OffsetType maxHeightType, LengthMeasure maxHeight) {
         setOffsetProperty("max-height", maxHeightType, maxHeight);
     }
 
@@ -381,7 +381,7 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getBackgroundPositionX() {
+    public LengthMeasure getBackgroundPositionX() {
         String str = getProperty("background-position");
         if (str == null || "inherited".equals(str))
             return getParent().getBackgroundPositionX();
@@ -393,23 +393,23 @@ public abstract class MappedCss3StyleClass
         case "right":
         case "center":
         case "":
-            return Measure.NaN;
+            return LengthMeasure.NaN;
         }
 
         if (str.endsWith("%"))
             str = StringPart.chop(str);
-        return Measure.parse(str);
+        return LengthMeasure.parseOrNaN(str);
     }
 
     @Override
-    public Measure getBackgroundPositionY() {
+    public LengthMeasure getBackgroundPositionY() {
         String str = getProperty("background-position");
         if (str == null || "inherited".equals(str))
             return getParent().getBackgroundPositionY();
 
         str = StringPart.after(str, ';', null);
         if (str == null)
-            return Measure.NaN;
+            return LengthMeasure.NaN;
         str = str.trim();
 
         switch (str) {
@@ -417,17 +417,18 @@ public abstract class MappedCss3StyleClass
         case "bottom":
         case "center":
         case "":
-            return Measure.NaN;
+            return LengthMeasure.NaN;
         }
 
         if (str.endsWith("%"))
             str = StringPart.chop(str);
-        return Measure.parse(str);
+        return LengthMeasure.parseOrNaN(str);
     }
 
     @Override
-    public void setBackgroundPosition(BackgroundPositionType backgroundPositionXType, Measure backgroundPositionX,
-            BackgroundPositionType backgroundPositionYType, Measure backgroundPositionY) {
+    public void setBackgroundPosition(BackgroundPositionType backgroundPositionXType,
+            LengthMeasure backgroundPositionX, BackgroundPositionType backgroundPositionYType,
+            LengthMeasure backgroundPositionY) {
         String xstr = null, ystr = null;
         if (backgroundPositionXType != null)
             switch (backgroundPositionXType) {
@@ -516,7 +517,7 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getBorderSpacingHorizontal() {
+    public LengthMeasure getBorderSpacingHorizontal() {
         String str = getProperty("border-spacing");
         if (str == null)
             return null;
@@ -524,11 +525,11 @@ public abstract class MappedCss3StyleClass
             return getParent().getBorderSpacingHorizontal();
         String[] array = str.split("\\s+");
         String hstr = array[0];
-        return Measure.parse(hstr);
+        return LengthMeasure.parseOrNaN(hstr);
     }
 
     @Override
-    public Measure getBorderSpacingVertical() {
+    public LengthMeasure getBorderSpacingVertical() {
         String str = getProperty("border-spacing");
         if (str == null)
             return null;
@@ -540,11 +541,11 @@ public abstract class MappedCss3StyleClass
             vstr = array[1];
         else
             vstr = array[0];
-        return Measure.parse(vstr);
+        return LengthMeasure.parseOrNaN(vstr);
     }
 
     @Override
-    public void setBorderSpacing(Measure borderSpacingHorizontal, Measure borderSpacingVertical) {
+    public void setBorderSpacing(LengthMeasure borderSpacingHorizontal, LengthMeasure borderSpacingVertical) {
         Object property = null;
         if (borderSpacingHorizontal != null) {
             String str = borderSpacingHorizontal.toString();
@@ -704,12 +705,12 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getFontSize() {
+    public LengthMeasure getFontSize() {
         return null;
     }
 
     @Override
-    public void setFontSize(FontSizeType fontSizeType, Measure fontSize) {
+    public void setFontSize(FontSizeType fontSizeType, LengthMeasure fontSize) {
     }
 
     @Override
@@ -765,20 +766,20 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getLetterSpacing() {
+    public LengthMeasure getLetterSpacing() {
         String str = getProperty("letter-spacing");
         if (str == null || "inherit".equals(str))
             return getParent().getLetterSpacing();
         switch (str) {
         case "normal":
-            return Measure.NaN;
+            return LengthMeasure.NaN;
         default:
-            return Measure.parse(str);
+            return LengthMeasure.parseOrNaN(str);
         }
     }
 
     @Override
-    public void setLetterSpacing(LetterSpacingType letterSpacingType, Measure letterSpacing) {
+    public void setLetterSpacing(LetterSpacingType letterSpacingType, LengthMeasure letterSpacing) {
         Object property = null;
         if (letterSpacingType != null)
             switch (letterSpacingType) {
@@ -814,24 +815,24 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getLineHeight() {
+    public LengthMeasure getLineHeight() {
         String str = getProperty("line-height");
         if (str == null || "inherit".equals(str))
             return getParent().getLineHeight();
 
         switch (str) {
         case "normal":
-            return Measure.NaN;
+            return LengthMeasure.NaN;
         }
 
         if (str.endsWith("%"))
             str = StringPart.chop(str);
 
-        return Measure.parse(str);
+        return LengthMeasure.parseOrNaN(str);
     }
 
     @Override
-    public void setLineHeight(LineHeightType lineHeightType, Measure lineHeight) {
+    public void setLineHeight(LineHeightType lineHeightType, LengthMeasure lineHeight) {
         Object property = null;
         if (lineHeightType != null)
             switch (lineHeightType) {
@@ -903,17 +904,17 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getTextIndent() {
+    public LengthMeasure getTextIndent() {
         String str = getProperty("text-indent");
         if (str == null || "inherit".equals(str))
             return getParent().getTextIndent();
         if (str.endsWith("%"))
             str = StringPart.chop(str);
-        return Measure.parse(str);
+        return LengthMeasure.parseOrNaN(str);
     }
 
     @Override
-    public void setTextIndent(TextIndentType textIndentType, Measure textIndent) {
+    public void setTextIndent(TextIndentType textIndentType, LengthMeasure textIndent) {
         Object property = null;
         if (textIndentType != null)
             switch (textIndentType) {
@@ -971,7 +972,7 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getVerticalAlign() {
+    public LengthMeasure getVerticalAlign() {
         String str = getProperty("vertical-align");
         if (str == null)
             return null;
@@ -986,15 +987,15 @@ public abstract class MappedCss3StyleClass
         case "text-bottom":
         case "top":
         case "bottom":
-            return Measure.NaN;
+            return LengthMeasure.NaN;
         }
         if (str.endsWith("%"))
             str = StringPart.chop(str);
-        return Measure.parse(str);
+        return LengthMeasure.parseOrNaN(str);
     }
 
     @Override
-    public void setVerticalAlign(VerticalAlignType verticalAlignType, Measure verticalAlign) {
+    public void setVerticalAlign(VerticalAlignType verticalAlignType, LengthMeasure verticalAlign) {
         Object property = null;
         if (verticalAlignType != null)
             switch (verticalAlignType) {
@@ -1100,7 +1101,7 @@ public abstract class MappedCss3StyleClass
     }
 
     @Override
-    public Measure getWordSpacing() {
+    public LengthMeasure getWordSpacing() {
         String str = getProperty("word-spacing");
         if (str == null)
             return null;
@@ -1108,14 +1109,14 @@ public abstract class MappedCss3StyleClass
         case "inherit":
             return getParent().getWordSpacing();
         case "normal":
-            return Measure.NaN;
+            return LengthMeasure.NaN;
         default:
-            return Measure.parse(str);
+            return LengthMeasure.parseOrNaN(str);
         }
     }
 
     @Override
-    public void setWordSpacing(WordSpacingType wordSpacingType, Measure wordSpacing) {
+    public void setWordSpacing(WordSpacingType wordSpacingType, LengthMeasure wordSpacing) {
         Object property = null;
         switch (wordSpacingType) {
         case length:

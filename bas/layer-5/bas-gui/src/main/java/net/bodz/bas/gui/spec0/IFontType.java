@@ -8,7 +8,7 @@ import net.bodz.bas.gui.css3.property.FontUseMode;
 import net.bodz.bas.gui.css3.property.FontVariantMode;
 import net.bodz.bas.gui.css3.property.FontWeightMode;
 import net.bodz.bas.gui.css3.property.TextDecorationFlags;
-import net.bodz.bas.i18n.unit.Measure;
+import net.bodz.bas.i18n.unit.std.LengthMeasure;
 
 public interface IFontType
         extends Serializable {
@@ -25,9 +25,9 @@ public interface IFontType
 
     void setFontSizeType(FontSizeType fontSizeType);
 
-    Measure getFontSize();
+    LengthMeasure getFontSize();
 
-    void setFontSize(Measure fontSize);
+    void setFontSize(LengthMeasure fontSize);
 
     FontVariantMode getFontVariant();
 

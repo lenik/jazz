@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.bodz.bas.gui.css3.property.*;
 import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.i18n.unit.Measure;
+import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 
 public class StrictCss3StyleClass
@@ -14,26 +14,26 @@ public class StrictCss3StyleClass
 
     OffsetType widthType;
     OffsetType heightType;
-    Measure width;
-    Measure height;
+    LengthMeasure width;
+    LengthMeasure height;
 
     OffsetType topType;
     OffsetType rightType;
     OffsetType bottomType;
     OffsetType leftType;
-    Measure top;
-    Measure right;
-    Measure bottom;
-    Measure left;
+    LengthMeasure top;
+    LengthMeasure right;
+    LengthMeasure bottom;
+    LengthMeasure left;
 
     OffsetType minWidthType;
     OffsetType maxWidthType;
     OffsetType minHeightType;
     OffsetType maxHeightType;
-    Measure minWidth;
-    Measure maxWidth;
-    Measure minHeight;
-    Measure maxHeight;
+    LengthMeasure minWidth;
+    LengthMeasure maxWidth;
+    LengthMeasure minHeight;
+    LengthMeasure maxHeight;
 
     IColor color;
     // background: color || image || repeat || attachment || position.
@@ -44,15 +44,15 @@ public class StrictCss3StyleClass
     BackgroundAttachmentMode backgroundAttachment;
     BackgroundPositionType backgroundPositionXType;
     BackgroundPositionType backgroundPositionYType;
-    Measure backgroundPositionX;
-    Measure backgroundPositionY;
+    LengthMeasure backgroundPositionX;
+    LengthMeasure backgroundPositionY;
 
     MeasureBox margin;
     MeasureBox padding;
     BorderBox border;
     BorderCollapseMode borderCollapse;
-    Measure borderSpacingHorizontal;
-    Measure borderSpacingVertical;
+    LengthMeasure borderSpacingHorizontal;
+    LengthMeasure borderSpacingVertical;
     OutlineColorMode outlineColorType;
     Border outline;
 
@@ -69,26 +69,26 @@ public class StrictCss3StyleClass
     // font: (style || variant || weight) size [/lineheight family]
     String fontFamily;
     FontSizeType fontSizeType;
-    Measure fontSize;
+    LengthMeasure fontSize;
     FontStyleMode fontStyle;
     FontVariantMode fontVariant;
     FontWeightMode fontWeight;
     DirectionMode direction;
     LetterSpacingType letterSpacingType;
-    Measure letterSpacing;
+    LengthMeasure letterSpacing;
     LineHeightType lineHeightType;
-    Measure lineHeight;
+    LengthMeasure lineHeight;
     TextDecorationFlags textDecoration;
     TextTransformMode textTransform;
     TextIndentType textIndentType;
-    Measure textIndent;
+    LengthMeasure textIndent;
     TextAlignMode textAlign;
     VerticalAlignType verticalAlignType;
-    Measure verticalAlign;
+    LengthMeasure verticalAlign;
     UnicodeBidiMode unicodeBidi;
     WhiteSpaceMode whiteSpace;
     WordSpacingType wordSpacingType;
-    Measure wordSpacing;
+    LengthMeasure wordSpacing;
 
     ClipType clipType;
     String clip;
@@ -137,23 +137,23 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getWidth() {
+    public LengthMeasure getWidth() {
         return width;
     }
 
     @Override
-    public Measure getHeight() {
+    public LengthMeasure getHeight() {
         return height;
     }
 
     @Override
-    public void setWidth(OffsetType widthType, Measure width) {
+    public void setWidth(OffsetType widthType, LengthMeasure width) {
         this.widthType = widthType;
         this.width = width;
     }
 
     @Override
-    public void setHeight(OffsetType heightType, Measure height) {
+    public void setHeight(OffsetType heightType, LengthMeasure height) {
         this.heightType = heightType;
         this.height = height;
     }
@@ -179,45 +179,45 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getTop() {
+    public LengthMeasure getTop() {
         return top;
     }
 
     @Override
-    public Measure getRight() {
+    public LengthMeasure getRight() {
         return right;
     }
 
     @Override
-    public Measure getBottom() {
+    public LengthMeasure getBottom() {
         return bottom;
     }
 
     @Override
-    public Measure getLeft() {
+    public LengthMeasure getLeft() {
         return left;
     }
 
     @Override
-    public void setTop(OffsetType topType, Measure top) {
+    public void setTop(OffsetType topType, LengthMeasure top) {
         this.topType = topType;
         this.top = top;
     }
 
     @Override
-    public void setRight(OffsetType rightType, Measure right) {
+    public void setRight(OffsetType rightType, LengthMeasure right) {
         this.rightType = rightType;
         this.right = right;
     }
 
     @Override
-    public void setBottom(OffsetType bottomType, Measure bottom) {
+    public void setBottom(OffsetType bottomType, LengthMeasure bottom) {
         this.bottomType = bottomType;
         this.bottom = bottom;
     }
 
     @Override
-    public void setLeft(OffsetType leftType, Measure left) {
+    public void setLeft(OffsetType leftType, LengthMeasure left) {
         this.leftType = leftType;
         this.left = left;
     }
@@ -243,45 +243,45 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getMinWidth() {
+    public LengthMeasure getMinWidth() {
         return minWidth;
     }
 
     @Override
-    public Measure getMaxWidth() {
+    public LengthMeasure getMaxWidth() {
         return maxWidth;
     }
 
     @Override
-    public Measure getMinHeight() {
+    public LengthMeasure getMinHeight() {
         return minHeight;
     }
 
     @Override
-    public Measure getMaxHeight() {
+    public LengthMeasure getMaxHeight() {
         return maxHeight;
     }
 
     @Override
-    public void setMinWidth(OffsetType minWidthType, Measure minWidth) {
+    public void setMinWidth(OffsetType minWidthType, LengthMeasure minWidth) {
         this.minWidthType = minWidthType;
         this.minWidth = minWidth;
     }
 
     @Override
-    public void setMaxWidth(OffsetType maxWidthType, Measure maxWidth) {
+    public void setMaxWidth(OffsetType maxWidthType, LengthMeasure maxWidth) {
         this.maxWidthType = maxWidthType;
         this.maxWidth = maxWidth;
     }
 
     @Override
-    public void setMinHeight(OffsetType minHeightType, Measure minHeight) {
+    public void setMinHeight(OffsetType minHeightType, LengthMeasure minHeight) {
         this.minHeightType = minHeightType;
         this.minHeight = minHeight;
     }
 
     @Override
-    public void setMaxHeight(OffsetType maxHeightType, Measure maxHeight) {
+    public void setMaxHeight(OffsetType maxHeightType, LengthMeasure maxHeight) {
         this.maxHeightType = maxHeightType;
         this.maxHeight = maxHeight;
     }
@@ -353,18 +353,18 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getBackgroundPositionX() {
+    public LengthMeasure getBackgroundPositionX() {
         return backgroundPositionX;
     }
 
     @Override
-    public Measure getBackgroundPositionY() {
+    public LengthMeasure getBackgroundPositionY() {
         return backgroundPositionY;
     }
 
     @Override
-    public void setBackgroundPosition(BackgroundPositionType backgroundPositionXType, Measure backgroundPositionX,
-            BackgroundPositionType backgroundPositionYType, Measure backgroundPositionY) {
+    public void setBackgroundPosition(BackgroundPositionType backgroundPositionXType, LengthMeasure backgroundPositionX,
+            BackgroundPositionType backgroundPositionYType, LengthMeasure backgroundPositionY) {
         this.backgroundPositionXType = backgroundPositionXType;
         this.backgroundPositionX = backgroundPositionX;
         this.backgroundPositionYType = backgroundPositionYType;
@@ -412,17 +412,17 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getBorderSpacingHorizontal() {
+    public LengthMeasure getBorderSpacingHorizontal() {
         return borderSpacingHorizontal;
     }
 
     @Override
-    public Measure getBorderSpacingVertical() {
+    public LengthMeasure getBorderSpacingVertical() {
         return borderSpacingVertical;
     }
 
     @Override
-    public void setBorderSpacing(Measure borderSpacingHorizontal, Measure borderSpacingVertical) {
+    public void setBorderSpacing(LengthMeasure borderSpacingHorizontal, LengthMeasure borderSpacingVertical) {
         this.borderSpacingHorizontal = borderSpacingHorizontal;
         this.borderSpacingVertical = borderSpacingVertical;
     }
@@ -549,12 +549,12 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getFontSize() {
+    public LengthMeasure getFontSize() {
         return fontSize;
     }
 
     @Override
-    public void setFontSize(FontSizeType fontSizeType, Measure fontSize) {
+    public void setFontSize(FontSizeType fontSizeType, LengthMeasure fontSize) {
         this.fontSizeType = fontSizeType;
         this.fontSize = fontSize;
     }
@@ -605,12 +605,12 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getLetterSpacing() {
+    public LengthMeasure getLetterSpacing() {
         return letterSpacing;
     }
 
     @Override
-    public void setLetterSpacing(LetterSpacingType letterSpacingType, Measure letterSpacing) {
+    public void setLetterSpacing(LetterSpacingType letterSpacingType, LengthMeasure letterSpacing) {
         this.letterSpacingType = letterSpacingType;
         this.letterSpacing = letterSpacing;
     }
@@ -621,12 +621,12 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getLineHeight() {
+    public LengthMeasure getLineHeight() {
         return lineHeight;
     }
 
     @Override
-    public void setLineHeight(LineHeightType lineHeightType, Measure lineHeight) {
+    public void setLineHeight(LineHeightType lineHeightType, LengthMeasure lineHeight) {
         this.lineHeightType = lineHeightType;
         this.lineHeight = lineHeight;
     }
@@ -657,12 +657,12 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getTextIndent() {
+    public LengthMeasure getTextIndent() {
         return textIndent;
     }
 
     @Override
-    public void setTextIndent(TextIndentType textIndentType, Measure textIndent) {
+    public void setTextIndent(TextIndentType textIndentType, LengthMeasure textIndent) {
         this.textIndentType = textIndentType;
         this.textIndent = textIndent;
     }
@@ -683,12 +683,12 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getVerticalAlign() {
+    public LengthMeasure getVerticalAlign() {
         return verticalAlign;
     }
 
     @Override
-    public void setVerticalAlign(VerticalAlignType verticalAlignType, Measure verticalAlign) {
+    public void setVerticalAlign(VerticalAlignType verticalAlignType, LengthMeasure verticalAlign) {
         this.verticalAlignType = verticalAlignType;
         this.verticalAlign = verticalAlign;
     }
@@ -719,12 +719,12 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public Measure getWordSpacing() {
+    public LengthMeasure getWordSpacing() {
         return wordSpacing;
     }
 
     @Override
-    public void setWordSpacing(WordSpacingType wordSpacingType, Measure wordSpacing) {
+    public void setWordSpacing(WordSpacingType wordSpacingType, LengthMeasure wordSpacing) {
         this.wordSpacingType = wordSpacingType;
         this.wordSpacing = wordSpacing;
     }

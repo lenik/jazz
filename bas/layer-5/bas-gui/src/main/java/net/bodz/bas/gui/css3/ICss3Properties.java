@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.bodz.bas.gui.css3.property.*;
 import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.i18n.unit.Measure;
+import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 
 /**
@@ -24,13 +24,13 @@ public interface ICss3Properties {
 
     OffsetType getHeightType();
 
-    Measure getWidth();
+    LengthMeasure getWidth();
 
-    Measure getHeight();
+    LengthMeasure getHeight();
 
-    void setWidth(OffsetType widthType, Measure width);
+    void setWidth(OffsetType widthType, LengthMeasure width);
 
-    void setHeight(OffsetType heightType, Measure height);
+    void setHeight(OffsetType heightType, LengthMeasure height);
 
     /**
      * This property specifies how far an absolutely positioned box's top margin edge is offset
@@ -61,21 +61,21 @@ public interface ICss3Properties {
      */
     OffsetType getLeftType();
 
-    Measure getTop();
+    LengthMeasure getTop();
 
-    Measure getRight();
+    LengthMeasure getRight();
 
-    Measure getBottom();
+    LengthMeasure getBottom();
 
-    Measure getLeft();
+    LengthMeasure getLeft();
 
-    void setTop(OffsetType topType, Measure top);
+    void setTop(OffsetType topType, LengthMeasure top);
 
-    void setRight(OffsetType rightType, Measure right);
+    void setRight(OffsetType rightType, LengthMeasure right);
 
-    void setBottom(OffsetType bottomType, Measure bottom);
+    void setBottom(OffsetType bottomType, LengthMeasure bottom);
 
-    void setLeft(OffsetType leftType, Measure left);
+    void setLeft(OffsetType leftType, LengthMeasure left);
 
     OffsetType getMinWidthType();
 
@@ -85,21 +85,21 @@ public interface ICss3Properties {
 
     OffsetType getMaxHeightType();
 
-    Measure getMinWidth();
+    LengthMeasure getMinWidth();
 
-    Measure getMaxWidth();
+    LengthMeasure getMaxWidth();
 
-    Measure getMinHeight();
+    LengthMeasure getMinHeight();
 
-    Measure getMaxHeight();
+    LengthMeasure getMaxHeight();
 
-    void setMinWidth(OffsetType minWidthType, Measure minWidth);
+    void setMinWidth(OffsetType minWidthType, LengthMeasure minWidth);
 
-    void setMaxWidth(OffsetType maxWidthType, Measure maxWidth);
+    void setMaxWidth(OffsetType maxWidthType, LengthMeasure maxWidth);
 
-    void setMinHeight(OffsetType minHeightType, Measure minHeight);
+    void setMinHeight(OffsetType minHeightType, LengthMeasure minHeight);
 
-    void setMaxHeight(OffsetType maxHeightType, Measure maxHeight);
+    void setMaxHeight(OffsetType maxHeightType, LengthMeasure maxHeight);
 
     /**
      * This property describes the foreground color of an element's text content. In addition it is
@@ -189,12 +189,12 @@ public interface ICss3Properties {
      */
     BackgroundPositionType getBackgroundPositionYType();
 
-    Measure getBackgroundPositionX();
+    LengthMeasure getBackgroundPositionX();
 
-    Measure getBackgroundPositionY();
+    LengthMeasure getBackgroundPositionY();
 
-    void setBackgroundPosition(BackgroundPositionType backgroundPositionXType, Measure backgroundPositionX,
-            BackgroundPositionType backgroundPositionYType, Measure backgroundPositionY);
+    void setBackgroundPosition(BackgroundPositionType backgroundPositionXType, LengthMeasure backgroundPositionX,
+            BackgroundPositionType backgroundPositionYType, LengthMeasure backgroundPositionY);
 
     /**
      * The 'margin' property is a shorthand property for setting 'margin-top', 'margin-right',
@@ -254,12 +254,12 @@ public interface ICss3Properties {
      * padding edge (including the border spacing but excluding padding and border).
      */
     @_InheritedIfNull
-    Measure getBorderSpacingHorizontal();
+    LengthMeasure getBorderSpacingHorizontal();
 
     @_InheritedIfNull
-    Measure getBorderSpacingVertical();
+    LengthMeasure getBorderSpacingVertical();
 
-    void setBorderSpacing(Measure borderSpacingHorizontal, Measure borderSpacingVertical);
+    void setBorderSpacing(LengthMeasure borderSpacingHorizontal, LengthMeasure borderSpacingVertical);
 
     OutlineColorMode getOutlineColorType();
 
@@ -386,9 +386,9 @@ public interface ICss3Properties {
     @_InheritedIfNull
     FontSizeType getFontSizeType();
 
-    Measure getFontSize();
+    LengthMeasure getFontSize();
 
-    void setFontSize(FontSizeType fontSizeType, Measure fontSize);
+    void setFontSize(FontSizeType fontSizeType, LengthMeasure fontSize);
 
     @_InheritedIfNull
     FontStyleMode getFontStyle();
@@ -424,17 +424,17 @@ public interface ICss3Properties {
     LetterSpacingType getLetterSpacingType();
 
     @_InheritedIfNull
-    Measure getLetterSpacing();
+    LengthMeasure getLetterSpacing();
 
-    void setLetterSpacing(LetterSpacingType letterSpacingType, Measure letterSpacing);
+    void setLetterSpacing(LetterSpacingType letterSpacingType, LengthMeasure letterSpacing);
 
     @_InheritedIfNull
     LineHeightType getLineHeightType();
 
     @_InheritedIfNull
-    Measure getLineHeight();
+    LengthMeasure getLineHeight();
 
-    void setLineHeight(LineHeightType lineHeightType, Measure lineHeight);
+    void setLineHeight(LineHeightType lineHeightType, LengthMeasure lineHeight);
 
     /**
      * This property describes decorations that are added to the text of an element using the
@@ -481,9 +481,9 @@ public interface ICss3Properties {
     TextIndentType getTextIndentType();
 
     @_InheritedIfNull
-    Measure getTextIndent();
+    LengthMeasure getTextIndent();
 
-    void setTextIndent(TextIndentType textIndentType, Measure textIndent);
+    void setTextIndent(TextIndentType textIndentType, LengthMeasure textIndent);
 
     /**
      * This property describes how inline-level content of a block container is aligned. Values have
@@ -503,9 +503,9 @@ public interface ICss3Properties {
      */
     VerticalAlignType getVerticalAlignType();
 
-    Measure getVerticalAlign();
+    LengthMeasure getVerticalAlign();
 
-    void setVerticalAlign(VerticalAlignType verticalAlignType, Measure verticalAlign);
+    void setVerticalAlign(VerticalAlignType verticalAlignType, LengthMeasure verticalAlign);
 
     /**
      * This property specifies quotation marks for any number of embedded quotations. Values have
@@ -564,9 +564,9 @@ public interface ICss3Properties {
     WordSpacingType getWordSpacingType();
 
     @_InheritedIfNull
-    Measure getWordSpacing();
+    LengthMeasure getWordSpacing();
 
-    void setWordSpacing(WordSpacingType wordSpacingType, Measure wordSpacing);
+    void setWordSpacing(WordSpacingType wordSpacingType, LengthMeasure wordSpacing);
 
     /**
      * The 'clip' property applies only to absolutely positioned elements.

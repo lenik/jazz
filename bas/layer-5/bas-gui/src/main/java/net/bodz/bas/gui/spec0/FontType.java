@@ -6,7 +6,7 @@ import net.bodz.bas.gui.css3.property.FontUseMode;
 import net.bodz.bas.gui.css3.property.FontVariantMode;
 import net.bodz.bas.gui.css3.property.FontWeightMode;
 import net.bodz.bas.gui.css3.property.TextDecorationFlags;
-import net.bodz.bas.i18n.unit.Measure;
+import net.bodz.bas.i18n.unit.std.LengthMeasure;
 
 public class FontType
         implements IFontType {
@@ -16,7 +16,7 @@ public class FontType
     FontUseMode fontUse;
     FontStyleMode fontStyle;
     FontSizeType fontSizeType;
-    Measure fontSize;
+    LengthMeasure fontSize;
     FontVariantMode fontVariant;
     FontWeightMode fontWeight;
     TextDecorationFlags textDecoration;
@@ -52,12 +52,12 @@ public class FontType
     }
 
     @Override
-    public Measure getFontSize() {
+    public LengthMeasure getFontSize() {
         return fontSize;
     }
 
     @Override
-    public void setFontSize(Measure fontSize) {
+    public void setFontSize(LengthMeasure fontSize) {
         this.fontSize = fontSize;
     }
 
