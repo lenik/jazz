@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.util.TextMap;
+import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
-import net.bodz.bas.xml.XMLs;
 import net.bodz.redist.installer.builtins.TestConfig;
 
 public class ComponentsTest

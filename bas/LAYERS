@@ -30,7 +30,7 @@ layer-3/ 工具和杂项
     bas-m2
 
 layer-5/ 框架基础
-    bas-bean
+    bas-c5
     bas-database
     bas-flow
     bas-l10n
@@ -38,7 +38,7 @@ layer-5/ 框架基础
     bas-repr
     bas-gui
     bas-vfs
-    bas-xml
+    bas-c5
     
 layer-7/ 应用框架
     bas-ant

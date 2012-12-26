@@ -6,11 +6,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
+import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.t.factory.AbstractFactory;
-import net.bodz.bas.xml.XMLs;
 
 public interface Factories {
 

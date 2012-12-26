@@ -17,6 +17,7 @@ import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.c.system.SystemColos;
+import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.Logger;
@@ -24,7 +25,6 @@ import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
-import net.bodz.bas.xml.XMLs;
 import net.bodz.redist.installer.util.Flags;
 
 public class Session
