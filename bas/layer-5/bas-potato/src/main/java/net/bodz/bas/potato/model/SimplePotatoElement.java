@@ -1,8 +1,5 @@
 package net.bodz.bas.potato.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.i18n.dom1.IMutableElement;
@@ -18,9 +15,8 @@ public class SimplePotatoElement
     DomainString displayName = new XDomainString();
     DomainString description = new XDomainString();
     DomainString helpDoc = new XDomainString();
-    int userLevel;
+    int verboseLevel = PUBLIC_LEVEL;
     int modifiers;
-    Set<String> tags = new HashSet<String>();
 
     @Override
     public Class<?> getDeclaringClass() {
@@ -71,13 +67,13 @@ public class SimplePotatoElement
     }
 
     @Override
-    public int getUserLevel() {
-        return userLevel;
+    public int getVerboseLevel() {
+        return verboseLevel;
     }
 
     @Override
-    public void setUserLevel(int userLevel) {
-        this.userLevel = userLevel;
+    public void setVerboseLevel(int userLevel) {
+        this.verboseLevel = userLevel;
     }
 
     @Override
@@ -88,21 +84,6 @@ public class SimplePotatoElement
     @Override
     public void setModifiers(int modifiers) {
         this.modifiers = modifiers;
-    }
-
-    @Override
-    public Set<String> getTagNames() {
-        return tags;
-    }
-
-    @Override
-    public void addTagName(String tagName) {
-        tags.add(tagName);
-    }
-
-    @Override
-    public void removeTagName(String tagName) {
-        tags.remove(tagName);
     }
 
 }

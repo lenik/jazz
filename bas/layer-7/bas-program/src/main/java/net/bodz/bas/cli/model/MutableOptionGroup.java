@@ -235,8 +235,8 @@ public class MutableOptionGroup
     }
 
     @Override
-    public void setUserLevel(int userLevel) {
-        super.setUserLevel(userLevel);
+    public void setVerboseLevel(int verboseLevel) {
+        super.setVerboseLevel(verboseLevel);
     }
 
     @Override

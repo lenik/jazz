@@ -1,8 +1,5 @@
 package net.bodz.bas.i18n.dom1;
 
-import java.util.Collections;
-import java.util.Set;
-
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.i18n.dom.DomainString;
 
@@ -31,18 +28,13 @@ public abstract class AbstractElement
     }
 
     @Override
-    public int getUserLevel() {
-        return 0;
+    public int getVerboseLevel() {
+        return PUBLIC_LEVEL;
     }
 
     @Override
     public int getModifiers() {
         return 0;
-    }
-
-    @Override
-    public Set<String> getTagNames() {
-        return Collections.emptySet();
     }
 
 }

@@ -2,7 +2,6 @@ package net.bodz.bas.potato.model;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
-import java.util.Set;
 
 import net.bodz.bas.c.reflect.DecoratedAnnotatedElement;
 import net.bodz.bas.i18n.dom.DomainString;
@@ -25,7 +24,7 @@ public class DecoratedPotatoElement
     @Override
     public void findAnnotations(Map<Class<? extends Annotation>, Annotation> map) {
         IPotatoElement wrapped = getWrapped();
-        IAnnotatedElement _wrapped = (IAnnotatedElement) wrapped;
+        IAnnotatedElement _wrapped = wrapped;
         _wrapped.findAnnotations(map);
     }
 
@@ -55,18 +54,13 @@ public class DecoratedPotatoElement
     }
 
     @Override
-    public int getUserLevel() {
-        return getWrapped().getUserLevel();
+    public int getVerboseLevel() {
+        return getWrapped().getVerboseLevel();
     }
 
     @Override
     public int getModifiers() {
         return getWrapped().getModifiers();
-    }
-
-    @Override
-    public Set<String> getTagNames() {
-        return getWrapped().getTagNames();
     }
 
 }

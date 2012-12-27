@@ -13,17 +13,24 @@ import net.bodz.bas.potato.spi.builtin.NullEventMap;
 public class ReflectType
         extends AbstractType {
 
-    IPropertyMap propertyMap;
-    IMethodMap methodMap;
-    IConstructorMap constructorMap;
-    IEventMap eventMap;
+    private IPropertyMap propertyMap;
+    private IMethodMap methodMap;
+    private IConstructorMap constructorMap;
+    private IEventMap eventMap;
+
+    private final int verboseLevel;
 
     public ReflectType(Class<?> clazz) {
         super(clazz.getDeclaringClass(), clazz.getName());
+
         this.propertyMap = new DefaultPropertyMap().addClassFields(clazz);
         this.methodMap = new DefaultMethodMap().addClassMethods(clazz);
         this.constructorMap = new DefaultConstructorMap().addClassConstructors(clazz);
         this.eventMap = NullEventMap.getInstance();
+
+        int _modifiers = clazz.getModifiers();
+        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+
     }
 
     @Override
@@ -44,6 +51,13 @@ public class ReflectType
     @Override
     public IEventMap getEventMap() {
         return eventMap;
+    }
+
+    // -o IElement
+
+    @Override
+    public int getVerboseLevel() {
+        return verboseLevel;
     }
 
 }

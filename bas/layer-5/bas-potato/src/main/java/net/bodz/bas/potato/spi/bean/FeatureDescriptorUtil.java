@@ -2,47 +2,38 @@ package net.bodz.bas.potato.spi.bean;
 
 import java.beans.FeatureDescriptor;
 
+import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.potato.model.IPotatoElement;
 
 public class FeatureDescriptorUtil {
 
-    public static int getFeatureUserLevel(FeatureDescriptor feature) {
-        int pref = 1; // normal
-        if (feature.isPreferred())
-            pref--;
-        if (feature.isExpert())
-            pref++;
-        if (feature.isHidden())
-            pref = -pref;
-        return pref;
+    public static int getVerboseLevel(FeatureDescriptor descriptor) {
+        int verboseLevel = IElement.PUBLIC_LEVEL;
+
+        if (descriptor.isPreferred())
+            verboseLevel = IElement.PREFERRED_LEVEL;
+        else if (descriptor.isExpert())
+            verboseLevel = IElement.EXPERT_LEVEL;
+        else if (descriptor.isHidden())
+            verboseLevel = IElement.HIDDEN_LEVEL;
+
+        return verboseLevel;
     }
 
-    public static void applyPreferenceLevelToFeature(FeatureDescriptor feature, int pref) {
-        switch (pref) {
-        case 0:
-            feature.setPreferred(true);
-            break;
-        case 1:
-            break;
-        default:
-            if (pref < 0) {
-                feature.setHidden(true);
-                pref = -pref;
-            }
-            if (pref >= 2)
-                feature.setExpert(true);
-        }
+    public static void setVerboseLevel(FeatureDescriptor descriptor, int verboseLevel) {
+        descriptor.setPreferred(verboseLevel <= IElement.PREFERRED_LEVEL);
+        descriptor.setExpert(verboseLevel <= IElement.EXPERT_LEVEL);
+        descriptor.setHidden(verboseLevel <= 0);
     }
 
-    public static void initFeatureDescriptorFromPotatoElement(FeatureDescriptor featureDescriptor,
-            IPotatoElement potatoElement) {
+    public static void initFeatureDescriptorFromPotatoElement(FeatureDescriptor descriptor, IPotatoElement element) {
 
-        featureDescriptor.setName(potatoElement.getName());
-        featureDescriptor.setDisplayName(potatoElement.getDisplayName().toString());
-        featureDescriptor.setShortDescription(potatoElement.getDescription().toString());
+        descriptor.setName(element.getName());
+        descriptor.setDisplayName(element.getDisplayName().toString());
+        descriptor.setShortDescription(element.getDescription().toString());
 
-        int pref = potatoElement.getUserLevel();
-        applyPreferenceLevelToFeature(featureDescriptor, pref);
+        int verboseLevel = element.getVerboseLevel();
+        setVerboseLevel(descriptor, verboseLevel);
     }
 
 }

@@ -10,6 +10,8 @@ public class ReflectMethod
         extends AbstractMethod {
 
     private final Method method;
+    private final int verboseLevel;
+    private final int modifiers;
 
     /**
      * @throws NullPointerException
@@ -18,6 +20,10 @@ public class ReflectMethod
     public ReflectMethod(Method method) {
         super(method.getDeclaringClass(), method.getName());
         this.method = method;
+
+        int _modifiers = method.getModifiers();
+        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+        this.modifiers = ReflectModifiers.toElementModifiers(_modifiers);
     }
 
     @Override
@@ -41,6 +47,18 @@ public class ReflectMethod
         return method.invoke(instance, parameters);
     }
 
+    // -o IElement
+
+    @Override
+    public int getModifiers() {
+        return modifiers;
+    }
+
+    @Override
+    public int getVerboseLevel() {
+        return verboseLevel;
+    }
+
     // -o AnnotatedElement
 
     @Override
@@ -61,11 +79,6 @@ public class ReflectMethod
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         return method.isAnnotationPresent(annotationClass);
-    }
-
-    @Override
-    public int getModifiers() {
-        return method.getModifiers();
     }
 
 }

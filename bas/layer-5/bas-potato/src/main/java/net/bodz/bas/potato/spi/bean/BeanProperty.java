@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.potato.model.AbstractProperty;
+import net.bodz.bas.potato.spi.reflect.ReflectModifiers;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 
@@ -14,6 +15,9 @@ public class BeanProperty
         extends AbstractProperty {
 
     private final PropertyDescriptor propertyDescriptor;
+    private final int verboseLevel;
+    private final int modifiers;
+
     private Boolean propertyChangeSource;
 
     /**
@@ -24,6 +28,11 @@ public class BeanProperty
     public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor) {
         super(beanClass, propertyDescriptor.getName());
         this.propertyDescriptor = propertyDescriptor;
+
+        this.verboseLevel = FeatureDescriptorUtil.getVerboseLevel(propertyDescriptor);
+
+        Method getter = propertyDescriptor.getReadMethod();
+        this.modifiers = getter == null ? 0 : ReflectModifiers.toVerboseLevel(getter.getModifiers());
     }
 
     @Override
@@ -41,11 +50,6 @@ public class BeanProperty
     public DomainString getDescription() {
         String shortDescription = propertyDescriptor.getShortDescription();
         return XDomainString.of(shortDescription);
-    }
-
-    @Override
-    public int getUserLevel() {
-        return FeatureDescriptorUtil.getFeatureUserLevel(propertyDescriptor);
     }
 
     @Override
@@ -126,6 +130,18 @@ public class BeanProperty
         }
     }
 
+    // -o IElement
+
+    @Override
+    public int getModifiers() {
+        return modifiers;
+    }
+
+    @Override
+    public int getVerboseLevel() {
+        return verboseLevel;
+    }
+
     // -o AnnotatedElement
 
     @Override
@@ -162,15 +178,6 @@ public class BeanProperty
             return false;
         else
             return getter.isAnnotationPresent(annotationClass);
-    }
-
-    @Override
-    public int getModifiers() {
-        Method getter = propertyDescriptor.getReadMethod();
-        if (getter == null)
-            return 0;
-        else
-            return getter.getModifiers();
     }
 
 }

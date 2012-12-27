@@ -38,8 +38,8 @@ public class DecoratedMutableElement
     }
 
     @Override
-    public void setUserLevel(int userLevel) {
-        getWrapped().setUserLevel(userLevel);
+    public void setVerboseLevel(int userLevel) {
+        getWrapped().setVerboseLevel(userLevel);
     }
 
     @Override
@@ -48,23 +48,13 @@ public class DecoratedMutableElement
     }
 
     @Override
-    public int getUserLevel() {
-        return getWrapped().getUserLevel();
+    public int getVerboseLevel() {
+        return getWrapped().getVerboseLevel();
     }
 
     @Override
     public int getModifiers() {
         return getWrapped().getModifiers();
-    }
-
-    @Override
-    public void addTagName(String tag) {
-        getWrapped().addTagName(tag);
-    }
-
-    @Override
-    public void removeTagName(String tag) {
-        getWrapped().removeTagName(tag);
     }
 
 }

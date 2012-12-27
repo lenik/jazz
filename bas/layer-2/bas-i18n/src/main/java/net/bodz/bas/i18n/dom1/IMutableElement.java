@@ -15,12 +15,8 @@ public interface IMutableElement
 
     void setHelpDoc(DomainString helpDoc);
 
-    void setUserLevel(int userLevel);
+    void setVerboseLevel(int verboseLevel);
 
     void setModifiers(int modifiers);
-
-    void addTagName(String tagName);
-
-    void removeTagName(String tagName);
 
 }
