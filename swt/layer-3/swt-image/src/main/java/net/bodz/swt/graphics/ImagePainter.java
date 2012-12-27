@@ -3,7 +3,7 @@ package net.bodz.swt.graphics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 
-import net.bodz.bas.gui.spec1_f.IDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IDrawContext2d;
 import net.bodz.swt.gui.spec1.SwtDrawContext2d;
 
 public abstract class ImagePainter {

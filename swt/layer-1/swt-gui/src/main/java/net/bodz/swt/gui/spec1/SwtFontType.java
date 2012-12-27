@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 
-import net.bodz.bas.gui.spec0.IFontType;
+import net.bodz.bas.gui.style.IFontType;
 
 public class SwtFontType
         implements IFontType, Serializable {

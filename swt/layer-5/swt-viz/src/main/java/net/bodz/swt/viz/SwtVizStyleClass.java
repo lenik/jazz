@@ -1,11 +1,11 @@
 package net.bodz.swt.viz;
 
 import net.bodz.bas.gui.css3.ICss3StyleClass;
-import net.bodz.bas.gui.spec0.GUIStyleClass;
-import net.bodz.bas.gui.spec0.IGUIStyleClass;
+import net.bodz.bas.gui.style.MappedGUIStyleClass;
+import net.bodz.bas.gui.style.IGUIStyleClass;
 
 public class SwtVizStyleClass
-        extends GUIStyleClass
+        extends MappedGUIStyleClass
         implements ISwtVizStyleClass /* , IDisposable */{
 
     public SwtVizStyleClass(IGUIStyleClass parent) {

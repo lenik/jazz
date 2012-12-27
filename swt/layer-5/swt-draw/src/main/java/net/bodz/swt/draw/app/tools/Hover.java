@@ -3,7 +3,7 @@ package net.bodz.swt.draw.app.tools;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 
-import net.bodz.bas.gui.spec1_f.IDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IDrawContext2d;
 import net.bodz.swt.c.canvas.Canvas;
 import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.draw.app.SubCanvasMode;

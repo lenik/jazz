@@ -6,7 +6,7 @@ import org.eclipse.swt.graphics.Region;
 
 import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
-import net.bodz.bas.gui.spec1_f.AbstractRegion2d;
+import net.bodz.bas.gui.draw_f.dc.AbstractRegion2d;
 import net.bodz.swt.gui.geom.SwtShapes;
 
 public class SwtRegion

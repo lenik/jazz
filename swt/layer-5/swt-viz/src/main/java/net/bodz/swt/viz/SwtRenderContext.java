@@ -5,8 +5,8 @@ import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.css3.property.VisibilityMode;
 import net.bodz.bas.gui.dialog.IUserDialogs;
-import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFontType;
+import net.bodz.bas.gui.style.IColor;
+import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.swt.c3.dialog.SwtDialogs;
 import net.bodz.swt.gui.api.ICommand;
