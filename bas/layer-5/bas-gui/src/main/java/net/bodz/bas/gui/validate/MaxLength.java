@@ -1,4 +1,4 @@
-package net.bodz.bas.model.meta;
+package net.bodz.bas.gui.validate;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
