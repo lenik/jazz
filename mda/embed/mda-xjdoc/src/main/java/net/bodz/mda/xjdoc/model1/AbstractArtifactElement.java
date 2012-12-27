@@ -13,12 +13,12 @@ public abstract class AbstractArtifactElement
         extends AbstractElement
         implements IArtifactElement {
 
-    transient ArtifactDoc artifactDoc;
-    transient boolean artifactDocLoaded;
+    private transient ArtifactDoc artifactDoc;
+    private transient boolean artifactDocLoaded;
 
-    transient DomainString displayName;
-    transient DomainString description;
-    transient DomainString helpDoc;
+    private transient DomainString displayName;
+    private transient DomainString description;
+    private transient DomainString helpDoc;
 
     public AbstractArtifactElement() {
     }
@@ -26,6 +26,7 @@ public abstract class AbstractArtifactElement
     /**
      * @return Non-<code>null</code> {@link ArtifactDoc}.
      */
+    @Override
     public ArtifactDoc getArtifactDoc() {
         if (artifactDoc == null) {
             synchronized (this) {

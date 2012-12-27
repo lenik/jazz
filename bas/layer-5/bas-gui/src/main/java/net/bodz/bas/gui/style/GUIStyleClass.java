@@ -1,27 +1,34 @@
-package net.bodz.bas.gui.css3;
+package net.bodz.bas.gui.style;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Css3StyleClass
-        extends MappedCss3StyleClass {
+import net.bodz.bas.gui.css3.ICss3StyleClass;
 
-    private ICss3StyleClass parent;
+public class GUIStyleClass
+        extends MappedGUIStyleClass {
+
+    private IGUIStyleClass parent;
     private Map<String, String> map = new LinkedHashMap<String, String>();
 
-    public Css3StyleClass(ICss3StyleClass parent) {
+    public GUIStyleClass(IGUIStyleClass parent) {
         setParent(parent);
     }
 
     @Override
-    public ICss3StyleClass getParent() {
+    public IGUIStyleClass getParent() {
         return parent;
     }
 
+    /**
+     * @throws ClassCastException
+     *             If the parent isn't a {@link IGUIStyleClass}.
+     */
     @Override
-    public void setParent(ICss3StyleClass parent) {
+    public void setParent(ICss3StyleClass _parent) {
+        IGUIStyleClass parent = (IGUIStyleClass) _parent;
         if (parent == null)
-            parent = new StaticCss3StyleClass();
+            parent = new StaticGUIStyleClass();
         this.parent = parent;
     }
 

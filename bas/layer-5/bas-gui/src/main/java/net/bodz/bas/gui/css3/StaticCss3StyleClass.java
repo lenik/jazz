@@ -3,11 +3,11 @@ package net.bodz.bas.gui.css3;
 import java.util.List;
 
 import net.bodz.bas.gui.css3.property.*;
-import net.bodz.bas.gui.spec0.IColor;
+import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 
-public class StrictCss3StyleClass
+public class StaticCss3StyleClass
         implements ICss3StyleClass {
 
     ICss3StyleClass parent;
@@ -363,8 +363,9 @@ public class StrictCss3StyleClass
     }
 
     @Override
-    public void setBackgroundPosition(BackgroundPositionType backgroundPositionXType, LengthMeasure backgroundPositionX,
-            BackgroundPositionType backgroundPositionYType, LengthMeasure backgroundPositionY) {
+    public void setBackgroundPosition(BackgroundPositionType backgroundPositionXType,
+            LengthMeasure backgroundPositionX, BackgroundPositionType backgroundPositionYType,
+            LengthMeasure backgroundPositionY) {
         this.backgroundPositionXType = backgroundPositionXType;
         this.backgroundPositionX = backgroundPositionX;
         this.backgroundPositionYType = backgroundPositionYType;
