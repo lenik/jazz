@@ -5,8 +5,8 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
-import net.bodz.bas.gui.spec0.color.AbstractRGBA32Color;
-import net.bodz.bas.gui.spec0.color.IColor_RGB24;
+import net.bodz.bas.gui.style.color.AbstractRGBA32Color;
+import net.bodz.bas.gui.style.color.IColor_RGB24;
 import net.bodz.bas.t.object.IDisposable;
 
 public class SwtColor

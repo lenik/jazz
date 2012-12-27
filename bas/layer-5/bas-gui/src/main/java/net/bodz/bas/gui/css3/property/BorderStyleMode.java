@@ -1,6 +1,6 @@
 package net.bodz.bas.gui.css3.property;
 
-import net.bodz.bas.gui.spec0.IStrokeType;
+import net.bodz.bas.gui.style.IStrokeType;
 import net.bodz.bas.meta.source.boDzFeature;
 
 public enum BorderStyleMode {

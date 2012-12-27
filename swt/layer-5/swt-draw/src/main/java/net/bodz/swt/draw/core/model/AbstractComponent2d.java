@@ -2,8 +2,8 @@ package net.bodz.swt.draw.core.model;
 
 import net.bodz.bas.geom.spec0_f.DecoratedPrimitive2d;
 import net.bodz.bas.geom.spec0_f.IPrimitive2d;
-import net.bodz.bas.gui.spec1_f.GraphicsOperationException;
-import net.bodz.bas.gui.spec1_f.IDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.GraphicsOperationException;
+import net.bodz.bas.gui.draw_f.dc.IDrawContext2d;
 
 public class AbstractComponent2d
         extends DecoratedPrimitive2d {

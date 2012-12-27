@@ -7,11 +7,11 @@ import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
-import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFillType;
-import net.bodz.bas.gui.spec0.IFontType;
-import net.bodz.bas.gui.spec0.IStrokeType;
-import net.bodz.bas.gui.spec1_f.AbstractDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.AbstractDrawContext2d;
+import net.bodz.bas.gui.style.IColor;
+import net.bodz.bas.gui.style.IFillType;
+import net.bodz.bas.gui.style.IFontType;
+import net.bodz.bas.gui.style.IStrokeType;
 
 public class SwtDrawContext2d
         extends AbstractDrawContext2d {

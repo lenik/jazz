@@ -1,9 +1,9 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.spec0.StrictGUIStyleClass;
+import net.bodz.bas.gui.style.StaticGUIStyleClass;
 
 public class StrictSwtVizStyleClass
-        extends StrictGUIStyleClass
+        extends StaticGUIStyleClass
         implements ISwtVizStyleClass {
 
     String menuItem;

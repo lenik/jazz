@@ -1,6 +1,6 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.spec0.IGUIStyleClass;
+import net.bodz.bas.gui.style.IGUIStyleClass;
 
 public interface ISwtVizStyleClass
         extends IGUIStyleClass {

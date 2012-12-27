@@ -9,7 +9,7 @@ import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.gui.css3.property.*;
-import net.bodz.bas.gui.spec0.IColor;
+import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 

@@ -4,9 +4,9 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.gui.spec0.IColor;
-import net.bodz.bas.gui.spec0.IFontType;
-import net.bodz.bas.gui.spec0.color.IColor_RGB24;
+import net.bodz.bas.gui.style.IColor;
+import net.bodz.bas.gui.style.IFontType;
+import net.bodz.bas.gui.style.color.IColor_RGB24;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.swt.viz.IRefEntry_SWT;
 import net.bodz.swt.viz.SwtVizStyleClass;
