@@ -19,7 +19,7 @@ import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.swt.viz.GridVisualization;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtRenderer;
-import net.bodz.swt.viz.SwtVizStyleClass;
+import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class R_CallObject
         extends SwtRenderer {
@@ -31,7 +31,7 @@ public class R_CallObject
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass styleClass, Composite parent,
+    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass styleClass, Composite parent,
             int _style)
             throws RenderException, SWTException {
 
@@ -40,7 +40,7 @@ public class R_CallObject
 
         final InvocationRefcomp refcomp = (InvocationRefcomp) entry;
         InvocationDescriptor descriptor = refcomp.getDescriptor();
-        SwtVizStyleClass style = descriptor.getStyle();
+        MappedSwtVizStyleClass style = descriptor.getStyle();
 
         final Composite comp = gridStyle.renderStruct(rc, refcomp, parent, _style);
         final Composite opbar = new Composite(comp, SWT.NONE);

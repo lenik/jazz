@@ -10,7 +10,7 @@ import net.bodz.bas.geom.spec0_f.tr.MatrixTransformer2d;
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec2_f.Composite2d;
 import net.bodz.bas.gui.draw_f.dc.IDrawContext2d;
-import net.bodz.swt.gui.spec1.SwtDrawContext2d;
+import net.bodz.swt.gui.draw_f.dc.SwtDrawContext2d;
 import net.bodz.swt.gui.state.SwtContext;
 
 public class GraphDesignerContext

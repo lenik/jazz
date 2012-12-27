@@ -9,19 +9,19 @@ import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.color.IColor_RGB24;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.swt.viz.IRefEntry_SWT;
-import net.bodz.swt.viz.SwtVizStyleClass;
+import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class SwtStyleHelper {
 
     public void addEffects(Control control, IRefEntry_SWT<?> entry)
             throws RenderException {
-        SwtVizStyleClass stylesheet = entry.getStyle();
+        MappedSwtVizStyleClass stylesheet = entry.getStyle();
         if (stylesheet == null)
             return;
         addEffects(control, stylesheet);
     }
 
-    public void addEffects(Control control, SwtVizStyleClass style) {
+    public void addEffects(Control control, MappedSwtVizStyleClass style) {
         Device device = control.getDisplay();
 
         if (style.getTooltip() != null)

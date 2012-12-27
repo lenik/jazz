@@ -28,7 +28,7 @@ import net.bodz.swt.c.layout.LineLayout;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtRenderer;
-import net.bodz.swt.viz.SwtVizStyleClass;
+import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class R_creator
         extends SwtRenderer {
@@ -39,7 +39,7 @@ public class R_creator
     Image getIcon(AnnotatedElement... tries)
             throws CreateException {
         for (AnnotatedElement elm : tries) {
-            SwtVizStyleClass style = SwtVizStyleClass.get(elm);
+            MappedSwtVizStyleClass style = MappedSwtVizStyleClass.get(elm);
             if (style == null)
                 continue;
             Image icon = style.getIcon();
@@ -80,7 +80,7 @@ public class R_creator
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass styleClass, Composite parent,
+    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass styleClass, Composite parent,
             int _style)
             throws RenderException, SWTException {
 
@@ -89,8 +89,8 @@ public class R_creator
         IParser<?> parser;
         try {
             parser = Traits.getTrait(type, IParser.class);
-            SwtVizStyleClass style = SwtVizStyleClass.get(type);
-            Image icon = SwtVizStyleClass.get(type).getIcon();
+            MappedSwtVizStyleClass style = MappedSwtVizStyleClass.get(type);
+            Image icon = MappedSwtVizStyleClass.get(type).getIcon();
 
         } catch (CreateException e) {
             throw new IllegalUsageError(tr._("failed to get parser for ") + type);
@@ -107,7 +107,7 @@ public class R_creator
         }
 
         for (Constructor<?> ctor : type.getConstructors()) {
-            SwtVizStyleClass style = SwtVizStyleClass.get(ctor);
+            MappedSwtVizStyleClass style = MappedSwtVizStyleClass.get(ctor);
             String label = style.getLabel();
             if (label == null) {
                 String pt = TypeName.join(", ", true, ctor.getParameterTypes());

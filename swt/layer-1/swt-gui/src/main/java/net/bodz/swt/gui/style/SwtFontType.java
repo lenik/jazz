@@ -1,4 +1,4 @@
-package net.bodz.swt.gui.spec1;
+package net.bodz.swt.gui.style;
 
 import java.io.Serializable;
 

@@ -23,7 +23,7 @@ import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtRenderer;
-import net.bodz.swt.viz.SwtVizStyleClass;
+import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class R_Date
         extends SwtRenderer {
@@ -33,7 +33,7 @@ public class R_Date
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, SwtVizStyleClass styleClass,
+    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass styleClass,
             Composite parent, int style)
             throws RenderException, SWTException {
 

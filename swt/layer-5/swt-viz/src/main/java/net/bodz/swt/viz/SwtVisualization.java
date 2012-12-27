@@ -67,7 +67,7 @@ public abstract class SwtVisualization
         }
     }
 
-    public Control render(SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent, int style)
+    public Control render(SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");

@@ -9,8 +9,8 @@ import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.swt.c3.dialog.SwtDialogs;
-import net.bodz.swt.gui.api.ICommand;
-import net.bodz.swt.gui.spec1.SwtColor;
+import net.bodz.swt.gui.model.ICommand;
+import net.bodz.swt.gui.style.SwtColor;
 
 public class SwtRenderContext {
 
@@ -20,13 +20,13 @@ public class SwtRenderContext {
 
     public void addEffects(Control control, IRefEntry_SWT<?> entry)
             throws RenderException {
-        SwtVizStyleClass stylesheet = entry.getStyle();
+        MappedSwtVizStyleClass stylesheet = entry.getStyle();
         if (stylesheet == null)
             return;
         addEffects(control, stylesheet);
     }
 
-    public void addEffects(Control control, SwtVizStyleClass style) {
+    public void addEffects(Control control, MappedSwtVizStyleClass style) {
         Device device = control.getDisplay();
 
         if (style.getVisibility() != null)
