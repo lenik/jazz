@@ -1,8 +1,6 @@
 package net.bodz.bas.i18n.dom1;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
 
@@ -16,9 +14,8 @@ public class SemiMutableElement
     private DomainString displayName;
     private DomainString description;
     private DomainString helpDoc;
-    private int userLevel;
+    private int verboseLevel = PUBLIC_LEVEL;
     private int modifiers;
-    private Set<String> tagNames;
 
     @Override
     public String getName() {
@@ -57,12 +54,12 @@ public class SemiMutableElement
     }
 
     @Override
-    public int getUserLevel() {
-        return userLevel;
+    public int getVerboseLevel() {
+        return verboseLevel;
     }
 
-    protected void setUserLevel(int userLevel) {
-        this.userLevel = userLevel;
+    protected void setVerboseLevel(int userLevel) {
+        this.verboseLevel = userLevel;
     }
 
     @Override
@@ -72,26 +69,6 @@ public class SemiMutableElement
 
     protected void setModifiers(int modifiers) {
         this.modifiers = modifiers;
-    }
-
-    @Override
-    public synchronized Set<String> getTagNames() {
-        if (tagNames == null)
-            tagNames = new HashSet<String>();
-        return tagNames;
-    }
-
-    public void addTagName(String tagName) {
-        if (tagName == null)
-            throw new NullPointerException("tagName");
-        getTagNames().add(tagName);
-    }
-
-    public void removeTagName(String tagName) {
-        if (tagName == null)
-            throw new NullPointerException("tagName");
-        if (tagNames != null)
-            tagNames.remove(tagName);
     }
 
 }

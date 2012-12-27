@@ -12,6 +12,9 @@ public class ReflectProperty
         extends AbstractProperty {
 
     private final Field field;
+    private final int verboseLevel;
+    private final int modifiers;
+
     private Boolean propertyChangeSource;
 
     /**
@@ -21,6 +24,10 @@ public class ReflectProperty
     public ReflectProperty(Field field) {
         super(field.getDeclaringClass(), field.getName());
         this.field = field;
+
+        int _modifiers = field.getModifiers();
+        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+        this.modifiers = ReflectModifiers.toElementModifiers(_modifiers);
     }
 
     @Override
@@ -103,6 +110,18 @@ public class ReflectProperty
         }
     }
 
+    // -o IElement
+
+    @Override
+    public int getModifiers() {
+        return modifiers;
+    }
+
+    @Override
+    public int getVerboseLevel() {
+        return verboseLevel;
+    }
+
     // -o AnnotatedElement
 
     @Override
@@ -123,11 +142,6 @@ public class ReflectProperty
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         return field.isAnnotationPresent(annotationClass);
-    }
-
-    @Override
-    public int getModifiers() {
-        return field.getModifiers();
     }
 
 }

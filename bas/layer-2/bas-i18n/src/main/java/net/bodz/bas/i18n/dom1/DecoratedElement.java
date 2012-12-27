@@ -1,7 +1,5 @@
 package net.bodz.bas.i18n.dom1;
 
-import java.util.Set;
-
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.t.model.AbstractDecorator;
 
@@ -36,18 +34,13 @@ public class DecoratedElement
     }
 
     @Override
-    public int getUserLevel() {
-        return getWrapped().getUserLevel();
+    public int getVerboseLevel() {
+        return getWrapped().getVerboseLevel();
     }
 
     @Override
     public int getModifiers() {
         return getWrapped().getModifiers();
-    }
-
-    @Override
-    public Set<String> getTagNames() {
-        return getWrapped().getTagNames();
     }
 
 }

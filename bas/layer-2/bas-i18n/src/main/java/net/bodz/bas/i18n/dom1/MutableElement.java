@@ -1,8 +1,5 @@
 package net.bodz.bas.i18n.dom1;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.bodz.bas.i18n.dom.DomainString;
 
 public class MutableElement
@@ -15,9 +12,8 @@ public class MutableElement
     private DomainString displayName;
     private DomainString description;
     private DomainString helpDoc;
-    private int userLevel;
+    private int verboseLevel;
     private int modifiers;
-    private Set<String> tagNames;
 
     @Override
     public String getName() {
@@ -60,13 +56,13 @@ public class MutableElement
     }
 
     @Override
-    public int getUserLevel() {
-        return userLevel;
+    public int getVerboseLevel() {
+        return verboseLevel;
     }
 
     @Override
-    public void setUserLevel(int userLevel) {
-        this.userLevel = userLevel;
+    public void setVerboseLevel(int verboseLevel) {
+        this.verboseLevel = verboseLevel;
     }
 
     @Override
@@ -77,28 +73,6 @@ public class MutableElement
     @Override
     public void setModifiers(int modifiers) {
         this.modifiers = modifiers;
-    }
-
-    @Override
-    public synchronized Set<String> getTagNames() {
-        if (tagNames == null)
-            tagNames = new HashSet<String>();
-        return tagNames;
-    }
-
-    @Override
-    public void addTagName(String tagName) {
-        if (tagName == null)
-            throw new NullPointerException("tagName");
-        getTagNames().add(tagName);
-    }
-
-    @Override
-    public void removeTagName(String tagName) {
-        if (tagName == null)
-            throw new NullPointerException("tagName");
-        if (tagNames != null)
-            tagNames.remove(tagName);
     }
 
 }

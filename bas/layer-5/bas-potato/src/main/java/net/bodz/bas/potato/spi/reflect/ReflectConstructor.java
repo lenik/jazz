@@ -9,6 +9,8 @@ public class ReflectConstructor
         extends AbstractConstructor {
 
     private final Constructor<?> ctor;
+    private final int verboseLevel;
+    private final int modifiers;
 
     /**
      * @throws NullPointerException
@@ -17,6 +19,10 @@ public class ReflectConstructor
     public ReflectConstructor(Constructor<?> ctor) {
         super(ctor.getDeclaringClass());
         this.ctor = ctor;
+
+        int _modifiers = ctor.getModifiers();
+        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+        this.modifiers = ReflectModifiers.toElementModifiers(_modifiers);
     }
 
     @Override
@@ -28,6 +34,18 @@ public class ReflectConstructor
     public Object newInstance(Object... parameters)
             throws ReflectiveOperationException {
         return ctor.newInstance(ctor, parameters);
+    }
+
+    // -o IElement
+
+    @Override
+    public int getModifiers() {
+        return modifiers;
+    }
+
+    @Override
+    public int getVerboseLevel() {
+        return verboseLevel;
     }
 
     // -o AnnotatedElement
@@ -50,11 +68,6 @@ public class ReflectConstructor
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         return ctor.isAnnotationPresent(annotationClass);
-    }
-
-    @Override
-    public int getModifiers() {
-        return ctor.getModifiers();
     }
 
 }

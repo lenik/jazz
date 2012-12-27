@@ -1,7 +1,5 @@
 package net.bodz.bas.i18n.dom1;
 
-import java.util.Set;
-
 import net.bodz.bas.i18n.dom.DomainString;
 
 public interface IElement {
@@ -30,6 +28,13 @@ public interface IElement {
      */
     DomainString getHelpDoc();
 
+    int HIDDEN_LEVEL = -1; // private
+    int PREFERRED_LEVEL = 0; //
+    int PUBLIC_LEVEL = 100; // public
+    int EXTENDEDLEVEL = 200; // child map, etc.
+    int EXPERT_LEVEL = 500; // protected
+    int INTERNAL_LEVEL = 1000; // package-protected
+
     /**
      * The user level controls whether this element is displayed. When user specifies a display user
      * level, then only elements with user level smaller then the the display user level is
@@ -44,34 +49,24 @@ public interface IElement {
      * </tr>
      * <tr>
      * <td> {@link java.beans.FeatureDescriptor#isHidden()}</td>
-     * <td>-1</td>
+     * <td> {@value #HIDDEN_LEVEL}</td>
      * </tr>
      * <tr>
      * <td> {@link java.beans.FeatureDescriptor#isPreferred()}</td>
-     * <td>0</td>
+     * <td> {@value #PREFERRED_LEVEL}</td>
      * </tr>
      * <tr>
      * <td><i>(Default)</i></td>
-     * <td>1</td>
+     * <td> {@value #PUBLIC_LEVEL}</td>
      * </tr>
      * <tr>
      * <td> {@link java.beans.FeatureDescriptor#isExpert()}</td>
-     * <td>2</td>
+     * <td> {@value #EXPERT_LEVEL}</td>
      * </tr>
      * </table>
      */
-    int getUserLevel();
+    int getVerboseLevel();
 
-    /**
-     * @see java.lang.reflect.Modifier
-     */
     int getModifiers();
-
-    /**
-     * Specify the category names this element belongs to.
-     * 
-     * @return Empty string array if no tag is specified.
-     */
-    Set<String> getTagNames();
 
 }

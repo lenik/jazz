@@ -13,6 +13,7 @@ import net.bodz.bas.potato.spi.builtin.DefaultEventMap;
 import net.bodz.bas.potato.spi.builtin.DefaultMethodMap;
 import net.bodz.bas.potato.spi.builtin.DefaultPropertyMap;
 import net.bodz.bas.potato.spi.builtin.NullConstructorMap;
+import net.bodz.bas.potato.spi.reflect.ReflectModifiers;
 
 public class BeanType
         extends AbstractType {
@@ -25,6 +26,8 @@ public class BeanType
     private IConstructorMap constructorMap;
     private IEventMap eventMap;
 
+    private final int verboseLevel;
+
     public BeanType(BeanInfo beanInfo) {
         super(beanInfo.getBeanDescriptor().getName());
 
@@ -35,6 +38,9 @@ public class BeanType
         methodMap = new DefaultMethodMap().addBeanMethods(beanInfo);
         constructorMap = NullConstructorMap.getInstance();
         eventMap = new DefaultEventMap().addBeanEvents(beanInfo);
+
+        int _modifiers = beanClass.getModifiers();
+        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
     }
 
     public BeanDescriptor getBeanDescriptor() {
@@ -63,6 +69,13 @@ public class BeanType
     @Override
     public IEventMap getEventMap() {
         return eventMap;
+    }
+
+    // -o IElement
+
+    @Override
+    public int getVerboseLevel() {
+        return verboseLevel;
     }
 
     // -o AnnotatedElement
