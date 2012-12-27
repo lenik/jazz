@@ -15,8 +15,8 @@ import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.t.tree.legacy.ITreeCallback;
-import net.bodz.mda.xjdoc.model1.ArtifactDoc;
-import net.bodz.mda.xjdoc.model1.Author;
+import net.bodz.mda.xjdoc.model2.ArtifactDoc;
+import net.bodz.mda.xjdoc.model2.Author;
 import net.bodz.redist.installer.Schemes.Custom;
 import net.bodz.redist.installer.Schemes.Default;
 import net.bodz.redist.installer.Schemes.Maximum;
@@ -46,7 +46,7 @@ public class AbstractProject
             logo = SWTResources.getImageDataRes(artifactClass, respath);
         }
 
-        ArtifactDoc artifactDoc = getArtifactDoc();
+        ArtifactDoc artifactDoc = getXjdoc();
 
         URL iconURL = artifactDoc.getIcon();
         if (iconURL != null) {

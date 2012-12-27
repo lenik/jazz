@@ -35,7 +35,7 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.mda.xjdoc.model1.ArtifactDoc;
+import net.bodz.mda.xjdoc.model2.ArtifactDoc;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.BorderLayout;
@@ -187,7 +187,7 @@ public class BasicGUI
     }
 
     protected String getTitle() {
-        ArtifactDoc artifactDoc = getArtifactDoc();
+        ArtifactDoc artifactDoc = getXjdoc();
         String title = artifactDoc.getName();
         String doc = artifactDoc.getText().toPlainText();
         if (doc != null)
@@ -200,7 +200,7 @@ public class BasicGUI
             throws GUIException {
         Shell shell = new Shell();
         shell.setText(getTitle());
-        ArtifactDoc artifactDoc = getArtifactDoc();
+        ArtifactDoc artifactDoc = getXjdoc();
         Image[] icons;
         try {
             icons = loadImages(artifactDoc.getIcons());
@@ -377,7 +377,7 @@ public class BasicGUI
         Label updateTime = new Label(bottomBar, SWT.NONE);
         updateTime.setLayoutData(new GridData(SWT.END, SWT.CENTER, true, false));
         updateTime.setAlignment(SWT.RIGHT);
-        String dateString = getArtifactDoc().getReleaseDateString();
+        String dateString = getXjdoc().getReleaseDateString();
         if (dateString != null) {
             updateTime.setText(tr._("Last updated: ") + dateString);
         }
@@ -387,7 +387,7 @@ public class BasicGUI
     static URL WWW_BODZ_NET = new URL("http://www.bodz.net/");
 
     protected String getBannerString() {
-        ArtifactDoc artifactDoc = getArtifactDoc();
+        ArtifactDoc artifactDoc = getXjdoc();
         String author = artifactDoc.getAuthor().toString();
         URL site = artifactDoc.getSiteLink();
         if (site == null)

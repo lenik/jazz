@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.model1;
+package net.bodz.mda.xjdoc.model2;
 
 import java.net.URL;
 import java.text.DateFormat;
@@ -25,11 +25,6 @@ public class ArtifactDoc
 
     public Set<String> getUsedLangs() {
         return getText().keySet();
-    }
-
-    public DomainString getDisplayName() {
-        DomainString displayName = (DomainString) getTag("name");
-        return displayName;
     }
 
     public List<Author> getAuthors() {

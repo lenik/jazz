@@ -23,6 +23,10 @@ public interface IJavaElementDoc
      */
     void setName(String name);
 
+    DomainString getDisplayName();
+
+    void setDisplayName(DomainString displayName);
+
     /**
      * The main text of the element.
      * 

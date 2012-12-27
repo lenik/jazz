@@ -4,34 +4,35 @@ import java.io.Serializable;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dom1.SemiMutableElement;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
-public abstract class SemiMutableArtifactElement
+public abstract class SemiMutableXjdocElement
         extends SemiMutableElement
-        implements IArtifactElement, Serializable {
+        implements IXjdocElement, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    transient ArtifactDoc artifactDoc;
+    transient IJavaElementDoc xjdoc;
     transient boolean artifactDocLoaded;
 
     /**
-     * @return Non-<code>null</code> {@link ArtifactDoc}.
+     * @return Non-<code>null</code> {@link IJavaElementDoc}.
      */
-    public ArtifactDoc getArtifactDoc() {
-        if (artifactDoc == null) {
+    public IJavaElementDoc getXjdoc() {
+        if (xjdoc == null) {
             synchronized (this) {
                 if (!artifactDocLoaded) {
-                    artifactDoc = loadArtifactDoc();
+                    xjdoc = loadXjdoc();
                     artifactDocLoaded = true;
                 }
             }
-            if (artifactDoc == null)
+            if (xjdoc == null)
                 throw new IllegalUsageException("Artifact doc isn't set.");
         }
-        return artifactDoc;
+        return xjdoc;
     }
 
-    protected ArtifactDoc loadArtifactDoc() {
+    protected IJavaElementDoc loadXjdoc() {
         return null;
     }
 

@@ -12,14 +12,14 @@ import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.model.IProperty;
-import net.bodz.mda.xjdoc.model1.SemiMutableArtifactElement;
+import net.bodz.mda.xjdoc.model1.SemiMutableXjdocElement;
 
 /**
  * Though {@link AbstractOptionGroup} is-a {@link Serializable}, the serialization on this object
  * (of any subclass) won't work because of the underlying transient fields.
  */
 public abstract class AbstractOptionGroup
-        extends SemiMutableArtifactElement
+        extends SemiMutableXjdocElement
         implements IOptionGroup {
 
     private static final long serialVersionUID = 1L;

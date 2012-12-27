@@ -9,10 +9,10 @@ import java.util.Set;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
+import net.bodz.mda.xjdoc.model1.AbstractXjdocElement;
 
 public abstract class AbstractComponent
-        extends AbstractArtifactElement
+        extends AbstractXjdocElement
         implements IComponent, II18nCapable {
 
     private String id;

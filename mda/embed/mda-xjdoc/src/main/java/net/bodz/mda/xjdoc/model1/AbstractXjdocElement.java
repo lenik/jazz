@@ -3,57 +3,53 @@ package net.bodz.mda.xjdoc.model1;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.i18n.dom1.AbstractElement;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
-/**
- * An artifact is a "product"-like component, with well created documents.
- * 
- * The default implementation get the documents from some "reflective" sources.
- */
-public abstract class AbstractArtifactElement
+public abstract class AbstractXjdocElement
         extends AbstractElement
-        implements IArtifactElement {
+        implements IXjdocElement {
 
-    private transient ArtifactDoc artifactDoc;
-    private transient boolean artifactDocLoaded;
+    private transient IJavaElementDoc xjdoc;
+    private transient boolean xjdocLoaded;
 
     private transient DomainString displayName;
     private transient DomainString description;
     private transient DomainString helpDoc;
 
-    public AbstractArtifactElement() {
+    public AbstractXjdocElement() {
     }
 
     /**
-     * @return Non-<code>null</code> {@link ArtifactDoc}.
+     * @return Non-<code>null</code> {@link IJavaElementDoc}.
      */
     @Override
-    public ArtifactDoc getArtifactDoc() {
-        if (artifactDoc == null) {
+    public IJavaElementDoc getXjdoc() {
+        if (xjdoc == null) {
             synchronized (this) {
-                if (!artifactDocLoaded) {
-                    artifactDoc = loadArtifactDoc();
-                    artifactDocLoaded = true;
+                if (!xjdocLoaded) {
+                    xjdoc = loadXjdoc();
+                    xjdocLoaded = true;
                 }
             }
-            if (artifactDoc == null)
+            if (xjdoc == null)
                 throw new IllegalUsageException("Artifact doc isn't set.");
         }
-        return artifactDoc;
+        return xjdoc;
     }
 
-    protected ArtifactDoc loadArtifactDoc() {
+    protected IJavaElementDoc loadXjdoc() {
         return null;
     }
 
     @Override
     public String getName() {
-        return getArtifactDoc().getName();
+        return getXjdoc().getName();
     }
 
     @Override
     public DomainString getDisplayName() {
         if (displayName == null)
-            displayName = getArtifactDoc().getDisplayName();
+            displayName = getXjdoc().getDisplayName();
         return displayName;
     }
 
@@ -63,7 +59,7 @@ public abstract class AbstractArtifactElement
     @Override
     public synchronized DomainString getDescription() {
         if (description == null) {
-            DomainString text = getArtifactDoc().getText();
+            DomainString text = getXjdoc().getText();
             if (text != null)
                 description = text.headPar();
         }
@@ -76,16 +72,16 @@ public abstract class AbstractArtifactElement
     @Override
     public synchronized DomainString getHelpDoc() {
         if (helpDoc == null) {
-            DomainString text = getArtifactDoc().getText();
+            DomainString text = getXjdoc().getText();
             if (text != null)
                 helpDoc = text.tailPar();
         }
         return helpDoc;
     }
 
-    protected void setArtifactDoc(ArtifactDoc artifactDoc) {
-        this.artifactDoc = artifactDoc;
-        this.artifactDocLoaded = true;
+    protected void setXjdoc(IJavaElementDoc xjdoc) {
+        this.xjdoc = xjdoc;
+        this.xjdocLoaded = true;
     }
 
     protected void setDisplayName(DomainString displayName) {

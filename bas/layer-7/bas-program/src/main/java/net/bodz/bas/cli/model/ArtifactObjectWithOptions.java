@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.bodz.bas.cli.skel.CLISyntaxException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.mda.xjdoc.model1.ArtifactObject;
+import net.bodz.mda.xjdoc.model2.ArtifactObject;
 
 public class ArtifactObjectWithOptions
         extends ArtifactObject
