@@ -1,4 +1,4 @@
-package net.bodz.swt.gui.spec1;
+package net.bodz.swt.gui.draw_f.dc;
 
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Rectangle;

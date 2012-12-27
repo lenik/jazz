@@ -30,7 +30,7 @@ public abstract class SwtRenderer
             if (context != null && !(context instanceof SwtRenderContext))
                 throw new OutOfDomainException("context", context, SwtRenderContext.class);
 
-            SwtVizStyleClass style = null;
+            MappedSwtVizStyleClass style = null;
             if (entry instanceof IRefEntry_SWT<?>)
                 style = ((IRefEntry_SWT<?>) entry).getStyle();
 
@@ -44,7 +44,7 @@ public abstract class SwtRenderer
         }
     }
 
-    public abstract Control render(SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet,
+    public abstract Control render(SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
             Composite parent, int swtStyle)
             throws RenderException, SWTException;
 

@@ -8,13 +8,13 @@ import net.bodz.bas.gui.viz.RenderException;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtRenderer;
-import net.bodz.swt.viz.SwtVizStyleClass;
+import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class R_Number
         extends SwtRenderer {
 
     @Override
-    public Control render(SwtRenderContext rc, IRefEntry<?> entry, SwtVizStyleClass stylesheet, Composite parent, int style)
+    public Control render(SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet, Composite parent, int style)
             throws RenderException, SWTException {
         // GUIVarMeta meta = var.getMeta();
         // if min/max then render in slider...

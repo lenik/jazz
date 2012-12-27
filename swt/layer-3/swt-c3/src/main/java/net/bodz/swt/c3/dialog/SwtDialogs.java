@@ -39,8 +39,8 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.gui.api.ICommand;
-import net.bodz.swt.gui.api.ICommandGroup;
+import net.bodz.swt.gui.model.ICommand;
+import net.bodz.swt.gui.model.ICommandGroup;
 
 public class SwtDialogs
         extends AbstractUserDialogs {

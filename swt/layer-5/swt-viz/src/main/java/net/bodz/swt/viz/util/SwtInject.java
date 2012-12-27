@@ -6,11 +6,11 @@ import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.swt.viz.IRefEntry_SWT;
-import net.bodz.swt.viz.SwtVizStyleClass;
+import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class SwtInject {
 
-    public static int styleFx(int styleBits, SwtVizStyleClass style) {
+    public static int styleFx(int styleBits, MappedSwtVizStyleClass style) {
         if (style != null) {
             styleBits |= SWT.BORDER;
         }
@@ -21,7 +21,7 @@ public class SwtInject {
         return styleFx(styleBits, entry.getStyle());
     }
 
-    public void inject(Widget widget, SwtVizStyleClass data)
+    public void inject(Widget widget, MappedSwtVizStyleClass data)
             throws InjectException {
         if (widget instanceof Item)
             inject((Item) widget, data);
@@ -33,7 +33,7 @@ public class SwtInject {
             inject((ToolTip) widget, data);
     }
 
-    public void inject(Item item, SwtVizStyleClass style)
+    public void inject(Item item, MappedSwtVizStyleClass style)
             throws InjectException {
         try {
             Image icon = style.getIcon();
@@ -74,7 +74,7 @@ public class SwtInject {
         }
     }
 
-    public void inject(Menu menu, SwtVizStyleClass style) {
+    public void inject(Menu menu, MappedSwtVizStyleClass style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:
@@ -90,7 +90,7 @@ public class SwtInject {
             menu.setEnabled(style.getEnabled());
     }
 
-    public void inject(ScrollBar bar, SwtVizStyleClass style) {
+    public void inject(ScrollBar bar, MappedSwtVizStyleClass style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:
@@ -106,7 +106,7 @@ public class SwtInject {
             bar.setEnabled(style.getEnabled());
     }
 
-    public void inject(ToolTip tooltip, SwtVizStyleClass style) {
+    public void inject(ToolTip tooltip, MappedSwtVizStyleClass style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:

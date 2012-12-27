@@ -1,4 +1,4 @@
-package net.bodz.swt.gui.spec1;
+package net.bodz.swt.gui.style;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;

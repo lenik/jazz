@@ -1,4 +1,4 @@
-package net.bodz.swt.gui.spec1;
+package net.bodz.swt.gui.draw_f.dc;
 
 import org.eclipse.swt.graphics.GC;
 
@@ -12,6 +12,10 @@ import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFillType;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.IStrokeType;
+import net.bodz.swt.gui.style.SwtColor;
+import net.bodz.swt.gui.style.SwtFillPattern;
+import net.bodz.swt.gui.style.SwtFontType;
+import net.bodz.swt.gui.style.SwtStrokeType;
 
 public class SwtDrawContext2d
         extends AbstractDrawContext2d {
@@ -54,13 +58,13 @@ public class SwtDrawContext2d
     }
 
     @Override
-    public SwtStroke getStroke() {
-        return new SwtStroke.Ref(gc);
+    public SwtStrokeType getStroke() {
+        return new SwtStrokeType.Ref(gc);
     }
 
     @Override
     public void setStroke(IStrokeType _stroke) {
-        SwtStroke stroke = (SwtStroke) _stroke;
+        SwtStrokeType stroke = (SwtStrokeType) _stroke;
         gc.setLineCap(stroke.getCap());
         gc.setLineDash(stroke.getDash());
         gc.setLineJoin(stroke.getJoin());

@@ -29,11 +29,11 @@ import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.gui.api.AbstractCommand;
-import net.bodz.swt.gui.api.ICommand;
+import net.bodz.swt.t.model.AbstractCommand;
+import net.bodz.swt.t.model.ICommand;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtRenderer;
-import net.bodz.swt.viz.SwtVizStyleClass;
+import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 /**
  * @test R_ThrowableTest
@@ -51,7 +51,7 @@ public class R_Throwable
     static boolean showDebug = SystemProperties.isDevelopMode();
 
     @Override
-    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, final SwtVizStyleClass stylesheet,
+    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, final MappedSwtVizStyleClass stylesheet,
             final Composite parent, final int style)
             throws RenderException, SWTException {
 

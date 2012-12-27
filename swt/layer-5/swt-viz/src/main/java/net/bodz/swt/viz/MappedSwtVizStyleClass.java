@@ -1,32 +1,10 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.css3.ICss3StyleClass;
 import net.bodz.bas.gui.style.MappedGUIStyleClass;
-import net.bodz.bas.gui.style.IGUIStyleClass;
 
-public class SwtVizStyleClass
+public abstract class MappedSwtVizStyleClass
         extends MappedGUIStyleClass
         implements ISwtVizStyleClass /* , IDisposable */{
-
-    public SwtVizStyleClass(IGUIStyleClass parent) {
-        super(parent);
-    }
-
-    @Override
-    public ISwtVizStyleClass getParent() {
-        return (ISwtVizStyleClass) super.getParent();
-    }
-
-    @Override
-    public void setParent(ICss3StyleClass parent) {
-        if (parent == null)
-            parent = new StrictSwtVizStyleClass();
-        else {
-            if (!(parent instanceof ISwtVizStyleClass))
-                throw new IllegalArgumentException("Incompatible parent: " + parent);
-        }
-        super.setParent(parent);
-    }
 
     // @Override
     // public SwtColor getColor() {

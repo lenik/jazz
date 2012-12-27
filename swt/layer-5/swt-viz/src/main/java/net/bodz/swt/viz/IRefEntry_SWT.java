@@ -5,6 +5,6 @@ import net.bodz.bas.potato.ref.IRefEntry;
 public interface IRefEntry_SWT<T>
         extends IRefEntry<T> {
 
-    SwtVizStyleClass getStyle();
+    MappedSwtVizStyleClass getStyle();
 
 }

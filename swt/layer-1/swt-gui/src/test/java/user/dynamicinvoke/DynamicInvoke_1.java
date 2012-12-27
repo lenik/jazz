@@ -1,11 +1,11 @@
-package net.bodz.swt.gui.a;
+package user.dynamicinvoke;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.invoke.MethodType;
 
-public class Dyn1 {
+public class DynamicInvoke_1 {
 
     public void greet(Object a) {
         System.out.println("Hello, " + a);
@@ -23,10 +23,10 @@ public class Dyn1 {
         MethodType f1 = MethodType.genericMethodType(1);
         MethodType f2 = MethodType.genericMethodType(2);
 
-        MethodHandle greet1 = lookup.findVirtual(Dyn1.class, "greet", f1);
+        MethodHandle greet1 = lookup.findVirtual(DynamicInvoke_1.class, "greet", f1);
         // MethodHandle greet2 = lookup.findVirtual(Dyn1.class, "greet", f2);
 
-        Dyn1 a = new Dyn1();
+        DynamicInvoke_1 a = new DynamicInvoke_1();
         greet1.invoke(a, "Tom");
         // greet2.invoke(a, "Lucy", "Lily");
     }
