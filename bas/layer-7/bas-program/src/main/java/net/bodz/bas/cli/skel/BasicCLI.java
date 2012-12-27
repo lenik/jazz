@@ -36,7 +36,7 @@ import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.mda.xjdoc.model1.ArtifactDoc;
+import net.bodz.mda.xjdoc.model2.ArtifactDoc;
 
 /**
  * Basic CLI Framework
@@ -123,7 +123,7 @@ public abstract class BasicCLI
     }
 
     protected void _version(IPrintOut out) {
-        ArtifactDoc artifactDoc = getArtifactDoc();
+        ArtifactDoc artifactDoc = getXjdoc();
         ReleaseDescription release = artifactDoc.getReleaseDescription();
         out.printf("[%s] %s\n", artifactDoc.getDisplayName(), artifactDoc.getText().getHeadPar());
         out.printf("Written by %s,  Version %s,  Last updated at %s\n", //

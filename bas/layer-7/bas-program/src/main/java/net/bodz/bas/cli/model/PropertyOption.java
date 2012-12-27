@@ -5,7 +5,6 @@ import java.beans.PropertyDescriptor;
 import net.bodz.bas.potato.model.IProperty;
 import net.bodz.bas.potato.spi.bean.BeanProperty;
 import net.bodz.mda.xjdoc.model.MethodDoc;
-import net.bodz.mda.xjdoc.model1.ArtifactDoc;
 
 public class PropertyOption
         extends TransientOption {
@@ -17,7 +16,7 @@ public class PropertyOption
         super(propertyDescriptor.getName(), //
                 propertyDescriptor.getPropertyType(), //
                 propertyDescriptor.getReadMethod(), // Only annotations on the getter are used.
-                getterDoc.as(ArtifactDoc.class));
+                getterDoc);
         this.beanClass = propertyDescriptor.getReadMethod().getDeclaringClass();
         this.propertyDescriptor = propertyDescriptor;
     }

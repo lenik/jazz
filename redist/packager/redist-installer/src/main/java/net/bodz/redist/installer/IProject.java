@@ -6,7 +6,7 @@ import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.t.tree.legacy.ITreeCallback;
-import net.bodz.mda.xjdoc.model1.Author;
+import net.bodz.mda.xjdoc.model2.Author;
 
 public interface IProject
         extends IComponent {

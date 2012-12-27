@@ -14,11 +14,11 @@ import net.bodz.bas.rtx.Negotiation;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
-import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
-import net.bodz.mda.xjdoc.model1.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model1.AbstractXjdocElement;
 
 public abstract class TransientOption
-        extends AbstractArtifactElement
+        extends AbstractXjdocElement
         implements IOption {
 
     String name;
@@ -40,7 +40,7 @@ public abstract class TransientOption
 
     Object defaultValue;
 
-    public TransientOption(String name, Class<?> type, AnnotatedElement annotations, ArtifactDoc artifactDoc) {
+    public TransientOption(String name, Class<?> type, AnnotatedElement annotations, IJavaElementDoc xjdoc) {
         this.name = Strings.hyphenatize(name);
 
         if (type == null)
@@ -55,7 +55,7 @@ public abstract class TransientOption
         else
             valueType = type;
 
-        setArtifactDoc(artifactDoc);
+        setXjdoc(xjdoc);
     }
 
     @Override

@@ -4,11 +4,11 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.mda.xjdoc.model1.AbstractArtifactElement;
-import net.bodz.mda.xjdoc.model1.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model1.AbstractXjdocElement;
 
 public abstract class AbstractPotatoElement
-        extends AbstractArtifactElement
+        extends AbstractXjdocElement
         implements IPotatoElement {
 
     private String name;
@@ -26,7 +26,7 @@ public abstract class AbstractPotatoElement
     }
 
     @Override
-    public ArtifactDoc getArtifactDoc() {
+    public IJavaElementDoc getXjdoc() {
         // TODO ClassDocs.loadFromResource(getClass()).as(ArtifactDoc.class);
         throw new NotImplementedException();
     }
