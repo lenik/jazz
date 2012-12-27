@@ -1,6 +1,6 @@
 package user;
 
-import net.bodz.bas.model.meta.MaxLength;
+import net.bodz.bas.gui.validate.MaxLength;
 
 /**
  * Age/Sex/Location
