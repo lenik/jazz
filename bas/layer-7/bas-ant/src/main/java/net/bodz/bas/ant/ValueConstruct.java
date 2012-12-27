@@ -11,8 +11,10 @@ import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.t.factory.DecodeXMLFactory;
+import net.bodz.bas.t.factory.DecodeXMLFileFactory;
 import net.bodz.bas.t.factory.IFactory;
-import net.bodz.bas.util.Factories;
+import net.bodz.bas.t.factory.NewInstanceOfClassnameFactory;
 
 public class ValueConstruct
         extends WithParameters {
@@ -41,15 +43,15 @@ public class ValueConstruct
      *            not in the bootstrap classpath,
      */
     public void setClassName(int caller, String className) {
-        setFactory(new Factories.ByClassName(loader, className));
+        setFactory(new NewInstanceOfClassnameFactory(loader, className));
     }
 
     public void setXml(String xml) { // logger...
-        setFactory(new Factories.ByXML(xml, null));
+        setFactory(new DecodeXMLFactory(xml, null));
     }
 
     public void setXmlFile(File xmlFile) { // logger
-        setFactory(new Factories.ByXMLFile(xmlFile, null));
+        setFactory(new DecodeXMLFileFactory(xmlFile, null));
     }
 
     public void addConfiguredClasspath(Path path) {
