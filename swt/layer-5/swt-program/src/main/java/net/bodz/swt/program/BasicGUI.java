@@ -29,12 +29,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.c.java.util.LocaleTraits;
-import net.bodz.bas.cli.meta.StartMode;
-import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIException;
+import net.bodz.bas.program.meta.StartMode;
+import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.mda.xjdoc.model2.ArtifactDoc;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
@@ -54,7 +54,7 @@ import net.bodz.swt.c3.dialog.ThreadsMonitor;
  * @website http://www.bodz.net/products/BasicGUI
  */
 @StartMode(StartMode.GUI)
-public class BasicGUI
+public abstract class BasicGUI
         extends BasicCLI {
 
     /**

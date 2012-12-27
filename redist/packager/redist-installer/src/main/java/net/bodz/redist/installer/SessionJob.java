@@ -4,9 +4,9 @@ import java.util.List;
 
 import net.bodz.bas.c.reflect.Reflects;
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.exec.job.IJob;
+import net.bodz.bas.exec.job.Job;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.util.IJob;
-import net.bodz.bas.util.Job;
 
 public abstract class SessionJob
         extends Job {
