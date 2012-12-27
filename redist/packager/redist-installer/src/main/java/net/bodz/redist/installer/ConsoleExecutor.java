@@ -1,13 +1,13 @@
 package net.bodz.redist.installer;
 
 import net.bodz.bas.err.RecoverableExceptionEvent;
+import net.bodz.bas.exec.job.DurationChangeEvent;
+import net.bodz.bas.exec.job.ProgressChangeEvent;
+import net.bodz.bas.exec.job.StatusChangeEvent;
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.impl.ConsoleLogger;
-import net.bodz.bas.util.DurationChangeEvent;
-import net.bodz.bas.util.ProgressChangeEvent;
-import net.bodz.bas.util.StatusChangeEvent;
 
 public class ConsoleExecutor
         extends ProjectExecutor {

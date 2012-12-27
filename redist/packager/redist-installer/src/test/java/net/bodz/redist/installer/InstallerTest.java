@@ -2,8 +2,8 @@ package net.bodz.redist.installer;
 
 import org.junit.Test;
 
+import net.bodz.bas.exec.job.JobConfig;
 import net.bodz.bas.log.LogLevel;
-import net.bodz.bas.util.JobConfig;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.redist.installer.builtins.TestConfig;
 
