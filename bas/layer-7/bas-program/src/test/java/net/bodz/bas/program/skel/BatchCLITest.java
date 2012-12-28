@@ -3,7 +3,6 @@ package net.bodz.bas.program.skel;
 import java.io.IOException;
 import java.util.Map.Entry;
 
-import net.bodz.bas.potato.mda.tagbook.PotatoBook;
 import net.bodz.bas.program.model.IOption;
 import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.program.skel.BatchCLI;
@@ -14,6 +13,7 @@ import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.model2.Model2TagBook;
 import net.bodz.mda.xjdoc.tags.ITagBook;
 
 public class BatchCLITest
@@ -38,7 +38,7 @@ public class BatchCLITest
         BCharOut buf = new BCharOut();
         FlatfOutput out = new FlatfOutput(buf);
         doc.writeObject(out, Negotiation.list(//
-                Negotiation.parameter(ITagBook.class, new PotatoBook())));
+                Negotiation.parameter(ITagBook.class, new Model2TagBook())));
         System.out.println(buf);
     }
 
