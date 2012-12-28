@@ -6,9 +6,9 @@ import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 
-public abstract class AbstractVisualization
-        extends TypePoMap<IRenderer>
-        implements II18nCapable  {
+public abstract class AbstractViewBuildStrategy
+        extends TypePoMap<IViewBuilder>
+        implements IViewBuildStrategy, II18nCapable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,12 +19,12 @@ public abstract class AbstractVisualization
      * @throws NullPointerException
      *             if obj is <code>null</code>.
      */
-    public Object render(Object context, IRefEntry<?> entry)
-            throws RenderException {
-        IRenderer renderer = findRenderer(entry);
+    public Object buildView(Object ctx, IRefEntry<?> entry, ViewBuildOption... options)
+            throws ViewBuilderException {
+        IViewBuilder renderer = findViewBuilder(entry);
         if (renderer == null)
-            throw new RenderException("Don't know how to render " + entry.getValueType());
-        return renderer.render(context, entry);
+            throw new ViewBuilderException("Don't know how to render " + entry.getValueType());
+        return renderer.buildView(ctx, entry);
     }
 
     /**
@@ -32,14 +32,15 @@ public abstract class AbstractVisualization
      *             if var is null.
      * @return <code>null</code> if no matching renderer.
      */
-    protected IRenderer findRenderer(IRefEntry<?> entry) {
+    protected IViewBuilder findViewBuilder(IRefEntry<?> entry) {
         if (entry == null)
             throw new NullPointerException("entry");
         Class<?> type = entry.getValueType();
-        return findRenderer(type);
+        return findViewBuilder(type);
     }
 
-    protected IRenderer findRenderer(Class<?> type) {
+    @Override
+    public IViewBuilder findViewBuilder(Class<?> type) {
         Class<?> usingType = floorKey(type);
         if (usingType == null) {
             if (type.isPrimitive()) {

@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.ia;
+package net.bodz.swt.gui.dialog;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.gui.dialog.AbstractTryBlock;

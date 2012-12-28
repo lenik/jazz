@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.builtin;
+package net.bodz.swt.viz.form.vbo;
 
 import java.io.File;
 import java.util.EventObject;
@@ -13,8 +13,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.potato.ref.IRefDescriptor;
+import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
@@ -26,17 +25,17 @@ import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtRenderer;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtViewBuilder;
 
-public class R_File
-        extends SwtRenderer {
+public class FileVbo
+        extends SwtViewBuilder {
 
     @Override
-    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
             final Composite parent, final int style)
-            throws RenderException, SWTException {
+            throws ViewBuilderException, SWTException {
 
         IRefDescriptor descriptor = entry.getDescriptor();
 
@@ -71,7 +70,7 @@ public class R_File
             try {
                 validator = Traits.getTrait(valueType, IValidator.class);
             } catch (QueryException e) {
-                throw new RenderException(tr._("Can\'t guess parser for number class: ") + valueType);
+                throw new ViewBuilderException(tr._("Can\'t guess parser for number class: ") + valueType);
             }
 
             ControlAdapters.autocommitForFocus(fileText, new CommitAdapter(//
@@ -103,4 +102,5 @@ public class R_File
         rc.addEffects(comp, stylesheet);
         return comp;
     }
+
 }

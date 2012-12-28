@@ -5,7 +5,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.swt.viz.IRefEntry_SWT;
+import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class SwtInject {
@@ -17,7 +17,7 @@ public class SwtInject {
         return styleBits;
     }
 
-    public static int styleFx(int styleBits, IRefEntry_SWT<?> entry) {
+    public static int styleFx(int styleBits, ISwtGUIRefEntry<?> entry) {
         return styleFx(styleBits, entry.getStyle());
     }
 

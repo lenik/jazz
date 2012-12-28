@@ -7,14 +7,14 @@ import org.eclipse.swt.widgets.Control;
 import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.color.IColor_RGB24;
-import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.swt.viz.IRefEntry_SWT;
+import net.bodz.bas.gui.viz.ViewBuilderException;
+import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class SwtStyleHelper {
 
-    public void addEffects(Control control, IRefEntry_SWT<?> entry)
-            throws RenderException {
+    public void addEffects(Control control, ISwtGUIRefEntry<?> entry)
+            throws ViewBuilderException {
         MappedSwtVizStyleClass stylesheet = entry.getStyle();
         if (stylesheet == null)
             return;

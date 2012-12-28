@@ -11,9 +11,10 @@ import user.School;
 import user.SimplePerson;
 
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
+import net.bodz.swt.viz.grid.GridViewBuildStrategy;
 
 /**
  * @style width: 500; height: 400
@@ -43,11 +44,11 @@ public class GridTest_SimpleObject
         };
 
         SwtRenderContext rc = new SwtRenderContext();
-        IRefEntry_SWT<School> schoolVar = GUIVars.wrap(school);
-        GridVisualization style = new GridVisualization();
+        ISwtGUIRefEntry<School> schoolVar = GUIVars.wrap(school);
+        GridViewBuildStrategy style = new GridViewBuildStrategy();
         try {
             style.render(rc, schoolVar, body, SWT.BORDER);
-        } catch (RenderException e) {
+        } catch (ViewBuilderException e) {
             throw new GUIException(e);
         } catch (SWTException e) {
             throw new GUIException(e);

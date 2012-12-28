@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.builtin;
+package net.bodz.swt.viz.form.vbo;
 
 import java.io.IOException;
 import java.util.EventObject;
@@ -23,7 +23,7 @@ import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.util.EventHandler;
-import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
@@ -32,14 +32,14 @@ import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.model.AbstractCommand;
 import net.bodz.swt.gui.model.ICommand;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtRenderer;
+import net.bodz.swt.viz.SwtViewBuilder;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 /**
  * @test R_ThrowableTest
  */
-public class R_Throwable
-        extends SwtRenderer {
+public class ExceptionVbo
+        extends SwtViewBuilder {
 
     static final String expandedIcon = "/icons/full/obj16/remove_correction.gif";
     static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";
@@ -51,9 +51,9 @@ public class R_Throwable
     static boolean showDebug = SystemProperties.isDevelopMode();
 
     @Override
-    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, final MappedSwtVizStyleClass stylesheet,
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, final MappedSwtVizStyleClass stylesheet,
             final Composite parent, final int style)
-            throws RenderException, SWTException {
+            throws ViewBuilderException, SWTException {
 
         final Display display = parent == null ? Display.getCurrent() : parent.getDisplay();
 

@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.builtin;
+package net.bodz.swt.viz.form.vbo;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
@@ -19,7 +19,7 @@ import net.bodz.bas.c.type.TypeName;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
@@ -27,11 +27,11 @@ import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.LineLayout;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtRenderer;
+import net.bodz.swt.viz.SwtViewBuilder;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
-public class R_creator
-        extends SwtRenderer {
+public class CreatorVbo
+        extends SwtViewBuilder {
 
     static String createIcon = "/icons/full/obj16/add_obj.gif";
     static String deleteIcon = "/icons/full/obj16/delete_obj.gif";
@@ -80,9 +80,9 @@ public class R_creator
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass styleClass, Composite parent,
+    public Control buildView(final SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass styleClass, Composite parent,
             int _style)
-            throws RenderException, SWTException {
+            throws ViewBuilderException, SWTException {
 
         Menu createMenu = new Menu(parent);
         Class<?> type = entry.getValueType();

@@ -2,7 +2,7 @@ package net.bodz.swt.viz;
 
 import net.bodz.bas.potato.ref.IRefEntry;
 
-public interface IRefEntry_SWT<T>
+public interface ISwtGUIRefEntry<T>
         extends IRefEntry<T> {
 
     MappedSwtVizStyleClass getStyle();

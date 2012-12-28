@@ -1,23 +1,23 @@
 package net.bodz.bas.gui.viz;
 
-public class RenderException
+public class ViewBuilderException
         extends VisualizationException {
 
     private static final long serialVersionUID = 1L;
 
-    public RenderException() {
+    public ViewBuilderException() {
         super();
     }
 
-    public RenderException(String message, Throwable cause) {
+    public ViewBuilderException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public RenderException(String message) {
+    public ViewBuilderException(String message) {
         super(message);
     }
 
-    public RenderException(Throwable cause) {
+    public ViewBuilderException(Throwable cause) {
         super(cause);
     }
 

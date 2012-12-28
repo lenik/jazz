@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.builtin;
+package net.bodz.swt.viz.form.vbo;
 
 import java.util.Date;
 
@@ -15,27 +15,27 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.gui.css3.Border;
-import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.model.meta.MaxLength;
+import net.bodz.bas.gui.validate.MaxLength;
+import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtRenderer;
+import net.bodz.swt.viz.SwtViewBuilder;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
-public class R_Date
-        extends SwtRenderer {
+public class DateVbo
+        extends SwtViewBuilder {
 
     protected String format(Date date) {
         return String.valueOf(date);
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass styleClass,
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass styleClass,
             Composite parent, int style)
-            throws RenderException, SWTException {
+            throws ViewBuilderException, SWTException {
 
         IRefDescriptor descriptor = entry.getDescriptor();
 
