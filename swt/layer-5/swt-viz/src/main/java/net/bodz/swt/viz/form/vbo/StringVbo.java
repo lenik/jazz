@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.builtin;
+package net.bodz.swt.viz.form.vbo;
 
 import java.util.EventObject;
 
@@ -10,8 +10,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.gui.css3.Border;
-import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.model.meta.MaxLength;
+import net.bodz.bas.gui.validate.MaxLength;
+import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.potato.ref.IRefDescriptor;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
@@ -24,16 +24,16 @@ import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtRenderer;
+import net.bodz.swt.viz.SwtViewBuilder;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
-public class R_Text
-        extends SwtRenderer {
+public class StringVbo
+        extends SwtViewBuilder {
 
     @Override
-    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
             Composite parent, int style)
-            throws RenderException, SWTException {
+            throws ViewBuilderException, SWTException {
 
         IRefDescriptor descriptor = entry.getDescriptor();
         boolean readOnly = !descriptor.isWritable();
@@ -83,7 +83,7 @@ public class R_Text
                 parser = Traits.getTrait(type, IParser.class);
                 validator = Traits.getTrait(type, IValidator.class);
             } catch (QueryException e) {
-                throw new RenderException(tr._("Can\'t guess parser for number class: ") + type);
+                throw new ViewBuilderException(tr._("Can\'t guess parser for number class: ") + type);
             }
 
             ControlAdapters.autocommitForFocus(text, new CommitAdapter(rc.getUserDialogs(text)) {

@@ -2,6 +2,8 @@ package net.bodz.swt.viz.ia;
 
 import org.junit.Test;
 
+import net.bodz.swt.gui.dialog.DialogTryBlock;
+
 public class DialogTryBlockTest {
 
     @Test

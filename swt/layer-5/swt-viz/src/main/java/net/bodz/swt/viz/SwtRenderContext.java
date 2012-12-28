@@ -7,7 +7,7 @@ import net.bodz.bas.gui.css3.property.VisibilityMode;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFontType;
-import net.bodz.bas.gui.viz.RenderException;
+import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.swt.c3.dialog.SwtDialogs;
 import net.bodz.swt.gui.model.ICommand;
 import net.bodz.swt.gui.style.SwtColor;
@@ -18,8 +18,8 @@ public class SwtRenderContext {
         return new SwtDialogs(active.getShell());
     }
 
-    public void addEffects(Control control, IRefEntry_SWT<?> entry)
-            throws RenderException {
+    public void addEffects(Control control, ISwtGUIRefEntry<?> entry)
+            throws ViewBuilderException {
         MappedSwtVizStyleClass stylesheet = entry.getStyle();
         if (stylesheet == null)
             return;
