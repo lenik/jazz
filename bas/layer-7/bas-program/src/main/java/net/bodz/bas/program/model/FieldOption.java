@@ -2,8 +2,8 @@ package net.bodz.bas.program.model;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.potato.model.IProperty;
-import net.bodz.bas.potato.spi.reflect.ReflectProperty;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.provider.reflect.ReflectProperty;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 
 public class FieldOption

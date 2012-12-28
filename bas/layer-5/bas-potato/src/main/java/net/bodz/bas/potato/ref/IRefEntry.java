@@ -1,14 +1,11 @@
 package net.bodz.bas.potato.ref;
 
+import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.t.ref.Ref;
 
 public interface IRefEntry<T>
-        extends Ref<T>, IValueChangeSource {
+        extends Ref<T>, IElement, IValueChangeSource {
 
-    IRefDescriptor getDescriptor();
-
-    String getName();
-
-    // void setName(String name);
+    boolean isValueChangeSource();
 
 }

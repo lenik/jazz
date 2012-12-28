@@ -23,7 +23,7 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.source.OverrideOption;
-import net.bodz.bas.potato.model.IType;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.program.IProgram;
 import net.bodz.bas.program.model.ArtifactObjectWithOptions;
 import net.bodz.bas.program.model.HelpPageFormatter;

@@ -137,7 +137,7 @@ public class MethodSignature {
         return equals(o);
     }
 
-    public Method getMethod(Class<?> clazz) {
+    public Method findMethod(Class<?> clazz) {
         try {
             return clazz.getMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -145,7 +145,7 @@ public class MethodSignature {
         }
     }
 
-    public Method getDeclaredMethod(Class<?> clazz) {
+    public Method findDeclaredMethod(Class<?> clazz) {
         try {
             return clazz.getDeclaredMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {

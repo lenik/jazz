@@ -3,13 +3,14 @@ package net.bodz.bas.trait.spi;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.rtx.IQueryProxy;
 import net.bodz.bas.rtx.QueryException;
+import net.bodz.bas.t.order.IPriority;
 
 /**
  * Provide to resolve specific traits for a given class or object.
  */
 @IndexedType
 public interface ITraitsProvider
-        extends IQueryProxy {
+        extends IPriority, IQueryProxy {
 
     /**
      * High priority.
@@ -40,6 +41,7 @@ public interface ITraitsProvider
      * @see #PRIORITY_NORMAL
      * @see #PRIORITY_LOW
      */
+    @Override
     int getPriority();
 
     /**

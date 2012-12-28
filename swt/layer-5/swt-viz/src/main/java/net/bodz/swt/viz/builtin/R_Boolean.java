@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.builtin;
+package net.bodz.swt.viz.form.vbo;
 
 import java.util.EventObject;
 
@@ -10,9 +10,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.potato.model.IType;
-import net.bodz.bas.potato.ref.IRefDescriptor;
+import net.bodz.bas.gui.viz.ViewBuilderException;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
@@ -20,17 +19,17 @@ import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtRenderer;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtViewBuilder;
 
-public class R_Boolean
-        extends SwtRenderer {
+public class BooleanVbo
+        extends SwtViewBuilder {
 
     @Override
-    public Control render(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
             Composite parent, int style)
-            throws RenderException, SWTException {
+            throws ViewBuilderException, SWTException {
 
         final IRefDescriptor descriptor = entry.getDescriptor();
 

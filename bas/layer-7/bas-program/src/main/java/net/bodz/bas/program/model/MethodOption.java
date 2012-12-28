@@ -3,7 +3,7 @@ package net.bodz.bas.program.model;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 
 public class MethodOption

@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.element.IProperty;
 
 public class PropertyRefEntry<T>
         extends AbstractRefEntry<T> {
@@ -11,14 +11,9 @@ public class PropertyRefEntry<T>
     IProperty property;
 
     public PropertyRefEntry(Object instance, IProperty property) {
-        super(property.getName());
+        super(property);
         this.instance = instance;
         this.property = property;
-    }
-
-    @Override
-    public IRefDescriptor getDescriptor() {
-        return new PropertyRefDescriptor(property);
     }
 
     @Override
@@ -43,6 +38,16 @@ public class PropertyRefEntry<T>
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void remove() {
+        set(null);
+    }
+
+    @Override
+    public boolean isValueChangeSource() {
+        return property.isPropertyChangeSource();
     }
 
     @Override

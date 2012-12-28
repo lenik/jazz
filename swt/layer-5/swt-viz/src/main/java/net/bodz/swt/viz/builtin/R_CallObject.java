@@ -1,4 +1,4 @@
-package net.bodz.swt.viz.builtin;
+package net.bodz.swt.viz.form.vbo;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -11,34 +11,32 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
-import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.potato.model.invoke.Invocation;
-import net.bodz.bas.potato.model.invoke.InvocationDescriptor;
-import net.bodz.bas.potato.model.invoke.InvocationRefcomp;
+import net.bodz.bas.gui.viz.ViewBuilderException;
+import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.potato.ref.IRefEntry;
-import net.bodz.swt.viz.GridVisualization;
-import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtRenderer;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtViewBuilder;
+import net.bodz.swt.viz.grid.GridViewBuildStrategy;
 
-public class R_CallObject
-        extends SwtRenderer {
+public class InvocationVbo
+        extends SwtViewBuilder {
 
-    protected final GridVisualization gridStyle;
+    protected final GridViewBuildStrategy gridStyle;
 
-    public R_CallObject(GridVisualization gridStyle) {
+    public InvocationVbo(GridViewBuildStrategy gridStyle) {
         this.gridStyle = gridStyle;
     }
 
     @Override
-    public Control render(final SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass styleClass, Composite parent,
-            int _style)
-            throws RenderException, SWTException {
+    public Control buildView(final SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass styleClass,
+            Composite parent, int _style)
+            throws ViewBuilderException, SWTException {
 
-        if (!(entry instanceof InvocationRefcomp))
+        if (!(entry instanceof IInvocationRefcomp))
             throw new IllegalArgumentException(tr._("R_CallObject.notInvocationRefcomp") + entry);
 
-        final InvocationRefcomp refcomp = (InvocationRefcomp) entry;
+        final IInvocationRefcomp refcomp = (AbstractInvocationRefcomp) entry;
         InvocationDescriptor descriptor = refcomp.getDescriptor();
         MappedSwtVizStyleClass style = descriptor.getStyle();
 

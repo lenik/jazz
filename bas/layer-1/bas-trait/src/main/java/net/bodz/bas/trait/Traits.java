@@ -4,8 +4,8 @@ import java.util.*;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.rtx.QueryException;
+import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.trait.spi.ITraitsProvider;
-import net.bodz.bas.trait.util.TraitProviderComparator;
 
 public class Traits {
 
@@ -19,7 +19,7 @@ public class Traits {
         else
             traitsProviderLoader.reload();
 
-        traitsProviders = new TreeSet<ITraitsProvider>(TraitProviderComparator.getInstance());
+        traitsProviders = new TreeSet<ITraitsProvider>(PriorityComparator.INSTANCE);
 
         Iterator<ITraitsProvider> traitsProviderIterator = traitsProviderLoader.iterator();
         while (traitsProviderIterator.hasNext()) {
