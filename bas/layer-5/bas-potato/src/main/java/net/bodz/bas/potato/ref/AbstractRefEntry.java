@@ -2,27 +2,17 @@ package net.bodz.bas.potato.ref;
 
 import java.util.Map;
 
-import net.bodz.bas.t.ref.AbstractRef;
+import net.bodz.bas.i18n.dom1.DecoratedElement;
+import net.bodz.bas.i18n.dom1.IElement;
 
 public abstract class AbstractRefEntry<T>
-        extends AbstractRef<T>
+        extends DecoratedElement
         implements IRefEntry<T>, Map.Entry<String, T> {
 
     private static final long serialVersionUID = 1L;
 
-    protected String name;
-
-    public AbstractRefEntry(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public AbstractRefEntry(IElement element) {
+        super(element);
     }
 
     // -o Map.Entry
@@ -42,6 +32,11 @@ public abstract class AbstractRefEntry<T>
         T oldValue = get();
         set(value);
         return oldValue;
+    }
+
+    @Override
+    public boolean isValueChangeSource() {
+        return false;
     }
 
     @Override

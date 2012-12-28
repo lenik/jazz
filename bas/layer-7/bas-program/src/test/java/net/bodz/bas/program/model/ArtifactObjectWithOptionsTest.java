@@ -4,10 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import net.bodz.bas.potato.Potatoes;
-import net.bodz.bas.potato.model.IProperty;
-import net.bodz.bas.potato.model.IType;
-import net.bodz.bas.program.model.ArtifactObjectWithOptions;
+import net.bodz.bas.potato.PotatoLoader;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IType;
 
 public class ArtifactObjectWithOptionsTest
         extends ArtifactObjectWithOptions {
@@ -29,7 +28,7 @@ public class ArtifactObjectWithOptionsTest
     @Test
     public void testReceive()
             throws Exception {
-        IType type = Potatoes.getType(getClass());
+        IType type = PotatoLoader.getType(getClass());
 
         for (IProperty property : type.getProperties())
             System.out.println("prop: " + property + ": " + property.getClass());

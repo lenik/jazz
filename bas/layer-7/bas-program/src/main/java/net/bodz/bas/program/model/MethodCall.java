@@ -1,7 +1,7 @@
 package net.bodz.bas.program.model;
 
 /**
- * @deprecated See {@link net.bodz.bas.potato.model.invoke.Invocation}
+ * @deprecated See {@link net.bodz.bas.potato.invoke.Invocation}
  */
 @Deprecated
 public class MethodCall {

@@ -10,7 +10,7 @@ import java.util.Set;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.program.skel.CLISyntaxException;
 import net.bodz.mda.xjdoc.model1.SemiMutableXjdocElement;
 

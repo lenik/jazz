@@ -1,4 +1,4 @@
-package net.bodz.swt.viz;
+package net.bodz.swt.viz.grid;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -11,17 +11,20 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.gui.viz.RenderException;
-import net.bodz.bas.potato.model.invoke.Invocation;
-import net.bodz.bas.potato.ref.IRefDescriptor;
+import net.bodz.bas.gui.viz.ViewBuilderException;
+import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.viz.builtin.R_CallObject;
+import net.bodz.swt.viz.ISwtGUIRefEntry;
+import net.bodz.swt.viz.MappedSwtVizStyleClass;
+import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.SwtViewBuildStrategy;
+import net.bodz.swt.viz.form.vbo.InvocationVbo;
 import net.bodz.swt.viz.util.ModifierIcon;
 
-public class GridVisualization
-        extends SwtVisualization {
+public class GridViewBuildStrategy
+        extends SwtViewBuildStrategy {
 
     private static final long serialVersionUID = -6476584130668546414L;
 
@@ -40,11 +43,11 @@ public class GridVisualization
 
     protected final GridConfig config;
 
-    public GridVisualization(GridConfig config) {
+    public GridViewBuildStrategy(GridConfig config) {
         this.config = config;
     }
 
-    public GridVisualization() {
+    public GridViewBuildStrategy() {
         this(GridConfig.getDefault());
     }
 
@@ -52,7 +55,7 @@ public class GridVisualization
     protected void setup() {
         super.setup();
         put(Object.class, new R_Object(this));
-        put(Invocation.class, new R_CallObject(this));
+        put(Invocation.class, new InvocationVbo(this));
     }
 
     private static ModifierIcon fieldIcons;
@@ -75,22 +78,22 @@ public class GridVisualization
     }
 
     public Composite renderStruct(final SwtRenderContext rc, IRefcomp<?> struct, Composite parent, int _style)
-            throws RenderException, SWTException {
+            throws ViewBuilderException, SWTException {
         Composite grid = new Composite(parent, _style);
         // icon label control
         GridLayout gridLayout = new GridLayout(3, false);
         grid.setLayout(gridLayout);
         for (IRefEntry<?> ent : struct.getRefEntries()) {
             MappedSwtVizStyleClass style = null;
-            if (ent instanceof IRefEntry_SWT<?>)
-                style = ((IRefEntry_SWT<?>) ent).getStyle();
+            if (ent instanceof ISwtGUIRefEntry<?>)
+                style = ((ISwtGUIRefEntry<?>) ent).getStyle();
             renderChild(rc, grid, ent, style);
         }
         return grid;
     }
 
     void renderChild(final SwtRenderContext rc, Composite grid, IRefEntry<?> entry, MappedSwtVizStyleClass style)
-            throws RenderException, SWTException {
+            throws ViewBuilderException, SWTException {
         IRefDescriptor descriptor = entry.getDescriptor();
         String name = descriptor.getName();
 
@@ -117,7 +120,7 @@ public class GridVisualization
             }
             iconLabel.setImage(icon);
         } catch (CreateException e) {
-            throw new RenderException(tr._("Failed to render icon"), e);
+            throw new ViewBuilderException(tr._("Failed to render icon"), e);
         }
 
         // Column #2
@@ -130,7 +133,7 @@ public class GridVisualization
 
         // Column #3
         Control child;
-        child = GridVisualization.this.render(rc, entry, grid, styleFx(SWT.NONE, style));
+        child = GridViewBuildStrategy.this.render(rc, entry, grid, styleFx(SWT.NONE, style));
 
         Point iconz = iconLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point labelz = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);

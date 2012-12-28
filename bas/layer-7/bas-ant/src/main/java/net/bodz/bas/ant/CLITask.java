@@ -14,7 +14,7 @@ import org.apache.tools.ant.Task;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.meta.source.UnderDevelopment;
-import net.bodz.bas.potato.model.IType;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.program.skel.CLISyntaxException;

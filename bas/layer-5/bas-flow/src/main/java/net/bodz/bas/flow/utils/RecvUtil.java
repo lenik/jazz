@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.flow.stream.IReceiverEx;
-import net.bodz.bas.potato.model.IMethod;
+import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.util.TraitEntryLoader;
 
 public class RecvUtil {

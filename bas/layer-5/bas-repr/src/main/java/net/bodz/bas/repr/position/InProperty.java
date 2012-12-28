@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.position;
 
-import net.bodz.bas.potato.model.IProperty;
+import net.bodz.bas.potato.element.IProperty;
 
 public class InProperty
         extends AbstractObjectOccurrence {

@@ -2,8 +2,8 @@ package net.bodz.bas.program.model;
 
 import java.beans.PropertyDescriptor;
 
-import net.bodz.bas.potato.model.IProperty;
-import net.bodz.bas.potato.spi.bean.BeanProperty;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.provider.bean.BeanProperty;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 
 public class PropertyOption

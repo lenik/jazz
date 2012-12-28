@@ -1,2 +1,1 @@
-net.bodz.bas.potato.spi.bean.BeanPotatoProvider
-net.bodz.bas.potato.spi.reflect.ReflectPotatoProvider
+net.bodz.bas.potato.PotatoTraitsProvider

@@ -5,8 +5,8 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.potato.model.IProperty;
-import net.bodz.bas.potato.model.IPropertyMap;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IPropertyMap;
 import net.bodz.bas.trait.Traits;
 
 public class MapBinding {
