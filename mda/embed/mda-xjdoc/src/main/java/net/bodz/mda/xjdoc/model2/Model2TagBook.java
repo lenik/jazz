@@ -1,22 +1,19 @@
-package net.bodz.bas.potato.mda.tagbook;
+package net.bodz.mda.xjdoc.model2;
 
-import net.bodz.bas.potato.model.IPotatoElement;
 import net.bodz.mda.xjdoc.tags.DocTagType;
 import net.bodz.mda.xjdoc.tags.TagBook;
 import net.bodz.mda.xjdoc.tags.URLTagType;
 import net.bodz.mda.xjdoc.tags.WordsTagType;
 
 /**
- * Potato tag book.
- * 
  * This tag book defines tags commonly used by the facade of applications.
  * 
- * @name The Potato Tag Book
+ * @name Model-2 Tag Book
+ * @name.zh_CN 二级模型标签书
  * @tags tags predefined meta-model
- * @see IPotatoElement
  * @site http://www.example.com
  */
-public class PotatoBook
+public class Model2TagBook
         extends TagBook {
 
     {
