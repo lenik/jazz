@@ -50,7 +50,7 @@ public class XDomainString
     @Override
     public String toString() {
         String path = LocaleColo.getInstance().getPath();
-        String leaf = get(path);
+        String leaf = getNearest(path);
         return leaf;
     }
 
