@@ -1,12 +1,12 @@
 package net.bodz.mda.xjdoc.user.xjl;
 
 import net.bodz.mda.xjdoc.tags.DocTagType;
-import net.bodz.mda.xjdoc.tags.TagBook;
+import net.bodz.mda.xjdoc.tags.TagLibrary;
 
-public class AnimalTagBook
-        extends TagBook {
+public class AnimalTagLibrary
+        extends TagLibrary {
 
-    public AnimalTagBook() {
+    public AnimalTagLibrary() {
         setTagType("color", DocTagType.getInstance());
     }
 

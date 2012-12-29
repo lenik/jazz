@@ -20,10 +20,10 @@ import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.tags.ITagBook;
-import net.bodz.mda.xjdoc.tags.JavadocTagBook;
-import net.bodz.mda.xjdoc.tags.MergedTagBook;
-import net.bodz.mda.xjdoc.tags.TagBooks;
+import net.bodz.mda.xjdoc.tags.ITagLibrary;
+import net.bodz.mda.xjdoc.tags.JavadocTagLibrary;
+import net.bodz.mda.xjdoc.tags.TagLibraryManager;
+import net.bodz.mda.xjdoc.tags.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.shared.mojo.AbstractResourceGeneratorMojo;
 
@@ -65,21 +65,21 @@ public class ClassDocBuilderMojo
     XDomainString missingDoc;
 
     /**
-     * Xjdoc book names.
+     * Xjdoc taglib names.
      * 
-     * This can be the FQCN of the {@link ITagBook} implementation, or predefined language name
+     * This can be the FQCN of the {@link ITagLibrary} implementation, or predefined language name
      * includes:
      * <ul>
-     * <li>javadoc: {@link JavadocTagBook}
+     * <li>javadoc: {@link JavadocTagLibrary}
      * </ul>
      * 
-     * @parameter expression="${classdoc.book}" default-value="javadoc"
+     * @parameter expression="${classdoc.taglibs}" default-value="javadoc"
      */
-    MergedTagBook books;
+    TagLibrarySet taglibs;
 
     public ClassDocBuilderMojo() {
-        books = new MergedTagBook();
-        setBooks("javadoc");
+        taglibs = new TagLibrarySet();
+        setTaglibs("javadoc");
     }
 
     public boolean isTestClasses() {
@@ -112,22 +112,22 @@ public class ClassDocBuilderMojo
         this.missingDoc = XDomainString.parseMultiLang(missingDoc);
     }
 
-    public String getBooks() {
+    public String getTaglibs() {
         StringBuilder sb = null;
-        for (ITagBook book : books) {
+        for (ITagLibrary taglib : taglibs) {
             if (sb == null)
                 sb = new StringBuilder();
             else
                 sb.append(", ");
-            String bookName = TagBooks.getName(book);
-            sb.append(bookName);
+            String name = TagLibraryManager.nameOf(taglib);
+            sb.append(name);
         }
         return sb.toString();
     }
 
-    public synchronized void setBooks(String bookNames) {
-        // getLog().info("Set-Books: " + bookNames);
-        books = TagBooks.parse(bookNames);
+    public synchronized void setTaglibs(String taglibNames) {
+        // getLog().info("Set-Books: " + taglibNames);
+        taglibs = TagLibraryManager.parseSet(taglibNames);
     }
 
     @Override
@@ -164,7 +164,7 @@ public class ClassDocBuilderMojo
             // sourceFileImports.add(importFqcn);
 
             for (JavaClass jclass : jsource.getClasses()) {
-                ClassDocBuilder builder = new ClassDocBuilder(books);
+                ClassDocBuilder builder = new ClassDocBuilder(taglibs);
                 // builder.setCreateClassImports(true);
                 ClassDoc classDoc = builder.buildClass(jclass);
                 // builder.setMissingDoc(missingDoc);
@@ -179,7 +179,7 @@ public class ClassDocBuilderMojo
                 ImportMap classImports = classDoc.getOrCreateImports();
 
                 INegotiation negotiation = list(//
-                        option(ITagBook.class, books), //
+                        option(ITagLibrary.class, taglibs), //
                         option(ImportMap.class, classImports));
 
                 IStreamOutputTarget outTarget;

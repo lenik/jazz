@@ -15,9 +15,10 @@ import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.conv.ClassDocFlatfLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.tags.ITagBook;
-import net.bodz.mda.xjdoc.tags.TagBooks;
-import net.bodz.mda.xjdoc.user.xjl.AnimalTagBook;
+import net.bodz.mda.xjdoc.tags.ITagLibrary;
+import net.bodz.mda.xjdoc.tags.TagLibraryManager;
+import net.bodz.mda.xjdoc.tags.TagLibrarySet;
+import net.bodz.mda.xjdoc.user.xjl.AnimalTagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -36,8 +37,8 @@ public class QdoxDog
         ClassLibrary syslib = new ClassLibrary(scl);
         JavaDocBuilder javaDocBuilder = new JavaDocBuilder(syslib);
 
-        TagBooks.register("animal", new AnimalTagBook());
-        ITagBook book = TagBooks.parse("javadoc, animal");
+        TagLibraryManager.register("animal", new AnimalTagLibrary());
+        TagLibrarySet taglibs = TagLibraryManager.parseSet("javadoc, animal");
 
         MavenProjectOrigin po = MavenProjectOrigin.fromClass(Animal.class);
 
@@ -52,14 +53,14 @@ public class QdoxDog
             // String packageName = jsource.getPackageName();
 
             for (JavaClass jclass : jsource.getClasses()) {
-                ClassDocBuilder builder = new ClassDocBuilder(book);
+                ClassDocBuilder builder = new ClassDocBuilder(taglibs);
                 ClassDoc classDoc = builder.buildClass(jclass);
 
                 String fqcn = jclass.getFullyQualifiedName();
                 ImportMap builderMap = classDoc.getOrCreateImports();
 
                 INegotiation n_ffout = list(//
-                        option(ITagBook.class, book), //
+                        option(ITagLibrary.class, taglibs), //
                         option(ImportMap.class, builderMap));
 
                 BCharOut buf = new BCharOut();
@@ -71,7 +72,7 @@ public class QdoxDog
 
                 StringSource ffSource = new StringSource(ff);
 
-                ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(book);
+                ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(taglibs);
                 ClassDoc doc2 = ffLoader.load(fqcn, ffSource);
 
                 BCharOut buf2 = new BCharOut();

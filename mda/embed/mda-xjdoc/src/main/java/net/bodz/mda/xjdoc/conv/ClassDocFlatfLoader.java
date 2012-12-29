@@ -13,16 +13,16 @@ import net.bodz.bas.text.flatf.FlatfInput;
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfInput;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.tags.ITagBook;
+import net.bodz.mda.xjdoc.tags.ITagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 public class ClassDocFlatfLoader
         extends FlatfLoader {
 
-    ITagBook book;
+    ITagLibrary taglib;
 
-    public ClassDocFlatfLoader(ITagBook book) {
-        this.book = book;
+    public ClassDocFlatfLoader(ITagLibrary taglib) {
+        this.taglib = taglib;
     }
 
     public final ClassDoc load(String fqcn, IStreamInputSource inputSource)
@@ -43,7 +43,7 @@ public class ClassDocFlatfLoader
         ImportMap importMap = classDoc.getOrCreateImports();
 
         INegotiation negotiation = list(//
-                option(ITagBook.class, book), //
+                option(ITagLibrary.class, taglib), //
                 option(ImportMap.class, importMap));
 
         super.load(in, classDoc, negotiation);

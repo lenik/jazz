@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.tags;
 
-public class JavadocTagBook
-        extends TagBook {
+public class JavadocTagLibrary
+        extends TagLibrary {
 
     {
         setTagType("author", DocTagType.getInstance().repeat());
