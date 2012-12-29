@@ -5,7 +5,7 @@ import java.net.URL;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.tags.JavadocTagLibrary;
+import net.bodz.mda.xjdoc.model.javadoc.JavadocTagLibrary;
 
 public class ClassDocLoader {
 

@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
-import net.bodz.mda.xjdoc.model1.AbstractXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
 public abstract class AbstractPotatoElement
         extends AbstractXjdocElement

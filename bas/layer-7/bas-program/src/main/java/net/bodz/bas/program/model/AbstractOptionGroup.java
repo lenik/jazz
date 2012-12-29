@@ -12,7 +12,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.program.skel.CLISyntaxException;
-import net.bodz.mda.xjdoc.model1.SemiMutableXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.SemiMutableXjdocElement;
 
 /**
  * Though {@link AbstractOptionGroup} is-a {@link Serializable}, the serialization on this object

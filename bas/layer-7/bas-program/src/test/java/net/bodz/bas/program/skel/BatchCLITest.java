@@ -13,8 +13,8 @@ import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model2.Model2TagLibrary;
-import net.bodz.mda.xjdoc.tags.ITagLibrary;
+import net.bodz.mda.xjdoc.model.artifact.ArtifactTagLibrary;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public class BatchCLITest
         extends BatchCLI {
@@ -38,7 +38,7 @@ public class BatchCLITest
         BCharOut buf = new BCharOut();
         FlatfOutput out = new FlatfOutput(buf);
         doc.writeObject(out, Negotiation.list(//
-                Negotiation.parameter(ITagLibrary.class, new Model2TagLibrary())));
+                Negotiation.parameter(ITagLibrary.class, new ArtifactTagLibrary())));
         System.out.println(buf);
     }
 

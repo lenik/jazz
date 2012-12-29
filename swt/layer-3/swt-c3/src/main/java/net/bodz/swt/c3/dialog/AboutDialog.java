@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
-import net.bodz.mda.xjdoc.model2.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 
 public class AboutDialog
         extends SimpleDialog {

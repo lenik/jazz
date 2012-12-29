@@ -13,7 +13,7 @@ import net.bodz.bas.text.flatf.FlatfInput;
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfInput;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.tags.ITagLibrary;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 public class ClassDocFlatfLoader
