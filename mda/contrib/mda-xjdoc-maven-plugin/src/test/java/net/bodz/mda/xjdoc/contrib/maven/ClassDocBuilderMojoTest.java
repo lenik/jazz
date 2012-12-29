@@ -8,11 +8,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.junit.Test;
 
+import net.bodz.bas.m2.test.MyMojoTestCase;
+
 public class ClassDocBuilderMojoTest
-        extends AbstractMojoTestCase {
+        extends MyMojoTestCase {
 
     @Override
     protected void setUp()
@@ -62,9 +63,9 @@ public class ClassDocBuilderMojoTest
     }
 
     @Test
-    public void testDumpff1()
+    public void testBuildClassDocs()
             throws Exception {
-        File testPom = new File(getBasedir(), "src/test/resources/unit/dumpff/test1.xml");
+        File testPom = getResourceFile("testBuildClassDocs.xml");
         assertTrue(testPom.exists());
 
         ClassDocBuilderMojo mojo = (ClassDocBuilderMojo) lookupMojo("build", testPom);
