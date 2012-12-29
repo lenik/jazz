@@ -11,7 +11,7 @@ import java.util.prefs.Preferences;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model2.ArtifactDoc;
 import net.bodz.redist.obfuz.pm.ProtectException;
 import net.bodz.redist.obfuz.pm.ProtectionModel;
@@ -45,7 +45,7 @@ public class ActivationByTargetString
         if (_activation == null)
             throw new IllegalUsageError(tr._("No activation info"));
 
-        ArtifactDoc artifactDoc = ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class);
+        ArtifactDoc artifactDoc = ClassDocLoader.load(clazz).as(ArtifactDoc.class);
 
         this.prefix = _activation.prefix();
         this.prefixBytes = prefix.getBytes(encoding);

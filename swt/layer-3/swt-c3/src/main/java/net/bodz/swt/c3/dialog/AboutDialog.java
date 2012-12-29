@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model2.ArtifactDoc;
 
 public class AboutDialog
@@ -16,7 +16,7 @@ public class AboutDialog
     }
 
     public AboutDialog(Shell parent, int style, Class<?> clazz) {
-        this(parent, style, ClassDocs.loadFromResource(clazz).as(ArtifactDoc.class));
+        this(parent, style, ClassDocLoader.load(clazz).as(ArtifactDoc.class));
     }
 
     public AboutDialog(Shell parent, int style, ArtifactDoc doc) {

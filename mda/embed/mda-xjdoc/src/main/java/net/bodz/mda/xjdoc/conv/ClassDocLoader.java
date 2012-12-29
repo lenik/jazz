@@ -7,30 +7,22 @@ import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.tags.JavadocTagBook;
 
-public class ClassDocs {
+public class ClassDocLoader {
 
     public static final String DEFAULT_EXTENSION = "ff";
 
     /**
      * @return <code>null</code> if no classdoc resource available.
      */
-    public static ClassDoc loadFromResource(Class<?> clazz)
+    public static ClassDoc load(Class<?> clazz)
             throws ClassDocLoadException {
-        return loadFromResource(clazz, DEFAULT_EXTENSION, false);
+        return load(clazz, DEFAULT_EXTENSION);
     }
 
     /**
      * @return <code>null</code> if no classdoc resource available.
      */
-    public static ClassDoc loadFromResource(Class<?> clazz, boolean mustExist)
-            throws ClassDocLoadException {
-        return loadFromResource(clazz, DEFAULT_EXTENSION, mustExist);
-    }
-
-    /**
-     * @return <code>null</code> if no classdoc resource available.
-     */
-    public static ClassDoc loadFromResource(Class<?> clazz, String extension, boolean mustExist)
+    public static ClassDoc load(Class<?> clazz, String extension)
             throws ClassDocLoadException {
 
         String fqcn = clazz.getName();
@@ -39,10 +31,7 @@ public class ClassDocs {
         ClassLoader resourceLoader = clazz.getClassLoader();
         URL resource = resourceLoader.getResource(resourceName);
         if (resource == null)
-            if (mustExist)
-                throw new ClassDocLoadException("No classdoc resource available for " + clazz);
-            else
-                return null;
+            return null;
 
         IStreamInputSource in = new URLResource(resource);
 

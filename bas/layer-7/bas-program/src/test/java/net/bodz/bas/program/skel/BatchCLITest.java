@@ -11,7 +11,7 @@ import net.bodz.bas.rtx.Negotiation;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model2.Model2TagBook;
 import net.bodz.mda.xjdoc.tags.ITagBook;
@@ -34,7 +34,7 @@ public class BatchCLITest
 
     static void printBaseDoc()
             throws IOException {
-        ClassDoc doc = ClassDocs.loadFromResource(BatchCLI.class);
+        ClassDoc doc = ClassDocLoader.load(BatchCLI.class);
         BCharOut buf = new BCharOut();
         FlatfOutput out = new FlatfOutput(buf);
         doc.writeObject(out, Negotiation.list(//
