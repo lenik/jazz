@@ -5,7 +5,7 @@ import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.program.xjdoc.ClassDocToOptions;
+import net.bodz.bas.program.xjdoc.ClassDocToOptionsConverter;
 import net.bodz.bas.program.xjdoc.OptionGroupInheritance;
 
 public class OptionGroupFactory {
@@ -15,9 +15,9 @@ public class OptionGroupFactory {
     static {
         clOptions = ClassLocals.createMap(new IMapEntryLoader<Class<?>, IOptionGroup>() {
 
-            ClassDocToOptions parser = new ClassDocToOptions();
+            ClassDocToOptionsConverter converter = new ClassDocToOptionsConverter();
             {
-                parser.setInheritance(OptionGroupInheritance.reflective);
+                converter.setInheritance(OptionGroupInheritance.reflective);
             }
 
             @Override
@@ -25,7 +25,7 @@ public class OptionGroupFactory {
                     throws LazyLoadException {
                 IOptionGroup options;
                 try {
-                    options = parser.convertTree(clazz);
+                    options = converter.convertTree(clazz);
                 } catch (ParseException e) {
                     throw new LazyLoadException(e.getMessage(), e);
                 }

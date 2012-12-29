@@ -26,7 +26,7 @@ import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
-public class ClassDocToOptions {
+public class ClassDocToOptionsConverter {
 
     boolean xjdocRequired = true;
 
@@ -248,7 +248,7 @@ public class ClassDocToOptions {
                     field.setAccessible(true);
 
                 FieldDoc fieldDoc = classDoc.getFieldDoc(field.getName());
-                String descriptor = getDescriptor(fieldDoc);
+                String descriptor = getOptionDescriptor(fieldDoc);
                 if (descriptor == null)
                     continue;
 
@@ -269,7 +269,8 @@ public class ClassDocToOptions {
 
                 MethodId methodId = new MethodId(method);
                 MethodDoc methodDoc = classDoc.getMethodDoc(methodId);
-                String descriptor = getDescriptor(methodDoc);
+
+                String descriptor = getOptionDescriptor(methodDoc);
                 if (descriptor == null)
                     continue;
 
@@ -296,7 +297,7 @@ public class ClassDocToOptions {
 
                 MethodId getterId = new MethodId(getter);
                 MethodDoc getterDoc = classDoc.getMethodDoc(getterId);
-                String descriptor = getDescriptor(getterDoc);
+                String descriptor = getOptionDescriptor(getterDoc);
                 if (descriptor == null)
                     continue;
 
@@ -322,11 +323,15 @@ public class ClassDocToOptions {
         return true;
     }
 
-    String getDescriptor(IJavaElementDoc doc) {
+    String getOptionDescriptor(IJavaElementDoc doc) {
+        if (doc == null)
+            return xjdocRequired ? null : "";
+
         String descriptor = (String) doc.getTag("option");
         if (descriptor == null)
             if (!xjdocRequired)
-                descriptor = "";
+                return "";
+
         return descriptor;
     }
 
