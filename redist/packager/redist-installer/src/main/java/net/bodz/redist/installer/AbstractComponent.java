@@ -9,7 +9,7 @@ import java.util.Set;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.mda.xjdoc.model1.AbstractXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
 public abstract class AbstractComponent
         extends AbstractXjdocElement

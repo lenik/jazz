@@ -20,10 +20,10 @@ import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.tags.ITagLibrary;
-import net.bodz.mda.xjdoc.tags.JavadocTagLibrary;
-import net.bodz.mda.xjdoc.tags.TagLibraryManager;
-import net.bodz.mda.xjdoc.tags.TagLibrarySet;
+import net.bodz.mda.xjdoc.model.javadoc.JavadocTagLibrary;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
+import net.bodz.mda.xjdoc.taglib.TagLibraryManager;
+import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.shared.mojo.AbstractResourceGeneratorMojo;
 

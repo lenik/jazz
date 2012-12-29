@@ -15,7 +15,7 @@ import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
-import net.bodz.mda.xjdoc.model1.AbstractXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
 public abstract class TransientOption
         extends AbstractXjdocElement

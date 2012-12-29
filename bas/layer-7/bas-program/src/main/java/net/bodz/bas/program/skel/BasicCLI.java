@@ -37,7 +37,7 @@ import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.mda.xjdoc.model2.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 
 /**
  * Basic CLI Framework

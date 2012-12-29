@@ -35,7 +35,7 @@ import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.program.meta.StartMode;
 import net.bodz.bas.program.skel.BasicCLI;
-import net.bodz.mda.xjdoc.model2.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.BorderLayout;

@@ -14,8 +14,8 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
-import net.bodz.mda.xjdoc.tags.ITagLibrary;
-import net.bodz.mda.xjdoc.tags.ITagType;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
+import net.bodz.mda.xjdoc.tagtype.ITagType;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 

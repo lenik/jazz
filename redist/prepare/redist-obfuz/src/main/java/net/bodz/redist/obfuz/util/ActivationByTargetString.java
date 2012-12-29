@@ -12,7 +12,7 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
-import net.bodz.mda.xjdoc.model2.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.redist.obfuz.pm.ProtectException;
 import net.bodz.redist.obfuz.pm.ProtectionModel;
 import net.bodz.redist.obfuz.seals.CodeSet;

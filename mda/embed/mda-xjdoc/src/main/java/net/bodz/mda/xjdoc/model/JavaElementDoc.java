@@ -14,9 +14,9 @@ import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
-import net.bodz.mda.xjdoc.tags.ITagLibrary;
-import net.bodz.mda.xjdoc.tags.ITagType;
-import net.bodz.mda.xjdoc.tags.TagLibrary;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
+import net.bodz.mda.xjdoc.taglib.TagLibrary;
+import net.bodz.mda.xjdoc.tagtype.ITagType;
 
 public class JavaElementDoc
         implements IJavaElementDoc, IFlatfSerializable {

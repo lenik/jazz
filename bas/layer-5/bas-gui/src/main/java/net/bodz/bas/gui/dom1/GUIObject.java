@@ -1,6 +1,6 @@
 package net.bodz.bas.gui.dom1;
 
-import net.bodz.mda.xjdoc.model1.AbstractXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
 public class GUIObject
         extends AbstractXjdocElement {

@@ -36,7 +36,7 @@ import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model2.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.model.ICommand;

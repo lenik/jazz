@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.user.xjl;
 
-import net.bodz.mda.xjdoc.tags.DocTagType;
-import net.bodz.mda.xjdoc.tags.TagLibrary;
+import net.bodz.mda.xjdoc.taglib.TagLibrary;
+import net.bodz.mda.xjdoc.tagtype.DocTagType;
 
 public class AnimalTagLibrary
         extends TagLibrary {
