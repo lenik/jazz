@@ -5,7 +5,7 @@ import java.net.URL;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.tags.JavadocTagBook;
+import net.bodz.mda.xjdoc.tags.JavadocTagLibrary;
 
 public class ClassDocLoader {
 
@@ -35,8 +35,8 @@ public class ClassDocLoader {
 
         IStreamInputSource in = new URLResource(resource);
 
-        JavadocTagBook book = new JavadocTagBook();
-        ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(book);
+        JavadocTagLibrary taglib = new JavadocTagLibrary();
+        ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(taglib);
 
         ClassDoc doc;
         try {

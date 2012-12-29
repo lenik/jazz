@@ -14,7 +14,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
-import net.bodz.mda.xjdoc.tags.ITagBook;
+import net.bodz.mda.xjdoc.tags.ITagLibrary;
 import net.bodz.mda.xjdoc.tags.ITagType;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
@@ -26,16 +26,16 @@ import com.thoughtworks.qdox.model.*;
  */
 public class ClassDocBuilder {
 
-    ITagBook book;
+    ITagLibrary taglib;
     DomainString missingDoc;
 
-    public ClassDocBuilder(ITagBook book) {
-        if (book == null)
-            throw new NullPointerException("book");
-// if (sourceFileImports == null)
-// throw new NullPointerException("sourceFileImports");
-        this.book = book;
-// this.sourceFileImports = sourceFileImports;
+    public ClassDocBuilder(ITagLibrary taglib) {
+        if (taglib == null)
+            throw new NullPointerException("taglib");
+        // if (sourceFileImports == null)
+        // throw new NullPointerException("sourceFileImports");
+        this.taglib = taglib;
+        // this.sourceFileImports = sourceFileImports;
     }
 
     public DomainString getMissingDoc() {
@@ -122,7 +122,7 @@ public class ClassDocBuilder {
             String tagValueString = docletTag.getValue();
 
             // DomainString value = DomainString.parseParaLang(tagValueString);
-            ITagType tagType = book.getTagType(tagName);
+            ITagType tagType = taglib.getTagType(tagName);
             if (tagType == null)
                 throw new IllegalUsageException("Undefined Tag: " + tagName);
             Object cont = tagMap.get(tagName);

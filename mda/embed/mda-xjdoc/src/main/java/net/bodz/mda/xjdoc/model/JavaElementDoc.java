@@ -14,9 +14,9 @@ import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
-import net.bodz.mda.xjdoc.tags.ITagBook;
+import net.bodz.mda.xjdoc.tags.ITagLibrary;
 import net.bodz.mda.xjdoc.tags.ITagType;
-import net.bodz.mda.xjdoc.tags.TagBook;
+import net.bodz.mda.xjdoc.tags.TagLibrary;
 
 public class JavaElementDoc
         implements IJavaElementDoc, IFlatfSerializable {
@@ -99,10 +99,10 @@ public class JavaElementDoc
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
             throws IOException {
-        ITagBook book = null;
+        ITagLibrary taglib = null;
         if (negotiation != null)
-            book = negotiation.get(ITagBook.class);
-        if (book == null)
+            taglib = negotiation.get(ITagLibrary.class);
+        if (taglib == null)
             throw new IllegalUsageException("Book is not provided in the negotiation.");
 
         if (text != null)
@@ -110,27 +110,27 @@ public class JavaElementDoc
         for (Entry<String, Object> entry : tagMap.entrySet()) {
             String tagName = entry.getKey();
             Object tagValue = entry.getValue();
-            ITagType tagType = book.getTagType(tagName);
+            ITagType tagType = taglib.getTagType(tagName);
             tagType.writeEntries(out, tagName, tagValue, negotiation);
         }
     }
 
     @Override
     public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation) {
-        ITagBook book = TagBook.getInstance(negotiation);
-        return new FlatfHandler(book, negotiation);
+        ITagLibrary taglib = TagLibrary.getInstance(negotiation);
+        return new FlatfHandler(taglib, negotiation);
     }
 
     protected class FlatfHandler
             implements ISectionHandler {
 
-        final ITagBook book;
+        final ITagLibrary taglib;
         final INegotiation negotiation;
 
-        public FlatfHandler(ITagBook book, INegotiation negotiation) {
-            if (book == null)
-                throw new NullPointerException("book");
-            this.book = book;
+        public FlatfHandler(ITagLibrary taglib, INegotiation negotiation) {
+            if (taglib == null)
+                throw new NullPointerException("taglib");
+            this.taglib = taglib;
             this.negotiation = negotiation;
         }
 
@@ -166,7 +166,7 @@ public class JavaElementDoc
                 tagName = name.substring(0, dot);
                 suffix = name.substring(dot + 1);
             }
-            ITagType tagType = book.getTagType(tagName);
+            ITagType tagType = taglib.getTagType(tagName);
             Object cont = getTag(tagName);
             Object tagValue = tagType.parseEntry(cont, suffix, string, negotiation);
             setTag(tagName, tagValue);

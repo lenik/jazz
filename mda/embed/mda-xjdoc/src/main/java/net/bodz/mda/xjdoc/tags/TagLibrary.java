@@ -6,8 +6,8 @@ import java.util.Map;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.rtx.INegotiation;
 
-public class TagBook
-        implements ITagBook {
+public class TagLibrary
+        implements ITagLibrary {
 
     Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
 
@@ -27,10 +27,10 @@ public class TagBook
         return StringTagType.INSTANCE;
     }
 
-    public static ITagBook getInstance(INegotiation negotiation) {
-        ITagBook instance = null;
+    public static ITagLibrary getInstance(INegotiation negotiation) {
+        ITagLibrary instance = null;
         if (negotiation != null)
-            instance = negotiation.require(ITagBook.class);
+            instance = negotiation.require(ITagLibrary.class);
         if (instance == null)
             throw new IllegalUsageException("Book isn't provided in negotiation.");
         return instance;
