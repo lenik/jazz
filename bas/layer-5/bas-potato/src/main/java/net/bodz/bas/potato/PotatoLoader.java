@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.element.LinkedType;
 import net.bodz.bas.t.order.PriorityComparator;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public class PotatoLoader {
@@ -21,7 +21,7 @@ public class PotatoLoader {
         IType type = loadedTypes.get(clazz);
 
         if (type == null) {
-            ClassDoc classDoc = ClassDocs.loadFromResource(clazz);
+            ClassDoc classDoc = ClassDocLoader.load(clazz);
 
             List<IType> _types = new ArrayList<>();
             for (ITypeProvider provider : typeProviders) {

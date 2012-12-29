@@ -19,7 +19,7 @@ import net.bodz.bas.program.model.MutableOptionGroup;
 import net.bodz.bas.program.model.PropertyOption;
 import net.bodz.bas.program.model.SyntaxUsage;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
@@ -199,11 +199,14 @@ public class ClassDocToOptionsConverter {
             throws ParseException {
         ClassDoc classDoc;
         try {
-            classDoc = ClassDocs.loadFromResource(clazz, true);
-
+            classDoc = ClassDocLoader.load(clazz);
         } catch (ClassDocLoadException e) {
             throw new ParseException(e.getMessage(), e);
         }
+
+        if (classDoc == null)
+            classDoc = new ClassDoc(clazz.getName());
+
         return convert(clazz, classDoc, parent);
     }
 

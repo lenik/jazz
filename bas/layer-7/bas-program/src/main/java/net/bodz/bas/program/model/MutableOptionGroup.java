@@ -7,7 +7,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.t.preorder.PrefixMap;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -33,7 +33,7 @@ public class MutableOptionGroup
 
     @Override
     protected IJavaElementDoc loadXjdoc() {
-        ClassDoc classDoc = ClassDocs.loadFromResource(declaringClass);
+        ClassDoc classDoc = ClassDocLoader.load(declaringClass);
         return classDoc;
     }
 

@@ -34,7 +34,7 @@ import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.rtx.Negotiation;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model2.ArtifactDoc;
 import net.bodz.swt.c.composite.StackComposite;
@@ -144,7 +144,7 @@ public class SwtDialogs
                 String doc = action.getDoc();
                 Image image = action.getImage();
                 if (text == null) {
-                    ClassDoc classDoc = ClassDocs.loadFromResource(action.getClass());
+                    ClassDoc classDoc = ClassDocLoader.load(action.getClass());
                     text = classDoc.as(ArtifactDoc.class).getDisplayName().toString();
                 }
                 button.setText(text);

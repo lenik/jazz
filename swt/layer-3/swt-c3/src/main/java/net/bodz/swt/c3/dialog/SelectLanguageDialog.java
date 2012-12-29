@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import net.bodz.bas.c.java.util.LocaleTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model2.ArtifactDoc;
 
 public class SelectLanguageDialog
@@ -28,7 +28,7 @@ public class SelectLanguageDialog
         langNames = new ArrayList<String>();
 
         while (declType != null) {
-            ArtifactDoc typeDoc = ClassDocs.loadFromResource(declType).as(ArtifactDoc.class);
+            ArtifactDoc typeDoc = ClassDocLoader.load(declType).as(ArtifactDoc.class);
 
             for (String lang : typeDoc.getUsedLangs())
                 langNames.add(lang);

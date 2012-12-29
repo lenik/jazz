@@ -17,7 +17,7 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.swt.gui.a.IconAnnotation;
 
@@ -34,7 +34,7 @@ public abstract class AbstractPage
     protected PropertyChangeSupport propertyChangeSupport;
 
     public AbstractPage() {
-        classDoc = ClassDocs.loadFromResource(getClass());
+        classDoc = ClassDocLoader.load(getClass());
         propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
