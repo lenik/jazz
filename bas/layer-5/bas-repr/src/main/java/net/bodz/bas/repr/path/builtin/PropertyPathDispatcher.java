@@ -39,7 +39,7 @@ public class PropertyPathDispatcher
         if (propertyName == null)
             throw new UnexpectedException("no more token.");
 
-        Map<String, PropertyDescriptor> propertyMap = classMap.load(obj.getClass());
+        Map<String, PropertyDescriptor> propertyMap = classMap.getOrLoad(obj.getClass());
 
         PropertyDescriptor propertyDescriptor = propertyMap.get(propertyName);
         if (propertyDescriptor == null)

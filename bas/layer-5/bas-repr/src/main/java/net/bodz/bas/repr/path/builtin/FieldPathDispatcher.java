@@ -36,7 +36,7 @@ public class FieldPathDispatcher
         if (fieldName == null)
             throw new UnexpectedException("no more token.");
 
-        Map<String, Field> fieldMap = classMap.load(obj.getClass());
+        Map<String, Field> fieldMap = classMap.getOrLoad(obj.getClass());
 
         Field field = fieldMap.get(fieldName);
         if (field == null)

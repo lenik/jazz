@@ -76,7 +76,7 @@ public class SimpleConstructorMap
     }
 
     public static SimpleConstructorMap getInstance(Class<?> type) {
-        return toolsCtorMap.load(type);
+        return toolsCtorMap.getOrLoad(type);
     }
 
 }

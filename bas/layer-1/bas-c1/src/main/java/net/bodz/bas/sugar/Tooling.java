@@ -36,7 +36,7 @@ public final class Tooling {
     public <T> T getWrapper(Class<T> wrapperClass) {
         Class<?> hostClass = hostObject.getClass();
         SimpleConstructorMap ctorMap = SimpleConstructorMap.getInstance(wrapperClass);
-        Constructor<?> ctor = ctorMap.load(hostClass);
+        Constructor<?> ctor = ctorMap.getOrLoad(hostClass);
         if (ctor == null)
             throw new IllegalUsageException(String.format( //
                     "No suitable constructor for %s found in the wrapper class %s.", //

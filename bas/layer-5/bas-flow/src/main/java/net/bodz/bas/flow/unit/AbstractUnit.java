@@ -31,7 +31,7 @@ public abstract class AbstractUnit
     @Override
     public IUnitMetadata getUnitMeta() {
         Class<? extends AbstractUnit> clazz = getClass();
-        IUnitMetadata meta = metas.load(clazz);
+        IUnitMetadata meta = metas.getOrLoad(clazz);
         return meta;
     }
 

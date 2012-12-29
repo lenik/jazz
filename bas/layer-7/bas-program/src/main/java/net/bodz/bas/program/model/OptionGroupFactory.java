@@ -36,7 +36,7 @@ public class OptionGroupFactory {
     }
 
     public static <T> IOptionGroup getClassOptions(Class<T> clazz) {
-        IOptionGroup copt = clOptions.load(clazz);
+        IOptionGroup copt = clOptions.getOrLoad(clazz);
         return copt;
     }
 

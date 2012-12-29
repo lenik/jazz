@@ -16,7 +16,7 @@ public class RecvUtil {
     public static void recvEx(IReceiverEx exReceiver, Object data)
             throws IOException, ReflectiveOperationException {
         Class<? extends IReceiverEx> clazz = exReceiver.getClass();
-        IMethod recv = recvLocal.load(clazz);
+        IMethod recv = recvLocal.getOrLoad(clazz);
         // TODO - unwrap IOException
         recv.invoke(exReceiver, data);
     }
