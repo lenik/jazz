@@ -10,6 +10,7 @@ import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
 public class BeanProperty
         extends AbstractProperty {
@@ -25,14 +26,17 @@ public class BeanProperty
      *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
      *             <code>null</code>.
      */
-    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor) {
+    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor, IJavaElementDoc xjdoc) {
         super(beanClass, propertyDescriptor.getName());
         this.propertyDescriptor = propertyDescriptor;
 
+        Method getter = propertyDescriptor.getReadMethod();
+
+        int _modifiers = getter.getModifiers();
+        this.modifiers = getter == null ? 0 : ReflectModifiers.toVerboseLevel(_modifiers);
         this.verboseLevel = FeatureDescriptorUtil.getVerboseLevel(propertyDescriptor);
 
-        Method getter = propertyDescriptor.getReadMethod();
-        this.modifiers = getter == null ? 0 : ReflectModifiers.toVerboseLevel(getter.getModifiers());
+        setXjdoc(xjdoc);
     }
 
     @Override

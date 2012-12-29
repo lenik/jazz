@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.c.reflect.MethodSignature;
@@ -9,11 +10,16 @@ import net.bodz.bas.t.iterator.Iterables;
 public class LinkedMethodMap
         implements IMethodMap {
 
-    private List<IMethodMap> maps = new ArrayList<>();
+    private List<IMethodMap> maps;
+
+    public LinkedMethodMap(List<IMethodMap> methodMaps) {
+        if (methodMaps == null)
+            throw new NullPointerException("methodMaps");
+        this.maps = methodMaps;
+    }
 
     public LinkedMethodMap(IMethodMap... methodMaps) {
-        for (IMethodMap map : methodMaps)
-            maps.add(map);
+        maps = Arrays.asList(methodMaps);
     }
 
     @Override

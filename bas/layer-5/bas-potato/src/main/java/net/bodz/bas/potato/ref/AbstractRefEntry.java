@@ -15,6 +15,26 @@ public abstract class AbstractRefEntry<T>
         super(element);
     }
 
+    @Override
+    public void remove() {
+        set(null);
+    }
+
+    @Override
+    public boolean isValueChangeSource() {
+        return false;
+    }
+
+    @Override
+    public void addValueChangeListener(IValueChangeListener listener) {
+        // throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void removeValueChangeListener(IValueChangeListener listener) {
+        // throw new UnsupportedOperationException();
+    }
+
     // -o Map.Entry
 
     @Override
@@ -32,21 +52,6 @@ public abstract class AbstractRefEntry<T>
         T oldValue = get();
         set(value);
         return oldValue;
-    }
-
-    @Override
-    public boolean isValueChangeSource() {
-        return false;
-    }
-
-    @Override
-    public void addValueChangeListener(IValueChangeListener listener) {
-        // throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void removeValueChangeListener(IValueChangeListener listener) {
-        // throw new UnsupportedOperationException();
     }
 
 }

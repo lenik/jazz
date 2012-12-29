@@ -13,7 +13,7 @@ public abstract class SemiMutableXjdocElement
     private static final long serialVersionUID = 1L;
 
     transient IJavaElementDoc xjdoc;
-    transient boolean artifactDocLoaded;
+    transient boolean xjdocLoaded;
 
     /**
      * @return Non-<code>null</code> {@link IJavaElementDoc}.
@@ -21,9 +21,9 @@ public abstract class SemiMutableXjdocElement
     public IJavaElementDoc getXjdoc() {
         if (xjdoc == null) {
             synchronized (this) {
-                if (!artifactDocLoaded) {
+                if (!xjdocLoaded) {
                     xjdoc = loadXjdoc();
-                    artifactDocLoaded = true;
+                    xjdocLoaded = true;
                 }
             }
             if (xjdoc == null)
@@ -34,6 +34,11 @@ public abstract class SemiMutableXjdocElement
 
     protected IJavaElementDoc loadXjdoc() {
         return null;
+    }
+
+    protected void setXjdoc(IJavaElementDoc xjdoc) {
+        this.xjdoc = xjdoc;
+        this.xjdocLoaded = true;
     }
 
 }

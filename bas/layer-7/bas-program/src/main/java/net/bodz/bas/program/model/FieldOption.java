@@ -18,7 +18,7 @@ public class FieldOption
 
     @Override
     public IProperty property() {
-        return new ReflectProperty(field);
+        return new ReflectProperty(field, getXjdoc());
     }
 
 }

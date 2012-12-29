@@ -1,8 +1,9 @@
 package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.potato.PotatoLoader;
 
-public class VariableEntry<T>
+public class VarEntry<T>
         extends AbstractRefEntry<T> {
 
     private static final long serialVersionUID = 1L;
@@ -10,15 +11,19 @@ public class VariableEntry<T>
     private final Class<? extends T> valueType;
     private T value;
 
-    public VariableEntry(IElement element, Class<? extends T> valueType) {
-        this(element, valueType, null);
+    public VarEntry(Class<? extends T> valueType) {
+        this(valueType, null);
     }
 
-    public VariableEntry(IElement element, T initialValue) {
-        this(element, (Class<? extends T>) initialValue.getClass(), initialValue);
+    public VarEntry(T initialValue) {
+        this((Class<? extends T>) initialValue.getClass(), initialValue);
     }
 
-    public VariableEntry(IElement element, Class<? extends T> valueType, T initialValue) {
+    public VarEntry(Class<? extends T> valueType, T initialValue) {
+        this(PotatoLoader.getType(valueType), valueType, initialValue);
+    }
+
+    public VarEntry(IElement element, Class<? extends T> valueType, T initialValue) {
         super(element);
         this.valueType = valueType;
         this.value = initialValue;

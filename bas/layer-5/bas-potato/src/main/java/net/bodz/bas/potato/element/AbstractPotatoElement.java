@@ -3,7 +3,6 @@ package net.bodz.bas.potato.element;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model1.AbstractXjdocElement;
 
@@ -26,12 +25,6 @@ public abstract class AbstractPotatoElement
     }
 
     @Override
-    public IJavaElementDoc getXjdoc() {
-        // TODO ClassDocs.loadFromResource(getClass()).as(ArtifactDoc.class);
-        throw new NotImplementedException();
-    }
-
-    @Override
     public String getName() {
         return name;
     }
@@ -39,6 +32,11 @@ public abstract class AbstractPotatoElement
     @Override
     public Class<?> getDeclaringClass() {
         return declaringClass;
+    }
+
+    @Override
+    public void setXjdoc(IJavaElementDoc xjdoc) {
+        super.setXjdoc(xjdoc);
     }
 
     private static final Annotation[] EMPTY_ANNOTATION = new Annotation[0];

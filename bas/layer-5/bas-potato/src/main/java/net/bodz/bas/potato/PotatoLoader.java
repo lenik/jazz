@@ -1,14 +1,17 @@
 package net.bodz.bas.potato;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.TreeSet;
 
-import net.bodz.bas.potato.element.IPotatoElementProvider;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.potato.element.MutableType;
+import net.bodz.bas.potato.element.LinkedType;
 import net.bodz.bas.t.order.PriorityComparator;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public class PotatoLoader {
 
@@ -18,25 +21,31 @@ public class PotatoLoader {
         IType type = loadedTypes.get(clazz);
 
         if (type == null) {
-            MutableType newType = new MutableType(clazz);
-            for (IPotatoElementProvider provider : potatoElementProviders) {
-                provider.fillProperties(clazz, null, newType.getPropertyMap());
-                provider.fillMethods(clazz, null, newType.getMethodMap());
-                provider.fillConstructor(clazz, null, newType.getConstructorMap());
-                provider.fillEventMap(clazz, null, newType.getEventMap());
+            ClassDoc classDoc = ClassDocs.loadFromResource(clazz);
+
+            List<IType> _types = new ArrayList<>();
+            for (ITypeProvider provider : typeProviders) {
+                IType _type = provider.getType(clazz, null, -1, classDoc);
+                if (_type != null)
+                    _types.add(_type);
             }
-            type = newType;
+
+            type = new LinkedType(clazz, _types, classDoc);
         }
 
         return type;
     }
 
-    static TreeSet<IPotatoElementProvider> potatoElementProviders;
+    static TreeSet<ITypeProvider> typeProviders;
     static {
-        potatoElementProviders = new TreeSet<>(PriorityComparator.INSTANCE);
-        for (IPotatoElementProvider provider : ServiceLoader.load(IPotatoElementProvider.class)) {
-            potatoElementProviders.add(provider);
+        typeProviders = new TreeSet<>(PriorityComparator.INSTANCE);
+        for (ITypeProvider provider : ServiceLoader.load(ITypeProvider.class)) {
+            typeProviders.add(provider);
         }
+    }
+
+    public static TreeSet<ITypeProvider> getTypeProviders() {
+        return typeProviders;
     }
 
     static PotatoLoader instance = new PotatoLoader();

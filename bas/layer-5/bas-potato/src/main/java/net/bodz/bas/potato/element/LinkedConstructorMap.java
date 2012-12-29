@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.c.reflect.MethodSignature;
@@ -9,11 +10,16 @@ import net.bodz.bas.t.iterator.Iterables;
 public class LinkedConstructorMap
         implements IConstructorMap {
 
-    private List<IConstructorMap> maps = new ArrayList<>();
+    private List<IConstructorMap> maps;
+
+    public LinkedConstructorMap(List<IConstructorMap> constructorMaps) {
+        if (constructorMaps == null)
+            throw new NullPointerException("constructorMaps");
+        this.maps = constructorMaps;
+    }
 
     public LinkedConstructorMap(IConstructorMap... constructorMaps) {
-        for (IConstructorMap map : constructorMaps)
-            maps.add(map);
+        maps = Arrays.asList(constructorMaps);
     }
 
     @Override
