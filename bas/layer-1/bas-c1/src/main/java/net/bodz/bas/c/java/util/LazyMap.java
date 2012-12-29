@@ -32,7 +32,7 @@ public abstract class LazyMap<K, V>
      * @return Value of the entry in the map. <code>null</code> if not existed. (however, the entry
      *         loader may also return <code>null</code> )
      */
-    public V load(K key) {
+    public V getOrLoad(K key) {
         V value = super.get(key);
         if (value == null) {
             synchronized (this) {

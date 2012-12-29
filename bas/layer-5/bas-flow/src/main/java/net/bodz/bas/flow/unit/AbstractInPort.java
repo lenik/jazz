@@ -26,7 +26,7 @@ public abstract class AbstractInPort
     @Override
     public IPortMetadata getInPortMeta() {
         Class<? extends AbstractPort> clazz = getClass();
-        IPortMetadata meta = metas.load(clazz);
+        IPortMetadata meta = metas.getOrLoad(clazz);
         return meta;
     }
 

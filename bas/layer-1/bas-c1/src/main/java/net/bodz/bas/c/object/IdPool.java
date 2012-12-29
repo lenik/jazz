@@ -58,7 +58,7 @@ public class IdPool {
     }
 
     public static IdPool getInstance(Class<?> clazz) {
-        return poolMap.load(clazz);
+        return poolMap.getOrLoad(clazz);
     }
 
     static final ClassLocal<IdPool> poolMap;
