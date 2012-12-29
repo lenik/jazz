@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,11 +11,16 @@ import net.bodz.bas.t.iterator.Iterables;
 public class LinkedPropertyMap
         implements IPropertyMap {
 
-    List<IPropertyMap> maps = new ArrayList<>();
+    private List<IPropertyMap> maps;
+
+    public LinkedPropertyMap(List<IPropertyMap> propertyMaps) {
+        if (propertyMaps == null)
+            throw new NullPointerException("propertyMaps");
+        this.maps = propertyMaps;
+    }
 
     public LinkedPropertyMap(IPropertyMap... propertyMaps) {
-        for (IPropertyMap map : propertyMaps)
-            maps.add(map);
+        maps = Arrays.asList(propertyMaps);
     }
 
     @Override

@@ -7,27 +7,27 @@ import java.lang.reflect.Modifier;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
 public class ReflectProperty
         extends AbstractProperty {
 
     private final Field field;
-    private final int verboseLevel;
+
     private final int modifiers;
+    private final int verboseLevel;
 
     private Boolean propertyChangeSource;
 
-    /**
-     * @throws NullPointerException
-     *             If <code>field</code> is <code>null</code>.
-     */
-    public ReflectProperty(Field field) {
+    public ReflectProperty(Field field, IJavaElementDoc xjdoc) {
         super(field.getDeclaringClass(), field.getName());
         this.field = field;
 
         int _modifiers = field.getModifiers();
-        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
         this.modifiers = ReflectModifiers.toElementModifiers(_modifiers);
+        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+
+        setXjdoc(xjdoc);
     }
 
     @Override

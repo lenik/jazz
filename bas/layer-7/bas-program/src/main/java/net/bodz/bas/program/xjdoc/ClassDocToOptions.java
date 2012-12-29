@@ -24,6 +24,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
+import net.bodz.mda.xjdoc.util.MethodId;
 
 public class ClassDocToOptions {
 
@@ -266,7 +267,8 @@ public class ClassDocToOptions {
                 if (includeNonPublic)
                     method.setAccessible(true);
 
-                MethodDoc methodDoc = classDoc.getMethodDoc(method);
+                MethodId methodId = new MethodId(method);
+                MethodDoc methodDoc = classDoc.getMethodDoc(methodId);
                 String descriptor = getDescriptor(methodDoc);
                 if (descriptor == null)
                     continue;
@@ -292,7 +294,8 @@ public class ClassDocToOptions {
             for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
                 Method getter = property.getReadMethod();
 
-                MethodDoc getterDoc = classDoc.getMethodDoc(getter);
+                MethodId getterId = new MethodId(getter);
+                MethodDoc getterDoc = classDoc.getMethodDoc(getterId);
                 String descriptor = getDescriptor(getterDoc);
                 if (descriptor == null)
                     continue;

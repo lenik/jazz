@@ -2,6 +2,7 @@ package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.potato.PotatoLoader;
 
 public class ValueEntry<T>
         extends AbstractRefEntry<T> {
@@ -11,12 +12,16 @@ public class ValueEntry<T>
     private final Class<? extends T> valueType;
     private final T value;
 
-    public ValueEntry(IElement element, Class<? extends T> valueType) {
-        this(element, valueType, null);
+    public ValueEntry(Class<? extends T> valueType) {
+        this(valueType, null);
     }
 
-    public ValueEntry(IElement element, T value) {
-        this(element, (Class<? extends T>) value.getClass(), value);
+    public ValueEntry(T value) {
+        this((Class<? extends T>) value.getClass(), value);
+    }
+
+    public ValueEntry(Class<? extends T> valueType, T value) {
+        this(PotatoLoader.getType(valueType), valueType, value);
     }
 
     public ValueEntry(IElement element, Class<? extends T> valueType, T value) {
@@ -38,11 +43,6 @@ public class ValueEntry<T>
     @Override
     public void set(T value) {
         throw new ReadOnlyException("value entry is read-only.");
-    }
-
-    @Override
-    public void remove() {
-        set(null);
     }
 
 }

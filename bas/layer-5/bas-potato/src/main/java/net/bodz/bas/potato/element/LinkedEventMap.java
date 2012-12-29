@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,11 +11,16 @@ import net.bodz.bas.t.iterator.Iterables;
 public class LinkedEventMap
         implements IEventMap {
 
-    List<IEventMap> maps = new ArrayList<>();
+    private List<IEventMap> maps;
+
+    public LinkedEventMap(List<IEventMap> eventMaps) {
+        if (eventMaps == null)
+            throw new NullPointerException("eventMaps");
+        this.maps = eventMaps;
+    }
 
     public LinkedEventMap(IEventMap... eventMaps) {
-        for (IEventMap map : eventMaps)
-            maps.add(map);
+        maps = Arrays.asList(eventMaps);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class PropertyOption
 
     @Override
     public IProperty property() {
-        return new BeanProperty(beanClass, propertyDescriptor);
+        return new BeanProperty(beanClass, propertyDescriptor, getXjdoc());
     }
 
 }

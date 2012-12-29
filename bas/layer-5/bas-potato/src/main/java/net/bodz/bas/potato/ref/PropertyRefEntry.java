@@ -41,11 +41,6 @@ public class PropertyRefEntry<T>
     }
 
     @Override
-    public void remove() {
-        set(null);
-    }
-
-    @Override
     public boolean isValueChangeSource() {
         return property.isPropertyChangeSource();
     }

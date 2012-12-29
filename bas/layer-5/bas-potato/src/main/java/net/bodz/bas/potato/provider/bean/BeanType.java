@@ -6,9 +6,15 @@ import java.beans.EventSetDescriptor;
 import java.beans.MethodDescriptor;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
+import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
+import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.MethodDoc;
+import net.bodz.mda.xjdoc.util.MethodId;
 
 public class BeanType
         extends AbstractType {
@@ -23,32 +29,66 @@ public class BeanType
 
     private final int verboseLevel;
 
-    public BeanType(BeanInfo beanInfo) {
+    public BeanType(BeanInfo beanInfo, int infoset, ClassDoc classDoc) {
         super(beanInfo.getBeanDescriptor().getName());
 
         beanDescriptor = beanInfo.getBeanDescriptor();
         beanClass = beanDescriptor.getBeanClass();
 
-        PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
-            BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor);
-            propertyMap.addProperty(beanProperty);
+        if ((infoset & ITypeProvider.PROPERTIES) != 0) {
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+            for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+
+                MethodDoc xetterDoc = null;
+                if (classDoc != null) {
+                    Method xetter = propertyDescriptor.getReadMethod();
+                    if (xetter == null)
+                        xetter = propertyDescriptor.getWriteMethod();
+                    if (xetter != null) {
+                        MethodId xetterId = new MethodId(xetter);
+                        xetterDoc = classDoc.getMethodDoc(xetterId);
+                    }
+                }
+
+                BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, xetterDoc);
+                propertyMap.addProperty(beanProperty);
+            }
         }
 
-        MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
-        for (MethodDescriptor methodDescriptor : methodDescriptors) {
-            BeanMethod beanMethod = new BeanMethod(methodDescriptor);
-            methodMap.addMethod(beanMethod);
+        if ((infoset & ITypeProvider.METHODS) != 0) {
+            MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
+            for (MethodDescriptor methodDescriptor : methodDescriptors) {
+
+                MethodDoc methodDoc = null;
+                if (classDoc != null) {
+                    Method method = methodDescriptor.getMethod();
+                    MethodId methodId = new MethodId(method);
+                    methodDoc = classDoc.getMethodDoc(methodId);
+                }
+
+                BeanMethod beanMethod = new BeanMethod(methodDescriptor, methodDoc);
+                methodMap.addMethod(beanMethod);
+            }
         }
 
-        EventSetDescriptor[] eventSetDescriptors = beanInfo.getEventSetDescriptors();
-        for (EventSetDescriptor eventSetDescriptor : eventSetDescriptors) {
-            BeanEvent beanEvent = new BeanEvent(beanClass, eventSetDescriptor);
-            eventMap.addEvent(beanEvent);
+        if ((infoset & ITypeProvider.EVENTS) != 0) {
+            EventSetDescriptor[] eventSetDescriptors = beanInfo.getEventSetDescriptors();
+            for (EventSetDescriptor eventSetDescriptor : eventSetDescriptors) {
+
+                IJavaElementDoc eventDoc = null;
+                if (classDoc != null) {
+                    // TODO Event xjdoc..
+                }
+
+                BeanEvent beanEvent = new BeanEvent(beanClass, eventSetDescriptor, eventDoc);
+                eventMap.addEvent(beanEvent);
+            }
         }
 
         int _modifiers = beanClass.getModifiers();
         this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+
+        setXjdoc(classDoc);
     }
 
     public BeanDescriptor getBeanDescriptor() {
@@ -107,6 +147,8 @@ public class BeanType
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         return beanClass.isAnnotationPresent(annotationClass);
     }
+
+    // -o IElement
 
     @Override
     public int getModifiers() {

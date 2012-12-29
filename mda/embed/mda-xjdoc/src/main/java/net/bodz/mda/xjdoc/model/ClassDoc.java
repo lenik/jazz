@@ -1,7 +1,6 @@
 package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -81,11 +80,6 @@ public class ClassDoc
     @Override
     public Map<MethodId, MethodDoc> getMethodDocs() {
         return methodDocs;
-    }
-
-    public MethodDoc getMethodDoc(Method method) {
-        MethodId methodId = new MethodId(method);
-        return getMethodDoc(methodId);
     }
 
     @Override

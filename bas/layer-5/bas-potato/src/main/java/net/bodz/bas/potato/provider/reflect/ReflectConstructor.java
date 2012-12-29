@@ -4,25 +4,29 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
 import net.bodz.bas.potato.element.AbstractConstructor;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
 public class ReflectConstructor
         extends AbstractConstructor {
 
     private final Constructor<?> ctor;
-    private final int verboseLevel;
+
     private final int modifiers;
+    private final int verboseLevel;
 
     /**
      * @throws NullPointerException
      *             If <code>method</code> is <code>null</code>.
      */
-    public ReflectConstructor(Constructor<?> ctor) {
+    public ReflectConstructor(Constructor<?> ctor, IJavaElementDoc xjdoc) {
         super(ctor.getDeclaringClass());
         this.ctor = ctor;
 
         int _modifiers = ctor.getModifiers();
-        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
         this.modifiers = ReflectModifiers.toElementModifiers(_modifiers);
+        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+
+        setXjdoc(xjdoc);
     }
 
     @Override

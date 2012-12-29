@@ -1,6 +1,7 @@
 package net.bodz.mda.xjdoc.util;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -15,6 +16,10 @@ public final class MethodId
 
     public MethodId(Method method) {
         this(method.getName(), method.getParameterTypes());
+    }
+
+    public MethodId(Constructor<?> ctor) {
+        this(ctor.getName(), ctor.getParameterTypes());
     }
 
     public MethodId(String methodName, Class<?>... parameterTypes) {
