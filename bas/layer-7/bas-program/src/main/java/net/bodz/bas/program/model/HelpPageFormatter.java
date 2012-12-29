@@ -130,6 +130,8 @@ public class HelpPageFormatter {
                 buffer.append(line);
                 buffer.append('\n');
             } // for selection.
+
+            group = group.getParent();
         } // for group
         return buffer.toString();
     }
