@@ -12,7 +12,7 @@
             <version>1.12</version>
         </dependency>
     </dependencies>
-    <name>Test: dump1</name>
+    <name>Test: dump project info</name>
     <build>
         <plugins>
             <plugin>
@@ -26,6 +26,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <sourceDirectory>.</sourceDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>

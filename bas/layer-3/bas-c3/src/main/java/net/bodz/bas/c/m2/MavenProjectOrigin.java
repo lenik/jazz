@@ -85,7 +85,7 @@ public class MavenProjectOrigin {
         return new File(path);
     }
 
-    public File getResourceDir(Class<?> clazz) {
+    public static File getResourceDir(Class<?> clazz) {
         File classFile = ClassResource.getClassBytesFile(clazz);
 
         // foo/target/classes/ => foo/src/main/java/

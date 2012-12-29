@@ -6,28 +6,27 @@ import java.util.List;
 
 import org.apache.maven.it.Verifier;
 import org.apache.maven.it.util.ResourceExtractor;
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.junit.Test;
 
+import net.bodz.bas.m2.test.MyMojoTestCase;
+
 public class ProjectInfoMojoTest
-        extends AbstractMojoTestCase {
+        extends MyMojoTestCase {
 
     @Test
     public void testExecute()
             throws Exception {
-        File testPom = new File(getBasedir(), "src/test/resources/unit/dumpff/test1.xml");
+        File testPom = getResourceFile("dump/pom.xml");
+        assertTrue(testPom.exists());
+
         ProjectInfoMojo mojo = (ProjectInfoMojo) lookupMojo("dump", testPom);
         mojo.execute();
     }
 
     public static void main(String[] args)
             throws Exception {
-        new ProjectInfoMojoTest().itSimple();
-    }
-
-    void itSimple()
-            throws Exception {
-        File testDir = ResourceExtractor.simpleExtractResources(getClass(), "/it/simple1");
+        File testDir = ResourceExtractor.simpleExtractResources(ProjectInfoMojoTest.class, "/lenik/lab/m2/dump");
+        assertTrue(testDir.isDirectory());
 
         Verifier verifier = new Verifier(testDir.getAbsolutePath());
         // verifier.deleteArtifact("", name, version, ext)
