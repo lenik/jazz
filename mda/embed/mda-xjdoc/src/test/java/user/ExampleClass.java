@@ -12,14 +12,15 @@ package user;
  * <p>
  * See {@link StringBuffer#append(char)}
  * 
+ * @label A Example Class
+ * @label.zh.cn 示例类
  * @param <T>
  *            A type parameter.
  *            <p lang="zh-cn">
  *            一个类型参数。
  * @author lenik <lenik@bodz.net>
- *         <p lang="zh-cn">
- *         谢继雷
  * @author Ray J.Stomach
+ * @author.zh.cn 谢继雷
  */
 public class ExampleClass<T> {
 
