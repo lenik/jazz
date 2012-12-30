@@ -1,11 +1,14 @@
 package net.bodz.mda.xjdoc.taglib;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.ServiceLoader;
 
+import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.DuplicatedKeyException;
-import net.bodz.mda.xjdoc.model.javadoc.JavadocTagLibrary;
 
 public class TagLibraryManager {
 
@@ -13,7 +16,20 @@ public class TagLibraryManager {
 
     static {
         taglibMap = new HashMap<String, ITagLibrary>();
-        taglibMap.put("javadoc", new JavadocTagLibrary());
+
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+        for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class, loader)) {
+            String name = taglib.getClass().getSimpleName();
+            name = StringPart.rtrim(name, "TagLibrary");
+            name = Strings.lcfirst(name);
+
+            register(name, taglib);
+        }
+    }
+
+    public static Map<String, ITagLibrary> getTaglibMap() {
+        return Collections.unmodifiableMap(taglibMap);
     }
 
     public static void register(String name, ITagLibrary taglib) {

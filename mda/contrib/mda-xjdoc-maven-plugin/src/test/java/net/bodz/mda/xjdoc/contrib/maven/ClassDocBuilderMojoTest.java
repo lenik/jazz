@@ -10,6 +10,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import user.ExampleClass;
+
+import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.m2.test.MyMojoTestCase;
 
 public class ClassDocBuilderMojoTest
@@ -76,6 +79,14 @@ public class ClassDocBuilderMojoTest
         // System.out.println("Book Class = " + mojo.getBook().getClass());
         mojo.execute();
         // System.out.println("Done!");
+
+        File outDir = mojo.getOutputDirectory();
+        String exampleName = ExampleClass.class.getName().replace('.', '/');
+        File exampleFlatFile = new File(outDir, exampleName + ".ff");
+        assertTrue(exampleFlatFile.exists());
+
+        String exampleFlatData = FileData.readString(exampleFlatFile);
+        System.out.println(exampleFlatData);
     }
 
 }

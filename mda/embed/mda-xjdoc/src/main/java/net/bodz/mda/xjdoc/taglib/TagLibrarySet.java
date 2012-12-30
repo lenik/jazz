@@ -1,6 +1,7 @@
 package net.bodz.mda.xjdoc.taglib;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
@@ -14,7 +15,11 @@ public class TagLibrarySet
     private static final long serialVersionUID = 1L;
 
     public TagLibrarySet(ITagLibrary... taglibs) {
-        addAll(Arrays.asList(taglibs));
+        this(Arrays.asList(taglibs));
+    }
+
+    public TagLibrarySet(Collection<ITagLibrary> taglibs) {
+        addAll(taglibs);
     }
 
     @Override
