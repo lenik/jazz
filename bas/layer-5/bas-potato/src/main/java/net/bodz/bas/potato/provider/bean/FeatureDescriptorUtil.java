@@ -27,9 +27,8 @@ public class FeatureDescriptorUtil {
     }
 
     public static void initFeatureDescriptorFromPotatoElement(FeatureDescriptor descriptor, IPotatoElement element) {
-
         descriptor.setName(element.getName());
-        descriptor.setLabel(element.getLabel().toString());
+        descriptor.setDisplayName(element.getLabel().toString());
         descriptor.setShortDescription(element.getDescription().toString());
 
         int verboseLevel = element.getVerboseLevel();

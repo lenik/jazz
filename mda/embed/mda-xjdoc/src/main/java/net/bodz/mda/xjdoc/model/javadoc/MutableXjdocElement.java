@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.model.javadoc;
 
 import java.io.Serializable;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -32,7 +32,7 @@ public class MutableXjdocElement
             setName(xjdoc.getName());
             setLabel(xjdoc.getLabel());
 
-            DomainString text = xjdoc.getText();
+            iString text = xjdoc.getText();
             if (text != null) {
                 setDescription(text.headPar());
                 setHelpDoc(text.tailPar());

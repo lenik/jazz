@@ -3,15 +3,15 @@ package net.bodz.bas.i18n.dom;
 public class MultiLangStringParser
         extends MultiTagStringParser {
 
-    private XDomainString domainString;
+    private XiString domainString;
 
     /**
      * Parse multi-lang string in format of <code>lang1 "..." lang2 "..."</code> into domain string.
      * 
-     * @return The parsed {@link DomainString domain string}.
+     * @return The parsed {@link iString domain string}.
      */
     @Override
-    public synchronized XDomainString parse(String s) {
+    public synchronized XiString parse(String s) {
         super.parse(s);
         return domainString;
     }
@@ -19,7 +19,7 @@ public class MultiLangStringParser
     @Override
     protected void reset() {
         super.reset();
-        domainString = new XDomainString();
+        domainString = new XiString();
     }
 
     @Override

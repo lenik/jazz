@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.AbstractElement;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -12,9 +12,9 @@ public abstract class AbstractXjdocElement
     private transient IJavaElementDoc xjdoc;
     private transient boolean xjdocLoaded;
 
-    private transient DomainString label;
-    private transient DomainString description;
-    private transient DomainString helpDoc;
+    private transient iString label;
+    private transient iString description;
+    private transient iString helpDoc;
 
     public AbstractXjdocElement() {
     }
@@ -47,7 +47,7 @@ public abstract class AbstractXjdocElement
     }
 
     @Override
-    public DomainString getLabel() {
+    public iString getLabel() {
         if (label == null)
             label = getXjdoc().getLabel();
         return label;
@@ -57,9 +57,9 @@ public abstract class AbstractXjdocElement
      * The default description is the header line of the text.
      */
     @Override
-    public synchronized DomainString getDescription() {
+    public synchronized iString getDescription() {
         if (description == null) {
-            DomainString text = getXjdoc().getText();
+            iString text = getXjdoc().getText();
             if (text != null)
                 description = text.headPar();
         }
@@ -70,9 +70,9 @@ public abstract class AbstractXjdocElement
      * The default helpDoc is from the text without the header line.
      */
     @Override
-    public synchronized DomainString getHelpDoc() {
+    public synchronized iString getHelpDoc() {
         if (helpDoc == null) {
-            DomainString text = getXjdoc().getText();
+            iString text = getXjdoc().getText();
             if (text != null)
                 helpDoc = text.tailPar();
         }
@@ -84,15 +84,15 @@ public abstract class AbstractXjdocElement
         this.xjdocLoaded = true;
     }
 
-    protected void setLabel(DomainString label) {
+    protected void setLabel(iString label) {
         this.label = label;
     }
 
-    protected void setDescription(DomainString description) {
+    protected void setDescription(iString description) {
         this.description = description;
     }
 
-    protected void setHelpDoc(DomainString helpDoc) {
+    protected void setHelpDoc(iString helpDoc) {
         this.helpDoc = helpDoc;
     }
 

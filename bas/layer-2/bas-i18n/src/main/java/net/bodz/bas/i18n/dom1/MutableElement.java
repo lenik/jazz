@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.dom1;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 
 public class MutableElement
         extends AbstractElement
@@ -9,9 +9,9 @@ public class MutableElement
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private DomainString label;
-    private DomainString description;
-    private DomainString helpDoc;
+    private iString label;
+    private iString description;
+    private iString helpDoc;
     private int verboseLevel;
     private int modifiers;
 
@@ -26,32 +26,32 @@ public class MutableElement
     }
 
     @Override
-    public DomainString getLabel() {
+    public iString getLabel() {
         return label;
     }
 
     @Override
-    public void setLabel(DomainString label) {
+    public void setLabel(iString label) {
         this.label = label;
     }
 
     @Override
-    public DomainString getDescription() {
+    public iString getDescription() {
         return description;
     }
 
     @Override
-    public void setDescription(DomainString description) {
+    public void setDescription(iString description) {
         this.description = description;
     }
 
     @Override
-    public DomainString getHelpDoc() {
+    public iString getHelpDoc() {
         return helpDoc;
     }
 
     @Override
-    public void setHelpDoc(DomainString helpDoc) {
+    public void setHelpDoc(iString helpDoc) {
         this.helpDoc = helpDoc;
     }
 

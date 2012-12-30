@@ -2,7 +2,7 @@ package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.sio.ICharOut;
 
 public class FlatfOutput
@@ -67,7 +67,7 @@ public class FlatfOutput
     }
 
     @Override
-    public void attribute(String name, DomainString text)
+    public void attribute(String name, iString text)
             throws IOException {
         String mlstr = text.toMultiLangString(langSeparator, lineSeparator);
         attribute(name, mlstr);

@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.c.java.util.Dates;
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
@@ -68,11 +68,11 @@ public class ArtifactDoc
     public ReleaseDescription getReleaseDescription() {
         ReleaseDescription release = new ReleaseDescription();
 
-        DomainString label = getLabel();
+        iString label = getLabel();
         if (label != null)
             release.setName(label.toString());
 
-        DomainString text = getText();
+        iString text = getText();
         if (text != null)
             release.setDescription(text.toString());
 

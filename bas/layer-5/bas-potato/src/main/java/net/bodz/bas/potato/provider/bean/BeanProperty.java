@@ -4,8 +4,8 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
 import net.bodz.bas.t.event.IPropertyChangeListener;
@@ -45,15 +45,15 @@ public class BeanProperty
     }
 
     @Override
-    public DomainString getLabel() {
-        String label = propertyDescriptor.getLabel();
-        return XDomainString.of(label);
+    public iString getLabel() {
+        String displayName = propertyDescriptor.getDisplayName();
+        return XiString.of(displayName);
     }
 
     @Override
-    public DomainString getDescription() {
+    public iString getDescription() {
         String shortDescription = propertyDescriptor.getShortDescription();
-        return XDomainString.of(shortDescription);
+        return XiString.of(shortDescription);
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.t.preorder.PrefixMap;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
@@ -219,17 +219,17 @@ public class MutableOptionGroup
     }
 
     @Override
-    public void setLabel(DomainString label) {
+    public void setLabel(iString label) {
         super.setLabel(label);
     }
 
     @Override
-    public void setDescription(DomainString description) {
+    public void setDescription(iString description) {
         super.setDescription(description);
     }
 
     @Override
-    public void setHelpDoc(DomainString helpDoc) {
+    public void setHelpDoc(iString helpDoc) {
         super.setHelpDoc(helpDoc);
     }
 

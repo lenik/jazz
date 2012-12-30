@@ -4,9 +4,9 @@ import java.util.Map.Entry;
 
 public class DomainStrings {
 
-    public static DomainString concat(DomainString... dstrings) {
-        DomainString result = null;
-        for (DomainString dstr : dstrings) {
+    public static iString concat(iString... dstrings) {
+        iString result = null;
+        for (iString dstr : dstrings) {
             if (dstr == null)
                 continue;
             if (result == null)
@@ -17,9 +17,9 @@ public class DomainStrings {
         return result;
     }
 
-    public static DomainString join(DomainString... dstrings) {
-        DomainString result = null;
-        for (DomainString dstr : dstrings) {
+    public static iString join(iString... dstrings) {
+        iString result = null;
+        for (iString dstr : dstrings) {
             if (dstr == null)
                 continue;
             if (result == null)
@@ -30,8 +30,8 @@ public class DomainStrings {
         return result;
     }
 
-    public static DomainString headPar(DomainString text) {
-        DomainString par = new XDomainString();
+    public static iString headPar(iString text) {
+        iString par = new XiString();
         for (Entry<String, String> entry : text.entrySet()) {
             String domain = entry.getKey();
             String _text = entry.getValue();
@@ -48,8 +48,8 @@ public class DomainStrings {
         return par;
     }
 
-    public static DomainString tailPar(DomainString text) {
-        DomainString par = new XDomainString();
+    public static iString tailPar(iString text) {
+        iString par = new XiString();
         for (Entry<String, String> entry : text.entrySet()) {
             String domain = entry.getKey();
             String _text = entry.getValue();

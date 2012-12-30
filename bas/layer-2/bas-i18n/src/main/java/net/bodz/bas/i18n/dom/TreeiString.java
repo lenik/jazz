@@ -8,17 +8,17 @@ import net.bodz.bas.c.string.StringHtml;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.i18n.LocaleColo;
 
-public class TreeMapDomainString
+public class TreeiString
         extends TreeMap<String, String>
-        implements DomainString {
+        implements iString {
 
     private static final long serialVersionUID = 1L;
 
-    public TreeMapDomainString() {
+    public TreeiString() {
         super();
     }
 
-    public TreeMapDomainString(Map<? extends String, ? extends String> m) {
+    public TreeiString(Map<? extends String, ? extends String> m) {
         super(m);
     }
 
@@ -61,12 +61,12 @@ public class TreeMapDomainString
 
     @Override
     public String toParaLangString() {
-        return ParaLangUtil.formatParaLangString(this);
+        return ParaLangString.format(this);
     }
 
     @Override
     public String toParaLangString(String separator) {
-        return ParaLangUtil.formatParaLangString(this, separator);
+        return ParaLangString.format(this, separator);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class TreeMapDomainString
     }
 
     @Override
-    public DomainString append(DomainString other) {
+    public iString append(iString other) {
         for (Entry<String, String> entry : other.entrySet()) {
             String domain = entry.getKey();
             String value = entry.getValue();
@@ -111,23 +111,23 @@ public class TreeMapDomainString
     }
 
     @Override
-    public DomainString concat(DomainString other) {
-        TreeMapDomainString copy = clone();
+    public iString concat(iString other) {
+        TreeiString copy = clone();
         return copy.append(other);
     }
 
     @Override
-    public DomainString join(DomainString other) {
+    public iString join(iString other) {
         return DomainStrings.join(this, other);
     }
 
     @Override
-    public DomainString headPar() {
+    public iString headPar() {
         return DomainStrings.headPar(this);
     }
 
     @Override
-    public DomainString tailPar() {
+    public iString tailPar() {
         return DomainStrings.tailPar(this);
     }
 
@@ -144,8 +144,8 @@ public class TreeMapDomainString
     }
 
     @Override
-    public TreeMapDomainString clone() {
-        return new TreeMapDomainString(this);
+    public TreeiString clone() {
+        return new TreeiString(this);
     }
 
 }

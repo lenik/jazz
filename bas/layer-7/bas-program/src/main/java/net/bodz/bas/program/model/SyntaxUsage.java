@@ -1,6 +1,6 @@
 package net.bodz.bas.program.model;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 
 /**
  * Examples:
@@ -16,7 +16,7 @@ public class SyntaxUsage {
 
     String id;
     String syntax;
-    DomainString description;
+    iString description;
 
     public String getId() {
         return id;
@@ -34,11 +34,11 @@ public class SyntaxUsage {
         this.syntax = syntax;
     }
 
-    public DomainString getDescription() {
+    public iString getDescription() {
         return description;
     }
 
-    public void setDescription(DomainString description) {
+    public void setDescription(iString description) {
         this.description = description;
     }
 

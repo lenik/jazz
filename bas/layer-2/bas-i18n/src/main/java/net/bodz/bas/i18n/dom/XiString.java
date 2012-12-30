@@ -6,42 +6,42 @@ import net.bodz.bas.c.string.StringHtml;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.i18n.LocaleColo;
 
-public class XDomainString
-        extends XDomainNode<XDomainString, String>
-        implements DomainString, Cloneable {
+public class XiString
+        extends XDomainNode<XiString, String>
+        implements iString, Cloneable {
 
-    public XDomainString() {
+    public XiString() {
         super(null, null);
     }
 
-    public XDomainString(String value) {
+    public XiString(String value) {
         super(null, value);
     }
 
-    public XDomainString(String domain, String value) {
+    public XiString(String domain, String value) {
         super(domain, value);
     }
 
-    public XDomainString(String domain, String value, XDomainString... follows) {
+    public XiString(String domain, String value, XiString... follows) {
         super(domain, value, follows);
     }
 
-    protected XDomainString(XDomainString other) {
+    protected XiString(XiString other) {
         super(other);
     }
 
-    public static XDomainString of(String plainString) {
-        return new XDomainString(plainString);
+    public static XiString of(String plainString) {
+        return new XiString(plainString);
     }
 
     @Override
-    protected XDomainString createNode(String domain, String value) {
-        return new XDomainString(domain, value);
+    protected XiString createNode(String domain, String value) {
+        return new XiString(domain, value);
     }
 
     @Override
-    public XDomainString clone() {
-        return new XDomainString(this);
+    public XiString clone() {
+        return new XiString(this);
     }
 
     /**
@@ -61,11 +61,23 @@ public class XDomainString
     }
 
     /**
-     * @see ParaLangUtil#parseParaLang(DomainString, String)
+     * A para-lang string is formatted as:
+     * 
+     * <pre>
+     * string for default-locale
+     * 
+     * &lt;p lang="LOCALE1"&gt; 
+     *      string for locale1...
+     * 
+     * &lt;p lang="LOCALE2"&gt; 
+     *      string for locale2...
+     * </pre>
+     * 
+     * @see ParaLangString#parse(iString, String)
      */
-    public static XDomainString parseParaLang(String plText) {
-        XDomainString ds = new XDomainString();
-        ParaLangUtil.parseParaLang(ds, plText);
+    public static XiString parseParaLangString(String plText) {
+        XiString ds = new XiString();
+        ParaLangString.parse(ds, plText);
         return ds;
     }
 
@@ -76,7 +88,7 @@ public class XDomainString
 
     @Override
     public String toParaLangString(String separator) {
-        return ParaLangUtil.formatParaLangString(this, separator);
+        return ParaLangString.format(this, separator);
     }
 
     /**
@@ -94,7 +106,7 @@ public class XDomainString
      *            multi-lang string to be parsed.
      * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
      */
-    public static XDomainString parseMultiLang(String mlstr) {
+    public static XiString parseMultiLangString(String mlstr) {
         if (mlstr == null)
             return null;
         MultiLangStringParser parser = new MultiLangStringParser();
@@ -115,33 +127,33 @@ public class XDomainString
     }
 
     @Override
-    public DomainString append(DomainString other) {
+    public iString append(iString other) {
         _join(other, false, this);
         return this;
     }
 
     @Override
-    public XDomainString concat(DomainString other) {
-        XDomainString out = clone();
+    public XiString concat(iString other) {
+        XiString out = clone();
         _join(other, false, out);
         return out;
     }
 
     @Override
-    public XDomainString join(DomainString other) {
-        XDomainString out = clone();
+    public XiString join(iString other) {
+        XiString out = clone();
         _join(other, true, out);
         return out;
     }
 
-    void _join(DomainString other, boolean bestFits, XDomainString output) {
+    void _join(iString other, boolean bestFits, XiString output) {
         if (other == null)
             throw new NullPointerException("other");
 
         if (bestFits) { // find which domains are occurred in this only.
-            for (Entry<String, XDomainString> entry : this) {
+            for (Entry<String, XiString> entry : this) {
                 String d1 = entry.getKey();
-                XDomainString node1 = entry.getValue();
+                XiString node1 = entry.getValue();
                 if (node1.value == null)
                     continue;
                 if (other.get(d1) != null)
@@ -166,7 +178,7 @@ public class XDomainString
             if (bestFits)
                 fallback1 = getNearest(d2);
 
-            XDomainString outNode = output.create(d2, fallback1);
+            XiString outNode = output.create(d2, fallback1);
             if (outNode.value == null)
                 outNode.value = s2;
             else
@@ -175,12 +187,12 @@ public class XDomainString
     }
 
     @Override
-    public DomainString headPar() {
+    public iString headPar() {
         return DomainStrings.headPar(this);
     }
 
     @Override
-    public DomainString tailPar() {
+    public iString tailPar() {
         return DomainStrings.tailPar(this);
     }
 

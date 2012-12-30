@@ -7,14 +7,14 @@ public class XDomainStringTest
         extends Assert {
 
     String pl1 = "Default<p  \n lang=\"zh-cn\"  />中文<p lang='et'>Esperanto";
-    DomainString dstr1 = XDomainString.parseParaLang(pl1);
+    iString dstr1 = XiString.parseParaLangString(pl1);
 
     String _hello = "Hello<p  \n lang=\"zh-cn\"  />你好<p lang='et'>Saluton";
     String _space = " <p  \n lang=\"zh\"  />　";
     String _world = "World<p  \n lang=\"zh-cn\"  />世界<p lang='et'>La mondo";
-    DomainString hello = XDomainString.parseParaLang(_hello);
-    DomainString space = XDomainString.parseParaLang(_space);
-    DomainString world = XDomainString.parseParaLang(_world);
+    iString hello = XiString.parseParaLangString(_hello);
+    iString space = XiString.parseParaLangString(_space);
+    iString world = XiString.parseParaLangString(_world);
 
     @Test
     public void testDumpContent() {
@@ -34,7 +34,7 @@ public class XDomainStringTest
 
     @Test
     public void testParseNullString() {
-        DomainString nul = new XDomainString();
+        iString nul = new XiString();
         assertNull(nul.toString());
         assertEquals("", nul.toMultiLangString());
         assertEquals("", nul.toParaLangString());
@@ -42,13 +42,13 @@ public class XDomainStringTest
 
     @Test
     public void testParseNullMultiLang() {
-        XDomainString dstr = XDomainString.parseMultiLang("");
+        XiString dstr = XiString.parseMultiLangString("");
         assertNull(dstr.getValue());
     }
 
     @Test
     public void testParseNullParaLang() {
-        XDomainString dstr = XDomainString.parseParaLang("");
+        XiString dstr = XiString.parseParaLangString("");
         assertEquals("", dstr.getValue());
     }
 
@@ -74,7 +74,7 @@ public class XDomainStringTest
     public void testEquals() {
         assertEquals(dstr1, dstr1);
 
-        DomainString copy = dstr1.clone();
+        iString copy = dstr1.clone();
         assertNotSame(dstr1, copy);
         assertEquals(dstr1, copy);
 
@@ -87,12 +87,12 @@ public class XDomainStringTest
 
     @Test
     public void testConcat0() {
-        DomainString c = new XDomainString().concat(hello);
+        iString c = new XiString().concat(hello);
         assertEquals(hello, c);
     }
 
-    DomainString s1 = new XDomainString("x1");
-    DomainString s2 = new XDomainString("x2");
+    iString s1 = new XiString("x1");
+    iString s2 = new XiString("x2");
     {
         s1.put("zh-cn", "zc1");
         s1.put("et", "e1");
@@ -101,28 +101,28 @@ public class XDomainStringTest
 
     @Test
     public void testConcats() {
-        DomainString s12 = new XDomainString("x1x2");
+        iString s12 = new XiString("x1x2");
         s12.put("zh-cn", "zc1");
         s12.put("et", "e1");
         s12.put("zh", "z2");
-        DomainString cat12 = s1.clone().concat(s2);
+        iString cat12 = s1.clone().concat(s2);
         assertEquals(s12, cat12);
 
-        DomainString s21 = new XDomainString("x2x1");
+        iString s21 = new XiString("x2x1");
         s21.put("zh-cn", "zc1");
         s21.put("et", "e1");
         s21.put("zh", "z2");
-        DomainString cat21 = s2.clone().concat(s1);
+        iString cat21 = s2.clone().concat(s1);
         assertEquals(s21, cat21);
     }
 
     @Test
     public void testJoins() {
-        DomainString j12 = new XDomainString("x1x2");
+        iString j12 = new XiString("x1x2");
         j12.put("zh-cn", "zc1z2");
         j12.put("et", "e1x2");
         j12.put("zh", "x1z2");
-        DomainString jon12 = s1.clone().join(s2);
+        iString jon12 = s1.clone().join(s2);
         // System.out.println("expect=" + j12.toMultiLangString());
         // System.out.println("actual=" + jon12.toMultiLangString());
         assertEquals(j12, jon12);

@@ -41,7 +41,7 @@ public class MultiLangStringFormatter {
         this.lineSeparator = lineSeparator;
     }
 
-    public String format(DomainString dstr) {
+    public String format(iString dstr) {
         StringBuilder sb = new StringBuilder();
         for (Entry<String, String> trEntry : dstr.entrySet()) {
             String lang = trEntry.getKey();

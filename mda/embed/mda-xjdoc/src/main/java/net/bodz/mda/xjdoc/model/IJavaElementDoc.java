@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.model;
 
 import java.util.Map;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.sugar.IWrappedAsable;
 
 public interface IJavaElementDoc
@@ -23,9 +23,9 @@ public interface IJavaElementDoc
      */
     void setName(String name);
 
-    DomainString getLabel();
+    iString getLabel();
 
-    void setLabel(DomainString label);
+    void setLabel(iString label);
 
     /**
      * The main text of the element.
@@ -34,7 +34,7 @@ public interface IJavaElementDoc
      * 
      * @return Possibly <code>null</code> or empty-string if main text isn't specified.
      */
-    DomainString getText();
+    iString getText();
 
     /**
      * Set the main text of the element.
@@ -44,7 +44,7 @@ public interface IJavaElementDoc
      * @param text
      *            <code>null</code> or empty-string if main text isn't specified.
      */
-    void setText(DomainString text);
+    void setText(iString text);
 
     /**
      * Get the value of a named tag.

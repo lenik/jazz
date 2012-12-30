@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.dom1;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 
 public class DecoratedMutableElement
         extends DecoratedElement
@@ -23,17 +23,17 @@ public class DecoratedMutableElement
     }
 
     @Override
-    public void setLabel(DomainString label) {
+    public void setLabel(iString label) {
         getWrapped().setLabel(label);
     }
 
     @Override
-    public void setDescription(DomainString description) {
+    public void setDescription(iString description) {
         getWrapped().setDescription(description);
     }
 
     @Override
-    public void setHelpDoc(DomainString helpDoc) {
+    public void setHelpDoc(iString helpDoc) {
         getWrapped().setHelpDoc(helpDoc);
     }
 

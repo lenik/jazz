@@ -1,9 +1,12 @@
 package net.bodz.bas.i18n.dom;
 
-public interface DomainString
+/**
+ * I18n-capable String
+ */
+public interface iString
         extends IDomainMap<String>, Cloneable {
 
-    DomainString clone();
+    iString clone();
 
     String toString();
 
@@ -22,19 +25,19 @@ public interface DomainString
 
     String dumpContent();
 
-    DomainString append(DomainString other);
+    iString append(iString other);
 
-    DomainString concat(DomainString other);
+    iString concat(iString other);
 
     /**
      * For domain strings A(default1,en1) and B(default3,et4), the result of join will be
      * C(default13,en13,et14).
      */
-    DomainString join(DomainString other);
+    iString join(iString other);
 
-    DomainString headPar();
+    iString headPar();
 
-    DomainString tailPar();
+    iString tailPar();
 
     String getHeadPar();
 

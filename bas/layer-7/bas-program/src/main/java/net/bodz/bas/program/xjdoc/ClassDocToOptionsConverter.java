@@ -11,7 +11,7 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.program.model.FieldOption;
 import net.bodz.bas.program.model.IMutableOptionGroup;
 import net.bodz.bas.program.model.MethodOption;
@@ -225,11 +225,11 @@ public class ClassDocToOptionsConverter {
             group = new MutableOptionGroup(parent, clazz);
 
         // In flatten-mode: override parent's name/description/docs.
-        DomainString _name = (DomainString) classDoc.getTag("name");
+        iString _name = (iString) classDoc.getTag("name");
         if (_name != null)
             group.setLabel(_name);
 
-        DomainString text = classDoc.getText();
+        iString text = classDoc.getText();
         if (text != null) {
             group.setDescription(text.headPar());
             group.setHelpDoc(text.tailPar());

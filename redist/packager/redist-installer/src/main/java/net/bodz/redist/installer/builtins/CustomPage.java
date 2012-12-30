@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.*;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.gui.err.QuietValidationException;
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.IComponent;
@@ -102,7 +102,7 @@ public class CustomPage
                     if (items != null && items.length != 0) {
                         TreeItem item = items[0];
                         IComponent c = (IComponent) item.getData();
-                        DomainString text = c.getDescription();
+                        iString text = c.getDescription();
                         if (text != null)
                             descriptionLabel.setText(text.toString());
                     }
@@ -231,7 +231,7 @@ public class CustomPage
         item.setData(component);
         component.setViewData(item);
 
-        DomainString text = component.getDescription();
+        iString text = component.getDescription();
         if (text != null)
             item.setText(text.toString());
 

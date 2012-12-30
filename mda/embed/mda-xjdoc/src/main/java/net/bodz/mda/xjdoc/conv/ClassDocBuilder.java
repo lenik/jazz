@@ -7,8 +7,8 @@ import java.util.Map;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
@@ -27,7 +27,7 @@ import com.thoughtworks.qdox.model.*;
 public class ClassDocBuilder {
 
     ITagLibrary taglib;
-    DomainString missingDoc;
+    iString missingDoc;
 
     public ClassDocBuilder(ITagLibrary taglib) {
         if (taglib == null)
@@ -38,11 +38,11 @@ public class ClassDocBuilder {
         // this.sourceFileImports = sourceFileImports;
     }
 
-    public DomainString getMissingDoc() {
+    public iString getMissingDoc() {
         return missingDoc;
     }
 
-    public void setMissingDoc(DomainString missingDoc) {
+    public void setMissingDoc(iString missingDoc) {
         this.missingDoc = missingDoc;
     }
 
@@ -88,7 +88,7 @@ public class ClassDocBuilder {
             for (JavaParameter jparam : javaMethod.getParameters()) {
                 // javadoc may not include all the parameters.
                 String paramName = jparam.getName();
-                DomainString paramDoc = methodDoc.getParamDoc(paramName);
+                iString paramDoc = methodDoc.getParamDoc(paramName);
                 if (paramDoc == null && missingDoc != null)
                     methodDoc.setParamDoc(paramName, missingDoc);
             }
@@ -98,7 +98,7 @@ public class ClassDocBuilder {
                 // javadoc may not include all the exceptions.
                 String exceptionFqcn = exceptionType.getFullyQualifiedName();
                 // String simple = typeNameContext.importTypeName(exceptionFqcn);
-                DomainString exceptionDoc = methodDoc.getExceptionDoc(exceptionFqcn);
+                iString exceptionDoc = methodDoc.getExceptionDoc(exceptionFqcn);
                 if (exceptionDoc == null && missingDoc != null)
                     methodDoc.setExceptionDoc(exceptionFqcn, missingDoc);
                 classImports.add(exceptionFqcn);
@@ -112,7 +112,7 @@ public class ClassDocBuilder {
     void populate(JavaElementDoc elementDoc, AbstractJavaEntity javaEntity, INegotiation negotiation) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
-            DomainString text = XDomainString.parseParaLang(comment);
+            iString text = XiString.parseParaLangString(comment);
             elementDoc.setText(text);
         }
 
