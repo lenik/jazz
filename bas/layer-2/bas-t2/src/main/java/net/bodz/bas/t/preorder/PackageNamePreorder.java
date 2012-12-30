@@ -1,8 +1,5 @@
 package net.bodz.bas.t.preorder;
 
-/**
- * @test {@link PackageNamePreorderTest}
- */
 public class PackageNamePreorder
         extends AbstractPreorder<String> {
 
