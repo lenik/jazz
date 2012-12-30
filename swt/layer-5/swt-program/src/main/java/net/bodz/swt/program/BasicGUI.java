@@ -117,8 +117,8 @@ public abstract class BasicGUI
             Thread t = threads[i];
             if (t.isDaemon())
                 continue;
-            String displayName = t.getName();
-            if (ignoredThreads.contains(displayName))
+            String label = t.getName();
+            if (ignoredThreads.contains(label))
                 continue;
             fg++;
         }

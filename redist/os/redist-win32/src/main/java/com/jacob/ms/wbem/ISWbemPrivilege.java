@@ -65,8 +65,8 @@ public class ISWbemPrivilege
      * 
      * @return the result is of type String
      */
-    public String getDisplayName() {
-        return Dispatch.get(this, "DisplayName").toString();
+    public String getLabel() {
+        return Dispatch.get(this, "Label").toString();
     }
 
     /**

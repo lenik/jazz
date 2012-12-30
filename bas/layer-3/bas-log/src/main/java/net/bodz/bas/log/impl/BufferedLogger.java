@@ -73,7 +73,7 @@ public class BufferedLogger
 
                 out.print(prefix);
 
-                String levelName = record.level.getDisplayName();
+                String levelName = record.level.getLabel();
                 out.print("[" + levelName + "] ");
 
                 out.println(record.message);

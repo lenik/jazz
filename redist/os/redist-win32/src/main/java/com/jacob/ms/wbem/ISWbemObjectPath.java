@@ -122,18 +122,18 @@ public class ISWbemObjectPath
      * 
      * @return the result is of type String
      */
-    public String getDisplayName() {
-        return Dispatch.get(this, "DisplayName").toString();
+    public String getLabel() {
+        return Dispatch.get(this, "Label").toString();
     }
 
     /**
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      * 
-     * @param displayName
+     * @param label
      *            an input-parameter of type String
      */
-    public void setDisplayName(String displayName) {
-        Dispatch.put(this, "DisplayName", displayName);
+    public void setLabel(String label) {
+        Dispatch.put(this, "Label", label);
     }
 
     /**

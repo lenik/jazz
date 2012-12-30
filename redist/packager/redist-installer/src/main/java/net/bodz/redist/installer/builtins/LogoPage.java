@@ -34,7 +34,7 @@ public class LogoPage
     @Override
     public String getPageTitle() {
         IProject project = session.getProject();
-        DomainString name = project.getDisplayName();
+        DomainString name = project.getLabel();
         IVersion version = project.getVersion();
         return tr._("Welcome to install ") + name + " " + version;
     }

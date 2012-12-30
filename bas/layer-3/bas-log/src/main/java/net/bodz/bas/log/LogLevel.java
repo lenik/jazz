@@ -22,7 +22,7 @@ public class LogLevel {
     public static final LogLevel PROGRESS = new LogLevel("progress", statusGroup, 3);
 
     private final transient String intern;
-    private final transient String displayName;
+    private final transient String label;
     private final transient int group;
     private final transient int priority;
     private final transient int syslogEquiv;
@@ -35,7 +35,7 @@ public class LogLevel {
         if (name == null)
             throw new NullPointerException("name");
         this.intern = name.intern();
-        this.displayName = name;
+        this.label = name;
         this.group = group;
         this.priority = priority;
         this.syslogEquiv = syslogEquiv;
@@ -45,8 +45,8 @@ public class LogLevel {
         return intern;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getLabel() {
+        return label;
     }
 
     public int getGroup() {
@@ -97,8 +97,8 @@ public class LogLevel {
 
     @Override
     public String toString() {
-        if (displayName != null)
-            return displayName;
+        if (label != null)
+            return label;
         else
             return intern;
     }

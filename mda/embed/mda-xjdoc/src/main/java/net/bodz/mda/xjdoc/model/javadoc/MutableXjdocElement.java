@@ -30,7 +30,7 @@ public class MutableXjdocElement
                 throw new NullPointerException("xjdoc");
 
             setName(xjdoc.getName());
-            setDisplayName(xjdoc.getDisplayName());
+            setLabel(xjdoc.getLabel());
 
             DomainString text = xjdoc.getText();
             if (text != null) {

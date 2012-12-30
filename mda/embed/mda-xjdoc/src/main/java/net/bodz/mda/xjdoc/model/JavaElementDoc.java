@@ -45,14 +45,14 @@ public class JavaElementDoc
     }
 
     @Override
-    public DomainString getDisplayName() {
-        DomainString displayName = (DomainString) getTag("name");
-        return displayName;
+    public DomainString getLabel() {
+        DomainString label = (DomainString) getTag("name");
+        return label;
     }
 
     @Override
-    public void setDisplayName(DomainString displayName) {
-        setTag("name", displayName);
+    public void setLabel(DomainString label) {
+        setTag("name", label);
     }
 
     @Override

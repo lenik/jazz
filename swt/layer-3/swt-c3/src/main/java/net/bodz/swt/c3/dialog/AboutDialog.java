@@ -20,7 +20,7 @@ public class AboutDialog
     }
 
     public AboutDialog(Shell parent, int style, ArtifactDoc doc) {
-        super(parent, style, "About " + doc.getDisplayName());
+        super(parent, style, "About " + doc.getLabel());
     }
 
     @Override

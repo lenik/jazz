@@ -126,7 +126,7 @@ public abstract class BasicCLI
     protected void _version(IPrintOut out) {
         ArtifactDoc artifactDoc = getXjdoc();
         ReleaseDescription release = artifactDoc.getReleaseDescription();
-        out.printf("[%s] %s\n", artifactDoc.getDisplayName(), artifactDoc.getText().getHeadPar());
+        out.printf("[%s] %s\n", artifactDoc.getLabel(), artifactDoc.getText().getHeadPar());
         out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
                 artifactDoc.getAuthor(), //
                 artifactDoc.getVersion(), //

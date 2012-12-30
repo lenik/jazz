@@ -58,14 +58,14 @@ public class BatchCLITest
 
         System.out.printf("Group [%s] %s: %s\n", //
                 group.getName(), //
-                group.getDisplayName(), //
+                group.getLabel(), //
                 group.getDescription());
 
         for (Entry<String, IOption> entry : group.getLocalOptionMap().entrySet()) {
             IOption opt = entry.getValue();
             System.out.printf("    Option [%s] %s: %s\n", //
                     entry.getKey(), //
-                    opt.getDisplayName(), //
+                    opt.getLabel(), //
                     opt.getDescription());
             System.out.println("        Aliases: " + opt.getAliases());
             System.out.println("        Type: " + opt.getType());

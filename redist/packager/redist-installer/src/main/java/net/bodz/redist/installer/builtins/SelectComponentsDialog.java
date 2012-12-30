@@ -81,7 +81,7 @@ public class SelectComponentsDialog
                 indent = indents[i];
             IComponent c = components[i];
             String s = indent == null ? "" : indent;
-            s += c.getDisplayName();
+            s += c.getLabel();
             DomainString description = c.getDescription();
             if (description != null)
                 s += " - " + description;

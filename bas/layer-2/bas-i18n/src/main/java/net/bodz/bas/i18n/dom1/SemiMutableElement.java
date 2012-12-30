@@ -11,7 +11,7 @@ public class SemiMutableElement
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private DomainString displayName;
+    private DomainString label;
     private DomainString description;
     private DomainString helpDoc;
     private int verboseLevel = PUBLIC_LEVEL;
@@ -27,12 +27,12 @@ public class SemiMutableElement
     }
 
     @Override
-    public DomainString getDisplayName() {
-        return displayName;
+    public DomainString getLabel() {
+        return label;
     }
 
-    protected void setDisplayName(DomainString displayName) {
-        this.displayName = displayName;
+    protected void setLabel(DomainString label) {
+        this.label = label;
     }
 
     @Override

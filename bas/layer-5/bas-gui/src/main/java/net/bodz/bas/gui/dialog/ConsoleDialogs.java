@@ -79,7 +79,7 @@ public class ConsoleDialogs
         return false;
     }
 
-    static String getDisplayName(IDirectiveCommand p) {
+    static String getLabel(IDirectiveCommand p) {
         char c = p.getMnemonic();
         String name = p.getName();
         String s = Strings.ucfirstWords(name);
@@ -101,12 +101,12 @@ public class ConsoleDialogs
             out.print("Choose a proposal: ");
             for (int i = 0; i < proposals.length; i++) {
                 IDirectiveCommand p = proposals[i];
-                String name = getDisplayName(p);
-                // String desc = p.getDescription();
-                // String s = desc == null ? name : name + ": " + desc;
+                String label = getLabel(p);
+                // String description = p.getDescription();
+                // String s = description == null ? label : label + ": " + description;
                 if (i != 0)
                     out.print(", ");
-                out.print(name);
+                out.print(label);
             }
             out.print(": ");
             String line;

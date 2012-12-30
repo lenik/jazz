@@ -26,13 +26,13 @@ public abstract class DecoratedJavaElementDoc
     }
 
     @Override
-    public DomainString getDisplayName() {
-        return getWrapped().getDisplayName();
+    public DomainString getLabel() {
+        return getWrapped().getLabel();
     }
 
     @Override
-    public void setDisplayName(DomainString displayName) {
-        getWrapped().setDisplayName(displayName);
+    public void setLabel(DomainString label) {
+        getWrapped().setLabel(label);
     }
 
     @Override

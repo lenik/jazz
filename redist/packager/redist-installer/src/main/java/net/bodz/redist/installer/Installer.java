@@ -77,9 +77,9 @@ public class Installer
 
     @Override
     protected String getTitle() {
-        DomainString displayName = project.getDisplayName();
+        DomainString label = project.getLabel();
         IVersion version = project.getVersion();
-        return displayName + tr._(" Installer ") + version;
+        return label + tr._(" Installer ") + version;
     }
 
     public ISession getSession() {
