@@ -6,7 +6,7 @@ import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.t.preorder.DomainMap;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
 
-public class TagLibrary
+public abstract class AbstractTagLibrary
         implements ITagLibrary {
 
     private DomainMap<ITagType> tagMap = new DomainMap<>();

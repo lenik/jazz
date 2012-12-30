@@ -20,7 +20,8 @@ public abstract class AbstractScalarTagType<T>
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
             throws FormatException, IOException {
         if (value != null) {
-            @SuppressWarnings("unchecked") String s = format((T) value);
+            @SuppressWarnings("unchecked")
+            String s = format((T) value);
             writer.writeTag(rootTagName, s);
         }
     }
@@ -35,7 +36,8 @@ public abstract class AbstractScalarTagType<T>
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
             throws FormatException, IOException {
-        @SuppressWarnings("unchecked") String string = format((T) value);
+        @SuppressWarnings("unchecked")
+        String string = format((T) value);
         out.attribute(prefix, string);
     }
 

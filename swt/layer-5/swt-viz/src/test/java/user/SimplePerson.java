@@ -1,6 +1,5 @@
 package user;
 
-
 public class SimplePerson {
 
     public String name;
@@ -20,7 +19,7 @@ public class SimplePerson {
     }
 
     /**
-     * @name &Age
+     * @label &Age
      */
     public int getAge() {
         return age;

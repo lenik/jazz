@@ -1,6 +1,6 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
-import net.bodz.mda.xjdoc.taglib.TagLibrary;
+import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
 import net.bodz.mda.xjdoc.tagtype.FirstWordFQCNTagType;
 import net.bodz.mda.xjdoc.tagtype.FirstWordKeyTagType;
 import net.bodz.mda.xjdoc.tagtype.I18nStringTagType;
@@ -8,10 +8,9 @@ import net.bodz.mda.xjdoc.tagtype.LocaleSpecI18nStringTagType;
 import net.bodz.mda.xjdoc.tagtype.RepeatForListTagType;
 
 public class JavadocTagLibrary
-        extends TagLibrary {
+        extends AbstractTagLibrary {
 
-    {
-
+    public JavadocTagLibrary() {
         addTagType("author", new RepeatForListTagType(//
                 AuthorTagType.getInstance()));
 

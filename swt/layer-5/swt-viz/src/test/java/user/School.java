@@ -14,13 +14,13 @@ public class School {
     }
 
     /**
-     * @name Lucy Girl
+     * @lable Lucy Girl
      * @style border: 1px solid
      */
     public SimplePerson lucy;
 
     /**
-     * @name Lily Girl
+     * @label Lily Girl
      */
     public ComplexPerson lily;
 

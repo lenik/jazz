@@ -16,7 +16,7 @@ import net.bodz.swt.c3.pageflow.IBadPathListener;
 import net.bodz.swt.program.BasicGUI;
 
 /**
- * @name boDz Product Installer
+ * @label boDz Product Installer
  * @site http://www.bodz.net/products/SWT-Installer
  * @style width: 500; height: 400
  * @image logo2.jpg

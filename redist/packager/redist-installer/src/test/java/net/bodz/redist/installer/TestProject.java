@@ -11,7 +11,7 @@ import net.bodz.redist.installer.builtins.OptionalSection;
 import net.bodz.redist.installer.builtins.Section;
 
 /**
- * @name ABC Program
+ * @label ABC Program
  */
 public class TestProject
         extends CTAProject {
