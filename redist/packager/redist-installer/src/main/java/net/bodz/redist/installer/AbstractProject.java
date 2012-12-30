@@ -16,7 +16,7 @@ import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.t.tree.legacy.ITreeCallback;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
-import net.bodz.mda.xjdoc.model.artifact.Author;
+import net.bodz.mda.xjdoc.model.javadoc.Author;
 import net.bodz.redist.installer.Schemes.Custom;
 import net.bodz.redist.installer.Schemes.Default;
 import net.bodz.redist.installer.Schemes.Maximum;

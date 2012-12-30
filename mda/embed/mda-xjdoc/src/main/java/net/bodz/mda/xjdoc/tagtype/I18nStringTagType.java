@@ -2,12 +2,12 @@ package net.bodz.mda.xjdoc.tagtype;
 
 import java.io.IOException;
 
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.XiString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
-public class iStringTagType
+public class I18nStringTagType
         extends AbstractTagType {
 
     /**
@@ -16,17 +16,19 @@ public class iStringTagType
      * @return {@link iString}.
      */
     @Override
-    public Object parseJavadoc(Object cont, String string, INegotiation negotiation) {
+    public iString parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation) {
         iString text = XiString.parseParaLangString(string);
         return text;
     }
 
     @Override
-    public String[] formatJavadoc(Object value, INegotiation negotiation) {
-        if (value == null)
-            return null;
-        iString text = (iString) value;
-        return new String[] { text.toParaLangString() };
+    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
+            throws IOException {
+        if (value != null) {
+            iString istr = (iString) value;
+            String paraLang = istr.toParaLangString();
+            writer.writeTag(rootTagName, paraLang);
+        }
     }
 
     @Override
@@ -49,9 +51,9 @@ public class iStringTagType
         out.attribute(prefix, mlstr);
     }
 
-    static final iStringTagType INSTANCE = new iStringTagType();
+    static final I18nStringTagType INSTANCE = new I18nStringTagType();
 
-    public static iStringTagType getInstance() {
+    public static I18nStringTagType getInstance() {
         return INSTANCE;
     }
 

@@ -18,9 +18,19 @@ public class TagLibrarySet
     }
 
     @Override
-    public ITagType getTagType(String tagName) {
+    public String getRootTagName(String tagName) {
         for (ITagLibrary taglib : this) {
-            ITagType tagType = taglib.getTagType(tagName);
+            String rootTagName = taglib.getRootTagName(tagName);
+            if (rootTagName != null)
+                return rootTagName;
+        }
+        return null;
+    }
+
+    @Override
+    public ITagType getTagType(String rootTagName) {
+        for (ITagLibrary taglib : this) {
+            ITagType tagType = taglib.getTagType(rootTagName);
             if (tagType != null)
                 return tagType;
         }

@@ -3,10 +3,10 @@ package net.bodz.mda.xjdoc.tagtype;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
-public class TypedTagType
-        extends KeyedTagType {
+public class FirstWordFQCNTagType
+        extends FirstWordKeyTagType {
 
-    public TypedTagType(ITagType valueTagType) {
+    public FirstWordFQCNTagType(ITagType valueTagType) {
         super(valueTagType);
     }
 

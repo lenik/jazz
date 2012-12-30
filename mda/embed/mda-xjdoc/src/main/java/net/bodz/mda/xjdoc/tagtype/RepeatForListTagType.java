@@ -9,47 +9,41 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
-class RepeatTagType
+public class RepeatForListTagType
         extends AbstractTagType {
 
     final ITagType valueTagType;
 
-    public RepeatTagType(ITagType valueTagType) {
+    public RepeatForListTagType(ITagType valueTagType) {
         if (valueTagType == null)
             throw new NullPointerException("valueTagType");
         this.valueTagType = valueTagType;
     }
 
     @Override
-    public Object parseJavadoc(Object cont, String string, INegotiation negotiation)
+    public Object parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
             throws ParseException {
-        @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>) cont;
+        @SuppressWarnings("unchecked") List<Object> list = (List<Object>) cont;
         if (list == null)
             list = new ArrayList<Object>();
-        Object value = valueTagType.parseJavadoc(null, string, negotiation);
+        Object value = valueTagType.parseJavadoc(tagNameSpec, null, string, negotiation);
         list.add(value);
         return list;
     }
 
     @Override
-    public String[] formatJavadoc(Object value, INegotiation negotiation)
-            throws FormatException {
+    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
+            throws FormatException, IOException {
         List<?> list = (List<?>) value;
-        String[] array = new String[list.size()];
-        for (int index = 0; index < array.length; index++) {
-            Object item = list.get(index);
-            for (String itemJavadoc : valueTagType.formatJavadoc(item, negotiation))
-                array[index] = itemJavadoc;
+        for (Object item : list) {
+            valueTagType.writeJavadoc(rootTagName, writer, item, negotiation);
         }
-        return array;
     }
 
     @Override
     public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
             throws ParseException {
-        @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>) cont;
+        @SuppressWarnings("unchecked") List<Object> list = (List<Object>) cont;
         if (list == null)
             list = new ArrayList<Object>();
 
