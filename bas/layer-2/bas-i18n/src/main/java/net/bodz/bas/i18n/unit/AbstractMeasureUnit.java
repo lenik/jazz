@@ -25,7 +25,7 @@ public abstract class AbstractMeasureUnit
     }
 
     @Override
-    public DomainString getDisplayName() {
+    public DomainString getLabel() {
         return null;
     }
 

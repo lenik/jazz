@@ -219,8 +219,8 @@ public class MutableOptionGroup
     }
 
     @Override
-    public void setDisplayName(DomainString displayName) {
-        super.setDisplayName(displayName);
+    public void setLabel(DomainString label) {
+        super.setLabel(label);
     }
 
     @Override

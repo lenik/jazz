@@ -16,7 +16,7 @@ public interface IElement {
      * 
      * @return non-<code>null</code> string of display name.
      */
-    DomainString getDisplayName();
+    DomainString getLabel();
 
     /**
      * @return <code>null</code> If no description available.

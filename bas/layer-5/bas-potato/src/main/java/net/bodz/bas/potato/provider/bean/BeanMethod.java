@@ -23,9 +23,9 @@ public class BeanMethod
     }
 
     @Override
-    public DomainString getDisplayName() {
-        String displayName = methodDescriptor.getDisplayName();
-        return XDomainString.of(displayName);
+    public DomainString getLabel() {
+        String label = methodDescriptor.getLabel();
+        return XDomainString.of(label);
     }
 
     @Override

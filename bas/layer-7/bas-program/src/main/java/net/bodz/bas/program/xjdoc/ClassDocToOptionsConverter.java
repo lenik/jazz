@@ -227,7 +227,7 @@ public class ClassDocToOptionsConverter {
         // In flatten-mode: override parent's name/description/docs.
         DomainString _name = (DomainString) classDoc.getTag("name");
         if (_name != null)
-            group.setDisplayName(_name);
+            group.setLabel(_name);
 
         DomainString text = classDoc.getText();
         if (text != null) {

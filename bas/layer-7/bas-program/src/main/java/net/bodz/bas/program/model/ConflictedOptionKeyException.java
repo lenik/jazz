@@ -10,7 +10,7 @@ public class ConflictedOptionKeyException
     public ConflictedOptionKeyException(String optionKey, IOption existingOption) {
         super(String.format("Option name '%s' conflicts with %s: %s.", //
                 optionKey, //
-                existingOption.getDisplayName(), //
+                existingOption.getLabel(), //
                 existingOption.getDescription()));
     }
 

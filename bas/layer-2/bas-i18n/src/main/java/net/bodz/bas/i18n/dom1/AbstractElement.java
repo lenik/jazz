@@ -13,7 +13,7 @@ public abstract class AbstractElement
     }
 
     @Override
-    public DomainString getDisplayName() {
+    public DomainString getLabel() {
         return null;
     }
 

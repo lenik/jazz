@@ -9,7 +9,7 @@ public interface IMeasureUnit
 
     String getName();
 
-    DomainString getDisplayName();
+    DomainString getLabel();
 
     String getSymbol();
 

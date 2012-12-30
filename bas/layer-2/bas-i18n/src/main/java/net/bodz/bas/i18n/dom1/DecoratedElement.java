@@ -19,8 +19,8 @@ public class DecoratedElement
     }
 
     @Override
-    public DomainString getDisplayName() {
-        return getWrapped().getDisplayName();
+    public DomainString getLabel() {
+        return getWrapped().getLabel();
     }
 
     @Override

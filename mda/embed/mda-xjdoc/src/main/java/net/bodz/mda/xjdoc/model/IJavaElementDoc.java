@@ -23,9 +23,9 @@ public interface IJavaElementDoc
      */
     void setName(String name);
 
-    DomainString getDisplayName();
+    DomainString getLabel();
 
-    void setDisplayName(DomainString displayName);
+    void setLabel(DomainString label);
 
     /**
      * The main text of the element.

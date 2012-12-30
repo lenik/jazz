@@ -68,9 +68,9 @@ public class ArtifactDoc
     public ReleaseDescription getReleaseDescription() {
         ReleaseDescription release = new ReleaseDescription();
 
-        DomainString displayName = getDisplayName();
-        if (displayName != null)
-            release.setName(displayName.toString());
+        DomainString label = getLabel();
+        if (label != null)
+            release.setName(label.toString());
 
         DomainString text = getText();
         if (text != null)

@@ -23,8 +23,8 @@ public class DecoratedMutableElement
     }
 
     @Override
-    public void setDisplayName(DomainString displayName) {
-        getWrapped().setDisplayName(displayName);
+    public void setLabel(DomainString label) {
+        getWrapped().setLabel(label);
     }
 
     @Override

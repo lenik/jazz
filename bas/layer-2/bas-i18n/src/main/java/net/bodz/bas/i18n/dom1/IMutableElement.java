@@ -9,7 +9,7 @@ public interface IMutableElement
 
     void setName(String name);
 
-    void setDisplayName(DomainString displayName);
+    void setLabel(DomainString label);
 
     void setDescription(DomainString description);
 

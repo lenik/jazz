@@ -12,7 +12,7 @@ public class SimplePotatoElement
 
     Class<?> declaringClass;
     String name;
-    DomainString displayName = new XDomainString();
+    DomainString label = new XDomainString();
     DomainString description = new XDomainString();
     DomainString helpDoc = new XDomainString();
     int verboseLevel = PUBLIC_LEVEL;
@@ -37,13 +37,13 @@ public class SimplePotatoElement
     }
 
     @Override
-    public DomainString getDisplayName() {
-        return displayName;
+    public DomainString getLabel() {
+        return label;
     }
 
     @Override
-    public void setDisplayName(DomainString displayName) {
-        this.displayName = displayName;
+    public void setLabel(DomainString label) {
+        this.label = label;
     }
 
     @Override

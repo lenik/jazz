@@ -12,7 +12,7 @@ public abstract class AbstractXjdocElement
     private transient IJavaElementDoc xjdoc;
     private transient boolean xjdocLoaded;
 
-    private transient DomainString displayName;
+    private transient DomainString label;
     private transient DomainString description;
     private transient DomainString helpDoc;
 
@@ -47,10 +47,10 @@ public abstract class AbstractXjdocElement
     }
 
     @Override
-    public DomainString getDisplayName() {
-        if (displayName == null)
-            displayName = getXjdoc().getDisplayName();
-        return displayName;
+    public DomainString getLabel() {
+        if (label == null)
+            label = getXjdoc().getLabel();
+        return label;
     }
 
     /**
@@ -84,8 +84,8 @@ public abstract class AbstractXjdocElement
         this.xjdocLoaded = true;
     }
 
-    protected void setDisplayName(DomainString displayName) {
-        this.displayName = displayName;
+    protected void setLabel(DomainString label) {
+        this.label = label;
     }
 
     protected void setDescription(DomainString description) {

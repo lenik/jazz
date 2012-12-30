@@ -7,22 +7,22 @@ http://xml.bodz.net/schema/pdb/pdb.xsd" package="com.AppName.accounts" name="App
 		<field name="doc" label="组描述" type="C[, 100]" doc="描述该用户组的用途。"/>
 		<instance name="G_ADMIN">
 			<name>admin</name>
-			<displayName>系统管理员组</displayName>
+			<label>系统管理员组</label>
 			<doc>管理、维护系统的用户组。</doc>
 		</instance>
 		<instance name="G_MANAGER">
 			<name>manager</name>
-			<displayName>管理员组</displayName>
+			<label>管理员组</label>
 			<doc>管理行政、决策事务的用户组。</doc>
 		</instance>
 		<instance name="G_USER">
 			<name>user</name>
-			<displayName>用户组</displayName>
+			<label>用户组</label>
 			<doc>使用系统为其服务的用户组。</doc>
 		</instance>
 		<instance name="G_GUEST">
 			<name>guest</name>
-			<displayName>来宾用户组</displayName>
+			<label>来宾用户组</label>
 			<doc>来宾用户组。</doc>
 		</instance>
 	</table>

@@ -45,9 +45,9 @@ public class BeanProperty
     }
 
     @Override
-    public DomainString getDisplayName() {
-        String displayName = propertyDescriptor.getDisplayName();
-        return XDomainString.of(displayName);
+    public DomainString getLabel() {
+        String label = propertyDescriptor.getLabel();
+        return XDomainString.of(label);
     }
 
     @Override
