@@ -15,7 +15,7 @@ import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.taglib.TagLibrary;
+import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
 
 public class JavaElementDoc
@@ -117,7 +117,7 @@ public class JavaElementDoc
 
     @Override
     public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation) {
-        ITagLibrary taglib = TagLibrary.getInstance(negotiation);
+        ITagLibrary taglib = AbstractTagLibrary.getInstance(negotiation);
         return new FlatfHandler(taglib, negotiation);
     }
 

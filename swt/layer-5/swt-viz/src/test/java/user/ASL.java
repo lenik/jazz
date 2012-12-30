@@ -27,7 +27,7 @@ public class ASL {
     }
 
     /**
-     * @name Is male?
+     * @label name Is male?
      */
     public boolean isSex() {
         return sex;
