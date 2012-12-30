@@ -49,9 +49,10 @@ import net.bodz.swt.c3.dialog.SwtDialogs;
 import net.bodz.swt.c3.dialog.ThreadsMonitor;
 
 /**
- * @lang en
- * @lang zh-cn
- * @website http://www.bodz.net/products/BasicGUI
+ * @style width: 320px; height: 240px;
+ * 
+ * @lang en, zh-cn
+ * @site.web http://www.bodz.net/products/BasicGUI
  */
 @StartMode(StartMode.GUI)
 public abstract class BasicGUI

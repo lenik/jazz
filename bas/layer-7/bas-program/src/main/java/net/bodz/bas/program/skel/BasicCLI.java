@@ -41,6 +41,8 @@ import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 
 /**
  * Basic CLI Framework
+ * 
+ * @usage.std [OPTIONS] -- FILES...
  */
 @RcsKeywords(id = "$Id$")
 public abstract class BasicCLI
