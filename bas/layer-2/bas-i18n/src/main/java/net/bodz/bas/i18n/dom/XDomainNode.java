@@ -102,6 +102,10 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
         return _resolve(path, DomainResolveMode.findNearest, null);
     }
 
+    /**
+     * @param path
+     *            <code>null</code> or empty string means current node.
+     */
     @Override
     public final value_t put(String path, value_t value) {
         node_t node = create(path, null);
@@ -121,6 +125,10 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
         return _resolve(path, DomainResolveMode.findNearestAndPullToFront, null);
     }
 
+    /**
+     * @param path
+     *            <code>null</code> or empty string means current node.
+     */
     @Override
     public final node_t create(String path, value_t initialValue) {
         node_t node = _resolve(path, DomainResolveMode.createPath, initialValue);
@@ -135,8 +143,7 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
 
     public node_t removeNode(String path) {
         if (path == null || path.isEmpty()) {
-            @SuppressWarnings("unchecked")
-            node_t _this = (node_t) this;
+            @SuppressWarnings("unchecked") node_t _this = (node_t) this;
             this.value = null;
             return _this;
         }
@@ -158,9 +165,12 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
             return null;
     }
 
+    /**
+     * @param path
+     *            <code>null</code> or empty string means current node.
+     */
     protected node_t _resolve(String path, DomainResolveMode mode, value_t initialValue) {
-        @SuppressWarnings("unchecked")
-        node_t _this = (node_t) this;
+        @SuppressWarnings("unchecked") node_t _this = (node_t) this;
 
         if (path == null || path.isEmpty()) {
             if (value != null)
@@ -526,8 +536,7 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
         if (obj == null)
             return false;
 
-        @SuppressWarnings("unchecked")
-        node_t o = (node_t) obj;
+        @SuppressWarnings("unchecked") node_t o = (node_t) obj;
 
         // if (!Nullables.equals(domain, o.domain))
         // return false;

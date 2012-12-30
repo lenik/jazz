@@ -7,8 +7,8 @@ import java.util.Map;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.XiString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
@@ -116,24 +116,38 @@ public class ClassDocBuilder {
             elementDoc.setText(text);
         }
 
-        Map<String, Object> tagMap = elementDoc.getTagMap();
+        Map<String, Object> rootTagContMap = elementDoc.getTagMap();
+
         for (DocletTag docletTag : javaEntity.getTags()) {
             String tagName = docletTag.getName();
             String tagValueString = docletTag.getValue();
 
-            // DomainString value = DomainString.parseParaLang(tagValueString);
-            ITagType tagType = taglib.getTagType(tagName);
-            if (tagType == null)
+            String rootTagName = taglib.getRootTagName(tagName);
+            if (rootTagName == null)
                 throw new IllegalUsageException("Undefined Tag: " + tagName);
-            Object cont = tagMap.get(tagName);
+
+            String tagNameSpec = null;
+            if (tagName.startsWith(rootTagName)) {
+                tagNameSpec = tagName.substring(rootTagName.length());
+                if (tagNameSpec.startsWith("."))
+                    tagNameSpec = tagNameSpec.substring(1);
+                else
+                    tagNameSpec = null;
+            }
+
+            // DomainString value = DomainString.parseParaLang(tagValueString);
+            ITagType tagType = taglib.getTagType(rootTagName);
+            assert tagType != null;
+
+            Object cont = rootTagContMap.get(rootTagName);
             Object tagValue;
             try {
-                tagValue = tagType.parseJavadoc(cont, tagValueString, negotiation);
+                tagValue = tagType.parseJavadoc(tagNameSpec, cont, tagValueString, negotiation);
             } catch (ParseException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
             if (cont == null)
-                tagMap.put(tagName, tagValue);
+                rootTagContMap.put(rootTagName, tagValue);
         }
     }
 

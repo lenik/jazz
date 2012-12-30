@@ -7,24 +7,21 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
-public abstract class ScalarTagType<T>
+public abstract class AbstractScalarTagType<T>
         extends AbstractTagType {
 
     @Override
-    public Object parseJavadoc(Object cont, String string, INegotiation negotiation)
+    public Object parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
             throws ParseException {
         return parse(string);
     }
 
     @Override
-    public String[] formatJavadoc(Object value, INegotiation negotiation)
-            throws FormatException {
-        if (value == null)
-            return new String[0];
-        else {
-            @SuppressWarnings("unchecked")
-            String s = format((T) value);
-            return new String[] { s };
+    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
+            throws FormatException, IOException {
+        if (value != null) {
+            @SuppressWarnings("unchecked") String s = format((T) value);
+            writer.writeTag(rootTagName, s);
         }
     }
 
@@ -38,8 +35,7 @@ public abstract class ScalarTagType<T>
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
             throws FormatException, IOException {
-        @SuppressWarnings("unchecked")
-        String string = format((T) value);
+        @SuppressWarnings("unchecked") String string = format((T) value);
         out.attribute(prefix, string);
     }
 

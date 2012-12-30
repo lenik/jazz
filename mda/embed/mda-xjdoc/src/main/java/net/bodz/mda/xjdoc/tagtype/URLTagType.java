@@ -7,7 +7,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 
 public class URLTagType
-        extends ScalarTagType<URL> {
+        extends AbstractScalarTagType<URL> {
 
     @Override
     protected URL parse(String s)

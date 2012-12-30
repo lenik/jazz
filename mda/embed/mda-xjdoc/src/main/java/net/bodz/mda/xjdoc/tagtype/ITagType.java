@@ -19,7 +19,7 @@ public interface ITagType {
      * @return If <code>cont</code> is not <code>null</code>, this method should return
      *         <code>cont</code>, otherwise a new value is created and returned.
      */
-    Object parseJavadoc(Object cont, String string, INegotiation negotiation)
+    Object parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
             throws ParseException;
 
     /**
@@ -31,11 +31,15 @@ public interface ITagType {
      * you want to format the value to multiple <code>&#64;author</code>s, then you should return an
      * array, each item for a single author text.
      * 
+     * @param rootTagName
+     *            The tag name prefix (without the dot).
      * @param value
-     * @return Javadoc tags of the same name. (name is invisible here)
+     *            The value to be written, never be <code>null</code>.
+     * @param writer
+     *            The javadoc writer.
      */
-    String[] formatJavadoc(Object value, INegotiation negotiation)
-            throws FormatException;
+    void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
+            throws FormatException, IOException;
 
     /**
      * Parse a single Flatf entry.

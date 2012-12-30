@@ -4,7 +4,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 
 public class WordsTagType
-        extends ScalarTagType<String[]> {
+        extends AbstractScalarTagType<String[]> {
 
     @Override
     protected String[] parse(String s)

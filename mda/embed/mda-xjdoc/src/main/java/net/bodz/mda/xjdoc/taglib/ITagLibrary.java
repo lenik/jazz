@@ -6,6 +6,11 @@ import net.bodz.mda.xjdoc.tagtype.ITagType;
 @IndexedType
 public interface ITagLibrary {
 
-    ITagType getTagType(String tagName);
+    String getRootTagName(String tagName);
+
+    /**
+     * @return <code>null</code> if the tag name isn't defined.
+     */
+    ITagType getTagType(String rootTagName);
 
 }

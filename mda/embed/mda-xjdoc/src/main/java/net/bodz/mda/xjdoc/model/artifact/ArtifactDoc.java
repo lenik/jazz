@@ -13,6 +13,7 @@ import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.javadoc.Author;
 
 public class ArtifactDoc
         extends DecoratedJavaElementDoc {

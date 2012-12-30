@@ -1,32 +1,37 @@
 package net.bodz.mda.xjdoc.taglib;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.t.preorder.DomainMap;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
-import net.bodz.mda.xjdoc.tagtype.StringTagType;
 
 public class TagLibrary
         implements ITagLibrary {
 
-    Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
+    private DomainMap<ITagType> tagMap = new DomainMap<>();
 
     @Override
-    public ITagType getTagType(String tagName) {
-        ITagType tagType = tagTypes.get(tagName);
-        if (tagType == null)
-            tagType = getDefaultTagType();
+    public String getRootTagName(String tagName) {
+        String rootTagName = tagMap.meetKey(tagName);
+        return rootTagName;
+    }
+
+    @Override
+    public ITagType getTagType(String rootTagName) {
+        ITagType tagType = tagMap.get(rootTagName);
         return tagType;
     }
 
-    public void setTagType(String tagName, ITagType tagType) {
-        tagTypes.put(tagName, tagType);
-    }
+    public void addTagType(String rootTagName, ITagType tagType) {
+        if (rootTagName == null)
+            throw new NullPointerException("rootTagName");
 
-    public ITagType getDefaultTagType() {
-        return StringTagType.getInstance();
+        ITagType existing = tagMap.get(rootTagName);
+        if (existing != null)
+            throw new DuplicatedKeyException(rootTagName);
+
+        tagMap.put(rootTagName, tagType);
     }
 
     public static ITagLibrary getInstance(INegotiation negotiation) {
@@ -34,7 +39,7 @@ public class TagLibrary
         if (negotiation != null)
             instance = negotiation.require(ITagLibrary.class);
         if (instance == null)
-            throw new IllegalUsageException("Book isn't provided in negotiation.");
+            throw new IllegalUsageException("Tag library isn't provided in negotiation.");
         return instance;
     }
 

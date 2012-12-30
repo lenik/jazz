@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.tagtype;
 
 public class StringTagType
-        extends ScalarTagType<String> {
+        extends AbstractScalarTagType<String> {
 
     @Override
     protected String parse(String s) {
