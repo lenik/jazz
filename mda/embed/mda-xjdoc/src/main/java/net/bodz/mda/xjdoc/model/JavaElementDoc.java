@@ -7,16 +7,17 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.XiString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
-import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
+import net.bodz.mda.xjdoc.tagtype.StringTagType;
 
 public class JavaElementDoc
         implements IJavaElementDoc, IFlatfSerializable {
@@ -110,7 +111,13 @@ public class JavaElementDoc
         for (Entry<String, Object> entry : tagMap.entrySet()) {
             String tagName = entry.getKey();
             Object tagValue = entry.getValue();
+
             ITagType tagType = taglib.getTagType(tagName);
+            if (tagType == null) {
+                // throw new IllegalUsageException("Undefined tag: " + tagName);
+                tagType = StringTagType.getInstance();
+            }
+
             tagType.writeEntries(out, tagName, tagValue, negotiation);
         }
     }

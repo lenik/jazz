@@ -4,6 +4,7 @@ import static net.bodz.bas.rtx.Negotiation.list;
 import static net.bodz.bas.rtx.Negotiation.option;
 
 import java.io.File;
+import java.util.Collection;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -73,13 +74,13 @@ public class ClassDocBuilderMojo
      * <li>javadoc: {@link JavadocTagLibrary}
      * </ul>
      * 
-     * @parameter expression="${classdoc.taglibs}" default-value="javadoc"
+     * @parameter expression="${classdoc.taglibs}"
      */
     TagLibrarySet taglibs;
 
     public ClassDocBuilderMojo() {
-        taglibs = new TagLibrarySet();
-        setTaglibs("javadoc");
+        Collection<ITagLibrary> taglibs = TagLibraryManager.getTaglibMap().values();
+        this.taglibs = new TagLibrarySet(taglibs);
     }
 
     public boolean isTestClasses() {

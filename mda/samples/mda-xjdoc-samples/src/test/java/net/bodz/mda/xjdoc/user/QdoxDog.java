@@ -18,7 +18,6 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.taglib.TagLibraryManager;
 import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
-import net.bodz.mda.xjdoc.user.xjl.AnimalTagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -37,7 +36,6 @@ public class QdoxDog
         ClassLibrary syslib = new ClassLibrary(scl);
         JavaDocBuilder javaDocBuilder = new JavaDocBuilder(syslib);
 
-        TagLibraryManager.register("animal", new AnimalTagLibrary());
         TagLibrarySet taglibs = TagLibraryManager.parseSet("javadoc, animal");
 
         MavenProjectOrigin po = MavenProjectOrigin.fromClass(Animal.class);

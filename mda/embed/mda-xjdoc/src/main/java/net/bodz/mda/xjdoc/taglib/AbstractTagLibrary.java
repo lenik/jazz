@@ -3,13 +3,13 @@ package net.bodz.mda.xjdoc.taglib;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.t.preorder.DomainMap;
+import net.bodz.bas.t.preorder.PackageMap;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
 
 public abstract class AbstractTagLibrary
         implements ITagLibrary {
 
-    private DomainMap<ITagType> tagMap = new DomainMap<>();
+    private PackageMap<ITagType> tagMap = new PackageMap<>();
 
     @Override
     public String getRootTagName(String tagName) {

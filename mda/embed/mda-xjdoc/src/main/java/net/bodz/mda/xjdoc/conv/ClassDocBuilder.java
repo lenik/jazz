@@ -5,7 +5,6 @@ import static net.bodz.bas.rtx.Negotiation.option;
 
 import java.util.Map;
 
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
@@ -16,6 +15,7 @@ import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
+import net.bodz.mda.xjdoc.tagtype.StringTagType;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
@@ -123,11 +123,16 @@ public class ClassDocBuilder {
             String tagValueString = docletTag.getValue();
 
             String rootTagName = taglib.getRootTagName(tagName);
-            if (rootTagName == null)
-                throw new IllegalUsageException("Undefined Tag: " + tagName);
-
             String tagNameSpec = null;
-            if (tagName.startsWith(rootTagName)) {
+
+            if (rootTagName == null) {
+                // TODO logging...
+                String mesg = "Undefined tag @" + tagName + " occurred in " + javaEntity;
+                // throw new IllegalUsageException(mesg);
+                rootTagName = tagName;
+            }
+
+            else if (tagName.startsWith(rootTagName)) {
                 tagNameSpec = tagName.substring(rootTagName.length());
                 if (tagNameSpec.startsWith("."))
                     tagNameSpec = tagNameSpec.substring(1);
@@ -137,7 +142,8 @@ public class ClassDocBuilder {
 
             // DomainString value = DomainString.parseParaLang(tagValueString);
             ITagType tagType = taglib.getTagType(rootTagName);
-            assert tagType != null;
+            if (tagType == null) // fallback to string.
+                tagType = StringTagType.getInstance();
 
             Object cont = rootTagContMap.get(rootTagName);
             Object tagValue;
