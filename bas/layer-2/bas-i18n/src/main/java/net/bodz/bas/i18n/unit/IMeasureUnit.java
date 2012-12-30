@@ -2,14 +2,14 @@ package net.bodz.bas.i18n.unit;
 
 import java.io.Serializable;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 
 public interface IMeasureUnit
         extends Serializable {
 
     String getName();
 
-    DomainString getLabel();
+    iString getLabel();
 
     String getSymbol();
 

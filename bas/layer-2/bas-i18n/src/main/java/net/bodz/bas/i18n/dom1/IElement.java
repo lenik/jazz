@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.dom1;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 
 public interface IElement {
 
@@ -16,17 +16,17 @@ public interface IElement {
      * 
      * @return non-<code>null</code> string of display name.
      */
-    DomainString getLabel();
+    iString getLabel();
 
     /**
      * @return <code>null</code> If no description available.
      */
-    DomainString getDescription();
+    iString getDescription();
 
     /**
      * @return <code>null</code> if no help doc available.
      */
-    DomainString getHelpDoc();
+    iString getHelpDoc();
 
     int HIDDEN_LEVEL = -1; // private
     int PREFERRED_LEVEL = 0; //

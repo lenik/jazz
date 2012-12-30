@@ -7,19 +7,19 @@ import org.junit.Test;
 public class XDomainNodeTest
         extends Assert {
 
-    DomainString hello;
+    iString hello;
 
     @Before
     public void buildHello() {
-        hello = new XDomainString(null, "hello", //
-                new XDomainString("zh", null, //
-                        new XDomainString("cn", "你好"), //
-                        new XDomainString("tw", "类好") //
+        hello = new XiString(null, "hello", //
+                new XiString("zh", null, //
+                        new XiString("cn", "你好"), //
+                        new XiString("tw", "类好") //
                 ), //
-                new XDomainString("en", "Hello", //
-                        new XDomainString("us", "Hey")), //
-                new XDomainString("ja", "こんにちは"), //
-                new XDomainString("et", "Saluton"));
+                new XiString("en", "Hello", //
+                        new XiString("us", "Hey")), //
+                new XiString("ja", "こんにちは"), //
+                new XiString("et", "Saluton"));
     }
 
     @Test

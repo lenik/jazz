@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.model;
 
 import java.util.Map;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedJavaElementDoc
@@ -26,22 +26,22 @@ public abstract class DecoratedJavaElementDoc
     }
 
     @Override
-    public DomainString getLabel() {
+    public iString getLabel() {
         return getWrapped().getLabel();
     }
 
     @Override
-    public void setLabel(DomainString label) {
+    public void setLabel(iString label) {
         getWrapped().setLabel(label);
     }
 
     @Override
-    public DomainString getText() {
+    public iString getText() {
         return getWrapped().getText();
     }
 
     @Override
-    public void setText(DomainString text) {
+    public void setText(iString text) {
         getWrapped().setText(text);
     }
 

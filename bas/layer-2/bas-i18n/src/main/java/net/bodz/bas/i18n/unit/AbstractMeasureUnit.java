@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.unit;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 
 public abstract class AbstractMeasureUnit
         implements IMeasureUnit {
@@ -25,7 +25,7 @@ public abstract class AbstractMeasureUnit
     }
 
     @Override
-    public DomainString getLabel() {
+    public iString getLabel() {
         return null;
     }
 

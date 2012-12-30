@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.model.artifact;
 
 import net.bodz.mda.xjdoc.taglib.TagLibrary;
-import net.bodz.mda.xjdoc.tagtype.DocTagType;
+import net.bodz.mda.xjdoc.tagtype.iStringTagType;
 import net.bodz.mda.xjdoc.tagtype.URLTagType;
 import net.bodz.mda.xjdoc.tagtype.WordsTagType;
 
@@ -18,7 +18,7 @@ public class ArtifactTagLibrary
 
     {
         // setTagType("author", DocTagType.INSTANCE.repeat());
-        setTagType("name", DocTagType.getInstance());
+        setTagType("name", iStringTagType.getInstance());
         setTagType("site", URLTagType.getInstance());
         setTagType("tags", WordsTagType.getInstance());
     }

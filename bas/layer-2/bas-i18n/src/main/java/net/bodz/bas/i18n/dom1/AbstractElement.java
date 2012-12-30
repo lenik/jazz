@@ -1,7 +1,7 @@
 package net.bodz.bas.i18n.dom1;
 
 import net.bodz.bas.c.object.ObjectInfo;
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 
 public abstract class AbstractElement
         implements IElement {
@@ -13,17 +13,17 @@ public abstract class AbstractElement
     }
 
     @Override
-    public DomainString getLabel() {
+    public iString getLabel() {
         return null;
     }
 
     @Override
-    public DomainString getDescription() {
+    public iString getDescription() {
         return null;
     }
 
     @Override
-    public DomainString getHelpDoc() {
+    public iString getHelpDoc() {
         return null;
     }
 

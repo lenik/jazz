@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.element;
 
-import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom1.IMutableElement;
 
 public class SimplePotatoElement
@@ -12,9 +12,9 @@ public class SimplePotatoElement
 
     Class<?> declaringClass;
     String name;
-    DomainString label = new XDomainString();
-    DomainString description = new XDomainString();
-    DomainString helpDoc = new XDomainString();
+    iString label = new XiString();
+    iString description = new XiString();
+    iString helpDoc = new XiString();
     int verboseLevel = PUBLIC_LEVEL;
     int modifiers;
 
@@ -37,32 +37,32 @@ public class SimplePotatoElement
     }
 
     @Override
-    public DomainString getLabel() {
+    public iString getLabel() {
         return label;
     }
 
     @Override
-    public void setLabel(DomainString label) {
+    public void setLabel(iString label) {
         this.label = label;
     }
 
     @Override
-    public DomainString getDescription() {
+    public iString getDescription() {
         return description;
     }
 
     @Override
-    public void setDescription(DomainString description) {
+    public void setDescription(iString description) {
         this.description = description;
     }
 
     @Override
-    public DomainString getHelpDoc() {
+    public iString getHelpDoc() {
         return helpDoc;
     }
 
     @Override
-    public void setHelpDoc(DomainString helpDoc) {
+    public void setHelpDoc(iString helpDoc) {
         this.helpDoc = helpDoc;
     }
 

@@ -11,7 +11,7 @@ import org.apache.maven.plugin.logging.Log;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
@@ -62,7 +62,7 @@ public class ClassDocBuilderMojo
      * 
      * @parameter expression="${classdoc.missingDoc}"
      */
-    XDomainString missingDoc;
+    XiString missingDoc;
 
     /**
      * Xjdoc taglib names.
@@ -109,7 +109,7 @@ public class ClassDocBuilderMojo
 
     public void setMissingDoc(String missingDoc) {
         // getLog().info("Set-Missing-Doc: " + missingDoc);
-        this.missingDoc = XDomainString.parseMultiLang(missingDoc);
+        this.missingDoc = XiString.parseMultiLangString(missingDoc);
     }
 
     public String getTaglibs() {

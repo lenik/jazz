@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -22,7 +22,7 @@ public class JavaElementDoc
         implements IJavaElementDoc, IFlatfSerializable {
 
     String name;
-    DomainString text;
+    iString text;
     Map<String, Object> tagMap = new LinkedHashMap<String, Object>();
 
     public JavaElementDoc() {
@@ -45,23 +45,23 @@ public class JavaElementDoc
     }
 
     @Override
-    public DomainString getLabel() {
-        DomainString label = (DomainString) getTag("name");
+    public iString getLabel() {
+        iString label = (iString) getTag("name");
         return label;
     }
 
     @Override
-    public void setLabel(DomainString label) {
+    public void setLabel(iString label) {
         setTag("name", label);
     }
 
     @Override
-    public DomainString getText() {
+    public iString getText() {
         return text;
     }
 
     @Override
-    public void setText(DomainString text) {
+    public void setText(iString text) {
         this.text = text;
     }
 
@@ -152,7 +152,7 @@ public class JavaElementDoc
         public void attribute(String name, String string)
                 throws ParseException {
             if (".".equals(name)) {
-                DomainString text = XDomainString.parseParaLang(string);
+                iString text = XiString.parseParaLangString(string);
                 setText(text);
                 return;
             }

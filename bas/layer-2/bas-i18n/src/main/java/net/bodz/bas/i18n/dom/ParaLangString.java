@@ -4,13 +4,13 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ParaLangUtil {
+public class ParaLangString {
 
-    public static String formatParaLangString(DomainString ds) {
-        return formatParaLangString(ds, "\n");
+    public static String format(iString ds) {
+        return format(ds, "\n");
     }
 
-    public static String formatParaLangString(DomainString ds, String separator) {
+    public static String format(iString ds, String separator) {
         StringBuilder sb = new StringBuilder();
         for (Entry<String, String> trEntry : ds.entrySet()) {
             String lang = trEntry.getKey();
@@ -30,17 +30,17 @@ public class ParaLangUtil {
      * ParaLang is a lang-mixed text where translations are separated by
      * <code>&lt;p lang='xxx'&gt;</code>.
      */
-    static final Pattern paraLangPattern;
+    static final Pattern TAG_PATTERN;
     static final int LANG_GROUP = 2;
     static {
-        paraLangPattern = Pattern.compile("<p\\s+lang=([\'\"])(.*?)\\1.*?>");
+        TAG_PATTERN = Pattern.compile("<p\\s+lang=([\'\"])(.*?)\\1.*?>");
     }
 
-    public static void parseParaLang(DomainString output, String plText) {
+    public static void parse(iString output, String plText) {
         if (plText == null)
             return;
 
-        Matcher matcher = paraLangPattern.matcher(plText);
+        Matcher matcher = TAG_PATTERN.matcher(plText);
         if (!matcher.find()) {
             output.put(null, plText);
             return;

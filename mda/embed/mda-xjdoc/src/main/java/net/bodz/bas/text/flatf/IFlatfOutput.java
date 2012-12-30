@@ -2,7 +2,7 @@ package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.sio.ICharOut;
 
 public interface IFlatfOutput {
@@ -30,7 +30,7 @@ public interface IFlatfOutput {
     void attribute(String name, String string)
             throws IOException;
 
-    void attribute(String name, DomainString text)
+    void attribute(String name, iString text)
             throws IOException;
 
 }

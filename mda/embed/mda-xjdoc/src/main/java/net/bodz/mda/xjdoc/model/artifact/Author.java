@@ -3,9 +3,9 @@ package net.bodz.mda.xjdoc.model.artifact;
 import java.io.Serializable;
 import java.util.Map.Entry;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.DomainStrings;
-import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom.XiString;
 
 /**
  * @author Lenik <lenik@bodz.net>
@@ -17,35 +17,35 @@ public class Author
 
     private static final long serialVersionUID = 1L;
 
-    DomainString name;
-    DomainString email;
-    DomainString description;
+    iString name;
+    iString email;
+    iString description;
 
-    public DomainString getName() {
+    public iString getName() {
         return name;
     }
 
-    public void setName(DomainString name) {
+    public void setName(iString name) {
         this.name = name;
     }
 
-    public DomainString getEmail() {
+    public iString getEmail() {
         return email;
     }
 
-    public void setEmail(DomainString email) {
+    public void setEmail(iString email) {
         this.email = email;
     }
 
-    public DomainString getDescription() {
+    public iString getDescription() {
         return description;
     }
 
-    public void setDescription(DomainString description) {
+    public void setDescription(iString description) {
         this.description = description;
     }
 
-    public DomainString compile() {
+    public iString compile() {
         return DomainStrings.join(name, email, description);
     }
 
@@ -61,10 +61,10 @@ public class Author
         return sb.toString();
     }
 
-    public static Author parse(DomainString text) {
-        DomainString name = new XDomainString();
-        DomainString email = new XDomainString();
-        DomainString description = new XDomainString();
+    public static Author parse(iString text) {
+        iString name = new XiString();
+        iString email = new XiString();
+        iString description = new XiString();
 
         for (Entry<String, String> tr : text.entrySet()) {
             String domain = tr.getKey();

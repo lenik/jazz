@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.dom1;
 
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedElement
@@ -19,17 +19,17 @@ public class DecoratedElement
     }
 
     @Override
-    public DomainString getLabel() {
+    public iString getLabel() {
         return getWrapped().getLabel();
     }
 
     @Override
-    public DomainString getDescription() {
+    public iString getDescription() {
         return getWrapped().getDescription();
     }
 
     @Override
-    public DomainString getHelpDoc() {
+    public iString getHelpDoc() {
         return getWrapped().getHelpDoc();
     }
 

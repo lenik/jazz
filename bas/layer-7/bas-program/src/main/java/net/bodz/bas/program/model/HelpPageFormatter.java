@@ -8,7 +8,7 @@ import java.util.TreeSet;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.order.AbstractNonNullComparator;
 
 public class HelpPageFormatter {
@@ -68,7 +68,7 @@ public class HelpPageFormatter {
         for (String usageId : usageIds) {
             SyntaxUsage usage = group.getUsage(usageId);
             String syntax = usage.getSyntax();
-            DomainString description = usage.getDescription();
+            iString description = usage.getDescription();
             // substitute vars in syntax string...
             buffer.append(indentChars);
             buffer.append(syntax + " - ");
@@ -80,7 +80,7 @@ public class HelpPageFormatter {
         StringBuilder line = new StringBuilder(columns);
 
         while (group != null) {
-            DomainString groupDescription = group.getDescription();
+            iString groupDescription = group.getDescription();
             String groupHeader = "Options for " + Strings.ucfirstWords(groupDescription.toString());
             buffer.append("\n" + groupHeader + "\n");
             buffer.append(Strings.repeat(groupHeader.length(), '=') + "\n");

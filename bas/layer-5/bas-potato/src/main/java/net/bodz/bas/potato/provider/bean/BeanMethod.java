@@ -2,8 +2,8 @@ package net.bodz.bas.potato.provider.bean;
 
 import java.beans.MethodDescriptor;
 
-import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.i18n.dom.XDomainString;
+import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.potato.provider.reflect.ReflectMethod;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -23,15 +23,15 @@ public class BeanMethod
     }
 
     @Override
-    public DomainString getLabel() {
-        String label = methodDescriptor.getLabel();
-        return XDomainString.of(label);
+    public iString getLabel() {
+        String displayName = methodDescriptor.getDisplayName();
+        return XiString.of(displayName);
     }
 
     @Override
-    public DomainString getDescription() {
+    public iString getDescription() {
         String shortDescription = methodDescriptor.getShortDescription();
-        return XDomainString.of(shortDescription);
+        return XiString.of(shortDescription);
     }
 
     // IPotatoParameter[] getParameters() {
