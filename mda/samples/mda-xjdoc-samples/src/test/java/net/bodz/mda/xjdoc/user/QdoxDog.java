@@ -4,8 +4,12 @@ import static net.bodz.bas.rtx.Negotiation.list;
 import static net.bodz.bas.rtx.Negotiation.option;
 
 import java.io.File;
+import java.util.ServiceLoader;
 
 import org.junit.Assert;
+
+import user.xjdoc.pojo.Animal;
+import user.xjdoc.pojo.Dog;
 
 import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.io.resource.builtin.StringSource;
@@ -16,7 +20,7 @@ import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.conv.ClassDocFlatfLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.taglib.TagLibraryManager;
+import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
 import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
@@ -33,10 +37,15 @@ public class QdoxDog
 
         ClassLoader scl = ClassLoader.getSystemClassLoader();
 
+        for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class))
+            System.out.println(taglib);
+
+        // qdox ClassLibrary.
         ClassLibrary syslib = new ClassLibrary(scl);
         JavaDocBuilder javaDocBuilder = new JavaDocBuilder(syslib);
 
-        TagLibrarySet taglibs = TagLibraryManager.parseSet("javadoc, animal");
+        TagLibraryLoader taglibLoader = new TagLibraryLoader(scl);
+        TagLibrarySet taglibs = taglibLoader.parseSet("javadoc, animal");
 
         MavenProjectOrigin po = MavenProjectOrigin.fromClass(Animal.class);
 

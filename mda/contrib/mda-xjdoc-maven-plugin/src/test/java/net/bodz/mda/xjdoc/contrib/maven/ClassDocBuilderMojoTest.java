@@ -18,12 +18,6 @@ import net.bodz.bas.m2.test.MyMojoTestCase;
 public class ClassDocBuilderMojoTest
         extends MyMojoTestCase {
 
-    @Override
-    protected void setUp()
-            throws Exception {
-        super.setUp();
-    }
-
     @SuppressWarnings("unchecked")
     static <T> T getField(Object obj, String fieldName)
             throws ReflectiveOperationException {

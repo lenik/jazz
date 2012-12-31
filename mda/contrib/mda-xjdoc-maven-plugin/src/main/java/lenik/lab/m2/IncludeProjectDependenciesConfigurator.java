@@ -25,6 +25,24 @@ import net.bodz.bas.m2.util.ProjectUtils;
 /**
  * Add the project's runtime classpath to plugin classpath.
  * 
+ * USAGE:
+ * 
+ * <pre>
+ * /**
+ *  * @goal generate
+ *  * @phase process-classes
+ *  * @configurator include-project-dependencies
+ *  * @requiresDependencyResolution compile+runtime
+ *  &#42;/
+ * public class CodeGenMojo
+ *         extends AbstractMojo {
+ *     public void execute()
+ *             throws MojoExecutionException {
+ *         // do work....
+ *     }
+ * }
+ * </pre>
+ * 
  * @plexus.component role="org.codehaus.plexus.component.configurator.ComponentConfigurator"
  *                   role-hint="include-project-dependencies"
  * @plexus.requirement 

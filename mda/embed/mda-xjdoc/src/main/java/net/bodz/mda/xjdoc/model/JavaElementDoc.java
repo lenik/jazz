@@ -16,8 +16,8 @@ import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
+import net.bodz.mda.xjdoc.tagtype.DefaultTagType;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
-import net.bodz.mda.xjdoc.tagtype.StringTagType;
 
 public class JavaElementDoc
         implements IJavaElementDoc, IFlatfSerializable {
@@ -115,10 +115,14 @@ public class JavaElementDoc
             ITagType tagType = taglib.getTagType(tagName);
             if (tagType == null) {
                 // throw new IllegalUsageException("Undefined tag: " + tagName);
-                tagType = StringTagType.getInstance();
+                tagType = DefaultTagType.getInstance();
             }
 
-            tagType.writeEntries(out, tagName, tagValue, negotiation);
+            try {
+                tagType.writeEntries(out, tagName, tagValue, negotiation);
+            } catch (RuntimeException e) {
+                throw new RuntimeException("Failed to write ff-entry for tag " + tagName + " := " + tagValue, e);
+            }
         }
     }
 
@@ -173,9 +177,20 @@ public class JavaElementDoc
                 tagName = name.substring(0, dot);
                 suffix = name.substring(dot + 1);
             }
+
             ITagType tagType = taglib.getTagType(tagName);
+            if (tagType == null)
+                tagType = DefaultTagType.getInstance();
+
             Object cont = getTag(tagName);
-            Object tagValue = tagType.parseEntry(cont, suffix, string, negotiation);
+            Object tagValue;
+
+            try {
+                tagValue = tagType.parseEntry(cont, suffix, string, negotiation);
+            } catch (RuntimeException e) {
+                throw new RuntimeException("Failed to parse ff-entry: " + string);
+            }
+
             setTag(tagName, tagValue);
         }
 
