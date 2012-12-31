@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.user.xjl;
+package user.xjdoc.taglib;
 
 import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
 import net.bodz.mda.xjdoc.tagtype.I18nStringTagType;

@@ -27,7 +27,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDirectory>.</sourceDirectory>
+                    <!-- In testing-harness, default-value won't work. so <sourceDirectory> and <outputDirectory> must be 
+                        specified. However, in real mode, the default-value will work. -->
+                    <sourceDirectory>${basedir}/src/test/java</sourceDirectory>
+                    <outputDirectory>${basedir}/target/infoset</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

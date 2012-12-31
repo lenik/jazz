@@ -5,6 +5,9 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import user.xjdoc.pojo.Dog;
+
+
 public class DogTest
         extends Assert {
 

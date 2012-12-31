@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.user2;
+package user.err;
 
 public class IOException
         extends java.io.IOException {

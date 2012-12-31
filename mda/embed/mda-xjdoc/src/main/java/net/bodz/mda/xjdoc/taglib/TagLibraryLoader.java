@@ -1,38 +1,41 @@
 package net.bodz.mda.xjdoc.taglib;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ServiceLoader;
 
+import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.DuplicatedKeyException;
 
-public class TagLibraryManager {
+public class TagLibraryLoader {
 
-    static Map<String, ITagLibrary> taglibMap;
+    private Map<String, ITagLibrary> taglibMap;
 
-    static {
+    public TagLibraryLoader(ClassLoader loader) {
         taglibMap = new HashMap<String, ITagLibrary>();
 
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-
+        System.err.println("Search taglibs in class loader:");
         for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class, loader)) {
             String name = taglib.getClass().getSimpleName();
             name = StringPart.rtrim(name, "TagLibrary");
             name = Strings.lcfirst(name);
 
+            System.err.println("    Found taglib " + name + " = " + ObjectInfo.getSimpleId(taglib));
+
             register(name, taglib);
         }
     }
 
-    public static Map<String, ITagLibrary> getTaglibMap() {
+    public Map<String, ITagLibrary> getTaglibMap() {
         return Collections.unmodifiableMap(taglibMap);
     }
 
-    public static void register(String name, ITagLibrary taglib) {
+    public void register(String name, ITagLibrary taglib) {
         if (name == null)
             throw new NullPointerException("name");
         if (taglib == null)
@@ -45,7 +48,7 @@ public class TagLibraryManager {
         taglibMap.put(name, taglib);
     }
 
-    public static ITagLibrary resolve(String name) {
+    public ITagLibrary resolve(String name) {
         ITagLibrary taglib = taglibMap.get(name);
         if (taglib == null)
             try {
@@ -59,7 +62,7 @@ public class TagLibraryManager {
         return taglib;
     }
 
-    public static String nameOf(ITagLibrary taglib) {
+    public String nameOf(ITagLibrary taglib) {
         if (taglib == null)
             throw new NullPointerException("taglib");
         for (Entry<String, ITagLibrary> entry : taglibMap.entrySet()) {
@@ -69,9 +72,14 @@ public class TagLibraryManager {
         return null;
     }
 
-    public static TagLibrarySet parseSet(String taglibNames) {
+    public TagLibrarySet parseSet(String taglibNames) {
         if (taglibNames == null)
             throw new NullPointerException("taglibNames");
+
+        if ("*".equals(taglibNames)) {
+            Collection<ITagLibrary> taglibs = taglibMap.values();
+            return new TagLibrarySet(taglibs);
+        }
 
         TagLibrarySet set = new TagLibrarySet();
 
@@ -80,7 +88,7 @@ public class TagLibraryManager {
             if (taglibName.isEmpty())
                 continue;
 
-            ITagLibrary taglib = TagLibraryManager.resolve(taglibName);
+            ITagLibrary taglib = resolve(taglibName);
             if (taglib == null)
                 throw new IllegalArgumentException("Undefined taglib: " + taglibName);
 

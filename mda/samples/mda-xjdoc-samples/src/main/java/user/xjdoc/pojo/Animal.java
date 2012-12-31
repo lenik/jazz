@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.user;
+package user.xjdoc.pojo;
 
 import java.io.IOException;
 

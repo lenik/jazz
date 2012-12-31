@@ -14,8 +14,8 @@ import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.JavaElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
+import net.bodz.mda.xjdoc.tagtype.DefaultTagType;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
-import net.bodz.mda.xjdoc.tagtype.StringTagType;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
@@ -143,7 +143,7 @@ public class ClassDocBuilder {
             // DomainString value = DomainString.parseParaLang(tagValueString);
             ITagType tagType = taglib.getTagType(rootTagName);
             if (tagType == null) // fallback to string.
-                tagType = StringTagType.getInstance();
+                tagType = DefaultTagType.getInstance();
 
             Object cont = rootTagContMap.get(rootTagName);
             Object tagValue;

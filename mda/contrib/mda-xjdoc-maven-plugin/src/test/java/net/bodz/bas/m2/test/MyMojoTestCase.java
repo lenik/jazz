@@ -7,7 +7,7 @@ import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
 
-public class MyMojoTestCase
+public abstract class MyMojoTestCase
         extends AbstractMojoTestCase {
 
     /**

@@ -4,11 +4,11 @@ import static net.bodz.bas.rtx.Negotiation.list;
 import static net.bodz.bas.rtx.Negotiation.option;
 
 import java.io.File;
-import java.util.Collection;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.project.MavenProject;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
@@ -23,7 +23,7 @@ import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.javadoc.JavadocTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.taglib.TagLibraryManager;
+import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
 import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.shared.mojo.AbstractResourceGeneratorMojo;
@@ -74,13 +74,13 @@ public class ClassDocBuilderMojo
      * <li>javadoc: {@link JavadocTagLibrary}
      * </ul>
      * 
-     * @parameter expression="${classdoc.taglibs}"
+     * @parameter expression="${classdoc.taglibs}" default-value="*"
      */
-    TagLibrarySet taglibs;
+    String taglibNames = "*";
+
+    TagLibraryLoader _taglibLoader;
 
     public ClassDocBuilderMojo() {
-        Collection<ITagLibrary> taglibs = TagLibraryManager.getTaglibMap().values();
-        this.taglibs = new TagLibrarySet(taglibs);
     }
 
     public boolean isTestClasses() {
@@ -113,31 +113,17 @@ public class ClassDocBuilderMojo
         this.missingDoc = XiString.parseMultiLangString(missingDoc);
     }
 
-    public String getTaglibs() {
-        StringBuilder sb = null;
-        for (ITagLibrary taglib : taglibs) {
-            if (sb == null)
-                sb = new StringBuilder();
-            else
-                sb.append(", ");
-            String name = TagLibraryManager.nameOf(taglib);
-            sb.append(name);
-        }
-        return sb.toString();
-    }
-
-    public synchronized void setTaglibs(String taglibNames) {
-        // getLog().info("Set-Books: " + taglibNames);
-        taglibs = TagLibraryManager.parseSet(taglibNames);
-    }
-
     @Override
     public void execute()
             throws MojoExecutionException, MojoFailureException {
         Log log = getLog();
 
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+        MavenProject project = getProject();
+        ClassLoader classLoader = ProjectDepLoader.getProjectLoader(project);
         ClassLibrary classLibrary = new ClassLibrary(classLoader);
+
+        TagLibraryLoader taglibLoader = new TagLibraryLoader(classLoader);
+        TagLibrarySet taglibs = taglibLoader.parseSet(taglibNames);
 
         JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
 
