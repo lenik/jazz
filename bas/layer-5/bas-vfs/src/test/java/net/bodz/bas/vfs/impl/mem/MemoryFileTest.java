@@ -12,7 +12,7 @@ import net.bodz.bas.io.resource.tools.StreamWriting;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.bas.vfs.util.FileTreeDumper;
+import net.bodz.bas.vfs.util.FileTreeFormatter;
 
 public class MemoryFileTest
         extends Assert {
@@ -24,8 +24,8 @@ public class MemoryFileTest
         targetDir.mkdirs();
 
         IFile root = VFS.resolve("mem:test:/createTree");
-        FileTreeDumper dumper = new FileTreeDumper();
-        dumper.dump(Stdio.cout, root);
+        FileTreeFormatter formatter = new FileTreeFormatter();
+        formatter.format(Stdio.cout, root);
     }
 
     @Test
@@ -51,8 +51,9 @@ public class MemoryFileTest
         foo_1.createLink("../foo", true);
 
         IFile root = VFS.resolve("mem:test:/createFiles");
-        FileTreeDumper dumper = new FileTreeDumper();
-        dumper.setShowSize(true);
-        dumper.dump(Stdio.cout, root);
+        FileTreeFormatter formatter = new FileTreeFormatter();
+        formatter.setShowSize(true);
+        formatter.format(Stdio.cout, root);
     }
+
 }

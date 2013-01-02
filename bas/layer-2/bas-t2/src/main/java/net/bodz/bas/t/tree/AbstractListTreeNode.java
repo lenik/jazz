@@ -75,7 +75,7 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
     }
 
     @Override
-    public String addChild(ITreeNode child) {
+    public synchronized String addChild(ITreeNode child) {
         int size = list.size();
         String key = String.valueOf(size);
 
@@ -86,7 +86,7 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
     }
 
     @Override
-    public void putChild(String key, ITreeNode child) {
+    public synchronized void putChild(String key, ITreeNode child) {
         ITreeNode childParent = child.getParent();
         if (childParent != null)
             throw new IllegalStateException("Child node is already attached: " + child);
@@ -106,7 +106,7 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
     }
 
     @Override
-    public node_t removeChild(String key) {
+    public synchronized node_t removeChild(String key) {
         if (StringPred.isInteger(key)) {
             int index = Integer.parseInt(key);
             if (index >= 0 && index < list.size()) {

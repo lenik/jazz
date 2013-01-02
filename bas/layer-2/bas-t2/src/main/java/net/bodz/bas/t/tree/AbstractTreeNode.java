@@ -11,6 +11,17 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode>
         return false;
     }
 
+    @SuppressWarnings("unchecked")
+    public node_t getRoot() {
+        ITreeNode node = this;
+        while (true) {
+            ITreeNode parent = node.getParent();
+            if (parent == null)
+                return (node_t) node;
+            node = parent;
+        }
+    }
+
     @Override
     public node_t getParent() {
         return null;
