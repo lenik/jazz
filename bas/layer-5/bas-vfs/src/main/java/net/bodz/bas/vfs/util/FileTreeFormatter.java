@@ -7,15 +7,13 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.c.string.TreeLineChars;
 import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.t.tree.TreeFormatterTemplate;
 import net.bodz.bas.vfs.IFile;
 
-public class FileTreeDumper {
+public class FileTreeFormatter
+        extends TreeFormatterTemplate<IFile> {
 
-    boolean treeGraph = true;
-    TreeLineChars treeLineChars = TreeLineChars.smooth;
-    boolean maxDepth;
     boolean showHidden;
 
     boolean showFullPath;
@@ -23,32 +21,6 @@ public class FileTreeDumper {
     boolean appendSymbol = true;
 
     boolean colorized;
-
-    public boolean isTreeGraph() {
-        return treeGraph;
-    }
-
-    public void setTreeGraph(boolean treeGraph) {
-        this.treeGraph = treeGraph;
-    }
-
-    public TreeLineChars getTreeLineChars() {
-        return treeLineChars;
-    }
-
-    public void setTreeLineChars(TreeLineChars treeLineChars) {
-        if (treeLineChars == null)
-            throw new NullPointerException("treeLineChars");
-        this.treeLineChars = treeLineChars;
-    }
-
-    public boolean isMaxDepth() {
-        return maxDepth;
-    }
-
-    public void setMaxDepth(boolean maxDepth) {
-        this.maxDepth = maxDepth;
-    }
 
     public boolean isShowHidden() {
         return showHidden;
@@ -97,16 +69,16 @@ public class FileTreeDumper {
         this.colorized = colorized;
     }
 
-    public void dump(IPrintOut out, IFile file)
+    @Override
+    public void format(IPrintOut out, IFile file)
             throws IOException {
-        dump(out, "", null, file, 0);
+        format(out, "", null, file, 0);
     }
 
-    void dump(IPrintOut out, String prefix, Boolean theLast, IFile file, int depth)
+    void format(IPrintOut out, String prefix, Boolean theLast, IFile file, int depth)
             throws IOException {
 
-        BasicFileAttributeView _view = file.getAttributeView(BasicFileAttributeView.class,
-                LinkOption.NOFOLLOW_LINKS);
+        BasicFileAttributeView _view = file.getAttributeView(BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
         BasicFileAttributes _attrs = _view.readAttributes();
 
         BasicFileAttributeView view = file.getAttributeView(BasicFileAttributeView.class);
@@ -115,7 +87,7 @@ public class FileTreeDumper {
         if (showHidden || !file.isHidden()) {
             out.print(prefix);
 
-            if (treeGraph && theLast != null)
+            if (drawTreeLines && theLast != null)
                 out.print(theLast ? treeLineChars.treeLastBranch : treeLineChars.treeBranch);
 
             if (showSize) {
@@ -150,7 +122,7 @@ public class FileTreeDumper {
 
         if (attrs.isDirectory()) {
 
-            if (treeGraph && theLast != null)
+            if (drawTreeLines && theLast != null)
                 prefix += theLast ? treeLineChars.treeSkip : treeLineChars.treeLine;
 
             depth++;
@@ -165,13 +137,13 @@ public class FileTreeDumper {
             for (int i = 0; i < size; i++) {
                 IFile child = list.get(i);
                 boolean lastChild = i == size - 1;
-                dump(out, prefix, lastChild, child, depth);
+                format(out, prefix, lastChild, child, depth);
             }
         }
     }
 
     String getText(IFile file) {
-        if (treeGraph)
+        if (drawTreeLines)
             return file.getName();
         else
             return file.getPath().toString();

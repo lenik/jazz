@@ -10,19 +10,19 @@ import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.nio.NioFile;
 
-public class FileTreeDumperTest
+public class FileTreeFormatterTest
         extends Assert {
 
     public void dumpPomDir()
             throws IOException {
-        MavenProjectOrigin pom = MavenProjectOrigin.fromClass(FileTreeDumperTest.class);
+        MavenProjectOrigin pom = MavenProjectOrigin.fromClass(FileTreeFormatterTest.class);
         File projectDir = pom.getProjectDir();
 
         // IFile start = new PojfFile(projectDir);
         IFile start = new NioFile(projectDir);
 
-        FileTreeDumper dumper = new FileTreeDumper();
-        dumper.dump(Stdio.cout, start);
+        FileTreeFormatter formatter = new FileTreeFormatter();
+        formatter.format(Stdio.cout, start);
     }
 
 }

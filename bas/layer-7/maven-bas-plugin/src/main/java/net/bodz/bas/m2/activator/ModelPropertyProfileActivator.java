@@ -14,7 +14,7 @@ import org.codehaus.plexus.logging.Logger;
 public class ModelPropertyProfileActivator
         implements ProfileActivator {
 
-    @Requirement
+    @Requirement 
     private Logger logger;
 
     /**
