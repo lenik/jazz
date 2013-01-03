@@ -1,17 +1,23 @@
 package lenik.lab.m2;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.IOException;
 import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
+import org.codehaus.plexus.classworlds.realm.ClassRealm;
+
+import net.bodz.bas.c.loader.ClassLoaderAnalyzer;
+import net.bodz.bas.c.loader.ClassLoaderNode;
+import net.bodz.bas.c.loader.ClassLoaderTreeFormatter;
+import net.bodz.bas.io.resource.builtin.FileResource;
+import net.bodz.bas.sio.IPrintOut;
 
 /**
  * A project-info plugin rewritten by Lenik.
@@ -111,21 +117,24 @@ public class ProjectInfoMojo
      */
     File projectFile;
 
+    ClassLoaderTreeFormatter formatter = new ClassLoaderTreeFormatter();
+
     @Override
     public void execute()
             throws MojoExecutionException, MojoFailureException {
 
         File file = new File(outputDirectory, "project-info.txt");
         file.getParentFile().mkdirs();
-        PrintStream out;
+
+        IPrintOut out;
         try {
-            out = new PrintStream(new FileOutputStream(file));
-        } catch (FileNotFoundException e) {
+            out = new FileResource(file).newPrintOut();
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 
-        out.println("srcdir = " + sourceDirectory);
-        out.println("outdir = " + outputDirectory);
+        out.println("mojo.sourceDirectory: " + sourceDirectory);
+        out.println("mojo.outputDirectory: " + outputDirectory);
 
         if (project != null) {
 
@@ -144,14 +153,62 @@ public class ProjectInfoMojo
                 for (Object _artifact : dependencyArtifacts) {
                     Artifact artifact = (Artifact) _artifact;
                     File artifactFile = artifact.getFile();
-                    out.println("dependency: " + artifactFile);
+                    out.println("project.dependencyArtifact: " + artifactFile);
                 }
 
-            out.println("project-output: " + project.getBuild().getOutputDirectory());
-            out.println("project-test-output: " + project.getBuild().getTestOutputDirectory());
+            out.println();
+            out.println("project.build.outputDirectory: " + project.getBuild().getOutputDirectory());
+            out.println("project.build.testOutputDirectory: " + project.getBuild().getTestOutputDirectory());
+
+            // No such method since Maven-3.
+            out.println();
+            try {
+                ClassRealm classRealm = project.getClassRealm();
+                if (classRealm == null)
+                    out.println("project.classRealm: null");
+                else {
+                    ClassLoaderNode realmNode = new ClassLoaderNode(null, classRealm);
+                    realmNode.addTag("project.classRealm");
+                    out.println("project.classRealm: ");
+                    formatter.format(out, realmNode);
+                }
+            } catch (Throwable e) {
+                out.println("Failed to get class realm: " + e.getMessage());
+            }
+
+            try {
+                out.println();
+                for (String classpath : project.getCompileClasspathElements())
+                    out.println("Compile-Classpath: " + classpath);
+
+                out.println();
+                for (String classpath : project.getRuntimeClasspathElements())
+                    out.println("Runtime-Classpath: " + classpath);
+
+                out.println();
+                for (String classpath : project.getTestClasspathElements())
+                    out.println("Test-Classpath: " + classpath);
+            } catch (DependencyResolutionRequiredException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
         }
+
+        ClassLoader scl = ClassLoader.getSystemClassLoader();
+        ClassLoader ccl = Thread.currentThread().getContextClassLoader();
+        ClassLoaderNode[] nodes = ClassLoaderAnalyzer.mergeParents(scl, ccl);
+        nodes[0].addTag("System Class Loader");
+        nodes[1].addTag("Context Class Loader");
+
+        out.println();
+        out.println("Class Loader Trees:");
+        Set<ClassLoaderNode> roots = ClassLoaderAnalyzer.getRoots(nodes);
+        for (ClassLoaderNode root : roots)
+            try {
+                formatter.format(out, root);
+            } catch (IOException e) {
+                throw new MojoExecutionException(e.getMessage(), e);
+            }
 
         out.close();
     }
-
 }

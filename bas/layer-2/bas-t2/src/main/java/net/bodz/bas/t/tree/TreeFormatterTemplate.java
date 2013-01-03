@@ -13,6 +13,8 @@ public abstract class TreeFormatterTemplate<T> // implements IFormatter
     protected TreeLineChars treeLineChars = TreeLineChars.smooth;
     protected int maxDepth = -1;
 
+    protected String linePrefix = "";
+
     public boolean isDrawTreeLines() {
         return drawTreeLines;
     }
@@ -37,6 +39,14 @@ public abstract class TreeFormatterTemplate<T> // implements IFormatter
 
     public void setMaxDepth(int maxDepth) {
         this.maxDepth = maxDepth;
+    }
+
+    public String getLinePrefix() {
+        return linePrefix;
+    }
+
+    public void setLinePrefix(String linePrefix) {
+        this.linePrefix = linePrefix;
     }
 
     public String format(T node) {
