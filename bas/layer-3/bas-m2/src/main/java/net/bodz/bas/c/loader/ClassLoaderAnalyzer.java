@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import net.bodz.bas.c.object.IdentityHashSet;
 
 public class ClassLoaderAnalyzer {
 
@@ -36,6 +39,15 @@ public class ClassLoaderAnalyzer {
             classLoaderNodes[i] = _lastNode;
         }
         return classLoaderNodes;
+    }
+
+    public static Set<ClassLoaderNode> getRoots(ClassLoaderNode... nodes) {
+        Set<ClassLoaderNode> roots = new IdentityHashSet<>();
+        for (ClassLoaderNode node : nodes) {
+            ClassLoaderNode root = node.getRoot();
+            roots.add(root);
+        }
+        return roots;
     }
 
 }

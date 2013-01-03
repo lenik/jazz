@@ -1,12 +1,9 @@
 package net.bodz.bas.c.loader;
 
-import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import net.bodz.bas.c.object.IdentityHashSet;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.t.tree.AbstractListTreeNode;
 
 public class ClassLoaderNode
@@ -53,20 +50,6 @@ public class ClassLoaderNode
         if (tag == null)
             throw new NullPointerException("tag");
         tags.remove(tag);
-    }
-
-    public static void format(IPrintOut out, ClassLoaderNode... nodes)
-            throws IOException {
-        Set<ClassLoaderNode> roots = new IdentityHashSet<>();
-        for (ClassLoaderNode node : nodes) {
-            ClassLoaderNode root = node.getRoot();
-            roots.add(root);
-        }
-
-        ClassLoaderTreeFormatter formatter = new ClassLoaderTreeFormatter();
-        for (ClassLoaderNode root : roots) {
-            formatter.format(out, root);
-        }
     }
 
 }
