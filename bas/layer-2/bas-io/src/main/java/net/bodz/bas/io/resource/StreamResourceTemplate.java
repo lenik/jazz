@@ -15,14 +15,14 @@ import net.bodz.bas.io.lookahead.LAReader;
 import net.bodz.bas.sio.*;
 import net.bodz.bas.sugar.Tooling;
 
-public abstract class StreamResourceImplHelper {
+public abstract class StreamResourceTemplate {
 
     static final Charset utf8Charset = Charset.forName("UTF-8");
 
     private Charset charset;
     private List<IOpenResourceListener> openResourceListeners = new ArrayList<IOpenResourceListener>(1);
 
-    public StreamResourceImplHelper() {
+    public StreamResourceTemplate() {
         charset = getPreferredCharset();
         if (charset == null)
             throw new NullPointerException("preferredCharset");

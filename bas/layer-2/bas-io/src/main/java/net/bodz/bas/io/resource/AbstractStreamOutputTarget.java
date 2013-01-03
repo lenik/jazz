@@ -7,7 +7,7 @@ import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 
 public abstract class AbstractStreamOutputTarget
-        extends StreamResourceImplHelper
+        extends StreamResourceTemplate
         implements IStreamOutputTarget {
 
     public AbstractStreamOutputTarget() {
