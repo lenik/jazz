@@ -18,6 +18,7 @@ public class OptionGroupFactory {
             ClassDocToOptionsConverter converter = new ClassDocToOptionsConverter();
             {
                 converter.setInheritance(OptionGroupInheritance.reflective);
+                converter.setIncludeNonPublic(true);
             }
 
             @Override

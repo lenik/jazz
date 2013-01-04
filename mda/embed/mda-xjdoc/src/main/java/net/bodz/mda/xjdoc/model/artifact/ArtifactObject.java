@@ -6,6 +6,9 @@ import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
 public abstract class ArtifactObject
         extends XjdocObject {
 
+    // Java Reflection: A method 'public IJavaElementDoc getXjdoc()' is auto created.
+    // With the modifier SYNTHETIC | VOLATILE set.
+
     @Override
     public ArtifactDoc getXjdoc() {
         return (ArtifactDoc) super.getXjdoc();

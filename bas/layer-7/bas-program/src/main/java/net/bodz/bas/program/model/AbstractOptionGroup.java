@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.type.addor.IAddor;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
@@ -105,8 +106,8 @@ public abstract class AbstractOptionGroup
             throws CLISyntaxException {
         List<String> rejected = new ArrayList<String>();
 
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
+        for (int argIndex = 0; argIndex < args.length; argIndex++) {
+            String arg = args[argIndex];
             IOption option = null;
             String argArg = null;
             Object argValue = null;
@@ -114,33 +115,45 @@ public abstract class AbstractOptionGroup
             if (arg.startsWith("--")) { // long-option
                 arg = arg.substring(2);
 
+                if (arg.isEmpty()) { // [OPTIONS} [--] ...
+                    while (++argIndex < args.length)
+                        rejected.add(args[argIndex]);
+                    break;
+                }
+
                 int eq = arg.indexOf('=');
-                argArg = eq == -1 ? null : arg.substring(eq + 1);
-                if (eq != -1)
+                if (eq != -1) {
+                    argArg = arg.substring(eq + 1);
                     arg = arg.substring(0, eq);
+                }
 
                 option = this.getUniqueOption(arg);
 
-                boolean maybeNegative = arg.startsWith("no-");
-                if (option == null && maybeNegative) {
-                    option = this.getUniqueOption(arg.substring(3));
-                    argValue = false;
+                if (option == null) {
+                    if (arg.startsWith("no-")) {
+                        option = this.getUniqueOption(arg.substring(3));
+                        if (option != null)
+                            argValue = false;
+                    }
+                    if (option == null)
+                        throw new NoSuchOptionException(arg);
                 }
 
-            } else if (arg.startsWith("-")) {
+            } else if (arg.startsWith("-") && arg.length() > 1) { // short-options
                 arg = arg.substring(1);
                 int argLen = arg.length();
 
                 for (int j = 0; j < argLen; j++) {
                     String shortKey = arg.substring(j, j + 1);
                     IOption shortOption = this.getOption(shortKey);
+
                     if (shortOption == null)
                         throw new NoSuchOptionException(shortKey);
 
                     if (shortOption.getParameterCount() == 0) {
                         Object trueValue = shortOption.getDefaultValue();
                         argValue = trueValue;
-                        setProperty(context, shortOption.property(), argValue);
+                        receiveOptionValue(context, shortOption, argValue);
                         continue;
                     } else {
                         option = shortOption; // The remaining chars are used as opt arg..
@@ -148,12 +161,12 @@ public abstract class AbstractOptionGroup
                         break;
                     }
                 }
-                if (option == null) // no shortopt needs an arg.
+                if (option == null)
                     continue;
 
             } else {
                 if (flags.isStopAtFirstNonOption()) {
-                    for (int j = i; j < args.length; j++)
+                    for (int j = argIndex; j < args.length; j++)
                         rejected.add(args[j]);
                     break;
                 } else {
@@ -162,43 +175,67 @@ public abstract class AbstractOptionGroup
                 }
             }
 
-            if (option.getType() == Boolean.class)
-                if (argValue == null)
+            Class<?> valueType = option.getValueType();
+
+            if (argValue == null)
+                if (valueType == Boolean.class)
                     argValue = true;
 
             int parameterCount = option.getParameterCount();
             String[] parameters = new String[parameterCount];
             int n = 0;
-            if (argArg != null)
+
+            if (argArg != null) {
+                if (parameterCount == 0)
+                    throw new CLISyntaxException(String.format("Unexpected parameter for option %s: %s", //
+                            argArg, option.getName()));
                 parameters[n++] = argArg;
-            if (args.length - (i + 1) < parameterCount - n) {
-                throw new CLISyntaxException(String.format("Option %s expects %d parameters, but only %d given.",
-                        option.getName(), parameterCount, args.length - (i + 1)));
-            }
-            while (n < parameterCount) {
-                parameters[n++] = args[++i];
             }
 
-            if (n > 0) {
+            if (args.length - (argIndex + 1) < parameterCount - n) {
+                throw new CLISyntaxException(String.format("Option %s expects %d parameters, but only %d given.",
+                        option.getName(), parameterCount, args.length - (argIndex + 1)));
+            }
+            while (n < parameterCount) {
+                parameters[n++] = args[++argIndex];
+            }
+
+            if (parameterCount > 0) {
                 try {
                     argValue = option.parseValue(context, parameters);
                 } catch (ParseException e) {
                     throw new ParseOptionException(option, parameters, e);
                 }
-                setProperty(context, option.property(), argValue);
+                receiveOptionValue(context, option, argValue);
             }
         }
         return rejected;
     }
 
-    static void setProperty(Object obj, IProperty property, Object value) {
+    static void receiveOptionValue(Object obj, IOption option, Object value) {
+        IProperty property = option.property();
+        IAddor addor = option.getAddor();
+        if (addor == null)
+            throw new NullPointerException("addor");
+
+        Object prev;
         try {
-            property.setValue(obj, value);
+            prev = property.getValue(obj);
+        } catch (ReflectiveOperationException e1) {
+            throw new RuntimeException(e1.getMessage(), e1);
+        }
+
+        Object result = addor.add(prev, value);
+        if (result == null)
+            throw new NullPointerException("result");
+
+        try {
+            property.setValue(obj, result);
         } catch (ReflectiveOperationException e) {
             throw new IllegalUsageException(String.format(//
                     "Can't set property %s.%s to %s", //
                     property.getDeclaringClass().getSimpleName(), property.getName(), //
-                    value), e);
+                    result), e);
         }
     }
 

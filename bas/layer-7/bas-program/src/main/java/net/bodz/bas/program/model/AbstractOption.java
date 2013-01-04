@@ -1,14 +1,20 @@
 package net.bodz.bas.program.model;
 
-import java.lang.reflect.AnnotatedElement;
-import java.util.Set;
-import java.util.TreeSet;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.*;
 
+import net.bodz.bas.c.object.TrueValues;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.c.type.TypeParam;
+import net.bodz.bas.c.type.addor.ArrayAddor;
+import net.bodz.bas.c.type.addor.CollectionAddor;
+import net.bodz.bas.c.type.addor.IAddor;
+import net.bodz.bas.c.type.addor.MapAddor;
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.meta.decl.ItemType;
 import net.bodz.bas.rtx.ListNegotiation;
 import net.bodz.bas.rtx.Negotiation;
 import net.bodz.bas.trait.Traits;
@@ -17,7 +23,7 @@ import net.bodz.bas.traits.IParser;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
-public abstract class TransientOption
+public abstract class AbstractOption
         extends AbstractXjdocElement
         implements IOption {
 
@@ -34,26 +40,74 @@ public abstract class TransientOption
     boolean required;
     int parameterCount;
 
+    Type genericType;
     Class<?> type;
     Class<?> valueType;
-    IAddor addor;
+    IAddor addor = IAddor.REPLACE;
 
     Object defaultValue;
 
-    public TransientOption(String name, Class<?> type, AnnotatedElement annotations, IJavaElementDoc xjdoc) {
+    public AbstractOption(String name, IJavaElementDoc xjdoc, Type _type) {
         this.name = Strings.hyphenatize(name);
 
-        if (type == null)
+        if (_type == null)
             throw new NullPointerException("type");
-        this.type = type;
+        this.genericType = _type;
 
-        ItemType _itemType = annotations.getAnnotation(ItemType.class);
-        if (_itemType != null)
-            valueType = _itemType.value();
-        else if (type.isArray())
-            valueType = type.getComponentType();
+        if (_type instanceof Class<?>)
+            this.type = (Class<?>) _type;
+        else if (_type instanceof ParameterizedType)
+            this.type = (Class<?>) ((ParameterizedType) _type).getRawType();
         else
+            throw new IllegalUsageException("Unsupported generic type: " + _type);
+
+        if (type.isArray()) {
+            valueType = type.getComponentType();
+            addor = new ArrayAddor(valueType);
+        }
+
+        else if (List.class.isAssignableFrom(type)) {
+            valueType = TypeParam.infer1(genericType, List.class, 0);
+
+            Class<?> listType;
+            if (type.isInterface())
+                listType = ArrayList.class;
+            else
+                listType = type;
+
+            addor = new CollectionAddor(listType);
+        }
+
+        else if (Set.class.isAssignableFrom(type)) {
+            valueType = TypeParam.infer1(genericType, Set.class, 0);
+
+            Class<?> setType;
+            if (type.isInterface())
+                setType = LinkedHashSet.class;
+            else
+                setType = type;
+
+            addor = new CollectionAddor(setType);
+        }
+
+        else if (Map.class.isAssignableFrom(type)) {
+            valueType = TypeParam.infer1(genericType, Map.class, 1);
+
+            Class<?> mapType;
+            if (type.isInterface())
+                mapType = LinkedHashMap.class;
+            else
+                mapType = type;
+
+            addor = new MapAddor(mapType);
+        }
+
+        else {
             valueType = type;
+            addor = IAddor.REPLACE;
+        }
+
+        defaultValue = TrueValues.getTrueValue(valueType);
 
         setXjdoc(xjdoc);
     }
@@ -136,6 +190,17 @@ public abstract class TransientOption
             return 0;
         else
             return 1;
+    }
+
+    @Override
+    public Type getGenericType() {
+        return genericType;
+    }
+
+    public void setGenericType(Type genericType) {
+        if (genericType == null)
+            throw new NullPointerException("genericType");
+        this.genericType = genericType;
     }
 
     @Override
