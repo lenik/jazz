@@ -66,7 +66,7 @@ public class DeclaredMembers
                 }
 
             if ((infoset & ITypeProvider.METHODS) != 0)
-                for (Method method : clazz.getMethods()) {
+                for (Method method : clazz.getDeclaredMethods()) {
 
                     if (method.isSynthetic())
                         continue;

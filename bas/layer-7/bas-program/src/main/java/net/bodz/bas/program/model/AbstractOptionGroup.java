@@ -52,8 +52,6 @@ public abstract class AbstractOptionGroup
             throws AmbiguousOptionKeyException {
         if (prefix == null)
             throw new NullPointerException("optionKeyPrefix");
-        if (prefix.startsWith("no-"))
-            prefix = prefix.substring(3);
         if (prefix.isEmpty())
             throw new IllegalArgumentException("prefix is empty");
 
@@ -175,11 +173,8 @@ public abstract class AbstractOptionGroup
                 }
             }
 
-            Class<?> valueType = option.getValueType();
-
             if (argValue == null)
-                if (valueType == Boolean.class)
-                    argValue = true;
+                argValue = option.getDefaultValue();
 
             int parameterCount = option.getParameterCount();
             String[] parameters = new String[parameterCount];
@@ -206,8 +201,9 @@ public abstract class AbstractOptionGroup
                 } catch (ParseException e) {
                     throw new ParseOptionException(option, parameters, e);
                 }
-                receiveOptionValue(context, option, argValue);
             }
+
+            receiveOptionValue(context, option, argValue);
         }
         return rejected;
     }

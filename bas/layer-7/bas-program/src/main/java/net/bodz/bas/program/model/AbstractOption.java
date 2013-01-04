@@ -27,7 +27,8 @@ public abstract class AbstractOption
         extends AbstractXjdocElement
         implements IOption {
 
-    String name;
+    String id;
+    String longName;
 
     int priority;
     IOptionGroup group;
@@ -47,8 +48,13 @@ public abstract class AbstractOption
 
     Object defaultValue;
 
-    public AbstractOption(String name, IJavaElementDoc xjdoc, Type _type) {
-        this.name = Strings.hyphenatize(name);
+    public AbstractOption(String id, IJavaElementDoc xjdoc, Type _type) {
+        this(id, id, xjdoc, _type);
+    }
+
+    public AbstractOption(String id, String longName, IJavaElementDoc xjdoc, Type _type) {
+        this.id = id;
+        this.longName = Strings.hyphenatize(longName);
 
         if (_type == null)
             throw new NullPointerException("type");
@@ -114,7 +120,12 @@ public abstract class AbstractOption
 
     @Override
     public String getName() {
-        return name;
+        return id;
+    }
+
+    @Override
+    public String getPreferredLongName() {
+        return longName;
     }
 
     @Override
@@ -186,7 +197,7 @@ public abstract class AbstractOption
 
     @Override
     public int getParameterCount() {
-        if (TypeKind.isBoolean(type))
+        if (TypeKind.isBoolean(valueType))
             return 0;
         else
             return 1;

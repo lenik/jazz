@@ -18,8 +18,7 @@ public interface IOption
      * 
      * @return Non-<code>null</code> CLI name.
      */
-    @Override
-    String getName();
+    String getPreferredLongName();
 
     /**
      * Option with same name or shortcut are overwritten by options with higher priority.

@@ -16,7 +16,8 @@ public class PropertyOption
     PropertyDescriptor propertyDescriptor;
 
     public PropertyOption(PropertyDescriptor propertyDescriptor, MethodDoc getterDoc) {
-        super(propertyDescriptor.getName(), //
+        super("property:" + propertyDescriptor.getName(), //
+                propertyDescriptor.getName(), //
                 getterDoc, //
                 findPropertyGenericType(propertyDescriptor));
         this.beanClass = propertyDescriptor.getReadMethod().getDeclaringClass();
