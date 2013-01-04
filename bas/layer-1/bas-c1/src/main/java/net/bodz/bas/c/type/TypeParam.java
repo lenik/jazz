@@ -111,6 +111,25 @@ public class TypeParam {
         return bound1(typeArgs[index]);
     }
 
+    public static <T> Class<T> infer1(Type type, Class<?> interesting, int index) {
+        Type[] typeArgs = getTypeArgs(type, interesting);
+        return bound1(typeArgs[index]);
+    }
+
+    public static Type[] getTypeArgs(Type type, Class<?> interesting) {
+        if (type instanceof Class<?>)
+            return getTypeArgs((Class<?>) type, interesting);
+
+        if (type instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) type;
+            Class<?> rawType = (Class<?>) parameterizedType.getRawType();
+            Type[] argv = parameterizedType.getActualTypeArguments();
+            return mapTypeArgsRec(rawType, interesting, argv);
+        }
+
+        throw new UnsupportedOperationException("Unsupported type: " + type);
+    }
+
     /**
      * This is the same as {@link #mapTypeArgsRec(Class, Class, Type[])} with <code>argv</code> set
      * to <code>clazz.getTypeParameters()</code>.
@@ -184,7 +203,7 @@ public class TypeParam {
                 if (iface__ != null)
                     actualv = iface__.getActualTypeArguments();
 
-                Type[] mapped = mapTypeArgs(declVars, actualv, argv);
+                Type[] mapped = reorder(declVars, actualv, argv);
 
                 return mapTypeArgsRec(ifaceRaw, interesting, mapped);
             }
@@ -200,7 +219,7 @@ public class TypeParam {
             ParameterizedType superclass__ = (ParameterizedType) superclass;
             Type[] actualv = superclass__.getActualTypeArguments();
 
-            superArgs = mapTypeArgs(declVars, actualv, argv);
+            superArgs = reorder(declVars, actualv, argv);
         } else {
             superArgs = EMPTY;
         }
@@ -208,7 +227,7 @@ public class TypeParam {
         return mapTypeArgsRec(clazz.getSuperclass(), interesting, superArgs);
     }
 
-    static Type[] mapTypeArgs(TypeVariable<?>[] declVars, Type[] actualv, Type[] argv) {
+    static Type[] reorder(TypeVariable<?>[] declVars, Type[] actualv, Type[] argv) {
         Type[] mapped = new Type[actualv.length];
         V: for (int i = 0; i < actualv.length; i++) {
             Type actual = actualv[i];
