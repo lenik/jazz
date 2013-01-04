@@ -20,7 +20,7 @@ import org.codehaus.plexus.configuration.PlexusConfiguration;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.m2.util.MavenLogLogger;
-import net.bodz.bas.m2.util.ProjectUtils;
+import net.bodz.bas.m2.util.MavenExprs;
 
 /**
  * Add the project's runtime classpath to plugin classpath.
@@ -63,7 +63,7 @@ public class IncludeProjectDependenciesConfigurator
         Mojo mojo = (Mojo) component;
         logger = new MavenLogLogger(mojo.getLog());
 
-        MavenProject project = ProjectUtils.getProject(expressionEvaluator);
+        MavenProject project = MavenExprs.getProject(expressionEvaluator);
 
         PlexusConfiguration _test = configuration.getChild("testClasses");
         boolean test = _test == null ? false : ("true".equals(_test.getValue()));
