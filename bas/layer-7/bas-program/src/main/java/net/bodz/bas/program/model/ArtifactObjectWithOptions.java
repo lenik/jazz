@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.program.skel.CLISyntaxException;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactObject;
 
@@ -83,12 +82,12 @@ public class ArtifactObjectWithOptions
 
     @Override
     public List<String> receive(Object receiver, String[] args, OptionGroupParseFlags flags)
-            throws CLISyntaxException, ParseException {
+            throws CLISyntaxException {
         return getOptionGroup().receive(receiver, args, flags);
     }
 
     public List<String> receive(String... args)
-            throws CLISyntaxException, ParseException {
+            throws CLISyntaxException {
         List<String> rejected = receive(this, args, OptionGroupParseFlags.DEFAULT);
         return rejected;
     }

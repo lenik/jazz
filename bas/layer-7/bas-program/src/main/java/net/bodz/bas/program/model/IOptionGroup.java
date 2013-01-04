@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.program.skel.CLISyntaxException;
 
@@ -102,6 +101,6 @@ public interface IOptionGroup
      * @return List of rejected arguments.
      */
     List<String> receive(Object receiver, String[] args, OptionGroupParseFlags flags)
-            throws CLISyntaxException, ParseException;
+            throws CLISyntaxException;
 
 }

@@ -127,7 +127,7 @@ public class ClassDocBuilder {
 
             if (rootTagName == null) {
                 // TODO logging...
-                String mesg = "Undefined tag @" + tagName + " occurred in " + javaEntity;
+                String mesg = "Undefined tag @" + tagName + " occurred in " + javaEntity.getName();
                 // throw new IllegalUsageException(mesg);
                 rootTagName = tagName;
             }

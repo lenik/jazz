@@ -315,8 +315,8 @@ public class ClassDocToOptionsConverter {
     boolean isIncluded(Member member) {
         int modifiers = member.getModifiers();
 
-        if (includeNonPublic)
-            if (Modifier.isPublic(modifiers))
+        if (!includeNonPublic)
+            if (!Modifier.isPublic(modifiers))
                 return false;
 
         if (!includeStatic)

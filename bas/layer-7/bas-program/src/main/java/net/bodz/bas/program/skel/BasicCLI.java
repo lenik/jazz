@@ -140,8 +140,7 @@ public abstract class BasicCLI
      * 
      * @option -h weak
      */
-    protected final void _help()
-            throws CLISyntaxException {
+    protected final void _help() {
         _help(Stdio.cerr);
         throw new ControlBreak();
     }

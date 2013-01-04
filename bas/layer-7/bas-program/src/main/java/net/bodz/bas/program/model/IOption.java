@@ -1,7 +1,9 @@
 package net.bodz.bas.program.model;
 
+import java.lang.reflect.Type;
 import java.util.Set;
 
+import net.bodz.bas.c.type.addor.IAddor;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom1.IElement;
@@ -83,6 +85,8 @@ public interface IOption
      * The option type.
      */
     Class<?> getType();
+
+    Type getGenericType();
 
     /**
      * Addor to specify how multiple items are combined.

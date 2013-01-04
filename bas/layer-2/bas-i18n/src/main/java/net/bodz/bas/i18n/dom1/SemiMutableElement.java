@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import net.bodz.bas.i18n.dom.iString;
 
+/**
+ * Semi-mutable is for serializable, however, setters are protected object.
+ */
 public class SemiMutableElement
         extends AbstractElement
         implements Serializable {

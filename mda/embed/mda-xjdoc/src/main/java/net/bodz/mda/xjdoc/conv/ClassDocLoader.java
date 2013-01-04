@@ -29,6 +29,8 @@ public class ClassDocLoader {
         String resourceName = fqcn.replace('.', '/') + "." + extension;
 
         ClassLoader resourceLoader = clazz.getClassLoader();
+        if (resourceLoader == null)
+            throw new NullPointerException("resourceLoader");
         URL resource = resourceLoader.getResource(resourceName);
         if (resource == null)
             return null;

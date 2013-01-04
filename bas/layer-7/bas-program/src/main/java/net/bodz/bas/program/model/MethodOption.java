@@ -7,12 +7,12 @@ import net.bodz.bas.potato.element.IProperty;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 
 public class MethodOption
-        extends TransientOption {
+        extends AbstractOption {
 
     private final Method method;
 
     public MethodOption(Method method, MethodDoc methodDoc) {
-        super(method.getName(), method.getReturnType(), method, methodDoc);
+        super(method.getName(), methodDoc, method.getGenericReturnType());
         this.method = method;
     }
 

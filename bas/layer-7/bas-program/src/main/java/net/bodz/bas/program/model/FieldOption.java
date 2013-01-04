@@ -7,12 +7,12 @@ import net.bodz.bas.potato.provider.reflect.ReflectProperty;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 
 public class FieldOption
-        extends TransientOption {
+        extends AbstractOption {
 
     private final Field field;
 
     public FieldOption(Field field, FieldDoc fieldDoc) {
-        super(field.getName(), field.getType(), field, fieldDoc);
+        super(field.getName(), fieldDoc, field.getGenericType());
         this.field = field;
     }
 
