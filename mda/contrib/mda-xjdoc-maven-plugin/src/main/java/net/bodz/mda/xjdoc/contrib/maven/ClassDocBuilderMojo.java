@@ -5,6 +5,7 @@ import static net.bodz.bas.rtx.Negotiation.option;
 
 import java.io.File;
 
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
@@ -16,6 +17,7 @@ import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
+import net.bodz.bas.m2.util.MavenProjects;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
@@ -119,10 +121,17 @@ public class ClassDocBuilderMojo
         Log log = getLog();
 
         MavenProject project = getProject();
-        ClassLoader classLoader = ProjectDepLoader.getProjectLoader(project);
-        ClassLibrary classLibrary = new ClassLibrary(classLoader);
 
-        TagLibraryLoader taglibLoader = new TagLibraryLoader(classLoader);
+        ClassLoader runtimeClassLoader;
+        try {
+            runtimeClassLoader = MavenProjects.createRuntimeClassLoader(project);
+        } catch (DependencyResolutionRequiredException e) {
+            throw new MojoFailureException(e.getMessage(), e);
+        }
+
+        ClassLibrary classLibrary = new ClassLibrary(runtimeClassLoader);
+
+        TagLibraryLoader taglibLoader = new TagLibraryLoader(runtimeClassLoader);
         TagLibrarySet taglibs = taglibLoader.parseSet(taglibNames);
 
         JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);

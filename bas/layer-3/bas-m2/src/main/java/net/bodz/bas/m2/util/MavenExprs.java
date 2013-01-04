@@ -6,7 +6,7 @@ import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator
 
 import net.bodz.bas.err.UnexpectedException;
 
-public class ProjectUtils {
+public class MavenExprs {
 
     public static MavenProject getProject(ExpressionEvaluator expressionEvaluator) {
         MavenProject project;
