@@ -7,6 +7,26 @@ public class StringsTest
         extends Assert {
 
     @Test
+    public void testLcfirst()
+            throws Exception {
+        class D {
+            void o(String input, String expected) {
+                String actual = Strings.lcfirst(input);
+                assertEquals(expected, actual);
+            }
+        }
+        D d = new D(); //
+        d.o("", "");
+        d.o("H", "h");
+        d.o("HH", "hH");
+        d.o("HHH", "HHH");
+        d.o("HHHH", "HHHH");
+        d.o("UClassLoader", "uClassLoader");
+        d.o("URClassLoader", "URClassLoader");
+        d.o("URLClassLoader", "URLClassLoader");
+    }
+
+    @Test
     public void testEllipseStringIntString() {
         String s = "abcdefghijklmnopqrstuvwxyz";
         assertEquals("..", Strings.ellipse(s, 2, "..."));
