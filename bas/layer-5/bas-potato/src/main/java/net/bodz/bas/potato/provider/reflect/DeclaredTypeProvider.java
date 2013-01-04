@@ -4,10 +4,12 @@ import net.bodz.bas.potato.AbstractTypeProvider;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
-public class ReflectTypeProvider
+public class DeclaredTypeProvider
         extends AbstractTypeProvider {
 
-    public static final int PRIORITY = 200;
+    public static final int PRIORITY = 299;
+
+    int visibilities = DeclaredMembers.PRIVATE | DeclaredMembers.PACKAGE_PRIVATE | DeclaredMembers.PROTECTED;
 
     @Override
     public int getPriority() {
@@ -16,7 +18,7 @@ public class ReflectTypeProvider
 
     @Override
     public IType getType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc) {
-        return new PublicMembers(clazz, infoset, classDoc);
+        return new DeclaredMembers(clazz, infoset | visibilities, classDoc, false);
     }
 
 }

@@ -9,7 +9,7 @@ import net.bodz.bas.c.reflect.MethodSignatureComparator;
 import net.bodz.bas.err.DuplicatedKeyException;
 
 public class MutableMethodMap
-        implements IMethodMap {
+        extends AbstractMethodMap {
 
     Map<MethodSignature, IMethod> map;
 

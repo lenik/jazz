@@ -9,10 +9,10 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 public interface ITypeProvider
         extends IPriority {
 
-    int PROPERTIES = 0x1;
-    int METHODS = 0x2;
-    int CONSTRUCTORS = 0x4;
-    int EVENTS = 0x8;
+    int PROPERTIES = 0x1_0000;
+    int METHODS = 0x2_0000;
+    int CONSTRUCTORS = 0x4_0000;
+    int EVENTS = 0x8_0000;
 
     IType getType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc);
 
