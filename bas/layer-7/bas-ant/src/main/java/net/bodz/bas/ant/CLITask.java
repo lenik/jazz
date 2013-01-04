@@ -11,10 +11,10 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.RuntimeConfigurable;
 import org.apache.tools.ant.Task;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.meta.source.UnderDevelopment;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.program.model.ApplyOptionException;
 import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.program.skel.CLISyntaxException;
@@ -143,9 +143,7 @@ public class CLITask
                 Logger logger = (Logger) appType.getProperty("logger").getValue(program);
                 logger.setDelta(logLevel);
             }
-        } catch (CLISyntaxException e) {
-            throw new BuildException(e.getMessage(), e);
-        } catch (ParseException e) {
+        } catch (CLISyntaxException | ApplyOptionException e) {
             throw new BuildException(e.getMessage(), e);
         } catch (ReflectiveOperationException e) {
             throw new BuildException(e.getMessage(), e);

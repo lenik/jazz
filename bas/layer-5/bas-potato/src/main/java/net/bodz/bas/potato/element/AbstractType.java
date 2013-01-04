@@ -3,6 +3,7 @@ package net.bodz.bas.potato.element;
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeArray;
+import net.bodz.mda.xjdoc.util.MethodId;
 
 public abstract class AbstractType
         extends AbstractPotatoElement
@@ -103,7 +104,13 @@ public abstract class AbstractType
     public Object invoke(Object instance, String methodName, Object... parameters)
             throws ReflectiveOperationException {
         Class<?>[] parameterTypes = TypeArray.getClasses(null, parameters);
+
         IMethod method = getMethod(methodName, parameterTypes);
+        if (method == null) {
+            MethodId methodId = new MethodId(methodName, parameterTypes);
+            throw new NoSuchMethodException(methodId.toString());
+        }
+
         Object returnValue = method.invoke(instance, parameters);
         return returnValue;
     }

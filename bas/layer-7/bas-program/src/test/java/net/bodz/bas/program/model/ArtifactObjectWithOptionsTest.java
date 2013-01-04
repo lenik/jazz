@@ -8,7 +8,6 @@ import org.junit.Test;
 import net.bodz.bas.potato.PotatoLoader;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.program.skel.CLISyntaxException;
 
 public class ArtifactObjectWithOptionsTest
         extends ArtifactObjectWithOptions {
@@ -52,8 +51,19 @@ public class ArtifactObjectWithOptionsTest
      * 
      * @option
      */
-    String hello(String t) {
-        return "hello " + t;
+    String hello(String myNameBeingUsed) {
+        this.myName = myNameBeingUsed;
+        return "Yes, this is " + myNameBeingUsed;
+    }
+
+    /**
+     * Show greeting message.
+     * 
+     * @option --hello2
+     */
+    String hello(String myFirstName, String myLastName) {
+        this.myName = myFirstName + " " + myLastName;
+        return "Hey, I'm " + myName;
     }
 
     /**
@@ -103,8 +113,16 @@ public class ArtifactObjectWithOptionsTest
     }
 
     @Test
+    public void testInvoke()
+            throws Exception {
+        IType type = PotatoLoader.getType(getClass());
+        Object retval = type.invoke(this, "hello", "Kate");
+        assertEquals("Yes, this is Kate", retval);
+    }
+
+    @Test
     public void receivePrivateVals()
-            throws CLISyntaxException {
+            throws Exception {
         assertEquals("Lucy", myName);
         assertEquals(13, yourAge);
 
@@ -117,7 +135,7 @@ public class ArtifactObjectWithOptionsTest
 
     @Test
     public void receiveSimpleSwitches()
-            throws CLISyntaxException {
+            throws Exception {
         assertFalse(feature1);
         assertFalse(feature2);
         assertFalse(feature3);
@@ -129,15 +147,28 @@ public class ArtifactObjectWithOptionsTest
 
     @Test
     public void receiveSwitches()
-            throws CLISyntaxException {
+            throws Exception {
         receive("--serial", "--no-serial", "--no-serial");
         assertEquals("serials", 3, serial.length);
         assertTrue(serial[0]);
         assertFalse(serial[1]);
         assertFalse(serial[2]);
+    }
 
-// Object ret = type.invoke(this, "hello", "Kate");
-// assertEquals("hello()", "hello Kate", ret);
+    @Test
+    public void receiveInvocation()
+            throws Exception {
+        assertEquals("Lucy", myName);
+        receive("--hello", "Simpson");
+        assertEquals("Simpson", myName);
+    }
+
+    @Test
+    public void receiveInvocationOverload()
+            throws Exception {
+        assertEquals("Lucy", myName);
+        receive("--hello2", "Bart", "Simpson");
+        assertEquals("Bart Simpson", myName);
     }
 
 }

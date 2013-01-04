@@ -12,7 +12,10 @@ public class FieldOption
     private final Field field;
 
     public FieldOption(Field field, FieldDoc fieldDoc) {
-        super(field.getName(), fieldDoc, field.getGenericType());
+        super("field:" + field.getName(), //
+                field.getName(), //
+                fieldDoc, //
+                field.getGenericType());
         this.field = field;
     }
 

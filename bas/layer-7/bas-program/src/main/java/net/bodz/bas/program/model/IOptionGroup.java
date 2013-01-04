@@ -101,6 +101,6 @@ public interface IOptionGroup
      * @return List of rejected arguments.
      */
     List<String> receive(Object receiver, String[] args, OptionGroupParseFlags flags)
-            throws CLISyntaxException;
+            throws CLISyntaxException, ApplyOptionException;
 
 }

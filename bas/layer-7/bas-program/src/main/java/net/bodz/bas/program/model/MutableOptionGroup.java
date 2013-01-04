@@ -84,14 +84,10 @@ public class MutableOptionGroup
 
     @Override
     public Entry<String, IOption> checkForConflict(IOption option) {
-        int priority = option.getPriority();
-
-        // Check for conflicts
         String optionName = option.getName();
         IOption existing = nameMap.get(optionName);
         if (existing != null)
-            if (existing.getPriority() == priority)
-                return Pair.of(optionName, existing);
+            return Pair.of(optionName, existing);
 
         for (String alias : option.getAliases()) {
             IOption other = prefixMap.get(alias);
@@ -120,15 +116,12 @@ public class MutableOptionGroup
         String optionName = option.getName();
         int priority = option.getPriority();
 
-        IOption existing = nameMap.get(optionName);
-        if (existing == null || priority < existing.getPriority()) {
-            nameMap.put(optionName, option);
-            prefixMap.put(optionName, option);
-        }
+        assert !nameMap.containsKey(optionName);
+        nameMap.put(optionName, option);
 
         for (String alias : option.getAliases()) {
-            IOption aliased = prefixMap.get(alias);
-            if (aliased != null && aliased.getPriority() < priority)
+            IOption prev = prefixMap.get(alias);
+            if (prev != null && prev.getPriority() < priority)
                 continue;
             prefixMap.put(alias, option);
         }

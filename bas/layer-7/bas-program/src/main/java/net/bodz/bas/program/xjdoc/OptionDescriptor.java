@@ -21,15 +21,29 @@ public class OptionDescriptor {
             throws ParseException {
         StringTokenizer tokens = new StringTokenizer(descriptor, " ");
 
+        @SuppressWarnings("unused") int shortOptions = 0;
+        int longOptions = 0;
+
         while (tokens.hasMoreTokens()) {
             String token = tokens.nextToken();
             if (token.isEmpty())
                 continue;
 
             if (token.startsWith("-")) {
-                do
+                token = token.substring(1);
+
+                boolean isLongOption = token.startsWith("-");
+                if (isLongOption)
                     token = token.substring(1);
-                while (token.startsWith("-"));
+
+                if (token.startsWith("-"))
+                    throw new ParseException("Bad option alias: " + token);
+
+                if (isLongOption)
+                    longOptions++;
+                else
+                    shortOptions++;
+
                 option.addAlias(token);
                 continue;
             }
@@ -88,6 +102,12 @@ public class OptionDescriptor {
                 throw new ParseException("Bad option modifier: " + token);
             }
         } // tokens
+
+        if (longOptions == 0) {
+            String preferredLongName = option.getPreferredLongName();
+            if (preferredLongName != null)
+                option.addAlias(preferredLongName);
+        }
     }
 
 }

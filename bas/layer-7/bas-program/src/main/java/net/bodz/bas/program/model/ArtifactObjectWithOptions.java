@@ -82,12 +82,12 @@ public class ArtifactObjectWithOptions
 
     @Override
     public List<String> receive(Object receiver, String[] args, OptionGroupParseFlags flags)
-            throws CLISyntaxException {
+            throws CLISyntaxException, ApplyOptionException {
         return getOptionGroup().receive(receiver, args, flags);
     }
 
     public List<String> receive(String... args)
-            throws CLISyntaxException {
+            throws CLISyntaxException, ApplyOptionException {
         List<String> rejected = receive(this, args, OptionGroupParseFlags.DEFAULT);
         return rejected;
     }
