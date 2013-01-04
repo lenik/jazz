@@ -163,7 +163,7 @@ public class JavaElementDoc
         public void attribute(String name, String string)
                 throws ParseException {
             if (".".equals(name)) {
-                iString text = XiString.parseParaLangString(string);
+                iString text = XiString.parseMultiLangString(string);
                 setText(text);
                 return;
             }

@@ -1,5 +1,7 @@
 package net.bodz.bas.i18n.dom;
 
+import java.util.Map.Entry;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,6 +61,13 @@ public class XDomainNodeTest
         // System.out.print(hello.dumpContent());
         assertEquals("null: hello\nzh-cn: 你好\nzh-tw: 类好\net: Saluton\nja: こんにちは\nen: Hello\nen-us: Hey\n", //
                 hello.dumpContent());
+    }
+
+    @Test
+    public void testEntrySet() {
+        for (Entry<String, String> entry : hello.entrySet()) {
+            System.out.println(entry.getKey() + " => " + entry.getValue());
+        }
     }
 
 }

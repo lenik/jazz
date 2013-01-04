@@ -5,7 +5,8 @@ import java.net.URL;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.javadoc.JavadocTagLibrary;
+import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
+import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 
 public class ClassDocLoader {
 
@@ -28,17 +29,27 @@ public class ClassDocLoader {
         String fqcn = clazz.getName();
         String resourceName = fqcn.replace('.', '/') + "." + extension;
 
-        ClassLoader resourceLoader = clazz.getClassLoader();
-        if (resourceLoader == null)
-            throw new NullPointerException("resourceLoader");
+        /**
+         * For Maven exec:java, the system class loader just includes plexus-classworlds, and
+         * context class loader should be used.
+         */
+        ClassLoader resourceLoader = Thread.currentThread().getContextClassLoader();
+        if (resourceLoader == null) {
+            resourceLoader = clazz.getClassLoader();
+            if (resourceLoader == null)
+                throw new NullPointerException("resourceLoader");
+        }
+
         URL resource = resourceLoader.getResource(resourceName);
         if (resource == null)
             return null;
 
         IStreamInputSource in = new URLResource(resource);
 
-        JavadocTagLibrary taglib = new JavadocTagLibrary();
-        ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(taglib);
+        TagLibraryLoader tagLibraryLoader = new TagLibraryLoader(resourceLoader);
+        TagLibrarySet taglibs = tagLibraryLoader.parseSet("*");
+
+        ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(taglibs);
 
         ClassDoc doc;
         try {

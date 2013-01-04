@@ -35,6 +35,9 @@ public class DomainStrings {
         for (Entry<String, String> entry : text.entrySet()) {
             String domain = entry.getKey();
             String _text = entry.getValue();
+            if (_text == null)
+                continue;
+
             String _header;
 
             int parbreak = indexOfParbreak(_text);
@@ -53,6 +56,9 @@ public class DomainStrings {
         for (Entry<String, String> entry : text.entrySet()) {
             String domain = entry.getKey();
             String _text = entry.getValue();
+            if (_text == null)
+                continue;
+
             String _body;
 
             int parbreak = indexOfParbreak(_text);
