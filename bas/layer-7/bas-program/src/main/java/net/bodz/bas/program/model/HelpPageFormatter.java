@@ -2,6 +2,7 @@ package net.bodz.bas.program.model;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -80,12 +81,16 @@ public class HelpPageFormatter {
         StringBuilder line = new StringBuilder(columns);
 
         while (group != null) {
-            iString groupDescription = group.getDescription();
-            String groupHeader = "Options for " + Strings.ucfirstWords(groupDescription.toString());
-            buffer.append("\n" + groupHeader + "\n");
-            buffer.append(Strings.repeat(groupHeader.length(), '=') + "\n");
+            Map<String, IOption> localOptionMap = group.getLocalOptionMap();
 
-            for (IOption option : group.getLocalOptionMap().values()) {
+            if (!localOptionMap.isEmpty()) {
+                iString groupDescription = group.getDescription();
+                String groupHeader = "Options for " + Strings.ucfirstWords(groupDescription.toString());
+                buffer.append("\n" + groupHeader + "\n");
+                buffer.append(Strings.repeat(groupHeader.length(), '=') + "\n");
+            }
+
+            for (IOption option : localOptionMap.values()) {
                 line.setLength(0);
                 line.append(indentChars);
                 int offset = line.length();

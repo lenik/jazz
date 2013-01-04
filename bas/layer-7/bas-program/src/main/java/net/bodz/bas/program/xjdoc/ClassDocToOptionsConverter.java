@@ -9,6 +9,7 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
@@ -236,10 +237,14 @@ public class ClassDocToOptionsConverter {
         }
 
         // Import syntax usages into group.
-        Map<String, SyntaxUsage> usageMap = (Map<String, SyntaxUsage>) classDoc.getTag("usage");
+        Map<String, String> usageMap = (Map<String, String>) classDoc.getTag("usage");
         if (usageMap != null)
-            for (SyntaxUsage usage : usageMap.values())
+            for (Entry<String, String> entry : usageMap.entrySet()) {
+                String id = entry.getKey();
+                String script = entry.getValue();
+                SyntaxUsage usage = new SyntaxUsage(id, script);
                 group.addUsage(usage);
+            }
 
         if (includeFields) {
             Field[] fields = clazz.getDeclaredFields();

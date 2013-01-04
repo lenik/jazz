@@ -12,7 +12,7 @@ public class ClassLoaderAnalyzerTest
         extends Assert {
 
     @Test
-    public void test1()
+    public void analyzeSCLandCCL()
             throws IOException {
         ClassLoader scl = ClassLoader.getSystemClassLoader();
         ClassLoader ccl = Thread.currentThread().getContextClassLoader();
@@ -27,6 +27,11 @@ public class ClassLoaderAnalyzerTest
         for (ClassLoaderNode root : roots) {
             formatter.format(Stdio.cout, root);
         }
+    }
+
+    public static void main(String[] args)
+            throws IOException {
+        new ClassLoaderAnalyzerTest().analyzeSCLandCCL();
     }
 
 }

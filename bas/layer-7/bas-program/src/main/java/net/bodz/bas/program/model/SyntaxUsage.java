@@ -1,5 +1,6 @@
 package net.bodz.bas.program.model;
 
+import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 
 /**
@@ -17,6 +18,25 @@ public class SyntaxUsage {
     String id;
     String syntax;
     iString description;
+
+    SyntaxUsage() {
+    }
+
+    public SyntaxUsage(String id, String script) {
+        this.id = id;
+
+        int lineSep = script.indexOf('\n');
+        String _description;
+        if (lineSep == -1) {
+            syntax = script;
+            _description = "";
+        } else {
+            syntax = script.substring(0, lineSep).trim();
+            _description = script.substring(lineSep + 1).trim();
+        }
+
+        description = XiString.parseParaLangString(_description);
+    }
 
     public String getId() {
         return id;
