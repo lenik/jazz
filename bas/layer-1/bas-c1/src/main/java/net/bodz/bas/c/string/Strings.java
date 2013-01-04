@@ -60,6 +60,39 @@ public class Strings {
         return padMiddle(s, len, PADCHAR);
     }
 
+    public static String _lcfirst(String s) {
+        if (s == null)
+            return null;
+        if (s.length() <= 1)
+            return s.toLowerCase();
+        char lcfirst = Character.toLowerCase(s.charAt(0));
+        return lcfirst + s.substring(1);
+    }
+
+    public static String lcfirst(String s) {
+        if (s == null)
+            return null;
+        switch (s.length()) {
+        case 0:
+            return s;
+
+        case 1:
+            return s.toLowerCase();
+
+        case 2:
+            break;
+
+        default:
+            boolean a = Character.isUpperCase(s.charAt(0));
+            boolean b = Character.isUpperCase(s.charAt(1));
+            boolean c = Character.isUpperCase(s.charAt(2));
+            if (a && b && c)
+                return s;
+        }
+        char lcfirst = Character.toLowerCase(s.charAt(0));
+        return lcfirst + s.substring(1);
+    }
+
     public static String ucfirst(String s) {
         if (s == null)
             return null;
@@ -67,15 +100,6 @@ public class Strings {
             return s.toUpperCase();
         char ucfirst = Character.toUpperCase(s.charAt(0));
         return ucfirst + s.substring(1);
-    }
-
-    public static String lcfirst(String s) {
-        if (s == null)
-            return null;
-        if (s.length() <= 1)
-            return s.toUpperCase();
-        char lcfirst = Character.toLowerCase(s.charAt(0));
-        return lcfirst + s.substring(1);
     }
 
     public static String ucfirstWords(String s) {
