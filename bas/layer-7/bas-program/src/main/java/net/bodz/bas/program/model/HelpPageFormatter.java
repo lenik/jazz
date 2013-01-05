@@ -1,10 +1,6 @@
 package net.bodz.bas.program.model;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringLengthComparator;
@@ -81,16 +77,23 @@ public class HelpPageFormatter {
         StringBuilder line = new StringBuilder(columns);
 
         while (group != null) {
-            Map<String, IOption> localOptionMap = group.getLocalOptionMap();
 
-            if (!localOptionMap.isEmpty()) {
+            Map<String, IOption> localOptionMap = group.getLocalOptionMap();
+            List<IOption> localOptions = new ArrayList<>(localOptionMap.size());
+            for (IOption option : localOptionMap.values()) {
+                if (option.isHidden())
+                    continue;
+                localOptions.add(option);
+            }
+
+            if (!localOptions.isEmpty()) {
                 iString groupDescription = group.getDescription();
                 String groupHeader = "Options for " + Strings.ucfirstWords(groupDescription.toString());
                 buffer.append("\n" + groupHeader + "\n");
                 buffer.append(Strings.repeat(groupHeader.length(), '=') + "\n");
             }
 
-            for (IOption option : localOptionMap.values()) {
+            for (IOption option : localOptions) {
                 line.setLength(0);
                 line.append(indentChars);
                 int offset = line.length();
@@ -140,7 +143,6 @@ public class HelpPageFormatter {
         } // for group
         return buffer.toString();
     }
-
 }
 
 class OptionNameComparator
