@@ -11,12 +11,17 @@ public class StringQuote {
     }
 
     public static String qJavaEscaped(String s) {
-        String java = StringEscape.java(s);
+        String java = StringEscape.escapeJava(s);
         return q(java);
     }
 
+    public static String qqJavaEscaped(String s) {
+        String java = StringEscape.escapeJava(s);
+        return qq(java);
+    }
+
     public static String qSQLEscaped(String s) {
-        String java = StringEscape.sql(s);
+        String java = StringEscape.escapeSql(s);
         return q(java);
     }
 

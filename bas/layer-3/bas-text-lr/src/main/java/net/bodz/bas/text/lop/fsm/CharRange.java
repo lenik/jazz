@@ -154,14 +154,14 @@ public class CharRange
 
     @Override
     public String toString() {
-        String c = StringEscape.java(begin);
+        String c = StringEscape.escapeJava(begin);
         switch (end - begin) {
         case 0:
             return "[]";
         case 1:
             return c;
         }
-        String d = StringEscape.java(end - 1);
+        String d = StringEscape.escapeJava(end - 1);
         return "[" + c + "-" + d + "]";
     }
 

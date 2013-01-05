@@ -12,6 +12,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
@@ -110,8 +111,8 @@ public class ClassDocBuilderMojo
             return missingDoc.toMultiLangString();
     }
 
-    public void setMissingDoc(String missingDoc) {
-        // getLog().info("Set-Missing-Doc: " + missingDoc);
+    public void setMissingDoc(String missingDoc)
+            throws ParseException {
         this.missingDoc = XiString.parseMultiLangString(missingDoc);
     }
 

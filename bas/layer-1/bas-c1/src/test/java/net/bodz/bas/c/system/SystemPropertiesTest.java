@@ -32,7 +32,7 @@ public class SystemPropertiesTest
                         + Strings.ucfirst(name.substring(dot + 1));
             }
             if (value != null)
-                value = StringEscape.java(value);
+                value = StringEscape.escapeJava(value);
 
             // System.getProperty(key)
             System.out.println("    /** " + key + " = " + value + " */");

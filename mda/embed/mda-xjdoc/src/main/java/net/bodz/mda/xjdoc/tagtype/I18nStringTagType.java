@@ -2,6 +2,7 @@ package net.bodz.mda.xjdoc.tagtype;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.INegotiation;
@@ -32,7 +33,8 @@ public class I18nStringTagType
     }
 
     @Override
-    public iString parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
+    public iString parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+            throws ParseException {
         iString text = XiString.parseMultiLangString(string);
         return text;
     }

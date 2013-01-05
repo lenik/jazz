@@ -12,7 +12,7 @@ public class StringEscapeTest
     public void testEscape() {
         class D {
             void o(String input, String expected) {
-                String actual = StringEscape.java(input);
+                String actual = StringEscape.escapeJava(input);
                 assertEquals(expected, actual);
             }
         }

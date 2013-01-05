@@ -3,6 +3,8 @@ package net.bodz.bas.i18n.dom;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.err.ParseException;
+
 public class XDomainStringTest
         extends Assert {
 
@@ -41,7 +43,8 @@ public class XDomainStringTest
     }
 
     @Test
-    public void testParseNullMultiLang() {
+    public void testParseNullMultiLang()
+            throws ParseException {
         XiString dstr = XiString.parseMultiLangString("");
         assertNull(dstr.getValue());
     }

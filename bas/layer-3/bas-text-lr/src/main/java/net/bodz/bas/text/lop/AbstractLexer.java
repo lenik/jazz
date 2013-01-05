@@ -145,7 +145,7 @@ public abstract class AbstractLexer
     @Override
     public String getTokenName(int id) {
         if (id >= 0 && id < 256)
-            return StringEscape.java((char) id);
+            return StringEscape.escapeJava((char) id);
         if (tokenNames == null)
             tokenNames = new IndexMap<String>();
         String name = tokenNames.get(id);
