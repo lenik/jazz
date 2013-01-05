@@ -13,8 +13,9 @@ public class MutablePropertyMapTest
     @Test
     public void testGetPropertyMap() {
         IPropertyMap propertyMap = Traits.getTrait(AddressBean.class, IPropertyMap.class);
-        // class, country, city, address
-        assertEquals(4, propertyMap.getPropertyCount());
+        // fields: country, city, address
+        // properties: class, country, city, address
+        assertEquals(7, propertyMap.getPropertyCount());
     }
 
     @Test
