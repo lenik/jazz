@@ -6,7 +6,7 @@ public class FileStartswithPreorder
         extends AbstractPreorder<File> {
 
     @Override
-    public int compare(File o1, File o2) {
+    public int compare2(File o1, File o2) {
         String path1 = o1.getPath();
         String path2 = o2.getPath();
         return path1.compareTo(path2);

@@ -6,11 +6,16 @@ import net.bodz.bas.err.IllegalUsageException;
 public abstract class AbstractPreorder<T>
         implements IPreorder<T> {
 
-    public int __compare(T o1, T o2) {
+    @Override
+    public final int compare(T o1, T o2) {
         int cmp = precompare(o1, o2);
-        if (cmp == UNKNOWN)
-            cmp = 0;
-        return cmp;
+        if (cmp != UNKNOWN)
+            return cmp;
+        return compare2(o1, o2);
+    }
+
+    protected int compare2(T o1, T o2) {
+        return compareIdentity(o1, o2);
     }
 
     @Override
