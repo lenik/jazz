@@ -2,13 +2,14 @@ package net.bodz.bas.c.org.eclipse;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Map;
-import java.util.regex.Pattern;
+import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class JavaProjectTest {
+public class JavaProjectTest
+        extends Assert {
 
     JavaProject project;
 
@@ -25,12 +26,28 @@ public class JavaProjectTest {
         // buildPath.addLibrary(rt);
     }
 
-    public void testType(JavaProject project, Class<?> clazz, String classPath, String sourcePath)
+    public void testType(JavaProject project, Class<?> clazz, String expectedTargetPath, String expectedSourcePath)
             throws Exception {
+        String targetPath = null;
+        String sourcePath = null;
+
         if (project == null) {
             File baseDir = JavaProjectBaseDir.forClass(clazz);
-            project = new JavaProject(baseDir);
+            if (baseDir != null)
+                project = new JavaProject(baseDir);
         }
+
+        if (project == null) {
+            assertNull(expectedTargetPath);
+            assertNull(expectedSourcePath);
+            return;
+        }
+
+        List<JavaProjectSourceFolder> srcdirs = project.getSourceFolders();
+        assertFalse(srcdirs.isEmpty());
+
+        targetPath = project.getDefaultOutput().toString();
+        sourcePath = srcdirs.get(0).toString();
 
         System.out.println("Class: " + clazz);
 
@@ -46,13 +63,6 @@ public class JavaProjectTest {
     public void testProjectType()
             throws Exception {
         testType(project, JavaProject.class, null, null);
-    }
-
-    @Test
-    public void testSysLib()
-            throws Exception {
-        testType(null, Pattern.class, null, null);
-        testType(null, Map.Entry.class, null, null);
     }
 
 }

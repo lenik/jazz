@@ -45,16 +45,25 @@ public class ClassResource {
 
     public static URL getRootURL(Class<?> clazz) {
         String classBytesName = clazz.getName().replace('.', '/') + ".class";
-        URL classBytesUrl = clazz.getClassLoader().getResource(classBytesName);
+
+        ClassLoader loader = clazz.getClassLoader();
+        if (loader == null)
+            // throw new RuntimeException("No class loader bound for " + clazz);
+            loader = ClassLoader.getSystemClassLoader();
+
+        URL classBytesUrl = loader.getResource(classBytesName);
 
         String rootUrl = classBytesUrl.toString();
 
         assert rootUrl.endsWith(classBytesName);
         rootUrl = rootUrl.substring(0, rootUrl.length() - classBytesName.length());
 
-        rootUrl = StringPart.chomp(rootUrl, "/");
-        rootUrl = StringPart.chomp(rootUrl, "\\");
-        rootUrl = StringPart.chomp(rootUrl, "!");
+        if (rootUrl.endsWith("!/")) {
+            // rootUrl = StringPart.chomp(rootUrl, "!/");
+        } else {
+            rootUrl = StringPart.chomp(rootUrl, "/");
+            rootUrl = StringPart.chomp(rootUrl, "\\");
+        }
 
         try {
             return new URL(rootUrl);
