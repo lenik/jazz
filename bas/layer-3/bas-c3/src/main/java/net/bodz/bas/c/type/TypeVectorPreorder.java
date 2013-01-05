@@ -5,7 +5,8 @@ import net.bodz.bas.t.preorder.AbstractPreorder;
 public class TypeVectorPreorder
         extends AbstractPreorder<Class<?>[]> {
 
-    public int compare(Class<?>[] o1, Class<?>[] o2) {
+    @Override
+    public int compare2(Class<?>[] o1, Class<?>[] o2) {
         int minLength = Math.min(o1.length, o2.length);
         for (int i = 0; i < minLength; i++) {
             String name1 = o1[i].getName();

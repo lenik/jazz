@@ -6,11 +6,14 @@ public class LogLevelPreorder
         extends AbstractPreorder<LogLevel> {
 
     @Override
-    public int compare(LogLevel o1, LogLevel o2) {
-        int cmp = o1.getGroup() - o2.getGroup();
+    public int compare2(LogLevel o1, LogLevel o2) {
+        int group1 = o1.getGroup();
+        int group2 = o2.getGroup();
+        int cmp = group1 - group2;
         if (cmp != 0)
             return cmp;
-        return o1.getPriority() - o2.getPriority();
+
+        return compareIdentity(o1, o2);
     }
 
     @Override
@@ -20,13 +23,16 @@ public class LogLevelPreorder
 
     @Override
     public int precompare(LogLevel o1, LogLevel o2) {
-        if (o1.getGroup() != o2.getGroup())
+        int group1 = o1.getGroup();
+        int group2 = o2.getGroup();
+        int cmp = group1 - group2;
+        if (cmp != 0)
             return UNKNOWN;
 
-        int diff = o1.getPriority() - o2.getPriority();
-        if (diff < 0)
+        cmp = o1.getPriority() - o2.getPriority();
+        if (cmp < 0)
             return LESS_THAN;
-        else if (diff > 0)
+        else if (cmp > 0)
             return GREATER_THAN;
 
         return compareIdentity(o1, o2);

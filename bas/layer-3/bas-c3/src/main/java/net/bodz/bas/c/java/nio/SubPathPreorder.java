@@ -6,7 +6,7 @@ public class SubPathPreorder
         extends AbstractPreorder<String> {
 
     @Override
-    public int compare(String o1, String o2) {
+    public int compare2(String o1, String o2) {
         return o1.compareTo(o2);
     }
 
