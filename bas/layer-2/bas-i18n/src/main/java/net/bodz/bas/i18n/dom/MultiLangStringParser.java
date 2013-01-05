@@ -1,35 +1,39 @@
 package net.bodz.bas.i18n.dom;
 
+import net.bodz.bas.err.ParseException;
+
 public class MultiLangStringParser
         extends MultiTagStringParser {
 
-    private XiString domainString;
+    private XiString istr;
 
     /**
      * Parse multi-lang string in format of <code>lang1 "..." lang2 "..."</code> into domain string.
      * 
      * @return The parsed {@link iString domain string}.
+     * @throws ParseException
      */
     @Override
-    public synchronized XiString parse(String s) {
+    public synchronized XiString parse(String s)
+            throws ParseException {
         super.parse(s);
-        return domainString;
+        return istr;
     }
 
     @Override
     protected void reset() {
         super.reset();
-        domainString = new XiString();
+        istr = new XiString();
     }
 
     @Override
-    protected void commit(String tag, String string) {
-        domainString.put(tag, string);
+    protected void acceptTaggedString(String tag, String string) {
+        istr.put(tag, string);
     }
 
     @Override
     public String toString() {
-        return String.valueOf(domainString);
+        return String.valueOf(istr);
     }
 
 }

@@ -83,7 +83,7 @@ public class Char
 
     @Override
     public String toString() {
-        return StringEscape.java(ch);
+        return StringEscape.escapeJava(ch);
     }
 
 }

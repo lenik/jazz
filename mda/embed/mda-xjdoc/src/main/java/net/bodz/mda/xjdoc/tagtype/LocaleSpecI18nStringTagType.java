@@ -50,7 +50,8 @@ public class LocaleSpecI18nStringTagType
 
     @GeneratedByCopyPaste(I18nStringTagType.class)
     @Override
-    public iString parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
+    public iString parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+            throws ParseException {
         iString text = XiString.parseMultiLangString(string);
         return text;
     }

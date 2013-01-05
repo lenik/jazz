@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.StringHtml;
 import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.LocaleColo;
 
 public class XiString
@@ -109,8 +110,10 @@ public class XiString
      * @param mlstr
      *            multi-lang string to be parsed.
      * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
+     * @throws ParseException
      */
-    public static XiString parseMultiLangString(String mlstr) {
+    public static XiString parseMultiLangString(String mlstr)
+            throws ParseException {
         if (mlstr == null)
             return null;
         MultiLangStringParser parser = new MultiLangStringParser();

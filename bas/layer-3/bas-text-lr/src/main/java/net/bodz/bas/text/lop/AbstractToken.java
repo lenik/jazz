@@ -121,7 +121,7 @@ public abstract class AbstractToken
             else {
                 String textBrief = Strings.ellipse(text, 20);
                 buf.append("(\"");
-                buf.append(StringEscape.java(textBrief));
+                buf.append(StringEscape.escapeJava(textBrief));
                 buf.append("\")");
             }
         }
