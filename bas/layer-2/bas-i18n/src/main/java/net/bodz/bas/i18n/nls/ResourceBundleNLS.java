@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import net.bodz.bas.c.java.util.UTF8ResourceBundle;
+
 public class ResourceBundleNLS
         extends AbstractNLS {
 
@@ -26,7 +28,7 @@ public class ResourceBundleNLS
     }
 
     public ResourceBundleNLS(NLS parent, String baseName, Locale locale) {
-        this(parent, baseName, ResourceBundle.getBundle(baseName, locale));
+        this(parent, baseName, UTF8ResourceBundle.getBundle(baseName, locale));
     }
 
     protected ResourceBundleNLS(NLS parent, String baseName, ResourceBundle resourceBundle) {
@@ -41,7 +43,7 @@ public class ResourceBundleNLS
     public void reload()
             throws MissingResourceException {
         Locale locale = getPreferredLocale();
-        this.resourceBundle = ResourceBundle.getBundle(baseName, locale);
+        this.resourceBundle = UTF8ResourceBundle.getBundle(baseName, locale);
     }
 
     @Override
