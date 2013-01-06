@@ -12,9 +12,10 @@ import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFillType;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.IStrokeType;
-import net.bodz.swt.gui.style.SwtColor;
-import net.bodz.swt.gui.style.SwtFillPattern;
-import net.bodz.swt.gui.style.SwtFontType;
+import net.bodz.swt.gui.style.GCStrokeType;
+import net.bodz.swt.gui.style.SwtManagedColor;
+import net.bodz.swt.gui.style.SwtManagedFont;
+import net.bodz.swt.gui.style.SwtManagedPattern;
 import net.bodz.swt.gui.style.SwtStrokeType;
 
 public class SwtDrawContext2d
@@ -36,30 +37,30 @@ public class SwtDrawContext2d
     }
 
     @Override
-    public SwtColor getColor() {
-        return new SwtColor(gc.getForeground());
+    public SwtManagedColor getColor() {
+        return new SwtManagedColor(gc.getForeground());
     }
 
     @Override
     public void setColor(IColor color) {
-        SwtColor sc = (SwtColor) color;
-        gc.setForeground(sc.color);
+        SwtManagedColor sc = (SwtManagedColor) color;
+        gc.setForeground(sc.getSwtColor());
     }
 
     @Override
-    public SwtColor getFillColor() {
-        return new SwtColor(gc.getBackground());
+    public SwtManagedColor getFillColor() {
+        return new SwtManagedColor(gc.getBackground());
     }
 
     @Override
     public void setFillColor(IColor fillColor) {
-        SwtColor sc = (SwtColor) fillColor;
-        gc.setBackground(sc.color);
+        SwtManagedColor sc = (SwtManagedColor) fillColor;
+        gc.setBackground(sc.getSwtColor());
     }
 
     @Override
-    public SwtStrokeType getStroke() {
-        return new SwtStrokeType.Ref(gc);
+    public IStrokeType getStroke() {
+        return new GCStrokeType(gc);
     }
 
     @Override
@@ -74,35 +75,35 @@ public class SwtDrawContext2d
 
     @Override
     public IFillType getPattern() {
-        return new SwtFillPattern(gc.getForegroundPattern());
+        return new SwtManagedPattern(gc.getForegroundPattern());
     }
 
     @Override
     public void setPattern(IFillType pattern) {
-        SwtFillPattern sp = (SwtFillPattern) pattern;
-        gc.setForegroundPattern(sp.pattern);
+        SwtManagedPattern sp = (SwtManagedPattern) pattern;
+        gc.setForegroundPattern(sp.getSwtPattern());
     }
 
     @Override
-    public SwtFillPattern getFillPattern() {
-        return new SwtFillPattern(gc.getBackgroundPattern());
+    public SwtManagedPattern getFillPattern() {
+        return new SwtManagedPattern(gc.getBackgroundPattern());
     }
 
     @Override
     public void setFillPattern(IFillType fillPattern) {
-        SwtFillPattern sp = (SwtFillPattern) fillPattern;
-        gc.setBackgroundPattern(sp.pattern);
+        SwtManagedPattern sp = (SwtManagedPattern) fillPattern;
+        gc.setBackgroundPattern(sp.getSwtPattern());
     }
 
     @Override
     public IFontType getFont() {
-        return new SwtFontType(gc.getFont());
+        return new SwtManagedFont(gc.getFont());
     }
 
     @Override
     public void setFont(IFontType font) {
-        SwtFontType sf = (SwtFontType) font;
-        gc.setFont(sf.font);
+        SwtManagedFont sf = (SwtManagedFont) font;
+        gc.setFont(sf.getSwtFont());
     }
 
     @Override

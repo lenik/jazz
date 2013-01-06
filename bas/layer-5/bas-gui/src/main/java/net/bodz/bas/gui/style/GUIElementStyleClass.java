@@ -5,28 +5,28 @@ import java.util.Map;
 
 import net.bodz.bas.gui.css3.ICss3StyleClass;
 
-public class GUIStyleClass
-        extends MappedGUIStyleClass {
+public class GUIElementStyleClass
+        extends MappedGUIElementStyleClass {
 
-    private IGUIStyleClass parent;
+    private IGUIElementStyleClass parent;
     private Map<String, String> map = new LinkedHashMap<String, String>();
 
-    public GUIStyleClass(IGUIStyleClass parent) {
+    public GUIElementStyleClass(IGUIElementStyleClass parent) {
         setParent(parent);
     }
 
     @Override
-    public IGUIStyleClass getParent() {
+    public IGUIElementStyleClass getParent() {
         return parent;
     }
 
     /**
      * @throws ClassCastException
-     *             If the parent isn't a {@link IGUIStyleClass}.
+     *             If the parent isn't a {@link IGUIElementStyleClass}.
      */
     @Override
     public void setParent(ICss3StyleClass _parent) {
-        IGUIStyleClass parent = (IGUIStyleClass) _parent;
+        IGUIElementStyleClass parent = (IGUIElementStyleClass) _parent;
         if (parent == null)
             parent = new StaticGUIStyleClass();
         this.parent = parent;

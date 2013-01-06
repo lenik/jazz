@@ -1,9 +1,9 @@
 package net.bodz.swt.gui.style;
 
-import net.bodz.bas.gui.style.IStrokeType;
+import java.io.Serializable;
 
 public class SwtStrokeType
-        implements IStrokeType {
+        implements ISwtStrokeType, Serializable {
 
     private static final long serialVersionUID = 1L;
 

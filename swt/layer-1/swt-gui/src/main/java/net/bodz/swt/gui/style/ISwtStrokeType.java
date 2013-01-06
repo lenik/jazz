@@ -15,7 +15,7 @@ public interface ISwtStrokeType {
 
     int[] getDash();
 
-    void setDash(int[] dash);
+    void setDash(int[] dashes);
 
     /**
      * @see SWT#JOIN_MITER

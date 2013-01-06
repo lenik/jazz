@@ -16,4 +16,10 @@ public interface ICommand {
 
     void execute();
 
+    String getMenuItem();
+
+    String getToolItem();
+
+    String getViewId();
+
 }
