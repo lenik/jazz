@@ -1,19 +1,19 @@
 package net.bodz.swt.draw.core.model;
 
-import net.bodz.swt.gui.style.SwtColor;
-import net.bodz.swt.gui.style.SwtFillPattern;
-import net.bodz.swt.gui.style.SwtFontType;
+import net.bodz.swt.gui.style.SwtManagedColor;
+import net.bodz.swt.gui.style.SwtManagedPattern;
+import net.bodz.swt.gui.style.SwtManagedFont;
 import net.bodz.swt.gui.style.SwtStrokeType;
 
 public class SwtStyleClass {
 
-    public SwtColor color;
-    public SwtColor fillColor;
+    public SwtManagedColor color;
+    public SwtManagedColor fillColor;
 
     public SwtStrokeType storke;
-    public SwtFillPattern pattern;
-    public SwtFillPattern fillPattern;
+    public SwtManagedPattern pattern;
+    public SwtManagedPattern fillPattern;
 
-    public SwtFontType font;
+    public SwtManagedFont font;
 
 }

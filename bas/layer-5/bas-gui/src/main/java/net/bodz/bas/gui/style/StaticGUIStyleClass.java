@@ -4,7 +4,7 @@ import net.bodz.bas.gui.css3.StaticCss3StyleClass;
 
 public class StaticGUIStyleClass
         extends StaticCss3StyleClass
-        implements IGUIStyleClass {
+        implements IGUIElementStyleClass {
 
     Boolean enabled;
     Boolean readOnly;
@@ -14,8 +14,8 @@ public class StaticGUIStyleClass
     IFillType fillType;
 
     @Override
-    public IGUIStyleClass getParent() {
-        return (IGUIStyleClass) super.getParent();
+    public IGUIElementStyleClass getParent() {
+        return (IGUIElementStyleClass) super.getParent();
     }
 
     @Override

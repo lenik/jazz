@@ -4,45 +4,11 @@ import net.bodz.bas.gui.style.StaticGUIStyleClass;
 
 public class StrictSwtVizStyleClass
         extends StaticGUIStyleClass
-        implements ISwtVizStyleClass {
-
-    String menuItem;
-    String toolItem;
-    String viewId;
+        implements ISwtControlStyleClass {
 
     @Override
-    public ISwtVizStyleClass getParent() {
-        return (ISwtVizStyleClass) super.getParent();
-    }
-
-    @Override
-    public String getMenuItem() {
-        return menuItem;
-    }
-
-    @Override
-    public void setMenuItem(String menuItem) {
-        this.menuItem = menuItem;
-    }
-
-    @Override
-    public String getToolItem() {
-        return toolItem;
-    }
-
-    @Override
-    public void setToolItem(String toolItem) {
-        this.toolItem = toolItem;
-    }
-
-    @Override
-    public String getViewId() {
-        return viewId;
-    }
-
-    @Override
-    public void setViewId(String viewId) {
-        this.viewId = viewId;
+    public ISwtControlStyleClass getParent() {
+        return (ISwtControlStyleClass) super.getParent();
     }
 
 }

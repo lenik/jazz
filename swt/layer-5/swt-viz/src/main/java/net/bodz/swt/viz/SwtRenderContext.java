@@ -10,7 +10,7 @@ import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.swt.c3.dialog.SwtDialogs;
 import net.bodz.swt.gui.model.ICommand;
-import net.bodz.swt.gui.style.SwtColor;
+import net.bodz.swt.gui.style.SwtColors;
 
 public class SwtRenderContext {
 
@@ -41,9 +41,9 @@ public class SwtRenderContext {
         IColor backColor = style.getBackgroundColor();
 
         if (color != null)
-            control.setForeground(SwtColor.convert(device, color.toRGB24()));
+            control.setForeground(SwtColors.convert(device, color));
         if (backColor != null)
-            control.setBackground(SwtColor.convert(device, backColor.toRGB24()));
+            control.setBackground(SwtColors.convert(device, backColor));
 
         IFontType fontType = style.getFontType();
         if (fontType != null) {

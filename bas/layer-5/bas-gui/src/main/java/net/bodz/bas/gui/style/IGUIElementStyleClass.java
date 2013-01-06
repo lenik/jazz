@@ -2,11 +2,11 @@ package net.bodz.bas.gui.style;
 
 import net.bodz.bas.gui.css3.ICss3StyleClass;
 
-public interface IGUIStyleClass
+public interface IGUIElementStyleClass
         extends ICss3StyleClass {
 
     @Override
-    IGUIStyleClass getParent();
+    IGUIElementStyleClass getParent();
 
     Boolean getEnabled();
 
@@ -33,5 +33,7 @@ public interface IGUIStyleClass
     void setFillType(IFillType fillType);
 
     IImageData getImage(ImageUsage usage);
+
+    String getViewId();
 
 }

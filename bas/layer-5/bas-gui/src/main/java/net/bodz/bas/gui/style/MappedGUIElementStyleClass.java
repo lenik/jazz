@@ -2,9 +2,9 @@ package net.bodz.bas.gui.style;
 
 import net.bodz.bas.gui.css3.MappedCss3StyleClass;
 
-public abstract class MappedGUIStyleClass
+public abstract class MappedGUIElementStyleClass
         extends MappedCss3StyleClass
-        implements IGUIStyleClass {
+        implements IGUIElementStyleClass {
 
     @Override
     public Boolean getEnabled() {
