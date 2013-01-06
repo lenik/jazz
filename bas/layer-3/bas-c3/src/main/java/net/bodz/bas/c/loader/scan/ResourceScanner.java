@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import net.bodz.bas.c.loader.DefaultClassLoader;
+import net.bodz.bas.c.loader.ClassLoaders;
 
 public class ResourceScanner {
 
@@ -18,7 +18,7 @@ public class ResourceScanner {
 
     public ResourceScanner(IFileOrEntryFilter filter) {
         setFilter(filter);
-        classLoader = DefaultClassLoader.getInstance();
+        classLoader = ClassLoaders.getRuntimeClassLoader();
     }
 
     public ClassLoader getClassLoader() {
