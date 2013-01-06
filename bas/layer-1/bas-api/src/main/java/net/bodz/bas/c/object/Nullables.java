@@ -65,6 +65,28 @@ public class Nullables {
         return cmp;
     }
 
+    public static <T extends Comparable<? super T>> T min(T o1, T o2) {
+        if (o1 == null || o2 == null)
+            return null;
+
+        if (o1.compareTo(o2) <= 0)
+            return o1;
+        else
+            return o2;
+    }
+
+    public static <T extends Comparable<? super T>> T max(T o1, T o2) {
+        if (o1 == null)
+            return o2;
+        if (o2 == null)
+            return o1;
+
+        if (o1.compareTo(o2) >= 0)
+            return o1;
+        else
+            return o2;
+    }
+
     public static Object clone(Cloneable o) {
         if (o == null)
             return null;
