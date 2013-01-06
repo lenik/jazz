@@ -76,6 +76,11 @@ public class URLClassLoaders {
         return null;
     }
 
+    public static boolean containsURL1(ClassLoader classLoader, URL url) {
+        URLClassLoader urlClassLoader = findClassLoaderForURL(classLoader, url);
+        return urlClassLoader != null;
+    }
+
     public static boolean containsURL(URLClassLoader urlClassLoader, URL url) {
         if (urlClassLoader == null)
             throw new NullPointerException("urlClassLoader");
@@ -87,6 +92,14 @@ public class URLClassLoaders {
                 return true;
 
         return false;
+    }
+
+    public static int addURLs1(ClassLoader classLoader, URL... urls) {
+        URLClassLoader urlClassLoader = findFirstURLClassLoader(classLoader);
+        if (urlClassLoader == null)
+            throw new Error("Can't find URLClassLoader.");
+        else
+            return addURLs(urlClassLoader, urls);
     }
 
     /**

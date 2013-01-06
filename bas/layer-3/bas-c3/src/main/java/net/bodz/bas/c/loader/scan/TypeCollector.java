@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.c.loader.DefaultClassLoader;
+import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.TypeParam;
@@ -47,7 +47,7 @@ public abstract class TypeCollector<T> {
         if (global == null)
             global = getClass().getName().contains(".uber.");
 
-        URLClassLoader mainLoader = (URLClassLoader) DefaultClassLoader.getInstance();
+        URLClassLoader mainLoader = (URLClassLoader) ClassLoaders.getRuntimeClassLoader();
         if (!global) {
             mainLoader = new URLClassLoader(new URL[] { //
                     ClassResource.getRootURL(getClass()), //
