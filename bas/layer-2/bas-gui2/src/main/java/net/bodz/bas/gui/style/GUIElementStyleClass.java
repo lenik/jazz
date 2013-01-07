@@ -45,4 +45,10 @@ public class GUIElementStyleClass
             map.put(key, value.toString());
     }
 
+    @Override
+    public String getViewId() {
+        // TODO
+        return null;
+    }
+
 }
