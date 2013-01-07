@@ -1,4 +1,4 @@
-package net.bodz.bas.gui.viz;
+package net.bodz.bas.repr.viz;
 
 public interface ViewBuildOption {
 

@@ -7,12 +7,12 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.gui.viz.AbstractViewBuildStrategy;
-import net.bodz.bas.gui.viz.IViewBuilder;
-import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.meta.source.ChainUsage;
 import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.repr.viz.AbstractViewBuildStrategy;
+import net.bodz.bas.repr.viz.IViewBuilder;
+import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.viz.form.*;
 import net.bodz.swt.viz.form.vbo.BooleanVbo;
 import net.bodz.swt.viz.form.vbo.DateVbo;

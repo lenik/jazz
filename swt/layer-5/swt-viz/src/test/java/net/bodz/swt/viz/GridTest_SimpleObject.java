@@ -11,7 +11,7 @@ import user.School;
 import user.SimplePerson;
 
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.bas.gui.viz.ViewBuilderException;
+import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
 import net.bodz.swt.viz.grid.GridViewBuildStrategy;

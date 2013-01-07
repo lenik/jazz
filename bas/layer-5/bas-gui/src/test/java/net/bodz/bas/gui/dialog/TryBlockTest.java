@@ -1,4 +1,4 @@
-package net.bodz.bas.gui.ia;
+package net.bodz.bas.gui.dialog;
 
 import org.junit.Test;
 
