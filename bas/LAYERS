@@ -22,6 +22,7 @@ layer-2/ 基础数据类型扩展
     bas-trait-impl
     
 layer-3/ 工具和杂项
+    bas-http
     bas-log
     bas-t3
     bas-text
