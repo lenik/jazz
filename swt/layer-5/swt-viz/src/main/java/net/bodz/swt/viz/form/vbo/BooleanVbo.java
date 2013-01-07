@@ -10,11 +10,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
+import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;

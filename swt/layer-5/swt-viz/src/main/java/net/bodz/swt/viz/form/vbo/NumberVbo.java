@@ -4,8 +4,8 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;

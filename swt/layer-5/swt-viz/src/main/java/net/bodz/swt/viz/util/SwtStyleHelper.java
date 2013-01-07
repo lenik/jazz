@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Control;
 import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.color.IColor_RGB24;
-import net.bodz.bas.gui.viz.ViewBuilderException;
+import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.MappedSwtVizStyleClass;
 

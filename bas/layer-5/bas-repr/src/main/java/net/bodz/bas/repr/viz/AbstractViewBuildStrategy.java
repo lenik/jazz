@@ -1,4 +1,4 @@
-package net.bodz.bas.gui.viz;
+package net.bodz.bas.repr.viz;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.type.TypePoMap;

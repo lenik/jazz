@@ -8,11 +8,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.gui.viz.IViewBuilder;
-import net.bodz.bas.gui.viz.ViewBuilderException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
+import net.bodz.bas.repr.viz.IViewBuilder;
+import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public abstract class SwtViewBuilder
         implements IViewBuilder, II18nCapable {

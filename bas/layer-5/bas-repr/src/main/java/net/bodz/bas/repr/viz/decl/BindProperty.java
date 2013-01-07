@@ -1,4 +1,4 @@
-package net.bodz.bas.gui.viz.decl;
+package net.bodz.bas.repr.viz.decl;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
