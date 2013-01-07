@@ -83,4 +83,9 @@ public class StaticGUIStyleClass
         return null;
     }
 
+    @Override
+    public String getViewId() {
+        return null;
+    }
+
 }
