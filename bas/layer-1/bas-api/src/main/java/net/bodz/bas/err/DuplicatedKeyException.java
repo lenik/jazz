@@ -1,5 +1,7 @@
 package net.bodz.bas.err;
 
+import java.util.Map;
+
 public class DuplicatedKeyException
         extends IllegalArgumentException {
 
@@ -7,6 +9,11 @@ public class DuplicatedKeyException
 
     public DuplicatedKeyException() {
         super();
+    }
+
+    public DuplicatedKeyException(Map<?, ?> map, Object key, String hint) {
+        super(String.format("%s is already used, the old value is %s.", //
+                hint, key, map.get(key)));
     }
 
     public DuplicatedKeyException(String message, Throwable cause) {
