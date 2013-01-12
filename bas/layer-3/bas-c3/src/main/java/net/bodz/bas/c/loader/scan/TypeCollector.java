@@ -10,8 +10,8 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.util.Collections;
-import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.loader.ClassLoaders;
+import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.TypeParam;
@@ -116,17 +116,17 @@ public abstract class TypeCollector<T> {
 
         logger.info("For " + baseClass.getCanonicalName());
 
-        for (Class<?> extension : getScannedExtensions(baseClass)) {
-            logger.info("    Extension: " + extension.getCanonicalName());
+        for (Class<?> extensionClass : getScannedExtensions(baseClass)) {
+            logger.info("    Extension: " + extensionClass.getCanonicalName());
 
             if (indexing == null) {
                 logger.debug("        (Not indexed-type, skipped)");
                 continue;
             }
 
-            extensions.add(extension);
+            extensions.add(extensionClass);
 
-            int mod = extension.getModifiers();
+            int mod = extensionClass.getModifiers();
             if (Modifier.isAbstract(mod)) {
                 if (indexing.includeAbstract())
                     logger.debug("    (Included abstract class)");
@@ -134,12 +134,16 @@ public abstract class TypeCollector<T> {
                     continue;
             }
 
-            MavenProjectOrigin pomDir = MavenProjectOrigin.fromClass(extension);
-            File resdir = pomDir.getResourceDir(extension);
+            MavenProjectOrigin pomDir = MavenProjectOrigin.fromClass(extensionClass);
+            File resdir = pomDir.getResourceDir(extensionClass);
             if (resdir == null)
                 continue;
 
-            File sfile = new File(resdir, indexing.prefix() + baseClass.getName());
+            String publishPrefix = indexing.publishDir();
+            if (publishPrefix.endsWith("/"))
+                publishPrefix += "/";
+
+            File sfile = new File(resdir, publishPrefix + baseClass.getName());
 
             List<String> lines = fileContentMap.get(sfile);
             if (lines == null) {
@@ -150,7 +154,7 @@ public abstract class TypeCollector<T> {
             if (indexing.obsoleted()) {
                 // lines.add("# " + extension.getName());
             } else {
-                lines.add(extension.getName());
+                lines.add(extensionClass.getName());
             }
         }
     }
