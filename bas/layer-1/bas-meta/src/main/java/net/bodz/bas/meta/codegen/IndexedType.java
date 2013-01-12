@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface IndexedType {
 
-    String prefix() default "META-INF/services/";
+    String publishDir() default "META-INF/services";
 
     boolean includeAbstract() default false;
 
