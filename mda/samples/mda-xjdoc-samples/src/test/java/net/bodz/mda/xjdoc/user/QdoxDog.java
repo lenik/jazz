@@ -6,11 +6,6 @@ import static net.bodz.bas.rtx.Negotiation.option;
 import java.io.File;
 import java.util.ServiceLoader;
 
-import org.junit.Assert;
-
-import user.xjdoc.pojo.Animal;
-import user.xjdoc.pojo.Dog;
-
 import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.rtx.INegotiation;
@@ -24,14 +19,25 @@ import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
 import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
+import org.junit.Assert;
+
+import user.xjdoc.pojo.Animal;
+import user.xjdoc.pojo.Dog;
+
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
 
+/**
+ * A qdox application, dump classdoc of the Dog class using qdox.
+ */
 public class QdoxDog
         extends Assert {
 
+    /**
+     * Main method.
+     */
     public static void main(String[] args)
             throws Exception {
 
