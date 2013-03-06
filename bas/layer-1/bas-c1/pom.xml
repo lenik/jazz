@@ -10,7 +10,6 @@
         <dependency>
             <groupId>java3d</groupId>
             <artifactId>vecmath</artifactId>
-            <version>1.5.2</version>
             <optional>true</optional>
         </dependency>
         <dependency>
