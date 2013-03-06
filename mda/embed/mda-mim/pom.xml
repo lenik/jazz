@@ -6,7 +6,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>mda-mim</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
     <name>MDA :: Embed :: Mim</name>
 </project>

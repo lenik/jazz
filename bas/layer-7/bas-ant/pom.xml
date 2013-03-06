@@ -6,7 +6,6 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>bas-ant</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.ant</groupId>
@@ -16,17 +15,17 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-program</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c3</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-context</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 7 :: Ant</name>

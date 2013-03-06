@@ -6,7 +6,6 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>redist-api</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>

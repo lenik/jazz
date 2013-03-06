@@ -6,7 +6,6 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>bas-unitperf</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -24,17 +23,17 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-meta</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-t2</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-trait</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

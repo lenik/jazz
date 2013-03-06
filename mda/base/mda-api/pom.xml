@@ -6,7 +6,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>mda-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
     <name>MDA :: Base :: Api</name>
 </project>
