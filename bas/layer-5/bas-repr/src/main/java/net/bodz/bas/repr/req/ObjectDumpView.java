@@ -7,17 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.object.ObjectInfo;
-import net.bodz.bas.repr.view.AbstractHttpRenderer;
 
 public class ObjectDumpView
-        extends AbstractHttpRenderer {
+// TODO
+//        extends AbstractHttpRenderer 
+        {
 
-    @Override
+//    @Override
     public Class<?> getType() {
         return Object.class;
     }
 
-    @Override
+//    @Override
     public boolean render(Object obj, HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         IRequestDispatch disp = RequestUtils.getRequestDispatch(req);
