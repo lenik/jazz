@@ -2,6 +2,8 @@ package net.bodz.mda.xjdoc.tagtype;
 
 import java.io.IOException;
 
+import net.bodz.bas.c.string.StringEscape;
+import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.INegotiation;
@@ -28,13 +30,26 @@ public class StringTagType
     @Override
     public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
             throws ParseException {
-        
-        return null;
+        if (string.startsWith("\"") && string.endsWith("\"")) {
+            String quotedString = string;
+            String unescaped = StringEscape.unescapeJava(quotedString);
+            return unescaped;
+        } else
+            return string;
     }
 
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
             throws FormatException, IOException {
+        if (value == null) {
+            // warning...
+            return;
+        }
+
+        String str = value.toString();
+        String escaped = StringEscape.escapeJava(str);
+        String quoted = StringQuote.qq(escaped);
+        out.attribute(prefix, quoted);
     }
 
     static final StringTagType INSTANCE = new StringTagType();

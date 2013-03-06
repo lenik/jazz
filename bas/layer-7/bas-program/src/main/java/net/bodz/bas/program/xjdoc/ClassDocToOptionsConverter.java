@@ -242,6 +242,8 @@ public class ClassDocToOptionsConverter {
             for (Entry<String, String> entry : usageMap.entrySet()) {
                 String id = entry.getKey();
                 String script = entry.getValue();
+                if (script == null)
+                    throw new NullPointerException("script");
                 SyntaxUsage usage = new SyntaxUsage(id, script);
                 group.addUsage(usage);
             }
