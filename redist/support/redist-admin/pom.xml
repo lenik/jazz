@@ -6,17 +6,16 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>redist-admin</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.redist</groupId>
             <artifactId>redist-pack</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.redist</groupId>
             <artifactId>redist-obfuz</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.swt</groupId>

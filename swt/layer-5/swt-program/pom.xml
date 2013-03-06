@@ -6,7 +6,6 @@
         <version>1.2.0-SNAPSHOT</version>
     </parent>
     <artifactId>swt-program</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -16,17 +15,17 @@
         <dependency>
             <groupId>net.bodz.swt</groupId>
             <artifactId>swt-gui</artifactId>
-            <version>1.2.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.swt</groupId>
             <artifactId>swt-c3</artifactId>
-            <version>1.2.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.swt</groupId>
             <artifactId>swt-viz</artifactId>
-            <version>1.2.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <name>SWT :: Layer 5 :: Program</name>

@@ -6,7 +6,6 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>redist-win32</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.sf.jacob-project</groupId>
@@ -16,7 +15,7 @@
         <dependency>
             <groupId>net.bodz.redist</groupId>
             <artifactId>redist-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>

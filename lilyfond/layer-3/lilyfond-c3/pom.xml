@@ -6,12 +6,11 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>lilyfond-c3</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
               <groupId>net.bodz.lilyfond</groupId>
               <artifactId>lilyfond-c1</artifactId>
-              <version>0.0.1-SNAPSHOT</version>
+              <version>${project.version}</version>
         </dependency>
     </dependencies>
     <name>LilyFond :: Layer 3 :: Lilyfond C3</name>

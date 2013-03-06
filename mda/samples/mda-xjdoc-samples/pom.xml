@@ -7,12 +7,11 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>mda-xjdoc-samples</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.mda</groupId>
             <artifactId>mda-xjdoc</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -26,7 +25,7 @@
             <plugin>
                 <groupId>net.bodz.mda</groupId>
                 <artifactId>mda-xjdoc-maven-plugin</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
                 <executions>
                     <execution>
                         <id>main-ff</id>

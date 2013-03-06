@@ -7,7 +7,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>mda-xjdoc-maven-plugin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <prerequisites>
         <maven>2.0.6</maven>
@@ -16,7 +15,7 @@
         <dependency>
             <groupId>net.bodz.mda</groupId>
             <artifactId>mda-xjdoc</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>

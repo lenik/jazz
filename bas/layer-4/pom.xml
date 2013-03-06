@@ -9,7 +9,6 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>layer-4</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
     </modules>
