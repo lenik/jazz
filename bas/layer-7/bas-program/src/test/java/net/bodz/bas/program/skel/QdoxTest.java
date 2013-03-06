@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.user;
+package net.bodz.bas.program.skel;
 
 import static net.bodz.bas.rtx.Negotiation.list;
 import static net.bodz.bas.rtx.Negotiation.option;
@@ -21,9 +21,6 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 
 import org.junit.Assert;
 
-import user.xjdoc.pojo.Animal;
-import user.xjdoc.pojo.Dog;
-
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -32,7 +29,7 @@ import com.thoughtworks.qdox.model.JavaSource;
 /**
  * A qdox application, dump classdoc of the Dog class using qdox.
  */
-public class QdoxDog
+public class QdoxTest
         extends Assert {
 
     /**
@@ -53,13 +50,11 @@ public class QdoxDog
         TagLibraryLoader taglibLoader = new TagLibraryLoader(scl);
         TagLibrarySet taglibs = taglibLoader.parseSet("*");
 
-        MavenProjectOrigin po = MavenProjectOrigin.fromClass(Animal.class);
+        MavenProjectOrigin po = MavenProjectOrigin.fromClass(BasicCLI.class);
 
-        File animalSource = po.getSourceFile(Animal.class);
-        File dogSource = po.getSourceFile(Dog.class);
+        File sourceFile = po.getSourceFile(BasicCLI.class);
 
-        javaDocBuilder.addSource(animalSource);
-        javaDocBuilder.addSource(dogSource);
+        javaDocBuilder.addSource(sourceFile);
         // javaDocBuilder.addSourceTree(file)
 
         for (JavaSource jsource : javaDocBuilder.getSources()) {

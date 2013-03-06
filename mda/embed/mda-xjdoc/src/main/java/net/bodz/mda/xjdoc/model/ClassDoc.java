@@ -183,7 +183,10 @@ public class ClassDoc
 
             String methodName = StringPart.before(_id, "(");
             String types = StringPart.beforeLast(StringPart.after(_id, "("), ")");
-            String typev[] = types.split(",");
+
+            String typev[] = {};
+            if (!types.isEmpty())
+                typev = types.split(",");
 
             MethodId methodId = new MethodId(methodName, typev.length);
             for (int i = 0; i < typev.length; i++) {

@@ -14,4 +14,9 @@ public class HelloProgram
         }
     }
 
+    public static void main(String[] args)
+            throws Exception {
+        new HelloProgram().execute("-h");
+    }
+    
 }

@@ -36,20 +36,6 @@ public final class MethodId
         this.dimss = new int[parameterCount];
     }
 
-    public void setParameterType(int index, Class<?> type) {
-        int dims = 0;
-        while (type.isArray()) {
-            type = type.getComponentType();
-            dims++;
-        }
-        setParameterType(index, type.getCanonicalName(), dims);
-    }
-
-    public void setParameterType(int index, String fqcn, int dims) {
-        types[index] = fqcn;
-        dimss[index] = dims;
-    }
-
     public String getMethodName() {
         return methodName;
     }
@@ -60,6 +46,24 @@ public final class MethodId
 
     public String getParameterType(int index) {
         return types[index];
+    }
+
+    public void setParameterType(int index, Class<?> type) {
+        int dims = 0;
+        while (type.isArray()) {
+            type = type.getComponentType();
+            dims++;
+        }
+        setParameterType(index, type.getCanonicalName(), dims);
+    }
+
+    public void setParameterType(int index, String fqcn, int dims) {
+        if (fqcn == null)
+            throw new NullPointerException("fqcn");
+        if (fqcn.isEmpty())
+            throw new IllegalArgumentException("Parameter typename is empty.");
+        types[index] = fqcn;
+        dimss[index] = dims;
     }
 
     public int getDimensions(int index) {

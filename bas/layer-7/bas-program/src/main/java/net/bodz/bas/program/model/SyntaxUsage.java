@@ -23,6 +23,9 @@ public class SyntaxUsage {
     }
 
     public SyntaxUsage(String id, String script) {
+        if (script == null)
+            throw new NullPointerException("script");
+
         this.id = id;
 
         int lineSep = script.indexOf('\n');

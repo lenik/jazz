@@ -33,6 +33,8 @@ public class Dog
      * 
      * <p lang="ar">
      * الكلب هو دائما تحية. والكلب لا تقول وداعا لك.
+     * 
+     * @option -G =MESG
      */
     @Override
     public void greet(String message, String bye)
