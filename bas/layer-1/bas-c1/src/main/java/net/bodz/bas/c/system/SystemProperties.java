@@ -1,6 +1,5 @@
 package net.bodz.bas.c.system;
 
-import net.bodz.bas.meta.codegen.GeneratedBy;
 
 public class SystemProperties {
 
@@ -29,7 +28,10 @@ public class SystemProperties {
         javaVersion7OrAbove = javaVersion.compareTo("1.7.0") >= 0;
     }
 
-    @GeneratedBy(SystemPropertiesTest.class)
+    /**
+     * @generator SystemPropertiesTest
+     */
+
     /** awt.toolkit = sun.awt.windows.WToolkit */
     public static String getAwtToolkit() {
         return System.getProperty("awt.toolkit");
