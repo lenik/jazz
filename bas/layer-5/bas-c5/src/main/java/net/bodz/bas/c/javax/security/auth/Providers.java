@@ -11,10 +11,6 @@ import java.security.Security;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import sun.security.pkcs11.SunPKCS11;
-import sun.security.pkcs11.wrapper.PKCS11;
-import sun.security.pkcs11.wrapper.PKCS11Exception;
-
 import net.bodz.bas.c.java.net.CURL;
 import net.bodz.bas.c.java.net.CURL.Alpha;
 import net.bodz.bas.c.java.util.HashTextMap;
@@ -26,6 +22,9 @@ import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.io.tmp.TempOut;
 import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.traits.IParser;
+import sun.security.pkcs11.SunPKCS11;
+import sun.security.pkcs11.wrapper.PKCS11;
+import sun.security.pkcs11.wrapper.PKCS11Exception;
 
 @SuppressWarnings("restriction")
 public class Providers
@@ -208,8 +207,8 @@ public class Providers
                 SunPKCS11 provider = new SunPKCS11(file.getPath());
                 return provider;
             } catch (ProviderException e) {
-                FileResource res = new FileResource(file);
-                String config = res.tooling()._for(StreamReading.class).readString();
+                FileResource resource = new FileResource(file);
+                String config = resource.tooling()._for(StreamReading.class).readString();
                 System.err.println(tr._("Config error: ") + e.getMessage());
                 System.err.println(config);
                 throw e;
