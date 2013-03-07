@@ -2,6 +2,7 @@ package net.bodz.mda.xjdoc.model.artifact;
 
 import java.net.URL;
 import java.text.DateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,10 @@ public class ArtifactDoc
 
     public List<Author> getAuthors() {
         List<Author> authors = (List<Author>) getTag("author");
+        if (authors == null)
+            authors = Collections.emptyList();
+        else
+            authors = Collections.unmodifiableList(authors);
         return authors;
     }
 
