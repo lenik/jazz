@@ -22,6 +22,10 @@
             <artifactId>qdox</artifactId>
             <version>1.12</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
     </dependencies>
     <name>MDA :: Embed :: Xjdoc</name>
 </project>

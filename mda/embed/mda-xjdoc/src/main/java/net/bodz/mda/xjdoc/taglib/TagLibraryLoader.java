@@ -12,20 +12,25 @@ import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.DuplicatedKeyException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TagLibraryLoader {
+
+    static final Logger logger = LoggerFactory.getLogger(TagLibraryLoader.class);
 
     private Map<String, ITagLibrary> taglibMap;
 
     public TagLibraryLoader(ClassLoader loader) {
         taglibMap = new HashMap<String, ITagLibrary>();
 
-        System.err.println("Search taglibs in class loader:");
+        logger.info("Search taglibs in class loader:");
         for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class, loader)) {
             String name = taglib.getClass().getSimpleName();
             name = StringPart.rtrim(name, "TagLibrary");
             name = Strings.lcfirst(name);
 
-            System.err.println("    Found taglib " + name + " = " + ObjectInfo.getSimpleId(taglib));
+            logger.info("    Found taglib " + name + " = " + ObjectInfo.getSimpleId(taglib));
 
             register(name, taglib);
         }
