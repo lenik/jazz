@@ -7,20 +7,8 @@ public class NoSuchOptionException
 
     private static final long serialVersionUID = 1L;
 
-    public NoSuchOptionException() {
-        super();
-    }
-
-    public NoSuchOptionException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public NoSuchOptionException(String message) {
-        super(message);
-    }
-
-    public NoSuchOptionException(Throwable cause) {
-        super(cause);
+    public NoSuchOptionException(String optionName) {
+        super("No such option: " + optionName);
     }
 
 }

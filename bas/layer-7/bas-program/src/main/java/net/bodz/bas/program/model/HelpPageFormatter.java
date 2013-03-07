@@ -1,6 +1,12 @@
 package net.bodz.bas.program.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringLengthComparator;
@@ -65,11 +71,18 @@ public class HelpPageFormatter {
         for (String usageId : usageIds) {
             SyntaxUsage usage = group.getUsage(usageId);
             String syntax = usage.getSyntax();
-            iString description = usage.getDescription();
+            iString _description = usage.getDescription();
+            String description = _description.toString();
+
             // substitute vars in syntax string...
             buffer.append(indentChars);
-            buffer.append(syntax + " - ");
-            buffer.append(description.toPlainText());
+            buffer.append(syntax);
+
+            if (!description.isEmpty()) {
+                buffer.append(" - ");
+                buffer.append(description);
+            }
+
             buffer.append('\n');
         }
 
