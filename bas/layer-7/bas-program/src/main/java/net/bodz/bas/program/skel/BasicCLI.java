@@ -2,7 +2,7 @@ package net.bodz.bas.program.skel;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -62,7 +62,7 @@ public abstract class BasicCLI
      * 
      * @option --stdout hidden weak
      */
-    protected IPrintOut _stdout = Stdio.cout;
+    protected IPrintOut stdout = Stdio.cout;
 
     protected IUserDialogs dialogs = ConsoleDialogs.stdout;
 
@@ -85,6 +85,8 @@ public abstract class BasicCLI
      * @option hidden
      */
     boolean _logWithDate = false;
+
+    Map<String, Object> variableMap = new LinkedHashMap<String, Object>();
 
     /**
      * Repeat to get more info.
@@ -109,8 +111,6 @@ public abstract class BasicCLI
     void _quiet() {
         logger.setDelta(logger.getDelta() - 1);
     }
-
-    protected Map<String, Object> variableMap;
 
     /**
      * Define variable.
@@ -142,20 +142,24 @@ public abstract class BasicCLI
         return String.class;
     }
 
+    public Map<String, Object> getVariableMap() {
+        return variableMap;
+    }
+
     /**
      * Show version information
      * 
      * <p lang="zh-cn">
      * 显示版本信息。
      * 
-     * @option
+     * @option --version
      */
-    protected final void _version() {
-        _version(Stdio.cerr);
+    protected final void showVersion() {
+        showVersion(Stdio.cout);
         throw new ControlBreak();
     }
 
-    protected void _version(IPrintOut out) {
+    protected void showVersion(IPrintOut out) {
         ArtifactDoc artifactDoc = getXjdoc();
         ReleaseDescription release = artifactDoc.getReleaseDescription();
         out.printf("[%s] %s\n", artifactDoc.getLabel(), artifactDoc.getText().getHeadPar());
@@ -171,15 +175,15 @@ public abstract class BasicCLI
      * <p lang="zh-cn">
      * 显示这个帮助文本。
      * 
-     * @option -h weak
+     * @option -h --help weak
      */
-    protected final void _help() {
-        _help(Stdio.cerr);
+    protected final void showHelpPage() {
+        showHelpPage(Stdio.cout);
         throw new ControlBreak();
     }
 
-    protected void _help(IPrintOut out) {
-        _version(out);
+    protected void showHelpPage(IPrintOut out) {
+        showVersion(out);
         out.println();
 
         HelpPageFormatter formatter = new HelpPageFormatter();
@@ -189,10 +193,6 @@ public abstract class BasicCLI
         out.print(doc);
 
         out.flush();
-    }
-
-    public BasicCLI() {
-        variableMap = new HashMap<String, Object>();
     }
 
     public IType getPotatoType() {
@@ -220,12 +220,22 @@ public abstract class BasicCLI
      * Public access: so derivations don't have to declare static main()s.
      */
     @Override
-    public synchronized void execute(String... args)
+    public synchronized int execute(String... args)
             throws Exception {
 
         logger.debug("Receive args from cmdline");
-        List<String> remaining = receive(args);
-        args = remaining.toArray(new String[0]);
+
+        try {
+            List<String> remaining = receive(args);
+            args = remaining.toArray(new String[0]);
+        } catch (ControlExit c) {
+            return c.getStatus();
+        } catch (ControlBreak c) {
+            return 0;
+        } catch (CLISyntaxException e) {
+            System.err.println("Illegal syntax: " + e.getMessage());
+            return 1;
+        }
 
         logger.debug("Reconfigure...");
         _reconfigure();
@@ -257,10 +267,12 @@ public abstract class BasicCLI
                 logger.debug("Program End");
                 break;
             } catch (ControlExit c) {
-                break;
+                return c.getStatus();
             } catch (ControlContinue c) {
                 continue;
             }
+
+        return 0;
     }
 
     protected void _reconfigure()

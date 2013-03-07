@@ -3,6 +3,7 @@ package net.bodz.bas.program.model;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.control.Control;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.traits.ParserUtil;
@@ -76,7 +77,7 @@ class InvocationAsProperty
     public void setValue(Object instance, Object value)
             throws ReflectiveOperationException {
         this.args = (Object[]) value;
-        this.returnValue = method.invoke(instance, args);
+        this.returnValue = Control.invoke(method, instance, args);
     }
 
     public Object getReturnValue() {

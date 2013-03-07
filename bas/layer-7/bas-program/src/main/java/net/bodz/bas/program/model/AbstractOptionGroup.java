@@ -102,110 +102,23 @@ public abstract class AbstractOptionGroup
     @Override
     public List<String> receive(Object context, String[] args, OptionGroupParseFlags flags)
             throws CLISyntaxException {
-        List<String> rejected = new ArrayList<String>();
+        _Parser parser = new _Parser(flags, args);
 
-        for (int argIndex = 0; argIndex < args.length; argIndex++) {
-            String arg = args[argIndex];
-            IOption option = null;
-            String argArg = null;
-            Object argValue = null;
-
-            if (arg.startsWith("--")) { // long-option
-                arg = arg.substring(2);
-
-                if (arg.isEmpty()) { // [OPTIONS} [--] ...
-                    while (++argIndex < args.length)
-                        rejected.add(args[argIndex]);
-                    break;
-                }
-
-                int eq = arg.indexOf('=');
-                if (eq != -1) {
-                    argArg = arg.substring(eq + 1);
-                    arg = arg.substring(0, eq);
-                }
-
-                option = this.getUniqueOption(arg);
-
-                if (option == null) {
-                    if (arg.startsWith("no-")) {
-                        option = this.getUniqueOption(arg.substring(3));
-                        if (option != null)
-                            argValue = false;
-                    }
-                    if (option == null)
-                        throw new NoSuchOptionException(arg);
-                }
-
-            } else if (arg.startsWith("-") && arg.length() > 1) { // short-options
-                arg = arg.substring(1);
-                int argLen = arg.length();
-
-                for (int j = 0; j < argLen; j++) {
-                    String shortKey = arg.substring(j, j + 1);
-                    IOption shortOption = this.getOption(shortKey);
-
-                    if (shortOption == null)
-                        throw new NoSuchOptionException(shortKey);
-
-                    if (shortOption.getParameterCount() == 0) {
-                        Object trueValue = shortOption.getDefaultValue();
-                        argValue = trueValue;
-                        receiveOptionValue(context, shortOption, argValue);
-                        continue;
-                    } else {
-                        option = shortOption; // The remaining chars are used as opt arg..
-                        argArg = arg.substring(j + 1);
-                        break;
-                    }
-                }
-                if (option == null)
-                    continue;
-
-            } else {
-                if (flags.isStopAtFirstNonOption()) {
-                    for (int j = argIndex; j < args.length; j++)
-                        rejected.add(args[j]);
-                    break;
-                } else {
-                    rejected.add(arg);
-                    continue;
-                }
-            }
-
-            if (argValue == null)
-                argValue = option.getDefaultValue();
-
-            int parameterCount = option.getParameterCount();
-            String[] parameters = new String[parameterCount];
-            int n = 0;
-
-            if (argArg != null) {
-                if (parameterCount == 0)
-                    throw new CLISyntaxException(String.format("Unexpected parameter for option %s: %s", //
-                            argArg, option.getName()));
-                parameters[n++] = argArg;
-            }
-
-            if (args.length - (argIndex + 1) < parameterCount - n) {
-                throw new CLISyntaxException(String.format("Option %s expects %d parameters, but only %d given.",
-                        option.getName(), parameterCount, args.length - (argIndex + 1)));
-            }
-            while (n < parameterCount) {
-                parameters[n++] = args[++argIndex];
-            }
-
-            if (parameterCount > 0) {
+        while (parser.next()) {
+            IOption option = parser.option;
+            Object optValue = parser.optValue;
+            if (option.getParameterCount() > 0) {
+                String[] parameters = parser.optArgs.toArray(new String[0]);
                 try {
-                    argValue = option.parseValue(context, parameters);
+                    optValue = option.parseValue(context, parameters);
                 } catch (ParseException e) {
                     throw new ParseOptionException(option, parameters, e);
                 }
             }
 
-            receiveOptionValue(context, option, argValue);
+            receiveOptionValue(context, option, optValue);
         }
-        return rejected;
+        return parser.rejected;
     }
 
     static void receiveOptionValue(Object obj, IOption option, Object value) {
@@ -222,8 +135,6 @@ public abstract class AbstractOptionGroup
         }
 
         Object result = addor.add(prev, value);
-        if (result == null)
-            throw new NullPointerException("result");
 
         try {
             property.setValue(obj, result);
@@ -234,5 +145,138 @@ public abstract class AbstractOptionGroup
                     result), e);
         }
     }
+
+    class _Parser {
+
+        static final int START = 0;
+        static final int UNPACKING = 1;
+        static final int SHIFT_ARGS = 2;
+        static final int STOPPED = 3;
+
+        private int state = START;
+
+        private OptionGroupParseFlags flags;
+
+        private String[] args;
+        private int argIndex;
+        private String packed;
+
+        private IOption option = null;
+        private List<String> optArgs = new ArrayList<String>();
+        private Object optValue = null;
+
+        private List<String> rejected = new ArrayList<String>();
+
+        public _Parser(OptionGroupParseFlags flags, String[] args) {
+            this.flags = flags;
+            this.args = args;
+        }
+
+        public boolean next()
+                throws CLISyntaxException {
+            option = null;
+            optArgs.clear();
+            optValue = null;
+
+            while (true)
+                switch (state) {
+                case START:
+                    if (argIndex == args.length)
+                        return false;
+
+                    String arg = args[argIndex++];
+
+                    // long-option
+                    if (arg.startsWith("--")) {
+                        arg = arg.substring(2);
+
+                        int eq = arg.indexOf('=');
+                        if (eq != -1) {
+                            optArgs.add(arg.substring(eq + 1));
+                            arg = arg.substring(0, eq);
+                        }
+
+                        option = getUniqueOption(arg);
+
+                        if (option == null) {
+                            if (arg.startsWith("no-")) {
+                                option = getUniqueOption(arg.substring(3));
+                                if (option != null)
+                                    optValue = false;
+                            }
+                            if (option == null)
+                                throw new NoSuchOptionException(arg);
+                        }
+
+                        state = SHIFT_ARGS;
+                        continue;
+                    }
+
+                    // short-option[s]
+                    if (arg.startsWith("-") && arg.length() > 1) {
+                        packed = arg.substring(1);
+                        state = UNPACKING;
+                        continue;
+                    }
+
+                    // non-option
+                    if (flags.isStopAtFirstNonOption())
+                        rejected.add(arg);
+                    else
+                        state = STOPPED;
+                    continue;
+
+                case UNPACKING:
+                    if (packed.isEmpty()) {
+                        state = START;
+                        continue;
+                    }
+
+                    String shortKey = packed.substring(0, 1);
+                    packed = packed.substring(1);
+
+                    option = getOption(shortKey);
+                    if (option == null)
+                        throw new NoSuchOptionException(shortKey);
+
+                    if (option.getParameterCount() == 0) {
+                        Object trueValue = option.getDefaultValue();
+                        optValue = trueValue;
+                        return true;
+                    }
+
+                    // The remaining chars are used as opt arg..
+                    optArgs.add(packed);
+                    state = SHIFT_ARGS;
+                    continue;
+
+                case SHIFT_ARGS:
+                    if (optValue == null)
+                        optValue = option.getDefaultValue();
+
+                    int parameterCount = option.getParameterCount();
+                    int shiftCount = parameterCount - optArgs.size();
+                    int available = args.length - argIndex;
+
+                    if (available < shiftCount) {
+                        throw new CLISyntaxException(String.format(
+                                "Option %s expects %d parameters, but only %d given.", //
+                                option.getName(), parameterCount, optArgs.size() + available));
+                    }
+
+                    for (int i = 0; i < shiftCount; i++)
+                        optArgs.add(args[argIndex++]);
+
+                    state = START;
+                    return true;
+
+                case STOPPED:
+                    while (argIndex < args.length)
+                        rejected.add(args[argIndex++]);
+                    return false;
+                }
+        }
+
+    } // Local parser class
 
 }

@@ -59,11 +59,17 @@ public class ReleaseDescription
     }
 
     public String getReleaseDateString() {
-        return RcsDates.formatDate(releaseDate.getTime());
+        if (releaseDate == null)
+            return null;
+        else
+            return RcsDates.formatDate(releaseDate.getTime());
     }
 
     public String getReleaseTimeString() {
-        return RcsDates.formatTime(releaseDate.getTime());
+        if (releaseDate == null)
+            return null;
+        else
+            return RcsDates.formatTime(releaseDate.getTime());
     }
 
     public String getReleaseNotes() {
