@@ -1,5 +1,7 @@
 package net.bodz.bas.jvm.exit;
 
+import net.bodz.bas.err.control.ControlExit;
+import net.bodz.bas.fn.IExecutableX;
 import net.bodz.bas.proxy.java.security.SecurityManagerProxy;
 
 public class CatchExit
@@ -19,8 +21,14 @@ public class CatchExit
         throw new SecurityControl(SecurityControl.EXIT, status);
     }
 
-    public <X extends Exception> void catchExit(ExitableProgram<X> executable)
-            throws X, IllegalExitException {
+    /**
+     * Capture exit() calls and convert to {@link ControlExit} exception.
+     * 
+     * @throws ControlExit
+     *             If exit() is called.
+     */
+    public <X extends Exception> void catchExit(IExecutableX<X> executable)
+            throws X {
         SecurityManager security0 = System.getSecurityManager();
         try {
             System.setSecurityManager(this);
@@ -35,9 +43,11 @@ public class CatchExit
         }
     }
 
-    protected void exitHandler(int status)
-            throws IllegalExitException {
-        throw new IllegalExitException(status);
+    /**
+     * @throws ControlExit
+     */
+    protected void exitHandler(int status) {
+        throw new ControlExit(status);
     }
 
 }

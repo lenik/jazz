@@ -7,13 +7,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import org.apache.commons.lang.ArrayUtils;
-
 import net.bodz.bas.c.string.StringArray;
 
-/**
- * @test {@link ProcessesTest}
- */
+import org.apache.commons.lang.ArrayUtils;
+
 public class Processes {
 
     private static String[] shvec;

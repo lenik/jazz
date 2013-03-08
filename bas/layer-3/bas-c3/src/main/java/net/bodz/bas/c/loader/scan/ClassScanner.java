@@ -24,6 +24,7 @@ public class ClassScanner
     Set<Class<?>> rootClasses = new HashSet<Class<?>>();
     Map<Class<?>, Set<Class<?>>> subclassesMap = new HashMap<Class<?>, Set<Class<?>>>();
     Map<Class<?>, Set<Class<?>>> annotatedClassesMap = new HashMap<Class<?>, Set<Class<?>>>();
+    Map<String, Set<Class<?>>> featureMap = new HashMap<String, Set<Class<?>>>();
 
     public ClassScanner() {
         super(ClassOrDirFileFilter.INSTANCE);
@@ -105,6 +106,8 @@ public class ClassScanner
 
     /**
      * Analyze the given class and all its parents, interfaces, annotations.
+     * 
+     * @retu Modification counter.
      */
     public synchronized int analyze(Class<?> clazz) {
         return _analyze(clazz);

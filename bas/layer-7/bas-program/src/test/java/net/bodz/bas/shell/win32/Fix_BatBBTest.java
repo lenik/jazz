@@ -1,4 +1,4 @@
-package net.bodz.bas.program.boot.win32;
+package net.bodz.bas.shell.win32;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,7 +7,7 @@ import org.junit.Test;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 import net.bodz.bas.io.resource.builtin.BytesResource;
-import net.bodz.bas.program.boot.win32.Fix_BatBB;
+import net.bodz.bas.shell.win32.Fix_BatBB;
 
 public class Fix_BatBBTest {
 

@@ -1,12 +1,12 @@
-package net.bodz.bas.program.boot;
+package net.bodz.bas.shell.runner;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.program.boot.JavaLauncher;
-
-public class JavaLauncherTest
+public class MainMethodInvokerTest
         extends Assert {
+
+    MainMethodInvoker mainInvoker = new MainMethodInvoker();
 
     static int state = 1;
 
@@ -25,11 +25,9 @@ public class JavaLauncherTest
     public void testMain()
             throws Exception {
         assertEquals(1, state);
-        JavaLauncher.main(new String[] { //
-                Cat.class.getName() });
+        mainInvoker.loadRun(Cat.class);
         assertEquals(100, state);
-        JavaLauncher.main(new String[] { //
-                Cat.class.getName(), "200" });
+        mainInvoker.loadRun(Cat.class, "200");
         assertEquals(200, state);
     }
 
