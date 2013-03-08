@@ -1,4 +1,4 @@
-package net.bodz.bas.program.boot.win32;
+package net.bodz.bas.shell.win32;
 
 import java.io.IOException;
 import java.io.OutputStream;

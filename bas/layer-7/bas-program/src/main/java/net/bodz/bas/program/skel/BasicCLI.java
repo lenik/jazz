@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.java.nio.WildcardsExpander;
 import net.bodz.bas.c.object.SimpleObjectFormatter;
 import net.bodz.bas.c.string.StringQuoted;
+import net.bodz.bas.c.system.System2;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.control.ControlBreak;
 import net.bodz.bas.err.control.ControlContinue;
@@ -220,7 +221,7 @@ public abstract class BasicCLI
      * Public access: so derivations don't have to declare static main()s.
      */
     @Override
-    public synchronized int execute(String... args)
+    public synchronized void execute(String... args)
             throws Exception {
 
         logger.debug("Receive args from cmdline");
@@ -229,12 +230,14 @@ public abstract class BasicCLI
             List<String> remaining = receive(args);
             args = remaining.toArray(new String[0]);
         } catch (ControlExit c) {
-            return c.getStatus();
+            System2.setExitStatus(c.getStatus());
+            return;
         } catch (ControlBreak c) {
-            return 0;
+            return;
         } catch (CLISyntaxException e) {
             System.err.println("Illegal syntax: " + e.getMessage());
-            return 1;
+            System2.setExitStatus(1);
+            return;
         }
 
         logger.debug("Reconfigure...");
@@ -267,12 +270,14 @@ public abstract class BasicCLI
                 logger.debug("Program End");
                 break;
             } catch (ControlExit c) {
-                return c.getStatus();
+                System2.setExitStatus(c.getStatus());
+                return;
             } catch (ControlContinue c) {
                 continue;
             }
 
-        return 0;
+        System2.setExitStatus(0);
+        return;
     }
 
     protected void _reconfigure()

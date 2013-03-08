@@ -1,5 +1,8 @@
 package net.bodz.bas.jvm.exit;
 
+import net.bodz.bas.err.control.ControlExit;
+import net.bodz.bas.fn.IExecutable;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -7,7 +10,7 @@ public class CatchExitTest
         extends Assert {
 
     static class TestProgram
-            implements ExitableProgram<Exception> {
+            implements IExecutable {
 
         private int status;
 
@@ -15,15 +18,13 @@ public class CatchExitTest
             this.status = status;
         }
 
-        @Override
-        public void execute()
-                throws Exception {
+        public void execute() {
             System.exit(status);
         }
 
     }
 
-    @Test(expected = IllegalExitException.class)
+    @Test(expected = ControlExit.class)
     public void test1()
             throws Exception {
         TestProgram program = new TestProgram(123);
@@ -39,7 +40,7 @@ public class CatchExitTest
             try {
                 catcher.catchExit(new TestProgram(status));
                 fail();
-            } catch (IllegalExitException e) {
+            } catch (ControlExit e) {
                 assertEquals(status, e.getStatus());
             }
         }
