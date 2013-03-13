@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.c.string.CharFeature;
 
 /**
@@ -35,7 +36,7 @@ public class HexCharsetEncoder
      */
     public HexCharsetEncoder(Charset charset, char[] transtbl) {
         super(charset, 3.0f + transtbl.length, 8.0f + transtbl.length, //
-                " ? ".getBytes(BasCharsetProvider.ASCII));
+                " ? ".getBytes(Charsets.ASCII));
         this.transtbl = new byte[transtbl.length];
         for (int i = 0; i < transtbl.length; i++)
             this.transtbl[i] = (byte) transtbl[i];
