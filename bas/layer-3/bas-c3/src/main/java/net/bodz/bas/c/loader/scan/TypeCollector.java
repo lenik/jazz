@@ -140,7 +140,7 @@ public abstract class TypeCollector<T> {
                 continue;
 
             String publishPrefix = indexing.publishDir();
-            if (publishPrefix.endsWith("/"))
+            if (!publishPrefix.endsWith("/"))
                 publishPrefix += "/";
 
             File sfile = new File(resdir, publishPrefix + baseClass.getName());

@@ -7,12 +7,15 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import net.bodz.bas.c.java.net.URLData;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.codegen.IndexedType;
 
 public class TypeExtensions {
+
+    static final Logger logger = Logger.getLogger(TypeExtensions.class.getName());
 
     String resourcePrefix = "META-INF/services/";
 
@@ -91,7 +94,13 @@ public class TypeExtensions {
                  */
                 Class<?> extClass;
                 ClassLoader classLoader = getClassLoader(baseType, fqcn);
-                extClass = Class.forName(fqcn, true, classLoader);
+
+                try {
+                    extClass = Class.forName(fqcn, true, classLoader);
+                } catch (ClassNotFoundException e) {
+                    logger.severe("Undefined implementation name: " + fqcn);
+                    continue;
+                }
 
                 if (!baseType.isAnnotation())
                     if (!baseType.isAssignableFrom(extClass))
