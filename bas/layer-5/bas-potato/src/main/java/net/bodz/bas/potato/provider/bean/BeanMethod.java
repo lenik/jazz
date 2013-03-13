@@ -2,8 +2,8 @@ package net.bodz.bas.potato.provider.bean;
 
 import java.beans.MethodDescriptor;
 
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.XiString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.provider.reflect.ReflectMethod;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 

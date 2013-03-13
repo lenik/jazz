@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.element;
 
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.XiString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IMutableElement;
 
 public class SimplePotatoElement

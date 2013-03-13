@@ -5,7 +5,6 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.c.type.ClassResource;
 
 public class MavenProjectOriginTest

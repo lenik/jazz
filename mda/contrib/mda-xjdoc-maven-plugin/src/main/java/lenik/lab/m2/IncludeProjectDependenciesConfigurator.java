@@ -19,8 +19,8 @@ import org.codehaus.plexus.configuration.PlexusConfiguration;
 
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.m2.util.MavenLogLogger;
 import net.bodz.bas.m2.util.MavenExprs;
+import net.bodz.bas.m2.util.MavenLogLogger;
 
 /**
  * Add the project's runtime classpath to plugin classpath.

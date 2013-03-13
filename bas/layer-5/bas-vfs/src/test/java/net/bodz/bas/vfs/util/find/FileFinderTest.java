@@ -5,9 +5,6 @@ import org.junit.Assert;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.bas.vfs.util.find.FileFinder;
-import net.bodz.bas.vfs.util.find.FileFoundEvent;
-import net.bodz.bas.vfs.util.find.IFileFoundListener;
 
 public class FileFinderTest
         extends Assert {

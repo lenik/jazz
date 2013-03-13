@@ -3,9 +3,6 @@ package net.bodz.bas.vfs.impl.pojf;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.vfs.impl.pojf.PojfPath;
-import net.bodz.bas.vfs.impl.pojf.PojfVfsDriver;
-
 public class PojfPathTest
         extends Assert {
 

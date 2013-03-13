@@ -2,10 +2,10 @@ package net.bodz.bas.program.skel;
 
 import java.util.Locale;
 
-import net.bodz.bas.program.model.HelpPageFormatter;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.program.model.HelpPageFormatter;
 
 import user.HelloProgram;
 

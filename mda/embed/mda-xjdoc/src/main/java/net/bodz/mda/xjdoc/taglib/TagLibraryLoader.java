@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ServiceLoader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.DuplicatedKeyException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TagLibraryLoader {
 

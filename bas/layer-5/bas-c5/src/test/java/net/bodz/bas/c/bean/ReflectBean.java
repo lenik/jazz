@@ -7,8 +7,6 @@ import java.util.List;
 
 import user.bean.Dog;
 
-import net.bodz.bas.c.bean.BeanDump;
-
 public class ReflectBean {
 
     public static void f(String x) {

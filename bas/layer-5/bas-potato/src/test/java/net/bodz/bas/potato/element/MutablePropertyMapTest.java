@@ -3,9 +3,9 @@ package net.bodz.bas.potato.element;
 import org.junit.Assert;
 import org.junit.Test;
 
-import user.bean.AddressBean;
-
 import net.bodz.bas.trait.Traits;
+
+import user.bean.AddressBean;
 
 public class MutablePropertyMapTest
         extends Assert {

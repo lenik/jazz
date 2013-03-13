@@ -2,8 +2,8 @@ package net.bodz.bas.vfs.impl.pojf;
 
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathFormat;
 import net.bodz.bas.vfs.path.MultiEntryPath;
+import net.bodz.bas.vfs.path.PathFormat;
 
 public class PojfPath
         extends MultiEntryPath {

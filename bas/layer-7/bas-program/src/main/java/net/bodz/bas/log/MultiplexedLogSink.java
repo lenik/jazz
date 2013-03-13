@@ -3,10 +3,6 @@ package net.bodz.bas.log;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.log.AbstractLogSink;
-import net.bodz.bas.log.ILogEntry;
-import net.bodz.bas.log.ILogSink;
-
 public class MultiplexedLogSink
         extends AbstractLogSink {
 

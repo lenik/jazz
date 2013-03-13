@@ -2,9 +2,6 @@ package net.bodz.bas.gui.dialog;
 
 import org.junit.Test;
 
-import net.bodz.bas.gui.dialog.AbstractTryBlock;
-import net.bodz.bas.gui.dialog.ConsoleDialogs;
-
 
 public class TryBlockTest {
 
