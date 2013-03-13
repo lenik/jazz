@@ -3,8 +3,8 @@ package net.bodz.bas.vfs.impl.apachevfs;
 import org.apache.commons.vfs.FileName;
 
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathFormat;
 import net.bodz.bas.vfs.path.MultiEntryPath;
+import net.bodz.bas.vfs.path.PathFormat;
 
 public class ApachePath
         extends MultiEntryPath {

@@ -7,9 +7,9 @@ import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.VFS;
+import net.bodz.bas.vfs.path.AbstractMultiEntryPath;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.AbstractMultiEntryPath;
 import net.bodz.bas.vfs.path.PathFormats;
 
 /**

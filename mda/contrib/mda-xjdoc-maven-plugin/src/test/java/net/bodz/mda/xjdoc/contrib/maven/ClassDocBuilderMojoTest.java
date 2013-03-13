@@ -10,10 +10,10 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import user.ExampleClass;
-
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.m2.test.MyMojoTestCase;
+
+import user.ExampleClass;
 
 public class ClassDocBuilderMojoTest
         extends MyMojoTestCase {

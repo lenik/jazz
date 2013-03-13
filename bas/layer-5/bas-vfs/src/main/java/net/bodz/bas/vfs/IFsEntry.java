@@ -8,8 +8,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileAttributeView;
 import java.nio.file.attribute.FileTime;
 
-import net.bodz.bas.c.java.nio.TreeDeleteOption;
 import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.c.java.nio.TreeDeleteOption;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 

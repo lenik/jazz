@@ -6,6 +6,8 @@ import static net.bodz.bas.rtx.Negotiation.option;
 import java.io.File;
 import java.util.ServiceLoader;
 
+import org.junit.Assert;
+
 import net.bodz.bas.c.m2.MavenProjectOrigin;
 import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.rtx.INegotiation;
@@ -18,8 +20,6 @@ import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
 import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
-
-import org.junit.Assert;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;

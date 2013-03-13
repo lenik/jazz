@@ -6,7 +6,6 @@ import java.util.Map;
 import org.junit.Assert;
 
 import net.bodz.bas.c.java.util.MapDump;
-import net.bodz.bas.c.loader.scan.URLResourceScanner;
 import net.bodz.bas.c.string.StringPart;
 
 public class URLResourceScannerTest

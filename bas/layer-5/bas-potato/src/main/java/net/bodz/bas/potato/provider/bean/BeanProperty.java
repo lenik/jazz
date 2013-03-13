@@ -4,8 +4,8 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.XiString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
 import net.bodz.bas.t.event.IPropertyChangeListener;

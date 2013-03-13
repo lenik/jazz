@@ -3,11 +3,11 @@ package lenik.lab.qdox;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import user.ExampleClass;
-
 import net.bodz.bas.c.type.ClassResource;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
+
+import user.ExampleClass;
 
 public class JavadocParser {
 

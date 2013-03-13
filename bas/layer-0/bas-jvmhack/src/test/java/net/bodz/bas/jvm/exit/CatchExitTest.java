@@ -1,10 +1,10 @@
 package net.bodz.bas.jvm.exit;
 
-import net.bodz.bas.err.control.ControlExit;
-import net.bodz.bas.fn.IExecutable;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.err.control.ControlExit;
+import net.bodz.bas.fn.IExecutable;
 
 public class CatchExitTest
         extends Assert {
