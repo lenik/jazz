@@ -4,6 +4,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -26,7 +27,15 @@ public class ArtifactDoc
     }
 
     public Set<String> getUsedLangs() {
-        return getText().keySet();
+        Set<String> langs = new LinkedHashSet<String>();
+
+        iString iStr = getText();
+        if (iStr != null)
+            for (String domain : iStr.keySet())
+                if (domain != null)
+                    langs.add(domain);
+
+        return langs;
     }
 
     public List<Author> getAuthors() {
@@ -52,7 +61,7 @@ public class ArtifactDoc
     }
 
     public List<URL> getSiteLinks() {
-        return null;
+        return Collections.emptyList();
     }
 
     public URL getSiteLink() {

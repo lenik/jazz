@@ -4,6 +4,7 @@ import static net.bodz.swt.nls.GUINLS.GUINLS;
 
 import java.awt.Desktop;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -33,9 +34,12 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIException;
+import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.program.meta.StartMode;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.javadoc.Author;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
 import net.bodz.swt.c.layout.BorderLayout;
@@ -69,11 +73,12 @@ public abstract class BasicGUI
     private int shellHeight = SWT.DEFAULT;
 
     {
-        PreferredSize _size = getClass().getAnnotation(PreferredSize.class);
-        if (_size != null) {
-            shellWidth = _size.width();
-            shellHeight = _size.height();
-        }
+//        TODO Set PreferredSize by CSS.
+//        PreferredSize _size = getClass().getAnnotation(PreferredSize.class);
+//        if (_size != null) {
+//            shellWidth = _size.width();
+//            shellHeight = _size.height();
+//        }
     }
 
     protected Shell shell;
@@ -88,9 +93,11 @@ public abstract class BasicGUI
         try {
             super.execute(args);
         } catch (Exception e) {
-            if (!shell.isDisposed()) {
+            if (shell != null && !shell.isDisposed()) {
                 SwtDialogs iact = new SwtDialogs(shell);
                 iact.alert(e.getMessage(), e);
+            } else {
+                // TODO logger.error
             }
             throw e;
         }
@@ -190,10 +197,10 @@ public abstract class BasicGUI
     protected String getTitle() {
         ArtifactDoc artifactDoc = getXjdoc();
         String title = artifactDoc.getName();
-        String doc = artifactDoc.getText().toPlainText();
+        iString doc = artifactDoc.getText();
         if (doc != null)
             title += ": " + doc;
-        String version = artifactDoc.getVersion().toString();
+        IVersion version = artifactDoc.getVersion();
         return title + " " + version;
     }
 
@@ -202,14 +209,16 @@ public abstract class BasicGUI
         Shell shell = new Shell();
         shell.setText(getTitle());
         ArtifactDoc artifactDoc = getXjdoc();
-        Image[] icons;
-        try {
-            icons = loadImages(artifactDoc.getIcons());
-        } catch (IOException e) {
-            throw new GUIException(e);
-        }
-        if (icons != null)
-            shell.setImages(icons);
+        
+        // TODO Set icon by CSS.
+//        Image[] icons;
+//        try {
+//            icons = loadImages(artifactDoc.getIcons());
+//        } catch (IOException e) {
+//            throw new GUIException(e);
+//        }
+//        if (icons != null)
+//            shell.setImages(icons);
 
         Menu menu = createMenu(shell);
         if (menu != null)
@@ -385,11 +394,19 @@ public abstract class BasicGUI
         return bottomBar;
     }
 
-    static URL WWW_BODZ_NET = new URL("http://www.bodz.net/");
-
+    // TODO Predefined URL constants..
+    static URL WWW_BODZ_NET;
+    static {
+        try {
+            WWW_BODZ_NET = new URL("http://www.bodz.net/");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e.getMessage(), e); 
+        }
+    }
+    
     protected String getBannerString() {
         ArtifactDoc artifactDoc = getXjdoc();
-        String author = artifactDoc.getAuthor().toString();
+        Author author = artifactDoc.getAuthor();
         URL site = artifactDoc.getSiteLink();
         if (site == null)
             site = WWW_BODZ_NET;

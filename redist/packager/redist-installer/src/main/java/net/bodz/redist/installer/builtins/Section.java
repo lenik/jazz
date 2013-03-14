@@ -8,7 +8,7 @@ public class Section
         extends AbstractComponent {
 
     public Section(String name, IComponent... children) {
-        setName(name);
+        setId(name);
         setVisible(true);
         for (IComponent child : children)
             add(child);

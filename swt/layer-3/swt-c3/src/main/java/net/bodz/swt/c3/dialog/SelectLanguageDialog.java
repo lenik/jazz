@@ -14,6 +14,7 @@ import net.bodz.bas.c.java.util.LocaleTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 
 public class SelectLanguageDialog
@@ -28,13 +29,19 @@ public class SelectLanguageDialog
         langNames = new ArrayList<String>();
 
         while (declType != null) {
-            ArtifactDoc typeDoc = ClassDocLoader.load(declType).as(ArtifactDoc.class);
-
-            for (String lang : typeDoc.getUsedLangs())
-                langNames.add(lang);
+            ClassDoc classDoc = ClassDocLoader.load(declType);
+            if (classDoc != null) {
+                ArtifactDoc typeDoc = classDoc.as(ArtifactDoc.class);
+                for (String lang : typeDoc.getUsedLangs())
+                    if (lang != null)
+                        langNames.add(lang);
+            }
 
             declType = declType.getSuperclass();
         }
+
+        if (langNames.isEmpty())
+            langNames.add("zh-CN"); // TODO default language list: C, en-us.
     }
 
     @Override

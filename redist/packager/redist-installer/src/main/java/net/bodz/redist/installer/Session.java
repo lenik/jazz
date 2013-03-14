@@ -15,7 +15,7 @@ import java.util.Set;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
-import net.bodz.bas.c.m2.MavenProjectOrigin;
+import net.bodz.bas.c.m2.MavenPom;
 import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.gui.dialog.IUserDialogs;
@@ -82,8 +82,8 @@ public class Session
         // addResFolder(new JavaioFile(FilePath.canoniOf(".")/*, true*/));
         addResFolder(new PojfFile(SystemColos.workdir.get()/* , true */));
 
-        MavenProjectOrigin installerPo = MavenProjectOrigin.fromClass(Installer.class);
-        MavenProjectOrigin userPo = MavenProjectOrigin.fromClass(project.getClass());
+        MavenPom installerPo = MavenPom.fromClass(Installer.class);
+        MavenPom userPo = MavenPom.fromClass(project.getClass());
 
         IFile projectResBase = new PojfFile(userPo.getResourceDir(project.getClass()));
         addResFolder(projectResBase);

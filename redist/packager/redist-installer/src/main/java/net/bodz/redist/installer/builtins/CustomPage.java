@@ -25,8 +25,14 @@ import org.eclipse.swt.widgets.*;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.gui.err.QuietValidationException;
+import net.bodz.bas.gui.style.IGUIElementStyleClass;
+import net.bodz.bas.gui.style.IImageData;
+import net.bodz.bas.gui.style.ImageUsage;
+import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.pojo.PathEntries;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.IProject;
@@ -235,11 +241,16 @@ public class CustomPage
         if (text != null)
             item.setText(text.toString());
 
-        ImageData image = component.getImage();
-        if (image != null) {
-            if (image.width > iconSize || image.height > iconSize)
-                image = image.scaledTo(iconSize, iconSize);
-            item.setImage(new Image(pageContainer.getDisplay(), image));
+        if (component instanceof IXjdocElement) {
+            IJavaElementDoc xjdoc = ((IXjdocElement) component).getXjdoc();
+            GUIElementDoc guidoc = xjdoc.as(GUIElementDoc.class);
+            IGUIElementStyleClass styleClass = guidoc.getStyleClass();
+            IImageData image = styleClass.getImage(ImageUsage.NORMAL);
+            if (image != null) {
+                if (image.width > iconSize || image.height > iconSize)
+                    image = image.scaledTo(iconSize, iconSize);
+                item.setImage(new Image(pageContainer.getDisplay(), image));
+            }
         }
 
         boolean defaultSelection = component.isSelected();
