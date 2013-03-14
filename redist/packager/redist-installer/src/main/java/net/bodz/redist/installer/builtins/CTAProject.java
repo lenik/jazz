@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.TempFile;
-import net.bodz.bas.c.m2.MavenProjectOrigin;
+import net.bodz.bas.c.m2.MavenPom;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.redist.installer.BaseDirVariable;
@@ -59,7 +59,7 @@ public class CTAProject
 
         FileFilter filter = FileCopy.NoSVN;
 
-        MavenProjectOrigin redistPo = MavenProjectOrigin.fromClass(IComponent.class);
+        MavenPom redistPo = MavenPom.fromClass(IComponent.class);
 
         classesSection = new RequiredSection("bin");
         {

@@ -1,5 +1,6 @@
 package net.bodz.redist.obfuz.util;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,7 +149,7 @@ public class ActivatePage
 
     void updateABTS() {
         String hostId = "";
-        String website = null;
+        URL website = null;
 
         ActivationByTargetString abts = abtsProvider.getABTS();
         if (abts != null) {
@@ -157,10 +158,9 @@ public class ActivatePage
         }
 
         hostIdText.setText(hostId);
-        if (website == null)
-            website = "";
         link.setText(String.format(tr._("Access our <a href=\"%s\">website</a> to get the activation code."), website));
-        link.setToolTipText(website);
+        if (website != null)
+            link.setToolTipText(website.toString());
     }
 
     @Override
