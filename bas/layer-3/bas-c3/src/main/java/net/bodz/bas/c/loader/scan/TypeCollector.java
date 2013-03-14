@@ -12,7 +12,7 @@ import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.c.m2.MavenProjectOrigin;
+import net.bodz.bas.c.m2.MavenPom;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.log.Logger;
@@ -134,7 +134,7 @@ public abstract class TypeCollector<T> {
                     continue;
             }
 
-            MavenProjectOrigin pomDir = MavenProjectOrigin.fromClass(extensionClass);
+            MavenPom pomDir = MavenPom.fromClass(extensionClass);
             File resdir = pomDir.getResourceDir(extensionClass);
             if (resdir == null)
                 continue;
@@ -233,7 +233,7 @@ public abstract class TypeCollector<T> {
         saveFiles(fileContentMap);
         if (showPaths)
             for (Class<?> extension : extensions) {
-                MavenProjectOrigin pomDir = MavenProjectOrigin.fromClass(extension);
+                MavenPom pomDir = MavenPom.fromClass(extension);
                 File sourceFile = pomDir.getSourceFile(extension);
                 System.out.println(sourceFile);
             }

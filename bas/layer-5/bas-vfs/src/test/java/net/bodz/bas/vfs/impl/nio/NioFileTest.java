@@ -9,15 +9,15 @@ import java.nio.file.Paths;
 
 import org.junit.Assert;
 
-import net.bodz.bas.c.m2.MavenProjectOrigin;
+import net.bodz.bas.c.m2.MavenPom;
 
 public class NioFileTest
         extends Assert {
 
     public static void main(String[] args)
             throws Exception {
-        MavenProjectOrigin mpo = MavenProjectOrigin.fromClass(NioFileTest.class);
-        File projectDirFile = mpo.getProjectDir();
+        MavenPom mpo = MavenPom.fromClass(NioFileTest.class);
+        File projectDirFile = mpo.getBaseDir();
         Path projectDir = Paths.get(projectDirFile.getPath());
 
         Path pomXml = projectDir.resolve("pom.xml");
