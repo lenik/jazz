@@ -10,7 +10,7 @@ import net.bodz.bas.c.type.ClassResource;
 public class MavenProjectOriginTest
         extends Assert {
 
-    MavenProjectOrigin project = MavenProjectOrigin.fromClass(getClass());
+    MavenPom project = MavenPom.fromClass(getClass());
 
     @Test
     public void testGetClassFile() {

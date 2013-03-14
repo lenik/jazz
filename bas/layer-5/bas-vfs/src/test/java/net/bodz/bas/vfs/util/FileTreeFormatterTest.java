@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.junit.Assert;
 
-import net.bodz.bas.c.m2.MavenProjectOrigin;
+import net.bodz.bas.c.m2.MavenPom;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.nio.NioFile;
@@ -15,8 +15,8 @@ public class FileTreeFormatterTest
 
     public void dumpPomDir()
             throws IOException {
-        MavenProjectOrigin pom = MavenProjectOrigin.fromClass(FileTreeFormatterTest.class);
-        File projectDir = pom.getProjectDir();
+        MavenPom pom = MavenPom.fromClass(FileTreeFormatterTest.class);
+        File projectDir = pom.getBaseDir();
 
         // IFile start = new PojfFile(projectDir);
         IFile start = new NioFile(projectDir);

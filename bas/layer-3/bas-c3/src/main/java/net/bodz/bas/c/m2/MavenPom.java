@@ -12,23 +12,31 @@ import net.bodz.bas.err.UnexpectedException;
  * 
  * So it's suggested to name as `FoobarPo`.
  */
-public class MavenProjectOrigin {
+public class MavenPom {
 
-    File projectDir;
+    private File pomFile;
+    private File baseDir;
 
-    public MavenProjectOrigin(File projectDir) {
-        this.projectDir = projectDir;
+    public MavenPom(File baseDir) {
+        if (baseDir == null)
+            throw new NullPointerException("baseDir");
+        this.baseDir = baseDir;
+        this.pomFile = new File(baseDir, "pom.xml");
     }
 
-    public File getProjectDir() {
-        return projectDir;
+    public File getBaseDir() {
+        return baseDir;
+    }
+
+    public File getPomFile() {
+        return pomFile;
     }
 
     public File find(String name) {
-        return new File(projectDir, name);
+        return new File(baseDir, name);
     }
 
-    public static MavenProjectOrigin fromClass(Class<?> clazz) {
+    public static MavenPom fromClass(Class<?> clazz) {
         String fname = clazz.getName().replace('.', '/') + ".class";
 
         File classFile = ClassResource.getClassBytesFile(clazz);
@@ -45,7 +53,7 @@ public class MavenProjectOrigin {
 
         File dir = new File(dirname);
 
-        return new MavenProjectOrigin(dir);
+        return new MavenPom(dir);
     }
 
     public File getSourceFile(Class<?> clazz) {

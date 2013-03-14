@@ -8,7 +8,7 @@ import java.util.ServiceLoader;
 
 import org.junit.Assert;
 
-import net.bodz.bas.c.m2.MavenProjectOrigin;
+import net.bodz.bas.c.m2.MavenPom;
 import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.sio.BCharOut;
@@ -50,7 +50,7 @@ public class QdoxTest
         TagLibraryLoader taglibLoader = new TagLibraryLoader(scl);
         TagLibrarySet taglibs = taglibLoader.parseSet("*");
 
-        MavenProjectOrigin po = MavenProjectOrigin.fromClass(BasicCLI.class);
+        MavenPom po = MavenPom.fromClass(BasicCLI.class);
 
         File sourceFile = po.getSourceFile(BasicCLI.class);
 
