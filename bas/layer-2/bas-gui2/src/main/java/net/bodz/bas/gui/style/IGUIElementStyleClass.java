@@ -3,22 +3,10 @@ package net.bodz.bas.gui.style;
 import net.bodz.bas.gui.css3.ICss3StyleClass;
 
 public interface IGUIElementStyleClass
-        extends ICss3StyleClass {
+        extends ICss3StyleClass, IInputStyleClass {
 
     @Override
     IGUIElementStyleClass getParent();
-
-    Boolean getEnabled();
-
-    void setEnabled(Boolean enabled);
-
-    Boolean getReadOnly();
-
-    void setReadOnly(Boolean readOnly);
-
-    Integer getTabOrder();
-
-    void setTabOrder(Integer tabOrder);
 
     IFontType getFontType();
 
@@ -33,6 +21,8 @@ public interface IGUIElementStyleClass
     void setFillType(IFillType fillType);
 
     IImageData getImage(ImageUsage usage);
+
+    void setImage(ImageUsage usage, IImageData imageData);
 
     String getViewId();
 
