@@ -7,7 +7,9 @@ public class DoubleComparator
 
     @Override
     public int compareNonNull(Double a, Double b) {
-        return a < b ? -1 : a > b ? 1 : 0;
+        double _a = a;
+        double _b = b;
+        return _a < _b ? -1 : _a > _b ? 1 : 0;
     }
 
     public static final DoubleComparator INSTANCE = new DoubleComparator();

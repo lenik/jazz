@@ -7,7 +7,9 @@ public class FloatComparator
 
     @Override
     public int compareNonNull(Float a, Float b) {
-        return a < b ? -1 : a > b ? 1 : 0;
+        float _a = a;
+        float _b = b;
+        return _a < _b ? -1 : _a > _b ? 1 : 0;
     }
 
     public static final FloatComparator INSTANCE = new FloatComparator();
