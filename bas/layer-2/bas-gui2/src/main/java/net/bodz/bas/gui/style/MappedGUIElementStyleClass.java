@@ -68,4 +68,8 @@ public abstract class MappedGUIElementStyleClass
         return null;
     }
 
+    @Override
+    public void setImage(ImageUsage usage, IImageData imageData) {
+    }
+
 }

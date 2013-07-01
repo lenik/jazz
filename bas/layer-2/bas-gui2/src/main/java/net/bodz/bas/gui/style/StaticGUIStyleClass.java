@@ -1,5 +1,8 @@
 package net.bodz.bas.gui.style;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.bodz.bas.gui.css3.StaticCss3StyleClass;
 
 public class StaticGUIStyleClass
@@ -12,6 +15,7 @@ public class StaticGUIStyleClass
     IFontType fontType;
     IStrokeType strokeType;
     IFillType fillType;
+    Map<ImageUsage, IImageData> imageMap = new HashMap<>();
 
     @Override
     public IGUIElementStyleClass getParent() {
@@ -80,7 +84,12 @@ public class StaticGUIStyleClass
 
     @Override
     public IImageData getImage(ImageUsage usage) {
-        return null;
+        return imageMap.get(usage);
+    }
+
+    @Override
+    public void setImage(ImageUsage usage, IImageData imageData) {
+        imageMap.put(usage, imageData);
     }
 
     @Override

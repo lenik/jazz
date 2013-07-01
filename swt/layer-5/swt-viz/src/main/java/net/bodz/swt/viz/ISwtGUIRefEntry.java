@@ -1,9 +1,9 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.gui.dom1.IGUIRefEntry;
 
 public interface ISwtGUIRefEntry<T>
-        extends IRefEntry<T> {
+        extends IGUIRefEntry<T> {
 
     MappedSwtVizStyleClass getStyle();
 
