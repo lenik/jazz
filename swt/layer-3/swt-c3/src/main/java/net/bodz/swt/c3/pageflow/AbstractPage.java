@@ -15,11 +15,14 @@ import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.gui.style.IGUIElementStyleClass;
+import net.bodz.bas.gui.style.IImageData;
+import net.bodz.bas.gui.style.ImageUsage;
+import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.swt.gui.a.IconAnnotation;
 
 public abstract class AbstractPage
         implements IPage, II18nCapable {
@@ -40,19 +43,22 @@ public abstract class AbstractPage
 
     @Override
     public String getPageTitle() {
-        Class<?> clazz = getClass();
         String header = classDoc.getText().getHeadPar();
         if (!Nullables.isEmpty(header))
             return header;
-        else
-            return clazz.getCanonicalName();
+
+        // Default page title is the class name.
+        Class<?> clazz = getClass();
+        return clazz.getCanonicalName();
     }
 
     @Override
     public ImageData getPageIcon() {
-        Class<?> clazz = getClass();
-        ImageData icon = IconAnnotation.getIcon(clazz);
-        return icon;
+        GUIElementDoc gdoc = classDoc.as(GUIElementDoc.class);
+        IGUIElementStyleClass style = gdoc.getStyleClass();
+        IImageData image = style.getImage(ImageUsage.NORMAL);
+        // TODO Convert to SWT image data...
+        return null;
     }
 
     @Override
@@ -155,6 +161,7 @@ public abstract class AbstractPage
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    @Override
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
     }

@@ -9,22 +9,22 @@ public interface ISwtStrokeType {
      * @see SWT#CAP_FLAT
      * @see SWT#CAP_SQUARE
      */
-    int getCap();
+    int getSwtLineCap();
 
-    void setCap(int cap);
+    void setSwtLineCap(int cap);
 
-    int[] getDash();
+    int[] getSwtLineDash();
 
-    void setDash(int[] dashes);
+    void setSwtLineDash(int[] dashes);
 
     /**
      * @see SWT#JOIN_MITER
      * @see SWT#JOIN_ROUND
      * @see SWT#JOIN_BEVEL
      */
-    int getJoin();
+    int getSwtLineJoin();
 
-    void setJoin(int join);
+    void setSwtLineJoin(int join);
 
     /**
      * @see SWT#LINE_SOLID
@@ -34,12 +34,12 @@ public interface ISwtStrokeType {
      * @see SWT#LINE_DASHDOTDOT
      * @see SWT#LINE_CUSTOM
      */
-    int getStyle();
+    int getSwtLineStyle();
 
-    void setStyle(int style);
+    void setSwtLineStyle(int style);
 
-    int getWidth();
+    int getSwtLineWidth();
 
-    void setWidth(int width);
+    void setSwtLineWidth(int width);
 
 }

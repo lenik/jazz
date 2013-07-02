@@ -14,52 +14,52 @@ public class SwtStrokeType
     public int width;
 
     @Override
-    public int getCap() {
+    public int getSwtLineCap() {
         return cap;
     }
 
     @Override
-    public void setCap(int cap) {
+    public void setSwtLineCap(int cap) {
         this.cap = cap;
     }
 
     @Override
-    public int[] getDash() {
+    public int[] getSwtLineDash() {
         return dash;
     }
 
     @Override
-    public void setDash(int[] dash) {
+    public void setSwtLineDash(int[] dash) {
         this.dash = dash;
     }
 
     @Override
-    public int getJoin() {
+    public int getSwtLineJoin() {
         return join;
     }
 
     @Override
-    public void setJoin(int join) {
+    public void setSwtLineJoin(int join) {
         this.join = join;
     }
 
     @Override
-    public int getStyle() {
+    public int getSwtLineStyle() {
         return style;
     }
 
     @Override
-    public void setStyle(int style) {
+    public void setSwtLineStyle(int style) {
         this.style = style;
     }
 
     @Override
-    public int getWidth() {
+    public int getSwtLineWidth() {
         return width;
     }
 
     @Override
-    public void setWidth(int width) {
+    public void setSwtLineWidth(int width) {
         this.width = width;
     }
 

@@ -16,8 +16,8 @@ import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
-import net.bodz.swt.viz.MappedSwtVizStyleClass;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuildStrategy;
 import net.bodz.swt.viz.form.vbo.InvocationVbo;
@@ -27,19 +27,6 @@ public class GridViewBuildStrategy
         extends SwtViewBuildStrategy {
 
     private static final long serialVersionUID = -6476584130668546414L;
-
-    protected static class GridConfig
-            extends Config {
-
-        public int margin = 3;
-
-        public static GridConfig getDefault() {
-            return instance;
-        }
-
-        private static GridConfig instance = new GridConfig();
-
-    }
 
     protected final GridConfig config;
 
@@ -84,18 +71,17 @@ public class GridViewBuildStrategy
         GridLayout gridLayout = new GridLayout(3, false);
         grid.setLayout(gridLayout);
         for (IRefEntry<?> ent : struct.getRefEntries()) {
-            MappedSwtVizStyleClass style = null;
+            ISwtControlStyleClass style = null;
             if (ent instanceof ISwtGUIRefEntry<?>)
                 style = ((ISwtGUIRefEntry<?>) ent).getStyle();
-            renderChild(rc, grid, ent, style);
+            _renderChild(rc, grid, ent, style);
         }
         return grid;
     }
 
-    void renderChild(final SwtRenderContext rc, Composite grid, IRefEntry<?> entry, MappedSwtVizStyleClass style)
+    void _renderChild(final SwtRenderContext rc, Composite grid, IRefEntry<?> entry, ISwtControlStyleClass style)
             throws ViewBuilderException, SWTException {
-        IRefDescriptor descriptor = entry.getDescriptor();
-        String name = descriptor.getName();
+        String name = entry.getName();
 
         // Column #1
         Label iconLabel = new Label(grid, SWT.NONE);
@@ -103,7 +89,7 @@ public class GridViewBuildStrategy
             Image icon = style == null ? null : style.getIcon();
             if (icon == null) {
                 String iconPath;
-                int modifiers = descriptor.getModifiers();
+                int modifiers = entry.getModifiers();
                 if (descriptor instanceof GUIFieldMeta)
                     iconPath = fieldIcons.getMod(modifiers);
                 else if (descriptor instanceof GUIPropertyMeta)

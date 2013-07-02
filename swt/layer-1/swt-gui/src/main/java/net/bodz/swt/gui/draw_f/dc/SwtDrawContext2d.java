@@ -66,11 +66,11 @@ public class SwtDrawContext2d
     @Override
     public void setStroke(IStrokeType _stroke) {
         SwtStrokeType stroke = (SwtStrokeType) _stroke;
-        gc.setLineCap(stroke.getCap());
-        gc.setLineDash(stroke.getDash());
-        gc.setLineJoin(stroke.getJoin());
-        gc.setLineStyle(stroke.getStyle());
-        gc.setLineWidth(stroke.getWidth());
+        gc.setLineCap(stroke.getSwtLineCap());
+        gc.setLineDash(stroke.getSwtLineDash());
+        gc.setLineJoin(stroke.getSwtLineJoin());
+        gc.setLineStyle(stroke.getSwtLineStyle());
+        gc.setLineWidth(stroke.getSwtLineWidth());
     }
 
     @Override
