@@ -12,17 +12,18 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.repr.viz.IViewBuilder;
+import net.bodz.bas.repr.viz.ViewBuildOption;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 
-public abstract class SwtViewBuilder
-        implements IViewBuilder, II18nCapable {
+public abstract class SwtViewBuilder<T>
+        implements IViewBuilder<T>, II18nCapable {
 
     /**
      * @throws NullPointerException
      *             if var is null
      */
     @Override
-    public Control buildView(Object ctx, IRefEntry<?> entry)
+    public Object buildView(Object ctx, IRefEntry<T> entry, ViewBuildOption... options)
             throws ViewBuilderException {
         if (entry == null)
             throw new NullPointerException("render var");
@@ -30,7 +31,7 @@ public abstract class SwtViewBuilder
             if (ctx != null && !(ctx instanceof SwtRenderContext))
                 throw new OutOfDomainException("context", ctx, SwtRenderContext.class);
 
-            MappedSwtVizStyleClass style = null;
+            ISwtControlStyleClass style = null;
             if (entry instanceof ISwtGUIRefEntry<?>)
                 style = ((ISwtGUIRefEntry<?>) entry).getStyle();
 
@@ -44,8 +45,8 @@ public abstract class SwtViewBuilder
         }
     }
 
-    public abstract Control buildView(SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
-            Composite parent, int swtStyle)
+    public abstract Control buildView(SwtRenderContext rc, IRefEntry<T> entry, ISwtControlStyleClass style,
+            Composite parent, int styleInt)
             throws ViewBuilderException, SWTException;
 
     protected void bindProperty(final IRefEntry<?> entry, final Control control, final IValueChangeListener listener) {

@@ -26,8 +26,8 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fn.legacy.Func0;
 import net.bodz.bas.gui.dialog.AbstractUserDialogs;
 import net.bodz.bas.gui.dialog.IDirectiveCommand;
-import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.viz.IViewBuildStrategy;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.INegotiation;
@@ -45,7 +45,7 @@ import net.bodz.swt.gui.model.ICommandGroup;
 public class SwtDialogs
         extends AbstractUserDialogs {
 
-    static IViewBuildStrategy visualization;
+    static IViewBuildStrategy viewBuildStrategy;
 
     private final Shell parent;
     private final int style;
@@ -205,7 +205,7 @@ public class SwtDialogs
                     throws CreateException {
                 INegotiation negotiation = getNegotiation();
                 try {
-                    visualization.buildView(parent, wrap(detail), negotiation);
+                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -240,7 +240,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    visualization.buildView(parent, wrap(detail), negotiation);
+                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -276,7 +276,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    visualization.buildView(parent, wrap(detail), negotiation);
+                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -342,7 +342,7 @@ public class SwtDialogs
                     throws SWTException, CreateException {
                 INegotiation negotiation = getNegotiation();
                 try {
-                    visualization.buildView(parent, wrap(detail), negotiation);
+                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -453,7 +453,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    visualization.buildView(parent, wrap(detail), negotiation);
+                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -479,7 +479,7 @@ public class SwtDialogs
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
-                        visualization.buildView(parent, wrap(value), negotiation);
+                        viewBuildStrategy.buildView(parent, wrap(value), negotiation);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -498,8 +498,8 @@ public class SwtDialogs
                 int size = candidates.size();
                 final Object[] keys = new Object[size];
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, visualization, size)
-                        : null;
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, viewBuildStrategy,
+                        size) : null;
                 try {
                     int index = 0;
                     for (Entry<?, ?> entry : candidates.entrySet()) {
@@ -575,7 +575,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    visualization.buildView(parent, wrap(detail), negotiation);
+                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -614,7 +614,7 @@ public class SwtDialogs
                     button.setSelection(selected);
                     keyButtons[index++] = new KeyButton(key, button);
                     try {
-                        visualization.buildView(parent, wrap(value), negotiation);
+                        viewBuildStrategy.buildView(parent, wrap(value), negotiation);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -650,8 +650,8 @@ public class SwtDialogs
 
                 final int size = candidates.size();
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, visualization, size)
-                        : null;
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, viewBuildStrategy,
+                        size) : null;
                 final _K[] keys = new _K[size];
                 int index = 0;
                 for (Entry<K, ?> entry : candidates.entrySet())

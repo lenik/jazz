@@ -11,16 +11,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
+import net.bodz.bas.gui.css3.property.BorderStyleMode;
+import net.bodz.bas.potato.invoke.IInvocation;
 import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.swt.viz.MappedSwtVizStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 import net.bodz.swt.viz.grid.GridViewBuildStrategy;
 
 public class InvocationVbo
-        extends SwtViewBuilder {
+        extends SwtViewBuilder<IInvocation> {
 
     protected final GridViewBuildStrategy gridStyle;
 
@@ -29,18 +32,18 @@ public class InvocationVbo
     }
 
     @Override
-    public Control buildView(final SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass styleClass,
-            Composite parent, int _style)
+    public Control buildView(final SwtRenderContext rc, IRefEntry<IInvocation> entry, ISwtControlStyleClass style,
+            Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
 
         if (!(entry instanceof IInvocationRefcomp))
             throw new IllegalArgumentException(tr._("R_CallObject.notInvocationRefcomp") + entry);
 
-        final IInvocationRefcomp refcomp = (AbstractInvocationRefcomp) entry;
+        final IInvocationRefcomp refcomp = (IRefcomp<?>) entry;
         InvocationDescriptor descriptor = refcomp.getDescriptor();
-        MappedSwtVizStyleClass style = descriptor.getStyle();
+        BorderStyleMode borderStyle = style.getBorder().getStyle();
 
-        final Composite comp = gridStyle.renderStruct(rc, refcomp, parent, _style);
+        final Composite comp = gridStyle.renderStruct(rc, refcomp, parent, styleInt);
         final Composite opbar = new Composite(comp, SWT.NONE);
         opbar.setLayoutData(new GridData(//
                 SWT.FILL, SWT.CENTER, true, false, 3, 1));

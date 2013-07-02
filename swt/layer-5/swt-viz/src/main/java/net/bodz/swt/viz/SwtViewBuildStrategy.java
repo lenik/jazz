@@ -12,8 +12,8 @@ import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.AbstractViewBuildStrategy;
 import net.bodz.bas.repr.viz.IViewBuilder;
+import net.bodz.bas.repr.viz.ViewBuildOption;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.swt.viz.form.*;
 import net.bodz.swt.viz.form.vbo.BooleanVbo;
 import net.bodz.swt.viz.form.vbo.DateVbo;
 import net.bodz.swt.viz.form.vbo.ExceptionVbo;
@@ -25,18 +25,6 @@ public abstract class SwtViewBuildStrategy
         extends AbstractViewBuildStrategy {
 
     private static final long serialVersionUID = 4665944902525510516L;
-
-    protected static class Config {
-        public String defaultIcon = "/icons/full/obj16/genericvariable_obj.gif";
-        public int defaultIconSize = 16;
-
-        public static Config getDefault() {
-            return instance;
-        }
-
-        private static Config instance = new Config();
-
-    }
 
     public SwtViewBuildStrategy() {
         setup();
@@ -56,14 +44,14 @@ public abstract class SwtViewBuildStrategy
     }
 
     @Override
-    public SwtViewBuilder put(Class<?> key, IViewBuilder value) {
+    public SwtViewBuilder<?> put(Class<?> key, IViewBuilder<?> value) {
         if (!(value instanceof SwtViewBuilder))
             throw new IllegalArgumentException(tr._("not a SWTRenderer: ") + value);
-        return (SwtViewBuilder) super.put(key, value);
+        return (SwtViewBuilder<?>) super.put(key, value);
     }
 
     @Override
-    public Control buildView(Object context, IRefEntry<?> entry)
+    public Control buildView(Object ctx, IRefEntry<?> entry, ViewBuildOption... options)
             throws ViewBuilderException {
         try {
             SwtRenderContext rc = null; // new SWTRenderContext();
@@ -73,31 +61,33 @@ public abstract class SwtViewBuildStrategy
         }
     }
 
-    public Control render(SwtRenderContext rc, IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet, Composite parent, int style)
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public Control render(SwtRenderContext rc, IRefEntry<?> entry, ISwtControlStyleClass style, Composite parent,
+            int styleInt)
             throws ViewBuilderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");
-        SwtViewBuilder renderer = findViewBuilder(entry);
-        if (renderer == null) {
+        SwtViewBuilder builder = findViewBuilder(entry);
+        if (builder == null) {
             String errMesg = tr._("Don\'t know how to render ") + entry.getName();
             entry = GUIVars.wrap(errMesg);
-            renderer = findViewBuilder(entry);
+            builder = findViewBuilder(entry);
             throw new ViewBuilderException(errMesg); // XXX -
         }
-        return renderer.buildView(rc, entry, stylesheet, parent, style);
+        return builder.buildView(rc, entry, style, parent, styleInt);
     }
 
-    public Control render(SwtRenderContext rc, Object constantValue, Composite parent, int style)
+    public Control render(SwtRenderContext rc, Object constantValue, Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");
         ISwtGUIRefEntry<Object> var = GUIVars.wrap(constantValue);
-        return render(rc, var, parent, style);
+        return render(rc, var, parent, styleInt);
     }
 
     @Override
-    protected SwtViewBuilder findViewBuilder(IRefEntry<?> entry) {
-        return (SwtViewBuilder) super.findViewBuilder(entry);
+    protected <T> SwtViewBuilder<T> findViewBuilder(IRefEntry<? extends T> entry) {
+        return (SwtViewBuilder<T>) super.findViewBuilder(entry);
     }
 
 }

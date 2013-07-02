@@ -25,23 +25,21 @@ import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.MappedSwtVizStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 
 public class FileVbo
-        extends SwtViewBuilder {
+        extends SwtViewBuilder<File> {
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
-            final Composite parent, final int style)
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<File> entry, ISwtControlStyleClass style,
+            final Composite parent, final int swtStyle)
             throws ViewBuilderException, SWTException {
-
-        IRefDescriptor descriptor = entry.getDescriptor();
 
         File val = (File) entry.get();
         assert val != null;
-        final Composite comp = new Composite(parent, style);
+        final Composite comp = new Composite(parent, swtStyle);
         BorderLayout layout = new BorderLayout();
         comp.setLayout(layout);
         final Text fileText = new Text(comp, SWT.BORDER);
@@ -61,7 +59,7 @@ public class FileVbo
         });
         browseButton.setLayoutData(BorderLayout.EAST);
 
-        if (!descriptor.isWritable()) {
+        if (style.getReadOnly() == Boolean.TRUE) {
             fileText.setEnabled(false);
             browseButton.setEnabled(false);
         } else {
@@ -89,7 +87,7 @@ public class FileVbo
             });
         }
 
-        if (descriptor.isValueChangeSource())
+        if (entry.isValueChangeSource())
             bindProperty(entry, fileText, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent evt) {
@@ -99,7 +97,7 @@ public class FileVbo
                     return true;
                 }
             });
-        rc.addEffects(comp, stylesheet);
+        rc.addEffects(comp, style);
         return comp;
     }
 

@@ -9,47 +9,19 @@ public class StaticGUIStyleClass
         extends StaticCss3StyleClass
         implements IGUIElementStyleClass {
 
-    Boolean enabled;
-    Boolean readOnly;
-    Integer tabOrder;
     IFontType fontType;
     IStrokeType strokeType;
     IFillType fillType;
     Map<ImageUsage, IImageData> imageMap = new HashMap<>();
 
+    Boolean enabled;
+    Boolean readOnly;
+    Integer tabOrder;
+    Integer maxLength;
+
     @Override
     public IGUIElementStyleClass getParent() {
         return (IGUIElementStyleClass) super.getParent();
-    }
-
-    @Override
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    @Override
-    public Boolean getReadOnly() {
-        return readOnly;
-    }
-
-    @Override
-    public void setReadOnly(Boolean readOnly) {
-        this.readOnly = readOnly;
-    }
-
-    @Override
-    public Integer getTabOrder() {
-        return tabOrder;
-    }
-
-    @Override
-    public void setTabOrder(Integer tabOrder) {
-        this.tabOrder = tabOrder;
     }
 
     @Override
@@ -95,6 +67,48 @@ public class StaticGUIStyleClass
     @Override
     public String getViewId() {
         return null;
+    }
+
+    // -o IInputControlStyle
+
+    @Override
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public Boolean getReadOnly() {
+        return readOnly;
+    }
+
+    @Override
+    public void setReadOnly(Boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    @Override
+    public Integer getTabOrder() {
+        return tabOrder;
+    }
+
+    @Override
+    public void setTabOrder(Integer tabOrder) {
+        this.tabOrder = tabOrder;
+    }
+
+    @Override
+    public Integer getMaxLength() {
+        return maxLength;
+    }
+
+    @Override
+    public void setMaxLength(Integer maxLength) {
+        this.maxLength = maxLength;
     }
 
 }

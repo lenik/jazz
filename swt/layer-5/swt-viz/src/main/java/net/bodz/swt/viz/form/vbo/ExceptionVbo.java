@@ -31,15 +31,15 @@ import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.model.AbstractCommand;
 import net.bodz.swt.gui.model.ICommand;
+import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
-import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 /**
  * @test R_ThrowableTest
  */
 public class ExceptionVbo
-        extends SwtViewBuilder {
+        extends SwtViewBuilder<Throwable> {
 
     static final String expandedIcon = "/icons/full/obj16/remove_correction.gif";
     static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";
@@ -51,20 +51,20 @@ public class ExceptionVbo
     static boolean showDebug = SystemProperties.isDevelopMode();
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, final MappedSwtVizStyleClass stylesheet,
-            final Composite parent, final int style)
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<Throwable> entry,
+            final ISwtControlStyleClass style, final Composite parent, final int styleInt)
             throws ViewBuilderException, SWTException {
 
         final Display display = parent == null ? Display.getCurrent() : parent.getDisplay();
 
-        final Composite comp = new Composite(parent, style);
+        final Composite comp = new Composite(parent, styleInt);
         GridLayout layout = new GridLayout(2, false);
         layout.verticalSpacing = 0;
         comp.setLayout(layout);
 
         // assert var.getMeta().isReadOnly();
         Color errorColor = new Color(display, 0xCC, 0, 0);
-        final Throwable throwable = (Throwable) entry.get();
+        final Throwable throwable = entry.get();
         int causeLevel = 0;
         int traceSkipped = 0;
         StringBuilder errbuf = new StringBuilder(4000);

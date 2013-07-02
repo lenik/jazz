@@ -7,36 +7,6 @@ public abstract class MappedGUIElementStyleClass
         implements IGUIElementStyleClass {
 
     @Override
-    public Boolean getEnabled() {
-        return getBooleanProperty("enabled", getParent().getEnabled(), true);
-    }
-
-    @Override
-    public void setEnabled(Boolean enabled) {
-        setProperty("enabled", enabled);
-    }
-
-    @Override
-    public Boolean getReadOnly() {
-        return getBooleanProperty("read-only", getParent().getReadOnly(), false);
-    }
-
-    @Override
-    public void setReadOnly(Boolean readOnly) {
-        setProperty("read-only", readOnly);
-    }
-
-    @Override
-    public Integer getTabOrder() {
-        return getIntegerProperty("tab-order", getParent().getTabOrder(), false);
-    }
-
-    @Override
-    public void setTabOrder(Integer tabOrder) {
-        setProperty("tab-order", tabOrder);
-    }
-
-    @Override
     public IFontType getFontType() {
         return null;
     }
@@ -70,6 +40,48 @@ public abstract class MappedGUIElementStyleClass
 
     @Override
     public void setImage(ImageUsage usage, IImageData imageData) {
+    }
+
+    // -o IInputControlStyle
+
+    @Override
+    public Boolean getEnabled() {
+        return getBooleanProperty("enabled", getParent().getEnabled(), true);
+    }
+
+    @Override
+    public void setEnabled(Boolean enabled) {
+        setProperty("enabled", enabled);
+    }
+
+    @Override
+    public Boolean getReadOnly() {
+        return getBooleanProperty("read-only", getParent().getReadOnly(), false);
+    }
+
+    @Override
+    public void setReadOnly(Boolean readOnly) {
+        setProperty("read-only", readOnly);
+    }
+
+    @Override
+    public Integer getTabOrder() {
+        return getIntegerProperty("tab-order", getParent().getTabOrder(), false);
+    }
+
+    @Override
+    public void setTabOrder(Integer tabOrder) {
+        setProperty("tab-order", tabOrder);
+    }
+
+    @Override
+    public Integer getMaxLength() {
+        return getIntegerProperty("max-length", getParent().getMaxLength(), false);
+    }
+
+    @Override
+    public void setMaxLength(Integer maxLength) {
+        setProperty("max-length", maxLength);
     }
 
 }

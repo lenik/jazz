@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import org.eclipse.swt.graphics.Pattern;
 
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ReadOnlyException;
+import net.bodz.bas.gui.style.FillPatternType;
 import net.bodz.bas.gui.style.IFillType;
 
 public class SwtManagedPattern
@@ -60,6 +63,28 @@ public class SwtManagedPattern
     @Override
     public String toString() {
         return pattern.toString();
+    }
+
+    // -o IFillType
+
+    @Override
+    public FillPatternType getFillPatternType() {
+        return FillPatternType.image;
+    }
+
+    @Override
+    public void setFillPatternType(FillPatternType fillPatternType) {
+        throw new ReadOnlyException();
+    }
+
+    @Override
+    public String getFillPattern() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void setFillPattern(String fillPattern) {
+        throw new ReadOnlyException();
     }
 
 }

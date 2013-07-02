@@ -10,7 +10,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
@@ -19,25 +18,25 @@ import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.MappedSwtVizStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 
 public class BooleanVbo
-        extends SwtViewBuilder {
+        extends SwtViewBuilder<Boolean> {
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass stylesheet,
-            Composite parent, int style)
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<Boolean> entry, ISwtControlStyleClass style,
+            Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
 
-        final IRefDescriptor descriptor = entry.getDescriptor();
+        boolean readOnly = style.getReadOnly() == Boolean.TRUE;
 
         Boolean _val = (Boolean) entry.get();
         boolean val = _val == null ? false : _val;
-        final Button check = new Button(parent, style | SWT.CHECK);
+        final Button check = new Button(parent, styleInt | SWT.CHECK);
         check.setSelection(val);
-        if (!descriptor.isWritable())
+        if (readOnly)
             check.setEnabled(false);
         else {
             check.addSelectionListener(new SelectionAdapter() {
@@ -47,7 +46,7 @@ public class BooleanVbo
                 }
             });
         }
-        if (descriptor.isValueChangeSource())
+        if (entry.isValueChangeSource())
             bindProperty(entry, check, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent event) {
@@ -56,12 +55,11 @@ public class BooleanVbo
                     return true;
                 }
             });
-        if (!descriptor.isWritable()) {
+        if (readOnly) {
             ControlAdapters.autocommitForFocus(check, new CommitAdapter(rc.getUserDialogs(check)) {
                 @Override
                 public void commit(EventObject event)
                         throws CommitException {
-                    IType type = descriptor.getPotatoType();
                     boolean val = check.getSelection();
                     try {
                         entry.validate(val);
@@ -72,7 +70,7 @@ public class BooleanVbo
                 }
             });
         }
-        rc.addEffects(check, stylesheet);
+        rc.addEffects(check, style);
         return check;
     }
 }

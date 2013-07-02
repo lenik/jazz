@@ -8,20 +8,20 @@ import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.color.IColor_RGB24;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
-import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class SwtStyleHelper {
 
     public void addEffects(Control control, ISwtGUIRefEntry<?> entry)
             throws ViewBuilderException {
-        MappedSwtVizStyleClass stylesheet = entry.getStyle();
+        ISwtControlStyleClass stylesheet = entry.getStyle();
         if (stylesheet == null)
             return;
         addEffects(control, stylesheet);
     }
 
-    public void addEffects(Control control, MappedSwtVizStyleClass style) {
+    public void addEffects(Control control, ISwtControlStyleClass style) {
         Device device = control.getDisplay();
 
         if (style.getTooltip() != null)

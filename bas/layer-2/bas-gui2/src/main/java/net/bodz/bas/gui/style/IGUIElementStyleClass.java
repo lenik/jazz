@@ -3,7 +3,7 @@ package net.bodz.bas.gui.style;
 import net.bodz.bas.gui.css3.ICss3StyleClass;
 
 public interface IGUIElementStyleClass
-        extends ICss3StyleClass, IInputStyleClass {
+        extends ICss3StyleClass, IInputControlStyle {
 
     @Override
     IGUIElementStyleClass getParent();

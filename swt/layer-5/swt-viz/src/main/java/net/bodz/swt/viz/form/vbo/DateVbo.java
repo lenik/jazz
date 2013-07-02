@@ -14,38 +14,35 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.gui.css3.Border;
-import net.bodz.bas.potato.ref.IRefDescriptor;
+import net.bodz.bas.gui.css3.BorderBox;
+import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
-import net.bodz.bas.repr.validate.MaxLength;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
-import net.bodz.swt.viz.MappedSwtVizStyleClass;
 
 public class DateVbo
-        extends SwtViewBuilder {
+        extends SwtViewBuilder<Date> {
 
     protected String format(Date date) {
         return String.valueOf(date);
     }
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<?> entry, MappedSwtVizStyleClass styleClass,
-            Composite parent, int style)
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<Date> entry, ISwtControlStyleClass style,
+            Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
 
-        IRefDescriptor descriptor = entry.getDescriptor();
-
-        boolean readOnly = !descriptor.isWritable();
+        boolean readOnly = style.getReadOnly() == Boolean.TRUE;
         Date date = (Date) entry.get();
 
         if (readOnly) {
-            final Label dateLabel = new Label(parent, style);
+            final Label dateLabel = new Label(parent, styleInt);
             dateLabel.setText(format(date));
-            if (descriptor.isValueChangeSource())
+            if (entry.isValueChangeSource())
                 bindProperty(entry, dateLabel, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {
@@ -58,23 +55,25 @@ public class DateVbo
 
         } else {
 
-            Border _border = descriptor.getClass().getAnnotation(Border.class);
-            if (_border != null)
-                if (_border.value() > 0)
-                    style |= SWT.BORDER;
-            Composite holder = new Composite(parent, style);
-            holder.setLayout(new GridLayout(2, false));
-
-            final Text text = new Text(holder, style | SWT.READ_ONLY);
-            text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-            MaxLength maxLength = descriptor.getAnnotation(MaxLength.class);
-            if (maxLength != null) {
-                int len = maxLength.value();
-                text.setTextLimit(len);
+            BorderBox borderBox = style.getBorder();
+            if (borderBox != null) {
+                LengthMeasure _border = borderBox.getWidth();
+                if (_border != null && _border.getValue() > 0.0)
+                    styleInt |= SWT.BORDER;
             }
 
+            Composite holder = new Composite(parent, styleInt);
+            holder.setLayout(new GridLayout(2, false));
+
+            final Text text = new Text(holder, styleInt | SWT.READ_ONLY);
+            text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+            Integer maxLength = style.getMaxLength();
+            if (maxLength != null)
+                text.setTextLimit(maxLength);
+
             text.setText(format(date));
-            if (descriptor.isValueChangeSource())
+            if (entry.isValueChangeSource())
                 bindProperty(entry, text, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {

@@ -1,6 +1,6 @@
 package net.bodz.bas.gui.style;
 
-public interface IInputStyleClass {
+public interface IInputControlStyle {
 
     Boolean getEnabled();
 
@@ -13,5 +13,9 @@ public interface IInputStyleClass {
     Integer getTabOrder();
 
     void setTabOrder(Integer tabOrder);
+
+    Integer getMaxLength();
+
+    void setMaxLength(Integer maxLength);
 
 }
