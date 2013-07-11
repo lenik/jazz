@@ -2,6 +2,18 @@ package net.bodz.bas.gui.style;
 
 public interface IImageData {
 
+    int getWidth();
+
+    int getHeight();
+
+    int getDepth();
+
+    int getScanlinePad();
+
+    // PaletteData getPaletteData();
+
+    byte[] getData();
+
     /**
      * Returns the alpha value at offset <code>x</code> in scanline <code>y</code> in the receiver's
      * alpha data. The alpha value is between 0 (transparent) and 255 (opaque).
@@ -190,8 +202,4 @@ public interface IImageData {
      */
     void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex);
 
-}
-
-enum TransparencyType {
-    none, mask, pixel, alpha,
 }

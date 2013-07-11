@@ -44,4 +44,19 @@ public abstract class AbstractCommand
         return image;
     }
 
+    @Override
+    public String getMenuItem() {
+        return null;
+    }
+
+    @Override
+    public String getToolItem() {
+        return null;
+    }
+
+    @Override
+    public String getViewId() {
+        return null;
+    }
+
 }
