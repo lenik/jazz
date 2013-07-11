@@ -1,11 +1,15 @@
 package net.bodz.swt.viz.util;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.gui.style.IImageData;
 import net.bodz.bas.gui.style.ImageUsage;
+import net.bodz.swt.gui.style.SwtImageMapper;
 import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 
@@ -36,10 +40,14 @@ public class SwtInject {
 
     public void inject(Item item, ISwtControlStyleClass style)
             throws InjectException {
+        Device device = item.getDisplay();
+
         try {
-            Image icon = style.getImage(ImageUsage.NORMAL);
-            if (icon != null)
-                item.setImage(icon);
+            IImageData icon = style.getImage(ImageUsage.NORMAL);
+            if (icon != null) {
+                ImageData iconData = SwtImageMapper.convert(icon);
+                item.setImage(new Image(device, iconData));
+            }
 
             String label = style.getLabel();
             if (label != null) {
@@ -55,12 +63,19 @@ public class SwtInject {
 
             } else if (item instanceof ToolItem) {
                 ToolItem toolItem = (ToolItem) item;
-                Image hoverImage = style.getImage(ImageUsage.HOVER);
-                if (hoverImage != null)
-                    toolItem.setHotImage(hoverImage);
-                Image disabledImage = style.getImage(ImageUsage.DISABLED);
-                if (disabledImage != null)
-                    toolItem.setDisabledImage(disabledImage);
+
+                IImageData hoverImage = style.getImage(ImageUsage.HOVER);
+                if (hoverImage != null) {
+                    ImageData hoverImageData = SwtImageMapper.convert(hoverImage);
+                    toolItem.setHotImage(new Image(device, hoverImageData));
+                }
+
+                IImageData disabledImage = style.getImage(ImageUsage.DISABLED);
+                if (disabledImage != null) {
+                    ImageData disabledImageData = SwtImageMapper.convert(disabledImage);
+                    toolItem.setDisabledImage(new Image(device, disabledImageData));
+                }
+
                 // toolItem.setToolTipText(doc);
 
             } else if (item instanceof ExpandItem) {

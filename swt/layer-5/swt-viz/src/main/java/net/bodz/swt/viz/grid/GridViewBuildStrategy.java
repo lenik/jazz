@@ -3,19 +3,25 @@ package net.bodz.swt.viz.grid;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.gui.style.IImageData;
+import net.bodz.bas.gui.style.ImageUsage;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.gui.style.SwtImageMapper;
 import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
@@ -41,7 +47,7 @@ public class GridViewBuildStrategy
     @Override
     protected void setup() {
         super.setup();
-        put(Object.class, new R_Object(this));
+        put(Object.class, new ObjectVbo(this));
         put(Invocation.class, new InvocationVbo(this));
     }
 
@@ -85,9 +91,16 @@ public class GridViewBuildStrategy
 
         // Column #1
         Label iconLabel = new Label(grid, SWT.NONE);
+
+        Image iconImage = null;
+        IImageData iconImageData = style == null ? null : style.getImage(ImageUsage.NORMAL);
+        Display device = grid.getDisplay();
+
         try {
-            Image icon = style == null ? null : style.getIcon();
-            if (icon == null) {
+            if (iconImageData != null) {
+                ImageData _imageData = SwtImageMapper.convert(iconImageData);
+                iconImage = new Image(device, _imageData);
+            } else {
                 String iconPath;
                 int modifiers = entry.getModifiers();
                 if (descriptor instanceof GUIFieldMeta)
@@ -102,20 +115,21 @@ public class GridViewBuildStrategy
                     iconPath = retvalIcons.getMod(modifiers);
                 else
                     iconPath = config.defaultIcon;
-                icon = SWTResources.getImageRes(iconPath);
+
+                iconImage = SWTResources.getImageRes(iconPath);
             }
-            iconLabel.setImage(icon);
         } catch (CreateException e) {
             throw new ViewBuilderException(tr._("Failed to render icon"), e);
         }
+        iconLabel.setImage(iconImage);
 
         // Column #2
         Label label = new Label(grid, SWT.NONE);
-        String labelString = style == null ? null : style.getLabel();
-        if (labelString == null)
-            labelString = name;
-        if (labelString != null)
-            label.setText(labelString);
+        iString iLabel = entry.getLabel();
+        if (iLabel == null)
+            label.setText(name);
+        else
+            label.setText(iLabel.toString());
 
         // Column #3
         Control child;
