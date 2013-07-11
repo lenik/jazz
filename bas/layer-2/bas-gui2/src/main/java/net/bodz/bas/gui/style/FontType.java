@@ -14,11 +14,16 @@ public class FontType
     private static final long serialVersionUID = 1L;
 
     FontUseMode fontUse;
-    FontStyleMode fontStyle;
+
+    String fontFamily;
+
     FontSizeType fontSizeType;
     LengthMeasure fontSize;
-    FontVariantMode fontVariant;
+
+    FontStyleMode fontStyle;
     FontWeightMode fontWeight;
+
+    FontVariantMode fontVariant;
     TextDecorationFlags textDecoration;
 
     @Override
@@ -32,13 +37,13 @@ public class FontType
     }
 
     @Override
-    public FontStyleMode getFontStyle() {
-        return fontStyle;
+    public String getFontFamily() {
+        return fontFamily;
     }
 
     @Override
-    public void setFontStyle(FontStyleMode fontStyle) {
-        this.fontStyle = fontStyle;
+    public void setFontFamily(String fontFamily) {
+        this.fontFamily = fontFamily;
     }
 
     @Override
@@ -62,13 +67,13 @@ public class FontType
     }
 
     @Override
-    public FontVariantMode getFontVariant() {
-        return fontVariant;
+    public FontStyleMode getFontStyle() {
+        return fontStyle;
     }
 
     @Override
-    public void setFontVariant(FontVariantMode fontVariant) {
-        this.fontVariant = fontVariant;
+    public void setFontStyle(FontStyleMode fontStyle) {
+        this.fontStyle = fontStyle;
     }
 
     @Override
@@ -79,6 +84,16 @@ public class FontType
     @Override
     public void setFontWeight(FontWeightMode fontWeight) {
         this.fontWeight = fontWeight;
+    }
+
+    @Override
+    public FontVariantMode getFontVariant() {
+        return fontVariant;
+    }
+
+    @Override
+    public void setFontVariant(FontVariantMode fontVariant) {
+        this.fontVariant = fontVariant;
     }
 
     @Override
