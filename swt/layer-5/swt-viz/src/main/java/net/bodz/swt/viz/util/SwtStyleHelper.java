@@ -2,12 +2,15 @@ package net.bodz.swt.viz.util;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.color.IColor_RGB24;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.swt.gui.style.SwtFontDataMapper;
 import net.bodz.swt.viz.ISwtControlStyleClass;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 
@@ -57,8 +60,10 @@ public class SwtStyleHelper {
                     rgb.getRed8(), rgb.getGreen8(), rgb.getBlue8()));
         }
 
-        IFontType font = style.getFont();
-        if (font != null) {
+        IFontType fontType = style.getFontType();
+        if (fontType != null) {
+            FontData fontData = SwtFontDataMapper.convert(fontType);
+            Font font = new Font(device, fontData);
             control.setFont(font);
         }
 

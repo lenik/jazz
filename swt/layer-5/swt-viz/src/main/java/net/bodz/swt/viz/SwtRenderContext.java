@@ -1,6 +1,9 @@
 package net.bodz.swt.viz;
 
 import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.css3.property.VisibilityMode;
@@ -8,10 +11,12 @@ import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c3.dialog.SwtDialogs;
 import net.bodz.swt.gui.model.ICommand;
 import net.bodz.swt.gui.style.SwtColors;
+import net.bodz.swt.gui.style.SwtFontDataMapper;
 
 public class SwtRenderContext {
 
@@ -48,11 +53,17 @@ public class SwtRenderContext {
 
         IFontType fontType = style.getFontType();
         if (fontType != null) {
-            control.setFont(fontType);
+            FontData fontData = SwtFontDataMapper.convert(fontType);
+            control.setFont(new Font(device, fontData));
         }
 
-        if (style.getWidth() != null)
-            control.setSize(style.getWidth());
+        Point size = control.getSize();
+        style.getWidthType();
+        style.getHeightType();
+        LengthMeasure width = style.getWidth();
+        LengthMeasure height = style.getHeight();
+
+        // TODO set size...
     }
 
     public void addAction(ICommand action) {

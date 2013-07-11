@@ -17,9 +17,9 @@ public interface IFontType
 
     void setFontUse(FontUseMode fontUse);
 
-    FontStyleMode getFontStyle();
+    String getFontFamily();
 
-    void setFontStyle(FontStyleMode fontStyle);
+    void setFontFamily(String fontFamily);
 
     FontSizeType getFontSizeType();
 
@@ -29,13 +29,17 @@ public interface IFontType
 
     void setFontSize(LengthMeasure fontSize);
 
-    FontVariantMode getFontVariant();
+    FontStyleMode getFontStyle();
 
-    void setFontVariant(FontVariantMode fontVariant);
+    void setFontStyle(FontStyleMode fontStyle);
 
     FontWeightMode getFontWeight();
 
     void setFontWeight(FontWeightMode fontWeight);
+
+    FontVariantMode getFontVariant();
+
+    void setFontVariant(FontVariantMode fontVariant);
 
     TextDecorationFlags getTextDecoration();
 
