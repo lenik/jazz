@@ -31,7 +31,7 @@ import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.model.AbstractCommand;
 import net.bodz.swt.gui.model.ICommand;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 
@@ -52,7 +52,7 @@ public class ExceptionVbo
 
     @Override
     public Control buildView(final SwtRenderContext rc, final IRefEntry<Throwable> entry,
-            final ISwtControlStyleClass style, final Composite parent, final int styleInt)
+            final ISwtControlStyleDeclaration style, final Composite parent, final int styleInt)
             throws ViewBuilderException, SWTException {
 
         final Display display = parent == null ? Display.getCurrent() : parent.getDisplay();

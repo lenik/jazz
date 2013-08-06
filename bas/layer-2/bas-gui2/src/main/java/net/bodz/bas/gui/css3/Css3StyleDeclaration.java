@@ -3,25 +3,25 @@ package net.bodz.bas.gui.css3;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Css3StyleClass
-        extends MappedCss3StyleClass {
+public class Css3StyleDeclaration
+        extends MappedCss3StyleDeclaration {
 
-    private ICss3StyleClass parent;
+    private ICss3StyleDeclaration parent;
     private Map<String, String> map = new LinkedHashMap<String, String>();
 
-    public Css3StyleClass(ICss3StyleClass parent) {
+    public Css3StyleDeclaration(ICss3StyleDeclaration parent) {
         setParent(parent);
     }
 
     @Override
-    public ICss3StyleClass getParent() {
+    public ICss3StyleDeclaration getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(ICss3StyleClass parent) {
+    public void setParent(ICss3StyleDeclaration parent) {
         if (parent == null)
-            parent = new StaticCss3StyleClass();
+            parent = new StaticCss3StyleDeclaration();
         this.parent = parent;
     }
 

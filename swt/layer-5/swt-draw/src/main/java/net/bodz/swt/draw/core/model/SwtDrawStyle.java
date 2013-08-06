@@ -5,7 +5,7 @@ import net.bodz.swt.gui.style.SwtManagedPattern;
 import net.bodz.swt.gui.style.SwtManagedFont;
 import net.bodz.swt.gui.style.SwtStrokeType;
 
-public class SwtStyleClass {
+public class SwtDrawStyle {
 
     public SwtManagedColor color;
     public SwtManagedColor fillColor;

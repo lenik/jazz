@@ -10,12 +10,12 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.style.IImageData;
 import net.bodz.bas.gui.style.ImageUsage;
 import net.bodz.swt.gui.style.SwtImageMapper;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 
 public class SwtInject {
 
-    public static int styleFx(int styleBits, ISwtControlStyleClass style) {
+    public static int styleFx(int styleBits, ISwtControlStyleDeclaration style) {
         if (style != null) {
             styleBits |= SWT.BORDER;
         }
@@ -26,7 +26,7 @@ public class SwtInject {
         return styleFx(styleBits, entry.getStyle());
     }
 
-    public void inject(Widget widget, ISwtControlStyleClass data)
+    public void inject(Widget widget, ISwtControlStyleDeclaration data)
             throws InjectException {
         if (widget instanceof Item)
             inject((Item) widget, data);
@@ -38,18 +38,18 @@ public class SwtInject {
             inject((ToolTip) widget, data);
     }
 
-    public void inject(Item item, ISwtControlStyleClass style)
+    public void inject(Item item, ISwtControlStyleDeclaration styleDecl)
             throws InjectException {
         Device device = item.getDisplay();
 
         try {
-            IImageData icon = style.getImage(ImageUsage.NORMAL);
+            IImageData icon = styleDecl.getImage(ImageUsage.NORMAL);
             if (icon != null) {
                 ImageData iconData = SwtImageMapper.convert(icon);
                 item.setImage(new Image(device, iconData));
             }
 
-            String label = style.getLabel();
+            String label = styleDecl.getLabel();
             if (label != null) {
                 // toolitem bugfix.
                 boolean notext = item instanceof ToolItem && icon != null;
@@ -64,13 +64,13 @@ public class SwtInject {
             } else if (item instanceof ToolItem) {
                 ToolItem toolItem = (ToolItem) item;
 
-                IImageData hoverImage = style.getImage(ImageUsage.HOVER);
+                IImageData hoverImage = styleDecl.getImage(ImageUsage.HOVER);
                 if (hoverImage != null) {
                     ImageData hoverImageData = SwtImageMapper.convert(hoverImage);
                     toolItem.setHotImage(new Image(device, hoverImageData));
                 }
 
-                IImageData disabledImage = style.getImage(ImageUsage.DISABLED);
+                IImageData disabledImage = styleDecl.getImage(ImageUsage.DISABLED);
                 if (disabledImage != null) {
                     ImageData disabledImageData = SwtImageMapper.convert(disabledImage);
                     toolItem.setDisabledImage(new Image(device, disabledImageData));
@@ -90,7 +90,7 @@ public class SwtInject {
         }
     }
 
-    public void inject(Menu menu, ISwtControlStyleClass style) {
+    public void inject(Menu menu, ISwtControlStyleDeclaration style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:
@@ -106,7 +106,7 @@ public class SwtInject {
             menu.setEnabled(style.getEnabled());
     }
 
-    public void inject(ScrollBar bar, ISwtControlStyleClass style) {
+    public void inject(ScrollBar bar, ISwtControlStyleDeclaration style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:
@@ -122,7 +122,7 @@ public class SwtInject {
             bar.setEnabled(style.getEnabled());
     }
 
-    public void inject(ToolTip tooltip, ISwtControlStyleClass style) {
+    public void inject(ToolTip tooltip, ISwtControlStyleDeclaration style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:

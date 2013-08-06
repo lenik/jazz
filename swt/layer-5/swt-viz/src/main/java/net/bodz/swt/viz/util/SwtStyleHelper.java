@@ -11,27 +11,27 @@ import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.color.IColor_RGB24;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.gui.style.SwtFontDataMapper;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 
 public class SwtStyleHelper {
 
     public void addEffects(Control control, ISwtGUIRefEntry<?> entry)
             throws ViewBuilderException {
-        ISwtControlStyleClass stylesheet = entry.getStyle();
-        if (stylesheet == null)
+        ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        if (styleDecl == null)
             return;
-        addEffects(control, stylesheet);
+        addEffects(control, styleDecl);
     }
 
-    public void addEffects(Control control, ISwtControlStyleClass style) {
+    public void addEffects(Control control, ISwtControlStyleDeclaration styleDecl) {
         Device device = control.getDisplay();
 
-        if (style.getTooltip() != null)
-            control.setToolTipText(style.getTooltip());
+        if (styleDecl.getTooltip() != null)
+            control.setToolTipText(styleDecl.getTooltip());
 
-        if (style.getVisibility() != null)
-            switch (style.getVisibility()) {
+        if (styleDecl.getVisibility() != null)
+            switch (styleDecl.getVisibility()) {
             case visible:
                 control.setVisible(true);
                 break;
@@ -43,32 +43,32 @@ public class SwtStyleHelper {
             default:
             }
 
-        if (style.getEnabled() != null)
-            control.setEnabled(style.getEnabled());
+        if (styleDecl.getEnabled() != null)
+            control.setEnabled(styleDecl.getEnabled());
 
-        IColor color = style.getColor();
-        if (style.getColor() != null) {
+        IColor color = styleDecl.getColor();
+        if (styleDecl.getColor() != null) {
             IColor_RGB24 rgb = color.toRGB24();
             control.setForeground(new Color(device, //
                     rgb.getRed8(), rgb.getGreen8(), rgb.getBlue8()));
         }
 
-        color = style.getBackgroundColor();
+        color = styleDecl.getBackgroundColor();
         if (color != null) {
             IColor_RGB24 rgb = color.toRGB24();
             control.setBackground(new Color(device, //
                     rgb.getRed8(), rgb.getGreen8(), rgb.getBlue8()));
         }
 
-        IFontType fontType = style.getFontType();
+        IFontType fontType = styleDecl.getFontType();
         if (fontType != null) {
             FontData fontData = SwtFontDataMapper.convert(fontType);
             Font font = new Font(device, fontData);
             control.setFont(font);
         }
 
-        if (style.getWidth() != null)
-            control.setSize(style.getWidth());
+        if (styleDecl.getWidth() != null)
+            control.setSize(styleDecl.getWidth());
     }
 
 }

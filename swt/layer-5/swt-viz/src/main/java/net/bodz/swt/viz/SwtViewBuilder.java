@@ -31,21 +31,21 @@ public abstract class SwtViewBuilder<T>
             if (ctx != null && !(ctx instanceof SwtRenderContext))
                 throw new OutOfDomainException("context", ctx, SwtRenderContext.class);
 
-            ISwtControlStyleClass style = null;
+            ISwtControlStyleDeclaration styleDecl = null;
             if (entry instanceof ISwtGUIRefEntry<?>)
-                style = ((ISwtGUIRefEntry<?>) entry).getStyle();
+                styleDecl = ((ISwtGUIRefEntry<?>) entry).getStyle();
 
             // XXX - or create a new swt-context to include the object-context?
             SwtRenderContext rc = null; // (SWTRenderContext) context;
 
-            return buildView(rc, entry, style, null, SWT.NONE);
+            return buildView(rc, entry, styleDecl, null, SWT.NONE);
 
         } catch (SWTException e) {
             throw new ViewBuilderException(e);
         }
     }
 
-    public abstract Control buildView(SwtRenderContext rc, IRefEntry<T> entry, ISwtControlStyleClass style,
+    public abstract Control buildView(SwtRenderContext rc, IRefEntry<T> entry, ISwtControlStyleDeclaration styleDecl,
             Composite parent, int styleInt)
             throws ViewBuilderException, SWTException;
 

@@ -1,12 +1,12 @@
 package net.bodz.bas.gui.style;
 
-import net.bodz.bas.gui.css3.ICss3StyleClass;
+import net.bodz.bas.gui.css3.ICss3StyleDeclaration;
 
-public interface IGUIElementStyleClass
-        extends ICss3StyleClass, IInputControlStyle {
+public interface IGUIElementStyleDeclaration
+        extends ICss3StyleDeclaration, IInputControlStyleDeclaration {
 
     @Override
-    IGUIElementStyleClass getParent();
+    IGUIElementStyleDeclaration getParent();
 
     IFontType getFontType();
 

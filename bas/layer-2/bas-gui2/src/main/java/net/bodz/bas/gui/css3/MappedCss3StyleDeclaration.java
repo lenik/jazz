@@ -13,9 +13,9 @@ import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 
-public abstract class MappedCss3StyleClass
+public abstract class MappedCss3StyleDeclaration
         extends AbstractPropertiesMapper
-        implements ICss3StyleClass {
+        implements ICss3StyleDeclaration {
 
     protected OffsetType getOffsetTypeProperty(String key, OffsetType inherited, boolean inheritByDefault) {
         String str = getProperty(key);

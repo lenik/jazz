@@ -22,25 +22,25 @@ import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.style.SwtImageMapper;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuildStrategy;
+import net.bodz.swt.viz.SwtViewBuilderFactory;
 import net.bodz.swt.viz.form.vbo.InvocationVbo;
 import net.bodz.swt.viz.util.ModifierIcon;
 
-public class GridViewBuildStrategy
-        extends SwtViewBuildStrategy {
+public class GridViewBuilderFactory
+        extends SwtViewBuilderFactory {
 
     private static final long serialVersionUID = -6476584130668546414L;
 
     protected final GridConfig config;
 
-    public GridViewBuildStrategy(GridConfig config) {
+    public GridViewBuilderFactory(GridConfig config) {
         this.config = config;
     }
 
-    public GridViewBuildStrategy() {
+    public GridViewBuilderFactory() {
         this(GridConfig.getDefault());
     }
 
@@ -77,15 +77,16 @@ public class GridViewBuildStrategy
         GridLayout gridLayout = new GridLayout(3, false);
         grid.setLayout(gridLayout);
         for (IRefEntry<?> ent : struct.getRefEntries()) {
-            ISwtControlStyleClass style = null;
+            ISwtControlStyleDeclaration styleDecl = null;
             if (ent instanceof ISwtGUIRefEntry<?>)
-                style = ((ISwtGUIRefEntry<?>) ent).getStyle();
-            _renderChild(rc, grid, ent, style);
+                styleDecl = ((ISwtGUIRefEntry<?>) ent).getStyle();
+            _renderChild(rc, grid, ent, styleDecl);
         }
         return grid;
     }
 
-    void _renderChild(final SwtRenderContext rc, Composite grid, IRefEntry<?> entry, ISwtControlStyleClass style)
+    void _renderChild(final SwtRenderContext rc, Composite grid, IRefEntry<?> entry,
+            ISwtControlStyleDeclaration styleDecl)
             throws ViewBuilderException, SWTException {
         String name = entry.getName();
 
@@ -93,7 +94,7 @@ public class GridViewBuildStrategy
         Label iconLabel = new Label(grid, SWT.NONE);
 
         Image iconImage = null;
-        IImageData iconImageData = style == null ? null : style.getImage(ImageUsage.NORMAL);
+        IImageData iconImageData = styleDecl == null ? null : styleDecl.getImage(ImageUsage.NORMAL);
         Display device = grid.getDisplay();
 
         try {
@@ -133,7 +134,7 @@ public class GridViewBuildStrategy
 
         // Column #3
         Control child;
-        child = GridViewBuildStrategy.this.render(rc, entry, grid, styleFx(SWT.NONE, style));
+        child = GridViewBuilderFactory.this.render(rc, entry, grid, styleFx(SWT.NONE, styleDecl));
 
         Point iconz = iconLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point labelz = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -153,7 +154,7 @@ public class GridViewBuildStrategy
         label.setLayoutData(labeld);
         child.setLayoutData(childd);
 
-        rc.addEffects(child, style);
+        rc.addEffects(child, styleDecl);
     }
 
 }

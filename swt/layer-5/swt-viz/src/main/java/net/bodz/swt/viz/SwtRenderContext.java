@@ -30,12 +30,12 @@ public class SwtRenderContext {
         if (tooltip != null)
             control.setToolTipText(tooltip.toPlainText());
 
-        ISwtControlStyleClass style = entry.getStyle();
-        if (style != null)
-            addEffects(control, style);
+        ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        if (styleDecl != null)
+            addEffects(control, styleDecl);
     }
 
-    public void addEffects(Control control, ISwtControlStyleClass style) {
+    public void addEffects(Control control, ISwtControlStyleDeclaration style) {
         Device device = control.getDisplay();
 
         if (style.getVisibility() != null)

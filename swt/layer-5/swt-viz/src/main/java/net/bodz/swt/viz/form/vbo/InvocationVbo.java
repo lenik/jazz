@@ -17,23 +17,23 @@ import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
-import net.bodz.swt.viz.grid.GridViewBuildStrategy;
+import net.bodz.swt.viz.grid.GridViewBuilderFactory;
 
 public class InvocationVbo
         extends SwtViewBuilder<IInvocation> {
 
-    protected final GridViewBuildStrategy gridStyle;
+    protected final GridViewBuilderFactory gridStyle;
 
-    public InvocationVbo(GridViewBuildStrategy gridStyle) {
+    public InvocationVbo(GridViewBuilderFactory gridStyle) {
         this.gridStyle = gridStyle;
     }
 
     @Override
-    public Control buildView(final SwtRenderContext rc, IRefEntry<IInvocation> entry, ISwtControlStyleClass style,
-            Composite parent, int styleInt)
+    public Control buildView(final SwtRenderContext rc, IRefEntry<IInvocation> entry,
+            ISwtControlStyleDeclaration styleDecl, Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
 
         if (!(entry instanceof IInvocationRefcomp))
@@ -41,7 +41,7 @@ public class InvocationVbo
 
         final IInvocationRefcomp refcomp = (IRefcomp<?>) entry;
         InvocationDescriptor descriptor = refcomp.getDescriptor();
-        BorderStyleMode borderStyle = style.getBorder().getStyle();
+        BorderStyleMode borderStyle = styleDecl.getBorder().getStyle();
 
         final Composite comp = gridStyle.renderStruct(rc, refcomp, parent, styleInt);
         final Composite opbar = new Composite(comp, SWT.NONE);
@@ -53,7 +53,7 @@ public class InvocationVbo
         opbar.setLayout(rowLayout);
         {
             final Button button = new Button(opbar, SWT.NONE);
-            String label = style.getLabel();
+            String label = styleDecl.getLabel();
             if (label == null)
                 label = entry.getName();
             // hint.getIcon();

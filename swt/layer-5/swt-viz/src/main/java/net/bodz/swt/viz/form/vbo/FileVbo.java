@@ -25,7 +25,7 @@ import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 
@@ -33,7 +33,7 @@ public class FileVbo
         extends SwtViewBuilder<File> {
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<File> entry, ISwtControlStyleClass style,
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<File> entry, ISwtControlStyleDeclaration style,
             final Composite parent, final int swtStyle)
             throws ViewBuilderException, SWTException {
 

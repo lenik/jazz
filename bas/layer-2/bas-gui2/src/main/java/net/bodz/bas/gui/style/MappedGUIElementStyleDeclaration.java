@@ -1,10 +1,10 @@
 package net.bodz.bas.gui.style;
 
-import net.bodz.bas.gui.css3.MappedCss3StyleClass;
+import net.bodz.bas.gui.css3.MappedCss3StyleDeclaration;
 
-public abstract class MappedGUIElementStyleClass
-        extends MappedCss3StyleClass
-        implements IGUIElementStyleClass {
+public abstract class MappedGUIElementStyleDeclaration
+        extends MappedCss3StyleDeclaration
+        implements IGUIElementStyleDeclaration {
 
     @Override
     public IFontType getFontType() {
