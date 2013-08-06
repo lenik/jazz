@@ -20,7 +20,7 @@ import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 
@@ -32,7 +32,7 @@ public class DateVbo
     }
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<Date> entry, ISwtControlStyleClass style,
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<Date> entry, ISwtControlStyleDeclaration style,
             Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
 

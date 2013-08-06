@@ -7,10 +7,10 @@ import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 
-public class StaticCss3StyleClass
-        implements ICss3StyleClass {
+public class StaticCss3StyleDeclaration
+        implements ICss3StyleDeclaration {
 
-    ICss3StyleClass parent;
+    ICss3StyleDeclaration parent;
 
     OffsetType widthType;
     OffsetType heightType;
@@ -117,12 +117,12 @@ public class StaticCss3StyleClass
     Integer widows;
 
     @Override
-    public ICss3StyleClass getParent() {
+    public ICss3StyleDeclaration getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(ICss3StyleClass parent) {
+    public void setParent(ICss3StyleDeclaration parent) {
         this.parent = parent;
     }
 

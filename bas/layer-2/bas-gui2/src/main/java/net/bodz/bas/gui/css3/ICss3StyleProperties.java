@@ -8,9 +8,11 @@ import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 
 /**
+ * CSS Declaration Properties.
+ * 
  * @see <a href="http://www.w3.org/TR/CSS/#properties">CSS3 Properties</a>
  */
-public interface ICss3Properties {
+public interface ICss3StyleProperties {
     /**
      * This property specifies the content width of boxes.
      * 
@@ -515,9 +517,9 @@ public interface ICss3Properties {
     QuotesType getQuotesType();
 
     @_InheritedIfNull
-    List<Pair<String,String>> getQuotes();
+    List<Pair<String, String>> getQuotes();
 
-    void setQuotes(QuotesType quotesType, List<Pair<String,String>> quotes);
+    void setQuotes(QuotesType quotesType, List<Pair<String, String>> quotes);
 
     /**
      * The final order of characters in each block container is the same as if the bidi control

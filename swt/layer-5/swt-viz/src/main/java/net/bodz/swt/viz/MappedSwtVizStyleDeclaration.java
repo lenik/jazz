@@ -1,10 +1,10 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.style.MappedGUIElementStyleClass;
+import net.bodz.bas.gui.style.MappedGUIElementStyleDeclaration;
 
-public abstract class MappedSwtVizStyleClass
-        extends MappedGUIElementStyleClass
-        implements ISwtControlStyleClass /* , IDisposable */{
+public abstract class MappedSwtVizStyleDeclaration
+        extends MappedGUIElementStyleDeclaration
+        implements ISwtControlStyleDeclaration /* , IDisposable */{
 
     // @Override
     // public SwtColor getColor() {

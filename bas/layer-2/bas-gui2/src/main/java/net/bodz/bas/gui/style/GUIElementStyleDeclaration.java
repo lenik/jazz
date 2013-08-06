@@ -3,32 +3,32 @@ package net.bodz.bas.gui.style;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import net.bodz.bas.gui.css3.ICss3StyleClass;
+import net.bodz.bas.gui.css3.ICss3StyleDeclaration;
 
-public class GUIElementStyleClass
-        extends MappedGUIElementStyleClass {
+public class GUIElementStyleDeclaration
+        extends MappedGUIElementStyleDeclaration {
 
-    private IGUIElementStyleClass parent;
+    private IGUIElementStyleDeclaration parent;
     private Map<String, String> map = new LinkedHashMap<String, String>();
 
-    public GUIElementStyleClass(IGUIElementStyleClass parent) {
+    public GUIElementStyleDeclaration(IGUIElementStyleDeclaration parent) {
         setParent(parent);
     }
 
     @Override
-    public IGUIElementStyleClass getParent() {
+    public IGUIElementStyleDeclaration getParent() {
         return parent;
     }
 
     /**
      * @throws ClassCastException
-     *             If the parent isn't a {@link IGUIElementStyleClass}.
+     *             If the parent isn't a {@link IGUIElementStyleDeclaration}.
      */
     @Override
-    public void setParent(ICss3StyleClass _parent) {
-        IGUIElementStyleClass parent = (IGUIElementStyleClass) _parent;
+    public void setParent(ICss3StyleDeclaration _parent) {
+        IGUIElementStyleDeclaration parent = (IGUIElementStyleDeclaration) _parent;
         if (parent == null)
-            parent = new StaticGUIStyleClass();
+            parent = new StaticGUIStyleDeclaration();
         this.parent = parent;
     }
 

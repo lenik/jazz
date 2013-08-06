@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.bas.gui.style.IGUIElementStyleClass;
+import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.bas.gui.style.IImageData;
 import net.bodz.bas.gui.style.ImageUsage;
 import net.bodz.bas.gui.xjdoc.GUIElementDoc;
@@ -55,7 +55,7 @@ public abstract class AbstractPage
     @Override
     public ImageData getPageIcon() {
         GUIElementDoc gdoc = classDoc.as(GUIElementDoc.class);
-        IGUIElementStyleClass style = gdoc.getStyleClass();
+        IGUIElementStyleDeclaration style = gdoc.getStyleClass();
         IImageData image = style.getImage(ImageUsage.NORMAL);
         // TODO Convert to SWT image data...
         return null;

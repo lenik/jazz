@@ -18,7 +18,7 @@ import net.bodz.bas.traits.ValidationException;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 
@@ -26,7 +26,7 @@ public class BooleanVbo
         extends SwtViewBuilder<Boolean> {
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<Boolean> entry, ISwtControlStyleClass style,
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<Boolean> entry, ISwtControlStyleDeclaration style,
             Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
 

@@ -1,6 +1,6 @@
 package net.bodz.bas.gui.style;
 
-public interface IInputControlStyle {
+public interface IInputControlStyleDeclaration {
 
     Boolean getEnabled();
 

@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.swt.viz.ISwtControlStyleClass;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.SwtViewBuilder;
 
@@ -14,7 +14,7 @@ public class NumberVbo
         extends SwtViewBuilder<Number> {
 
     @Override
-    public Control buildView(SwtRenderContext rc, IRefEntry<Number> entry, ISwtControlStyleClass style,
+    public Control buildView(SwtRenderContext rc, IRefEntry<Number> entry, ISwtControlStyleDeclaration style,
             Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
 

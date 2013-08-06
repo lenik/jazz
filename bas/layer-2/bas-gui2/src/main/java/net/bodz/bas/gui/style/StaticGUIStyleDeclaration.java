@@ -3,11 +3,11 @@ package net.bodz.bas.gui.style;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.gui.css3.StaticCss3StyleClass;
+import net.bodz.bas.gui.css3.StaticCss3StyleDeclaration;
 
-public class StaticGUIStyleClass
-        extends StaticCss3StyleClass
-        implements IGUIElementStyleClass {
+public class StaticGUIStyleDeclaration
+        extends StaticCss3StyleDeclaration
+        implements IGUIElementStyleDeclaration {
 
     IFontType fontType;
     IStrokeType strokeType;
@@ -20,8 +20,8 @@ public class StaticGUIStyleClass
     Integer maxLength;
 
     @Override
-    public IGUIElementStyleClass getParent() {
-        return (IGUIElementStyleClass) super.getParent();
+    public IGUIElementStyleDeclaration getParent() {
+        return (IGUIElementStyleDeclaration) super.getParent();
     }
 
     @Override

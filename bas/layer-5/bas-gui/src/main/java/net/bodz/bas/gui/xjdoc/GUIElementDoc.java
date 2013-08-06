@@ -1,8 +1,8 @@
 package net.bodz.bas.gui.xjdoc;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.gui.style.GUIElementStyleClass;
-import net.bodz.bas.gui.style.IGUIElementStyleClass;
+import net.bodz.bas.gui.style.GUIElementStyleDeclaration;
+import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
@@ -11,7 +11,7 @@ public class GUIElementDoc
 
     private static final long serialVersionUID = 1L;
 
-    private transient IGUIElementStyleClass styleClass;
+    private transient IGUIElementStyleDeclaration styleClass;
 
     public GUIElementDoc(IJavaElementDoc _orig) {
         super(_orig);
@@ -21,9 +21,9 @@ public class GUIElementDoc
         super(_orig.getWrapped());
     }
 
-    public synchronized IGUIElementStyleClass getStyleClass() {
+    public synchronized IGUIElementStyleDeclaration getStyleClass() {
         if (styleClass == null) {
-            GUIElementStyleClass style = new GUIElementStyleClass(null);
+            GUIElementStyleDeclaration style = new GUIElementStyleDeclaration(null);
             String script = (String) getTag("style");
             if (script != null)
                 try {

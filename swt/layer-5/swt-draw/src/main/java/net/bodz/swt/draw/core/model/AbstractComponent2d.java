@@ -10,7 +10,7 @@ public class AbstractComponent2d
 
     private static final long serialVersionUID = 1L;
 
-    SwtStyleClass style;
+    SwtDrawStyle style;
 
     public AbstractComponent2d(IPrimitive2d _orig) {
         super(_orig);

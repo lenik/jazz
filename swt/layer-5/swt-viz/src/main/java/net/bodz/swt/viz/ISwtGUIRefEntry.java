@@ -6,6 +6,6 @@ public interface ISwtGUIRefEntry<T>
         extends IGUIRefEntry<T> {
 
     @Override
-    ISwtControlStyleClass getStyle();
+    ISwtControlStyleDeclaration getStyle();
 
 }
