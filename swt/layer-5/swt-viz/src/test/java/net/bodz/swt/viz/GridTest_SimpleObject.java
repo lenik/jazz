@@ -5,16 +5,16 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Label;
 import org.junit.Test;
 
-import user.ASL;
-import user.ComplexPerson;
-import user.School;
-import user.SimplePerson;
-
 import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
-import net.bodz.swt.viz.grid.GridViewBuildStrategy;
+import net.bodz.swt.viz.grid.GridViewBuilderFactory;
+
+import user.ASL;
+import user.ComplexPerson;
+import user.School;
+import user.SimplePerson;
 
 /**
  * @style width: 500; height: 400
@@ -45,9 +45,9 @@ public class GridTest_SimpleObject
 
         SwtRenderContext rc = new SwtRenderContext();
         ISwtGUIRefEntry<School> schoolVar = GUIVars.wrap(school);
-        GridViewBuildStrategy style = new GridViewBuildStrategy();
+        GridViewBuilderFactory viewBuilderFactory = new GridViewBuilderFactory();
         try {
-            style.render(rc, schoolVar, body, SWT.BORDER);
+            viewBuilderFactory.render(rc, schoolVar, body, SWT.BORDER);
         } catch (ViewBuilderException e) {
             throw new GUIException(e);
         } catch (SWTException e) {
