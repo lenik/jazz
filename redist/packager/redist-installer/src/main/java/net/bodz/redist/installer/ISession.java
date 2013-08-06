@@ -8,8 +8,8 @@ import java.util.NoSuchElementException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.vfs.IFsEntry;
 import net.bodz.bas.vfs.IFsDir;
+import net.bodz.bas.vfs.IFsEntry;
 import net.bodz.redist.installer.util.Flags;
 
 public interface ISession {

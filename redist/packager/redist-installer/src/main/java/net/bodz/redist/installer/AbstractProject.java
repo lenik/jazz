@@ -46,7 +46,7 @@ public class AbstractProject
             logo = SWTResources.getImageDataRes(artifactClass, respath);
         }
 
-        ArtifactDoc artifactDoc = getXjdoc();
+        ArtifactDoc artifactDoc = getXjdoc().as(ArtifactDoc.class);
 
         URL iconURL = artifactDoc.getIcon();
         if (iconURL != null) {
