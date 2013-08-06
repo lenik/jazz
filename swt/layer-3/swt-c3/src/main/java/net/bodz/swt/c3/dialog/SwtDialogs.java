@@ -28,7 +28,7 @@ import net.bodz.bas.gui.dialog.AbstractUserDialogs;
 import net.bodz.bas.gui.dialog.IDirectiveCommand;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.ValueEntry;
-import net.bodz.bas.repr.viz.IViewBuildStrategy;
+import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.rtx.Negotiation;
@@ -45,7 +45,7 @@ import net.bodz.swt.gui.model.ICommandGroup;
 public class SwtDialogs
         extends AbstractUserDialogs {
 
-    static IViewBuildStrategy viewBuildStrategy;
+    static IViewBuilderFactory viewBuilderFactory;
 
     private final Shell parent;
     private final int style;
@@ -205,7 +205,7 @@ public class SwtDialogs
                     throws CreateException {
                 INegotiation negotiation = getNegotiation();
                 try {
-                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -240,7 +240,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -276,7 +276,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -342,7 +342,7 @@ public class SwtDialogs
                     throws SWTException, CreateException {
                 INegotiation negotiation = getNegotiation();
                 try {
-                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -375,12 +375,12 @@ public class SwtDialogs
 
     static class PreRenderred {
         private final INegotiation negotiation;
-        private final IViewBuildStrategy viz;
+        private final IViewBuilderFactory viz;
         private final StackComposite stack;
         private final Control[] controls;
         private int next;
 
-        public PreRenderred(INegotiation negotiation, Composite parent, IViewBuildStrategy style, int size) {
+        public PreRenderred(INegotiation negotiation, Composite parent, IViewBuilderFactory style, int size) {
             this.negotiation = negotiation;
             this.stack = new StackComposite(parent, SWT.BORDER);
             this.viz = style;
@@ -453,7 +453,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -479,7 +479,7 @@ public class SwtDialogs
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
-                        viewBuildStrategy.buildView(parent, wrap(value), negotiation);
+                        viewBuilderFactory.buildView(parent, wrap(value), negotiation);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -498,7 +498,7 @@ public class SwtDialogs
                 int size = candidates.size();
                 final Object[] keys = new Object[size];
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, viewBuildStrategy,
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, viewBuilderFactory,
                         size) : null;
                 try {
                     int index = 0;
@@ -575,7 +575,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuildStrategy.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -614,7 +614,7 @@ public class SwtDialogs
                     button.setSelection(selected);
                     keyButtons[index++] = new KeyButton(key, button);
                     try {
-                        viewBuildStrategy.buildView(parent, wrap(value), negotiation);
+                        viewBuilderFactory.buildView(parent, wrap(value), negotiation);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -650,7 +650,7 @@ public class SwtDialogs
 
                 final int size = candidates.size();
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, viewBuildStrategy,
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, viewBuilderFactory,
                         size) : null;
                 final _K[] keys = new _K[size];
                 int index = 0;
