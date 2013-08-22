@@ -8,27 +8,13 @@ import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.NoOptions;
 
 public abstract class AbstractViewBuilderFactory
         implements IViewBuilderFactory, II18nCapable {
 
     protected TypePoMap<IViewBuilder<?>> typeMap = new TypePoMap<>();
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public <T> IViewBuilder<T> getViewBuilder(Type type, Annotation[] annotations) {
-        Class<?> rawType;
-        // if (type.getClass() == Class.class)
-        if (type instanceof Class<?>)
-            rawType = (Class<?>) type;
-        else if (type instanceof ParameterizedType) {
-            ParameterizedType pt = (ParameterizedType) type;
-            rawType = (Class<?>) pt.getRawType();
-        } else
-            throw new IllegalArgumentException("Unsupported type: " + type);
-
-        return getViewBuilder((Class) rawType);
-    }
 
     @Override
     public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type) {
@@ -73,6 +59,22 @@ public abstract class AbstractViewBuilderFactory
             throw new IllegalArgumentException("Unsupported type: " + type);
 
         typeMap.put(rawType, viewBuilder);
+    }
+
+    @Override
+    public Object buildView(Object ctx, IRefEntry<?> entry)
+            throws ViewBuilderException {
+        return buildView(ctx, entry, NoOptions.getInstance());
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public Object buildView(Object ctx, IRefEntry<?> entry, IOptions options)
+            throws ViewBuilderException {
+        Class<?> valueType = entry.getValueType();
+        IViewBuilder viewBuilder = getViewBuilder(valueType);
+        Object view = viewBuilder.buildView(ctx, entry, options);
+        return view;
     }
 
 }
