@@ -10,7 +10,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.traits.ValidationException;
+import net.bodz.bas.mf.std.ValidationException;
 import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public class BMPImageType

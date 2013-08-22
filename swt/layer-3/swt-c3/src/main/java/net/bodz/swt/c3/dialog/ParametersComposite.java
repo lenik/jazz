@@ -2,7 +2,7 @@ package net.bodz.swt.c3.dialog;
 
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.traits.ValidationException;
+import net.bodz.bas.mf.std.ValidationException;
 
 public abstract class ParametersComposite
         extends Composite {

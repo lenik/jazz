@@ -26,7 +26,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.util.IValidationListener;
 import net.bodz.bas.gui.util.ValidationEvent;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.traits.ValidationException;
+import net.bodz.bas.mf.std.ValidationException;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.control.Controls;

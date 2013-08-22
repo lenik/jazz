@@ -1,7 +1,7 @@
 package net.bodz.bas.c.java.io;
 
-import static net.bodz.bas.c.java.util.regex.PatternTraits.globTextformMode;
-import static net.bodz.bas.c.java.util.regex.PatternTraits.textformMode;
+import static net.bodz.bas.c.java.util.regex.PatternMdaFeatures.globTextformMode;
+import static net.bodz.bas.c.java.util.regex.PatternMdaFeatures.textformMode;
 import static net.bodz.bas.rtx.Negotiation.list;
 import static net.bodz.bas.rtx.Negotiation.option;
 
@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.trait.Traits;
-import net.bodz.bas.traits.IParser;
+import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.mf.std.IParser;
 
 public class GlobFilenameFilter
         extends RegexFilenameFilter {
@@ -27,7 +27,7 @@ public class GlobFilenameFilter
     static IParser<Pattern> patternParser;
     static INegotiation globNegotiation;
     static {
-        patternParser = Traits.getTrait(Pattern.class, IParser.class);
+        patternParser = MdaFeatures.getMdaFeature(Pattern.class, IParser.class);
         globNegotiation = list(option(textformMode, globTextformMode));
     }
 

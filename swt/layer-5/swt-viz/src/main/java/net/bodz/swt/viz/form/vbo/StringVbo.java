@@ -11,14 +11,14 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.gui.css3.BorderBox;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.mf.std.IParser;
+import net.bodz.bas.mf.std.IValidator;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.QueryException;
-import net.bodz.bas.trait.Traits;
-import net.bodz.bas.traits.IParser;
-import net.bodz.bas.traits.IValidator;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
@@ -90,8 +90,8 @@ public class StringVbo
             final IParser<?> parser;
             final IValidator<Object> validator;
             try {
-                parser = Traits.getTrait(type, IParser.class);
-                validator = Traits.getTrait(type, IValidator.class);
+                parser = MdaFeatures.getMdaFeature(type, IParser.class);
+                validator = MdaFeatures.getMdaFeature(type, IValidator.class);
             } catch (QueryException e) {
                 throw new ViewBuilderException(tr._("Can\'t guess parser for number class: ") + type);
             }

@@ -5,8 +5,8 @@ import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.trait.Traits;
-import net.bodz.bas.traits.IParser;
+import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.mf.std.IParser;
 
 public abstract class AbstractSeqMaps<K, V>
         extends AbstractSeqRecords<Map<K, V>>
@@ -30,7 +30,7 @@ public abstract class AbstractSeqMaps<K, V>
     protected K parseKey(String key)
             throws ParseException {
         if (keyParser == null)
-            keyParser = Traits.getTrait(getKeyClass(), IParser.class);
+            keyParser = MdaFeatures.getMdaFeature(getKeyClass(), IParser.class);
         Object k = keyParser.parse(key);
         return keyClass.cast(k);
     }
@@ -38,7 +38,7 @@ public abstract class AbstractSeqMaps<K, V>
     protected V parseValue(String value)
             throws ParseException {
         if (valueParser == null)
-            valueParser = Traits.getTrait(getValueClass(), IParser.class);
+            valueParser = MdaFeatures.getMdaFeature(getValueClass(), IParser.class);
         Object v = valueParser.parse(value);
         return valueClass.cast(v);
     }

@@ -15,7 +15,7 @@
         <module>bas-c1</module>
         <module>bas-meta</module>
         <module>bas-test</module>
-        <module>bas-trait</module>
+        <module>bas-mf</module>
         <module>bas-usnap</module>
     </modules>
     <name>BAS :: Layer 1</name>

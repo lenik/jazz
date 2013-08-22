@@ -4,7 +4,7 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.traits.AbstractParser;
+import net.bodz.bas.mf.std.AbstractParser;
 
 public class Base64Parser
         extends AbstractParser<byte[]> {
