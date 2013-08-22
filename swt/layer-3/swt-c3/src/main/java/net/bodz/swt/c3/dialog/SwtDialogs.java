@@ -28,7 +28,6 @@ import net.bodz.bas.gui.dialog.AbstractUserDialogs;
 import net.bodz.bas.gui.dialog.IDirectiveCommand;
 import net.bodz.bas.mf.MdaFeatures;
 import net.bodz.bas.mf.std.IParser;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -121,10 +120,6 @@ public class SwtDialogs
         setIcon(image);
     }
 
-    static IRefEntry<?> wrap(Object obj) {
-        return new ValueEntry<Object>("undefined", obj);
-    }
-
     abstract class _Dialog
             extends SimpleDialog {
 
@@ -203,9 +198,8 @@ public class SwtDialogs
             @Override
             protected void createDetail(Composite parent)
                     throws CreateException {
-                IOptions options = getOptions();
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), getOptions());
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -240,7 +234,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -276,7 +270,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -342,7 +336,7 @@ public class SwtDialogs
                     throws SWTException, CreateException {
                 IOptions options = getOptions();
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -389,7 +383,7 @@ public class SwtDialogs
 
         public int render(Object value)
                 throws ViewBuilderException, SWTException {
-            Control control = (Control) viz.buildView(stack, wrap(value), options);
+            Control control = (Control) viz.buildView(stack, ValueEntry.wrap(value), options);
             controls[next] = control;
             return next++;
         }
@@ -453,7 +447,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -479,7 +473,7 @@ public class SwtDialogs
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
-                        viewBuilderFactory.buildView(parent, wrap(value), options);
+                        viewBuilderFactory.buildView(parent, ValueEntry.wrap(value), options);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -575,7 +569,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -614,7 +608,7 @@ public class SwtDialogs
                     button.setSelection(selected);
                     keyButtons[index++] = new KeyButton(key, button);
                     try {
-                        viewBuilderFactory.buildView(parent, wrap(value), options);
+                        viewBuilderFactory.buildView(parent, ValueEntry.wrap(value), options);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }

@@ -1,7 +1,9 @@
 package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.err.ReadOnlyException;
+import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.potato.PotatoLoader;
 
 public class ValueEntry<T>
@@ -43,6 +45,18 @@ public class ValueEntry<T>
     @Override
     public void set(T value) {
         throw new ReadOnlyException("value entry is read-only.");
+    }
+
+    public static <T> ValueEntry<T> wrap(T obj) {
+        if (obj == null)
+            throw new NullPointerException("obj");
+
+        MutableElement element = new MutableElement();
+        element.setLabel(XiString.of("noname"));
+
+        Class<T> valueType = (Class<T>) obj.getClass();
+
+        return new ValueEntry<T>(element, valueType, obj);
     }
 
 }
