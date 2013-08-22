@@ -1,20 +1,22 @@
 package net.bodz.bas.repr.viz;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
+import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.rtx.IOptions;
 
 public interface IViewBuilderFactory {
 
     <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type);
 
     /**
-     * Not implemented well, yet.
-     * 
-     * @param type
-     *            Raw type or parameterized type.
-     * @param annotations
-     *            Annotations on the property or field or method.
+     * @return The built widget/control handle.
      */
-    <T> IViewBuilder<T> getViewBuilder(Type type, Annotation[] annotations);
+    Object buildView(Object ctx, IRefEntry<?> entry)
+            throws ViewBuilderException;
+
+    /**
+     * @return The built widget/control handle.
+     */
+    Object buildView(Object ctx, IRefEntry<?> entry, IOptions options)
+            throws ViewBuilderException;
 
 }
