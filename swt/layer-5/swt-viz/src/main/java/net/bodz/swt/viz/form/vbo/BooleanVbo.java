@@ -10,27 +10,28 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import net.bodz.bas.mf.std.ValidationException;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.mf.std.ValidationException;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
+import net.bodz.swt.viz.SwtControlStyler;
+import net.bodz.swt.viz.SwtRenderContext;
 
 public class BooleanVbo
         extends AbstractSwtViewBuilder<Boolean> {
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<Boolean> entry, ISwtControlStyleDeclaration style,
-            Composite parent, int styleInt)
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<Boolean> entry,
+            ISwtControlStyleDeclaration styleDecl, Composite parent, int styleInt)
             throws ViewBuilderException, SWTException {
 
-        boolean readOnly = style.getReadOnly() == Boolean.TRUE;
+        boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
 
         Boolean _val = (Boolean) entry.get();
         boolean val = _val == null ? false : _val;
@@ -70,7 +71,7 @@ public class BooleanVbo
                 }
             });
         }
-        rc.addEffects(check, style);
+        SwtControlStyler.applyCommonStyle(check, styleDecl);
         return check;
     }
 }
