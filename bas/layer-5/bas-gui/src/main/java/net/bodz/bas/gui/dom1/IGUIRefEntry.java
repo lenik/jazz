@@ -6,6 +6,7 @@ import net.bodz.bas.potato.ref.IRefEntry;
 public interface IGUIRefEntry<T>
         extends IRefEntry<T>, IGUIElement {
 
+    @Override
     IGUIElementStyleDeclaration getStyle();
 
 }
