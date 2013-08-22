@@ -1,6 +1,8 @@
 package net.bodz.swt.gui.style;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 
 import net.bodz.bas.err.UnexpectedException;
@@ -168,6 +170,12 @@ public class SwtImageMapper
 
         ImageData imageData = new ImageData(width, height, depth, null, scanlinePad, data);
         return imageData;
+    }
+
+    public static Image convert(Device device, IImageData src) {
+        ImageData imageData = convert(src);
+        Image image = new Image(device, imageData);
+        return image;
     }
 
 }

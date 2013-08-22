@@ -46,6 +46,7 @@ import net.bodz.swt.c.composite.WindowComposite;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c3.pageflow.PageException;
 import net.bodz.swt.c3.pageflow.ServiceContext;
+import net.bodz.swt.gui.style.SwtImageMapper;
 
 public class CustomPage
         extends ConfigPage {
@@ -245,11 +246,14 @@ public class CustomPage
             IJavaElementDoc xjdoc = ((IXjdocElement) component).getXjdoc();
             GUIElementDoc guidoc = xjdoc.as(GUIElementDoc.class);
             IGUIElementStyleDeclaration styleClass = guidoc.getStyleClass();
-            IImageData image = styleClass.getImage(ImageUsage.NORMAL);
-            if (image != null) {
-                if (image.width > iconSize || image.height > iconSize)
-                    image = image.scaledTo(iconSize, iconSize);
-                item.setImage(new Image(pageContainer.getDisplay(), image));
+
+            IImageData imageData = styleClass.getImage(ImageUsage.NORMAL);
+            if (imageData != null) {
+                if (imageData.getWidth() > iconSize || imageData.getHeight() > iconSize)
+                    imageData = imageData.scaledTo(iconSize, iconSize);
+
+                Image _image = SwtImageMapper.convert(pageContainer.getDisplay(), imageData);
+                item.setImage(_image);
             }
         }
 
