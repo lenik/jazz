@@ -17,9 +17,9 @@ import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.grid.SwtGridViewBuilderFactory;
 
 public class InvocationVbo
