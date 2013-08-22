@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Label;
 import org.junit.Test;
 
 import net.bodz.bas.gui.err.GUIException;
-import net.bodz.bas.gui.util.GUIVars;
+import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
@@ -45,7 +45,7 @@ public class SwtGridViewTest
         };
 
         SwtRenderContext rc = new SwtRenderContext();
-        ISwtGUIRefEntry<School> schoolEntry = GUIVars.wrap(school);
+        ISwtGUIRefEntry<School> schoolEntry = ValueEntry.wrap(school);
         schoolEntry.getStyle().setBorder(true);
 
         SwtGridViewBuilderFactory viewBuilderFactory = new SwtGridViewBuilderFactory();
