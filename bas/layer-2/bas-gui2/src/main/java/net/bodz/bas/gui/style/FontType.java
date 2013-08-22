@@ -1,5 +1,6 @@
 package net.bodz.bas.gui.style;
 
+import net.bodz.bas.gui.css3.ICss3StyleDeclaration;
 import net.bodz.bas.gui.css3.property.FontSizeType;
 import net.bodz.bas.gui.css3.property.FontStyleMode;
 import net.bodz.bas.gui.css3.property.FontUseMode;
@@ -25,6 +26,21 @@ public class FontType
 
     FontVariantMode fontVariant;
     TextDecorationFlags textDecoration;
+
+    public FontType() {
+    }
+
+    public FontType(ICss3StyleDeclaration styleDecl) {
+        if (styleDecl == null)
+            throw new NullPointerException("styleDecl");
+        fontFamily = styleDecl.getFontFamily();
+        fontSizeType = styleDecl.getFontSizeType();
+        fontSize = styleDecl.getFontSize();
+        fontStyle = styleDecl.getFontStyle();
+        fontWeight = styleDecl.getFontWeight();
+        fontVariant = styleDecl.getFontVariant();
+        textDecoration = styleDecl.getTextDecoration();
+    }
 
     @Override
     public FontUseMode getFontUse() {
