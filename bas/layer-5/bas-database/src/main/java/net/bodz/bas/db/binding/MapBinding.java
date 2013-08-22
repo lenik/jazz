@@ -5,9 +5,9 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
+import net.bodz.bas.mf.MdaFeatures;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IPropertyMap;
-import net.bodz.bas.trait.Traits;
 
 public class MapBinding {
 
@@ -17,7 +17,7 @@ public class MapBinding {
     public MapBinding(Class<?> clazz, Object instance, boolean forceAccess)
             throws ScriptException {
         assert clazz != null;
-        this.propertyMap = Traits.getTrait(clazz, IPropertyMap.class);
+        this.propertyMap = MdaFeatures.getMdaFeature(clazz, IPropertyMap.class);
         this.instance = instance;
     }
 

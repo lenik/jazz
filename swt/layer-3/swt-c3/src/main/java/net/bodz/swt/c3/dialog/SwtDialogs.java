@@ -32,8 +32,8 @@ import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.rtx.Negotiation;
-import net.bodz.bas.trait.Traits;
-import net.bodz.bas.traits.IParser;
+import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.mf.std.IParser;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
@@ -314,7 +314,7 @@ public class SwtDialogs
     @Override
     public <T> T prompt(String title, final Object detail, final Class<T> type, final T initial) {
 
-        final IParser<?> parser = Traits.getTrait(type, IParser.class);
+        final IParser<?> parser = MdaFeatures.getMdaFeature(type, IParser.class);
 
         class PromptDialog
                 extends _Dialog {

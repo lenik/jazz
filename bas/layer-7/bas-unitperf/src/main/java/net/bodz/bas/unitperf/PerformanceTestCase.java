@@ -4,7 +4,7 @@ import org.junit.Assert;
 
 import net.bodz.bas.rtx.INegotiation.IParameter;
 import net.bodz.bas.rtx.Negotiation;
-import net.bodz.bas.traits.ISampleGenerator;
+import net.bodz.bas.mf.std.ISampleGenerator;
 
 public class PerformanceTestCase
         extends Assert {

@@ -9,7 +9,7 @@ import net.bodz.bas.rtx.INegotiation;
 
 public interface IXMLForm<T> {
 
-    int traitsIndex = 260403962; // IXMLForm
+    int mdaFeaturesIndex = 260403962; // IXMLForm
 
     T parseXML(IStreamInputSource source, INegotiation negotiation)
             throws IOException, ParseException;

@@ -13,7 +13,7 @@
     bas-meta
     bas-primitive
     bas-test
-    bas-trait
+    bas-mf
     bas-bits
     bas-c2
     bas-closure
@@ -24,7 +24,7 @@
     bas-regex
     bas-sio
     bas-string
-    bas-trait-impl
+    bas-mf-impl
     bas-script
     bas-c3
     bas-t3

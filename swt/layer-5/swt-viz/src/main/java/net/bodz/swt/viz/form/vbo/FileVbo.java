@@ -18,9 +18,9 @@ import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.QueryException;
-import net.bodz.bas.trait.Traits;
-import net.bodz.bas.traits.IValidator;
-import net.bodz.bas.traits.ValidationException;
+import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.mf.std.IValidator;
+import net.bodz.bas.mf.std.ValidationException;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
@@ -66,7 +66,7 @@ public class FileVbo
             Class<?> valueType = entry.getValueType();
             final IValidator<Object> validator;
             try {
-                validator = Traits.getTrait(valueType, IValidator.class);
+                validator = MdaFeatures.getMdaFeature(valueType, IValidator.class);
             } catch (QueryException e) {
                 throw new ViewBuilderException(tr._("Can\'t guess parser for number class: ") + valueType);
             }

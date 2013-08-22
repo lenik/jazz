@@ -17,9 +17,9 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.ListNegotiation;
 import net.bodz.bas.rtx.Negotiation;
-import net.bodz.bas.trait.Traits;
-import net.bodz.bas.traits.IFormatter;
-import net.bodz.bas.traits.IParser;
+import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.mf.std.IFormatter;
+import net.bodz.bas.mf.std.IParser;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
@@ -251,7 +251,7 @@ public abstract class AbstractOption
         String param1 = parameters[0];
 
         Class<?> valueType = getValueType();
-        IParser<?> parser = Traits.getTrait(valueType, IParser.class);
+        IParser<?> parser = MdaFeatures.getMdaFeature(valueType, IParser.class);
         if (parser == null)
             throw new ParseException("Don't know how to parse " + valueType);
 
@@ -266,7 +266,7 @@ public abstract class AbstractOption
     public String[] formatValue(Object context, Object value)
             throws FormatException {
         Class<?> valueType = getValueType();
-        IFormatter<Object> formatter = Traits.getTrait(valueType, IFormatter.class);
+        IFormatter<Object> formatter = MdaFeatures.getMdaFeature(valueType, IFormatter.class);
         String param1 = formatter.format(value);
         return new String[] { param1 };
     }

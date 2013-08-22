@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 
-import net.bodz.bas.traits.ValidationException;
+import net.bodz.bas.mf.std.ValidationException;
 import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public class JPEGImageType
