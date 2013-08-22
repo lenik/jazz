@@ -13,28 +13,29 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 
+import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.mf.std.IValidator;
+import net.bodz.bas.mf.std.ValidationException;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.QueryException;
-import net.bodz.bas.mf.MdaFeatures;
-import net.bodz.bas.mf.std.IValidator;
-import net.bodz.bas.mf.std.ValidationException;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
+import net.bodz.swt.viz.ISwtControlStyleDeclaration;
+import net.bodz.swt.viz.SwtControlStyler;
+import net.bodz.swt.viz.SwtRenderContext;
 
 public class FileVbo
         extends AbstractSwtViewBuilder<File> {
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<File> entry, ISwtControlStyleDeclaration style,
-            final Composite parent, final int swtStyle)
+    public Control buildView(final SwtRenderContext rc, final IRefEntry<File> entry,
+            ISwtControlStyleDeclaration styleDecl, final Composite parent, final int swtStyle)
             throws ViewBuilderException, SWTException {
 
         File val = (File) entry.get();
@@ -59,7 +60,7 @@ public class FileVbo
         });
         browseButton.setLayoutData(BorderLayout.EAST);
 
-        if (style.getReadOnly() == Boolean.TRUE) {
+        if (styleDecl.getReadOnly() == Boolean.TRUE) {
             fileText.setEnabled(false);
             browseButton.setEnabled(false);
         } else {
@@ -97,7 +98,7 @@ public class FileVbo
                     return true;
                 }
             });
-        rc.addEffects(comp, style);
+        SwtControlStyler.applyCommonStyle(comp, styleDecl);
         return comp;
     }
 
