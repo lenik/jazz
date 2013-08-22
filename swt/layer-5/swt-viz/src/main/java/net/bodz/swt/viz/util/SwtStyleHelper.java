@@ -4,6 +4,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.gui.style.IColor;
@@ -67,8 +68,9 @@ public class SwtStyleHelper {
             control.setFont(font);
         }
 
-        if (styleDecl.getWidth() != null)
-            control.setSize(styleDecl.getWidth());
+        Point size = styleDecl.getSize(device.getDPI());
+        if (size != null)
+            control.setSize(size);
     }
 
 }
