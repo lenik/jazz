@@ -1,14 +1,17 @@
 package net.bodz.bas.rtx;
 
+/**
+ * The whole object is negotiable.
+ */
 public interface INegotiable {
 
     /**
-     * Negotiate the entire negotiation.
+     * Send the options parameters.
      * 
-     * @throws NegotiationException
-     *             If the callee don't accept the negotiation, for example, an important parameter
+     * @throws IllegalParameterUsageException
+     *             If the callee doesn't accept the request, for example, an important parameter
      *             isn't supported by the callee.
      */
-    void negotiate(INegotiation negotiation);
+    void negotiate(IOptions req);
 
 }

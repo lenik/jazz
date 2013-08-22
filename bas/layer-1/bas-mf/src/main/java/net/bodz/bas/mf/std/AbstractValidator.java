@@ -1,16 +1,14 @@
 package net.bodz.bas.mf.std;
 
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.NoOptions;
 
 public abstract class AbstractValidator<T>
         implements IValidator<T> {
 
     @Override
-    public void validate(T o, INegotiation negotiation)
+    public void validate(T object)
             throws ValidationException {
-        if (negotiation != null)
-            negotiation.ignore();
-        validate(o);
+        validate(object, NoOptions.getInstance());
     }
 
 }

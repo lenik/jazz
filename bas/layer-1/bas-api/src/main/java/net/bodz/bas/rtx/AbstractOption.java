@@ -2,28 +2,26 @@ package net.bodz.bas.rtx;
 
 import java.io.Serializable;
 
-import net.bodz.bas.rtx.INegotiation.IParameter;
-
-public abstract class AbstractParameter
-        implements IParameter, Serializable {
+public abstract class AbstractOption
+        implements IOption, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private final String id;
     private final Object value;
 
-    public AbstractParameter(String id, Object value) {
+    public AbstractOption(String id, Object value) {
         if (id == null)
             throw new NullPointerException("id");
         this.id = id;
         this.value = value;
     }
 
-    public AbstractParameter(Class<?> type, Object value) {
-        this(type.getName(), value);
+    public AbstractOption(Class<?> clazz, Object value) {
+        this(clazz.getName(), value);
     }
 
-    public AbstractParameter(Object typedValue) {
+    public AbstractOption(Object typedValue) {
         this(typedValue.getClass(), typedValue);
     }
 
@@ -38,13 +36,6 @@ public abstract class AbstractParameter
         return (T) value;
     }
 
-    @Override
-    public void ignore()
-            throws MandatoryException {
-        if (isImportant())
-            throw new MandatoryException(this);
-    }
-
     public boolean idEquals(String id) {
         return this.id.equals(id);
     }
@@ -53,30 +44,8 @@ public abstract class AbstractParameter
         return idEquals(type.getName());
     }
 
-    public boolean checkId(Class<?> type, boolean use)
-            throws MandatoryException {
-        return checkId(type.getName(), use);
-    }
-
-    public boolean checkId(String id, boolean use)
-            throws MandatoryException {
-        if (!this.id.equals(id))
-            return false;
-        if (isImportant() && !use)
-            throw new MandatoryException(this);
-        return true;
-    }
-
     public <T> T typeFilter(Class<T> type) {
         if (idEquals(type.getName()))
-            return type.cast(value);
-        else
-            return null;
-    }
-
-    public <T> T typeFilter(Class<T> type, boolean use)
-            throws MandatoryException {
-        if (checkId(type.getName(), use))
             return type.cast(value);
         else
             return null;
@@ -92,9 +61,9 @@ public abstract class AbstractParameter
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof AbstractParameter))
+        if (!(obj instanceof AbstractOption))
             return false;
-        AbstractParameter that = (AbstractParameter) obj;
+        AbstractOption that = (AbstractOption) obj;
         if (!id.equals(that.id))
             return false;
         if (value != that.value)
@@ -105,7 +74,7 @@ public abstract class AbstractParameter
 
     @Override
     public String toString() {
-        return (isImportant() ? '+' : '-') + id + "=" + value;
+        return id + "=" + value;
     }
 
 }

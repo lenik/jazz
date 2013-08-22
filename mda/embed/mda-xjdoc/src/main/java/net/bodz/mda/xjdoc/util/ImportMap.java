@@ -3,7 +3,7 @@ package net.bodz.mda.xjdoc.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 import com.thoughtworks.qdox.model.Type;
 
@@ -124,10 +124,10 @@ public class ImportMap {
         }
     }
 
-    public static ImportMap getInstance(INegotiation negotiation) {
-        ImportMap importMap = negotiation.get(ImportMap.class);
+    public static ImportMap getInstance(IOptions options) {
+        ImportMap importMap = options.get(ImportMap.class);
         if (importMap == null)
-            throw new NullPointerException("ImportMap is not provided in the negotiation.");
+            throw new NullPointerException("ImportMap is not provided in the options.");
         return importMap;
     }
 

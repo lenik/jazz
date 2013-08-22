@@ -1,14 +1,12 @@
 package net.bodz.mda.xjdoc.conv;
 
-import static net.bodz.bas.rtx.Negotiation.list;
-import static net.bodz.bas.rtx.Negotiation.option;
-
 import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.JavaElementDoc;
@@ -51,15 +49,15 @@ public class ClassDocBuilder {
         ClassDoc classDoc = new ClassDoc(fqcn);
 
         ImportMap classImports = classDoc.getOrCreateImports();
-        INegotiation negotiation = list(//
-        option(ImportMap.class, classImports));
+        IOptions options = new Options() //
+                .addOption(ImportMap.class, classImports);
 
-        populate(classDoc, javaClass, negotiation);
+        populate(classDoc, javaClass, options);
 
         for (JavaField javaField : javaClass.getFields()) {
             String fieldName = javaField.getName();
             FieldDoc fieldDoc = new FieldDoc(classDoc, fieldName);
-            populate(fieldDoc, javaField, negotiation);
+            populate(fieldDoc, javaField, options);
             classDoc.setFieldDoc(fieldName, fieldDoc);
         }
 
@@ -83,7 +81,7 @@ public class ClassDocBuilder {
             }
 
             MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
-            populate(methodDoc, javaMethod, negotiation);
+            populate(methodDoc, javaMethod, options);
 
             for (JavaParameter jparam : javaMethod.getParameters()) {
                 // javadoc may not include all the parameters.
@@ -109,7 +107,7 @@ public class ClassDocBuilder {
         return classDoc;
     }
 
-    void populate(JavaElementDoc elementDoc, AbstractJavaEntity javaEntity, INegotiation negotiation) {
+    void populate(JavaElementDoc elementDoc, AbstractJavaEntity javaEntity, IOptions options) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
             iString text = XiString.parseParaLangString(comment);
@@ -148,7 +146,7 @@ public class ClassDocBuilder {
             Object cont = rootTagContMap.get(rootTagName);
             Object tagValue;
             try {
-                tagValue = tagType.parseJavadoc(tagNameSpec, cont, tagValueString, negotiation);
+                tagValue = tagType.parseJavadoc(tagNameSpec, cont, tagValueString, options);
             } catch (ParseException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }

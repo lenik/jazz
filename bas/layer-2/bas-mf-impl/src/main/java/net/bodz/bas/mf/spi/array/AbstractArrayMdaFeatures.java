@@ -6,7 +6,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.rtx.INegotiable;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public abstract class AbstractArrayMdaFeatures<T>
         extends AbstractCommonMdaFeatures<T> {
@@ -61,9 +61,9 @@ public abstract class AbstractArrayMdaFeatures<T>
         }
 
         @Override
-        public void negotiate(INegotiation negotiation) {
-            minLength = negotiation.get(sampleMinLength, minLength);
-            maxLength = negotiation.get(sampleMaxLength, maxLength);
+        public void negotiate(IOptions req) {
+            minLength = req.get(sampleMinLength, minLength);
+            maxLength = req.get(sampleMaxLength, maxLength);
         }
 
     }
@@ -79,10 +79,10 @@ public abstract class AbstractArrayMdaFeatures<T>
     }
 
     @Override
-    public T newSample(Map<String, Object> classification, INegotiation negotiation)
+    public T newSample(Map<String, Object> classification, IOptions options)
             throws CreateException {
         ArraySampleParameters sampleParameters = newSampleParameters();
-        sampleParameters.negotiate(negotiation);
+        sampleParameters.negotiate(options);
         return newSample(sampleParameters);
     }
 

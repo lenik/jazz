@@ -2,10 +2,10 @@ package net.bodz.bas.c.java.util;
 
 import java.util.Collection;
 
-import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.mf.std.IParser;
 import net.bodz.bas.mf.std.ISampleGenerator;
+import net.bodz.bas.rtx.QueryException;
 
 public class CollectionMdaFeatures<T>
         extends AbstractCommonMdaFeatures<Collection<T>> {

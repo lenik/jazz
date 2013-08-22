@@ -15,11 +15,11 @@ import net.bodz.bas.c.type.addor.MapAddor;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.ListNegotiation;
-import net.bodz.bas.rtx.Negotiation;
 import net.bodz.bas.mf.MdaFeatures;
 import net.bodz.bas.mf.std.IFormatter;
 import net.bodz.bas.mf.std.IParser;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
@@ -255,10 +255,10 @@ public abstract class AbstractOption
         if (parser == null)
             throw new ParseException("Don't know how to parse " + valueType);
 
-        ListNegotiation negotiation = Negotiation.list(//
-                Negotiation.option(IParser.PARSE_CONTEXT, context));
+        IOptions options = new Options()//
+                .addOption(IParser.PARSE_CONTEXT, context);
 
-        Object value = parser.parse(param1, negotiation);
+        Object value = parser.parse(param1, options);
         return value;
     }
 

@@ -6,21 +6,21 @@ import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class StringTagType
         extends AbstractTagType {
 
     @Override
-    public Object parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
+    public Object parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         // TODO normalize-space?
         return string;
     }
 
     @Override
-    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
+    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
             throws FormatException, IOException {
         String string = (String) value;
         // TODO Line-wrap...
@@ -28,7 +28,7 @@ public class StringTagType
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+    public Object parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         if (string.startsWith("\"") && string.endsWith("\"")) {
             String quotedString = string;
@@ -39,7 +39,7 @@ public class StringTagType
     }
 
     @Override
-    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
             throws FormatException, IOException {
         if (value == null) {
             // warning...

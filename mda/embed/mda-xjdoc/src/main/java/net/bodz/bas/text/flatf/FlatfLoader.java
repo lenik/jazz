@@ -7,27 +7,27 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.mda.xjdoc.util.WordTokenizer;
 
 public class FlatfLoader {
 
-    public void load(IStreamInputSource inputSource, IFlatfSerializable target, INegotiation negotiation)
+    public void load(IStreamInputSource inputSource, IFlatfSerializable target, IOptions options)
             throws IOException, ParseException {
         Reader reader = inputSource.newReader();
         try {
             FlatfInput in = new FlatfInput(reader);
-            load(in, target, negotiation);
+            load(in, target, options);
         } finally {
             reader.close();
         }
     }
 
-    public void load(IFlatfInput in, IFlatfSerializable target, INegotiation negotiation)
+    public void load(IFlatfInput in, IFlatfSerializable target, IOptions options)
             throws ParseException, IOException {
         int token;
         String currentSection = in.getSectionName();
-        ISectionHandler sectionHandler = target.getSectionHandler(currentSection, negotiation);
+        ISectionHandler sectionHandler = target.getSectionHandler(currentSection, options);
 
         while ((token = in.next()) != IFlatfInput.EOF) {
             switch (token) {
@@ -48,7 +48,7 @@ public class FlatfLoader {
                     sectionHandler.sectionEnd(currentSection);
 
                 currentSection = in.getSectionName();
-                sectionHandler = target.getSectionHandler(currentSection, negotiation);
+                sectionHandler = target.getSectionHandler(currentSection, options);
 
                 if (sectionHandler == null) {
                     throw new ParseException("Unhandled section: " + currentSection);

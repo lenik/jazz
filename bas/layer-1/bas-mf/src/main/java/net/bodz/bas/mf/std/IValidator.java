@@ -1,6 +1,6 @@
 package net.bodz.bas.mf.std;
 
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public interface IValidator<T> {
 
@@ -9,7 +9,7 @@ public interface IValidator<T> {
     void validate(T object)
             throws ValidationException;
 
-    void validate(T object, INegotiation negotiation)
+    void validate(T object, IOptions options)
             throws ValidationException;
 
 }

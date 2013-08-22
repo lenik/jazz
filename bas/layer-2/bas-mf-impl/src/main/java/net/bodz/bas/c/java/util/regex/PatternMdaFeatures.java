@@ -6,9 +6,8 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.mf.std.IParser;
-import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.rtx.INegotiation.IParameter;
-import net.bodz.bas.rtx.NegotiationException;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IllegalParameterUsageException;
 
 public class PatternMdaFeatures
         extends AbstractCommonMdaFeatures<Pattern> {
@@ -52,24 +51,10 @@ public class PatternMdaFeatures
     }
 
     @Override
-    public Pattern parse(String text, INegotiation negotiation)
+    public Pattern parse(String text, IOptions options)
             throws ParseException {
-        String mode = defaultTextformMode;
-        int flags = defeaultRegexFlags;
-
-        IParameter modeParam = null;
-
-        for (IParameter param : negotiation) {
-            String paramId = param.getId();
-            Object paramValue = param.getValue();
-            if (paramValue == null)
-                continue;
-            if (textformMode.equals(paramId)) {
-                mode = (String) paramValue;
-                modeParam = param;
-            } else if (regexFlags.equals(paramId))
-                flags = (Integer) paramValue;
-        }
+        String mode = options.get(textformMode, defaultTextformMode);
+        int flags = options.getInt(regexFlags, defeaultRegexFlags);
 
         if (javaTextformMode.equals(mode))
             return Pattern.compile(text, flags);
@@ -79,7 +64,7 @@ public class PatternMdaFeatures
             regex = regex.replace("?", "\\E.\\Q");
             return Pattern.compile(regex, flags);
         } else
-            throw new NegotiationException(modeParam);
+            throw new IllegalParameterUsageException(options.getOption(textformMode));
     }
 
 }

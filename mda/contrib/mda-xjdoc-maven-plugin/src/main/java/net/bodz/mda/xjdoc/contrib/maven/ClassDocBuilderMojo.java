@@ -1,8 +1,5 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
-import static net.bodz.bas.rtx.Negotiation.list;
-import static net.bodz.bas.rtx.Negotiation.option;
-
 import java.io.File;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
@@ -19,7 +16,8 @@ import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 import net.bodz.bas.m2.util.MavenProjects;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Options;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
@@ -175,9 +173,9 @@ public class ClassDocBuilderMojo
 
                 ImportMap classImports = classDoc.getOrCreateImports();
 
-                INegotiation negotiation = list(//
-                        option(ITagLibrary.class, taglibs), //
-                        option(ImportMap.class, classImports));
+                IOptions options = new Options() //
+                        .addOption(ITagLibrary.class, taglibs) //
+                        .addOption(ImportMap.class, classImports);
 
                 IStreamOutputTarget outTarget;
                 if (classDocFile == null) {
@@ -192,7 +190,7 @@ public class ClassDocBuilderMojo
                 try {
                     ICharOut charOut = outTarget.newCharOut();
                     FlatfOutput ffOut = new FlatfOutput(charOut);
-                    classDoc.writeObject(ffOut, negotiation);
+                    classDoc.writeObject(ffOut, options);
                     charOut.flush();
                 } catch (Exception e) {
                     throw new MojoExecutionException(e.getMessage(), e);
@@ -200,5 +198,4 @@ public class ClassDocBuilderMojo
             }
         }
     }
-
 }

@@ -1,7 +1,7 @@
 package net.bodz.bas.mf.spi;
 
-import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.mf.util.MdaFeatureImplCache;
+import net.bodz.bas.rtx.QueryException;
 
 public class FriendMdaFeaturesProvider
         extends AbstractMdaFeaturesProvider {

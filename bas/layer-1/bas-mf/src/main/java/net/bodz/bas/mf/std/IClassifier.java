@@ -2,7 +2,7 @@ package net.bodz.bas.mf.std;
 
 import java.util.Map;
 
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public interface IClassifier<T> {
 
@@ -11,7 +11,7 @@ public interface IClassifier<T> {
     Map<String, Object> classify(T object)
             throws ClassifyException;
 
-    Map<String, Object> classify(T object, INegotiation negotiation)
+    Map<String, Object> classify(T object, IOptions options)
             throws ClassifyException;
 
     IAttributes getClassAnnotations(String classId);

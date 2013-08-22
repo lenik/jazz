@@ -7,8 +7,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.mf.std.IParser;
-import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.rtx.INegotiation.IParameter;
+import net.bodz.bas.rtx.IOptions;
 
 public class FileMdaFeatures
         extends AbstractCommonMdaFeatures<File> {
@@ -41,19 +40,9 @@ public class FileMdaFeatures
     }
 
     @Override
-    public File parse(String text, INegotiation negotiation)
+    public File parse(String text, IOptions options)
             throws ParseException {
-        File contextDirectory = defaultTextformContextDirectory;
-
-        for (IParameter param : negotiation) {
-            String paramId = param.getId();
-            Object paramValue = param.getValue();
-            if (paramValue == null)
-                continue;
-            if (textformContextDirectory.equals(paramId))
-                contextDirectory = (File) paramValue;
-        }
-
+        File contextDirectory = options.get(textformContextDirectory, defaultTextformContextDirectory);
         File file = new File(contextDirectory, text);
         return file;
     }

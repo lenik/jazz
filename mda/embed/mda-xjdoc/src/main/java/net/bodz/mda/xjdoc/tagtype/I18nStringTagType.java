@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class I18nStringTagType
@@ -17,13 +17,13 @@ public class I18nStringTagType
      * @return {@link iString}.
      */
     @Override
-    public iString parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation) {
+    public iString parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options) {
         iString text = XiString.parseParaLangString(string);
         return text;
     }
 
     @Override
-    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
+    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
             throws IOException {
         if (value != null) {
             iString istr = (iString) value;
@@ -33,14 +33,14 @@ public class I18nStringTagType
     }
 
     @Override
-    public iString parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+    public iString parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         iString text = XiString.parseMultiLangString(string);
         return text;
     }
 
     @Override
-    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
             throws IOException {
         iString dstr = (iString) value;
 

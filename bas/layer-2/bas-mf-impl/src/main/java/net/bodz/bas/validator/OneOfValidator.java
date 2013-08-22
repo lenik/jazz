@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.bodz.bas.mf.std.AbstractValidator;
 import net.bodz.bas.mf.std.ValidationException;
+import net.bodz.bas.rtx.IOptions;
 
 /**
  * One and only one in the set is allowed to be set.
@@ -12,7 +13,7 @@ public class OneOfValidator
         extends AbstractValidator<Collection<?>> {
 
     @Override
-    public void validate(Collection<?> collection)
+    public void validate(Collection<?> collection, IOptions options)
             throws ValidationException {
         int index = 0;
         int lastNonNullIndex = -1;

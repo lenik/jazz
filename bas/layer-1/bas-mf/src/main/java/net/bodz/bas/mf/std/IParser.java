@@ -5,7 +5,7 @@ import java.text.ParsePosition;
 import java.util.logging.Logger;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public interface IParser<T> {
 
@@ -32,7 +32,7 @@ public interface IParser<T> {
      * 
      * @return ? extends <code>T</code>
      */
-    T parse(String text, INegotiation negotiation)
+    T parse(String text, IOptions options)
             throws ParseException;
 
 }

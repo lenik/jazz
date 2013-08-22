@@ -3,7 +3,7 @@ package net.bodz.bas.mf.std;
 import java.beans.ExceptionListener;
 import java.util.Iterator;
 
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public interface ISearcher<T> {
 
@@ -30,6 +30,6 @@ public interface ISearcher<T> {
      *            Query string which usually contains the keywords to be searched.
      * @return non-<code>null</code> {@link Iterator} of search result.
      */
-    Iterator<?> search(T object, String query, INegotiation negotiation);
+    Iterator<?> search(T object, String query, IOptions options);
 
 }

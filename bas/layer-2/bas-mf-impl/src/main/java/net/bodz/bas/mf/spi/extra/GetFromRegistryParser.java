@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.mf.std.AbstractParser;
+import net.bodz.bas.rtx.IOptions;
 
 public class GetFromRegistryParser
         extends AbstractParser<Object> {
@@ -15,7 +16,7 @@ public class GetFromRegistryParser
     }
 
     @Override
-    public Object parse(String entry)
+    public Object parse(String entry, IOptions options)
             throws ParseException {
         try {
             Field field = registryClass.getField(entry);

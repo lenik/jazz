@@ -9,7 +9,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
@@ -98,13 +98,13 @@ public class JavaElementDoc
     // --o IFlatfSerializable
 
     @Override
-    public void writeObject(IFlatfOutput out, INegotiation negotiation)
+    public void writeObject(IFlatfOutput out, IOptions options)
             throws IOException {
         ITagLibrary taglib = null;
-        if (negotiation != null)
-            taglib = negotiation.get(ITagLibrary.class);
+        if (options != null)
+            taglib = options.get(ITagLibrary.class);
         if (taglib == null)
-            throw new IllegalUsageException("Book is not provided in the negotiation.");
+            throw new IllegalUsageException("Book is not provided in the options.");
 
         if (text != null)
             out.attribute(".", text);
@@ -119,7 +119,7 @@ public class JavaElementDoc
             }
 
             try {
-                tagType.writeEntries(out, tagName, tagValue, negotiation);
+                tagType.writeEntries(out, tagName, tagValue, options);
             } catch (RuntimeException e) {
                 throw new RuntimeException("Failed to write ff-entry for tag " + tagName + " := " + tagValue, e);
             }
@@ -127,22 +127,22 @@ public class JavaElementDoc
     }
 
     @Override
-    public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation) {
-        ITagLibrary taglib = AbstractTagLibrary.getInstance(negotiation);
-        return new FlatfHandler(taglib, negotiation);
+    public ISectionHandler getSectionHandler(String sectionName, IOptions options) {
+        ITagLibrary taglib = AbstractTagLibrary.fromOptions(options);
+        return new FlatfHandler(taglib, options);
     }
 
     protected class FlatfHandler
             implements ISectionHandler {
 
         final ITagLibrary taglib;
-        final INegotiation negotiation;
+        final IOptions options;
 
-        public FlatfHandler(ITagLibrary taglib, INegotiation negotiation) {
+        public FlatfHandler(ITagLibrary taglib, IOptions options) {
             if (taglib == null)
                 throw new NullPointerException("taglib");
             this.taglib = taglib;
-            this.negotiation = negotiation;
+            this.options = options;
         }
 
         @Override
@@ -186,7 +186,7 @@ public class JavaElementDoc
             Object tagValue;
 
             try {
-                tagValue = tagType.parseEntry(cont, suffix, string, negotiation);
+                tagValue = tagType.parseEntry(cont, suffix, string, options);
             } catch (RuntimeException e) {
                 throw new RuntimeException("Failed to parse ff-entry: " + string);
             }

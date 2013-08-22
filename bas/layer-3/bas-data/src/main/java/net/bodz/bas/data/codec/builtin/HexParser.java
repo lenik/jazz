@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.mf.std.AbstractParser;
+import net.bodz.bas.rtx.IOptions;
 
 public class HexParser
         extends AbstractParser<byte[]> {
@@ -17,7 +18,7 @@ public class HexParser
     }
 
     @Override
-    public byte[] parse(String hex)
+    public byte[] parse(String hex, IOptions options)
             throws ParseException {
         if (hex == null)
             throw new NullPointerException("hex");

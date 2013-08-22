@@ -9,8 +9,7 @@ import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.mf.std.IParser;
 import net.bodz.bas.mf.std.ISampleGenerator;
-import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.rtx.INegotiation.IParameter;
+import net.bodz.bas.rtx.IOptions;
 
 public class LocaleMdaFeatures
         extends AbstractCommonMdaFeatures<Locale> {
@@ -43,18 +42,8 @@ public class LocaleMdaFeatures
     }
 
     @Override
-    public Locale parse(String text, INegotiation negotiation) {
-        String separator = defaultTextformSeparator;
-
-        for (IParameter param : negotiation) {
-            String paramId = param.getId();
-            Object paramValue = param.getValue();
-            if (paramValue == null)
-                continue;
-            if (textformSeparator.equals(paramId))
-                separator = (String) paramValue;
-        }
-
+    public Locale parse(String text, IOptions options) {
+        String separator = options.get(textformSeparator, defaultTextformSeparator);
         return parseLocale(text, separator);
     }
 

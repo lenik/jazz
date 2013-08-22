@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
 
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class FieldDoc
@@ -24,10 +24,10 @@ public class FieldDoc
     // --o IFlatfSerializable
 
     @Override
-    public void writeObject(IFlatfOutput out, INegotiation negotiation)
+    public void writeObject(IFlatfOutput out, IOptions options)
             throws IOException {
         out.sectionBegin("field:" + getName());
-        super.writeObject(out, negotiation);
+        super.writeObject(out, options);
         out.sectionEnd();
     }
 

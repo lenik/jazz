@@ -26,6 +26,7 @@ import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.io.tmp.TempOut;
 import net.bodz.bas.mf.std.AbstractParser;
 import net.bodz.bas.mf.std.IParser;
+import net.bodz.bas.rtx.IOptions;
 
 @SuppressWarnings("restriction")
 public class Providers
@@ -45,7 +46,7 @@ public class Providers
             extends AbstractParser<Provider> {
 
         @Override
-        public Provider parse(String s)
+        public Provider parse(String s, IOptions options)
                 throws ParseException {
             Provider provider = Security.getProvider(s);
             if (provider != null)
@@ -118,7 +119,7 @@ public class Providers
         }
 
         @Override
-        public Provider parse(String s)
+        public Provider parse(String s, IOptions options)
                 throws ParseException {
             CURL curl = new CURL(s);
             if (curl.getType() != null)

@@ -9,7 +9,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 import net.bodz.bas.rtx.AbstractQueryable;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.QueryException;
 
 @ThreadUnsafe
@@ -151,33 +151,25 @@ public abstract class AbstractCommonMdaFeatures<T>
     }
 
     @Override
-    public String format(T object, INegotiation negotiation) {
-        if (negotiation != null)
-            negotiation.ignore();
+    public String format(T object, IOptions options) {
         return format(object);
     }
 
     @Override
-    public T parse(String text, INegotiation negotiation)
+    public T parse(String text, IOptions options)
             throws ParseException {
-        if (negotiation != null)
-            negotiation.ignore();
         return parse(text);
     }
 
     @Override
-    public void validate(T object, INegotiation negotiation)
+    public void validate(T object, IOptions options)
             throws ValidationException {
-        if (negotiation != null)
-            negotiation.ignore();
         validate(object);
     }
 
     @Override
-    public Map<String, Object> classify(T object, INegotiation negotiation)
+    public Map<String, Object> classify(T object, IOptions options)
             throws ClassifyException {
-        if (negotiation != null)
-            negotiation.ignore();
         return classify(object);
     }
 
@@ -196,20 +188,16 @@ public abstract class AbstractCommonMdaFeatures<T>
     }
 
     @Override
-    public Iterator<?> search(T object, String query, INegotiation negotiation) {
-        if (negotiation != null)
-            negotiation.ignore();
+    public Iterator<?> search(T object, String query, IOptions options) {
         return search(object, query);
     }
 
     @Override
-    public T newSample(Map<String, Object> classification, INegotiation negotiation)
+    public T newSample(Map<String, Object> classification, IOptions options)
             throws CreateException {
         if (classification != null)
             if (!classification.isEmpty())
                 return null;
-        if (negotiation != null)
-            negotiation.ignore();
         return newSample();
     }
 

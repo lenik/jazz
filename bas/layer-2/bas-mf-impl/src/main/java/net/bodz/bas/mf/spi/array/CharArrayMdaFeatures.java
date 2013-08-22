@@ -6,7 +6,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.mf.std.IParser;
 import net.bodz.bas.mf.std.ISampleGenerator;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public class CharArrayMdaFeatures
         extends AbstractArrayMdaFeatures<char[]> {
@@ -58,9 +58,9 @@ public class CharArrayMdaFeatures
         }
 
         @Override
-        public void negotiate(INegotiation negotiation) {
-            super.negotiate(negotiation);
-            charSample = negotiation.get(sampleCharSample, charSample);
+        public void negotiate(IOptions options) {
+            super.negotiate(options);
+            charSample = options.get(sampleCharSample, charSample);
         }
 
     }

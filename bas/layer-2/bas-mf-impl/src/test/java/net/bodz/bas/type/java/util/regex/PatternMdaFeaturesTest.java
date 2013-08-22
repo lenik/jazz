@@ -1,15 +1,13 @@
 package net.bodz.bas.type.java.util.regex;
 
-import static net.bodz.bas.rtx.Negotiation.list;
-import static net.bodz.bas.rtx.Negotiation.option;
-
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.util.regex.PatternMdaFeatures;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Options;
 
 public class PatternMdaFeaturesTest
         extends PatternMdaFeatures {
@@ -21,10 +19,10 @@ public class PatternMdaFeaturesTest
     @Test
     public void testParseGlob()
             throws Exception {
-        INegotiation n = list(option(textformMode, globTextformMode));
+        IOptions options = new Options().addOption(textformMode, globTextformMode);
 
         Pattern expected = Pattern.compile("\\Q\\E.*\\Q.xml\\E");
-        Pattern actual = parse("*.xml", n);
+        Pattern actual = parse("*.xml", options);
         assertPatternEquals(expected, actual);
     }
 

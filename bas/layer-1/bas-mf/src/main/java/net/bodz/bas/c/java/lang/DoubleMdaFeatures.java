@@ -8,9 +8,8 @@ import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.mf.std.IParser;
 import net.bodz.bas.mf.std.ISampleGenerator;
-import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.rtx.INegotiation.IParameter;
-import net.bodz.bas.rtx.NegotiationException;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IllegalParameterUsageException;
 
 public class DoubleMdaFeatures
         extends AbstractCommonMdaFeatures<Double> {
@@ -58,28 +57,16 @@ public class DoubleMdaFeatures
     }
 
     @Override
-    public Double newSample(Map<String, Object> classification, INegotiation negotiation)
+    public Double newSample(Map<String, Object> classification, IOptions options)
             throws CreateException {
-        String distribution = defaultSampleDistribution;
-        IParameter distributionParam = null;
-
-        for (IParameter param : negotiation) {
-            String paramId = param.getId();
-            Object paramValue = param.getValue();
-            if (paramValue == null)
-                continue;
-            if (sampleDistribution.equals(paramId)) {
-                distribution = (String) paramValue;
-                distributionParam = param;
-            }
-        }
+        String distribution = options.get(sampleDistribution, defaultSampleDistribution);
 
         if (normalSampleDistribution.equals(distribution))
             return random.nextDouble();
         else if (gaussianSampleDistribution.equals(distribution))
             return random.nextGaussian();
         else
-            throw new NegotiationException(distributionParam);
+            throw new IllegalParameterUsageException(options.getOption(sampleDistribution));
     }
 
 }

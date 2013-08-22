@@ -8,6 +8,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.mf.MdaFeatures;
 import net.bodz.bas.mf.std.AbstractParser;
 import net.bodz.bas.mf.std.IParser;
+import net.bodz.bas.rtx.IOptions;
 
 public class ArrayParser
         extends AbstractParser<Object> {
@@ -36,7 +37,7 @@ public class ArrayParser
     }
 
     @Override
-    public Object parse(String s)
+    public Object parse(String s, IOptions options)
             throws ParseException {
         if (s == null)
             return null;

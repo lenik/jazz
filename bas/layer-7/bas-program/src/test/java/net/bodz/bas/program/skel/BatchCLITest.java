@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.program.model.IOption;
 import net.bodz.bas.program.model.IOptionGroup;
-import net.bodz.bas.rtx.Negotiation;
+import net.bodz.bas.rtx.Options;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.IFile;
@@ -35,8 +35,8 @@ public class BatchCLITest
         ClassDoc doc = ClassDocLoader.load(BatchCLI.class);
         BCharOut buf = new BCharOut();
         FlatfOutput out = new FlatfOutput(buf);
-        doc.writeObject(out, Negotiation.list(//
-                Negotiation.parameter(ITagLibrary.class, new ArtifactTagLibrary())));
+        doc.writeObject(out, new Options() //
+                .addOption(ITagLibrary.class, new ArtifactTagLibrary()));
         System.out.println(buf);
     }
 
