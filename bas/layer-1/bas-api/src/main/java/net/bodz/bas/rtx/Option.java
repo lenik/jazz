@@ -1,25 +1,20 @@
 package net.bodz.bas.rtx;
 
-class Option
-        extends AbstractParameter {
+public class Option
+        extends AbstractOption {
 
     private static final long serialVersionUID = 1L;
-
-    public <T> Option(Class<T> type, T value) {
-        super(type, value);
-    }
-
-    public Option(Object typedValue) {
-        super(typedValue);
-    }
 
     public Option(String id, Object value) {
         super(id, value);
     }
 
-    @Override
-    public boolean isImportant() {
-        return false;
+    public <T> Option(Class<T> clazz, T value) {
+        super(clazz, value);
+    }
+
+    public Option(Object typedValue) {
+        super(typedValue);
     }
 
 }

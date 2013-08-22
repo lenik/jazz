@@ -8,7 +8,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 /**
@@ -18,7 +18,7 @@ public class LocaleSpecI18nStringTagType
         extends AbstractTagType {
 
     @Override
-    public iString parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
+    public iString parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
 
         XiString istr = (XiString) cont;
@@ -30,7 +30,7 @@ public class LocaleSpecI18nStringTagType
     }
 
     @Override
-    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object _istr, INegotiation negotiation)
+    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object _istr, IOptions options)
             throws FormatException, IOException {
 
         iString istr = (iString) _istr;
@@ -50,7 +50,7 @@ public class LocaleSpecI18nStringTagType
 
     @GeneratedByCopyPaste(I18nStringTagType.class)
     @Override
-    public iString parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+    public iString parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         iString text = XiString.parseMultiLangString(string);
         return text;
@@ -58,7 +58,7 @@ public class LocaleSpecI18nStringTagType
 
     @GeneratedByCopyPaste(I18nStringTagType.class)
     @Override
-    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
             throws IOException {
         iString dstr = (iString) value;
 

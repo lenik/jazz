@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public interface ITagType {
@@ -19,7 +19,7 @@ public interface ITagType {
      * @return If <code>cont</code> is not <code>null</code>, this method should return
      *         <code>cont</code>, otherwise a new value is created and returned.
      */
-    Object parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
+    Object parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException;
 
     /**
@@ -38,19 +38,19 @@ public interface ITagType {
      * @param writer
      *            The javadoc writer.
      */
-    void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
+    void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
             throws FormatException, IOException;
 
     /**
      * Parse a single Flatf entry.
      */
-    Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+    Object parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException;
 
     /**
      * Write Flatf entries for a value object.
      */
-    void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
+    void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
             throws FormatException, IOException;
 
 }

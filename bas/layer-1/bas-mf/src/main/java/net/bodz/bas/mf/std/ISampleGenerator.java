@@ -5,7 +5,7 @@ import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.meta.decl.ParameterType;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public interface ISampleGenerator<T> {
 
@@ -41,7 +41,7 @@ public interface ISampleGenerator<T> {
      * @return <code>null</code> if the sample space restricted by <code>classification</code> is
      *         empty.
      */
-    T newSample(Map<String, Object> classification, INegotiation negotiation)
+    T newSample(Map<String, Object> classification, IOptions options)
             throws CreateException;
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class RepeatForListTagType
@@ -21,27 +21,27 @@ public class RepeatForListTagType
     }
 
     @Override
-    public Object parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
+    public Object parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         @SuppressWarnings("unchecked") List<Object> list = (List<Object>) cont;
         if (list == null)
             list = new ArrayList<Object>();
-        Object value = valueTagType.parseJavadoc(tagNameSpec, null, string, negotiation);
+        Object value = valueTagType.parseJavadoc(tagNameSpec, null, string, options);
         list.add(value);
         return list;
     }
 
     @Override
-    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, INegotiation negotiation)
+    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
             throws FormatException, IOException {
         List<?> list = (List<?>) value;
         for (Object item : list) {
-            valueTagType.writeJavadoc(rootTagName, writer, item, negotiation);
+            valueTagType.writeJavadoc(rootTagName, writer, item, options);
         }
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+    public Object parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         @SuppressWarnings("unchecked") List<Object> list = (List<Object>) cont;
         if (list == null)
@@ -53,19 +53,19 @@ public class RepeatForListTagType
             list.add(null);
 
         // Object valueCont = list.get(index);
-        Object value = valueTagType.parseEntry(null, null, string, negotiation);
+        Object value = valueTagType.parseEntry(null, null, string, options);
         list.set(index, value);
         return list;
     }
 
     @Override
-    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
             throws FormatException, IOException {
         List<?> list = (List<?>) value;
         for (int index = 0; index < list.size(); index++) {
             Object item = list.get(index);
             if (item != null) {
-                valueTagType.writeEntries(out, prefix + "." + index, item, negotiation);
+                valueTagType.writeEntries(out, prefix + "." + index, item, options);
             }
         }
     }

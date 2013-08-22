@@ -1,8 +1,8 @@
 package net.bodz.bas.mf.std;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
 import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.rtx.IOptions;
 
 public class ParserUtil {
 
@@ -14,7 +14,7 @@ public class ParserUtil {
         return parser.parse(text);
     }
 
-    public static <T> T parse(Class<T> objType, String text, INegotiation negotiation)
+    public static <T> T parse(Class<T> objType, String text, IOptions options)
             throws ParseException {
         IParser<T> parser = MdaFeatures.getMdaFeature(objType, IParser.class);
         if (parser == null)

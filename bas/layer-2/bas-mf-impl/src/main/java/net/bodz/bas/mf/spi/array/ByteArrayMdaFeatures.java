@@ -5,8 +5,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.mf.std.IParser;
-import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.rtx.INegotiation.IParameter;
+import net.bodz.bas.rtx.IOptions;
 
 public class ByteArrayMdaFeatures
         extends AbstractArrayMdaFeatures<byte[]> {
@@ -38,17 +37,9 @@ public class ByteArrayMdaFeatures
     }
 
     @Override
-    public byte[] parse(String text, INegotiation negotiation)
+    public byte[] parse(String text, IOptions options)
             throws ParseException {
-        Charset charset = defaultTextformCharset;
-        for (IParameter param : negotiation) {
-            String paramId = param.getId();
-            Object paramValue = param.getValue();
-            if (textformCharset.equals(paramId)) {
-                if (paramValue != null)
-                    charset = (Charset) paramValue;
-            }
-        }
+        Charset charset = options.get(textformCharset, defaultTextformCharset);
         return text.getBytes(charset);
     }
 

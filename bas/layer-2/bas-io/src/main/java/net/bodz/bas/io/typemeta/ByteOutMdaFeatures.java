@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.mf.std.IParser;
+import net.bodz.bas.sio.IByteOut;
+import net.bodz.bas.sio.OutputStreamByteOut;
 
 public class ByteOutMdaFeatures
         extends AbstractCommonMdaFeatures<IByteOut> {

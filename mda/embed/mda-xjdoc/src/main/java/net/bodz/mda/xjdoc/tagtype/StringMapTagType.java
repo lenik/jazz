@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class StringMapTagType
@@ -16,16 +16,16 @@ public class StringMapTagType
     }
 
     @Override
-    public Map<?, ?> parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+    public Map<?, ?> parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
-        Map<?, ?> map = super.parseEntry(cont, suffix, string, negotiation);
+        Map<?, ?> map = super.parseEntry(cont, suffix, string, options);
         return map;
     }
 
     @Override
-    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
             throws FormatException, IOException {
-        super.writeEntries(out, prefix, value, negotiation);
+        super.writeEntries(out, prefix, value, options);
     }
 
     static final StringMapTagType instance = new StringMapTagType();

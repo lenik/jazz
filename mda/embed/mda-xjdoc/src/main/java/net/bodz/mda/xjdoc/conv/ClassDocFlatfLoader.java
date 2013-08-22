@@ -1,14 +1,12 @@
 package net.bodz.mda.xjdoc.conv;
 
-import static net.bodz.bas.rtx.Negotiation.list;
-import static net.bodz.bas.rtx.Negotiation.option;
-
 import java.io.IOException;
 import java.io.Reader;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Options;
 import net.bodz.bas.text.flatf.FlatfInput;
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfInput;
@@ -42,11 +40,11 @@ public class ClassDocFlatfLoader
         ClassDoc classDoc = createClassDoc(fqcn);
         ImportMap importMap = classDoc.getOrCreateImports();
 
-        INegotiation negotiation = list(//
-                option(ITagLibrary.class, taglib), //
-                option(ImportMap.class, importMap));
+        IOptions options = new Options() //
+                .addOption(ITagLibrary.class, taglib) //
+                .addOption(ImportMap.class, importMap);
 
-        super.load(in, classDoc, negotiation);
+        super.load(in, classDoc, options);
         return classDoc;
     }
 

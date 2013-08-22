@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
@@ -113,12 +113,12 @@ public class MethodDoc
     }
 
     @Override
-    public void writeObject(IFlatfOutput out, INegotiation negotiation)
+    public void writeObject(IFlatfOutput out, IOptions options)
             throws IOException {
         ImportMap imports = getClassDoc().getOrCreateImports();
         String importedForm = methodId.getImportedForm(imports);
         out.sectionBegin("method:" + importedForm);
-        super.writeObject(out, negotiation);
+        super.writeObject(out, options);
         out.sectionEnd();
     }
 

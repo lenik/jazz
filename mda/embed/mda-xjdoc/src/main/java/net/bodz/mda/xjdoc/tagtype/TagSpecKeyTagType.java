@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public class TagSpecKeyTagType
         extends AbstractMapCompositeTagType {
@@ -17,16 +17,16 @@ public class TagSpecKeyTagType
     }
 
     @Override
-    public Map<?, ?> parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
+    public Map<?, ?> parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         @SuppressWarnings("unchecked") Map<Object, Object> map = (Map<Object, Object>) cont;
         if (map == null)
             map = new LinkedHashMap<Object, Object>();
 
-        Object key = parseKey(tagNameSpec, negotiation);
+        Object key = parseKey(tagNameSpec, options);
 
         Object valueCont = map.get(key);
-        Object value = valueTagType.parseJavadoc(tagNameSpec, valueCont, string, negotiation);
+        Object value = valueTagType.parseJavadoc(tagNameSpec, valueCont, string, options);
         if (valueCont != value)
             map.put(key, value);
 
@@ -34,7 +34,7 @@ public class TagSpecKeyTagType
     }
 
     @Override
-    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object _map, INegotiation negotiation)
+    public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object _map, IOptions options)
             throws FormatException, IOException {
         Map<?, ?> map = (Map<?, ?>) _map;
 
@@ -44,11 +44,11 @@ public class TagSpecKeyTagType
 
             String tagName = rootTagName;
 
-            String keyStr = formatKey(k, negotiation);
+            String keyStr = formatKey(k, options);
             if (keyStr != null && !keyStr.isEmpty())
                 tagName += "." + keyStr;
 
-            valueTagType.writeJavadoc(tagName, writer, v, negotiation);
+            valueTagType.writeJavadoc(tagName, writer, v, options);
         }
     }
 

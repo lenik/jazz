@@ -8,8 +8,7 @@ import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.mf.std.IParser;
 import net.bodz.bas.mf.std.ISampleGenerator;
-import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.rtx.INegotiation.IParameter;
+import net.bodz.bas.rtx.IOptions;
 
 public class StringMdaFeatures
         extends AbstractCommonMdaFeatures<String> {
@@ -64,26 +63,12 @@ public class StringMdaFeatures
                 defaultSampleMaxLength);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public String newSample(Map<String, Object> classification, INegotiation negotiation)
+    public String newSample(Map<String, Object> classification, IOptions options)
             throws CreateException {
-        int minLength = defaultSampleMinLength;
-        int maxLength = defaultSampleMaxLength;
-        ISampleGenerator<Character> charSample = defaultSampleCharSample;
-
-        for (IParameter param : negotiation) {
-            String paramId = param.getId();
-            Object paramValue = param.getValue();
-            if (paramValue == null)
-                continue;
-            if (sampleMinLength.equals(paramId))
-                minLength = (Integer) paramValue;
-            else if (sampleMaxLength.equals(paramId))
-                maxLength = (Integer) paramValue;
-            else if (sampleCharSample.equals(paramId))
-                charSample = (ISampleGenerator<Character>) paramValue;
-        }
+        int minLength = options.getInt(sampleMinLength, defaultSampleMinLength);
+        int maxLength = options.getInt(sampleMaxLength, defaultSampleMaxLength);
+        ISampleGenerator<Character> charSample = options.get(sampleCharSample, defaultSampleCharSample);
 
         return newSample(charSample, minLength, maxLength);
     }

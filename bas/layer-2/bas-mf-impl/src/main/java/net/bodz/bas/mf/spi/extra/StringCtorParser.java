@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.mf.std.AbstractParser;
+import net.bodz.bas.rtx.IOptions;
 
 public class StringCtorParser
         extends AbstractParser<Object> {
@@ -20,7 +21,7 @@ public class StringCtorParser
     }
 
     @Override
-    public Object parse(String text)
+    public Object parse(String text, IOptions options)
             throws ParseException {
         try {
             return ctor.newInstance(text);

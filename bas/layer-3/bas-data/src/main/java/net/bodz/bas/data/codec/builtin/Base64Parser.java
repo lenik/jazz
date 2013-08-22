@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.mf.std.AbstractParser;
+import net.bodz.bas.rtx.IOptions;
 
 public class Base64Parser
         extends AbstractParser<byte[]> {
@@ -17,7 +18,7 @@ public class Base64Parser
     }
 
     @Override
-    public byte[] parse(String base64)
+    public byte[] parse(String base64, IOptions options)
             throws ParseException {
         if (base64 == null)
             throw new NullPointerException("base64");

@@ -1,8 +1,5 @@
 package net.bodz.bas.program.skel;
 
-import static net.bodz.bas.rtx.Negotiation.list;
-import static net.bodz.bas.rtx.Negotiation.option;
-
 import java.io.File;
 import java.util.ServiceLoader;
 
@@ -10,7 +7,8 @@ import org.junit.Assert;
 
 import net.bodz.bas.c.m2.MavenPom;
 import net.bodz.bas.io.resource.builtin.StringSource;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Options;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
@@ -67,9 +65,9 @@ public class QdoxTest
                 String fqcn = jclass.getFullyQualifiedName();
                 ImportMap builderMap = classDoc.getOrCreateImports();
 
-                INegotiation n_ffout = list(//
-                        option(ITagLibrary.class, taglibs), //
-                        option(ImportMap.class, builderMap));
+                IOptions n_ffout = new Options() //
+                        .addOption(ITagLibrary.class, taglibs) //
+                        .addOption(ImportMap.class, builderMap);
 
                 BCharOut buf = new BCharOut();
                 FlatfOutput ffout = new FlatfOutput(buf);

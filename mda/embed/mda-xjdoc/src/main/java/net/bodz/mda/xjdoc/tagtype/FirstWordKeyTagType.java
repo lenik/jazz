@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.mda.xjdoc.util.WordTokenizer;
 
 /**
@@ -21,7 +21,7 @@ public class FirstWordKeyTagType
     }
 
     @Override
-    public Map<?, ?> parseJavadoc(String tagNameSpec, Object cont, String string, INegotiation negotiation)
+    public Map<?, ?> parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         String keyStr = WordTokenizer.firstWord(string);
         String valueStr = string.substring(keyStr.length());
@@ -32,10 +32,10 @@ public class FirstWordKeyTagType
         if (map == null)
             map = new LinkedHashMap<Object, Object>();
 
-        Object key = parseKey(keyStr, negotiation);
+        Object key = parseKey(keyStr, options);
 
         Object valueCont = map.get(key);
-        Object value = valueTagType.parseJavadoc(tagNameSpec, valueCont, valueStr, negotiation);
+        Object value = valueTagType.parseJavadoc(tagNameSpec, valueCont, valueStr, options);
         if (valueCont != value)
             map.put(key, value);
 
@@ -43,7 +43,7 @@ public class FirstWordKeyTagType
     }
 
     @Override
-    public void writeJavadoc(String rootTagName, final IJavadocWriter writer, Object _map, INegotiation negotiation)
+    public void writeJavadoc(String rootTagName, final IJavadocWriter writer, Object _map, IOptions options)
             throws FormatException, IOException {
         Map<?, ?> map = (Map<?, ?>) _map;
 
@@ -51,7 +51,7 @@ public class FirstWordKeyTagType
             Object k = entry.getKey();
             Object v = entry.getValue();
 
-            final String keyStr = formatKey(k, negotiation);
+            final String keyStr = formatKey(k, options);
 
             IJavadocWriter prependKeyWriter = new IJavadocWriter() {
                 @Override
@@ -61,7 +61,7 @@ public class FirstWordKeyTagType
                 }
             };
 
-            valueTagType.writeJavadoc(rootTagName, prependKeyWriter, v, negotiation);
+            valueTagType.writeJavadoc(rootTagName, prependKeyWriter, v, options);
         }
     }
 

@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.taglib;
 
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.preorder.PackageMap;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
 
@@ -34,12 +34,14 @@ public abstract class AbstractTagLibrary
         tagMap.put(rootTagName, tagType);
     }
 
-    public static ITagLibrary getInstance(INegotiation negotiation) {
-        ITagLibrary instance = null;
-        if (negotiation != null)
-            instance = negotiation.require(ITagLibrary.class);
+    public static ITagLibrary fromOptions(IOptions options) {
+        if (options == null)
+            throw new NullPointerException("options");
+
+        ITagLibrary instance = options.get(ITagLibrary.class);
         if (instance == null)
-            throw new IllegalUsageException("Tag library isn't provided in negotiation.");
+            throw new IllegalUsageException("Tag library isn't provided in options.");
+
         return instance;
     }
 

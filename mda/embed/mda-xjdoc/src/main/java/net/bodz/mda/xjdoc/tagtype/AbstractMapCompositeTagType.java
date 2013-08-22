@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public abstract class AbstractMapCompositeTagType
@@ -21,11 +21,11 @@ public abstract class AbstractMapCompositeTagType
         this.valueTagType = valueTagType;
     }
 
-    protected Object parseKey(String keyText, INegotiation negotiation) {
+    protected Object parseKey(String keyText, IOptions options) {
         return keyText;
     }
 
-    protected String formatKey(Object key, INegotiation negotiation) {
+    protected String formatKey(Object key, IOptions options) {
         if (key == null)
             return null;
         else
@@ -33,16 +33,16 @@ public abstract class AbstractMapCompositeTagType
     }
 
     @Override
-    public Map<?, ?> parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+    public Map<?, ?> parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         @SuppressWarnings("unchecked") Map<Object, Object> map = (Map<Object, Object>) cont;
         if (map == null)
             map = new LinkedHashMap<Object, Object>();
 
         // suffix -> suffix-1.suffix-rest
-        Object key = parseKey(suffix, negotiation);
+        Object key = parseKey(suffix, options);
         Object valueCont = map.get(key);
-        Object value = valueTagType.parseEntry(valueCont, null, string, negotiation);
+        Object value = valueTagType.parseEntry(valueCont, null, string, options);
         // return new Pair<Object, Object>(key, value);
         if (valueCont == null)
             map.put(key, value);
@@ -50,15 +50,15 @@ public abstract class AbstractMapCompositeTagType
     }
 
     @Override
-    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
             throws FormatException, IOException {
         Map<?, ?> map = (Map<?, ?>) value;
         for (Entry<?, ?> entry : map.entrySet()) {
             Object k = entry.getKey();
             Object v = entry.getValue();
             if (v != null) {
-                String keyStr = formatKey(k, negotiation);
-                valueTagType.writeEntries(out, prefix + "." + keyStr, v, negotiation);
+                String keyStr = formatKey(k, options);
+                valueTagType.writeEntries(out, prefix + "." + keyStr, v, options);
             }
         }
     }

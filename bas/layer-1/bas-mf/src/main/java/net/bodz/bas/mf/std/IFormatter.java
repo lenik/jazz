@@ -4,7 +4,7 @@ import java.beans.ExceptionListener;
 import java.io.Writer;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 
 public interface IFormatter<T> {
 
@@ -36,7 +36,7 @@ public interface IFormatter<T> {
      * @throws FormatException
      *             If failed to format.
      */
-    String format(T object, INegotiation negotiation)
+    String format(T object, IOptions options)
             throws FormatException;
 
 }

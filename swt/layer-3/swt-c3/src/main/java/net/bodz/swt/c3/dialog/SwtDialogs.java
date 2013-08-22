@@ -26,14 +26,14 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fn.legacy.Func0;
 import net.bodz.bas.gui.dialog.AbstractUserDialogs;
 import net.bodz.bas.gui.dialog.IDirectiveCommand;
+import net.bodz.bas.mf.MdaFeatures;
+import net.bodz.bas.mf.std.IParser;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.rtx.Negotiation;
-import net.bodz.bas.mf.MdaFeatures;
-import net.bodz.bas.mf.std.IParser;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
@@ -165,9 +165,9 @@ public class SwtDialogs
             super(parent, style, title);
         }
 
-        public INegotiation getNegotiation() {
-            return Negotiation.list(//
-                    Negotiation.option(ICommandGroup.class, new RC()));
+        public IOptions getOptions() {
+            return new Options() //
+                    .addOption(ICommandGroup.class, new RC());
         }
 
         @Override
@@ -203,9 +203,9 @@ public class SwtDialogs
             @Override
             protected void createDetail(Composite parent)
                     throws CreateException {
-                INegotiation negotiation = getNegotiation();
+                IOptions options = getOptions();
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -225,7 +225,7 @@ public class SwtDialogs
         class ConfirmDialog
                 extends _Dialog {
 
-            INegotiation negotiation = getNegotiation();
+            IOptions options = getOptions();
 
             public ConfirmDialog(Shell parent, int style, String title) {
                 super(parent, style, title);
@@ -240,7 +240,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -261,7 +261,7 @@ public class SwtDialogs
         class AskDialog
                 extends _Dialog {
 
-            INegotiation negotiation = getNegotiation();
+            IOptions options = getOptions();
 
             public AskDialog(Shell parent, int style, String title) {
                 super(parent, style, title);
@@ -276,7 +276,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -340,9 +340,9 @@ public class SwtDialogs
             @Override
             protected void createDetail(Composite parent)
                     throws SWTException, CreateException {
-                INegotiation negotiation = getNegotiation();
+                IOptions options = getOptions();
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -374,14 +374,14 @@ public class SwtDialogs
     private static int FLATMAX = 3;
 
     static class PreRenderred {
-        private final INegotiation negotiation;
+        private final IOptions options;
         private final IViewBuilderFactory viz;
         private final StackComposite stack;
         private final Control[] controls;
         private int next;
 
-        public PreRenderred(INegotiation negotiation, Composite parent, IViewBuilderFactory style, int size) {
-            this.negotiation = negotiation;
+        public PreRenderred(IOptions options, Composite parent, IViewBuilderFactory style, int size) {
+            this.options = options;
             this.stack = new StackComposite(parent, SWT.BORDER);
             this.viz = style;
             this.controls = new Control[size];
@@ -389,7 +389,7 @@ public class SwtDialogs
 
         public int render(Object value)
                 throws ViewBuilderException, SWTException {
-            Control control = (Control) viz.buildView(stack, wrap(value), negotiation);
+            Control control = (Control) viz.buildView(stack, wrap(value), options);
             controls[next] = control;
             return next++;
         }
@@ -418,7 +418,7 @@ public class SwtDialogs
         class ChoiceDialog
                 extends _Dialog {
 
-            INegotiation negotiation = getNegotiation();
+            IOptions options = getOptions();
 
             class SetResultByData
                     extends SelectionAdapter {
@@ -453,7 +453,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -479,7 +479,7 @@ public class SwtDialogs
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
-                        viewBuilderFactory.buildView(parent, wrap(value), negotiation);
+                        viewBuilderFactory.buildView(parent, wrap(value), options);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -498,7 +498,7 @@ public class SwtDialogs
                 int size = candidates.size();
                 final Object[] keys = new Object[size];
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, viewBuilderFactory,
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(options, parent, viewBuilderFactory,
                         size) : null;
                 try {
                     int index = 0;
@@ -553,7 +553,7 @@ public class SwtDialogs
 
         class ChoicesDialog
                 extends _Dialog {
-            INegotiation negotiation = getNegotiation();
+            IOptions options = getOptions();
             Func0<Set<K>> selection;
 
             public ChoicesDialog(Shell parent, int style, String title) {
@@ -575,7 +575,7 @@ public class SwtDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, wrap(detail), negotiation);
+                    viewBuilderFactory.buildView(parent, wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -614,7 +614,7 @@ public class SwtDialogs
                     button.setSelection(selected);
                     keyButtons[index++] = new KeyButton(key, button);
                     try {
-                        viewBuilderFactory.buildView(parent, wrap(value), negotiation);
+                        viewBuilderFactory.buildView(parent, wrap(value), options);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -650,7 +650,7 @@ public class SwtDialogs
 
                 final int size = candidates.size();
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(negotiation, parent, viewBuilderFactory,
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(options, parent, viewBuilderFactory,
                         size) : null;
                 final _K[] keys = new _K[size];
                 int index = 0;

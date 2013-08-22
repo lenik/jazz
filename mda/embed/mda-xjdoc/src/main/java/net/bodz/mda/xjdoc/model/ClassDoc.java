@@ -6,7 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -139,20 +139,20 @@ public class ClassDoc
      * </ul>
      */
     @Override
-    public void writeObject(IFlatfOutput out, INegotiation negotiation)
+    public void writeObject(IFlatfOutput out, IOptions options)
             throws IOException {
         // out.sectionBegin("class");
 
         BCharOut bodyBuffer = new BCharOut();
         FlatfOutput bodyOut = new FlatfOutput(bodyBuffer);
         {
-            super.writeObject(bodyOut, negotiation);
+            super.writeObject(bodyOut, options);
 
             for (FieldDoc fieldDoc : fieldDocs.values())
-                fieldDoc.writeObject(bodyOut, negotiation);
+                fieldDoc.writeObject(bodyOut, options);
 
             for (MethodDoc methodDoc : methodDocs.values())
-                methodDoc.writeObject(bodyOut, negotiation);
+                methodDoc.writeObject(bodyOut, options);
         }
 
         for (String fqcn : imports.getMap().values())
@@ -164,9 +164,9 @@ public class ClassDoc
     }
 
     @Override
-    public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation) {
+    public ISectionHandler getSectionHandler(String sectionName, IOptions options) {
         if (sectionName == null)
-            return super.getSectionHandler(sectionName, negotiation);
+            return super.getSectionHandler(sectionName, options);
 
         if (sectionName.startsWith("field:")) {
             String fieldName = sectionName.substring(6);
@@ -175,7 +175,7 @@ public class ClassDoc
                 fieldDoc = new FieldDoc(this, fieldName);
                 setFieldDoc(fieldName, fieldDoc);
             }
-            return fieldDoc.getSectionHandler(null, negotiation);
+            return fieldDoc.getSectionHandler(null, options);
         }
 
         if (sectionName.startsWith("method:")) {
@@ -205,7 +205,7 @@ public class ClassDoc
                 methodDoc = new MethodDoc(this, methodId);
                 setMethodDoc(methodId, methodDoc);
             }
-            return methodDoc.getSectionHandler(null, negotiation);
+            return methodDoc.getSectionHandler(null, options);
         }
 
         throw new IllegalArgumentException("Illegal section name: " + sectionName);

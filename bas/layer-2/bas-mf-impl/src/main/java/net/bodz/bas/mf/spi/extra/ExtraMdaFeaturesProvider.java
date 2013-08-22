@@ -1,7 +1,7 @@
 package net.bodz.bas.mf.spi.extra;
 
-import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.mf.spi.AbstractMdaFeaturesProvider;
+import net.bodz.bas.rtx.QueryException;
 
 public class ExtraMdaFeaturesProvider
         extends AbstractMdaFeaturesProvider {

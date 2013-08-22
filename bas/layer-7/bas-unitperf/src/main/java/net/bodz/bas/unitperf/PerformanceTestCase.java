@@ -2,13 +2,13 @@ package net.bodz.bas.unitperf;
 
 import org.junit.Assert;
 
-import net.bodz.bas.rtx.INegotiation.IParameter;
-import net.bodz.bas.rtx.Negotiation;
 import net.bodz.bas.mf.std.ISampleGenerator;
+import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Options;
 
 public class PerformanceTestCase
         extends Assert {
 
-    IParameter testUsage = Negotiation.option(ISampleGenerator.sampleUsage, "test");
+    IOptions testUsage = new Options().addOption(ISampleGenerator.sampleUsage, "test");
 
 }

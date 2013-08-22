@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.mf.std.AbstractValidator;
 import net.bodz.bas.mf.std.ValidationException;
+import net.bodz.bas.rtx.IOptions;
 
 public class RegexValidator
         extends AbstractValidator<String> {
@@ -23,7 +24,7 @@ public class RegexValidator
     }
 
     @Override
-    public void validate(String string)
+    public void validate(String string, IOptions options)
             throws ValidationException {
         if (!pattern.matcher(string).matches())
             throw new ValidationException(String.format("String Doesn't match with regex(%s): %s", //

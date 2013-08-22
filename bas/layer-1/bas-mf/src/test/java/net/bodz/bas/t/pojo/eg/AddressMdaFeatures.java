@@ -1,11 +1,10 @@
 package net.bodz.bas.t.pojo.eg;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.rtx.INegotiation;
-import net.bodz.bas.rtx.MandatoryException;
 import net.bodz.bas.mf.std.AbstractCommonMdaFeatures;
 import net.bodz.bas.mf.std.IFormatter;
 import net.bodz.bas.mf.std.IParser;
+import net.bodz.bas.rtx.IOptions;
 
 public class AddressMdaFeatures
         extends AbstractCommonMdaFeatures<Address> {
@@ -38,8 +37,8 @@ public class AddressMdaFeatures
     }
 
     @Override
-    public Address parse(String text, INegotiation negotiation)
-            throws ParseException, MandatoryException {
+    public Address parse(String text, IOptions options)
+            throws ParseException {
         String[] segs = text.split(":", 3);
         if (segs.length < 3)
             throw new ParseException("Address format=COUNTRY:POSTCODE:ADDRESS");
@@ -49,12 +48,12 @@ public class AddressMdaFeatures
         String address = segs[2];
         int postCode = 0;
 
-        if (negotiation != null) {
-            CountryAliasUtil countryAliasUtil = negotiation.get(CountryAliasUtil.class);
+        if (options != null) {
+            CountryAliasUtil countryAliasUtil = options.get(CountryAliasUtil.class);
             if (countryAliasUtil != null)
                 country = countryAliasUtil.unalias(country);
             if (resolvePostCode) {
-                PostCodeUtil postCodeUtil = negotiation.get(PostCodeUtil.class);
+                PostCodeUtil postCodeUtil = options.get(PostCodeUtil.class);
                 postCode = Integer.parseInt(city);
                 city = postCodeUtil.getCityFromCode(postCode);
             }
