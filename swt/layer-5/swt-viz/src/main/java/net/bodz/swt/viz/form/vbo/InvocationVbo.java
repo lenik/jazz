@@ -19,15 +19,15 @@ import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuilder;
-import net.bodz.swt.viz.grid.GridViewBuilderFactory;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
+import net.bodz.swt.viz.grid.SwtGridViewBuilderFactory;
 
 public class InvocationVbo
-        extends SwtViewBuilder<IInvocation> {
+        extends AbstractSwtViewBuilder<IInvocation> {
 
-    protected final GridViewBuilderFactory gridStyle;
+    protected final SwtGridViewBuilderFactory gridStyle;
 
-    public InvocationVbo(GridViewBuilderFactory gridStyle) {
+    public InvocationVbo(SwtGridViewBuilderFactory gridStyle) {
         this.gridStyle = gridStyle;
     }
 

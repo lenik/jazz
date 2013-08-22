@@ -22,10 +22,10 @@ import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuilder;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 public class DateVbo
-        extends SwtViewBuilder<Date> {
+        extends AbstractSwtViewBuilder<Date> {
 
     protected String format(Date date) {
         return String.valueOf(date);

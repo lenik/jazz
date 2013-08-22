@@ -1,12 +1,20 @@
 package net.bodz.bas.repr.viz;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+
 public interface IViewBuilderFactory {
 
     <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type);
 
     /**
-     * TODO class/annotation/parameters...
+     * Not implemented well, yet.
+     * 
+     * @param type
+     *            Raw type or parameterized type.
+     * @param annotations
+     *            Annotations on the property or field or method.
      */
-    // <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, Map<String, ?> parameters);
+    <T> IViewBuilder<T> getViewBuilder(Type type, Annotation[] annotations);
 
 }

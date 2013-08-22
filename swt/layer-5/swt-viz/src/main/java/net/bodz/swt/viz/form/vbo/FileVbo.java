@@ -27,10 +27,10 @@ import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuilder;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 public class FileVbo
-        extends SwtViewBuilder<File> {
+        extends AbstractSwtViewBuilder<File> {
 
     @Override
     public Control buildView(final SwtRenderContext rc, final IRefEntry<File> entry, ISwtControlStyleDeclaration style,

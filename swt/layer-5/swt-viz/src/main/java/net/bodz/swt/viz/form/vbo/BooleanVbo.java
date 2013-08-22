@@ -20,10 +20,10 @@ import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuilder;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 public class BooleanVbo
-        extends SwtViewBuilder<Boolean> {
+        extends AbstractSwtViewBuilder<Boolean> {
 
     @Override
     public Control buildView(final SwtRenderContext rc, final IRefEntry<Boolean> entry, ISwtControlStyleDeclaration style,

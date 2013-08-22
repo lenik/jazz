@@ -8,10 +8,10 @@ import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuilder;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 public class NumberVbo
-        extends SwtViewBuilder<Number> {
+        extends AbstractSwtViewBuilder<Number> {
 
     @Override
     public Control buildView(SwtRenderContext rc, IRefEntry<Number> entry, ISwtControlStyleDeclaration style,

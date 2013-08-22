@@ -8,6 +8,15 @@ public interface IGUIElementStyleDeclaration
     @Override
     IGUIElementStyleDeclaration getParent();
 
+    /**
+     * @see #getFontFamily()
+     * @see #getFontSize()
+     * @see #getFontSizeType()
+     * @see #getFontStyle()
+     * @see #getFontWeight()
+     * @see #getFontType()
+     * @see #getFontVariant()
+     */
     IFontType getFontType();
 
     void setFontType(IFontType fontType);

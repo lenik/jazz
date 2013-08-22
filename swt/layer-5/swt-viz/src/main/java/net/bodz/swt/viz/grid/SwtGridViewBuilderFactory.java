@@ -22,33 +22,31 @@ import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.style.SwtImageMapper;
+import net.bodz.swt.viz.AbstractSwtViewBuilderFactory;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuilderFactory;
 import net.bodz.swt.viz.form.vbo.InvocationVbo;
 import net.bodz.swt.viz.util.ModifierIcon;
 
-public class GridViewBuilderFactory
-        extends SwtViewBuilderFactory {
-
-    private static final long serialVersionUID = -6476584130668546414L;
+public class SwtGridViewBuilderFactory
+        extends AbstractSwtViewBuilderFactory {
 
     protected final GridConfig config;
 
-    public GridViewBuilderFactory(GridConfig config) {
+    public SwtGridViewBuilderFactory(GridConfig config) {
         this.config = config;
     }
 
-    public GridViewBuilderFactory() {
+    public SwtGridViewBuilderFactory() {
         this(GridConfig.getDefault());
     }
 
     @Override
     protected void setup() {
         super.setup();
-        put(Object.class, new ObjectVbo(this));
-        put(Invocation.class, new InvocationVbo(this));
+        typeMap.put(Object.class, new ObjectVbo(this));
+        typeMap.put(Invocation.class, new InvocationVbo(this));
     }
 
     private static ModifierIcon fieldIcons;
@@ -134,7 +132,7 @@ public class GridViewBuilderFactory
 
         // Column #3
         Control child;
-        child = GridViewBuilderFactory.this.render(rc, entry, grid, styleFx(SWT.NONE, styleDecl));
+        child = SwtGridViewBuilderFactory.this.render(rc, entry, grid, styleFx(SWT.NONE, styleDecl));
 
         Point iconz = iconLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point labelz = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
