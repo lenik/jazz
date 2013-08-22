@@ -89,8 +89,7 @@ public class GCStrokeType
 
     @Override
     public void setWidth(LengthMeasure width) {
-        double _width = width.pixels(xdpi).getValue();
-        gc.setLineWidth((int) _width);
+        gc.setLineWidth(width.pixels(xdpi));
     }
 
     @Override

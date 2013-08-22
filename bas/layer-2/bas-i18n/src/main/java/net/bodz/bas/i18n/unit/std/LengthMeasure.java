@@ -44,12 +44,22 @@ public class LengthMeasure
         return new LengthMeasure(value * times, otherUnit);
     }
 
-    public LengthMeasure dots(int dpi) {
+    public int dots(int dpi) {
+        int times = unit.dots(dpi);
+        return (int) (value * times);
+    }
+
+    public LengthMeasure inDots(int dpi) {
         int times = unit.dots(dpi);
         return new LengthMeasure(value * times, POINT);
     }
 
-    public LengthMeasure pixels(int ppi) {
+    public int pixels(int ppi) {
+        int times = unit.pixels(ppi);
+        return (int) (value * times);
+    }
+
+    public LengthMeasure inPixels(int ppi) {
         int times = unit.pixels(ppi);
         return new LengthMeasure(value * times, PIXEL);
     }
