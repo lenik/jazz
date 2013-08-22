@@ -24,10 +24,10 @@ import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuilder;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 public class StringVbo
-        extends SwtViewBuilder<Object> {
+        extends AbstractSwtViewBuilder<Object> {
 
     public Control _buildView(final SwtRenderContext rc, final IRefEntry<?> entry, ISwtControlStyleDeclaration style,
             Composite parent, int styleInt)

@@ -9,7 +9,7 @@ import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.swt.c.test.WidgetTester;
 import net.bodz.swt.c3.misc.Timer;
-import net.bodz.swt.viz.grid.GridViewBuilderFactory;
+import net.bodz.swt.viz.grid.SwtGridViewBuilderFactory;
 
 import user.ASL;
 import user.ComplexPerson;
@@ -19,12 +19,12 @@ import user.SimplePerson;
 /**
  * @style width: 500; height: 400
  */
-public class GridTest_SimpleObject
+public class SwtGridViewTest
         extends WidgetTester {
 
     private School school;
 
-    public GridTest_SimpleObject() {
+    public SwtGridViewTest() {
         school = new School("Dream School");
         school.lucy = new SimplePerson("Lucy", 12, false);
         school.lily = new ComplexPerson();
@@ -33,7 +33,7 @@ public class GridTest_SimpleObject
     }
 
     @Test
-    public void testGridViz()
+    public void testSimpleObject()
             throws Throwable {
         final Label bar = new Label(shell, SWT.NONE);
         new Timer(100, bar) {
@@ -44,10 +44,10 @@ public class GridTest_SimpleObject
         };
 
         SwtRenderContext rc = new SwtRenderContext();
-        ISwtGUIRefEntry<School> schoolVar = GUIVars.wrap(school);
-        GridViewBuilderFactory viewBuilderFactory = new GridViewBuilderFactory();
+        ISwtGUIRefEntry<School> schoolEntry = GUIVars.wrap(school);
+        SwtGridViewBuilderFactory viewBuilderFactory = new SwtGridViewBuilderFactory();
         try {
-            viewBuilderFactory.render(rc, schoolVar, body, SWT.BORDER);
+            viewBuilderFactory.render(rc, schoolEntry, body, SWT.BORDER);
         } catch (ViewBuilderException e) {
             throw new GUIException(e);
         } catch (SWTException e) {

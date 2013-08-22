@@ -33,13 +33,13 @@ import net.bodz.swt.gui.model.AbstractCommand;
 import net.bodz.swt.gui.model.ICommand;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.SwtViewBuilder;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 /**
  * @test R_ThrowableTest
  */
 public class ExceptionVbo
-        extends SwtViewBuilder<Throwable> {
+        extends AbstractSwtViewBuilder<Throwable> {
 
     static final String expandedIcon = "/icons/full/obj16/remove_correction.gif";
     static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";

@@ -1,5 +1,10 @@
 package net.bodz.bas.gui.css3.property;
 
+/**
+ * Abstract font type.
+ * 
+ * In Win32, these font may be mapped to actual font types.
+ */
 public enum FontUseMode {
 
     /** The font used for captioned controls (e.g., buttons, drop-downs, etc.). */

@@ -385,6 +385,11 @@ public interface ICss3StyleProperties {
 
     void setFontFamily(String fontFamily);
 
+    /**
+     * @see FontSizeType#medium
+     * @see FontSizeType#large
+     * @see FontSizeType#small
+     */
     @_InheritedIfNull
     FontSizeType getFontSizeType();
 
@@ -392,16 +397,31 @@ public interface ICss3StyleProperties {
 
     void setFontSize(FontSizeType fontSizeType, LengthMeasure fontSize);
 
+    /**
+     * @see FontStyleMode#normal
+     * @see FontStyleMode#italic
+     * @see FontStyleMode#oblique
+     */
     @_InheritedIfNull
     FontStyleMode getFontStyle();
 
     void setFontStyle(FontStyleMode fontStyle);
 
+    /**
+     * @see FontVariantMode#normal
+     * @see FontVariantMode#small_caps
+     */
     @_InheritedIfNull
     FontVariantMode getFontVariant();
 
     void setFontVariant(FontVariantMode fontVariant);
 
+    /**
+     * @see FontWeightMode#normal
+     * @see FontWeightMode#bold
+     * @see FontWeightMode#bolder
+     * @see FontWeightMode#lighter
+     */
     @_InheritedIfNull
     FontWeightMode getFontWeight();
 
@@ -413,6 +433,9 @@ public interface ICss3StyleProperties {
      * specifies such things as the direction of table column layout, the direction of horizontal
      * overflow, the position of an incomplete last line in a block in case of 'text-align:
      * justify'.
+     * 
+     * @see DirectionMode#ltr
+     * @see DirectionMode#rtl
      */
     @_InheritedIfNull
     DirectionMode getDirection();
@@ -461,8 +484,14 @@ public interface ICss3StyleProperties {
     void setTextDecoration(TextDecorationFlags textDecoration);
 
     /**
-     * This property controls capitalization effects of an element's text. Values have the following
-     * meanings:
+     * This property controls capitalization effects of an element's text.
+     * 
+     * Values have the following meanings:
+     * 
+     * @see TextTransformMode#none
+     * @see TextTransformMode#uppercase
+     * @see TextTransformMode#lowercase
+     * @see TextTransformMode#capitalize
      */
     @_InheritedIfNull
     TextTransformMode getTextTransform();
@@ -478,6 +507,9 @@ public interface ICss3StyleProperties {
      * 'Text-indent' only affects a line if it is the first formatted line of an element. For
      * example, the first line of an anonymous block box is only affected if it is the first child
      * of its parent element.
+     * 
+     * @see TextIndentType#length
+     * @see TextIndentType#percentage
      */
     @_InheritedIfNull
     TextIndentType getTextIndentType();
@@ -488,8 +520,13 @@ public interface ICss3StyleProperties {
     void setTextIndent(TextIndentType textIndentType, LengthMeasure textIndent);
 
     /**
-     * This property describes how inline-level content of a block container is aligned. Values have
-     * the following meanings:
+     * This property describes how inline-level content of a block container is aligned.
+     * 
+     * Values have the following meanings:
+     * 
+     * @see TextAlignMode#left
+     * @see TextAlignMode#right
+     * @see TextAlignMode#justify
      */
     @_InheritedIfNull
     TextAlignMode getTextAlign();
