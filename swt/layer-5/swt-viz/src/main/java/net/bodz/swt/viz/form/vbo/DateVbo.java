@@ -20,9 +20,9 @@ import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 public class DateVbo
         extends AbstractSwtViewBuilder<Date> {

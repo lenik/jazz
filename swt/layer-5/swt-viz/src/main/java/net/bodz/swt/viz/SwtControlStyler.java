@@ -16,7 +16,7 @@ import net.bodz.swt.gui.style.SwtFontDataMapper;
 
 public class SwtControlStyler {
 
-    public void applyCommonStyle(Control control, IGUIElementStyleDeclaration styleDecl) {
+    public static void applyCommonStyle(Control control, IGUIElementStyleDeclaration styleDecl) {
         applyVisibility(control, styleDecl.getVisibility());
         applyEnabled(control, styleDecl.getEnabled());
         applyColor(control, styleDecl.getColor());
@@ -25,34 +25,34 @@ public class SwtControlStyler {
         applySize(control, styleDecl);
     }
 
-    public void applyVisibility(Control control, VisibilityMode visibilityMode) {
+    public static void applyVisibility(Control control, VisibilityMode visibilityMode) {
         if (visibilityMode != null)
             control.setVisible(visibilityMode == VisibilityMode.visible);
     }
 
-    public void applyEnabled(Control control, Boolean enabled) {
+    public static void applyEnabled(Control control, Boolean enabled) {
         if (enabled != null)
             control.setEnabled(enabled);
     }
 
-    public void applyColor(Control control, IColor color) {
+    public static void applyColor(Control control, IColor color) {
         if (color != null)
             control.setForeground(SwtColors.convert(color, control.getDisplay()));
     }
 
-    public void applyBackColor(Control control, IColor backColor) {
+    public static void applyBackColor(Control control, IColor backColor) {
         if (backColor != null)
             control.setBackground(SwtColors.convert(backColor, control.getDisplay()));
     }
 
-    public void applyFont(Control control, ICss3StyleDeclaration styleDecl) {
+    public static void applyFont(Control control, ICss3StyleDeclaration styleDecl) {
         FontType fontType = new FontType(styleDecl);
         applyFont(control, fontType);
 
         // styleDecl.getTextTransform(); ...
     }
 
-    public void applyFont(Control control, IFontType fontType) {
+    public static void applyFont(Control control, IFontType fontType) {
         if (fontType != null) {
             FontData fontData = SwtFontDataMapper.convert(fontType);
             Font font = new Font(control.getDisplay(), fontData);
@@ -60,7 +60,7 @@ public class SwtControlStyler {
         }
     }
 
-    public void applySize(Control control, IGUIElementStyleDeclaration styleDecl) {
+    public static void applySize(Control control, IGUIElementStyleDeclaration styleDecl) {
         styleDecl.getWidthType();
         styleDecl.getHeightType();
 

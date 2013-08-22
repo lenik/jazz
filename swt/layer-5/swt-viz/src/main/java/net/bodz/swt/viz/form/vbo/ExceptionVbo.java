@@ -31,9 +31,9 @@ import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.model.AbstractCommand;
 import net.bodz.swt.gui.model.ICommand;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 /**
  * @test R_ThrowableTest

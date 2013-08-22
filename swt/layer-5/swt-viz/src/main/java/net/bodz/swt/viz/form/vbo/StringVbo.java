@@ -22,9 +22,9 @@ import net.bodz.bas.rtx.QueryException;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
+import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.SwtRenderContext;
-import net.bodz.swt.viz.AbstractSwtViewBuilder;
 
 public class StringVbo
         extends AbstractSwtViewBuilder<Object> {

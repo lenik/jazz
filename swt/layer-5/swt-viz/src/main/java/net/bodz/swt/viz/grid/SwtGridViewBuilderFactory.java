@@ -25,6 +25,7 @@ import net.bodz.swt.gui.style.SwtImageMapper;
 import net.bodz.swt.viz.AbstractSwtViewBuilderFactory;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
+import net.bodz.swt.viz.SwtControlStyler;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.form.vbo.InvocationVbo;
 import net.bodz.swt.viz.util.ModifierIcon;
@@ -152,7 +153,7 @@ public class SwtGridViewBuilderFactory
         label.setLayoutData(labeld);
         child.setLayoutData(childd);
 
-        rc.addEffects(child, styleDecl);
+        SwtControlStyler.applyCommonStyle(child, styleDecl);
     }
 
 }
