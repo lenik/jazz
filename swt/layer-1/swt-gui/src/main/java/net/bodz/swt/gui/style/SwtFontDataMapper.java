@@ -100,13 +100,11 @@ public class SwtFontDataMapper
 
     @Override
     public void setFontSize(LengthMeasure fontSize) {
-        Point dpi = device.getDPI();
-        int ydpi = dpi.y;
-        double height = fontSize.pixels(ydpi).getValue();
+        Point ppi = device.getDPI();
 
         FontData fontData = getFontData();
         assert fontData != null : "font data is null";
-        fontData.setHeight((int) height);
+        fontData.setHeight(fontSize.pixels(ppi.y));
         setFontData(fontData);
     }
 
