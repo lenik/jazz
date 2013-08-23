@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.EventObject;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -14,17 +13,17 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Widget;
 
 import net.bodz.bas.c.java.awt.DesktopApps;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.gui.util.EventHandler;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.control.Controls;
@@ -33,6 +32,7 @@ import net.bodz.swt.gui.model.AbstractCommand;
 import net.bodz.swt.gui.model.ICommand;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
+import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
 
 /**
@@ -51,9 +51,10 @@ public class ExceptionVbo
     static boolean showDebug = SystemProperties.isDevelopMode();
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<Throwable> entry,
-            final ISwtControlStyleDeclaration style, final Composite parent, final int styleInt)
-            throws ViewBuilderException, SWTException {
+    public Widget buildView(final Composite parent, ISwtGUIRefEntry<Throwable> entry, int styleInt, IOptions options)
+            throws ViewBuilderException {
+        final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        final SwtRenderContext rc = options.get(SwtRenderContext.class);
 
         final Display display = parent == null ? Display.getCurrent() : parent.getDisplay();
 

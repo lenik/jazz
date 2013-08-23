@@ -1,24 +1,24 @@
 package net.bodz.swt.viz.form.vbo;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Widget;
 
 import net.bodz.bas.gui.css3.property.BorderStyleMode;
 import net.bodz.bas.potato.invoke.IInvocation;
 import net.bodz.bas.potato.invoke.Invocation;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IRefcomp;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
+import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.grid.SwtGridViewBuilderFactory;
 
@@ -32,9 +32,10 @@ public class InvocationVbo
     }
 
     @Override
-    public Control buildView(final SwtRenderContext rc, IRefEntry<IInvocation> entry,
-            ISwtControlStyleDeclaration styleDecl, Composite parent, int styleInt)
-            throws ViewBuilderException, SWTException {
+    public Widget buildView(Composite parent, ISwtGUIRefEntry<IInvocation> entry, int styleInt, IOptions options)
+            throws ViewBuilderException {
+        final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        final SwtRenderContext rc = options.get(SwtRenderContext.class);
 
         if (!(entry instanceof IInvocationRefcomp))
             throw new IllegalArgumentException(tr._("R_CallObject.notInvocationRefcomp") + entry);
@@ -53,7 +54,7 @@ public class InvocationVbo
         opbar.setLayout(rowLayout);
         {
             final Button button = new Button(opbar, SWT.NONE);
-            String label = styleDecl.getLabel();
+            String label = entry.getLabel().toString();
             if (label == null)
                 label = entry.getName();
             // hint.getIcon();

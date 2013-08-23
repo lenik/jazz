@@ -3,26 +3,25 @@ package net.bodz.swt.viz.form.vbo;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 
 import net.bodz.bas.gui.css3.BorderBox;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.ISwtGUIRefEntry;
 
 public class DateVbo
         extends AbstractSwtViewBuilder<Date> {
@@ -32,11 +31,11 @@ public class DateVbo
     }
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<Date> entry, ISwtControlStyleDeclaration style,
-            Composite parent, int styleInt)
-            throws ViewBuilderException, SWTException {
+    public Widget buildView(Composite parent, final ISwtGUIRefEntry<Date> entry, int styleInt, IOptions options)
+            throws ViewBuilderException {
+        ISwtControlStyleDeclaration styleDecl = entry.getStyle();
 
-        boolean readOnly = style.getReadOnly() == Boolean.TRUE;
+        boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
         Date date = (Date) entry.get();
 
         if (readOnly) {
@@ -55,7 +54,7 @@ public class DateVbo
 
         } else {
 
-            BorderBox borderBox = style.getBorder();
+            BorderBox borderBox = styleDecl.getBorder();
             if (borderBox != null) {
                 LengthMeasure _border = borderBox.getWidth();
                 if (_border != null && _border.getValue() > 0.0)
@@ -68,7 +67,7 @@ public class DateVbo
             final Text text = new Text(holder, styleInt | SWT.READ_ONLY);
             text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-            Integer maxLength = style.getMaxLength();
+            Integer maxLength = styleDecl.getMaxLength();
             if (maxLength != null)
                 text.setTextLimit(maxLength);
 

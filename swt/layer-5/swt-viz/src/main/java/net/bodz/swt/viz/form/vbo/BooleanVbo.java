@@ -3,33 +3,34 @@ package net.bodz.swt.viz.form.vbo;
 import java.util.EventObject;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Widget;
 
 import net.bodz.bas.mf.std.ValidationException;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.SwtControlStyler;
+import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
+import net.bodz.swt.viz.util.SwtControlStyler;
 
 public class BooleanVbo
         extends AbstractSwtViewBuilder<Boolean> {
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<Boolean> entry,
-            ISwtControlStyleDeclaration styleDecl, Composite parent, int styleInt)
-            throws ViewBuilderException, SWTException {
+    public Widget buildView(Composite parent, final ISwtGUIRefEntry<Boolean> entry, int styleInt, IOptions options)
+            throws ViewBuilderException {
+        final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        final SwtRenderContext rc = options.get(SwtRenderContext.class);
 
         boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
 
@@ -71,7 +72,7 @@ public class BooleanVbo
                 }
             });
         }
-        SwtControlStyler.applyCommonStyle(check, styleDecl);
+        SwtControlStyler.apply(check, styleDecl);
         return check;
     }
 }
