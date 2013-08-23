@@ -50,12 +50,13 @@ public class ValueEntry<T>
     public static <T> ValueEntry<T> wrap(T obj) {
         if (obj == null)
             throw new NullPointerException("obj");
+        Class<T> valueType = (Class<T>) obj.getClass();
+        return wrap(valueType, obj);
+    }
 
+    public static <T> ValueEntry<T> wrap(Class<T> valueType, T obj) {
         MutableElement element = new MutableElement();
         element.setLabel(XiString.of("noname"));
-
-        Class<T> valueType = (Class<T>) obj.getClass();
-
         return new ValueEntry<T>(element, valueType, obj);
     }
 
