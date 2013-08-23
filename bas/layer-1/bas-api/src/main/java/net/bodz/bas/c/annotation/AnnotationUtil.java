@@ -3,9 +3,6 @@ package net.bodz.bas.c.annotation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 
-/**
- * @test AnnotationUtilTest
- */
 public class AnnotationUtil {
 
     /**
