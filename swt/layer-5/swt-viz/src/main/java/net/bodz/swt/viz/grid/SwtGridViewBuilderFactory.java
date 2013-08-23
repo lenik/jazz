@@ -25,10 +25,10 @@ import net.bodz.swt.gui.style.SwtImageMapper;
 import net.bodz.swt.viz.AbstractSwtViewBuilderFactory;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
-import net.bodz.swt.viz.SwtControlStyler;
-import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.form.vbo.InvocationVbo;
 import net.bodz.swt.viz.util.ModifierIcon;
+import net.bodz.swt.viz.util.SwtControlStyler;
+import net.bodz.swt.viz.util.SwtStyleInts;
 
 public class SwtGridViewBuilderFactory
         extends AbstractSwtViewBuilderFactory {
@@ -69,7 +69,7 @@ public class SwtGridViewBuilderFactory
         retvalIcons = new ModifierIcon("/icons/full/obj16/field_default_obj.gif");
     }
 
-    public Composite renderStruct(final SwtRenderContext rc, IRefcomp<?> struct, Composite parent, int _style)
+    public Composite renderStruct(IRefcomp<?> struct, Composite parent, int _style)
             throws ViewBuilderException, SWTException {
         Composite grid = new Composite(parent, _style);
         // icon label control
@@ -79,13 +79,12 @@ public class SwtGridViewBuilderFactory
             ISwtControlStyleDeclaration styleDecl = null;
             if (ent instanceof ISwtGUIRefEntry<?>)
                 styleDecl = ((ISwtGUIRefEntry<?>) ent).getStyle();
-            _renderChild(rc, grid, ent, styleDecl);
+            _renderChild(grid, ent, styleDecl);
         }
         return grid;
     }
 
-    void _renderChild(final SwtRenderContext rc, Composite grid, IRefEntry<?> entry,
-            ISwtControlStyleDeclaration styleDecl)
+    void _renderChild(Composite grid, IRefEntry<?> entry, ISwtControlStyleDeclaration styleDecl)
             throws ViewBuilderException, SWTException {
         String name = entry.getName();
 
@@ -133,7 +132,8 @@ public class SwtGridViewBuilderFactory
 
         // Column #3
         Control child;
-        child = SwtGridViewBuilderFactory.this.render(rc, entry, grid, styleFx(SWT.NONE, styleDecl));
+        child = SwtGridViewBuilderFactory.this.buildView(grid, entry, //
+                SwtStyleInts.merge(SWT.NONE, styleDecl));
 
         Point iconz = iconLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point labelz = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -153,7 +153,7 @@ public class SwtGridViewBuilderFactory
         label.setLayoutData(labeld);
         child.setLayoutData(childd);
 
-        SwtControlStyler.applyCommonStyle(child, styleDecl);
+        SwtControlStyler.apply(child, styleDecl);
     }
 
 }

@@ -25,7 +25,7 @@ public abstract class AbstractSwtViewBuilderFactory
     @OverrideOption(chain = ChainUsage.MUST)
     protected void setup() {
         typeMap.put(boolean.class, new BooleanVbo());
-        typeMap.put(byte[].class, new R_binary());
+        typeMap.put(byte[].class, new ByteArrayVbo());
 
         typeMap.put(Boolean.class, new BooleanVbo());
 

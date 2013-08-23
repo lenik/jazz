@@ -3,48 +3,39 @@ package net.bodz.swt.viz.form.vbo;
 import java.util.EventObject;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 
 import net.bodz.bas.gui.css3.BorderBox;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.mf.MdaFeatures;
 import net.bodz.bas.mf.std.IParser;
 import net.bodz.bas.mf.std.IValidator;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.QueryException;
 import net.bodz.swt.c3.control.CommitAdapter;
 import net.bodz.swt.c3.control.CommitException;
 import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
+import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
 
 public class StringVbo
-        extends AbstractSwtViewBuilder<Object> {
-
-    public Control _buildView(final SwtRenderContext rc, final IRefEntry<?> entry, ISwtControlStyleDeclaration style,
-            Composite parent, int styleInt)
-            throws ViewBuilderException, SWTException {
-
-        @SuppressWarnings("unchecked")
-        IRefEntry<Object> _entry = (IRefEntry<Object>) (Object) entry;
-
-        return buildView(rc, _entry, style, parent, styleInt);
-    }
+        extends AbstractSwtViewBuilder<String> {
 
     @Override
-    public Control buildView(final SwtRenderContext rc, final IRefEntry<Object> entry, ISwtControlStyleDeclaration style,
-            Composite parent, int styleInt)
-            throws ViewBuilderException, SWTException {
+    public Widget buildView(Composite parent, final ISwtGUIRefEntry<String> entry, int styleInt, IOptions options)
+            throws ViewBuilderException {
+        final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        final SwtRenderContext rc = options.get(SwtRenderContext.class);
 
-        boolean readOnly = style.getReadOnly() == Boolean.TRUE;
+        boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
 
         String val = String.valueOf(entry.get());
         if (readOnly) {
@@ -60,7 +51,7 @@ public class StringVbo
                 });
             return label;
         } else {
-            BorderBox borderBox = style.getBorder();
+            BorderBox borderBox = styleDecl.getBorder();
             if (borderBox != null) {
                 LengthMeasure width = borderBox.getWidth();
                 if (width != null) {
@@ -72,7 +63,7 @@ public class StringVbo
             final Text text = new Text(parent, styleInt);
             // Ns.getValue(meta, EchoChar.class);
             // text.setEchoChar(echo);
-            Integer maxLength = style.getMaxLength();
+            Integer maxLength = styleDecl.getMaxLength();
             if (maxLength != null)
                 text.setTextLimit(maxLength);
 
