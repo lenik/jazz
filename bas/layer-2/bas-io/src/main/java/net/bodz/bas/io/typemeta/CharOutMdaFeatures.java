@@ -19,7 +19,7 @@ public class CharOutMdaFeatures
     }
 
     @Override
-    protected Object query(int mdaFeaturesIndex) {
+    protected Object _query(int mdaFeaturesIndex) {
         if (mdaFeaturesIndex == IParser.mdaFeatureIndex)
             return this;
         return null;

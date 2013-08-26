@@ -24,7 +24,7 @@ public class ByteArrayMdaFeatures
     }
 
     @Override
-    protected Object query(int mdaFeatureIndex) {
+    protected Object _query(int mdaFeatureIndex) {
         if (mdaFeatureIndex == IParser.mdaFeatureIndex)
             return this;
         return null;

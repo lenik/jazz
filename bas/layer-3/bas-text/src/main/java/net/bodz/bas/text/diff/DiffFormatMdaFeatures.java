@@ -11,7 +11,7 @@ public class DiffFormatMdaFeatures
     }
 
     @Override
-    protected Object query(int mdaFeaturesIndex) {
+    protected Object _query(int mdaFeaturesIndex) {
         return null;
     }
 
