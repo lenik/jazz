@@ -10,7 +10,7 @@ public class PersonMdaFeatures
     }
 
     @Override
-    protected Object query(int mdaFeatureIndex) {
+    protected Object _query(int mdaFeatureIndex) {
         return null;
     }
 

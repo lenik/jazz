@@ -27,7 +27,7 @@ public class CollectionMdaFeatures<T>
     }
 
     @Override
-    protected Object query(int mdaFeatureIndex) {
+    protected Object _query(int mdaFeatureIndex) {
         switch (mdaFeatureIndex) {
         case IParser.mdaFeatureIndex:
         case ISampleGenerator.mdaFeatureIndex:

@@ -1,6 +1,5 @@
 package net.bodz.bas.potato.element;
 
-
 /**
  * This is also usable as member/inner type.
  */

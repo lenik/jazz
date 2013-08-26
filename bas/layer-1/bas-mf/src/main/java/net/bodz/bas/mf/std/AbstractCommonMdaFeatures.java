@@ -49,21 +49,22 @@ public abstract class AbstractCommonMdaFeatures<T>
 
     @Override
     public <X> X query(Class<X> specificationType) {
-        Integer mdaFeatureIndex = commonMdaFeaturesIndex.get(specificationType);
-        if (mdaFeatureIndex == null)
+        Integer index = commonMdaFeaturesIndex.get(specificationType);
+        if (index == null)
             return super.query(specificationType);
-        Object mdaFeatures = queryIndexed(mdaFeatureIndex);
-        return specificationType.cast(mdaFeatures);
+
+        Object impl = query(index);
+
+        if (impl == null)
+            impl = __query(index);
+
+        return specificationType.cast(impl);
     }
 
     /**
      * The indexed query is faster.
      */
-    protected Object queryIndexed(int mdaFeatureIndex) {
-        Object mdaFeatures = query(mdaFeatureIndex);
-        if (mdaFeatures != null)
-            return mdaFeatures;
-
+    protected Object __query(int mdaFeatureIndex) {
         switch (mdaFeatureIndex) {
         case ICommonMdaFeatures.mdaFeatureIndex:
             return this;
@@ -88,7 +89,7 @@ public abstract class AbstractCommonMdaFeatures<T>
         return null;
     }
 
-    protected abstract Object query(int mdaFeatureIndex);
+    protected abstract Object _query(int mdaFeatureIndex);
 
     @Override
     public IAttributes getAttributes() {

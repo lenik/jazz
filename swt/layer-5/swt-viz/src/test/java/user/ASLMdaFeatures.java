@@ -12,7 +12,7 @@ public class ASLMdaFeatures
     }
 
     @Override
-    protected Object query(int mdaFeatureIndex) {
+    protected Object _query(int mdaFeatureIndex) {
         switch (mdaFeatureIndex) {
         case IParser.mdaFeatureIndex:
             return this;

@@ -51,7 +51,7 @@ public class QueryMethodMdaFeaturesProviderTest
         }
 
         @Override
-        protected Object query(int mdaFeatureIndex) {
+        protected Object _query(int mdaFeatureIndex) {
             switch (mdaFeatureIndex) {
             case IFormatter.mdaFeatureIndex:
                 return this;
