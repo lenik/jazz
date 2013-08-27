@@ -10,7 +10,7 @@ import java.nio.file.attribute.FileTime;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.FilePermissionAttributes;
-import net.bodz.bas.mf.std.Attributes;
+import net.bodz.bas.tf.std.Attributes;
 import net.bodz.bas.vfs.path.IPath;
 
 public abstract class AbstractFsEntry

@@ -14,7 +14,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-mf</artifactId>
+            <artifactId>bas-tf</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -1,0 +1,5 @@
+net.bodz.bas.typeFeature.spi.AnnotationTypeFeatureProvider
+net.bodz.bas.typeFeature.spi.BasCompanionTypeFeatureProvider
+net.bodz.bas.typeFeature.spi.FriendTypeFeatureProvider
+net.bodz.bas.typeFeature.spi.QueryMethodTypeFeatureProvider
+net.bodz.bas.typeFeature.spi.QuerySelfTypeFeatureProvider

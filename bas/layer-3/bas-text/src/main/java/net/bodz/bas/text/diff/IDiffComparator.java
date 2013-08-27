@@ -2,9 +2,9 @@ package net.bodz.bas.text.diff;
 
 import java.util.List;
 
-import net.bodz.bas.meta.lang.MdaFeatureClass;
+import net.bodz.bas.meta.lang.TypeFeatureClass;
 
-@MdaFeatureClass(DiffComparatorMdaFeatures.class)
+@TypeFeatureClass(DiffComparatorTypeFeatures.class)
 public interface IDiffComparator {
 
     List<DiffEntry> compareDiff(List<?> a, List<?> b);

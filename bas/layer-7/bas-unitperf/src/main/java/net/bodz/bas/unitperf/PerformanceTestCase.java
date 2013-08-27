@@ -2,7 +2,7 @@ package net.bodz.bas.unitperf;
 
 import org.junit.Assert;
 
-import net.bodz.bas.mf.std.ISampleGenerator;
+import net.bodz.bas.tf.std.ISampleGenerator;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 
