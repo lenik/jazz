@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-mf-impl</artifactId>
+            <artifactId>bas-tf-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

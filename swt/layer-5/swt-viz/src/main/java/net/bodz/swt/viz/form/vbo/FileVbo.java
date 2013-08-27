@@ -12,9 +12,9 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
-import net.bodz.bas.mf.MdaFeatures;
-import net.bodz.bas.mf.std.IValidator;
-import net.bodz.bas.mf.std.ValidationException;
+import net.bodz.bas.tf.TypeFeatures;
+import net.bodz.bas.tf.std.IValidator;
+import net.bodz.bas.tf.std.ValidationException;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -68,7 +68,7 @@ public class FileVbo
             Class<?> valueType = entry.getValueType();
             final IValidator<Object> validator;
             try {
-                validator = MdaFeatures.getMdaFeature(valueType, IValidator.class);
+                validator = TypeFeatures.getTypeFeature(valueType, IValidator.class);
             } catch (QueryException e) {
                 throw new ViewBuilderException(tr._("Can\'t guess parser for number class: ") + valueType);
             }

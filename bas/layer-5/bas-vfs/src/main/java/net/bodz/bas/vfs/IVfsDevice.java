@@ -7,7 +7,7 @@ import java.nio.file.NotLinkException;
 
 import org.apache.commons.vfs.FileSystem;
 
-import net.bodz.bas.mf.std.IAttributes;
+import net.bodz.bas.tf.std.IAttributes;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 

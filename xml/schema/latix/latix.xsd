@@ -365,7 +365,7 @@ from: [left], right</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="base-function">
 		<xs:annotation>
-			<xs:documentation>The storage-mdaFeatures of a function is specified uncommonly. </xs:documentation>
+			<xs:documentation>The storage-typeFeatures of a function is specified uncommonly. </xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="ltx:base-code-unit">
@@ -413,7 +413,7 @@ If no implement is declared, then the default main-implement is used. </xs:docum
 				<xs:attribute name="virtual" type="xs:boolean" use="optional" default="false"/>
 				<xs:attribute name="inline" type="xs:boolean" use="optional" default="false"/>
 				<xs:attributeGroup ref="ltx:atg-symbol"/>
-				<xs:attributeGroup ref="ltx:atg-storage-mdaFeatures"/>
+				<xs:attributeGroup ref="ltx:atg-storage-typeFeatures"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -457,7 +457,7 @@ If no implement is declared, then the default main-implement is used. </xs:docum
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:attributeGroup>
-	<xs:attributeGroup name="atg-storage-mdaFeatures">
+	<xs:attributeGroup name="atg-storage-typeFeatures">
 		<xs:attribute name="static" type="xs:boolean" use="optional" default="false"/>
 		<xs:attribute name="constant" type="xs:boolean" use="optional" default="false"/>
 		<xs:attribute name="transient" type="xs:boolean" use="optional" default="false"/>
@@ -541,7 +541,7 @@ For element, type-construct is done before element-constructor. </xs:documentati
 					</xs:element>
 					<xs:group ref="ltx:grp-define"/>
 					<xs:element ref="ltx:function"/>
-					<xs:element name="mdaFeature">
+					<xs:element name="typeFeature">
 						<xs:complexType>
 							<xs:attribute name="name" type="xs:string" use="required"/>
 						</xs:complexType>
@@ -552,7 +552,7 @@ For element, type-construct is done before element-constructor. </xs:documentati
 				<xs:attribute name="bytes" type="xs:integer" use="optional"/>
 				<xs:attribute name="final" type="xs:boolean" use="optional" default="false"/>
 				<xs:attributeGroup ref="ltx:atg-symbol"/>
-				<xs:attributeGroup ref="ltx:atg-storage-mdaFeatures"/>
+				<xs:attributeGroup ref="ltx:atg-storage-typeFeatures"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>

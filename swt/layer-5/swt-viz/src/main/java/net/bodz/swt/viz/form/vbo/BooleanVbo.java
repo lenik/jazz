@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
-import net.bodz.bas.mf.std.ValidationException;
+import net.bodz.bas.tf.std.ValidationException;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;

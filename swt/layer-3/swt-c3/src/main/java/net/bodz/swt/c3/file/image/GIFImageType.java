@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 
-import net.bodz.bas.mf.std.ValidationException;
+import net.bodz.bas.tf.std.ValidationException;
 import net.bodz.swt.c3.dialog.ParametersComposite;
 
 public class GIFImageType

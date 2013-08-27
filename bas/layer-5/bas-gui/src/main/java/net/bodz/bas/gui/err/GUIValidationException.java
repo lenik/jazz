@@ -1,7 +1,7 @@
 package net.bodz.bas.gui.err;
 
 import net.bodz.bas.gui.util.IQuietHint;
-import net.bodz.bas.mf.std.ValidationException;
+import net.bodz.bas.tf.std.ValidationException;
 
 public class GUIValidationException
         extends ValidationException

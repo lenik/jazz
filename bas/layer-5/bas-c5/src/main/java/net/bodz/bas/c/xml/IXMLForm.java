@@ -9,7 +9,7 @@ import net.bodz.bas.rtx.IOptions;
 
 public interface IXMLForm<T> {
 
-    int mdaFeaturesIndex = 260403962; // IXMLForm
+    int typeFeatureIndex = 260403962; // IXMLForm
 
     T parseXML(IStreamInputSource source, IOptions options)
             throws IOException, ParseException;

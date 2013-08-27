@@ -1,14 +1,14 @@
 package net.bodz.bas.c.java.io;
 
-import static net.bodz.bas.c.java.util.regex.PatternMdaFeatures.globTextformMode;
-import static net.bodz.bas.c.java.util.regex.PatternMdaFeatures.textformMode;
+import static net.bodz.bas.c.java.util.regex.PatternTypeFeatures.globTextformMode;
+import static net.bodz.bas.c.java.util.regex.PatternTypeFeatures.textformMode;
 
 import java.util.regex.Pattern;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.mf.MdaFeatures;
-import net.bodz.bas.mf.std.IParser;
+import net.bodz.bas.tf.TypeFeatures;
+import net.bodz.bas.tf.std.IParser;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 
@@ -26,7 +26,7 @@ public class GlobFilenameFilter
     static IParser<Pattern> patternParser;
     static IOptions globOptions;
     static {
-        patternParser = MdaFeatures.getMdaFeature(Pattern.class, IParser.class);
+        patternParser = TypeFeatures.getTypeFeature(Pattern.class, IParser.class);
         globOptions = new Options().addOption(textformMode, globTextformMode);
     }
 

@@ -14,7 +14,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.mf.std.ValidationException;
+import net.bodz.bas.tf.std.ValidationException;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c3.dialog.ParametersComposite;
