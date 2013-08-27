@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
@@ -36,7 +36,7 @@ public class FieldPathDispatcher
         if (fieldName == null)
             throw new UnexpectedException("no more token.");
 
-        Map<String, Field> fieldMap = classMap.getOrLoad(obj.getClass());
+        Map<String, Field> fieldMap = clsFieldMap.getOrLoad(obj.getClass());
 
         Field field = fieldMap.get(fieldName);
         if (field == null)
@@ -54,11 +54,11 @@ public class FieldPathDispatcher
         return new PathArrival(previous, result, fieldName, tokens.getRemainingPath());
     }
 
-    static final String CLASS_LOCAL_ID;
-    static final ClassLocal<Map<String, Field>> classMap;
+    static final String CLS_FIELD_MAP_ID;
+    static final LazyTypeMap<Map<String, Field>> clsFieldMap;
     static {
-        classMap = ClassLocals.createMap(new EntryLoader());
-        CLASS_LOCAL_ID = classMap.getRegisteredId();
+        clsFieldMap = TypeMapRegistry.createMap(new EntryLoader());
+        CLS_FIELD_MAP_ID = clsFieldMap.getRegisteredId();
     }
 
     static class EntryLoader

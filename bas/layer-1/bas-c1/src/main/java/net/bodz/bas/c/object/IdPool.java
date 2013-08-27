@@ -3,8 +3,8 @@ package net.bodz.bas.c.object;
 import java.util.IdentityHashMap;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
 
 public class IdPool {
@@ -58,12 +58,12 @@ public class IdPool {
     }
 
     public static IdPool getInstance(Class<?> clazz) {
-        return poolMap.getOrLoad(clazz);
+        return clsIdPool.getOrLoad(clazz);
     }
 
-    static final ClassLocal<IdPool> poolMap;
+    static final LazyTypeMap<IdPool> clsIdPool;
     static {
-        poolMap = ClassLocals.createMap(IdPool.class.getName(), //
+        clsIdPool = TypeMapRegistry.createMap(IdPool.class.getName(), //
                 new IMapEntryLoader<Class<?>, IdPool>() {
                     @Override
                     public IdPool loadValue(Class<?> type)

@@ -1,7 +1,7 @@
 package net.bodz.bas.flow.unit;
 
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.flow.unit.metadata.IPortMetadata;
 import net.bodz.bas.flow.unit.metadata.PortMetaEntryLoader;
 
@@ -16,13 +16,13 @@ public abstract class AbstractOutPort
         this.index = index;
     }
 
-    private static ClassLocal<IPortMetadata> metas = ClassLocals.createMap(//
+    private static LazyTypeMap<IPortMetadata> clsPortMetadata = TypeMapRegistry.createMap(//
             IPortMetadata.class.getCanonicalName(), PortMetaEntryLoader.INSTANCE);
 
     @Override
     public IPortMetadata getOutPortMeta() {
         Class<? extends AbstractPort> clazz = getClass();
-        IPortMetadata meta = metas.getOrLoad(clazz);
+        IPortMetadata meta = clsPortMetadata.getOrLoad(clazz);
         return meta;
     }
 
