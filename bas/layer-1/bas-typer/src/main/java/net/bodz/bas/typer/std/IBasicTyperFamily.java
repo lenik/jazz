@@ -1,11 +1,9 @@
 package net.bodz.bas.typer.std;
 
-import net.bodz.bas.rtx.IQueryable;
+public interface IBasicTyperFamily<T>
+        extends ITyperFamily<T> {
 
-public interface ICommonTypers<T>
-        extends IQueryable {
-
-    int typerIndex = 365443289; // ICommonTypers
+    int typerIndex = -1353907369; // IBasicTyperFamily
 
     /**
      * Get the type attributes.

@@ -10,57 +10,57 @@ import net.bodz.bas.c.object.Nullables;
 public class Attributes
         implements IAttributes {
 
-    private Map<String, Object> map;
-    private Map<String, ICommonTypers<?>> typeMap;;
+    private Map<String, Object> valueMap;
+    private Map<String, ITyperFamily<?>> typersMap;
 
     public Attributes() {
         this(null);
     }
 
-    public Attributes(Map<String, ICommonTypers<?>> typeMap) {
-        this.map = new TreeMap<String, Object>();
-        this.typeMap = typeMap;
+    public Attributes(Map<String, ITyperFamily<?>> typerMap) {
+        this.valueMap = new TreeMap<String, Object>();
+        this.typersMap = typerMap;
     }
 
     @Override
     public Object getAttribute(String name) {
-        return map.get(name);
+        return valueMap.get(name);
     }
 
     @Override
     public Collection<String> getAttributeNames() {
-        return map.keySet();
+        return valueMap.keySet();
     }
 
     @Override
-    public ICommonTypers<?> getAttributeTypers(String attributeName) {
-        if (typeMap != null)
-            return typeMap.get(attributeName);
+    public ITyperFamily<?> getAttributeTypers(String attributeName) {
+        if (typersMap != null)
+            return typersMap.get(attributeName);
         return null;
     }
 
     public void setAttribute(String name, Object value) {
         if (name == null)
             throw new NullPointerException("name");
-        map.put(name, value);
+        valueMap.put(name, value);
     }
 
-    public void setAttributeTypeInfo(String name, ICommonTypers<?> typeInfo) {
+    public void setAttributeTypers(String name, ITyperFamily<?> typers) {
         if (name == null)
             throw new NullPointerException("name");
-        if (typeInfo == null)
+        if (typers == null)
             throw new NullPointerException("typeInfo");
-        if (typeMap == null)
-            typeMap = new HashMap<String, ICommonTypers<?>>();
-        typeMap.put(name, typeInfo);
+        if (typersMap == null)
+            typersMap = new HashMap<String, ITyperFamily<?>>();
+        typersMap.put(name, typers);
     }
 
     @Override
     public int hashCode() {
         int hash = 0xf5a440eb;
-        hash += map.hashCode();
-        if (typeMap != null)
-            hash += typeMap.hashCode();
+        hash += valueMap.hashCode();
+        if (typersMap != null)
+            hash += typersMap.hashCode();
         return hash;
     }
 
@@ -71,9 +71,9 @@ public class Attributes
         if (!(obj instanceof Attributes))
             return false;
         Attributes o = (Attributes) obj;
-        if (!map.equals(o.map))
+        if (!valueMap.equals(o.valueMap))
             return false;
-        if (!Nullables.equals(typeMap, o.typeMap))
+        if (!Nullables.equals(typersMap, o.typersMap))
             return false;
         return true;
     }
