@@ -26,13 +26,13 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fn.legacy.Func0;
 import net.bodz.bas.gui.dialog.AbstractUserDialogs;
 import net.bodz.bas.gui.dialog.IDirectiveCommand;
-import net.bodz.bas.tf.TypeFeatures;
-import net.bodz.bas.tf.std.IParser;
 import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IParser;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
@@ -308,7 +308,7 @@ public class SwtDialogs
     @Override
     public <T> T prompt(String title, final Object detail, final Class<T> type, final T initial) {
 
-        final IParser<?> parser = TypeFeatures.getTypeFeature(type, IParser.class);
+        final IParser<?> parser = Typers.getTyper(type, IParser.class);
 
         class PromptDialog
                 extends _Dialog {

@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import net.bodz.bas.c.java.util.LocaleTypeFeatures;
+import net.bodz.bas.c.java.util.LocaleTypers;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;
@@ -73,7 +73,7 @@ public class SelectLanguageDialog
         String defaultLocaleName = Locale.getDefault().toString();
         for (int i = 0; i < langNames.size(); i++) {
             String langName = langNames.get(i);
-            Locale locale = LocaleTypeFeatures.parseLocale(langName);
+            Locale locale = LocaleTypers.parseLocale(langName);
             String caption = locale.getDisplayName();
             combo.add(caption);
             if (langName.equals(defaultLocaleName))

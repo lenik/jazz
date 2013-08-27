@@ -5,8 +5,8 @@ import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.tf.TypeFeatures;
-import net.bodz.bas.tf.std.IParser;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IParser;
 
 public abstract class AbstractSeqMaps<K, V>
         extends AbstractSeqRecords<Map<K, V>>
@@ -30,7 +30,7 @@ public abstract class AbstractSeqMaps<K, V>
     protected K parseKey(String key)
             throws ParseException {
         if (keyParser == null)
-            keyParser = TypeFeatures.getTypeFeature(getKeyClass(), IParser.class);
+            keyParser = Typers.getTyper(getKeyClass(), IParser.class);
         Object k = keyParser.parse(key);
         return keyClass.cast(k);
     }
@@ -38,7 +38,7 @@ public abstract class AbstractSeqMaps<K, V>
     protected V parseValue(String value)
             throws ParseException {
         if (valueParser == null)
-            valueParser = TypeFeatures.getTypeFeature(getValueClass(), IParser.class);
+            valueParser = Typers.getTyper(getValueClass(), IParser.class);
         Object v = valueParser.parse(value);
         return valueClass.cast(v);
     }

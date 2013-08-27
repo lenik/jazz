@@ -9,7 +9,7 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-tf-impl</artifactId>
+            <artifactId>bas-typer-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

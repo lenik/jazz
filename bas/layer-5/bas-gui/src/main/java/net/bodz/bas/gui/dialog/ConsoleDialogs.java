@@ -16,7 +16,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.err.GUIRuntimeException;
 import net.bodz.bas.io.LineReader;
-import net.bodz.bas.tf.std.ParserUtil;
+import net.bodz.bas.typer.std.ParserUtil;
 
 public class ConsoleDialogs
         extends AbstractUserDialogs {

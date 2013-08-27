@@ -2,11 +2,11 @@ package net.bodz.bas.text.diff;
 
 import java.util.List;
 
-import net.bodz.bas.meta.lang.TypeFeatureClass;
+import net.bodz.bas.meta.lang.TyperClass;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 
-@TypeFeatureClass(DiffFormatTypeFeatures.class)
+@TyperClass(DiffFormatTypers.class)
 public interface IDiffFormat {
 
     IDiffFormat SIMPLE = new SimpleDiffFormat();

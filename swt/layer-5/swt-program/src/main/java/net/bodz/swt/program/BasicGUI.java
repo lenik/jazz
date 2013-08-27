@@ -29,7 +29,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
-import net.bodz.bas.c.java.util.LocaleTypeFeatures;
+import net.bodz.bas.c.java.util.LocaleTypers;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
@@ -159,7 +159,7 @@ public abstract class BasicGUI
             } else
                 lang = Locale.getDefault().getLanguage();
         }
-        Locale locale = LocaleTypeFeatures.parseLocale(lang);
+        Locale locale = LocaleTypers.parseLocale(lang);
         Locale.setDefault(locale);
 
         shell = createShell();// throws GUIExcaption

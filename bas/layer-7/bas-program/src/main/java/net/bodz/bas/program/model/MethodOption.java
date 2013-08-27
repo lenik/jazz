@@ -4,9 +4,9 @@ import java.lang.reflect.Method;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.control.Control;
-import net.bodz.bas.tf.std.ParserUtil;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.typer.std.ParserUtil;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
