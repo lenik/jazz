@@ -20,6 +20,6 @@ public interface IAttributes {
     /**
      * @return <code>null</code> if no type info available.
      */
-    ICommonTypers<?> getAttributeTypers(String attributeName);
+    ITyperFamily<?> getAttributeTypers(String attributeName);
 
 }

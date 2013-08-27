@@ -8,7 +8,7 @@ public class CalcPreferredId {
             //
             IAttributes.class, //
             IClassifier.class, //
-            ICommonTypers.class, //
+            IBasicTyperFamily.class, //
             IFormatter.class, //
             IInstanceStore.class, //
             IParser.class, //

@@ -20,7 +20,7 @@ public class EmptyAttributes
     }
 
     @Override
-    public ICommonTypers<?> getAttributeTypers(String attributeName) {
+    public ITyperFamily<?> getAttributeTypers(String attributeName) {
         return null;
     }
 

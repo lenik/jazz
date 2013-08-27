@@ -15,7 +15,7 @@ import net.bodz.bas.rtx.QueryException;
 @ThreadUnsafe
 public abstract class AbstractCommonTypers<T>
         extends AbstractQueryable
-        implements ICommonTypers<T>, IAttributes, ITextForm<T>, IValidator<T>, IClassifier<T>, ISearcher<T>,
+        implements IBasicTyperFamily<T>, IAttributes, ITextForm<T>, IValidator<T>, IClassifier<T>, ISearcher<T>,
         ISampleGenerator<T>, IInstanceStore<T> {
 
     protected final Class<T> type;
@@ -32,28 +32,28 @@ public abstract class AbstractCommonTypers<T>
     }
 
     /** @GeneratedBy CalcPreferredId.class */
-    static final Map<Class<?>, Integer> commonTypersIndex;
+    static final Map<Class<?>, Integer> commonTyperIndex;
     static {
-        commonTypersIndex = new HashMap<Class<?>, Integer>();
-        commonTypersIndex.put(IAttributes.class, IAttributes.typerIndex);
-        commonTypersIndex.put(IClassifier.class, IClassifier.typerIndex);
-        commonTypersIndex.put(ICommonTypers.class, ICommonTypers.typerIndex);
-        commonTypersIndex.put(IFormatter.class, IFormatter.typerIndex);
-        commonTypersIndex.put(IInstanceStore.class, IInstanceStore.typerIndex);
-        commonTypersIndex.put(IParser.class, IParser.typerIndex);
-        commonTypersIndex.put(ISampleGenerator.class, ISampleGenerator.typerIndex);
-        commonTypersIndex.put(ISearcher.class, ISearcher.typerIndex);
-        commonTypersIndex.put(ITextForm.class, ITextForm.typerIndex);
-        commonTypersIndex.put(IValidator.class, IValidator.typerIndex);
+        commonTyperIndex = new HashMap<Class<?>, Integer>();
+        commonTyperIndex.put(IAttributes.class, IAttributes.typerIndex);
+        commonTyperIndex.put(IClassifier.class, IClassifier.typerIndex);
+        commonTyperIndex.put(IBasicTyperFamily.class, IBasicTyperFamily.typerIndex);
+        commonTyperIndex.put(IFormatter.class, IFormatter.typerIndex);
+        commonTyperIndex.put(IInstanceStore.class, IInstanceStore.typerIndex);
+        commonTyperIndex.put(IParser.class, IParser.typerIndex);
+        commonTyperIndex.put(ISampleGenerator.class, ISampleGenerator.typerIndex);
+        commonTyperIndex.put(ISearcher.class, ISearcher.typerIndex);
+        commonTyperIndex.put(ITextForm.class, ITextForm.typerIndex);
+        commonTyperIndex.put(IValidator.class, IValidator.typerIndex);
     }
 
     @Override
     public <X> X query(Class<X> specificationType) {
-        Integer index = commonTypersIndex.get(specificationType);
+        Integer index = commonTyperIndex.get(specificationType);
         if (index == null)
             return super.query(specificationType);
 
-        Object impl = query(index);
+        Object impl = _query(index);
 
         if (impl == null)
             impl = __query(index);
@@ -66,7 +66,7 @@ public abstract class AbstractCommonTypers<T>
      */
     protected Object __query(int typerIndex) {
         switch (typerIndex) {
-        case ICommonTypers.typerIndex:
+        case IBasicTyperFamily.typerIndex:
             return this;
 
         case IAttributes.typerIndex:
@@ -147,7 +147,7 @@ public abstract class AbstractCommonTypers<T>
     }
 
     @Override
-    public ICommonTypers<?> getAttributeTypers(String attributeName) {
+    public ITyperFamily<?> getAttributeTypers(String attributeName) {
         return attributes.getAttributeTypers(attributeName);
     }
 

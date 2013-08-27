@@ -9,14 +9,14 @@ import net.bodz.bas.t.pojo.eg.Address;
 import net.bodz.bas.t.pojo.eg.CountryAliasUtil;
 import net.bodz.bas.t.pojo.eg.PostCodeUtil;
 import net.bodz.bas.typer.Typers;
-import net.bodz.bas.typer.std.ICommonTypers;
+import net.bodz.bas.typer.std.IBasicTyperFamily;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
 
 public class AddressTypersTest
         extends Assert {
 
-    ICommonTypers<Address> addressTypers = Typers.getTyper(Address.class, ICommonTypers.class);
+    IBasicTyperFamily<Address> addressTypers = Typers.getTyper(Address.class, IBasicTyperFamily.class);
 
     IParser<Address> addressParser = addressTypers.getParser();
     IFormatter<Address> addressFormatter = addressTypers.getFormatter();
