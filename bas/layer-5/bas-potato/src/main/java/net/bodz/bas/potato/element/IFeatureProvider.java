@@ -3,7 +3,7 @@ package net.bodz.bas.potato.element;
 import java.util.Map;
 
 /**
- * 
+ * General purpose feature provider.
  */
 public interface IFeatureProvider {
 

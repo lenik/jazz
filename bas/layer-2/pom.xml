@@ -18,7 +18,7 @@
         <module>bas-io</module>
         <module>bas-std</module>
         <module>bas-t2</module>
-        <module>bas-tf-impl</module>
+        <module>bas-typer-impl</module>
     </modules>
     <name>BAS :: Layer 2</name>
 </project>

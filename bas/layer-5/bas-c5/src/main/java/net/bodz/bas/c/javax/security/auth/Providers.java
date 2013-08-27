@@ -24,9 +24,9 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.io.tmp.TempOut;
-import net.bodz.bas.tf.std.AbstractParser;
-import net.bodz.bas.tf.std.IParser;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.typer.std.AbstractParser;
+import net.bodz.bas.typer.std.IParser;
 
 @SuppressWarnings("restriction")
 public class Providers

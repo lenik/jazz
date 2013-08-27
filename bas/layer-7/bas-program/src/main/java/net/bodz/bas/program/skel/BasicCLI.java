@@ -24,8 +24,6 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.source.OverrideOption;
-import net.bodz.bas.tf.TypeFeatures;
-import net.bodz.bas.tf.std.ParserUtil;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.program.IProgram;
 import net.bodz.bas.program.model.ArtifactObjectWithOptions;
@@ -35,6 +33,8 @@ import net.bodz.bas.program.model.MethodCall;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.t.iterator.Iterables;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.ParserUtil;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
@@ -197,7 +197,7 @@ public abstract class BasicCLI
     }
 
     public IType getPotatoType() {
-        return TypeFeatures.getTypeFeature(getClass(), IType.class);
+        return Typers.getTyper(getClass(), IType.class);
     }
 
     public void runExtra(String cmdline)

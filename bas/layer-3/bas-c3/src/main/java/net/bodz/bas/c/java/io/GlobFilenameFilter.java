@@ -1,16 +1,16 @@
 package net.bodz.bas.c.java.io;
 
-import static net.bodz.bas.c.java.util.regex.PatternTypeFeatures.globTextformMode;
-import static net.bodz.bas.c.java.util.regex.PatternTypeFeatures.textformMode;
+import static net.bodz.bas.c.java.util.regex.PatternTypers.globTextformMode;
+import static net.bodz.bas.c.java.util.regex.PatternTypers.textformMode;
 
 import java.util.regex.Pattern;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.tf.TypeFeatures;
-import net.bodz.bas.tf.std.IParser;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IParser;
 
 public class GlobFilenameFilter
         extends RegexFilenameFilter {
@@ -26,7 +26,7 @@ public class GlobFilenameFilter
     static IParser<Pattern> patternParser;
     static IOptions globOptions;
     static {
-        patternParser = TypeFeatures.getTypeFeature(Pattern.class, IParser.class);
+        patternParser = Typers.getTyper(Pattern.class, IParser.class);
         globOptions = new Options().addOption(textformMode, globTextformMode);
     }
 

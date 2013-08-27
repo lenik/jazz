@@ -6,12 +6,12 @@ import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.flow.stream.IReceiverEx;
 import net.bodz.bas.potato.element.IMethod;
-import net.bodz.bas.potato.util.TypeFeatureEntryLoader;
+import net.bodz.bas.potato.util.TyperEntryLoader;
 
 public class RecvUtil {
 
     private static final ClassLocal<IMethod> recvLocal = ClassLocals.createMap(//
-            RecvUtil.class.getCanonicalName(), TypeFeatureEntryLoader.forClass(IMethod.class));
+            RecvUtil.class.getCanonicalName(), TyperEntryLoader.forClass(IMethod.class));
 
     public static void recvEx(IReceiverEx exReceiver, Object data)
             throws IOException, ReflectiveOperationException {

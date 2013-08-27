@@ -9,7 +9,7 @@ layer-1/ 核心语言增强与语言工具
     bas-meta
     bas-c1
     bas-test
-    bas-tf
+    bas-typer
     
 layer-2/ 基础数据类型扩展
     bas-t2
@@ -19,7 +19,7 @@ layer-2/ 基础数据类型扩展
     bas-io
     bas-i18n
     bas-std
-    bas-tf-impl
+    bas-typer-impl
     
 layer-3/ 工具和杂项
     bas-http

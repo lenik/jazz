@@ -1,7 +1,7 @@
 package net.bodz.bas.ant;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.tf.std.ParserUtil;
+import net.bodz.bas.typer.std.ParserUtil;
 
 /**
  * Utility class to help implement a custom tag in ant-xml.

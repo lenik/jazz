@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.tf.std.EmptyAttributes;
-import net.bodz.bas.tf.std.IAttributes;
+import net.bodz.bas.typer.std.EmptyAttributes;
+import net.bodz.bas.typer.std.IAttributes;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 

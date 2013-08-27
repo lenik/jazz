@@ -15,11 +15,11 @@ import net.bodz.bas.c.type.addor.MapAddor;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.tf.TypeFeatures;
-import net.bodz.bas.tf.std.IFormatter;
-import net.bodz.bas.tf.std.IParser;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IFormatter;
+import net.bodz.bas.typer.std.IParser;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
@@ -251,7 +251,7 @@ public abstract class AbstractOption
         String param1 = parameters[0];
 
         Class<?> valueType = getValueType();
-        IParser<?> parser = TypeFeatures.getTypeFeature(valueType, IParser.class);
+        IParser<?> parser = Typers.getTyper(valueType, IParser.class);
         if (parser == null)
             throw new ParseException("Don't know how to parse " + valueType);
 
@@ -266,7 +266,7 @@ public abstract class AbstractOption
     public String[] formatValue(Object context, Object value)
             throws FormatException {
         Class<?> valueType = getValueType();
-        IFormatter<Object> formatter = TypeFeatures.getTypeFeature(valueType, IFormatter.class);
+        IFormatter<Object> formatter = Typers.getTyper(valueType, IFormatter.class);
         String param1 = formatter.format(value);
         return new String[] { param1 };
     }

@@ -3,7 +3,7 @@ package net.bodz.bas.potato.element;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.tf.TypeFeatures;
+import net.bodz.bas.typer.Typers;
 
 import user.bean.AddressBean;
 
@@ -12,7 +12,7 @@ public class MutablePropertyMapTest
 
     @Test
     public void testGetPropertyMap() {
-        IPropertyMap propertyMap = TypeFeatures.getTypeFeature(AddressBean.class, IPropertyMap.class);
+        IPropertyMap propertyMap = Typers.getTyper(AddressBean.class, IPropertyMap.class);
         // fields: country, city, address
         // properties: class, country, city, address
         assertEquals(7, propertyMap.getPropertyCount());
@@ -23,7 +23,7 @@ public class MutablePropertyMapTest
             throws Exception {
         AddressBean addr = new AddressBean();
 
-        IPropertyMap propertyMap = TypeFeatures.getTypeFeature(AddressBean.class, IPropertyMap.class);
+        IPropertyMap propertyMap = Typers.getTyper(AddressBean.class, IPropertyMap.class);
 
         IProperty cityProp = propertyMap.getProperty("city");
         assertEquals("city", cityProp.getName());

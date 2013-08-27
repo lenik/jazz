@@ -2,8 +2,8 @@ package net.bodz.bas.unitperf;
 
 import java.lang.reflect.Method;
 
-import net.bodz.bas.tf.TypeFeatures;
-import net.bodz.bas.tf.std.IInstanceStore;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IInstanceStore;
 
 public class Player {
 
@@ -14,7 +14,7 @@ public class Player {
 
         for (int i = 0; i < parameterTypes.length; i++) {
             Class<?> parameterType = parameterTypes[i];
-            IInstanceStore<?> instanceStore = TypeFeatures.getTypeFeature(parameterType, IInstanceStore.class);
+            IInstanceStore<?> instanceStore = Typers.getTyper(parameterType, IInstanceStore.class);
             parameterStores[i] = instanceStore;
         }
 
