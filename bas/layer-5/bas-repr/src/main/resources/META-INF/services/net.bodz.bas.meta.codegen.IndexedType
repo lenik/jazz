@@ -1,4 +1,2 @@
 net.bodz.bas.repr.path.IPathDispatcher
 net.bodz.bas.repr.req.IHttpRequestProcessor
-net.bodz.bas.repr.view.IHttpRenderer
-net.bodz.bas.repr.view.IRenderer

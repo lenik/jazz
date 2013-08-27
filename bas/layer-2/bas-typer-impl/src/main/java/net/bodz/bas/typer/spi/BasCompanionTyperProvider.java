@@ -2,6 +2,7 @@ package net.bodz.bas.typer.spi;
 
 import net.bodz.bas.BasVersion;
 import net.bodz.bas.c.java.lang.IntegerTypers;
+import net.bodz.bas.typer.spi.BuiltinProviderOrder;
 
 public class BasCompanionTyperProvider
         extends FriendTyperProvider {

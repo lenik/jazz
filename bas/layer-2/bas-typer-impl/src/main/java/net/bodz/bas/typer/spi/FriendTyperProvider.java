@@ -1,7 +1,11 @@
 package net.bodz.bas.typer.spi;
 
+import net.bodz.bas.c.type.CachedInstantiator;
+import net.bodz.bas.err.LazyLoadException;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
-import net.bodz.bas.typer.util.TyperImplCache;
+import net.bodz.bas.typer.spi.AbstractTyperProvider;
+import net.bodz.bas.typer.spi.BuiltinProviderOrder;
 
 public class FriendTyperProvider
         extends AbstractTyperProvider {
@@ -9,7 +13,7 @@ public class FriendTyperProvider
     private final int priority;
 
     private final String prefixName;
-    private final String commonSuffixName = "Typers";
+    private final String suffixFamilyName = "Typers";
     private final boolean flatten;
 
     public FriendTyperProvider() {
@@ -46,36 +50,49 @@ public class FriendTyperProvider
             throws QueryException {
         String objTypeName = flatten ? objType.getSimpleName() : objType.getName();
 
-        String simpleTypersTypeName = typerClass.getSimpleName();
-        if (isStandardInterfaceName(simpleTypersTypeName))
-            simpleTypersTypeName = simpleTypersTypeName.substring(1);
+        String simpleTyperName = typerClass.getSimpleName();
+        if (isStandardInterfaceName(simpleTyperName))
+            simpleTyperName = simpleTyperName.substring(1);
 
-        String perfectFriendName = prefixName + objTypeName + simpleTypersTypeName;
-        T typers = checkoutTypers(perfectFriendName, typerClass);
-        if (typers != null)
-            return typers;
+        String friendTyperName = prefixName + objTypeName + simpleTyperName;
+        T typer = loadTyper(friendTyperName, typerClass);
+        if (typer != null)
+            return typer;
 
-        String commonFriendName = prefixName + objTypeName + commonSuffixName;
-        typers = checkoutTypers(commonFriendName, typerClass);
-        if (typers != null)
-            return typers;
+        String friendTyperFamilyName = prefixName + objTypeName + suffixFamilyName;
+        typer = loadTyper(friendTyperFamilyName, typerClass);
+        if (typer != null)
+            return typer;
 
         return null;
     }
 
-    public <T> T checkoutTypers(String friendTyperTypeName, Class<T> typerClass)
+    public <T> T loadTyper(String friendTyperImplName, Class<T> typerClass)
             throws QueryException {
-        Class<?> friendTyperType;
+        Class<?> friendTyperImplClass;
         try {
-            friendTyperType = Class.forName(friendTyperTypeName);
+            friendTyperImplClass = Class.forName(friendTyperImplName);
         } catch (ClassNotFoundException e) {
             return null;
         }
+
+        CachedInstantiator cacher = CachedInstantiator.getInstance();
+        Object friendTyperImpl;
         try {
-            return TyperImplCache.getTyper(friendTyperType, typerClass);
-        } catch (ReflectiveOperationException e) {
-            throw new QueryException(e.getMessage(), e);
+            friendTyperImpl = cacher.instantiate(friendTyperImplClass);
+        } catch (LazyLoadException e) {
+            throw new QueryException(e);
         }
+
+        if (typerClass.isInstance(friendTyperImpl))
+            return typerClass.cast(friendTyperImpl);
+
+        if (friendTyperImpl instanceof IQueryable) {
+            IQueryable queryable = (IQueryable) friendTyperImpl;
+            return queryable.query(typerClass);
+        }
+        
+        return null;
     }
 
     private static boolean isStandardInterfaceName(String name) {
