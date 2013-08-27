@@ -13,7 +13,7 @@ public class GetInstanceParser
             throws ParseException {
         try {
             Class<?> clazz = Class.forName(className);
-            return SingletonUtil.getClassInstance(clazz);
+            return SingletonUtil.callGetInstance(clazz);
         } catch (ReflectiveOperationException e) {
             throw new ParseException(e.getMessage(), e);
         }

@@ -14,20 +14,20 @@ import net.bodz.bas.typer.spi.AbstractTyperProvider;
 public class PotatoTyperProvider
         extends AbstractTyperProvider {
 
-    static final int typeTypers = 0;
-    static final int propertyMapTypers = 1;
-    static final int methodMapTypers = 2;
-    static final int constructorMapTypers = 3;
-    static final int eventMapTypers = 4;
+    private static final int typeTyper = 0;
+    private static final int propertyMapTyper = 1;
+    private static final int methodMapTyper = 2;
+    private static final int constructorMapTyper = 3;
+    private static final int eventMapTyper = 4;
 
     static final Map<String, Integer> rindexMap;
     static {
         rindexMap = new HashMap<String, Integer>();
-        rindexMap.put(IType.class.getName(), typeTypers);
-        rindexMap.put(IPropertyMap.class.getName(), propertyMapTypers);
-        rindexMap.put(IMethodMap.class.getName(), methodMapTypers);
-        rindexMap.put(IConstructorMap.class.getName(), constructorMapTypers);
-        rindexMap.put(IEventMap.class.getName(), eventMapTypers);
+        rindexMap.put(IType.class.getName(), typeTyper);
+        rindexMap.put(IPropertyMap.class.getName(), propertyMapTyper);
+        rindexMap.put(IMethodMap.class.getName(), methodMapTyper);
+        rindexMap.put(IConstructorMap.class.getName(), constructorMapTyper);
+        rindexMap.put(IEventMap.class.getName(), eventMapTyper);
     }
 
     @Override
@@ -43,23 +43,23 @@ public class PotatoTyperProvider
         if (index != null) {
             Object _typers;
             switch (index) {
-            case typeTypers:
+            case typeTyper:
                 _typers = getType(objType);
                 break;
 
-            case propertyMapTypers:
+            case propertyMapTyper:
                 _typers = getType(objType).getPropertyMap();
                 break;
 
-            case methodMapTypers:
+            case methodMapTyper:
                 _typers = getType(objType).getMethodMap();
                 break;
 
-            case constructorMapTypers:
+            case constructorMapTyper:
                 _typers = getType(objType).getConstructorMap();
                 break;
 
-            case eventMapTypers:
+            case eventMapTyper:
                 _typers = getType(objType).getEventMap();
                 break;
 

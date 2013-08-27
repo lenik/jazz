@@ -111,4 +111,22 @@ public class ArrayWrapper<T>
         return -1;
     }
 
+    @Override
+    public int hashCode() {
+        return hashCode(array);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        Class<?> c = obj.getClass();
+        if (!c.isArray())
+            return false;
+        if (c.getComponentType().isPrimitive())
+            return false;
+        Object[] a = (Object[]) obj;
+        return Arrays.equals(array, a);
+    }
+
 }

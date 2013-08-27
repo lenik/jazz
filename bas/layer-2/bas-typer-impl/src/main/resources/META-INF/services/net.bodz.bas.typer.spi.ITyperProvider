@@ -1,0 +1,3 @@
+net.bodz.bas.typer.spi.BasCompanionTyperProvider
+net.bodz.bas.typer.spi.FriendTyperProvider
+net.bodz.bas.typer.spi.extra.ExtraTyperProvider

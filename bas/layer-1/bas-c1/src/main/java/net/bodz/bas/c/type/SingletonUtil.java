@@ -6,14 +6,11 @@ import net.bodz.bas.err.OutOfDomainException;
 
 public class SingletonUtil {
 
-    /**
-     * @throws OutOfDomainException
-     */
-    public static <T> T getClassInstance(Class<T> clazz, Object... args)
+    public static <T> T callGetInstance(Class<T> clazz, Object... args)
             throws ReflectiveOperationException {
         if (clazz == null)
             return null;
-        if (void.class.equals(clazz))
+        if (clazz == void.class)
             return null;
 
         if (clazz.isInterface())

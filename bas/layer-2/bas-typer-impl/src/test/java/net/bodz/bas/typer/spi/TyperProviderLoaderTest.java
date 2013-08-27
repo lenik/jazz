@@ -22,18 +22,13 @@ public class TyperProviderLoaderTest
     }
 
     @Test
-    public void testLoadProvider_Annotation() {
-        assertTrue(providerClasses.contains(AnnotationTyperProvider.class));
+    public void testLoadProvider_Friends() {
+        assertTrue(providerClasses.contains(FriendTyperProvider.class));
     }
 
     @Test
-    public void testLoadProvider_QueryMethod() {
-        assertTrue(providerClasses.contains(QueryMethodTyperProvider.class));
-    }
-
-    @Test
-    public void testLoadProvider_QuerySelf() {
-        assertTrue(providerClasses.contains(QuerySelfTyperProvider.class));
+    public void testLoadProvider_BasCFriend() {
+        assertTrue(providerClasses.contains(BasCompanionTyperProvider.class));
     }
 
 }
