@@ -11,14 +11,17 @@ import net.bodz.bas.c.java.util.LazyHashMap;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LazyLoadException;
 
-public class ClassLocal<T>
+/**
+ * Naming convention for class-local: cls-VAR. Where cls means 'class-local storage'.
+ * 
+ * aka. <code>ClassLocal</code>.
+ */
+public class LazyTypeMap<T>
         extends LazyHashMap<Class<?>, T> {
 
     private static final long serialVersionUID = 1L;
 
-    Set<String> registeredIds;
-
-    public ClassLocal(IMapEntryLoader<Class<?>, T> entryLoader) {
+    public LazyTypeMap(IMapEntryLoader<Class<?>, T> entryLoader) {
         super(entryLoader);
     }
 
@@ -31,7 +34,7 @@ public class ClassLocal<T>
      * @throws IllegalUsageException
      *             If <code>metadataClass</code> doesn't have desired constructor.
      */
-    public ClassLocal(Class<?> metadataClass) {
+    public LazyTypeMap(Class<?> metadataClass) {
         super(new MetadataClassEntryLoader<T>(metadataClass));
     }
 
@@ -44,12 +47,12 @@ public class ClassLocal<T>
      * @throws IllegalUsageException
      *             If the method don't accept a single {@link Class} parameter.
      */
-    public ClassLocal(Method classParserMethod) {
+    public LazyTypeMap(Method classParserMethod) {
         super(new ClassParserEntryLoader<T>(classParserMethod));
     }
 
     /**
-     * Used by {@link ClassLocal#ClassLocal(Class)}.
+     * Used by {@link LazyTypeMap#ClassLocal(Class)}.
      */
     private static class MetadataClassEntryLoader<V>
             implements IMapEntryLoader<Class<?>, V> {
@@ -82,7 +85,7 @@ public class ClassLocal<T>
     }
 
     /**
-     * Used by {@link ClassLocal#ClassLocal(Method)}.
+     * Used by {@link LazyTypeMap#ClassLocal(Method)}.
      */
     private static class ClassParserEntryLoader<V>
             implements IMapEntryLoader<Class<?>, V> {
@@ -110,6 +113,8 @@ public class ClassLocal<T>
         }
 
     }
+
+    Set<String> registeredIds;
 
     public Set<String> getRegisteredIds() {
         if (registeredIds == null) {

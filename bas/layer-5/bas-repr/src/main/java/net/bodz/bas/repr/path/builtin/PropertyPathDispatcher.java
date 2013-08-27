@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
@@ -39,7 +39,7 @@ public class PropertyPathDispatcher
         if (propertyName == null)
             throw new UnexpectedException("no more token.");
 
-        Map<String, PropertyDescriptor> propertyMap = classMap.getOrLoad(obj.getClass());
+        Map<String, PropertyDescriptor> propertyMap = clsPropertyMap.getOrLoad(obj.getClass());
 
         PropertyDescriptor propertyDescriptor = propertyMap.get(propertyName);
         if (propertyDescriptor == null)
@@ -61,11 +61,11 @@ public class PropertyPathDispatcher
         return new PathArrival(context, result, propertyName, tokens.getRemainingPath());
     }
 
-    static final String CLASS_LOCAL_ID;
-    static final ClassLocal<Map<String, PropertyDescriptor>> classMap;
+    static final String CLS_PROPERTY_MAP_ID;
+    static final LazyTypeMap<Map<String, PropertyDescriptor>> clsPropertyMap;
     static {
-        classMap = ClassLocals.createMap(new EntryLoader());
-        CLASS_LOCAL_ID = classMap.getRegisteredId();
+        clsPropertyMap = TypeMapRegistry.createMap(new EntryLoader());
+        CLS_PROPERTY_MAP_ID = clsPropertyMap.getRegisteredId();
     }
 
     static class EntryLoader

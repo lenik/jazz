@@ -2,8 +2,8 @@ package net.bodz.bas.flow.unit;
 
 import java.io.IOException;
 
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.flow.stream.IReceiverEx;
 import net.bodz.bas.flow.unit.metadata.IPortMetadata;
@@ -20,13 +20,13 @@ public abstract class AbstractInPort
         this.index = index;
     }
 
-    private static ClassLocal<IPortMetadata> metas = ClassLocals.createMap(//
+    private static LazyTypeMap<IPortMetadata> clsPortMetadata = TypeMapRegistry.createMap(//
             IPortMetadata.class.getCanonicalName(), PortMetaEntryLoader.INSTANCE);
 
     @Override
     public IPortMetadata getInPortMeta() {
         Class<? extends AbstractPort> clazz = getClass();
-        IPortMetadata meta = metas.getOrLoad(clazz);
+        IPortMetadata meta = clsPortMetadata.getOrLoad(clazz);
         return meta;
     }
 

@@ -3,13 +3,13 @@ package net.bodz.bas.sugar;
 import java.lang.reflect.Constructor;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeDistance;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
 
 public class SimpleConstructorMap
-        extends ClassLocal<Constructor<?>> {
+        extends LazyTypeMap<Constructor<?>> {
 
     private static final long serialVersionUID = 1L;
 
@@ -64,10 +64,10 @@ public class SimpleConstructorMap
 
     } // EntryLoader
 
-    static final String CLASS_LOCAL_ID = SimpleConstructorMap.class.getCanonicalName();
-    static final ClassLocal<SimpleConstructorMap> toolsCtorMap;
+    static final String CLS_TOOLS_CTOR_ID = SimpleConstructorMap.class.getCanonicalName();
+    static final LazyTypeMap<SimpleConstructorMap> clsToolsCtorMap;
     static {
-        toolsCtorMap = ClassLocals.createMap(CLASS_LOCAL_ID, //
+        clsToolsCtorMap = TypeMapRegistry.createMap(CLS_TOOLS_CTOR_ID, //
                 new IMapEntryLoader<Class<?>, SimpleConstructorMap>() {
                     public SimpleConstructorMap loadValue(Class<?> type) {
                         return new SimpleConstructorMap(type);
@@ -76,7 +76,7 @@ public class SimpleConstructorMap
     }
 
     public static SimpleConstructorMap getInstance(Class<?> type) {
-        return toolsCtorMap.getOrLoad(type);
+        return clsToolsCtorMap.getOrLoad(type);
     }
 
 }

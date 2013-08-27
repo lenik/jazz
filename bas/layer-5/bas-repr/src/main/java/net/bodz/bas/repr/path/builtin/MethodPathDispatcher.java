@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
@@ -114,7 +114,7 @@ public class MethodPathDispatcher
         Class<? extends Object> objClass = obj.getClass();
         MethodKey wantKey = new MethodKey(methodName, wantPV);
 
-        Map<MethodKey, Method> methodMap = classMap.get(objClass);
+        Map<MethodKey, Method> methodMap = clsMethodMap.get(objClass);
         if (methodMap == null) {
             methodMap = new HashMap<MethodKey, Method>();
 
@@ -135,7 +135,7 @@ public class MethodPathDispatcher
                 // }
             }
 
-            classMap.put(objClass, methodMap);
+            clsMethodMap.put(objClass, methodMap);
         }
 
         Method method = methodMap.get(wantKey);
@@ -155,11 +155,11 @@ public class MethodPathDispatcher
         return new PathArrival(previous, result, consumedTokens, tokens.getRemainingPath());
     }
 
-    static final String CLASS_LOCAL_ID;
-    static final ClassLocal<Map<MethodKey, Method>> classMap;
+    static final String CLS_METHOD_MAP_ID;
+    static final LazyTypeMap<Map<MethodKey, Method>> clsMethodMap;
     static {
-        classMap = ClassLocals.createMap(new EntryLoader());
-        CLASS_LOCAL_ID = classMap.getRegisteredId();
+        clsMethodMap = TypeMapRegistry.createMap(new EntryLoader());
+        CLS_METHOD_MAP_ID = clsMethodMap.getRegisteredId();
     }
 
     static class EntryLoader

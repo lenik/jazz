@@ -2,6 +2,7 @@ package net.bodz.bas.c.java.util;
 
 import java.util.Map;
 
+import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.proxy.java.util.DecoratedMap;
 
 /**
@@ -31,8 +32,11 @@ public abstract class LazyMap<K, V>
      *            Which entry to get or load.
      * @return Value of the entry in the map. <code>null</code> if not existed. (however, the entry
      *         loader may also return <code>null</code> )
+     * @throws LazyLoadException
+     *             If the entry for the specific key can't be loaded.
      */
-    public V getOrLoad(K key) {
+    public V getOrLoad(K key)
+            throws LazyLoadException {
         V value = super.get(key);
         if (value == null) {
             synchronized (this) {

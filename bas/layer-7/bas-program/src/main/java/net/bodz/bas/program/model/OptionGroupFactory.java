@@ -1,8 +1,8 @@
 package net.bodz.bas.program.model;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.program.xjdoc.ClassDocToOptionsConverter;
@@ -11,9 +11,9 @@ import net.bodz.bas.program.xjdoc.OptionGroupInheritance;
 public class OptionGroupFactory {
 
     // private static boolean cache = false;
-    private static ClassLocal<IOptionGroup> clOptions;
+    private static LazyTypeMap<IOptionGroup> clsOptions;
     static {
-        clOptions = ClassLocals.createMap(new IMapEntryLoader<Class<?>, IOptionGroup>() {
+        clsOptions = TypeMapRegistry.createMap(new IMapEntryLoader<Class<?>, IOptionGroup>() {
 
             ClassDocToOptionsConverter converter = new ClassDocToOptionsConverter();
             {
@@ -37,7 +37,7 @@ public class OptionGroupFactory {
     }
 
     public static <T> IOptionGroup getClassOptions(Class<T> clazz) {
-        IOptionGroup copt = clOptions.getOrLoad(clazz);
+        IOptionGroup copt = clsOptions.getOrLoad(clazz);
         return copt;
     }
 

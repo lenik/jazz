@@ -1,36 +1,36 @@
 package net.bodz.bas.c.type;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.err.IllegalUsageException;
 
-public class ClassLocals {
+public class TypeMapRegistry
+        extends TreeMap<String, LazyTypeMap<?>> {
 
-    static Map<String, ClassLocal<?>> all = new TreeMap<String, ClassLocal<?>>();
+    private static final long serialVersionUID = 1L;
 
-    public static ClassLocal<?> getMap(String id) {
-        return all.get(id);
+    public static LazyTypeMap<?> getMap(String id) {
+        return instance.get(id);
     }
 
     /**
-     * @see ClassLocal#ClassLocal(IMapEntryLoader)
+     * @see LazyTypeMap#ClassLocal(IMapEntryLoader)
      */
-    public static <T> ClassLocal<T> createMap(IMapEntryLoader<Class<?>, T> entryLoader) {
+    public static <T> LazyTypeMap<T> createMap(IMapEntryLoader<Class<?>, T> entryLoader) {
         // Canonical name maybe null, so here we use normal name.
         String className = entryLoader.getClass().getName();
         return createMap(className, entryLoader);
     }
 
     /**
-     * @see ClassLocal#ClassLocal(IMapEntryLoader)
+     * @see LazyTypeMap#ClassLocal(IMapEntryLoader)
      */
-    public static <T> ClassLocal<T> createMap(String id, IMapEntryLoader<Class<?>, T> entryLoader) {
-        ClassLocal<T> map = new ClassLocal<T>(entryLoader);
-        register(id, map);
+    public static <T> LazyTypeMap<T> createMap(String id, IMapEntryLoader<Class<?>, T> entryLoader) {
+        LazyTypeMap<T> map = new LazyTypeMap<T>(entryLoader);
+        addMap(id, map);
         return map;
     }
 
@@ -40,9 +40,9 @@ public class ClassLocals {
      * @param metadataClass
      *            The metadata class. The class must have a public constructor with a single
      *            Class-type parameter.
-     * @see ClassLocal#ClassLocal(Class)
+     * @see LazyTypeMap#ClassLocal(Class)
      */
-    public static <T> ClassLocal<T> createMap(Class<?> metadataClass) {
+    public static <T> LazyTypeMap<T> createMap(Class<?> metadataClass) {
         // Canonical name of the metadata class maybe null.
         String className = metadataClass.getName();
         return createMap(className, metadataClass);
@@ -57,11 +57,11 @@ public class ClassLocals {
      * @param metadataClass
      *            The metadata class. The class must have a public constructor with a single
      *            Class-type parameter.
-     * @see ClassLocal#ClassLocal(Class)
+     * @see LazyTypeMap#ClassLocal(Class)
      */
-    public static <T> ClassLocal<T> createMap(String id, Class<?> metadataClass) {
-        ClassLocal<T> map = new ClassLocal<T>(metadataClass);
-        register(id, map);
+    public static <T> LazyTypeMap<T> createMap(String id, Class<?> metadataClass) {
+        LazyTypeMap<T> map = new LazyTypeMap<T>(metadataClass);
+        addMap(id, map);
         return map;
     }
 
@@ -73,9 +73,9 @@ public class ClassLocals {
      *            returns the parsed entry value.
      * @throws IllegalUsageException
      *             If the method don't accept a single {@link Class} parameter.
-     * @see ClassLocal#ClassLocal(Method)
+     * @see LazyTypeMap#ClassLocal(Method)
      */
-    public static <T> ClassLocal<T> createMap(Method parserMethod) {
+    public static <T> LazyTypeMap<T> createMap(Method parserMethod) {
         // Canonical name maybe null.
         String className = parserMethod.getDeclaringClass().getName();
 
@@ -93,11 +93,11 @@ public class ClassLocals {
      *            returns the parsed entry value.
      * @throws IllegalUsageException
      *             If the method don't accept a single {@link Class} parameter.
-     * @see ClassLocal#ClassLocal(Method)
+     * @see LazyTypeMap#ClassLocal(Method)
      */
-    public static <T> ClassLocal<T> createMap(String id, Method parserMethod) {
-        ClassLocal<T> map = new ClassLocal<T>(parserMethod);
-        register(id, map);
+    public static <T> LazyTypeMap<T> createMap(String id, Method parserMethod) {
+        LazyTypeMap<T> map = new LazyTypeMap<T>(parserMethod);
+        addMap(id, map);
         return map;
     }
 
@@ -106,24 +106,24 @@ public class ClassLocals {
      * 
      * @param id
      *            Non-<code>null</code> class-local-id to be registered. The id must be unique.
-     * @param classLocal
+     * @param map
      *            Non-<code>null</code> class-local map to be registered.
      * @throws IllegalUsageException
      *             If the id is already in use.
      */
-    public static void register(String id, ClassLocal<?> classLocal) {
+    public static void addMap(String id, LazyTypeMap<?> map) {
         if (id == null)
             throw new NullPointerException("id");
-        if (classLocal == null)
+        if (map == null)
             throw new NullPointerException("classLocal");
 
-        ClassLocal<?> exist = all.get(id);
+        LazyTypeMap<?> exist = instance.get(id);
         if (exist != null)
             throw new IllegalUsageException("Id is already used: " + id);
 
-        all.put(id, classLocal);
+        instance.put(id, map);
 
-        classLocal.addRegisteredId(id);
+        map.addRegisteredId(id);
     }
 
     /**
@@ -134,16 +134,22 @@ public class ClassLocals {
      * @return Removed class-local. Return <code>null</code> if the class-local with given id isn't
      *         existed.
      */
-    public static ClassLocal<?> remove(String id) {
+    public static LazyTypeMap<?> removeMap(String id) {
         if (id == null)
             throw new NullPointerException("id");
 
-        ClassLocal<?> classLocal = all.remove(id);
+        LazyTypeMap<?> map = instance.remove(id);
 
-        if (classLocal != null)
-            classLocal.removeRegisteredId(id);
+        if (map != null)
+            map.removeRegisteredId(id);
 
-        return classLocal;
+        return map;
+    }
+
+    private static TypeMapRegistry instance;
+
+    public static TypeMapRegistry getInstance() {
+        return instance;
     }
 
 }

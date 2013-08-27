@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.c.type.ClassLocal;
-import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.c.type.LazyTypeMap;
+import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.c.type.TypeName;
 import net.bodz.bas.flow.stream.IReceiver;
 import net.bodz.bas.flow.unit.metadata.IUnitMetadata;
@@ -25,13 +25,13 @@ public abstract class AbstractUnit
         outPort.send(data);
     }
 
-    private static ClassLocal<IUnitMetadata> metas = ClassLocals.createMap(//
+    private static LazyTypeMap<IUnitMetadata> clsUnitMetadata = TypeMapRegistry.createMap(//
             IUnitMetadata.class.getCanonicalName(), UnitMetaEntryLoader.INSTANCE);
 
     @Override
     public IUnitMetadata getUnitMeta() {
         Class<? extends AbstractUnit> clazz = getClass();
-        IUnitMetadata meta = metas.getOrLoad(clazz);
+        IUnitMetadata meta = clsUnitMetadata.getOrLoad(clazz);
         return meta;
     }
 
