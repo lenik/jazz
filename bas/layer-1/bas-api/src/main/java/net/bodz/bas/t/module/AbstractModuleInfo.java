@@ -8,12 +8,12 @@ public abstract class AbstractModuleInfo
         implements IModuleInfo {
 
     private String packageName;
+    private String moduleName;
 
     public AbstractModuleInfo() {
         this.packageName = getClass().getPackage().getName();
 
-        String moduleClassName = getClass().getName();
-        String moduleName;
+        String moduleClassName = getClass().getSimpleName();
         if (moduleClassName.endsWith("ModuleInfo"))
             moduleName = moduleClassName.substring(0, moduleClassName.length() - "ModuleInfo".length());
         else if (moduleClassName.endsWith("Info"))
@@ -25,8 +25,13 @@ public abstract class AbstractModuleInfo
         // this.NLS = rbNLS;
     }
 
+    @Override
     public String getPackageName() {
         return packageName;
+    }
+
+    public String getModuleName() {
+        return moduleName;
     }
 
 }
