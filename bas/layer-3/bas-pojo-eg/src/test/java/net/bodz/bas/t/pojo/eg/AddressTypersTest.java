@@ -1,13 +1,10 @@
-package net.bodz.bas.util.example;
+package net.bodz.bas.t.pojo.eg;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
-import net.bodz.bas.t.pojo.eg.Address;
-import net.bodz.bas.t.pojo.eg.CountryAliasUtil;
-import net.bodz.bas.t.pojo.eg.PostCodeUtil;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IBasicTyperFamily;
 import net.bodz.bas.typer.std.IFormatter;
@@ -21,7 +18,7 @@ public class AddressTypersTest
     IParser<Address> addressParser = addressTypers.getParser();
     IFormatter<Address> addressFormatter = addressTypers.getFormatter();
 
-    IParser<Address> strictAddressParser = new StrictAddressTypers().getParser();
+    IParser<Address> strictAddressParser = new AddressTypers(true).getParser();
 
     @Test
     public void testDefaultNoChange()

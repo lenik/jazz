@@ -16,6 +16,7 @@
         <module>bas-http</module>
         <module>bas-log</module>
         <module>bas-m2</module>
+        <module>bas-pojo-eg</module>
         <module>bas-t3</module>
         <module>bas-text</module>
         <module>bas-text-lr</module>
