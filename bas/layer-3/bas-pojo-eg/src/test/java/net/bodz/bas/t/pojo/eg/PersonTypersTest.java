@@ -1,15 +1,13 @@
-package net.bodz.bas.typer;
+package net.bodz.bas.t.pojo.eg;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.meta.lang.TyperClass;
-import net.bodz.bas.t.pojo.eg.Person;
-import net.bodz.bas.t.pojo.eg.PersonTypers;
 import net.bodz.bas.typer.std.IBasicTyperFamily;
 
 @TyperClass(PersonTypers.class)
-public class AbstractTypeTypersTest
+public class PersonTypersTest
         extends Assert {
 
     @Test
