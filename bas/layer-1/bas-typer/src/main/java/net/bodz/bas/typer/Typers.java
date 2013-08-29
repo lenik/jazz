@@ -12,24 +12,32 @@ public class Typers {
     private static ServiceLoader<ITyperProvider> typerProviderLoader;
 
     static TreeSet<ITyperProvider> typerProviders;
+    static List<ITyperProvider> aggresiveTyperProviders;
 
-    static synchronized void reload() {
+    static {
+        reload();
+    }
+
+    static void reload() {
         if (typerProviderLoader == null)
             typerProviderLoader = ServiceLoader.load(ITyperProvider.class);
         else
             typerProviderLoader.reload();
 
         typerProviders = new TreeSet<ITyperProvider>(PriorityComparator.INSTANCE);
+        aggresiveTyperProviders = new ArrayList<ITyperProvider>();
 
         Iterator<ITyperProvider> typerProviderIterator = typerProviderLoader.iterator();
         while (typerProviderIterator.hasNext()) {
             ITyperProvider typerProvider = typerProviderIterator.next();
             typerProviders.add(typerProvider);
-        }
-    }
 
-    static {
-        reload();
+        }
+
+        for (ITyperProvider provider : typerProviders)
+            if (provider.isAggressive()) {
+                aggresiveTyperProviders.add(provider);
+            }
     }
 
     public static SortedSet<ITyperProvider> getTyperProviders() {
@@ -39,8 +47,8 @@ public class Typers {
     /**
      * Query for specific typers about the user object type.
      * <p>
-     * For specific typers on the instance object, {@link #getTyper(Class, Object, Class)}
-     * should be called.
+     * For specific typers on the instance object, {@link #getTyper(Class, Object, Class)} should be
+     * called.
      * 
      * @param objType
      *            The user object type to be queryed, non-<code>null</code>.
@@ -62,30 +70,25 @@ public class Typers {
 
         objType = Primitives.box(objType);
 
-        List<ITyperProvider> aggresiveProviders = null;
-        int index = 0;
         for (ITyperProvider provider : typerProviders) {
             T typer = provider.getTyper(objType, typerClass);
             if (typer != null)
                 return typer;
-            if (!provider.isAggressive()) {
-                if (aggresiveProviders == null)
-                    aggresiveProviders = new ArrayList<ITyperProvider>(typerProviders.size() - index);
-                aggresiveProviders.add(provider);
-            }
-            index++;
         }
 
         // Continue to query on aggresive providers for superclasses.
-        if (aggresiveProviders != null) {
-            // assert !nonDefinedTyperProviders.isEmpty();
-            while ((objType = objType.getSuperclass()) != null)
-                for (ITyperProvider provider : aggresiveProviders) {
+        if (!aggresiveTyperProviders.isEmpty())
+            while (true) {
+                objType = objType.getSuperclass();
+                if (objType == null || objType == Object.class)
+                    break;
+
+                for (ITyperProvider provider : aggresiveTyperProviders) {
                     T typer = provider.getTyper(objType, typerClass);
                     if (typer != null)
                         return typer;
                 }
-        }
+            }
 
         return null;
     }
@@ -127,8 +130,8 @@ public class Typers {
     }
 
     /**
-     * Shortcut for {@link #getTyper(Class, Object, Class)} with the <code>objType</code> set
-     * to <code>obj.getClass()</code>.
+     * Shortcut for {@link #getTyper(Class, Object, Class)} with the <code>objType</code> set to
+     * <code>obj.getClass()</code>.
      * 
      * @param objType
      *            The user object type to be queryed, non-<code>null</code>.

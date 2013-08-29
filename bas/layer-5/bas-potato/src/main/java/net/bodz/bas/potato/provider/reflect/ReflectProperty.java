@@ -17,7 +17,7 @@ public class ReflectProperty
     private final int modifiers;
     private final int verboseLevel;
 
-    private Boolean propertyChangeSource;
+    private PropertyChangeSourceMode propertyChangeSourceMode;
 
     public ReflectProperty(Field field, IJavaElementDoc xjdoc) {
         super(field.getDeclaringClass(), field.getName());
@@ -65,48 +65,68 @@ public class ReflectProperty
         field.set(instance, value);
     }
 
+    private synchronized void analyzePropertyChangeSourceMode() {
+        if (propertyChangeSourceMode == null) {
+            Class<?> declaringType = getDeclaringClass();
+            if (IPropertyChangeSource.class.isAssignableFrom(declaringType))
+                propertyChangeSourceMode = PropertyChangeSourceMode.INTERFACE;
+            // PropertyChangeSourceMode.BEAN
+            else
+                propertyChangeSourceMode = PropertyChangeSourceMode.UNSUPPORTED;
+        }
+    }
+
     @Override
     public boolean isPropertyChangeSource() {
-        if (propertyChangeSource == null) {
-            synchronized (this) {
-                if (propertyChangeSource == null) {
-                    Class<?> declaringType = getDeclaringClass();
-                    propertyChangeSource = IPropertyChangeSource.class.isAssignableFrom(declaringType);
-                }
-            }
-        }
-        return propertyChangeSource;
+        analyzePropertyChangeSourceMode();
+        return propertyChangeSourceMode != PropertyChangeSourceMode.UNSUPPORTED;
     }
 
     @Override
     public void addPropertyChangeListener(Object instance, IPropertyChangeListener listener) {
-        if (isPropertyChangeSource()) {
-            IPropertyChangeSource source = (IPropertyChangeSource) instance;
-            source.addPropertyChangeListener(listener);
-        }
+        addPropertyChangeListener(instance, null, listener);
     }
 
     @Override
     public void addPropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener) {
-        if (isPropertyChangeSource()) {
+        analyzePropertyChangeSourceMode();
+        switch (propertyChangeSourceMode) {
+        case INTERFACE:
             IPropertyChangeSource source = (IPropertyChangeSource) instance;
-            source.addPropertyChangeListener(propertyName, listener);
+            if (propertyName == null)
+                source.addPropertyChangeListener(listener);
+            else
+                source.addPropertyChangeListener(propertyName, listener);
+            break;
+        case BEAN:
+            // TODO Not implemented.
+            break;
+        case UNSUPPORTED:
+        default:
         }
     }
 
     @Override
     public void removePropertyChangeListener(Object instance, IPropertyChangeListener listener) {
-        if (isPropertyChangeSource()) {
-            IPropertyChangeSource source = (IPropertyChangeSource) instance;
-            source.removePropertyChangeListener(listener);
-        }
+        removePropertyChangeListener(instance, null, listener);
     }
 
     @Override
     public void removePropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener) {
-        if (isPropertyChangeSource()) {
+        analyzePropertyChangeSourceMode();
+        switch (propertyChangeSourceMode) {
+        case INTERFACE:
             IPropertyChangeSource source = (IPropertyChangeSource) instance;
-            source.removePropertyChangeListener(propertyName, listener);
+            if (propertyName == null)
+                source.removePropertyChangeListener(listener);
+            else
+                source.removePropertyChangeListener(propertyName, listener);
+            break;
+        case BEAN:
+            // TODO Not implemented.
+            break;
+        case UNSUPPORTED:
+        default:
         }
     }
 

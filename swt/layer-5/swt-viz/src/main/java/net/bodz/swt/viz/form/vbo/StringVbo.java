@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Widget;
 import net.bodz.bas.gui.css3.BorderBox;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.potato.ref.IValueChangeListener;
+import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -41,7 +42,7 @@ public class StringVbo
         if (readOnly) {
             final Label label = new Label(parent, styleInt);
             label.setText(val);
-            if (entry.isValueChangeSource())
+            if (entry.query(IValueChangeSource.class) != null)
                 bindProperty(entry, label, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {
@@ -68,7 +69,9 @@ public class StringVbo
                 text.setTextLimit(maxLength);
 
             text.setText(val);
-            if (entry.isValueChangeSource())
+
+            IValueChangeSource valueChangeSource = entry.query(IValueChangeSource.class);
+            if (valueChangeSource != null)
                 bindProperty(entry, text, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {

@@ -146,7 +146,7 @@ public class TypeMapRegistry
         return map;
     }
 
-    private static TypeMapRegistry instance;
+    private static TypeMapRegistry instance = new TypeMapRegistry();
 
     public static TypeMapRegistry getInstance() {
         return instance;
