@@ -7,11 +7,6 @@
     </parent>
     <artifactId>bas-meta</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
     <name>BAS :: Layer 1 :: Meta</name>
 </project>

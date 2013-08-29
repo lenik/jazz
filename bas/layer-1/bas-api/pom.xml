@@ -8,6 +8,11 @@
     <artifactId>bas-api</artifactId>
     <dependencies>
         <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-meta</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
         </dependency>
