@@ -1,11 +1,21 @@
 package net.bodz.bas.meta.build;
 
-import net.bodz.bas.t.order.AbstractNonNullComparator;
+import java.util.Comparator;
 
 public class VersionComparator
-        extends AbstractNonNullComparator<IVersion> {
+        implements Comparator<IVersion> {
 
     @Override
+    public int compare(IVersion o1, IVersion o2) {
+        if (o1 == o2)
+            return 0;
+        if (o1 == null)
+            return -1;
+        if (o2 == null)
+            return 1;
+        return compareNonNull(o1, o2);
+    }
+
     public int compareNonNull(IVersion o1, IVersion o2) {
         String[] v1 = o1.getVersionElements();
         String[] v2 = o2.getVersionElements();

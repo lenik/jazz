@@ -2,7 +2,7 @@ package net.bodz.bas.meta.build;
 
 import java.util.Arrays;
 
-import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.IllegalAnnotationException;
 
 public abstract class AbstractVersion
         implements IVersion {
@@ -12,24 +12,24 @@ public abstract class AbstractVersion
     public final int getMajorVersion() {
         String[] elements = getVersionElements();
         if (elements.length < 2)
-            throw new IllegalUsageException("Bad version elements: must be major.minor.*");
+            throw new IllegalAnnotationException("Bad version elements: must be major.minor.*");
         String s = elements[0];
         try {
             return Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            throw new IllegalUsageException("Major version should be integer.");
+            throw new IllegalAnnotationException("Major version should be integer.");
         }
     }
 
     public final int getMinorVersion() {
         String[] elements = getVersionElements();
         if (elements.length < 2)
-            throw new IllegalUsageException("Bad version elements: must be major.minor.*");
+            throw new IllegalAnnotationException("Bad version elements: must be major.minor.*");
         String s = elements[1];
         try {
             return Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            throw new IllegalUsageException("Minor version should be integer.");
+            throw new IllegalAnnotationException("Minor version should be integer.");
         }
     }
 

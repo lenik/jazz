@@ -3,10 +3,7 @@ package net.bodz.bas.meta.build;
 import java.text.ParseException;
 import java.util.Date;
 
-import net.bodz.bas.c.annotation.AnnotationParseUtil;
-
-public class RcsKeywordsUtil
-        extends AnnotationParseUtil {
+public class RcsKeywordsUtil {
 
     public static ReleaseDescription parseId(String rcs_id) {
         rcs_id = rcs_id.substring(0, rcs_id.length() - 1);
