@@ -1,4 +1,4 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.task;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

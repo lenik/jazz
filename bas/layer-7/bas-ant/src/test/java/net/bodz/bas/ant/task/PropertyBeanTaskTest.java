@@ -1,6 +1,9 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.task;
 
 import java.io.IOException;
+
+import net.bodz.bas.ant.task.PropertyBeanTask;
+import net.bodz.bas.ant.test.TaskTestApp;
 
 /**
  * @see PropertyBeanTask

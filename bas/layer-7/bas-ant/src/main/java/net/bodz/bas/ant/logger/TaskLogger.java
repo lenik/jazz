@@ -1,4 +1,4 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.logger;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;

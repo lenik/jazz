@@ -1,4 +1,4 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.util;
 
 public class NamedParameter
         extends Parameter {

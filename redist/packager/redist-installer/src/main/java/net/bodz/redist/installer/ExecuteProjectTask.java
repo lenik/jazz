@@ -8,9 +8,9 @@ import java.util.Map;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-import net.bodz.bas.ant.NamedParameter;
-import net.bodz.bas.ant.TaskLogger;
-import net.bodz.bas.ant.WithNamedParameters;
+import net.bodz.bas.ant.logger.TaskLogger;
+import net.bodz.bas.ant.util.NamedParameter;
+import net.bodz.bas.ant.util.WithNamedParameters;
 import net.bodz.bas.err.ExceptionBuffer;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.RecoverableExceptionEvent;
