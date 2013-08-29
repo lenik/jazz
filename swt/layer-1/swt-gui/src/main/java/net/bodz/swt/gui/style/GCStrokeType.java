@@ -80,7 +80,8 @@ public class GCStrokeType
         gc.setLineWidth(width);
     }
 
-    // -o IStrokeType
+    /** ⇱ Implementaton Of {@link IStrokeType}. */
+    ;
 
     @Override
     public LengthMeasure getWidth() {

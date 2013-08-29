@@ -229,7 +229,8 @@ public abstract class AbstractFile
         }
     }
 
-    // -o IFsBlob
+    /** ⇱ Implementaton Of {@link IFsBlob}. */
+    ;
 
     /**
      * @return <code>null</code> If no resource available for this fs-entry.
@@ -324,7 +325,8 @@ public abstract class AbstractFile
         return resource;
     }
 
-    // -o IFsDir
+    /** ⇱ Implementaton Of {@link IFsDir}. */
+    ;
 
     @Override
     public boolean mkdir() {
@@ -365,7 +367,8 @@ public abstract class AbstractFile
         return file;
     }
 
-    // -o IToolable
+    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToolable}. */
+    ;
 
     @Override
     public Tooling tooling() {

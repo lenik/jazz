@@ -45,7 +45,8 @@ public abstract class AbstractLine2d
             return null;
     }
 
-    // -o IShapeAmount2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
+    ;
 
     @Override
     public float getLength() {
@@ -187,7 +188,8 @@ public abstract class AbstractLine2d
         return 2;
     }
 
-    // -o IPickable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
+    ;
 
     @Override
     public PickResult2d _pick(Point2d point) {
@@ -246,7 +248,8 @@ public abstract class AbstractLine2d
         return result.getDistance();
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize() {
@@ -255,7 +258,8 @@ public abstract class AbstractLine2d
         return polygon;
     }
 
-    // -o ICroppable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
+    ;
 
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {

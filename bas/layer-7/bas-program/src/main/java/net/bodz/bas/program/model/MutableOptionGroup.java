@@ -204,7 +204,8 @@ public class MutableOptionGroup
             parent.removeUsage(usage);
     }
 
-    // -o IMutableElement
+    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IMutableElement}. */
+    ;
 
     @Override
     public void setName(String name) {

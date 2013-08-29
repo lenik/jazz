@@ -52,7 +52,8 @@ public class Polygon2d
         return new Polygon2d(sameList);
     }
 
-    // -o IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     @Override
     public List<Point2d> getPoints() {
@@ -70,7 +71,8 @@ public class Polygon2d
         return points.get(index);
     }
 
-    // -o IEditablePointRefSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IMutablePointRefSet2d}. */
+    ;
 
     @Override
     public void setPoint(int index, IPointRef2d point) {
@@ -88,7 +90,8 @@ public class Polygon2d
         addPoint(index, point.snapshot());
     }
 
-    // -o IEditablePointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IMutablePointSet2d}. */
+    ;
 
     @Override
     public void setPoint(int index, float x, float y) {
@@ -127,7 +130,8 @@ public class Polygon2d
         return points.remove(index);
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {

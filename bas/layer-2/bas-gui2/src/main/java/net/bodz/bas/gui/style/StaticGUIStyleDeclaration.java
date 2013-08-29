@@ -69,7 +69,8 @@ public class StaticGUIStyleDeclaration
         return null;
     }
 
-    // -o IInputControlStyle
+    /** ⇱ Implementaton Of {@link IInputBehaviorDeclaration}. */
+    ;
 
     @Override
     public Boolean getEnabled() {

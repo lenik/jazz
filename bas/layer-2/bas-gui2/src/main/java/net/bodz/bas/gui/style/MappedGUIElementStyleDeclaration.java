@@ -42,7 +42,8 @@ public abstract class MappedGUIElementStyleDeclaration
     public void setImage(ImageUsage usage, IImageData imageData) {
     }
 
-    // -o IInputControlStyle
+    /** ⇱ Implementaton Of {@link IInputBehaviorDeclaration}. */
+    ;
 
     @Override
     public Boolean getEnabled() {

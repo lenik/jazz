@@ -39,7 +39,8 @@ public class URLFileAttributes
         return this;
     }
 
-    // -o BasicFileAttributes and View
+    /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
+    ;
 
     @Override
     public FileTime creationTime() {
@@ -124,7 +125,8 @@ public class URLFileAttributes
         }
     }
 
-    // -o FilePermissionAttributes
+    /** ⇱ Implementaton Of {@link FilePermissionAttributes}. */
+    ;
 
     @Override
     public boolean isReadable() {
@@ -175,7 +177,8 @@ public class URLFileAttributes
         }
     }
 
-    // -o DeviceAttributes
+    /** ⇱ Implementaton Of {@link DeviceAttributes}. */
+    ;
 
     @Override
     public boolean isRandomAccessible() {

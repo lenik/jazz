@@ -41,7 +41,8 @@ public class DesignerCanvas2f
     protected void checkSubclass() {
     }
 
-    // -o PaintListener
+    /** ⇱ Implementaton Of {@link PaintListener}. */
+    ;
 
     public void paintControl(PaintEvent e) {
         if (major != null)

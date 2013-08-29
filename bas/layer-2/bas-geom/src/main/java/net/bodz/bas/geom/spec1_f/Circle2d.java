@@ -44,7 +44,8 @@ public class Circle2d
         return this;
     }
 
-    // -o IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     public int getPointCount() {
         return 1;
@@ -95,7 +96,8 @@ public class Circle2d
         this.radius = radius;
     }
 
-    // -o IExtendable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IExtendable2d}. */
+    ;
 
     @Override
     public boolean include(Point2d point) {
@@ -126,14 +128,16 @@ public class Circle2d
         return true;
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {
         return null;
     }
 
-    // -o ICroppable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
+    ;
 
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {

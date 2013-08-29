@@ -9,7 +9,8 @@ import net.bodz.bas.sio.util.DecodedCharIn;
 public abstract class AbstractInputOutputStreamResource
         extends AbstractStreamResource {
 
-    // -o IStreamInputSource
+    /** ⇱ Implementaton Of {@link IStreamInputSource}. */
+    ;
 
     @Override
     protected abstract InputStream _newInputStream(OpenOption... options)
@@ -36,7 +37,8 @@ public abstract class AbstractInputOutputStreamResource
         return new DecodedCharIn(in, getCharset().newDecoder());
     }
 
-    // -o IStreamOutputTarget
+    /** ⇱ Implementaton Of {@link IStreamOutputTarget}. */
+    ;
 
     @Override
     protected abstract OutputStream _newOutputStream(OpenOption... options)

@@ -35,7 +35,8 @@ public abstract class GenericUnit_z1
         return this;
     }
 
-    // -o IOutPort
+    /** ⇱ Implementaton Of {@link IOutPort}. */
+    ;
 
     @Override
     public IUnit getUnit() {

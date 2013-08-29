@@ -7,7 +7,11 @@ import net.bodz.bas.geom.spec0_f.IShapeAmount2d;
 public interface ILine2d
         extends IPrimitive2d, IShapeAmount2d {
 
-    // -o IShape2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPrimitive2d}. */
+    ;
+
+    @Override
+    Line2d snap();
 
     @Override
     ILine2d shot();
@@ -15,10 +19,8 @@ public interface ILine2d
     @Override
     Line2d snapshot();
 
-    @Override
-    Line2d snap();
-
-    // -o ShapeAmount
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
+    ;
 
     /**
      * The length of the line.
@@ -28,7 +30,8 @@ public interface ILine2d
     @Override
     float getLength();
 
-    // -o IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     Point2d getPoint0();
 

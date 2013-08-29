@@ -51,7 +51,8 @@ public class ReflectMethod
         return method.invoke(instance, parameters);
     }
 
-    // -o IElement
+    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    ;
 
     @Override
     public int getModifiers() {
@@ -63,7 +64,8 @@ public class ReflectMethod
         return verboseLevel;
     }
 
-    // -o AnnotatedElement
+    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    ;
 
     @Override
     public Annotation[] getAnnotations() {

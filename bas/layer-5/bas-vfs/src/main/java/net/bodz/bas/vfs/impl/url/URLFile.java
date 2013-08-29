@@ -19,12 +19,7 @@ import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
-import net.bodz.bas.vfs.AbstractFile;
-import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
-import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.*;
 
 public class URLFile
         extends AbstractFile {
@@ -124,7 +119,8 @@ public class URLFile
         }
     }
 
-    // -o IFsBlob
+    /** ⇱ Implementaton Of {@link IFsBlob}. */
+    ;
 
     @Override
     public Long getLength() {
@@ -196,7 +192,8 @@ public class URLFile
         return resource;
     }
 
-    // -o IFsDir
+    /** ⇱ Implementaton Of {@link IFsDir}. */
+    ;
 
     @Override
     public URLFile getChild(String entryName)

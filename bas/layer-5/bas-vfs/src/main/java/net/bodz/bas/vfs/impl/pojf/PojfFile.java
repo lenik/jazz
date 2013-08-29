@@ -17,12 +17,7 @@ import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.FileResource;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.vfs.AbstractFile;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
-import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.IFsDir;
-import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.*;
 import net.bodz.bas.vfs.util.Vfs2PojfFileFilter;
 import net.bodz.bas.vfs.util.Vfs2PojfFilenameFilter;
 
@@ -147,7 +142,8 @@ public class PojfFile
         return true;
     }
 
-// -o IFsBlob
+    /** ⇱ Implementaton Of {@link IFsBlob}. */
+    ;
 
     @Override
     protected IStreamResource newResource(Charset charset) {
@@ -156,7 +152,8 @@ public class PojfFile
         return resource;
     }
 
-    // -o IFsTree
+    /** ⇱ Implementaton Of {@link IFsDir}. */
+    ;
 
     @Override
     public PojfFile getChild(String entryName) {

@@ -12,16 +12,20 @@ public abstract class AbstractShape2d
     @Override
     public abstract AbstractShape2d clone();
 
-    // -o IBoundingBall2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBall2d}. */
+    ;
+
     @Override
     public Circle2d getBoundingBall() {
         Rectangle2d bbox = getBoundingBox();
         return bbox.getBoundingBall();
     }
 
-    // -o ITransformable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ITransformable2d}. */
+    ;
 
-    // IDecoratable
+    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IDecoratable}. */
+    ;
 
     @Override
     public <T> T decorate(Class<T> decoratedType) {

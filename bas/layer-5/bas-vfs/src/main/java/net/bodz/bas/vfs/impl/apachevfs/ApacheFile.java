@@ -18,12 +18,7 @@ import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.vfs.AbstractFile;
-import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
-import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.*;
 
 public class ApacheFile
         extends AbstractFile {
@@ -110,7 +105,8 @@ public class ApacheFile
         return false;
     }
 
-    // -o IFsBlob
+    /** ⇱ Implementaton Of {@link IFsBlob}. */
+    ;
 
     @Override
     protected IStreamResource newResource(Charset charset) {
@@ -119,7 +115,8 @@ public class ApacheFile
         return resource;
     }
 
-    // -o IFsDir
+    /** ⇱ Implementaton Of {@link IFsDir}. */
+    ;
 
     @Override
     public boolean mkdir() {

@@ -72,7 +72,9 @@ public class LinkedType
         return eventMap;
     }
 
-    // -o AnnotatedElement
+    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    ;
+
     // TODO Should merge annotations from all types.
 
     @Override

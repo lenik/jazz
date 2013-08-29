@@ -57,7 +57,8 @@ public abstract class AbstractReflectType
         return eventMap;
     }
 
-    // -o AnnotatedElement
+    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    ;
 
     @Override
     public Annotation[] getAnnotations() {
@@ -79,7 +80,8 @@ public abstract class AbstractReflectType
         return clazz.isAnnotationPresent(annotationClass);
     }
 
-    // -o IElement
+    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    ;
 
     @Override
     public int getVerboseLevel() {

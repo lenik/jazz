@@ -49,7 +49,8 @@ public class NioExtraFileAttributes
         return this;
     }
 
-    // -o BasicFileAttributes
+    /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
+    ;
 
     @Override
     public FileTime lastModifiedTime() {
@@ -105,7 +106,8 @@ public class NioExtraFileAttributes
         return basicFileAttributes.fileKey();
     }
 
-    // -o FilePermissionAttributes
+    /** ⇱ Implementaton Of {@link FilePermissionAttributes}. */
+    ;
 
     @Override
     public boolean isReadable() {
@@ -133,7 +135,8 @@ public class NioExtraFileAttributes
         return parentFile.canWrite();
     }
 
-    // -o DeviceAttributes
+    /** ⇱ Implementaton Of {@link DeviceAttributes}. */
+    ;
 
     @Override
     public boolean isRandomAccessible() {

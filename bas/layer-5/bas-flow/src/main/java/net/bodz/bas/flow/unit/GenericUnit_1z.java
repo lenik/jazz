@@ -34,7 +34,8 @@ public abstract class GenericUnit_1z
         throw new IndexOutOfBoundsException();
     }
 
-    // -o IInPort
+    /** ⇱ Implementaton Of {@link IInPort}. */
+    ;
 
     @Override
     public IUnit getUnit() {

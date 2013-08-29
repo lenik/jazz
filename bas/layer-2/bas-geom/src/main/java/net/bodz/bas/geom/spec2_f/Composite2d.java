@@ -72,7 +72,8 @@ public class Composite2d
         return single;
     }
 
-    // -o IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     public int getPointCount() {
         return 0;
@@ -83,7 +84,8 @@ public class Composite2d
         return getBadPoint(index);
     }
 
-    // -o IBoundingBox2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBox2d}. */
+    ;
 
     @Override
     public Rectangle2d getBoundingBox() {
@@ -101,7 +103,8 @@ public class Composite2d
         return bbox; // super.getBoundingBox();
     }
 
-    // -o IPickable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
+    ;
 
     public static class CompPickInfo2f
             extends PickResult2d {
@@ -158,7 +161,8 @@ public class Composite2d
         return minDistance;
     }
 
-    // -o ICroppable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
+    ;
 
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {

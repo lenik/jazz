@@ -39,7 +39,8 @@ public class Polylink2d
         return new Polylink2d(newList);
     }
 
-    // -o IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     @Override
     public int getPointCount() {
@@ -59,7 +60,8 @@ public class Polylink2d
         return points.get(index);
     }
 
-    // -o IEditablePointRefSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IMutablePointRefSet2d}. */
+    ;
 
     @Override
     public void setPoint(int index, IPointRef2d point) {
@@ -83,7 +85,8 @@ public class Polylink2d
         return points.remove(index);
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {

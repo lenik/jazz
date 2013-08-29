@@ -36,7 +36,8 @@ public abstract class InodeFileAttributes
         return this;
     }
 
-    // -o BasicFileAttributes and View
+    /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
+    ;
 
     @Override
     public FileTime lastModifiedTime() {
@@ -161,7 +162,8 @@ public abstract class InodeFileAttributes
         getInode().setLastAccessTime(lastAccessTime.toMillis());
     }
 
-    // -o DosFileAttributes and View
+    /** ⇱ Implementaton Of {@link DosFileAttributes}. */
+    ;
 
     @Override
     public boolean isReadOnly() {
@@ -207,7 +209,8 @@ public abstract class InodeFileAttributes
         getInode().setArchive(value);
     }
 
-    // -o PosixFileAttributes and View
+    /** ⇱ Implementaton Of {@link PosixFileAttributes}. */
+    ;
 
     @Override
     public UserPrincipal owner() {
@@ -225,17 +228,8 @@ public abstract class InodeFileAttributes
         return UnitModeBits.toPermissions(mode);
     }
 
-    @Override
-    public UserPrincipal getOwner()
-            throws IOException {
-        return getInode().getOwner();
-    }
-
-    @Override
-    public void setOwner(UserPrincipal owner)
-            throws IOException {
-        getInode().setOwner(owner);
-    }
+    /** ⇱ Implementaton Of {@link PosixFileAttributeView}. */
+    ;
 
     @Override
     public void setGroup(GroupPrincipal group)
@@ -250,7 +244,23 @@ public abstract class InodeFileAttributes
         getInode().setMode(mode);
     }
 
-    // -o FilePermissionAttributes and View
+    /** ⇱ Implementaton Of {@link FileOwnerAttributeView}. */
+    ;
+
+    @Override
+    public UserPrincipal getOwner()
+            throws IOException {
+        return getInode().getOwner();
+    }
+
+    @Override
+    public void setOwner(UserPrincipal owner)
+            throws IOException {
+        getInode().setOwner(owner);
+    }
+
+    /** ⇱ Implementaton Of {@link FilePermissionAttributes}. */
+    ;
 
     @Override
     public boolean isReadable() {
@@ -276,7 +286,8 @@ public abstract class InodeFileAttributes
             return parent.isWritable();
     }
 
-    // -o DeviceAttributes
+    /** ⇱ Implementaton Of {@link DeviceAttributes}. */
+    ;
 
     @Override
     public boolean isRandomAccessible() {
