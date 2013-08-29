@@ -1,9 +1,11 @@
 package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.rtx.QueryException;
 
 public class PropertyRefEntry<T>
-        extends AbstractRefEntry<T> {
+        extends AbstractRefEntry<T>
+        implements IValueChangeSource {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,8 +43,15 @@ public class PropertyRefEntry<T>
     }
 
     @Override
-    public boolean isValueChangeSource() {
-        return property.isPropertyChangeSource();
+    public <S> S query(Class<S> specificationType)
+            throws QueryException {
+        if (specificationType == IValueChangeSource.class) {
+            if (property.isPropertyChangeSource())
+                return specificationType.cast(this);
+            else
+                return null;
+        }
+        return super.query(specificationType);
     }
 
     @Override

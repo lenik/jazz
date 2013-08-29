@@ -11,6 +11,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
+import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -45,11 +46,12 @@ public abstract class AbstractSwtViewBuilder<T>
     }
 
     protected void bindProperty(final IRefEntry<?> entry, final Control control, final IValueChangeListener listener) {
-        entry.addValueChangeListener(listener);
+        final IValueChangeSource valueChangeSource = entry.query(IValueChangeSource.class);
+        valueChangeSource.addValueChangeListener(listener);
         control.addDisposeListener(new DisposeListener() {
             @Override
             public void widgetDisposed(DisposeEvent e) {
-                entry.removeValueChangeListener(listener);
+                valueChangeSource.removeValueChangeListener(listener);
             }
         });
     }

@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
 import net.bodz.bas.potato.ref.IValueChangeListener;
+import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -48,7 +49,8 @@ public class BooleanVbo
                 }
             });
         }
-        if (entry.isValueChangeSource())
+
+        if (entry.query(IValueChangeSource.class) != null)
             bindProperty(entry, check, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent event) {

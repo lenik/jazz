@@ -41,15 +41,16 @@ public abstract class AbstractRefEntry<T>
         return oldValue;
     }
 
-    /** ⇱ {@link net.bodz.bas.rtx.IQueryable} */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.rtx.IQueryable} */
+    ;
 
     @Override
     public Object query(Object specification)
             throws QueryException {
-        if (specification instanceof String)
-            return query((String) specification);
         if (specification instanceof Class<?>)
             return query((Class<?>) specification);
+        if (specification instanceof String)
+            return query((String) specification);
         return null;
     }
 
@@ -62,7 +63,13 @@ public abstract class AbstractRefEntry<T>
     @Override
     public <S> S query(Class<S> specificationType)
             throws QueryException {
-        return null;
+
+        Class<? extends T> valueType = getValueType();
+        if (specificationType.isAssignableFrom(valueType)) {
+            T value = getValue();
+            return specificationType.cast(value);
+        }
+
     }
 
 }

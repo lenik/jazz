@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Widget;
 import net.bodz.bas.gui.css3.BorderBox;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.potato.ref.IValueChangeListener;
+import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -41,7 +42,7 @@ public class DateVbo
         if (readOnly) {
             final Label dateLabel = new Label(parent, styleInt);
             dateLabel.setText(format(date));
-            if (entry.isValueChangeSource())
+            if (entry.query(IValueChangeSource.class) != null)
                 bindProperty(entry, dateLabel, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {
@@ -72,7 +73,7 @@ public class DateVbo
                 text.setTextLimit(maxLength);
 
             text.setText(format(date));
-            if (entry.isValueChangeSource())
+            if (entry.query(IValueChangeSource.class) != null)
                 bindProperty(entry, text, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {

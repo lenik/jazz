@@ -1,5 +1,7 @@
 package net.bodz.bas.i18n.dom1;
 
+import java.lang.reflect.Modifier;
+
 import net.bodz.bas.i18n.dom.iString;
 
 public interface IElement {
@@ -67,6 +69,13 @@ public interface IElement {
      */
     int getVerboseLevel();
 
+    /**
+     * Returns the Java language modifiers for this element, as an integer. The {@link Modifier}
+     * class should be used to decode the modifiers in the integer.
+     * 
+     * @return the Java language modifiers for the underlying element.
+     * @see java.lang.reflect.Modifier
+     */
     int getModifiers();
 
 }
