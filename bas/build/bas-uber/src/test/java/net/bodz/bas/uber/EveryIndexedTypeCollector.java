@@ -6,6 +6,9 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedType;
 
+/**
+ * @see IndexedTypeCollector
+ */
 public class EveryIndexedTypeCollector {
 
     static Logger logger = LoggerFactory.getLogger(EveryIndexedTypeCollector.class);
@@ -15,7 +18,7 @@ public class EveryIndexedTypeCollector {
         for (Class<?> base : TypeExtensions.forClassWithAnnotation(IndexedType.class)) {
             logger.info("Indexed-Type: ", base);
 
-            @SuppressWarnings({ "rawtypes", "unchecked" })//
+            @SuppressWarnings({ "rawtypes", "unchecked" })
             TypeCollector<?> collector = new NetBodzTypeCollector(base, null);
 
             collector.collect();

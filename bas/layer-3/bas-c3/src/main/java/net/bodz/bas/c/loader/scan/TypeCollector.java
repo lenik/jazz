@@ -5,14 +5,20 @@ import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.c.java.util.LazyTreeMap;
+import net.bodz.bas.c.java.util.NewArrayList;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.c.m2.MavenPom;
+import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.log.Logger;
@@ -36,7 +42,8 @@ public abstract class TypeCollector<T> {
 
     boolean showPaths;
     List<Class<?>> extensions;
-    Map<File, List<String>> fileContentMap;
+    LazyTreeMap<File, List<String>> fileContentMap = new LazyTreeMap<File, List<String>>(
+            new NewArrayList<File, String>());
     boolean deleteEmptyFiles = true;
 
     public TypeCollector() {
@@ -134,7 +141,7 @@ public abstract class TypeCollector<T> {
                     continue;
             }
 
-            MavenPom pomDir = MavenPom.fromClass(extensionClass);
+            MavenPomDir pomDir = MavenPomDir.fromClass(extensionClass);
             File resdir = pomDir.getResourceDir(extensionClass);
             if (resdir == null)
                 continue;
@@ -144,12 +151,7 @@ public abstract class TypeCollector<T> {
                 publishPrefix += "/";
 
             File sfile = new File(resdir, publishPrefix + baseClass.getName());
-
-            List<String> lines = fileContentMap.get(sfile);
-            if (lines == null) {
-                lines = new ArrayList<String>();
-                fileContentMap.put(sfile, lines);
-            }
+            List<String> lines = fileContentMap.getOrLoad(sfile);
 
             if (indexing.obsoleted()) {
                 // lines.add("# " + extension.getName());
@@ -226,19 +228,22 @@ public abstract class TypeCollector<T> {
 
     synchronized void _collect()
             throws IOException {
-        fileContentMap = new HashMap<File, List<String>>();
+        fileContentMap.clear();
         extensions = new ArrayList<>();
         scanTypes();
-        createExtensionFiles();
+        createFiles();
         saveFiles(fileContentMap);
         if (showPaths)
             for (Class<?> extension : extensions) {
-                MavenPom pomDir = MavenPom.fromClass(extension);
+                MavenPomDir pomDir = MavenPomDir.fromClass(extension);
                 File sourceFile = pomDir.getSourceFile(extension);
                 System.out.println(sourceFile);
             }
-        fileContentMap = null;
         extensions = null;
+    }
+
+    protected void createFiles() {
+        createExtensionFiles();
     }
 
 }
