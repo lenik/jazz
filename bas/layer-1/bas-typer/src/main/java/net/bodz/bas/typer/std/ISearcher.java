@@ -8,7 +8,7 @@ import net.bodz.bas.rtx.IOptions;
 public interface ISearcher<T>
         extends IStdTyper {
 
-    int typerIndex = -2141867074; // ISearcher
+    int typerIndex = 0xbc81df61; // ISearcher
 
     /**
      * @param object

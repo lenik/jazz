@@ -7,7 +7,7 @@ import net.bodz.bas.rtx.IOptions;
 public interface IClassifier<T>
         extends IStdTyper {
 
-    int typerIndex = -616435894; // IClassifier
+    int typerIndex = 0xf1b27ae6; // IClassifier
 
     Map<String, Object> classify(T object)
             throws ClassifyException;

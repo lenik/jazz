@@ -5,7 +5,7 @@ import net.bodz.bas.rtx.IOptions;
 public interface IValidator<T>
         extends IStdTyper {
 
-    int typerIndex = -566399735; // IValidator
+    int typerIndex = 0x43280a98; // IValidator
 
     void validate(T object)
             throws ValidationException;
