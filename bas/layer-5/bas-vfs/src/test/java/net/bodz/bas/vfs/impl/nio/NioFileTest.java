@@ -9,18 +9,18 @@ import java.nio.file.Paths;
 
 import org.junit.Assert;
 
-import net.bodz.bas.c.m2.MavenPom;
+import net.bodz.bas.c.m2.MavenPomDir;
 
 public class NioFileTest
         extends Assert {
 
     public static void main(String[] args)
             throws Exception {
-        MavenPom mpo = MavenPom.fromClass(NioFileTest.class);
-        File projectDirFile = mpo.getBaseDir();
-        Path projectDir = Paths.get(projectDirFile.getPath());
+        MavenPomDir pomDir = MavenPomDir.fromClass(NioFileTest.class);
+        File baseDir = pomDir.getBaseDir();
+        Path baseDirPath = Paths.get(baseDir.getPath());
 
-        Path pomXml = projectDir.resolve("pom.xml");
+        Path pomXml = baseDirPath.resolve("pom.xml");
 
         SeekableByteChannel ch = Files.newByteChannel(pomXml);
 

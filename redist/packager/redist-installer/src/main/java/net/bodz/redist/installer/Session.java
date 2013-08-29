@@ -15,7 +15,7 @@ import java.util.Set;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
-import net.bodz.bas.c.m2.MavenPom;
+import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.gui.dialog.IUserDialogs;
@@ -82,13 +82,13 @@ public class Session
         // addResFolder(new JavaioFile(FilePath.canoniOf(".")/*, true*/));
         addResFolder(new PojfFile(SystemColos.workdir.get()/* , true */));
 
-        MavenPom installerPo = MavenPom.fromClass(Installer.class);
-        MavenPom userPo = MavenPom.fromClass(project.getClass());
+        MavenPomDir installerPomDir = MavenPomDir.fromClass(Installer.class);
+        MavenPomDir userPomDir = MavenPomDir.fromClass(project.getClass());
 
-        IFile projectResBase = new PojfFile(userPo.getResourceDir(project.getClass()));
+        IFile projectResBase = new PojfFile(userPomDir.getResourceDir(project.getClass()));
         addResFolder(projectResBase);
 
-        IFile installerResBase = new PojfFile(installerPo.getResourceDir(Installer.class));
+        IFile installerResBase = new PojfFile(installerPomDir.getResourceDir(Installer.class));
         addResFolder(installerResBase);
 
         searchLoaders = new ArrayList<ClassLoader>();
@@ -289,7 +289,8 @@ public class Session
                 in.close();
                 if (!(obj instanceof Map<?, ?>))
                     throw new SessionException(tr._("bad decoded registry: ") + obj);
-                @SuppressWarnings("unchecked") Map<String, Object> registry = (Map<String, Object>) obj;
+                @SuppressWarnings("unchecked")
+                Map<String, Object> registry = (Map<String, Object>) obj;
                 logger.info(tr._("Registry data to load: "), registry);
                 components.importRegistry(registry);
                 logger.info(tr._("Registry loaded"));
