@@ -8,7 +8,7 @@ import java.util.Set;
 public interface IInstanceStore<T>
         extends IStdTyper {
 
-    int typerIndex = 1154332547; // IInstanceStore
+    int typerIndex = 0xa401a6d5; // IInstanceStore
 
     /**
      * 

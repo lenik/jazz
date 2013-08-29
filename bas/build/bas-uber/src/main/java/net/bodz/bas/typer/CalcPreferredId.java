@@ -1,5 +1,7 @@
 package net.bodz.bas.typer;
 
+import java.security.MessageDigest;
+
 import net.bodz.bas.typer.std.*;
 
 public class CalcPreferredId {
@@ -18,11 +20,23 @@ public class CalcPreferredId {
             IValidator.class, //
     };
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+            throws Exception {
+        MessageDigest SHA1 = MessageDigest.getInstance("SHA1");
+
         // Id-hash
         for (Class<?> iface : interfaceClasses) {
             String name = iface.getSimpleName();
-            System.out.println("int typerIndex = " + name.hashCode() + "; // " + name);
+            // int hashCode = name.hashCode();
+
+            byte[] digest = SHA1.digest(name.getBytes("utf-8"));
+            int a = digest[0] & 0xff;
+            int b = digest[1] & 0xff;
+            int c = digest[2] & 0xff;
+            int d = digest[3] & 0xff;
+            int sha1 = (a << 24) | (b << 16) | (c << 8) | d;
+            System.out.printf("int typerIndex = 0x%08x; // %s\n", //
+                    sha1, name);
         }
         System.out.println();
 

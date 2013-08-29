@@ -10,7 +10,7 @@ import net.bodz.bas.rtx.IOptions;
 public interface ISampleGenerator<T>
         extends IStdTyper {
 
-    int typerIndex = -1354170176; // ISampleGenerator
+    int typerIndex = 0xa5d35f7a; // ISampleGenerator
 
     /**
      * @return non-<code>null</code> sample instance.

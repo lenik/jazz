@@ -9,7 +9,7 @@ import net.bodz.bas.rtx.IOptions;
 public interface IFormatter<T>
         extends IStdTyper {
 
-    int typerIndex = -1939991935; // IFormatter
+    int typerIndex = 0x07155834; // IFormatter
 
     /**
      * @param object

@@ -3,7 +3,7 @@ package net.bodz.bas.typer.std;
 public interface IBasicTyperFamily<T>
         extends ITyperFamily<T>, IStdTyper {
 
-    int typerIndex = -1353907369; // IBasicTyperFamily
+    int typerIndex = 0xd5c04a20; // IBasicTyperFamily
 
     /**
      * Get the type attributes.

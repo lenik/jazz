@@ -10,7 +10,7 @@ import net.bodz.bas.rtx.IOptions;
 public interface IParser<T>
         extends IStdTyper {
 
-    int typerIndex = -1548284472; // IParser
+    int typerIndex = 0x59ce1f03; // IParser
 
     /**
      * @return ? extends <code>T</code>
