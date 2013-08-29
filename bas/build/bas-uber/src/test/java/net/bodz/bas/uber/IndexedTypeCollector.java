@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 
+/**
+ * @see EveryIndexedTypeCollector
+ */
 public class IndexedTypeCollector
         extends NetBodzTypeCollector<IndexedType> {
 
