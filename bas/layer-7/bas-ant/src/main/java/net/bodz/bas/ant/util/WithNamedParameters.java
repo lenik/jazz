@@ -1,4 +1,4 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.util;
 
 import java.util.Map;
 import java.util.TreeMap;

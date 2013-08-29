@@ -1,4 +1,4 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.task;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -19,6 +19,11 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Path;
 
+import net.bodz.bas.ant.logger.LoggerVC;
+import net.bodz.bas.ant.logger.TaskLogger;
+import net.bodz.bas.ant.util.Parameter;
+import net.bodz.bas.ant.util.TextElement;
+import net.bodz.bas.ant.util.ValueConstruct;
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.system.SystemColos;

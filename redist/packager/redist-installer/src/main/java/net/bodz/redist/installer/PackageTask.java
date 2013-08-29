@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-import net.bodz.bas.ant.TaskLogger;
+import net.bodz.bas.ant.logger.TaskLogger;
 import net.bodz.bas.err.ExceptionBuffer;
 import net.bodz.bas.err.RecoverableExceptionEvent;
 import net.bodz.bas.i18n.nls.II18nCapable;

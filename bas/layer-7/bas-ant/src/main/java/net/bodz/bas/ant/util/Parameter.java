@@ -1,4 +1,4 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.util;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.typer.std.ParserUtil;

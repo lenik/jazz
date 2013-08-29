@@ -1,4 +1,4 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.test;
 
 import java.io.File;
 import java.io.IOException;

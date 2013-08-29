@@ -1,4 +1,4 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.util;
 
 /**
  * Value attribute will overwrite any text.

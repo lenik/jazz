@@ -1,5 +1,6 @@
-package net.bodz.bas.ant;
+package net.bodz.bas.ant.logger;
 
+import net.bodz.bas.ant.util.ValueConstruct;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.log.Logger;
 
