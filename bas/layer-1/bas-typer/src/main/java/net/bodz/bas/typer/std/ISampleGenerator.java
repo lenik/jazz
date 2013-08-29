@@ -7,7 +7,8 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.rtx.IOptions;
 
-public interface ISampleGenerator<T> {
+public interface ISampleGenerator<T>
+        extends IStdTyper {
 
     int typerIndex = -1354170176; // ISampleGenerator
 

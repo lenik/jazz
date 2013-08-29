@@ -19,7 +19,7 @@ public class CharOutTypers
     }
 
     @Override
-    protected Object _query(int typerIndex) {
+    protected Object queryInt(int typerIndex) {
         if (typerIndex == IParser.typerIndex)
             return this;
         return null;

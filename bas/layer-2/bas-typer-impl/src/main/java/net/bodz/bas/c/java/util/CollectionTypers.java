@@ -2,7 +2,6 @@ package net.bodz.bas.c.java.util;
 
 import java.util.Collection;
 
-import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.ISampleGenerator;
@@ -16,18 +15,7 @@ public class CollectionTypers<T>
     }
 
     @Override
-    public Object query(String specificationId) {
-        return super.query(specificationId);
-    }
-
-    @Override
-    public Object query(Object specification)
-            throws QueryException {
-        return super.query(specification);
-    }
-
-    @Override
-    protected Object _query(int typerIndex) {
+    protected Object queryInt(int typerIndex) {
         switch (typerIndex) {
         case IParser.typerIndex:
         case ISampleGenerator.typerIndex:

@@ -4,7 +4,8 @@ import java.util.Map;
 
 import net.bodz.bas.rtx.IOptions;
 
-public interface IClassifier<T> {
+public interface IClassifier<T>
+        extends IStdTyper {
 
     int typerIndex = -616435894; // IClassifier
 

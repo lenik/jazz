@@ -5,7 +5,8 @@ import java.util.Set;
 /**
  * Pre-defined instances provider.
  */
-public interface IInstanceStore<T> {
+public interface IInstanceStore<T>
+        extends IStdTyper {
 
     int typerIndex = 1154332547; // IInstanceStore
 
