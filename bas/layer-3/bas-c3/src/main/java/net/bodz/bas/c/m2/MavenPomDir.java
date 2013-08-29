@@ -6,22 +6,26 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
-/**
- * The origin directory of a maven project.
- * 
- * So it's suggested to name as `FoobarPo`.
- */
-public class MavenPom {
+public class MavenPomDir {
+
+    static final Logger logger = LoggerFactory.getLogger(MavenPomDir.class);
 
     private File pomFile;
     private File baseDir;
 
-    public MavenPom(File baseDir) {
+    public MavenPomDir(File baseDir) {
         if (baseDir == null)
             throw new NullPointerException("baseDir");
         this.baseDir = baseDir;
         this.pomFile = new File(baseDir, "pom.xml");
+    }
+
+    public String getName() {
+        String name = baseDir.getName();
+        return name;
     }
 
     public File getBaseDir() {
@@ -36,10 +40,23 @@ public class MavenPom {
         return new File(baseDir, name);
     }
 
-    public static MavenPom fromClass(Class<?> clazz) {
+    /**
+     * Find the maven project directory from the specific class.
+     * 
+     * @param clazz
+     *            The specific class.
+     * @return <code>null</code> if the class bytes resource couldn't be found for the specific
+     *         class.
+     */
+    public static MavenPomDir fromClass(Class<?> clazz) {
         String fname = clazz.getName().replace('.', '/') + ".class";
 
         File classFile = ClassResource.getClassBytesFile(clazz);
+        if (classFile == null) {
+            logger.warn("No class bytes for " + clazz);
+            return null;
+        }
+
         String path = classFile.getPath();
         path = FilePath.toUnixStyle(path);
 
@@ -53,7 +70,7 @@ public class MavenPom {
 
         File dir = new File(dirname);
 
-        return new MavenPom(dir);
+        return new MavenPomDir(dir);
     }
 
     public File getSourceFile(Class<?> clazz) {
@@ -93,33 +110,60 @@ public class MavenPom {
         return new File(path);
     }
 
-    public File getResourceDir(Class<?> clazz) {
-        return _getResourceDir(clazz);
+    /**
+     * Find the source dir within the maven project directory from the specific class.
+     * 
+     * @param clazz
+     *            The specific class.
+     * @return <code>null</code> if the class bytes resource couldn't be found for the specific
+     *         class.
+     */
+    public File getSourceDir(Class<?> clazz) {
+        String path = _getSourceDirPath(clazz);
+        return path == null ? null : new File(path);
     }
 
-    public static File _getResourceDir(Class<?> clazz) {
+    private static String _getSourceDirPath(Class<?> clazz) {
+        File classFile = ClassResource.getClassBytesFile(clazz);
+        if (classFile == null)
+            return null;
+
+        // foo/target/classes/ => foo/src/main/java/
+        // foo/target/test-classes/ => foo/src/test/java/
+        String path = classFile.getPath();
+
+        int pos = path.lastIndexOf("/target/classes/");
+        if (pos != -1)
+            return path.substring(0, pos) + "/src/main/java/";
+
+        pos = path.lastIndexOf("/target/test-classes/");
+        if (pos != -1)
+            return path.substring(0, pos) + "/src/test/java/";
+
+        return null;
+    }
+
+    public File getResourceDir(Class<?> clazz) {
+        String path = _getResourceDirPath(clazz);
+        return path == null ? null : new File(path);
+    }
+
+    private static String _getResourceDirPath(Class<?> clazz) {
         File classFile = ClassResource.getClassBytesFile(clazz);
 
         // foo/target/classes/ => foo/src/main/java/
         // foo/target/test-classes/ => foo/src/test/java/
         String path = classFile.getPath();
 
-        int i;
-        do {
-            i = path.indexOf("/target/classes/");
-            if (i != -1) {
-                path = path.substring(0, i) + "/src/main/resources/";
-                break;
-            }
+        int pos = path.lastIndexOf("/target/classes/");
+        if (pos != -1)
+            return path.substring(0, pos) + "/src/main/resources/";
 
-            i = path.indexOf("/target/test-classes/");
-            if (i != -1) {
-                path = path.substring(0, i) + "/src/test/resources/";
-                break;
-            }
-        } while (false);
+        pos = path.lastIndexOf("/target/test-classes/");
+        if (pos != -1)
+            return path.substring(0, pos) + "/src/test/resources/";
 
-        return new File(path);
+        return null;
     }
 
 }

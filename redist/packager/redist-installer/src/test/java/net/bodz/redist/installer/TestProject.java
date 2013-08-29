@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import net.bodz.bas.c.java.io.FileFinder;
-import net.bodz.bas.c.m2.MavenPom;
+import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.redist.installer.builtins.CTAProject;
 import net.bodz.redist.installer.builtins.FileCopy;
 import net.bodz.redist.installer.builtins.OptionalSection;
@@ -36,9 +36,9 @@ public class TestProject
 
         testSection = new OptionalSection("test");
         {
-            MavenPom testPo = MavenPom.fromClass(TestProject.class);
-            File testBinDir = testPo.find("target/bin");
-            File testSrcDir = testPo.find("src/main/java");
+            MavenPomDir testPomDir = MavenPomDir.fromClass(TestProject.class);
+            File testBinDir = testPomDir.find("target/bin");
+            File testSrcDir = testPomDir.find("src/main/java");
             FileFinder testbin = new FileFinder(FileCopy.NoSVN, testBinDir);
             FileFinder testsrc = new FileFinder(FileCopy.NoSVN, testSrcDir);
             copyTestClassesFiles = new FileCopy(BASE_TEST, testbin);

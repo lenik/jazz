@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.TempFile;
-import net.bodz.bas.c.m2.MavenPom;
+import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.redist.installer.BaseDirVariable;
@@ -59,11 +59,11 @@ public class CTAProject
 
         FileFilter filter = FileCopy.NoSVN;
 
-        MavenPom redistPo = MavenPom.fromClass(IComponent.class);
+        MavenPomDir redistPomDir = MavenPomDir.fromClass(IComponent.class);
 
         classesSection = new RequiredSection("bin");
         {
-            File binDir = redistPo.find("target/bin");
+            File binDir = redistPomDir.find("target/bin");
             FileFinder binfiles = new FileFinder(filter, binDir);
             FileCopy copyClassFiles = new FileCopy(BASE_PROGRAMS, binfiles);
             classesSection.add(copyClassFiles);
@@ -71,7 +71,7 @@ public class CTAProject
 
         sourceSection = new DefaultSection("src");
         {
-            File srcDir = redistPo.find("src/main/java");
+            File srcDir = redistPomDir.find("src/main/java");
             FileFinder srcfiles = new FileFinder(filter, srcDir);
             FileCopy copySrcFiles = new FileCopy(BASE_PROGRAMS, srcfiles);
             sourceSection.add(copySrcFiles);

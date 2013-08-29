@@ -7,26 +7,26 @@ import org.junit.Test;
 
 import net.bodz.bas.c.type.ClassResource;
 
-public class MavenProjectOriginTest
+public class MavenPomDirTest
         extends Assert {
 
-    MavenPom project = MavenPom.fromClass(getClass());
+    MavenPomDir pomDir = MavenPomDir.fromClass(getClass());
 
     @Test
     public void testGetClassFile() {
-        File file = ClassResource.getClassBytesFile(MavenProjectOriginTest.class);
+        File file = ClassResource.getClassBytesFile(MavenPomDirTest.class);
         assertTrue(file.exists());
     }
 
     @Test
     public void testGetSourceFile() {
-        File file = project.getSourceFile(MavenProjectOriginTest.class);
+        File file = pomDir.getSourceFile(MavenPomDirTest.class);
         assertTrue(file.exists());
     }
 
     @Test
     public void testGetResourceDir() {
-        File file = project.getResourceDir(MavenProjectOriginTest.class);
+        File file = pomDir.getResourceDir(MavenPomDirTest.class);
         assertTrue(file.isDirectory());
     }
 
