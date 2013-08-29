@@ -7,7 +7,8 @@ import java.util.logging.Logger;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 
-public interface IParser<T> {
+public interface IParser<T>
+        extends IStdTyper {
 
     int typerIndex = -1548284472; // IParser
 

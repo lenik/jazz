@@ -10,7 +10,7 @@ public class PersonTypers
     }
 
     @Override
-    protected Object _query(int typerIndex) {
+    protected Object queryInt(int typerIndex) {
         return null;
     }
 

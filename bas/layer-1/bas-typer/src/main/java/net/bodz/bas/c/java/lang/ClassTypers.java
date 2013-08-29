@@ -13,7 +13,7 @@ public class ClassTypers
     }
 
     @Override
-    protected Object _query(int typerIndex) {
+    protected Object queryInt(int typerIndex) {
         switch (typerIndex) {
         case IParser.typerIndex:
             return this;

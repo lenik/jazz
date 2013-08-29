@@ -6,7 +6,8 @@ import java.io.Writer;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.rtx.IOptions;
 
-public interface IFormatter<T> {
+public interface IFormatter<T>
+        extends IStdTyper {
 
     int typerIndex = -1939991935; // IFormatter
 

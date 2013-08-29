@@ -51,7 +51,7 @@ public class QueryMethodTyperProviderTest
         }
 
         @Override
-        protected Object _query(int typerIndex) {
+        protected Object queryInt(int typerIndex) {
             switch (typerIndex) {
             case IFormatter.typerIndex:
                 return this;

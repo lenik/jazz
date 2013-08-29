@@ -2,7 +2,8 @@ package net.bodz.bas.typer.std;
 
 import java.util.Collection;
 
-public interface IAttributes {
+public interface IAttributes
+        extends IStdTyper {
 
     int typerIndex = 70680192; // IAttributes
 

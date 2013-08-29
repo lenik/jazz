@@ -31,20 +31,23 @@ public abstract class AbstractCommonTypers<T>
         this.type = type;
     }
 
-    /** @GeneratedBy CalcPreferredId.class */
-    static final Map<Class<?>, Integer> commonTyperIndex;
+    /** @GeneratedBy CalcPreferredId.class.getName() */
+    static final Map<String, Integer> commonTyperIndex;
     static {
-        commonTyperIndex = new HashMap<Class<?>, Integer>();
-        commonTyperIndex.put(IAttributes.class, IAttributes.typerIndex);
-        commonTyperIndex.put(IClassifier.class, IClassifier.typerIndex);
-        commonTyperIndex.put(IBasicTyperFamily.class, IBasicTyperFamily.typerIndex);
-        commonTyperIndex.put(IFormatter.class, IFormatter.typerIndex);
-        commonTyperIndex.put(IInstanceStore.class, IInstanceStore.typerIndex);
-        commonTyperIndex.put(IParser.class, IParser.typerIndex);
-        commonTyperIndex.put(ISampleGenerator.class, ISampleGenerator.typerIndex);
-        commonTyperIndex.put(ISearcher.class, ISearcher.typerIndex);
-        commonTyperIndex.put(ITextForm.class, ITextForm.typerIndex);
-        commonTyperIndex.put(IValidator.class, IValidator.typerIndex);
+        /**
+         * TODO scan indexed typers and generate the index.
+         */
+        commonTyperIndex = new HashMap<String, Integer>();
+        commonTyperIndex.put(IAttributes.class.getName(), IAttributes.typerIndex);
+        commonTyperIndex.put(IClassifier.class.getName(), IClassifier.typerIndex);
+        commonTyperIndex.put(IBasicTyperFamily.class.getName(), IBasicTyperFamily.typerIndex);
+        commonTyperIndex.put(IFormatter.class.getName(), IFormatter.typerIndex);
+        commonTyperIndex.put(IInstanceStore.class.getName(), IInstanceStore.typerIndex);
+        commonTyperIndex.put(IParser.class.getName(), IParser.typerIndex);
+        commonTyperIndex.put(ISampleGenerator.class.getName(), ISampleGenerator.typerIndex);
+        commonTyperIndex.put(ISearcher.class.getName(), ISearcher.typerIndex);
+        commonTyperIndex.put(ITextForm.class.getName(), ITextForm.typerIndex);
+        commonTyperIndex.put(IValidator.class.getName(), IValidator.typerIndex);
     }
 
     @Override
@@ -53,10 +56,10 @@ public abstract class AbstractCommonTypers<T>
         if (index == null)
             return super.query(specificationType);
 
-        Object impl = _query(index);
+        Object impl = queryInt(index);
 
         if (impl == null)
-            impl = __query(index);
+            impl = _queryInt(index);
 
         return specificationType.cast(impl);
     }
@@ -64,7 +67,7 @@ public abstract class AbstractCommonTypers<T>
     /**
      * The indexed query is faster.
      */
-    protected Object __query(int typerIndex) {
+    protected Object _queryInt(int typerIndex) {
         switch (typerIndex) {
         case IBasicTyperFamily.typerIndex:
             return this;
@@ -89,7 +92,7 @@ public abstract class AbstractCommonTypers<T>
         return null;
     }
 
-    protected abstract Object _query(int typerIndex);
+    protected abstract Object queryInt(int typerIndex);
 
     @Override
     public IAttributes getAttributes() {

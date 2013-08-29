@@ -1,7 +1,7 @@
 package net.bodz.bas.typer.std;
 
 public interface IBasicTyperFamily<T>
-        extends ITyperFamily<T> {
+        extends ITyperFamily<T>, IStdTyper {
 
     int typerIndex = -1353907369; // IBasicTyperFamily
 

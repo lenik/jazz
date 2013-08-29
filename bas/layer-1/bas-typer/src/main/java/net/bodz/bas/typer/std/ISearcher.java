@@ -5,7 +5,8 @@ import java.util.Iterator;
 
 import net.bodz.bas.rtx.IOptions;
 
-public interface ISearcher<T> {
+public interface ISearcher<T>
+        extends IStdTyper {
 
     int typerIndex = -2141867074; // ISearcher
 
