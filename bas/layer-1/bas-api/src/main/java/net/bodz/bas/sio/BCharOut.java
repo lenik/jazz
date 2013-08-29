@@ -60,7 +60,9 @@ public class BCharOut
         return buffer.toString();
     }
 
-    // --o CharSequence
+    /** ⇱ Implementaton Of {@link CharSequence}. */
+    ;
+
     @Override
     public int length() {
         return buffer.length();
@@ -76,7 +78,8 @@ public class BCharOut
         return buffer.subSequence(start, end);
     }
 
-    // --o Appendable
+    /** ⇱ Implementaton Of {@link Appendable}. */
+    ;
 
     @Override
     public Appendable append(CharSequence csq)

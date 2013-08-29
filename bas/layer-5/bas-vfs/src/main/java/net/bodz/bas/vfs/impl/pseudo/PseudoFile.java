@@ -9,11 +9,7 @@ import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.vfs.AbstractFile;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
-import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.*;
 import net.bodz.bas.vfs.inode.Inode;
 import net.bodz.bas.vfs.inode.InodeType;
 
@@ -92,14 +88,16 @@ public abstract class PseudoFile
         return true;
     }
 
-// -o IFsBlob
+    /** ⇱ Implementaton Of {@link IFsBlob}. */
+    ;
 
     @Override
     protected IStreamResource newResource(Charset charset) {
         return (IStreamResource) inode.getData();
     }
 
-    // -o IFsTree
+    /** ⇱ Implementaton Of {@link IFsDir}. */
+    ;
 
     @Override
     public IFile getChild(String childName) {

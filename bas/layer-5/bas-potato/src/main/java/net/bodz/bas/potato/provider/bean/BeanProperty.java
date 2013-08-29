@@ -134,7 +134,8 @@ public class BeanProperty
         }
     }
 
-    // -o IElement
+    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    ;
 
     @Override
     public int getModifiers() {
@@ -146,8 +147,8 @@ public class BeanProperty
         return verboseLevel;
     }
 
-    // -o AnnotatedElement
-
+    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    ;
     @Override
     public Annotation[] getAnnotations() {
         Method getter = propertyDescriptor.getReadMethod();

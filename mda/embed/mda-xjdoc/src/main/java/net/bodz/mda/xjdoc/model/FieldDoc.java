@@ -21,7 +21,8 @@ public class FieldDoc
         return classDoc;
     }
 
-    // --o IFlatfSerializable
+    /** ⇱ Implementaton Of {@link net.bodz.bas.text.flatf.IFlatfSerializable}. */
+    ;
 
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)

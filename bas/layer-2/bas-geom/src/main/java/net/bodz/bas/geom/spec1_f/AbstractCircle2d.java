@@ -42,7 +42,8 @@ public abstract class AbstractCircle2d
             return null;
     }
 
-    // -o IShapeAmount2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
+    ;
 
     @Override
     public float getLength() {
@@ -67,7 +68,8 @@ public abstract class AbstractCircle2d
         setRadius(radius);
     }
 
-    // -o IBoundingBox2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBox2d}. */
+    ;
 
     @Override
     public Rectangle2d getBoundingBox() {
@@ -83,7 +85,8 @@ public abstract class AbstractCircle2d
         return snapshot();
     }
 
-    // -o IPickable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
+    ;
 
     @Override
     public PickResult2d _pick(Point2d point) {
@@ -97,7 +100,8 @@ public abstract class AbstractCircle2d
         return dr - getRadius();
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize() {
@@ -109,7 +113,9 @@ public abstract class AbstractCircle2d
         throw new NotImplementedException();
     }
 
-    // -o ICroppable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
+    ;
+
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {
         return null;

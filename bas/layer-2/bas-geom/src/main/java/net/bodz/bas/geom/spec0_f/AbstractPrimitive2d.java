@@ -39,7 +39,8 @@ public abstract class AbstractPrimitive2d
             return this;
     }
 
-    // -o IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     /**
      * Check point index.
@@ -113,7 +114,8 @@ public abstract class AbstractPrimitive2d
         return points;
     }
 
-    // -o IPointRefSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointRefSet2d}. */
+    ;
 
     @Override
     public Iterable<IPointRef2d> getPointRefs() {
@@ -152,7 +154,8 @@ public abstract class AbstractPrimitive2d
         return points;
     }
 
-    // -o IPositionAttributes2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPositionAttributes2d}. */
+    ;
 
     @Override
     public Point2d getCenterPoint() {
@@ -176,7 +179,8 @@ public abstract class AbstractPrimitive2d
         return center;
     }
 
-    // -o IPickable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
+    ;
 
     @Override
     public final PickResult2d _pick(float x, float y) {
@@ -214,7 +218,8 @@ public abstract class AbstractPrimitive2d
         return distance(point) <= 0.0f;
     }
 
-    // -o IBoundingBox2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBox2d}. */
+    ;
 
     @Override
     public Rectangle2d getBoundingBox() {
@@ -231,7 +236,8 @@ public abstract class AbstractPrimitive2d
         return bbox;
     }
 
-    // -o IBoundingBall2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBall2d}. */
+    ;
 
     @Override
     public Circle2d getBoundingBall() {
@@ -247,7 +253,8 @@ public abstract class AbstractPrimitive2d
         return bball;
     }
 
-    // -o ITransformable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ITransformable2d}. */
+    ;
 
     @Override
     public void translate(float dx, float dy) {
@@ -298,7 +305,8 @@ public abstract class AbstractPrimitive2d
             point.rotateAt(angle, basePoint);
     }
 
-    // -o IExtendable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IExtendable2d}. */
+    ;
 
     public boolean include(IPrimitive2d shape) {
         boolean dirty = false;
@@ -320,7 +328,8 @@ public abstract class AbstractPrimitive2d
         throw new UnsupportedOperationException("Not extendable.");
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {
@@ -332,7 +341,8 @@ public abstract class AbstractPrimitive2d
         return polygon;
     }
 
-    // -o ICroppable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
+    ;
 
     @Override
     public IPrimitive2d crop(Triangle2d triangle, boolean detached) {
@@ -371,7 +381,8 @@ public abstract class AbstractPrimitive2d
         return result;
     }
 
-    // IDecoratable
+    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IDecoratable}. */
+    ;
 
     @Override
     public <T> T decorate(Class<T> decoratedType) {

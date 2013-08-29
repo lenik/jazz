@@ -53,7 +53,8 @@ public class DecoratedPrimitive2d
         return getWrapped().reduce();
     }
 
-    // -o IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     @Override
     public int getPointCount() {
@@ -95,7 +96,8 @@ public class DecoratedPrimitive2d
         return getWrapped().toPointList(copy);
     }
 
-    // -o IPointRefSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointRefSet2d}. */
+    ;
 
     @Override
     public IPointRef2d getPointRef(int index) {
@@ -122,14 +124,16 @@ public class DecoratedPrimitive2d
         return getWrapped().toPointRefList();
     }
 
-    // -o IPositionAttributes2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPositionAttributes2d}. */
+    ;
 
     @Override
     public Point2d getCenterPoint() {
         return getWrapped().getCenterPoint();
     }
 
-    // -o ITransformable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ITransformable2d}. */
+    ;
 
     @Override
     public void translate(float dx, float dy) {
@@ -171,21 +175,24 @@ public class DecoratedPrimitive2d
         getWrapped().rotateAt(angle, basePoint);
     }
 
-    // -o IBoundingBox2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBox2d}. */
+    ;
 
     @Override
     public Rectangle2d getBoundingBox() {
         return getWrapped().getBoundingBox();
     }
 
-    // -o IBoundingBall2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBall2d}. */
+    ;
 
     @Override
     public Circle2d getBoundingBall() {
         return getWrapped().getBoundingBall();
     }
 
-    // -o IPickable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
+    ;
 
     @Override
     public PickResult2d _pick(float x, float y) {
@@ -227,7 +234,8 @@ public class DecoratedPrimitive2d
         return getWrapped().contains(point);
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize() {
@@ -239,7 +247,8 @@ public class DecoratedPrimitive2d
         return getWrapped().polygonize(minSegments, maxSegmentLength);
     }
 
-    // -o ICroppable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
+    ;
 
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {
@@ -261,7 +270,8 @@ public class DecoratedPrimitive2d
         return getWrapped().crop(convexPolygon, detached);
     }
 
-    // -o IDecoratable
+    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IDecoratable}. */
+    ;
 
     @Override
     public <T> T decorate(Class<T> decoratedType) {

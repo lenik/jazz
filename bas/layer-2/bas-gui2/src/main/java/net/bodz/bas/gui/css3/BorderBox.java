@@ -48,7 +48,8 @@ public class BorderBox
         this.left = left;
     }
 
-    // -o IBorderAttributes
+    /** ⇱ Implementaton Of {@link IBorderAttributes}. */
+    ;
 
     public Border getFirstBorder() {
         if (top != null)

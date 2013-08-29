@@ -13,7 +13,8 @@ import net.bodz.bas.geom.spec0_f.IShapeAmount2d;
 public interface IEllipse2d
         extends IPrimitive2d, IShapeAmount2d {
 
-    // -o IShape2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPrimitive2d}. */
+    ;
 
     @Override
     IEllipse2d shot();
@@ -24,9 +25,8 @@ public interface IEllipse2d
     @Override
     Ellipse2d snap();
 
-    // -o IShapeAmount2d
-
-    //
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
+    ;
 
     Point2d getCenter1();
 

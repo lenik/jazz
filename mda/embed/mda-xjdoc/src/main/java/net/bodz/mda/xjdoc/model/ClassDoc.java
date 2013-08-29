@@ -101,7 +101,8 @@ public class ClassDoc
         return methodDocs.remove(methodId);
     }
 
-    // --o IFlatfSerializable
+    /** ⇱ Implementaton Of {@link net.bodz.bas.text.flatf.IFlatfSerializable}. */
+    ;
 
     /**
      * classdoc file format.

@@ -43,7 +43,8 @@ public class SwtFontDataMapper
         this._fontData = fontData;
     }
 
-    // -o IFontType
+    /** ⇱ Implementaton Of {@link IFontType}. */
+    ;
 
     @Override
     public FontUseMode getFontUse() {

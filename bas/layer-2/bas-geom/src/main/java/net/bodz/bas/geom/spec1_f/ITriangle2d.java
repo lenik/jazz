@@ -8,7 +8,8 @@ import net.bodz.bas.geom.spec0_f.IShapeAmount2d;
 public interface ITriangle2d
         extends IPrimitive2d, IShapeAmount2d /* , IExtendable2d */{
 
-    // -o Shape
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPrimitive2d}. */
+    ;
 
     @Override
     Triangle2d snapshot();

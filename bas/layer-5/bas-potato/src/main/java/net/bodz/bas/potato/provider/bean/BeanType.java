@@ -119,14 +119,8 @@ public class BeanType
         return eventMap;
     }
 
-    // -o IElement
-
-    @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
-    }
-
-    // -o AnnotatedElement
+    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    ;
 
     @Override
     public Annotation[] getAnnotations() {
@@ -148,7 +142,13 @@ public class BeanType
         return beanClass.isAnnotationPresent(annotationClass);
     }
 
-    // -o IElement
+    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    ;
+
+    @Override
+    public int getVerboseLevel() {
+        return verboseLevel;
+    }
 
     @Override
     public int getModifiers() {

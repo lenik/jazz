@@ -33,7 +33,8 @@ public abstract class AbstractPointRef2d
         return snapshot();
     }
 
-    // -o IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     /*
      * Most point-implementation should have a point as itself. This pointCount/pointRef is just for
@@ -151,7 +152,8 @@ public abstract class AbstractPointRef2d
         return new PositiveHalfPlane2d(end, snapshot());
     }
 
-    // -o IPickable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
+    ;
 
     @Override
     public PickResult2d _pick(Point2d point) {
@@ -175,7 +177,8 @@ public abstract class AbstractPointRef2d
         return dx * dx + dy * dy;
     }
 
-    // -o ITransformable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ITransformable2d}. */
+    ;
 
     @Override
     public void translate(float dx, float dy) {
@@ -232,7 +235,8 @@ public abstract class AbstractPointRef2d
         setY(v.y);
     }
 
-    // -o ICroppable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
+    ;
 
     @Override
     public Point2d crop(PositiveHalfPlane2d php, boolean detached) {
@@ -270,14 +274,16 @@ public abstract class AbstractPointRef2d
             return null;
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize() {
         return null;
     }
 
-    // I_Tuple2f
+    /** ⇱ Implementaton Of {@link net.bodz.bas.c.javax.vecmath.I_Tuple2f}. */
+    ;
 
     @Override
     public void set(float x, float y) {
@@ -465,7 +471,8 @@ public abstract class AbstractPointRef2d
         setY(my);
     }
 
-    // I_Tuple2f_
+    /** ⇱ Implementaton Of {@link net.bodz.bas.c.javax.vecmath.I_Tuple2f_}. */
+    ;
 
     @Override
     public I_Tuple2f_ add_(Tuple2f t1) {

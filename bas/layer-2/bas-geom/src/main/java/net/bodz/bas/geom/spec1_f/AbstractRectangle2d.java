@@ -43,7 +43,8 @@ public abstract class AbstractRectangle2d
             return null;
     }
 
-    // -o IShapeAmount2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
+    ;
 
     @Override
     public float getLength() {
@@ -55,7 +56,8 @@ public abstract class AbstractRectangle2d
         return Math.abs(getWidth() * getHeight());
     }
 
-    // -o IExtendable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IExtendable2d}. */
+    ;
 
     @Override
     public boolean include(Point2d point) {
@@ -193,7 +195,8 @@ public abstract class AbstractRectangle2d
         return out;
     }
 
-    // -o IPickable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
+    ;
 
     @Override
     public PickResult2d _pick(Point2d point) {
@@ -267,7 +270,8 @@ public abstract class AbstractRectangle2d
         return Math.max(dx, dy);
     }
 
-    // -o IPolygonizable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
+    ;
 
     @Override
     public Polygon2d polygonize() {
@@ -276,7 +280,8 @@ public abstract class AbstractRectangle2d
         return polygon;
     }
 
-    // -o ICroppable2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
+    ;
 
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {

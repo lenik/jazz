@@ -65,7 +65,8 @@ public class SwtManagedPattern
         return pattern.toString();
     }
 
-    // -o IFillType
+    /** ⇱ Implementaton Of {@link IFillType}. */
+    ;
 
     @Override
     public FillPatternType getFillPatternType() {

@@ -25,6 +25,14 @@ public class Triangle2d
         this.p2 = p2;
     }
 
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPrimitive2d}. */
+    ;
+
+    @Override
+    public Triangle2d snap() {
+        return new Triangle2d(p0, p1, p2);
+    }
+
     @Override
     public Triangle2d shot() {
         return new Triangle2d(p0, p1, p2);
@@ -35,12 +43,8 @@ public class Triangle2d
         return new Triangle2d(p0.snapshot(), p1.snapshot(), p2.snapshot());
     }
 
-    @Override
-    public Triangle2d snap() {
-        return new Triangle2d(p0, p1, p2);
-    }
-
-    // IPointSet2d
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
+    ;
 
     @Override
     public int getPointCount() {
@@ -59,6 +63,9 @@ public class Triangle2d
         }
         return getBadPoint(index);
     }
+
+    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec1_f.ITriangle2d}. */
+    ;
 
     @Override
     public Point2d getPoint0() {

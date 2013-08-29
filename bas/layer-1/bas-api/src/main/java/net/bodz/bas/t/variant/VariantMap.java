@@ -44,7 +44,8 @@ public class VariantMap<K>
         return map.keySet();
     }
 
-    // -o Map .
+    /** ⇱ Implementaton Of {@link Map}. */
+    ;
 
     @Override
     public int size() {

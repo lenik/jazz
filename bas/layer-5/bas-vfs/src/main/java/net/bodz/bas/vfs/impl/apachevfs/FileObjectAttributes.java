@@ -40,7 +40,8 @@ public class FileObjectAttributes
         return this;
     }
 
-    // -o BasicFileAttributes and View
+    /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
+    ;
 
     @Override
     public FileTime lastModifiedTime() {
@@ -122,7 +123,8 @@ public class FileObjectAttributes
         }
     }
 
-// -o DosFileAttributes and View
+    /** ⇱ Implementaton Of {@link DosFileAttributes}. */
+    ;
 
     @Override
     public boolean isReadOnly() {
@@ -168,7 +170,8 @@ public class FileObjectAttributes
             throws IOException {
     }
 
-    // -o FilePermissionAttributes
+    /** ⇱ Implementaton Of {@link FilePermissionAttributes}. */
+    ;
 
     @Override
     public boolean isReadable() {
@@ -198,7 +201,8 @@ public class FileObjectAttributes
         return false;
     }
 
-    // -o DeviceAttributes
+    /** ⇱ Implementaton Of {@link DeviceAttributes}. */
+    ;
 
     @Override
     public boolean isRandomAccessible() {

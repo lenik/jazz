@@ -62,7 +62,8 @@ public class TreeOutImpl
         }
     }
 
-    // --o IStackedOut
+    /** ⇱ Implementaton Of {@link ITreeOut}. */
+    ;
 
     @Override
     public ITextIndention getTextIndention() {
@@ -79,7 +80,8 @@ public class TreeOutImpl
         return textIndention.decreaseIndentLevel();
     }
 
-    // --o IPrint
+    /** ⇱ Implementaton Of {@link IPrintOut}. */
+    ;
 
     @Override
     public void print(String s) {
@@ -229,7 +231,8 @@ public class TreeOutImpl
         linePrefixPrinted = false;
     }
 
-    // --o ICharOut
+    /** ⇱ Implementaton Of {@link ICharOut}. */
+    ;
 
     @Override
     public void write(char[] chars, int off, int len)

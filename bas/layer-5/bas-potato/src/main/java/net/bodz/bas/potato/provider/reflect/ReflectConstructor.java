@@ -40,7 +40,8 @@ public class ReflectConstructor
         return ctor.newInstance(ctor, parameters);
     }
 
-    // -o IElement
+    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    ;
 
     @Override
     public int getModifiers() {
@@ -52,7 +53,8 @@ public class ReflectConstructor
         return verboseLevel;
     }
 
-    // -o AnnotatedElement
+    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    ;
 
     @Override
     public Annotation[] getAnnotations() {

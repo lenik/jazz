@@ -37,7 +37,8 @@ public class PojfFileAttributes
         return this;
     }
 
-    // -o BasicFileAttributes and View
+    /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
+    ;
 
     @Override
     public FileTime lastModifiedTime() {
@@ -99,7 +100,8 @@ public class PojfFileAttributes
         file.setLastModified(lastModifiedTime.toMillis());
     }
 
-    // -o FilePermissionAttributes
+    /** ⇱ Implementaton Of {@link FilePermissionAttributes}. */
+    ;
 
     @Override
     public boolean isReadable() {
@@ -125,7 +127,8 @@ public class PojfFileAttributes
             return false;
     }
 
-    // -o DeviceAttributes
+    /** ⇱ Implementaton Of {@link DeviceAttributes}. */
+    ;
 
     @Override
     public boolean isRandomAccessible() {

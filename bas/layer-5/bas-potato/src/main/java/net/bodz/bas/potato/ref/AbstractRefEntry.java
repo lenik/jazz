@@ -4,6 +4,7 @@ import java.util.Map;
 
 import net.bodz.bas.i18n.dom1.DecoratedElement;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.rtx.QueryException;
 
 public abstract class AbstractRefEntry<T>
         extends DecoratedElement
@@ -20,22 +21,8 @@ public abstract class AbstractRefEntry<T>
         set(null);
     }
 
-    @Override
-    public boolean isValueChangeSource() {
-        return false;
-    }
-
-    @Override
-    public void addValueChangeListener(IValueChangeListener listener) {
-        // throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void removeValueChangeListener(IValueChangeListener listener) {
-        // throw new UnsupportedOperationException();
-    }
-
-    // -o Map.Entry
+    /** ⇱ {@link java.util.Map.Entry}. */
+    ;
 
     @Override
     public final String getKey() {
@@ -52,6 +39,30 @@ public abstract class AbstractRefEntry<T>
         T oldValue = get();
         set(value);
         return oldValue;
+    }
+
+    /** ⇱ {@link net.bodz.bas.rtx.IQueryable} */
+
+    @Override
+    public Object query(Object specification)
+            throws QueryException {
+        if (specification instanceof String)
+            return query((String) specification);
+        if (specification instanceof Class<?>)
+            return query((Class<?>) specification);
+        return null;
+    }
+
+    @Override
+    public Object query(String specificationId)
+            throws QueryException {
+        return null;
+    }
+
+    @Override
+    public <S> S query(Class<S> specificationType)
+            throws QueryException {
+        return null;
     }
 
 }

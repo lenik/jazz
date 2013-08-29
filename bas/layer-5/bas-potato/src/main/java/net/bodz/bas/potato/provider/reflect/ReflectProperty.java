@@ -110,7 +110,8 @@ public class ReflectProperty
         }
     }
 
-    // -o IElement
+    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    ;
 
     @Override
     public int getModifiers() {
@@ -122,7 +123,8 @@ public class ReflectProperty
         return verboseLevel;
     }
 
-    // -o AnnotatedElement
+    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    ;
 
     @Override
     public Annotation[] getAnnotations() {
