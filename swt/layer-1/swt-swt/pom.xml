@@ -5,8 +5,15 @@
         <artifactId>layer-1</artifactId>
         <version>1.2.0-SNAPSHOT</version>
     </parent>
-    <artifactId>swt-swt</artifactId>
+    <artifactId>swt-api</artifactId>
     <version>3.6.2</version>
+    <dependencies>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-api</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+    </dependencies>
     <name>SWT :: Layer 1 :: Swt</name>
     <properties>
         <swt.version>3.8</swt.version>

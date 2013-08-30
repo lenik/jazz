@@ -1,6 +1,6 @@
 package net.bodz.bas.typer.spi;
 
-import net.bodz.bas.BasVersion;
+import net.bodz.bas.JazzBasProject;
 import net.bodz.bas.c.java.lang.IntegerTypers;
 import net.bodz.bas.typer.spi.BuiltinProviderOrder;
 
@@ -12,7 +12,7 @@ public class BasCompanionTyperProvider
     static final boolean flatten;
 
     static {
-        basPackageName = BasVersion.class.getPackage().getName();
+        basPackageName = JazzBasProject.class.getPackage().getName();
 
         String cJavaLangPackage = IntegerTypers.class.getPackage().getName();
         if (cJavaLangPackage.endsWith(".java.lang")) {

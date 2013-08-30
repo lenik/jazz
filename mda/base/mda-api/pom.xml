@@ -6,6 +6,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>mda-api</artifactId>
-    <dependencies/>
+    <dependencies>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-api</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+    </dependencies>
     <name>MDA :: Base :: Api</name>
 </project>
