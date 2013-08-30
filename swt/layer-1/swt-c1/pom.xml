@@ -9,7 +9,7 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.swt</groupId>
-            <artifactId>swt-swt</artifactId>
+            <artifactId>swt-api</artifactId>
             <version>3.6.2</version>
         </dependency>
         <dependency>

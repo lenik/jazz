@@ -13,4 +13,6 @@ public @interface MainVersion {
 
     int[] value() default { 0 };
 
+    Class<?> ref() default void.class;
+
 }

@@ -6,6 +6,12 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>bas-vcs</artifactId>
-    <dependencies/>
+    <dependencies>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <name>BAS :: Layer 7 :: Vcs</name>
 </project>

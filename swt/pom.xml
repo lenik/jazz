@@ -28,6 +28,7 @@
     <properties>
         <java.version>1.7</java.version>
         <javaProfile>JavaSE-7</javaProfile>
+        <bas.version>2.0.0-SNAPSHOT</bas.version>
     </properties>
     <name>SWT Framework</name>
     <url>http://swt.bodz.net/</url>
