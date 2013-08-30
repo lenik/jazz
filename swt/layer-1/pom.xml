@@ -11,9 +11,9 @@
     <artifactId>layer-1</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>swt-api</module>
         <module>swt-c1</module>
         <module>swt-gui</module>
-        <module>swt-swt</module>
     </modules>
     <name>SWT :: Layer 1</name>
 </project>
