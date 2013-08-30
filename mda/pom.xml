@@ -23,6 +23,7 @@
         <module>model</module>
         <module>contrib</module>
         <module>samples</module>
+        <module>build</module>
     </modules>
     <properties>
         <java.version>1.7</java.version>

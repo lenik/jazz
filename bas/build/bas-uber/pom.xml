@@ -18,8 +18,22 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-dotnet</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-natives-win32</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-natives-win32</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -28,8 +42,22 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-test</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-geom</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-geom</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -38,8 +66,29 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-t3</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-text-lr</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-text-lr</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-data</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -50,6 +99,20 @@
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c5</artifactId>
             <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-c5</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-c5</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -58,8 +121,22 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-repr</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-ant</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-ant</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -68,8 +145,22 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-m2</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-netserv</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-netserv</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -78,13 +169,34 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-program</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-unitperf</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-unitperf</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-vcs</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-vcs</artifactId>
             <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <name>BAS :: Build :: Uber</name>
