@@ -3,9 +3,12 @@ package net.bodz.bas.io.resource.tools;
 import java.io.IOException;
 import java.util.Collection;
 
-public interface IStreamDumping
-        extends Cloneable {
+import net.bodz.bas.t.object.IContextUtility;
 
+public interface IStreamDumping
+        extends IContextUtility {
+
+    @Override
     IStreamDumping clone();
 
     void dumpObject(Object o)

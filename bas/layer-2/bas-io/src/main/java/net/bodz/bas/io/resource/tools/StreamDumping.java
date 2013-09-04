@@ -6,7 +6,6 @@ import java.io.ObjectOutput;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.IStreamOutputTargetWrapper;
 
@@ -27,11 +26,8 @@ public class StreamDumping
 
     @Override
     public IStreamDumping clone() {
-        try {
-            return (IStreamDumping) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
+        StreamDumping o = new StreamDumping(target);
+        return o;
     }
 
     @Override

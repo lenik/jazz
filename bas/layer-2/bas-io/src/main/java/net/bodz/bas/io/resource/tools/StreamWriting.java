@@ -3,7 +3,6 @@ package net.bodz.bas.io.resource.tools;
 import java.io.IOException;
 import java.nio.file.OpenOption;
 
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.IStreamOutputTargetWrapper;
@@ -35,12 +34,11 @@ public class StreamWriting
 
     @Override
     public IStreamWriting clone() {
-        try {
-            IStreamWriting clone = (IStreamWriting) super.clone();
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
+        StreamWriting o = new StreamWriting(target);
+        o.openOptions = openOptions;
+        o.autoFlush = autoFlush;
+        o.blockSize = blockSize;
+        return o;
     }
 
     @Override
