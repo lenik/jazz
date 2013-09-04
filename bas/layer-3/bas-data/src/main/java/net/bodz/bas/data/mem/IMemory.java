@@ -3,7 +3,7 @@ package net.bodz.bas.data.mem;
 /**
  * <code>addr</code> may be int or unsigned int.
  */
-public interface Memory {
+public interface IMemory {
 
     byte read(int addr)
             throws MemoryAccessException;
@@ -23,7 +23,7 @@ public interface Memory {
     void write(int addr, byte[] buf)
             throws MemoryAccessException;
 
-    Memory offset(long off);
+    IMemory offset(long off);
 
     int LITTLE_ENDIAN = 0;
     int BIG_ENDIAN = 1;

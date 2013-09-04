@@ -1,6 +1,6 @@
 package net.bodz.bas.data.mem.types;
 
-import net.bodz.bas.data.mem.Memory;
+import net.bodz.bas.data.mem.IMemory;
 import net.bodz.bas.data.mem.MemoryAccessException;
 import net.bodz.bas.data.mem.Type;
 
@@ -13,7 +13,7 @@ public class AbsPtr32LE
     }
 
     @Override
-    public int getAddress(Memory memory, int offset)
+    public int getAddress(IMemory memory, int offset)
             throws MemoryAccessException {
         byte[] mem = new byte[4];
         memory.read(offset, mem);
@@ -22,7 +22,7 @@ public class AbsPtr32LE
     }
 
     @Override
-    public void putAddress(Memory memory, int offset, int addr)
+    public void putAddress(IMemory memory, int offset, int addr)
             throws MemoryAccessException {
         byte[] mem = new byte[4];
         Int32LE.write(mem, addr);
@@ -30,14 +30,14 @@ public class AbsPtr32LE
     }
 
     @Override
-    public Object getTarget(Memory memory, int offset)
+    public Object getTarget(IMemory memory, int offset)
             throws MemoryAccessException {
         int addr = getAddress(memory, offset);
         return targetType.get(memory, addr);
     }
 
     @Override
-    public void putTarget(Memory memory, int offset, Object value)
+    public void putTarget(IMemory memory, int offset, Object value)
             throws MemoryAccessException {
         int addr = getAddress(memory, offset);
         targetType.put(memory, addr, value);

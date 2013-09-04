@@ -15,14 +15,14 @@ public abstract class AbstractRefType
      * @return memory position of the referent
      */
     @Override
-    public abstract MemoryWrapOffset get(Memory memory, int offset)
+    public abstract MemoryWrapOffset get(IMemory memory, int offset)
             throws MemoryAccessException;
 
     @Override
-    public void put(Memory memory, int offset, Object targetAddr)
+    public void put(IMemory memory, int offset, Object targetAddr)
             throws MemoryAccessException {
         MemoryWrapOffset target = (MemoryWrapOffset) targetAddr;
-        Memory targetMemory = target.getOrig();
+        IMemory targetMemory = target.getOrig();
         int targetOffset = target.getOffset();
         if (memory == targetMemory)
             putLocal(memory, offset, targetOffset);
@@ -30,23 +30,23 @@ public abstract class AbstractRefType
             putRemote(memory, offset, targetMemory, targetOffset);
     }
 
-    protected void putLocal(Memory memory, int offset, int targetOffset)
+    protected void putLocal(IMemory memory, int offset, int targetOffset)
             throws MemoryAccessException {
         putRemote(memory, offset, memory, targetOffset);
     }
 
-    protected abstract void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset)
+    protected abstract void putRemote(IMemory memory, int offset, IMemory targetMemory, int targetOffset)
             throws MemoryAccessException;
 
     @Override
-    public Object getTarget(Memory memory, int offset)
+    public Object getTarget(IMemory memory, int offset)
             throws MemoryAccessException {
         MemoryWrapOffset target = get(memory, offset);
         return targetType.get(target.getOrig(), target.getOffset());
     }
 
     @Override
-    public void putTarget(Memory memory, int offset, Object value)
+    public void putTarget(IMemory memory, int offset, Object value)
             throws MemoryAccessException {
         MemoryWrapOffset target = get(memory, offset);
         targetType.put(target.getOrig(), target.getOffset(), value);

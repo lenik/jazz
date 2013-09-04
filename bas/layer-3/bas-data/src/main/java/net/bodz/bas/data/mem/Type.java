@@ -2,10 +2,10 @@ package net.bodz.bas.data.mem;
 
 public interface Type {
 
-    Object get(Memory memory, int offset)
+    Object get(IMemory memory, int offset)
             throws MemoryAccessException;
 
-    void put(Memory memory, int offset, Object value)
+    void put(IMemory memory, int offset, Object value)
             throws MemoryAccessException;
 
     boolean isAbstract();

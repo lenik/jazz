@@ -4,13 +4,13 @@ public interface RefType
         extends Type {
 
     @Override
-    MemoryWrapOffset get(Memory memory, int offset)
+    MemoryWrapOffset get(IMemory memory, int offset)
             throws MemoryAccessException;
 
-    Object getTarget(Memory memory, int offset)
+    Object getTarget(IMemory memory, int offset)
             throws MemoryAccessException;
 
-    void putTarget(Memory memory, int offset, Object value)
+    void putTarget(IMemory memory, int offset, Object value)
             throws MemoryAccessException;
 
 }
