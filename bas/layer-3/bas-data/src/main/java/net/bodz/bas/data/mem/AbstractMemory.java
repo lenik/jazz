@@ -3,7 +3,7 @@ package net.bodz.bas.data.mem;
 import static net.bodz.bas.data.mem.types.Types.*;
 
 public abstract class AbstractMemory
-        implements Memory {
+        implements IMemory {
 
     @Override
     public void read(int addr, byte[] buf)

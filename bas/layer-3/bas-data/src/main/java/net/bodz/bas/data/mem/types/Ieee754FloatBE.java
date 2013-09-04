@@ -1,14 +1,14 @@
 package net.bodz.bas.data.mem.types;
 
 import net.bodz.bas.data.mem.AbstractType;
-import net.bodz.bas.data.mem.Memory;
+import net.bodz.bas.data.mem.IMemory;
 import net.bodz.bas.data.mem.MemoryAccessException;
 
 public class Ieee754FloatBE
         extends AbstractType {
 
     @Override
-    public Float get(Memory memory, int offset)
+    public Float get(IMemory memory, int offset)
             throws MemoryAccessException {
         byte[] mem = new byte[4];
         memory.read(offset, mem);
@@ -17,7 +17,7 @@ public class Ieee754FloatBE
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
+    public void put(IMemory memory, int offset, Object value)
             throws MemoryAccessException {
         byte[] mem = new byte[4];
         int bits = Float.floatToRawIntBits((Float) value);

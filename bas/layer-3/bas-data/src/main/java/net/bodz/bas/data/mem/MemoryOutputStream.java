@@ -8,20 +8,20 @@ import net.bodz.bas.meta.decl.ThreadUnsafe;
 public class MemoryOutputStream
         extends OutputStream {
 
-    private final Memory memory;
+    private final IMemory memory;
 
     /** addr_t */
     private int start;
 
     private int size;
 
-    public MemoryOutputStream(Memory memory, int start, int size) {
+    public MemoryOutputStream(IMemory memory, int start, int size) {
         this.memory = memory;
         this.start = start;
         this.size = size;
     }
 
-    public MemoryOutputStream(Memory memory) {
+    public MemoryOutputStream(IMemory memory) {
         this(memory, 0, -1);
     }
 

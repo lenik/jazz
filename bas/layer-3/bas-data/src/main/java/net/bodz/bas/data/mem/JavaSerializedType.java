@@ -7,7 +7,7 @@ public class JavaSerializedType
         extends AbstractType {
 
     @Override
-    public Object get(Memory memory, int offset)
+    public Object get(IMemory memory, int offset)
             throws MemoryAccessException {
         try (MemoryInputStream min = new MemoryInputStream(memory, offset, -1);
                 ObjectInputStream in = new ObjectInputStream(min)) {
@@ -18,7 +18,7 @@ public class JavaSerializedType
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
+    public void put(IMemory memory, int offset, Object value)
             throws MemoryAccessException {
         try (MemoryOutputStream mout = new MemoryOutputStream(memory, offset, -1);
                 ObjectOutputStream out = new ObjectOutputStream(mout)) {

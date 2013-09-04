@@ -3,18 +3,18 @@ package net.bodz.bas.data.mem;
 public class MemoryWrapOffset
         extends AbstractMemory {
 
-    private final Memory orig;
+    private final IMemory orig;
 
     /** addr_t */
     private final int offset;
 
-    public MemoryWrapOffset(Memory orig, int offset) {
+    public MemoryWrapOffset(IMemory orig, int offset) {
         assert orig != null;
         this.orig = orig;
         this.offset = offset;
     }
 
-    public Memory getOrig() {
+    public IMemory getOrig() {
         return orig;
     }
 

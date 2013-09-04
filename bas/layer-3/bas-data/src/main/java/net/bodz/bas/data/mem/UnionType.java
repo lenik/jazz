@@ -6,12 +6,12 @@ public class UnionType
     // Type
 
     @Override
-    public Object get(Memory memory, int offset) {
+    public Object get(IMemory memory, int offset) {
         return null;
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value) {
+    public void put(IMemory memory, int offset, Object value) {
     }
 
     // CompositeType

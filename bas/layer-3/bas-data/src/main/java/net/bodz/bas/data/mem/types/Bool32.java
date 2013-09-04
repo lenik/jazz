@@ -1,7 +1,7 @@
 package net.bodz.bas.data.mem.types;
 
 import net.bodz.bas.data.mem.AbstractType;
-import net.bodz.bas.data.mem.Memory;
+import net.bodz.bas.data.mem.IMemory;
 import net.bodz.bas.data.mem.MemoryAccessException;
 
 public class Bool32
@@ -11,7 +11,7 @@ public class Bool32
     public static final byte[] FALSE = { 0, 0, 0, 0 };
 
     @Override
-    public Boolean get(Memory memory, int offset)
+    public Boolean get(IMemory memory, int offset)
             throws MemoryAccessException {
         byte[] mem = new byte[4];
         memory.read(offset, mem);
@@ -19,7 +19,7 @@ public class Bool32
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
+    public void put(IMemory memory, int offset, Object value)
             throws MemoryAccessException {
         if ((Boolean) value)
             memory.write(offset, TRUE);
