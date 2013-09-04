@@ -41,6 +41,14 @@ public class StreamReading
     }
 
     @Override
+    public IStreamReading clone() {
+        StreamReading o = new StreamReading(source);
+        o.blockSize = blockSize;
+        o.openOptions = openOptions;
+        return o;
+    }
+
+    @Override
     public OpenOption[] getOpenOptions() {
         return openOptions;
     }

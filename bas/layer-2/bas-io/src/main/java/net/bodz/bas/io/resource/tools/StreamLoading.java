@@ -7,7 +7,6 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Properties;
 
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamInputSourceWrapper;
 import net.bodz.bas.t.iterator.immed.AbstractMitorx;
@@ -31,11 +30,8 @@ public class StreamLoading
 
     @Override
     public IStreamLoading clone() {
-        try {
-            return (IStreamLoading) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
+        StreamLoading o = new StreamLoading(source);
+        return o;
     }
 
     public Properties loadProperties()

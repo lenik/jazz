@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.t.object.IContextUtility;
 
 public interface IStreamWriting
-        extends Cloneable {
+        extends IContextUtility {
+
+    @Override
+    IStreamWriting clone();
 
     OpenOption[] getOpenOptions();
 

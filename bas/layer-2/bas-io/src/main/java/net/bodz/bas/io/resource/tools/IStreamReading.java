@@ -8,9 +8,13 @@ import java.util.List;
 
 import net.bodz.bas.err.RuntimeIOException;
 import net.bodz.bas.t.iterator.immed.Mitorx;
+import net.bodz.bas.t.object.IContextUtility;
 
 public interface IStreamReading
-        extends Cloneable {
+        extends IContextUtility {
+
+    @Override
+    IStreamReading clone();
 
     OpenOption[] getOpenOptions();
 

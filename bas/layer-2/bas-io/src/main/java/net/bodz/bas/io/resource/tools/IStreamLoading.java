@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Properties;
 
 import net.bodz.bas.t.iterator.immed.Mitorx;
+import net.bodz.bas.t.object.IContextUtility;
 
 public interface IStreamLoading
-        extends Cloneable {
+        extends IContextUtility {
 
+    @Override
     IStreamLoading clone();
 
     Properties loadProperties()
