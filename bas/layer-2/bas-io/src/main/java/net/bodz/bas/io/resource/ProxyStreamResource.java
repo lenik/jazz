@@ -9,9 +9,9 @@ import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.IDataOut;
 import net.bodz.bas.sio.IPrintOut;
 
 public abstract class ProxyStreamResource
@@ -78,9 +78,15 @@ public abstract class ProxyStreamResource
     }
 
     @Override
-    protected IByteOutEx _newByteOutNative(OpenOption... options)
+    protected IDataOut _newDataOutLE(OpenOption... options)
             throws IOException {
-        return getWrapped().newByteOutNative(options);
+        return getWrapped().newDataOutLE(options);
+    }
+
+    @Override
+    protected IDataOut _newDataOutBE(OpenOption... options)
+            throws IOException {
+        return getWrapped().newDataOutBE(options);
     }
 
     @Override

@@ -3,23 +3,23 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class ByteOutExImpl
-        extends AbstractByteOutEx
-        implements IByteOutEx {
+public class DataOutImplLE
+        extends AbstractDataOutLE
+        implements IDataOut {
 
     private final IByteOut baseImpl;
 
-    ByteOutExImpl(IByteOut baseImpl) {
+    DataOutImplLE(IByteOut baseImpl) {
         if (baseImpl == null)
             throw new NullPointerException("baseImpl");
         this.baseImpl = baseImpl;
     }
 
-    public static IByteOutEx from(IByteOut byteOut) {
-        if (byteOut instanceof IByteOutEx)
-            return (IByteOutEx) byteOut;
+    public static IDataOut from(IByteOut byteOut) {
+        if (byteOut instanceof IDataOut)
+            return (IDataOut) byteOut;
         else
-            return new ByteOutExImpl(byteOut);
+            return new DataOutImplLE(byteOut);
     }
 
     @Override
@@ -54,9 +54,9 @@ public class ByteOutExImpl
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ByteOutExImpl))
+        if (!(obj instanceof DataOutImplLE))
             return false;
-        ByteOutExImpl o = (ByteOutExImpl) obj;
+        DataOutImplLE o = (DataOutImplLE) obj;
         if (!baseImpl.equals(o.baseImpl))
             return false;
         return true;

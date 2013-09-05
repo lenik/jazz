@@ -5,7 +5,7 @@ import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 
 public class ByteBufferByteOut
-        extends AbstractByteOutEx {
+        extends AbstractByteOut {
 
     private final ByteBuffer byteBuffer;
 
