@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
-import net.bodz.bas.err.ParseException;
-
 public class FlatfInput
         implements IFlatfInput {
 
@@ -81,28 +79,6 @@ public class FlatfInput
             }
         }
         return EOF;
-    }
-
-    boolean next(int token)
-            throws IOException {
-        int tok;
-        while ((tok = next()) != EOF) {
-            if (tok == token)
-                return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean nextSection()
-            throws ParseException, IOException {
-        return next(SECTION_BEGIN);
-    }
-
-    @Override
-    public boolean nextAttribute()
-            throws ParseException, IOException {
-        return next(ATTRIBUTE);
     }
 
     @Override

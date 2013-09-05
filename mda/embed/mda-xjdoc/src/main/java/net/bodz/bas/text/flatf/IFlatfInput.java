@@ -29,22 +29,6 @@ public interface IFlatfInput
             throws ParseException, IOException;
 
     /**
-     * Find the next section.
-     * 
-     * @return <code>null</code> if no more section.
-     */
-    boolean nextSection()
-            throws ParseException, IOException;
-
-    /**
-     * Fetch an attribute with-in the current section.
-     * 
-     * @return <code>null</code> if no more attribute with-in the current section.
-     */
-    boolean nextAttribute()
-            throws ParseException, IOException;
-
-    /**
      * Get the last preprocessing instruction.
      * 
      * @return <code>null</code> if no preprocessing instruction is read.
