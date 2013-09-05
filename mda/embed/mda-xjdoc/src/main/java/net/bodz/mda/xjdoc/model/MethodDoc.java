@@ -117,9 +117,9 @@ public class MethodDoc
             throws IOException {
         ImportMap imports = getClassDoc().getOrCreateImports();
         String importedForm = methodId.getImportedForm(imports);
-        out.sectionBegin("method:" + importedForm);
+        out.beginSection("method:" + importedForm);
         super.writeObject(out, options);
-        out.sectionEnd();
+        out.endSection();
     }
 
 }

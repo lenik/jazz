@@ -27,9 +27,9 @@ public class FieldDoc
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)
             throws IOException {
-        out.sectionBegin("field:" + getName());
+        out.beginSection("field:" + getName());
         super.writeObject(out, options);
-        out.sectionEnd();
+        out.endSection();
     }
 
 }
