@@ -397,18 +397,32 @@ public abstract class StreamResourceTemplate {
         return out;
     }
 
-    // IByteOutEx
+    // IDataOut
 
-    protected IByteOutEx _newByteOutNative(OpenOption... options)
+    protected IDataOut _newDataOutLE(OpenOption... options)
             throws IOException {
         IByteOut byteOut = newByteOut(options);
-        return ByteOutExImpl.from(byteOut);
+        return DataOutImplLE.from(byteOut);
     }
 
-    public final IByteOutEx newByteOutNative(OpenOption... options)
+    public final IDataOut newDataOutLE(OpenOption... options)
             throws IOException {
         beforeOpenOutput(options);
-        IByteOutEx out = _newByteOutNative(options);
+        IDataOut out = _newDataOutLE(options);
+        afterOpenOutput(out);
+        return out;
+    }
+
+    protected IDataOut _newDataOutBE(OpenOption... options)
+            throws IOException {
+        IByteOut byteOut = newByteOut(options);
+        return DataOutImplBE.from(byteOut);
+    }
+
+    public final IDataOut newDataOutBE(OpenOption... options)
+            throws IOException {
+        beforeOpenOutput(options);
+        IDataOut out = _newDataOutBE(options);
         afterOpenOutput(out);
         return out;
     }

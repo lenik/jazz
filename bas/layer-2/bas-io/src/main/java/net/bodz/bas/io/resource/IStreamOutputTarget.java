@@ -11,7 +11,7 @@ import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectOutput;
-import net.bodz.bas.sio.IByteOutEx;
+import net.bodz.bas.sio.IDataOut;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sugar.IToolable;
 
@@ -39,7 +39,13 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
-    IByteOutEx newByteOutNative(OpenOption... options)
+    IDataOut newDataOutLE(OpenOption... options)
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
+    IDataOut newDataOutBE(OpenOption... options)
             throws IOException;
 
     /**
