@@ -62,7 +62,7 @@ public class LocaleSpecI18nStringTagType
             throws IOException {
         iString dstr = (iString) value;
 
-        String indent = out.getIndent();
+        String indent = out.getHskip();
         String domainSep = "\n" + indent + "    ";
         String lineSep = "\n" + indent + "        ";
         String mlstr = dstr.toMultiLangString(domainSep, lineSep);

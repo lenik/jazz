@@ -19,13 +19,11 @@ public class FlatfOutput
         setIndent("    ");
     }
 
-    @Override
     public ICharOut getCharOut() {
         return out;
     }
 
-    @Override
-    public String getIndent() {
+    public String getHskip() {
         return indent;
     }
 
@@ -44,14 +42,14 @@ public class FlatfOutput
     }
 
     @Override
-    public void sectionBegin(String sectionName)
+    public void beginSection(String sectionName)
             throws IOException {
         out.write("\n[" + sectionName + "]\n");
         depth++;
     }
 
     @Override
-    public void sectionEnd()
+    public void endSection()
             throws IOException {
         // writer.append("\n");
         depth--;

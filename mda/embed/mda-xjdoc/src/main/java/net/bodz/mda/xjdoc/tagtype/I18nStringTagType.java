@@ -44,9 +44,9 @@ public class I18nStringTagType
             throws IOException {
         iString dstr = (iString) value;
 
-        String indent = out.getIndent();
-        String domainSep = "\n" + indent + "    ";
-        String lineSep = "\n" + indent + "        ";
+        String hskip = out.getHskip();
+        String domainSep = "\n" + hskip + "    ";
+        String lineSep = "\n" + hskip + "        ";
         String mlstr = dstr.toMultiLangString(domainSep, lineSep);
 
         // out.attribute(prefix, dstr);

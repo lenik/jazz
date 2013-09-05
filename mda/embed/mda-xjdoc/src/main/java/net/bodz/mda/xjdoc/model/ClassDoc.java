@@ -7,8 +7,6 @@ import java.util.Map;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.util.ImportMap;
@@ -143,24 +141,16 @@ public class ClassDoc
     public void writeObject(IFlatfOutput out, IOptions options)
             throws IOException {
         // out.sectionBegin("class");
-
-        BCharOut bodyBuffer = new BCharOut();
-        FlatfOutput bodyOut = new FlatfOutput(bodyBuffer);
-        {
-            super.writeObject(bodyOut, options);
-
-            for (FieldDoc fieldDoc : fieldDocs.values())
-                fieldDoc.writeObject(bodyOut, options);
-
-            for (MethodDoc methodDoc : methodDocs.values())
-                methodDoc.writeObject(bodyOut, options);
-        }
-
         for (String fqcn : imports.getMap().values())
             out.pi("import", fqcn);
 
-        out.getCharOut().write(bodyBuffer.toString());
+        super.writeObject(out, options);
 
+        for (FieldDoc fieldDoc : fieldDocs.values())
+            fieldDoc.writeObject(out, options);
+
+        for (MethodDoc methodDoc : methodDocs.values())
+            methodDoc.writeObject(out, options);
         // out.sectionEnd();
     }
 
