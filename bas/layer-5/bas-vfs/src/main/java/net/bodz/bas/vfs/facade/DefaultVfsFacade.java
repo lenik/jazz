@@ -6,9 +6,9 @@ import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.nio.CopyOptions;
 import net.bodz.bas.c.java.nio.CreateOptions;
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.tools.StreamReading;
-import net.bodz.bas.io.resource.tools.StreamWriting;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.tools.StreamReading;
+import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVfsDevice;
 import net.bodz.bas.vfs.VFS;

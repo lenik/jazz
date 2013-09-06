@@ -9,8 +9,8 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.java.net.URLData;
 import net.bodz.bas.c.type.ClassResource;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.text.IMessageModifier;
 
 public class AntiCensorshipMessageModifier

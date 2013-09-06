@@ -1,5 +1,6 @@
 package net.bodz.bas.log;
 
+import net.bodz.bas.log.impl.NullLogSink;
 import net.bodz.bas.log.impl.PrintStreamLogSink;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.StringFormatMessage;

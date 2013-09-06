@@ -2,8 +2,8 @@ package net.bodz.bas.vfs.util.content;
 
 import java.io.IOException;
 
-import net.bodz.bas.io.resource.tools.IStreamReading;
-import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.res.tools.IStreamReading;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.vfs.IFile;
 
 public class HeuristicProbing

@@ -1,9 +1,10 @@
 package net.bodz.bas.log;
 
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.log.impl.NullLogSink;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.ITreeOut;
 
 /**
  * Features:
@@ -93,5 +94,7 @@ public interface ILogSink
      *            Can be <code>null</code> if no exception.
      */
     void _done(Throwable exception);
+
+    NullLogSink NULL = new NullLogSink();
 
 }

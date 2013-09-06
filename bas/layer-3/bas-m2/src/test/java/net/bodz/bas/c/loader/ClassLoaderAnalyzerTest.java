@@ -6,7 +6,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.Stdio;
 
 public class ClassLoaderAnalyzerTest
         extends Assert {

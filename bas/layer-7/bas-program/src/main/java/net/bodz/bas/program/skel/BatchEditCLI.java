@@ -3,8 +3,8 @@ package net.bodz.bas.program.skel;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.string.StringPart;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.text.diff.IDiffComparator;
 import net.bodz.bas.text.diff.IDiffFormat;
 import net.bodz.bas.vfs.IFile;

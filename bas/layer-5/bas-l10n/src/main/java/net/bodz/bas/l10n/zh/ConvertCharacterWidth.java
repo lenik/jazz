@@ -7,12 +7,12 @@ import java.util.Set;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.ISimpleCharIn;
-import net.bodz.bas.sio.ISimpleCharOut;
-import net.bodz.bas.sio.StringCharIn;
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.ISimpleCharIn;
+import net.bodz.bas.io.ISimpleCharOut;
+import net.bodz.bas.io.StringCharIn;
 
 /**
  * @see <a href="http://www.unicode.org/charts/PDF/UFF00.pdf">Halfwidth and Fullwidth Forms</a>

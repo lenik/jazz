@@ -6,8 +6,8 @@ import java.nio.file.OpenOption;
 import java.nio.file.StandardOpenOption;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.tools.StreamWriting;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.ISession;

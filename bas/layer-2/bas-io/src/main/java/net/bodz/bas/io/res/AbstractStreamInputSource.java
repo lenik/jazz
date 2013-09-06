@@ -1,0 +1,28 @@
+package net.bodz.bas.io.res;
+
+import java.io.IOException;
+import java.nio.file.OpenOption;
+
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharOut;
+
+public abstract class AbstractStreamInputSource
+        extends StreamResourceTemplate
+        implements IStreamInputSource {
+
+    public AbstractStreamInputSource() {
+    }
+
+    @Override
+    public IByteOut _newByteOut(OpenOption... options)
+            throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ICharOut _newCharOut(OpenOption... options)
+            throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+}

@@ -12,7 +12,7 @@ import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.DeleteOptions;
 import net.bodz.bas.c.java.nio.LinkOptions;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.t.buffer.IMovableBuffer;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.t.buffer.MovableCharBuffer;

@@ -6,7 +6,7 @@ import java.io.Reader;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.mda.xjdoc.util.WordTokenizer;
 

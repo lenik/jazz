@@ -9,8 +9,8 @@ import java.util.List;
 import net.bodz.bas.c.reflect.query.PublicFields;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.io.resource.builtin.URLResource;
-import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.LogLevel;
 
 public class LoggerCG {

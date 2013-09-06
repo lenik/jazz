@@ -2,7 +2,7 @@ package net.bodz.redist.installer.builtins;
 
 import org.junit.Test;
 
-import net.bodz.bas.io.resource.builtin.ByteArrayResource;
+import net.bodz.bas.io.res.builtin.ByteArrayResource;
 import net.bodz.redist.installer.SessionException;
 import net.bodz.redist.installer.TestProject;
 

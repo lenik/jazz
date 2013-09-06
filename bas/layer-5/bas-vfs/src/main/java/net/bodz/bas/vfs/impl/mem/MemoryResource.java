@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.ProxyStreamResource;
-import net.bodz.bas.io.resource.builtin.BytesResource;
-import net.bodz.bas.io.resource.builtin.CharsResource;
+import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.ProxyStreamResource;
+import net.bodz.bas.io.res.builtin.BytesResource;
+import net.bodz.bas.io.res.builtin.CharsResource;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 import net.bodz.bas.vfs.inode.Inode;

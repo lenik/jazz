@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.junit.Assert;
 
 import net.bodz.bas.c.m2.MavenPomDir;
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.nio.NioFile;
 

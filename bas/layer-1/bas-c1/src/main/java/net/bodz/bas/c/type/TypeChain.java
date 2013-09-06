@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import net.bodz.bas.sio.ITreeOut;
+import net.bodz.bas.io.ITreeOut;
 
 public class TypeChain {
 

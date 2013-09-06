@@ -5,7 +5,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import net.bodz.bas.c.object.ObjectInfo;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.tree.AbstractTreeNodeFormatter;
 
 public class ClassLoaderTreeFormatter

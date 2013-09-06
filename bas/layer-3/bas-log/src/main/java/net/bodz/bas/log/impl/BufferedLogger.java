@@ -4,14 +4,14 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.adapter.PrintStreamPrintOut;
 import net.bodz.bas.jvm.stack.StackTrace;
 import net.bodz.bas.log.AbstractLogSink;
 import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.PrintStreamPrintOut;
 
 public class BufferedLogger
         extends AbstractLogger {

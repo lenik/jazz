@@ -4,8 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.builtin.CharArrayResource;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.builtin.CharArrayResource;
 
 public class StringContent
         extends AbstractContent {

@@ -11,7 +11,7 @@ import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.vfs.IFile;
 
 public class StatedAttachment

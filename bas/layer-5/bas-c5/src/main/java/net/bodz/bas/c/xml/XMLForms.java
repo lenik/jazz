@@ -1,6 +1,6 @@
 package net.bodz.bas.c.xml;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.typer.Typers;
 
 public class XMLForms {

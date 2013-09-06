@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.text.diff.IDiffComparator;
 import net.bodz.bas.text.diff.IDiffFormat;
 import net.bodz.bas.vfs.FileMaskedModifiers;

@@ -3,8 +3,8 @@ package net.bodz.bas.vfs.impl.pseudo;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.object.ObjectInfo;
-import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.io.resource.builtin.CharArrayResource;
+import net.bodz.bas.io.res.IStreamOutputTarget;
+import net.bodz.bas.io.res.builtin.CharArrayResource;
 
 public class InputStringFile
         extends PseudoFile {

@@ -11,8 +11,8 @@ import java.util.Set;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.IPrintOut;
 
 public class URLClassLoaders {
 

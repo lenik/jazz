@@ -6,8 +6,8 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.resource.builtin.FileResource;
-import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.IPath;

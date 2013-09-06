@@ -9,13 +9,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.c.string.StringSearch;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.err.GUIRuntimeException;
-import net.bodz.bas.io.LineReader;
 import net.bodz.bas.typer.std.ParserUtil;
 
 public class ConsoleDialogs

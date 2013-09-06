@@ -3,7 +3,7 @@ package net.bodz.bas.c.java.io;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.resource.builtin.ByteArrayResource;
+import net.bodz.bas.io.res.builtin.ByteArrayResource;
 
 public class FileDiffTest
         extends Assert {

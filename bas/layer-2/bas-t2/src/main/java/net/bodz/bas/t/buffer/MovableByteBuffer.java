@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.sio.IByteIn;
-import net.bodz.bas.sio.IByteOut;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.io.IByteOut;
 
 public class MovableByteBuffer
         implements IMovableBuffer {

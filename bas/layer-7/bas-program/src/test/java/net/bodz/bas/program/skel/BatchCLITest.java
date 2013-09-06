@@ -3,10 +3,10 @@ package net.bodz.bas.program.skel;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.program.model.IOption;
 import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.rtx.Options;
-import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.mda.xjdoc.conv.ClassDocLoader;

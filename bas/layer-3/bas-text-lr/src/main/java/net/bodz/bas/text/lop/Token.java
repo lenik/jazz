@@ -1,6 +1,6 @@
 package net.bodz.bas.text.lop;
 
-import net.bodz.bas.sio.util.IXYTellable;
+import net.bodz.bas.io.IXYTellable;
 
 public interface Token
         extends IXYTellable {

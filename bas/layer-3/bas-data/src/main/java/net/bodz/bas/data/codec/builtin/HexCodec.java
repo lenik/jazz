@@ -6,10 +6,10 @@ import java.nio.charset.Charset;
 import net.bodz.bas.c.string.CharFeature;
 import net.bodz.bas.data.codec.AbstractByteCodec;
 import net.bodz.bas.err.EncodeException;
-import net.bodz.bas.sio.IByteIn;
-import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.io.ICharOut;
 
 public class HexCodec
         extends AbstractByteCodec {

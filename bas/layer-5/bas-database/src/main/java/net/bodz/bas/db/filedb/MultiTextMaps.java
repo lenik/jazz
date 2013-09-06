@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
 /**

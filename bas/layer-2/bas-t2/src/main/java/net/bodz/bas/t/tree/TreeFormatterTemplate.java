@@ -3,8 +3,8 @@ package net.bodz.bas.t.tree;
 import java.io.IOException;
 
 import net.bodz.bas.c.string.TreeLineChars;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.IPrintOut;
 
 public abstract class TreeFormatterTemplate<T> // implements IFormatter
 {

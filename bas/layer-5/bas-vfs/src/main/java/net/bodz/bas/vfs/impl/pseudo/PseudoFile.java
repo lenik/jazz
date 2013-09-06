@@ -8,7 +8,7 @@ import java.nio.file.attribute.FileAttributeView;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.vfs.*;
 import net.bodz.bas.vfs.inode.Inode;
 import net.bodz.bas.vfs.inode.InodeType;

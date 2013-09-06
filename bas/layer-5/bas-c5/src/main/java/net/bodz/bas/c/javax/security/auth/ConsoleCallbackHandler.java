@@ -9,9 +9,9 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
-import net.bodz.bas.io.resource.builtin.InputStreamSource;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.Stdio;
+import net.bodz.bas.io.res.builtin.InputStreamSource;
 
 /**
  * @see com.sun.security.auth.callback.TextCallbackHandler

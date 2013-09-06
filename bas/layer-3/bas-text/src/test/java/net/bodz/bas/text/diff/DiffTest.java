@@ -23,7 +23,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.sio.WriterPrintOut;
+import net.bodz.bas.io.adapter.WriterPrintOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 import net.bodz.bas.text.diff.gnudiff.GNUDiff;
 

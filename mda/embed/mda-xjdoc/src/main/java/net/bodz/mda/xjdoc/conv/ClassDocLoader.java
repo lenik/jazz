@@ -2,8 +2,8 @@ package net.bodz.mda.xjdoc.conv;
 
 import java.net.URL;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
 import net.bodz.mda.xjdoc.taglib.TagLibrarySet;

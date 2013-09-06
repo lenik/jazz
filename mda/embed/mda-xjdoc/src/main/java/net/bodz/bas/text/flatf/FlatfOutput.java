@@ -3,7 +3,7 @@ package net.bodz.bas.text.flatf;
 import java.io.IOException;
 
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.io.ICharOut;
 
 public class FlatfOutput
         implements IFlatfOutput {

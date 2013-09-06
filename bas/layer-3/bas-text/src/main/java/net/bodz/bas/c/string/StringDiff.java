@@ -3,8 +3,8 @@ package net.bodz.bas.c.string;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.text.diff.DiffComparators;
 import net.bodz.bas.text.diff.DiffEntry;
 import net.bodz.bas.text.diff.IDiffComparator;

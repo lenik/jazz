@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.fn.legacy.Pred1;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.text.diff.DiffEntry;
 
 /**

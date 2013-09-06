@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.PrintStreamPrintOut;
-import net.bodz.bas.sio.TreeOutImpl;
-import net.bodz.bas.sio.WriterPrintOut;
-import net.bodz.bas.sio.util.TextIndention;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.TextIndention;
+import net.bodz.bas.io.adapter.PrintStreamPrintOut;
+import net.bodz.bas.io.adapter.WriterPrintOut;
+import net.bodz.bas.io.impl.TreeOutImpl;
 
 public class TempOut
         extends TreeOutImpl {

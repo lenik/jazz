@@ -1,6 +1,6 @@
 package net.bodz.bas.c.loader;
 
-import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.io.res.builtin.URLResource;
 
 public class ClassResource
         extends net.bodz.bas.c.type.ClassResource {

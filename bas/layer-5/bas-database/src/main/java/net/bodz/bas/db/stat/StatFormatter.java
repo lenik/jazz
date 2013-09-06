@@ -5,8 +5,8 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.string.TreeLineChars;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.IPrintOut;
 
 public class StatFormatter {
 

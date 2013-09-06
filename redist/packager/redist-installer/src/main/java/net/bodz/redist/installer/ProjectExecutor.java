@@ -3,8 +3,8 @@ package net.bodz.redist.installer;
 import net.bodz.bas.exec.job.JobObserver;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.Logger;
-import net.bodz.bas.sio.Stdio;
 
 public abstract class ProjectExecutor
         extends JobObserver

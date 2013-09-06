@@ -12,8 +12,8 @@ import org.junit.Test;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringFeature;
-import net.bodz.bas.io.resource.builtin.URLResource;
-import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.tools.StreamReading;
 
 public class JarStuffTest
         extends Assert {

@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.io.AbstractTreeOut;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.IMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
-import net.bodz.bas.sio.AbstractTreeOut;
 
 @ThreadUnsafe
 public abstract class AbstractLogSink

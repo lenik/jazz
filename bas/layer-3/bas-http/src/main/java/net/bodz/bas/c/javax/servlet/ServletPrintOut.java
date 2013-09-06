@@ -9,7 +9,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import net.bodz.bas.sio.WriterPrintOut;
+import net.bodz.bas.io.adapter.WriterPrintOut;
 
 public class ServletPrintOut
         extends WriterPrintOut
