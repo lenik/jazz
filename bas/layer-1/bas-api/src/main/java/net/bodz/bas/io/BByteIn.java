@@ -49,7 +49,7 @@ public class BByteIn
     public int read()
             throws IOException {
         if (position < end)
-            return src[position++];
+            return src[position++] & 0xff;
         return -1;
     }
 
