@@ -202,14 +202,12 @@ class _WriteUtfStringImpl {
 
                     else if (ch <= 0x7ff) {
                         // 11bit: 110xxxxx . 10xxxxxx
-                        ch -= 0x80;
                         out.write(0xC0 | (ch >> 6));
                         out.write(0x80 | (ch & 0x3F));
                     }
 
                     else {
                         // 16bit: 1110xxxx . 10xxxxxx . 10xxxxxx
-                        ch -= 0x800;
                         out.write(0xE0 | (ch >> 12));
                         out.write(0x80 | ((ch >> 6) & 0x3F));
                         out.write(0x80 | (ch & 0x3F));

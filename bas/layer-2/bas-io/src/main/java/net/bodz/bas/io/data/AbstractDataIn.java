@@ -74,9 +74,9 @@ public abstract class AbstractDataIn
         int y = readByte() & 0xFF;
         if (x <= 0xDF) {
             // 11bit: 110xxxxx . 10xxxxxx
-            x = (x & 0x1F) << 5;
+            x = (x & 0x1F) << 6;
             y &= 0x3F;
-            return (char) (0x80 + (x | y));
+            return (char) (0 + (x | y));
         }
 
         int z = readByte() & 0xFF;
@@ -85,7 +85,7 @@ public abstract class AbstractDataIn
             x = (x & 0x0F) << 12;
             y = (y & 0x3F) << 6;
             z &= 0x3F;
-            return (char) (0x800 + (x | y | z));
+            return (char) (0 + (x | y | z));
         }
 
         throw new DecodeException("Bad UTF-8 char sequence.");
