@@ -8,8 +8,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.t.iterator.Iterables;
 
 public class BeanDump {

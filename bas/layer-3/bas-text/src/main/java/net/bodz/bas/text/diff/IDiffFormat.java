@@ -2,8 +2,8 @@ package net.bodz.bas.text.diff;
 
 import java.util.List;
 
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.meta.lang.TyperClass;
-import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 
 @TyperClass(DiffFormatTypers.class)

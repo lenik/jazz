@@ -3,7 +3,7 @@ package net.bodz.bas.io.tmp;
 import java.io.File;
 import java.io.IOException;
 
-import net.bodz.bas.sio.OutputStreamByteOut;
+import net.bodz.bas.io.adapter.OutputStreamByteOut;
 
 public class TempByteOut
         extends OutputStreamByteOut {

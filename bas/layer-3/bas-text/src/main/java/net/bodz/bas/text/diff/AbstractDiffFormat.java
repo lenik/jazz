@@ -2,7 +2,7 @@ package net.bodz.bas.text.diff;
 
 import java.util.List;
 
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
 
 public abstract class AbstractDiffFormat
         implements IDiffFormat {

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.text.flatf.FlatfInput;

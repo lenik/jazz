@@ -1,9 +1,9 @@
 package net.bodz.bas.text.lop.fsm;
 
-import net.bodz.bas.io.lookahead.Lookable;
+import net.bodz.bas.io.ILookable;
 
 public interface Input
-        extends Lookable {
+        extends ILookable {
 
     int getChar();
 

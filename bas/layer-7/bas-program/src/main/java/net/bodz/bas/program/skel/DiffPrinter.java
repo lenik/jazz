@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.FileDiff;
-import net.bodz.bas.io.resource.tools.StreamReading;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.Stdio;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.text.diff.DiffEntry;
 import net.bodz.bas.text.diff.IDiffComparator;
 import net.bodz.bas.text.diff.IDiffFormat;

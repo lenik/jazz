@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
 
 public class AbstractTreeNodeFormatter<node_t extends ITreeNode>
         extends TreeFormatterTemplate<node_t> {

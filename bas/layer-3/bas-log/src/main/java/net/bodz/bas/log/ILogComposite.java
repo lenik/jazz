@@ -1,5 +1,7 @@
 package net.bodz.bas.log;
 
+import net.bodz.bas.log.impl.NullLogSink;
+
 public interface ILogComposite {
 
     LogLevel getLevel();

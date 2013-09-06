@@ -8,7 +8,7 @@ import java.io.OutputStream;
 
 import org.junit.Test;
 
-import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.io.BCharOut;
 
 public class ManagedProcessTest {
 

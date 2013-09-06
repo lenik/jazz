@@ -16,9 +16,9 @@ import javax.servlet.http.HttpSession;
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.ITreeOut;
-import net.bodz.bas.sio.TreeOutImpl;
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.impl.TreeOutImpl;
 
 public class ServletDiag {
 

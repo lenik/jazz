@@ -1,6 +1,6 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.sio.DecoratedTreeOut;
+import net.bodz.bas.io.DecoratedTreeOut;
 
 public class DecoratedLogSink
         extends DecoratedTreeOut

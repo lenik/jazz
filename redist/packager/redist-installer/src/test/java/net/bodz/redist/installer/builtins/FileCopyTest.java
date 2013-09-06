@@ -5,7 +5,7 @@ import java.io.File;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.io.TempFile;
-import net.bodz.bas.io.resource.tools.StreamWriting;
+import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.redist.installer.SessionException;
 import net.bodz.redist.installer.TestProject;

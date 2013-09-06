@@ -24,7 +24,7 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class CertSelector

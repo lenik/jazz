@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.LogLevel;
-import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.redist.installer.builtins.TestConfig;

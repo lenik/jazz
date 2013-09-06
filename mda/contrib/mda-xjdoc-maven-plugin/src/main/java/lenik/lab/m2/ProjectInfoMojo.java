@@ -16,8 +16,8 @@ import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import net.bodz.bas.c.loader.ClassLoaderAnalyzer;
 import net.bodz.bas.c.loader.ClassLoaderNode;
 import net.bodz.bas.c.loader.ClassLoaderTreeFormatter;
-import net.bodz.bas.io.resource.builtin.FileResource;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.res.builtin.FileResource;
 
 /**
  * A project-info plugin rewritten by Lenik.

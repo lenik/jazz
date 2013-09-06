@@ -2,7 +2,7 @@ package net.bodz.bas.c.javax.security.auth;
 
 import java.security.KeyStoreException;
 
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.Stdio;
 
 public class PKIDumperTest {
 

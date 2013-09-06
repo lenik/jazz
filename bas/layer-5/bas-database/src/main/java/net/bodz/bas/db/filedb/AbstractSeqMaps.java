@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 

@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
-import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.vfs.inode.Inode;
 import net.bodz.bas.vfs.inode.InodeFileAttributes;
 

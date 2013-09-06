@@ -1,7 +1,7 @@
 package net.bodz.bas.c.object;
 
-import net.bodz.bas.sio.ITreeOut;
-import net.bodz.bas.sio.PrintException;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.PrintException;
 
 public interface ITreeDump {
 

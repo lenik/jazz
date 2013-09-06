@@ -3,7 +3,7 @@ package net.bodz.bas.vfs;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.io.resource.IStreamResourceWrapper;
+import net.bodz.bas.io.res.IStreamResourceWrapper;
 
 public interface IFsBlob
         extends IFsEntry, IStreamResourceWrapper {

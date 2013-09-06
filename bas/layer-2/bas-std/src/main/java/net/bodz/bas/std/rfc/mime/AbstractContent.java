@@ -3,7 +3,7 @@ package net.bodz.bas.std.rfc.mime;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 
 public abstract class AbstractContent
         implements IContent, Serializable {

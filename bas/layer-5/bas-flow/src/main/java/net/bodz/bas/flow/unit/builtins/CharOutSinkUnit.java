@@ -3,7 +3,7 @@ package net.bodz.bas.flow.unit.builtins;
 import java.io.Flushable;
 import java.io.IOException;
 
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.io.ICharOut;
 
 public class CharOutSinkUnit
         extends TextProcessSinkUnit {

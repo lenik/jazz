@@ -10,7 +10,8 @@ import java.nio.CharBuffer;
 
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
-import net.bodz.bas.sio.*;
+import net.bodz.bas.io.*;
+import net.bodz.bas.io.adapter.*;
 
 public abstract class AbstractCharCodec
         implements ICharCodec {

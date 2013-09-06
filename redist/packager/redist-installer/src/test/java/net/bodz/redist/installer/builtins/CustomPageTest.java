@@ -3,8 +3,8 @@ package net.bodz.redist.installer.builtins;
 import org.junit.Test;
 
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.impl.ConsoleLogger;
-import net.bodz.bas.sio.Stdio;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.Session;
 import net.bodz.redist.installer.TestProject;

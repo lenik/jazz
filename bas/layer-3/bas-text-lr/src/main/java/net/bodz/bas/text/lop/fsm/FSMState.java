@@ -2,7 +2,7 @@ package net.bodz.bas.text.lop.fsm;
 
 import java.util.Map;
 
-import net.bodz.bas.io.lookahead.Lookable;
+import net.bodz.bas.io.ILookable;
 
 public interface FSMState {
 
@@ -14,7 +14,7 @@ public interface FSMState {
 
     FSMState next(int input, int lookahead);
 
-    FSMState next(int input, Lookable lookahead);
+    FSMState next(int input, ILookable lookahead);
 
     Map<CharSet, FSMState> getTransitionMap();
 

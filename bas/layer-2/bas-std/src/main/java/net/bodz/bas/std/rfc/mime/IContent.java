@@ -1,6 +1,6 @@
 package net.bodz.bas.std.rfc.mime;
 
-import net.bodz.bas.io.resource.IStreamInputSourceWrapper;
+import net.bodz.bas.io.res.IStreamInputSourceWrapper;
 
 public interface IContent
         extends IStreamInputSourceWrapper {

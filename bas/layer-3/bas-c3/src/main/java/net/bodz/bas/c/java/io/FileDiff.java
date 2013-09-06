@@ -6,10 +6,10 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.IStreamInputSourceWrapper;
-import net.bodz.bas.io.resource.builtin.FileResource;
-import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSourceWrapper;
+import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.text.diff.DiffEntry;
 import net.bodz.bas.text.diff.IDiffComparator;
 

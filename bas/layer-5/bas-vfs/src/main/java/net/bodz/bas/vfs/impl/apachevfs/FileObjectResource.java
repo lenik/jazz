@@ -9,7 +9,7 @@ import org.apache.commons.vfs.FileContent;
 import org.apache.commons.vfs.FileObject;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
-import net.bodz.bas.io.resource.AbstractInputOutputStreamResource;
+import net.bodz.bas.io.res.AbstractInputOutputStreamResource;
 
 public class FileObjectResource
         extends AbstractInputOutputStreamResource {

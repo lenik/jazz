@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.Stdio;
 
 public class ProvidersTest
         extends TestCase {

@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.io.resource.builtin.ByteArrayResource;
-import net.bodz.bas.io.resource.builtin.BytesResource;
+import net.bodz.bas.io.res.builtin.ByteArrayResource;
+import net.bodz.bas.io.res.builtin.BytesResource;
 
 public class Fix_BatBBTest {
 

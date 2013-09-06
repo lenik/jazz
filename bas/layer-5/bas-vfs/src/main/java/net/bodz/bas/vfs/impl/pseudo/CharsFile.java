@@ -3,8 +3,8 @@ package net.bodz.bas.vfs.impl.pseudo;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.builtin.CharsResource;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.builtin.CharsResource;
 
 public class CharsFile
         extends PseudoFile {

@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class CSVRecordsTest

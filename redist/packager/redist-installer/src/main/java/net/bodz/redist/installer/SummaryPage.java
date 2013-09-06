@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c3.pageflow.AbstractPage;
 import net.bodz.swt.c3.pageflow.PageException;

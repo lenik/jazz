@@ -6,7 +6,7 @@ import java.nio.file.LinkOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileAttributeView;
 
-import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;

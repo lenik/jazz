@@ -2,7 +2,7 @@ package net.bodz.bas.c.object;
 
 import java.util.Set;
 
-import net.bodz.bas.sio.ITreeOut;
+import net.bodz.bas.io.ITreeOut;
 
 public class DefaultTreeDumping
         extends AbstractTreeDumping<Object> {

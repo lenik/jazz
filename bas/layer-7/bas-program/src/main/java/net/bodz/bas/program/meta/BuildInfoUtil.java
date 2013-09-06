@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.io.resource.tools.StreamLoading;
+import net.bodz.bas.io.res.tools.StreamLoading;
 import net.bodz.bas.vfs.impl.url.URLFile;
 
 public class BuildInfoUtil {

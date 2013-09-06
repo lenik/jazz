@@ -3,8 +3,8 @@ package net.bodz.bas.flow.unit.builtins.text;
 import java.io.IOException;
 
 import net.bodz.bas.flow.unit.builtins.CharOutSinkUnit;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.ICharOut;
 
 public class CharOutSinkUnitTest {
 

@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import net.bodz.bas.i18n.nls.NLS;
-import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.t.pojo.PathEntries;
 
 public class SimpleBook

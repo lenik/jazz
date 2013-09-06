@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.IContent;
 

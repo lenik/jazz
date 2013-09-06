@@ -5,9 +5,9 @@ import org.apache.commons.vfs.VFS;
 import org.apache.commons.vfs.operations.FileOperation;
 
 import net.bodz.bas.c.bean.BeanDump;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.PrintOutImpl;
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.Stdio;
+import net.bodz.bas.io.impl.PrintOutImpl;
 
 public class ListFileOperations {
 

@@ -16,7 +16,7 @@ import org.apache.commons.vfs.FileSystemException;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.fn.ITransformer;
-import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
 

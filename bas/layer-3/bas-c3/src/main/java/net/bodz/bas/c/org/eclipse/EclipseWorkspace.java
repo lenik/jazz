@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import net.bodz.bas.io.resource.builtin.FileResource;
-import net.bodz.bas.io.resource.tools.StreamLoading;
+import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.tools.StreamLoading;
 
 public class EclipseWorkspace {
 

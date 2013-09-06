@@ -3,8 +3,8 @@ package net.bodz.bas.c.java.io.capture;
 import java.io.*;
 import java.lang.reflect.Field;
 
-import net.bodz.bas.io.ReaderInputStream;
-import net.bodz.bas.io.WriterOutputStream;
+import net.bodz.bas.c.java.io.ReaderInputStream;
+import net.bodz.bas.c.java.io.WriterOutputStream;
 
 public class IOHack {
 

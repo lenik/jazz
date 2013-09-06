@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
+import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.LineReader;
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.builtin.FileResource;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.t.iterator.immed.AbstractMitorx;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 

@@ -10,8 +10,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
 
-import net.bodz.bas.sio.BTreeOut;
-import net.bodz.bas.sio.ITreeOut;
+import net.bodz.bas.io.BTreeOut;
+import net.bodz.bas.io.ITreeOut;
 
 public abstract class AbstractTreeDumping<T>
         implements ITreeDumpContext {

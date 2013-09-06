@@ -2,8 +2,8 @@ package net.bodz.bas.std.rfc.mime;
 
 import java.nio.charset.Charset;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.builtin.ByteArrayResource;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.builtin.ByteArrayResource;
 
 public class ByteArrayContent
         extends AbstractContent {

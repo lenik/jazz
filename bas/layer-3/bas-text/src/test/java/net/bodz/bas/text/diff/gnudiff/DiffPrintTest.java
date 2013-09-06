@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.text.diff.DiffEntry;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint.Base;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint.ContextPrint;

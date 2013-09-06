@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
 
 /**
  * DFA State: For any two of transitions in a DFA State, their CharSet are not intersected.

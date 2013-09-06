@@ -17,8 +17,8 @@ import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.vfs.*;
 
 public class URLFile

@@ -27,8 +27,8 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.data.codec.builtin.HexCodec;
-import net.bodz.bas.sio.CharOutWriter;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.adapter.CharOutWriter;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.t.order.ComparableComparator;
 

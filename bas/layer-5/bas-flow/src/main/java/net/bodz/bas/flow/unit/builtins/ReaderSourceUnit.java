@@ -5,9 +5,9 @@ import java.io.Reader;
 
 import net.bodz.bas.flow.StreamConfig;
 import net.bodz.bas.flow.unit.GenericUnit_z1;
-import net.bodz.bas.io.resource.builtin.ReaderSource;
-import net.bodz.bas.io.resource.tools.IStreamReading;
-import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.res.builtin.ReaderSource;
+import net.bodz.bas.io.res.tools.IStreamReading;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 

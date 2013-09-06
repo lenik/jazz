@@ -3,8 +3,8 @@ package net.bodz.bas.c.loader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.resource.builtin.URLResource;
-import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.tools.StreamReading;
 
 public class ClassResourceTest
         extends Assert {

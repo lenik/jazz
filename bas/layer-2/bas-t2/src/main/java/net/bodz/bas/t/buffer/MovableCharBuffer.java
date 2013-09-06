@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.io.ICharOut;
 
 public class MovableCharBuffer
         implements IMovableBuffer {

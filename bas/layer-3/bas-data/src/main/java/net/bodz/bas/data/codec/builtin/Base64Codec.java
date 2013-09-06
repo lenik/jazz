@@ -8,10 +8,10 @@ import org.apache.commons.codec.binary.Base64;
 import net.bodz.bas.data.codec.AbstractByteCodec;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
-import net.bodz.bas.sio.IByteIn;
-import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.io.ICharOut;
 
 public class Base64Codec
         extends AbstractByteCodec {

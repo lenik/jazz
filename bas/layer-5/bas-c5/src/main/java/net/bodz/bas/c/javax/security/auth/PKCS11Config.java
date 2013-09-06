@@ -15,7 +15,7 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.io.IPrintOut;
 
 @SuppressWarnings("restriction")
 public class PKCS11Config {

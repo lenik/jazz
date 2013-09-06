@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.io.resource.tools.StreamReading;
-import net.bodz.bas.sio.util.IXYTellable;
+import net.bodz.bas.io.IXYTellable;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.text.lop.Token;
 
 public class JFlexLexerTest
