@@ -16,8 +16,8 @@ import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.Installer;
 import net.bodz.redist.installer.LogoImage;
 import net.bodz.swt.c.canvas.Picture;
+import net.bodz.swt.c.pageflow.PageException;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.pageflow.PageException;
 
 public class LogoPage
         extends ConfigPage {

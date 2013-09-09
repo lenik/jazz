@@ -15,10 +15,10 @@ import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.ISession;
 import net.bodz.swt.c.layout.BorderLayout;
-import net.bodz.swt.c3.pageflow.IPage;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.PageMethod;
-import net.bodz.swt.c3.pageflow.ServiceContext;
+import net.bodz.swt.c.pageflow.IPage;
+import net.bodz.swt.c.pageflow.PageException;
+import net.bodz.swt.c.pageflow.PageMethod;
+import net.bodz.swt.c.pageflow.ServiceContext;
 import net.bodz.swt.widgets.util.Playback;
 
 public class LicensePage

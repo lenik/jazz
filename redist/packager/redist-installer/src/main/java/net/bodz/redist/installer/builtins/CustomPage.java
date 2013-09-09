@@ -43,9 +43,9 @@ import net.bodz.redist.installer.util.MissingDependancyBuffer;
 import net.bodz.redist.installer.util.MissingDependancyBuffer.Entry;
 import net.bodz.redist.installer.util.TreeItems;
 import net.bodz.swt.c.composite.WindowComposite;
+import net.bodz.swt.c.pageflow.PageException;
+import net.bodz.swt.c.pageflow.ServiceContext;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.ServiceContext;
 import net.bodz.swt.gui.style.SwtImageMapper;
 
 public class CustomPage

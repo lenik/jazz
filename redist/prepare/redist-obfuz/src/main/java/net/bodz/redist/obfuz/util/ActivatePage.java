@@ -18,9 +18,9 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c.control.OnClickBrowse;
+import net.bodz.swt.c.pageflow.AbstractPage;
+import net.bodz.swt.c.pageflow.PageMethod;
 
 public class ActivatePage
         extends AbstractPage {
@@ -144,7 +144,7 @@ public class ActivatePage
         link = new Link(holder, SWT.NONE);
         final GridData gd_label2 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1);
         link.setLayoutData(gd_label2);
-        ControlAdapters.onclickBrowse(link);
+        OnClickBrowse.apply(link);
     }
 
     void updateABTS() {

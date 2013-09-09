@@ -19,9 +19,9 @@ import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.IValidator;
-import net.bodz.swt.c3.control.CommitAdapter;
-import net.bodz.swt.c3.control.CommitException;
-import net.bodz.swt.c3.control.ControlAdapters;
+import net.bodz.swt.c.control.CommitAdapter;
+import net.bodz.swt.c.control.CommitException;
+import net.bodz.swt.c.control.OnFocusCommit;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
@@ -90,7 +90,7 @@ public class StringVbo
                 throw new ViewBuilderException(tr._("Can\'t guess parser for number class: ") + type);
             }
 
-            ControlAdapters.autocommitForFocus(text, new CommitAdapter(rc.getUserDialogs(text)) {
+            OnFocusCommit.apply(text, new CommitAdapter(rc.getUserDialogs(text)) {
                 @Override
                 public void commit(EventObject event)
                         throws CommitException {

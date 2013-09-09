@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import net.bodz.bas.gui.dialog.ConsoleDialogs;
 import net.bodz.bas.log.impl.ConsoleLogger;
-import net.bodz.swt.c3.test.PageTester;
+import net.bodz.swt.test.PageTester;
 
 public class DonePageTest {
 

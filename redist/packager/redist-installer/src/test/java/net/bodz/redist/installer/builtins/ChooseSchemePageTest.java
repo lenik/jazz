@@ -7,7 +7,7 @@ import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.Session;
 import net.bodz.redist.installer.TestProject;
-import net.bodz.swt.c3.test.PageTester;
+import net.bodz.swt.test.PageTester;
 
 public class ChooseSchemePageTest {
 

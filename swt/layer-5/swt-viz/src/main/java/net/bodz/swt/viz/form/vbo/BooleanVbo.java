@@ -15,9 +15,9 @@ import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.ValidationException;
-import net.bodz.swt.c3.control.CommitAdapter;
-import net.bodz.swt.c3.control.CommitException;
-import net.bodz.swt.c3.control.ControlAdapters;
+import net.bodz.swt.c.control.CommitAdapter;
+import net.bodz.swt.c.control.CommitException;
+import net.bodz.swt.c.control.OnFocusCommit;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
@@ -60,7 +60,7 @@ public class BooleanVbo
                 }
             });
         if (readOnly) {
-            ControlAdapters.autocommitForFocus(check, new CommitAdapter(rc.getUserDialogs(check)) {
+            OnFocusCommit.apply(check, new CommitAdapter(rc.getUserDialogs(check)) {
                 @Override
                 public void commit(EventObject event)
                         throws CommitException {
