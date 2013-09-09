@@ -7,10 +7,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.PageMethod;
-import net.bodz.swt.c3.pageflow.ServiceContext;
+import net.bodz.swt.c.pageflow.AbstractPage;
+import net.bodz.swt.c.pageflow.PageException;
+import net.bodz.swt.c.pageflow.PageMethod;
+import net.bodz.swt.c.pageflow.ServiceContext;
 
 public class ActivatedPage
         extends AbstractPage {

@@ -7,8 +7,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c.pageflow.AbstractPage;
+import net.bodz.swt.c.pageflow.PageMethod;
 
 class CanceledPage
         extends AbstractPage {

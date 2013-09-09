@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageMethod;
+import net.bodz.swt.c.pageflow.AbstractPage;
+import net.bodz.swt.c.pageflow.PageMethod;
 
 public abstract class ConfigPage
         extends AbstractPage {

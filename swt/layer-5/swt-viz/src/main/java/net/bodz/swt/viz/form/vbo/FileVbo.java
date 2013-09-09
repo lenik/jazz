@@ -21,10 +21,10 @@ import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.typer.std.ValidationException;
+import net.bodz.swt.c.control.CommitAdapter;
+import net.bodz.swt.c.control.CommitException;
+import net.bodz.swt.c.control.OnFocusCommit;
 import net.bodz.swt.c.layout.BorderLayout;
-import net.bodz.swt.c3.control.CommitAdapter;
-import net.bodz.swt.c3.control.CommitException;
-import net.bodz.swt.c3.control.ControlAdapters;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
@@ -74,7 +74,7 @@ public class FileVbo
                 throw new ViewBuilderException(tr._("Can\'t guess parser for number class: ") + valueType);
             }
 
-            ControlAdapters.autocommitForFocus(fileText, new CommitAdapter(//
+            OnFocusCommit.apply(fileText, new CommitAdapter(//
                     rc.getUserDialogs(fileText)) {
                 @Override
                 public void commit(EventObject event)

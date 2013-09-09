@@ -4,7 +4,7 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.gui.dialog.AbstractTryBlock;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.gui.dialog.IUserDialogs;
-import net.bodz.swt.c3.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.SwtDialogs;
 
 public abstract class DialogTryBlock
         extends AbstractTryBlock {

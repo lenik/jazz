@@ -19,7 +19,7 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.util.Indices;
 import net.bodz.redist.installer.util.MissingDependancyBuffer.Entry;
-import net.bodz.swt.c3.dialog.SimpleDialog;
+import net.bodz.swt.c.dialog.SimpleDialog;
 
 public class SelectComponentsDialog
         extends SimpleDialog {

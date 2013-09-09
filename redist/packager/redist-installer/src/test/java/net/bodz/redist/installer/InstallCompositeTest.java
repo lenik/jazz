@@ -6,9 +6,9 @@ import org.junit.Test;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.redist.installer.builtins.TestConfig;
+import net.bodz.swt.c.pageflow.BadPathEvent;
+import net.bodz.swt.c.pageflow.IBadPathListener;
 import net.bodz.swt.c.test.WidgetTester;
-import net.bodz.swt.c3.pageflow.BadPathEvent;
-import net.bodz.swt.c3.pageflow.IBadPathListener;
 
 public class InstallCompositeTest
         extends WidgetTester {

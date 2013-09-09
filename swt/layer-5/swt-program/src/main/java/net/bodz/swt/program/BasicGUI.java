@@ -42,15 +42,15 @@ import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.mda.xjdoc.model.javadoc.Author;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
+import net.bodz.swt.c.control.OnClickBrowse;
+import net.bodz.swt.c.dialog.AboutDialog;
+import net.bodz.swt.c.dialog.CreditDialog;
+import net.bodz.swt.c.dialog.SelectLanguageDialog;
+import net.bodz.swt.c.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.ThreadsMonitor;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.menu.Menus;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.c3.control.ControlAdapters;
-import net.bodz.swt.c3.dialog.AboutDialog;
-import net.bodz.swt.c3.dialog.CreditDialog;
-import net.bodz.swt.c3.dialog.SelectLanguageDialog;
-import net.bodz.swt.c3.dialog.SwtDialogs;
-import net.bodz.swt.c3.dialog.ThreadsMonitor;
 
 /**
  * @style width: 320px; height: 240px;
@@ -73,12 +73,12 @@ public abstract class BasicGUI
     private int shellHeight = SWT.DEFAULT;
 
     {
-//        TODO Set PreferredSize by CSS.
-//        PreferredSize _size = getClass().getAnnotation(PreferredSize.class);
-//        if (_size != null) {
-//            shellWidth = _size.width();
-//            shellHeight = _size.height();
-//        }
+// TODO Set PreferredSize by CSS.
+// PreferredSize _size = getClass().getAnnotation(PreferredSize.class);
+// if (_size != null) {
+// shellWidth = _size.width();
+// shellHeight = _size.height();
+// }
     }
 
     protected Shell shell;
@@ -209,16 +209,16 @@ public abstract class BasicGUI
         Shell shell = new Shell();
         shell.setText(getTitle());
         ArtifactDoc artifactDoc = getXjdoc();
-        
+
         // TODO Set icon by CSS.
-//        Image[] icons;
-//        try {
-//            icons = loadImages(artifactDoc.getIcons());
-//        } catch (IOException e) {
-//            throw new GUIException(e);
-//        }
-//        if (icons != null)
-//            shell.setImages(icons);
+// Image[] icons;
+// try {
+// icons = loadImages(artifactDoc.getIcons());
+// } catch (IOException e) {
+// throw new GUIException(e);
+// }
+// if (icons != null)
+// shell.setImages(icons);
 
         Menu menu = createMenu(shell);
         if (menu != null)
@@ -307,15 +307,15 @@ public abstract class BasicGUI
 
         MenuItem feature = new MenuItem(menu, SWT.PUSH);
         feature.setText("Feature Request...");
-        ControlAdapters.onclickBrowse(feature, "http://track.bodz.net/request?product=?");
+        OnClickBrowse.apply(feature, "http://track.bodz.net/request?product=?");
 
         MenuItem bug = new MenuItem(menu, SWT.PUSH);
         bug.setText("Bug Report...");
-        ControlAdapters.onclickBrowse(bug, "http://track.bodz.net/bugs?product=?");
+        OnClickBrowse.apply(bug, "http://track.bodz.net/bugs?product=?");
 
         MenuItem forum = new MenuItem(menu, SWT.PUSH);
         forum.setText("Forum");
-        ControlAdapters.onclickBrowse(forum, "http://track.bodz.net/forum?product=?");
+        OnClickBrowse.apply(forum, "http://track.bodz.net/forum?product=?");
 
         new MenuItem(menu, SWT.SEPARATOR);
 
@@ -400,10 +400,10 @@ public abstract class BasicGUI
         try {
             WWW_BODZ_NET = new URL("http://www.bodz.net/");
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e.getMessage(), e); 
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
-    
+
     protected String getBannerString() {
         ArtifactDoc artifactDoc = getXjdoc();
         Author author = artifactDoc.getAuthor();

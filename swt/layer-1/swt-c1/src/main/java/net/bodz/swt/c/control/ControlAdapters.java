@@ -2,8 +2,6 @@ package net.bodz.swt.c.control;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -27,31 +25,6 @@ public class ControlAdapters {
                 if (!doit) {
                     control.setFocus();
                 }
-            }
-        });
-    }
-
-    public static void onresizeChangeFontSize(final Control control) {
-        Point origSize = control.getSize();
-        FontData origFontData = control.getFont().getFontData()[0];
-        int origFontHeight = origFontData.getHeight();
-
-        // final float fontRatioX = (float) (origFontHeight) / origSize.x;
-        final float origRows = origSize.y / (float) (origFontHeight);
-
-        control.addControlListener(new ControlAdapter() {
-            @Override
-            public void controlResized(final ControlEvent e) {
-                Control control = (Control) e.widget;
-                // int width = control.getBounds().width;
-                int height = control.getBounds().height;
-
-                FontData fontData = control.getFont().getFontData()[0];
-                float newFontHeight = Math.round(height / origRows);
-                fontData.setHeight((int) newFontHeight);
-
-                Font font = new Font(control.getDisplay(), fontData);
-                control.setFont(font);
             }
         });
     }

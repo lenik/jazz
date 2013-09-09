@@ -4,10 +4,10 @@ import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.swt.c3.pageflow.IBook;
-import net.bodz.swt.c3.pageflow.IPage;
-import net.bodz.swt.c3.pageflow.NavigatorComposite;
-import net.bodz.swt.c3.pageflow.SimpleBook;
+import net.bodz.swt.c.pageflow.IBook;
+import net.bodz.swt.c.pageflow.IPage;
+import net.bodz.swt.c.pageflow.NavigatorComposite;
+import net.bodz.swt.c.pageflow.SimpleBook;
 
 public class InstallComposite
         extends NavigatorComposite {

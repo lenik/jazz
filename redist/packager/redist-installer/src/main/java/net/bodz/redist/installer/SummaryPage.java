@@ -10,10 +10,10 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.swt.c3.pageflow.AbstractPage;
-import net.bodz.swt.c3.pageflow.PageException;
-import net.bodz.swt.c3.pageflow.PageMethod;
-import net.bodz.swt.c3.pageflow.ServiceContext;
+import net.bodz.swt.c.pageflow.AbstractPage;
+import net.bodz.swt.c.pageflow.PageException;
+import net.bodz.swt.c.pageflow.PageMethod;
+import net.bodz.swt.c.pageflow.ServiceContext;
 
 class SummaryPage
         extends AbstractPage {

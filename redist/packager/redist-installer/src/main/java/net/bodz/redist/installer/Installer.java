@@ -11,8 +11,8 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
-import net.bodz.swt.c3.pageflow.BadPathEvent;
-import net.bodz.swt.c3.pageflow.IBadPathListener;
+import net.bodz.swt.c.pageflow.BadPathEvent;
+import net.bodz.swt.c.pageflow.IBadPathListener;
 import net.bodz.swt.program.BasicGUI;
 
 /**
