@@ -1,11 +1,11 @@
-package net.bodz.bas.text.structf;
+package net.bodz.bas.text.rst;
 
 import java.io.Closeable;
 import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 
-public interface IStructfInput
+public interface IRstInput
         extends Closeable {
 
     /** element arg arg ... { */

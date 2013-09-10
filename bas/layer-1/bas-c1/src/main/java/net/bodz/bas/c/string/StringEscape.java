@@ -33,18 +33,19 @@ public class StringEscape {
                         return "\\u000" + hex(ch);
                 }
 
-            // assert ch >= 0x20 && ch <= 0x7f;
-            switch (ch) {
-            case '\'': // OPT escape option
-                return "\\'";
-                // return "'";
-            case '"':
-                return "\\\"";
-            case '\\':
-                return "\\\\";
-            case '/': // OPT escape option
-                return "/";
-            }
+            else
+                // assert ch >= 0x20 && ch <= 0x7f;
+                switch (ch) {
+                case '\'': // OPT escape option
+                    return "\\'";
+                    // return "'";
+                case '"':
+                    return "\\\"";
+                case '\\':
+                    return "\\\\";
+                case '/': // OPT escape option
+                    return "/";
+                }
         } // [0..7f]
 
         return String.valueOf((char) ch);

@@ -1,4 +1,4 @@
-package net.bodz.bas.text.structf;
+package net.bodz.bas.text.rst;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,8 +7,8 @@ import java.io.Reader;
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.t.pojo.Pair;
 
-public class StructfInput
-        implements IStructfInput {
+public class RstInput
+        implements IRstInput {
 
     BufferedReader reader;
 
@@ -17,7 +17,7 @@ public class StructfInput
     String attributeName;
     StringBuilder attributeData = new StringBuilder();
 
-    public StructfInput(Reader reader) {
+    public RstInput(Reader reader) {
         if (reader == null)
             throw new NullPointerException("reader");
         if (reader instanceof BufferedReader)

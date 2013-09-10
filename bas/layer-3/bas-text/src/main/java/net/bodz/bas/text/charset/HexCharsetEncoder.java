@@ -21,7 +21,7 @@ public class HexCharsetEncoder
     private boolean leads = false;
 
     public HexCharsetEncoder(Charset charset) {
-        this(charset, CharFeature.n2cl);
+        this(charset, CharFeature.n2lc);
     }
 
     /**

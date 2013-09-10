@@ -1,16 +1,16 @@
-package net.bodz.bas.text.structf;
+package net.bodz.bas.text.rst;
 
 import java.io.Serializable;
 
-public class StructfAttribute
-        implements IStructfAttribute, Serializable {
+public class RstAttribute
+        implements IRstAttribute, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
     private String data;
 
-    public StructfAttribute(String name, String data) {
+    public RstAttribute(String name, String data) {
         if (name == null)
             throw new NullPointerException("name");
         if (data == null)

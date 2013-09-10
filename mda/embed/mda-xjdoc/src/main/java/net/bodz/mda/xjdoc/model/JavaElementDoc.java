@@ -130,16 +130,16 @@ public class JavaElementDoc
     @Override
     public ISectionHandler getSectionHandler(String sectionName, IOptions options) {
         ITagLibrary taglib = AbstractTagLibrary.fromOptions(options);
-        return new FlatfHandler(taglib, options);
+        return new SectionHandler(taglib, options);
     }
 
-    protected class FlatfHandler
+    protected class SectionHandler
             implements ISectionHandler {
 
         final ITagLibrary taglib;
         final IOptions options;
 
-        public FlatfHandler(ITagLibrary taglib, IOptions options) {
+        public SectionHandler(ITagLibrary taglib, IOptions options) {
             if (taglib == null)
                 throw new NullPointerException("taglib");
             this.taglib = taglib;

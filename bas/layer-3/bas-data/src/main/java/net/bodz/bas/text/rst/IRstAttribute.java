@@ -1,6 +1,6 @@
-package net.bodz.bas.text.structf;
+package net.bodz.bas.text.rst;
 
-public interface IStructfAttribute {
+public interface IRstAttribute {
     /**
      * Get the attribute name.
      * 
