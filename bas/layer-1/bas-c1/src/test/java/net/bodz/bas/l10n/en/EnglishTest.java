@@ -14,11 +14,28 @@ public class EnglishTest
                 assertEquals(expected, actual);
             }
         }
-        D d = new D(); //
+        D d = new D();
         d.o("cat", "cats");
-        d.o("foot", "foots"); // TODO - irregular plural
+        d.o("foot", "feet");
         d.o("baby", "babies");
         d.o("homo", "homoes");
+        d.o("person", "people");
+    }
+
+    @Test
+    public void testSingularOf() {
+        class D {
+            void o(String input, String expected) {
+                String actual = English.singularOf(input);
+                assertEquals(expected, actual);
+            }
+        }
+        D d = new D();
+        d.o("cats", "cat");
+        d.o("feet", "foot");
+        d.o("babies", "baby");
+        d.o("homoes", "homo");
+        d.o("people", "person");
     }
 
     @Test

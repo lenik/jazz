@@ -1,37 +1,8 @@
 package net.bodz.bas.l10n.en;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.l10n.en.IrregularPlural.Handler;
-
 public class English {
-
-    private static Map<String, String> pastTense;
-    private static Map<String, String> perfectTense;
-
-    static {
-        pastTense = new HashMap<String, String>();
-        perfectTense = new HashMap<String, String>();
-        IrregularPlural.process(Locale.ENGLISH, new Handler() {
-            @Override
-            public void handle(String name, String value) {
-                int eq = value.indexOf('=');
-                String past = value;
-                String perfect;
-                if (eq == -1)
-                    perfect = past;
-                else {
-                    perfect = value.substring(eq + 1);
-                    past = value.substring(0, eq);
-                }
-                pastTense.put(name, past);
-                perfectTense.put(name, perfect);
-            }
-        });
-    }
 
     // private static final Pattern P_Ve;
     private static final Pattern P_Ce;
@@ -60,12 +31,36 @@ public class English {
      * </pre>
      */
     public static String pluralOf(String word) {
+        String plural = IrregularPlural.pluralForm.get(word);
+        if (plural != null)
+            return plural;
+
         int len = word.length();
         if (matches(word, P_Cy))
-            return word.substring(0, len - 1) + "ies";
-        if (matches(word, P_aiouxs))
-            return word + "es";
-        return word + "s";
+            plural = word.substring(0, len - 1) + "ies";
+        else if (matches(word, P_aiouxs))
+            plural = word + "es";
+        else
+            plural = word + "s";
+
+        return plural;
+    }
+
+    public static String singularOf(String word) {
+        String singular = IrregularPlural.singularForm.get(word);
+        if (singular != null)
+            return singular;
+
+        int len = word.length();
+        if (word.endsWith("ies")) {
+            singular = word.substring(0, len - 3) + "y";
+        } else if (word.endsWith("es")) {
+            singular = word.substring(0, len - 2);
+        } else if (word.endsWith("s")) {
+            singular = word.substring(0, len - 1);
+        }
+
+        return singular;
     }
 
     /**
@@ -111,12 +106,12 @@ public class English {
     }
 
     public static String pastOf(String word) {
-        String past = pastTense.get(word);
+        String past = IrregularTense.pastTense.get(word);
         return past == null ? _pastOf(word) : past;
     }
 
     public static String perfectOf(String word) {
-        String perfect = perfectTense.get(word);
+        String perfect = IrregularTense.perfectTense.get(word);
         return perfect == null ? _pastOf(word) : perfect;
     }
 
