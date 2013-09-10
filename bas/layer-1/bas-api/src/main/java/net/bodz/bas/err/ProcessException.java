@@ -1,6 +1,6 @@
 package net.bodz.bas.err;
 
-public class ProcessException
+public abstract class ProcessException
         extends Exception {
 
     public static final long serialVersionUID = 1L;

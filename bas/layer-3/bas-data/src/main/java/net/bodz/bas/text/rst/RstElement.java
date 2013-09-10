@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RstElement
-        implements IRstElement, Serializable, IElementHandler {
+        implements IRstElement, IElementHandler, Serializable {
 
     private static final long serialVersionUID = 1L;
 

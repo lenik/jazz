@@ -1,7 +1,6 @@
 package net.bodz.bas.text.rst;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.ProcessException;
 
 public interface IElementHandler {
 
@@ -13,10 +12,10 @@ public interface IElementHandler {
      *         be processed in the future.
      */
     boolean attribute(String name, String data)
-            throws ProcessException, ParseException;
+            throws ParseException, ElementHandlerException;
 
     IElementHandler beginChild(String name, String[] args)
-            throws ProcessException;
+            throws ParseException, ElementHandlerException;
 
     /**
      * @return <code>true</code> if this (child-) element is handled, and should be dropped away.
@@ -24,9 +23,9 @@ public interface IElementHandler {
      *         element to be processed in the future.
      */
     boolean endChild(IRstElement element)
-            throws ProcessException;
+            throws ElementHandlerException;
 
     void complete(IRstElement element)
-            throws ProcessException;
+            throws ElementHandlerException;
 
 }

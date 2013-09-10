@@ -7,13 +7,17 @@ import java.util.Arrays;
 
 import net.bodz.bas.c.type.TypeEnum;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.ProcessException;
 
 public class ReflectElementHandler
         implements IElementHandler {
 
     private Class<?> type;
     private Object obj;
+
+    public ReflectElementHandler() {
+        this.type = getClass();
+        this.obj = this;
+    }
 
     public ReflectElementHandler(Object obj) {
         if (obj == null)
@@ -52,16 +56,16 @@ public class ReflectElementHandler
 
     @Override
     public boolean attribute(String name, String data)
-            throws ProcessException, ParseException {
+            throws ParseException, ElementHandlerException {
         Field field = _getField(name);
         if (field == null)
-            throw new ProcessException("attribute is undefined: " + name);
+            return false;
 
         boolean _final = Modifier.isFinal(field.getModifiers());
         Class<?> type = field.getType();
         TypeEnum typeEnum = TypeEnum.fromClass(type);
         if (typeEnum == null)
-            throw new ProcessException("property type isn't supported: " + type);
+            throw new ElementHandlerException("property type isn't supported: " + type);
 
         Object value = null;
         int arrayLen = 0;
@@ -71,7 +75,7 @@ public class ReflectElementHandler
             try {
                 value = field.get(obj);
             } catch (Exception e) {
-                throw new ProcessException("failed to read property " + name, e);
+                throw new ElementHandlerException("failed to read property " + name, e);
             }
         }
 
@@ -237,47 +241,47 @@ public class ReflectElementHandler
 
         case OBJECT:
         default:
-            throw new ProcessException("property type isn't supported: " + type);
+            throw new ElementHandlerException("property type isn't supported: " + type);
         }
 
         if (!_final)
             try {
                 field.set(obj, value);
             } catch (Exception e) {
-                throw new ProcessException("failed to set the value of property " + name, e);
+                throw new ElementHandlerException("failed to set the value of property " + name, e);
             }
         return false;
     }
 
     @Override
     public IElementHandler beginChild(String name, String[] args)
-            throws ProcessException {
+            throws ParseException, ElementHandlerException {
         Field field = _getField(name);
         if (field == null)
-            throw new ProcessException("element is undefined: " + name);
+            return null; // throw new ElementHandlerException("element is undefined: " + name);
 
         boolean _final = Modifier.isFinal(field.getModifiers());
         Class<?> type = field.getType();
         if (!IRstSerializable.class.isAssignableFrom(type))
-            throw new ProcessException("property isn't structf-serializable: " + name);
+            throw new ElementHandlerException("property isn't structf-serializable: " + name);
 
         IRstSerializable value = null;
         if (_final) {
             try {
                 value = (IRstSerializable) field.get(obj);
             } catch (ReflectiveOperationException e) {
-                throw new ProcessException("failed to read property " + name, e);
+                throw new ElementHandlerException("failed to read property " + name, e);
             }
         } else {
             try {
                 value = (IRstSerializable) type.newInstance(); // args ...
             } catch (ReflectiveOperationException e) {
-                throw new ProcessException("failed to instantiate " + type, e);
+                throw new ElementHandlerException("failed to instantiate " + type, e);
             }
             try {
                 field.set(obj, value);
             } catch (ReflectiveOperationException e) {
-                throw new ProcessException("failed to write property " + name, e);
+                throw new ElementHandlerException("failed to write property " + name, e);
             }
         }
 
@@ -286,13 +290,13 @@ public class ReflectElementHandler
 
     @Override
     public boolean endChild(IRstElement element)
-            throws ProcessException {
-        return true;
+            throws ElementHandlerException {
+        return false;
     }
 
     @Override
     public void complete(IRstElement element)
-            throws ProcessException {
+            throws ElementHandlerException {
     }
 
 }
