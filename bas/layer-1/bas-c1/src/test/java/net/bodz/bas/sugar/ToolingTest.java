@@ -25,7 +25,7 @@ public class ToolingTest
         }
 
         @Override
-        public Tooling tooling() {
+        public ITooling tooling() {
             return new Tooling(this);
         }
 

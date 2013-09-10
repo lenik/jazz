@@ -6,7 +6,8 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.t.factory.IFactory;
 
-public final class Tooling {
+public final class Tooling
+        implements ITooling {
 
     final Object hostObject;
 
@@ -14,6 +15,11 @@ public final class Tooling {
         if (hostObject == null)
             throw new NullPointerException("hostObject");
         this.hostObject = hostObject;
+    }
+
+    @Override
+    public Tooling clone() {
+        return this; // new Tooling(hostObject);
     }
 
     public static Tooling on(Object hostObject) {
