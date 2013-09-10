@@ -11,6 +11,6 @@ public interface IToolable {
      * return new Tooling&lt;H&gt;(this);
      * </pre>
      */
-    Tooling tooling();
+    ITooling tooling();
 
 }

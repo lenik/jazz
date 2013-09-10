@@ -11,14 +11,21 @@ import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectOutput;
 import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.c.java.io.ObjectOutputAdapter;
-import net.bodz.bas.io.*;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.IDataOut;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.ByteInInputStream;
 import net.bodz.bas.io.adapter.ByteOutOutputStream;
 import net.bodz.bas.io.adapter.CharInReader;
 import net.bodz.bas.io.adapter.CharOutWriter;
-import net.bodz.bas.io.data.*;
+import net.bodz.bas.io.data.DataOutImplBE;
+import net.bodz.bas.io.data.DataOutImplLE;
 import net.bodz.bas.io.impl.LAReader;
 import net.bodz.bas.io.impl.PrintOutImpl;
+import net.bodz.bas.sugar.ITooling;
 import net.bodz.bas.sugar.Tooling;
 
 public abstract class StreamResourceTemplate {
@@ -34,7 +41,7 @@ public abstract class StreamResourceTemplate {
             throw new NullPointerException("preferredCharset");
     }
 
-    public Tooling tooling() {
+    public ITooling tooling() {
         return new Tooling(this);
     }
 

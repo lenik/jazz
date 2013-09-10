@@ -16,6 +16,7 @@ import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.OpenResourceEvent;
+import net.bodz.bas.sugar.ITooling;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -371,7 +372,7 @@ public abstract class AbstractFile
     ;
 
     @Override
-    public Tooling tooling() {
+    public ITooling tooling() {
         return new Tooling(this);
     }
 
