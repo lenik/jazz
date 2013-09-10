@@ -3,7 +3,7 @@ package net.bodz.swt.draw.geom_i.particle;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
-import net.bodz.bas.c.object.EmptyConsts;
+import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.t._int.IntIterable;
@@ -160,7 +160,7 @@ public abstract class GridParticleBounds2d
         public int[] getParticleIndexesAt(Point point) {
             int index = getParticleIndexAt(point);
             if (index == -1)
-                return EmptyConsts.noInt;
+                return IEmptyConsts.emptyIntArray;
             return new int[] { index };
         }
 
