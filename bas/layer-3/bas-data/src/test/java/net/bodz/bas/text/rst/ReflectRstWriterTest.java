@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.res.builtin.StringSource;
 import net.bodz.bas.t.pojo.eg.bookstore.Cat;
@@ -29,18 +28,15 @@ public class ReflectRstWriterTest
     @Test
     public void test1()
             throws Exception {
-        BCharOut buf = new BCharOut();
-        IRstOutput out = RstOutputImpl.from(buf);
-        ReflectRstWriter.writeObject(out, zoo);
+        String rst = ReflectRstDumper.dump(zoo);
 
-        String rst = buf.toString();
+        Zoo zoo2 = new Zoo();
 
         RstLoader loader = new RstLoader();
-        Zoo zoo2 = new Zoo();
         loader.load(new StringSource(rst), zoo2);
 
-        out = RstOutputImpl.from(Stdio.cout);
-        ReflectRstWriter.writeObject(out, zoo2);
+        IRstOutput out = RstOutputImpl.from(Stdio.cout);
+        ReflectRstDumper.dump(out, zoo2);
     }
 
 }

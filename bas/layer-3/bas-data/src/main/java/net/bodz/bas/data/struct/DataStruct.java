@@ -8,7 +8,7 @@ import net.bodz.bas.text.rst.IElementHandler;
 import net.bodz.bas.text.rst.IRstOutput;
 import net.bodz.bas.text.rst.IRstSerializable;
 import net.bodz.bas.text.rst.ReflectElementHandler;
-import net.bodz.bas.text.rst.ReflectRstWriter;
+import net.bodz.bas.text.rst.ReflectRstDumper;
 
 public abstract class DataStruct
         implements IDataStruct, IRstSerializable {
@@ -28,7 +28,7 @@ public abstract class DataStruct
     @Override
     public void writeObject(IRstOutput out)
             throws IOException {
-        ReflectRstWriter.writeObject(out, this);
+        ReflectRstDumper.dump(out, this);
     }
 
     @Override
