@@ -9,7 +9,7 @@ public abstract class RstObject
     @Override
     public void writeObject(IRstOutput out)
             throws IOException {
-        ReflectRstWriter.writeObject(out, this);
+        ReflectRstDumper.dump(out, this);
     }
 
     @Override

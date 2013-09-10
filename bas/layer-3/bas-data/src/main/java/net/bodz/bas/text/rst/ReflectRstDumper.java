@@ -11,9 +11,11 @@ import java.util.Set;
 import net.bodz.bas.c.type.TypeArray;
 import net.bodz.bas.c.type.TypeEnum;
 import net.bodz.bas.c.type.TypeParam;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.l10n.en.English;
 
-public class ReflectRstWriter {
+public class ReflectRstDumper {
 
     private static Set<Class<?>> stopClasses = new HashSet<>();
     static {
@@ -21,7 +23,18 @@ public class ReflectRstWriter {
         stopClasses.add(ReflectElementHandler.class);
     }
 
-    public static void writeObject(IRstOutput out, Object obj)
+    public static String dump(Object obj) {
+        BCharOut buf = new BCharOut();
+        IRstOutput out = RstOutputImpl.from(buf);
+        try {
+            dump(out, obj);
+        } catch (IOException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
+        return buf.toString();
+    }
+
+    public static void dump(IRstOutput out, Object obj)
             throws IOException {
         _dump(out, obj, obj.getClass());
     }
