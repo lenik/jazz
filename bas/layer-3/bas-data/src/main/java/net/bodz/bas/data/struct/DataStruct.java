@@ -16,6 +16,11 @@ public abstract class DataStruct
     private static final long serialVersionUID = 1L;
 
     @Override
+    public int sizeof() {
+        return new ReflectSizeComputer(this).sizeof();
+    }
+
+    @Override
     public void readObject(IDataIn in)
             throws IOException {
     }

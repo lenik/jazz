@@ -65,18 +65,18 @@ public class ReflectElementHandler
         Class<?> type = field.getType();
         TypeEnum typeEnum = TypeEnum.fromClass(type);
         if (typeEnum == null)
-            throw new ElementHandlerException("property type isn't supported: " + type);
+            throw new ElementHandlerException("field type isn't supported: " + type);
 
         Object value = null;
         int arrayLen = 0;
         if (_final) {
-            if (type.isArray())
-                arrayLen = Array.getLength(value);
             try {
                 value = field.get(obj);
             } catch (Exception e) {
-                throw new ElementHandlerException("failed to read property " + name, e);
+                throw new ElementHandlerException("failed to get field " + name, e);
             }
+            if (type.isArray())
+                arrayLen = Array.getLength(value);
         }
 
         switch (typeEnum) {
@@ -241,14 +241,14 @@ public class ReflectElementHandler
 
         case OBJECT:
         default:
-            throw new ElementHandlerException("property type isn't supported: " + type);
+            throw new ElementHandlerException("field type isn't supported: " + type);
         }
 
         if (!_final)
             try {
                 field.set(obj, value);
             } catch (Exception e) {
-                throw new ElementHandlerException("failed to set the value of property " + name, e);
+                throw new ElementHandlerException("failed to set the value of field " + name, e);
             }
         return false;
     }
@@ -263,14 +263,14 @@ public class ReflectElementHandler
         boolean _final = Modifier.isFinal(field.getModifiers());
         Class<?> type = field.getType();
         if (!IRstSerializable.class.isAssignableFrom(type))
-            throw new ElementHandlerException("property isn't structf-serializable: " + name);
+            throw new ElementHandlerException("field isn't structf-serializable: " + name);
 
         IRstSerializable value = null;
         if (_final) {
             try {
                 value = (IRstSerializable) field.get(obj);
             } catch (ReflectiveOperationException e) {
-                throw new ElementHandlerException("failed to read property " + name, e);
+                throw new ElementHandlerException("failed to read field " + name, e);
             }
         } else {
             try {
@@ -281,7 +281,7 @@ public class ReflectElementHandler
             try {
                 field.set(obj, value);
             } catch (ReflectiveOperationException e) {
-                throw new ElementHandlerException("failed to write property " + name, e);
+                throw new ElementHandlerException("failed to write field " + name, e);
             }
         }
 
