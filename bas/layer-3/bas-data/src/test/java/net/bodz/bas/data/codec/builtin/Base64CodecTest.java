@@ -1,4 +1,4 @@
-package net.bodz.bas.codec.ascii.builtin;
+package net.bodz.bas.data.codec.builtin;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -25,8 +25,12 @@ public class ParseException
         super(cause);
     }
 
-    public ParseException(Class<?> unparsableType, String unparsableText) {
-        this(String.format("Don't know how to parse %s", unparsableType));
+    public ParseException(String name, String message) {
+        this(name == null ? message : (name + ": " + message));
+    }
+
+    public ParseException(String name, String message, Throwable cause) {
+        this(name == null ? message : (name + ": " + message), cause);
     }
 
     public void setLocation(String source) {

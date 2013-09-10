@@ -6,6 +6,13 @@ import java.util.Map;
 
 public class TypeArray {
 
+    public static String[] getCanonicalNames(Class<?>[] types) {
+        String[] names = new String[types.length];
+        for (int i = 0; i < types.length; i++)
+            names[i] = types[i].getCanonicalName();
+        return names;
+    }
+
     /**
      * Get class for each component in the object array.
      * 

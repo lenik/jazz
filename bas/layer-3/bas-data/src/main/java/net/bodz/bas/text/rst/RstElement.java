@@ -1,19 +1,19 @@
-package net.bodz.bas.text.structf;
+package net.bodz.bas.text.rst;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StructfElement
-        implements IStructfElement, Serializable, IStructfHandler {
+public class RstElement
+        implements IRstElement, Serializable, IElementHandler {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
     private String[] args;
 
-    private List<IStructfAttribute> attributes;
-    private List<IStructfElement> children;
+    private List<IRstAttribute> attributes;
+    private List<IRstElement> children;
 
     // private transient Map<String, IStructfAttribute> attributeMap;
 
@@ -25,11 +25,11 @@ public class StructfElement
      * @param args
      *            Non-<code>null</code> element arguments.
      */
-    public StructfElement(String name, String... args) {
+    public RstElement(String name, String... args) {
         this.name = name;
         this.args = args;
-        attributes = new ArrayList<IStructfAttribute>();
-        children = new ArrayList<IStructfElement>();
+        attributes = new ArrayList<IRstAttribute>();
+        children = new ArrayList<IRstElement>();
     }
 
     @Override
@@ -55,12 +55,12 @@ public class StructfElement
     }
 
     @Override
-    public List<IStructfAttribute> getAttributes() {
+    public List<IRstAttribute> getAttributes() {
         return attributes;
     }
 
     @Override
-    public List<IStructfElement> getChildren() {
+    public List<IRstElement> getChildren() {
         return children;
     }
 
@@ -69,26 +69,24 @@ public class StructfElement
 
     @Override
     public boolean attribute(String name, String data) {
-        StructfAttribute attribute = new StructfAttribute(name, data);
+        RstAttribute attribute = new RstAttribute(name, data);
         attributes.add(attribute);
         return true;
     }
 
     @Override
-    public IStructfHandler beginChild(String name, String[] args)
-            throws StructfHandlerException {
-        return new StructfElement(name, args);
+    public IElementHandler beginChild(String name, String[] args) {
+        return new RstElement(name, args);
     }
 
     @Override
-    public boolean endChild(IStructfElement element) {
+    public boolean endChild(IRstElement element) {
         children.add(element);
         return true;
     }
 
     @Override
-    public void element(IStructfElement element)
-            throws StructfHandlerException {
+    public void complete(IRstElement element) {
     }
 
 }

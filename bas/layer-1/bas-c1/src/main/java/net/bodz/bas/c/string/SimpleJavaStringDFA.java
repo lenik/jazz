@@ -46,7 +46,7 @@ public class SimpleJavaStringDFA {
 
         case QQ:
             switch (ch) {
-            case '"':
+            case '\"':
                 accept(stringBuffer.toString());
                 stringBuffer.setLength(0);
                 state = START;

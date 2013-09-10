@@ -96,30 +96,4 @@ public class StringUtil {
         return buf.toByteArray();
     }
 
-    public static int parseInt(String s) {
-        int radix = 10;
-        if (s.endsWith("h")) {
-            radix = 16;
-            s = s.substring(0, s.length() - 1);
-        }
-        if (s.startsWith("0x")) {
-            radix = 16;
-            s = s.substring(2);
-        }
-        return Integer.parseInt(s, radix);
-    }
-
-    public static long parseLong(String s) {
-        int radix = 10;
-        if (s.endsWith("h")) {
-            radix = 16;
-            s = s.substring(0, s.length() - 1);
-        }
-        if (s.startsWith("0x")) {
-            radix = 16;
-            s = s.substring(2);
-        }
-        return Long.parseLong(s, radix);
-    }
-
 }

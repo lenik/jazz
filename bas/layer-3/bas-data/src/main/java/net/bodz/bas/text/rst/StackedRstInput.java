@@ -1,21 +1,21 @@
-package net.bodz.bas.text.structf;
+package net.bodz.bas.text.rst;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
 import net.bodz.bas.err.ParseException;
 
-public class StackedStructfInput
-        implements IStructfInput {
+public class StackedRstInput
+        implements IRstInput {
 
-    private IStructfInput in;
-    private LinkedList<StructfElement> stack;
+    private IRstInput in;
+    private LinkedList<RstElement> stack;
 
-    public StackedStructfInput(IStructfInput in) {
+    public StackedRstInput(IRstInput in) {
         if (in == null)
             throw new NullPointerException("in");
         this.in = in;
-        this.stack = new LinkedList<StructfElement>();
+        this.stack = new LinkedList<RstElement>();
     }
 
     @Override
@@ -28,11 +28,11 @@ public class StackedStructfInput
     public int next()
             throws ParseException, IOException {
         int ret;
-        StructfElement element;
+        RstElement element;
 
         switch (ret = in.next()) {
         case ELEMENT_BEGIN:
-            element = new StructfElement(in.getElementName(), in.getElementArguments());
+            element = new RstElement(in.getElementName(), in.getElementArguments());
             stack.push(element);
             break;
 
@@ -54,7 +54,7 @@ public class StackedStructfInput
 
     @Override
     public String getElementName() {
-        IStructfElement element = stack.peek();
+        IRstElement element = stack.peek();
         if (element == null)
             return null;
         else
@@ -63,7 +63,7 @@ public class StackedStructfInput
 
     @Override
     public String[] getElementArguments() {
-        IStructfElement element = stack.peek();
+        IRstElement element = stack.peek();
         if (element == null)
             return null;
         else

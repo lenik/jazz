@@ -16,7 +16,7 @@ public class HexCodec
 
     private final String IFS;
     private final char simpleIFS;
-    private final char[] enctbl = CharFeature.n2cl;
+    private final char[] enctbl = CharFeature.n2lc;
     private final byte[] dectbl = CharFeature.c2n;
 
     private final int width;

@@ -23,8 +23,8 @@ public class CharFeature {
     };
 
     private static final String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static final char[] n2cu = alphabet.toCharArray();
-    public static final char[] n2cl = alphabet.toLowerCase().toCharArray();
+    public static final char[] n2uc = alphabet.toCharArray();
+    public static final char[] n2lc = alphabet.toLowerCase().toCharArray();
 
     public static int getDigits(int radix, int num) {
         return getDigits(radix, num, false);

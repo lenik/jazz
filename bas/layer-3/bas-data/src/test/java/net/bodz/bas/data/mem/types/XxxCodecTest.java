@@ -1,4 +1,4 @@
-package net.bodz.bas.codec.mem.types;
+package net.bodz.bas.data.mem.types;
 
 import java.util.Arrays;
 import java.util.Random;
