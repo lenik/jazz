@@ -97,6 +97,8 @@ public abstract class AbstractDataIn
     public final void readBytes(byte[] buf, int off, int len)
             throws IOException {
         int cb = read(buf, off, len);
+
+        // XXX if (cb == -1)
         if (cb != len)
             throw new EOFException();
     }

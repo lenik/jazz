@@ -17,6 +17,15 @@ public class ByteBufferByteIn
     }
 
     @Override
+    public long skip(long n)
+            throws IOException {
+        int min = (int) Math.min(n, byteBuffer.remaining());
+        int position = byteBuffer.position();
+        byteBuffer.position(position + min);
+        return min;
+    }
+
+    @Override
     public int read()
             throws IOException {
         if (byteBuffer.hasRemaining()) {

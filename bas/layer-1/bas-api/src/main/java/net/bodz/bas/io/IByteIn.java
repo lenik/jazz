@@ -8,6 +8,13 @@ public interface IByteIn
         extends ISimpleByteIn, Closeable {
 
     /**
+     * @return the actual number of bytes skipped.
+     */
+    long skip(long n)
+            throws IOException;
+
+    /**
+     * @return <code>-1</code> if the EOF is reached.
      * @throws NullPointerException
      *             If <code>buf</code> is <code>null</code>.
      */
@@ -15,6 +22,7 @@ public interface IByteIn
             throws IOException;
 
     /**
+     * @return <code>-1</code> if the EOF is reached.
      * @throws NullPointerException
      *             If <code>buf</code> is <code>null</code>.
      */
