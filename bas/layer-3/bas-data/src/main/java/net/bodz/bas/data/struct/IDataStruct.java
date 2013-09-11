@@ -17,4 +17,9 @@ public interface IDataStruct
     void writeObject(IDataOut out)
             throws IOException;
 
+    int FORMAT_LE = 0;
+    int FORMAT_BE = 1;
+
+    IDataIn transfer(int format);
+
 }
