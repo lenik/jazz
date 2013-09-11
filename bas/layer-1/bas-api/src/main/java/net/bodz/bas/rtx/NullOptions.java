@@ -5,7 +5,7 @@ import java.util.Iterator;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.t.iterator.Iterators;
 
-public class NoOptions
+class NullOptions
         extends AbstractOptions {
 
     @Override
@@ -26,12 +26,6 @@ public class NoOptions
     @Override
     protected AbstractOptions addOption(IOption option) {
         throw new ReadOnlyException();
-    }
-
-    static final NoOptions instance = new NoOptions();
-
-    public static NoOptions getInstance() {
-        return instance;
     }
 
 }

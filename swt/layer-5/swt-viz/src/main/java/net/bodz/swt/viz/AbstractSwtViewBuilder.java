@@ -15,7 +15,6 @@ import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.NoOptions;
 
 public abstract class AbstractSwtViewBuilder<T>
         extends AbstractViewBuilder<T>
@@ -42,7 +41,7 @@ public abstract class AbstractSwtViewBuilder<T>
     @Override
     public final Widget buildView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt)
             throws ViewBuilderException {
-        return buildView(parent, entry, styleInt, NoOptions.getInstance());
+        return buildView(parent, entry, styleInt, IOptions.NULL);
     }
 
     protected void bindProperty(final IRefEntry<?> entry, final Control control, final IValueChangeListener listener) {

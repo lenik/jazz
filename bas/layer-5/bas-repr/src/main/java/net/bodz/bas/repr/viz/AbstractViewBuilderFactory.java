@@ -9,7 +9,6 @@ import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.NoOptions;
 
 public abstract class AbstractViewBuilderFactory
         implements IViewBuilderFactory, II18nCapable {
@@ -64,7 +63,7 @@ public abstract class AbstractViewBuilderFactory
     @Override
     public Object buildView(Object ctx, IRefEntry<?> entry)
             throws ViewBuilderException {
-        return buildView(ctx, entry, NoOptions.getInstance());
+        return buildView(ctx, entry, IOptions.NULL);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
