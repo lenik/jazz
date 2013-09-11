@@ -1,9 +1,6 @@
 package net.bodz.bas.text.rst;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.StringNum;
 import net.bodz.bas.err.NotImplementedException;
@@ -276,7 +273,7 @@ public class DataCodec
     @Override
     public byte[] parseBytes(String field, String data)
             throws ParseException {
-        int n = countWords(data);
+        int n = StringArray.countWords(data);
         byte[] buf = new byte[n];
         parseBytes(field, data, buf, 0, n);
         return buf;
@@ -286,7 +283,7 @@ public class DataCodec
     public int parseBytes(String field, String data, byte[] buf, int off, int maxLen)
             throws ParseException {
         int index = 0;
-        for (String word : extractWords(data, maxLen)) {
+        for (String word : StringArray.extractWords(data, maxLen)) {
             try {
                 byte val = StringNum.parseByte(word, 0);
                 buf[off++] = val;
@@ -301,7 +298,7 @@ public class DataCodec
     @Override
     public short[] parseShorts(String field, String data)
             throws ParseException {
-        int n = countWords(data);
+        int n = StringArray.countWords(data);
         short[] buf = new short[n];
         parseShorts(field, data, buf, 0, n);
         return buf;
@@ -311,7 +308,7 @@ public class DataCodec
     public int parseShorts(String field, String data, short[] buf, int off, int maxLen)
             throws ParseException {
         int index = 0;
-        for (String word : extractWords(data, maxLen)) {
+        for (String word : StringArray.extractWords(data, maxLen)) {
             try {
                 short val = StringNum.parseShort(word, 0);
                 buf[off++] = val;
@@ -326,7 +323,7 @@ public class DataCodec
     @Override
     public int[] parseInts(String field, String data)
             throws ParseException {
-        int n = countWords(data);
+        int n = StringArray.countWords(data);
         int[] buf = new int[n];
         parseInts(field, data, buf, 0, n);
         return buf;
@@ -336,7 +333,7 @@ public class DataCodec
     public int parseInts(String field, String data, int[] buf, int off, int maxLen)
             throws ParseException {
         int index = 0;
-        for (String word : extractWords(data, maxLen)) {
+        for (String word : StringArray.extractWords(data, maxLen)) {
             try {
                 int val = StringNum.parseInt(word, 0);
                 buf[off++] = val;
@@ -351,7 +348,7 @@ public class DataCodec
     @Override
     public long[] parseLongs(String field, String data)
             throws ParseException {
-        int n = countWords(data);
+        int n = StringArray.countWords(data);
         long[] buf = new long[n];
         parseLongs(field, data, buf, 0, n);
         return buf;
@@ -361,7 +358,7 @@ public class DataCodec
     public int parseLongs(String field, String data, long[] buf, int off, int maxLen)
             throws ParseException {
         int index = 0;
-        for (String word : extractWords(data, maxLen)) {
+        for (String word : StringArray.extractWords(data, maxLen)) {
             try {
                 long val = StringNum.parseLong(word, 0);
                 buf[off++] = val;
@@ -376,7 +373,7 @@ public class DataCodec
     @Override
     public float[] parseFloats(String field, String data)
             throws ParseException {
-        int n = countWords(data);
+        int n = StringArray.countWords(data);
         float[] buf = new float[n];
         parseFloats(field, data, buf, 0, n);
         return buf;
@@ -386,7 +383,7 @@ public class DataCodec
     public int parseFloats(String field, String data, float[] buf, int off, int maxLen)
             throws ParseException {
         int index = 0;
-        for (String word : extractWords(data, maxLen)) {
+        for (String word : StringArray.extractWords(data, maxLen)) {
             try {
                 float val = Float.parseFloat(word);
                 buf[off++] = val;
@@ -401,7 +398,7 @@ public class DataCodec
     @Override
     public double[] parseDoubles(String field, String data)
             throws ParseException {
-        int n = countWords(data);
+        int n = StringArray.countWords(data);
         double[] buf = new double[n];
         parseDoubles(field, data, buf, 0, n);
         return buf;
@@ -411,7 +408,7 @@ public class DataCodec
     public int parseDoubles(String field, String data, double[] buf, int off, int maxLen)
             throws ParseException {
         int index = 0;
-        for (String word : extractWords(data, maxLen)) {
+        for (String word : StringArray.extractWords(data, maxLen)) {
             try {
                 double val = Double.parseDouble(word);
                 buf[off++] = val;
@@ -426,7 +423,7 @@ public class DataCodec
     @Override
     public boolean[] parseBools(String field, String data)
             throws ParseException {
-        int n = countWords(data);
+        int n = StringArray.countWords(data);
         boolean[] buf = new boolean[n];
         parseBools(field, data, buf, 0, n);
         return buf;
@@ -436,7 +433,7 @@ public class DataCodec
     public int parseBools(String field, String data, boolean[] buf, int off, int maxLen)
             throws ParseException {
         int index = 0;
-        for (String word : extractWords(data, maxLen)) {
+        for (String word : StringArray.extractWords(data, maxLen)) {
             try {
                 boolean val = Boolean.parseBoolean(word);
                 buf[off++] = val;
@@ -470,52 +467,6 @@ public class DataCodec
     public int parseStrings(String field, String data, String[] buf, int off, int maxLen)
             throws ParseException {
         throw new NotImplementedException();
-    }
-
-    static int countWords(String data) {
-        int count = 0;
-        int pos = 0;
-        int len = data.length();
-        boolean started = false;
-        while (pos < len) {
-            char ch = data.charAt(pos++);
-            boolean space = Character.isWhitespace(ch);
-            if (space && started)
-                count++;
-            started = !space;
-        }
-        if (started)
-            count++;
-        return count;
-    }
-
-    static List<String> extractWords(String data, int maxCount) {
-        if (maxCount == 0)
-            return Collections.emptyList();
-
-        List<String> list = new ArrayList<String>(maxCount);
-
-        int pos = 0;
-        int len = data.length();
-        int startPos = -1;
-        while (pos < len) {
-            char ch = data.charAt(pos);
-            if (Character.isWhitespace(ch)) {
-                if (startPos != -1) {
-                    list.add(data.substring(startPos, pos));
-                    startPos = -1;
-                    if (list.size() >= maxCount)
-                        break;
-                }
-            } else {
-                if (startPos == -1)
-                    startPos = pos;
-            }
-            pos++;
-        }
-        if (startPos != -1)
-            list.add(data.substring(startPos));
-        return list;
     }
 
 }

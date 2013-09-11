@@ -2,6 +2,7 @@ package net.bodz.bas.c.string;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -261,6 +262,52 @@ public class StringArray {
 
     public static String[] splitBySize(String s, int size) {
         return splitBySize(s, size, 0);
+    }
+
+    public static int countWords(String data) {
+        int count = 0;
+        int pos = 0;
+        int len = data.length();
+        boolean started = false;
+        while (pos < len) {
+            char ch = data.charAt(pos++);
+            boolean space = Character.isWhitespace(ch);
+            if (space && started)
+                count++;
+            started = !space;
+        }
+        if (started)
+            count++;
+        return count;
+    }
+
+    public static List<String> extractWords(String data, int maxCount) {
+        if (maxCount == 0)
+            return Collections.emptyList();
+
+        List<String> list = new ArrayList<String>(Math.min(maxCount, 32));
+
+        int pos = 0;
+        int len = data.length();
+        int startPos = -1;
+        while (pos < len) {
+            char ch = data.charAt(pos);
+            if (Character.isWhitespace(ch)) {
+                if (startPos != -1) {
+                    list.add(data.substring(startPos, pos));
+                    startPos = -1;
+                    if (list.size() >= maxCount)
+                        break;
+                }
+            } else {
+                if (startPos == -1)
+                    startPos = pos;
+            }
+            pos++;
+        }
+        if (startPos != -1)
+            list.add(data.substring(startPos));
+        return list;
     }
 
 }
