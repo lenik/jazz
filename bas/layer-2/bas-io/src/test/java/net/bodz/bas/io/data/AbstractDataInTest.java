@@ -72,9 +72,9 @@ public abstract class AbstractDataInTest
             throws IOException {
         IDataIn in = getDataIn(seqBytes);
         byte[] buf = new byte[4];
-        in.readFully(buf);
+        in.readBytes(buf);
         assertArrayEquals(new byte[] { (byte) 0x11, (byte) 0x22, (byte) 0x33, (byte) 0x44 }, buf);
-        in.readFully(buf);
+        in.readBytes(buf);
         assertArrayEquals(new byte[] { (byte) 0x55, (byte) 0x66, (byte) 0x77, (byte) 0x88 }, buf);
     }
 
@@ -83,9 +83,9 @@ public abstract class AbstractDataInTest
             throws IOException {
         IDataIn in = getDataIn(seqBytes);
         for (int i = 0; i < 15; i++) {
-            assertTrue("Offset " + i, in.readBoolean());
+            assertTrue("Offset " + i, in.readBool());
         }
-        assertFalse(in.readBoolean());
+        assertFalse(in.readBool());
     }
 
     @Test
@@ -95,7 +95,7 @@ public abstract class AbstractDataInTest
         int len = utf8String.length();
         for (int i = 0; i < len; i++) {
             char expect = utf8String.charAt(i);
-            char actual = in.readUtf8Char();
+            char actual = in.readChar(0);
             assertEquals("Offset " + i, expect, actual);
         }
     }

@@ -51,6 +51,8 @@ public class ReflectRstDumper {
             if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers))
                 continue;
 
+            field.setAccessible(true);
+
             String name = field.getName();
             Object _value;
             try {

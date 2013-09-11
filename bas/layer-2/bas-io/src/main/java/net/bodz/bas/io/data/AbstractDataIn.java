@@ -28,20 +28,6 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public final void readFully(byte[] buf)
-            throws IOException {
-        readFully(buf, 0, buf.length);
-    }
-
-    @Override
-    public final void readFully(byte[] buf, int off, int len)
-            throws IOException {
-        int cb = read(buf, off, len);
-        if (cb != len)
-            throw new EOFException();
-    }
-
-    @Override
     public float readFloat()
             throws IOException {
         int bits = readDword();
@@ -56,13 +42,23 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public boolean readBoolean()
+    public boolean readBool()
             throws IOException {
         byte b = readByte();
         return b != 0;
     }
 
     @Override
+    public char readChar(int flags)
+            throws IOException {
+        if ((flags & StringFlags._16BIT) != 0)
+            // UTF-16 LE/BE depends on implementation.
+            return (char) (readWord() & 0xffff);
+        else
+            // UTF-8
+            return readUtf8Char();
+    }
+
     public synchronized char readUtf8Char()
             throws IOException {
         int x = readByte() & 0xFF;
@@ -89,6 +85,130 @@ public abstract class AbstractDataIn
         }
 
         throw new DecodeException("Bad UTF-8 char sequence.");
+    }
+
+    @Override
+    public final void readBytes(byte[] buf)
+            throws IOException {
+        readBytes(buf, 0, buf.length);
+    }
+
+    @Override
+    public final void readBytes(byte[] buf, int off, int len)
+            throws IOException {
+        int cb = read(buf, off, len);
+        if (cb != len)
+            throw new EOFException();
+    }
+
+    @Override
+    public final void readWords(short[] buf)
+            throws IOException {
+        readWords(buf, 0, buf.length);
+    }
+
+    @Override
+    public void readWords(short[] buf, int off, int len)
+            throws IOException {
+        for (int i = 0; i < len; i++)
+            buf[off++] = readWord();
+    }
+
+    @Override
+    public final void readDwords(int[] buf)
+            throws IOException {
+        readDwords(buf, 0, buf.length);
+    }
+
+    @Override
+    public void readDwords(int[] buf, int off, int len)
+            throws IOException {
+        for (int i = 0; i < len; i++)
+            buf[off++] = readDword();
+    }
+
+    @Override
+    public final void readQwords(long[] buf)
+            throws IOException {
+        readQwords(buf, 0, buf.length);
+    }
+
+    @Override
+    public void readQwords(long[] buf, int off, int len)
+            throws IOException {
+        for (int i = 0; i < len; i++)
+            buf[off++] = readQword();
+    }
+
+    @Override
+    public final void readFloats(float[] buf)
+            throws IOException {
+        readFloats(buf, 0, buf.length);
+    }
+
+    @Override
+    public void readFloats(float[] buf, int off, int len)
+            throws IOException {
+        for (int i = 0; i < len; i++)
+            buf[off++] = readFloat();
+    }
+
+    @Override
+    public final void readDoubles(double[] buf)
+            throws IOException {
+        readDoubles(buf, 0, buf.length);
+    }
+
+    @Override
+    public void readDoubles(double[] buf, int off, int len)
+            throws IOException {
+        for (int i = 0; i < len; i++)
+            buf[off++] = readDouble();
+    }
+
+    @Override
+    public final void readBools(boolean[] buf)
+            throws IOException {
+        readBools(buf, 0, buf.length);
+    }
+
+    @Override
+    public void readBools(boolean[] buf, int off, int len)
+            throws IOException {
+        for (int i = 0; i < len; i++)
+            buf[off++] = readBool();
+    }
+
+    @Override
+    public final void readChars(int flags, char[] buf)
+            throws IOException {
+        readChars(flags, buf, 0, buf.length);
+    }
+
+    @Override
+    public synchronized void readChars(int flags, char[] buf, int off, int len)
+            throws IOException {
+        byte[] bb = new byte[len * 2];
+        readBytes(bb);
+        int j = -1;
+
+        if ((flags & StringFlags._16BIT) != 0)
+            if (isBigEndian())
+                for (int i = 0; i < len; i++) {
+                    int high = bb[++j] & 0xff;
+                    int low = bb[++j] & 0xff;
+                    buf[off++] = (char) ((high << 8) | low);
+                }
+            else
+                for (int i = 0; i < len; i++) {
+                    int low = bb[++j] & 0xff;
+                    int high = bb[++j] & 0xff;
+                    buf[off++] = (char) ((high << 8) | low);
+                }
+
+        else
+            for (int i = 0; i < len; i++)
+                buf[off++] = readUtf8Char();
     }
 
     @Override

@@ -36,10 +36,52 @@ public interface IDataOut
     void writeDouble(double v)
             throws IOException;
 
-    void writeBoolean(boolean v)
+    void writeBool(boolean v)
             throws IOException;
 
-    void writeUtf8Char(char ch)
+    void writeChar(int flags, char ch)
+            throws IOException;
+
+    void writeWords(short[] buf)
+            throws IOException;
+
+    void writeWords(short[] buf, int off, int len)
+            throws IOException;
+
+    void writeDwords(int[] buf)
+            throws IOException;
+
+    void writeDwords(int[] buf, int off, int len)
+            throws IOException;
+
+    void writeQwords(long[] buf)
+            throws IOException;
+
+    void writeQwords(long[] buf, int off, int len)
+            throws IOException;
+
+    void writeFloats(float[] buf)
+            throws IOException;
+
+    void writeFloats(float[] buf, int off, int len)
+            throws IOException;
+
+    void writeDoubles(double[] buf)
+            throws IOException;
+
+    void writeDoubles(double[] buf, int off, int len)
+            throws IOException;
+
+    void writeBools(boolean[] buf)
+            throws IOException;
+
+    void writeBools(boolean[] buf, int off, int len)
+            throws IOException;
+
+    void writeChars(int flags, char[] buf)
+            throws IOException;
+
+    void writeChars(int flags, char[] buf, int off, int len)
             throws IOException;
 
     /**
