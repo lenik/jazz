@@ -23,6 +23,12 @@ public class InputStreamByteIn
     }
 
     @Override
+    public long skip(long n)
+            throws IOException {
+        return in.skip(n);
+    }
+
+    @Override
     public int read()
             throws IOException {
         return in.read();
@@ -31,7 +37,8 @@ public class InputStreamByteIn
     @Override
     public int read(byte[] buf, int off, int len)
             throws IOException {
-        return in.read(buf, off, len);
+        int cb = in.read(buf, off, len);
+        return cb;
     }
 
     /**

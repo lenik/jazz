@@ -46,6 +46,14 @@ public class BByteIn
     }
 
     @Override
+    public long skip(long n)
+            throws IOException {
+        int min = (int) Math.min(n, end - position);
+        position += min;
+        return min;
+    }
+
+    @Override
     public int read()
             throws IOException {
         if (position < end)

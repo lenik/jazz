@@ -24,6 +24,14 @@ public class MovableByteBufferByteIn
     }
 
     @Override
+    public synchronized long skip(long n)
+            throws IOException {
+        int min = (int) Math.min(n, buffer.size() - position);
+        position += min;
+        return min;
+    }
+
+    @Override
     public synchronized int read() {
         checkIfClosed();
         if (position < buffer.size()) {

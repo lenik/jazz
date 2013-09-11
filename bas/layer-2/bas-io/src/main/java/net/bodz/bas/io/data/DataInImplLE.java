@@ -25,6 +25,12 @@ public class DataInImplLE
     }
 
     @Override
+    public long skip(long n)
+            throws IOException {
+        return baseImpl.skip(n);
+    }
+
+    @Override
     public int read(byte[] buf, int off, int len)
             throws IOException {
         return baseImpl.read(buf, off, len);
