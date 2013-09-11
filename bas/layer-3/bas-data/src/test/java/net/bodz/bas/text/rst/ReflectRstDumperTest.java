@@ -10,9 +10,10 @@ import net.bodz.bas.t.pojo.eg.bookstore.Cat;
 import net.bodz.bas.t.pojo.eg.bookstore.Dog;
 import net.bodz.bas.t.pojo.eg.bookstore.Zoo;
 
-public class ReflectRstWriterTest
+public class ReflectRstDumperTest
         extends Assert {
 
+    ReflectRstDumper dumper = ReflectRstDumper.getInstance();
     Zoo zoo = new Zoo();
 
     @Before
@@ -28,7 +29,7 @@ public class ReflectRstWriterTest
     @Test
     public void test1()
             throws Exception {
-        String rst = ReflectRstDumper.dump(zoo);
+        String rst = dumper.dump(zoo);
 
         Zoo zoo2 = new Zoo();
 
@@ -36,7 +37,7 @@ public class ReflectRstWriterTest
         loader.load(new StringSource(rst), zoo2);
 
         IRstOutput out = RstOutputImpl.from(Stdio.cout);
-        ReflectRstDumper.dump(out, zoo2);
+        dumper.dump(out, zoo2);
     }
 
 }

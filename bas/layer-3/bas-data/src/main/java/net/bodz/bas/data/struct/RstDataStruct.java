@@ -10,26 +10,17 @@ import net.bodz.bas.io.data.DataInImplBE;
 import net.bodz.bas.io.data.DataInImplLE;
 import net.bodz.bas.io.data.DataOutImplBE;
 import net.bodz.bas.io.data.DataOutImplLE;
-import net.bodz.bas.text.rst.IElementHandler;
-import net.bodz.bas.text.rst.IRstOutput;
-import net.bodz.bas.text.rst.IRstSerializable;
-import net.bodz.bas.text.rst.ReflectElementHandler;
-import net.bodz.bas.text.rst.ReflectRstDumper;
+import net.bodz.bas.text.rst.RstObject;
 
-public abstract class DataStruct
-        implements IDataStruct, IRstSerializable {
+public abstract class RstDataStruct
+        extends RstObject
+        implements IDataStruct {
 
     private static final long serialVersionUID = 1L;
 
     @Override
     public int sizeof() {
         return new ReflectSizeComputer(this).sizeof();
-    }
-
-    @Override
-    public void writeObject(IRstOutput out)
-            throws IOException {
-        ReflectRstDumper.dump(out, this);
     }
 
     @SuppressWarnings("resource")
@@ -64,11 +55,6 @@ public abstract class DataStruct
         default:
             throw new UnexpectedException();
         }
-    }
-
-    @Override
-    public IElementHandler getElementHandler() {
-        return new ReflectElementHandler(this);
     }
 
 }
