@@ -23,7 +23,7 @@ public abstract class AbstractDataInLE
     @Override
     public synchronized int readDword()
             throws IOException {
-        readFully(buf, 0, 4);
+        readBytes(buf, 0, 4);
         return (buf[3] & 0xFF) << 24 //
                 | (buf[2] & 0xFF) << 16 //
                 | (buf[1] & 0xFF) << 8 //
@@ -33,7 +33,7 @@ public abstract class AbstractDataInLE
     @Override
     public synchronized long readQword()
             throws IOException {
-        readFully(buf, 0, 8);
+        readBytes(buf, 0, 8);
         int high = (buf[7] & 0xFF) << 24 //
                 | (buf[6] & 0xFF) << 16 //
                 | (buf[5] & 0xFF) << 8 //

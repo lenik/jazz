@@ -68,12 +68,82 @@ public class NullDataOut
     }
 
     @Override
-    public void writeBoolean(boolean b)
+    public void writeBool(boolean b)
             throws IOException {
     }
 
     @Override
-    public void writeUtf8Char(char ch)
+    public void writeChar(int flags, char ch)
+            throws IOException {
+    }
+
+    @Override
+    public void writeWords(short[] buf)
+            throws IOException {
+    }
+
+    @Override
+    public void writeWords(short[] buf, int off, int len)
+            throws IOException {
+    }
+
+    @Override
+    public void writeDwords(int[] buf)
+            throws IOException {
+    }
+
+    @Override
+    public void writeDwords(int[] buf, int off, int len)
+            throws IOException {
+    }
+
+    @Override
+    public void writeQwords(long[] buf)
+            throws IOException {
+    }
+
+    @Override
+    public void writeQwords(long[] buf, int off, int len)
+            throws IOException {
+    }
+
+    @Override
+    public void writeFloats(float[] buf)
+            throws IOException {
+    }
+
+    @Override
+    public void writeFloats(float[] buf, int off, int len)
+            throws IOException {
+    }
+
+    @Override
+    public void writeDoubles(double[] buf)
+            throws IOException {
+    }
+
+    @Override
+    public void writeDoubles(double[] buf, int off, int len)
+            throws IOException {
+    }
+
+    @Override
+    public void writeBools(boolean[] buf)
+            throws IOException {
+    }
+
+    @Override
+    public void writeBools(boolean[] buf, int off, int len)
+            throws IOException {
+    }
+
+    @Override
+    public void writeChars(int flags, char[] buf)
+            throws IOException {
+    }
+
+    @Override
+    public void writeChars(int flags, char[] buf, int off, int len)
             throws IOException {
     }
 

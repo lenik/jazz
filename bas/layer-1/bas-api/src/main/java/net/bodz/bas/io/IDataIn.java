@@ -18,24 +18,6 @@ public interface IDataIn
      * @exception IOException
      *                if an I/O error occurs.
      */
-    void readFully(byte[] buf)
-            throws IOException;
-
-    /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
-     */
-    void readFully(byte[] buf, int off, int len)
-            throws IOException;
-
-    /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
-     */
     byte readByte()
             throws IOException;
 
@@ -90,7 +72,7 @@ public interface IDataIn
      * @exception IOException
      *                if an I/O error occurs.
      */
-    boolean readBoolean()
+    boolean readBool()
             throws IOException;
 
     /**
@@ -101,7 +83,67 @@ public interface IDataIn
      * @exception IOException
      *                if an I/O error occurs.
      */
-    char readUtf8Char()
+    char readChar(int flags)
+            throws IOException;
+
+    /**
+     * @exception EOFException
+     *                if this stream reaches the end before reading all the bytes.
+     * @exception IOException
+     *                if an I/O error occurs.
+     */
+    void readBytes(byte[] buf)
+            throws IOException;
+
+    /**
+     * @exception EOFException
+     *                if this stream reaches the end before reading all the bytes.
+     * @exception IOException
+     *                if an I/O error occurs.
+     */
+    void readBytes(byte[] buf, int off, int len)
+            throws IOException;
+
+    void readWords(short[] buf)
+            throws IOException;
+
+    void readWords(short[] buf, int off, int len)
+            throws IOException;
+
+    void readDwords(int[] buf)
+            throws IOException;
+
+    void readDwords(int[] buf, int off, int len)
+            throws IOException;
+
+    void readQwords(long[] buf)
+            throws IOException;
+
+    void readQwords(long[] buf, int off, int len)
+            throws IOException;
+
+    void readFloats(float[] buf)
+            throws IOException;
+
+    void readFloats(float[] buf, int off, int len)
+            throws IOException;
+
+    void readDoubles(double[] buf)
+            throws IOException;
+
+    void readDoubles(double[] buf, int off, int len)
+            throws IOException;
+
+    void readBools(boolean[] buf)
+            throws IOException;
+
+    void readBools(boolean[] buf, int off, int len)
+            throws IOException;
+
+    void readChars(int flags, char[] buf)
+            throws IOException;
+
+    void readChars(int flags, char[] buf, int off, int len)
             throws IOException;
 
     /**
