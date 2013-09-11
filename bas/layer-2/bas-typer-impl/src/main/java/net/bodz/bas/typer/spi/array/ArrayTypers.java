@@ -2,6 +2,7 @@ package net.bodz.bas.typer.spi.array;
 
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.IParser;
 
 /**
@@ -26,9 +27,9 @@ public abstract class ArrayTypers<T>
     }
 
     @Override
-    public T[] parse(String text)
+    public T[] parse(String text, IOptions options)
             throws ParseException {
-        return super.parse(text);
+        return super.parse(text, options);
     }
 
 }

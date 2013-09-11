@@ -5,6 +5,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IFormatter;
 
@@ -60,7 +61,7 @@ public class QueryMethodTyperProviderTest
         }
 
         @Override
-        public String format(Object object) {
+        public String format(Object object, IOptions options) {
             return message + " blah";
         }
 

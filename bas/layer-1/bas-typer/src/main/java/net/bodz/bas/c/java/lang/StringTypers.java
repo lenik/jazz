@@ -1,6 +1,6 @@
 package net.bodz.bas.c.java.lang;
 
-import java.util.Map;
+import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
@@ -49,33 +49,21 @@ public class StringTypers
     }
 
     @Override
-    public String parse(String text)
+    public String parse(String text, IOptions options)
             throws ParseException {
         return text;
     }
 
     @Override
-    public String newSample()
-            throws CreateException {
-        return newSample( //
-                defaultSampleCharSample, //
-                defaultSampleMinLength, //
-                defaultSampleMaxLength);
-    }
-
-    @Override
-    public String newSample(Map<String, Object> classification, IOptions options)
+    public String newSample(IOptions options)
             throws CreateException {
         int minLength = options.getInt(sampleMinLength, defaultSampleMinLength);
         int maxLength = options.getInt(sampleMaxLength, defaultSampleMaxLength);
         ISampleGenerator<Character> charSample = options.get(sampleCharSample, defaultSampleCharSample);
 
-        return newSample(charSample, minLength, maxLength);
-    }
+        Random prng = options.get(Random.class, random);
 
-    public String newSample(ISampleGenerator<Character> charSample, int minLength, int maxLength)
-            throws CreateException {
-        int length = minLength + random.nextInt(maxLength + 1 - minLength);
+        int length = minLength + prng.nextInt(maxLength + 1 - minLength);
         StringBuilder sample = new StringBuilder(length);
         for (int i = 0; i < length; i++)
             sample.append(charSample.newSample());

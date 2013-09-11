@@ -1,5 +1,7 @@
 package net.bodz.bas.typer.spi.array;
 
+import java.util.Random;
+
 import net.bodz.bas.c.java.lang.CharacterTypers;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
@@ -30,56 +32,20 @@ public class CharArrayTypers
     }
 
     @Override
-    public char[] parse(String text)
+    public char[] parse(String text, IOptions options)
             throws ParseException {
         return text.toCharArray();
     }
 
-    public static class CharArraySampleParameters
-            extends ArraySampleParameters {
-
-        private ISampleGenerator<Character> charSample;
-
-        public CharArraySampleParameters(int minLength, int maxLength, ISampleGenerator<Character> charSample) {
-            super(minLength, maxLength);
-            if (charSample == null)
-                throw new NullPointerException("charSample");
-            setCharSample(charSample);
-        }
-
-        public ISampleGenerator<Character> getCharSample() {
-            return charSample;
-        }
-
-        public void setCharSample(ISampleGenerator<Character> charSample) {
-            if (charSample == null)
-                throw new NullPointerException("charSample");
-            this.charSample = charSample;
-        }
-
-        @Override
-        public void negotiate(IOptions options) {
-            super.negotiate(options);
-            charSample = options.get(sampleCharSample, charSample);
-        }
-
-    }
-
     @Override
-    public CharArraySampleParameters newSampleParameters() {
-        return new CharArraySampleParameters(//
-                defaultSampleMinLength, //
-                defaultSampleMaxLength, //
-                defaultSampleCharSample);
-    }
-
-    @Override
-    public char[] newSample(ArraySampleParameters asp)
+    public char[] newSample(IOptions options)
             throws CreateException {
-        CharArraySampleParameters casp = (CharArraySampleParameters) asp;
-        ISampleGenerator<Character> charSample = casp.getCharSample();
+        ISampleGenerator<Character> charSample = options.get(sampleCharSample, defaultSampleCharSample);
+        Random prng = options.get(Random.class, random);
+        int minLen = options.getInt(sampleMinLength, defaultSampleMinLength);
+        int maxLen = options.getInt(sampleMaxLength, defaultSampleMaxLength);
+        int length = minLen + prng.nextInt(maxLen - minLen);
 
-        int length = casp.nextLength();
         char[] sample = new char[length];
         for (int i = 0; i < length; i++)
             sample[i] = charSample.newSample();

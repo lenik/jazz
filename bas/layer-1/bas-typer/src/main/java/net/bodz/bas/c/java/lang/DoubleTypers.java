@@ -1,6 +1,6 @@
 package net.bodz.bas.c.java.lang;
 
-import java.util.Map;
+import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
@@ -41,7 +41,7 @@ public class DoubleTypers
     }
 
     @Override
-    public Double parse(String text)
+    public Double parse(String text, IOptions options)
             throws ParseException {
         try {
             return Double.valueOf(text);
@@ -51,22 +51,18 @@ public class DoubleTypers
     }
 
     @Override
-    public Double newSample()
+    public Double newSample(IOptions options)
             throws CreateException {
-        return random.nextDouble();
-    }
-
-    @Override
-    public Double newSample(Map<String, Object> classification, IOptions options)
-            throws CreateException {
+        Random prng = options.get(Random.class, random);
         String distribution = options.get(sampleDistribution, defaultSampleDistribution);
-
-        if (normalSampleDistribution.equals(distribution))
-            return random.nextDouble();
-        else if (gaussianSampleDistribution.equals(distribution))
-            return random.nextGaussian();
-        else
+        switch (distribution) {
+        case normalSampleDistribution:
+            return prng.nextDouble();
+        case gaussianSampleDistribution:
+            return prng.nextGaussian();
+        default:
             throw new IllegalParameterUsageException(options.getOption(sampleDistribution));
+        }
     }
 
 }

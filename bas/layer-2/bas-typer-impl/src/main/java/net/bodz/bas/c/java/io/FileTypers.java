@@ -33,13 +33,6 @@ public class FileTypers
     }
 
     @Override
-    public File parse(String text)
-            throws ParseException {
-        File file = new File(defaultTextformContextDirectory, text);
-        return file;
-    }
-
-    @Override
     public File parse(String text, IOptions options)
             throws ParseException {
         File contextDirectory = options.get(textformContextDirectory, defaultTextformContextDirectory);

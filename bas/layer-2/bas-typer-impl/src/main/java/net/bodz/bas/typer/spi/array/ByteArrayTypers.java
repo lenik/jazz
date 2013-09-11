@@ -1,7 +1,9 @@
 package net.bodz.bas.typer.spi.array;
 
 import java.nio.charset.Charset;
+import java.util.Random;
 
+import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.rtx.IOptions;
@@ -31,12 +33,6 @@ public class ByteArrayTypers
     }
 
     @Override
-    public byte[] parse(String text)
-            throws ParseException {
-        return text.getBytes(defaultTextformCharset);
-    }
-
-    @Override
     public byte[] parse(String text, IOptions options)
             throws ParseException {
         Charset charset = options.get(textformCharset, defaultTextformCharset);
@@ -44,11 +40,16 @@ public class ByteArrayTypers
     }
 
     @Override
-    public byte[] newSample(ArraySampleParameters sampleParameters) {
-        int length = sampleParameters.nextLength();
+    public byte[] newSample(IOptions options)
+            throws CreateException {
+        Random prng = options.get(Random.class, random);
+        int minLen = options.getInt(sampleMinLength, defaultSampleMinLength);
+        int maxLen = options.getInt(sampleMaxLength, defaultSampleMaxLength);
+        int length = minLen + prng.nextInt(maxLen - minLen);
+
         byte[] sample = new byte[length];
         for (int i = 0; i < length; i++)
-            sample[i] = (byte) random.nextInt();
+            sample[i] = (byte) prng.nextInt();
         return sample;
     }
 

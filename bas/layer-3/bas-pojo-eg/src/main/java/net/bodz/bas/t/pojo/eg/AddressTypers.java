@@ -31,12 +31,6 @@ public class AddressTypers
     }
 
     @Override
-    public Address parse(String text)
-            throws ParseException {
-        return parse(text, null);
-    }
-
-    @Override
     public Address parse(String text, IOptions options)
             throws ParseException {
         String[] segs = text.split(":", 3);
@@ -63,7 +57,7 @@ public class AddressTypers
     }
 
     @Override
-    public String format(Address a) {
+    public String format(Address a, IOptions options) {
         return a.getCountry() + ":" + a.getCity() + ":" + a.getAddress();
     }
 

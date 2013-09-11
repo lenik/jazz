@@ -8,6 +8,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.WriterPrintOut;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 
@@ -26,7 +27,7 @@ public class CharOutTypers
     }
 
     @Override
-    public IPrintOut parse(String path)
+    public IPrintOut parse(String path, IOptions options)
             throws ParseException {
         FileOutputStream out;
         try {
