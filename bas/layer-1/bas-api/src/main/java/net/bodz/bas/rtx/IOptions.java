@@ -111,4 +111,6 @@ public interface IOptions
 
     boolean getBoolean(String id, boolean defaultValue);
 
+    NullOptions NULL = new NullOptions();
+
 }
