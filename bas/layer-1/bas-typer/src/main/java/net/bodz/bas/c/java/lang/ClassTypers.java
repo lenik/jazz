@@ -1,6 +1,7 @@
 package net.bodz.bas.c.java.lang;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 
@@ -22,10 +23,14 @@ public class ClassTypers
     }
 
     @Override
-    public Class<?> parse(String name)
+    public Class<?> parse(String name, IOptions options)
             throws ParseException {
+        ClassLoader classLoader = options.get(ClassLoader.class, null);
         try {
-            return Class.forName(name);
+            if (classLoader == null)
+                return Class.forName(name);
+            else
+                return Class.forName(name, false, classLoader);
         } catch (ClassNotFoundException e) {
             throw new ParseException(e.getMessage(), e);
         }

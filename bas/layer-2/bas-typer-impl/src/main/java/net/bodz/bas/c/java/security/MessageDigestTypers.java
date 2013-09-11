@@ -7,9 +7,11 @@ import java.security.Provider;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.ISampleGenerator;
@@ -32,7 +34,7 @@ public class MessageDigestTypers
     }
 
     @Override
-    public MessageDigest parse(String name)
+    public MessageDigest parse(String name, IOptions options)
             throws ParseException {
         String provider = null;
         int d = name.indexOf("::");
@@ -55,7 +57,7 @@ public class MessageDigestTypers
     List<String> messageDigestNames;
 
     @Override
-    public synchronized MessageDigest newSample()
+    public synchronized MessageDigest newSample(IOptions options)
             throws CreateException {
         if (messageDigestNames == null) {
             messageDigestNames = new ArrayList<String>();
@@ -67,7 +69,10 @@ public class MessageDigestTypers
                 }
             }
         }
-        int randomIndex = random.nextInt(messageDigestNames.size());
+
+        Random prng = options.get(Random.class, random);
+
+        int randomIndex = prng.nextInt(messageDigestNames.size());
         String randomMesageDigestName = messageDigestNames.get(randomIndex);
         try {
             MessageDigest randomMessageDigest = MessageDigest.getInstance(randomMesageDigestName);

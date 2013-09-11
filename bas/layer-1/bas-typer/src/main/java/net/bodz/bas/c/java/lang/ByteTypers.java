@@ -1,7 +1,10 @@
 package net.bodz.bas.c.java.lang;
 
+import java.util.Random;
+
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.ISampleGenerator;
@@ -24,7 +27,7 @@ public class ByteTypers
     }
 
     @Override
-    public Byte parse(String text)
+    public Byte parse(String text, IOptions options)
             throws ParseException {
         try {
             return Byte.valueOf(text);
@@ -34,9 +37,10 @@ public class ByteTypers
     }
 
     @Override
-    public Byte newSample()
+    public Byte newSample(IOptions options)
             throws CreateException {
-        return (byte) random.nextInt();
+        Random prng = options.get(Random.class, random);
+        return (byte) prng.nextInt();
     }
 
 }

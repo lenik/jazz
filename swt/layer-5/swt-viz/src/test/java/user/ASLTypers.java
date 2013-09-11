@@ -1,6 +1,7 @@
 package user;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 
@@ -22,7 +23,7 @@ public class ASLTypers
     }
 
     @Override
-    public ASL parse(String text)
+    public ASL parse(String text, IOptions options)
             throws ParseException {
         int slash = text.indexOf('/');
         int age = Integer.parseInt(text.substring(0, slash));

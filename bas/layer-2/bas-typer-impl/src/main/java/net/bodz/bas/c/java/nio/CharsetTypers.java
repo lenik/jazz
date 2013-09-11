@@ -5,9 +5,11 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.ISampleGenerator;
@@ -30,7 +32,7 @@ public class CharsetTypers
     }
 
     @Override
-    public Charset parse(String name)
+    public Charset parse(String name, IOptions options)
             throws ParseException {
         try {
             return Charset.forName(name);
@@ -42,7 +44,7 @@ public class CharsetTypers
     private static List<String> availableCharsetNames;
 
     @Override
-    public Charset newSample()
+    public Charset newSample(IOptions options)
             throws CreateException {
         if (availableCharsetNames == null) {
             synchronized (CharsetTypers.class) {
@@ -52,7 +54,9 @@ public class CharsetTypers
                 }
             }
         }
-        int randomIndex = random.nextInt(availableCharsetNames.size());
+
+        Random prng = options.get(Random.class, random);
+        int randomIndex = prng.nextInt(availableCharsetNames.size());
         String randomCharsetName = availableCharsetNames.get(randomIndex);
         Charset randomCharset = Charset.forName(randomCharsetName);
         return randomCharset;

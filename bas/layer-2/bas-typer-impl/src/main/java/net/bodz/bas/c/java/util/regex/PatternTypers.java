@@ -45,12 +45,6 @@ public class PatternTypers
     }
 
     @Override
-    public Pattern parse(String regexp)
-            throws ParseException {
-        return Pattern.compile(regexp);
-    }
-
-    @Override
     public Pattern parse(String text, IOptions options)
             throws ParseException {
         String mode = options.get(textformMode, defaultTextformMode);

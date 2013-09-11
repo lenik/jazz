@@ -31,10 +31,14 @@ public interface ISampleGenerator<T>
     @ParameterType(String.class)
     String sampleUsage = "sample.usage";
 
+    @ParameterType(Map.class)
+    String sampleClassification = "sample.classification";
+
     /**
      * Negotiations:
      * <ul>
      * <li>Optional {@link #sampleUsage}: Generate samples for specified usage.
+     * <li>Optional {@link #sampleClass}: Generate samples of specified classification.
      * <li>Optional {@link Random}.class: Build random samples rather than meaningful ones, with the
      * specified {@link Random} generator when possible.
      * </ul>
@@ -42,7 +46,7 @@ public interface ISampleGenerator<T>
      * @return <code>null</code> if the sample space restricted by <code>classification</code> is
      *         empty.
      */
-    T newSample(Map<String, Object> classification, IOptions options)
+    T newSample(IOptions options)
             throws CreateException;
 
 }

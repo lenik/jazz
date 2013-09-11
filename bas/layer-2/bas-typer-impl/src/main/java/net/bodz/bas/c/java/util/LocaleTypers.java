@@ -2,9 +2,9 @@ package net.bodz.bas.c.java.util;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
+import java.util.Random;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
@@ -33,12 +33,6 @@ public class LocaleTypers
             return this;
         }
         return null;
-    }
-
-    @Override
-    public Locale parse(String localeName)
-            throws ParseException {
-        return parseLocale(localeName);
     }
 
     @Override
@@ -74,14 +68,16 @@ public class LocaleTypers
     }
 
     @Override
-    public synchronized Locale newSample()
+    public synchronized Locale newSample(IOptions options)
             throws CreateException {
         Locale[] availableLocales = availableLocalesRef.get();
         if (availableLocales == null) {
             availableLocales = Locale.getAvailableLocales();
             availableLocalesRef = new WeakReference<Locale[]>(availableLocales);
         }
-        int randomIndex = random.nextInt(availableLocales.length);
+
+        Random prng = options.get(Random.class, random);
+        int randomIndex = prng.nextInt(availableLocales.length);
         return availableLocales[randomIndex];
     }
 
