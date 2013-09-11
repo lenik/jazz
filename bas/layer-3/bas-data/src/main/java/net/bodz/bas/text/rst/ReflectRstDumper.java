@@ -17,13 +17,13 @@ import net.bodz.bas.l10n.en.English;
 
 public class ReflectRstDumper {
 
-    private static Set<Class<?>> stopClasses = new HashSet<>();
-    static {
+    private Set<Class<?>> stopClasses = new HashSet<>();
+    {
         stopClasses.add(Object.class);
         stopClasses.add(ReflectElementHandler.class);
     }
 
-    public static String dump(Object obj) {
+    public String dump(Object obj) {
         BCharOut buf = new BCharOut();
         IRstOutput out = RstOutputImpl.from(buf);
         try {
@@ -34,22 +34,30 @@ public class ReflectRstDumper {
         return buf.toString();
     }
 
-    public static void dump(IRstOutput out, Object obj)
+    public void dump(IRstOutput out, Object obj)
             throws IOException {
         _dump(out, obj, obj.getClass());
     }
 
-    static void _dump(IRstOutput out, Object obj, Class<?> clazz)
+    void _dump(IRstOutput out, Object obj, Class<?> clazz)
             throws IOException {
         Class<?> superclass = clazz.getSuperclass();
         if (superclass != null)
             if (!stopClasses.contains(superclass))
                 _dump(out, obj, superclass);
 
+        IRstFieldOverride fieldOverride = null;
+        if (obj instanceof IRstFieldOverride)
+            fieldOverride = (IRstFieldOverride) obj;
+
         for (Field field : clazz.getDeclaredFields()) {
             int modifiers = field.getModifiers();
             if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers))
                 continue;
+
+            if (fieldOverride != null)
+                if (fieldOverride.writeObjectFieldOverride(out, field))
+                    continue;
 
             field.setAccessible(true);
 
@@ -171,6 +179,12 @@ public class ReflectRstDumper {
                 }
             } // for collection
         } // for field
+    }
+
+    private static ReflectRstDumper instance = new ReflectRstDumper();
+
+    public static ReflectRstDumper getInstance() {
+        return instance;
     }
 
 }
