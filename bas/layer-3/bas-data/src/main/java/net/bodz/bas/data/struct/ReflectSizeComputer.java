@@ -44,7 +44,7 @@ public class ReflectSizeComputer {
                 }
 
                 if (value instanceof IDataStruct) {
-                    sum += ((IDataStruct) value).sizeof();
+                    sum += ((IDataStruct) value).size();
                     continue;
                 }
 

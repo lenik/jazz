@@ -19,14 +19,14 @@ public abstract class RstDataStruct
     private static final long serialVersionUID = 1L;
 
     @Override
-    public int sizeof() {
+    public int size() {
         return new ReflectSizeComputer(this).sizeof();
     }
 
     @SuppressWarnings("resource")
     @Override
     public IDataIn transfer(int format) {
-        int size = sizeof();
+        int size = size();
         BByteOut bo = new BByteOut(size);
 
         try {
