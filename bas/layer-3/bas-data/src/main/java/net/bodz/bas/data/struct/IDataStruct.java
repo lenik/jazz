@@ -9,7 +9,7 @@ import net.bodz.bas.io.IDataOut;
 public interface IDataStruct
         extends Serializable {
 
-    int sizeof();
+    int size();
 
     void readObject(IDataIn in)
             throws IOException;
