@@ -46,17 +46,17 @@ public class ReflectRstDumper {
             if (!stopClasses.contains(superclass))
                 _dump(out, obj, superclass);
 
-        IRstFieldOverride fieldOverride = null;
-        if (obj instanceof IRstFieldOverride)
-            fieldOverride = (IRstFieldOverride) obj;
+        IReflectRstOverrides overrides = null;
+        if (obj instanceof IReflectRstOverrides)
+            overrides = (IReflectRstOverrides) obj;
 
         for (Field field : clazz.getDeclaredFields()) {
             int modifiers = field.getModifiers();
             if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers))
                 continue;
 
-            if (fieldOverride != null)
-                if (fieldOverride.writeObjectFieldOverride(out, field))
+            if (overrides != null)
+                if (overrides.writeObjectFieldOverride(out, field))
                     continue;
 
             field.setAccessible(true);
@@ -86,7 +86,11 @@ public class ReflectRstDumper {
             for (Object value : collection) {
                 if (value instanceof IRstSerializable) {
                     IRstSerializable child = (IRstSerializable) value;
-                    out.beginElement(name);
+                    String args[] = {};
+                    if (child instanceof IReflectRstOverrides)
+                        args = ((IReflectRstOverrides) child).getElementArguments();
+
+                    out.beginElement(name, args);
                     child.writeObject(out);
                     out.endElement();
                     continue;
