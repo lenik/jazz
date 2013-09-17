@@ -1,7 +1,6 @@
 package net.bodz.redist.installer;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +12,10 @@ import org.eclipse.swt.graphics.ImageData;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.object.IdentityObjectSet;
+import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
+import net.bodz.bas.gui.style.IImageData;
+import net.bodz.bas.gui.style.ImageUsage;
+import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.t.tree.legacy.ITreeCallback;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
@@ -23,7 +26,7 @@ import net.bodz.redist.installer.Schemes.Maximum;
 import net.bodz.redist.installer.Schemes.Minimum;
 import net.bodz.redist.installer.builtins.RequiredSection;
 import net.bodz.redist.installer.lic.License;
-import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.gui.style.SwtImageMapper;
 
 /**
  * Project Root
@@ -32,30 +35,31 @@ public class AbstractProject
         extends RequiredSection
         implements IProject {
 
-    private ImageData logo;
     private IVersion version;
-    private String updateTime;
     private Author company;
+    private String updateTime;
+
+    private ImageData logo;
 
     public AbstractProject(Class<?> artifactClass, IComponent... children) {
         super("root", children);
 
-        LogoImage alogo = artifactClass.getAnnotation(LogoImage.class);
-        if (alogo != null) {
-            String respath = alogo.value();
-            logo = SWTResources.getImageDataRes(artifactClass, respath);
-        }
-
         ArtifactDoc artifactDoc = getXjdoc().as(ArtifactDoc.class);
-
-        URL iconURL = artifactDoc.getIcon();
-        if (iconURL != null) {
-            ImageData icon = SWTResources.getImageData(iconURL);
-            setImage(icon);
-        }
         version = artifactDoc.getVersion();
         company = artifactDoc.getAuthor();
         updateTime = artifactDoc.getReleaseDateString();
+
+        GUIElementDoc guiElementDoc = getXjdoc().as(GUIElementDoc.class);
+        IGUIElementStyleDeclaration styleDecl = guiElementDoc.getStyleClass();
+        // SwtControlStyler.applyAuto(widget, styleDecl)
+
+        IImageData imageData = styleDecl.getImage(ImageUsage.NORMAL);
+        if (imageData != null) {
+            logo = SwtImageMapper.convert(imageData);
+
+            // get small version?
+            setImage(logo);
+        }
 
         this.variables = new TreeTextMap<Variable>();
     }
