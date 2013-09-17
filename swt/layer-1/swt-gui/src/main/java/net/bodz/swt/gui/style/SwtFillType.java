@@ -5,11 +5,10 @@ import java.io.Serializable;
 import org.eclipse.swt.graphics.Pattern;
 
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.gui.style.FillPatternType;
 import net.bodz.bas.gui.style.IFillType;
 
-public class SwtManagedPattern
+public class SwtFillType
         implements IFillType, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -17,7 +16,7 @@ public class SwtManagedPattern
     private final Pattern pattern;
     private final boolean managed;
 
-    public SwtManagedPattern(Pattern pattern) {
+    public SwtFillType(Pattern pattern) {
         if (pattern == null)
             throw new NullPointerException("pattern");
         this.pattern = pattern;
@@ -39,10 +38,10 @@ public class SwtManagedPattern
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof SwtManagedPattern))
+        if (!(obj instanceof SwtFillType))
             return false;
 
-        SwtManagedPattern o = (SwtManagedPattern) obj;
+        SwtFillType o = (SwtFillType) obj;
         if (managed != o.managed)
             return false;
         if (!pattern.equals(o.pattern))
@@ -74,18 +73,8 @@ public class SwtManagedPattern
     }
 
     @Override
-    public void setFillPatternType(FillPatternType fillPatternType) {
-        throw new ReadOnlyException();
-    }
-
-    @Override
     public String getFillPattern() {
         throw new NotImplementedException();
-    }
-
-    @Override
-    public void setFillPattern(String fillPattern) {
-        throw new ReadOnlyException();
     }
 
 }

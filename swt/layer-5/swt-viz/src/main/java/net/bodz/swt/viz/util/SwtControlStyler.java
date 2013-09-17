@@ -9,14 +9,14 @@ import org.eclipse.swt.widgets.*;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.css3.ICss3StyleDeclaration;
 import net.bodz.bas.gui.css3.property.VisibilityMode;
-import net.bodz.bas.gui.style.FontType;
 import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.bas.gui.style.IImageData;
 import net.bodz.bas.gui.style.ImageUsage;
+import net.bodz.bas.gui.style.FontType;
+import net.bodz.swt.gui.style.FontDataFontType;
 import net.bodz.swt.gui.style.SwtColors;
-import net.bodz.swt.gui.style.SwtFontDataMapper;
 import net.bodz.swt.gui.style.SwtImageMapper;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 
@@ -52,7 +52,7 @@ public class SwtControlStyler {
     }
 
     public static void applyFont(Control control, ICss3StyleDeclaration styleDecl) {
-        FontType fontType = new FontType(styleDecl);
+        IFontType fontType = new FontType(styleDecl);
         applyFont(control, fontType);
 
         // styleDecl.getTextTransform(); ...
@@ -60,20 +60,16 @@ public class SwtControlStyler {
 
     public static void applyFont(Control control, IFontType fontType) {
         if (fontType != null) {
-            FontData fontData = SwtFontDataMapper.convert(fontType);
+            FontData fontData = FontDataFontType.convert(fontType);
             Font font = new Font(control.getDisplay(), fontData);
             control.setFont(font);
         }
     }
 
     public static void applySize(Control control, IGUIElementStyleDeclaration styleDecl) {
-        styleDecl.getWidthType();
-        styleDecl.getHeightType();
-
-        Point size = control.getSize();
-        styleDecl.getWidth();
-        styleDecl.getHeight();
-        // TODO set size...
+        Point size = SizeResolver.resolveSize(styleDecl, control);
+        if (size != null)
+            control.setSize(size);
     }
 
     public static void applyAuto(Widget widget, ISwtControlStyleDeclaration styleDecl)

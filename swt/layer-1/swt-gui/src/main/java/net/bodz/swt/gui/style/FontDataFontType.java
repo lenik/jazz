@@ -14,20 +14,21 @@ import net.bodz.bas.gui.css3.property.FontVariantMode;
 import net.bodz.bas.gui.css3.property.FontWeightMode;
 import net.bodz.bas.gui.css3.property.TextDecorationFlags;
 import net.bodz.bas.gui.style.IFontType;
+import net.bodz.bas.gui.style.IMutableFontType;
 import net.bodz.bas.i18n.unit.std.LengthMeasure;
 
-public class SwtFontDataMapper
-        implements IFontType, Serializable {
+public class FontDataFontType
+        implements IMutableFontType, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Device device;
     private FontData _fontData;
 
-    protected SwtFontDataMapper() {
+    protected FontDataFontType() {
     }
 
-    public SwtFontDataMapper(FontData fontData) {
+    public FontDataFontType(FontData fontData) {
         if (fontData == null)
             throw new NullPointerException("fontData");
         this._fontData = fontData;
@@ -96,7 +97,8 @@ public class SwtFontDataMapper
     public LengthMeasure getFontSize() {
         FontData fontData = getFontData();
         assert fontData != null : "font data is null";
-        return new LengthMeasure(fontData.getHeight(), LengthMeasure.POINT);
+        int fontHeight = fontData.getHeight();
+        return new LengthMeasure(fontHeight, LengthMeasure.POINT);
     }
 
     @Override
@@ -105,7 +107,10 @@ public class SwtFontDataMapper
 
         FontData fontData = getFontData();
         assert fontData != null : "font data is null";
-        fontData.setHeight(fontSize.pixels(ppi.y));
+
+        int fontHeight = fontSize.pixels(ppi.y);
+        fontData.setHeight(fontHeight);
+
         setFontData(fontData);
     }
 
@@ -218,7 +223,7 @@ public class SwtFontDataMapper
     }
 
     public static FontData convert(IFontType src) {
-        SwtFontDataMapper mapper = new SwtFontDataMapper(new FontData());
+        FontDataFontType mapper = new FontDataFontType(new FontData());
         mapper.setFontFamily(src.getFontFamily());
         mapper.setFontSize(src.getFontSize());
         mapper.setFontStyle(src.getFontStyle());

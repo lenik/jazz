@@ -2,19 +2,19 @@ package net.bodz.swt.gui.style;
 
 import org.eclipse.swt.graphics.Font;
 
-public class SwtManagedFont
-        extends AbstractSwtFont {
+public class SwtFontType
+        extends AbstractSwtFontType {
 
     private static final long serialVersionUID = 1L;
 
     private Font font;
     private boolean managed;
 
-    public SwtManagedFont(Font font) {
+    public SwtFontType(Font font) {
         this(font, false);
     }
 
-    public SwtManagedFont(Font font, boolean managed) {
+    public SwtFontType(Font font, boolean managed) {
         super(font.getDevice());
         this.font = font;
         this.managed = managed;
@@ -42,10 +42,10 @@ public class SwtManagedFont
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof SwtManagedFont))
+        if (!(obj instanceof SwtFontType))
             return false;
 
-        SwtManagedFont o = (SwtManagedFont) obj;
+        SwtFontType o = (SwtFontType) obj;
         if (managed != o.managed)
             return false;
         if (!font.equals(o.font))
