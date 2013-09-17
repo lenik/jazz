@@ -27,8 +27,8 @@ public class Kernel32Test
         IntByReference pMaxLen = new IntByReference();
         IntByReference pFlags = new IntByReference();
         kernel32.GetVolumeInformationA("C:/", buf, buf.capacity(), pSerial, pMaxLen, pFlags, fsbuf, fsbuf.capacity());
-        String volName = Kernel32Utils.getAsciz(buf);
-        String fsName = Kernel32Utils.getAsciz(fsbuf);
+        String volName = Kernel32.fn.getAsciz(buf);
+        String fsName = Kernel32.fn.getAsciz(fsbuf);
         output("Vol Name = " + volName);
         output("FS Name = " + fsName);
         System.out.printf("Serial = %x\n", pSerial.getValue());
