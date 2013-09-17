@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.type.SingletonUtil;
-import net.bodz.bas.meta.lang.TyperFamilyClass;
+import net.bodz.bas.meta.lang.typer;
 import net.bodz.bas.typer.std.ITyperFamily;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
@@ -39,7 +39,7 @@ public abstract class AbstractPotatoElement
 
     @Override
     public <T> T getTyper(Class<T> typerClass) {
-        TyperFamilyClass _typerFamilyClass = getAnnotation(TyperFamilyClass.class);
+        typer.family _typerFamilyClass = getAnnotation(typer.family.class);
         if (_typerFamilyClass == null)
             return null;
 
