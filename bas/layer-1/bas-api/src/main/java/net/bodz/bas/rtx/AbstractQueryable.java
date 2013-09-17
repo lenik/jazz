@@ -14,7 +14,7 @@ public abstract class AbstractQueryable
     }
 
     @Override
-    public <S> S query(Class<S> specificationType) {
+    public <spec_t> spec_t query(Class<spec_t> specificationType) {
         if (specificationType.isInstance(this))
             return specificationType.cast(this);
         return null;
