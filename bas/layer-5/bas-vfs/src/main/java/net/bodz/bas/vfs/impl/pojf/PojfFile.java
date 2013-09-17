@@ -17,7 +17,12 @@ import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.vfs.*;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileFilter;
+import net.bodz.bas.vfs.IFilenameFilter;
+import net.bodz.bas.vfs.IFsDir;
+import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.util.Vfs2PojfFileFilter;
 import net.bodz.bas.vfs.util.Vfs2PojfFilenameFilter;
 
@@ -187,8 +192,7 @@ public class PojfFile
     Iterable<? extends IFile> convertNames(Iterable<String> names) {
         return Iterables.transform(names, new ITransformer<String, PojfFile>() {
             @Override
-            public PojfFile transform(String input)
-                    throws RuntimeException {
+            public PojfFile transform(String input) {
                 return PojfFile.this.getChild(input);
             }
         });
@@ -197,8 +201,7 @@ public class PojfFile
     Iterable<? extends IFile> convertFiles(Iterable<File> files) {
         return Iterables.transform(files, new ITransformer<File, PojfFile>() {
             @Override
-            public PojfFile transform(File input)
-                    throws RuntimeException {
+            public PojfFile transform(File input) {
                 return new PojfFile(input);
             }
         });

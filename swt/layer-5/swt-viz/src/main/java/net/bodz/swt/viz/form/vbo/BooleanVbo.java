@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
+import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
@@ -59,22 +60,24 @@ public class BooleanVbo
                     return true;
                 }
             });
-        if (readOnly) {
+
+        if (!readOnly) {
             OnFocusCommit.apply(check, new CommitAdapter(rc.getUserDialogs(check)) {
                 @Override
                 public void commit(EventObject event)
                         throws CommitException {
                     boolean val = check.getSelection();
                     try {
-                        entry.validate(val);
-                        entry.set(val);
+                        IRefEntry.fn.validateAndSet(entry, val);
                     } catch (ValidationException e) {
                         throw new CommitException(e);
                     }
                 }
             });
         }
+
         SwtControlStyler.apply(check, styleDecl);
         return check;
     }
+
 }

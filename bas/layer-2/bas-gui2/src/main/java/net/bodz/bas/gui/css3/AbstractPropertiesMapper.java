@@ -2,6 +2,7 @@ package net.bodz.bas.gui.css3;
 
 import java.util.regex.Pattern;
 
+import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.err.ParseException;
 
 public abstract class AbstractPropertiesMapper {
@@ -60,6 +61,28 @@ public abstract class AbstractPropertiesMapper {
             return inherited;
         E val = Enum.valueOf(enumClass, str);
         return val;
+    }
+
+    protected Character getCharProperty(String key, Character inherited, boolean inheritByDefault) {
+        String str = getProperty(key);
+        if (str == null)
+            return inheritByDefault ? inherited : null;
+        if ("inherited".equals(str))
+            return inherited;
+        if (str.startsWith("\'") && str.endsWith("\'")) {
+            str = str.substring(1, str.length() - 1);
+            try {
+                str = StringEscape.unescapeJava(str);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException("Failed to parse char literal: " + str, e);
+            }
+            if (str.length() == 0)
+                return null;
+            else
+                return str.charAt(0);
+        } else {
+            throw new IllegalArgumentException("Bad char literal: " + str);
+        }
     }
 
     static Pattern cCommentPattern;
