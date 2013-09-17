@@ -18,24 +18,8 @@ public abstract class AbstractPolygon2d
 
     private boolean closed;
 
-    @Override
-    public abstract AbstractPolygon2d shot();
-
-    @Override
-    public Polygon2d snapshot() {
-        List<Point2d> newList = new ArrayList<Point2d>(getPointCount());
-        for (Point2d p : getPoints())
-            newList.add(p.snapshot());
-        return new Polygon2d(newList);
-    }
-
-    @Override
-    public Polygon2d snap() {
-        List<Point2d> newList = new ArrayList<Point2d>(getPointCount());
-        for (Point2d p : getPoints())
-            newList.add(p);
-        return new Polygon2d(newList);
-    }
+    /** ⇱ Implementation Of {@link IPrimitive2d}. */
+    ;
 
     private static boolean _fullCheck = false;
 
@@ -75,6 +59,28 @@ public abstract class AbstractPolygon2d
         return point0;
     }
 
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
+
+    @Override
+    public Polygon2d snap() {
+        List<Point2d> newList = new ArrayList<Point2d>(getPointCount());
+        for (Point2d p : getPoints())
+            newList.add(p);
+        return new Polygon2d(newList);
+    }
+
+    @Override
+    public abstract AbstractPolygon2d shot();
+
+    @Override
+    public Polygon2d snapshot() {
+        List<Point2d> newList = new ArrayList<Point2d>(getPointCount());
+        for (Point2d p : getPoints())
+            newList.add(p.snapshot());
+        return new Polygon2d(newList);
+    }
+
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
     ;
 
@@ -100,7 +106,8 @@ public abstract class AbstractPolygon2d
         return area;
     }
 
-    //
+    /** ⇱ Implementation Of {@link IPolygon2d}. */
+    ;
 
     @Override
     public final boolean isOpened() {
@@ -183,16 +190,6 @@ public abstract class AbstractPolygon2d
     }
 
     @Override
-    public Line2d getEdge(int index1, int index2) {
-        int n = getPointCount();
-        index1 %= n;
-        index2 %= n;
-        Point2d p1 = getPoint(index1);
-        Point2d p2 = getPoint(index2);
-        return p1.lineTo(p2);
-    }
-
-    @Override
     public Link2d getLink(int index) {
         int n = getPointCount();
         index %= n;
@@ -202,7 +199,17 @@ public abstract class AbstractPolygon2d
     }
 
     @Override
-    public Link2d getLink(int index1, int index2) {
+    public Line2d line(int index1, int index2) {
+        int n = getPointCount();
+        index1 %= n;
+        index2 %= n;
+        Point2d p1 = getPoint(index1);
+        Point2d p2 = getPoint(index2);
+        return p1.lineTo(p2);
+    }
+
+    @Override
+    public Link2d link(int index1, int index2) {
         int n = getPointCount();
         index1 %= n;
         index2 %= n;
@@ -404,7 +411,7 @@ public abstract class AbstractPolygon2d
         }
 
         public int getIntersectionCount(int i, int j) {
-            return getIntersectionCount(getEdge(i, j));
+            return getIntersectionCount(line(i, j));
         }
 
         // for planarize, only

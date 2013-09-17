@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.geom.spec0_f.IMutablePointSet2d;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 public class Polygon2d
         extends AbstractPolygon2d
@@ -45,6 +47,9 @@ public class Polygon2d
     public static Polygon2d fromXY(float x[], float y[]) {
         return fromXY(x, y, 0, x.length);
     }
+
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
 
     @Override
     public Polygon2d shot() {
@@ -140,6 +145,15 @@ public class Polygon2d
 
         // Re-sampling.
         return this;
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        ctx.drawPolygon(this);
     }
 
 }

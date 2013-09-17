@@ -11,6 +11,8 @@ import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedPrimitive2d
@@ -24,19 +26,12 @@ public class DecoratedPrimitive2d
     }
 
     @Override
-    public IPrimitive2d shot() {
-        return getWrapped().shot();
+    public String toString() {
+        return getWrapped().toString();
     }
 
-    @Override
-    public IPrimitive2d snapshot() {
-        return getWrapped().snapshot();
-    }
-
-    @Override
-    public IPrimitive2d snap() {
-        return getWrapped().snap();
-    }
+    /** ⇱ Implementation Of {@link IPrimitive2d}. */
+    ;
 
     @Override
     public boolean isValid() {
@@ -51,6 +46,24 @@ public class DecoratedPrimitive2d
     @Override
     public IPrimitive2d reduce() {
         return getWrapped().reduce();
+    }
+
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
+
+    @Override
+    public IPrimitive2d snap() {
+        return getWrapped().snap();
+    }
+
+    @Override
+    public IPrimitive2d shot() {
+        return getWrapped().shot();
+    }
+
+    @Override
+    public IPrimitive2d snapshot() {
+        return getWrapped().snapshot();
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
@@ -278,9 +291,13 @@ public class DecoratedPrimitive2d
         return getWrapped().decorate(decoratedType);
     }
 
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
     @Override
-    public String toString() {
-        return getWrapped().toString();
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        getWrapped().draw(ctx);
     }
 
 }

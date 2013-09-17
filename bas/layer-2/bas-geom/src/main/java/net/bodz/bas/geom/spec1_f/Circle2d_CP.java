@@ -1,6 +1,8 @@
 package net.bodz.bas.geom.spec1_f;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 /**
  * Center-PointOfBorder
@@ -94,6 +96,15 @@ public class Circle2d_CP
         float scale = radius / oldRadius;
         v.scale(scale);
         point1 = center.shot().scale_(scale);
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        ctx.drawCircle(center, getRadius());
     }
 
 }

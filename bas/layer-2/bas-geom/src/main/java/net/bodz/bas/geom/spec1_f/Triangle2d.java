@@ -1,5 +1,8 @@
 package net.bodz.bas.geom.spec1_f;
 
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+
 public class Triangle2d
         extends AbstractTriangle2d {
 
@@ -155,6 +158,15 @@ public class Triangle2d
     @Override
     public void setY2(float y) {
         p2.y = y;
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        ctx.drawTriangle(this);
     }
 
 }

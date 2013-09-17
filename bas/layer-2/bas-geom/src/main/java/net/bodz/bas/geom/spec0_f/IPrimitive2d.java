@@ -3,6 +3,7 @@ package net.bodz.bas.geom.spec0_f;
 import java.io.Serializable;
 
 import net.bodz.bas.geom.spec1_f.Point2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
 import net.bodz.bas.sugar.IDecoratable;
 import net.bodz.bas.t.object.ISnapShot;
 
@@ -16,6 +17,7 @@ public interface IPrimitive2d
         IPolygonizable2d, //
         ICroppable2d, //
         ISnapShot, //
+        IBaseDrawable2d, //
         IDecoratable<Object> {
 
     float EPSILON = 1e-7f;

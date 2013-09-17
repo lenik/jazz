@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import net.bodz.bas.geom.spec1_f.*;
 import net.bodz.bas.gui.draw_f.dc.AbstractDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.t.pojo.Pair;
 
 public class AWTDrawContext2d
@@ -28,6 +29,18 @@ public class AWTDrawContext2d
     @Override
     public void drawPixel(Point2d point) {
         drawPixel(point.x, point.y);
+    }
+
+    @Override
+    public void drawLine(int x0, int y0, int x1, int y1)
+            throws DrawException {
+        g.drawLine(x0, y0, x1, y1);
+    }
+
+    @Override
+    public void drawLine(float x0, float y0, float x1, float y1)
+            throws DrawException {
+        g.drawLine((int) x0, (int) y0, (int) x1, (int) y1);
     }
 
     @Override

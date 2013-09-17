@@ -3,6 +3,8 @@ package net.bodz.bas.geom.spec1_f;
 import javax.vecmath.Tuple2f;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 public class Point2d
         extends AbstractPointRef2d {
@@ -190,6 +192,15 @@ public class Point2d
     public final Point2d interpolate_(Tuple2f t1, float alpha) {
         this.interpolate(t1, alpha);
         return this;
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        ctx.drawPixel(x, y);
     }
 
 }

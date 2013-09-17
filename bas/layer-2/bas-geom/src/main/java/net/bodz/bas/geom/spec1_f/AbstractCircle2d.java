@@ -13,17 +13,13 @@ public abstract class AbstractCircle2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractCircle2d shot();
-
-    @Override
-    public Circle2d snapshot() {
-        return new Circle2d(getCenterPoint().snapshot(), getRadius());
+    public String toString() {
+        Point2d center = getCenterPoint();
+        return String.format("<Circle x='%f' y='%f' r='%f' />", center.x, center.y, getRadius());
     }
 
-    @Override
-    public Circle2d snap() {
-        return new Circle2d(getCenterPoint(), getRadius());
-    }
+    /** ⇱ Implementation Of {@link IPrimitive2d}. */
+    ;
 
     @Override
     public boolean isValid() {
@@ -40,6 +36,22 @@ public abstract class AbstractCircle2d
             return getCenterPoint();
         else
             return null;
+    }
+
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
+
+    @Override
+    public abstract AbstractCircle2d shot();
+
+    @Override
+    public Circle2d snapshot() {
+        return new Circle2d(getCenterPoint().snapshot(), getRadius());
+    }
+
+    @Override
+    public Circle2d snap() {
+        return new Circle2d(getCenterPoint(), getRadius());
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
@@ -119,12 +131,6 @@ public abstract class AbstractCircle2d
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {
         return null;
-    }
-
-    @Override
-    public String toString() {
-        Point2d center = getCenterPoint();
-        return String.format("<Circle x='%f' y='%f' r='%f' />", center.x, center.y, getRadius());
     }
 
 }

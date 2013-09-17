@@ -8,14 +8,15 @@ import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
 import net.bodz.bas.gui.draw_f.dc.AbstractDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFillType;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.IStrokeType;
 import net.bodz.swt.gui.style.GCStrokeType;
 import net.bodz.swt.gui.style.SwtColor;
-import net.bodz.swt.gui.style.SwtFontType;
 import net.bodz.swt.gui.style.SwtFillType;
+import net.bodz.swt.gui.style.SwtFontType;
 import net.bodz.swt.gui.style.SwtStrokeType;
 
 public class SwtDrawContext2d
@@ -119,6 +120,18 @@ public class SwtDrawContext2d
     @Override
     public void drawPixel(Point2d point) {
         gc.drawPoint((int) point.x, (int) point.y);
+    }
+
+    @Override
+    public void drawLine(int x0, int y0, int x1, int y1)
+            throws DrawException {
+        gc.drawLine(x0, y0, x1, y1);
+    }
+
+    @Override
+    public void drawLine(float x0, float y0, float x1, float y1)
+            throws DrawException {
+        gc.drawLine((int) x0, (int) y0, (int) x1, (int) y1);
     }
 
     @Override

@@ -3,6 +3,8 @@ package net.bodz.bas.geom.spec1_f;
 import java.io.Serializable;
 
 import net.bodz.bas.geom.spec0_f.CurveDirection;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 public class Line2d
         extends AbstractLine2d
@@ -131,6 +133,15 @@ public class Line2d
             return CurveDirection.clockwise;
         else
             return CurveDirection.unknown;
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        ctx.drawLine(point0, point1);
     }
 
 }

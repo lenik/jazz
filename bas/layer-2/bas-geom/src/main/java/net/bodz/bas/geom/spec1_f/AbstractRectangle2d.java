@@ -12,17 +12,12 @@ public abstract class AbstractRectangle2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractRectangle2d shot();
-
-    @Override
-    public Rectangle2d snapshot() {
-        return new Rectangle2d(getPoint0().snapshot(), getPoint2().snapshot());
+    public String toString() {
+        return String.format("<Rectangle x0='%f' y0='%f' x2='%f' y2='%f' />", getX0(), getY0(), getX1(), getY1());
     }
 
-    @Override
-    public Rectangle2d snap() {
-        return new Rectangle2d(getPoint0(), getPoint2());
-    }
+    /** ⇱ Implementation Of {@link IPrimitive2d}. */
+    ;
 
     @Override
     public boolean isValid() {
@@ -41,6 +36,22 @@ public abstract class AbstractRectangle2d
             return point0.snapshot();
         else
             return null;
+    }
+
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
+
+    @Override
+    public Rectangle2d snap() {
+        return new Rectangle2d(getPoint0(), getPoint2());
+    }
+
+    @Override
+    public abstract AbstractRectangle2d shot();
+
+    @Override
+    public Rectangle2d snapshot() {
+        return new Rectangle2d(getPoint0().snapshot(), getPoint2().snapshot());
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
@@ -318,11 +329,6 @@ public abstract class AbstractRectangle2d
         p2.y = Math.min(p2.y, o.p2.y);
 
         return new Rectangle2d(p0, p2);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("<Rectangle x0='%f' y0='%f' x2='%f' y2='%f' />", getX0(), getY0(), getX1(), getY1());
     }
 
 }

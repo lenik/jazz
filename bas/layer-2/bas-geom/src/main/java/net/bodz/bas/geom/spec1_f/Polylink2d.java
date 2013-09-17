@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.geom.spec0_f.IMutablePointRefSet2d;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 public class Polylink2d
         extends AbstractPolygon2d
@@ -11,7 +13,7 @@ public class Polylink2d
 
     private static final long serialVersionUID = 1L;
 
-    List<IPointRef2d> points;
+    private List<IPointRef2d> points;
 
     public Polylink2d(List<IPointRef2d> pointList) {
         if (pointList == null)
@@ -32,6 +34,9 @@ public class Polylink2d
             points.add(point);
         }
     }
+
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
 
     @Override
     public Polylink2d shot() {
@@ -94,6 +99,16 @@ public class Polylink2d
             return snapshot();
 
         return snapshot();
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        Polygon2d polygon = snapshot();
+        ctx.drawPolygon(polygon);
     }
 
 }

@@ -24,15 +24,45 @@ public class DirtyAreaDrawContext2d
     }
 
     @Override
+    public void drawPixel(int x, int y)
+            throws DrawException {
+        super.drawPixel(x, y);
+        dirtyRect.include(x, y);
+    }
+
+    @Override
+    public void drawPixel(float x, float y)
+            throws DrawException {
+        super.drawPixel(x, y);
+        dirtyRect.include(x, y);
+    }
+
+    @Override
     public void drawPixel(Point2d point)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawPixel(point);
         dirtyRect.include(point);
     }
 
     @Override
+    public void drawLine(int x0, int y0, int x1, int y1)
+            throws DrawException {
+        super.drawLine(x0, y0, x1, y1);
+        dirtyRect.include(x0, y0);
+        dirtyRect.include(x1, y1);
+    }
+
+    @Override
+    public void drawLine(float x0, float y0, float x1, float y1)
+            throws DrawException {
+        super.drawLine(x0, y0, x1, y1);
+        dirtyRect.include(x0, y0);
+        dirtyRect.include(x1, y1);
+    }
+
+    @Override
     public void drawLine(Point2d start, Point2d end)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawLine(start, end);
         dirtyRect.include(start);
         dirtyRect.include(end);
@@ -40,7 +70,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void drawLine(Line2d line)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawLine(line);
         dirtyRect.include(line.getPoint0());
         dirtyRect.include(line.getPoint1());
@@ -48,7 +78,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void drawRectangle(Rectangle2d rect)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawRectangle(rect);
         dirtyRect.include(rect.getPoint0());
         dirtyRect.include(rect.getPoint2());
@@ -56,7 +86,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void fillRectangle(Rectangle2d rect)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.fillRectangle(rect);
         dirtyRect.include(rect.getPoint0());
         dirtyRect.include(rect.getPoint2());
@@ -64,7 +94,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void drawTriangle(Triangle2d triangle)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawTriangle(triangle);
         dirtyRect.include(triangle.getPoint0());
         dirtyRect.include(triangle.getPoint1());
@@ -73,7 +103,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void fillTriangle(Triangle2d triangle)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.fillTriangle(triangle);
         dirtyRect.include(triangle.getPoint0());
         dirtyRect.include(triangle.getPoint1());
@@ -82,7 +112,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void drawPolygon(Polygon2d polygon)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawPolygon(polygon);
         for (Point2d point : polygon.getPoints())
             dirtyRect.include(point);
@@ -90,7 +120,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void fillPolygon(Polygon2d polygon)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.fillPolygon(polygon);
         for (Point2d point : polygon.getPoints())
             dirtyRect.include(point);
@@ -98,7 +128,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void drawCircle(Point2d center, float radius)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawCircle(center, radius);
 
         float x0 = center.x - radius;
@@ -110,7 +140,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void fillCircle(Point2d center, float radius)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.fillCircle(center, radius);
 
         float x0 = center.x - radius;
@@ -122,7 +152,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void drawEllipse(Point2d center, float radiusX, float radiusY)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawEllipse(center, radiusX, radiusY);
 
         float x0 = center.x - radiusX;
@@ -133,7 +163,7 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void fillEllipse(Point2d center, float radiusX, float radiusY)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.fillEllipse(center, radiusX, radiusY);
 
         float x0 = center.x - radiusX;
@@ -144,14 +174,14 @@ public class DirtyAreaDrawContext2d
 
     @Override
     public void drawEllipse(Rectangle2d boundingBox)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.drawEllipse(boundingBox);
         dirtyRect.include(boundingBox);
     }
 
     @Override
     public void fillEllipse(Rectangle2d boundingBox)
-            throws GraphicsOperationException {
+            throws DrawException {
         super.fillEllipse(boundingBox);
         dirtyRect.include(boundingBox);
     }

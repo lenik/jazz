@@ -1,6 +1,8 @@
 package net.bodz.bas.geom.spec1_f;
 
 import net.bodz.bas.c.javax.vecmath.Vector2f;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 /**
  * 3-Point Circle
@@ -109,6 +111,17 @@ public class Circle2d_PPP
         translate(-center.x, -center.y);
         scale(scale);
         translate(center.x, center.y);
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        Point2d center = getCenterPoint();
+        float radius = getRadius();
+        ctx.drawCircle(center, radius);
     }
 
 }

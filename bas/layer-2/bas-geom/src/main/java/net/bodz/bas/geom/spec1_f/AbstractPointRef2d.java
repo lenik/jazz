@@ -8,6 +8,8 @@ import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.bas.geom.spec0_f.AbstractPrimitive2d;
 import net.bodz.bas.geom.spec0_f.PickResult2d;
 import net.bodz.bas.geom.spec0_f.PositiveHalfPlane2d;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 public abstract class AbstractPointRef2d
         extends AbstractPrimitive2d
@@ -16,12 +18,20 @@ public abstract class AbstractPointRef2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractPointRef2d shot();
+    public String toString() {
+        return String.format("<Point x='%f' y='%f' />", getX(), getY());
+    }
+
+    /** ⇱ Implementation Of {@link IPrimitive2d}. */
+    ;
 
     @Override
-    public Point2d snapshot() {
-        return new Point2d(getX(), getY());
+    public Point2d degenerate() {
+        return snapshot();
     }
+
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
 
     @Override
     public Point2d snap() {
@@ -29,8 +39,11 @@ public abstract class AbstractPointRef2d
     }
 
     @Override
-    public Point2d degenerate() {
-        return snapshot();
+    public abstract AbstractPointRef2d shot();
+
+    @Override
+    public Point2d snapshot() {
+        return new Point2d(getX(), getY());
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
@@ -546,7 +559,8 @@ public abstract class AbstractPointRef2d
         return this;
     }
 
-    // IMyPoint2f
+    /** ⇱ Implementation Of {@link IMyPoint2f}. */
+    ;
 
     @Override
     public final float distanceL1(float x, float y) {
@@ -570,9 +584,15 @@ public abstract class AbstractPointRef2d
         return d;
     }
 
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
     @Override
-    public String toString() {
-        return String.format("<Point x='%f' y='%f' />", getX(), getY());
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        float x = getX();
+        float y = getY();
+        ctx.drawPixel(x, y);
     }
 
 }

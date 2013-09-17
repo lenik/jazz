@@ -1,5 +1,8 @@
 package net.bodz.bas.geom.spec1_f;
 
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+
 public class Rectangle2d
         extends AbstractRectangle2d {
 
@@ -218,6 +221,15 @@ public class Rectangle2d
             return p2;
         }
         return getBadPoint(index);
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        ctx.drawRectangle(this);
     }
 
 }
