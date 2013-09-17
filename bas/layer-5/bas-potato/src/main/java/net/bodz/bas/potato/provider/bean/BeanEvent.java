@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.provider.bean;
 
 import java.beans.EventSetDescriptor;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.potato.element.AbstractEvent;
@@ -34,6 +35,18 @@ public class BeanEvent
     protected Method getRemoveListenerMethod()
             throws ReflectiveOperationException {
         return eventSetDescriptor.getRemoveListenerMethod();
+    }
+
+    @Override
+    public Annotation[] getAnnotations() {
+        Class<?> listenerType = eventSetDescriptor.getListenerType();
+        return listenerType.getAnnotations();
+    }
+
+    @Override
+    public Annotation[] getDeclaredAnnotations() {
+        Class<?> listenerType = eventSetDescriptor.getListenerType();
+        return listenerType.getDeclaredAnnotations();
     }
 
 }

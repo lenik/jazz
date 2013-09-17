@@ -37,6 +37,14 @@ public abstract class AbstractReflectType
         setXjdoc(classDoc);
     }
 
+    /** ⇱ Implementation Of {@link IType}. */
+    ;
+
+    @Override
+    public Class<?> getType() {
+        return clazz;
+    }
+
     @Override
     public IPropertyMap getPropertyMap() {
         return propertyMap;
@@ -57,8 +65,18 @@ public abstract class AbstractReflectType
         return eventMap;
     }
 
-    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    /** ⇱ Implementaton Of {@link IAnnotated}. */
     ;
+
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return clazz.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        return clazz.getAnnotation(annotationClass);
+    }
 
     @Override
     public Annotation[] getAnnotations() {
@@ -70,17 +88,7 @@ public abstract class AbstractReflectType
         return clazz.getDeclaredAnnotations();
     }
 
-    @Override
-    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-        return clazz.getAnnotation(annotationClass);
-    }
-
-    @Override
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
-        return clazz.isAnnotationPresent(annotationClass);
-    }
-
-    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    /** ⇱ Implementaton Of {@link IElement}. */
     ;
 
     @Override

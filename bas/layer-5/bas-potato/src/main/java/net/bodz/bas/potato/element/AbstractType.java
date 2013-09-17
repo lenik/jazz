@@ -13,8 +13,13 @@ public abstract class AbstractType
         super(null, name);
     }
 
-    public AbstractType(Class<?> declaringClass, String name) {
-        super(declaringClass, name);
+    public AbstractType(Class<?> type, String name) {
+        super(type.getDeclaringClass(), name);
+    }
+
+    @Override
+    public final Class<?> getDeclaringClass() {
+        return getType().getDeclaringClass();
     }
 
     @Override

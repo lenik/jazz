@@ -29,6 +29,9 @@ public class ReflectConstructor
         setXjdoc(xjdoc);
     }
 
+    /** ⇱ Implementation Of {@link IConstructor}. */
+    ;
+
     @Override
     public Class<?>[] getParameterTypes() {
         return ctor.getParameterTypes();
@@ -57,13 +60,8 @@ public class ReflectConstructor
     ;
 
     @Override
-    public Annotation[] getAnnotations() {
-        return ctor.getAnnotations();
-    }
-
-    @Override
-    public Annotation[] getDeclaredAnnotations() {
-        return ctor.getDeclaredAnnotations();
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return ctor.isAnnotationPresent(annotationClass);
     }
 
     @Override
@@ -72,8 +70,13 @@ public class ReflectConstructor
     }
 
     @Override
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
-        return ctor.isAnnotationPresent(annotationClass);
+    public Annotation[] getAnnotations() {
+        return ctor.getAnnotations();
+    }
+
+    @Override
+    public Annotation[] getDeclaredAnnotations() {
+        return ctor.getDeclaredAnnotations();
     }
 
 }

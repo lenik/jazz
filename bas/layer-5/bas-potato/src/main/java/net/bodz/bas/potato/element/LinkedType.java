@@ -52,6 +52,14 @@ public class LinkedType
         setXjdoc(xjdoc);
     }
 
+    /** ⇱ Implementation Of {@link IType}. */
+    ;
+
+    @Override
+    public Class<?> getType() {
+        return clazz;
+    }
+
     @Override
     public IPropertyMap getPropertyMap() {
         return propertyMap;
@@ -72,10 +80,20 @@ public class LinkedType
         return eventMap;
     }
 
-    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    /** ⇱ Implementaton Of {@link IElement}. */
     ;
 
     // TODO Should merge annotations from all types.
+
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return clazz.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        return clazz.getAnnotation(annotationClass);
+    }
 
     @Override
     public Annotation[] getAnnotations() {
@@ -85,16 +103,6 @@ public class LinkedType
     @Override
     public Annotation[] getDeclaredAnnotations() {
         return clazz.getDeclaredAnnotations();
-    }
-
-    @Override
-    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-        return clazz.getAnnotation(annotationClass);
-    }
-
-    @Override
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
-        return clazz.isAnnotationPresent(annotationClass);
     }
 
 }
