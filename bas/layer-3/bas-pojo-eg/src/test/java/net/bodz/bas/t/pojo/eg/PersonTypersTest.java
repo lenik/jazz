@@ -3,20 +3,20 @@ package net.bodz.bas.t.pojo.eg;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.meta.lang.TyperFamilyClass;
+import net.bodz.bas.meta.lang.typer;
 import net.bodz.bas.typer.std.IBasicTyperFamily;
 
-@TyperFamilyClass(PersonTypers.class)
+@typer.family(PersonTypers.class)
 public class PersonTypersTest
         extends Assert {
 
     @Test
     public void test1()
             throws Exception {
-        IBasicTyperFamily<Person> typers = new PersonTypers();
+        IBasicTyperFamily<Person> family = new PersonTypers();
 
-        typers.getValidator().validate(Person.Lenik);
-        String lucyFormat = typers.getFormatter().format(Person.Lucy);
+        family.getValidator().validate(Person.Lenik);
+        String lucyFormat = family.getFormatter().format(Person.Lucy);
         System.out.println("Lucy: " + lucyFormat);
     }
 
