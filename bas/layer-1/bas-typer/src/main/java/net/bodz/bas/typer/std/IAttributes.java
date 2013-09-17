@@ -2,10 +2,7 @@ package net.bodz.bas.typer.std;
 
 import java.util.Collection;
 
-public interface IAttributes
-        extends IStdTyper {
-
-    int typerIndex = 0x3d9ce22c; // IAttributes
+public interface IAttributes {
 
     /**
      * @return Never <code>null</code>, returns empty {@link Collection} if no public annotation

@@ -15,11 +15,10 @@ import net.bodz.bas.rtx.QueryException;
 @ThreadUnsafe
 public abstract class AbstractCommonTypers<T>
         extends AbstractQueryable
-        implements IBasicTyperFamily<T>, IAttributes, ITextForm<T>, IValidator<T>, IClassifier<T>, ISearcher<T>,
+        implements IBasicTyperFamily<T>, ITextForm<T>, IValidator<T>, IClassifier<T>, ISearcher<T>,
         ISampleGenerator<T>, IInstanceStore<T> {
 
     protected final Class<T> type;
-    private Attributes attributes;
     private Map<String, IAttributes> classicationAttributes;
     private Map<String, T> storeInstances;
 
@@ -38,7 +37,6 @@ public abstract class AbstractCommonTypers<T>
          * TODO scan indexed typers and generate the index.
          */
         commonTyperIndex = new HashMap<String, Integer>();
-        commonTyperIndex.put(IAttributes.class.getName(), IAttributes.typerIndex);
         commonTyperIndex.put(IClassifier.class.getName(), IClassifier.typerIndex);
         commonTyperIndex.put(IBasicTyperFamily.class.getName(), IBasicTyperFamily.typerIndex);
         commonTyperIndex.put(IFormatter.class.getName(), IFormatter.typerIndex);
@@ -72,11 +70,6 @@ public abstract class AbstractCommonTypers<T>
         case IBasicTyperFamily.typerIndex:
             return this;
 
-        case IAttributes.typerIndex:
-            if (attributes != null)
-                return this;
-            break;
-
         case ITextForm.typerIndex:
             Object parser = query(IParser.typerIndex);
             Object formatter = query(IFormatter.typerIndex);
@@ -96,11 +89,6 @@ public abstract class AbstractCommonTypers<T>
 
     /** ⇱ Implementation Of {@link IBasicTyperFamily}. */
     ;
-
-    @Override
-    public IAttributes getAttributes() {
-        return this;
-    }
 
     @Override
     public IClassifier<T> getClassifier() {
@@ -140,24 +128,6 @@ public abstract class AbstractCommonTypers<T>
     @Override
     public IValidator<T> getValidator() {
         return this;
-    }
-
-    /** ⇱ Implementation Of {@link IAttributes}. */
-    ;
-
-    @Override
-    public Object getAttribute(String attributeName) {
-        return attributes.getAttribute(attributeName);
-    }
-
-    @Override
-    public Collection<String> getAttributeNames() {
-        return attributes.getAttributeNames();
-    }
-
-    @Override
-    public ITyperFamily<?> getAttributeTypers(String attributeName) {
-        return attributes.getAttributeTypers(attributeName);
     }
 
     /** ⇱ Implementation Of {@link IFormatter}. */
