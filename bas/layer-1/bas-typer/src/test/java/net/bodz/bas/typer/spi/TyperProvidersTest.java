@@ -7,9 +7,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.TyperProviders;
 
-public class TyperProviderLoaderTest
+public class TyperProvidersTest
         extends Assert {
 
     static Set<Class<?>> providerClasses;
@@ -17,7 +17,7 @@ public class TyperProviderLoaderTest
     @BeforeClass
     public static void setup() {
         providerClasses = new HashSet<Class<?>>();
-        for (ITyperProvider provider : Typers.getTyperProviders())
+        for (ITyperProvider provider : TyperProviders.sorted())
             providerClasses.add(provider.getClass());
     }
 
