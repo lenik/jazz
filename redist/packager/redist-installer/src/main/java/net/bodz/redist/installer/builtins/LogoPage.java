@@ -7,17 +7,22 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
+import net.bodz.bas.gui.style.IImageData;
+import net.bodz.bas.gui.style.ImageUsage;
+import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.redist.installer.ConfigPage;
 import net.bodz.redist.installer.IComponent;
 import net.bodz.redist.installer.IProject;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.Installer;
-import net.bodz.redist.installer.LogoImage;
 import net.bodz.swt.c.canvas.Picture;
 import net.bodz.swt.c.pageflow.PageException;
-import net.bodz.swt.c.resources.SWTResources;
+import net.bodz.swt.gui.style.SwtImageMapper;
 
 public class LogoPage
         extends ConfigPage {
@@ -46,15 +51,16 @@ public class LogoPage
 
         final Picture logoPicture = new Picture(holder, SWT.NONE, true);
         logoPicture.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
         ImageData logo = session.getProject().getLogo();
         if (logo == null) {
-            LogoImage _logoImage = Installer.class.getAnnotation(LogoImage.class);
-            String resource = _logoImage == null ? null : _logoImage.value();
-            if (resource != null) {
-                Image defaultLogo = SWTResources.getImageRes(Installer.class, resource);
-                logoPicture.setImage(defaultLogo);
-            }
-        } else
+            ClassDoc classDoc = ClassDocLoader.load(Installer.class);
+            IGUIElementStyleDeclaration styleDecl = classDoc.as(GUIElementDoc.class).getStyleClass();
+            IImageData defaultLogo = styleDecl.getImage(ImageUsage.NORMAL);
+            if (defaultLogo != null)
+                logo = SwtImageMapper.convert(defaultLogo);
+        }
+        if (logo != null)
             logoPicture.setImage(new Image(holder.getDisplay(), logo));
     }
 
