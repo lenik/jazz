@@ -13,6 +13,7 @@ public class SubCanvasMode
     private static final long serialVersionUID = 1L;
 
     private Canvas canvas;
+    GraphDesignerContext context;
 
     public SubCanvasMode(ICanvasMode previous) {
         super(previous);
@@ -31,6 +32,10 @@ public class SubCanvasMode
     public void keyUp(KeyEvent e) {
         if (e.keyCode == SWT.ESC)
             canvas.setMode(getWrapped());
+    }
+
+    public GraphDesignerContext getContext() {
+        return context;
     }
 
 }

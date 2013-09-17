@@ -25,14 +25,16 @@ public class Select
     public void mouseMove(MouseEvent e, MouseEvent d) {
         GraphDesignerContext context = getContext();
 
-        if (d != null) {
-            // Drag a select-range-box
+        boolean dragging = d != null;
+
+        if (dragging) {
             GC gc = new GC(context.preview);
             gc.setLineDash(DASH_SELECT);
             gc.drawRectangle(d.x, d.y, e.x - d.x + 1, e.y - d.y + 1);
             gc.dispose();
+        }
 
-        } else {
+        else {
             Point2d p = context.vtSource(e.x, e.y);
 
             /* is p on some object ? */
