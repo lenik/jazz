@@ -6,7 +6,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.typer.std.ITyperFamily;
 
 /**
  * TyperClass can be defined on:
@@ -45,8 +45,8 @@ import net.bodz.bas.rtx.IQueryable;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TyperClass {
+public @interface TyperFamilyClass {
 
-    Class<? extends IQueryable> value();
+    Class<? extends ITyperFamily<?>> value();
 
 }
