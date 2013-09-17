@@ -43,7 +43,7 @@ public class PropertyRefEntry<T>
     }
 
     @Override
-    public <S> S query(Class<S> specificationType)
+    public <spec_t> spec_t query(Class<spec_t> specificationType)
             throws QueryException {
         if (specificationType == IValueChangeSource.class) {
             if (property.isPropertyChangeSource())

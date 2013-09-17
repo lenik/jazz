@@ -48,7 +48,7 @@ public interface IQueryable {
      * @throws QueryException
      *             If query is failed.
      */
-    <S> S query(Class<S> specificationType)
+    <spec_t> spec_t query(Class<spec_t> specificationType)
             throws QueryException;
 
 }
