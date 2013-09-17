@@ -15,4 +15,15 @@ public @interface StartMode {
 
     int value();
 
+    class fn {
+
+        public static Integer getValue(Class<?> type) {
+            StartMode startModeAnn = type.getAnnotation(StartMode.class);
+            if (startModeAnn == null)
+                return null;
+            return startModeAnn.value();
+        }
+
+    }
+
 }
