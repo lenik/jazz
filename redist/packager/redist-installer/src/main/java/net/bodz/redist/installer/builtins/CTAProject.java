@@ -65,7 +65,7 @@ public class CTAProject
         {
             File binDir = redistPomDir.find("target/bin");
             FileFinder binfiles = new FileFinder(filter, binDir);
-            FileCopy copyClassFiles = new FileCopy(BASE_PROGRAMS, binfiles);
+            FileCopy copyClassFiles = new FileCopy(BASE_PROGRAMS, null, binfiles);
             classesSection.add(copyClassFiles);
         }
 
@@ -73,7 +73,7 @@ public class CTAProject
         {
             File srcDir = redistPomDir.find("src/main/java");
             FileFinder srcfiles = new FileFinder(filter, srcDir);
-            FileCopy copySrcFiles = new FileCopy(BASE_PROGRAMS, srcfiles);
+            FileCopy copySrcFiles = new FileCopy(BASE_PROGRAMS, null, srcfiles);
             sourceSection.add(copySrcFiles);
         }
     }
