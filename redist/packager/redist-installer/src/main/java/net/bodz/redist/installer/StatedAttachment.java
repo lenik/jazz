@@ -2,10 +2,8 @@ package net.bodz.redist.installer;
 
 import java.io.*;
 import java.nio.file.StandardOpenOption;
-import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -90,14 +88,6 @@ public class StatedAttachment
     }
 
     @Override
-    public ZipFile getZipFile()
-            throws IOException {
-        if (stated == null)
-            stated = new UsingZipFile(link);
-        return stated.getZipFile();
-    }
-
-    @Override
     public ZipInputStream getZipIn()
             throws IOException {
         if (stated == null)
@@ -111,14 +101,6 @@ public class StatedAttachment
         if (stated == null)
             stated = new UsingZipOutputStream(link);
         return stated.getZipOut();
-    }
-
-    @Override
-    public JarFile getJarFile()
-            throws IOException {
-        if (stated == null)
-            stated = new UsingJarFile(link);
-        return stated.getJarFile();
     }
 
     @Override
@@ -213,12 +195,6 @@ public class StatedAttachment
         }
 
         @Override
-        public ZipFile getZipFile()
-                throws IOException {
-            throw new IllegalStateException(error);
-        }
-
-        @Override
         public ZipInputStream getZipIn()
                 throws IOException {
             throw new IllegalStateException(error);
@@ -226,12 +202,6 @@ public class StatedAttachment
 
         @Override
         public ZipOutputStream getZipOut()
-                throws IOException {
-            throw new IllegalStateException(error);
-        }
-
-        @Override
-        public JarFile getJarFile()
                 throws IOException {
             throw new IllegalStateException(error);
         }
@@ -598,27 +568,28 @@ public class StatedAttachment
     static class UsingZipFile
             extends StateBase {
 
-        ZipFile zipFile;
+        ZipInputStream zipIn;
 
         public UsingZipFile(IFile link) {
             super(link, "ZipFile");
         }
 
         @Override
-        public ZipFile getZipFile()
+        public ZipInputStream getZipIn()
                 throws IOException {
-            if (zipFile == null) {
-                zipFile = link.getInputSource().newZipFile();
+            if (zipIn == null) {
+                InputStream in = link.getInputSource().newInputStream();
+                zipIn = new ZipInputStream(in);
             }
-            return zipFile;
+            return zipIn;
         }
 
         @Override
         public void close()
                 throws IOException {
-            if (zipFile != null) {
-                zipFile.close();
-                zipFile = null;
+            if (zipIn != null) {
+                zipIn.close();
+                zipIn = null;
             }
         }
 
@@ -627,27 +598,28 @@ public class StatedAttachment
     static class UsingJarFile
             extends StateBase {
 
-        JarFile jarFile;
+        JarInputStream jarIn;
 
         public UsingJarFile(IFile link) {
             super(link, "JarFile");
         }
 
         @Override
-        public JarFile getJarFile()
+        public JarInputStream getJarIn()
                 throws IOException {
-            if (jarFile == null) {
-                jarFile = link.getInputSource().newJarFile();
+            if (jarIn == null) {
+                InputStream in = link.getInputSource().newInputStream();
+                jarIn = new JarInputStream(in);
             }
-            return jarFile;
+            return jarIn;
         }
 
         @Override
         public void close()
                 throws IOException {
-            if (jarFile != null) {
-                jarFile.close();
-                jarFile = null;
+            if (jarIn != null) {
+                jarIn.close();
+                jarIn = null;
             }
         }
 

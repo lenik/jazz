@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -279,20 +278,22 @@ public class FileCopy
 
             setProgressSize(data.list.length);
 
-            Attachment a = getAttachment(session, false);
-            ZipFile zipFile;
+            Attachment attachment = getAttachment(session, false);
+            ZipInputStream zipIn;
             try {
-                zipFile = a.getZipFile();
+                zipIn = attachment.getZipIn();
             } catch (IOException e) {
                 throwException(e);
                 return;
             }
+
             int index = 0;
             try {
                 for (String name : data.list) {
                     if (!moveOn(index++))
                         break;
-                    ZipEntry entry = zipFile.getEntry(name);
+
+                    ZipEntry entry = zipIn.getEntry(name);
                     if (entry == null) {
                         InstallException ex = new InstallException(tr._("Entry isn\'t existed: ") + name);
                         if (recoverException(ex))
