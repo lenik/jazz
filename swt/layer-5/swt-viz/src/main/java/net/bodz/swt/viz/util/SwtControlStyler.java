@@ -97,14 +97,6 @@ public class SwtControlStyler {
             if (icon != null)
                 item.setImage(SwtImageMapper.convert(display, icon));
 
-            String label = styleDecl.getLabel();
-            if (label != null) {
-                // toolitem bugfix.
-                boolean notext = item instanceof ToolItem && icon != null;
-                if (!notext)
-                    item.setText(label);
-            }
-
             if (item instanceof MenuItem) {
                 // MenuItem menuItem = (MenuItem) item;
                 // do nothing
