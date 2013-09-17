@@ -3,13 +3,13 @@ package net.bodz.bas.i18n.dom1;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.model.AbstractDecorator;
 
-public class DecoratedElement
+public abstract class DecoratedElement
         extends AbstractDecorator<IElement>
         implements IElement {
 
     private static final long serialVersionUID = 1L;
 
-    public DecoratedElement(IElement _orig) {
+    protected DecoratedElement(IElement _orig) {
         super(_orig);
     }
 
