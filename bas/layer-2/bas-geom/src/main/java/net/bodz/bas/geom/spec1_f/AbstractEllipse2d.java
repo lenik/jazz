@@ -4,6 +4,8 @@ import net.bodz.bas.geom.spec0_f.AbstractPrimitive2d;
 import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.geom.spec0_f.PickResult2d;
 import net.bodz.bas.geom.spec0_f.PositiveHalfPlane2d;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 public abstract class AbstractEllipse2d
         extends AbstractPrimitive2d
@@ -122,6 +124,15 @@ public abstract class AbstractEllipse2d
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {
         return null;
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        ctx.drawEllipse(getBoundingBox());
     }
 
 }

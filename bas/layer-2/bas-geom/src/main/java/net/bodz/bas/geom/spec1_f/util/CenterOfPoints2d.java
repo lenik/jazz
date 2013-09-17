@@ -3,20 +3,20 @@ package net.bodz.bas.geom.spec1_f.util;
 import net.bodz.bas.geom.spec0_f.IPointSet2d;
 import net.bodz.bas.geom.spec1_f.PointRef2d;
 
-public class PointSetCenter2d
+public class CenterOfPoints2d
         extends PointRef2d {
 
     private static final long serialVersionUID = 1L;
 
     private final IPointSet2d points;
 
-    public PointSetCenter2d(IPointSet2d points) {
+    public CenterOfPoints2d(IPointSet2d points) {
         this.points = points;
     }
 
     @Override
-    public PointSetCenter2d shot() {
-        return new PointSetCenter2d(points);
+    public CenterOfPoints2d shot() {
+        return new CenterOfPoints2d(points);
     }
 
     @Override

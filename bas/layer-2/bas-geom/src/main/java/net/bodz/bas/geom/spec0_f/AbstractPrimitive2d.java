@@ -20,7 +20,25 @@ public abstract class AbstractPrimitive2d
     private static final long serialVersionUID = 1L;
 
     @Override
-    public abstract AbstractPrimitive2d shot();
+    public String toString() {
+        StringBuilder buf = new StringBuilder();
+        String simpleName = getClass().getSimpleName();
+        buf.append('(');
+        buf.append(simpleName);
+
+        int n = getPointCount();
+        for (int i = 0; i < n; i++) {
+            Point2d point = getPoint(i);
+            buf.append(' ');
+            buf.append(point);
+        }
+
+        buf.append(')');
+        return buf.toString();
+    }
+
+    /** ⇱ Implementation Of {@link IPrimitive2d}. */
+    ;
 
     @Override
     public boolean isValid() {
@@ -38,6 +56,12 @@ public abstract class AbstractPrimitive2d
         else
             return this;
     }
+
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
+
+    @Override
+    public abstract AbstractPrimitive2d shot();
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
     ;
@@ -387,24 +411,6 @@ public abstract class AbstractPrimitive2d
     @Override
     public <T> T decorate(Class<T> decoratedType) {
         return new Tooling(this).getWrapper(decoratedType);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder buf = new StringBuilder();
-        String simpleName = getClass().getSimpleName();
-        buf.append('(');
-        buf.append(simpleName);
-
-        int n = getPointCount();
-        for (int i = 0; i < n; i++) {
-            Point2d point = getPoint(i);
-            buf.append(' ');
-            buf.append(point);
-        }
-
-        buf.append(')');
-        return buf.toString();
     }
 
 }

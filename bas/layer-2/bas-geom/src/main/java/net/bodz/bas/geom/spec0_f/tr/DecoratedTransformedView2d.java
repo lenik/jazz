@@ -1,8 +1,7 @@
-package net.bodz.bas.gui.draw_f.dc;
+package net.bodz.bas.geom.spec0_f.tr;
 
 import javax.vecmath.Vector2f;
 
-import net.bodz.bas.geom.spec0_f.tr.ITransformedView2d;
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.t.model.AbstractDecorator;
 

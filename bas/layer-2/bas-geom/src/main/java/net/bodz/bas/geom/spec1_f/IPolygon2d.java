@@ -16,14 +16,17 @@ public interface IPolygon2d
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPrimitive2d}. */
     ;
 
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
+
+    @Override
+    Polygon2d snap();
+
     @Override
     IPolygon2d shot();
 
     @Override
     Polygon2d snapshot();
-
-    @Override
-    Polygon2d snap();
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
     ;
@@ -47,11 +50,11 @@ public interface IPolygon2d
 
     Line2d getEdge(int index);
 
-    Line2d getEdge(int index1, int index2);
-
     Link2d getLink(int index);
 
-    Link2d getLink(int index1, int index2);
+    Line2d line(int index1, int index2);
+
+    Link2d link(int index1, int index2);
 
     /**
      * Get interpolated point at specified index.

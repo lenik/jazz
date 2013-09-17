@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.geom.spec0_f.PositiveHalfPlane2d;
+import net.bodz.bas.gui.draw_f.dc.DrawException;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 
 /**
  * Center-Radius
@@ -29,6 +31,14 @@ public class Circle2d
         this.radius = radius;
     }
 
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    ;
+
+    @Override
+    public Circle2d snap() {
+        return this;
+    }
+
     @Override
     public Circle2d shot() {
         return new Circle2d(center.shot(), radius);
@@ -37,11 +47,6 @@ public class Circle2d
     @Override
     public Circle2d snapshot() {
         return new Circle2d(center.snapshot(), radius);
-    }
-
-    @Override
-    public Circle2d snap() {
-        return this;
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
@@ -142,6 +147,15 @@ public class Circle2d
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {
         return null;
+    }
+
+    /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
+    ;
+
+    @Override
+    public void draw(IBaseDrawContext2d ctx)
+            throws DrawException {
+        ctx.drawCircle(center, radius);
     }
 
 }
