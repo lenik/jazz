@@ -1,10 +1,8 @@
-package net.bodz.redist.installer.util;
+package net.bodz.bas.c.java.io;
 
 import java.io.File;
 
-import net.bodz.bas.c.java.io.FilePath;
-
-public class Utils {
+public class FileDirs {
 
     public static void removeEmptyParents(File start, File stopDir) {
         start = FilePath.canoniOf(start);

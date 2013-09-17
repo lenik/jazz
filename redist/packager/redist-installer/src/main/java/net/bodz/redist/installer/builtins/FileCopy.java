@@ -17,6 +17,7 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import net.bodz.bas.c.java.io.FileDirs;
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.IOConfig;
@@ -25,7 +26,6 @@ import net.bodz.redist.installer.AbstractComponent;
 import net.bodz.redist.installer.Attachment;
 import net.bodz.redist.installer.ISession;
 import net.bodz.redist.installer.InstallException;
-import net.bodz.redist.installer.util.Utils;
 
 public class FileCopy
         extends AbstractComponent {
@@ -412,7 +412,7 @@ public class FileCopy
                 }
                 logger.log(tr._("Delete file "), dest);
                 if (dest.delete())
-                    Utils.removeEmptyParents(dest.getParentFile(), baseDir);
+                    FileDirs.removeEmptyParents(dest.getParentFile(), baseDir);
                 else {
                     logger.logf(tr._("Can\'t delete file %s, try at exit\n"), dest);
                     dest.deleteOnExit();
