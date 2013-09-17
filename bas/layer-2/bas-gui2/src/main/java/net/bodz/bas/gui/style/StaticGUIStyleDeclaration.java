@@ -18,6 +18,7 @@ public class StaticGUIStyleDeclaration
     Boolean readOnly;
     Integer tabOrder;
     Integer maxLength;
+    Character echoChar;
 
     @Override
     public IGUIElementStyleDeclaration getParent() {
@@ -110,6 +111,16 @@ public class StaticGUIStyleDeclaration
     @Override
     public void setMaxLength(Integer maxLength) {
         this.maxLength = maxLength;
+    }
+
+    @Override
+    public Character getEchoChar() {
+        return echoChar;
+    }
+
+    @Override
+    public void setEchoChar(Character echoChar) {
+        this.echoChar = echoChar;
     }
 
 }

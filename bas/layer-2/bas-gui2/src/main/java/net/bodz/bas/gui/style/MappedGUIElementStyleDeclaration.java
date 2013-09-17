@@ -85,4 +85,14 @@ public abstract class MappedGUIElementStyleDeclaration
         setProperty("max-length", maxLength);
     }
 
+    @Override
+    public Character getEchoChar() {
+        return getCharProperty("echo-char", getParent().getEchoChar(), false);
+    }
+
+    @Override
+    public void setEchoChar(Character echoChar) {
+        setProperty("echo-char", echoChar);
+    }
+
 }

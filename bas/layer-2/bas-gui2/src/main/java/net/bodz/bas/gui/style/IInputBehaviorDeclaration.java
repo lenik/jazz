@@ -18,4 +18,8 @@ public interface IInputBehaviorDeclaration {
 
     void setMaxLength(Integer maxLength);
 
+    Character getEchoChar();
+
+    void setEchoChar(Character echoChar);
+
 }

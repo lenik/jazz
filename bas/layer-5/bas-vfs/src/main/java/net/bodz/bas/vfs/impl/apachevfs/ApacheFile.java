@@ -18,7 +18,12 @@ import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.vfs.*;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileFilter;
+import net.bodz.bas.vfs.IFilenameFilter;
+import net.bodz.bas.vfs.VFSException;
 
 public class ApacheFile
         extends AbstractFile {
@@ -242,8 +247,7 @@ public class ApacheFile
     Iterable<ApacheFile> convertFiles(Iterable<FileObject> fileObjects) {
         return Iterables.transform(fileObjects, new ITransformer<FileObject, ApacheFile>() {
             @Override
-            public ApacheFile transform(FileObject input)
-                    throws RuntimeException {
+            public ApacheFile transform(FileObject input) {
                 return new ApacheFile(getDevice(), input);
             }
         });

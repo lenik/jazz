@@ -12,7 +12,7 @@ import net.bodz.swt.viz.form.vbo.BooleanVbo;
 import net.bodz.swt.viz.form.vbo.DateVbo;
 import net.bodz.swt.viz.form.vbo.ExceptionVbo;
 import net.bodz.swt.viz.form.vbo.FileVbo;
-import net.bodz.swt.viz.form.vbo.NumberVbo;
+import net.bodz.swt.viz.form.vbo.TextFormedVbo;
 import net.bodz.swt.viz.form.vbo.StringVbo;
 
 public abstract class AbstractSwtViewBuilderFactory
@@ -25,11 +25,11 @@ public abstract class AbstractSwtViewBuilderFactory
     @OverrideOption(chain = ChainUsage.MUST)
     protected void setup() {
         typeMap.put(boolean.class, new BooleanVbo());
-        typeMap.put(byte[].class, new ByteArrayVbo());
+        // typeMap.put(byte[].class, new ByteArrayVbo());
 
         typeMap.put(Boolean.class, new BooleanVbo());
 
-        typeMap.put(Number.class, new NumberVbo());
+        typeMap.put(Number.class, new TextFormedVbo());
         typeMap.put(String.class, new StringVbo());
         typeMap.put(Throwable.class, new ExceptionVbo());
 
