@@ -6,13 +6,6 @@ public interface IBasicTyperFamily<T>
     int typerIndex = 0xd5c04a20; // IBasicTyperFamily
 
     /**
-     * Get the type attributes.
-     * 
-     * @return <code>null</code> If the type attributes is not available.
-     */
-    IAttributes getAttributes();
-
-    /**
      * Get the type parser.
      * 
      * @return <code>null</code> If the type parser is not available.
