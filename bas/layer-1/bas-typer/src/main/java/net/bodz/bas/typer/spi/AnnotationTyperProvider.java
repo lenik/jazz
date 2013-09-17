@@ -1,6 +1,6 @@
 package net.bodz.bas.typer.spi;
 
-import net.bodz.bas.meta.lang.TyperClass;
+import net.bodz.bas.meta.lang.TyperFamilyClass;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 
@@ -21,7 +21,7 @@ public class AnnotationTyperProvider
     public <T> T getTyper(Class<?> objType, Class<T> typerClass) {
         if (objType == null)
             throw new NullPointerException("objType");
-        TyperClass _typerClass = objType.getAnnotation(TyperClass.class);
+        TyperFamilyClass _typerClass = objType.getAnnotation(TyperFamilyClass.class);
         if (_typerClass == null)
             return null;
 

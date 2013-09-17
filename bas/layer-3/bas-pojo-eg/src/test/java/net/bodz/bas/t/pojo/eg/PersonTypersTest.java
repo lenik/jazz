@@ -3,10 +3,10 @@ package net.bodz.bas.t.pojo.eg;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.meta.lang.TyperClass;
+import net.bodz.bas.meta.lang.TyperFamilyClass;
 import net.bodz.bas.typer.std.IBasicTyperFamily;
 
-@TyperClass(PersonTypers.class)
+@TyperFamilyClass(PersonTypers.class)
 public class PersonTypersTest
         extends Assert {
 

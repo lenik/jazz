@@ -3,10 +3,10 @@ package net.bodz.bas.text.diff;
 import java.util.List;
 
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.meta.lang.TyperClass;
+import net.bodz.bas.meta.lang.TyperFamilyClass;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 
-@TyperClass(DiffFormatTypers.class)
+@TyperFamilyClass(DiffFormatTypers.class)
 public interface IDiffFormat {
 
     IDiffFormat SIMPLE = new SimpleDiffFormat();
