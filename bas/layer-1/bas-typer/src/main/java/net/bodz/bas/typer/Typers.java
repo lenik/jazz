@@ -1,48 +1,12 @@
 package net.bodz.bas.typer;
 
-import java.util.*;
+import java.util.List;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.rtx.QueryException;
-import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.typer.spi.ITyperProvider;
 
 public class Typers {
-
-    private static ServiceLoader<ITyperProvider> typerProviderLoader;
-
-    static TreeSet<ITyperProvider> typerProviders;
-    static List<ITyperProvider> aggresiveTyperProviders;
-
-    static {
-        reload();
-    }
-
-    static void reload() {
-        if (typerProviderLoader == null)
-            typerProviderLoader = ServiceLoader.load(ITyperProvider.class);
-        else
-            typerProviderLoader.reload();
-
-        typerProviders = new TreeSet<ITyperProvider>(PriorityComparator.INSTANCE);
-        aggresiveTyperProviders = new ArrayList<ITyperProvider>();
-
-        Iterator<ITyperProvider> typerProviderIterator = typerProviderLoader.iterator();
-        while (typerProviderIterator.hasNext()) {
-            ITyperProvider typerProvider = typerProviderIterator.next();
-            typerProviders.add(typerProvider);
-
-        }
-
-        for (ITyperProvider provider : typerProviders)
-            if (provider.isAggressive()) {
-                aggresiveTyperProviders.add(provider);
-            }
-    }
-
-    public static SortedSet<ITyperProvider> getTyperProviders() {
-        return Collections.unmodifiableSortedSet(typerProviders);
-    }
 
     /**
      * Query for specific typers about the user object type.
@@ -70,20 +34,21 @@ public class Typers {
 
         objType = Primitives.box(objType);
 
-        for (ITyperProvider provider : typerProviders) {
+        for (ITyperProvider provider : TyperProviders.sorted()) {
             T typer = provider.getTyper(objType, typerClass);
             if (typer != null)
                 return typer;
         }
 
         // Continue to query on aggresive providers for superclasses.
-        if (!aggresiveTyperProviders.isEmpty())
+        List<ITyperProvider> aggresiveList = TyperProviders.aggresives();
+        if (!aggresiveList.isEmpty())
             while (true) {
                 objType = objType.getSuperclass();
                 if (objType == null || objType == Object.class)
                     break;
 
-                for (ITyperProvider provider : aggresiveTyperProviders) {
+                for (ITyperProvider provider : aggresiveList) {
                     T typer = provider.getTyper(objType, typerClass);
                     if (typer != null)
                         return typer;
@@ -121,7 +86,7 @@ public class Typers {
 
         objType = Primitives.box(objType);
 
-        for (ITyperProvider provider : typerProviders) {
+        for (ITyperProvider provider : TyperProviders.sorted()) {
             T typer = provider.getTyper(objType, obj, typerClass);
             if (typer != null)
                 return typer;
