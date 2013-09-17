@@ -95,7 +95,11 @@ public class BeanType
         return beanDescriptor;
     }
 
-    public Class<?> getBeanClass() {
+    /** ⇱ Implementation Of {@link IType}. */
+    ;
+
+    @Override
+    public Class<?> getType() {
         return beanClass;
     }
 
@@ -119,8 +123,18 @@ public class BeanType
         return eventMap;
     }
 
-    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    /** ⇱ Implementaton Of {@link IAnnotated}. */
     ;
+
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return beanClass.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        return beanClass.getAnnotation(annotationClass);
+    }
 
     @Override
     public Annotation[] getAnnotations() {
@@ -132,17 +146,7 @@ public class BeanType
         return beanClass.getDeclaredAnnotations();
     }
 
-    @Override
-    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-        return beanClass.getAnnotation(annotationClass);
-    }
-
-    @Override
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
-        return beanClass.isAnnotationPresent(annotationClass);
-    }
-
-    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    /** ⇱ Implementaton Of {@link IElement}. */
     ;
 
     @Override

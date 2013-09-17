@@ -1,8 +1,12 @@
 package net.bodz.bas.potato.element;
 
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.type.SingletonUtil;
+import net.bodz.bas.meta.lang.TyperFamilyClass;
+import net.bodz.bas.typer.std.ITyperFamily;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
@@ -11,7 +15,7 @@ public abstract class AbstractPotatoElement
         implements IPotatoElement {
 
     private String name;
-    private final Class<?> declaringClass;
+    private Class<?> declaringClass;
 
     /**
      * @param declaringType
@@ -25,13 +29,43 @@ public abstract class AbstractPotatoElement
     }
 
     @Override
-    public String getName() {
-        return name;
+    public Class<?> getDeclaringClass() {
+        return declaringClass;
+    }
+
+    protected void setDeclaringClass(Class<?> declaringClass) {
+        this.declaringClass = declaringClass;
     }
 
     @Override
-    public Class<?> getDeclaringClass() {
-        return declaringClass;
+    public <T> T getTyper(Class<T> typerClass) {
+        TyperFamilyClass _typerFamilyClass = getAnnotation(TyperFamilyClass.class);
+        if (_typerFamilyClass == null)
+            return null;
+
+        Class<? extends ITyperFamily<?>> typerFamilyClass = _typerFamilyClass.value();
+        ITyperFamily<?> typerFamily;
+        try {
+            typerFamily = SingletonUtil.callGetInstance(typerFamilyClass);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+
+        T typer = typerFamily.query(typerClass);
+        return typer;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    /** ⇱ Implementation Of {@link IXjdocElement}. */
+    ;
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -39,38 +73,9 @@ public abstract class AbstractPotatoElement
         super.setXjdoc(xjdoc);
     }
 
-    private static final Annotation[] EMPTY_ANNOTATION = new Annotation[0];
+    /** ⇱ Implementation Of {@link IAnnotated}. */
+    ;
 
-    @Override
-    public Annotation[] getAnnotations() {
-        return EMPTY_ANNOTATION;
-    }
-
-    @Override
-    public Annotation[] getDeclaredAnnotations() {
-        return EMPTY_ANNOTATION;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return The first occurance in {@link #getAnnotations()} which is instance of the specified
-     *         <code>annotationClass</code>.
-     */
-    @Override
-    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-        for (Annotation a : getAnnotations())
-            if (annotationClass.isInstance(a))
-                return annotationClass.cast(a);
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return <code>true</code> If any annotation of in {@link #getAnnotations()} is instance of
-     *         the specified <code>annotationClass</code> exists.
-     */
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         for (Annotation a : getAnnotations())
@@ -80,15 +85,33 @@ public abstract class AbstractPotatoElement
     }
 
     @Override
-    public void findAnnotations(Map<Class<? extends Annotation>, Annotation> map) {
-        Annotation[] annotations = getAnnotations();
-        for (Annotation annotation : annotations)
-            map.put(annotation.getClass(), annotation);
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        for (Annotation a : getAnnotations())
+            if (annotationClass.isInstance(a))
+                return annotationClass.cast(a);
+        return null;
     }
 
     @Override
-    public String toString() {
-        return getName();
+    public Map<Class<?>, Annotation> getAnnotationMap() {
+        Map<Class<?>, Annotation> map = new HashMap<>();
+        dumpAnnotations(map);
+        return map;
+    }
+
+    @Override
+    public Map<Class<?>, Annotation> getDeclaredAnnotationMap() {
+        Map<Class<?>, Annotation> map = new HashMap<>();
+        for (Annotation annotation : getDeclaredAnnotations())
+            map.put(annotation.getClass(), annotation);
+        return map;
+    }
+
+    @Override
+    public void dumpAnnotations(Map<Class<?>, Annotation> map) {
+        Annotation[] annotations = getAnnotations();
+        for (Annotation annotation : annotations)
+            map.put(annotation.getClass(), annotation);
     }
 
 }

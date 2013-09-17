@@ -2,24 +2,23 @@ package net.bodz.bas.potato.element;
 
 import net.bodz.bas.t.event.IPropertyChangeListener;
 
-public abstract class SimpleProperty
-        extends SimplePotatoElement
+public abstract class AbstractMutableProperty
+        extends MutablePotatoElement
         implements IProperty {
 
     private static final long serialVersionUID = 1L;
 
-    Class<?> propertyType;
-    boolean readable;
-    boolean writable;
-    boolean propertyChangeSource;
+    private Class<?> propertyType;
+    private boolean readable;
+    private boolean writable;
+    private boolean propertyChangeSource;
+
+    /** ⇱ Implementation Of {@link IProperty}. */
+    ;
 
     @Override
     public Class<?> getPropertyType() {
         return propertyType;
-    }
-
-    public void setPropertyType(Class<?> propertyType) {
-        this.propertyType = propertyType;
     }
 
     @Override
@@ -27,26 +26,14 @@ public abstract class SimpleProperty
         return readable;
     }
 
-    public void setReadable(boolean readable) {
-        this.readable = readable;
-    }
-
     @Override
     public boolean isWritable() {
         return writable;
     }
 
-    public void setWritable(boolean writable) {
-        this.writable = writable;
-    }
-
     @Override
     public boolean isPropertyChangeSource() {
         return propertyChangeSource;
-    }
-
-    public void setPropertyChangeSource(boolean propertyChangeSource) {
-        this.propertyChangeSource = propertyChangeSource;
     }
 
     @Override
@@ -63,6 +50,25 @@ public abstract class SimpleProperty
 
     @Override
     public void removePropertyChangeListener(Object instance, String propertyName, IPropertyChangeListener listener) {
+    }
+
+    /** ⇱ Implementation Of {@link IMutableProperty}. */
+    ;
+
+    public void setPropertyType(Class<?> propertyType) {
+        this.propertyType = propertyType;
+    }
+
+    public void setReadable(boolean readable) {
+        this.readable = readable;
+    }
+
+    public void setWritable(boolean writable) {
+        this.writable = writable;
+    }
+
+    public void setPropertyChangeSource(boolean propertyChangeSource) {
+        this.propertyChangeSource = propertyChangeSource;
     }
 
 }

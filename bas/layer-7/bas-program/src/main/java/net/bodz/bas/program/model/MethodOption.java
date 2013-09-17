@@ -1,5 +1,6 @@
 package net.bodz.bas.program.model;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.ParseException;
@@ -82,6 +83,16 @@ class InvocationAsProperty
 
     public Object getReturnValue() {
         return returnValue;
+    }
+
+    @Override
+    public Annotation[] getAnnotations() {
+        return method.getAnnotations();
+    }
+
+    @Override
+    public Annotation[] getDeclaredAnnotations() {
+        return method.getDeclaredAnnotations();
     }
 
 }

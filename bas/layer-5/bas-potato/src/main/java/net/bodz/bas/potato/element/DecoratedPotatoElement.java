@@ -22,16 +22,37 @@ public class DecoratedPotatoElement
     }
 
     @Override
-    public void findAnnotations(Map<Class<? extends Annotation>, Annotation> map) {
-        IPotatoElement wrapped = getWrapped();
-        IAnnotatedElement _wrapped = wrapped;
-        _wrapped.findAnnotations(map);
-    }
-
-    @Override
     public Class<?> getDeclaringClass() {
         return getWrapped().getDeclaringClass();
     }
+
+    @Override
+    public <T> T getTyper(Class<T> typerClass) {
+        return getWrapped().getTyper(typerClass);
+    }
+
+    /** ⇱ Implementation Of {@link IAnnotated}. */
+    ;
+
+    @Override
+    public Map<Class<?>, Annotation> getAnnotationMap() {
+        return getWrapped().getAnnotationMap();
+    }
+
+    @Override
+    public Map<Class<?>, Annotation> getDeclaredAnnotationMap() {
+        return getWrapped().getDeclaredAnnotationMap();
+    }
+
+    @Override
+    public void dumpAnnotations(Map<Class<?>, Annotation> map) {
+        IPotatoElement wrapped = getWrapped();
+        IAnnotated _wrapped = wrapped;
+        _wrapped.dumpAnnotations(map);
+    }
+
+    /** ⇱ Implementation Of {@link IElement}. */
+    ;
 
     @Override
     public String getName() {

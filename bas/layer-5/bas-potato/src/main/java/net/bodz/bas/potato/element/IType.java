@@ -6,6 +6,8 @@ package net.bodz.bas.potato.element;
 public interface IType
         extends IPotatoElement {
 
+    Class<?> getType();
+
     /**
      * Get the property map.
      * 
