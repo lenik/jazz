@@ -48,18 +48,8 @@ public class FontType
     }
 
     @Override
-    public void setFontUse(FontUseMode fontUse) {
-        this.fontUse = fontUse;
-    }
-
-    @Override
     public String getFontFamily() {
         return fontFamily;
-    }
-
-    @Override
-    public void setFontFamily(String fontFamily) {
-        this.fontFamily = fontFamily;
     }
 
     @Override
@@ -68,18 +58,8 @@ public class FontType
     }
 
     @Override
-    public void setFontSizeType(FontSizeType fontSizeType) {
-        this.fontSizeType = fontSizeType;
-    }
-
-    @Override
     public LengthMeasure getFontSize() {
         return fontSize;
-    }
-
-    @Override
-    public void setFontSize(LengthMeasure fontSize) {
-        this.fontSize = fontSize;
     }
 
     @Override
@@ -88,18 +68,8 @@ public class FontType
     }
 
     @Override
-    public void setFontStyle(FontStyleMode fontStyle) {
-        this.fontStyle = fontStyle;
-    }
-
-    @Override
     public FontWeightMode getFontWeight() {
         return fontWeight;
-    }
-
-    @Override
-    public void setFontWeight(FontWeightMode fontWeight) {
-        this.fontWeight = fontWeight;
     }
 
     @Override
@@ -108,18 +78,8 @@ public class FontType
     }
 
     @Override
-    public void setFontVariant(FontVariantMode fontVariant) {
-        this.fontVariant = fontVariant;
-    }
-
-    @Override
     public TextDecorationFlags getTextDecoration() {
         return textDecoration;
-    }
-
-    @Override
-    public void setTextDecoration(TextDecorationFlags textDecoration) {
-        this.textDecoration = textDecoration;
     }
 
 }

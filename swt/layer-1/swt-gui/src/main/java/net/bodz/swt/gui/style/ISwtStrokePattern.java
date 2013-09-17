@@ -2,7 +2,7 @@ package net.bodz.swt.gui.style;
 
 import org.eclipse.swt.SWT;
 
-public interface ISwtStrokeType {
+public interface ISwtStrokePattern {
 
     /**
      * @see SWT#CAP_ROUND

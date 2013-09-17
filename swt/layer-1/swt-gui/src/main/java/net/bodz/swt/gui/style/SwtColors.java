@@ -9,13 +9,13 @@ import net.bodz.bas.gui.style.color.IColor_RGB24;
 public class SwtColors {
 
     public static Color convert(IColor color, Device device) {
-        if (color instanceof SwtManagedColor)
-            return ((SwtManagedColor) color).getSwtColor();
+        if (color instanceof SwtColor)
+            return ((SwtColor) color).getSwtColor();
         else
             return create(device, color);
     }
 
-    public static Color convert(SwtManagedColor managedColor) {
+    public static Color convert(SwtColor managedColor) {
         return managedColor.getSwtColor();
     }
 

@@ -11,18 +11,10 @@ public interface IStrokeType
 
     LengthMeasure getWidth();
 
-    void setWidth(LengthMeasure width);
-
     LineCapMode getLineCap();
-
-    void setLineCap(LineCapMode lineCap);
 
     LineJoinMode getLineJoin();
 
-    void setLineJoin(LineJoinMode lineJoin);
-
     int[] getDashPattern();
-
-    void setDashPattern(int[] dashPattern);
 
 }

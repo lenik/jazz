@@ -1,9 +1,7 @@
 package net.bodz.swt.gui.style;
 
-import java.io.Serializable;
-
 public class SwtStrokeType
-        implements ISwtStrokeType, Serializable {
+        extends AbstractSwtStrokeType {
 
     private static final long serialVersionUID = 1L;
 
@@ -12,6 +10,9 @@ public class SwtStrokeType
     public int join;
     public int style;
     public int width;
+
+    /** ⇱ Implementation Of {@link ISwtStrokePattern}. */
+    ;
 
     @Override
     public int getSwtLineCap() {

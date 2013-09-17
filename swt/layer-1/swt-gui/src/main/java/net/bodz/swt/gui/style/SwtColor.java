@@ -9,7 +9,7 @@ import net.bodz.bas.gui.style.color.AbstractRGBA32Color;
 import net.bodz.bas.gui.style.color.IColor_RGB24;
 import net.bodz.bas.t.object.IDisposable;
 
-public class SwtManagedColor
+public class SwtColor
         extends AbstractRGBA32Color
         implements IDisposable {
 
@@ -18,14 +18,14 @@ public class SwtManagedColor
     private final Color color;
     private final boolean managed;
 
-    public SwtManagedColor(Device device, IColor_RGB24 color) {
+    public SwtColor(Device device, IColor_RGB24 color) {
         if (device == null)
             device = Display.getCurrent();
         this.color = new Color(device, color.getRed8(), color.getGreen8(), color.getBlue8());
         this.managed = true;
     }
 
-    public SwtManagedColor(Color color) {
+    public SwtColor(Color color) {
         assert color != null;
         this.color = color;
         this.managed = false;
@@ -47,6 +47,45 @@ public class SwtManagedColor
         if (managed)
             color.dispose();
     }
+
+    public Color getSwtColor() {
+        return color;
+    }
+
+    public RGB getRGB() {
+        return color.getRGB();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SwtColor))
+            return false;
+
+        SwtColor o = (SwtColor) obj;
+        if (!managed != o.managed)
+            return false;
+        if (!color.equals(o.color))
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0x8a57df58;
+        if (managed)
+            hash += 0x19b8224e;
+        hash += color.hashCode();
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return color.toString();
+    }
+
+    /** ⇱ Implementation Of {@link IColor_RGBA32}. */
+    ;
 
     @Override
     public int getAlpha8() {
@@ -82,42 +121,6 @@ public class SwtManagedColor
 
     @Override
     public void setBlue8(int blue8) {
-    }
-
-    public Color getSwtColor() {
-        return color;
-    }
-
-    public RGB getRGB() {
-        return color.getRGB();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof SwtManagedColor))
-            return false;
-
-        SwtManagedColor o = (SwtManagedColor) obj;
-        if (!managed != o.managed)
-            return false;
-        if (!color.equals(o.color))
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0x8a57df58;
-        if (managed)
-            hash += 0x19b8224e;
-        hash += color.hashCode();
-        return hash;
-    }
-
-    @Override
-    public String toString() {
-        return color.toString();
     }
 
 }

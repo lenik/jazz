@@ -66,4 +66,8 @@ public class LengthMeasure
 
     public static final LengthMeasure NaN = new LengthMeasure(Double.NaN);
 
+    public static LengthMeasure PIXEL(int length) {
+        return new LengthMeasure(length, LengthUnit.PIXEL);
+    }
+
 }
