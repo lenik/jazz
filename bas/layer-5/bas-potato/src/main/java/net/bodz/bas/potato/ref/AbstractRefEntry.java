@@ -5,6 +5,7 @@ import java.util.Map;
 import net.bodz.bas.i18n.dom1.DecoratedElement;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.rtx.QueryException;
+import net.bodz.bas.typer.Typers;
 
 public abstract class AbstractRefEntry<T>
         extends DecoratedElement
@@ -61,15 +62,16 @@ public abstract class AbstractRefEntry<T>
     }
 
     @Override
-    public <S> S query(Class<S> specificationType)
+    public <spec_t> spec_t query(Class<spec_t> specificationType)
             throws QueryException {
+        Class<?> valueType = getValueType();
 
-        Class<? extends T> valueType = getValueType();
-        if (specificationType.isAssignableFrom(valueType)) {
-            T value = getValue();
-            return specificationType.cast(value);
-        }
+        // if (IStdTyper.class.isAssignableFrom(specificationType))
+        spec_t typer = Typers.getTyper(valueType, specificationType);
+        if (typer != null)
+            return typer;
 
+        return null;
     }
 
 }
