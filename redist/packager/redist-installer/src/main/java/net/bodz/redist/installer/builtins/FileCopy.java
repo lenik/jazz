@@ -19,7 +19,7 @@ import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.c.java.io.FileDirs;
 import net.bodz.bas.c.java.io.FileFinder;
-import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.io.FileRelation;
 import net.bodz.bas.c.java.io.IOConfig;
 import net.bodz.bas.c.java.io.PruneFileFilter;
 import net.bodz.redist.installer.AbstractComponent;
@@ -53,7 +53,7 @@ public class FileCopy
 
     public FileCopy(String baseName, String basePath, FileFinder finder)
             throws IOException {
-        this(baseName, basePath, FilePath.findBase(finder.getStart()), finder.listFiles());
+        this(baseName, basePath, FileRelation.getCommonParentFile(finder.getStart()), finder.listFiles());
     }
 
     /**

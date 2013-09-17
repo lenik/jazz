@@ -41,8 +41,8 @@ public class TestProject
             File testSrcDir = testPomDir.find("src/main/java");
             FileFinder testbin = new FileFinder(FileCopy.NoSVN, testBinDir);
             FileFinder testsrc = new FileFinder(FileCopy.NoSVN, testSrcDir);
-            copyTestClassesFiles = new FileCopy(BASE_TEST, testbin);
-            copyTestSrcFiles = new FileCopy(BASE_TEST, testsrc);
+            copyTestClassesFiles = new FileCopy(BASE_TEST, null, testbin);
+            copyTestSrcFiles = new FileCopy(BASE_TEST, null, testsrc);
             testSection.add(copyTestClassesFiles);
             testSection.add(copyTestSrcFiles);
         }
