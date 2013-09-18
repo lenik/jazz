@@ -17,13 +17,13 @@ public abstract class AbstractByteOut
     }
 
     @Override
-    public void write(ByteBuffer byteBuffer)
+    public void write(ByteBuffer buf)
             throws IOException {
-        if (byteBuffer == null)
-            throw new NullPointerException("byteBuffer");
-        byte[] array = byteBuffer.array();
-        int offset = byteBuffer.arrayOffset();
-        int length = byteBuffer.position();
+        if (buf == null)
+            throw new NullPointerException("buf");
+        byte[] array = buf.array();
+        int offset = buf.arrayOffset();
+        int length = buf.position();
         write(array, offset, length);
     }
 

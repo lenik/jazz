@@ -19,14 +19,14 @@ public abstract class AbstractByteIn
      * XXX - Please check in more detail.
      */
     @Override
-    public int read(ByteBuffer buffer)
+    public int read(ByteBuffer buf)
             throws IOException {
         int cbRead = 0;
-        while (buffer.hasRemaining()) {
+        while (buf.hasRemaining()) {
             int b = read();
             if (b == -1)
                 return cbRead == 0 ? -1 : cbRead;
-            buffer.put((byte) b);
+            buf.put((byte) b);
             cbRead++;
         }
         return cbRead;

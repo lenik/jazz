@@ -36,7 +36,7 @@ public interface IByteIn
      * @throws NullPointerException
      *             If <code>byteBuffer</code> is <code>null</code>.
      */
-    int read(ByteBuffer byteBuffer)
+    int read(ByteBuffer buf)
             throws IOException;
 
     @Override
