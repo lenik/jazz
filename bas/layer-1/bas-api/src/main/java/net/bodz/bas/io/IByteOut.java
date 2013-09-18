@@ -23,12 +23,12 @@ public interface IByteOut
             throws IOException;
 
     /**
-     * @param buffer
+     * @param buf
      *            Selection to limit instead of buffer.capacity();
      * @throws NullPointerException
      *             If <code>buffer</code> is <code>null</code>.
      */
-    void write(ByteBuffer buffer)
+    void write(ByteBuffer buf)
             throws IOException;
 
     /**
