@@ -3,7 +3,7 @@ package net.bodz.bas.vfs.inode;
 import java.nio.file.attribute.GroupPrincipal;
 import java.nio.file.attribute.UserPrincipal;
 
-import net.bodz.bas.c.java.nio.UnitModeBits;
+import net.bodz.bas.c.java.nio.UnixModeBits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.t.tree.AbstractMapTreeNode;
 
@@ -79,27 +79,27 @@ public class Inode
     }
 
     public boolean isReadable() {
-        return (mode & UnitModeBits.OWNER_READ) != 0;
+        return (mode & UnixModeBits.OWNER_READ) != 0;
     }
 
     public void setReadable(boolean readable) {
-        mode |= UnitModeBits.OWNER_READ;
+        mode |= UnixModeBits.OWNER_READ;
     }
 
     public boolean isWritable() {
-        return (mode & UnitModeBits.OWNER_WRITE) != 0;
+        return (mode & UnixModeBits.OWNER_WRITE) != 0;
     }
 
     public void setWritable(boolean writable) {
-        mode |= UnitModeBits.OWNER_WRITE;
+        mode |= UnixModeBits.OWNER_WRITE;
     }
 
     public boolean isExecutable() {
-        return (mode & UnitModeBits.OWNER_EXECUTE) != 0;
+        return (mode & UnixModeBits.OWNER_EXECUTE) != 0;
     }
 
     public void setExecutable(boolean executable) {
-        mode |= UnitModeBits.OWNER_EXECUTE;
+        mode |= UnixModeBits.OWNER_EXECUTE;
     }
 
     public boolean isArchive() {
