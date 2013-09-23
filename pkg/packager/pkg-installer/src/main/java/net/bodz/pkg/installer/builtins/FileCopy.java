@@ -16,6 +16,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import net.bodz.bas.ar.IArchiveEntry;
+import net.bodz.bas.ar.IUnarchiver;
 import net.bodz.bas.c.java.io.FileDirs;
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.FileRelation;
@@ -279,9 +281,9 @@ public class FileCopy
             setProgressSize(data.list.length);
 
             Attachment attachment = getAttachment(session, false);
-            ZipInputStream zipIn;
+            IUnarchiver unarchiver;
             try {
-                zipIn = attachment.getZipIn();
+                unarchiver = attachment.getZipIn();
             } catch (IOException e) {
                 throwException(e);
                 return;
@@ -293,7 +295,7 @@ public class FileCopy
                     if (!moveOn(index++))
                         break;
 
-                    ZipEntry entry = zipIn.getEntry(name);
+                    IArchiveEntry entry = unarchiver.getEntry(name);
                     if (entry == null) {
                         InstallException ex = new InstallException(tr._("Entry isn\'t existed: ") + name);
                         if (recoverException(ex))
