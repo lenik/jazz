@@ -8,13 +8,13 @@ import java.util.Map;
 
 import net.bodz.bas.ar.IArchiveEntry;
 import net.bodz.bas.ar.IUnarchiver;
-import net.bodz.bas.c.java.io.RafInputStream;
 import net.bodz.bas.err.BadFormatException;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.data.DataInImplLE;
+import net.bodz.bas.io.impl.RafIn;
 
 public class ZipUnarchiver
         implements IUnarchiver, IZipConsts, IZip64Consts {
@@ -108,7 +108,7 @@ public class ZipUnarchiver
 
     public static void main(String[] args)
             throws Exception {
-        RafInputStream in = new RafInputStream("/tmp/b.zip", "r");
+        RafIn in = new RafIn("/tmp/b.zip", "r");
         ZipUnarchiver unarchiver = new ZipUnarchiver(in);
         ZipEntry entry;
         while ((entry = unarchiver.getNextEntry()) != null) {
