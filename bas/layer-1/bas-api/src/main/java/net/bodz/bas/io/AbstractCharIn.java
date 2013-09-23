@@ -9,6 +9,8 @@ import net.bodz.bas.io.adapter.CharInReader;
 public abstract class AbstractCharIn
         implements ICharIn {
 
+    private boolean closed;
+
     @Override
     public int read(char[] chars)
             throws IOException {
@@ -16,17 +18,9 @@ public abstract class AbstractCharIn
     }
 
     @Override
-    public int read(CharBuffer buffer)
+    public int read(CharBuffer buf)
             throws IOException {
-        int ccRead = 0;
-        while (buffer.hasRemaining()) {
-            int ch = read();
-            if (ch == -1)
-                return ccRead == 0 ? -1 : ccRead;
-            buffer.put((char) ch);
-            ccRead++;
-        }
-        return ccRead;
+        return fn.read(this, buf);
     }
 
     @Override
@@ -42,6 +36,17 @@ public abstract class AbstractCharIn
     @Override
     public void close()
             throws IOException {
+        closed = true;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return closed;
+    }
+
+    protected void ensureOpen() {
+        if (closed)
+            throw new IllegalStateException("already closed");
     }
 
     public Reader toReader() {

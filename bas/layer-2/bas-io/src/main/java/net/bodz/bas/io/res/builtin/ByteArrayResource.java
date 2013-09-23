@@ -5,8 +5,10 @@ import java.nio.ByteBuffer;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
+import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharIOS;
 import net.bodz.bas.io.adapter.ByteBufferByteIn;
 import net.bodz.bas.io.adapter.ByteBufferByteOut;
 
@@ -79,4 +81,17 @@ public class ByteArrayResource
         return new ByteBufferByteOut(byteBuffer);
     }
 
+    @Override
+    protected IByteIOS _newByteIOS(OpenOption... options)
+            throws IOException {
+        return null;
+    }
+
+    @Override
+    protected ICharIOS _newCharIOS(OpenOption... options)
+            throws IOException {
+        return null;
+    }
+
+    
 }

@@ -11,12 +11,8 @@ import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectOutput;
 import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.c.java.io.ObjectOutputAdapter;
-import net.bodz.bas.io.IByteIn;
-import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.ICharIn;
-import net.bodz.bas.io.ICharOut;
-import net.bodz.bas.io.IDataOut;
-import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.io.*;
 import net.bodz.bas.io.adapter.ByteInInputStream;
 import net.bodz.bas.io.adapter.ByteOutOutputStream;
 import net.bodz.bas.io.adapter.CharInReader;
@@ -495,6 +491,34 @@ public abstract class StreamResourceTemplate {
         IObjectOutput out = _newObjectOutput(options);
         afterOpenOutput(out);
         return out;
+    }
+
+    // IByteIOS, ICharIOS
+
+    public final IByteIOS newByteIOS(OpenOption... options)
+            throws IOException {
+        beforeOpenOutput(options);
+        IByteIOS ios = _newByteIOS(options);
+        afterOpenOutput(ios);
+        return ios;
+    }
+
+    public final ICharIOS newCharIOS(OpenOption... options)
+            throws IOException {
+        beforeOpenOutput(options);
+        ICharIOS ios = _newCharIOS(options);
+        afterOpenOutput(ios);
+        return ios;
+    }
+
+    protected IByteIOS _newByteIOS(OpenOption... options)
+            throws IOException {
+        throw new NotImplementedException();
+    }
+
+    protected ICharIOS _newCharIOS(OpenOption... options)
+            throws IOException {
+        throw new NotImplementedException();
     }
 
 }

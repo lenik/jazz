@@ -1,6 +1,5 @@
 package net.bodz.bas.io;
 
-import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;
 import java.nio.CharBuffer;
@@ -8,7 +7,7 @@ import java.nio.CharBuffer;
 import net.bodz.bas.io.impl.NullCharOut;
 
 public interface ICharOut
-        extends ISimpleCharOut, Flushable, Closeable {
+        extends ISimpleCharOut, Flushable, ICloseable {
 
     /**
      * @throws NullPointerException
@@ -67,10 +66,33 @@ public interface ICharOut
     void flush()
             throws IOException;
 
-    @Override
-    void close()
-            throws IOException;
-
     ICharOut NULL = new NullCharOut();
+
+    class fn {
+
+        public static void write(ICharOut out, CharBuffer buf)
+                throws IOException {
+            if (buf == null)
+                throw new NullPointerException("buf");
+            char[] array = buf.array();
+            int offset = buf.arrayOffset();
+            int length = buf.position();
+            out.write(array, offset, length);
+        }
+
+        public static void dump(ICharOut out, ICharIn charIn)
+                throws IOException {
+            if (charIn == null)
+                throw new NullPointerException("charIn");
+            char[] buf = new char[4096];
+            while (true) {
+                int cc = charIn.read(buf);
+                if (cc == -1)
+                    return;
+                out.write(buf, 0, cc);
+            }
+        }
+
+    }
 
 }

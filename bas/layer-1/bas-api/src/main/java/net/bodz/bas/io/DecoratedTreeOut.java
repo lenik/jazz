@@ -1,6 +1,5 @@
 package net.bodz.bas.io;
 
-
 public class DecoratedTreeOut
         extends DecoratedPrintOut
         implements ITreeOut {

@@ -6,31 +6,57 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.ar.IArchiveEntry;
+import net.bodz.bas.ar.IUnarchiver;
 import net.bodz.bas.c.java.io.RafInputStream;
 import net.bodz.bas.err.BadFormatException;
 import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.data.DataInImplLE;
 
 public class ZipUnarchiver
-        implements IZipConsts, IZip64Consts {
+        implements IUnarchiver, IZipConsts, IZip64Consts {
 
     IDataIn in;
     ISeekable seeker;
+    ICroppable cropper;
 
     Charset charset = Charset.defaultCharset();
     Map<String, IZipEntry> entryMap = new LinkedHashMap<>();
 
     byte[] tmpbuf = new byte[128];
 
-    public ZipUnarchiver(IByteIn in, ISeekable seeker) {
+    public <T extends IByteIn & ISeekable & ICroppable> ZipUnarchiver(T in) {
         if (in == null)
             throw new NullPointerException("in");
-        if (seeker == null)
-            throw new NullPointerException("seeker");
         this.in = DataInImplLE.from(in);
-        this.seeker = seeker;
+        this.seeker = in;
+        this.cropper = in;
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        in.close();
+    }
+
+    @Override
+    public boolean isClosed() {
+        return false;
+    }
+
+    @Override
+    public Iterable<? extends IArchiveEntry> entries()
+            throws IOException {
+        return null;
+    }
+
+    @Override
+    public IArchiveEntry getEntry(String name)
+            throws IOException {
+        return null;
     }
 
     public ZipEntry getNextEntry()
@@ -83,7 +109,7 @@ public class ZipUnarchiver
     public static void main(String[] args)
             throws Exception {
         RafInputStream in = new RafInputStream("/tmp/b.zip", "r");
-        ZipUnarchiver unarchiver = new ZipUnarchiver(in, in);
+        ZipUnarchiver unarchiver = new ZipUnarchiver(in);
         ZipEntry entry;
         while ((entry = unarchiver.getNextEntry()) != null) {
             System.out.println(entry.getName() + ": " + entry.extraBytes.length);

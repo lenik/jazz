@@ -1,11 +1,10 @@
 package net.bodz.bas.io;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public interface IByteIn
-        extends ISimpleByteIn, Closeable {
+        extends ISimpleByteIn, ICloseable {
 
     /**
      * @return the actual number of bytes skipped.
@@ -39,8 +38,24 @@ public interface IByteIn
     int read(ByteBuffer buf)
             throws IOException;
 
-    @Override
-    void close()
-            throws IOException;
+    class fn {
+
+        /**
+         * XXX - Please check in more detail.
+         */
+        public static int read(IByteIn in, ByteBuffer buf)
+                throws IOException {
+            int cbRead = 0;
+            while (buf.hasRemaining()) {
+                int b = in.read();
+                if (b == -1)
+                    return cbRead == 0 ? -1 : cbRead;
+                buf.put((byte) b);
+                cbRead++;
+            }
+            return cbRead;
+        }
+
+    }
 
 }

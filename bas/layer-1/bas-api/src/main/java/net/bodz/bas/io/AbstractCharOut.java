@@ -9,6 +9,8 @@ import net.bodz.bas.io.adapter.CharOutWriter;
 public abstract class AbstractCharOut
         implements ICharOut {
 
+    private boolean closed;
+
     @Override
     public void write(char[] chars)
             throws IOException {
@@ -18,8 +20,8 @@ public abstract class AbstractCharOut
     @Override
     public void write(CharSequence chars, int off, int len)
             throws IOException {
-        CharBuffer charBuffer = CharBuffer.wrap(chars, off, off + len);
-        write(charBuffer);
+        CharBuffer buf = CharBuffer.wrap(chars, off, off + len);
+        write(buf);
     }
 
     @Override
@@ -37,27 +39,14 @@ public abstract class AbstractCharOut
     }
 
     @Override
-    public void write(CharBuffer charBuffer)
+    public void write(CharBuffer buf)
             throws IOException {
-        if (charBuffer == null)
-            throw new NullPointerException("charBuffer");
-        char[] array = charBuffer.array();
-        int offset = charBuffer.arrayOffset();
-        int length = charBuffer.position();
-        write(array, offset, length);
+        fn.write(this, buf);
     }
 
     public void dump(ICharIn charIn)
             throws IOException {
-        if (charIn == null)
-            throw new NullPointerException("charIn");
-        char[] buf = new char[4096];
-        while (true) {
-            int cc = charIn.read(buf);
-            if (cc == -1)
-                return;
-            write(buf, 0, cc);
-        }
+        fn.dump(this, charIn);
     }
 
     @Override
@@ -75,6 +64,17 @@ public abstract class AbstractCharOut
     public void close()
             throws IOException {
         flush(true);
+        closed = true;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return closed;
+    }
+
+    protected void ensureOpen() {
+        if (closed)
+            throw new IllegalStateException("already closed");
     }
 
     public Writer toWriter() {
