@@ -18,13 +18,15 @@ import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.ar.IArchiveEntry;
 import net.bodz.bas.ar.IUnarchiver;
+import net.bodz.bas.ar.zip.ZipUnarchiver;
 import net.bodz.bas.c.java.io.FileDirs;
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.FileRelation;
 import net.bodz.bas.c.java.io.IOConfig;
 import net.bodz.bas.c.java.io.PruneFileFilter;
+import net.bodz.bas.io.IByteIOS;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.pkg.installer.AbstractComponent;
-import net.bodz.pkg.installer.Attachment;
 import net.bodz.pkg.installer.ISession;
 import net.bodz.pkg.installer.InstallException;
 
@@ -98,10 +100,10 @@ public class FileCopy
         return buf.toString();
     }
 
-    Attachment getAttachment(ISession session, boolean autoCreate) {
+    IStreamResource getAttachment(ISession session, boolean autoCreate) {
         String id = getId();
         String aname = baseName + "/" + id + ".zip";
-        Attachment a;
+        IStreamResource a;
         try {
             a = session.getAttachment(aname, autoCreate);
         } catch (IOException e) {
@@ -161,7 +163,7 @@ public class FileCopy
             List<String> list = new ArrayList<String>(count);
             long sum = 0;
 
-            Attachment a = getAttachment(session, true);
+            IStreamResource a = getAttachment(session, true);
             logger.infof(tr._("Pack %s files to %s\n"), getId(), a);
 
             ZipOutputStream zout;
@@ -280,10 +282,11 @@ public class FileCopy
 
             setProgressSize(data.list.length);
 
-            Attachment attachment = getAttachment(session, false);
+            IStreamResource attachment = getAttachment(session, false);
             IUnarchiver unarchiver;
             try {
-                unarchiver = attachment.getZipIn();
+                IByteIOS ios = attachment.newByteIOS();
+                unarchiver = new ZipUnarchiver(ios);
             } catch (IOException e) {
                 throwException(e);
                 return;
@@ -374,7 +377,7 @@ public class FileCopy
                     baseDir = new File(baseDir, basePath);
             }
             logger.infof(tr._("Remove %s files from %s\n"), getId(), baseDir);
-            Attachment a = getAttachment(session, false);
+            IStreamResource a = getAttachment(session, false);
             ZipInputStream zin = null;
             try {
                 zin = a.getZipIn();
