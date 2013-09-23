@@ -30,7 +30,7 @@ public interface ICharIn
      * @throws NullPointerException
      *             If <code>charBuffer</code> is <code>null</code>.
      */
-    int read(CharBuffer charBuffer)
+    int read(CharBuffer buf)
             throws IOException;
 
     /**
@@ -52,6 +52,15 @@ public interface ICharIn
                 ccRead++;
             }
             return ccRead;
+        }
+
+        public static String readString(ICharIn in, int maxCharacters)
+                throws IOException {
+            char[] chars = new char[maxCharacters];
+            int ccRead = in.read(chars);
+            if (ccRead == -1)
+                return null;
+            return new String(chars, 0, ccRead);
         }
 
     }

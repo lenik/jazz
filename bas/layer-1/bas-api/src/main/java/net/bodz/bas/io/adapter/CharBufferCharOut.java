@@ -9,41 +9,41 @@ import net.bodz.bas.io.AbstractCharOut;
 public class CharBufferCharOut
         extends AbstractCharOut {
 
-    private final CharBuffer charBuffer;
+    private final CharBuffer buf;
 
-    public CharBufferCharOut(CharBuffer charBuffer) {
-        if (charBuffer == null)
-            throw new NullPointerException("charBuffer");
-        this.charBuffer = charBuffer;
+    public CharBufferCharOut(CharBuffer buf) {
+        if (buf == null)
+            throw new NullPointerException("buf");
+        this.buf = buf;
     }
 
     @Override
     public void write(int c)
             throws IOException {
-        charBuffer.put((char) c);
+        buf.put((char) c);
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(char[] src, int off, int len)
             throws IOException {
-        charBuffer.put(chars, off, len);
+        buf.put(src, off, len);
     }
 
     @Override
     public void write(String string, int off, int len)
             throws IOException {
         try {
-            charBuffer.put(string, off, len);
+            buf.put(string, off, len);
         } catch (BufferOverflowException e) {
             throw new IOException(e);
         }
     }
 
     @Override
-    public void write(CharBuffer charBuffer)
+    public void write(CharBuffer src)
             throws IOException {
         try {
-            charBuffer.put(charBuffer);
+            buf.put(src);
         } catch (BufferOverflowException e) {
             throw new IOException(e);
         }
@@ -51,7 +51,7 @@ public class CharBufferCharOut
 
     @Override
     public int hashCode() {
-        return 0x56ec273b + charBuffer.hashCode();
+        return 0x56ec273b + buf.hashCode();
     }
 
     @Override
@@ -59,12 +59,12 @@ public class CharBufferCharOut
         if (!(obj instanceof CharBufferCharOut))
             return false;
         CharBufferCharOut o = (CharBufferCharOut) obj;
-        return charBuffer.equals(o.charBuffer);
+        return buf.equals(o.buf);
     }
 
     @Override
     public String toString() {
-        return charBuffer.toString();
+        return buf.toString();
     }
 
 }

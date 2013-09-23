@@ -2,16 +2,18 @@ package net.bodz.bas.io;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.ByteArrayResource;
 
+/**
+ * @see BByteIn
+ * @see BByteOut
+ */
 public class BByteIOS
-        extends AbstractByteIn
-        implements IByteIOS {
+        extends AbstractByteIOS {
 
     private final byte[] buf;
     private final int start;
@@ -126,38 +128,16 @@ public class BByteIOS
     }
 
     @Override
-    public final void write(byte[] buf)
-            throws IOException {
-        write(buf, 0, buf.length);
-    }
-
-    @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(byte[] src, int off, int len)
             throws IOException {
         ensureOpen();
         int willEndAt = position + len;
         if (willEndAt >= end)
             throw new EOFException();
 
-        System.arraycopy(buf, off, this.buf, position, len);
+        System.arraycopy(src, off, buf, position, len);
 
         position += len;
-    }
-
-    @Override
-    public void write(ByteBuffer buf)
-            throws IOException {
-        IByteOut.fn.write(this, buf);
-    }
-
-    @Override
-    public void flush(boolean strict)
-            throws IOException {
-    }
-
-    @Override
-    public void flush()
-            throws IOException {
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
