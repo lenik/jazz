@@ -2,7 +2,6 @@ package net.bodz.mda.xjdoc.tagtype;
 
 import java.io.IOException;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -18,7 +17,7 @@ public abstract class AbstractScalarTagType<T>
 
     @Override
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
         if (value != null) {
             @SuppressWarnings("unchecked")
             String s = format((T) value);
@@ -35,7 +34,7 @@ public abstract class AbstractScalarTagType<T>
 
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
         @SuppressWarnings("unchecked")
         String string = format((T) value);
         out.attribute(prefix, string);
@@ -44,7 +43,6 @@ public abstract class AbstractScalarTagType<T>
     protected abstract T parse(String s)
             throws ParseException;
 
-    protected abstract String format(T value)
-            throws FormatException;
+    protected abstract String format(T value);
 
 }

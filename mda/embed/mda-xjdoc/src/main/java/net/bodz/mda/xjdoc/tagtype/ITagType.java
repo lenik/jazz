@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.tagtype;
 
 import java.io.IOException;
 
-import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.FormatterException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -37,9 +37,11 @@ public interface ITagType {
      *            The value to be written, never be <code>null</code>.
      * @param writer
      *            The javadoc writer.
+     * @throws FormatterException
+     *             If the value can't be converted to a specific text form.
      */
     void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
-            throws FormatException, IOException;
+            throws IOException;
 
     /**
      * Parse a single Flatf entry.
@@ -49,8 +51,11 @@ public interface ITagType {
 
     /**
      * Write Flatf entries for a value object.
+     * 
+     * @throws FormatterException
+     *             If the value can't be converted to a specific text form.
      */
     void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
-            throws FormatException, IOException;
+            throws IOException;
 
 }

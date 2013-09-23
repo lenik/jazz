@@ -3,7 +3,6 @@ package net.bodz.mda.xjdoc.tagtype;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 
 public class URLTagType
@@ -20,8 +19,7 @@ public class URLTagType
     }
 
     @Override
-    protected String format(URL value)
-            throws FormatException {
+    protected String format(URL value) {
         return value.toString();
     }
 

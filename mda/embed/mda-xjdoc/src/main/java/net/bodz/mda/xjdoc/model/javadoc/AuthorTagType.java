@@ -1,6 +1,5 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.tagtype.AbstractScalarTagType;
 
@@ -14,8 +13,7 @@ public class AuthorTagType
     }
 
     @Override
-    protected String format(Author value)
-            throws FormatException {
+    protected String format(Author value) {
         return value.toString();
     }
 

@@ -1,23 +1,23 @@
 package net.bodz.bas.err;
 
-public class FormatException
+public class FormatterException
         extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public FormatException() {
+    public FormatterException() {
         super();
     }
 
-    public FormatException(String message, Throwable cause) {
+    public FormatterException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public FormatException(String message) {
+    public FormatterException(String message) {
         super(message);
     }
 
-    public FormatException(Throwable cause) {
+    public FormatterException(Throwable cause) {
         super(cause);
     }
 

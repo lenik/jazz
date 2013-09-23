@@ -12,7 +12,6 @@ import net.bodz.bas.c.type.addor.ArrayAddor;
 import net.bodz.bas.c.type.addor.CollectionAddor;
 import net.bodz.bas.c.type.addor.IAddor;
 import net.bodz.bas.c.type.addor.MapAddor;
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
@@ -263,8 +262,7 @@ public abstract class AbstractOption
     }
 
     @Override
-    public String[] formatValue(Object context, Object value)
-            throws FormatException {
+    public String[] formatValue(Object context, Object value) {
         Class<?> valueType = getValueType();
         IFormatter<Object> formatter = Typers.getTyper(valueType, IFormatter.class);
         String param1 = formatter.format(value);

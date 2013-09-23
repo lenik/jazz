@@ -3,7 +3,7 @@ package net.bodz.bas.typer.std;
 import java.beans.ExceptionListener;
 import java.io.Writer;
 
-import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.FormatterException;
 import net.bodz.bas.rtx.IOptions;
 
 public interface IFormatter<T>
@@ -15,11 +15,10 @@ public interface IFormatter<T>
      * @param object
      *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.
      * @return non-<code>null</code> formatted string.
-     * @throws FormatException
-     *             If failed to format.
+     * @throws FormatterException
+     *             If the object can't be converted to a specific text form.
      */
-    String format(T object)
-            throws FormatException;
+    String format(T object);
 
     /**
      * Negotiation:
@@ -34,10 +33,9 @@ public interface IFormatter<T>
      * @param object
      *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.
      * @return non-<code>null</code> formatted string.
-     * @throws FormatException
-     *             If failed to format.
+     * @throws FormatterException
+     *             If the object can't be converted to a specific text form.
      */
-    String format(T object, IOptions options)
-            throws FormatException;
+    String format(T object, IOptions options);
 
 }

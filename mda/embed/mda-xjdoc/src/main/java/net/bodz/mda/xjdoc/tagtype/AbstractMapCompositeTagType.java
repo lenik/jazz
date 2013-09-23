@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -35,7 +34,8 @@ public abstract class AbstractMapCompositeTagType
     @Override
     public Map<?, ?> parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
-        @SuppressWarnings("unchecked") Map<Object, Object> map = (Map<Object, Object>) cont;
+        @SuppressWarnings("unchecked")
+        Map<Object, Object> map = (Map<Object, Object>) cont;
         if (map == null)
             map = new LinkedHashMap<Object, Object>();
 
@@ -51,7 +51,7 @@ public abstract class AbstractMapCompositeTagType
 
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
         Map<?, ?> map = (Map<?, ?>) value;
         for (Entry<?, ?> entry : map.entrySet()) {
             Object k = entry.getKey();
