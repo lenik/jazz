@@ -1,25 +1,30 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.impl;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 
+import net.bodz.bas.io.ICharIOS;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.ICroppable;
+import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
 
-public class ByteIOImpl
-        implements IByteIOS {
+public class MergedCharIOS
+        implements ICharIOS {
 
-    private IByteIn in;
-    private IByteOut out;
+    private ICharIn in;
+    private ICharOut out;
     private ISeekable seeker;
     private ICroppable cropper;
 
-    public ByteIOImpl(IByteIn in, IByteOut out, ISeekable seeker, ICroppable cropper) {
+    public MergedCharIOS(ICharIn in, ICharOut out, ISeekable seeker, ICroppable cropper) {
         if (in == null)
             throw new NullPointerException("in");
         if (out == null)
             throw new NullPointerException("out");
         if (seeker == null)
-            throw new NullPointerException("seekable");
+            throw new NullPointerException("seeker");
         if (cropper == null)
             throw new NullPointerException("cropper");
         this.in = in;
@@ -40,7 +45,7 @@ public class ByteIOImpl
         return in.isClosed();
     }
 
-    /** ⇱ Implementation Of {@link IByteIn}. */
+    /** ⇱ Implementation Of {@link ICharIn}. */
     ;
 
     @Override
@@ -50,54 +55,72 @@ public class ByteIOImpl
     }
 
     @Override
-    public long skip(long n)
-            throws IOException {
-        return in.skip(n);
-    }
-
-    @Override
-    public int read(byte[] buf)
+    public int read(char[] buf)
             throws IOException {
         return in.read(buf);
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(char[] buf, int off, int len)
             throws IOException {
         return in.read(buf, off, len);
     }
 
     @Override
-    public int read(ByteBuffer buf)
+    public int read(CharBuffer buf)
             throws IOException {
-        return IByteIn.fn.read(this, buf);
+        return in.read(buf);
     }
 
-    /** ⇱ Implementation Of {@link IByteOut}. */
+    @Override
+    public String readString(int maxCharacters)
+            throws IOException {
+        return in.readString(maxCharacters);
+    }
+
+    /** ⇱ Implementation Of {@link ICharOut}. */
     ;
 
     @Override
-    public void write(int b)
+    public void write(int ch)
             throws IOException {
-        out.write(b);
+        out.write(ch);
     }
 
     @Override
-    public void write(byte[] buf)
+    public void write(char[] buf)
             throws IOException {
         out.write(buf);
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(char[] buf, int off, int len)
             throws IOException {
         out.write(buf, off, len);
     }
 
     @Override
-    public void write(ByteBuffer buf)
+    public void write(CharBuffer buf)
             throws IOException {
-        IByteOut.fn.write(this, buf);
+        out.write(buf);
+    }
+
+    @Override
+    public void write(String s)
+            throws IOException {
+        out.write(s);
+    }
+
+    @Override
+    public void write(String s, int off, int len)
+            throws IOException {
+        out.write(s, off, len);
+    }
+
+    @Override
+    public void write(CharSequence chars, int off, int len)
+            throws IOException {
+        out.write(chars, off, len);
     }
 
     @Override
@@ -116,14 +139,14 @@ public class ByteIOImpl
     ;
 
     @Override
-    public long tell() {
-        return seeker.tell();
-    }
-
-    @Override
     public void seek(long position)
             throws IOException {
         seeker.seek(position);
+    }
+
+    @Override
+    public long tell() {
+        return seeker.tell();
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
