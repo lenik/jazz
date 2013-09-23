@@ -3,8 +3,8 @@ package net.bodz.bas.io;
 import java.io.EOFException;
 import java.io.IOException;
 
+import net.bodz.bas.err.BadFormatException;
 import net.bodz.bas.err.DecodeException;
-import net.bodz.bas.err.FormatterException;
 import net.bodz.bas.err.ParseException;
 
 public interface IDataIn
@@ -149,7 +149,7 @@ public interface IDataIn
     /**
      * Read UTF-encoded string.
      * 
-     * @throws FormatterException
+     * @throws BadFormatException
      *             If the string format is illegal.
      * @exception EOFException
      *                if this stream reaches the end before reading all the bytes.
@@ -177,7 +177,7 @@ public interface IDataIn
      * 
      * @param encoding
      *            <code>null</code> for UTF-8/16/32.
-     * @throws FormatterException
+     * @throws BadFormatException
      *             If the string format is illegal.
      * @exception EOFException
      *                if this stream reaches the end before reading all the bytes.
