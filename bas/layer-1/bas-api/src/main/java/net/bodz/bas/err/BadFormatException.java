@@ -1,7 +1,9 @@
 package net.bodz.bas.err;
 
+import java.io.IOException;
+
 public class BadFormatException
-        extends Exception {
+        extends IOException {
 
     private static final long serialVersionUID = 1L;
 
