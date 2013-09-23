@@ -1,6 +1,5 @@
 package net.bodz.bas.io;
 
-
 public class XYPosition
         implements IXYTellable {
 
