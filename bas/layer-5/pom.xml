@@ -11,6 +11,7 @@
     <artifactId>layer-5</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>bas-ar</module>
         <module>bas-c5</module>
         <module>bas-database</module>
         <module>bas-flow</module>

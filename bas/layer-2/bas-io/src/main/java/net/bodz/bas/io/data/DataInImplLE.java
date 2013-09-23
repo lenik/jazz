@@ -17,9 +17,9 @@ public class DataInImplLE
         this.baseImpl = baseImpl;
     }
 
-    public static IDataIn from(IByteIn byteIn) {
-        if (byteIn instanceof IDataIn)
-            return (IDataIn) byteIn;
+    public static DataInImplLE from(IByteIn byteIn) {
+        if (byteIn instanceof DataInImplLE)
+            return (DataInImplLE) byteIn;
         else
             return new DataInImplLE(byteIn);
     }
