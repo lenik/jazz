@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 
@@ -19,7 +18,8 @@ public class TagSpecKeyTagType
     @Override
     public Map<?, ?> parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
-        @SuppressWarnings("unchecked") Map<Object, Object> map = (Map<Object, Object>) cont;
+        @SuppressWarnings("unchecked")
+        Map<Object, Object> map = (Map<Object, Object>) cont;
         if (map == null)
             map = new LinkedHashMap<Object, Object>();
 
@@ -35,7 +35,7 @@ public class TagSpecKeyTagType
 
     @Override
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object _map, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
         Map<?, ?> map = (Map<?, ?>) _map;
 
         for (Entry<?, ?> entry : map.entrySet()) {

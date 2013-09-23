@@ -3,7 +3,6 @@ package net.bodz.mda.xjdoc.tagtype;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 
 public class TokensTagType
@@ -55,8 +54,7 @@ public class TokensTagType
     }
 
     @Override
-    public String format(String[] array)
-            throws FormatException {
+    public String format(String[] array) {
         StringBuilder sb = new StringBuilder(array.length * 32);
         for (int index = 0; index < array.length; index++) {
             if (index != 0) {

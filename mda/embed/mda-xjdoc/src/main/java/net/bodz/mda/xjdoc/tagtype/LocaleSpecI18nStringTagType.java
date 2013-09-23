@@ -3,7 +3,6 @@ package net.bodz.mda.xjdoc.tagtype;
 import java.io.IOException;
 import java.util.Map.Entry;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
@@ -31,7 +30,7 @@ public class LocaleSpecI18nStringTagType
 
     @Override
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object _istr, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
 
         iString istr = (iString) _istr;
 

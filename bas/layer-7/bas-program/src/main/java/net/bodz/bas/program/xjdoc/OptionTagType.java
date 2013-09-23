@@ -2,7 +2,6 @@ package net.bodz.bas.program.xjdoc;
 
 import java.io.IOException;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -20,7 +19,7 @@ public class OptionTagType
 
     @Override
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
     }
 
     @Override
@@ -31,7 +30,7 @@ public class OptionTagType
 
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
     }
 
 }

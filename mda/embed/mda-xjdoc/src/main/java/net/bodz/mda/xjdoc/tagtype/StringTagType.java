@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.StringQuote;
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -21,7 +20,7 @@ public class StringTagType
 
     @Override
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
         String string = (String) value;
         // TODO Line-wrap...
         writer.writeTag(rootTagName, string);
@@ -40,7 +39,7 @@ public class StringTagType
 
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
         if (value == null) {
             // warning...
             return;

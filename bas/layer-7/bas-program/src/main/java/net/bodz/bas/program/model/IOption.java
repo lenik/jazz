@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 import java.util.Set;
 
 import net.bodz.bas.c.type.addor.IAddor;
-import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.FormatterException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.potato.element.IProperty;
@@ -119,9 +119,10 @@ public interface IOption
      * @param value
      *            to be formatted.
      * @return Non-<code>null</code> formatted parameter array.
+     * @throws FormatterException
+     *             If can't format the value.
      */
-    String[] formatValue(Object context, Object value)
-            throws FormatException;
+    String[] formatValue(Object context, Object value);
 
     /**
      * Default value is pre-parsed of default-value string.

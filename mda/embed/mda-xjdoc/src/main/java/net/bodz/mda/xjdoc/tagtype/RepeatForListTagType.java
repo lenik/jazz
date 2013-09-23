@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -23,7 +22,8 @@ public class RepeatForListTagType
     @Override
     public Object parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
-        @SuppressWarnings("unchecked") List<Object> list = (List<Object>) cont;
+        @SuppressWarnings("unchecked")
+        List<Object> list = (List<Object>) cont;
         if (list == null)
             list = new ArrayList<Object>();
         Object value = valueTagType.parseJavadoc(tagNameSpec, null, string, options);
@@ -33,7 +33,7 @@ public class RepeatForListTagType
 
     @Override
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
         List<?> list = (List<?>) value;
         for (Object item : list) {
             valueTagType.writeJavadoc(rootTagName, writer, item, options);
@@ -43,7 +43,8 @@ public class RepeatForListTagType
     @Override
     public Object parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
-        @SuppressWarnings("unchecked") List<Object> list = (List<Object>) cont;
+        @SuppressWarnings("unchecked")
+        List<Object> list = (List<Object>) cont;
         if (list == null)
             list = new ArrayList<Object>();
 
@@ -60,7 +61,7 @@ public class RepeatForListTagType
 
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
-            throws FormatException, IOException {
+            throws IOException {
         List<?> list = (List<?>) value;
         for (int index = 0; index < list.size(); index++) {
             Object item = list.get(index);

@@ -1,6 +1,5 @@
 package net.bodz.bas.gui.xjdoc;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.tagtype.AbstractScalarTagType;
 
@@ -14,8 +13,7 @@ public class StyleTagType
     }
 
     @Override
-    protected String format(String value)
-            throws FormatException {
+    protected String format(String value) {
         return null;
     }
 
