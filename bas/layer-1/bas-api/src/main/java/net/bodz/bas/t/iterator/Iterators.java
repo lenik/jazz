@@ -108,6 +108,14 @@ public class Iterators {
         return new FilteredIterator<T>(iterator, filter);
     }
 
+    public static <S, T> Iterator<T> transform(Iterator<S> iterable, ITransformer<S, T> transformer) {
+        return new TransformedIterator<>(iterable, transformer);
+    }
+
+    public static <S, T> Iterator<T> transform(Enumeration<? extends S> enm, ITransformer<S, T> transformer) {
+        return new TransformedEnmIterator<S, T>(enm, transformer);
+    }
+
 }
 
 class EmptyIterator<T>
@@ -329,6 +337,36 @@ class TransformedIterator<S, T>
     @Override
     public void remove() {
         orig.remove();
+    }
+
+}
+
+class TransformedEnmIterator<S, T>
+        implements Iterator<T> {
+
+    final Enumeration<? extends S> orig;
+    final ITransformer<S, T> transformer;
+
+    public TransformedEnmIterator(Enumeration<? extends S> orig, ITransformer<S, T> transformer) {
+        this.orig = orig;
+        this.transformer = transformer;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return orig.hasMoreElements();
+    }
+
+    @Override
+    public T next() {
+        S src = orig.nextElement();
+        T dst = transformer.transform(src);
+        return dst;
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
     }
 
 }
