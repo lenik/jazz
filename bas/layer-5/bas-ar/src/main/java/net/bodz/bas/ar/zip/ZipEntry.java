@@ -8,9 +8,12 @@ import java.nio.file.OpenOption;
 import java.util.zip.InflaterInputStream;
 
 import net.bodz.bas.ar.AbstractArchiveEntry;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ReadOnlyException;
+import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharIOS;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
@@ -90,7 +93,7 @@ public class ZipEntry
 
     IStreamResource rawcrop()
             throws IOException {
-        return ctx.seeker.crop(offset, offset + size);
+        return ctx.cropper.crop(offset, offset + size);
     }
 
     @Override
@@ -151,6 +154,18 @@ public class ZipEntry
     protected ICharOut _newCharOut(OpenOption... options)
             throws IOException {
         throw new ReadOnlyException();
+    }
+
+    @Override
+    protected IByteIOS _newByteIOS(OpenOption... options)
+            throws IOException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    protected ICharIOS _newCharIOS(OpenOption... options)
+            throws IOException {
+        throw new NotImplementedException();
     }
 
 }

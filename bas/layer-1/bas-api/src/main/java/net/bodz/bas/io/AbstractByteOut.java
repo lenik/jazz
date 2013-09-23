@@ -10,6 +10,8 @@ import net.bodz.bas.io.adapter.ByteOutPrintStream;
 public abstract class AbstractByteOut
         implements IByteOut {
 
+    private boolean closed;
+
     @Override
     public void write(byte[] buf)
             throws IOException {
@@ -19,25 +21,7 @@ public abstract class AbstractByteOut
     @Override
     public void write(ByteBuffer buf)
             throws IOException {
-        if (buf == null)
-            throw new NullPointerException("buf");
-        byte[] array = buf.array();
-        int offset = buf.arrayOffset();
-        int length = buf.position();
-        write(array, offset, length);
-    }
-
-    public void dump(IByteIn byteIn)
-            throws IOException {
-        if (byteIn == null)
-            throw new NullPointerException("byteIn");
-        byte[] buf = new byte[4096];
-        while (true) {
-            int cb = byteIn.read(buf);
-            if (cb == -1)
-                return;
-            write(buf, 0, cb);
-        }
+        fn.write(this, buf);
     }
 
     /**
@@ -58,6 +42,17 @@ public abstract class AbstractByteOut
     public void close()
             throws IOException {
         flush(true);
+        closed = true;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return closed;
+    }
+
+    protected void ensureOpen() {
+        if (closed)
+            throw new IllegalStateException("already closed");
     }
 
     public OutputStream toOutputStream() {

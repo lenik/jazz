@@ -1,12 +1,11 @@
 package net.bodz.bas.io;
 
-import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public interface IByteOut
-        extends ISimpleByteOut, Flushable, Closeable {
+        extends ISimpleByteOut, Flushable, ICloseable {
 
     /**
      * @throws NullPointerException
@@ -46,8 +45,33 @@ public interface IByteOut
     void flush()
             throws IOException;
 
-    @Override
-    void close()
-            throws IOException;
+    IByteOut NULL = IDataOut.NULL_LE;
+
+    class fn {
+
+        public static void write(IByteOut out, ByteBuffer buf)
+                throws IOException {
+            if (buf == null)
+                throw new NullPointerException("buf");
+            byte[] array = buf.array();
+            int offset = buf.arrayOffset();
+            int length = buf.position();
+            out.write(array, offset, length);
+        }
+
+        public static void dump(IByteOut out, IByteIn byteIn)
+                throws IOException {
+            if (byteIn == null)
+                throw new NullPointerException("byteIn");
+            byte[] buf = new byte[4096];
+            while (true) {
+                int cb = byteIn.read(buf);
+                if (cb == -1)
+                    return;
+                out.write(buf, 0, cb);
+            }
+        }
+
+    }
 
 }

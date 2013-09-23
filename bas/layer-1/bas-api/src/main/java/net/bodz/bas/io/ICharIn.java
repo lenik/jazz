@@ -1,11 +1,10 @@
 package net.bodz.bas.io;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
 public interface ICharIn
-        extends ISimpleCharIn, Closeable {
+        extends ISimpleCharIn, ICloseable {
 
     /**
      * @return -1 If reaches the end.
@@ -40,8 +39,21 @@ public interface ICharIn
     String readString(int maxCharacters)
             throws IOException;
 
-    @Override
-    void close()
-            throws IOException;
+    class fn {
+
+        public static int read(ICharIn in, CharBuffer buf)
+                throws IOException {
+            int ccRead = 0;
+            while (buf.hasRemaining()) {
+                int ch = in.read();
+                if (ch == -1)
+                    return ccRead == 0 ? -1 : ccRead;
+                buf.put((char) ch);
+                ccRead++;
+            }
+            return ccRead;
+        }
+
+    }
 
 }

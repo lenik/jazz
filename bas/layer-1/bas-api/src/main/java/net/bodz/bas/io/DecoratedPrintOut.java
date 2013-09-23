@@ -115,6 +115,11 @@ public abstract class DecoratedPrintOut
     }
 
     @Override
+    public boolean isClosed() {
+        return getWrapped().isClosed();
+    }
+
+    @Override
     public void flush(boolean strict) {
         getWrapped().flush(strict);
     }

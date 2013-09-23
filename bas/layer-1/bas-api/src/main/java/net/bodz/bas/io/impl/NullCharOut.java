@@ -58,4 +58,9 @@ public class NullCharOut
             throws IOException {
     }
 
+    @Override
+    public boolean isClosed() {
+        return false;
+    }
+
 }

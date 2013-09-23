@@ -8,12 +8,13 @@ import java.nio.ByteBuffer;
 
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICloseable;
+import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
 
 public class CroppedRafOutputStream
         extends OutputStream
-        implements IByteOut, ISeekable, ICloseable {
+        implements IByteOut, ISeekable, ICroppable, ICloseable {
 
     private final File file;
     private final String mode;
@@ -63,23 +64,18 @@ public class CroppedRafOutputStream
     }
 
     @Override
+    public void write(ByteBuffer buf)
+            throws IOException {
+        IByteOut.fn.write(this, buf);
+    }
+
+    @Override
     public void flush()
             throws IOException {
     }
 
     /** ⇱ Implementation Of {@link IByteOut}. */
     ;
-
-    @Override
-    public final void write(ByteBuffer buf)
-            throws IOException {
-        if (buf == null)
-            throw new NullPointerException("byteBuffer");
-        byte[] array = buf.array();
-        int offset = buf.arrayOffset();
-        int length = buf.position();
-        write(array, offset, length);
-    }
 
     @Override
     public void flush(boolean strict)
@@ -110,6 +106,9 @@ public class CroppedRafOutputStream
         raf.seek(fPos);
         pos = fPos;
     }
+
+    /** ⇱ Implementation Of {@link ICroppable}. */
+    ;
 
     @Override
     public IStreamResource crop(long start, long end)

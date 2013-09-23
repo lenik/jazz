@@ -7,9 +7,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.io.BByteOut;
+import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.StringCharIn;
-import net.bodz.bas.io.impl.EncodedByteIn;
-import net.bodz.bas.io.impl.TranscodeConfig;
 
 public class EncodedByteInTest
         extends Assert {
@@ -25,7 +24,7 @@ public class EncodedByteInTest
         in = new EncodedByteIn(cin, charset);
 
         BByteOut buf = new BByteOut();
-        buf.dump(in);
+        IByteOut.fn.dump(buf, in);
 
         return buf.toByteArray();
     }

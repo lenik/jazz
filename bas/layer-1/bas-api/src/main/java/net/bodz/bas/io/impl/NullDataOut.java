@@ -172,4 +172,9 @@ public class NullDataOut
             throws IOException {
     }
 
+    @Override
+    public boolean isClosed() {
+        return false;
+    }
+
 }

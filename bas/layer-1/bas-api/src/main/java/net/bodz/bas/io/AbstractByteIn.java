@@ -9,32 +9,34 @@ import net.bodz.bas.io.adapter.ByteInInputStream;
 public abstract class AbstractByteIn
         implements IByteIn {
 
+    private boolean closed;
+
     @Override
     public int read(byte[] buf)
             throws IOException {
         return read(buf, 0, buf.length);
     }
 
-    /**
-     * XXX - Please check in more detail.
-     */
     @Override
     public int read(ByteBuffer buf)
             throws IOException {
-        int cbRead = 0;
-        while (buf.hasRemaining()) {
-            int b = read();
-            if (b == -1)
-                return cbRead == 0 ? -1 : cbRead;
-            buf.put((byte) b);
-            cbRead++;
-        }
-        return cbRead;
+        return fn.read(this, buf);
     }
 
     @Override
     public void close()
             throws IOException {
+        closed = true;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return closed;
+    }
+
+    protected void ensureOpen() {
+        if (closed)
+            throw new IllegalStateException("already closed");
     }
 
     public InputStream toInputStream() {
