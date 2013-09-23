@@ -23,7 +23,7 @@ public interface IComponent
     void setId(String id);
 
     /**
-     * Change the selection state of feature component will cause refresh all the sibling nodes.
+     * Change the selection state of a feature cause all sibling nodes be refreshed.
      */
     boolean isFeature();
 

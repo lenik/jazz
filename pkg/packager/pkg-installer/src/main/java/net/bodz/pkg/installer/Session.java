@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
@@ -21,6 +20,7 @@ import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsDir;
@@ -48,7 +48,7 @@ public class Session
 
     // Execution Variables
     // private Stack<Component> stack;
-    private TextMap<StatedAttachment> apool;
+    private TextMap<IStreamResource> apool;
 
     public Session(IProject project, IUserDialogs userDialogs, Logger logger) {
         if (project == null)
@@ -94,7 +94,7 @@ public class Session
         searchLoaders = new ArrayList<ClassLoader>();
         searchLoaders.add(ClassLoader.getSystemClassLoader());
 
-        apool = new TreeTextMap<StatedAttachment>();
+        apool = new TreeTextMap<IStreamResource>();
     }
 
     @Override
@@ -242,16 +242,16 @@ public class Session
     }
 
     @Override
-    public Attachment getAttachment(String name, boolean autoCreate)
+    public IStreamResource getAttachment(String name, boolean autoCreate)
             throws IOException {
         String path = getAttachmentPath(name);
-        StatedAttachment a = apool.get(path);
-        if (a == null) {
-            IFile res = findResource(path, autoCreate);
-            a = new StatedAttachment(res, "utf-8");
-            apool.put(path, a);
+        IStreamResource attachment = apool.get(path);
+        if (attachment == null) {
+            IFile fileRes = findResource(path, autoCreate);
+            attachment = fileRes.getResource();
+            apool.put(path, attachment);
         }
-        return a;
+        return attachment;
     }
 
     class ExWarn
@@ -264,14 +264,14 @@ public class Session
 
     @Override
     public void closeAttachments() {
-        for (Entry<String, StatedAttachment> entry : apool.entrySet()) {
-            StatedAttachment a = entry.getValue();
+        for (Entry<String, IStreamResource> entry : apool.entrySet()) {
+            IStreamResource a = entry.getValue();
             logger.info(tr._("Close attachment "), a);
-            try {
-                a.close();
-            } catch (IOException e) {
-                logger.warn(tr._("Can\'t close attachment: "), a);
-            }
+//            try {
+//                 a.close();
+//            } catch (IOException e) {
+//                logger.warn(tr._("Can\'t close attachment: "), a);
+//            }
         }
         apool.clear();
     }
@@ -334,10 +334,9 @@ public class Session
         for (ClassLoader searchLoader : searchLoaders)
             out.printf(tr._("  Search Loader[%d] = %s\n"), i++, searchLoader);
         if (apool != null) {
-            Set<Entry<String, StatedAttachment>> entrySet = apool.entrySet();
-            for (Entry<String, StatedAttachment> entry : entrySet) {
+            for (Entry<String, IStreamResource> entry : apool.entrySet()) {
                 String name = entry.getKey();
-                StatedAttachment a = entry.getValue();
+                IStreamResource a = entry.getValue();
                 out.printf(tr._("  Pool Attachment[%s] = %s\n"), name, a);
             }
         }

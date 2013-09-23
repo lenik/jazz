@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.IFsEntry;
@@ -77,13 +78,13 @@ public interface ISession {
      *            name of the attachment to use
      * @param autoCreate
      *            create new attachment resource if not existed
-     * @return {@link Attachment} which can be opened later. After used the attachment, it can be
+     * @return {@link IAttachment} which can be opened later. After used the attachment, it can be
      *         left opened for next time use, all unclosed attachments are auto closed at the end of
      *         the session. The return value is never be <code>null</code>.
      * @throws IOException
      *             if the name is invalid or failed to get the attachment.
      */
-    Attachment getAttachment(String name, boolean autoCreate)
+    IStreamResource getAttachment(String name, boolean autoCreate)
             throws IOException;
 
     /**
