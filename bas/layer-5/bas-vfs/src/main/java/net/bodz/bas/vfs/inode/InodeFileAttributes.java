@@ -8,7 +8,7 @@ import net.bodz.bas.c.java.nio.DeviceAttributeView;
 import net.bodz.bas.c.java.nio.DeviceAttributes;
 import net.bodz.bas.c.java.nio.FilePermissionAttributeView;
 import net.bodz.bas.c.java.nio.FilePermissionAttributes;
-import net.bodz.bas.c.java.nio.UnitModeBits;
+import net.bodz.bas.c.java.nio.UnixModeBits;
 import net.bodz.bas.c.object.ObjectInfo;
 
 public abstract class InodeFileAttributes
@@ -225,7 +225,7 @@ public abstract class InodeFileAttributes
     @Override
     public Set<PosixFilePermission> permissions() {
         int mode = getInode().getMode();
-        return UnitModeBits.toPermissions(mode);
+        return UnixModeBits.toPermissions(mode);
     }
 
     /** ⇱ Implementaton Of {@link PosixFileAttributeView}. */
@@ -240,7 +240,7 @@ public abstract class InodeFileAttributes
     @Override
     public void setPermissions(Set<PosixFilePermission> permissions)
             throws IOException {
-        int mode = UnitModeBits.fromPermissions(permissions);
+        int mode = UnixModeBits.fromPermissions(permissions);
         getInode().setMode(mode);
     }
 

@@ -4,7 +4,7 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.util.EnumSet;
 import java.util.Set;
 
-public class UnitModeBits {
+public class UnixModeBits {
 
     public static final int OWNER_MASK = 0700;
     public static final int GROUP_MASK = 0070;
