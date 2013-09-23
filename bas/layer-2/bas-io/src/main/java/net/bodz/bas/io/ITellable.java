@@ -3,6 +3,9 @@ package net.bodz.bas.io;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import net.bodz.bas.io.impl.TellableByteIn;
+import net.bodz.bas.io.impl.TellableCharIn;
+
 /**
  * Position tellable
  */
@@ -28,6 +31,14 @@ public interface ITellable {
                     }
                 }
             };
+        }
+
+        public static final ITellable impl(IByteIn in) {
+            return new TellableByteIn(in);
+        }
+
+        public static final ITellable impl(ICharIn in) {
+            return new TellableCharIn(in);
         }
 
     }
