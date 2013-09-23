@@ -9,36 +9,36 @@ import net.bodz.bas.io.AbstractByteOut;
 public class ByteBufferByteOut
         extends AbstractByteOut {
 
-    private final ByteBuffer byteBuffer;
+    private final ByteBuffer buf;
 
-    public ByteBufferByteOut(ByteBuffer byteBuffer) {
-        if (byteBuffer == null)
-            throw new NullPointerException("byteBuffer");
-        this.byteBuffer = byteBuffer;
+    public ByteBufferByteOut(ByteBuffer buf) {
+        if (buf == null)
+            throw new NullPointerException("buf");
+        this.buf = buf;
     }
 
     @Override
     public void write(int b) {
-        byteBuffer.put((byte) b);
+        buf.put((byte) b);
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(byte[] src, int off, int len)
             throws IOException {
         try {
-            byteBuffer.put(buf, off, len);
+            buf.put(src, off, len);
         } catch (BufferOverflowException e) {
             throw new IOException(e);
         }
     }
 
     @Override
-    public void write(ByteBuffer buffer)
+    public void write(ByteBuffer src)
             throws IOException {
-        if (buffer == null)
-            throw new NullPointerException("buffer");
+        if (src == null)
+            throw new NullPointerException("src");
         try {
-            byteBuffer.put(buffer);
+            buf.put(src);
         } catch (BufferOverflowException e) {
             throw new IOException(e);
         }
@@ -46,7 +46,7 @@ public class ByteBufferByteOut
 
     @Override
     public int hashCode() {
-        return 0xb499c40d + byteBuffer.hashCode();
+        return 0xb499c40d + buf.hashCode();
     }
 
     @Override
@@ -54,12 +54,12 @@ public class ByteBufferByteOut
         if (!(obj instanceof ByteBufferByteOut))
             return false;
         ByteBufferByteOut o = (ByteBufferByteOut) obj;
-        return byteBuffer.equals(o.byteBuffer);
+        return buf.equals(o.buf);
     }
 
     @Override
     public String toString() {
-        return byteBuffer.toString();
+        return buf.toString();
     }
 
 }

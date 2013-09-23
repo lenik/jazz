@@ -26,11 +26,7 @@ public abstract class AbstractCharIn
     @Override
     public String readString(int maxCharacters)
             throws IOException {
-        char[] chars = new char[maxCharacters];
-        int ccRead = read(chars);
-        if (ccRead == -1)
-            return null;
-        return new String(chars, 0, ccRead);
+        return fn.readString(this, maxCharacters);
     }
 
     @Override
