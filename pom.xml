@@ -12,6 +12,7 @@
     <modules>
         <module>bas</module>
         <module>mda</module>
+        <module>swt</module>
     </modules>
     <name>Jazz Project</name>
     <url>http://bas.bodz.net/</url>
