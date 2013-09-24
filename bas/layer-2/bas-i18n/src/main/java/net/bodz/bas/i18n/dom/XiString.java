@@ -31,10 +31,6 @@ public class XiString
         super(other);
     }
 
-    public static XiString of(String plainString) {
-        return new XiString(plainString);
-    }
-
     @Override
     protected XiString createNode(String domain, String value) {
         return new XiString(domain, value);

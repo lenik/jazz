@@ -4,7 +4,6 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
@@ -47,13 +46,13 @@ public class BeanProperty
     @Override
     public iString getLabel() {
         String displayName = propertyDescriptor.getDisplayName();
-        return XiString.of(displayName);
+        return iString.fn.val(displayName);
     }
 
     @Override
     public iString getDescription() {
         String shortDescription = propertyDescriptor.getShortDescription();
-        return XiString.of(shortDescription);
+        return iString.fn.val(shortDescription);
     }
 
     @Override

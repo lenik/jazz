@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.i18n.dom.XiString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.potato.PotatoLoader;
@@ -60,7 +60,7 @@ public class VarEntry<T>
 
     public static <T> VarEntry<T> wrap(Class<T> valueType, T obj) {
         MutableElement element = new MutableElement();
-        element.setLabel(XiString.of("noname"));
+        element.setLabel(iString.fn.val("noname"));
         return new VarEntry<T>(element, valueType, obj);
     }
 
