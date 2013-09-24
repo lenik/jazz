@@ -15,7 +15,7 @@ import net.bodz.bas.io.IDataOut;
  * Atime and Ctime values MAY be used on any WIN32 system.)
  */
 @ExtraFieldType(id = 0x000a, sizeTotal = true)
-class XF_NTFS
+public class XF_NTFS
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

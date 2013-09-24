@@ -15,7 +15,7 @@ import net.bodz.bas.io.IDataOut;
  * can only appear once per certificate.
  */
 @ExtraFieldType(id = 0x0015)
-class XF_X509ForFile
+public class XF_X509ForFile
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

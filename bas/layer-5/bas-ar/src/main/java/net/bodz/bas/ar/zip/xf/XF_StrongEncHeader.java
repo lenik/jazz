@@ -11,7 +11,7 @@ import net.bodz.bas.io.IDataOut;
  * Strong Encryption Header
  */
 @ExtraFieldType(id = 0x0017)
-class XF_StrongEncHeader
+public class XF_StrongEncHeader
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

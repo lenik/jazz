@@ -16,7 +16,7 @@ import net.bodz.bas.io.IDataOut;
  * will be ignored in any other record.
  */
 @ExtraFieldType(id = 0x0014)
-class XF_PKCS7Store
+public class XF_PKCS7Store
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

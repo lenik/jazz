@@ -15,7 +15,7 @@ import net.bodz.bas.io.IDataOut;
  * "Incorporating PKWARE Proprietary Technology into Your Product" for more information.
  */
 @ExtraFieldType(id = 0x000f, sizeTotal = true)
-class XF_PatchDescriptor
+public class XF_PatchDescriptor
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

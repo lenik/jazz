@@ -15,6 +15,7 @@ import net.bodz.bas.io.impl.RafIn;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.tools.StreamReading;
+import net.bodz.bas.text.rst.RstObject;
 
 public class ZipUnarchiverTest
         extends Assert {
@@ -57,6 +58,13 @@ public class ZipUnarchiverTest
             // assertEquals(entry.crc32, value);
             if (value != entry.crc32)
                 System.out.print(" crc failed: " + entry.crc32 + "/" + value);
+
+            System.out.println();
+
+            for (ExtraField extraField : entry.extraFields.values()) {
+                System.out.println("    Field " + extraField.getClass().getSimpleName() + ": ");
+                System.out.print(RstObject.fn.dump(extraField, "       |- "));
+            }
 
             System.out.println();
         }

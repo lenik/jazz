@@ -87,17 +87,22 @@
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-data</artifactId>
             <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-data</artifactId>
             <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-c5</artifactId>
+            <artifactId>bas-ar</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-ar</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>

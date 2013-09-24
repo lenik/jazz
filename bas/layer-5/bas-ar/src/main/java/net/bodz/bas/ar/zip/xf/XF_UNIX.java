@@ -8,7 +8,7 @@ import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.IDataOut;
 
 @ExtraFieldType(id = 0x000d)
-class XF_UNIX
+public class XF_UNIX
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;
