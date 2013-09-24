@@ -16,6 +16,22 @@ class XF_StrongEncHeader
 
     private static final long serialVersionUID = 1L;
 
+    public static final int F_PASSWORD = 1;
+    public static final int F_CERTIFICATE = 2;
+
+    public static final int ALG_DES = 0x6601;
+    public static final int ALG_RC2 = 0x6602;
+    public static final int ALG_3DES_168 = 0x6603;
+    public static final int ALG_3DES_112 = 0x6609;
+    public static final int ALG_AES_128 = 0x660e;
+    public static final int ALG_AES_192 = 0x660f;
+    public static final int ALG_AES_256 = 0x6610;
+    public static final int ALG_RC2_C = 0x6702;
+    public static final int ALG_BLOWFISH = 0x6720;
+    public static final int ALG_TWOFISH = 0x6721;
+    public static final int ALG_RC4 = 0x6801;
+    public static final int ALG_UNKNOWN = 0xffff;
+
     /** Format definition for this record */
     public short format;
 
