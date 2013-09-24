@@ -7,7 +7,6 @@ import java.util.List;
 import javax.crypto.SecretKey;
 
 import net.bodz.bas.err.SystemException;
-import net.bodz.pkg.obfuz.sysid.CpuId;
 import net.bodz.pkg.obfuz.sysid.ISysIdProvider;
 import net.bodz.pkg.obfuz.sysid.MacAddressId;
 
@@ -21,16 +20,16 @@ public class BasicPM
 
     static ISysIdProvider findAvailableSysIdProvider()
             throws SystemException {
-        List<ISysIdProvider> probeList = new ArrayList<ISysIdProvider>();
-        probeList.add(new CpuId(0));
-        probeList.add(new MacAddressId(0));
+        List<ISysIdProvider> providers = new ArrayList<ISysIdProvider>();
+        // providers.add(new CpuId(0));
+        providers.add(new MacAddressId(0));
         // list.add(new DiskId(0));
         // list.add(new VolumeId("C:/"));
 
-        for (ISysIdProvider sip : probeList) {
-            byte[] id = sip.getId();
+        for (ISysIdProvider provider : providers) {
+            byte[] id = provider.getId();
             if (id != null)
-                return sip;
+                return provider;
         }
         throw new SystemException(tr._("Can\'t identify this machine."));
     }
