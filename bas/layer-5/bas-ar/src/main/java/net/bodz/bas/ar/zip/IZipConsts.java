@@ -102,7 +102,7 @@ public interface IZipConsts
      */
     int VN_non_OAEP_Key = 61;
 
-    int VN_EncryptedCenDir = 62;
+    int VN_EncryptedCen = 62;
     int VN_LAMZ = 63;
 
     /**

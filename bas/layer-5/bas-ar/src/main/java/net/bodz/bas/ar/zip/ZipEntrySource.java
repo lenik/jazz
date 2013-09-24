@@ -39,6 +39,12 @@ public class ZipEntrySource
 
         long start = entry.dataAddress;
         long end = start + entry.compressedSize;
+
+        long zipLength = ctx.getZipLength();
+        if (end > zipLength)
+            throw new IOException(String.format("Entry %s exceeds the zip file, maybe it's incompleted.",
+                    entry.getName()));
+
         return ctx.crop(start, end);
     }
 
