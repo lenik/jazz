@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.OpenOption;
 
+import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.res.AbstractInputOutputStreamResource;
@@ -52,6 +53,12 @@ public class CroppedRafResource
     protected IByteOut _newByteOut(OpenOption... options)
             throws IOException {
         return new CroppedRafOut(file, mode, start, end);
+    }
+
+    @Override
+    protected IByteIOS _newByteIOS(OpenOption... options)
+            throws IOException {
+        return new CroppedRafIOS(file, mode, start, end);
     }
 
 }

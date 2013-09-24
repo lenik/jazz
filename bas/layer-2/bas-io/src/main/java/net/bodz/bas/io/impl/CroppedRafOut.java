@@ -51,7 +51,7 @@ public class CroppedRafOut
     }
 
     @Override
-    public void write(byte[] b, int off, int len)
+    public void write(byte[] buf, int off, int len)
             throws IOException {
         ensureOpen();
 
@@ -59,7 +59,7 @@ public class CroppedRafOut
         if (len > remaining)
             throw new IOException("Exceeds the EOF.");
 
-        raf.write(b, off, len);
+        raf.write(buf, off, len);
         pos += len;
     }
 
@@ -87,11 +87,7 @@ public class CroppedRafOut
 
     @Override
     public long tell() {
-        try {
-            return raf.getFilePointer();
-        } catch (IOException e) {
-            return -1L;
-        }
+        return pos - start;
     }
 
     @Override
