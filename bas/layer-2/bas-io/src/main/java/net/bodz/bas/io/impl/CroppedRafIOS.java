@@ -2,19 +2,13 @@ package net.bodz.bas.io.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
 
-import net.bodz.bas.io.IByteIn;
-import net.bodz.bas.io.ICloseable;
-import net.bodz.bas.io.ICroppable;
-import net.bodz.bas.io.ISeekable;
+import net.bodz.bas.io.AbstractByteIOS;
 import net.bodz.bas.io.res.IStreamResource;
 
-public class CroppedRafIn
-        extends InputStream
-        implements IByteIn, ISeekable, ICroppable, ICloseable {
+public class CroppedRafIOS
+        extends AbstractByteIOS {
 
     private final File file;
     private final String mode;
@@ -22,12 +16,9 @@ public class CroppedRafIn
     private final long end;
 
     private RandomAccessFile raf;
-    private boolean closed;
     private long pos;
 
-    private long markedPosition;
-
-    public CroppedRafIn(File file, String mode, long start, long end)
+    public CroppedRafIOS(File file, String mode, long start, long end)
             throws IOException {
         this.file = file;
         this.mode = mode;
@@ -37,7 +28,7 @@ public class CroppedRafIn
         raf.seek(pos = start);
     }
 
-    /** ⇱ Implementation Of {@link InputStream}. */
+    /** ⇱ Implementation Of {@link IByteIn}. */
     ;
 
     @Override
@@ -68,12 +59,6 @@ public class CroppedRafIn
     }
 
     @Override
-    public int read(ByteBuffer buf)
-            throws IOException {
-        return IByteIn.fn.read(this, buf);
-    }
-
-    @Override
     public long skip(long n)
             throws IOException {
         long willEndAt = pos + n;
@@ -92,36 +77,32 @@ public class CroppedRafIn
         }
     }
 
-    @Override
-    public int available()
-            throws IOException {
-        long position = raf.getFilePointer();
-        long remaining = raf.length() - position;
-        if (remaining > Integer.MAX_VALUE)
-            return Integer.MAX_VALUE;
-        else
-            return (int) remaining;
-    }
+    /** ⇱ Implementation Of {@link IByteOut}. */
+    ;
 
     @Override
-    public boolean markSupported() {
-        return true;
-    }
-
-    @Override
-    public void mark(int readlimit) {
-        ensureOpen();
-        markedPosition = tell();
-    }
-
-    @Override
-    public void reset()
+    public void write(int b)
             throws IOException {
         ensureOpen();
-        if (markedPosition == -1)
-            throw new IOException("Not marked yet.");
-        raf.seek(markedPosition);
-        pos = markedPosition;
+
+        if (pos >= end)
+            throw new IOException("Exceeds the EOF.");
+
+        raf.write(b);
+        pos++;
+    }
+
+    @Override
+    public void write(byte[] buf, int off, int len)
+            throws IOException {
+        ensureOpen();
+
+        long remaining = end - pos;
+        if (len > remaining)
+            throw new IOException("Exceeds the EOF.");
+
+        raf.write(buf, off, len);
+        pos += len;
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
@@ -145,7 +126,7 @@ public class CroppedRafIn
         pos = fPos;
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /** ⇱ Implementation Of {@link ICropapble}. */
     ;
 
     @Override
@@ -160,26 +141,6 @@ public class CroppedRafIn
             throw new IllegalArgumentException("end");
 
         return new CroppedRafResource(file, mode, fStart, fEnd);
-    }
-
-    /** ⇱ Implementation Of {@link ICloseable}. */
-    ;
-
-    private void ensureOpen() {
-        if (closed)
-            throw new IllegalStateException("closed");
-    }
-
-    @Override
-    public void close()
-            throws IOException {
-        raf.close();
-        closed = true;
-    }
-
-    @Override
-    public boolean isClosed() {
-        return closed;
     }
 
 }
