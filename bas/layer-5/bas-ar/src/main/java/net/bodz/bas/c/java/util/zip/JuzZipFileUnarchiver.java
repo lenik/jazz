@@ -11,13 +11,13 @@ import net.bodz.bas.err.TransformException;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.t.iterator.Iterators;
 
-public class ZipFileUnarchiver
+public class JuzZipFileUnarchiver
         implements IUnarchiver {
 
     private ZipFile zipFile;
     private boolean closed;
 
-    public ZipFileUnarchiver(ZipFile zipFile) {
+    public JuzZipFileUnarchiver(ZipFile zipFile) {
         if (zipFile == null)
             throw new NullPointerException("zipFile");
         this.zipFile = zipFile;
@@ -38,21 +38,10 @@ public class ZipFileUnarchiver
     }
 
     @Override
-    public IArchiveEntry getEntry(String name) {
-        if (closed)
-            throw new IllegalStateException("already closed.");
-        ZipEntry entry = zipFile.getEntry(name);
-        if (entry == null)
-            return null;
-        else
-            return new ZipFileArchiveEntry(zipFile, entry);
-    }
-
-    @Override
-    public Iterable<? extends IArchiveEntry> entries() {
-        return new Iterable<IArchiveEntry>() {
+    public Iterable<JuzZipEntry> entries() {
+        return new Iterable<JuzZipEntry>() {
             @Override
-            public Iterator<IArchiveEntry> iterator() {
+            public Iterator<JuzZipEntry> iterator() {
                 if (closed)
                     throw new IllegalStateException("already closed.");
                 else
@@ -61,13 +50,24 @@ public class ZipFileUnarchiver
         };
     }
 
+    @Override
+    public IArchiveEntry getEntry(String name) {
+        if (closed)
+            throw new IllegalStateException("already closed.");
+        ZipEntry entry = zipFile.getEntry(name);
+        if (entry == null)
+            return null;
+        else
+            return new JuzZipEntry(zipFile, entry);
+    }
+
     class EntryTransformer
-            implements ITransformer<ZipEntry, IArchiveEntry> {
+            implements ITransformer<ZipEntry, JuzZipEntry> {
 
         @Override
-        public ZipFileArchiveEntry transform(ZipEntry input)
+        public JuzZipEntry transform(ZipEntry input)
                 throws TransformException {
-            return new ZipFileArchiveEntry(zipFile, input);
+            return new JuzZipEntry(zipFile, input);
         }
 
     }
