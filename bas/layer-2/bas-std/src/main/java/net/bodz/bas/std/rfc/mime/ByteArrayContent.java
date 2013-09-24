@@ -48,7 +48,9 @@ public class ByteArrayContent
 
     @Override
     public IStreamInputSource getInputSource(Charset charset) {
-        return new ByteArrayResource(array, off, len);
+        ByteArrayResource res = new ByteArrayResource(array, off, len);
+        res.setCharset(charset);
+        return res;
     }
 
 }

@@ -26,14 +26,14 @@ public abstract class AbstractInputStreamSource
     }
 
     @Override
-    public IByteIn _newByteIn(OpenOption... options)
+    protected IByteIn _newByteIn(OpenOption... options)
             throws IOException {
         InputStream in = newInputStream(options);
         return new InputStreamByteIn(in);
     }
 
     @Override
-    public ICharIn _newCharIn(OpenOption... options)
+    protected ICharIn _newCharIn(OpenOption... options)
             throws IOException {
         IByteIn in = _newByteIn(options);
         return new DecodedCharIn(in, getCharset().newDecoder());

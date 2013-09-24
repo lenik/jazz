@@ -44,7 +44,9 @@ public class StringContent
 
     @Override
     public IStreamInputSource getInputSource(Charset charset) {
-        return new CharArrayResource(string.toCharArray());
+        CharArrayResource res = new CharArrayResource(string.toCharArray());
+        res.setCharset(charset);
+        return res;
     }
 
 }
