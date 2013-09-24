@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.ar.zip.ExtraField;
 import net.bodz.bas.ar.zip.ExtraFieldType;
+import net.bodz.bas.ar.zip.IZipConsts;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.IDataOut;
 
@@ -32,9 +33,10 @@ import net.bodz.bas.io.IDataOut;
  * the same file name storage method, either general purpose bit 11 or extra fields, be used in both
  * the Local and Central Directory Header for a file.
  */
-@ExtraFieldType(id = 0x7075, sizeTotal = true)
+@ExtraFieldType(id = 0x7075, sizeTotal = false)
 public class XF_InfoZip_UnicodePath
-        extends ExtraField {
+        extends ExtraField
+        implements IZipConsts {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,13 +44,17 @@ public class XF_InfoZip_UnicodePath
     public int crc32;
     public byte[] fileNameRaw;
 
+    private String fileName;
+
     @Override
     protected void _readObject(IDataIn in)
             throws IOException {
         version = in.readByte();
         crc32 = in.readDword();
-        fileNameRaw = new byte[size - 9];
+
+        fileNameRaw = new byte[size - 5];
         in.readBytes(fileNameRaw);
+        fileName = null;
     }
 
     @Override
@@ -57,6 +63,18 @@ public class XF_InfoZip_UnicodePath
         out.writeByte(version);
         out.writeDword(crc32);
         out.write(fileNameRaw);
+    }
+
+    public String getFileName() {
+        if (fileName == null)
+            fileName = new String(fileNameRaw, utf8Charset);
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+        fileNameRaw = fileName.getBytes(utf8Charset);
+        size = (short) (fileNameRaw.length + 5);
     }
 
 }

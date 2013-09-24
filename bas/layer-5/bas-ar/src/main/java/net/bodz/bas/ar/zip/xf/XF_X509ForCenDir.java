@@ -16,7 +16,7 @@ import net.bodz.bas.io.IDataOut;
  * the first central directory record.
  */
 @ExtraFieldType(id = 0x0016)
-class XF_X509ForCenDir
+public class XF_X509ForCenDir
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

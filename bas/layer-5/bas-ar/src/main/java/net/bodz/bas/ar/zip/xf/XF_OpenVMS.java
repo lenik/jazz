@@ -24,7 +24,7 @@ import net.bodz.bas.io.IDataOut;
  * particular directory record.
  */
 @ExtraFieldType(id = 0x000c, sizeTotal = true)
-class XF_OpenVMS
+public class XF_OpenVMS
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

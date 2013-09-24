@@ -21,7 +21,7 @@ import net.bodz.bas.io.IDataOut;
  * more information.
  */
 @ExtraFieldType(id = 0x0019)
-class XF_PKCS7EncRecipientList
+public class XF_PKCS7EncRecipientList
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

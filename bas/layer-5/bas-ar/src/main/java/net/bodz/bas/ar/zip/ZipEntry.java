@@ -46,6 +46,7 @@ public class ZipEntry
 
     private transient Charset charset;
     private transient String name;
+    transient ExtraFieldMap extraFields;
     private transient String comment;
 
     private transient int perm = 0644;
@@ -132,6 +133,7 @@ public class ZipEntry
             throws IOException {
         in.readBytes(nameRaw);
         in.readBytes(extras);
+        extraFields = ExtraFieldMap.parse(extras);
     }
 
     void _readComment(IDataIn in)

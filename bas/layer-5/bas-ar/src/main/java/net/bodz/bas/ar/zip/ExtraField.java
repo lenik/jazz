@@ -5,7 +5,9 @@ import java.io.IOException;
 import net.bodz.bas.data.struct.RstDataStruct;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.IDataOut;
+import net.bodz.bas.meta.codegen.IndexedType;
 
+@IndexedType
 public abstract class ExtraField
         extends RstDataStruct {
 

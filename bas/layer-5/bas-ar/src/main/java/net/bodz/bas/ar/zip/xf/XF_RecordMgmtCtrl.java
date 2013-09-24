@@ -12,7 +12,7 @@ import net.bodz.bas.io.IDataOut;
 
 /** Record Management Controls */
 @ExtraFieldType(id = 0x0018, sizeTotal = true)
-class XF_RecordMgmtCtrl
+public class XF_RecordMgmtCtrl
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

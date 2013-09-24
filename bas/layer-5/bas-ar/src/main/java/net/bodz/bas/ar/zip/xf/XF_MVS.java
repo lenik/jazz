@@ -9,7 +9,7 @@ import net.bodz.bas.io.IDataOut;
 
 /** IBM S/390 (Z390), AS/400 (I400) attributes - uncompressed */
 @ExtraFieldType(id = 0x0065)
-class XF_MVS
+public class XF_MVS
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;

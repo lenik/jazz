@@ -12,7 +12,7 @@ import net.bodz.bas.io.IDataOut;
  * within this structure. There will only ever be one "block" of data in VarFields[].
  */
 @ExtraFieldType(id = 0x0009)
-class XF_OS2
+public class XF_OS2
         extends ExtraField {
 
     private static final long serialVersionUID = 1L;
