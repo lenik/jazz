@@ -40,21 +40,24 @@ public class BPrintOut
     }
 
     @Override
-    public Appendable append(CharSequence csq)
+    public BPrintOut append(CharSequence csq)
             throws IOException {
-        return baseImpl.append(csq);
+        baseImpl.append(csq);
+        return this;
     }
 
     @Override
-    public Appendable append(CharSequence csq, int start, int end)
+    public BPrintOut append(CharSequence csq, int start, int end)
             throws IOException {
-        return baseImpl.append(csq, start, end);
+        baseImpl.append(csq, start, end);
+        return this;
     }
 
     @Override
-    public Appendable append(char c)
+    public BPrintOut append(char c)
             throws IOException {
-        return baseImpl.append(c);
+        baseImpl.append(c);
+        return this;
     }
 
 }

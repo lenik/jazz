@@ -68,11 +68,6 @@ public class InputStreamByteIn
     }
 
     @Override
-    public InputStream toInputStream() {
-        return in;
-    }
-
-    @Override
     public int hashCode() {
         int hash = 0xcd9fa4fe;
         hash += in.hashCode();
@@ -90,6 +85,11 @@ public class InputStreamByteIn
     @Override
     public String toString() {
         return in.toString();
+    }
+
+    @Override
+    public InputStream toInputStream() {
+        return in;
     }
 
 }

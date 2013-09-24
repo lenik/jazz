@@ -82,21 +82,24 @@ public class BufCharOut
     ;
 
     @Override
-    public Appendable append(CharSequence csq)
+    public BufCharOut append(CharSequence csq)
             throws IOException {
-        return buffer.append(csq);
+        buffer.append(csq);
+        return this;
     }
 
     @Override
-    public Appendable append(CharSequence csq, int start, int end)
+    public BufCharOut append(CharSequence csq, int start, int end)
             throws IOException {
-        return buffer.append(csq, start, end);
+        buffer.append(csq, start, end);
+        return this;
     }
 
     @Override
-    public Appendable append(char c)
+    public BufCharOut append(char c)
             throws IOException {
-        return buffer.append(c);
+        buffer.append(c);
+        return this;
     }
 
     public String flip() {

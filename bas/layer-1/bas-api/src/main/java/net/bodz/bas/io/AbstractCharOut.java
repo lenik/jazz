@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.adapter.CharOutWriter;
-
 public abstract class AbstractCharOut
+        extends Writer
         implements ICharOut {
 
     private boolean closed;
@@ -78,7 +77,7 @@ public abstract class AbstractCharOut
     }
 
     public Writer toWriter() {
-        return new CharOutWriter(this);
+        return this;
     }
 
 }
