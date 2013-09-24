@@ -255,7 +255,8 @@ public class Arrays
     // Array Wrapper
 
     // Generated Code: See ArraysCG, ArraysTemplate
-    // ============== BEGIN OF GENERATED CODE ================
+    void __generated_begin__() {
+    }
 
     /**
      * Concat multiple arrays.
@@ -1474,6 +1475,474 @@ public class Arrays
         }
     }
 
+    public static int indexOf(byte[] array, byte... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(byte[] array, int fromIndex, byte... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(byte[] array, int start, int end, byte... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        byte p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int indexOf(short[] array, short... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(short[] array, int fromIndex, short... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(short[] array, int start, int end, short... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        short p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int indexOf(int[] array, int... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(int[] array, int fromIndex, int... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(int[] array, int start, int end, int... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        int p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int indexOf(long[] array, long... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(long[] array, int fromIndex, long... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(long[] array, int start, int end, long... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        long p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int indexOf(float[] array, float... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(float[] array, int fromIndex, float... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(float[] array, int start, int end, float... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        float p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int indexOf(double[] array, double... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(double[] array, int fromIndex, double... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(double[] array, int start, int end, double... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        double p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int indexOf(char[] array, char... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(char[] array, int fromIndex, char... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(char[] array, int start, int end, char... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        char p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int indexOf(boolean[] array, boolean... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(boolean[] array, int fromIndex, boolean... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(boolean[] array, int start, int end, boolean... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        boolean p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int indexOf(Object[] array, Object... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(Object[] array, int fromIndex, Object... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(Object[] array, int start, int end, Object... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        Object p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(byte[] array, byte... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(byte[] array, int fromIndex, byte... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(byte[] array, int start, int end, byte... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        byte p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(short[] array, short... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(short[] array, int fromIndex, short... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(short[] array, int start, int end, short... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        short p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(int[] array, int... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(int[] array, int fromIndex, int... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(int[] array, int start, int end, int... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        int p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(long[] array, long... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(long[] array, int fromIndex, long... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(long[] array, int start, int end, long... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        long p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(float[] array, float... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(float[] array, int fromIndex, float... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(float[] array, int start, int end, float... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        float p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(double[] array, double... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(double[] array, int fromIndex, double... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(double[] array, int start, int end, double... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        double p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(char[] array, char... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(char[] array, int fromIndex, char... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(char[] array, int start, int end, char... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        char p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(boolean[] array, boolean... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(boolean[] array, int fromIndex, boolean... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(boolean[] array, int start, int end, boolean... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        boolean p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(Object[] array, Object... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(Object[] array, int fromIndex, Object... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(Object[] array, int start, int end, Object... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        Object p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
     /**
      * Calculate the total value of an array.
      * 
@@ -1876,7 +2345,7 @@ public class Arrays
         long sum = 0L;
         for (int i = begin; i < end; i++)
             sum = sum + array[i];
-        return (sum / n);
+        return (long) (sum / n);
     }
 
     /**
@@ -1912,7 +2381,7 @@ public class Arrays
         float sum = 0.0f;
         for (int i = begin; i < end; i++)
             sum = sum + array[i];
-        return (sum / n);
+        return (float) (sum / n);
     }
 
     /**
@@ -1948,7 +2417,7 @@ public class Arrays
         double sum = 0.0;
         for (int i = begin; i < end; i++)
             sum = sum + array[i];
-        return (sum / n);
+        return (double) (sum / n);
     }
 
     /**
@@ -2020,7 +2489,7 @@ public class Arrays
         BigDecimal sum = BigDecimal.ZERO;
         for (int i = begin; i < end; i++)
             sum = sum.add(array[i]);
-        return (sum.divide(BigDecimal.valueOf(n)));
+        return (BigDecimal) (sum.divide(BigDecimal.valueOf(n)));
     }
 
     /**
@@ -2056,7 +2525,7 @@ public class Arrays
         BigInteger sum = BigInteger.ZERO;
         for (int i = begin; i < end; i++)
             sum = sum.add(array[i]);
-        return (sum.divide(BigInteger.valueOf(n)));
+        return (BigInteger) (sum.divide(BigInteger.valueOf(n)));
     }
 
     /**
@@ -2779,6 +3248,7 @@ public class Arrays
         return max;
     }
 
-    // ============== END OF GENERATED CODE ================
+    void __generated_end__() {
+    }
 
 }

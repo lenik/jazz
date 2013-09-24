@@ -172,6 +172,62 @@ public class ArraysTemplate {
         }
     }
 
+    // SECTION elm
+
+    public static int indexOf(type_t[] array, type_t... pattern) {
+        return indexOf(array, 0, array.length, pattern);
+    }
+
+    public static int indexOf(type_t[] array, int fromIndex, type_t... pattern) {
+        return indexOf(array, fromIndex, array.length, pattern);
+    }
+
+    public static int indexOf(type_t[] array, int start, int end, type_t... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        type_t p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = start; i <= limit; i++) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // SECTION elm
+
+    public static int lastIndexOf(type_t[] array, type_t... pattern) {
+        return lastIndexOf(array, 0, array.length, pattern);
+    }
+
+    public static int lastIndexOf(type_t[] array, int fromIndex, type_t... pattern) {
+        return lastIndexOf(array, 0, fromIndex + 1, pattern);
+    }
+
+    public static int lastIndexOf(type_t[] array, int start, int end, type_t... pattern) {
+        int p = pattern.length;
+        if (p == 0)
+            return 0;
+        type_t p0 = pattern[0];
+
+        int limit = end - p;
+        L: for (int i = limit; i >= start; i--) {
+            if (array[i] == p0) {
+                for (int j = 1; j < p; j++)
+                    if (array[i + j] != pattern[j])
+                        continue L;
+                return i;
+            }
+        }
+        return -1;
+    }
+
     // SECTION alg
 
     /**
