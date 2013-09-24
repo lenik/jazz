@@ -3,8 +3,10 @@ package net.bodz.bas.ar.zip;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.OpenOption;
+import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
+import net.bodz.bas.c.java.io.DbgInputStream;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
 import net.bodz.bas.io.res.AbstractInputStreamSource;
@@ -34,20 +36,26 @@ public class ZipEntrySource
         if (entry.dataAddress == -1L) {
             ctx.reloadLFH(entry);
         }
-        return ctx.crop(entry.dataAddress, entry.dataAddress + entry.size);
+
+        long start = entry.dataAddress;
+        long end = start + entry.compressedSize;
+        return ctx.crop(start, end);
     }
 
     @Override
     protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
-        IStreamResource crop = rawcrop();
-        InputStream in = crop.newInputStream(options);
+        IStreamResource src = rawcrop();
+        InputStream in = src.newInputStream(options);
+        in = new DbgInputStream(in);
 
         switch (entry.method) {
         case M_STORE:
             return in;
+
         case M_DEFLATE:
-            return new InflaterInputStream(in);
+            return new InflaterInputStream(in, new Inflater(true));
+
         default:
             throw new UnsupportedOperationException("Unknown method: " + entry.method);
         }
@@ -56,15 +64,17 @@ public class ZipEntrySource
     @Override
     protected IByteIn _newByteIn(OpenOption... options)
             throws IOException {
-        IStreamResource crop = rawcrop();
+        IStreamResource src = rawcrop();
+
         switch (entry.method) {
         case M_STORE:
-            return crop.newByteIn(options);
+            return src.newByteIn(options);
 
         case M_DEFLATE:
-            InputStream in = crop.newInputStream(options);
-            InputStream inflatedIn = new InflaterInputStream(in);
-            return new InputStreamByteIn(inflatedIn);
+            InputStream deflated = src.newInputStream(options);
+            deflated = new DbgInputStream(deflated);
+            InflaterInputStream in = new InflaterInputStream(deflated, new Inflater(true));
+            return new InputStreamByteIn(in);
 
         default:
             throw new UnsupportedOperationException("Unknown method: " + entry.method);

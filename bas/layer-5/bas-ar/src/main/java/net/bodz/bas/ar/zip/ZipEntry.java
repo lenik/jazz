@@ -109,9 +109,16 @@ public class ZipEntry
 
         method = in.readWord();
         time_dos = in.readDword();
+
         crc32 = in.readDword();
         compressedSize = in.readDword();
         size = in.readDword();
+
+        if ((flags & F_DATA_DESCRIPTOR) != 0) {
+            assert crc32 == 0;
+            assert compressedSize == 0;
+            assert size == 0;
+        }
 
         int nameLen = in.readWord() & 0xffff;
         nameRaw = new byte[nameLen];
