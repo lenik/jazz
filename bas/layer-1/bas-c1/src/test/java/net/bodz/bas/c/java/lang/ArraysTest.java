@@ -41,4 +41,24 @@ public class ArraysTest
         assertArrayEquals(expected, result);
     }
 
+    @Test
+    public void indexOf() {
+        int[] a = { 1, 2, 3, 4, 1, 2, 3, 2, 3, 4, 5 };
+        int[] b = { 2, 3 };
+        assertEquals(1, Arrays.indexOf(a, b));
+        assertEquals(5, Arrays.indexOf(a, 2, b));
+        assertEquals(7, Arrays.indexOf(a, 6, b));
+        assertEquals(-1, Arrays.indexOf(a, 8, b));
+    }
+
+    @Test
+    public void lastIndexOf() {
+        int[] a = { 1, 2, 3, 4, 1, 2, 3, 2, 3, 4, 5 };
+        int[] b = { 2, 3, 4 };
+        assertEquals(7, Arrays.lastIndexOf(a, b));
+        assertEquals(1, Arrays.lastIndexOf(a, 8, b));
+        assertEquals(1, Arrays.lastIndexOf(a, 3, b));
+        assertEquals(-1, Arrays.lastIndexOf(a, 2, b));
+    }
+
 }
