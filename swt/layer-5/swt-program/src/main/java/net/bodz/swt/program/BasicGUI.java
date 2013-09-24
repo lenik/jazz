@@ -46,7 +46,7 @@ import net.bodz.swt.c.control.OnClickBrowse;
 import net.bodz.swt.c.dialog.AboutDialog;
 import net.bodz.swt.c.dialog.CreditDialog;
 import net.bodz.swt.c.dialog.SelectLanguageDialog;
-import net.bodz.swt.c.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.SwtUserDialogs;
 import net.bodz.swt.c.dialog.ThreadsMonitor;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.menu.Menus;
@@ -85,7 +85,7 @@ public abstract class BasicGUI
     private DynamicControl viewArea;
     private Map<Object, Composite> views;
 
-    protected IUserDialogs userDialogs = new SwtDialogs();
+    protected IUserDialogs userDialogs = new SwtUserDialogs();
 
     @Override
     public synchronized void execute(String... args)
@@ -94,7 +94,7 @@ public abstract class BasicGUI
             super.execute(args);
         } catch (Exception e) {
             if (shell != null && !shell.isDisposed()) {
-                SwtDialogs iact = new SwtDialogs(shell);
+                SwtUserDialogs iact = new SwtUserDialogs(shell);
                 iact.alert(e.getMessage(), e);
             } else {
                 // TODO logger.error
@@ -163,7 +163,7 @@ public abstract class BasicGUI
         Locale.setDefault(locale);
 
         shell = createShell();// throws GUIExcaption
-        userDialogs = new SwtDialogs(shell);
+        userDialogs = new SwtUserDialogs(shell);
 
         shell.open();
         shell.layout();

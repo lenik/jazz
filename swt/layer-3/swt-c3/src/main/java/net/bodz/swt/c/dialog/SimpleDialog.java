@@ -53,7 +53,7 @@ public abstract class SimpleDialog
     private Composite userBar;
     private Composite basicBar;
 
-    private SwtDialogs dialogs;
+    private SwtUserDialogs dialogs;
 
     private Object result;
     private boolean canceled;
@@ -66,15 +66,8 @@ public abstract class SimpleDialog
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public SimpleDialog(Shell parent, int style, String title) {
-        super(parent == null ? new Shell() : parent, style);
-        this.parent = parent;
-        setTitle(title);
-        if (title != null)
-            setText(title);
-        icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif");
-        image = icon;
-        dialogs = new SwtDialogs(parent, SWT.APPLICATION_MODAL);
+    public SimpleDialog(Shell parent, int style) {
+        this(parent, style, null);
     }
 
     /**
@@ -82,8 +75,17 @@ public abstract class SimpleDialog
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public SimpleDialog(Shell parent, int style) {
-        this(parent, style, null);
+    public SimpleDialog(Shell parent, int style, String title) {
+        super(parent == null ? new Shell() : parent, style);
+        this.parent = parent;
+
+        setTitle(title);
+        if (title != null)
+            setText(title);
+
+        icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif");
+        image = icon;
+        dialogs = new SwtUserDialogs(parent, SWT.APPLICATION_MODAL);
     }
 
     public abstract Object open()
@@ -243,6 +245,7 @@ public abstract class SimpleDialog
             shell = new Shell(Display.getCurrent(), style);
         else
             shell = new Shell(parent, style);
+
         GridLayout shellGrid = new GridLayout(1, false);
         shellGrid.marginWidth = 15;
         shellGrid.marginHeight = 10;

@@ -35,7 +35,7 @@ public class ThreadsMonitor
     public ThreadsMonitor(Shell parent, int style) {
         super(parent, style, tr._("Threads Monitor"));
         threadMap = new HashMap<Long, Thread>();
-        userDialogs = new SwtDialogs(parent);
+        userDialogs = new SwtUserDialogs(parent);
     }
 
     @Override

@@ -4,7 +4,7 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.gui.dialog.AbstractTryBlock;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.gui.dialog.IUserDialogs;
-import net.bodz.swt.c.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.SwtUserDialogs;
 
 public abstract class DialogTryBlock
         extends AbstractTryBlock {
@@ -22,7 +22,7 @@ public abstract class DialogTryBlock
     }
 
     public DialogTryBlock(int maxRetry, boolean tryImmediately) {
-        this(new SwtDialogs(), maxRetry, tryImmediately);
+        this(new SwtUserDialogs(), maxRetry, tryImmediately);
     }
 
     public DialogTryBlock(boolean tryImmediately) {

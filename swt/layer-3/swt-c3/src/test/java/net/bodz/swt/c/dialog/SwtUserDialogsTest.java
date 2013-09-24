@@ -15,12 +15,12 @@ import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.t.pojo.eg.Address;
 import net.bodz.bas.t.pojo.eg.Person;
-import net.bodz.swt.c.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.SwtUserDialogs;
 
-public class SwtDialogsTest
+public class SwtUserDialogsTest
         extends Assert {
 
-    SwtDialogs dialogs;
+    SwtUserDialogs dialogs;
     Person person;
     {
         person = new Person("Lily", 12, true);
@@ -30,8 +30,8 @@ public class SwtDialogsTest
     String lily = "LiLY";
     Person lily2 = person;
 
-    public SwtDialogsTest() {
-        dialogs = new SwtDialogs(new Shell());
+    public SwtUserDialogsTest() {
+        dialogs = new SwtUserDialogs(new Shell());
     }
 
     @Test

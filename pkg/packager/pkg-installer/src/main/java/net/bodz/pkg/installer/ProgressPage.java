@@ -34,7 +34,7 @@ import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c.composite.DetailSwitchEvent;
 import net.bodz.swt.c.composite.DetailSwitchListener;
 import net.bodz.swt.c.composite.WindowComposite;
-import net.bodz.swt.c.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.SwtUserDialogs;
 import net.bodz.swt.c.pageflow.AbstractPage;
 import net.bodz.swt.c.pageflow.IPage;
 import net.bodz.swt.c.pageflow.PageException;
@@ -265,7 +265,7 @@ class ProgressPage
             @Override
             public void run() {
                 int state = CANCELED;
-                SwtDialogs _dialogs = new SwtDialogs(new Shell(new Display()));
+                SwtUserDialogs _dialogs = new SwtUserDialogs(new Shell(new Display()));
                 try {
                     session.loadRegistry();
                     if (rootJob != null) {

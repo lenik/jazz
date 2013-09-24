@@ -61,16 +61,11 @@ public class SelectLanguageDialog
     @Override
     protected void createBody(Composite parent)
             throws CreateException {
-
-        if (langNames.isEmpty())
-            accept(null);
-        if (langNames.size() == 1)
-            accept(langNames.get(0));
-
         Collections.sort(langNames);
 
-        combo = new Combo(parent, SWT.READ_ONLY);
         String defaultLocaleName = Locale.getDefault().toString();
+
+        combo = new Combo(parent, SWT.READ_ONLY);
         for (int i = 0; i < langNames.size(); i++) {
             String langName = langNames.get(i);
             Locale locale = LocaleTypers.parseLocale(langName);
@@ -79,6 +74,9 @@ public class SelectLanguageDialog
             if (langName.equals(defaultLocaleName))
                 combo.select(i);
         }
+
+        if (langNames.size() == 1)
+            combo.select(0);
     }
 
 }
