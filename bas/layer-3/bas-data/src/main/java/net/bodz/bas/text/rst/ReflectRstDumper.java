@@ -96,7 +96,8 @@ public class ReflectRstDumper {
                     continue;
                 }
 
-                switch (TypeEnum.fromClass(type)) {
+                TypeEnum typeEnum = TypeEnum.fromClass(type);
+                switch (typeEnum) {
                 case BYTE:
                     out.attribute(name, (byte) value);
                     break;
