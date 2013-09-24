@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.c.object.IEmptyConsts;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.BCharOut;
 
 public abstract class RstObject
-        extends ReflectElementHandler
-        implements IRstSerializable, IReflectRstOverrides {
+        implements IRstSerializable, IElementHandler, IReflectRstOverrides {
+
+    /** ⇱ Implementation Of {@link IRstSerializable}. */
+    ;
 
     @Override
     public void writeObject(IRstOutput out)
@@ -22,6 +25,35 @@ public abstract class RstObject
         return this;
     }
 
+    /** ⇱ Implementation Of {@link IElementHandler}. */
+    ;
+
+    @Override
+    public boolean attribute(String name, String data)
+            throws ParseException, ElementHandlerException {
+        return new ReflectElementHandler(this).attribute(name, data);
+    }
+
+    @Override
+    public IElementHandler beginChild(String name, String[] args)
+            throws ParseException, ElementHandlerException {
+        return new ReflectElementHandler(this).beginChild(name, args);
+    }
+
+    @Override
+    public boolean endChild(IRstElement element)
+            throws ElementHandlerException {
+        return false;
+    }
+
+    @Override
+    public void complete(IRstElement element)
+            throws ElementHandlerException {
+    }
+
+    /** ⇱ Implementation Of {@link IReflectRstOverrides}. */
+    ;
+
     @Override
     public String[] getElementArguments() {
         return IEmptyConsts.emptyStringArray;
@@ -32,6 +64,9 @@ public abstract class RstObject
             throws IOException {
         return false;
     }
+
+    /** ⇱ Implementation Of {@link Object}. */
+    ;
 
     @Override
     public String toString() {
