@@ -23,7 +23,7 @@ public class CroppedRafOut
 
     private RandomAccessFile raf;
     private boolean closed;
-    private long pos;
+    private long ap;
 
     public CroppedRafOut(File file, String mode, long start, long end)
             throws IOException {
@@ -32,7 +32,7 @@ public class CroppedRafOut
         this.start = start;
         this.end = end;
         raf = new RandomAccessFile(file, mode);
-        raf.seek(pos = start);
+        raf.seek(ap = start);
     }
 
     /** ⇱ Implementation Of {@link OutputStream}. */
@@ -43,11 +43,11 @@ public class CroppedRafOut
             throws IOException {
         ensureOpen();
 
-        if (pos >= end)
+        if (ap >= end)
             throw new IOException("Exceeds the EOF.");
 
         raf.write(b);
-        pos++;
+        ap++;
     }
 
     @Override
@@ -55,12 +55,12 @@ public class CroppedRafOut
             throws IOException {
         ensureOpen();
 
-        long remaining = end - pos;
+        long remaining = end - ap;
         if (len > remaining)
             throw new IOException("Exceeds the EOF.");
 
         raf.write(buf, off, len);
-        pos += len;
+        ap += len;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class CroppedRafOut
 
     @Override
     public long tell() {
-        return pos - start;
+        return ap - start;
     }
 
     @Override
@@ -100,7 +100,13 @@ public class CroppedRafOut
             throw new IllegalArgumentException("position");
 
         raf.seek(fPos);
-        pos = fPos;
+        ap = fPos;
+    }
+
+    @Override
+    public long length()
+            throws IOException {
+        return raf.length();
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */

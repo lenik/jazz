@@ -16,7 +16,7 @@ public class CroppedRafIOS
     private final long end;
 
     private RandomAccessFile raf;
-    private long pos;
+    private long ap;
 
     public CroppedRafIOS(File file, String mode, long start, long end)
             throws IOException {
@@ -25,7 +25,7 @@ public class CroppedRafIOS
         this.start = start;
         this.end = end;
         raf = new RandomAccessFile(file, mode);
-        raf.seek(pos = start);
+        raf.seek(ap = start);
     }
 
     /** ⇱ Implementation Of {@link IByteIn}. */
@@ -35,11 +35,11 @@ public class CroppedRafIOS
     public int read()
             throws IOException {
         ensureOpen();
-        if (pos >= end)
+        if (ap >= end)
             return -1;
 
         int byt = raf.read();
-        pos++;
+        ap++;
 
         return byt;
     }
@@ -49,30 +49,30 @@ public class CroppedRafIOS
             throws IOException {
         ensureOpen();
 
-        long remaining = end - pos;
+        long remaining = end - ap;
         if (len > remaining)
             len = (int) remaining;
 
         int actual = raf.read(buf, off, len);
-        pos += actual;
+        ap += actual;
         return actual;
     }
 
     @Override
     public long skip(long n)
             throws IOException {
-        long willEndAt = pos + n;
+        long willEndAt = ap + n;
         if (willEndAt > end)
-            n = end - pos;
+            n = end - ap;
 
         if (n <= Integer.MAX_VALUE) {
             int actual = raf.skipBytes((int) n);
-            pos += actual;
+            ap += actual;
             return actual;
         } else {
             long position = raf.getFilePointer() + n;
             raf.seek(position);
-            pos += n;
+            ap += n;
             return n;
         }
     }
@@ -85,11 +85,11 @@ public class CroppedRafIOS
             throws IOException {
         ensureOpen();
 
-        if (pos >= end)
+        if (ap >= end)
             throw new IOException("Exceeds the EOF.");
 
         raf.write(b);
-        pos++;
+        ap++;
     }
 
     @Override
@@ -97,12 +97,12 @@ public class CroppedRafIOS
             throws IOException {
         ensureOpen();
 
-        long remaining = end - pos;
+        long remaining = end - ap;
         if (len > remaining)
             throw new IOException("Exceeds the EOF.");
 
         raf.write(buf, off, len);
-        pos += len;
+        ap += len;
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
@@ -110,7 +110,7 @@ public class CroppedRafIOS
 
     @Override
     public long tell() {
-        return pos - start;
+        return ap - start;
     }
 
     @Override
@@ -123,7 +123,13 @@ public class CroppedRafIOS
             throw new IllegalArgumentException("position");
 
         raf.seek(fPos);
-        pos = fPos;
+        ap = fPos;
+    }
+
+    @Override
+    public long length()
+            throws IOException {
+        return raf.length();
     }
 
     /** ⇱ Implementation Of {@link ICropapble}. */

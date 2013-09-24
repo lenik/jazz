@@ -145,6 +145,12 @@ public class CroppedRafIn
         pos = fPos;
     }
 
+    @Override
+    public long length()
+            throws IOException {
+        return raf.length();
+    }
+
     /** ⇱ Implementation Of {@link ICroppable}. */
     ;
 

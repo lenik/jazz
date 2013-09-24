@@ -2,7 +2,6 @@ package net.bodz.bas.io;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.util.Arrays;
 
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.io.res.IStreamResource;
@@ -19,7 +18,8 @@ public class BByteIOS
     private final int start;
     private final int end;
 
-    private int position;
+    /** absolute position */
+    private int ap;
 
     /**
      * @throws NullPointerException
@@ -49,35 +49,13 @@ public class BByteIOS
         this.buf = buf;
         this.start = off;
         this.end = off + len;
-        this.position = off;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0x93cfab31;
-        hash += buf.hashCode();
-        hash += start * 3;
-        hash += end * 53;
-        hash += position * 113;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof BByteIOS))
-            return false;
-        BByteIOS o = (BByteIOS) obj;
-        if (start != o.start || end != o.end || position != o.position)
-            return false;
-        if (!Arrays.equals(buf, o.buf))
-            return false;
-        return true;
+        this.ap = off;
     }
 
     @Override
     public String toString() {
-        String graph = new String(buf, start, position - start) //
-                + "|" + new String(buf, position, end - position);
+        String graph = new String(buf, start, ap - start) //
+                + "|" + new String(buf, ap, end - ap);
         return graph;
     }
 
@@ -88,8 +66,8 @@ public class BByteIOS
     public long skip(long n)
             throws IOException {
         ensureOpen();
-        int min = (int) Math.min(n, end - position);
-        position += min;
+        int min = (int) Math.min(n, end - ap);
+        ap += min;
         return min;
     }
 
@@ -97,8 +75,8 @@ public class BByteIOS
     public int read()
             throws IOException {
         ensureOpen();
-        if (position < end)
-            return buf[position++] & 0xff;
+        if (ap < end)
+            return buf[ap++] & 0xff;
         else
             return -1;
     }
@@ -107,11 +85,11 @@ public class BByteIOS
     public int read(byte[] dst, int dstOffset, int len)
             throws IOException {
         ensureOpen();
-        int cbRead = Math.min(len, end - position);
+        int cbRead = Math.min(len, end - ap);
         if (cbRead <= 0)
             return -1;
-        System.arraycopy(buf, position, dst, dstOffset, cbRead);
-        position += cbRead;
+        System.arraycopy(buf, ap, dst, dstOffset, cbRead);
+        ap += cbRead;
         return cbRead;
     }
 
@@ -122,22 +100,22 @@ public class BByteIOS
     public void write(int b)
             throws IOException {
         ensureOpen();
-        if (position >= end)
+        if (ap >= end)
             throw new EOFException();
-        buf[position++] = (byte) b;
+        buf[ap++] = (byte) b;
     }
 
     @Override
     public void write(byte[] src, int off, int len)
             throws IOException {
         ensureOpen();
-        int willEndAt = position + len;
+        int willEndAt = ap + len;
         if (willEndAt >= end)
             throw new EOFException();
 
-        System.arraycopy(src, off, buf, position, len);
+        System.arraycopy(src, off, buf, ap, len);
 
-        position += len;
+        ap += len;
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
@@ -145,7 +123,7 @@ public class BByteIOS
 
     @Override
     public long tell() {
-        return position;
+        return ap - start;
     }
 
     @Override
@@ -153,8 +131,17 @@ public class BByteIOS
             throws IOException {
         if (position < 0 || position > end - start)
             throw new IllegalArgumentException("Position out of range: " + position);
-        this.position = start + (int) position;
+        this.ap = start + (int) position;
     }
+
+    @Override
+    public long length()
+            throws IOException {
+        return end - start;
+    }
+
+    /** ⇱ Implementation Of {@link ICroppable}. */
+    ;
 
     @Override
     public IStreamResource crop(long start, long end)
