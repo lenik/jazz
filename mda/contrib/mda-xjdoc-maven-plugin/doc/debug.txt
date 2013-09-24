@@ -1,0 +1,11 @@
+1. 在具体的项目中，运行 xjdoc 插件出现类找不到的错误
+
+    这是因为：xjdoc-plugin 设置为使用项目的 classpath ，而不是 xjdoc 插件本身的 classpath.
+    
+    这就要求：
+        具体的项目要依赖 bas-* dependencies，至少包含：
+            bas-log
+            bas-m2
+            mda-xjdoc
+        
+
