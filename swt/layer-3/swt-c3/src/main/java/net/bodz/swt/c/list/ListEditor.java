@@ -3,7 +3,7 @@ package net.bodz.swt.c.list;
 import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.gui.dialog.IUserDialogs;
-import net.bodz.swt.c.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.SwtUserDialogs;
 
 public class ListEditor
         extends AbstractListEditor<String> {
@@ -12,7 +12,7 @@ public class ListEditor
 
     public ListEditor(Composite parent, int style) {
         super(parent, style);
-        userDialogs = new SwtDialogs(parent.getShell());
+        userDialogs = new SwtUserDialogs(parent.getShell());
     }
 
     @Override

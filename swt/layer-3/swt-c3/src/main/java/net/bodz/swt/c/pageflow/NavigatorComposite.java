@@ -23,7 +23,7 @@ import net.bodz.bas.i18n.nls.NLS;
 import net.bodz.bas.repr.req.SimpleRequest;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c.control.ControlAdapters;
-import net.bodz.swt.c.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.SwtUserDialogs;
 import net.bodz.swt.c.resources.SWTResources;
 
 public class NavigatorComposite
@@ -113,7 +113,7 @@ public class NavigatorComposite
         this.dict = book.getDict();
         this.history = history;
         this.pageFlow = new DefaultPageFlow();
-        this.userDialogs = new SwtDialogs(getShell());
+        this.userDialogs = new SwtUserDialogs(getShell());
 
         labelFormat_sc = tr._("%s");
 

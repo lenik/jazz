@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
-import net.bodz.swt.c.dialog.SwtDialogs;
+import net.bodz.swt.c.dialog.SwtUserDialogs;
 
 public class OnClickBrowse
         extends SelectionAdapter {
@@ -33,7 +33,7 @@ public class OnClickBrowse
             Desktop.getDesktop().browse(uri);
         } catch (Exception ex) {
             Shell shell = ((Control) e.widget).getShell();
-            new SwtDialogs(shell).alert(ex.getMessage(), ex);
+            new SwtUserDialogs(shell).alert(ex.getMessage(), ex);
         }
     }
 

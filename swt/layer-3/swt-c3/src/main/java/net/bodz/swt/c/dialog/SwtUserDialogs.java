@@ -41,7 +41,7 @@ import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.gui.model.ICommand;
 import net.bodz.swt.gui.model.ICommandGroup;
 
-public class SwtDialogs
+public class SwtUserDialogs
         extends AbstractUserDialogs {
 
     static IViewBuilderFactory viewBuilderFactory;
@@ -57,7 +57,7 @@ public class SwtDialogs
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public SwtDialogs(Shell parent, int style) {
+    public SwtUserDialogs(Shell parent, int style) {
         this.parent = parent;
         this.style = style;
     }
@@ -67,15 +67,15 @@ public class SwtDialogs
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public SwtDialogs(int style) {
+    public SwtUserDialogs(int style) {
         this(new Shell(), style);
     }
 
-    public SwtDialogs(Shell parent) {
+    public SwtUserDialogs(Shell parent) {
         this(parent, SWT.NONE);
     }
 
-    public SwtDialogs() {
+    public SwtUserDialogs() {
         this(SWT.NONE);
     }
 
@@ -173,7 +173,7 @@ public class SwtDialogs
 
         @Override
         protected void addEffects() {
-            SwtDialogs.this.addEffects(getShell());
+            SwtUserDialogs.this.addEffects(getShell());
         }
 
     }
