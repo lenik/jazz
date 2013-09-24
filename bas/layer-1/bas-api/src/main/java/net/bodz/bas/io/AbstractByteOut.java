@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
-import net.bodz.bas.io.adapter.ByteOutOutputStream;
 import net.bodz.bas.io.adapter.ByteOutPrintStream;
 
 public abstract class AbstractByteOut
+        extends OutputStream
         implements IByteOut {
 
     private boolean closed;
@@ -56,7 +56,7 @@ public abstract class AbstractByteOut
     }
 
     public OutputStream toOutputStream() {
-        return new ByteOutOutputStream(this);
+        return this;
     }
 
     public OutputStream toPrintStream() {

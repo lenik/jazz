@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import net.bodz.bas.io.impl.TreeOutImpl;
 
-
-
 public class BTreeOut
         extends TreeOutImpl
         implements CharSequence, Appendable {
@@ -37,21 +35,24 @@ public class BTreeOut
     }
 
     @Override
-    public Appendable append(CharSequence csq)
+    public BTreeOut append(CharSequence csq)
             throws IOException {
-        return baseImpl.append(csq);
+        baseImpl.append(csq);
+        return this;
     }
 
     @Override
-    public Appendable append(CharSequence csq, int start, int end)
+    public BTreeOut append(CharSequence csq, int start, int end)
             throws IOException {
-        return baseImpl.append(csq, start, end);
+        baseImpl.append(csq, start, end);
+        return this;
     }
 
     @Override
-    public Appendable append(char c)
+    public BTreeOut append(char c)
             throws IOException {
-        return baseImpl.append(c);
+        baseImpl.append(c);
+        return this;
     }
 
     @Override

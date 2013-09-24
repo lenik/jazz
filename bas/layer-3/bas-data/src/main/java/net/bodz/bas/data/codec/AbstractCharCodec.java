@@ -29,7 +29,7 @@ public abstract class AbstractCharCodec
     @Override
     public byte[] encode(String string)
             throws EncodeException {
-        StringCharIn charIn = new StringCharIn(string);
+        ICharIn charIn = new StringCharIn(string);
         int approxBytes = (int) (string.length() * bytesPerChar) + 10;
         BByteOut byteOut = new BByteOut(approxBytes);
         try {
@@ -52,7 +52,7 @@ public abstract class AbstractCharCodec
     public byte[] encode(char[] chars, int off, int len)
             throws EncodeException {
         CharBuffer charBuffer = CharBuffer.wrap(chars, off, len);
-        CharBufferCharIn charIn = new CharBufferCharIn(charBuffer);
+        ICharIn charIn = new CharBufferCharIn(charBuffer);
         int approxBytes = (int) (len * bytesPerChar) + 10;
         BByteOut byteOut = new BByteOut(approxBytes);
         try {
@@ -75,7 +75,7 @@ public abstract class AbstractCharCodec
     public String decode(byte[] bytes, int off, int len)
             throws DecodeException {
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes, off, len);
-        ByteBufferByteIn byteIn = new ByteBufferByteIn(byteBuffer);
+        IByteIn byteIn = new ByteBufferByteIn(byteBuffer);
         int approxChars = (int) (len / bytesPerChar) + 10;
         BCharOut charOut = new BCharOut(approxChars);
         try {
@@ -91,32 +91,32 @@ public abstract class AbstractCharCodec
     @Override
     public void encode(CharBuffer in, ByteBuffer out)
             throws IOException, EncodeException {
-        CharBufferCharIn charIn = new CharBufferCharIn(in);
-        ByteBufferByteOut byteOut = new ByteBufferByteOut(out);
+        ICharIn charIn = new CharBufferCharIn(in);
+        IByteOut byteOut = new ByteBufferByteOut(out);
         encode(charIn, byteOut);
     }
 
     @Override
     public void decode(ByteBuffer in, CharBuffer out)
             throws IOException, DecodeException {
-        ByteBufferByteIn byteIn = new ByteBufferByteIn(in);
-        CharBufferCharOut charOut = new CharBufferCharOut(out);
+        IByteIn byteIn = new ByteBufferByteIn(in);
+        ICharOut charOut = new CharBufferCharOut(out);
         decode(byteIn, charOut);
     }
 
     @Override
     public void encode(Reader in, OutputStream out)
             throws IOException, EncodeException {
-        ReaderCharIn charIn = new ReaderCharIn(in);
-        OutputStreamByteOut byteOut = new OutputStreamByteOut(out);
+        ICharIn charIn = new ReaderCharIn(in);
+        IByteOut byteOut = new OutputStreamByteOut(out);
         encode(charIn, byteOut);
     }
 
     @Override
     public void decode(InputStream in, Writer out)
             throws IOException, DecodeException {
-        InputStreamByteIn byteIn = new InputStreamByteIn(in);
-        WriterCharOut charOut = new WriterCharOut(out);
+        IByteIn byteIn = new InputStreamByteIn(in);
+        ICharOut charOut = new WriterCharOut(out);
         decode(byteIn, charOut);
     }
 

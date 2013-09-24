@@ -34,9 +34,4 @@ public abstract class DynamicInputStreamByteIn
         getInputStream().close();
     }
 
-    @Override
-    public InputStream toInputStream() {
-        return getInputStream();
-    }
-
 }

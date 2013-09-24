@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.adapter.CharInReader;
-
 public abstract class AbstractCharIn
+        extends Reader
         implements ICharIn {
 
     private boolean closed;
+
+    /** ⇱ Implementation Of {@link ICharIn}. */
+    ;
 
     @Override
     public int read(char[] chars)
@@ -29,6 +31,9 @@ public abstract class AbstractCharIn
         return fn.readString(this, maxCharacters);
     }
 
+    /** ⇱ Implementation Of {@link ICloseable}. */
+    ;
+
     @Override
     public void close()
             throws IOException {
@@ -46,7 +51,7 @@ public abstract class AbstractCharIn
     }
 
     public Reader toReader() {
-        return new CharInReader(this);
+        return this;
     }
 
 }

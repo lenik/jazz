@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
-import net.bodz.bas.io.adapter.ByteInInputStream;
-
 public abstract class AbstractByteIn
+        extends InputStream
         implements IByteIn {
 
     private boolean closed;
+
+    /** ⇱ Implementation Of {@link IByteIn}. */
+    ;
 
     @Override
     public int read(byte[] buf)
@@ -22,6 +24,9 @@ public abstract class AbstractByteIn
             throws IOException {
         return fn.read(this, buf);
     }
+
+    /** ⇱ Implementation Of {@link ICloseable}. */
+    ;
 
     @Override
     public void close()
@@ -40,7 +45,7 @@ public abstract class AbstractByteIn
     }
 
     public InputStream toInputStream() {
-        return new ByteInInputStream(this);
+        return this;
     }
 
 }
