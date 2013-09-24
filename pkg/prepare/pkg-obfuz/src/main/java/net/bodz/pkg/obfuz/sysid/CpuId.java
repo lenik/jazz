@@ -5,8 +5,13 @@ import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.SystemException;
 
 /**
- * @test {@link CpuIdTest}
+ * Processor serial numbers were basically only in Pentium III processors. Intel removed it from
+ * later models due to the privacy concerns that were raised. As such, unless you're on a PIII AND
+ * your BIOS settings let you read the serial number, all you'll get are 0's.
+ * 
+ * @see http://stackoverflow.com/questions/5045450/how-to-get-cpu-serial
  */
+@Deprecated
 public class CpuId
         extends AbstractSysIdProvider {
 

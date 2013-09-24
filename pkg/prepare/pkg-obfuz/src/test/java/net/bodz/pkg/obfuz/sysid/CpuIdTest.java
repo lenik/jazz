@@ -1,8 +1,11 @@
 package net.bodz.pkg.obfuz.sysid;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-public class CpuIdTest {
+@Deprecated
+public class CpuIdTest
+        extends Assert {
 
     @Test
     public void test()
