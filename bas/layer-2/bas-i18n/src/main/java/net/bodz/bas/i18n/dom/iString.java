@@ -43,4 +43,23 @@ public interface iString
 
     String getTailPar();
 
+    iString NULL = new NulliString();
+
+    class fn {
+
+        public static iString val(Object obj) {
+            if (obj == null)
+                return NULL;
+            if (obj instanceof iString)
+                return (iString) obj;
+            else
+                return val(obj.toString());
+        }
+
+        public static iString val(String plainString) {
+            return new XiString(plainString);
+        }
+
+    }
+
 }
