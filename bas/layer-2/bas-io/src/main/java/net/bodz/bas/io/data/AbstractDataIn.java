@@ -96,6 +96,9 @@ public abstract class AbstractDataIn
     @Override
     public final void readBytes(byte[] buf, int off, int len)
             throws IOException {
+        if (len == 0)
+            return;
+
         int cb = read(buf, off, len);
 
         // XXX if (cb == -1)

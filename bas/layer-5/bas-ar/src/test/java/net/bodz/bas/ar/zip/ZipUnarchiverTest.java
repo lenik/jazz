@@ -1,13 +1,19 @@
 package net.bodz.bas.ar.zip;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.CRC32;
+import java.util.zip.ZipInputStream;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.bodz.bas.c.java.io.DbgInputStream;
 import net.bodz.bas.io.impl.RafIn;
 import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 
 public class ZipUnarchiverTest
@@ -30,20 +36,50 @@ public class ZipUnarchiverTest
     public void readEocComment()
             throws IOException {
         EndOfCen eoc = unarchiver.getEndOfCen();
-        assertFalse(eoc.getComment().isEmpty());
+        String comment = eoc.getComment();
+        comment.length();
     }
 
     @Test
     public void readCenEntries()
             throws IOException {
         for (ZipEntry entry : unarchiver.entries()) {
-            System.out.println("Entry: " + entry.getName() + ": ");
+            System.out.print("Entry: " + entry.getName() + ": ");
 
             IStreamInputSource src = entry.getInputSource();
-            String text = src.tooling()._for(StreamReading.class).readString();
-            System.out.print(text);
+            byte[] data = src.tooling()._for(StreamReading.class).read();
 
-            System.out.println("====");
+            System.out.print(data.length + " bytes");
+
+            CRC32 crc32 = new CRC32();
+            crc32.update(data);
+            int value = (int) crc32.getValue();
+            // assertEquals(entry.crc32, value);
+            if (value != entry.crc32)
+                System.out.print(" crc failed: " + entry.crc32 + "/" + value);
+
+            System.out.println();
+        }
+    }
+
+    // @Test
+    public void readEntries_JUZ()
+            throws IOException {
+        InputStream in = new FileInputStream(FILENAME);
+        ZipInputStream zin = new ZipInputStream(new DbgInputStream(in));
+        java.util.zip.ZipEntry entry;
+        while ((entry = zin.getNextEntry()) != null) {
+            System.out.print("Entry: " + entry.getName() + ": ");
+
+            byte[] data = new InputStreamSource(zin).tooling()._for(StreamReading.class).read();
+            System.out.print(data.length + " bytes");
+
+            CRC32 crc32 = new CRC32();
+            crc32.update(data);
+            long value = crc32.getValue();
+            assertEquals(entry.getCrc(), value);
+
+            System.out.println();
         }
     }
 

@@ -23,7 +23,7 @@ public class CroppedRafIn
 
     private RandomAccessFile raf;
     private boolean closed;
-    private long pos;
+    private long ap;
 
     private long markedPosition;
 
@@ -34,7 +34,7 @@ public class CroppedRafIn
         this.start = start;
         this.end = end;
         raf = new RandomAccessFile(file, mode);
-        raf.seek(pos = start);
+        raf.seek(ap = start);
     }
 
     /** ⇱ Implementation Of {@link InputStream}. */
@@ -44,11 +44,11 @@ public class CroppedRafIn
     public int read()
             throws IOException {
         ensureOpen();
-        if (pos >= end)
+        if (ap >= end)
             return -1;
 
         int byt = raf.read();
-        pos++;
+        ap++;
 
         return byt;
     }
@@ -58,12 +58,15 @@ public class CroppedRafIn
             throws IOException {
         ensureOpen();
 
-        long remaining = end - pos;
+        long remaining = end - ap;
+        if (remaining == 0)
+            return -1;
+
         if (len > remaining)
             len = (int) remaining;
 
         int actual = raf.read(buf, off, len);
-        pos += actual;
+        ap += actual;
         return actual;
     }
 
@@ -76,18 +79,18 @@ public class CroppedRafIn
     @Override
     public long skip(long n)
             throws IOException {
-        long willEndAt = pos + n;
+        long willEndAt = ap + n;
         if (willEndAt > end)
-            n = end - pos;
+            n = end - ap;
 
         if (n <= Integer.MAX_VALUE) {
             int actual = raf.skipBytes((int) n);
-            pos += actual;
+            ap += actual;
             return actual;
         } else {
             long position = raf.getFilePointer() + n;
             raf.seek(position);
-            pos += n;
+            ap += n;
             return n;
         }
     }
@@ -95,8 +98,7 @@ public class CroppedRafIn
     @Override
     public int available()
             throws IOException {
-        long position = raf.getFilePointer();
-        long remaining = raf.length() - position;
+        long remaining = raf.length() - ap;
         if (remaining > Integer.MAX_VALUE)
             return Integer.MAX_VALUE;
         else
@@ -121,7 +123,7 @@ public class CroppedRafIn
         if (markedPosition == -1)
             throw new IOException("Not marked yet.");
         raf.seek(markedPosition);
-        pos = markedPosition;
+        ap = markedPosition;
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
@@ -129,7 +131,7 @@ public class CroppedRafIn
 
     @Override
     public long tell() {
-        return pos - start;
+        return ap - start;
     }
 
     @Override
@@ -142,7 +144,7 @@ public class CroppedRafIn
             throw new IllegalArgumentException("position");
 
         raf.seek(fPos);
-        pos = fPos;
+        ap = fPos;
     }
 
     @Override
