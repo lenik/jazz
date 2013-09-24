@@ -1,14 +1,19 @@
 package net.bodz.bas.ar;
 
 import net.bodz.bas.c.java.nio.UnixModeBits;
-import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSourceWrapper;
 
 public interface IArchiveEntry
-        extends IStreamInputSource {
+        extends IStreamInputSourceWrapper {
 
     int defaultMode = 0664;
 
     String getName();
+
+    /**
+     * @return <code>null</code> if no comment.
+     */
+    String getComment();
 
     boolean isDirectory();
 
@@ -34,16 +39,21 @@ public interface IArchiveEntry
     /**
      * @return <code>null</code> if it's unknown.
      */
+    Integer getOwnerId();
+
+    /**
+     * @return <code>null</code> if it's unknown.
+     */
     String getOwner();
 
     /**
      * @return <code>null</code> if it's unknown.
      */
-    String getGroup();
+    Integer getGroupId();
 
     /**
-     * @return <code>null</code> if no comment.
+     * @return <code>null</code> if it's unknown.
      */
-    String getComment();
+    String getGroup();
 
 }

@@ -15,9 +15,6 @@ public interface IZipConsts
     Charset asciiCharset = Charset.forName("ascii");
     Charset utf8Charset = Charset.forName("utf-8");
 
-    /** "PK\003\004" */
-    int LFH_SIG = 0x04034b50;
-
     /**
      * Version Made By
      * 
