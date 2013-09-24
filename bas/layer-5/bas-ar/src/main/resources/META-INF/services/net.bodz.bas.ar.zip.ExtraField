@@ -9,7 +9,7 @@ net.bodz.bas.ar.zip.xf.XF_PatchDescriptor
 net.bodz.bas.ar.zip.xf.XF_RecordMgmtCtrl
 net.bodz.bas.ar.zip.xf.XF_StrongEncHeader
 net.bodz.bas.ar.zip.xf.XF_UNIX
-net.bodz.bas.ar.zip.xf.XF_X509ForCenDir
+net.bodz.bas.ar.zip.xf.XF_X509ForCen
 net.bodz.bas.ar.zip.xf.XF_X509ForFile
 net.bodz.bas.ar.zip.xf.XF_Zip64
 net.bodz.bas.ar.zip.xf3.XF_AOS_VS_ACL

@@ -17,10 +17,20 @@ public class ExtraFieldMap
 
     private static final long serialVersionUID = 1L;
 
+    public <T extends ExtraField> T getByClass(Class<T> extraFieldClass) {
+        Integer tag = classTagMap.get(extraFieldClass);
+        if (tag == null)
+            throw new IllegalArgumentException("Unregistered extra field class: " + extraFieldClass.getName());
+        ExtraField extraField = get(tag.shortValue());
+        return extraFieldClass.cast(extraField);
+    }
+
     static Map<Integer, ExtraFieldMetadata> tagMetaMap;
+    static Map<Class<?>, Integer> classTagMap;
 
     static {
         tagMetaMap = new HashMap<>();
+        classTagMap = new HashMap<>();
 
         for (ExtraField inst : ServiceLoader.load(ExtraField.class)) {
             Class<? extends ExtraField> clazz = inst.getClass();
@@ -40,6 +50,7 @@ public class ExtraFieldMap
             metadata.sizeTotal = extraFieldType.sizeTotal();
 
             tagMetaMap.put(id, metadata);
+            classTagMap.put(clazz, id);
         }
     }
 
@@ -80,4 +91,5 @@ public class ExtraFieldMap
 
         return map;
     }
+
 }

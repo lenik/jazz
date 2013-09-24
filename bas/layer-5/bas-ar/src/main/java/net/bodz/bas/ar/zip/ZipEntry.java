@@ -3,6 +3,7 @@ package net.bodz.bas.ar.zip;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UnicodePath;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.text.rst.RstObject;
@@ -165,8 +166,13 @@ public class ZipEntry
 
     @Override
     public String getName() {
-        if (name == null)
-            name = new String(nameRaw, charset);
+        if (name == null) {
+            XF_InfoZip_UnicodePath _unicodePath = extraFields.getByClass(XF_InfoZip_UnicodePath.class);
+            if (_unicodePath != null)
+                name = _unicodePath.getFileName();
+            else
+                name = new String(nameRaw, charset);
+        }
         return name;
     }
 

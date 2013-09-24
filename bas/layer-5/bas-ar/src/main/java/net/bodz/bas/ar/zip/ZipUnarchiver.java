@@ -22,17 +22,22 @@ public class ZipUnarchiver
     private IDataIn in;
     private ISeekable seeker;
     private ICroppable cropper;
+    private long zipLength;
 
     private Charset charset = Charset.defaultCharset();
+    private ZipEntry lastEntry;
+
     private EndOfCen eoc;
     private Map<String, ZipEntry> centralDir;
 
-    public <T extends IByteIn & ISeekable & ICroppable> ZipUnarchiver(T in) {
+    public <T extends IByteIn & ISeekable & ICroppable> ZipUnarchiver(T in)
+            throws IOException {
         if (in == null)
             throw new NullPointerException("in");
         this.in = DataInImplLE.from(in);
         this.seeker = in;
         this.cropper = in;
+        this.zipLength = seeker.length();
     }
 
     /** ⇱ Implementation Of {@link IUnarchiver}. */
@@ -54,6 +59,17 @@ public class ZipUnarchiver
 
     public ZipEntry nextEntry()
             throws IOException {
+        if (lastEntry != null) {
+            long dataEndPtr = lastEntry.dataAddress + lastEntry.compressedSize;
+            seeker.seek(dataEndPtr);
+
+            if ((lastEntry.flags & F_DATA_DESCRIPTOR) != 0) {
+                lastEntry.crc32 = in.readDword();
+                lastEntry.compressedSize = in.readDword();
+                lastEntry.size = in.readDword();
+            }
+        }
+
         int sig = in.readDword();
         if (sig != ZipEntry.SIG_LFH) {
             seeker.seek(seeker.tell() - 4);
@@ -64,8 +80,11 @@ public class ZipUnarchiver
         entry.sig = sig;
         entry._readLoc(in);
 
-        seeker.seek(entry.dataAddress + entry.compressedSize);
-        return entry;
+        // security-descriptor...
+
+        entry.dataAddress = tell();
+
+        return lastEntry = entry;
     }
 
     /** ⇱ Implementation Of {@link ICloseable}. */
@@ -102,6 +121,11 @@ public class ZipUnarchiver
     }
 
     @Override
+    public long getZipLength() {
+        return zipLength;
+    }
+
+    @Override
     public void requireZipVersion(short version) {
         if (version > VN_Deflate64)
             throw new UnsupportedOperationException("Version too high to handle: " + version);
@@ -126,6 +150,12 @@ public class ZipUnarchiver
         if (eoc == null) {
             eoc = findEndOfCen();
             if (eoc == null)
+                /**
+                 * End-of-central-directory signature not found. Either this file is not a zipfile,
+                 * or it constitutes one disk of a multi-part archive. In the latter case the
+                 * central directory and zipfile comment will be found on the last disk(s) of this
+                 * archive.
+                 */
                 throw new BadFormatException("Invalid zip file: no End-Of-Central-Dir is found. ");
         }
         return eoc;

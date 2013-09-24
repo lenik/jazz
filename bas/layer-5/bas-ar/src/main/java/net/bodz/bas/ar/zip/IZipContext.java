@@ -11,6 +11,8 @@ public interface IZipContext
 
     Charset getZipCharset();
 
+    long getZipLength();
+
     void requireZipVersion(short version);
 
     void reloadLFH(ZipEntry entry)
