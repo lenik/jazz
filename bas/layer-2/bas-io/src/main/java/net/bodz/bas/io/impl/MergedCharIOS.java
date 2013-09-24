@@ -42,7 +42,7 @@ public class MergedCharIOS
 
     @Override
     public boolean isClosed() {
-        return in.isClosed();
+        return in.isClosed() && out.isClosed();
     }
 
     /** ⇱ Implementation Of {@link ICharIn}. */
@@ -147,6 +147,12 @@ public class MergedCharIOS
     @Override
     public long tell() {
         return seeker.tell();
+    }
+
+    @Override
+    public long length()
+            throws IOException {
+        return seeker.length();
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */

@@ -11,4 +11,7 @@ public interface ISeekable
     void seek(long position)
             throws IOException;
 
+    long length()
+            throws IOException;
+
 }

@@ -42,7 +42,7 @@ public class MergedByteIOS
 
     @Override
     public boolean isClosed() {
-        return in.isClosed();
+        return in.isClosed() && out.isClosed();
     }
 
     /** ⇱ Implementation Of {@link IByteIn}. */
@@ -129,6 +129,12 @@ public class MergedByteIOS
     public void seek(long position)
             throws IOException {
         seeker.seek(position);
+    }
+
+    @Override
+    public long length()
+            throws IOException {
+        return seeker.length();
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */

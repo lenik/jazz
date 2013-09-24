@@ -101,6 +101,12 @@ public class ByteBufferByteIOS
         buf.position((int) position);
     }
 
+    @Override
+    public long length()
+            throws IOException {
+        return buf.capacity();
+    }
+
     /** ⇱ Implementation Of {@link ICroppable}. */
     ;
 
