@@ -17,7 +17,7 @@ public class DiffFormatTypersTest
             throws Exception {
         IInstanceStore<? super IDiffFormat> diffStore = Typers.getTyper(IDiffFormat.class, IInstanceStore.class);
 
-        Object Simdiff = diffStore.getInstance("Simdiff");
+        Object Simdiff = diffStore.getInstance("SIMPLE");
         assertEquals(IDiffFormat.SIMPLE, Simdiff);
     }
 
