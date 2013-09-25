@@ -325,13 +325,13 @@ public class ArraysTemplate {
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static type_t min(type_t[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static type_t min(type_t[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        type_t min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        type_t min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             type_t v = array[i];
             if (LESS_THAN(v, min))
                 min = v;
@@ -367,18 +367,37 @@ public class ArraysTemplate {
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static type_t max(type_t[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static type_t max(type_t[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        type_t max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        type_t max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             type_t v = array[i];
             if (GREATER_THAN(v, max))
                 max = v;
         }
         return max;
+    }
+
+    // SECTION int
+
+    public static String toHex(int columns, type_t... array) {
+        return toHex(columns, array, 0, array.length);
+    }
+
+    public static String toHex(int columns, type_t[] array, int off, int len) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                if (i % columns == 0)
+                    sb.append('\n');
+                else
+                    sb.append(' ');
+            sb.append(toHex(array[off++]));
+        }
+        return sb.toString();
     }
 
     // END

@@ -252,6 +252,30 @@ public class Arrays
         return result;
     }
 
+    private static String toHex(boolean n) {
+        return n ? "1" : "0";
+    }
+
+    private static String toHex(byte n) {
+        return String.format("%02x", n);
+    }
+
+    private static String toHex(short n) {
+        return String.format("%04x", n);
+    }
+
+    private static String toHex(int n) {
+        return String.format("%08x", n);
+    }
+
+    private static String toHex(long n) {
+        return String.format("%016x", n);
+    }
+
+    private static String toHex(char n) {
+        return String.format("%04x", (int) n);
+    }
+
     // Array Wrapper
 
     // Generated Code: See ArraysCG, ArraysTemplate
@@ -2554,13 +2578,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static byte min(byte[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static byte min(byte[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        byte min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        byte min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             byte v = array[i];
             if (v < min)
                 min = v;
@@ -2594,13 +2618,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static short min(short[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static short min(short[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        short min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        short min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             short v = array[i];
             if (v < min)
                 min = v;
@@ -2634,13 +2658,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static int min(int[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static int min(int[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        int min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        int min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             int v = array[i];
             if (v < min)
                 min = v;
@@ -2674,13 +2698,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static long min(long[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static long min(long[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        long min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        long min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             long v = array[i];
             if (v < min)
                 min = v;
@@ -2714,13 +2738,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static float min(float[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static float min(float[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        float min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        float min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             float v = array[i];
             if (v < min)
                 min = v;
@@ -2754,13 +2778,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static double min(double[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static double min(double[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        double min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        double min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             double v = array[i];
             if (v < min)
                 min = v;
@@ -2794,13 +2818,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static char min(char[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static char min(char[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        char min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        char min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             char v = array[i];
             if (v < min)
                 min = v;
@@ -2834,13 +2858,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static BigDecimal min(BigDecimal[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static BigDecimal min(BigDecimal[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        BigDecimal min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        BigDecimal min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             BigDecimal v = array[i];
             if (v.compareTo(min) < 0)
                 min = v;
@@ -2874,13 +2898,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static BigInteger min(BigInteger[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static BigInteger min(BigInteger[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        BigInteger min = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        BigInteger min = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             BigInteger v = array[i];
             if (v.compareTo(min) < 0)
                 min = v;
@@ -2914,13 +2938,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static byte max(byte[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static byte max(byte[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        byte max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        byte max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             byte v = array[i];
             if (v > max)
                 max = v;
@@ -2954,13 +2978,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static short max(short[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static short max(short[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        short max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        short max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             short v = array[i];
             if (v > max)
                 max = v;
@@ -2994,13 +3018,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static int max(int[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static int max(int[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        int max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        int max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             int v = array[i];
             if (v > max)
                 max = v;
@@ -3034,13 +3058,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static long max(long[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static long max(long[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        long max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        long max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             long v = array[i];
             if (v > max)
                 max = v;
@@ -3074,13 +3098,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static float max(float[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static float max(float[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        float max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        float max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             float v = array[i];
             if (v > max)
                 max = v;
@@ -3114,13 +3138,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static double max(double[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static double max(double[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        double max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        double max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             double v = array[i];
             if (v > max)
                 max = v;
@@ -3154,13 +3178,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static char max(char[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static char max(char[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        char max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        char max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             char v = array[i];
             if (v > max)
                 max = v;
@@ -3194,13 +3218,13 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static BigDecimal max(BigDecimal[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static BigDecimal max(BigDecimal[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        BigDecimal max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        BigDecimal max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             BigDecimal v = array[i];
             if (v.compareTo(max) > 0)
                 max = v;
@@ -3234,18 +3258,120 @@ public class Arrays
      * @throws IllegalArgumentException
      *             If the array is empty.
      */
-    public static BigInteger max(BigInteger[] array, int offset, int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1" + length);
+    public static BigInteger max(BigInteger[] array, int off, int len) {
+        if (len < 1)
+            throw new IllegalArgumentException("len < 1" + len);
 
-        BigInteger max = array[offset];
-        int end = offset + length;
-        for (int i = offset + 1; i < end; i++) {
+        BigInteger max = array[off];
+        int end = off + len;
+        for (int i = off + 1; i < end; i++) {
             BigInteger v = array[i];
             if (v.compareTo(max) > 0)
                 max = v;
         }
         return max;
+    }
+
+    public static String toHex(int columns, boolean... array) {
+        return toHex(columns, array, 0, array.length);
+    }
+
+    public static String toHex(int columns, boolean[] array, int off, int len) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                if (i % columns == 0)
+                    sb.append('\n');
+                else
+                    sb.append(' ');
+            sb.append(toHex(array[off++]));
+        }
+        return sb.toString();
+    }
+
+    public static String toHex(int columns, byte... array) {
+        return toHex(columns, array, 0, array.length);
+    }
+
+    public static String toHex(int columns, byte[] array, int off, int len) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                if (i % columns == 0)
+                    sb.append('\n');
+                else
+                    sb.append(' ');
+            sb.append(toHex(array[off++]));
+        }
+        return sb.toString();
+    }
+
+    public static String toHex(int columns, short... array) {
+        return toHex(columns, array, 0, array.length);
+    }
+
+    public static String toHex(int columns, short[] array, int off, int len) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                if (i % columns == 0)
+                    sb.append('\n');
+                else
+                    sb.append(' ');
+            sb.append(toHex(array[off++]));
+        }
+        return sb.toString();
+    }
+
+    public static String toHex(int columns, int... array) {
+        return toHex(columns, array, 0, array.length);
+    }
+
+    public static String toHex(int columns, int[] array, int off, int len) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                if (i % columns == 0)
+                    sb.append('\n');
+                else
+                    sb.append(' ');
+            sb.append(toHex(array[off++]));
+        }
+        return sb.toString();
+    }
+
+    public static String toHex(int columns, long... array) {
+        return toHex(columns, array, 0, array.length);
+    }
+
+    public static String toHex(int columns, long[] array, int off, int len) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                if (i % columns == 0)
+                    sb.append('\n');
+                else
+                    sb.append(' ');
+            sb.append(toHex(array[off++]));
+        }
+        return sb.toString();
+    }
+
+    public static String toHex(int columns, char... array) {
+        return toHex(columns, array, 0, array.length);
+    }
+
+    public static String toHex(int columns, char[] array, int off, int len) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                if (i % columns == 0)
+                    sb.append('\n');
+                else
+                    sb.append(' ');
+            sb.append(toHex(array[off++]));
+        }
+        return sb.toString();
     }
 
     void __generated_end__() {

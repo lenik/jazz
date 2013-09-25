@@ -13,6 +13,7 @@ public class ArraysCG {
 
     static List<TypeDef> elmtypes;
     static List<TypeDef> algtypes;
+    static List<TypeDef> inttypes;
     static {
         elmtypes = new ArrayList<TypeDef>();
         elmtypes.add(new TypeDef("byte", "Byte", "int", "(byte) 0"));
@@ -35,6 +36,14 @@ public class ArraysCG {
         algtypes.add(new TypeDef("char", "Character", "int", "'\\0'"));
         algtypes.add(new BigDecimal_t()); // alg
         algtypes.add(new BigInteger_t()); // alg
+
+        inttypes = new ArrayList<TypeDef>();
+        inttypes.add(new TypeDef("boolean", "Boolean", "int", "false"));
+        inttypes.add(new TypeDef("byte", "Byte", "int", "(byte) 0"));
+        inttypes.add(new TypeDef("short", "Short", "int", "(short) 0"));
+        inttypes.add(new TypeDef("int", "Integer", "long", "0"));
+        inttypes.add(new TypeDef("long", "Long", "long", "0L"));
+        inttypes.add(new TypeDef("char", "Character", "int", "'\\0'"));
     }
 
     static final Pattern FNCALL = Pattern.compile(//
@@ -83,6 +92,9 @@ public class ArraysCG {
                 break;
             case "alg":
                 types = algtypes;
+                break;
+            case "int":
+                types = inttypes;
                 break;
             default:
                 throw new RuntimeException("Bad section mode: " + mode);
