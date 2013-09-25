@@ -128,6 +128,54 @@ public class IntMath {
         return xor >> 1;
     }
 
+    public static int reflect(int n, int count) {
+        int out = 0;
+        while (count-- > 0) {
+            out |= n & 1;
+            out <<= 1;
+            n >>= 1;
+        }
+        return out;
+    }
+
+    static final int H1 = 0b10101010_10101010_10101010_10101010;
+    static final int L1 = H1 >> 1;
+    static final int H2 = 0b11001100_11001100_11001100_11001100;
+    static final int L2 = H2 >> 2;
+    static final int H4 = 0b11110000_11110000_11110000_11110000;
+    static final int L4 = H4 >> 4;
+    static final int H8 = 0b11111111_00000000_11111111_00000000;
+    static final int L8 = H8 >> 8;
+
+    public static int reflect8(int n) {
+        int x = (n & H4) >>> 4;
+        int y = n & L4;
+        n = (y << 4) | x;
+
+        x = (n & H2) >>> 2;
+        y = n & L2;
+        n = (y << 2) | x;
+
+        x = (n & H1) >>> 1;
+        y = n & L1;
+        n = (y << 1) | x;
+        return n;
+    }
+
+    public static int reflect16(int n) {
+        n = reflect8(n);
+        int x = (n & H8) >>> 8;
+        int y = n & L8;
+        return (y << 8) | x;
+    }
+
+    public static int reflect32(int n) {
+        n = reflect16(n);
+        int x = n >>> 16;
+        int y = n & 0xffff;
+        return (y << 16) | x;
+    }
+
     private static final Number[] facConsts;
     static {
         facConsts = new Number[] { 1, // 0
