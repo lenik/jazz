@@ -32,8 +32,10 @@ public class ZipEntrySource
 
     IStreamResource rawcrop()
             throws IOException {
+        ZipUnarchiver unarchiver = ctx.getUnarchiver();
+
         if (entry.dataAddress == -1L)
-            ctx.reloadLFH(entry);
+            unarchiver.reloadLFH(entry);
 
         long rawsize = entry.compressedSize;
         if (entry.isEncrytped())
@@ -42,12 +44,12 @@ public class ZipEntrySource
         long start = entry.dataAddress;
         long end = start + rawsize;
 
-        long zipLength = ctx.getZipLength();
+        long zipLength = unarchiver.length();
         if (end > zipLength)
             throw new IOException(String.format("Entry %s exceeds the zip file, maybe it's incompleted.",
                     entry.getName()));
 
-        return ctx.crop(start, end);
+        return unarchiver.crop(start, end);
     }
 
     InputStream decrypt(InputStream in) {

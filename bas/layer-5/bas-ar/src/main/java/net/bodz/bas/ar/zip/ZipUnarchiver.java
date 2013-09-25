@@ -1,7 +1,6 @@
 package net.bodz.bas.ar.zip;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,18 +12,19 @@ import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.ISeekable;
+import net.bodz.bas.io.ITellable;
 import net.bodz.bas.io.data.DataInImplLE;
 import net.bodz.bas.io.res.IStreamResource;
 
 public class ZipUnarchiver
-        implements IUnarchiver, IZipContext, IZipConsts, IZip64Consts {
+        extends ZipEngine
+        implements IUnarchiver, ITellable, ICroppable {
 
     private IDataIn in;
     private ISeekable seeker;
     private ICroppable cropper;
     private long zipLength;
 
-    private Charset charset = Charset.defaultCharset();
     private ZipEntry lastEntry;
 
     private EndOfCen eoc;
@@ -84,21 +84,19 @@ public class ZipUnarchiver
         return lastEntry = entry;
     }
 
-    /** ⇱ Implementation Of {@link ICloseable}. */
-    ;
-
     @Override
     public void close()
             throws IOException {
         in.close();
+        super.close();
     }
 
     @Override
-    public boolean isClosed() {
-        return false;
+    public ZipUnarchiver getUnarchiver() {
+        return this;
     }
 
-    /** ⇱ Implementation Of {@link IZipContext}. */
+    /** ⇱ Implementation Of {@link ISeekable}. */
     ;
 
     @Override
@@ -106,39 +104,17 @@ public class ZipUnarchiver
         return seeker.tell();
     }
 
+    public long length() {
+        return zipLength;
+    }
+
+    /** ⇱ Implementation Of {@link ICroppable}. */
+    ;
+
     @Override
     public IStreamResource crop(long start, long end)
             throws IOException {
         return cropper.crop(start, end);
-    }
-
-    @Override
-    public Charset getZipCharset() {
-        return charset;
-    }
-
-    @Override
-    public long getZipLength() {
-        return zipLength;
-    }
-
-    @Override
-    public String getZipPassword() {
-        return "123";
-    }
-
-    @Override
-    public void requireZipVersion(short version) {
-        if (version > VN_Deflate64)
-            throw new UnsupportedOperationException("Version too high to handle: " + version);
-    }
-
-    @Override
-    public void reloadLFH(ZipEntry entry)
-            throws IOException {
-        seeker.seek(entry.localHeaderOffset);
-        entry.readLoc(in);
-        entry.dataAddress = seeker.tell();
     }
 
     /** ⇱ Internal Implementations */
@@ -222,6 +198,13 @@ public class ZipUnarchiver
 
         int entryCount = centralDir.size();
         assert entryCount >= eoc.diskEntryCount;
+    }
+
+    void reloadLFH(ZipEntry entry)
+            throws IOException {
+        seeker.seek(entry.localHeaderOffset);
+        entry.readLoc(in);
+        entry.dataAddress = seeker.tell();
     }
 
 }

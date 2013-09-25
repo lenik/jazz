@@ -1,23 +1,17 @@
 package net.bodz.bas.ar.zip;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.io.ICroppable;
-import net.bodz.bas.io.ITellable;
-
-public interface IZipContext
-        extends ITellable, ICroppable {
+public interface IZipContext {
 
     Charset getZipCharset();
-
-    long getZipLength();
 
     String getZipPassword();
 
     void requireZipVersion(short version);
 
-    void reloadLFH(ZipEntry entry)
-            throws IOException;
+    ZipArchiver getArchiver();
+
+    ZipUnarchiver getUnarchiver();
 
 }
