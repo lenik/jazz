@@ -97,6 +97,9 @@ public class ReflectRstDumper {
                 }
 
                 TypeEnum typeEnum = TypeEnum.fromClass(type);
+                if (typeEnum == null) // skip unknown type.
+                    continue;
+
                 switch (typeEnum) {
                 case BYTE:
                     out.attribute(name, (byte) value);
