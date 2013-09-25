@@ -3,7 +3,12 @@ package net.bodz.bas.ar.zip;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.ar.zip.xf.XF_UNIX;
+import net.bodz.bas.ar.zip.xf.XF_Zip64;
+import net.bodz.bas.ar.zip.xf3.XF_ASi_UNIX;
+import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UNIX2;
 import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UnicodePath;
+import net.bodz.bas.ar.zip.xf3.XF_Timestamp;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.text.rst.RstObject;
@@ -22,10 +27,15 @@ public class ZipEntry
 
     /** Appeared in central directory header only. */
     public short versionMadeBy;
+
     public short versionNeeded;
     public short flags;
     public short method;
-    public int time_dos;
+
+    /** Appeared in XF_Timestamp header only. */
+    public/* transient */int ctime;
+    public int mtime;
+
     public int crc32;
 
     /**
@@ -51,8 +61,14 @@ public class ZipEntry
     /** Appeared in central directory header only. */
     public byte[] commentRaw;
 
-    /** Appeared in central directory header only. */
-    public short startDisk;
+    /**
+     * Appeared in:
+     * <ul>
+     * <li>central directory header: u16
+     * <li>zip64 field: u32
+     * </ul>
+     */
+    public int startDisk;
 
     /** Appeared in central directory header only. */
     public short internalFileAttributes;
@@ -61,7 +77,7 @@ public class ZipEntry
     public int externalFileAttributes;
 
     /** Appeared in central directory header only. */
-    public int localHeaderOffset;
+    public long localHeaderOffset;
 
     private transient Charset charset;
     private transient String name;
@@ -144,10 +160,10 @@ public class ZipEntry
         int commentLen = in.readWord() & 0xffff;
         commentRaw = new byte[commentLen];
 
-        startDisk = in.readWord();
+        startDisk = in.readWord() & 0xffff;
         internalFileAttributes = in.readWord();
         externalFileAttributes = in.readDword();
-        localHeaderOffset = in.readDword();
+        localHeaderOffset = in.readDword() & 0xffffffffL;
 
         _readNameExtras(in);
         _readComment(in);
@@ -164,12 +180,12 @@ public class ZipEntry
         charset = (flags & F_UTF8) == 0 ? ctx.getZipCharset() : utf8Charset;
 
         method = in.readWord();
-        time_dos = in.readDword();
+        mtime = in.readDword();
 
         // if ((flags & F_DATA_DESCRIPTOR) != 0) in.skip(12); else
         crc32 = in.readDword();
-        compressedSize = in.readDword();
-        size = in.readDword();
+        compressedSize = in.readDword() & 0xffffffffL;
+        size = in.readDword() & 0xffffffffL;
 
         int nameLen = in.readWord() & 0xffff;
         nameRaw = new byte[nameLen];
@@ -183,7 +199,52 @@ public class ZipEntry
             throws IOException {
         in.readBytes(nameRaw);
         in.readBytes(extras);
-        extraFields = ExtraFieldMap.parse(extras);
+
+        /*
+         * Optim: It seems extra fields can be defined on both LOC and CEN. If it is already loaded
+         * from CEN, don't load them again in LOC.
+         */
+        if (extraFields == null) {
+            extraFields = ExtraFieldMap.parse(extras);
+
+            XF_Zip64 _zip64 = extraFields.get(XF_Zip64.class);
+            if (_zip64 != null) {
+                compressedSize = _zip64.compressedSize;
+                size = _zip64.size;
+                localHeaderOffset = _zip64.offset;
+                startDisk = _zip64.startDisk;
+            }
+
+            XF_InfoZip_UnicodePath _unicodePath = extraFields.get(XF_InfoZip_UnicodePath.class);
+            if (_unicodePath != null)
+                name = _unicodePath.getFileName();
+
+            XF_Timestamp _timestamp = extraFields.get(XF_Timestamp.class);
+            if (_timestamp != null) {
+                ctime = _timestamp.ctime;
+                mtime = _timestamp.mtime;
+            }
+
+            XF_UNIX _unix = extraFields.get(XF_UNIX.class);
+            if (_unix != null) {
+                uid = _unix.uid & 0xffff;
+                gid = _unix.gid & 0xffff;
+                // atime = _unix.atime;
+                // mtime = _unix.mtime;
+            }
+
+            XF_ASi_UNIX _asiUnix = extraFields.get(XF_ASi_UNIX.class);
+            if (_asiUnix != null) {
+                uid = _asiUnix.uid & 0xffff;
+                gid = _asiUnix.gid & 0xffff;
+                perm = _asiUnix.mode;
+                // symlink = _asiUnix.getTarget();
+            }
+
+            XF_InfoZip_UNIX2 _unix2 = extraFields.get(XF_InfoZip_UNIX2.class);
+            if (_unix2 != null)
+                ;
+        }
     }
 
     void _readComment(IDataIn in)
@@ -215,13 +276,8 @@ public class ZipEntry
 
     @Override
     public String getName() {
-        if (name == null) {
-            XF_InfoZip_UnicodePath _unicodePath = extraFields.get(XF_InfoZip_UnicodePath.class);
-            if (_unicodePath != null)
-                name = _unicodePath.getFileName();
-            else
-                name = new String(nameRaw, charset);
-        }
+        if (name == null)
+            name = new String(nameRaw, charset);
         return name;
     }
 
@@ -260,17 +316,22 @@ public class ZipEntry
 
     @Override
     public long getCreatedTime() {
-        return getModifiedTime();
+        int time = ctime != 0 ? ctime : mtime;
+        return TimeUtils.fromDos(time);
+    }
+
+    public void setCreatedTime(long time) {
+        ctime = TimeUtils.toDos(time);
     }
 
     @Override
     public long getModifiedTime() {
-        long time = TimeUtils.fromDos(time_dos);
+        long time = TimeUtils.fromDos(mtime);
         return time;
     }
 
     public void setModifiedTime(long time) {
-        time_dos = TimeUtils.toDos(time);
+        mtime = TimeUtils.toDos(time);
     }
 
     @Override
