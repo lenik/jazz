@@ -63,7 +63,7 @@ public class ZipUnarchiver
             long dataEndPtr = lastEntry.dataAddress + lastEntry.compressedSize;
             seeker.seek(dataEndPtr);
 
-            if ((lastEntry.flags & F_DATA_DESCRIPTOR) != 0) {
+            if (lastEntry.isDDExisted()) {
                 lastEntry.crc32 = in.readDword();
                 lastEntry.compressedSize = in.readDword();
                 lastEntry.size = in.readDword();
@@ -79,9 +79,6 @@ public class ZipUnarchiver
         ZipEntry entry = new ZipEntry(this);
         entry.sig = sig;
         entry._readLoc(in);
-
-        // security-descriptor...
-
         entry.dataAddress = tell();
 
         return lastEntry = entry;
@@ -126,6 +123,11 @@ public class ZipUnarchiver
     }
 
     @Override
+    public String getZipPassword() {
+        return "123";
+    }
+
+    @Override
     public void requireZipVersion(short version) {
         if (version > VN_Deflate64)
             throw new UnsupportedOperationException("Version too high to handle: " + version);
@@ -136,9 +138,6 @@ public class ZipUnarchiver
             throws IOException {
         seeker.seek(entry.localHeaderOffset);
         entry.readLoc(in);
-
-        // security-descriptor...
-
         entry.dataAddress = seeker.tell();
     }
 
