@@ -7,6 +7,7 @@ import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UnicodePath;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.text.rst.RstObject;
+import net.bodz.bas.typer.std.ValidationException;
 
 public class ZipEntry
         extends RstObject
@@ -26,11 +27,28 @@ public class ZipEntry
     public short method;
     public int time_dos;
     public int crc32;
+
+    /**
+     * The size of the file compressed (4.4.8) and uncompressed, (4.4.9) respectively. When a
+     * decryption header is present it will be placed in front of the file data and the value of the
+     * compressed file size will include the bytes of the decryption header. If bit 3 of the general
+     * purpose bit flag is set, these fields are set to zero in the local header and the correct
+     * values are put in the data descriptor and in the central directory. If an archive is in ZIP64
+     * format and the value in this field is 0xFFFFFFFF, the size will be in the corresponding 8
+     * byte ZIP64 extended information extra field. When encrypting the central directory, if the
+     * local header is not in ZIP64 format and general purpose bit flag 13 is set indicating
+     * masking, the value stored for the uncompressed size in the Local Header will be zero.
+     */
     public long compressedSize;
     public long size;
 
     public byte[] nameRaw;
     public byte[] extras;
+
+    /** Appeared in local file header only. */
+    public byte[] encryptionHeader;
+
+    /** Appeared in central directory header only. */
     public byte[] commentRaw;
 
     /** Appeared in central directory header only. */
@@ -48,6 +66,8 @@ public class ZipEntry
     private transient Charset charset;
     private transient String name;
     transient ExtraFieldMap extraFields;
+    private transient String password;
+    private transient ZipEncryptKey encryptKey;
     private transient String comment;
 
     private transient int perm = 0644;
@@ -60,6 +80,34 @@ public class ZipEntry
         if (ctx == null)
             throw new NullPointerException("ctx");
         this.ctx = ctx;
+    }
+
+    public boolean isEncrytped() {
+        return (flags & F_ENC) != 0;
+    }
+
+    public ZipEncryptKey getEncryptKey() {
+        if (!isEncrytped())
+            return null;
+
+        if (encryptKey == null) {
+            String password = getPassword();
+            encryptKey = new ZipEncryptKey(password);
+
+            ZipEncryptKey zek = encryptKey;
+            zek.decrypt(encryptionHeader);
+
+            try {
+                zek.validateEH(encryptionHeader, this);
+            } catch (ValidationException e1) {
+                System.err.println("eh validation failed.");
+            }
+        }
+        return encryptKey.clone();
+    }
+
+    public boolean isDDExisted() {
+        return (flags & F_DATA_DESCRIPTOR) != 0;
     }
 
     public void readLoc(IDataIn in)
@@ -79,7 +127,13 @@ public class ZipEntry
     public void _readLoc(IDataIn in)
             throws IOException {
         _readShared(in);
-        _readNameAndExtras(in);
+        _readNameExtras(in);
+
+        if (isEncrytped())
+            in.readBytes(encryptionHeader = new byte[12]);
+        else
+            encryptionHeader = null;
+        encryptKey = null;
     }
 
     public void _readCen(IDataIn in)
@@ -95,7 +149,7 @@ public class ZipEntry
         externalFileAttributes = in.readDword();
         localHeaderOffset = in.readDword();
 
-        _readNameAndExtras(in);
+        _readNameExtras(in);
         _readComment(in);
 
         dataAddress = -1L;
@@ -112,15 +166,10 @@ public class ZipEntry
         method = in.readWord();
         time_dos = in.readDword();
 
+        // if ((flags & F_DATA_DESCRIPTOR) != 0) in.skip(12); else
         crc32 = in.readDword();
         compressedSize = in.readDword();
         size = in.readDword();
-
-        if ((flags & F_DATA_DESCRIPTOR) != 0) {
-            assert crc32 == 0;
-            assert compressedSize == 0;
-            assert size == 0;
-        }
 
         int nameLen = in.readWord() & 0xffff;
         nameRaw = new byte[nameLen];
@@ -130,7 +179,7 @@ public class ZipEntry
         extras = new byte[extrasLen];
     }
 
-    void _readNameAndExtras(IDataIn in)
+    void _readNameExtras(IDataIn in)
             throws IOException {
         in.readBytes(nameRaw);
         in.readBytes(extras);
@@ -167,7 +216,7 @@ public class ZipEntry
     @Override
     public String getName() {
         if (name == null) {
-            XF_InfoZip_UnicodePath _unicodePath = extraFields.getByClass(XF_InfoZip_UnicodePath.class);
+            XF_InfoZip_UnicodePath _unicodePath = extraFields.get(XF_InfoZip_UnicodePath.class);
             if (_unicodePath != null)
                 name = _unicodePath.getFileName();
             else
@@ -184,6 +233,17 @@ public class ZipEntry
     @Override
     public boolean isDirectory() {
         return name.endsWith("/");
+    }
+
+    public String getPassword() {
+        if (password == null)
+            return ctx.getZipPassword();
+        else
+            return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

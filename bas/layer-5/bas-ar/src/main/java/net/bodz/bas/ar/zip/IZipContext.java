@@ -13,6 +13,8 @@ public interface IZipContext
 
     long getZipLength();
 
+    String getZipPassword();
+
     void requireZipVersion(short version);
 
     void reloadLFH(ZipEntry entry)

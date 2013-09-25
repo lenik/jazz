@@ -13,24 +13,19 @@ import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.data.DataInImplLE;
 
 public class ExtraFieldMap
-        extends LinkedHashMap<Short, ExtraField> {
+        extends LinkedHashMap<Class<?>, ExtraField> {
 
     private static final long serialVersionUID = 1L;
 
-    public <T extends ExtraField> T getByClass(Class<T> extraFieldClass) {
-        Integer tag = classTagMap.get(extraFieldClass);
-        if (tag == null)
-            throw new IllegalArgumentException("Unregistered extra field class: " + extraFieldClass.getName());
-        ExtraField extraField = get(tag.shortValue());
+    public <T extends ExtraField> T get(Class<T> extraFieldClass) {
+        ExtraField extraField = super.get(extraFieldClass);
         return extraFieldClass.cast(extraField);
     }
 
     static Map<Integer, ExtraFieldMetadata> tagMetaMap;
-    static Map<Class<?>, Integer> classTagMap;
 
     static {
         tagMetaMap = new HashMap<>();
-        classTagMap = new HashMap<>();
 
         for (ExtraField inst : ServiceLoader.load(ExtraField.class)) {
             Class<? extends ExtraField> clazz = inst.getClass();
@@ -50,7 +45,6 @@ public class ExtraFieldMap
             metadata.sizeTotal = extraFieldType.sizeTotal();
 
             tagMetaMap.put(id, metadata);
-            classTagMap.put(clazz, id);
         }
     }
 
@@ -83,7 +77,7 @@ public class ExtraFieldMap
 
             field._readObject(le);
 
-            map.put((short) tag, field);
+            map.put(metadata.type, field);
 
             if (ios.tell() != nextptr)
                 ios.seek(nextptr);

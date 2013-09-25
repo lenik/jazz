@@ -6,7 +6,6 @@ import java.nio.file.OpenOption;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
-import net.bodz.bas.c.java.io.DbgInputStream;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
 import net.bodz.bas.io.res.AbstractInputStreamSource;
@@ -33,12 +32,15 @@ public class ZipEntrySource
 
     IStreamResource rawcrop()
             throws IOException {
-        if (entry.dataAddress == -1L) {
+        if (entry.dataAddress == -1L)
             ctx.reloadLFH(entry);
-        }
+
+        long rawsize = entry.compressedSize;
+        if (entry.isEncrytped())
+            rawsize -= 12;
 
         long start = entry.dataAddress;
-        long end = start + entry.compressedSize;
+        long end = start + rawsize;
 
         long zipLength = ctx.getZipLength();
         if (end > zipLength)
@@ -48,12 +50,26 @@ public class ZipEntrySource
         return ctx.crop(start, end);
     }
 
+    InputStream decrypt(InputStream in) {
+        if (!entry.isEncrytped())
+            return in;
+        ZipEncryptKey key = entry.getEncryptKey();
+        return new DecryptedInputStream(in, key);
+    }
+
+    IByteIn decrypt(IByteIn in) {
+        if (!entry.isEncrytped())
+            return in;
+        ZipEncryptKey key = entry.getEncryptKey();
+        return new DecryptedByteIn(in, key);
+    }
+
     @Override
     protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
         IStreamResource src = rawcrop();
         InputStream in = src.newInputStream(options);
-        in = new DbgInputStream(in);
+        in = decrypt(in);
 
         switch (entry.method) {
         case M_STORE:
@@ -74,13 +90,13 @@ public class ZipEntrySource
 
         switch (entry.method) {
         case M_STORE:
-            return src.newByteIn(options);
+            return decrypt(src.newByteIn(options));
 
         case M_DEFLATE:
-            InputStream deflated = src.newInputStream(options);
-            deflated = new DbgInputStream(deflated);
-            InflaterInputStream in = new InflaterInputStream(deflated, new Inflater(true));
-            return new InputStreamByteIn(in);
+            InputStream in = src.newInputStream(options);
+            in = decrypt(in);
+            InflaterInputStream inflated = new InflaterInputStream(in, new Inflater(true));
+            return new InputStreamByteIn(inflated);
 
         default:
             throw new UnsupportedOperationException("Unknown method: " + entry.method);
