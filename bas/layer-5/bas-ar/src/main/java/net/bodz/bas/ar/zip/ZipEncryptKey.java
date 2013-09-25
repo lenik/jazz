@@ -99,7 +99,7 @@ public class ZipEncryptKey {
             if (!entry.isDDExisted())
                 throw new ValidationException("The password did not match.");
 
-            if (ehText[11] != (byte) ((entry.time_dos >> 8) & 0xff))
+            if (ehText[11] != (byte) ((entry.mtime >> 8) & 0xff))
                 throw new ValidationException("The password did not match.");
         }
     }
