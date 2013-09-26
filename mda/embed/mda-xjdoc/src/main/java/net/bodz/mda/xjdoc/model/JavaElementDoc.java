@@ -203,8 +203,8 @@ public class JavaElementDoc
     }
 
     @Override
-    public <T> T as(Class<T> decoratedType) {
-        return new Tooling(this).getWrapper(decoratedType);
+    public <T> T to(Class<T> clazz) {
+        return new Tooling(this).getWrapper(clazz);
     }
 
 }

@@ -34,7 +34,7 @@ public class MemoryFileTest
         IFile targetDir = VFS.resolve("mem:test:/createFiles/");
 
         IFile foo = targetDir.resolve("foo");
-        foo.tooling()._for(StreamWriting.class).writeString("Foo Data");
+        foo.to(StreamWriting.class).writeString("Foo Data");
 
         PosixFileAttributeView view = foo.getAttributeView(PosixFileAttributeView.class);
         Set<PosixFilePermission> permissions = view.readAttributes().permissions();
@@ -42,7 +42,7 @@ public class MemoryFileTest
         view.setPermissions(permissions);
 
         IFile bar = targetDir.resolve("sub/bar");
-        bar.tooling()._for(StreamWriting.class).writeString("Bar is very long.");
+        bar.to(StreamWriting.class).writeString("Bar is very long.");
 
         IFile bar_1 = targetDir.resolve("sub/bar.1");
         bar_1.createLink("bar", true);

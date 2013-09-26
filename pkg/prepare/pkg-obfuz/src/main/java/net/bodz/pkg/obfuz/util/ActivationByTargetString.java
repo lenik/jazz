@@ -45,7 +45,7 @@ public class ActivationByTargetString
         if (_activation == null)
             throw new IllegalUsageError(tr._("No activation info"));
 
-        ArtifactDoc artifactDoc = ClassDocLoader.load(clazz).as(ArtifactDoc.class);
+        ArtifactDoc artifactDoc = ClassDocLoader.load(clazz).to(ArtifactDoc.class);
 
         this.prefix = _activation.prefix();
         this.prefixBytes = prefix.getBytes(encoding);

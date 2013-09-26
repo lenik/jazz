@@ -405,12 +405,12 @@ public abstract class AbstractPrimitive2d
         return result;
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IDecoratable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToChain}. */
     ;
 
     @Override
-    public <T> T decorate(Class<T> decoratedType) {
-        return new Tooling(this).getWrapper(decoratedType);
+    public <T> T to(Class<T> clazz) {
+        return new Tooling(this).getWrapper(clazz);
     }
 
 }

@@ -32,7 +32,7 @@ public @interface BuildInfo {
             URL url = clazz.getResource(resname);
             if (url == null)
                 throw new NullPointerException("BuildInfo resource isn't existed: " + resname);
-            return URLFile.resolve(url).tooling()._for(StreamLoading.class).loadProperties();
+            return URLFile.resolve(url).to(StreamLoading.class).loadProperties();
         }
 
     }

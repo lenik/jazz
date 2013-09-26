@@ -140,7 +140,7 @@ public class SwtUserDialogs
                 Image image = action.getImage();
                 if (text == null) {
                     ClassDoc classDoc = ClassDocLoader.load(action.getClass());
-                    text = classDoc.as(ArtifactDoc.class).getLabel().toString();
+                    text = classDoc.to(ArtifactDoc.class).getLabel().toString();
                 }
                 button.setText(text);
                 if (doc != null)

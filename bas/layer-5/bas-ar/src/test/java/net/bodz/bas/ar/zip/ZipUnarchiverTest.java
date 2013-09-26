@@ -76,7 +76,7 @@ public class ZipUnarchiverTest
             out.print("Loc-Entry: " + entry.getName() + ": ");
 
             IStreamInputSource src = entry.getInputSource();
-            byte[] data = src.tooling()._for(StreamReading.class).read();
+            byte[] data = src.to(StreamReading.class).read();
 
             out.print(data.length + " bytes");
 
@@ -106,7 +106,7 @@ public class ZipUnarchiverTest
             out.print("Entry: " + entry.getName() + ": ");
 
             IStreamInputSource src = entry.getInputSource();
-            byte[] data = src.tooling()._for(StreamReading.class).read();
+            byte[] data = src.to(StreamReading.class).read();
 
             out.print(data.length + " bytes");
 
@@ -139,7 +139,7 @@ public class ZipUnarchiverTest
         while ((entry = zin.getNextEntry()) != null) {
             out.print("Entry: " + entry.getName() + ": ");
 
-            byte[] data = new InputStreamSource(zin).tooling()._for(StreamReading.class).read();
+            byte[] data = new InputStreamSource(zin).to(StreamReading.class).read();
             out.print(data.length + " bytes");
 
             CRC32 crc32 = new CRC32();

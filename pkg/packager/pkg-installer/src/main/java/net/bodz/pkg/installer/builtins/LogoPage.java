@@ -55,7 +55,7 @@ public class LogoPage
         ImageData logo = session.getProject().getLogo();
         if (logo == null) {
             ClassDoc classDoc = ClassDocLoader.load(ProjectInstaller.class);
-            IGUIElementStyleDeclaration styleDecl = classDoc.as(GUIElementDoc.class).getStyleClass();
+            IGUIElementStyleDeclaration styleDecl = classDoc.to(GUIElementDoc.class).getStyleClass();
             IImageData defaultLogo = styleDecl.getImage(ImageUsage.NORMAL);
             if (defaultLogo != null)
                 logo = SwtImageMapper.convert(defaultLogo);

@@ -44,12 +44,12 @@ public class AbstractProject
     public AbstractProject(Class<?> artifactClass, IComponent... children) {
         super("root", children);
 
-        ArtifactDoc artifactDoc = getXjdoc().as(ArtifactDoc.class);
+        ArtifactDoc artifactDoc = getXjdoc().to(ArtifactDoc.class);
         version = artifactDoc.getVersion();
         company = artifactDoc.getAuthor();
         updateTime = artifactDoc.getReleaseDateString();
 
-        GUIElementDoc guiElementDoc = getXjdoc().as(GUIElementDoc.class);
+        GUIElementDoc guiElementDoc = getXjdoc().to(GUIElementDoc.class);
         IGUIElementStyleDeclaration styleDecl = guiElementDoc.getStyleClass();
         // SwtControlStyler.applyAuto(widget, styleDecl)
 

@@ -14,7 +14,7 @@ public class License
         URLResource licenseURL = ClassResource.getData(License.class, name);
         licenseURL.setCharset("utf-8");
         try {
-            String license = licenseURL.tooling()._for(StreamReading.class).readString();
+            String license = licenseURL.to(StreamReading.class).readString();
             return license;
         } catch (IOException e) {
             throw new IllegalArgumentException(tr._("No such license: ") + name);

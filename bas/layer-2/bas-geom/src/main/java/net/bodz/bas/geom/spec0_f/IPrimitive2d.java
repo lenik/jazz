@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
-import net.bodz.bas.sugar.IDecoratable;
+import net.bodz.bas.sugar.IToChain;
 import net.bodz.bas.t.object.ISnapShot;
 
 public interface IPrimitive2d
@@ -18,7 +18,7 @@ public interface IPrimitive2d
         ICroppable2d, //
         ISnapShot, //
         IBaseDrawable2d, //
-        IDecoratable<Object> {
+        IToChain {
 
     float EPSILON = 1e-7f;
 

@@ -63,7 +63,7 @@ public class CreateFile
                 else
                     logger.infof(tr._("Create file %s: %s"), dest, abbr);
 
-                destFile.tooling()._for(StreamWriting.class).setOpenOptions(options).write(source);
+                destFile.to(StreamWriting.class).setOpenOptions(options).write(source);
             } catch (IOException e) {
                 recoverException(e);
             }

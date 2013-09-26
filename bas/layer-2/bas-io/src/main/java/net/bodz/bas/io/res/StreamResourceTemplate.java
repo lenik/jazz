@@ -21,7 +21,6 @@ import net.bodz.bas.io.data.DataOutImplBE;
 import net.bodz.bas.io.data.DataOutImplLE;
 import net.bodz.bas.io.impl.LAReader;
 import net.bodz.bas.io.impl.PrintOutImpl;
-import net.bodz.bas.sugar.ITooling;
 import net.bodz.bas.sugar.Tooling;
 
 public abstract class StreamResourceTemplate {
@@ -37,8 +36,8 @@ public abstract class StreamResourceTemplate {
             throw new NullPointerException("preferredCharset");
     }
 
-    public ITooling tooling() {
-        return new Tooling(this);
+    public <T> T to(Class<T> anotherType) {
+        return new Tooling(this).to(anotherType);
     }
 
     /**

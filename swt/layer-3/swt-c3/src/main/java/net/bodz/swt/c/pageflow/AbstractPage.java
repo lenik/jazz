@@ -54,7 +54,7 @@ public abstract class AbstractPage
 
     @Override
     public ImageData getPageIcon() {
-        GUIElementDoc gdoc = classDoc.as(GUIElementDoc.class);
+        GUIElementDoc gdoc = classDoc.to(GUIElementDoc.class);
         IGUIElementStyleDeclaration style = gdoc.getStyleClass();
         IImageData image = style.getImage(ImageUsage.NORMAL);
         // TODO Convert to SWT image data...

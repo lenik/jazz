@@ -28,7 +28,7 @@ public class PojfFileTest
         // System.out.println(rawFile);
         assertTrue(rawFile.exists());
 
-        String contents = file.tooling()._for(StreamReading.class).readString();
+        String contents = file.to(StreamReading.class).readString();
         assertEquals("Bar!\n", contents);
     }
 

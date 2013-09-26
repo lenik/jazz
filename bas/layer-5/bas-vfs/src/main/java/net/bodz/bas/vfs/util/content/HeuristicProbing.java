@@ -21,7 +21,7 @@ public class HeuristicProbing
 
         byte[] block;
         try {
-            IStreamReading readPrep = file.tooling()._for(StreamReading.class);
+            IStreamReading readPrep = file.to(StreamReading.class);
             block = readPrep.read(TextOrBinary.textLookSize);
         } catch (IOException e) {
             return super.isText();

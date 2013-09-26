@@ -34,7 +34,7 @@ public class EclipseWorkspace {
     public void reload()
             throws IOException {
         Properties prefs = new FileResource(new File(base, PREFS))//
-                .tooling()._for(StreamLoading.class).loadProperties();
+                .to(StreamLoading.class).loadProperties();
         cpVars = new HashMap<String, String>();
         for (Object k : prefs.keySet()) {
             String name = (String) k;

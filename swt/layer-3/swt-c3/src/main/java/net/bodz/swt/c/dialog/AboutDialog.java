@@ -16,7 +16,7 @@ public class AboutDialog
     }
 
     public AboutDialog(Shell parent, int style, Class<?> clazz) {
-        this(parent, style, ClassDocLoader.load(clazz).as(ArtifactDoc.class));
+        this(parent, style, ClassDocLoader.load(clazz).to(ArtifactDoc.class));
     }
 
     public AboutDialog(Shell parent, int style, ArtifactDoc doc) {

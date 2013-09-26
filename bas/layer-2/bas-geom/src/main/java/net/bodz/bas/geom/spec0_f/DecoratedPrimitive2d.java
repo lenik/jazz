@@ -283,12 +283,12 @@ public class DecoratedPrimitive2d
         return getWrapped().crop(convexPolygon, detached);
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IDecoratable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToChain}. */
     ;
 
     @Override
-    public <T> T decorate(Class<T> decoratedType) {
-        return getWrapped().decorate(decoratedType);
+    public <T> T to(Class<T> clazz) {
+        return getWrapped().to(clazz);
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */

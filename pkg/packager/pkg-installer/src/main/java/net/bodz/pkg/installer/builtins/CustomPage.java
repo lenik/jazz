@@ -244,7 +244,7 @@ public class CustomPage
 
         if (component instanceof IXjdocElement) {
             IJavaElementDoc xjdoc = ((IXjdocElement) component).getXjdoc();
-            GUIElementDoc guidoc = xjdoc.as(GUIElementDoc.class);
+            GUIElementDoc guidoc = xjdoc.to(GUIElementDoc.class);
             IGUIElementStyleDeclaration styleClass = guidoc.getStyleClass();
 
             IImageData imageData = styleClass.getImage(ImageUsage.NORMAL);

@@ -3,10 +3,10 @@ package net.bodz.mda.xjdoc.model;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.sugar.IWrappedAsable;
+import net.bodz.bas.sugar.IToChain;
 
 public interface IJavaElementDoc
-        extends IWrappedAsable<Object> {
+        extends IToChain {
 
     /**
      * Get the (canonical/unique) element name.
