@@ -1,21 +1,15 @@
 package net.bodz.bas.vfs;
 
 import java.io.IOException;
-import java.nio.file.LinkOption;
-import java.nio.file.attribute.BasicFileAttributeView;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.DosFileAttributeView;
-import java.nio.file.attribute.DosFileAttributes;
 import java.nio.file.attribute.FileTime;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
-import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.typer.std.Attributes;
 import net.bodz.bas.vfs.path.IPath;
 
 public abstract class FsObject
         extends Attributes
-        implements IFsObject {
+        implements IFsObject, IFsObjectAttributes {
 
     private final IVfsDevice device;
     private String baseName;
@@ -37,6 +31,20 @@ public abstract class FsObject
         }
     }
 
+    /**
+     * Get the path string of this file.
+     * 
+     * @return Non-<code>null</code> path string of this file.
+     * @see IPath#toString()
+     */
+    @Override
+    public String toString() {
+        return getPath().toString();
+    }
+
+    /** ⇱ Implementation Of {@link IFsObject}. */
+    /* _____________________________ */static section.iface __FS_OBJECT__;
+
     @Override
     public IVfsDevice getDevice() {
         return device;
@@ -51,41 +59,6 @@ public abstract class FsObject
         if (baseName == null)
             throw new NullPointerException("baseName");
         this.baseName = baseName;
-    }
-
-    @Override
-    public final FileTime getCreationTime() {
-        try {
-            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
-            return attrs == null ? null : attrs.creationTime();
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public final FileTime getLastModifiedTime() {
-        try {
-            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
-            return attrs == null ? null : attrs.lastModifiedTime();
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public final boolean setLastModifiedTime(FileTime lastModifiedTime)
-            throws IOException {
-        BasicFileAttributeView view = this.getAttributeView(BasicFileAttributeView.class);
-        if (view == null)
-            return false;
-
-        BasicFileAttributes attrs = view.readAttributes();
-        FileTime creationTime = attrs.creationTime();
-        FileTime lastAccessTime = attrs.lastAccessTime();
-
-        view.setTimes(lastModifiedTime, lastAccessTime, creationTime);
-        return true;
     }
 
     @Override
@@ -110,72 +83,17 @@ public abstract class FsObject
 
     @Override
     public final boolean isBlob() {
-        try {
-            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
-            return attrs == null ? false : attrs.isRegularFile();
-        } catch (IOException e) {
-            return false;
-        }
+        return false;
     }
 
     @Override
-    public final boolean isDirectory() {
-        try {
-            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
-            return attrs == null ? false : attrs.isDirectory();
-        } catch (IOException e) {
-            return false;
-        }
+    public boolean isDirectory() {
+        return false;
     }
 
     @Override
-    public final boolean isSymLink() {
-        try {
-            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
-            return attrs == null ? false : attrs.isSymbolicLink();
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public final boolean isHidden() {
-        try {
-            DosFileAttributes attrs = this.readAttributes(DosFileAttributes.class);
-            return attrs == null ? false : attrs.isHidden();
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public final boolean setHidden(boolean hidden)
-            throws IOException {
-        DosFileAttributeView view = this.getAttributeView(DosFileAttributeView.class);
-        if (view == null)
-            return false;
-        view.setHidden(true);
-        return true;
-    }
-
-    @Override
-    public final boolean isReadable() {
-        try {
-            FilePermissionAttributes attrs = this.readAttributes(FilePermissionAttributes.class);
-            return attrs == null ? false : attrs.isReadable();
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public final boolean isWritable() {
-        try {
-            FilePermissionAttributes attrs = this.readAttributes(FilePermissionAttributes.class);
-            return attrs == null ? false : attrs.isWritable();
-        } catch (IOException e) {
-            return false;
-        }
+    public IFileAttributes getAttributes() {
+        return null;
     }
 
     @Override
@@ -189,10 +107,10 @@ public abstract class FsObject
     }
 
     @Override
-    public boolean createLink(String targetSpec, boolean symbolic)
+    public boolean linkTo(String target, boolean symbolic)
             throws IOException {
         String localPath = getPath().getLocalPath();
-        return getDevice().createLink(localPath, targetSpec, symbolic);
+        return getDevice().createLink(localPath, target, symbolic);
     }
 
     @Override
@@ -203,15 +121,44 @@ public abstract class FsObject
         return targetSpec;
     }
 
-    /**
-     * Get the path string of this file.
-     * 
-     * @return Non-<code>null</code> path string of this file.
-     * @see IPath#toString()
-     */
+    /** ⇱ Implementation Of {@link IFsObjectAttributes}. */
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
+
     @Override
-    public String toString() {
-        return getPath().toString();
+    public FileTime getCreationTime() {
+        return getLastModifiedTime();
+    }
+
+    @Override
+    public boolean setLastModifiedTime(FileTime lastModifiedTime)
+            throws IOException {
+        return false;
+    }
+
+    @Override
+    public boolean isSymLink() {
+        return false;
+    }
+
+    @Override
+    public boolean isHidden() {
+        return false;
+    }
+
+    @Override
+    public boolean setHidden(boolean hidden)
+            throws IOException {
+        return false;
+    }
+
+    @Override
+    public boolean isReadable() {
+        return false;
+    }
+
+    @Override
+    public boolean isWritable() {
+        return false;
     }
 
 }

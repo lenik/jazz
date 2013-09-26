@@ -174,7 +174,7 @@ public class DefaultVfsFacade
     public boolean createLink(IPath targetPath, IFile linkFile, boolean symbolic)
             throws IOException {
         String targetSpec = targetPath.toString();
-        return linkFile.createLink(targetSpec, symbolic);
+        return linkFile.linkTo(targetSpec, symbolic);
     }
 
     static final DefaultVfsFacade instance = new DefaultVfsFacade();

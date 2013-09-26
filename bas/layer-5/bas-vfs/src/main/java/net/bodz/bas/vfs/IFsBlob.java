@@ -31,14 +31,8 @@ public interface IFsBlob
      */
     void setPreferredCharset(String charsetName);
 
-    boolean isExecutable();
-
-    /**
-     * Return whether this file is random seekable.
-     * 
-     * @return <code>true</code> If this file is ramdom seekable.
-     */
-    boolean isSeekable();
+    @Override
+    IFsBlobAttributes getAttributes();
 
     /**
      * Get the file length.
