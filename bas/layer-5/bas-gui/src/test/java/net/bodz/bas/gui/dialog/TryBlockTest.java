@@ -2,7 +2,6 @@ package net.bodz.bas.gui.dialog;
 
 import org.junit.Test;
 
-
 public class TryBlockTest {
 
     @Test

@@ -6,8 +6,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.junit.Test;
 
-import net.bodz.swt.c.button.RolloverButton;
-import net.bodz.swt.c.button.RolloverStyle;
 import net.bodz.swt.c.color.Syscolors;
 import net.bodz.swt.c.test.WidgetTester;
 

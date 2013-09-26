@@ -6,8 +6,6 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.impl.TellableInputStream;
-
 public class TellableInputStreamTest
         extends Assert {
 

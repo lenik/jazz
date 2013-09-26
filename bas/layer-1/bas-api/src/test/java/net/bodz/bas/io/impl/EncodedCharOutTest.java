@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.io.BByteOut;
-import net.bodz.bas.io.impl.EncodedCharOut;
-import net.bodz.bas.io.impl.TranscodeConfig;
 
 public class EncodedCharOutTest
         extends Assert {

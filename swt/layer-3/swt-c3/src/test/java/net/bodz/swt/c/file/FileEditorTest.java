@@ -8,8 +8,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.junit.Test;
 
-import net.bodz.swt.c.file.FileEditor;
-import net.bodz.swt.c.file.FileSelector;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class FileEditorTest

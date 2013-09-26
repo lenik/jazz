@@ -10,8 +10,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolItem;
 
-import net.bodz.swt.c.composite.WindowComposite;
-
 public class DetailMessage
         extends WindowComposite {
 

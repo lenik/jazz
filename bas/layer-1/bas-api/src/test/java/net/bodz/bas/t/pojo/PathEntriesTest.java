@@ -3,7 +3,6 @@ package net.bodz.bas.t.pojo;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 public class PathEntriesTest
         extends Assert {
 

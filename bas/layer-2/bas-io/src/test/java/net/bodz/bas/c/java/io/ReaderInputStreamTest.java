@@ -7,8 +7,6 @@ import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.java.io.ReaderInputStream;
-
 public class ReaderInputStreamTest
         extends Assert {
 

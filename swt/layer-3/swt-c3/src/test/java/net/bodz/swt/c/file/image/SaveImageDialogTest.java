@@ -7,7 +7,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Shell;
 
-import net.bodz.swt.c.file.image.SaveImageDialog;
 import net.bodz.swt.c.resources.SWTResources;
 
 public class SaveImageDialogTest {

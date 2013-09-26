@@ -3,7 +3,6 @@ package net.bodz.swt.c.canvas;
 import org.eclipse.swt.SWT;
 import org.junit.Test;
 
-import net.bodz.swt.c.canvas.BufferedCanvas;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class BufferedCanvasTest

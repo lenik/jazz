@@ -5,9 +5,6 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.bit.BNibbleIn;
-import net.bodz.bas.io.bit.LANibbleIn;
-
 public class LANibbleInTest
         extends Assert {
 

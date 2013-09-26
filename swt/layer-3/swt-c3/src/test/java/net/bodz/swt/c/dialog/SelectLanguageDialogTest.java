@@ -4,8 +4,6 @@ import org.eclipse.swt.SWT;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.swt.c.dialog.SelectLanguageDialog;
-
 /**
  * @lang es
  * @lang et

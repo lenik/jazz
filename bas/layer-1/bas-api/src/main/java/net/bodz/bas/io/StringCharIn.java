@@ -2,7 +2,6 @@ package net.bodz.bas.io;
 
 import java.io.IOException;
 
-
 public class StringCharIn
         extends AbstractCharIn {
 

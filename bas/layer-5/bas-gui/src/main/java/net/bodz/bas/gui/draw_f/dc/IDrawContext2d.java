@@ -1,6 +1,5 @@
 package net.bodz.bas.gui.draw_f.dc;
 
-import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
 import net.bodz.bas.gui.style.IColor;
 import net.bodz.bas.gui.style.IFillType;
 import net.bodz.bas.gui.style.IFontType;

@@ -12,12 +12,14 @@ import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.VFS;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
-import net.bodz.bas.io.*;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
 import net.bodz.bas.io.adapter.OutputStreamByteOut;
 import net.bodz.bas.io.adapter.ReaderCharIn;
 import net.bodz.bas.io.adapter.WriterPrintOut;
-import net.bodz.bas.io.data.*;
 import net.bodz.bas.io.res.AbstractStreamResource;
 
 public class ApacheFileResource

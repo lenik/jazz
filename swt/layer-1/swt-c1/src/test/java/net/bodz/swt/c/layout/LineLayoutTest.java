@@ -7,8 +7,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.junit.Test;
 
-import net.bodz.swt.c.layout.BorderLayout;
-import net.bodz.swt.c.layout.LineLayout;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class LineLayoutTest

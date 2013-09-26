@@ -1,6 +1,5 @@
 package net.bodz.bas.geom.spec1_f;
 
-
 public class LineInf2d
         extends Line2d
         implements ILineInf2d {

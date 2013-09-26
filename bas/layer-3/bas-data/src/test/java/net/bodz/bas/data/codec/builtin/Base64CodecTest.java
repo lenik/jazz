@@ -3,8 +3,6 @@ package net.bodz.bas.data.codec.builtin;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.data.codec.builtin.Base64Codec;
-
 public class Base64CodecTest
         extends Assert {
 

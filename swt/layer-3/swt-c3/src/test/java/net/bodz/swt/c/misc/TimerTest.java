@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.junit.Test;
 
-import net.bodz.swt.c.misc.Timer;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class TimerTest

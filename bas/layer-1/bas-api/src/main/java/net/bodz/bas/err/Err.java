@@ -3,7 +3,6 @@ package net.bodz.bas.err;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
-
 /**
  * Utility functions for {@link Throwable}s.
  */

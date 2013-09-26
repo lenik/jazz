@@ -1,6 +1,5 @@
 package net.bodz.swt.c.composite;
 
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 

@@ -2,7 +2,6 @@ package net.bodz.bas.log;
 
 import javax.annotation.Generated;
 
-
 @Generated("LoggerCG")
 public abstract class AbstractLogger
         extends AbstractLoggerCompat

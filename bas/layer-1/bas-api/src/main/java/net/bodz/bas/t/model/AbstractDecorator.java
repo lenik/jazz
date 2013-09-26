@@ -2,7 +2,6 @@ package net.bodz.bas.t.model;
 
 import java.io.Serializable;
 
-
 /**
  * Decorator Pattern:
  * 

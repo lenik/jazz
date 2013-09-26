@@ -148,6 +148,7 @@ public class BeanProperty
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
     /* _____________________________ */static section.iface __ANNOTATION__;
+
     @Override
     public Annotation[] getAnnotations() {
         Method getter = propertyDescriptor.getReadMethod();

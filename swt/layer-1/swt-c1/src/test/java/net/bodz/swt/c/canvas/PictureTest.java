@@ -8,7 +8,6 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Image;
 import org.junit.Test;
 
-import net.bodz.swt.c.canvas.Picture;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c.test.WidgetTester;
 

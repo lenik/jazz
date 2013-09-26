@@ -5,7 +5,6 @@ import java.util.Date;
 import org.eclipse.swt.SWT;
 import org.junit.Test;
 
-import net.bodz.swt.c.extern.DatePicker;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class DatePickerTest

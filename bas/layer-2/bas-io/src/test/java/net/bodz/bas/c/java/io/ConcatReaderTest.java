@@ -7,8 +7,6 @@ import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.java.io.ConcatReader;
-
 public class ConcatReaderTest
         extends Assert {
 

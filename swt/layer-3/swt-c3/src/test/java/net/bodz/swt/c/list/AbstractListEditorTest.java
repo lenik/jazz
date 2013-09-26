@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.junit.Test;
 
 import net.bodz.bas.err.CorruptedStateError;
-import net.bodz.swt.c.list.AbstractListEditor;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class AbstractListEditorTest

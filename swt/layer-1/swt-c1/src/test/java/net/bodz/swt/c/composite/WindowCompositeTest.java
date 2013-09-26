@@ -4,8 +4,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.junit.Test;
 
-import net.bodz.swt.c.composite.DetailSwitchEvent;
-import net.bodz.swt.c.composite.DetailSwitchListener;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.c.test.WidgetTester;
 

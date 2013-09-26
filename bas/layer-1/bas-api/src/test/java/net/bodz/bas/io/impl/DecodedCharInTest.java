@@ -9,8 +9,6 @@ import org.junit.Test;
 
 import net.bodz.bas.io.BByteIn;
 import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.io.impl.DecodedCharIn;
-import net.bodz.bas.io.impl.TranscodeConfig;
 
 public class DecodedCharInTest
         extends Assert {

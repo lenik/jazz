@@ -4,7 +4,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.swt.c.pageflow.AbstractPage;
 import net.bodz.swt.c.test.TestComposite;
 
 public class TestPage2

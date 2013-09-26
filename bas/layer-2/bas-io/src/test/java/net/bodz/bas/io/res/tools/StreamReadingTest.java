@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.io.res.builtin.InputStreamSource;
-import net.bodz.bas.io.res.tools.IStreamReading;
-import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class StreamReadingTest

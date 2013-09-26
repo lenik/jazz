@@ -3,7 +3,6 @@ package net.bodz.bas.c.loader.scan;
 import java.io.File;
 import java.util.zip.ZipEntry;
 
-
 public class ClassOrDirFileFilter
         implements IFileOrEntryFilter {
 

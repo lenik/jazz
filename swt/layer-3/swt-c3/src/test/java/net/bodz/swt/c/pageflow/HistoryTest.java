@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.swt.c.pageflow.History;
 
 public class HistoryTest {
 

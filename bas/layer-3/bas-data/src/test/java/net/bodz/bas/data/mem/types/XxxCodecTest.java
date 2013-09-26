@@ -10,7 +10,6 @@ import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.data.mem.ArrayMemory;
 import net.bodz.bas.data.mem.IMemory;
 import net.bodz.bas.data.mem.Type;
-import net.bodz.bas.data.mem.types.*;
 
 public class XxxCodecTest
         extends Assert {

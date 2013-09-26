@@ -6,8 +6,6 @@ import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.impl.TellableReader;
-
 public class TellableReaderTest
         extends Assert {
 

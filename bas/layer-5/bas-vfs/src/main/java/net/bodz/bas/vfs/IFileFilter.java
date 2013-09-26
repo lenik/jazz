@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs;
 
-
 public interface IFileFilter {
 
     /**
