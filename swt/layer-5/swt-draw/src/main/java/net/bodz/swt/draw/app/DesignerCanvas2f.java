@@ -42,8 +42,9 @@ public class DesignerCanvas2f
     }
 
     /** ⇱ Implementaton Of {@link PaintListener}. */
-    ;
+    /* _____________________________ */static section.iface __PAINT_LISTENER__;
 
+    @Override
     public void paintControl(PaintEvent e) {
         if (major != null)
             e.gc.drawImage(major, 0, 0);

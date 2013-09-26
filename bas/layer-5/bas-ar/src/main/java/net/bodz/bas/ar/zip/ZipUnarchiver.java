@@ -41,7 +41,7 @@ public class ZipUnarchiver
     }
 
     /** ⇱ Implementation Of {@link IUnarchiver}. */
-    ;
+    /* _____________________________ */static section.iface __UNARCHIVER__;
 
     @Override
     public Iterable<? extends ZipEntry> entries()
@@ -97,7 +97,7 @@ public class ZipUnarchiver
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public long tell() {
@@ -109,7 +109,7 @@ public class ZipUnarchiver
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long start, long end)
@@ -118,7 +118,7 @@ public class ZipUnarchiver
     }
 
     /** ⇱ Internal Implementations */
-    ;
+    /* _____________________________ */static section.friend __CEN_LOC__;
 
     EndOfCen getEndOfCen()
             throws IOException {

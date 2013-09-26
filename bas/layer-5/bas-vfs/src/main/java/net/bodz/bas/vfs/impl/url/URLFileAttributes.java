@@ -40,7 +40,7 @@ public class URLFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
-    ;
+    /* _____________________________ */static section.iface __BASIC__;
 
     @Override
     public FileTime creationTime() {
@@ -126,7 +126,7 @@ public class URLFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link FilePermissionAttributes}. */
-    ;
+    /* _____________________________ */static section.iface __FILE_PERMISSION__;
 
     @Override
     public boolean isReadable() {
@@ -178,7 +178,7 @@ public class URLFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link DeviceAttributes}. */
-    ;
+    /* _____________________________ */static section.iface __DEVICE__;
 
     @Override
     public boolean isRandomAccessible() {

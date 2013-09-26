@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import net.bodz.bas.io.AbstractByteIOS;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
 
 public class CroppedRafIOS
@@ -29,7 +32,7 @@ public class CroppedRafIOS
     }
 
     /** ⇱ Implementation Of {@link IByteIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public int read()
@@ -78,7 +81,7 @@ public class CroppedRafIOS
     }
 
     /** ⇱ Implementation Of {@link IByteOut}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public void write(int b)
@@ -106,7 +109,7 @@ public class CroppedRafIOS
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public long tell() {
@@ -133,7 +136,7 @@ public class CroppedRafIOS
     }
 
     /** ⇱ Implementation Of {@link ICropapble}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long start, long end)

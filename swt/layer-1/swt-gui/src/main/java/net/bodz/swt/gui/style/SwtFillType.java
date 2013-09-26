@@ -65,7 +65,7 @@ public class SwtFillType
     }
 
     /** ⇱ Implementaton Of {@link IFillType}. */
-    ;
+    /* _____________________________ */static section.iface __FILLTYPE__;
 
     @Override
     public FillPatternType getFillPatternType() {

@@ -38,7 +38,7 @@ public class CroppedRafIn
     }
 
     /** ⇱ Implementation Of {@link InputStream}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public int read()
@@ -127,7 +127,7 @@ public class CroppedRafIn
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public long tell() {
@@ -154,7 +154,7 @@ public class CroppedRafIn
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long start, long end)
@@ -171,7 +171,7 @@ public class CroppedRafIn
     }
 
     /** ⇱ Implementation Of {@link ICloseable}. */
-    ;
+    /* _____________________________ */static section.iface __CLOSE__;
 
     private void ensureOpen() {
         if (closed)

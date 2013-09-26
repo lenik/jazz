@@ -1,5 +1,6 @@
 package net.bodz.bas.gui.dom1;
 
+import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.rtx.QueryException;
 
 public abstract class DecoratedGUIRefEntry<T>
@@ -19,7 +20,7 @@ public abstract class DecoratedGUIRefEntry<T>
     }
 
     /** ⇱ Implementation Of {@link Ref}. */
-    ;
+    /* _____________________________ */static section.iface __REF__;
 
     @Override
     public Class<? extends T> getValueType() {
@@ -42,7 +43,7 @@ public abstract class DecoratedGUIRefEntry<T>
     }
 
     /** ⇱ Implementation Of {@link IRefEntry}. */
-    ;
+    /* _____________________________ */static section.iface __REFENTRY__;
 
     @Override
     public Object query(Object specification)

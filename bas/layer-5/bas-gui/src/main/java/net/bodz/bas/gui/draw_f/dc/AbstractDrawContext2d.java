@@ -93,7 +93,7 @@ public abstract class AbstractDrawContext2d
     // abstract implementation
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.tr.ITransformedView2d}. */
-    ;
+    /* _____________________________ */static section.iface __TRANSFORM__;
 
     @Override
     public void translate(float x, float y) {

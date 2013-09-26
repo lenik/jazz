@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.geom.spec0_f.AbstractPrimitive2d;
+import net.bodz.bas.geom.spec0_f.IPolygonizable2d;
 import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.geom.spec0_f.PickResult2d;
 import net.bodz.bas.geom.spec0_f.PositiveHalfPlane2d;
@@ -12,6 +13,8 @@ import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
+import net.bodz.bas.t.object.ISnapShot;
 
 public class Composite2d
         extends AbstractPrimitive2d {
@@ -30,7 +33,7 @@ public class Composite2d
     }
 
     /** ⇱ Implementation Of {@link IPrimitive2d}. */
-    ;
+    /* _____________________________ */static section.iface __BASE__;
 
     @Override
     public Point2d degenerate() {
@@ -48,7 +51,7 @@ public class Composite2d
     }
 
     /** ⇱ Implementation Of {@link ISnapShot}. */
-    ;
+    /* _____________________________ */static section.iface __SNAPSHOT__;
 
     @Override
     public Composite2d snap() {
@@ -81,7 +84,7 @@ public class Composite2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTS__;
 
     public int getPointCount() {
         return 0;
@@ -93,7 +96,7 @@ public class Composite2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBox2d}. */
-    ;
+    /* _____________________________ */static section.iface __BBOX__;
 
     @Override
     public Rectangle2d getBoundingBox() {
@@ -112,7 +115,7 @@ public class Composite2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
-    ;
+    /* _____________________________ */static section.iface __PICK__;
 
     public static class CompPickInfo2f
             extends PickResult2d {
@@ -170,7 +173,7 @@ public class Composite2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {
@@ -192,7 +195,7 @@ public class Composite2d
     }
 
     /** ⇱ Implementation Of {@link IPolygonizable2d}. */
-    ;
+    /* _____________________________ */static section.iface __POLYGONIZE__;
 
     @Override
     public Polygon2d polygonize() {
@@ -213,7 +216,7 @@ public class Composite2d
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
-    ;
+    /* _____________________________ */static section.iface __DRAW__;
 
     @Override
     public void draw(IBaseDrawContext2d ctx)

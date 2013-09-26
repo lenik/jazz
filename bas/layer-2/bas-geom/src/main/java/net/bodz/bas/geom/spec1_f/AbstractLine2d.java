@@ -5,6 +5,7 @@ import net.bodz.bas.geom.spec0_f.AbstractPrimitive2d;
 import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.geom.spec0_f.PickResult2d;
 import net.bodz.bas.geom.spec0_f.PositiveHalfPlane2d;
+import net.bodz.bas.t.object.ISnapShot;
 
 public abstract class AbstractLine2d
         extends AbstractPrimitive2d
@@ -12,18 +13,8 @@ public abstract class AbstractLine2d
 
     private static final long serialVersionUID = 1L;
 
-    @Override
-    public abstract AbstractLine2d shot();
-
-    @Override
-    public Line2d snapshot() {
-        return new Line2d(getPoint0().snapshot(), getPoint1().snapshot());
-    }
-
-    @Override
-    public Line2d snap() {
-        return new Line2d(getPoint0(), getPoint1());
-    }
+    /** ⇱ Implementation Of {@link IPrimitive2d}. */
+    /* _____________________________ */static section.iface __BASE__;
 
     @Override
     public boolean isValid() {
@@ -45,8 +36,24 @@ public abstract class AbstractLine2d
             return null;
     }
 
+    /** ⇱ Implementation Of {@link ISnapShot}. */
+    /* _____________________________ */static section.iface __SNAPSHOT__;
+
+    @Override
+    public Line2d snap() {
+        return new Line2d(getPoint0(), getPoint1());
+    }
+
+    @Override
+    public abstract AbstractLine2d shot();
+
+    @Override
+    public Line2d snapshot() {
+        return new Line2d(getPoint0().snapshot(), getPoint1().snapshot());
+    }
+
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
-    ;
+    /* _____________________________ */static section.iface __AMOUNT__;
 
     @Override
     public float getLength() {
@@ -189,7 +196,7 @@ public abstract class AbstractLine2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
-    ;
+    /* _____________________________ */static section.iface __PICK__;
 
     @Override
     public PickResult2d _pick(Point2d point) {
@@ -249,7 +256,7 @@ public abstract class AbstractLine2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
-    ;
+    /* _____________________________ */static section.iface __POLYGON__;
 
     @Override
     public Polygon2d polygonize() {
@@ -259,7 +266,7 @@ public abstract class AbstractLine2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {

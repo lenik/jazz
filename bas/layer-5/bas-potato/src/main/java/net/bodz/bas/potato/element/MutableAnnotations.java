@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class MutableAnnotations
     }
 
     /** ⇱ Implementation Of {@link AnnotatedElement}. */
-    ;
+    /* _____________________________ */static section.iface __ANNOTATED_ELEMENT__;
 
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
@@ -77,7 +78,7 @@ public class MutableAnnotations
     }
 
     /** ⇱ Implementation Of {@link IAnnotated}. */
-    ;
+    /* _____________________________ */static section.iface __I_ANNOTATED__;
 
     @Override
     public Map<Class<?>, Annotation> getAnnotationMap() {

@@ -8,7 +8,7 @@ public abstract class AbstractCharIOS
         implements ICharIOS {
 
     /** ⇱ Implementation Of {@link ICharIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public final int read(char[] dst)
@@ -29,7 +29,7 @@ public abstract class AbstractCharIOS
     }
 
     /** ⇱ Implementation Of {@link ICharOut}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public final void write(char[] buf)

@@ -2,6 +2,7 @@ package net.bodz.swt.viz.form.vbo;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.dom1.DecoratedGUIElement;
+import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
@@ -35,7 +36,7 @@ public class TextFormedSwtGUIRefEntry<T>
     }
 
     /** ⇱ Implementation Of {@link Ref}. */
-    ;
+    /* _____________________________ */static section.iface __REF__;
 
     @Override
     public Class<String> getValueType() {
@@ -70,7 +71,7 @@ public class TextFormedSwtGUIRefEntry<T>
     }
 
     /** ⇱ Implementation Of {@link IRefEntry}. */
-    ;
+    /* _____________________________ */static section.iface __REFENTRY__;
 
     @Override
     public Object query(Object specification)
@@ -91,7 +92,7 @@ public class TextFormedSwtGUIRefEntry<T>
     }
 
     /** ⇱ Implementation Of {@link ISwtGUIRefEntry}. */
-    ;
+    /* _____________________________ */static section.iface __GUI__;
 
     @Override
     public ISwtControlStyleDeclaration getStyle() {

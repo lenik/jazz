@@ -53,7 +53,7 @@ public class LinkedType
     }
 
     /** ⇱ Implementation Of {@link IType}. */
-    ;
+    /* _____________________________ */static section.iface __TYPE__;
 
     @Override
     public Class<?> getType() {
@@ -80,8 +80,8 @@ public class LinkedType
         return eventMap;
     }
 
-    /** ⇱ Implementaton Of {@link IElement}. */
-    ;
+    /** ⇱ Implementaton Of {@link IAnnotated}. */
+    /* _____________________________ */static section.iface __ANNOTATION__;
 
     // TODO Should merge annotations from all types.
 

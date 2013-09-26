@@ -45,7 +45,7 @@ public class VariantMap<K>
     }
 
     /** ⇱ Implementaton Of {@link Map}. */
-    ;
+    /* _____________________________ */static section.iface __MAP__;
 
     @Override
     public int size() {

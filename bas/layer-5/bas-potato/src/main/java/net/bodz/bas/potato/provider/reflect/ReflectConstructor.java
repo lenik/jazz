@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
 import net.bodz.bas.potato.element.AbstractConstructor;
+import net.bodz.bas.potato.element.IConstructor;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 
 public class ReflectConstructor
@@ -30,7 +31,7 @@ public class ReflectConstructor
     }
 
     /** ⇱ Implementation Of {@link IConstructor}. */
-    ;
+    /* _____________________________ */static section.iface __CTOR__;
 
     @Override
     public Class<?>[] getParameterTypes() {
@@ -44,7 +45,7 @@ public class ReflectConstructor
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
-    ;
+    /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
     public int getModifiers() {
@@ -57,7 +58,7 @@ public class ReflectConstructor
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
-    ;
+    /* _____________________________ */static section.iface __ANNOTATION__;
 
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {

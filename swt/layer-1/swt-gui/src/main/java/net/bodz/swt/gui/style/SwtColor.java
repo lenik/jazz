@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Display;
 
 import net.bodz.bas.gui.style.color.AbstractRGBA32Color;
 import net.bodz.bas.gui.style.color.IColor_RGB24;
+import net.bodz.bas.gui.style.color.IColor_RGBA32;
 import net.bodz.bas.t.object.IDisposable;
 
 public class SwtColor
@@ -85,7 +86,7 @@ public class SwtColor
     }
 
     /** ⇱ Implementation Of {@link IColor_RGBA32}. */
-    ;
+    /* _____________________________ */static section.iface __RGBA32__;
 
     @Override
     public int getAlpha8() {

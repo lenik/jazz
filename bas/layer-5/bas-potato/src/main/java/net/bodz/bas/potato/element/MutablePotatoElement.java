@@ -4,6 +4,7 @@ import java.util.Map;
 
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.IMutableElement;
 
 public class MutablePotatoElement
@@ -23,7 +24,7 @@ public class MutablePotatoElement
     private int modifiers;
 
     /** ⇱ Implementation Of {@link IPotatoElement}. */
-    ;
+    /* _____________________________ */static section.iface __POTATO__;
 
     @Override
     public Class<?> getDeclaringClass() {
@@ -59,7 +60,7 @@ public class MutablePotatoElement
     }
 
     /** ⇱ Implementation Of {@link IElement}. */
-    ;
+    /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
     public String getName() {
@@ -87,7 +88,7 @@ public class MutablePotatoElement
     }
 
     /** ⇱ Implementation Of {@link IMutableElement}. */
-    ;
+    /* _____________________________ */static section.iface __MUTABLE__;
 
     public void setName(String name) {
         this.name = name;

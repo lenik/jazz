@@ -43,7 +43,7 @@ public abstract class MappedGUIElementStyleDeclaration
     }
 
     /** ⇱ Implementaton Of {@link IInputBehaviorDeclaration}. */
-    ;
+    /* _____________________________ */static section.iface __INPUT_BEHAVIOR__;
 
     @Override
     public Boolean getEnabled() {

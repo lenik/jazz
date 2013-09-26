@@ -1,6 +1,5 @@
 package net.bodz.bas.flow.unit;
 
-
 public abstract class GenericUnit_vn
         extends AbstractUnit {
 

@@ -9,6 +9,7 @@ import net.bodz.bas.meta.lang.typer;
 import net.bodz.bas.typer.std.ITyperFamily;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public abstract class AbstractPotatoElement
         extends AbstractXjdocElement
@@ -61,7 +62,7 @@ public abstract class AbstractPotatoElement
     }
 
     /** ⇱ Implementation Of {@link IXjdocElement}. */
-    ;
+    /* _____________________________ */static section.iface __XJDOC__;
 
     @Override
     public String getName() {
@@ -74,7 +75,7 @@ public abstract class AbstractPotatoElement
     }
 
     /** ⇱ Implementation Of {@link IAnnotated}. */
-    ;
+    /* _____________________________ */static section.iface __ANNOTATED__;
 
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {

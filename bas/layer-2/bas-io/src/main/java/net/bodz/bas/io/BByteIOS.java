@@ -60,7 +60,7 @@ public class BByteIOS
     }
 
     /** ⇱ Implementation Of {@link IByteIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public long skip(long n)
@@ -94,7 +94,7 @@ public class BByteIOS
     }
 
     /** ⇱ Implementation Of {@link IByteOut}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public void write(int b)
@@ -119,7 +119,7 @@ public class BByteIOS
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public long tell() {
@@ -141,7 +141,7 @@ public class BByteIOS
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long start, long end)

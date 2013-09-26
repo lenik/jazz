@@ -14,7 +14,7 @@ public abstract class AbstractSwtStrokeType
     private static final long serialVersionUID = 1L;
 
     /** ⇱ Implementaton Of {@link IStrokeType}. */
-    ;
+    /* _____________________________ */static section.iface __GUI__;
 
     @Override
     public LengthMeasure getWidth() {

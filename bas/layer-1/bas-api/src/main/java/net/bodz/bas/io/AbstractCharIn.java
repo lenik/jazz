@@ -11,7 +11,7 @@ public abstract class AbstractCharIn
     private boolean closed;
 
     /** ⇱ Implementation Of {@link ICharIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public int read(char[] chars)
@@ -32,7 +32,7 @@ public abstract class AbstractCharIn
     }
 
     /** ⇱ Implementation Of {@link ICloseable}. */
-    ;
+    /* _____________________________ */static section.iface __CLOSE__;
 
     @Override
     public void close()

@@ -64,8 +64,8 @@ public class RstElement
         return children;
     }
 
-    /** ⇱ Implementation Of {@link IStructfHandler}. */
-    ;
+    /** ⇱ Implementation Of {@link IElementHandler}. */
+    /* _____________________________ */static section.iface __ELEMENT_HANDLER__;
 
     @Override
     public boolean attribute(String name, String data) {

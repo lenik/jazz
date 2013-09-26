@@ -2,6 +2,7 @@ package net.bodz.bas.potato.provider.reflect;
 
 import java.lang.annotation.Annotation;
 
+import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -38,7 +39,7 @@ public abstract class AbstractReflectType
     }
 
     /** ⇱ Implementation Of {@link IType}. */
-    ;
+    /* _____________________________ */static section.iface __TYPE__;
 
     @Override
     public Class<?> getType() {
@@ -66,7 +67,7 @@ public abstract class AbstractReflectType
     }
 
     /** ⇱ Implementaton Of {@link IAnnotated}. */
-    ;
+    /* _____________________________ */static section.iface __ANNOTATION__;
 
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
@@ -89,7 +90,7 @@ public abstract class AbstractReflectType
     }
 
     /** ⇱ Implementaton Of {@link IElement}. */
-    ;
+    /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
     public int getVerboseLevel() {

@@ -45,7 +45,7 @@ public class FontDataFontType
     }
 
     /** ⇱ Implementaton Of {@link IFontType}. */
-    ;
+    /* _____________________________ */static section.iface __FONTTYPE__;
 
     @Override
     public FontUseMode getFontUse() {

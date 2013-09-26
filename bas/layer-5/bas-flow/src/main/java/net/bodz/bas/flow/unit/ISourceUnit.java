@@ -2,7 +2,6 @@ package net.bodz.bas.flow.unit;
 
 import java.io.IOException;
 
-
 /**
  * tag interface
  */

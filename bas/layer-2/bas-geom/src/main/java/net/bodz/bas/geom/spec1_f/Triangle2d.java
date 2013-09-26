@@ -2,6 +2,7 @@ package net.bodz.bas.geom.spec1_f;
 
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
 
 public class Triangle2d
         extends AbstractTriangle2d {
@@ -29,7 +30,7 @@ public class Triangle2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPrimitive2d}. */
-    ;
+    /* _____________________________ */static section.iface __BASE__;
 
     @Override
     public Triangle2d snap() {
@@ -47,7 +48,7 @@ public class Triangle2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTS__;
 
     @Override
     public int getPointCount() {
@@ -68,7 +69,7 @@ public class Triangle2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec1_f.ITriangle2d}. */
-    ;
+    /* _____________________________ */static section.iface __TRIANGLE__;
 
     @Override
     public Point2d getPoint0() {
@@ -161,7 +162,7 @@ public class Triangle2d
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
-    ;
+    /* _____________________________ */static section.iface __DRAW__;
 
     @Override
     public void draw(IBaseDrawContext2d ctx)

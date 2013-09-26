@@ -15,7 +15,7 @@ public abstract class ZipEngine
     private boolean closed;
 
     /** ⇱ Implementation Of {@link IZipContext}. */
-    ;
+    /* _____________________________ */static section.iface __CONTEXT__;
 
     @Override
     public Charset getZipCharset() {
@@ -56,7 +56,7 @@ public abstract class ZipEngine
     }
 
     /** ⇱ Implementation Of {@link ICloseable}. */
-    ;
+    /* _____________________________ */static section.iface __CLOSE__;
 
     @Override
     public void close()

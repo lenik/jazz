@@ -11,7 +11,7 @@ public abstract class AbstractByteIn
     private boolean closed;
 
     /** ⇱ Implementation Of {@link IByteIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public int read(byte[] buf)
@@ -26,7 +26,7 @@ public abstract class AbstractByteIn
     }
 
     /** ⇱ Implementation Of {@link ICloseable}. */
-    ;
+    /* _____________________________ */static section.iface __CLOSE__;
 
     @Override
     public void close()

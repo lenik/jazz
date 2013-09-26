@@ -46,7 +46,7 @@ public class MergedByteIOS
     }
 
     /** ⇱ Implementation Of {@link IByteIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public int read()
@@ -79,7 +79,7 @@ public class MergedByteIOS
     }
 
     /** ⇱ Implementation Of {@link IByteOut}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public void write(int b)
@@ -118,7 +118,7 @@ public class MergedByteIOS
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public long tell() {
@@ -138,7 +138,7 @@ public class MergedByteIOS
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long start, long end)

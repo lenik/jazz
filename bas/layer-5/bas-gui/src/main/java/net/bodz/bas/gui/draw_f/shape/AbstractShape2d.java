@@ -13,7 +13,7 @@ public abstract class AbstractShape2d
     public abstract AbstractShape2d clone();
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBall2d}. */
-    ;
+    /* _____________________________ */static section.iface __BBALL__;
 
     @Override
     public Circle2d getBoundingBall() {
@@ -22,12 +22,12 @@ public abstract class AbstractShape2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ITransformable2d}. */
-    ;
+    /* _____________________________ */static section.iface __TRANSFORM__;
 
     /**
      * ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToChain}.
      */
-    ;
+    /* _____________________________ */static section.iface __TO__;
 
     @Override
     public <T> T to(Class<T> clazz) {

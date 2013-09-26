@@ -11,9 +11,6 @@ public class SwtStrokeType
     public int style;
     public int width;
 
-    /** ⇱ Implementation Of {@link ISwtStrokePattern}. */
-    ;
-
     @Override
     public int getSwtLineCap() {
         return cap;

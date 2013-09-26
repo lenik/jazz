@@ -62,7 +62,7 @@ public class TreeOutImpl
     }
 
     /** ⇱ Implementaton Of {@link ITreeOut}. */
-    ;
+    /* _____________________________ */static section.iface __TREE__;
 
     @Override
     public ITextIndention getTextIndention() {
@@ -80,7 +80,7 @@ public class TreeOutImpl
     }
 
     /** ⇱ Implementaton Of {@link IPrintOut}. */
-    ;
+    /* _____________________________ */static section.iface __PRINT__;
 
     @Override
     public void print(String s) {
@@ -231,7 +231,7 @@ public class TreeOutImpl
     }
 
     /** ⇱ Implementaton Of {@link ICharOut}. */
-    ;
+    /* _____________________________ */static section.iface __CHAR__;
 
     @Override
     public void write(char[] chars, int off, int len)

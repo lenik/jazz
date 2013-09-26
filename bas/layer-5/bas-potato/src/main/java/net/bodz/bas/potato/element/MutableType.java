@@ -25,7 +25,7 @@ public class MutableType
     }
 
     /** ⇱ Implementation Of {@link IType}. */
-    ;
+    /* _____________________________ */static section.iface __TYPE__;
 
     @Override
     public Class<?> getType() {
@@ -53,7 +53,7 @@ public class MutableType
     }
 
     /** ⇱ Implementation Of {@link IAnnotated}. */
-    ;
+    /* _____________________________ */static section.iface __ANNOTATION__;
 
     @Override
     public Annotation[] getAnnotations() {

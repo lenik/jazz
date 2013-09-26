@@ -10,15 +10,6 @@ import net.bodz.bas.geom.spec0_f.IShapeAmount2d;
 public interface IPolygon2d
         extends IPrimitive2d, IShapeAmount2d, IMutablePointRefSet2d {
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IMutablePointSet2d}. */
-    ;
-
-    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPrimitive2d}. */
-    ;
-
-    /** ⇱ Implementation Of {@link ISnapShot}. */
-    ;
-
     @Override
     Polygon2d snap();
 
@@ -27,9 +18,6 @@ public interface IPolygon2d
 
     @Override
     Polygon2d snapshot();
-
-    /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IShapeAmount2d}. */
-    ;
 
     /**
      * Open/close is only affect to following operations: addCross draw
