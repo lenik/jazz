@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.apachevfs;
+package net.bodz.bas.vfs.impl.apache;
 
 import java.io.IOException;
 import java.nio.file.attribute.BasicFileAttributeView;
