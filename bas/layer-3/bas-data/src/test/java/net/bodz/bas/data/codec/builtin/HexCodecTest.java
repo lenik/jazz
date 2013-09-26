@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import net.bodz.bas.data.codec.builtin.HexCodec;
-
 public class HexCodecTest {
 
     HexCodec hexCodec = HexCodec.getInstance();

@@ -9,8 +9,6 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.swt.c.pageflow.AbstractPage;
-import net.bodz.swt.c.pageflow.PageMethod;
 
 /**
  * Test page 1

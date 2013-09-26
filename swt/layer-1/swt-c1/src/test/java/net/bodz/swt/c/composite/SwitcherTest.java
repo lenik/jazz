@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.junit.Test;
 
-import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.test.TestComposite;
 import net.bodz.swt.c.test.WidgetTester;
 

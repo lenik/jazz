@@ -25,8 +25,7 @@ public class InheritableAnnotations {
      * @return The list of all declared annotations. The order is: The annotations on the overrided
      *         method comes first, then the annotations on the method in the super classes.
      */
-    public static List<Annotation> getDeclaredAnnotations(Class<?> clazz, String methodName,
-            Class<?>... parameterTypes) {
+    public static List<Annotation> getDeclaredAnnotations(Class<?> clazz, String methodName, Class<?>... parameterTypes) {
 
         List<Annotation> annotations = new ArrayList<Annotation>();
 

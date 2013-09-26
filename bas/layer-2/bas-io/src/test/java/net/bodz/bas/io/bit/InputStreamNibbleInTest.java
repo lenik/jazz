@@ -7,8 +7,6 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.bit.InputStreamNibbleIn;
-
 public class InputStreamNibbleInTest
         extends Assert {
 

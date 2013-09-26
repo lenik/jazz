@@ -1,6 +1,5 @@
 package net.bodz.bas.t.model;
 
-
 /**
  * Proxy Pattern:
  * 

@@ -3,7 +3,6 @@ package net.bodz.swt.draw.utils.vt;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class VisualTypes {
 
     public static boolean isSupportedType(Class<?> dataType) {

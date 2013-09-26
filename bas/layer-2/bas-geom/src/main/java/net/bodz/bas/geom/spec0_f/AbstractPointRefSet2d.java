@@ -7,7 +7,6 @@ import java.util.List;
 import net.bodz.bas.geom.spec0_f.util.PointRefSet2dIterator;
 import net.bodz.bas.geom.spec1_f.IPointRef2d;
 
-
 public abstract class AbstractPointRefSet2d
         implements IPointRefSet2d {
 

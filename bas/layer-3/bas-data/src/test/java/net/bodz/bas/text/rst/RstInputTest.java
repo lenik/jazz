@@ -6,9 +6,6 @@ import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.text.rst.IRstInput;
-import net.bodz.bas.text.rst.RstInput;
-
 public class RstInputTest
         extends Assert {
 

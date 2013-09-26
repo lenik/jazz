@@ -6,9 +6,6 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.bit.NibByteArrayOutputStream;
-import net.bodz.bas.io.bit.OutputStreamNibbleOut;
-
 public class OutputStreamNibbleOutTest
         extends Assert {
 
@@ -68,7 +65,7 @@ public class OutputStreamNibbleOutTest
 
         out.write4b(seq, 6, 4);
         assertEquals("0122 6789", out.toString());
-        
+
         out.close();
     }
 

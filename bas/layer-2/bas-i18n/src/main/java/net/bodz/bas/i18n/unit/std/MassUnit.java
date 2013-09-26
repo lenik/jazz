@@ -3,7 +3,6 @@ package net.bodz.bas.i18n.unit.std;
 import net.bodz.bas.i18n.unit.AbstractMeasureUnit;
 import net.bodz.bas.i18n.unit.IMeasureUnit;
 
-
 public class MassUnit
         extends AbstractMeasureUnit
         implements MassUnits {

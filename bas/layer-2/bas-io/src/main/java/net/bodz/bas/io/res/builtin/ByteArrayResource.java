@@ -93,5 +93,4 @@ public class ByteArrayResource
         return null;
     }
 
-    
 }

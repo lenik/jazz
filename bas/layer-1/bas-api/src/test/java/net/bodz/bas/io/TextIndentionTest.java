@@ -3,8 +3,6 @@ package net.bodz.bas.io;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.io.TextIndention;
-
 public class TextIndentionTest
         extends Assert {
 

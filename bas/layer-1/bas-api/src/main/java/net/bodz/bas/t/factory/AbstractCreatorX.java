@@ -1,6 +1,5 @@
 package net.bodz.bas.t.factory;
 
-
 public abstract class AbstractCreatorX<T, X extends Throwable>
         implements ICreatorX<T, X> {
 

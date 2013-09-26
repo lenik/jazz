@@ -6,8 +6,8 @@ import java.lang.reflect.Modifier;
 import net.bodz.bas.rtx.QueryException;
 
 /**
- * This provider allow user to define typers by declare a
- * {@link #getTyper(Class, Object, Class)} method as:
+ * This provider allow user to define typers by declare a {@link #getTyper(Class, Object, Class)}
+ * method as:
  * 
  * <pre>
  * public static &lt;T&gt; T query(Class&lt;T&gt; typerClass) {

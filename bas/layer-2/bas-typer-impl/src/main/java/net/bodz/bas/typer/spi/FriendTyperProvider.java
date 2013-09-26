@@ -4,8 +4,6 @@ import net.bodz.bas.c.type.CachedInstantiator;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
-import net.bodz.bas.typer.spi.AbstractTyperProvider;
-import net.bodz.bas.typer.spi.BuiltinProviderOrder;
 
 public class FriendTyperProvider
         extends AbstractTyperProvider {
@@ -91,7 +89,7 @@ public class FriendTyperProvider
             IQueryable queryable = (IQueryable) friendTyperImpl;
             return queryable.query(typerClass);
         }
-        
+
         return null;
     }
 

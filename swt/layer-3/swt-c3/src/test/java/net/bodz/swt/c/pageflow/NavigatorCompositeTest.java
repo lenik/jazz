@@ -3,10 +3,6 @@ package net.bodz.swt.c.pageflow;
 import org.eclipse.swt.SWT;
 import org.junit.Test;
 
-import net.bodz.swt.c.pageflow.BadPathEvent;
-import net.bodz.swt.c.pageflow.IBadPathListener;
-import net.bodz.swt.c.pageflow.NavigatorComposite;
-import net.bodz.swt.c.pageflow.SimpleBook;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class NavigatorCompositeTest

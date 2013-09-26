@@ -12,8 +12,8 @@ import net.bodz.swt.viz.form.vbo.BooleanVbo;
 import net.bodz.swt.viz.form.vbo.DateVbo;
 import net.bodz.swt.viz.form.vbo.ExceptionVbo;
 import net.bodz.swt.viz.form.vbo.FileVbo;
-import net.bodz.swt.viz.form.vbo.TextFormedVbo;
 import net.bodz.swt.viz.form.vbo.StringVbo;
+import net.bodz.swt.viz.form.vbo.TextFormedVbo;
 
 public abstract class AbstractSwtViewBuilderFactory
         extends AbstractViewBuilderFactory {

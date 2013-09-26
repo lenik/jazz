@@ -5,8 +5,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import net.bodz.swt.c.pageflow.AbstractPage;
-import net.bodz.swt.c.pageflow.PageException;
 import net.bodz.swt.test.PageTester;
 
 public class PageTestAppTest {

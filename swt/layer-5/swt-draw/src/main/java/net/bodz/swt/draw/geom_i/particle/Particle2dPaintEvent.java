@@ -6,7 +6,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 
-
 public class Particle2dPaintEvent
         extends EventObject {
 

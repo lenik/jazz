@@ -38,7 +38,7 @@ public class FileLink
         this.dstbase = dstbase;
         this.dstpath = dstpath;
         this.symbolic = symbolic;
-        
+
         setSelected(true);
     }
 

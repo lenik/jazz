@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.io.impl.DecodedByteOut;
-import net.bodz.bas.io.impl.TranscodeConfig;
 
 public class DecodedByteOutTest
         extends Assert {

@@ -6,7 +6,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.junit.Test;
 
-import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.test.TestComposite;
 import net.bodz.swt.c.test.WidgetTester;
 
