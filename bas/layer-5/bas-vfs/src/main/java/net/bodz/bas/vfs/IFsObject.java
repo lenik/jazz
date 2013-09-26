@@ -2,11 +2,7 @@ package net.bodz.bas.vfs;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.LinkOption;
 import java.nio.file.NotLinkException;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileAttributeView;
-import java.nio.file.attribute.FileTime;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
@@ -66,55 +62,11 @@ public interface IFsObject {
 
     boolean isNotExisted();
 
-    /**
-     * Returns a file attribute view of a given type.
-     * 
-     * @return <code>null</code> if the attribute view type is not available.
-     */
-    <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options);
-
-    /**
-     * @return <code>null</code> if the file attributes is not available.
-     */
-    <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
-            throws IOException;
-
-    /**
-     * Get the creation time of an fs entry.
-     * 
-     * @return <code>0</code> if create-time is unknown.
-     */
-    FileTime getCreationTime();
-
-    /**
-     * Get the last modified time of an fs entry.
-     * 
-     * @return <code>0</code> if last-modified-time is unknown.
-     */
-    FileTime getLastModifiedTime();
-
-    /**
-     * Change the last modified time of an fs entry.
-     * 
-     * @return <code>false</code> If failed to set the last modified time attribute.
-     */
-    boolean setLastModifiedTime(FileTime lastModifiedTime)
-            throws IOException;
-
     boolean isBlob();
 
     boolean isDirectory();
 
-    boolean isSymLink();
-
-    boolean isHidden();
-
-    boolean setHidden(boolean hidden)
-            throws IOException;
-
-    boolean isReadable();
-
-    boolean isWritable();
+    IFsObjectAttributes getAttributes();
 
     /**
      * Get the parent fs entry which this entry resides in.
@@ -165,13 +117,13 @@ public interface IFsObject {
      * 
      * @see File#renameTo(File)
      */
-    boolean renameTo(String destSpec)
+    boolean renameTo(String target)
             throws BadPathException, IOException;
 
     /**
      * Create a (symbolic) link to the target.
      * 
-     * @param targetSpec
+     * @param targetPath
      *            Relative path string to the target.
      * @param symbolic
      *            Create a symbolic link rather then hard link.
@@ -181,7 +133,7 @@ public interface IFsObject {
      * @throws BadPathException
      *             If <code>targetSpec</code> is invalid.
      */
-    boolean createLink(String targetSpec, boolean symbolic)
+    boolean linkTo(String target, boolean symbolic)
             throws IOException;
 
     /**

@@ -45,10 +45,10 @@ public class MemoryFileTest
         bar.to(StreamWriting.class).writeString("Bar is very long.");
 
         IFile bar_1 = targetDir.resolve("sub/bar.1");
-        bar_1.createLink("bar", true);
+        bar_1.linkTo("bar", true);
 
         IFile foo_1 = targetDir.resolve("sub/foo.1");
-        foo_1.createLink("../foo", true);
+        foo_1.linkTo("../foo", true);
 
         IFile root = VFS.resolve("mem:test:/createFiles");
         FileTreeFormatter formatter = new FileTreeFormatter();

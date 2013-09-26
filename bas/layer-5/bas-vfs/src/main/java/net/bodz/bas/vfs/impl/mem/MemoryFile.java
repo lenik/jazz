@@ -297,7 +297,7 @@ public class MemoryFile
     }
 
     @Override
-    public boolean createLink(String targetSpec, boolean symbolic)
+    public boolean linkTo(String targetSpec, boolean symbolic)
             throws IOException {
         Inode inode = _create();
         if (inode == null)

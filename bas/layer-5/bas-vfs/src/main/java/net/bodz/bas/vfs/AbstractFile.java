@@ -4,17 +4,15 @@ import static net.bodz.bas.vfs.FileFlags.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import net.bodz.bas.c.java.nio.CommonOpenConfig;
-import net.bodz.bas.c.java.nio.DeviceAttributes;
-import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.res.IOpenResourceListener;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.IStreamResourceWrapper;
 import net.bodz.bas.io.res.OpenResourceEvent;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -25,7 +23,7 @@ import net.bodz.bas.vfs.util.content.LazyProbing;
 
 public abstract class AbstractFile
         extends FsObject
-        implements IFile /* , Serializable */{
+        implements IFile, IFileAttributes/* , Serializable */{
 
     private Charset preferredCharset = Charset.defaultCharset();
 
@@ -42,6 +40,46 @@ public abstract class AbstractFile
         super(device, baseName);
     }
 
+    /** ⇱ Implementation Of {@link Object}. */
+    /* _____________________________ */static section.obj __OBJ__;
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        assert preferredCharset != null;
+        hash += preferredCharset.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AbstractFile))
+            return false;
+        AbstractFile o = (AbstractFile) obj;
+        if (!preferredCharset.equals(o.preferredCharset))
+            return false;
+        return super.equals(o);
+    }
+
+    @Override
+    public <T> T to(Class<T> clazz) {
+        return new Tooling(this).to(clazz);
+    }
+
+    /** ⇱ Implementation Of {@link IFile}. */
+    /* _____________________________ */static section.iface __FILE__;
+
+    @Override
+    public IFile resolve(String spec)
+            throws BadPathException, FileResolveException {
+        IPath joinedPath = getPath().join(spec);
+        IFile file = VFS.resolve(joinedPath);
+        return file;
+    }
+
+    /** ⇱ Implementation Of {@link IFsObject}. */
+    /* _____________________________ */static section.iface __FS_OBJECT__;
+
     @Override
     public IFile getParentFile() {
         IPath parentPath = getPath().getParent();
@@ -52,76 +90,6 @@ public abstract class AbstractFile
         } catch (FileResolveException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
-    }
-
-    @Override
-    public Charset getPreferredCharset() {
-        return preferredCharset;
-    }
-
-    @Override
-    public void setPreferredCharset(Charset charset) {
-        if (charset == null)
-            throw new NullPointerException("charset");
-        this.preferredCharset = charset;
-    }
-
-    @Override
-    public final void setPreferredCharset(String charsetName) {
-        if (charsetName == null)
-            throw new NullPointerException("charsetName");
-        setPreferredCharset(Charset.forName(charsetName));
-    }
-
-    @Override
-    public final boolean isExecutable() {
-        try {
-            FilePermissionAttributes attrs = this.readAttributes(FilePermissionAttributes.class);
-            return attrs == null ? false : attrs.isExecutable();
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public final boolean isSeekable() {
-        try {
-            DeviceAttributes attrs = this.readAttributes(DeviceAttributes.class);
-            return attrs == null ? false : attrs.isRandomAccessible();
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public Long getLength() {
-        try {
-            BasicFileAttributes attrs = this.readAttributes(BasicFileAttributes.class);
-            return attrs == null ? null : attrs.size();
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public final long length() {
-        Long length = getLength();
-        if (length == null)
-            return 0;
-        else
-            return length.longValue();
-    }
-
-    @Override
-    public boolean setLength(long newLength)
-            throws IOException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean mkblob(boolean touch)
-            throws IOException {
-        return false;
     }
 
     @Override
@@ -137,20 +105,22 @@ public abstract class AbstractFile
     protected int retrieveFlags(int mask) {
         int bits = 0;
 
+        IFileAttributes attrs = getAttributes();
+
         if ((mask & MASK_ACCESSIBLE) != 0) {
-            if (this.isReadable())
+            if (attrs.isReadable())
                 bits |= READABLE;
-            if (this.isWritable())
+            if (attrs.isWritable())
                 bits |= WRITABLE;
-            if (this.isExecutable())
+            if (attrs.isExecutable())
                 bits |= EXECUTABLE;
-            if (this.isSeekable())
+            if (attrs.isSeekable())
                 bits |= SEEKABLE;
         }
 
         if (0 != (mask & MASK_ATTRIB)) {
             if (0 != (mask & HIDDEN))
-                if (this.isHidden())
+                if (attrs.isHidden())
                     bits |= HIDDEN;
         }
 
@@ -201,36 +171,79 @@ public abstract class AbstractFile
     }
 
     @Override
-    public final boolean renameTo(String destSpec)
+    public final boolean renameTo(String target)
             throws BadPathException, IOException {
-        IFile dest = resolve(destSpec);
-        return renameTo(dest);
+        IFile targetFile = resolve(target);
+        return renameTo(targetFile);
     }
 
-    public final boolean renameTo(IFile dest)
+    public final boolean renameTo(IFile target)
             throws BadPathException, IOException {
-        if (dest == null)
-            throw new NullPointerException("dest");
+        if (target == null)
+            throw new NullPointerException("target");
 
         IVfsDevice srcDev = getDevice();
-        IVfsDevice destDev = dest.getDevice();
-        if (srcDev != destDev)
+        IVfsDevice dstDev = target.getDevice();
+        if (srcDev != dstDev)
             return false;
-        if (!srcDev.equals(destDev))
+        if (!srcDev.equals(dstDev))
             return false;
 
-        String fromLocalPath = getPath().getLocalPath();
-        String destLocalPath = dest.getPath().getLocalPath();
+        String srcPath = getPath().getLocalPath();
+        String dstPath = target.getPath().getLocalPath();
         try {
-            getDevice().move(fromLocalPath, destLocalPath);
+            getDevice().move(srcPath, dstPath);
             return true;
         } catch (VFSException e) {
             return false;
         }
     }
 
-    /** ⇱ Implementaton Of {@link IFsBlob}. */
-    /* _____________________________ */static section.iface __BLOB__;
+    /** ⇱ Implementation Of {@link IFsBlob}. */
+    /* _____________________________ */static section.iface __FS_BLOB__;
+
+    @Override
+    public Charset getPreferredCharset() {
+        return preferredCharset;
+    }
+
+    @Override
+    public void setPreferredCharset(Charset charset) {
+        if (charset == null)
+            throw new NullPointerException("charset");
+        this.preferredCharset = charset;
+    }
+
+    @Override
+    public final void setPreferredCharset(String charsetName) {
+        if (charsetName == null)
+            throw new NullPointerException("charsetName");
+        setPreferredCharset(Charset.forName(charsetName));
+    }
+
+    @Override
+    public final long length() {
+        Long length = getLength();
+        if (length == null)
+            return 0;
+        else
+            return length.longValue();
+    }
+
+    @Override
+    public boolean setLength(long newLength)
+            throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean mkblob(boolean touch)
+            throws IOException {
+        return false;
+    }
+
+    /** ⇱ Implementation Of {@link IStreamResourceWrapper}. */
+    /* _____________________________ */static section.iface __RESOURCE__;
 
     /**
      * @return <code>null</code> If no resource available for this fs-entry.
@@ -326,7 +339,7 @@ public abstract class AbstractFile
     }
 
     /** ⇱ Implementaton Of {@link IFsDir}. */
-    /* _____________________________ */static section.iface __DIR__;
+    /* _____________________________ */static section.iface __FS_DIR__;
 
     @Override
     public boolean mkdir() {
@@ -349,48 +362,27 @@ public abstract class AbstractFile
     }
 
     @Override
-    public boolean isIterable() {
-        return isDirectory();
-    }
-
-    @Override
     public Iterable<? extends IFile> children()
             throws VFSException {
         return children(IFilenameFilter.TRUE);
     }
 
-    @Override
-    public IFile resolve(String spec)
-            throws BadPathException, FileResolveException {
-        IPath joinedPath = getPath().join(spec);
-        IFile file = VFS.resolve(joinedPath);
-        return file;
-    }
-
-    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToChain}. */
-    /* _____________________________ */static section.iface __TO__;
+    /** ⇱ Implementation Of {@link IFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
 
     @Override
-    public <T> T to(Class<T> clazz) {
-        return new Tooling(this).to(clazz);
+    public boolean isIterable() {
+        return true;
     }
 
     @Override
-    public int hashCode() {
-        int hash = super.hashCode();
-        assert preferredCharset != null;
-        hash += preferredCharset.hashCode();
-        return hash;
+    public boolean isExecutable() {
+        return false;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof AbstractFile))
-            return false;
-        AbstractFile o = (AbstractFile) obj;
-        if (!preferredCharset.equals(o.preferredCharset))
-            return false;
-        return super.equals(o);
+    public boolean isSeekable() {
+        return true;
     }
 
 }
