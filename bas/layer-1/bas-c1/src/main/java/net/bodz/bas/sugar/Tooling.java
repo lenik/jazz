@@ -7,7 +7,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.t.factory.IFactory;
 
 public final class Tooling
-        implements ITooling {
+        implements IToChain {
 
     final Object hostObject;
 
@@ -55,8 +55,8 @@ public final class Tooling
         }
     }
 
-    public <T> T _for(Class<T> toolsType) {
-        return getWrapper(toolsType);
+    public <T> T to(Class<T> clazz) {
+        return getWrapper(clazz);
     }
 
 }

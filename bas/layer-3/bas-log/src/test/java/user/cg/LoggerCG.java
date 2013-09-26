@@ -37,9 +37,9 @@ public class LoggerCG {
         URL classAbstractLoggerURL = getClass().getResource("LoggerCG.AbstractLogger");
 
         src_Logger = new URLResource(classLoggerURL)//
-                .tooling()._for(StreamReading.class).readString();
+                .to(StreamReading.class).readString();
         src_AbstractLogger = new URLResource(classAbstractLoggerURL)//
-                .tooling()._for(StreamReading.class).readString();
+                .to(StreamReading.class).readString();
     }
 
     public void makeLogger()

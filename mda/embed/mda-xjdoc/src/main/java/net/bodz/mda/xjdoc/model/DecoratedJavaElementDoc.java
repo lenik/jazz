@@ -71,8 +71,8 @@ public abstract class DecoratedJavaElementDoc
     }
 
     @Override
-    public <T> T as(Class<T> decoratedType) {
-        return getWrapped().as(decoratedType);
+    public <T> T to(Class<T> clazz) {
+        return getWrapped().to(clazz);
     }
 
 }

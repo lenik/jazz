@@ -28,7 +28,7 @@ public class DefaultVfsFacade
             throws IOException {
         if (src == null)
             throw new NullPointerException("src");
-        StreamReading reading = src.tooling()._for(StreamReading.class);
+        StreamReading reading = src.to(StreamReading.class);
         if (readSize == -1)
             return reading.read();
         else
@@ -40,7 +40,7 @@ public class DefaultVfsFacade
             throws IOException {
         if (src == null)
             throw new NullPointerException("src");
-        StreamReading reading = src.tooling()._for(StreamReading.class);
+        StreamReading reading = src.to(StreamReading.class);
         if (readSize == -1)
             return reading.readChars();
         else
@@ -52,7 +52,7 @@ public class DefaultVfsFacade
             throws IOException {
         if (src == null)
             throw new NullPointerException("src");
-        StreamReading reading = src.tooling()._for(StreamReading.class);
+        StreamReading reading = src.to(StreamReading.class);
         if (readSize == -1)
             return reading.readString();
         else {
@@ -68,7 +68,7 @@ public class DefaultVfsFacade
             throw new NullPointerException("dst");
         if (buf == null)
             throw new NullPointerException("buf");
-        StreamWriting writing = dst.tooling()._for(StreamWriting.class);
+        StreamWriting writing = dst.to(StreamWriting.class);
         writing.setOpenOptions(options);
         writing.write(buf, off, len);
     }
@@ -80,7 +80,7 @@ public class DefaultVfsFacade
             throw new NullPointerException("dst");
         if (buf == null)
             throw new NullPointerException("buf");
-        StreamWriting writing = dst.tooling()._for(StreamWriting.class);
+        StreamWriting writing = dst.to(StreamWriting.class);
         writing.setOpenOptions(options);
         writing.writeChars(buf, off, len);
     }
@@ -92,7 +92,7 @@ public class DefaultVfsFacade
             throw new NullPointerException("dst");
         if (string == null)
             throw new NullPointerException("string");
-        StreamWriting writing = dst.tooling()._for(StreamWriting.class);
+        StreamWriting writing = dst.to(StreamWriting.class);
         writing.setOpenOptions(options);
         writing.writeString(string);
     }
@@ -122,7 +122,7 @@ public class DefaultVfsFacade
         }
 
         IStreamInputSource srcSource = src.getInputSource();
-        StreamWriting writing = dst.tooling()._for(StreamWriting.class);
+        StreamWriting writing = dst.to(StreamWriting.class);
         writing.write(srcSource);
         return true;
     }

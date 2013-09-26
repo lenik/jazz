@@ -31,7 +31,7 @@ public class SelectLanguageDialog
         while (declType != null) {
             ClassDoc classDoc = ClassDocLoader.load(declType);
             if (classDoc != null) {
-                ArtifactDoc typeDoc = classDoc.as(ArtifactDoc.class);
+                ArtifactDoc typeDoc = classDoc.to(ArtifactDoc.class);
                 for (String lang : typeDoc.getUsedLangs())
                     if (lang != null)
                         langNames.add(lang);

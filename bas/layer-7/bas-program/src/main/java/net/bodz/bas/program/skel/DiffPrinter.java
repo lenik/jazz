@@ -66,8 +66,8 @@ public class DiffPrinter {
             return !equals;
         }
 
-        List<String> lines1 = file1.getInputSource().tooling()._for(StreamReading.class).readLines();
-        List<String> lines2 = file2.getInputSource().tooling()._for(StreamReading.class).readLines();
+        List<String> lines1 = file1.getInputSource().to(StreamReading.class).readLines();
+        List<String> lines2 = file2.getInputSource().to(StreamReading.class).readLines();
 
         List<DiffEntry> diffs = comparator.compareDiff(lines1, lines2);
 

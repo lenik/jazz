@@ -210,7 +210,7 @@ public class Providers
                 return provider;
             } catch (ProviderException e) {
                 FileResource resource = new FileResource(file);
-                String config = resource.tooling()._for(StreamReading.class).readString();
+                String config = resource.to(StreamReading.class).readString();
                 System.err.println(tr._("Config error: ") + e.getMessage());
                 System.err.println(config);
                 throw e;

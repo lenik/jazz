@@ -12,10 +12,10 @@ import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.io.impl.LAReader;
-import net.bodz.bas.sugar.IToolable;
+import net.bodz.bas.sugar.IToChain;
 
 public interface IStreamInputSource
-        extends ISimpleStreamInputSource, IToolable {
+        extends ISimpleStreamInputSource, IToChain {
 
     /**
      * Set the charset of the file.

@@ -16,7 +16,6 @@ import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.OpenResourceEvent;
-import net.bodz.bas.sugar.ITooling;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -182,13 +181,13 @@ public abstract class AbstractFile
         if (0 != (mask & CNTTYPE) && (bits & EXIST) != 0) {
             IProbing probe;
             try {
-                probe = tooling()._for(HeuristicProbing.class);
+                probe = to(HeuristicProbing.class);
                 if (probe.isText())
                     bits |= TEXT;
                 else
                     bits |= BINARY;
             } catch (IOException e) {
-                probe = tooling()._for(LazyProbing.class);
+                probe = to(LazyProbing.class);
                 try {
                     if (probe.isText())
                         bits |= TEXT;
@@ -368,12 +367,12 @@ public abstract class AbstractFile
         return file;
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToolable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToChain}. */
     ;
 
     @Override
-    public ITooling tooling() {
-        return new Tooling(this);
+    public <T> T to(Class<T> clazz) {
+        return new Tooling(this).to(clazz);
     }
 
     @Override

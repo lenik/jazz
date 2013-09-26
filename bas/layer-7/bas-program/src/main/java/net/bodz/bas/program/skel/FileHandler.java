@@ -466,7 +466,7 @@ public class FileHandler
     public IStreamReading read()
             throws IOException {
         IStreamInputSource inputSource = getInputSource();
-        StreamReading reading = inputSource.tooling()._for(StreamReading.class);
+        StreamReading reading = inputSource.to(StreamReading.class);
         reading.setOpenOptions(inputOpenOptions);
         return reading;
     }
@@ -476,7 +476,7 @@ public class FileHandler
         IStreamOutputTarget outputTarget = getOutputTarget();
 
         setOutputOpenMode(OutputOpenMode.STREAM_WRITING);
-        StreamWriting writing = outputTarget.tooling()._for(StreamWriting.class);
+        StreamWriting writing = outputTarget.to(StreamWriting.class);
         writing.setOpenOptions(outputOpenOptions);
 
         return writing;

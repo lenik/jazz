@@ -7,7 +7,7 @@ import net.bodz.bas.geom.spec0_f.IBoundingBox2d;
 import net.bodz.bas.geom.spec0_f.IPositionAttributes2d;
 import net.bodz.bas.geom.spec0_f.ITransformable2d;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
-import net.bodz.bas.sugar.IDecoratable;
+import net.bodz.bas.sugar.IToChain;
 import net.bodz.bas.t.object.ICloneable;
 
 public interface IShape2d
@@ -20,7 +20,7 @@ public interface IShape2d
         ITransformable2d, //
         // ICroppable2d, //
         IBaseDrawable2d, //
-        IDecoratable<Object> {
+        IToChain {
 
     @Override
     IShape2d clone();

@@ -1,10 +1,10 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.sugar.IToolable;
+import net.bodz.bas.sugar.IToChain;
 import net.bodz.bas.vfs.path.BadPathException;
 
 public interface IFile
-        extends IFsBlob, IFsDir, IToolable {
+        extends IFsBlob, IFsDir, IToChain {
 
     @Override
     IFile getParentFile();

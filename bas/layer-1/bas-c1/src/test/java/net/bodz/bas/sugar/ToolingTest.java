@@ -9,12 +9,12 @@ public class ToolingTest
     @Test
     public void testGreeting() {
         Alien alien = new Alien("tom");
-        String mesg = alien.tooling()._for(Greeting.class).greet();
+        String mesg = alien.to(Greeting.class).greet();
         assertEquals("hello, tom", mesg);
     }
 
     public static class Alien
-            implements IToolable {
+            implements IToChain {
 
         String name;
 
@@ -25,8 +25,8 @@ public class ToolingTest
         }
 
         @Override
-        public ITooling tooling() {
-            return new Tooling(this);
+        public <T> T to(Class<T> clazz) {
+            return new Tooling(this).to(clazz);
         }
 
         @Override

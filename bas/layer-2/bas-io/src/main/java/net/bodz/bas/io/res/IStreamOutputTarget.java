@@ -13,13 +13,13 @@ import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectOutput;
 import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.sugar.IToolable;
+import net.bodz.bas.sugar.IToChain;
 
 /**
  * 提供更多的打开方式。
  */
 public interface IStreamOutputTarget
-        extends ISimpleStreamOutputTarget, IToolable {
+        extends ISimpleStreamOutputTarget, IToChain {
 
     @Override
     void setCharset(Charset charset);

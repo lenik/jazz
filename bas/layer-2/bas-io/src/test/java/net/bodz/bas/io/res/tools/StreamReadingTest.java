@@ -19,7 +19,7 @@ public class StreamReadingTest
             throws Exception {
         byte[] src = "0123456789abcdefghijklmnopqrstuvwxyz".getBytes();
         ByteArrayInputStream in = new ByteArrayInputStream(src);
-        IStreamReading read = new InputStreamSource(in).tooling()._for(StreamReading.class);
+        IStreamReading read = new InputStreamSource(in).to(StreamReading.class);
 
         Mitorx<char[], ? extends IOException> blocks = read.charBlocks(true);
         assertEquals("01234", new String(blocks._next()));

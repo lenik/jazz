@@ -110,8 +110,8 @@ public class FileDiff {
         if (diffComparator == null)
             throw new NullPointerException("diffComparator");
 
-        List<String> lines1 = src1.tooling()._for(StreamReading.class).readLines();
-        List<String> lines2 = src2.tooling()._for(StreamReading.class).readLines();
+        List<String> lines1 = src1.to(StreamReading.class).readLines();
+        List<String> lines2 = src2.to(StreamReading.class).readLines();
         List<DiffEntry> diffs = diffComparator.compareDiff(lines1, lines2);
         return diffs;
     }
