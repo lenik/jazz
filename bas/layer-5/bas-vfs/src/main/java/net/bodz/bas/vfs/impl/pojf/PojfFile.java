@@ -21,7 +21,6 @@ import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.util.Vfs2PojfFileFilter;
 import net.bodz.bas.vfs.util.Vfs2PojfFilenameFilter;
@@ -30,8 +29,7 @@ import net.bodz.bas.vfs.util.Vfs2PojfFilenameFilter;
  * @see FileResource
  */
 public class PojfFile
-        extends AbstractFile
-        implements IFsDir {
+        extends AbstractFile {
 
     private final java.io.File _file;
     private PojfFileAttributes attributes;

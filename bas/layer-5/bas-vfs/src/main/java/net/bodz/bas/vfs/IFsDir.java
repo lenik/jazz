@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs;
 
 public interface IFsDir
-        extends IFsEntry {
+        extends IFsObject {
 
     boolean isIterable();
 
@@ -9,14 +9,14 @@ public interface IFsDir
      * @return <code>null</code> If <code>childName</code> isn't existed, or the folder isn't
      *         accessible.
      */
-    IFsEntry getChild(String childName);
+    IFsObject getChild(String childName);
 
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
      * @see #isIterable()
      */
-    Iterable<? extends IFsEntry> children()
+    Iterable<? extends IFsObject> children()
             throws VFSException;
 
     /**
@@ -24,7 +24,7 @@ public interface IFsDir
      *             If not iterable.
      * @see #isIterable()
      */
-    Iterable<? extends IFsEntry> children(IFilenameFilter nameFilter)
+    Iterable<? extends IFsObject> children(IFilenameFilter nameFilter)
             throws VFSException;
 
     /**

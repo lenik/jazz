@@ -10,7 +10,7 @@ import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.vfs.IFsDir;
-import net.bodz.bas.vfs.IFsEntry;
+import net.bodz.bas.vfs.IFsObject;
 import net.bodz.pkg.installer.util.Flags;
 
 public interface ISession {
@@ -61,14 +61,14 @@ public interface ISession {
      */
     void addResFolder(int beforeIndex, IFsDir resFolder);
 
-    IFsEntry newResource(String resPath)
+    IFsObject newResource(String resPath)
             throws IOException;
 
     /**
      * @throws NoSuchElementException
      *             if specified resource isn't existed.
      */
-    IFsEntry findResource(String resPath, boolean autoCreate)
+    IFsObject findResource(String resPath, boolean autoCreate)
             throws IOException, NoSuchElementException;
 
     /**
