@@ -22,7 +22,11 @@ import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.PathResource;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.vfs.*;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileFilter;
+import net.bodz.bas.vfs.IFilenameFilter;
+import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.util.Vfs2NioFileFilter;
 import net.bodz.bas.vfs.util.Vfs2NioFilenameFilter;
 
@@ -30,8 +34,7 @@ import net.bodz.bas.vfs.util.Vfs2NioFilenameFilter;
  * @see FileResource
  */
 public class NioFile
-        extends AbstractFile
-        implements IFsDir {
+        extends AbstractFile {
 
     private final Path _path;
     private NioExtraFileAttributes extraAttrs;

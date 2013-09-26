@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.io.res.IStreamResourceWrapper;
 
 public interface IFsBlob
-        extends IFsEntry, IStreamResourceWrapper {
+        extends IFsObject, IStreamResourceWrapper {
 
     /**
      * Get the preferred charset which will be used to access the blob in text mode.

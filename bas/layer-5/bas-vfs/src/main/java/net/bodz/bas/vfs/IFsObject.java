@@ -13,7 +13,7 @@ import net.bodz.bas.c.java.nio.TreeDeleteOption;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
-public interface IFsEntry {
+public interface IFsObject {
 
     /**
      * Get the VFS device which this file entry belongs to.

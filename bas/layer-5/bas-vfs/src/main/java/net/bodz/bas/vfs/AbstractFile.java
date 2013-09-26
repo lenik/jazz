@@ -25,7 +25,7 @@ import net.bodz.bas.vfs.util.content.IProbing;
 import net.bodz.bas.vfs.util.content.LazyProbing;
 
 public abstract class AbstractFile
-        extends AbstractFsEntry
+        extends FsObject
         implements IFile /* , Serializable */{
 
     private Charset preferredCharset = Charset.defaultCharset();

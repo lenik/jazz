@@ -13,14 +13,14 @@ import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.typer.std.Attributes;
 import net.bodz.bas.vfs.path.IPath;
 
-public abstract class AbstractFsEntry
+public abstract class FsObject
         extends Attributes
-        implements IFsEntry {
+        implements IFsObject {
 
     private final IVfsDevice device;
     private String baseName;
 
-    public AbstractFsEntry(IVfsDevice device, String baseName) {
+    public FsObject(IVfsDevice device, String baseName) {
         if (device == null)
             throw new NullPointerException("device");
         if (baseName == null)
@@ -29,9 +29,9 @@ public abstract class AbstractFsEntry
         this.baseName = baseName;
     }
 
-    protected final AbstractFsEntry nativeClone() {
+    protected final FsObject nativeClone() {
         try {
-            return (AbstractFsEntry) super.clone();
+            return (FsObject) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
