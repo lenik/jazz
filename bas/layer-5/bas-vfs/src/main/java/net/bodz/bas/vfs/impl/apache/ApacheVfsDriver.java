@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.apachevfs;
+package net.bodz.bas.vfs.impl.apache;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.apachevfs;
+package net.bodz.bas.vfs.impl.apache;
 
 import org.apache.commons.vfs.FileName;
 
