@@ -36,7 +36,7 @@ public abstract class GenericUnit_z1
     }
 
     /** ⇱ Implementaton Of {@link IOutPort}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public IUnit getUnit() {

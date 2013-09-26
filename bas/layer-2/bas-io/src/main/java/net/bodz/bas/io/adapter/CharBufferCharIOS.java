@@ -5,6 +5,10 @@ import java.nio.BufferOverflowException;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.io.AbstractCharIOS;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.ICroppable;
+import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.CharArrayResource;
 
@@ -24,7 +28,7 @@ public class CharBufferCharIOS
     }
 
     /** ⇱ Implementation Of {@link ICharIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public int read()
@@ -48,7 +52,7 @@ public class CharBufferCharIOS
     }
 
     /** ⇱ Implementation Of {@link ICharOut}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public void write(int ch)
@@ -79,7 +83,7 @@ public class CharBufferCharIOS
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public long tell() {
@@ -99,7 +103,7 @@ public class CharBufferCharIOS
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long _start, long _end)

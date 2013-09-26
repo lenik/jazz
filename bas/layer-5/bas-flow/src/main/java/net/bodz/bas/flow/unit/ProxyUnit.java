@@ -2,7 +2,6 @@ package net.bodz.bas.flow.unit;
 
 import net.bodz.bas.flow.unit.metadata.IUnitMetadata;
 
-
 public abstract class ProxyUnit
         implements IUnit {
 

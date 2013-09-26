@@ -8,7 +8,7 @@ public abstract class AbstractByteIOS
         implements IByteIOS {
 
     /** ⇱ Implementation Of {@link IByteIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public final int read(byte[] buf)
@@ -23,7 +23,7 @@ public abstract class AbstractByteIOS
     }
 
     /** ⇱ Implementation Of {@link IByteOut}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public final void write(byte[] buf)

@@ -5,6 +5,10 @@ import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 
 import net.bodz.bas.io.AbstractByteIOS;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICroppable;
+import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.ByteArrayResource;
 
@@ -24,7 +28,7 @@ public class ByteBufferByteIOS
     }
 
     /** ⇱ Implementation Of {@link IByteIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public int read()
@@ -57,7 +61,7 @@ public class ByteBufferByteIOS
     }
 
     /** ⇱ Implementation Of {@link IByteOut}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public void write(int b)
@@ -88,7 +92,7 @@ public class ByteBufferByteIOS
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public long tell() {
@@ -108,7 +112,7 @@ public class ByteBufferByteIOS
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long _start, long _end)

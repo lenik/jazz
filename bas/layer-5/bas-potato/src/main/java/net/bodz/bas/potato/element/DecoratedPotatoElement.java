@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.c.reflect.DecoratedAnnotatedElement;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom1.IElement;
 
 public class DecoratedPotatoElement
         extends DecoratedAnnotatedElement
@@ -32,7 +33,7 @@ public class DecoratedPotatoElement
     }
 
     /** ⇱ Implementation Of {@link IAnnotated}. */
-    ;
+    /* _____________________________ */static section.iface __ANNOTATION__;
 
     @Override
     public Map<Class<?>, Annotation> getAnnotationMap() {
@@ -52,7 +53,7 @@ public class DecoratedPotatoElement
     }
 
     /** ⇱ Implementation Of {@link IElement}. */
-    ;
+    /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
     public String getName() {

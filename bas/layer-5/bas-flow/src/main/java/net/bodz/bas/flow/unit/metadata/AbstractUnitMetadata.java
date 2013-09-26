@@ -1,7 +1,5 @@
 package net.bodz.bas.flow.unit.metadata;
 
-
-
 public class AbstractUnitMetadata
         implements IUnitMetadata {
 

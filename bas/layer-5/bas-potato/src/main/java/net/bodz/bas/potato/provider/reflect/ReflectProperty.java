@@ -131,7 +131,7 @@ public class ReflectProperty
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
-    ;
+    /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
     public int getModifiers() {
@@ -144,7 +144,7 @@ public class ReflectProperty
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
-    ;
+    /* _____________________________ */static section.iface __ANNOTATION__;
 
     @Override
     public Annotation[] getAnnotations() {

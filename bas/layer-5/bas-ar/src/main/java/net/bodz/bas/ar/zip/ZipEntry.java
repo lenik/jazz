@@ -3,6 +3,7 @@ package net.bodz.bas.ar.zip;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.ar.IArchiveEntry;
 import net.bodz.bas.ar.zip.xf.XF_UNIX;
 import net.bodz.bas.ar.zip.xf.XF_Zip64;
 import net.bodz.bas.ar.zip.xf3.XF_ASi_UNIX;
@@ -11,6 +12,7 @@ import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UnicodePath;
 import net.bodz.bas.ar.zip.xf3.XF_Timestamp;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamInputSourceWrapper;
 import net.bodz.bas.text.rst.RstObject;
 import net.bodz.bas.typer.std.ValidationException;
 
@@ -254,7 +256,7 @@ public class ZipEntry
     }
 
     /** ⇱ Implementation Of {@link IZipEntry}. */
-    ;
+    /* _____________________________ */static section.iface __ZIPENTRY__;
 
     @Override
     public int getMethod() {
@@ -272,7 +274,7 @@ public class ZipEntry
     }
 
     /** ⇱ Implementation Of {@link IArchiveEntry}. */
-    ;
+    /* _____________________________ */static section.iface __ARCHIVE_ENTRY__;
 
     @Override
     public String getName() {
@@ -370,7 +372,7 @@ public class ZipEntry
     }
 
     /** ⇱ Implementation Of {@link IStreamInputSourceWrapper}. */
-    ;
+    /* _____________________________ */static section.iface __INPUT_SOURCE__;
 
     @Override
     public final IStreamInputSource getInputSource() {

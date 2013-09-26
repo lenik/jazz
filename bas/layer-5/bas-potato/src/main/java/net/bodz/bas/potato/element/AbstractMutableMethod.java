@@ -10,7 +10,7 @@ public abstract class AbstractMutableMethod
     private Class<?>[] parameterTypes;
 
     /** ⇱ Implementation Of {@link IMethod}. */
-    ;
+    /* _____________________________ */static section.iface __METHOD__;
 
     @Override
     public Class<?> getReturnType() {
@@ -23,7 +23,7 @@ public abstract class AbstractMutableMethod
     }
 
     /** ⇱ Implementation Of {@link IMutableMethod}. */
-    ;
+    /* _____________________________ */static section.iface __MUTABLE__;
 
     public void setReturnType(Class<?> returnType) {
         this.returnType = returnType;

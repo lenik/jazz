@@ -13,7 +13,9 @@ import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
 import net.bodz.bas.t.model.AbstractDecorator;
+import net.bodz.bas.t.object.ISnapShot;
 
 public class DecoratedPrimitive2d
         extends AbstractDecorator<IPrimitive2d>
@@ -31,7 +33,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementation Of {@link IPrimitive2d}. */
-    ;
+    /* _____________________________ */static section.iface __BASE__;
 
     @Override
     public boolean isValid() {
@@ -49,7 +51,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementation Of {@link ISnapShot}. */
-    ;
+    /* _____________________________ */static section.iface __SNAPSHOT__;
 
     @Override
     public IPrimitive2d snap() {
@@ -67,7 +69,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTS__;
 
     @Override
     public int getPointCount() {
@@ -110,7 +112,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointRefSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTREFS__;
 
     @Override
     public IPointRef2d getPointRef(int index) {
@@ -138,7 +140,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPositionAttributes2d}. */
-    ;
+    /* _____________________________ */static section.iface __POSITION__;
 
     @Override
     public Point2d getCenterPoint() {
@@ -146,7 +148,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ITransformable2d}. */
-    ;
+    /* _____________________________ */static section.iface __TRANSFORM__;
 
     @Override
     public void translate(float dx, float dy) {
@@ -189,7 +191,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBox2d}. */
-    ;
+    /* _____________________________ */static section.iface __BBOX__;
 
     @Override
     public Rectangle2d getBoundingBox() {
@@ -197,7 +199,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBall2d}. */
-    ;
+    /* _____________________________ */static section.iface __BBALL__;
 
     @Override
     public Circle2d getBoundingBall() {
@@ -205,7 +207,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
-    ;
+    /* _____________________________ */static section.iface __PICK__;
 
     @Override
     public PickResult2d _pick(float x, float y) {
@@ -248,7 +250,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
-    ;
+    /* _____________________________ */static section.iface __POLYGONIZE__;
 
     @Override
     public Polygon2d polygonize() {
@@ -261,7 +263,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IPrimitive2d crop(PositiveHalfPlane2d php, boolean detached) {
@@ -284,7 +286,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToChain}. */
-    ;
+    /* _____________________________ */static section.iface __TO__;
 
     @Override
     public <T> T to(Class<T> clazz) {
@@ -292,7 +294,7 @@ public class DecoratedPrimitive2d
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
-    ;
+    /* _____________________________ */static section.iface __DRAW__;
 
     @Override
     public void draw(IBaseDrawContext2d ctx)

@@ -230,7 +230,7 @@ public abstract class AbstractFile
     }
 
     /** ⇱ Implementaton Of {@link IFsBlob}. */
-    ;
+    /* _____________________________ */static section.iface __BLOB__;
 
     /**
      * @return <code>null</code> If no resource available for this fs-entry.
@@ -326,7 +326,7 @@ public abstract class AbstractFile
     }
 
     /** ⇱ Implementaton Of {@link IFsDir}. */
-    ;
+    /* _____________________________ */static section.iface __DIR__;
 
     @Override
     public boolean mkdir() {
@@ -368,7 +368,7 @@ public abstract class AbstractFile
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToChain}. */
-    ;
+    /* _____________________________ */static section.iface __TO__;
 
     @Override
     public <T> T to(Class<T> clazz) {

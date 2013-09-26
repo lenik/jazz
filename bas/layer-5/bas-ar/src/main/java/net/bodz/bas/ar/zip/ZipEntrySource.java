@@ -9,6 +9,7 @@ import java.util.zip.InflaterInputStream;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
 import net.bodz.bas.io.res.AbstractInputStreamSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamResource;
 
 public class ZipEntrySource
@@ -28,7 +29,7 @@ public class ZipEntrySource
     }
 
     /** ⇱ Implementation Of {@link IStreamInputSource}. */
-    ;
+    /* _____________________________ */static section.iface __INPUT_SOURCE__;
 
     IStreamResource rawcrop()
             throws IOException {

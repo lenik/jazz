@@ -46,7 +46,7 @@ public class MergedCharIOS
     }
 
     /** ⇱ Implementation Of {@link ICharIn}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     public int read()
@@ -79,7 +79,7 @@ public class MergedCharIOS
     }
 
     /** ⇱ Implementation Of {@link ICharOut}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public void write(int ch)
@@ -136,7 +136,7 @@ public class MergedCharIOS
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public void seek(long position)
@@ -156,7 +156,7 @@ public class MergedCharIOS
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long start, long end)

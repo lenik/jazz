@@ -61,7 +61,7 @@ public class BCharOut
     }
 
     /** ⇱ Implementaton Of {@link CharSequence}. */
-    ;
+    /* _____________________________ */static section.iface __CHARSEQ__;
 
     @Override
     public int length() {
@@ -79,7 +79,7 @@ public class BCharOut
     }
 
     /** ⇱ Implementaton Of {@link Appendable}. */
-    ;
+    /* _____________________________ */static section.iface __APPEND__;
 
     @Override
     public BCharOut append(CharSequence csq)

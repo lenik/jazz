@@ -13,6 +13,7 @@ import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
 import net.bodz.bas.sugar.Tooling;
+import net.bodz.bas.t.object.ISnapShot;
 
 public abstract class AbstractPrimitive2d
         implements IPrimitive2d {
@@ -38,7 +39,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementation Of {@link IPrimitive2d}. */
-    ;
+    /* _____________________________ */static section.iface __BASE__;
 
     @Override
     public boolean isValid() {
@@ -58,13 +59,13 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementation Of {@link ISnapShot}. */
-    ;
+    /* _____________________________ */static section.iface __SNAPSHOT__;
 
     @Override
     public abstract AbstractPrimitive2d shot();
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTS__;
 
     /**
      * Check point index.
@@ -139,7 +140,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointRefSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTREFS__;
 
     @Override
     public Iterable<IPointRef2d> getPointRefs() {
@@ -179,7 +180,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPositionAttributes2d}. */
-    ;
+    /* _____________________________ */static section.iface __POSITION__;
 
     @Override
     public Point2d getCenterPoint() {
@@ -204,7 +205,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
-    ;
+    /* _____________________________ */static section.iface __PICK__;
 
     @Override
     public final PickResult2d _pick(float x, float y) {
@@ -243,7 +244,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBox2d}. */
-    ;
+    /* _____________________________ */static section.iface __BBOX__;
 
     @Override
     public Rectangle2d getBoundingBox() {
@@ -261,7 +262,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IBoundingBall2d}. */
-    ;
+    /* _____________________________ */static section.iface __BBALL__;
 
     @Override
     public Circle2d getBoundingBall() {
@@ -278,7 +279,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ITransformable2d}. */
-    ;
+    /* _____________________________ */static section.iface __TRANSFORM__;
 
     @Override
     public void translate(float dx, float dy) {
@@ -330,7 +331,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IExtendable2d}. */
-    ;
+    /* _____________________________ */static section.iface __EXTEND__;
 
     public boolean include(IPrimitive2d shape) {
         boolean dirty = false;
@@ -353,7 +354,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
-    ;
+    /* _____________________________ */static section.iface __POLYGONIZE__;
 
     @Override
     public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {
@@ -366,7 +367,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IPrimitive2d crop(Triangle2d triangle, boolean detached) {
@@ -406,7 +407,7 @@ public abstract class AbstractPrimitive2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.sugar.IToChain}. */
-    ;
+    /* _____________________________ */static section.iface __TO__;
 
     @Override
     public <T> T to(Class<T> clazz) {

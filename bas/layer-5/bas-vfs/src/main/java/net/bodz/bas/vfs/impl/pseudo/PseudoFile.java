@@ -89,7 +89,7 @@ public abstract class PseudoFile
     }
 
     /** ⇱ Implementaton Of {@link IFsBlob}. */
-    ;
+    /* _____________________________ */static section.iface __BLOC__;
 
     @Override
     protected IStreamResource newResource(Charset charset) {
@@ -97,7 +97,7 @@ public abstract class PseudoFile
     }
 
     /** ⇱ Implementaton Of {@link IFsDir}. */
-    ;
+    /* _____________________________ */static section.iface __DIR__;
 
     @Override
     public IFile getChild(String childName) {

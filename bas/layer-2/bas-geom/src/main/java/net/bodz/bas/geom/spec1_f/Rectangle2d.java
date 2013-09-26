@@ -2,6 +2,7 @@ package net.bodz.bas.geom.spec1_f;
 
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
 
 public class Rectangle2d
         extends AbstractRectangle2d {
@@ -224,7 +225,7 @@ public class Rectangle2d
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
-    ;
+    /* _____________________________ */static section.iface __DRAW__;
 
     @Override
     public void draw(IBaseDrawContext2d ctx)

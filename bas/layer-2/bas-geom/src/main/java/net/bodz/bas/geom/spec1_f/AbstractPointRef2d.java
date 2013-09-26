@@ -3,13 +3,17 @@ package net.bodz.bas.geom.spec1_f;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Tuple2f;
 
+import net.bodz.bas.c.javax.vecmath.IMyPoint2f;
 import net.bodz.bas.c.javax.vecmath.I_Tuple2f_;
 import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.bas.geom.spec0_f.AbstractPrimitive2d;
+import net.bodz.bas.geom.spec0_f.IPrimitive2d;
 import net.bodz.bas.geom.spec0_f.PickResult2d;
 import net.bodz.bas.geom.spec0_f.PositiveHalfPlane2d;
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
+import net.bodz.bas.t.object.ISnapShot;
 
 public abstract class AbstractPointRef2d
         extends AbstractPrimitive2d
@@ -23,7 +27,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementation Of {@link IPrimitive2d}. */
-    ;
+    /* _____________________________ */static section.iface __BASE__;
 
     @Override
     public Point2d degenerate() {
@@ -31,7 +35,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementation Of {@link ISnapShot}. */
-    ;
+    /* _____________________________ */static section.iface __SNAPSHOT__;
 
     @Override
     public Point2d snap() {
@@ -47,7 +51,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTS__;
 
     /*
      * Most point-implementation should have a point as itself. This pointCount/pointRef is just for
@@ -166,7 +170,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPickable2d}. */
-    ;
+    /* _____________________________ */static section.iface __PICK__;
 
     @Override
     public PickResult2d _pick(Point2d point) {
@@ -191,7 +195,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ITransformable2d}. */
-    ;
+    /* _____________________________ */static section.iface __TRANSFORM__;
 
     @Override
     public void translate(float dx, float dy) {
@@ -249,7 +253,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.ICroppable2d}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public Point2d crop(PositiveHalfPlane2d php, boolean detached) {
@@ -288,7 +292,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
-    ;
+    /* _____________________________ */static section.iface __POLYGON__;
 
     @Override
     public Polygon2d polygonize() {
@@ -296,7 +300,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.c.javax.vecmath.I_Tuple2f}. */
-    ;
+    /* _____________________________ */static section.iface __TUPLE__;
 
     @Override
     public void set(float x, float y) {
@@ -485,7 +489,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.c.javax.vecmath.I_Tuple2f_}. */
-    ;
+    /* _____________________________ */static section.iface __TUPLEc__;
 
     @Override
     public I_Tuple2f_ add_(Tuple2f t1) {
@@ -560,7 +564,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementation Of {@link IMyPoint2f}. */
-    ;
+    /* _____________________________ */static section.iface __MYPOINT__;
 
     @Override
     public final float distanceL1(float x, float y) {
@@ -585,7 +589,7 @@ public abstract class AbstractPointRef2d
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
-    ;
+    /* _____________________________ */static section.iface __DRAW__;
 
     @Override
     public void draw(IBaseDrawContext2d ctx)

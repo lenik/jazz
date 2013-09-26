@@ -22,11 +22,7 @@ import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.PathResource;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.vfs.AbstractFile;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
-import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.*;
 import net.bodz.bas.vfs.util.Vfs2NioFileFilter;
 import net.bodz.bas.vfs.util.Vfs2NioFilenameFilter;
 
@@ -194,7 +190,7 @@ public class NioFile
     }
 
     /** ⇱ Implementaton Of {@link IFsBlob}. */
-    ;
+    /* _____________________________ */static section.iface __BLOB__;
 
     @Override
     protected IStreamResource newResource(Charset charset) {
@@ -204,7 +200,7 @@ public class NioFile
     }
 
     /** ⇱ Implementaton Of {@link IFsDir}. */
-    ;
+    /* _____________________________ */static section.iface __DIR__;
 
     @Override
     public NioFile getChild(String entryName) {

@@ -96,7 +96,7 @@ public class JavaElementDoc
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.text.flatf.IFlatfSerializable}. */
-    ;
+    /* _____________________________ */static section.iface __FLATF__;
 
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)

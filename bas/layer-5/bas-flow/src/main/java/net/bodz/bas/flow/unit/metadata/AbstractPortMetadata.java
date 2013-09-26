@@ -1,6 +1,5 @@
 package net.bodz.bas.flow.unit.metadata;
 
-
 public abstract class AbstractPortMetadata
         implements IPortMetadata {
 

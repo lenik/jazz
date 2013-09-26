@@ -6,6 +6,8 @@ import java.util.List;
 import net.bodz.bas.geom.spec0_f.IMutablePointRefSet2d;
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
+import net.bodz.bas.t.object.ISnapShot;
 
 public class Polylink2d
         extends AbstractPolygon2d
@@ -36,7 +38,7 @@ public class Polylink2d
     }
 
     /** ⇱ Implementation Of {@link ISnapShot}. */
-    ;
+    /* _____________________________ */static section.iface __SNAPSHOT__;
 
     @Override
     public Polylink2d shot() {
@@ -45,7 +47,7 @@ public class Polylink2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPointSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTS__;
 
     @Override
     public int getPointCount() {
@@ -66,7 +68,7 @@ public class Polylink2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IMutablePointRefSet2d}. */
-    ;
+    /* _____________________________ */static section.iface __POINTREFS_MUTABLE__;
 
     @Override
     public void setPoint(int index, IPointRef2d point) {
@@ -91,7 +93,7 @@ public class Polylink2d
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.geom.spec0_f.IPolygonizable2d}. */
-    ;
+    /* _____________________________ */static section.iface __POLYGONIZE__;
 
     @Override
     public Polygon2d polygonize(int minSegments, Float maxSegmentLength) {
@@ -102,7 +104,7 @@ public class Polylink2d
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
-    ;
+    /* _____________________________ */static section.iface __DRAW__;
 
     @Override
     public void draw(IBaseDrawContext2d ctx)

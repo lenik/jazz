@@ -23,7 +23,7 @@ public abstract class AbstractRefEntry<T>
     }
 
     /** ⇱ {@link java.util.Map.Entry}. */
-    ;
+    /* _____________________________ */static section.iface __ENTRY__;
 
     @Override
     public final String getKey() {
@@ -43,7 +43,7 @@ public abstract class AbstractRefEntry<T>
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.rtx.IQueryable} */
-    ;
+    /* _____________________________ */static section.iface __QUERY__;
 
     @Override
     public Object query(Object specification)

@@ -205,7 +205,7 @@ public class MutableOptionGroup
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IMutableElement}. */
-    ;
+    /* _____________________________ */static section.iface __MUTABLE__;
 
     @Override
     public void setName(String name) {

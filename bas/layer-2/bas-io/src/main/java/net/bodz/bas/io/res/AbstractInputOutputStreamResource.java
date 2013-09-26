@@ -18,7 +18,7 @@ public abstract class AbstractInputOutputStreamResource
         extends AbstractStreamResource {
 
     /** ⇱ Implementaton Of {@link IStreamInputSource}. */
-    ;
+    /* _____________________________ */static section.iface __IN__;
 
     @Override
     protected abstract InputStream _newInputStream(OpenOption... options)
@@ -47,7 +47,7 @@ public abstract class AbstractInputOutputStreamResource
     }
 
     /** ⇱ Implementaton Of {@link IStreamOutputTarget}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     protected abstract OutputStream _newOutputStream(OpenOption... options)

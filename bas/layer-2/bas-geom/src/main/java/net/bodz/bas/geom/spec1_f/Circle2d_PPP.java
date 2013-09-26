@@ -3,6 +3,7 @@ package net.bodz.bas.geom.spec1_f;
 import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
 
 /**
  * 3-Point Circle
@@ -114,7 +115,7 @@ public class Circle2d_PPP
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
-    ;
+    /* _____________________________ */static section.iface __DRAW__;
 
     @Override
     public void draw(IBaseDrawContext2d ctx)

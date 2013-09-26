@@ -120,7 +120,7 @@ public class URLFile
     }
 
     /** ⇱ Implementaton Of {@link IFsBlob}. */
-    ;
+    /* _____________________________ */static section.iface __BLOB__;
 
     @Override
     public Long getLength() {
@@ -193,7 +193,7 @@ public class URLFile
     }
 
     /** ⇱ Implementaton Of {@link IFsDir}. */
-    ;
+    /* _____________________________ */static section.iface __DIR__;
 
     @Override
     public URLFile getChild(String entryName)

@@ -36,7 +36,7 @@ public class CroppedRafOut
     }
 
     /** ⇱ Implementation Of {@link OutputStream}. */
-    ;
+    /* _____________________________ */static section.iface __OUT__;
 
     @Override
     public void write(int b)
@@ -74,16 +74,13 @@ public class CroppedRafOut
             throws IOException {
     }
 
-    /** ⇱ Implementation Of {@link IByteOut}. */
-    ;
-
     @Override
     public void flush(boolean strict)
             throws IOException {
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */
-    ;
+    /* _____________________________ */static section.iface __SEEK__;
 
     @Override
     public long tell() {
@@ -110,7 +107,7 @@ public class CroppedRafOut
     }
 
     /** ⇱ Implementation Of {@link ICroppable}. */
-    ;
+    /* _____________________________ */static section.iface __CROP__;
 
     @Override
     public IStreamResource crop(long start, long end)
@@ -127,7 +124,7 @@ public class CroppedRafOut
     }
 
     /** ⇱ Implementation Of {@link ICloseable}. */
-    ;
+    /* _____________________________ */static section.iface __CLOSE__;
 
     private void ensureOpen() {
         if (closed)

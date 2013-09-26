@@ -37,7 +37,7 @@ public abstract class InodeFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
-    ;
+    /* _____________________________ */static section.iface __BASIC__;
 
     @Override
     public FileTime lastModifiedTime() {
@@ -163,7 +163,7 @@ public abstract class InodeFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link DosFileAttributes}. */
-    ;
+    /* _____________________________ */static section.iface __DOS__;
 
     @Override
     public boolean isReadOnly() {
@@ -210,7 +210,7 @@ public abstract class InodeFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link PosixFileAttributes}. */
-    ;
+    /* _____________________________ */static section.iface __POSIX__;
 
     @Override
     public UserPrincipal owner() {
@@ -229,7 +229,7 @@ public abstract class InodeFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link PosixFileAttributeView}. */
-    ;
+    /* _____________________________ */static section.iface __POSIX_VIEW__;
 
     @Override
     public void setGroup(GroupPrincipal group)
@@ -245,7 +245,7 @@ public abstract class InodeFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link FileOwnerAttributeView}. */
-    ;
+    /* _____________________________ */static section.iface __FILE_OWNER__;
 
     @Override
     public UserPrincipal getOwner()
@@ -260,7 +260,7 @@ public abstract class InodeFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link FilePermissionAttributes}. */
-    ;
+    /* _____________________________ */static section.iface __FILE_PERMISSION__;
 
     @Override
     public boolean isReadable() {
@@ -287,7 +287,7 @@ public abstract class InodeFileAttributes
     }
 
     /** ⇱ Implementaton Of {@link DeviceAttributes}. */
-    ;
+    /* _____________________________ */static section.iface __DEVICE__;
 
     @Override
     public boolean isRandomAccessible() {

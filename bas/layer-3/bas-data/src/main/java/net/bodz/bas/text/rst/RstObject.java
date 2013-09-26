@@ -12,7 +12,7 @@ public abstract class RstObject
         implements IRstSerializable, IElementHandler, IReflectRstOverrides {
 
     /** ⇱ Implementation Of {@link IRstSerializable}. */
-    ;
+    /* _____________________________ */static section.iface __RST_SERIALIZABLE__;
 
     @Override
     public void writeObject(IRstOutput out)
@@ -26,7 +26,7 @@ public abstract class RstObject
     }
 
     /** ⇱ Implementation Of {@link IElementHandler}. */
-    ;
+    /* _____________________________ */static section.iface __ELEMENT_HANDLER__;
 
     @Override
     public boolean attribute(String name, String data)
@@ -52,7 +52,7 @@ public abstract class RstObject
     }
 
     /** ⇱ Implementation Of {@link IReflectRstOverrides}. */
-    ;
+    /* _____________________________ */static section.iface __OVERRIDES__;
 
     @Override
     public String[] getElementArguments() {
@@ -66,7 +66,7 @@ public abstract class RstObject
     }
 
     /** ⇱ Implementation Of {@link Object}. */
-    ;
+    /* _____________________________ */static section.obj __OBJ__;
 
     @Override
     public String toString() {

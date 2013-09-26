@@ -5,6 +5,7 @@ import javax.vecmath.Tuple2f;
 import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.gui.draw_f.dc.IBaseDrawContext2d;
+import net.bodz.bas.gui.draw_f.dc.IBaseDrawable2d;
 
 public class Point2d
         extends AbstractPointRef2d {
@@ -195,7 +196,7 @@ public class Point2d
     }
 
     /** ⇱ Implementation Of {@link IBaseDrawable2d}. */
-    ;
+    /* _____________________________ */static section.iface __DRAW__;
 
     @Override
     public void draw(IBaseDrawContext2d ctx)

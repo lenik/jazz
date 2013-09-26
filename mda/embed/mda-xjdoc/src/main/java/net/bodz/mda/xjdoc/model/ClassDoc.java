@@ -100,7 +100,7 @@ public class ClassDoc
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.text.flatf.IFlatfSerializable}. */
-    ;
+    /* _____________________________ */static section.iface __FLATF__;
 
     /**
      * classdoc file format.

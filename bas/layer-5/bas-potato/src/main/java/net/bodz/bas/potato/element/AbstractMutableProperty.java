@@ -14,7 +14,7 @@ public abstract class AbstractMutableProperty
     private boolean propertyChangeSource;
 
     /** ⇱ Implementation Of {@link IProperty}. */
-    ;
+    /* _____________________________ */static section.iface __PROPERTY__;
 
     @Override
     public Class<?> getPropertyType() {
@@ -53,7 +53,7 @@ public abstract class AbstractMutableProperty
     }
 
     /** ⇱ Implementation Of {@link IMutableProperty}. */
-    ;
+    /* _____________________________ */static section.iface __MUTABLE__;
 
     public void setPropertyType(Class<?> propertyType) {
         this.propertyType = propertyType;

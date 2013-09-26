@@ -278,9 +278,13 @@ public class Arrays
 
     // Array Wrapper
 
-    // Generated Code: See ArraysCG, ArraysTemplate
-    void __generated_begin__() {
-    }
+    /**
+     * ⇱ Generated Code Begin
+     * 
+     * @see ArraysCG
+     * @see ArraysTemplate
+     */
+    /* _____________________________ */static section.generated __BEGIN__;
 
     /**
      * Concat multiple arrays.
@@ -3374,7 +3378,7 @@ public class Arrays
         return sb.toString();
     }
 
-    void __generated_end__() {
-    }
+    /** ⇱ Generated Code END */
+    /* _____________________________ */static section.generated __END__;
 
 }
