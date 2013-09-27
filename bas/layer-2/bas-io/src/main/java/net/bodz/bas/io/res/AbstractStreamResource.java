@@ -5,8 +5,8 @@ public abstract class AbstractStreamResource
         implements IStreamResource {
 
     @Override
-    public Long getLength() {
-        return null;
+    public long getLength() {
+        return -1L;
     }
 
 }

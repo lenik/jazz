@@ -50,7 +50,7 @@ public class FileResource
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         return file.length();
     }
 

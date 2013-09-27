@@ -36,11 +36,11 @@ public class BytesResource
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         if (buffer == null)
-            return null;
+            return 0;
         else
-            return (long) buffer.size();
+            return buffer.size();
     }
 
     /**
