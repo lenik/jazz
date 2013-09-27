@@ -2,7 +2,10 @@ package net.bodz.bas.err;
 
 import java.beans.ExceptionListener;
 
-public interface ExceptionSource {
+import net.bodz.bas.meta.decl.EventSource;
+
+public interface IExceptionSource
+        extends EventSource {
 
     void addExceptionListener(ExceptionListener listener);
 

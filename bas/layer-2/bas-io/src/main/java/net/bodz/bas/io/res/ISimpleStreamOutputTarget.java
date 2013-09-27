@@ -10,7 +10,8 @@ import net.bodz.bas.io.ICharOut;
 /**
  * 相当于一个只写的File对象，其打开操作可定制。
  */
-public interface ISimpleStreamOutputTarget {
+public interface ISimpleStreamOutputTarget
+        extends IOpenResourceSource {
 
     Charset getCharset();
 

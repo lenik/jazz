@@ -7,7 +7,8 @@ import java.nio.file.OpenOption;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICharIn;
 
-public interface ISimpleStreamInputSource {
+public interface ISimpleStreamInputSource
+        extends IOpenResourceSource {
 
     Charset getCharset();
 

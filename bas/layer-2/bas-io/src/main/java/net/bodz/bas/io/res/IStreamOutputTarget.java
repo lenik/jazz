@@ -15,9 +15,6 @@ import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.sugar.IToChain;
 
-/**
- * 提供更多的打开方式。
- */
 public interface IStreamOutputTarget
         extends ISimpleStreamOutputTarget, IToChain {
 
