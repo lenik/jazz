@@ -30,9 +30,4 @@ public class PseudoFileAttributes
             return length;
     }
 
-    @Override
-    protected Inode resolveSymlink(String targetSpec) {
-        return null;
-    }
-
 }

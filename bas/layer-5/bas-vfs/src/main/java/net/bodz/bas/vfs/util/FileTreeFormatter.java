@@ -10,6 +10,7 @@ import java.util.List;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.tree.TreeFormatterTemplate;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileAttributes;
 
 public class FileTreeFormatter
         extends TreeFormatterTemplate<IFile> {
@@ -78,13 +79,15 @@ public class FileTreeFormatter
     void format(IPrintOut out, String prefix, Boolean theLast, IFile file, int depth)
             throws IOException {
 
+        IFileAttributes attrs = file.getAttributes();
+
         BasicFileAttributeView _view = file.getAttributeView(BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
-        BasicFileAttributes _attrs = _view.readAttributes();
+        BasicFileAttributes _bfa = _view.readAttributes();
 
         BasicFileAttributeView view = file.getAttributeView(BasicFileAttributeView.class);
-        BasicFileAttributes attrs = view.readAttributes();
+        BasicFileAttributes bfa = view.readAttributes();
 
-        if (showHidden || !file.isHidden()) {
+        if (showHidden || !attrs.isHidden()) {
             out.print(prefix);
 
             if (drawTreeLines && theLast != null)
@@ -98,7 +101,7 @@ public class FileTreeFormatter
 
             out.print(getText(file));
 
-            if (_attrs.isSymbolicLink()) {
+            if (_bfa.isSymbolicLink()) {
                 String targetSpec;
                 try {
                     targetSpec = file.readSymLink();
@@ -110,9 +113,9 @@ public class FileTreeFormatter
             }
 
             if (appendSymbol) {
-                if (attrs.isDirectory())
+                if (bfa.isDirectory())
                     out.print("/");
-                else if (file.isExecutable())
+                else if (attrs.isExecutable())
                     out.print("*");
                 // else if (file.isPipe()) ...
             }
@@ -120,7 +123,7 @@ public class FileTreeFormatter
             out.println();
         }
 
-        if (attrs.isDirectory()) {
+        if (bfa.isDirectory()) {
 
             if (drawTreeLines && theLast != null)
                 prefix += theLast ? treeLineChars.treeSkip : treeLineChars.treeLine;
@@ -130,7 +133,7 @@ public class FileTreeFormatter
             Iterable<? extends IFile> children = file.children();
             List<IFile> list = new ArrayList<IFile>();
             for (IFile child : children)
-                if (showHidden || !child.isHidden())
+                if (showHidden || !child.getAttributes().isHidden())
                     list.add(child);
 
             int size = list.size();

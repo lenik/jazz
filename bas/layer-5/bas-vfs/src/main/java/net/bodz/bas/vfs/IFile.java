@@ -19,7 +19,7 @@ public interface IFile
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
-     * @see #isIterable()
+     * @see #isTraversible()
      */
     Iterable<? extends IFile> children()
             throws VFSException;
@@ -27,7 +27,7 @@ public interface IFile
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
-     * @see #isIterable()
+     * @see #isTraversible()
      */
     Iterable<? extends IFile> children(IFilenameFilter nameFilter)
             throws VFSException;
@@ -35,7 +35,7 @@ public interface IFile
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
-     * @see #isIterable()
+     * @see #isTraversible()
      */
     Iterable<? extends IFile> children(IFileFilter fileFilter)
             throws VFSException;

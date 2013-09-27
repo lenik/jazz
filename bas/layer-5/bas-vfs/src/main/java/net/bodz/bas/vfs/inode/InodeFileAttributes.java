@@ -4,20 +4,15 @@ import java.io.IOException;
 import java.nio.file.attribute.*;
 import java.util.Set;
 
-import net.bodz.bas.c.java.nio.DeviceAttributeView;
-import net.bodz.bas.c.java.nio.DeviceAttributes;
-import net.bodz.bas.c.java.nio.FilePermissionAttributeView;
-import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.c.java.nio.UnixModeBits;
 import net.bodz.bas.c.object.ObjectInfo;
+import net.bodz.bas.vfs.IFileAttributes;
 
 public abstract class InodeFileAttributes
-        implements //
-        BasicFileAttributeView, BasicFileAttributes, //
+        implements IFileAttributes, //
         DosFileAttributeView, DosFileAttributes, //
-        PosixFileAttributeView, PosixFileAttributes, //
-        FilePermissionAttributeView, FilePermissionAttributes, //
-        DeviceAttributeView, DeviceAttributes {
+        PosixFileAttributeView, PosixFileAttributes //
+{
 
     protected abstract Inode getInode();
 
@@ -277,25 +272,11 @@ public abstract class InodeFileAttributes
         return getInode().isExecutable();
     }
 
-    @Override
-    public boolean isDeletable() {
-        Inode parent = getInode().getParent();
-        if (parent == null)
-            return false;
-        else
-            return parent.isWritable();
-    }
-
     /** ⇱ Implementaton Of {@link DeviceAttributes}. */
     /* _____________________________ */static section.iface __DEVICE__;
 
     @Override
     public boolean isRandomAccessible() {
-        return true;
-    }
-
-    @Override
-    public boolean isBlockAccessible() {
         return true;
     }
 

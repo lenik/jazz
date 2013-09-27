@@ -16,7 +16,7 @@ public class HeuristicProbing
     @Override
     public boolean isText()
             throws IOException {
-        if (!file.isBlob())
+        if (!file.getAttributes().isBlob())
             return false;
 
         byte[] block;
@@ -32,7 +32,7 @@ public class HeuristicProbing
     @Override
     public boolean isBinary()
             throws IOException {
-        return file.isBlob() ? !isText() : false;
+        return file.getAttributes().isBlob() ? !isText() : false;
     }
 
 }

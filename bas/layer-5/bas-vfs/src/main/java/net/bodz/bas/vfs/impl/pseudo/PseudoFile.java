@@ -1,10 +1,8 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.LinkOption;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileAttributeView;
+import java.nio.file.attribute.FileTime;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FilePath;
@@ -18,7 +16,6 @@ public abstract class PseudoFile
 
     private String localPath;
     protected Inode inode;
-    private PseudoFileAttributes attributes;
 
     /**
      * @throws NullPointerException
@@ -67,23 +64,6 @@ public abstract class PseudoFile
     }
 
     @Override
-    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
-    }
-
-    @Override
-    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
-            throws IOException {
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
-    }
-
-    @Override
     public Boolean exists() {
         return true;
     }
@@ -114,6 +94,15 @@ public abstract class PseudoFile
     public Iterable<? extends IFile> children(IFileFilter nameFilter)
             throws VFSException {
         return Collections.emptyList();
+    }
+
+    /** ⇱ Implementation Of {@link BasicFileAttributes}. */
+    /* _____________________________ */static section.iface __section__;
+
+    @Override
+    public FileTime lastModifiedTime() {
+        long time = inode.getLastAccessTime();
+        return FileTime.fromMillis(time);
     }
 
 }

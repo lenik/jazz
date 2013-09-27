@@ -2,16 +2,10 @@ package net.bodz.bas.vfs.impl.filter;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.LinkOption;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileAttributeView;
+import java.nio.file.attribute.FileTime;
 
 import net.bodz.bas.io.res.IStreamResource;
-import net.bodz.bas.vfs.AbstractFile;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
-import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.*;
 import net.bodz.bas.vfs.path.IPath;
 
 public class FilterFile
@@ -21,16 +15,21 @@ public class FilterFile
         super(device, baseName);
     }
 
+    /** ⇱ Implementation Of {@link net.bodz.bas.vfs.IFsObject}. */
+/* _____________________________ */static section.iface __FS_OBJ__;
+
     @Override
-    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+    public IPath getPath() {
         return null;
     }
 
     @Override
-    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
-            throws IOException {
+    public Boolean exists() {
         return null;
     }
+
+    /** ⇱ Implementation Of {@link net.bodz.bas.vfs.IFsDir}. */
+    /* _____________________________ */static section.iface __DIR__;
 
     @Override
     public IFile getChild(String childName) {
@@ -49,15 +48,30 @@ public class FilterFile
         return null;
     }
 
+    /** ⇱ Implementation Of {@link IFsBlob}. */
+    /* _____________________________ */static section.iface __BLOB__;
+
     @Override
-    public IPath getPath() {
-        return null;
+    public long getLength()
+            throws IOException {
+        return 0;
     }
 
     @Override
     protected IStreamResource newResource(Charset charset) {
         return null;
     }
+
+    /** ⇱ Implementation Of {@link IFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
+
+    @Override
+    public FileTime lastModifiedTime() {
+        return null;
+    }
+
+    /** ⇱ Implementation Of {@link Object}. */
+    /* _____________________________ */static section.obj __OBJ__;
 
     @Override
     public FilterFile clone() {

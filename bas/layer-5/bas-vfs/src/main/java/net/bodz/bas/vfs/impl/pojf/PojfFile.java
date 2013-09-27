@@ -5,9 +5,11 @@ import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.LinkOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileAttributeView;
+import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
 
 import net.bodz.bas.c.java.io.FileData;
@@ -28,7 +30,6 @@ public class PojfFile
         extends AbstractFile {
 
     private final java.io.File _file;
-    private PojfFileAttributes attributes;
 
     /**
      * @param _pathstr
@@ -51,12 +52,14 @@ public class PojfFile
     PojfFile(PojfVfsDevice driveDevice, File _file) {
         super(driveDevice, _file.getName());
         this._file = _file;
-        this.attributes = new PojfFileAttributes(_file);
     }
 
     public java.io.File getInternalFile() {
         return _file;
     }
+
+    /** ⇱ Implementation Of {@link IFsObject}. */
+    /* _____________________________ */static section.iface __FS_OBJ__;
 
     @Override
     public PojfVfsDevice getDevice() {
@@ -97,24 +100,21 @@ public class PojfFile
     }
 
     @Override
-    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
+    public boolean delete(DeleteOption... options) {
+        return FileTree.delete(_file, options);
     }
 
     @Override
-    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
-            throws IOException {
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
+    public boolean deleteOnExit(DeleteOption... options) {
+        _file.deleteOnExit();
+        return true;
     }
 
+    /** ⇱ Implementaton Of {@link IFsBlob}. */
+    /* _____________________________ */static section.iface __BLOB__;
+
     @Override
-    public Long getLength() {
+    public long getLength() {
         return _file.length();
     }
 
@@ -129,20 +129,6 @@ public class PojfFile
             throws IOException {
         return FileData.touch(_file, touch);
     }
-
-    @Override
-    public boolean delete(DeleteOption... options) {
-        return FileTree.delete(_file, options);
-    }
-
-    @Override
-    public boolean deleteOnExit(DeleteOption... options) {
-        _file.deleteOnExit();
-        return true;
-    }
-
-    /** ⇱ Implementaton Of {@link IFsBlob}. */
-    /* _____________________________ */static section.iface __BLOB__;
 
     @Override
     protected IStreamResource newResource(Charset charset) {
@@ -210,6 +196,85 @@ public class PojfFile
     public boolean mkdirs() {
         return _file.mkdirs();
     }
+
+    /** ⇱ Implementation Of {@link IFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
+
+    @Override
+    public boolean isReadable() {
+        return _file.canRead();
+    }
+
+    @Override
+    public boolean isWritable() {
+        return _file.canWrite();
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return _file.canExecute();
+    }
+
+    @Override
+    public boolean isRandomAccessible() {
+        return true;
+    }
+
+    @Override
+    public void setTimes(FileTime lastModifiedTime, FileTime lastAccessTime, FileTime createTime)
+            throws IOException {
+        _file.setLastModified(lastModifiedTime.toMillis());
+    }
+
+    /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRS_BASIC__;
+
+    @Override
+    public FileTime lastModifiedTime() {
+        return FileTime.fromMillis(_file.lastModified());
+    }
+
+    @Override
+    public boolean isRegularFile() {
+        return _file.isFile();
+    }
+
+    @Override
+    public boolean isDirectory() {
+        return _file.isDirectory();
+    }
+
+    @Override
+    public boolean isSymbolicLink() {
+        Path _path = _file.toPath();
+        return Files.isSymbolicLink(_path);
+    }
+
+    @Override
+    public boolean isOther() {
+        return false;
+    }
+
+    @Override
+    public long size() {
+        return getLength();
+    }
+
+    @Override
+    public Object fileKey() {
+        Path path = _file.toPath();
+        BasicFileAttributeView view = Files.getFileAttributeView(path, BasicFileAttributeView.class);
+        if (view == null)
+            return null;
+        try {
+            return view.readAttributes().fileKey();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    /** ⇱ Implementation Of {@link Object}. */
+    /* _____________________________ */static section.obj __OBJ__;
 
     @Override
     public int hashCode() {

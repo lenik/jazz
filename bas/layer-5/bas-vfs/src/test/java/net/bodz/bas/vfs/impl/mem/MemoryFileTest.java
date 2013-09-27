@@ -36,7 +36,7 @@ public class MemoryFileTest
         IFile foo = targetDir.resolve("foo");
         foo.to(StreamWriting.class).writeString("Foo Data");
 
-        PosixFileAttributeView view = foo.getAttributeView(PosixFileAttributeView.class);
+        PosixFileAttributeView view = foo.query(PosixFileAttributeView.class);
         Set<PosixFilePermission> permissions = view.readAttributes().permissions();
         permissions.add(PosixFilePermission.OWNER_EXECUTE);
         view.setPermissions(permissions);

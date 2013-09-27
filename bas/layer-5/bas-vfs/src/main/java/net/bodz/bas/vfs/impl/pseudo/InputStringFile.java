@@ -50,10 +50,10 @@ public class InputStringFile
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         if (encodedSize == null) {
             byte[] bytes = getText().getBytes(getPreferredCharset());
-            encodedSize = Long.valueOf(bytes.length);
+            return bytes.length;
         }
         return encodedSize;
     }

@@ -7,9 +7,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.nio.file.LinkOption;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileAttributeView;
+import java.nio.file.attribute.FileTime;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
@@ -25,12 +24,12 @@ public class URLFile
         extends AbstractFile {
 
     private final URLPath path;
-    private URLFileAttributes attributes;
+    private final URL url;
 
     public URLFile(URLVfsDevice device, URLPath path) {
         super(device, path.getBaseName());
         this.path = path;
-        this.attributes = new URLFileAttributes(this);
+        this.url = path.toURL();
     }
 
     public static URLFile resolve(URL url) {
@@ -58,26 +57,12 @@ public class URLFile
     }
 
     @Override
-    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
-    }
-
-    @Override
-    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
-            throws IOException {
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
+    public Boolean exists() {
+        return null;
     }
 
     @Override
     public boolean delete(DeleteOption... options) {
-        URL url = path.toURL();
-
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url, null);
@@ -123,41 +108,35 @@ public class URLFile
     /* _____________________________ */static section.iface __BLOB__;
 
     @Override
-    public Long getLength() {
-        URL url = path.toURL();
-
+    public long getLength()
+            throws IOException {
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url, null);
-            if (file != null && file.isFile())
-                return file.length();
+            if (file == null)
+                return -1L;
             else
-                return null;
+                return file.length();
 
             // case "jar":
             // case "zip":
             // ZipFile...
         default:
-            try {
-                URLConnection connection = url.openConnection();
+            URLConnection connection = url.openConnection();
 
-                long length;
-                if (SystemProperties.javaVersion7OrAbove)
-                    length = connection.getContentLengthLong();
-                else
-                    length = connection.getContentLength();
+            long length;
+            if (SystemProperties.javaVersion7OrAbove)
+                length = connection.getContentLengthLong();
+            else
+                length = connection.getContentLength();
 
-                return length == -1 ? null : length;
-            } catch (IOException e) {
-                return null;
-            }
+            return length;
         }
     }
 
     @Override
     public boolean setLength(long newLength)
             throws IOException {
-        URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url, null);
@@ -172,7 +151,6 @@ public class URLFile
     @Override
     public boolean mkblob(boolean touch)
             throws IOException {
-        URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url, null);
@@ -186,7 +164,6 @@ public class URLFile
 
     @Override
     protected IStreamResource newResource(Charset charset) {
-        URL url = path.toURL();
         URLResource resource = new URLResource(url);
         resource.setCharset(charset);
         return resource;
@@ -198,15 +175,15 @@ public class URLFile
     @Override
     public URLFile getChild(String entryName)
             throws FileResolveException {
-        URL url;
+        URL childUrl;
         try {
             // XXX entered...?
-            url = new URL(path.toURL(), entryName);
+            childUrl = new URL(path.toURL(), entryName);
         } catch (MalformedURLException e) {
             throw new FileResolveException(e.getMessage(), e);
         }
-        URLPath childURL = URLPath.parse(url);
-        return childURL.resolve();
+        URLPath childUrlPath = URLPath.parse(childUrl);
+        return childUrlPath.resolve();
     }
 
     @Override
@@ -225,7 +202,6 @@ public class URLFile
 
     @Override
     public boolean mkdir() {
-        URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url, null);
@@ -238,7 +214,6 @@ public class URLFile
 
     @Override
     public boolean mkdirs() {
-        URL url = path.toURL();
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url, null);
@@ -246,6 +221,107 @@ public class URLFile
                 return file.mkdirs();
         default:
             return false;
+        }
+    }
+
+    /** ⇱ Implementation Of {@link IFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
+
+    @Override
+    public boolean isReadable() {
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.canRead();
+        default:
+            return true;
+        }
+    }
+
+    @Override
+    public boolean isWritable() {
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.canWrite();
+        default:
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isExecutable() {
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.canExecute();
+        default:
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isRandomAccessible() {
+        switch (url.getProtocol()) {
+        case "file":
+        case "jar":
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRS_BASIC__;
+
+    @Override
+    public FileTime lastModifiedTime() {
+        long lastModified = 0L;
+        try {
+            lastModified = url.openConnection().getLastModified();
+        } catch (IOException e) {
+        }
+        return FileTime.fromMillis(lastModified);
+    }
+
+    @Override
+    public boolean isRegularFile() {
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.isFile();
+
+        default:
+            return true;
+        }
+    }
+
+    @Override
+    public boolean isDirectory() {
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url, null);
+            return file == null ? false : file.isDirectory();
+
+        default:
+            return false;
+        }
+    }
+
+    @Override
+    public Object fileKey() {
+        return url.toString();
+    }
+
+    @Override
+    public void setTimes(FileTime lastModifiedTime, FileTime lastAccessTime, FileTime createTime)
+            throws IOException {
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url, null);
+            if (file != null)
+                file.setLastModified(lastModifiedTime.toMillis());
+            break;
         }
     }
 
