@@ -1,5 +1,7 @@
 package net.bodz.bas.t.event;
 
+import net.bodz.bas.meta.decl.EventSource;
+
 /**
  * Property change event source.
  * 
@@ -10,8 +12,7 @@ package net.bodz.bas.t.event;
  * @see java.beans.PropertyChangeSupport
  */
 public interface IPropertyChangeSource
-// extends EventSource
-{
+        extends EventSource {
 
     void addPropertyChangeListener(IPropertyChangeListener listener);
 

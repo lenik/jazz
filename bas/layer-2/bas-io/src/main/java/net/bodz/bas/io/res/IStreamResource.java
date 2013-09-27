@@ -9,11 +9,11 @@ import net.bodz.bas.io.ICharIOS;
 public interface IStreamResource
         extends IStreamInputSource, IStreamOutputTarget {
 
-    Long getLength();
-
-    void addOpenResourceListener(IOpenResourceListener listener);
-
-    void removeOpenResourceListener(IOpenResourceListener listener);
+    /**
+     * @return -1 if length unknown.
+     */
+    long getLength()
+            throws IOException;
 
     IByteIOS newByteIOS(OpenOption... options)
             throws IOException;

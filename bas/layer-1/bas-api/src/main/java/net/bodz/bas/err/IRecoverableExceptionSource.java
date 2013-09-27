@@ -1,6 +1,9 @@
 package net.bodz.bas.err;
 
-public interface ExceptionEventSource {
+import net.bodz.bas.meta.decl.EventSource;
+
+public interface IRecoverableExceptionSource
+        extends EventSource {
 
     void addExceptionListener(RecoverableExceptionListener listener);
 

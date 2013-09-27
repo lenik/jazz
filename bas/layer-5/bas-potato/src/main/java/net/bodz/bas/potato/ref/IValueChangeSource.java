@@ -1,6 +1,9 @@
 package net.bodz.bas.potato.ref;
 
-public interface IValueChangeSource {
+import net.bodz.bas.meta.decl.EventSource;
+
+public interface IValueChangeSource
+        extends EventSource {
 
     void addValueChangeListener(IValueChangeListener listener);
 

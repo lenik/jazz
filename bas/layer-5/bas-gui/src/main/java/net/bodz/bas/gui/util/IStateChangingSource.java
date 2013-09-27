@@ -1,5 +1,8 @@
 package net.bodz.bas.gui.util;
 
-public interface IStateChangingSource {
+import net.bodz.bas.meta.decl.EventSource;
+
+public interface IStateChangingSource
+        extends EventSource {
 
 }
