@@ -55,13 +55,16 @@ public class URLResource
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url, null);
-            return file == null ? null : file.length();
+            if (file != null)
+                return file.length();
+            else
+                return -1L;
         default:
-            return null;
+            return -1L;
         }
     }
 

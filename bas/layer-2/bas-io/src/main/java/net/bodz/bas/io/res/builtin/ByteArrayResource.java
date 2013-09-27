@@ -58,8 +58,8 @@ public class ByteArrayResource
     }
 
     @Override
-    public Long getLength() {
-        return (long) (end - start);
+    public long getLength() {
+        return end - start;
     }
 
     @Override
