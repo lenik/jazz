@@ -28,11 +28,11 @@ public class BytesFile
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         if (resource.isAllocated())
-            return (long) resource.getLength();
+            return resource.getLength();
         else
-            return null;
+            return 0;
     }
 
     @Override

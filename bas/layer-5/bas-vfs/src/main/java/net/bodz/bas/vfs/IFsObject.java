@@ -6,10 +6,12 @@ import java.nio.file.NotLinkException;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
-public interface IFsObject {
+public interface IFsObject
+        extends IQueryable {
 
     /**
      * Get the VFS device which this file entry belongs to.
@@ -62,11 +64,7 @@ public interface IFsObject {
 
     boolean isNotExisted();
 
-    boolean isBlob();
-
-    boolean isDirectory();
-
-    IFsObjectAttributes getAttributes();
+    IFileAttributes getAttributes();
 
     /**
      * Get the parent fs entry which this entry resides in.

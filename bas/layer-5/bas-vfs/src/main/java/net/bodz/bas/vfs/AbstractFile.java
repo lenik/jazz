@@ -23,7 +23,7 @@ import net.bodz.bas.vfs.util.content.LazyProbing;
 
 public abstract class AbstractFile
         extends FsObject
-        implements IFile, IFileAttributes/* , Serializable */{
+        implements IFile/* , Serializable */{
 
     private Charset preferredCharset = Charset.defaultCharset();
 
@@ -38,27 +38,6 @@ public abstract class AbstractFile
      */
     public AbstractFile(IVfsDevice device, String baseName) {
         super(device, baseName);
-    }
-
-    /** ⇱ Implementation Of {@link Object}. */
-    /* _____________________________ */static section.obj __OBJ__;
-
-    @Override
-    public int hashCode() {
-        int hash = super.hashCode();
-        assert preferredCharset != null;
-        hash += preferredCharset.hashCode();
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof AbstractFile))
-            return false;
-        AbstractFile o = (AbstractFile) obj;
-        if (!preferredCharset.equals(o.preferredCharset))
-            return false;
-        return super.equals(o);
     }
 
     @Override
@@ -114,7 +93,7 @@ public abstract class AbstractFile
                 bits |= WRITABLE;
             if (attrs.isExecutable())
                 bits |= EXECUTABLE;
-            if (attrs.isSeekable())
+            if (attrs.isRandomAccessible())
                 bits |= SEEKABLE;
         }
 
@@ -133,12 +112,13 @@ public abstract class AbstractFile
         }
 
         if (0 != (mask & MASK_LENGTHY)) {
-            Long length = this.getLength();
-            if (length != null) {
+            try {
+                long length = this.getLength();
                 if (length == 0)
                     bits |= EMPTY;
-                else
+                if (length > 0)
                     bits |= NEMPTY;
+            } catch (IOException e) {
             }
         }
 
@@ -219,15 +199,6 @@ public abstract class AbstractFile
         if (charsetName == null)
             throw new NullPointerException("charsetName");
         setPreferredCharset(Charset.forName(charsetName));
-    }
-
-    @Override
-    public final long length() {
-        Long length = getLength();
-        if (length == null)
-            return 0;
-        else
-            return length.longValue();
     }
 
     @Override
@@ -371,18 +342,38 @@ public abstract class AbstractFile
     /* _____________________________ */static section.iface __ATTRIBUTES__;
 
     @Override
-    public boolean isIterable() {
-        return true;
+    public boolean isBlob() {
+        return isRegularFile();
     }
 
     @Override
-    public boolean isExecutable() {
-        return false;
+    public long size() {
+        try {
+            return getLength();
+        } catch (IOException e) {
+            return -1L;
+        }
+    }
+
+    /** ⇱ Implementation Of {@link Object}. */
+    /* _____________________________ */static section.obj __OBJ__;
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        assert preferredCharset != null;
+        hash += preferredCharset.hashCode();
+        return hash;
     }
 
     @Override
-    public boolean isSeekable() {
-        return true;
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AbstractFile))
+            return false;
+        AbstractFile o = (AbstractFile) obj;
+        if (!preferredCharset.equals(o.preferredCharset))
+            return false;
+        return super.equals(o);
     }
 
 }

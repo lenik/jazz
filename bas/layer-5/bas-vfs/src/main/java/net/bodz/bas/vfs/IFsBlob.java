@@ -31,28 +31,14 @@ public interface IFsBlob
      */
     void setPreferredCharset(String charsetName);
 
-    @Override
-    IFsBlobAttributes getAttributes();
-
     /**
      * Get the file length.
-     * <p>
-     * <i> If you override this method, you should override the {@link #length()} at the same time.
-     * </i>
      * 
-     * @return <code>null</code> if the file length is unknown, or the file length in bytes, .
+     * @return File length in bytes, <code>0</code> if the file isn't existed. If the length of the
+     *         file can't be known, <code>-1</code> is returned.
      */
-    Long getLength();
-
-    /**
-     * Get the file length.
-     * <p>
-     * <i> If you override this method, you should override the {@link #length()} at the same time.
-     * </i>
-     * 
-     * @return <code>0</code> if the file length is unknown, or the file length in bytes.
-     */
-    long length();
+    long getLength()
+            throws IOException;
 
     /**
      * Trim the file to the length, or extend the file, the extension part may be filled with

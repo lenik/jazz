@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.nio.file.attribute.FileTime;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
-import net.bodz.bas.typer.std.Attributes;
+import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.vfs.path.IPath;
 
 public abstract class FsObject
-        extends Attributes
-        implements IFsObject, IFsObjectAttributes {
+        extends AbstractQueryable
+        implements IFsObject, IMutableFileAttributes {
 
     private final IVfsDevice device;
     private String baseName;
@@ -21,25 +21,6 @@ public abstract class FsObject
             throw new NullPointerException("baseName");
         this.device = device;
         this.baseName = baseName;
-    }
-
-    protected final FsObject nativeClone() {
-        try {
-            return (FsObject) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Get the path string of this file.
-     * 
-     * @return Non-<code>null</code> path string of this file.
-     * @see IPath#toString()
-     */
-    @Override
-    public String toString() {
-        return getPath().toString();
     }
 
     /** ⇱ Implementation Of {@link IFsObject}. */
@@ -67,11 +48,6 @@ public abstract class FsObject
     }
 
     @Override
-    public Boolean exists() {
-        return null;
-    }
-
-    @Override
     public final boolean isExisted() {
         return exists() == Boolean.TRUE;
     }
@@ -82,18 +58,8 @@ public abstract class FsObject
     }
 
     @Override
-    public final boolean isBlob() {
-        return false;
-    }
-
-    @Override
-    public boolean isDirectory() {
-        return false;
-    }
-
-    @Override
     public IFileAttributes getAttributes() {
-        return null;
+        return this;
     }
 
     @Override
@@ -121,22 +87,69 @@ public abstract class FsObject
         return targetSpec;
     }
 
-    /** ⇱ Implementation Of {@link IFsObjectAttributes}. */
-    /* _____________________________ */static section.iface __ATTRIBUTES__;
+    /** ⇱ Implementation Of {@link BasicFileAttributes}. */
+    ;
 
     @Override
-    public FileTime getCreationTime() {
-        return getLastModifiedTime();
+    public FileTime lastAccessTime() {
+        return lastModifiedTime();
     }
 
     @Override
-    public boolean setLastModifiedTime(FileTime lastModifiedTime)
-            throws IOException {
+    public FileTime creationTime() {
+        return lastModifiedTime();
+    }
+
+    @Override
+    public boolean isRegularFile() {
         return false;
     }
 
     @Override
-    public boolean isSymLink() {
+    public boolean isDirectory() {
+        return false;
+    }
+
+    @Override
+    public boolean isSymbolicLink() {
+        return false;
+    }
+
+    @Override
+    public boolean isOther() {
+        return false;
+    }
+
+    @Override
+    public Object fileKey() {
+        return this;
+    }
+
+    /** ⇱ Implementation Of {@link IFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
+
+    @Override
+    public boolean isBlob() {
+        return false;
+    }
+
+    @Override
+    public boolean isReadable() {
+        return true;
+    }
+
+    @Override
+    public boolean isWritable() {
+        return false;
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return false;
+    }
+
+    @Override
+    public boolean isRandomAccessible() {
         return false;
     }
 
@@ -146,19 +159,30 @@ public abstract class FsObject
     }
 
     @Override
-    public boolean setHidden(boolean hidden)
+    public void setTimes(FileTime lastModifiedTime, FileTime lastAccessTime, FileTime createTime)
             throws IOException {
-        return false;
     }
 
-    @Override
-    public boolean isReadable() {
-        return false;
+    /** ⇱ Implementation Of {@link Object}. */
+    /* _____________________________ */static section.obj __OBJ__;
+
+    protected final FsObject nativeClone() {
+        try {
+            return (FsObject) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
+    /**
+     * Get the path string of this file.
+     * 
+     * @return Non-<code>null</code> path string of this file.
+     * @see IPath#toString()
+     */
     @Override
-    public boolean isWritable() {
-        return false;
+    public String toString() {
+        return getPath().toString();
     }
 
 }

@@ -5,18 +5,14 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.attribute.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.nio.DeleteOption;
-import net.bodz.bas.c.java.nio.DeviceAttributeView;
-import net.bodz.bas.c.java.nio.DeviceAttributes;
-import net.bodz.bas.c.java.nio.FilePermissionAttributeView;
-import net.bodz.bas.c.java.nio.FilePermissionAttributes;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.FileResource;
@@ -33,7 +29,6 @@ public class NioFile
         extends AbstractFile {
 
     private final Path _path;
-    private NioExtraFileAttributes extraAttrs;
 
     /**
      * @param _pathstr
@@ -68,6 +63,9 @@ public class NioFile
         return _path;
     }
 
+    /** ⇱ Implementation Of {@link IFsObject}. */
+    /* _____________________________ */static section.iface __FS_OBJ__;
+
     @Override
     public NioVfsDevice getDevice() {
         return (NioVfsDevice) super.getDevice();
@@ -97,66 +95,9 @@ public class NioFile
     }
 
     @Override
-    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
-        if (type == DeviceAttributeView.class || type == FilePermissionAttributeView.class)
-            return type.cast(extraAttrs);
-        else
-            return Files.getFileAttributeView(_path, type, options);
-    }
-
-    @Override
-    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
-            throws IOException {
-        BasicFileAttributes attributes = null;
-
-        if (type == DeviceAttributes.class || type == FilePermissionAttributes.class)
-            attributes = type.cast(extraAttrs);
-
-        else if (type.equals(BasicFileAttributes.class)) {
-            BasicFileAttributeView view = getAttributeView(BasicFileAttributeView.class, options);
-            if (view != null)
-                attributes = view.readAttributes();
-        }
-
-        else if (type.equals(DosFileAttributes.class)) {
-            DosFileAttributeView view = getAttributeView(DosFileAttributeView.class, options);
-            if (view != null)
-                attributes = view.readAttributes();
-        }
-
-        else if (type.equals(PosixFileAttributes.class)) {
-            PosixFileAttributeView view = getAttributeView(PosixFileAttributeView.class, options);
-            if (view != null)
-                attributes = view.readAttributes();
-        }
-
-        return type.cast(attributes);
-    }
-
-    @Override
     public Boolean exists() {
         // LinkOption.NOFOLLOW_LINKS
         return Files.exists(_path);
-    }
-
-    @Override
-    public boolean setLength(long newLength)
-            throws IOException {
-        File file = _path.toFile();
-        if (file != null)
-            return FileData.setLength(file, newLength);
-        else
-            return false;
-    }
-
-    @Override
-    public boolean mkblob(boolean touch)
-            throws IOException {
-        File file = _path.toFile();
-        if (file != null)
-            return FileData.touch(file, touch);
-        else
-            return false;
     }
 
     @Override
@@ -191,6 +132,32 @@ public class NioFile
 
     /** ⇱ Implementaton Of {@link IFsBlob}. */
     /* _____________________________ */static section.iface __BLOB__;
+
+    @Override
+    public long getLength()
+            throws IOException {
+        return Files.size(_path);
+    }
+
+    @Override
+    public boolean setLength(long newLength)
+            throws IOException {
+        File file = _path.toFile();
+        if (file != null)
+            return FileData.setLength(file, newLength);
+        else
+            return false;
+    }
+
+    @Override
+    public boolean mkblob(boolean touch)
+            throws IOException {
+        File file = _path.toFile();
+        if (file != null)
+            return FileData.touch(file, touch);
+        else
+            return false;
+    }
 
     @Override
     protected IStreamResource newResource(Charset charset) {
@@ -279,6 +246,93 @@ public class NioFile
             return false;
         }
     }
+
+    /** ⇱ Implementaton Of {@link IFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
+
+    @Override
+    public boolean isReadable() {
+        return Files.isReadable(_path);
+    }
+
+    @Override
+    public boolean isWritable() {
+        return Files.isWritable(_path);
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return Files.isExecutable(_path);
+    }
+
+    @Override
+    public boolean isRandomAccessible() {
+        return true;
+    }
+
+    /** ⇱ Implementaton Of {@link BasicFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRS_BASIC__;
+
+    private BasicFileAttributes _bfa;
+
+    private BasicFileAttributes getBasicFileAttributes() {
+        if (_bfa == null) {
+            try {
+                _bfa = Files.readAttributes(_path, BasicFileAttributes.class);
+            } catch (IOException e) {
+                _bfa = IFileAttributes.NULL;
+            }
+        }
+        return _bfa;
+    }
+
+    @Override
+    public FileTime lastModifiedTime() {
+        return getBasicFileAttributes().lastModifiedTime();
+    }
+
+    @Override
+    public FileTime lastAccessTime() {
+        return getBasicFileAttributes().lastAccessTime();
+    }
+
+    @Override
+    public FileTime creationTime() {
+        return getBasicFileAttributes().creationTime();
+    }
+
+    @Override
+    public boolean isRegularFile() {
+        return getBasicFileAttributes().isRegularFile();
+    }
+
+    @Override
+    public boolean isDirectory() {
+        return getBasicFileAttributes().isDirectory();
+    }
+
+    @Override
+    public boolean isSymbolicLink() {
+        return getBasicFileAttributes().isSymbolicLink();
+    }
+
+    @Override
+    public boolean isOther() {
+        return getBasicFileAttributes().isOther();
+    }
+
+    @Override
+    public long size() {
+        return getBasicFileAttributes().size();
+    }
+
+    @Override
+    public Object fileKey() {
+        return getBasicFileAttributes().fileKey();
+    }
+
+    /** ⇱ Implementation Of {@link Object}. */
+    /* _____________________________ */static section.obj __OBJ__;
 
     @Override
     public int hashCode() {

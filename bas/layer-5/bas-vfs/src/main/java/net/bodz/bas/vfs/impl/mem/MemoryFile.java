@@ -17,11 +17,7 @@ import net.bodz.bas.t.buffer.IMovableBuffer;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 import net.bodz.bas.t.pojo.Pair;
-import net.bodz.bas.vfs.AbstractFile;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
-import net.bodz.bas.vfs.IFilenameFilter;
-import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.*;
 import net.bodz.bas.vfs.inode.Inode;
 import net.bodz.bas.vfs.inode.InodeType;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -50,14 +46,12 @@ public class MemoryFile
         this.inode = inode;
     }
 
-    @Override
-    public MemoryVfsDevice getDevice() {
-        return (MemoryVfsDevice) super.getDevice();
+    public boolean isCharOriented() {
+        return charOriented;
     }
 
-    @Override
-    public MemoryPath getPath() {
-        return path;
+    public void setCharOriented(boolean charOriented) {
+        this.charOriented = charOriented;
     }
 
     public synchronized Inode _get(boolean followLinks) {
@@ -83,45 +77,143 @@ public class MemoryFile
         return inode;
     }
 
+    /** ⇱ Implementation Of {@link IFsObject}. */
+    /* _____________________________ */static section.iface __FS_OBJ__;
+
     @Override
-    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
-        if (LinkOptions.isFollowLinks(options) && isSymLink()) {
-            Pair<IPath, Inode> target = getDevice()._follow(path.getLocalPath());
-            if (target == null)
-                throw new BadPathException(path.toString());
-
-            MemoryPath targetPath = (MemoryPath) target.getFirst();
-            Inode targetInode = target.getSecond();
-            MemoryFile targetFile = new MemoryFile(getDevice(), targetPath, targetInode);
-
-            return targetFile.getAttributeView(type);
-        }
-
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
+    public MemoryVfsDevice getDevice() {
+        return (MemoryVfsDevice) super.getDevice();
     }
 
     @Override
-    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options) {
-        if (LinkOptions.isFollowLinks(options) && isSymLink()) {
-            Pair<IPath, Inode> target = getDevice()._follow(path.getLocalPath());
-            if (target == null)
-                throw new BadPathException(path.toString());
+    public MemoryPath getPath() {
+        return path;
+    }
 
-            MemoryPath targetPath = (MemoryPath) target.getFirst();
-            Inode targetInode = target.getSecond();
-            MemoryFile targetFile = new MemoryFile(getDevice(), targetPath, targetInode);
+    @Override
+    public Boolean exists() {
+        Inode inode = _get(true);
+        if (inode == null)
+            return false;
+        else
+            return true;
+    }
 
-            return targetFile.readAttributes(type);
+    @Override
+    public boolean delete(DeleteOption... options) {
+        Inode inode = _get(false);
+        if (inode != null && inode.isEmpty()) {
+            inode.detach();
+            inode = null;
+
+            if (DeleteOptions.isRemoveEmptyParents(options)) {
+                // TODO remove empty parents...
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean linkTo(String targetSpec, boolean symbolic)
+            throws IOException {
+        Inode inode = _create();
+        if (inode == null)
+            throw new IOException("Failed to create inode.");
+
+        if (symbolic) {
+            inode.setType(InodeType.symbolicLink);
+            inode.setData(targetSpec);
+            inode.touch();
+        } else {
+            IPath targetPath = getPath().join(targetSpec);
+
+            Inode targetInode = getDevice()._find(targetPath.getLocalPath());
+            if (targetInode == null)
+                throw new IOException("Target isn't existed: " + targetSpec);
+
+            InodeType type = targetInode.getType();
+            int dataType = targetInode.getDataType();
+            Object data = targetInode.getData();
+
+            inode.setType(type);
+            inode.setData(dataType, data);
+        }
+        return true;
+    }
+
+    /** ⇱ Implementation Of {@link IFsBlob}. */
+/* _____________________________ */static section.iface __BLOB__;
+
+    @Override
+    public boolean setLength(long newLength)
+            throws IOException {
+        if (!mkblob(true))
+            return false;
+
+        if (newLength > IMovableBuffer.SIZE_MAX)
+            throw new OutOfMemoryError();
+        int newSize = (int) newLength;
+
+        Inode inode = _get(false);
+
+        boolean followSymLink = false;
+        if (followSymLink)
+            while (inode.getType() == InodeType.symbolicLink) {
+                String targetSpec = (String) inode.getData();
+                inode = inode.resolve(targetSpec);
+                if (inode == null)
+                    throw new IllegalUsageException();
+            }
+
+        switch (inode.getType()) {
+        case blob:
+        case mixed:
+            IMovableBuffer data = (IMovableBuffer) inode.getData();
+            data.resize(newSize);
+            return true;
+
+        case none:
+        case directory:
+            return false;
+
+        default:
+            return false;
+        }
+    }
+
+    @Override
+    public boolean mkblob(boolean touch)
+            throws IOException {
+        Inode inode = _create();
+        if (inode == null)
+            throw new IOException("Failed to create inode.");
+
+        inode.setType(InodeType.blob);
+
+        if (isCharOriented()) {
+            MovableCharBuffer buffer = new MovableCharBuffer();
+            inode.setData(MOVABLE_CHAR_BUFFER, buffer);
+        } else {
+            MovableByteBuffer buffer = new MovableByteBuffer();
+            inode.setData(MOVABLE_BYTE_BUFFER, buffer);
         }
 
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
+        if (touch)
+            inode.touch();
+
+        return true;
     }
+
+    @Override
+    protected IStreamResource newResource(Charset charset) {
+        IStreamResource resource = new MemoryResource(this);
+        resource.setCharset(charset);
+        return resource;
+    }
+
+    /** ⇱ Implementation Of {@link IFsDir}. */
+    /* _____________________________ */static section.iface __DIR__;
 
     @Override
     public IFile getChild(String childName) {
@@ -162,107 +254,6 @@ public class MemoryFile
     }
 
     @Override
-    public boolean setLength(long newLength)
-            throws IOException {
-        if (!mkblob(true))
-            return false;
-
-        if (newLength > IMovableBuffer.SIZE_MAX)
-            throw new OutOfMemoryError();
-        int newSize = (int) newLength;
-
-        Inode inode = _get(false);
-
-        boolean followSymLink = false;
-        if (followSymLink)
-            while (inode.getType() == InodeType.symbolicLink) {
-                String targetSpec = (String) inode.getData();
-                inode = inode.resolve(targetSpec);
-                if (inode == null)
-                    throw new IllegalUsageException();
-            }
-
-        switch (inode.getType()) {
-        case blob:
-        case mixed:
-            IMovableBuffer data = (IMovableBuffer) inode.getData();
-            data.resize(newSize);
-            return true;
-
-        case none:
-        case directory:
-            return false;
-
-        default:
-            return false;
-        }
-    }
-
-    public boolean isCharOriented() {
-        return charOriented;
-    }
-
-    public void setCharOriented(boolean charOriented) {
-        this.charOriented = charOriented;
-    }
-
-    @Override
-    public boolean mkblob(boolean touch)
-            throws IOException {
-        Inode inode = _create();
-        if (inode == null)
-            throw new IOException("Failed to create inode.");
-
-        inode.setType(InodeType.blob);
-
-        if (isCharOriented()) {
-            MovableCharBuffer buffer = new MovableCharBuffer();
-            inode.setData(MOVABLE_CHAR_BUFFER, buffer);
-        } else {
-            MovableByteBuffer buffer = new MovableByteBuffer();
-            inode.setData(MOVABLE_BYTE_BUFFER, buffer);
-        }
-
-        if (touch)
-            inode.touch();
-
-        return true;
-    }
-
-    @Override
-    public Boolean exists() {
-        Inode inode = _get(true);
-        if (inode == null)
-            return false;
-        else
-            return true;
-    }
-
-    @Override
-    public boolean isIterable() {
-        Inode inode = _get(true);
-        if (inode == null)
-            return false;
-        else
-            return true;
-    }
-
-    @Override
-    public boolean delete(DeleteOption... options) {
-        Inode inode = _get(false);
-        if (inode != null && inode.isEmpty()) {
-            inode.detach();
-            inode = null;
-
-            if (DeleteOptions.isRemoveEmptyParents(options)) {
-                // TODO remove empty parents...
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public boolean mkdirs() {
         Inode inode = _create();
         if (inode == null)
@@ -289,39 +280,56 @@ public class MemoryFile
         return mkdirs();
     }
 
+    /** ⇱ Implementation Of {@link IFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
+
     @Override
-    protected IStreamResource newResource(Charset charset) {
-        IStreamResource resource = new MemoryResource(this);
-        resource.setCharset(charset);
-        return resource;
+    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
+        if (LinkOptions.isFollowLinks(options) && isSymbolicLink()) {
+            Pair<IPath, Inode> target = getDevice()._follow(path.getLocalPath());
+            if (target == null)
+                throw new BadPathException(path.toString());
+
+            MemoryPath targetPath = (MemoryPath) target.getFirst();
+            Inode targetInode = target.getSecond();
+            MemoryFile targetFile = new MemoryFile(getDevice(), targetPath, targetInode);
+
+            return targetFile.getAttributeView(type);
+        }
+
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
     }
 
     @Override
-    public boolean linkTo(String targetSpec, boolean symbolic)
-            throws IOException {
-        Inode inode = _create();
-        if (inode == null)
-            throw new IOException("Failed to create inode.");
+    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options) {
+        if (LinkOptions.isFollowLinks(options) && isSymbolicLink()) {
+            Pair<IPath, Inode> target = getDevice()._follow(path.getLocalPath());
+            if (target == null)
+                throw new BadPathException(path.toString());
 
-        if (symbolic) {
-            inode.setType(InodeType.symbolicLink);
-            inode.setData(targetSpec);
-            inode.touch();
-        } else {
-            IPath targetPath = getPath().join(targetSpec);
+            MemoryPath targetPath = (MemoryPath) target.getFirst();
+            Inode targetInode = target.getSecond();
+            MemoryFile targetFile = new MemoryFile(getDevice(), targetPath, targetInode);
 
-            Inode targetInode = getDevice()._find(targetPath.getLocalPath());
-            if (targetInode == null)
-                throw new IOException("Target isn't existed: " + targetSpec);
-
-            InodeType type = targetInode.getType();
-            int dataType = targetInode.getDataType();
-            Object data = targetInode.getData();
-
-            inode.setType(type);
-            inode.setData(dataType, data);
+            return targetFile.readAttributes(type);
         }
-        return true;
+
+        if (type.isInstance(attributes))
+            return type.cast(attributes);
+        else
+            return null;
+    }
+
+    @Override
+    public boolean isTraversible() {
+        Inode inode = _get(true);
+        if (inode == null)
+            return false;
+        else
+            return true;
     }
 
 }

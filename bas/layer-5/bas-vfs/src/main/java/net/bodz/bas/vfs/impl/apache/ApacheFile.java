@@ -2,12 +2,11 @@ package net.bodz.bas.vfs.impl.apache;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.LinkOption;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileAttributeView;
 import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
 
+import org.apache.commons.vfs.FileContent;
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSelectInfo;
@@ -24,12 +23,10 @@ public class ApacheFile
         extends AbstractFile {
 
     private FileObject fileObject;
-    private FileObjectAttributes attributes;
 
     ApacheFile(ApacheVfsDevice device, FileObject fileObject) {
         super(device, fileObject.getName().getBaseName());
         this.fileObject = fileObject;
-        this.attributes = new FileObjectAttributes(fileObject);
     }
 
     public FileObject getFileObject() {
@@ -48,44 +45,9 @@ public class ApacheFile
     }
 
     @Override
-    public <V extends FileAttributeView> V getAttributeView(Class<V> type, LinkOption... options) {
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
-    }
-
-    @Override
-    public <A extends BasicFileAttributes> A readAttributes(Class<A> type, LinkOption... options)
-            throws IOException {
-        if (type.isInstance(attributes))
-            return type.cast(attributes);
-        else
-            return null;
-    }
-
-    @Override
     public Boolean exists() {
         try {
             return fileObject.exists();
-        } catch (FileSystemException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean mkblob(boolean touch)
-            throws IOException {
-        try {
-            fileObject.createFile();
-
-            // Apache VFS: createFile() does nothing if file is already existed.
-            if (touch) {
-                FileTime lastModifiedTime = FileTime.fromMillis(System.currentTimeMillis());
-                setLastModifiedTime(lastModifiedTime);
-            }
-
-            return true;
         } catch (FileSystemException e) {
             return false;
         }
@@ -107,6 +69,35 @@ public class ApacheFile
 
     /** ⇱ Implementaton Of {@link IFsBlob}. */
     /* _____________________________ */static section.iface __BLOB__;
+
+    @Override
+    public long getLength()
+            throws IOException {
+        if (!fileObject.exists())
+            return 0L;
+
+        FileContent fileContent = fileObject.getContent();
+        long size = fileContent.getSize();
+        return size;
+    }
+
+    @Override
+    public boolean mkblob(boolean touch)
+            throws IOException {
+        try {
+            fileObject.createFile();
+
+            // Apache VFS: createFile() does nothing if file is already existed.
+            if (touch) {
+                FileTime lastModifiedTime = FileTime.fromMillis(System.currentTimeMillis());
+                setTimes(lastModifiedTime, null, null);
+            }
+
+            return true;
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
 
     @Override
     protected IStreamResource newResource(Charset charset) {
@@ -135,15 +126,6 @@ public class ApacheFile
         try {
             fileObject.createFolder();
             return true;
-        } catch (FileSystemException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isIterable() {
-        try {
-            return fileObject.getType().hasChildren();
         } catch (FileSystemException e) {
             return false;
         }
@@ -246,6 +228,86 @@ public class ApacheFile
                 return new ApacheFile(getDevice(), input);
             }
         });
+    }
+
+    /** ⇱ Implementation Of {@link IFileAttributes}. */
+/* _____________________________ */static section.iface __ATTRIBUTES__;
+
+    @Override
+    public boolean isBlob() {
+        try {
+            return fileObject.getType().hasContent();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isReadable() {
+        try {
+            return fileObject.isReadable();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isWritable() {
+        try {
+            return fileObject.isWriteable();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isHidden() {
+        try {
+            return fileObject.isHidden();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public void setTimes(FileTime lastModifiedTime, FileTime lastAccessTime, FileTime createTime)
+            throws IOException {
+        try {
+            FileContent fileContent = fileObject.getContent();
+            fileContent.setLastModifiedTime(lastModifiedTime.toMillis());
+        } catch (FileSystemException e) {
+        }
+    }
+
+    /** ⇱ Implementation Of {@link BasicFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRS_BASIC__;
+
+    @Override
+    public FileTime lastModifiedTime() {
+        try {
+            long time = fileObject.getContent().getLastModifiedTime();
+            return FileTime.fromMillis(time);
+        } catch (FileSystemException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean isRegularFile() {
+        try {
+            return fileObject.getType().hasContent();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isDirectory() {
+        try {
+            return fileObject.getType().hasChildren();
+        } catch (FileSystemException e) {
+            return false;
+        }
     }
 
 }
