@@ -18,7 +18,7 @@ public abstract class ProxyStreamResource
         extends AbstractStreamResource// implements IWrapper<IStreamResource>
 {
 
-    private IStreamResource _orig;
+    protected IStreamResource _orig;
 
     public ProxyStreamResource(IStreamResource _orig) {
         this._orig = _orig;

@@ -9,10 +9,10 @@ import java.nio.file.OpenOption;
 import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.res.AbstractInputOutputStreamResource;
+import net.bodz.bas.io.res.AbstractIOStreamResource;
 
 public class CroppedRafResource
-        extends AbstractInputOutputStreamResource {
+        extends AbstractIOStreamResource {
 
     private File file;
     private String mode;

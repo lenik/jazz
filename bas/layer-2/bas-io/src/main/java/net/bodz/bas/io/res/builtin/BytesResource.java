@@ -11,7 +11,7 @@ import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 
 public class BytesResource
-        extends AbstractBinaryStreamResource {
+        extends AbstractBinaryResource {
 
     MovableByteBuffer buffer;
 

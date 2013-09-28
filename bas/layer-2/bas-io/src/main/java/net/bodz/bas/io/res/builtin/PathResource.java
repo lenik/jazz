@@ -11,10 +11,10 @@ import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 
-import net.bodz.bas.io.res.AbstractInputOutputStreamResource;
+import net.bodz.bas.io.res.AbstractIORandomResource;
 
 public class PathResource
-        extends AbstractInputOutputStreamResource
+        extends AbstractIORandomResource
         implements IChannelResource {
 
     private Path path;
@@ -48,6 +48,9 @@ public class PathResource
             throws IOException {
         return Files.newBufferedWriter(path, getCharset(), options);
     }
+
+    /** ⇱ Implementation Of {@link IChannelResource}. */
+    /* _____________________________ */static section.iface __CHANNEL__;
 
     @Override
     public final ByteChannel newByteChannel(OpenOption... options)

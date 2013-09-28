@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.IFsObject;
@@ -84,7 +84,7 @@ public interface ISession {
      * @throws IOException
      *             if the name is invalid or failed to get the attachment.
      */
-    IStreamResource getAttachment(String name, boolean autoCreate)
+    IRandomResource getAttachment(String name, boolean autoCreate)
             throws IOException;
 
     /**

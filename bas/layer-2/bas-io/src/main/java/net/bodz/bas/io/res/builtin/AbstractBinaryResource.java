@@ -12,10 +12,10 @@ import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.impl.DecodedCharIn;
 import net.bodz.bas.io.impl.EncodedCharOut;
-import net.bodz.bas.io.res.AbstractStreamResource;
+import net.bodz.bas.io.res.AbstractRandomResource;
 
-public abstract class AbstractBinaryStreamResource
-        extends AbstractStreamResource {
+public abstract class AbstractBinaryResource
+        extends AbstractRandomResource {
 
     @Override
     public ICharIn _newCharIn(OpenOption... options)

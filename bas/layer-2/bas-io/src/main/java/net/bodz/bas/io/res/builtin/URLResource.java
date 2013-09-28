@@ -12,10 +12,10 @@ import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.nio.OpenOptions;
-import net.bodz.bas.io.res.AbstractInputOutputStreamResource;
+import net.bodz.bas.io.res.AbstractIOStreamResource;
 
 public class URLResource
-        extends AbstractInputOutputStreamResource {
+        extends AbstractIOStreamResource {
 
     private final URL url;
 
@@ -53,20 +53,20 @@ public class URLResource
     public URL getURL() {
         return url;
     }
-
-    @Override
-    public long getLength() {
-        switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            if (file != null)
-                return file.length();
-            else
-                return -1L;
-        default:
-            return -1L;
-        }
-    }
+//
+//    @Override
+//    public long getLength() {
+//        switch (url.getProtocol()) {
+//        case "file":
+//            File file = FileURL.toFile(url, null);
+//            if (file != null)
+//                return file.length();
+//            else
+//                return -1L;
+//        default:
+//            return -1L;
+//        }
+//    }
 
     @Override
     protected InputStream _newInputStream(OpenOption... options)
@@ -96,4 +96,5 @@ public class URLResource
             return url.openConnection().getOutputStream();
         }
     }
+
 }
