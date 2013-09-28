@@ -5,12 +5,12 @@ import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
+import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.text.diff.IDiffComparator;
 import net.bodz.bas.text.diff.IDiffFormat;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
 
 /**
  * Why put getter/setter here?
@@ -117,11 +117,11 @@ public class CLIAccessor {
         instance.prune = filterDirectories;
     }
 
-    public static IFileFilter getFileFilter(BatchCLI instance) {
+    public static IFilter<IFile> getFileFilter(BatchCLI instance) {
         return instance.fileFilter;
     }
 
-    public static void setFileFilter(BatchCLI instance, IFileFilter fileFilter) {
+    public static void setFileFilter(BatchCLI instance, IFilter<IFile> fileFilter) {
         instance.fileFilter = fileFilter;
     }
 
