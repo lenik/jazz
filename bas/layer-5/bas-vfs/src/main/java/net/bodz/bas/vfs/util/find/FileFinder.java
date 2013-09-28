@@ -10,11 +10,11 @@ import java.util.List;
 import net.bodz.bas.c.java.io.PruneFileFilter;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.RuntimizedException;
+import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.t.iterator.Iterators;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 import net.bodz.bas.t.iterator.StackedIterator;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileFilter;
 import net.bodz.bas.vfs.VFSException;
 
 public class FileFinder
@@ -27,9 +27,9 @@ public class FileFinder
     public static final int DIR_POST = 4;
 
     private IFile[] startFiles;
-    private IFileFilter userFilter;
+    private IFilter<IFile> userFilter;
     private boolean prune;
-    private IFileFilter filter;
+    private IFilter<IFile> filter;
 
     private int maxDepth;
     private int order = FILE | DIR;
@@ -38,7 +38,7 @@ public class FileFinder
     private List<IFileFoundListener> fileFoundListeners = new ArrayList<>();
 
     class Filter
-            implements IFileFilter {
+            implements IFilter<IFile> {
 
         @Override
         public boolean accept(IFile file) {
@@ -52,7 +52,7 @@ public class FileFinder
 
     }
 
-    public FileFinder(IFileFilter filter, boolean prune, int maxDepth, IFile... start) {
+    public FileFinder(IFilter<IFile> filter, boolean prune, int maxDepth, IFile... start) {
         this.startFiles = start;
         this.userFilter = filter;
         this.prune = prune;
@@ -60,15 +60,15 @@ public class FileFinder
         this.filter = new Filter();
     }
 
-    public FileFinder(IFileFilter filter, boolean prune, IFile... start) {
+    public FileFinder(IFilter<IFile> filter, boolean prune, IFile... start) {
         this(filter, false, defaultMaxDepth, start);
     }
 
-    public FileFinder(IFileFilter filter, int maxDepth, IFile... start) {
+    public FileFinder(IFilter<IFile> filter, int maxDepth, IFile... start) {
         this(filter, filter instanceof PruneFileFilter, defaultMaxDepth, start);
     }
 
-    public FileFinder(IFileFilter filter, IFile... start) {
+    public FileFinder(IFilter<IFile> filter, IFile... start) {
         this(filter, defaultMaxDepth, start);
     }
 
@@ -88,11 +88,11 @@ public class FileFinder
         this.startFiles = startFiles;
     }
 
-    public IFileFilter getFilter() {
+    public IFilter<IFile> getFilter() {
         return userFilter;
     }
 
-    public void setFilter(IFileFilter filter) {
+    public void setFilter(IFilter<IFile> filter) {
         this.userFilter = filter;
     }
 
