@@ -10,7 +10,7 @@ import net.bodz.bas.io.adapter.CharBufferCharIn;
 import net.bodz.bas.io.adapter.CharBufferCharOut;
 
 public class CharArrayResource
-        extends AbstractTextStreamResource {
+        extends AbstractTextResource {
 
     private final char[] array;
     private final int start;

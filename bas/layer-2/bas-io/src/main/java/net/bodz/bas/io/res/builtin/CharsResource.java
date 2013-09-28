@@ -11,7 +11,7 @@ import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 
 public class CharsResource
-        extends AbstractTextStreamResource {
+        extends AbstractTextResource {
 
     MovableCharBuffer buffer;
 

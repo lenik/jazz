@@ -11,10 +11,10 @@ import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.adapter.OutputStreamByteOut;
 import net.bodz.bas.io.impl.EncodedByteIn;
-import net.bodz.bas.io.res.AbstractStreamResource;
+import net.bodz.bas.io.res.AbstractRandomResource;
 
-public abstract class AbstractTextStreamResource
-        extends AbstractStreamResource {
+public abstract class AbstractTextResource
+        extends AbstractRandomResource {
 
     @Override
     protected IByteIn _newByteIn(OpenOption... options)

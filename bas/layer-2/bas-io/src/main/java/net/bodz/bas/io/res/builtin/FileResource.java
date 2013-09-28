@@ -10,10 +10,10 @@ import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
-import net.bodz.bas.io.res.AbstractInputOutputStreamResource;
+import net.bodz.bas.io.res.AbstractIORandomResource;
 
 public class FileResource
-        extends AbstractInputOutputStreamResource {
+        extends AbstractIORandomResource {
 
     private final File file;
 

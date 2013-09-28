@@ -13,7 +13,7 @@ import net.bodz.bas.io.adapter.ByteBufferByteIn;
 import net.bodz.bas.io.adapter.ByteBufferByteOut;
 
 public class ByteArrayResource
-        extends AbstractBinaryStreamResource {
+        extends AbstractBinaryResource {
 
     private final byte[] array;
     private final int start;

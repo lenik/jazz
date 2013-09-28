@@ -25,6 +25,7 @@ import net.bodz.bas.c.java.io.FileRelation;
 import net.bodz.bas.c.java.io.IOConfig;
 import net.bodz.bas.c.java.io.PruneFileFilter;
 import net.bodz.bas.io.IByteIOS;
+import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.pkg.installer.AbstractComponent;
 import net.bodz.pkg.installer.ISession;
@@ -100,10 +101,10 @@ public class FileCopy
         return buf.toString();
     }
 
-    IStreamResource getAttachment(ISession session, boolean autoCreate) {
+    IRandomResource getAttachment(ISession session, boolean autoCreate) {
         String id = getId();
         String aname = baseName + "/" + id + ".zip";
-        IStreamResource a;
+        IRandomResource a;
         try {
             a = session.getAttachment(aname, autoCreate);
         } catch (IOException e) {
@@ -282,7 +283,7 @@ public class FileCopy
 
             setProgressSize(data.list.length);
 
-            IStreamResource attachment = getAttachment(session, false);
+            IRandomResource attachment = getAttachment(session, false);
             IUnarchiver unarchiver;
             try {
                 IByteIOS ios = attachment.newByteIOS();

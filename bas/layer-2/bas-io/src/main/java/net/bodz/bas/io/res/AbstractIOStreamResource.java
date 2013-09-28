@@ -14,7 +14,7 @@ import net.bodz.bas.io.adapter.PrintStreamPrintOut;
 import net.bodz.bas.io.adapter.WriterCharOut;
 import net.bodz.bas.io.impl.DecodedCharIn;
 
-public abstract class AbstractInputOutputStreamResource
+public abstract class AbstractIOStreamResource
         extends AbstractStreamResource {
 
     /** ⇱ Implementaton Of {@link IStreamInputSource}. */
