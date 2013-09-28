@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.prefs.Preferences;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.nls.II18nCapable;
@@ -24,7 +25,7 @@ public class ActivationByTargetString
     private static final String KEY_HOSTID = "hostId";
     private static final String KEY_ACTIVATE_CODE = "activateCode";
 
-    private static final Charset encoding = Charset.forName("utf-8");
+    private static final Charset encoding = Charsets.UTF8;
 
     private final String prefix;
     private final byte[] prefixBytes;

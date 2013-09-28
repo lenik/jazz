@@ -3,6 +3,7 @@ package net.bodz.bas.ar.zip;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.data.struct.RstDataStruct;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.IDataOut;
@@ -55,7 +56,7 @@ public class EndOfCen
 
     public byte[] commentRaw;
 
-    public transient Charset charset = utf8Charset;
+    public transient Charset charset = Charsets.UTF8;
 
     @Override
     public void readObject(IDataIn in)

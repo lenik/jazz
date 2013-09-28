@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.nio.file.CopyOption;
 import java.nio.file.OpenOption;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.FileSystemProxy;
 import net.bodz.bas.vfs.IFile;
@@ -17,9 +18,7 @@ public abstract class AbstractVfsFacade
         extends FileSystemProxy
         implements IVfsFacade {
 
-    private static final Charset utf8Charset = Charset.forName("utf-8");
-
-    Charset charset = utf8Charset;
+    private Charset charset = Charsets.UTF8;
 
     public AbstractVfsFacade() {
         super();

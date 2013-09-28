@@ -11,6 +11,7 @@ import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectOutput;
 import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.c.java.io.ObjectOutputAdapter;
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.io.*;
 import net.bodz.bas.io.adapter.ByteInInputStream;
@@ -24,8 +25,6 @@ import net.bodz.bas.io.impl.PrintOutImpl;
 import net.bodz.bas.sugar.Tooling;
 
 public abstract class StreamResourceTemplate {
-
-    static final Charset utf8Charset = Charset.forName("UTF-8");
 
     private Charset charset;
     private List<IOpenResourceListener> openResourceListeners = new ArrayList<IOpenResourceListener>(1);
@@ -45,7 +44,7 @@ public abstract class StreamResourceTemplate {
      *         UTF-8 charset.
      */
     private Charset getPreferredCharset() {
-        return utf8Charset;
+        return Charsets.UTF8;
     }
 
     public Charset getCharset() {

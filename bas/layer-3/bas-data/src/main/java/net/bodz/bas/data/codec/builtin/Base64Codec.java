@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 
 import org.apache.commons.codec.binary.Base64;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.data.codec.AbstractByteCodec;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
@@ -24,7 +25,7 @@ public class Base64Codec
         super(3, 4);
     }
 
-    static final Charset base64Charset = Charset.forName("ASCII");
+    static final Charset base64Charset = Charsets.ASCII7;
 
     @Override
     public Charset getPreferredCharsetForEncodedContents() {

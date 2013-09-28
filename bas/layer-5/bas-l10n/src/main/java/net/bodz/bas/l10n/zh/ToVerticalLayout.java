@@ -12,10 +12,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.c.java.nio.Charsets;
+
 public class ToVerticalLayout {
 
     static final String verticalLine = "┆";
-    static final Charset charset = Charset.forName("utf-8");
+    static final Charset charset = Charsets.UTF8;
 
     public static void main(String[] args)
             throws IOException, UnsupportedFlavorException {

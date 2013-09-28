@@ -3,30 +3,22 @@ package net.bodz.bas.io.impl;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.io.BByteOut;
-import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.StringCharIn;
 
-public class EncodedByteInTest
-        extends Assert {
+public class EncodedCharOutTest
+        extends CodecIOTestCase {
 
-    static final Charset ASCII = Charset.forName("ASCII");
-    static final Charset UTF8 = Charset.forName("UTF8");
-
-    EncodedByteIn in;
+    EncodedCharOut out;
 
     byte[] conv(String string, Charset charset)
             throws IOException {
-        StringCharIn cin = new StringCharIn(string);
-        in = new EncodedByteIn(cin, charset);
-
-        BByteOut buf = new BByteOut();
-        IByteOut.fn.dump(buf, in);
-
-        return buf.toByteArray();
+        BByteOut bout = new BByteOut();
+        out = new EncodedCharOut(bout, charset);
+        out.write(string);
+        out.close();
+        return bout.toByteArray();
     }
 
     void convByChunk(String string, Charset charset, int chunkSize, int processCount)
@@ -37,7 +29,7 @@ public class EncodedByteInTest
         byte[] actual = conv(string, charset);
 
         assertArrayEquals(expected, actual);
-        assertEquals(processCount, in.__chunks);
+        assertEquals(processCount, out.__chunks);
     }
 
     @Test

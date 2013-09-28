@@ -10,6 +10,7 @@ import net.bodz.bas.ar.zip.xf3.XF_ASi_UNIX;
 import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UNIX2;
 import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UnicodePath;
 import net.bodz.bas.ar.zip.xf3.XF_Timestamp;
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamInputSourceWrapper;
@@ -179,7 +180,7 @@ public class ZipEntry
         ctx.requireZipVersion(versionNeeded);
 
         flags = in.readWord();
-        charset = (flags & F_UTF8) == 0 ? ctx.getZipCharset() : utf8Charset;
+        charset = (flags & F_UTF8) == 0 ? ctx.getZipCharset() : Charsets.UTF8;
 
         method = in.readWord();
         mtime = in.readDword();
