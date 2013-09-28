@@ -63,4 +63,10 @@ public abstract class FileSystemProxy
         return getWrapped().resolve(path);
     }
 
+    @Override
+    public IFile resolve(IPath path, FileResolveOptions options)
+            throws FileResolveException {
+        return getWrapped().resolve(path, options);
+    }
+
 }

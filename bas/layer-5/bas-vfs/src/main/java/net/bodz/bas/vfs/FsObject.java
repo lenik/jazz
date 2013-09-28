@@ -72,21 +72,6 @@ public abstract class FsObject
         return false;
     }
 
-    @Override
-    public boolean linkTo(String target, boolean symbolic)
-            throws IOException {
-        String localPath = getPath().getLocalPath();
-        return getDevice().createLink(localPath, target, symbolic);
-    }
-
-    @Override
-    public String readSymLink()
-            throws IOException {
-        String localPath = getPath().getLocalPath();
-        String targetSpec = getDevice().readSymbolicLink(localPath);
-        return targetSpec;
-    }
-
     /** ⇱ Implementation Of {@link BasicFileAttributes}. */
     ;
 

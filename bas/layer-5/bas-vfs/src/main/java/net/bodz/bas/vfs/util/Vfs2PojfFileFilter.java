@@ -3,15 +3,16 @@ package net.bodz.bas.vfs.util;
 import java.io.File;
 import java.io.FileFilter;
 
-import net.bodz.bas.vfs.IFileFilter;
+import net.bodz.bas.fn.IFilter;
+import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 
 public class Vfs2PojfFileFilter
         implements FileFilter {
 
-    private final IFileFilter vfsFilter;
+    private final IFilter<IFile> vfsFilter;
 
-    public Vfs2PojfFileFilter(IFileFilter vfsFilter) {
+    public Vfs2PojfFileFilter(IFilter<IFile> vfsFilter) {
         if (vfsFilter == null)
             throw new NullPointerException("vfsFilter");
         this.vfsFilter = vfsFilter;

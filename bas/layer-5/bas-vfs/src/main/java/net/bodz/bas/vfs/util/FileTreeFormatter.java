@@ -1,9 +1,6 @@
 package net.bodz.bas.vfs.util;
 
 import java.io.IOException;
-import java.nio.file.LinkOption;
-import java.nio.file.attribute.BasicFileAttributeView;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,40 +77,45 @@ public class FileTreeFormatter
             throws IOException {
 
         IFileAttributes attrs = file.getAttributes();
+        if (attrs.isHidden() && !showHidden)
+            return;
 
-        BasicFileAttributeView _view = file.getAttributeView(BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
-        BasicFileAttributes _bfa = _view.readAttributes();
+        IFile target = file;
+        IFileAttributes targetAttrs = attrs;
+        String targetSpec = null;
 
-        BasicFileAttributeView view = file.getAttributeView(BasicFileAttributeView.class);
-        BasicFileAttributes bfa = view.readAttributes();
+        if (attrs.isSymbolicLink()) {
+            try {
+                targetSpec = file.readSymbolicLink();
+                target = file.resolve(targetSpec);
+                if (target != null)
+                    targetAttrs = target.getAttributes();
+            } catch (IOException e) {
+                targetSpec = "<error: " + e.getMessage() + ">";
+            }
+        }
 
-        if (showHidden || !attrs.isHidden()) {
+        /* blob */{
             out.print(prefix);
 
             if (drawTreeLines && theLast != null)
                 out.print(theLast ? treeLineChars.treeLastBranch : treeLineChars.treeBranch);
 
             if (showSize) {
-                Long length = file.getLength();
+                Long length = target.getLength();
                 if (length != null)
                     out.printf("[%8d]", length);
             }
 
-            out.print(getText(file));
+            out.print(getFileLabel(file));
 
-            if (_bfa.isSymbolicLink()) {
-                String targetSpec;
-                try {
-                    targetSpec = file.readSymLink();
-                } catch (IOException e) {
-                    targetSpec = "<error: " + e.getMessage() + ">";
-                }
+            if (attrs.isSymbolicLink()) {
                 out.print(" -> ");
                 out.print(targetSpec);
             }
 
             if (appendSymbol) {
-                if (bfa.isDirectory())
+                if (targetAttrs.isDirectory())
                     out.print("/");
                 else if (attrs.isExecutable())
                     out.print("*");
@@ -123,14 +125,14 @@ public class FileTreeFormatter
             out.println();
         }
 
-        if (bfa.isDirectory()) {
+        if (targetAttrs.isDirectory()) {
 
             if (drawTreeLines && theLast != null)
                 prefix += theLast ? treeLineChars.treeSkip : treeLineChars.treeLine;
 
             depth++;
 
-            Iterable<? extends IFile> children = file.children();
+            Iterable<? extends IFile> children = target.children();
             List<IFile> list = new ArrayList<IFile>();
             for (IFile child : children)
                 if (showHidden || !child.getAttributes().isHidden())
@@ -145,7 +147,7 @@ public class FileTreeFormatter
         }
     }
 
-    String getText(IFile file) {
+    String getFileLabel(IFile file) {
         if (drawTreeLines)
             return file.getName();
         else

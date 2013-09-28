@@ -90,7 +90,7 @@ public class Iterables {
         return Iterators.toListLimited(iterable.iterator(), limit, appxSize);
     }
 
-    public static <T> Iterable<T> filter(Iterable<T> iterable, IFilter<T> filter) {
+    public static <T> Iterable<T> filter(Iterable<? extends T> iterable, IFilter<T> filter) {
         return new FilteredIterable<>(iterable, filter);
     }
 
@@ -169,17 +169,17 @@ class OtpEnumWrapper<T>
 class FilteredIterable<T>
         implements Iterable<T> {
 
-    final Iterable<T> orig;
+    final Iterable<? extends T> orig;
     final IFilter<T> filter;
 
-    public FilteredIterable(Iterable<T> orig, IFilter<T> filter) {
+    public FilteredIterable(Iterable<? extends T> orig, IFilter<T> filter) {
         this.orig = orig;
         this.filter = filter;
     }
 
     @Override
     public Iterator<T> iterator() {
-        Iterator<T> iterator = orig.iterator();
+        Iterator<? extends T> iterator = orig.iterator();
         return new FilteredIterator<T>(iterator, filter);
     }
 
@@ -188,17 +188,17 @@ class FilteredIterable<T>
 class TransformedIterable<S, T>
         implements Iterable<T> {
 
-    final Iterable<S> orig;
+    final Iterable<? extends S> orig;
     final ITransformer<S, T> transformer;
 
-    public TransformedIterable(Iterable<S> orig, ITransformer<S, T> transformer) {
+    public TransformedIterable(Iterable<? extends S> orig, ITransformer<S, T> transformer) {
         this.orig = orig;
         this.transformer = transformer;
     }
 
     @Override
     public Iterator<T> iterator() {
-        Iterator<S> iterator = orig.iterator();
+        Iterator<? extends S> iterator = orig.iterator();
         return new TransformedIterator<S, T>(iterator, transformer);
     }
 

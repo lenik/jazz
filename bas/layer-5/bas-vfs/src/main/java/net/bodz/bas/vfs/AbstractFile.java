@@ -7,14 +7,11 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.i18n.LocaleColos;
-import net.bodz.bas.io.res.IOpenResourceListener;
-import net.bodz.bas.io.res.IStreamInputSource;
-import net.bodz.bas.io.res.IStreamOutputTarget;
-import net.bodz.bas.io.res.IStreamResource;
-import net.bodz.bas.io.res.IStreamResourceWrapper;
-import net.bodz.bas.io.res.OpenResourceEvent;
+import net.bodz.bas.io.res.*;
 import net.bodz.bas.sugar.Tooling;
+import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.util.content.HeuristicProbing;
@@ -27,8 +24,10 @@ public abstract class AbstractFile
 
     private Charset preferredCharset = Charset.defaultCharset();
 
-    private transient int flags;
-    private transient int knownMask;
+    protected int flags;
+
+    /** Known flags */
+    protected int flagsMask;
 
     /**
      * @param device
@@ -49,11 +48,44 @@ public abstract class AbstractFile
     /* _____________________________ */static section.iface __FILE__;
 
     @Override
-    public IFile resolve(String spec)
+    public final IFile resolve(String relativePath)
             throws BadPathException, FileResolveException {
-        IPath joinedPath = getPath().join(spec);
-        IFile file = VFS.resolve(joinedPath);
-        return file;
+        return resolve(relativePath, FileResolveOptions.DEFAULT);
+    }
+
+    @Override
+    public IFile resolve(String relativePath, FileResolveOptions options)
+            throws BadPathException, FileResolveException {
+        IFile ctx = this;
+
+        while (true) {
+            if (relativePath.startsWith(IPath.SEPARATOR)) {
+                relativePath = relativePath.substring(IPath.SEPARATOR_LEN);
+                ctx = getDevice().getRootFile();
+            } else if (relativePath.startsWith(".." + IPath.SEPARATOR)) {
+                relativePath = relativePath.substring(IPath.SEPARATOR_LEN + 2);
+                ctx = getParentFile();
+            } else
+                break;
+        }
+
+        String remaining = relativePath;
+        int pos;
+        while ((pos = remaining.indexOf(IPath.SEPARATOR)) != -1) {
+            String head = remaining.substring(0, pos);
+            remaining = remaining.substring(pos + IPath.SEPARATOR_LEN);
+            if (".".equals(head))
+                continue;
+            else if ("..".equals(head))
+                ctx = ctx.getParentFile();
+            else {
+                ctx = ctx.getChild(head);
+                if (ctx == null)
+                    // options.isCreateParents()
+                    break;
+            }
+        }
+        return ctx;
     }
 
     /** ⇱ Implementation Of {@link IFsObject}. */
@@ -65,15 +97,15 @@ public abstract class AbstractFile
         if (parentPath == null)
             return null;
         try {
-            return parentPath.resolve();
-        } catch (FileResolveException e) {
+            return parentPath.resolve(FileResolveOptions.NO_FOLLOW_LINKS);
+        } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
     }
 
     @Override
     public int getFlags(int mask) {
-        int unknownMask = (mask & ~knownMask);
+        int unknownMask = (mask & ~flagsMask);
         if (unknownMask != 0) {
             int unknownFlags = retrieveFlags(unknownMask);
             flags = (flags & ~unknownMask) | unknownFlags;
@@ -179,6 +211,21 @@ public abstract class AbstractFile
         }
     }
 
+    @Override
+    public boolean linkTo(String target, boolean symbolic)
+            throws IOException {
+        String localPath = getPath().getLocalPath();
+        return getDevice().createLink(localPath, target, symbolic);
+    }
+
+    @Override
+    public String readSymbolicLink()
+            throws IOException {
+        String localPath = getPath().getLocalPath();
+        String targetSpec = getDevice().readSymbolicLink(localPath);
+        return targetSpec;
+    }
+
     /** ⇱ Implementation Of {@link IFsBlob}. */
     /* _____________________________ */static section.iface __FS_BLOB__;
 
@@ -219,8 +266,13 @@ public abstract class AbstractFile
     /**
      * @return <code>null</code> If no resource available for this fs-entry.
      */
+    protected abstract IRandomResource _getResource(Charset charset);
+
+    /**
+     * @return <code>null</code> If no resource available for this fs-entry.
+     */
     @Override
-    public final IStreamResource getResource() {
+    public final IRandomResource getResource() {
         Charset charset = getPreferredCharset();
         if (charset == null)
             charset = LocaleColos.charset.get();
@@ -231,39 +283,19 @@ public abstract class AbstractFile
      * @return <code>null</code> If no resource available for this fs-entry.
      */
     @Override
-    public final IStreamResource getResource(String charsetName) {
+    public final IRandomResource getResource(String charsetName) {
         Charset charset = Charset.forName(charsetName);
         return getResource(charset);
     }
 
     @Override
-    public final IStreamResource getResource(Charset charset) {
-        IStreamResource resource = newResource(charset);
+    public final IRandomResource getResource(Charset charset) {
+        IRandomResource resource = _getResource(charset);
         if (resource == null)
             return null;
-
-        resource.addOpenResourceListener(new IOpenResourceListener() {
-            @Override
-            public void openResource(OpenResourceEvent event)
-                    throws IOException {
-
-                CommonOpenConfig config = CommonOpenConfig.parse(event.getOptions());
-
-                if (config.isCreateParents()) {
-                    IFile parent = getParentFile();
-                    if (parent != null)
-                        if (!parent.mkdirs())
-                            throw new IOException("Can't create parents for " + this);
-                }
-            }
-        });
+        bindOpenEvent(resource);
         return resource;
     }
-
-    /**
-     * @return <code>null</code> If no resource available for this fs-entry.
-     */
-    protected abstract IStreamResource newResource(Charset charset);
 
     @Override
     public final IStreamInputSource getInputSource() {
@@ -280,7 +312,13 @@ public abstract class AbstractFile
     }
 
     @Override
-    public IStreamInputSource getInputSource(Charset charset) {
+    public final IStreamInputSource getInputSource(Charset charset) {
+        IStreamInputSource source = _getInputSource(charset);
+        bindOpenEvent(source);
+        return source;
+    }
+
+    protected IStreamInputSource _getInputSource(Charset charset) {
         IStreamResource resource = getResource(charset);
         return resource;
     }
@@ -301,16 +339,51 @@ public abstract class AbstractFile
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(Charset charset) {
+    public final IStreamOutputTarget getOutputTarget(Charset charset) {
+        IStreamOutputTarget target = _getOutputTarget(charset);
+        bindOpenEvent(target);
+        return target;
+    }
+
+    protected IStreamOutputTarget _getOutputTarget(Charset charset) {
         IStreamResource resource = getResource(charset);
         if (resource == null)
             throw new NullPointerException("resource");
-
         return resource;
+    }
+
+    void bindOpenEvent(IOpenResourceSource res) {
+        res.addOpenResourceListener(new IOpenResourceListener() {
+            @Override
+            public void openResource(OpenResourceEvent event)
+                    throws IOException {
+
+                CommonOpenConfig config = CommonOpenConfig.parse(event.getOptions());
+
+                if (config.isCreateParents()) {
+                    IFile parent = getParentFile();
+                    if (parent != null)
+                        if (!parent.mkdirs())
+                            throw new IOException("Can't create parents for " + this);
+                }
+            }
+        });
     }
 
     /** ⇱ Implementaton Of {@link IFsDir}. */
     /* _____________________________ */static section.iface __FS_DIR__;
+
+    @Override
+    public Iterable<? extends IFile> children(IFilenameFilter nameFilter)
+            throws VFSException {
+        return IFile.fn.children(this, nameFilter);
+    }
+
+    @Override
+    public Iterable<? extends IFile> children(IFilter<IFile> fileFilter)
+            throws VFSException {
+        return Iterables.filter(children(), fileFilter);
+    }
 
     @Override
     public boolean mkdir() {

@@ -13,8 +13,9 @@ import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.fn.ITransformer;
-import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.PathResource;
 import net.bodz.bas.t.iterator.Iterables;
@@ -160,7 +161,7 @@ public class NioFile
     }
 
     @Override
-    protected IStreamResource newResource(Charset charset) {
+    protected IRandomResource _getResource(Charset charset) {
         PathResource resource = new PathResource(_path);
         resource.setCharset(charset);
         return resource;
@@ -177,6 +178,17 @@ public class NioFile
         return new NioFile(childPath);
     }
 
+    static class Path2NioFile
+            implements ITransformer<Path, NioFile> {
+
+        @Override
+        public NioFile transform(Path input)
+                throws RuntimeException {
+            return new NioFile(input);
+        }
+
+    }
+
     @Override
     public Iterable<? extends NioFile> children()
             throws VFSException {
@@ -190,20 +202,10 @@ public class NioFile
         return Iterables.transform(stream, new Path2NioFile());
     }
 
-    static class Path2NioFile
-            implements ITransformer<Path, NioFile> {
-
-        @Override
-        public NioFile transform(Path input)
-                throws RuntimeException {
-            return new NioFile(input);
-        }
-
-    }
-
     @Override
     public Iterable<? extends IFile> children(IFilenameFilter nameFilter)
             throws VFSException {
+        this.children();
         DirectoryStream.Filter<Path> filter = new Vfs2NioFilenameFilter(nameFilter, this);
         DirectoryStream<Path> stream;
         try {
@@ -215,7 +217,7 @@ public class NioFile
     }
 
     @Override
-    public Iterable<? extends IFile> children(IFileFilter fileFilter)
+    public Iterable<? extends IFile> children(IFilter<IFile> fileFilter)
             throws VFSException {
         DirectoryStream.Filter<Path> filter = new Vfs2NioFileFilter(fileFilter);
         DirectoryStream<Path> stream;

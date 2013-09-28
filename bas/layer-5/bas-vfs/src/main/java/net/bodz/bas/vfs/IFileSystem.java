@@ -89,4 +89,7 @@ public interface IFileSystem {
     IFile resolve(IPath path)
             throws FileResolveException;
 
+    IFile resolve(IPath path, FileResolveOptions options)
+            throws FileResolveException;
+
 }

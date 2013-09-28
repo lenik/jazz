@@ -2,25 +2,22 @@ package net.bodz.bas.vfs.impl.mem;
 
 import java.io.IOException;
 import java.nio.file.CopyOption;
-import java.nio.file.NotLinkException;
 
-import net.bodz.bas.t.pojo.Pair;
+import net.bodz.bas.c.java.nio.CreateOptions;
 import net.bodz.bas.vfs.AbstractVfsDevice;
 import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.inode.Inode;
-import net.bodz.bas.vfs.inode.InodeType;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.MutableFile;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 public class MemoryVfsDevice
         extends AbstractVfsDevice {
 
-    Inode rootInode;
-    MemoryFile rootFile;
+    private MemoryFile rootFile;
 
     public MemoryVfsDevice(MemoryVfsDriver driver, String scopeName) {
         super(driver, driver.protocol, scopeName);
-        this.rootInode = new Inode(null);
 
         MemoryPath rootPath = parse("");
         this.rootFile = new MemoryFile(this, rootPath);
@@ -28,53 +25,6 @@ public class MemoryVfsDevice
 
     public String getScopeName() {
         return getDeviceSpec();
-    }
-
-    public Inode _root() {
-        return rootInode;
-    }
-
-    public Inode _find(String localPath) {
-        return rootInode.getDescendant(localPath);
-    }
-
-    public Inode _resolve(String localPath) {
-        Inode inode = rootInode.resolve(localPath);
-
-        // Auto init default parents nodes as directories.
-        Inode parent = inode.getParent();
-        while (parent != null) {
-            if (parent.getType() == InodeType.none)
-                parent.setType(InodeType.directory);
-            else
-                break;
-            parent = parent.getParent();
-        }
-
-        return inode;
-    }
-
-    public Pair<IPath, Inode> _follow(String localPath) {
-        Inode inode = _find(localPath);
-        if (inode == null)
-            return null;
-
-        IPath path = parse(localPath);
-
-        while (inode.getType() == InodeType.symbolicLink) {
-            String targetSpec = (String) inode.getData();
-            path = path.join(targetSpec);
-
-            String targetLocalPath = path.getLocalPath();
-            inode = _find(targetLocalPath);
-
-            if (inode == null)
-                return null;
-
-            if (inode.getType() != InodeType.symbolicLink)
-                break;
-        }
-        return Pair.of(path, inode);
     }
 
     @Override
@@ -89,7 +39,7 @@ public class MemoryVfsDevice
     }
 
     @Override
-    public MemoryFile resolve(IPath _path)
+    public MemoryFile _resolveNoRec(IPath _path)
             throws FileResolveException {
         MemoryPath path = (MemoryPath) _path;
         return new MemoryFile(this, path);
@@ -97,7 +47,7 @@ public class MemoryVfsDevice
 
     @Override
     public boolean move(String localPathFrom, String localPathTo, CopyOption... options)
-            throws BadPathException {
+            throws BadPathException, IOException {
         MemoryFile src = (MemoryFile) resolve(localPathFrom);
         MemoryFile dest = (MemoryFile) resolve(localPathTo);
 
@@ -106,46 +56,37 @@ public class MemoryVfsDevice
         if (dest.isExisted())
             return false;
 
+        boolean createParents = CreateOptions.isCreateParents(options);
+
         String destName = dest.getName();
         MemoryFile destParentFile = (MemoryFile) dest.getParentFile();
-        if (!destParentFile.mkdirs())
-            return false;
 
-        Inode srcNode = src._get(false);
-        Inode destParentNode = destParentFile._get(false);
-        srcNode.detach();
-        srcNode.attach(destParentNode, destName);
+        if (!destParentFile.isExisted())
+            if (createParents) {
+                if (!destParentFile.mkdirs())
+                    return false;
+            } else
+                return false;
+
+        dest.detach();
+
+        src.setName(destName);
+        src.attach(destParentFile);
         return true;
     }
 
     @Override
     public boolean createLink(String localPath, String target, boolean symbolic)
             throws IOException {
-
-        Inode inode = _resolve(localPath);
-        if (inode == null)
-            throw new IOException("Failed to create inode.");
-
-        if (inode.getType() != InodeType.none)
-            return false;
-
-        inode.setType(InodeType.symbolicLink);
-        inode.setData(target);
-        return true;
+        MutableFile src = (MutableFile) resolve(localPath);
+        return src.linkTo(target, symbolic);
     }
 
     @Override
     public String readSymbolicLink(String localPath)
-            throws NotLinkException, IOException {
-        Inode inode = _resolve(localPath);
-        if (inode == null)
-            throw new BadPathException(localPath);
-
-        if (inode.getType() != InodeType.symbolicLink)
-            throw new NotLinkException(localPath);
-
-        Object targetSpec = inode.getData();
-        return (String) targetSpec;
+            throws IOException {
+        IFile file = resolve(localPath);
+        return file.readSymbolicLink();
     }
 
 }

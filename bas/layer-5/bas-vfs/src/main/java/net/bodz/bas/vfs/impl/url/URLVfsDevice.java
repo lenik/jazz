@@ -92,13 +92,13 @@ public class URLVfsDevice
     }
 
     @Override
-    public URLFile resolve(String localPath)
+    public URLFile _resolveNoRec(String localPath)
             throws BadPathException, FileResolveException {
-        return (URLFile) super.resolve(localPath);
+        return (URLFile) super._resolveNoRec(localPath);
     }
 
     @Override
-    public URLFile resolve(IPath _path)
+    public URLFile _resolveNoRec(IPath _path)
             throws FileResolveException {
         URLPath path = (URLPath) _path;
         return new URLFile(this, path);

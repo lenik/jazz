@@ -4,6 +4,9 @@ import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.MultiEntryPath;
 
+/**
+ * mem:100:/foo/bar
+ */
 public class MemoryPath
         extends MultiEntryPath {
 

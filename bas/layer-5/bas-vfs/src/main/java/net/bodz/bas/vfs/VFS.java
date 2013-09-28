@@ -28,13 +28,23 @@ public class VFS {
 
     public static IFile resolve(String path)
             throws BadPathException, FileResolveException {
+        return resolve(path, FileResolveOptions.DEFAULT);
+    }
+
+    public static IFile resolve(IPath path)
+            throws FileResolveException {
+        return resolve(path, FileResolveOptions.DEFAULT);
+    }
+
+    public static IFile resolve(String path, FileResolveOptions options)
+            throws BadPathException, FileResolveException {
         if (path == null)
             throw new NullPointerException("path");
         IPath p = parse(path);
         return fileSystem.resolve(p);
     }
 
-    public static IFile resolve(IPath path)
+    public static IFile resolve(IPath path, FileResolveOptions options)
             throws FileResolveException {
         return fileSystem.resolve(path);
     }

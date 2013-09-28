@@ -3,7 +3,6 @@ package net.bodz.bas.vfs;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
-import java.nio.file.NotLinkException;
 
 import org.apache.commons.vfs.FileSystem;
 
@@ -76,7 +75,10 @@ public interface IVfsDevice {
      *             If <code>localPath</code> is <code>null</code>.
      */
     IFile resolve(String localPath)
-            throws BadPathException, FileResolveException;
+            throws BadPathException, IOException;
+
+    IFile resolve(String localPath, FileResolveOptions options)
+            throws BadPathException, IOException;
 
     /**
      * Resolve a parsed path to a file.
@@ -88,7 +90,10 @@ public interface IVfsDevice {
      *             If the path isn't instance of concrete path type.
      */
     IFile resolve(IPath _path)
-            throws FileResolveException;
+            throws IOException;
+
+    IFile resolve(IPath _path, FileResolveOptions options)
+            throws IOException;
 
     /**
      * Renames the file denoted by the local pathnames.
@@ -123,7 +128,7 @@ public interface IVfsDevice {
             throws IOException;
 
     String readSymbolicLink(String localPath)
-            throws NotLinkException, IOException;
+            throws IOException;
 
     /**
      * @param watchFile

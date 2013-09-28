@@ -39,7 +39,7 @@ public class FilterVfsDevice
     }
 
     @Override
-    public IFile resolve(IPath _path)
+    public IFile _resolveNoRec(IPath _path)
             throws FileResolveException {
         return null;
     }

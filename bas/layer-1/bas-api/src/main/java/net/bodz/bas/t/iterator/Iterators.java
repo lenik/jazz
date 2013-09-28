@@ -287,10 +287,10 @@ class EnumIterator<T>
 class FilteredIterator<T>
         extends PrefetchedIterator<T> {
 
-    final Iterator<T> orig;
+    final Iterator<? extends T> orig;
     IFilter<T> filter;
 
-    public FilteredIterator(Iterator<T> orig, IFilter<T> filter) {
+    public FilteredIterator(Iterator<? extends T> orig, IFilter<T> filter) {
         if (orig == null)
             throw new NullPointerException("orig");
         if (filter == null)
@@ -314,10 +314,10 @@ class FilteredIterator<T>
 class TransformedIterator<S, T>
         implements Iterator<T> {
 
-    final Iterator<S> orig;
+    final Iterator<? extends S> orig;
     final ITransformer<S, T> transformer;
 
-    public TransformedIterator(Iterator<S> orig, ITransformer<S, T> transformer) {
+    public TransformedIterator(Iterator<? extends S> orig, ITransformer<S, T> transformer) {
         this.orig = orig;
         this.transformer = transformer;
     }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.ScopedVfsDriver;
@@ -51,12 +52,12 @@ public class MemoryVfsDriver
     }
 
     @Override
-    public IFile resolve(IPath _path)
+    public IFile resolve(IPath _path, FileResolveOptions options)
             throws FileResolveException {
         MemoryPath path = (MemoryPath) _path;
         String scope = path.getDeviceSpec();
         MemoryVfsDevice device = getDevice(scope);
-        return device.resolve(path);
+        return device.resolve(path, options);
     }
 
     private static MemoryVfsDriver instance = new MemoryVfsDriver("mem");

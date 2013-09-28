@@ -3,10 +3,10 @@ package net.bodz.bas.vfs;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.io.res.IStreamResourceWrapper;
+import net.bodz.bas.io.res.IRandomResourceWrapper;
 
 public interface IFsBlob
-        extends IFsObject, IStreamResourceWrapper {
+        extends IFsObject, IRandomResourceWrapper {
 
     /**
      * Get the preferred charset which will be used to access the blob in text mode.

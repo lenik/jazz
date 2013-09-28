@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.attribute.FileTime;
 
-import net.bodz.bas.io.res.IStreamResource;
-import net.bodz.bas.vfs.*;
+import net.bodz.bas.io.res.IRandomResource;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileAttributes;
+import net.bodz.bas.vfs.IFsBlob;
 import net.bodz.bas.vfs.path.IPath;
 
 public class FilterFile
@@ -36,18 +39,6 @@ public class FilterFile
         return null;
     }
 
-    @Override
-    public Iterable<? extends IFile> children(IFilenameFilter nameFilter)
-            throws VFSException {
-        return null;
-    }
-
-    @Override
-    public Iterable<? extends IFile> children(IFileFilter nameFilter)
-            throws VFSException {
-        return null;
-    }
-
     /** ⇱ Implementation Of {@link IFsBlob}. */
     /* _____________________________ */static section.iface __BLOB__;
 
@@ -58,7 +49,7 @@ public class FilterFile
     }
 
     @Override
-    protected IStreamResource newResource(Charset charset) {
+    protected IRandomResource _getResource(Charset charset) {
         return null;
     }
 

@@ -8,6 +8,7 @@ import java.util.Collection;
 import net.bodz.bas.c.java.nio.SubPathMap;
 import net.bodz.bas.vfs.AbstractVfsDriver;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -63,12 +64,12 @@ public class NioVfsDriver
     }
 
     @Override
-    public NioFile resolve(IPath _path)
+    public NioFile resolve(IPath _path, FileResolveOptions options)
             throws FileResolveException {
         NioPath path = (NioPath) _path;
         String driveName = path.getDeviceSpec();
         NioVfsDevice device = getRootDevice(driveName);
-        NioFile file = device.resolve(path);
+        NioFile file = (NioFile) device.resolve(path, options);
         return file;
     }
 

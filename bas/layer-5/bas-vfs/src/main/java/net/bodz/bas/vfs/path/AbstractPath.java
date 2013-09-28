@@ -10,6 +10,7 @@ import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
@@ -40,9 +41,15 @@ public abstract class AbstractPath
     }
 
     @Override
-    public IFile resolve()
+    public final IFile resolve()
             throws FileResolveException {
-        return VFS.resolve(this);
+        return resolve(FileResolveOptions.DEFAULT);
+    }
+
+    @Override
+    public IFile resolve(FileResolveOptions options)
+            throws FileResolveException {
+        return VFS.resolve(this, options);
     }
 
     @Override

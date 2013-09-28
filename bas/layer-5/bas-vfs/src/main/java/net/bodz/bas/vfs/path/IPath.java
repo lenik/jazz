@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.path;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -7,6 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
@@ -35,7 +37,10 @@ public interface IPath
      * Resolve this path using the default VFS manager.
      */
     IFile resolve()
-            throws FileResolveException;
+            throws IOException;
+
+    IFile resolve(FileResolveOptions options)
+            throws IOException;
 
     /**
      * The alignment is used to anchor one path to another.

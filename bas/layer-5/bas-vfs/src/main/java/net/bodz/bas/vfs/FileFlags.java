@@ -103,6 +103,20 @@ public class FileFlags {
         return (bits & BINARY) != 0;
     }
 
+    public static int set(int flags, boolean condition, int bits) {
+        flags &= ~bits;
+        if (condition)
+            flags |= bits;
+        return flags;
+    }
+
+    public static int clear(int flags, boolean condition, int bits) {
+        flags |= bits;
+        if (condition)
+            flags &= ~bits;
+        return flags;
+    }
+
     public static int parse(String str) {
         int bits = 0;
         int len = str.length();

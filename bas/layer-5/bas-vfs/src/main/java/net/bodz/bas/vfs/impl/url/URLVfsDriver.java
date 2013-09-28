@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.vfs.AbstractVfsDriver;
-import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -87,8 +87,7 @@ public class URLVfsDriver
     }
 
     @Override
-    public URLFile resolve(IPath _path)
-            throws FileResolveException {
+    public URLFile resolve(IPath _path, FileResolveOptions options) {
         URLPath path = (URLPath) _path;
         String deviceSpec = path.getDeviceSpec();
         URLVfsDevice device = getDevice(path.getProtocol(), deviceSpec);

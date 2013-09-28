@@ -8,6 +8,7 @@ import java.util.Map;
 
 import net.bodz.bas.vfs.AbstractVfsDriver;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -62,12 +63,12 @@ public class PojfVfsDriver
     }
 
     @Override
-    public PojfFile resolve(IPath _path)
+    public PojfFile resolve(IPath _path, FileResolveOptions options)
             throws FileResolveException {
         PojfPath path = (PojfPath) _path;
         String driveName = path.getDeviceSpec();
         PojfVfsDevice device = getDrive(driveName);
-        PojfFile file = device.resolve(path);
+        PojfFile file = (PojfFile) device.resolve(path);
         return file;
     }
 

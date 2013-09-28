@@ -1,6 +1,11 @@
 package net.bodz.bas.vfs;
 
+import java.io.IOException;
+import java.nio.file.NotLinkException;
+
+import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.sugar.IToChain;
+import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.path.BadPathException;
 
 public interface IFile
@@ -37,13 +42,65 @@ public interface IFile
      *             If not iterable.
      * @see #isTraversible()
      */
-    Iterable<? extends IFile> children(IFileFilter fileFilter)
+    Iterable<? extends IFile> children(IFilter<IFile> fileFilter)
             throws VFSException;
 
     /**
-     * The same as: <code>getPath().join(path).resolve()</code>.
+     * @param relativePath
+     *            The path should be within the same scope provided by the device.
      */
-    IFile resolve(String path)
+    IFile resolve(String relativePath)
             throws BadPathException, FileResolveException;
+
+    /**
+     * @param relativePath
+     *            The path should be within the same scope provided by the device.
+     */
+    IFile resolve(String relativePath, FileResolveOptions options)
+            throws BadPathException, FileResolveException;
+
+    /**
+     * Create a (symbolic) link to the target.
+     * 
+     * @param targetPath
+     *            Relative path string to the target.
+     * @param symbolic
+     *            Create a symbolic link rather then hard link.
+     * @return <code>false</code> If file is already existed.
+     * @throws UnsupportedOperationException
+     *             If the underlying device doesn't support symbolic link.
+     * @throws BadPathException
+     *             If <code>targetSpec</code> is invalid.
+     */
+    boolean linkTo(String target, boolean symbolic)
+            throws IOException;
+
+    /**
+     * Read the target spec of the symbolic link.
+     * 
+     * @throws UnsupportedOperationException
+     *             If the underlying device doesn't support symbolic link.
+     * @throws NotLinkException
+     *             If this file isn't a symlink.
+     */
+    String readSymbolicLink()
+            throws IOException;
+
+    class fn {
+
+        public static Iterable<? extends IFile> children(final IFile parent, final IFilenameFilter nameFilter)
+                throws VFSException {
+            return Iterables.filter(parent.children(), new IFilter<IFile>() {
+                @Override
+                public boolean accept(IFile o)
+                        throws RuntimeException {
+                    // assert parent == o.getParentFile();
+                    String name = o.getName();
+                    return nameFilter.accept(parent, name);
+                }
+            });
+        }
+
+    }
 
 }
