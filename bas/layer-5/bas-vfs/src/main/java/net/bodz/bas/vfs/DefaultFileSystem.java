@@ -104,7 +104,13 @@ public class DefaultFileSystem
     }
 
     @Override
-    public IFile resolve(IPath path)
+    public final IFile resolve(IPath path)
+            throws FileResolveException {
+        return resolve(path, FileResolveOptions.DEFAULT);
+    }
+
+    @Override
+    public IFile resolve(IPath path, FileResolveOptions options)
             throws FileResolveException {
         if (path == null)
             throw new NullPointerException("path");
@@ -113,7 +119,7 @@ public class DefaultFileSystem
         if (driver == null)
             throw new FileResolveException("No VFS driver for protocol " + path.getProtocol());
 
-        IFile file = driver.resolve(path);
+        IFile file = driver.resolve(path, options);
         return file;
     }
 

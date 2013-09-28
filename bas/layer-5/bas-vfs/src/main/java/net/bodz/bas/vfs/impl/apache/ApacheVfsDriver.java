@@ -12,6 +12,7 @@ import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.vfs.AbstractVfsDriver;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -58,13 +59,12 @@ public class ApacheVfsDriver
     }
 
     @Override
-    public IFile resolve(IPath _path)
+    public IFile resolve(IPath _path, FileResolveOptions options)
             throws FileResolveException {
         ApachePath path = (ApachePath) _path;
         String scheme = path.getProtocol();
         ApacheVfsDevice device = getDevice(scheme);
-        ApacheFile file = device.resolve(path);
-        return file;
+        return device.resolve(path, options);
     }
 
     public synchronized ApacheVfsDevice getDevice(String scheme) {

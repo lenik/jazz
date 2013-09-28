@@ -63,15 +63,15 @@ public class NioVfsDevice
     }
 
     @Override
-    public NioFile resolve(String localPath) {
+    public NioFile _resolveNoRec(String localPath) {
         Path path = resolvePath(localPath);
         return new NioFile(path);
     }
 
     @Override
-    public NioFile resolve(IPath _path)
+    public NioFile _resolveNoRec(IPath _path)
             throws FileResolveException {
-        return resolve(_path.getLocalPath());
+        return _resolveNoRec(_path.getLocalPath());
     }
 
     @Override

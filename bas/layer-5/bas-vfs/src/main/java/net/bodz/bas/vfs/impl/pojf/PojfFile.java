@@ -15,8 +15,9 @@ import java.util.Arrays;
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.fn.ITransformer;
-import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
@@ -131,7 +132,7 @@ public class PojfFile
     }
 
     @Override
-    protected IStreamResource newResource(Charset charset) {
+    protected IRandomResource _getResource(Charset charset) {
         FileResource resource = new FileResource(_file);
         resource.setCharset(charset);
         return resource;
@@ -162,7 +163,7 @@ public class PojfFile
     }
 
     @Override
-    public Iterable<? extends IFile> children(IFileFilter fileFilter)
+    public Iterable<? extends IFile> children(IFilter<IFile> fileFilter)
             throws VFSException {
         FileFilter adapter = new Vfs2PojfFileFilter(fileFilter);
         File[] childFiles = _file.listFiles(adapter);

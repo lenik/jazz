@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.impl.pseudo;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.MultiEntryPath;
@@ -59,8 +60,9 @@ public class PseudoPath
     }
 
     @Override
-    public IFile resolve()
+    public IFile resolve(FileResolveOptions options)
             throws FileResolveException {
+        // XXX follow-symlink?
         return file;
     }
 

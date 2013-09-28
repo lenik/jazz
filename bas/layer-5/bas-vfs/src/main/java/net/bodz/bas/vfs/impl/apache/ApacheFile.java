@@ -14,8 +14,9 @@ import org.apache.commons.vfs.FileSelector;
 import org.apache.commons.vfs.FileSystemException;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.fn.ITransformer;
-import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
 
@@ -100,7 +101,7 @@ public class ApacheFile
     }
 
     @Override
-    protected IStreamResource newResource(Charset charset) {
+    protected IRandomResource _getResource(Charset charset) {
         FileObjectResource resource = new FileObjectResource(fileObject);
         resource.setCharset(charset);
         return resource;
@@ -173,9 +174,9 @@ public class ApacheFile
     class VfsFileSelector
             implements FileSelector {
 
-        private final IFileFilter vfsFilter;
+        private final IFilter<IFile> vfsFilter;
 
-        public VfsFileSelector(IFileFilter vfsFilter) {
+        public VfsFileSelector(IFilter<IFile> vfsFilter) {
             if (vfsFilter == null)
                 throw new NullPointerException("vfsFilter");
             this.vfsFilter = vfsFilter;
@@ -210,7 +211,7 @@ public class ApacheFile
     }
 
     @Override
-    public Iterable<? extends IFile> children(IFileFilter fileFilter)
+    public Iterable<? extends IFile> children(IFilter<IFile> fileFilter)
             throws VFSException {
         FileSelector selector = new VfsFileSelector(fileFilter);
         try {

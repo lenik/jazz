@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.impl.pseudo;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.object.ObjectInfo;
+import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.builtin.CharArrayResource;
 
@@ -26,8 +27,8 @@ public class InputStringFile
     public InputStringFile(String name, char[] charArray) {
         super(name, new CharArrayResource(charArray));
         this.charArray = charArray;
-        this.inode.setReadable(true);
-        this.inode.setWritable(false);
+        setReadable(true);
+        setWritable(false);
     }
 
     public char[] getCharArray() {
@@ -58,9 +59,8 @@ public class InputStringFile
         return encodedSize;
     }
 
-    @Override
-    public IStreamOutputTarget getOutputTarget(Charset charset) {
-        throw new UnsupportedOperationException("Read-Only");
+    protected IStreamOutputTarget _getOutputTarget(Charset charset) {
+        throw new ReadOnlyException();
     }
 
 }

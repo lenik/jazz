@@ -70,15 +70,15 @@ public class PojfVfsDevice
     }
 
     @Override
-    public PojfFile resolve(String localPath) {
+    public PojfFile _resolveNoRec(String localPath) {
         File file = _resolve(localPath);
         return new PojfFile(this, file);
     }
 
     @Override
-    public PojfFile resolve(IPath _path)
+    public PojfFile _resolveNoRec(IPath _path)
             throws FileResolveException {
-        return resolve(_path.getLocalPath());
+        return _resolveNoRec(_path.getLocalPath());
     }
 
     @Override
@@ -120,7 +120,7 @@ public class PojfVfsDevice
     public String readSymbolicLink(String localPath)
             throws NotLinkException, IOException {
         File _linkFile = _resolve(localPath);
-        return FilePath.getSymLinkTarget(_linkFile);
+        return FilePath.readSymbolicLink(_linkFile);
     }
 
 }

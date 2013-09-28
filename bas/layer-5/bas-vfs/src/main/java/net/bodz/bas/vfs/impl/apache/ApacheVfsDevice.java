@@ -81,7 +81,7 @@ public class ApacheVfsDevice
     }
 
     @Override
-    public ApacheFile resolve(String localPath)
+    public ApacheFile _resolveNoRec(String localPath)
             throws BadPathException, FileResolveException {
         String qPath = localPath;
         String fqPath = getProtocol() + ":" + qPath;
@@ -89,7 +89,7 @@ public class ApacheVfsDevice
     }
 
     @Override
-    public ApacheFile resolve(IPath _path)
+    public ApacheFile _resolveNoRec(IPath _path)
             throws FileResolveException {
         ApachePath path = (ApachePath) _path;
         String fqPath = path.toString();
@@ -107,8 +107,8 @@ public class ApacheVfsDevice
         if (localPathFrom.equals(localPathTo))
             return true;
 
-        ApacheFile src = resolve(localPathFrom);
-        ApacheFile dest = resolve(localPathTo);
+        ApacheFile src = _resolveNoRec(localPathFrom);
+        ApacheFile dest = _resolveNoRec(localPathTo);
 
         FileObject srcObj = src.getFileObject();
         FileObject destObj = dest.getFileObject();
@@ -132,7 +132,7 @@ public class ApacheVfsDevice
         if (target == null)
             throw new NullPointerException("target");
 
-        ApacheFile linkFile = resolve(localPath);
+        ApacheFile linkFile = _resolveNoRec(localPath);
         if (linkFile.exists() == Boolean.TRUE)
             return false;
 

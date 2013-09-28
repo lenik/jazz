@@ -2,7 +2,6 @@ package net.bodz.bas.vfs;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.NotLinkException;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
@@ -117,32 +116,5 @@ public interface IFsObject
      */
     boolean renameTo(String target)
             throws BadPathException, IOException;
-
-    /**
-     * Create a (symbolic) link to the target.
-     * 
-     * @param targetPath
-     *            Relative path string to the target.
-     * @param symbolic
-     *            Create a symbolic link rather then hard link.
-     * @return <code>false</code> If file is already existed.
-     * @throws UnsupportedOperationException
-     *             If the underlying device doesn't support symbolic link.
-     * @throws BadPathException
-     *             If <code>targetSpec</code> is invalid.
-     */
-    boolean linkTo(String target, boolean symbolic)
-            throws IOException;
-
-    /**
-     * Read the target spec of the symbolic link.
-     * 
-     * @throws UnsupportedOperationException
-     *             If the underlying device doesn't support symbolic link.
-     * @throws NotLinkException
-     *             If this file isn't a symlink.
-     */
-    String readSymLink()
-            throws IOException;
 
 }

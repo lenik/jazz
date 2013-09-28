@@ -6,6 +6,7 @@ import java.net.URL;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.AbstractMultiEntryPath;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -145,10 +146,10 @@ public abstract class URLPath
     }
 
     @Override
-    public URLFile resolve()
+    public URLFile resolve(FileResolveOptions options)
             throws FileResolveException {
         URLVfsDriver driver = URLVfsDriver.getInstance();
-        URLFile file = driver.resolve(this);
+        URLFile file = driver.resolve(this, options);
         return file;
     }
 

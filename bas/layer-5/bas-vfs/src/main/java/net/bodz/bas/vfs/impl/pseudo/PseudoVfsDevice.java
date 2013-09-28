@@ -51,12 +51,12 @@ public class PseudoVfsDevice
     @Override
     public PseudoPath parse(String localPath)
             throws BadPathException {
-        PseudoFile pseudoFile = resolve(localPath);
+        PseudoFile pseudoFile = _resolveNoRec(localPath);
         return pseudoFile.getPath();
     }
 
     @Override
-    public PseudoFile resolve(String localPath)
+    public PseudoFile _resolveNoRec(String localPath)
             throws BadPathException {
         PseudoFile pseudoFile = registeredFiles.get(localPath);
         if (pseudoFile == null)
@@ -66,9 +66,9 @@ public class PseudoVfsDevice
     }
 
     @Override
-    public PseudoFile resolve(IPath _path)
+    public PseudoFile _resolveNoRec(IPath _path)
             throws FileResolveException {
-        return resolve(_path.getLocalPath());
+        return _resolveNoRec(_path.getLocalPath());
     }
 
     /**

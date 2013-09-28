@@ -5,10 +5,12 @@ import java.nio.charset.Charset;
 import java.nio.file.CopyOption;
 import java.nio.file.OpenOption;
 
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.FileSystemProxy;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.VFS;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 public abstract class AbstractVfsFacade
@@ -54,8 +56,14 @@ public abstract class AbstractVfsFacade
         return VFS.parse(path);
     }
 
-    public IFile resolve(String path) {
-        return VFS.resolve(path);
+    public final IFile resolve(String path)
+            throws BadPathException, IOException {
+        return resolve(path, FileResolveOptions.DEFAULT);
+    }
+
+    public IFile resolve(String path, FileResolveOptions options)
+            throws BadPathException, IOException {
+        return VFS.resolve(path, options);
     }
 
     @Override

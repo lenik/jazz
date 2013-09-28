@@ -1,6 +1,6 @@
-package net.bodz.bas.vfs.inode;
+package net.bodz.bas.vfs;
 
-public enum InodeType {
+public enum FsObjectType {
 
     none,
 

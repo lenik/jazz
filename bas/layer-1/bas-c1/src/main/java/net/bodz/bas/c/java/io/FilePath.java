@@ -338,10 +338,17 @@ public class FilePath {
         return true;
     }
 
-    public static String getSymLinkTarget(File linkFile)
+    public static String readSymbolicLink(File linkFile)
             throws IOException {
         Path link = linkFile.toPath();
         Path target = Files.readSymbolicLink(link);
+        return target.toString();
+    }
+
+    public static String readSymbolicLink(String pathstr)
+            throws IOException {
+        Path path = Paths.get(pathstr);
+        Path target = Files.readSymbolicLink(path);
         return target.toString();
     }
 

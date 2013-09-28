@@ -32,7 +32,7 @@ public interface IVfsProtocolHandler
     IPath parse(String fqPath)
             throws BadPathException;
 
-    IFile resolve(IPath path)
+    IFile resolve(IPath path, FileResolveOptions options)
             throws FileResolveException;
 
 }

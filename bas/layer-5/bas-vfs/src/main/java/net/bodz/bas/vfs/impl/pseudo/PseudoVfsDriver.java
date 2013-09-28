@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.ScopedVfsDriver;
@@ -60,7 +61,7 @@ public class PseudoVfsDriver
     }
 
     @Override
-    public IFile resolve(IPath _path)
+    public IFile resolve(IPath _path, FileResolveOptions options)
             throws FileResolveException {
         return null;
     }

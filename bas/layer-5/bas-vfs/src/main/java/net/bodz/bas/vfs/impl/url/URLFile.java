@@ -16,7 +16,10 @@ import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.fn.IFilter;
+import net.bodz.bas.io.res.IRandomResource;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.vfs.*;
 
@@ -33,9 +36,13 @@ public class URLFile
     }
 
     public static URLFile resolve(URL url) {
+        return resolve(url, FileResolveOptions.DEFAULT);
+    }
+
+    public static URLFile resolve(URL url, FileResolveOptions options) {
         URLPath path = URLPath.parse(url);
         URLVfsDriver driver = URLVfsDriver.getInstance();
-        return driver.resolve(path);
+        return driver.resolve(path, options);
     }
 
     @Override
@@ -163,7 +170,19 @@ public class URLFile
     }
 
     @Override
-    protected IStreamResource newResource(Charset charset) {
+    protected IRandomResource _getResource(Charset charset) {
+        throw new UnsupportedOperationException("URL resource is stream-based.");
+    }
+
+    @Override
+    protected IStreamInputSource _getInputSource(Charset charset) {
+        URLResource resource = new URLResource(url);
+        resource.setCharset(charset);
+        return resource;
+    }
+
+    @Override
+    protected IStreamOutputTarget _getOutputTarget(Charset charset) {
         URLResource resource = new URLResource(url);
         resource.setCharset(charset);
         return resource;
@@ -183,7 +202,8 @@ public class URLFile
             throw new FileResolveException(e.getMessage(), e);
         }
         URLPath childUrlPath = URLPath.parse(childUrl);
-        return childUrlPath.resolve();
+        URLFile childFile = (URLFile) childUrlPath.resolve();
+        return childFile;
     }
 
     @Override
@@ -194,7 +214,7 @@ public class URLFile
     }
 
     @Override
-    public Iterable<? extends IFile> children(IFileFilter nameFilter)
+    public Iterable<? extends IFile> children(IFilter<IFile> nameFilter)
             throws VFSException {
         // TODO URL maybe opened like directory stream.
         return Collections.emptyList();

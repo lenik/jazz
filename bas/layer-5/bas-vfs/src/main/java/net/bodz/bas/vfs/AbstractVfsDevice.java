@@ -55,11 +55,45 @@ public abstract class AbstractVfsDevice
     }
 
     @Override
-    public IFile resolve(String localPath)
+    public final IFile resolve(String localPath)
+            throws FileResolveException {
+        return resolve(localPath, FileResolveOptions.DEFAULT);
+    }
+
+    @Override
+    public final IFile resolve(IPath _path)
+            throws FileResolveException {
+        return resolve(_path, FileResolveOptions.DEFAULT);
+    }
+
+    @Override
+    public final IFile resolve(String localPath, FileResolveOptions options)
+            throws FileResolveException {
+        IFile file = _resolveNoRec(localPath);
+        if (options.isFollowLinks() && file.getAttributes().isSymbolicLink()) {
+            // XXX follow symlink
+        }
+        return file;
+    }
+
+    @Override
+    public final IFile resolve(IPath _path, FileResolveOptions options)
+            throws FileResolveException {
+        IFile file = _resolveNoRec(_path);
+        if (options.isFollowLinks() && file.getAttributes().isSymbolicLink()) {
+            // XXX follow symlink
+        }
+        return file;
+    }
+
+    protected IFile _resolveNoRec(String localPath)
             throws BadPathException, FileResolveException {
         IPath path = parse(localPath);
-        return resolve(path);
+        return _resolveNoRec(path);
     }
+
+    protected abstract IFile _resolveNoRec(IPath _path)
+            throws FileResolveException;
 
     @Override
     public void addFileListener(IFile watchFile, IFileListener listener)

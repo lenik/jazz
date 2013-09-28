@@ -19,8 +19,8 @@ public class InputBytesFile
     public InputBytesFile(String name, byte[] bytes) {
         super(name, new ByteArrayResource(bytes));
         this.bytes = bytes;
-        this.inode.setReadable(true);
-        this.inode.setWritable(false);
+        setReadable(true);
+        setWritable(false);
     }
 
     public byte[] getBytes() {
@@ -33,7 +33,7 @@ public class InputBytesFile
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(Charset charset) {
+    protected IStreamOutputTarget _getOutputTarget(Charset charset) {
         throw new ReadOnlyException();
     }
 
