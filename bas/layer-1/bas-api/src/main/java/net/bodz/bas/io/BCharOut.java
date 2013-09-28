@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class BCharOut
         extends AbstractPrintOut
-        implements CharSequence, Appendable {
+        implements CharSequence {
 
     /**
      * @TODO set final in future.

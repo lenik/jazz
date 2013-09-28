@@ -11,9 +11,9 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class URLData {
+import net.bodz.bas.c.java.nio.Charsets;
 
-    static Charset utf8Charset = Charset.forName("utf-8");
+public class URLData {
 
     /**
      * Read the contents as UTF-8 lines.
@@ -26,7 +26,7 @@ public class URLData {
             throws IOException {
         if (url == null)
             throw new NullPointerException("url");
-        return readTextContents(url, utf8Charset);
+        return readTextContents(url, Charsets.UTF8);
     }
 
     /**
@@ -81,7 +81,7 @@ public class URLData {
             throws IOException {
         if (url == null)
             throw new NullPointerException("url");
-        return readLines(url, utf8Charset);
+        return readLines(url, Charsets.UTF8);
     }
 
     /**

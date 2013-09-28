@@ -1,7 +1,5 @@
 package net.bodz.bas.ar.zip;
 
-import java.nio.charset.Charset;
-
 import net.bodz.bas.sugar.IConstants;
 
 /**
@@ -11,9 +9,6 @@ import net.bodz.bas.sugar.IConstants;
  */
 public interface IZipConsts
         extends IConstants {
-
-    Charset asciiCharset = Charset.forName("ascii");
-    Charset utf8Charset = Charset.forName("utf-8");
 
     /**
      * Version Made By

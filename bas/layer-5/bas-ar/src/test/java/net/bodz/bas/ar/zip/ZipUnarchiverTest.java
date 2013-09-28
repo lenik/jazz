@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.io.DbgInputStream;
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.RafIn;
@@ -133,7 +134,7 @@ public class ZipUnarchiverTest
     public void readEntries_JUZ()
             throws IOException {
         // Charset charset = Charset.forName("gb2312");
-        Charset charset = Charset.forName("utf-8");
+        Charset charset = Charsets.UTF8;
         ZipInputStream zin = new ZipInputStream(new DbgInputStream(in), charset);
         java.util.zip.ZipEntry entry;
         while ((entry = zin.getNextEntry()) != null) {

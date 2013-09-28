@@ -17,6 +17,7 @@ import sun.security.pkcs11.wrapper.PKCS11Exception;
 
 import net.bodz.bas.c.java.net.CURL;
 import net.bodz.bas.c.java.net.CURL.Alpha;
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.err.ParseException;
@@ -93,7 +94,7 @@ public class Providers
         TempOut getTemp()
                 throws IOException {
             File tempFile = File.createTempFile("p11conf", ".ini");
-            Charset utf8 = Charset.forName("utf-8");
+            Charset utf8 = Charsets.UTF8;
             TempOut tempOut = new TempOut(tempFile, utf8);
             return tempOut;
         }

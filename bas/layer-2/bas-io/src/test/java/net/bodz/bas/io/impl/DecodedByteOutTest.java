@@ -4,16 +4,12 @@ import java.io.IOException;
 import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.io.BCharOut;
 
 public class DecodedByteOutTest
-        extends Assert {
-
-    static final Charset ASCII = Charset.forName("ASCII");
-    static final Charset UTF8 = Charset.forName("UTF8");
+        extends CodecIOTestCase {
 
     DecodedByteOut out;
 

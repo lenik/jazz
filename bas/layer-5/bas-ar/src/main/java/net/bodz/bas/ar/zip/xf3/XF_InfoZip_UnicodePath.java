@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.ar.zip.ExtraField;
 import net.bodz.bas.ar.zip.ExtraFieldType;
 import net.bodz.bas.ar.zip.IZipConsts;
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.IDataOut;
 
@@ -67,13 +68,13 @@ public class XF_InfoZip_UnicodePath
 
     public String getFileName() {
         if (fileName == null)
-            fileName = new String(fileNameRaw, utf8Charset);
+            fileName = new String(fileNameRaw, Charsets.UTF8);
         return fileName;
     }
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-        fileNameRaw = fileName.getBytes(utf8Charset);
+        fileNameRaw = fileName.getBytes(Charsets.UTF8);
         size = (short) (fileNameRaw.length + 5);
     }
 

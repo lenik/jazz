@@ -2,6 +2,7 @@ package net.bodz.bas.ar;
 
 import java.nio.charset.Charset;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamInputSourceWrapper;
 
@@ -46,10 +47,8 @@ public abstract class AbstractArchiveEntry
     /** ⇱ Implementation Of {@link IStreamInputSourceWrapper}. */
     /* _____________________________ */static section.iface __INPUT_SOURCE__;
 
-    private static final Charset utf8Charset = Charset.forName("utf-8");
-
     protected Charset getPreferredContentCharset() {
-        return utf8Charset;
+        return Charsets.UTF8;
     }
 
     @Override

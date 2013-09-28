@@ -3,6 +3,7 @@ package net.bodz.bas.data.codec.builtin;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.c.string.CharFeature;
 import net.bodz.bas.data.codec.AbstractByteCodec;
 import net.bodz.bas.err.EncodeException;
@@ -38,11 +39,9 @@ public class HexCodec
         this.NL = NL;
     }
 
-    static final Charset hexCharset = Charset.forName("ASCII");
-
     @Override
     public Charset getPreferredCharsetForEncodedContents() {
-        return hexCharset;
+        return Charsets.ASCII7;
     }
 
     @Override

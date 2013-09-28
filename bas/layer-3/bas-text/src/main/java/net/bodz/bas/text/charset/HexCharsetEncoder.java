@@ -36,7 +36,7 @@ public class HexCharsetEncoder
      */
     public HexCharsetEncoder(Charset charset, char[] transtbl) {
         super(charset, 3.0f + transtbl.length, 8.0f + transtbl.length, //
-                " ? ".getBytes(Charsets.ASCII));
+                " ? ".getBytes(Charsets.ASCII7));
         this.transtbl = new byte[transtbl.length];
         for (int i = 0; i < transtbl.length; i++)
             this.transtbl[i] = (byte) transtbl[i];

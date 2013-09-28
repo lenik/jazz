@@ -1,13 +1,13 @@
 package net.bodz.bas.flow.unit.builtins.text;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Collection;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.flow.unit.GenericUnit_11;
@@ -21,9 +21,8 @@ public class DecodeUnitTest
 
     public DecodeUnitTest()
             throws IOException {
-        Charset utf8 = Charset.forName("utf-8");
         // charbuf = [3]
-        decode = new DecodeUnit(utf8.newDecoder(), 3);
+        decode = new DecodeUnit(Charsets.UTF8.newDecoder(), 3);
         decode.setDst(tostr = new Text_String());
     }
 

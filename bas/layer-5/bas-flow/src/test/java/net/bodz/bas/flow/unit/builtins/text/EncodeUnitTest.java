@@ -1,12 +1,12 @@
 package net.bodz.bas.flow.unit.builtins.text;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Collection;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.flow.unit.GenericUnit_11;
 import net.bodz.bas.flow.utils.WhatIf;
@@ -19,9 +19,8 @@ public class EncodeUnitTest
 
     public EncodeUnitTest()
             throws IOException {
-        Charset utf8 = Charset.forName("utf-8");
         // bytebuf = [3]
-        encode = new EncodeUnit(utf8.newEncoder(), 3);
+        encode = new EncodeUnit(Charsets.UTF8.newEncoder(), 3);
         encode.setDst(tostr = new Binary_Hex());
         // encode.setDst(tostr = new Binary_String("ascii"));
     }
