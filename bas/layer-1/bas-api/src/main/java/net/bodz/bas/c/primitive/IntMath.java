@@ -6,6 +6,8 @@ import net.bodz.bas.err.OutOfDomainException;
 
 public class IntMath {
 
+    /* _____________________________ */static section.iface __SIGN__;
+
     public static int signum(int n) {
         return n > 0 ? 1 : n < 0 ? -1 : 0;
     }
@@ -38,6 +40,8 @@ public class IntMath {
         return num;
     }
 
+    /* _____________________________ */static section.iface __OPTIM__;
+
     public static int min(int a, long b) {
         if (b > Integer.MAX_VALUE)
             return a;
@@ -53,6 +57,8 @@ public class IntMath {
         int _a = (int) a;
         return (_a <= b) ? _a : b;
     }
+
+    /* _____________________________ */static section.iface __BIT_MATH__;
 
     public static int ones(int bits) {
         int c = 0;
@@ -138,34 +144,34 @@ public class IntMath {
         return out;
     }
 
-    static final int H1 = 0b10101010_10101010_10101010_10101010;
-    static final int L1 = H1 >> 1;
-    static final int H2 = 0b11001100_11001100_11001100_11001100;
-    static final int L2 = H2 >> 2;
-    static final int H4 = 0b11110000_11110000_11110000_11110000;
-    static final int L4 = H4 >> 4;
-    static final int H8 = 0b11111111_00000000_11111111_00000000;
-    static final int L8 = H8 >> 8;
+    static final int _swapper_H1 = 0b10101010_10101010_10101010_10101010;
+    static final int _swapper_L1 = _swapper_H1 >> 1;
+    static final int _swapper_H2 = 0b11001100_11001100_11001100_11001100;
+    static final int _swapper_L2 = _swapper_H2 >> 2;
+    static final int _swapper_H4 = 0b11110000_11110000_11110000_11110000;
+    static final int _swapper_L4 = _swapper_H4 >> 4;
+    static final int _swapper_H8 = 0b11111111_00000000_11111111_00000000;
+    static final int _swapper_L8 = _swapper_H8 >> 8;
 
     public static int reflect8(int n) {
-        int x = (n & H4) >>> 4;
-        int y = n & L4;
+        int x = (n & _swapper_H4) >>> 4;
+        int y = n & _swapper_L4;
         n = (y << 4) | x;
 
-        x = (n & H2) >>> 2;
-        y = n & L2;
+        x = (n & _swapper_H2) >>> 2;
+        y = n & _swapper_L2;
         n = (y << 2) | x;
 
-        x = (n & H1) >>> 1;
-        y = n & L1;
+        x = (n & _swapper_H1) >>> 1;
+        y = n & _swapper_L1;
         n = (y << 1) | x;
         return n;
     }
 
     public static int reflect16(int n) {
         n = reflect8(n);
-        int x = (n & H8) >>> 8;
-        int y = n & L8;
+        int x = (n & _swapper_H8) >>> 8;
+        int y = n & _swapper_L8;
         return (y << 8) | x;
     }
 
@@ -175,6 +181,8 @@ public class IntMath {
         int y = n & 0xffff;
         return (y << 16) | x;
     }
+
+    /* _____________________________ */static section.iface __INT_MATH__;
 
     private static final Number[] facConsts;
     static {

@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.c.primitive.Flags32;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.IFsObject;
-import net.bodz.pkg.installer.util.Flags;
 
 public interface ISession {
 
@@ -36,7 +36,7 @@ public interface ISession {
 
     int REBOOT = 1;
 
-    Flags getFlags();
+    Flags32 getFlags();
 
     void set(String variableName, Object variableValue);
 

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.DeleteOptions;
+import net.bodz.bas.c.primitive.Flags32;
 import net.bodz.bas.io.res.IRandomResource;
 
 public abstract class MutableFile
@@ -234,15 +235,15 @@ public abstract class MutableFile
     }
 
     public void setReadable(boolean readable) {
-        flags = FileFlags.set(flags, readable, FileFlags.READABLE);
+        flags = Flags32.setOrClear(flags, readable, FileFlags.READABLE);
     }
 
     public void setWritable(boolean writable) {
-        flags = FileFlags.set(flags, writable, FileFlags.WRITABLE);
+        flags = Flags32.setOrClear(flags, writable, FileFlags.WRITABLE);
     }
 
     public void setExecutable(boolean executable) {
-        flags = FileFlags.set(flags, executable, FileFlags.EXECUTABLE);
+        flags = Flags32.setOrClear(flags, executable, FileFlags.EXECUTABLE);
     }
 
     /** ⇱ Implementation Of {@link DosFileAttributes}. */
@@ -268,20 +269,20 @@ public abstract class MutableFile
         return FileFlags.isSystem(flags);
     }
 
-    public void setReadOnly(boolean readOnly) {
-        flags = FileFlags.clear(flags, readOnly, FileFlags.WRITABLE);
+    public final void setReadOnly(boolean readOnly) {
+        setWritable(!readOnly);
     }
 
     public void setHidden(boolean hidden) {
-        flags = FileFlags.set(flags, hidden, FileFlags.HIDDEN);
+        flags = Flags32.setOrClear(flags, hidden, FileFlags.HIDDEN);
     }
 
     public void setArchive(boolean archive) {
-        flags = FileFlags.set(flags, archive, FileFlags.ARCHIVE);
+        flags = Flags32.setOrClear(flags, archive, FileFlags.ARCHIVE);
     }
 
     public void setSystem(boolean system) {
-        flags = FileFlags.set(flags, system, FileFlags.SYSTEM);
+        flags = Flags32.setOrClear(flags, system, FileFlags.SYSTEM);
     }
 
 }
