@@ -1,11 +1,9 @@
 package net.bodz.bas.i18n.dom1;
 
-import java.io.Serializable;
-
 import net.bodz.bas.i18n.dom.iString;
 
 public interface IMutableElement
-        extends IElement, Serializable {
+        extends IElement {
 
     void setName(String name);
 

@@ -6,8 +6,6 @@ public class MutableElement
         extends AbstractElement
         implements IMutableElement {
 
-    private static final long serialVersionUID = 1L;
-
     private String name;
     private iString label;
     private iString description;
