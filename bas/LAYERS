@@ -15,7 +15,6 @@ layer-2/ 基础数据类型扩展
     bas-t2
     bas-context
     bas-geom
-    bas-gui2
     bas-io
     bas-i18n
     bas-std
@@ -40,6 +39,7 @@ layer-5/ 框架基础
     bas-potato
     bas-repr
     bas-gui
+    bas-gui2
     bas-vfs
     bas-c5
     

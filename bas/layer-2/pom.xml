@@ -13,7 +13,6 @@
     <modules>
         <module>bas-context</module>
         <module>bas-geom</module>
-        <module>bas-gui2</module>
         <module>bas-i18n</module>
         <module>bas-io</module>
         <module>bas-std</module>
