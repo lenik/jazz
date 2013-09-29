@@ -13,4 +13,6 @@ public interface ICss3StyleDeclaration
 
     void setParent(ICss3StyleDeclaration parent);
 
+    ICss3StyleDeclaration NULL = new NullCss3StyleDeclaration();
+
 }
