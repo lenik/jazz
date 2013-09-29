@@ -14,7 +14,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-gui</artifactId>
+            <artifactId>bas-draw</artifactId>
             <version>${bas.version}</version>
         </dependency>
         <dependency>
@@ -25,11 +25,6 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-t3</artifactId>
-            <version>${bas.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-i18n</artifactId>
             <version>${bas.version}</version>
         </dependency>
     </dependencies>
