@@ -15,6 +15,7 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
 import net.bodz.bas.c.m2.MavenPomDir;
+import net.bodz.bas.c.primitive.Flags32;
 import net.bodz.bas.c.system.SystemColos;
 import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.gui.dialog.IUserDialogs;
@@ -26,7 +27,6 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
-import net.bodz.pkg.installer.util.Flags;
 
 public class Session
         implements ISession, II18nCapable {
@@ -41,7 +41,7 @@ public class Session
     private Components components;
     private Scheme scheme;
 
-    private Flags flags;
+    private Flags32 flags;
     private TextMap<Object> variables;
 
     private List<IFsDir> resFolders;
@@ -65,7 +65,7 @@ public class Session
         logger.info(tr._("Collect components"));
         components = Components.collect(project);
         scheme = new Schemes.Default();
-        flags = new Flags();
+        flags = new Flags32();
 
         Map<String, Variable> vardef = project.getVariables();
         assert vardef != null;
@@ -155,7 +155,7 @@ public class Session
     }
 
     @Override
-    public Flags getFlags() {
+    public Flags32 getFlags() {
         return flags;
     }
 
