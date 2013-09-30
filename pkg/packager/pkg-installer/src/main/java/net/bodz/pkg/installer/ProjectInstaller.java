@@ -11,6 +11,7 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
+import net.bodz.pkg.installer.pageflow.InstallNavigator;
 import net.bodz.swt.c.pageflow.BadPathEvent;
 import net.bodz.swt.c.pageflow.IBadPathListener;
 import net.bodz.swt.program.BasicGUI;
@@ -65,7 +66,7 @@ public class ProjectInstaller
             throws GUIException {
         ISession session = new Session(project, userDialogs, logger);
         setSession(session);
-        InstallComposite installComposite = new InstallComposite(session, parent, SWT.NONE);
+        InstallNavigator installComposite = new InstallNavigator(session, parent, SWT.NONE);
         installComposite.getPageFlow().addBadPathListener(new IBadPathListener() {
             @Override
             public void badPath(BadPathEvent e) {

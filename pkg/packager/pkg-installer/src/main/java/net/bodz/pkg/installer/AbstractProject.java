@@ -18,6 +18,8 @@ import net.bodz.bas.gui.style.ImageUsage;
 import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.t.tree.legacy.ITreeCallback;
+import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.mda.xjdoc.model.javadoc.Author;
 import net.bodz.pkg.installer.Schemes.Custom;
@@ -44,22 +46,20 @@ public class AbstractProject
     public AbstractProject(Class<?> artifactClass, IComponent... children) {
         super("root", children);
 
-        ArtifactDoc artifactDoc = getXjdoc().to(ArtifactDoc.class);
+        ClassDoc classDoc = ClassDocLoader.load(getClass());
+
+        ArtifactDoc artifactDoc = classDoc.to(ArtifactDoc.class);
         version = artifactDoc.getVersion();
         company = artifactDoc.getAuthor();
         updateTime = artifactDoc.getReleaseDateString();
 
-        GUIElementDoc guiElementDoc = getXjdoc().to(GUIElementDoc.class);
+        GUIElementDoc guiElementDoc = classDoc.to(GUIElementDoc.class);
         IGUIElementStyleDeclaration styleDecl = guiElementDoc.getStyleClass();
         // SwtControlStyler.applyAuto(widget, styleDecl)
 
         IImageData imageData = styleDecl.getImage(ImageUsage.NORMAL);
-        if (imageData != null) {
+        if (imageData != null)
             logo = SwtImageMapper.convert(imageData);
-
-            // get small version?
-            setImage(logo);
-        }
 
         this.variables = new TreeTextMap<Variable>();
     }
@@ -94,8 +94,8 @@ public class AbstractProject
     }
 
     @Override
-    public Scheme[] getSchemes() {
-        Scheme[] commons = {
+    public IScheme[] getSchemes() {
+        IScheme[] commons = {
                 //
                 new Default(), //
                 new Minimum(), //

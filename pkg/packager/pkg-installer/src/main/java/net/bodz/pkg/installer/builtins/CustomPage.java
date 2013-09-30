@@ -33,12 +33,12 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
-import net.bodz.pkg.installer.ConfigPage;
 import net.bodz.pkg.installer.IComponent;
 import net.bodz.pkg.installer.IProject;
 import net.bodz.pkg.installer.ISession;
-import net.bodz.pkg.installer.Scheme;
+import net.bodz.pkg.installer.IScheme;
 import net.bodz.pkg.installer.Variable;
+import net.bodz.pkg.installer.pageflow.ConfigPage;
 import net.bodz.pkg.installer.util.MissingDependancyBuffer;
 import net.bodz.pkg.installer.util.MissingDependancyBuffer.Entry;
 import net.bodz.pkg.installer.util.TreeItems;
@@ -258,7 +258,7 @@ public class CustomPage
         }
 
         boolean defaultSelection = component.isSelected();
-        Scheme scheme = session.getScheme();
+        IScheme scheme = session.getScheme();
         if (scheme != null)
             defaultSelection = scheme.isIncluded(component);
         int state = defaultSelection ? FULL : NONE;

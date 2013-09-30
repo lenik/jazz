@@ -6,9 +6,10 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.pkg.installer.AbstractProject;
 import net.bodz.pkg.installer.BaseDirVariable;
-import net.bodz.pkg.installer.ConfigPage;
 import net.bodz.pkg.installer.ISession;
 import net.bodz.pkg.installer.Variable;
+import net.bodz.pkg.installer.pageflow.ConfigPage;
+import net.bodz.pkg.os.win32.Win32Vars;
 
 public class SimpleProject
         extends AbstractProject {

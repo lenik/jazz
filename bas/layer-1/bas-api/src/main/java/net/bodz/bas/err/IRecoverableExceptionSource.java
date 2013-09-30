@@ -5,8 +5,8 @@ import net.bodz.bas.meta.decl.EventSource;
 public interface IRecoverableExceptionSource
         extends EventSource {
 
-    void addExceptionListener(RecoverableExceptionListener listener);
+    void addExceptionListener(IRecoverableExceptionListener listener);
 
-    void removeExceptionListener(RecoverableExceptionListener listener);
+    void removeExceptionListener(IRecoverableExceptionListener listener);
 
 }

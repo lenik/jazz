@@ -1,7 +1,7 @@
 package net.bodz.bas.err;
 
 public class OneExceptionBuffer
-        implements RecoverableExceptionListener {
+        implements IRecoverableExceptionListener {
 
     private Exception first;
 

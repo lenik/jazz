@@ -2,9 +2,6 @@ package net.bodz.pkg.installer.util;
 
 import net.bodz.bas.err.OutOfDomainException;
 
-/**
- * @test IndicesTest
- */
 public class Indices {
 
     /**

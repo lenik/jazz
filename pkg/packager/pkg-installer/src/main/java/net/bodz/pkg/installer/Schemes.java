@@ -9,7 +9,7 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 public class Schemes {
 
     static abstract class _Scheme
-            implements Scheme, II18nCapable {
+            implements IScheme, II18nCapable {
 
         private final String name;
         private final String caption;

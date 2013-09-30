@@ -11,9 +11,9 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.pkg.installer.ConfigPage;
 import net.bodz.pkg.installer.IComponent;
 import net.bodz.pkg.installer.ISession;
+import net.bodz.pkg.installer.pageflow.ConfigPage;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.c.pageflow.IPage;
 import net.bodz.swt.c.pageflow.PageException;
