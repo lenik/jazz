@@ -2,8 +2,8 @@ package net.bodz.bas.err;
 
 public interface RecoverableExceptionSource {
 
-    void addExceptionListener(RecoverableExceptionListener listener);
+    void addExceptionListener(IRecoverableExceptionListener listener);
 
-    void removeExceptionListener(RecoverableExceptionListener listener);
+    void removeExceptionListener(IRecoverableExceptionListener listener);
 
 }

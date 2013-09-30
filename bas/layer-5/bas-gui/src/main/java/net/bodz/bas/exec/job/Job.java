@@ -1,0 +1,512 @@
+package net.bodz.bas.exec.job;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.err.IRecoverableExceptionListener;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.err.RecoverableExceptionEvent;
+import net.bodz.bas.t.tree.legacy.ITreeNode;
+
+public abstract class Job
+        implements IJob, ITreeNode<Job> {
+
+    private int state = NOTSTART;
+
+    private List<Job> children;
+    private List<ChildObserver> observers;
+    private List<Runnable> exitHooks;
+
+    private Object status;
+    private int progressIndex;
+    private int progressSize;
+    private Long durationSum;
+
+    private List<IRecoverableExceptionListener> exceptionListeners;
+    private List<IStatusChangeListener> statusChangeListeners;
+    private List<IProgressChangeListener> progressChangeListeners;
+    private List<IDurationChangeListener> durationChangeListeners;
+
+    protected abstract void _run()
+            throws Exception;
+
+    @Override
+    public void start() {
+        switch (state) {
+        case NOTSTART:
+            setState(RUNNING);
+            break;
+        case RUNNING:
+            return;
+        case TERMINATED: // can restart?
+        case STOPPED: // can error-restart?
+            setState(RUNNING);
+            break;
+        case STOPPING: // synchronized??
+            setState(RUNNING);
+            return;
+        case PAUSED:
+        case PAUSING:
+            throw new NotImplementedException();
+        }
+        try {
+            runTree();
+            if (state == STOPPING)
+                setState(STOPPED);
+            else
+                setState(TERMINATED);
+        } catch (Exception e) {
+            setState(STOPPING);
+            throwException(e);
+            setState(STOPPED);
+        } finally {
+            if (exitHooks != null)
+                for (Runnable exitHook : exitHooks)
+                    try {
+                        exitHook.run();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+        }
+    }
+
+    /**
+     * Override this method to specify your own run order, and set progress indexes for child jobs.
+     * 
+     * @throws Exception
+     */
+    protected void runTree()
+            throws Exception {
+        _run();
+        if (children != null)
+            for (Job child : children) {
+                child.start();
+            }
+    }
+
+    @Override
+    public int getState() {
+        return state;
+    }
+
+    private void setState(int state) {
+        List<? extends IJob> children = getChildren();
+        if (children != null)
+            for (IJob child : children)
+                switch (state) {
+                case PAUSING:
+                    child.pause();
+                    break;
+                case STOPPING:
+                    child.stop();
+                    break;
+                }
+        if (this.state != state) {
+            this.state = state;
+            fireStateChange();
+        }
+    }
+
+    @Override
+    public void pause() {
+        switch (state) {
+        case RUNNING:
+            setState(PAUSING);
+            break;
+        case STOPPING:
+            // setState(STOPPING | PAUSING);
+            break;
+        }
+    }
+
+    @Override
+    public void stop() {
+        switch (state) {
+        case NOTSTART:
+        case TERMINATED:
+        case STOPPED:
+            break;
+        case STOPPING:
+            return;
+        default:
+            setState(STOPPING);
+        }
+    }
+
+    protected final boolean isStopping() {
+        if (JobConfig.slowdown != 0)
+            try {
+                Thread.sleep(JobConfig.slowdown);
+            } catch (InterruptedException e) {
+            }
+        return getState() == STOPPING;
+    }
+
+    protected final void setStopped() {
+        setState(STOPPED);
+    }
+
+    protected void execute(IJob child, double progressIncrement) {
+        if (progressIncrement < 0)
+            throw new OutOfDomainException("progressIncrement", progressIncrement, 0);
+
+        ChildObserver childObserver = new ChildObserver(progressIncrement);
+        childObserver.bind(child);
+        try {
+            child.start();
+        } finally {
+            childObserver.unbind(child);
+        }
+    }
+
+    public void addExitHook(Runnable hook) {
+        if (exitHooks == null)
+            exitHooks = new ArrayList<Runnable>();
+        exitHooks.add(hook);
+    }
+
+    @Override
+    public Object getStatus() {
+        return status;
+    }
+
+    protected void setStatus(Object status) {
+        if (Nullables.equals(this.status, status)) {
+            this.status = status;
+            StatusChangeEvent e = new StatusChangeEvent(this, status);
+            fireStatusChange(e);
+        }
+    }
+
+    public double getProgress() {
+        if (progressSize == 0)
+            return 0.0;
+        return (double) progressIndex / progressSize;
+    }
+
+    private double getProgress(double progressIncrement) {
+        if (progressSize == 0)
+            return 0;
+        return (progressIndex + progressIncrement) / progressSize;
+    }
+
+    protected void setProgress(double progress) {
+        progressIndex = (int) (progress * progressSize);
+        fireProgressChange(progress);
+    }
+
+    protected void setProgress(int progressIndex, int progressSize) {
+        this.progressIndex = progressIndex;
+        this.progressSize = progressSize;
+        fireProgressChange();
+    }
+
+    @Override
+    public int getProgressIndex() {
+        return progressIndex;
+    }
+
+    protected void setProgressIndex(int progressIndex) {
+        if (this.progressIndex != progressIndex) {
+            this.progressIndex = progressIndex;
+            fireProgressChange();
+        }
+    }
+
+    protected void setProgressIndex(double progressIndex) {
+        this.progressIndex = (int) progressIndex;
+        double progress = progressSize == 0 ? 0 : progressIndex / progressSize;
+        fireProgressChange(progress);
+    }
+
+    public int getProgressSize() {
+        return progressSize;
+    }
+
+    protected void setProgressSize(int progressSize) {
+        if (this.progressSize != progressSize) {
+            this.progressSize = progressSize;
+            fireProgressChange();
+        }
+    }
+
+    /**
+     * Set progress index, status info, and check if stopping requested.
+     */
+    protected boolean moveOn(double progressIndex, Object status) {
+        setStatus(status);
+        return moveOn(progressIndex);
+    }
+
+    protected boolean moveOn(double progressIndex) {
+        setProgressIndex(progressIndex);
+        if (isStopping()) {
+            setStopped();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Override this method to get a better estimated duration this job will take to complete.
+     * 
+     * @return 0 in default implementation.
+     */
+    protected long getLocalDuration() {
+        return 0;
+    }
+
+    // synchronized?
+    @Override
+    public long getDuration() {
+        if (durationSum == null) {
+            long sum = getLocalDuration();
+            List<? extends IJob> children = getChildren();
+            if (children != null)
+                for (IJob child : children)
+                    sum += child.getDuration();
+            durationSum = sum;
+        }
+        return durationSum;
+    }
+
+    protected void setDuration(long duration) {
+        long oldDuration = getDuration();
+        if (oldDuration != duration) {
+            this.durationSum = duration;
+            DurationChangeEvent e = new DurationChangeEvent(this, oldDuration, duration);
+            fireDurationChange(e);
+        }
+    }
+
+    /**
+     * Children jobs are executed after this job.
+     */
+    @Override
+    public List<? extends Job> getChildren() {
+        if (children == null)
+            return null;
+        return children;
+    }
+
+    public void addChildJob(Job job, double progressIncrement) {
+        if (children == null) {
+            children = new ArrayList<Job>();
+            observers = new ArrayList<ChildObserver>();
+        }
+        children.add(job);
+        ChildObserver observer = new ChildObserver(progressIncrement);
+        observer.bind(job);
+        observers.add(observer);
+    }
+
+    public boolean removeChildJob(Job job) {
+        if (children == null)
+            return false;
+        int index = children.indexOf(job);
+        if (index == -1)
+            return false;
+        ChildObserver observer = observers.remove(index);
+        observer.unbind(job);
+        return true;
+    }
+
+    protected class ChildObserver
+            extends JobObserver {
+
+        private double progressIncrement;
+
+        public ChildObserver(double progressIncrement) {
+            this.progressIncrement = progressIncrement;
+        }
+
+        @Override
+        public void exceptionThrown(Exception ex) {
+            if (exceptionListeners != null)
+                for (IRecoverableExceptionListener listener : exceptionListeners)
+                    listener.exceptionThrown(ex);
+        }
+
+        @Override
+        public void recoverException(RecoverableExceptionEvent e) {
+            if (exceptionListeners != null)
+                for (IRecoverableExceptionListener listener : exceptionListeners) {
+                    if (e.isRecovered())
+                        break;
+                    listener.recoverException(e);
+                }
+        }
+
+        /**
+         * Default implementation won't change the actual status of parent job.
+         */
+        @Override
+        public void statusChange(StatusChangeEvent e) {
+            fireStatusChange(e);
+        }
+
+        /**
+         * Default implementation won't change the actual progress of parent job.
+         */
+        @Override
+        public void progressChange(ProgressChangeEvent e) {
+            double childLocal = e.getProgress();
+            double progress = getProgress(progressIncrement * childLocal);
+            fireProgressChange(new ProgressChangeEvent(e.getSource(), progress));
+        }
+
+        @Override
+        public void durationChange(DurationChangeEvent e) {
+            long newDuration = getDuration() + e.getIncrement();
+            setDuration(newDuration);
+        }
+
+    }
+
+    private List<StateChangeListener> StateChangeListeners;
+
+    @Override
+    public void addStateChangeListener(StateChangeListener listener) {
+        if (StateChangeListeners == null)
+            StateChangeListeners = new ArrayList<StateChangeListener>(1);
+        StateChangeListeners.add(listener);
+    }
+
+    @Override
+    public void removeStateChangeListener(StateChangeListener listener) {
+        if (StateChangeListeners != null)
+            StateChangeListeners.remove(listener);
+    }
+
+    protected final void fireStateChange() {
+        if (StateChangeListeners != null) {
+            StateChangeEvent event = new StateChangeEvent(this);
+            for (StateChangeListener listener : StateChangeListeners)
+                listener.stateChange(event);
+        }
+    }
+
+    @Override
+    public void addExceptionListener(IRecoverableExceptionListener listener) {
+        if (exceptionListeners == null)
+            exceptionListeners = new ArrayList<IRecoverableExceptionListener>(1);
+        exceptionListeners.add(listener);
+    }
+
+    @Override
+    public void removeExceptionListener(IRecoverableExceptionListener listener) {
+        if (exceptionListeners != null)
+            exceptionListeners.remove(listener);
+    }
+
+    /**
+     * Combinations: A = recoverable, D = recovered
+     * <ul>
+     * <li>A & D: default ignored exception
+     * <li>A & &#172;D: recoverable exception
+     * <li>&#172;A & D: (n/a)
+     * <li>&#172;A & &#172;D: fatal exception
+     * <li>recover
+     * 
+     * @return <code>true</code> if the exception is recovered.
+     */
+    protected boolean defaultExceptionHandler(Exception exception, boolean recoverable, boolean discarded) {
+        exception.printStackTrace();
+        return discarded;
+    }
+
+    protected final boolean recoverException(Exception exception, boolean discarded) {
+        if (exceptionListeners == null)
+            return defaultExceptionHandler(exception, true, discarded);
+        RecoverableExceptionEvent event = new RecoverableExceptionEvent(this, exception);
+        event.setRecovered(discarded);
+        for (IRecoverableExceptionListener listener : exceptionListeners)
+            listener.recoverException(event);
+        return event.isRecovered();
+    }
+
+    /**
+     * @return <code>true</code> if the exception is recovered.
+     */
+    protected final boolean recoverException(Exception exception) {
+        return recoverException(exception, false);
+    }
+
+    protected final void throwException(Exception exception) {
+        if (exceptionListeners == null)
+            defaultExceptionHandler(exception, false, false);
+        else
+            for (IRecoverableExceptionListener listener : exceptionListeners)
+                listener.exceptionThrown(exception);
+    }
+
+    @Override
+    public void addStatusChangeListener(IStatusChangeListener listener) {
+        if (statusChangeListeners == null)
+            statusChangeListeners = new ArrayList<IStatusChangeListener>(1);
+        statusChangeListeners.add(listener);
+    }
+
+    @Override
+    public void removeStatusChangeListener(IStatusChangeListener listener) {
+        if (statusChangeListeners != null)
+            statusChangeListeners.remove(listener);
+    }
+
+    protected final void fireStatusChange(StatusChangeEvent event) {
+        if (statusChangeListeners != null)
+            for (IStatusChangeListener listener : statusChangeListeners)
+                listener.statusChange(event);
+    }
+
+    @Override
+    public void addProgressChangeListener(IProgressChangeListener listener) {
+        if (progressChangeListeners == null)
+            progressChangeListeners = new ArrayList<IProgressChangeListener>(1);
+        progressChangeListeners.add(listener);
+    }
+
+    @Override
+    public void removeProgressChangeListener(IProgressChangeListener listener) {
+        if (progressChangeListeners != null)
+            progressChangeListeners.remove(listener);
+    }
+
+    protected final void fireProgressChange() {
+        fireProgressChange(getProgress());
+    }
+
+    protected final void fireProgressChange(double progress) {
+        ProgressChangeEvent event = new ProgressChangeEvent(this, progress);
+        fireProgressChange(event);
+    }
+
+    protected final void fireProgressChange(ProgressChangeEvent event) {
+        if (progressChangeListeners != null) {
+            for (IProgressChangeListener listener : progressChangeListeners)
+                listener.progressChange(event);
+        }
+    }
+
+    @Override
+    public void addDurationChangeListener(IDurationChangeListener listener) {
+        if (durationChangeListeners == null)
+            durationChangeListeners = new ArrayList<IDurationChangeListener>(1);
+        durationChangeListeners.add(listener);
+    }
+
+    @Override
+    public void removeDurationChangeListener(IDurationChangeListener listener) {
+        if (durationChangeListeners != null)
+            durationChangeListeners.remove(listener);
+    }
+
+    protected final void fireDurationChange(DurationChangeEvent event) {
+        if (durationChangeListeners != null)
+            for (IDurationChangeListener listener : durationChangeListeners)
+                listener.durationChange(event);
+    }
+
+}

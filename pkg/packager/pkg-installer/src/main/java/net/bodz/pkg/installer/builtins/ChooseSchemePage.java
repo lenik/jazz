@@ -12,10 +12,10 @@ import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.pkg.installer.ConfigPage;
 import net.bodz.pkg.installer.IComponent;
 import net.bodz.pkg.installer.ISession;
-import net.bodz.pkg.installer.Scheme;
+import net.bodz.pkg.installer.IScheme;
+import net.bodz.pkg.installer.pageflow.ConfigPage;
 import net.bodz.swt.c.control.Controls;
 
 /**
@@ -24,7 +24,7 @@ import net.bodz.swt.c.control.Controls;
 public class ChooseSchemePage
         extends ConfigPage {
 
-    private Scheme[] schemes;
+    private IScheme[] schemes;
 
     private int selectedIndex = -1;
 
@@ -65,7 +65,7 @@ public class ChooseSchemePage
             }
         };
         for (int i = 0; i < schemes.length; i++) {
-            Scheme scheme = schemes[i];
+            IScheme scheme = schemes[i];
             String caption = scheme.getCaption();
             String description = scheme.getDescription();
 
@@ -90,7 +90,7 @@ public class ChooseSchemePage
             throws GUIValidationException {
         if (selectedIndex == -1)
             throw new GUIValidationException(tr._("Scheme isn\'t selected"));
-        Scheme scheme = schemes[selectedIndex];
+        IScheme scheme = schemes[selectedIndex];
         session.setScheme(scheme);
     }
 

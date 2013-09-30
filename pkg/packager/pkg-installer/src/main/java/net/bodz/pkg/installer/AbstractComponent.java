@@ -6,27 +6,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.swt.graphics.ImageData;
-
+import net.bodz.bas.gui.dom1.MutableGUIElement;
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
 public abstract class AbstractComponent
-        extends AbstractXjdocElement
+        extends MutableGUIElement
         implements IComponent, II18nCapable {
 
     private String id;
     private Object viewData;
     private Object registryData;
 
-    private ImageData image;
-
     private boolean enabled = true;
     private boolean visible;
     private boolean readOnly;
     private boolean selected;
     private long size;
-    private long moreSize;
+// private long moreSize;
 
     private List<IComponent> children;
     private Set<IComponent> dependancy;
@@ -41,16 +37,8 @@ public abstract class AbstractComponent
         this.id = id;
     }
 
-    public ImageData getImage() {
-        return image;
-    }
-
-    protected void setImage(ImageData image) {
-        this.image = image;
-    }
-
     @Override
-    public boolean isFeature() {
+    public boolean isSelector() {
         return false;
     }
 
@@ -94,13 +82,13 @@ public abstract class AbstractComponent
         this.size = size;
     }
 
-    public long getMoreSize() {
-        return moreSize;
-    }
-
-    protected void setMoreSize(long moreSize) {
-        this.moreSize = moreSize;
-    }
+// public long getMoreSize() {
+// return moreSize;
+// }
+//
+// protected void setMoreSize(long moreSize) {
+// this.moreSize = moreSize;
+// }
 
     @Override
     public List<IComponent> getChildren() {
@@ -156,11 +144,6 @@ public abstract class AbstractComponent
         return false;
     }
 
-    @Override
-    public ConfigPage createConfig(ISession session) {
-        return null;
-    }
-
     /**
      * @return slightly bigger then a single progress index (1.00), in default implementation.
      */
@@ -187,7 +170,7 @@ public abstract class AbstractComponent
             for (SessionJob job : list) {
                 if (!moveOn(progressIndex, job.getDescription()))
                     return;
-                job.run();
+                job.start();
                 progressIndex += job.progressIncrement;
             }
             setProgressIndex(jobCount);
@@ -228,7 +211,7 @@ public abstract class AbstractComponent
             psum += 1;
         }
 
-        Scheme scheme = session.getScheme();
+        IScheme scheme = session.getScheme();
         for (IComponent child : children) {
             switch (type) {
             case PACK:

@@ -1,11 +1,6 @@
 package net.bodz.pkg.installer.builtins;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,7 +12,6 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.ar.IArchiveEntry;
-import net.bodz.bas.ar.IUnarchiver;
 import net.bodz.bas.ar.zip.ZipUnarchiver;
 import net.bodz.bas.c.java.io.FileDirs;
 import net.bodz.bas.c.java.io.FileFinder;
@@ -164,12 +158,13 @@ public class FileCopy
             List<String> list = new ArrayList<String>(count);
             long sum = 0;
 
-            IStreamResource a = getAttachment(session, true);
-            logger.infof(tr._("Pack %s files to %s\n"), getId(), a);
+            IStreamResource attachment = getAttachment(session, true);
+            logger.infof(tr._("Pack %s files to %s\n"), getId(), attachment);
 
             ZipOutputStream zout;
             try {
-                zout = a.getZipOut();
+                OutputStream out = attachment.newOutputStream();
+                zout = new ZipOutputStream(out);
             } catch (IOException e) {
                 throwException(e);
                 return;
@@ -271,7 +266,8 @@ public class FileCopy
         }
 
         @Override
-        protected void _run() {
+        protected void _run()
+                throws IOException {
             File baseDir = session.getFile(baseName);
             if (!preConstruct)
                 if (basePath != null)
@@ -284,10 +280,10 @@ public class FileCopy
             setProgressSize(data.list.length);
 
             IRandomResource attachment = getAttachment(session, false);
-            IUnarchiver unarchiver;
+            ZipUnarchiver unzip;
             try {
                 IByteIOS ios = attachment.newByteIOS();
-                unarchiver = new ZipUnarchiver(ios);
+                unzip = new ZipUnarchiver(ios);
             } catch (IOException e) {
                 throwException(e);
                 return;
@@ -299,7 +295,7 @@ public class FileCopy
                     if (!moveOn(index++))
                         break;
 
-                    IArchiveEntry entry = unarchiver.getEntry(name);
+                    IArchiveEntry entry = unzip.getEntry(name);
                     if (entry == null) {
                         InstallException ex = new InstallException(tr._("Entry isn\'t existed: ") + name);
                         if (recoverException(ex))
@@ -329,7 +325,7 @@ public class FileCopy
                     logger.log(tr._("Extract "), destFile);
                     FileOutputStream destOut = null;
                     try {
-                        InputStream entryIn = zipFile.getInputStream(entry);
+                        InputStream entryIn = entry.getInputSource().newInputStream();
                         destOut = new FileOutputStream(destFile);
                         long remaining = entry.getSize();
                         int blockSize = IOConfig.readBlockSize;
@@ -356,7 +352,7 @@ public class FileCopy
                 }
             } finally {
                 try {
-                    zipFile.close();
+                    unzip.close();
                 } catch (IOException e) {
                 }
             }
@@ -378,12 +374,13 @@ public class FileCopy
                     baseDir = new File(baseDir, basePath);
             }
             logger.infof(tr._("Remove %s files from %s\n"), getId(), baseDir);
-            IStreamResource a = getAttachment(session, false);
+            IStreamResource attachment = getAttachment(session, false);
             ZipInputStream zin = null;
             try {
-                zin = a.getZipIn();
+                InputStream in = attachment.newInputStream();
+                zin = new ZipInputStream(in);
             } catch (IOException e) {
-                throwException(new InstallException(tr._("Failed to read from ") + a, e));
+                throwException(new InstallException(tr._("Failed to read from ") + attachment, e));
                 return;
             }
             List<String> names = new ArrayList<String>();

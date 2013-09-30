@@ -82,7 +82,7 @@ public abstract class ProjectExecutor
                 job.dump(Stdio.cout);
             bind(job);
             try {
-                job.run();
+                job.start();
             } finally {
                 unbind(job);
             }

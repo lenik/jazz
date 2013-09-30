@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ExceptionBuffer
-        implements RecoverableExceptionListener, Serializable {
+        implements IRecoverableExceptionListener, Serializable {
 
     private static final long serialVersionUID = 1L;
 

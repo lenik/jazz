@@ -39,7 +39,7 @@ public class Session
     protected Logger logger;
 
     private Components components;
-    private Scheme scheme;
+    private IScheme scheme;
 
     private Flags32 flags;
     private TextMap<Object> variables;
@@ -114,7 +114,7 @@ public class Session
     }
 
     @Override
-    public Scheme getScheme() {
+    public IScheme getScheme() {
         return scheme;
     }
 
@@ -122,9 +122,9 @@ public class Session
     public void setScheme(String schemeName) {
         if (schemeName == null)
             throw new NullPointerException("schemeName");
-        Scheme[] schemes = project.getSchemes();
+        IScheme[] schemes = project.getSchemes();
         assert schemes != null;
-        for (Scheme scheme : schemes) {
+        for (IScheme scheme : schemes) {
             String name = scheme.getName();
             if (schemeName.equalsIgnoreCase(name)) {
                 setScheme(scheme);
@@ -135,7 +135,7 @@ public class Session
     }
 
     @Override
-    public void setScheme(Scheme scheme) {
+    public void setScheme(IScheme scheme) {
         this.scheme = scheme;
     }
 
