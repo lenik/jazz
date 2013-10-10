@@ -1,4 +1,4 @@
-package net.bodz.bas.exec.job;
+package net.bodz.bas.c.action;
 
 public class JobConfig {
 

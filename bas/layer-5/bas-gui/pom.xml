@@ -22,6 +22,11 @@
             <artifactId>bas-potato</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-log</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: Gui2</name>
 </project>
