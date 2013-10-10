@@ -1,4 +1,4 @@
-package net.bodz.bas.gui.util;
+package net.bodz.bas.c.event;
 
 public interface IQuietHint {
 

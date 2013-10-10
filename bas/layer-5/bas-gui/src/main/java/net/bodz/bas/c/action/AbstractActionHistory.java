@@ -1,12 +1,12 @@
-package net.bodz.bas.exec.operation;
+package net.bodz.bas.c.action;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.OutOfDomainException;
 
-public abstract class OperationHistoryImpl
-        implements IOperationHistory {
+public abstract class AbstractActionHistory
+        implements IActionHistory {
 
-    protected abstract IOperationRecord get(int position);
+    protected abstract IReversable get(int position);
 
     @Override
     public void moveTo(int p) {
@@ -39,7 +39,7 @@ public abstract class OperationHistoryImpl
 
     @Override
     public void undo()
-            throws OperationException {
+            throws PlaybackException {
         int p = getPosition();
         if (p <= 0)
             throw new IllegalUsageException("Can\'t undo more");
@@ -48,7 +48,7 @@ public abstract class OperationHistoryImpl
 
     @Override
     public void redo()
-            throws OperationException {
+            throws PlaybackException {
         int p = getPosition();
         if (p >= size())
             throw new IllegalUsageException("Can\'t redo more");

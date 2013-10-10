@@ -1,6 +1,6 @@
-package net.bodz.bas.exec.operation;
+package net.bodz.bas.c.action;
 
-public interface IOperationHistory {
+public interface IActionHistory {
 
     int size();
 
@@ -8,7 +8,7 @@ public interface IOperationHistory {
     int getPosition();
 
     void moveTo(int position)
-            throws OperationException;
+            throws PlaybackException;
 
     // utilities
     boolean canUndo();
@@ -16,9 +16,9 @@ public interface IOperationHistory {
     boolean canRedo();
 
     void undo()
-            throws OperationException;
+            throws PlaybackException;
 
     void redo()
-            throws OperationException;
+            throws PlaybackException;
 
 }

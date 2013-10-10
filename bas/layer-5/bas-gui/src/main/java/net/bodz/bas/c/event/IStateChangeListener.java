@@ -1,8 +1,8 @@
-package net.bodz.bas.exec.job;
+package net.bodz.bas.c.event;
 
 import java.util.EventListener;
 
-public interface StateChangeListener
+public interface IStateChangeListener
         extends EventListener {
 
     void stateChange(StateChangeEvent event);
