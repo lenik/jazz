@@ -1,4 +1,4 @@
-package net.bodz.bas.t.node.state;
+package net.bodz.bas.c.fsm;
 
 import java.util.EmptyStackException;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Stack;
 public class StateGraphImpl
         implements IStateGraph {
 
-    private static final long serialVersionUID = 3618890808666598908L;
+    private static final long serialVersionUID = 1L;
 
     protected Object context;
     protected IState current;
