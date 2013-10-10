@@ -1,8 +1,6 @@
-package net.bodz.bas.t.node.cross;
+package net.bodz.bas.t.node;
 
 import net.bodz.bas.err.ReadOnlyException;
-import net.bodz.bas.t.node.chain.ChainIteration;
-import net.bodz.bas.t.node.chain.IChainNode;
 
 public abstract class _CrossEdge
         implements ICrossEdge {

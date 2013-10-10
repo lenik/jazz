@@ -6,7 +6,7 @@ import java.util.List;
 import net.bodz.bas.err.ReadOnlyException;
 
 public class ArrayTable<T>
-        implements Table<T> {
+        implements ITable<T> {
 
     private T[][] array;
     private int rows;

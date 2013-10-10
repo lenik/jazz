@@ -1,4 +1,4 @@
-package net.bodz.bas.t.node.state;
+package net.bodz.bas.c.fsm;
 
 public class DummyState
         extends StateImpl {

@@ -1,4 +1,4 @@
-package net.bodz.bas.t.node.chain;
+package net.bodz.bas.t.node;
 
 import java.util.Iterator;
 
