@@ -4,11 +4,11 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 
 import net.bodz.bas.log.AbstractLogSink;
-import net.bodz.bas.log.AbstractLogger;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.LogLevel;
 
 public class TaskLogger
-        extends AbstractLogger {
+        extends SinkBasedLogger {
 
     private final Task task;
 

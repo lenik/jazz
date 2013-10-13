@@ -1,31 +1,32 @@
 package net.bodz.bas.log;
 
-public interface LoggerCompat
-        extends ILogComposite {
-
-    // Log4j compatibles.
+public interface ILog4jCompat {
 
     /**
      * @see org.apache.log4j.Category#error(Object)
-     * @return Always return <code>false</code>.
+     * @return If user interaction is concerned, return <code>true</code> for retry, and
+     *         <code>false</code> for continue/cancel. Otherwise, return <code>false</code>.
      */
     boolean fatal(Object message);
 
     /**
      * @see org.apache.log4j.Category#error(Object)
-     * @return Always return <code>false</code>.
+     * @return If user interaction is concerned, return <code>true</code> for retry, and
+     *         <code>false</code> for continue/cancel. Otherwise, return <code>false</code>.
      */
     boolean fatal(Object message, Throwable t);
 
     /**
      * @see org.apache.log4j.Category#error(Object)
-     * @return Always return <code>false</code>.
+     * @return If user interaction is concerned, return <code>true</code> for retry, and
+     *         <code>false</code> for continue/cancel. Otherwise, return <code>false</code>.
      */
     boolean error(Object message);
 
     /**
      * @see org.apache.log4j.Category#error(Object)
-     * @return Always return <code>false</code>.
+     * @return If user interaction is concerned, return <code>true</code> for retry, and
+     *         <code>false</code> for continue/cancel. Otherwise, return <code>false</code>.
      */
     boolean error(Object message, Throwable t);
 

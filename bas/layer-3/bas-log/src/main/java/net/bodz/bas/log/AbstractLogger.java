@@ -1,73 +1,11 @@
 package net.bodz.bas.log;
 
-import javax.annotation.Generated;
-
-@Generated("LoggerCG")
 public abstract class AbstractLogger
-        extends AbstractLoggerCompat
-        implements Logger {
+        extends AbstractLogComposite
+        implements ILogger {
 
-    @Override
-    public void stderr(Object message) {
-        getStderrSink().p(message);
-    }
-
-    @Override
-    public void stdout(Object message) {
-        getStdoutSink().p(message);
-    }
-
-    @Override
-    public void mesg(Object message) {
-        getMesgSink().p(message);
-    }
-
-    @Override
-    public void log(Object message) {
-        getLogSink().p(message);
-    }
-
-    @Override
-    public void trace(Object message) {
-        getTraceSink().p(message);
-    }
-
-    @Override
-    public void status(Object message) {
-        getStatusSink().p(message);
-    }
-
-    @Override
-    public void progress(Object message) {
-        getProgressSink().p(message);
-    }
-
-    @Override
-    public final boolean fatal(Object message, Throwable t) {
-        return _fatal(0, t, message);
-    }
-
-    @Override
-    public final boolean error(Object message, Throwable t) {
-        return _error(0, t, message);
-    }
-
-    @Override
-    public final void warn(Object message, Throwable t) {
-        _warn(0, t, message);
-    }
-
-    @Override
-    public final void info(Object message, Throwable t) {
-        _info(0, t, message);
-    }
-
-    @Override
-    public final void debug(Object message, Throwable t) {
-        _debug(0, t, message);
-    }
-
-    // --- LOGGER CG GENERATED BEGIN ---
+    /** ⇱ Implementation Of {@link ILogger}. */
+    /* _____________________________ */static section.iface __ILOGGER__;
 
     @Override
     public boolean isStderrEnabled() {
@@ -80,13 +18,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getStderrSink() {
-        return get(LogLevel.STDERR);
-    }
-
-    @Override
-    public final ILogSink getStderrSink(int delta) {
-        return get(LogLevel.STDERR, delta);
+    public final void stderr(Object message) {
+        _stderr(0, null, message);
     }
 
     @Override
@@ -100,28 +33,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _stderr(int delta, Throwable e, Object message) {
-        getStderrSink(delta).p(e, message);
+    public final void stderr(Object... fragments) {
+        _stderr(0, null, concat(fragments));
     }
 
     @Override
-    public final void stderr(Object... messageArray) {
-        _stderr(0, null, concat(messageArray));
+    public final void stderr(Throwable e, Object... fragments) {
+        _stderr(0, e, concat(fragments));
     }
 
     @Override
-    public final void stderr(Throwable e, Object... messageArray) {
-        _stderr(0, e, concat(messageArray));
+    public final void _stderr(int delta, Object... fragments) {
+        _stderr(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _stderr(int delta, Object... messageArray) {
-        _stderr(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _stderr(int delta, Throwable e, Object... messageArray) {
-        _stderr(delta, e, concat(messageArray));
+    public final void _stderr(int delta, Throwable e, Object... fragments) {
+        _stderr(delta, e, concat(fragments));
     }
 
     @Override
@@ -155,13 +83,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getStdoutSink() {
-        return get(LogLevel.STDOUT);
-    }
-
-    @Override
-    public final ILogSink getStdoutSink(int delta) {
-        return get(LogLevel.STDOUT, delta);
+    public final void stdout(Object message) {
+        _stdout(0, null, message);
     }
 
     @Override
@@ -175,28 +98,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _stdout(int delta, Throwable e, Object message) {
-        getStdoutSink(delta).p(e, message);
+    public final void stdout(Object... fragments) {
+        _stdout(0, null, concat(fragments));
     }
 
     @Override
-    public final void stdout(Object... messageArray) {
-        _stdout(0, null, concat(messageArray));
+    public final void stdout(Throwable e, Object... fragments) {
+        _stdout(0, e, concat(fragments));
     }
 
     @Override
-    public final void stdout(Throwable e, Object... messageArray) {
-        _stdout(0, e, concat(messageArray));
+    public final void _stdout(int delta, Object... fragments) {
+        _stdout(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _stdout(int delta, Object... messageArray) {
-        _stdout(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _stdout(int delta, Throwable e, Object... messageArray) {
-        _stdout(delta, e, concat(messageArray));
+    public final void _stdout(int delta, Throwable e, Object... fragments) {
+        _stdout(delta, e, concat(fragments));
     }
 
     @Override
@@ -230,13 +148,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getFatalSink() {
-        return get(LogLevel.FATAL);
-    }
-
-    @Override
-    public final ILogSink getFatalSink(int delta) {
-        return get(LogLevel.FATAL, delta);
+    public final boolean fatal(Object message) {
+        return _fatal(0, null, message);
     }
 
     @Override
@@ -250,29 +163,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public boolean _fatal(int delta, Throwable e, Object message) {
-        getFatalSink(delta).p(e, message);
-        return false;
+    public final boolean fatal(Object... fragments) {
+        return _fatal(0, null, concat(fragments));
     }
 
     @Override
-    public final boolean fatal(Object... messageArray) {
-        return _fatal(0, null, concat(messageArray));
+    public final boolean fatal(Throwable e, Object... fragments) {
+        return _fatal(0, e, concat(fragments));
     }
 
     @Override
-    public final boolean fatal(Throwable e, Object... messageArray) {
-        return _fatal(0, e, concat(messageArray));
+    public final boolean _fatal(int delta, Object... fragments) {
+        return _fatal(delta, null, concat(fragments));
     }
 
     @Override
-    public final boolean _fatal(int delta, Object... messageArray) {
-        return _fatal(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final boolean _fatal(int delta, Throwable e, Object... messageArray) {
-        return _fatal(delta, e, concat(messageArray));
+    public final boolean _fatal(int delta, Throwable e, Object... fragments) {
+        return _fatal(delta, e, concat(fragments));
     }
 
     @Override
@@ -306,13 +213,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getErrorSink() {
-        return get(LogLevel.ERROR);
-    }
-
-    @Override
-    public final ILogSink getErrorSink(int delta) {
-        return get(LogLevel.ERROR, delta);
+    public final boolean error(Object message) {
+        return _error(0, null, message);
     }
 
     @Override
@@ -326,29 +228,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public boolean _error(int delta, Throwable e, Object message) {
-        getErrorSink(delta).p(e, message);
-        return false;
+    public final boolean error(Object... fragments) {
+        return _error(0, null, concat(fragments));
     }
 
     @Override
-    public final boolean error(Object... messageArray) {
-        return _error(0, null, concat(messageArray));
+    public final boolean error(Throwable e, Object... fragments) {
+        return _error(0, e, concat(fragments));
     }
 
     @Override
-    public final boolean error(Throwable e, Object... messageArray) {
-        return _error(0, e, concat(messageArray));
+    public final boolean _error(int delta, Object... fragments) {
+        return _error(delta, null, concat(fragments));
     }
 
     @Override
-    public final boolean _error(int delta, Object... messageArray) {
-        return _error(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final boolean _error(int delta, Throwable e, Object... messageArray) {
-        return _error(delta, e, concat(messageArray));
+    public final boolean _error(int delta, Throwable e, Object... fragments) {
+        return _error(delta, e, concat(fragments));
     }
 
     @Override
@@ -382,13 +278,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getWarnSink() {
-        return get(LogLevel.WARN);
-    }
-
-    @Override
-    public final ILogSink getWarnSink(int delta) {
-        return get(LogLevel.WARN, delta);
+    public final void warn(Object message) {
+        _warn(0, null, message);
     }
 
     @Override
@@ -402,28 +293,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _warn(int delta, Throwable e, Object message) {
-        getWarnSink(delta).p(e, message);
+    public final void warn(Object... fragments) {
+        _warn(0, null, concat(fragments));
     }
 
     @Override
-    public final void warn(Object... messageArray) {
-        _warn(0, null, concat(messageArray));
+    public final void warn(Throwable e, Object... fragments) {
+        _warn(0, e, concat(fragments));
     }
 
     @Override
-    public final void warn(Throwable e, Object... messageArray) {
-        _warn(0, e, concat(messageArray));
+    public final void _warn(int delta, Object... fragments) {
+        _warn(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _warn(int delta, Object... messageArray) {
-        _warn(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _warn(int delta, Throwable e, Object... messageArray) {
-        _warn(delta, e, concat(messageArray));
+    public final void _warn(int delta, Throwable e, Object... fragments) {
+        _warn(delta, e, concat(fragments));
     }
 
     @Override
@@ -457,13 +343,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getMesgSink() {
-        return get(LogLevel.MESG);
-    }
-
-    @Override
-    public final ILogSink getMesgSink(int delta) {
-        return get(LogLevel.MESG, delta);
+    public final void mesg(Object message) {
+        _mesg(0, null, message);
     }
 
     @Override
@@ -477,28 +358,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _mesg(int delta, Throwable e, Object message) {
-        getMesgSink(delta).p(e, message);
+    public final void mesg(Object... fragments) {
+        _mesg(0, null, concat(fragments));
     }
 
     @Override
-    public final void mesg(Object... messageArray) {
-        _mesg(0, null, concat(messageArray));
+    public final void mesg(Throwable e, Object... fragments) {
+        _mesg(0, e, concat(fragments));
     }
 
     @Override
-    public final void mesg(Throwable e, Object... messageArray) {
-        _mesg(0, e, concat(messageArray));
+    public final void _mesg(int delta, Object... fragments) {
+        _mesg(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _mesg(int delta, Object... messageArray) {
-        _mesg(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _mesg(int delta, Throwable e, Object... messageArray) {
-        _mesg(delta, e, concat(messageArray));
+    public final void _mesg(int delta, Throwable e, Object... fragments) {
+        _mesg(delta, e, concat(fragments));
     }
 
     @Override
@@ -532,13 +408,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getInfoSink() {
-        return get(LogLevel.INFO);
-    }
-
-    @Override
-    public final ILogSink getInfoSink(int delta) {
-        return get(LogLevel.INFO, delta);
+    public final void info(Object message) {
+        _info(0, null, message);
     }
 
     @Override
@@ -552,28 +423,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _info(int delta, Throwable e, Object message) {
-        getInfoSink(delta).p(e, message);
+    public final void info(Object... fragments) {
+        _info(0, null, concat(fragments));
     }
 
     @Override
-    public final void info(Object... messageArray) {
-        _info(0, null, concat(messageArray));
+    public final void info(Throwable e, Object... fragments) {
+        _info(0, e, concat(fragments));
     }
 
     @Override
-    public final void info(Throwable e, Object... messageArray) {
-        _info(0, e, concat(messageArray));
+    public final void _info(int delta, Object... fragments) {
+        _info(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _info(int delta, Object... messageArray) {
-        _info(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _info(int delta, Throwable e, Object... messageArray) {
-        _info(delta, e, concat(messageArray));
+    public final void _info(int delta, Throwable e, Object... fragments) {
+        _info(delta, e, concat(fragments));
     }
 
     @Override
@@ -607,13 +473,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getLogSink() {
-        return get(LogLevel.LOG);
-    }
-
-    @Override
-    public final ILogSink getLogSink(int delta) {
-        return get(LogLevel.LOG, delta);
+    public final void log(Object message) {
+        _log(0, null, message);
     }
 
     @Override
@@ -627,28 +488,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _log(int delta, Throwable e, Object message) {
-        getLogSink(delta).p(e, message);
+    public final void log(Object... fragments) {
+        _log(0, null, concat(fragments));
     }
 
     @Override
-    public final void log(Object... messageArray) {
-        _log(0, null, concat(messageArray));
+    public final void log(Throwable e, Object... fragments) {
+        _log(0, e, concat(fragments));
     }
 
     @Override
-    public final void log(Throwable e, Object... messageArray) {
-        _log(0, e, concat(messageArray));
+    public final void _log(int delta, Object... fragments) {
+        _log(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _log(int delta, Object... messageArray) {
-        _log(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _log(int delta, Throwable e, Object... messageArray) {
-        _log(delta, e, concat(messageArray));
+    public final void _log(int delta, Throwable e, Object... fragments) {
+        _log(delta, e, concat(fragments));
     }
 
     @Override
@@ -682,13 +538,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getDebugSink() {
-        return get(LogLevel.DEBUG);
-    }
-
-    @Override
-    public final ILogSink getDebugSink(int delta) {
-        return get(LogLevel.DEBUG, delta);
+    public final void debug(Object message) {
+        _debug(0, null, message);
     }
 
     @Override
@@ -702,28 +553,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _debug(int delta, Throwable e, Object message) {
-        getDebugSink(delta).p(e, message);
+    public final void debug(Object... fragments) {
+        _debug(0, null, concat(fragments));
     }
 
     @Override
-    public final void debug(Object... messageArray) {
-        _debug(0, null, concat(messageArray));
+    public final void debug(Throwable e, Object... fragments) {
+        _debug(0, e, concat(fragments));
     }
 
     @Override
-    public final void debug(Throwable e, Object... messageArray) {
-        _debug(0, e, concat(messageArray));
+    public final void _debug(int delta, Object... fragments) {
+        _debug(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _debug(int delta, Object... messageArray) {
-        _debug(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _debug(int delta, Throwable e, Object... messageArray) {
-        _debug(delta, e, concat(messageArray));
+    public final void _debug(int delta, Throwable e, Object... fragments) {
+        _debug(delta, e, concat(fragments));
     }
 
     @Override
@@ -757,13 +603,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getTraceSink() {
-        return get(LogLevel.TRACE);
-    }
-
-    @Override
-    public final ILogSink getTraceSink(int delta) {
-        return get(LogLevel.TRACE, delta);
+    public final void trace(Object message) {
+        _trace(0, null, message);
     }
 
     @Override
@@ -777,28 +618,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _trace(int delta, Throwable e, Object message) {
-        getTraceSink(delta).p(e, message);
+    public final void trace(Object... fragments) {
+        _trace(0, null, concat(fragments));
     }
 
     @Override
-    public final void trace(Object... messageArray) {
-        _trace(0, null, concat(messageArray));
+    public final void trace(Throwable e, Object... fragments) {
+        _trace(0, e, concat(fragments));
     }
 
     @Override
-    public final void trace(Throwable e, Object... messageArray) {
-        _trace(0, e, concat(messageArray));
+    public final void _trace(int delta, Object... fragments) {
+        _trace(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _trace(int delta, Object... messageArray) {
-        _trace(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _trace(int delta, Throwable e, Object... messageArray) {
-        _trace(delta, e, concat(messageArray));
+    public final void _trace(int delta, Throwable e, Object... fragments) {
+        _trace(delta, e, concat(fragments));
     }
 
     @Override
@@ -832,13 +668,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getStatusSink() {
-        return get(LogLevel.STATUS);
-    }
-
-    @Override
-    public final ILogSink getStatusSink(int delta) {
-        return get(LogLevel.STATUS, delta);
+    public final void status(Object message) {
+        _status(0, null, message);
     }
 
     @Override
@@ -852,28 +683,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _status(int delta, Throwable e, Object message) {
-        getStatusSink(delta).p(e, message);
+    public final void status(Object... fragments) {
+        _status(0, null, concat(fragments));
     }
 
     @Override
-    public final void status(Object... messageArray) {
-        _status(0, null, concat(messageArray));
+    public final void status(Throwable e, Object... fragments) {
+        _status(0, e, concat(fragments));
     }
 
     @Override
-    public final void status(Throwable e, Object... messageArray) {
-        _status(0, e, concat(messageArray));
+    public final void _status(int delta, Object... fragments) {
+        _status(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _status(int delta, Object... messageArray) {
-        _status(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _status(int delta, Throwable e, Object... messageArray) {
-        _status(delta, e, concat(messageArray));
+    public final void _status(int delta, Throwable e, Object... fragments) {
+        _status(delta, e, concat(fragments));
     }
 
     @Override
@@ -907,13 +733,8 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public final ILogSink getProgressSink() {
-        return get(LogLevel.PROGRESS);
-    }
-
-    @Override
-    public final ILogSink getProgressSink(int delta) {
-        return get(LogLevel.PROGRESS, delta);
+    public final void progress(Object message) {
+        _progress(0, null, message);
     }
 
     @Override
@@ -927,28 +748,23 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void _progress(int delta, Throwable e, Object message) {
-        getProgressSink(delta).p(e, message);
+    public final void progress(Object... fragments) {
+        _progress(0, null, concat(fragments));
     }
 
     @Override
-    public final void progress(Object... messageArray) {
-        _progress(0, null, concat(messageArray));
+    public final void progress(Throwable e, Object... fragments) {
+        _progress(0, e, concat(fragments));
     }
 
     @Override
-    public final void progress(Throwable e, Object... messageArray) {
-        _progress(0, e, concat(messageArray));
+    public final void _progress(int delta, Object... fragments) {
+        _progress(delta, null, concat(fragments));
     }
 
     @Override
-    public final void _progress(int delta, Object... messageArray) {
-        _progress(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final void _progress(int delta, Throwable e, Object... messageArray) {
-        _progress(delta, e, concat(messageArray));
+    public final void _progress(int delta, Throwable e, Object... fragments) {
+        _progress(delta, e, concat(fragments));
     }
 
     @Override
@@ -970,7 +786,5 @@ public abstract class AbstractLogger
     public final void _progressf(int delta, Throwable e, String fmt, Object... args) {
         _progress(delta, e, format(fmt, args));
     }
-
-    // +++ LOGGER CG GENERATED END +++
 
 }

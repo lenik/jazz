@@ -3,7 +3,7 @@ package net.bodz.bas.log.impl;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import net.bodz.bas.log.AbstractLogger;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.impl.Log4jLogSink.DebugSink;
@@ -14,11 +14,11 @@ import net.bodz.bas.log.impl.Log4jLogSink.TraceSink;
 import net.bodz.bas.log.impl.Log4jLogSink.WarnSink;
 
 public class Log4jLogger
-        extends AbstractLogger {
+        extends SinkBasedLogger {
 
     private final Logger log4j;
 
-    static final String fqcn = AbstractLogger.class.getName();
+    static final String fqcn = SinkBasedLogger.class.getName();
 
     public Log4jLogger(Logger log4j) {
         if (log4j == null)

@@ -1,0 +1,15 @@
+
+    @Override
+    public final ILogSink get${Name}Sink() {
+        return get(LogLevel.${NAME});
+    }
+
+    @Override
+    public final ILogSink get${Name}Sink(int delta) {
+        return get(LogLevel.${NAME}, delta);
+    }
+
+    @Override
+    public ${rettype} _${name}(int delta, Throwable e, Object message) {
+        get${Name}Sink(delta).p(e, message);
+    }

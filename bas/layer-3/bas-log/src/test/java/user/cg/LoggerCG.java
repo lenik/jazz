@@ -16,8 +16,10 @@ import net.bodz.bas.log.LogLevel;
 public class LoggerCG {
 
     List<String> levelNames;
+    String src_ILogger;
     String src_Logger;
     String src_AbstractLogger;
+    String src_SinkBasedLogger;
 
     public LoggerCG()
             throws IOException {
@@ -33,13 +35,46 @@ public class LoggerCG {
             levelNames.add(levelName);
         }
 
+        URL classILoggerURL = getClass().getResource("LoggerCG.ILogger");
         URL classLoggerURL = getClass().getResource("LoggerCG.Logger");
         URL classAbstractLoggerURL = getClass().getResource("LoggerCG.AbstractLogger");
+        URL classSinkBasedLoggerURL = getClass().getResource("LoggerCG.SinkBasedLogger");
 
+        src_ILogger = new URLResource(classILoggerURL)//
+                .to(StreamReading.class).readString();
         src_Logger = new URLResource(classLoggerURL)//
                 .to(StreamReading.class).readString();
         src_AbstractLogger = new URLResource(classAbstractLoggerURL)//
                 .to(StreamReading.class).readString();
+        src_SinkBasedLogger = new URLResource(classSinkBasedLoggerURL)//
+                .to(StreamReading.class).readString();
+    }
+
+    public void makeILogger()
+            throws IOException {
+        for (String levelName : levelNames) {
+            String LevelName = Strings.ucfirst(levelName);
+
+            String level = src_ILogger;
+            level = level.replace("${name}", levelName);
+            level = level.replace("${Name}", LevelName);
+
+            String rettype = "void";
+            String retdoc = "";
+            String retdoc_ = "";
+            if (levelName.equals("fatal") || levelName.equals("error")) {
+                rettype = "boolean";
+                retdoc = ""
+                        + "     * @return If user interaction is concerned, return <code>true</code> for retry, and\n"
+                        + "     *         <code>false</code> for continue/cancel. Otherwise, return <code>false</code>.\n";
+                retdoc_ = retdoc;
+            }
+            level = level.replace("${rettype}", rettype);
+            level = level.replace("${retdoc}", retdoc);
+            level = level.replace("${retdoc_}", retdoc_);
+
+            System.out.println(level);
+        }
     }
 
     public void makeLogger()
@@ -52,10 +87,18 @@ public class LoggerCG {
             level = level.replace("${Name}", LevelName);
 
             String rettype = "void";
+            String retdoc = "";
+            String retdoc_ = "";
             if (levelName.equals("fatal") || levelName.equals("error")) {
                 rettype = "boolean";
+                retdoc = ""
+                        + "     * @return If user interaction is concerned, return <code>true</code> for retry, and\n"
+                        + "     *         <code>false</code> for continue/cancel. Otherwise, return <code>false</code>.\n";
+                retdoc_ = retdoc;
             }
             level = level.replace("${rettype}", rettype);
+            level = level.replace("${retdoc}", retdoc);
+            level = level.replace("${retdoc_}", retdoc_);
 
             System.out.println(level);
         }
@@ -85,15 +128,51 @@ public class LoggerCG {
         }
     }
 
-    static boolean generateInterfaceOrClass = false;
+    public void makeSinkBasedLogger()
+            throws IOException {
+        for (String levelName : levelNames) {
+            String LevelName = Strings.ucfirst(levelName);
+            String LEVELNAME = levelName.toUpperCase();
+
+            String text = src_SinkBasedLogger;
+            text = text.replace("${name}", levelName);
+            text = text.replace("${Name}", LevelName);
+            text = text.replace("${NAME}", LEVELNAME);
+
+            String rettype = "void";
+            String _return = "";
+            if (levelName.equals("fatal") || levelName.equals("error")) {
+                rettype = "boolean";
+                _return = "return ";
+            }
+            text = text.replace("${rettype}", rettype);
+            text = text.replace("${return}", _return);
+
+            System.out.println(text);
+        }
+    }
+
+    static String target = "AL";
 
     public static void main(String[] args)
             throws Exception {
         LoggerCG cg = new LoggerCG();
-        if (generateInterfaceOrClass)
+        switch (target) {
+        case "IL":
+            cg.makeILogger();
+            break;
+        case "L":
             cg.makeLogger();
-        else
+            break;
+        case "AL":
             cg.makeAbstractLogger();
+            break;
+        case "SL":
+            cg.makeSinkBasedLogger();
+            break;
+        default:
+            assert false;
+        }
     }
 
 }

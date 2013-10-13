@@ -9,12 +9,12 @@ import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.PrintStreamPrintOut;
 import net.bodz.bas.jvm.stack.StackTrace;
 import net.bodz.bas.log.AbstractLogSink;
-import net.bodz.bas.log.AbstractLogger;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 
 public class BufferedLogger
-        extends AbstractLogger {
+        extends SinkBasedLogger {
 
     String prefix;
     List<LogRecord> records = new ArrayList<LogRecord>();
