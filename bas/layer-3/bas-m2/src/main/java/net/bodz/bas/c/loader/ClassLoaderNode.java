@@ -17,9 +17,6 @@ public class ClassLoaderNode
     public ClassLoaderNode(ClassLoaderNode parent, ClassLoader loader) {
         super(parent);
         this.loader = loader;
-
-        if (parent != null)
-            parent.addChild(this);
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public interface ITreeNode {
+public interface ITreeNode<node_t extends ITreeNode<?>> {
 
     boolean isMutable();
 
@@ -13,7 +13,7 @@ public interface ITreeNode {
      * 
      * @return <code>null</code> if this node doesn't have a parent.
      */
-    ITreeNode getParent();
+    node_t getParent();
 
     int size();
 
@@ -21,11 +21,11 @@ public interface ITreeNode {
 
     boolean contains(String childKey);
 
-    boolean contains(ITreeNode child);
+    boolean contains(ITreeNode<?> child);
 
-    ITreeNode getChild(String key);
+    node_t getChild(String key);
 
-    ITreeNode getDescendant(String path);
+    node_t getDescendant(String path);
 
     /**
      * Get or create the node by path.
@@ -37,14 +37,16 @@ public interface ITreeNode {
      *         missing node, <code>null</code> is returned.
      * 
      */
-    ITreeNode resolve(String path);
+    node_t resolve(String path);
 
     Set<String> childKeySet();
 
-    Collection<? extends ITreeNode> children();
+    Collection<? extends node_t> getChildren();
 
-    String keyOf(ITreeNode child);
+    Iterable<? extends node_t> getDescendants();
 
-    List<String> keysOf(ITreeNode child);
+    String keyOf(ITreeNode<?> child);
+
+    List<String> keysOf(ITreeNode<?> child);
 
 }

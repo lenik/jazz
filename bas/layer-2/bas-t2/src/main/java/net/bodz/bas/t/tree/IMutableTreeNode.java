@@ -1,20 +1,36 @@
 package net.bodz.bas.t.tree;
 
-public interface IMutableTreeNode
-        extends ITreeNode {
+public interface IMutableTreeNode<node_t extends IMutableTreeNode<?>>
+        extends ITreeNode<node_t> {
 
     @Override
-    ITreeNode getParent();
+    node_t getParent();
 
-    ITreeNode detach();
+    /**
+     * @return this.
+     */
+    <self_t extends node_t> self_t detach();
 
-    void attach(ITreeNode parent, String key);
+    /**
+     * @return this.
+     */
+    <self_t extends node_t> self_t attach(node_t parent);
 
-    String addChild(ITreeNode child);
+    /**
+     * @return this.
+     */
+    <self_t extends node_t> self_t attach(node_t parent, String key);
 
-    void putChild(String key, ITreeNode child);
+    void addChild(node_t child);
 
-    ITreeNode removeChild(String key);
+    /**
+     * If the specific child is duplicated in the children set, any number of them can be removed.
+     */
+    void removeChild(node_t child);
+
+    void putChild(String key, node_t child);
+
+    node_t removeChild(String key);
 
     void clear();
 

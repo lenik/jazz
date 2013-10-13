@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.bodz.bas.c.string.StringPred;
 
-public abstract class AbstractListTreeNode<node_t extends ITreeNode>
+public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractMutableTreeNode<node_t> {
 
     private static final long serialVersionUID = 1L;
@@ -51,12 +51,12 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
     }
 
     @Override
-    public Collection<? extends node_t> children() {
+    public Collection<? extends node_t> getChildren() {
         return list;
     }
 
     @Override
-    public String keyOf(ITreeNode child) {
+    public String keyOf(ITreeNode<?> child) {
         int index = list.indexOf(child);
         if (index == -1)
             return null;
@@ -65,7 +65,7 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
     }
 
     @Override
-    public List<String> keysOf(ITreeNode child) {
+    public List<String> keysOf(ITreeNode<?> child) {
         List<String> keys = new ArrayList<String>(1);
         int size = list.size();
         for (int index = 0; index < size; index++)
@@ -75,19 +75,17 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
     }
 
     @Override
-    public synchronized String addChild(ITreeNode child) {
-        int size = list.size();
-        String key = String.valueOf(size);
+    public synchronized void addChild(node_t child) {
+        list.add(child);
+    }
 
-        @SuppressWarnings("unchecked") node_t _child = (node_t) child;
-        list.add(_child);
-
-        return key;
+    public void removeChild(node_t child) {
+        list.remove(child);
     }
 
     @Override
-    public synchronized void putChild(String key, ITreeNode child) {
-        ITreeNode childParent = child.getParent();
+    public synchronized void putChild(String key, node_t child) {
+        ITreeNode<?> childParent = child.getParent();
         if (childParent != null)
             throw new IllegalStateException("Child node is already attached: " + child);
 
@@ -101,8 +99,7 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
         while (list.size() < index)
             list.add(null);
 
-        @SuppressWarnings("unchecked") node_t _child = (node_t) child;
-        list.set(index, _child);
+        list.set(index, child);
     }
 
     @Override
@@ -112,7 +109,7 @@ public abstract class AbstractListTreeNode<node_t extends ITreeNode>
             if (index >= 0 && index < list.size()) {
                 node_t child = list.remove(index);
                 if (child.isMutable()) {
-                    IMutableTreeNode _child = (IMutableTreeNode) child;
+                    IMutableTreeNode<?> _child = (IMutableTreeNode<?>) child;
                     _child.detach();
                 }
                 return child;

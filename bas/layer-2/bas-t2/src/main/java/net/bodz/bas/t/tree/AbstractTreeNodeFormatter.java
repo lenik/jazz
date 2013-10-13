@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.bodz.bas.io.IPrintOut;
 
-public class AbstractTreeNodeFormatter<node_t extends ITreeNode>
+public class AbstractTreeNodeFormatter<node_t extends ITreeNode<node_t>>
         extends TreeFormatterTemplate<node_t> {
 
     @Override
@@ -22,8 +22,7 @@ public class AbstractTreeNodeFormatter<node_t extends ITreeNode>
         int n = 0;
         if (depth < maxDepth || maxDepth == -1) {
             visibleChildren = new ArrayList<>();
-            for (ITreeNode _child : node.children()) {
-                @SuppressWarnings("unchecked") node_t child = (node_t) _child;
+            for (node_t child : node.getChildren()) {
                 if (isVisible(child))
                     visibleChildren.add(child);
             }

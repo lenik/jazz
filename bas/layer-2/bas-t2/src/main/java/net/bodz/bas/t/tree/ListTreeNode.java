@@ -4,23 +4,24 @@ import java.util.List;
 
 import net.bodz.bas.err.CreateException;
 
-public class ListTreeNode
-        extends AbstractListTreeNode<ITreeNode> {
+public class ListTreeNode<node_t extends IMutableTreeNode<node_t>>
+        extends AbstractListTreeNode<node_t> {
 
     private static final long serialVersionUID = 1L;
 
-    public ListTreeNode(ITreeNode parent) {
+    public ListTreeNode(node_t parent) {
         super(parent);
     }
 
-    public ListTreeNode(ITreeNode parent, List<ITreeNode> list) {
+    public ListTreeNode(node_t parent, List<node_t> list) {
         super(parent, list);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    protected ITreeNode newChild()
+    protected node_t newChild()
             throws CreateException {
-        return new ListTreeNode(this);
+        return (node_t) new ListTreeNode<node_t>((node_t) this);
     }
 
 }
