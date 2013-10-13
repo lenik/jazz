@@ -2,7 +2,7 @@ package net.bodz.bas.m2.util;
 
 import org.apache.maven.plugin.logging.Log;
 
-import net.bodz.bas.log.AbstractLogger;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.impl.NullLogSink;
@@ -12,11 +12,11 @@ import net.bodz.bas.m2.util.MavenLogSink.InfoSink;
 import net.bodz.bas.m2.util.MavenLogSink.WarnSink;
 
 public class MavenLogLogger
-        extends AbstractLogger {
+        extends SinkBasedLogger {
 
     private final Log mlog;
 
-    static final String FQCN = AbstractLogger.class.getName();
+    static final String FQCN = SinkBasedLogger.class.getName();
 
     public MavenLogLogger(Log mlog) {
         if (mlog == null)

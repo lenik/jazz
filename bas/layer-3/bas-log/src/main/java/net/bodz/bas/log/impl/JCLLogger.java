@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogConfigurationException;
 import org.apache.commons.logging.LogFactory;
 
-import net.bodz.bas.log.AbstractLogger;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.impl.JCLLogSink.DebugSink;
@@ -15,7 +15,7 @@ import net.bodz.bas.log.impl.JCLLogSink.TraceSink;
 import net.bodz.bas.log.impl.JCLLogSink.WarnSink;
 
 public class JCLLogger
-        extends AbstractLogger {
+        extends SinkBasedLogger {
 
     private final Log jclLog;
 

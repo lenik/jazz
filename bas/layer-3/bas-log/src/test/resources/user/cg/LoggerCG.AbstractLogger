@@ -10,13 +10,8 @@
     }
 
     @Override
-    public final ILogSink get${Name}Sink() {
-        return get(LogLevel.${NAME});
-    }
-
-    @Override
-    public final ILogSink get${Name}Sink(int delta) {
-        return get(LogLevel.${NAME}, delta);
+    public final ${rettype} ${name}(Object message) {
+        ${return}_${name}(0, null, message);
     }
 
     @Override
@@ -30,28 +25,23 @@
     }
 
     @Override
-    public ${rettype} _${name}(int delta, Throwable e, Object message) {
-        get${Name}Sink(delta).p(e, message);
+    public final ${rettype} ${name}(Object... fragments) {
+        ${return}_${name}(0, null, concat(fragments));
     }
 
     @Override
-    public final ${rettype} ${name}(Object... messageArray) {
-        ${return}_${name}(0, null, concat(messageArray));
+    public final ${rettype} ${name}(Throwable e, Object... fragments) {
+        ${return}_${name}(0, e, concat(fragments));
     }
 
     @Override
-    public final ${rettype} ${name}(Throwable e, Object... messageArray) {
-        ${return}_${name}(0, e, concat(messageArray));
+    public final ${rettype} _${name}(int delta, Object... fragments) {
+        ${return}_${name}(delta, null, concat(fragments));
     }
 
     @Override
-    public final ${rettype} _${name}(int delta, Object... messageArray) {
-        ${return}_${name}(delta, null, concat(messageArray));
-    }
-
-    @Override
-    public final ${rettype} _${name}(int delta, Throwable e, Object... messageArray) {
-        ${return}_${name}(delta, e, concat(messageArray));
+    public final ${rettype} _${name}(int delta, Throwable e, Object... fragments) {
+        ${return}_${name}(delta, e, concat(fragments));
     }
 
     @Override

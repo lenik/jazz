@@ -1,18 +1,3 @@
-    
-    /**
-     * Check if ${name} logging is enabled. 
-     *
-     * @return <code>true</code> If ${name} logging is enabled.
-     */
-    boolean is${Name}Enabled();
-
-    /**
-     * Check if ${name} logging with a delta verbose is enabled.
-     *
-     * @param delta The verbose level delta.
-     * @return <code>true</code> IF ${name} logging with the specific delta is enabled.
-     */
-    boolean is${Name}Enabled(int delta);
 
     /**
      * Get the ${name} logging output sink.
@@ -22,7 +7,7 @@
      * @return Non-<code>null</code> sink object.
      */
     ILogSink get${Name}Sink(); 
-    
+
     /**
      * Get the ${name} logging output sink with a delta verbose.
      * <p>
@@ -32,101 +17,3 @@
      * @return Non-<code>null</code> sink object.
      */
     ILogSink get${Name}Sink(int delta); 
-    
-    /**
-     * Add a ${name} logging.
-     *
-     * @param message The logging message.
-     */
-    ${rettype} ${name}(Object message);
-
-    /**
-     * Add a ${name} logging with an exception.
-     *
-     * @param e The exception object.
-     * @param message The logging message.
-     */
-    ${rettype} ${name}(Throwable e, Object message);
-
-    /**
-     * Add a ${name} logging with a delta verbose.
-     *
-     * @param message The logging message.
-     */
-    ${rettype} _${name}(int delta, Object message);
-
-    /**
-     * Add a ${name} logging with a delta verbose with an exception.
-     *
-     * @param e The exception object.
-     * @param message The logging message.
-     */
-    ${rettype} _${name}(int delta, Throwable e, Object message);
-
-    /**
-     * Add a ${name} logging.
-     *
-     * @param messageArray The logging message in pieces, will be concated.
-     */
-    ${rettype} ${name}(Object... messageArray);
-
-    /**
-     * Add a ${name} logging with an exception.
-     *
-     * @param e The exception object.
-     * @param messageArray The logging message in pieces, will be concated.
-     */
-    ${rettype} ${name}(Throwable e, Object... messageArray);
-
-    /**
-     * Add a ${name} logging with a delta verbose.
-     *
-     * @param delta The verbose level delta.
-     * @param messageArray The logging message in pieces, will be concated.
-     */
-    ${rettype} _${name}(int delta, Object... messageArray);
-
-    /**
-     * Add a ${name} logging with a delta verbose with an exception.
-     *
-     * @param delta The verbose level delta.
-     * @param e The exception object.
-     * @param messageArray The logging message in pieces, will be concated.
-     */
-    ${rettype} _${name}(int delta, Throwable e, Object... messageArray);
-
-    /**
-     * Add formatted a ${name} logging.
-     *
-     * @param format The message format.
-     * @param args The arguments to the format.
-     */
-    ${rettype} ${name}f(String format, Object... args);
-
-    /**
-     * Add formatted a ${name} logging with an exception.
-     *
-     * @param e The exception object.
-     * @param format The message format.
-     * @param args The arguments to the format.
-     */
-    ${rettype} ${name}f(Throwable e, String format, Object... args);
-
-    /**
-     * Add formatted a ${name} logging with a delta verbose.
-     *
-     * @param delta The verbose level delta.
-     * @param format The message format.
-     * @param args The arguments to the format.
-     */
-    ${rettype} _${name}f(int delta, String format, Object... args);
-
-    /**
-     * Add formatted a ${name} logging with a delta verbose with an exception.
-     *
-     * @param delta The verbose level delta.
-     * @param e The exception object.
-     * @param format The message format.
-     * @param args The arguments to the format.
-     */
-    ${rettype} _${name}f(int delta, Throwable e, String format, Object... args);

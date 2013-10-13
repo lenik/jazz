@@ -1,11 +1,11 @@
 package net.bodz.bas.log.impl;
 
-import net.bodz.bas.log.AbstractLogger;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 
 public class ConsoleLogger
-        extends AbstractLogger {
+        extends SinkBasedLogger {
 
     static ConsoleLogger instance = new ConsoleLogger();
 

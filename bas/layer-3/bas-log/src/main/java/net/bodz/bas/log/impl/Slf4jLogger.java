@@ -3,7 +3,7 @@ package net.bodz.bas.log.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.bodz.bas.log.AbstractLogger;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.impl.Slf4jLogSink.DebugSink;
@@ -13,7 +13,7 @@ import net.bodz.bas.log.impl.Slf4jLogSink.TraceSink;
 import net.bodz.bas.log.impl.Slf4jLogSink.WarnSink;
 
 public class Slf4jLogger
-        extends AbstractLogger {
+        extends SinkBasedLogger {
 
     private final Logger slf4j;
 
