@@ -6,16 +6,16 @@ import java.util.Set;
 
 import net.bodz.bas.err.CreateException;
 
-public abstract class AbstractMutableTreeNode<node_t extends ITreeNode>
+public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractTreeNode<node_t>
-        implements IMutableTreeNode, Serializable {
+        implements IMutableTreeNode<node_t>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private node_t parent;
 
     public AbstractMutableTreeNode(node_t parent) {
-        this.parent = parent;
+        attach(parent);
     }
 
     @Override
@@ -24,26 +24,46 @@ public abstract class AbstractMutableTreeNode<node_t extends ITreeNode>
     }
 
     @Override
-    public node_t detach() {
-        if (parent != null && parent.isMutable()) {
-            IMutableTreeNode _parent = (IMutableTreeNode) parent;
-            for (String key : _parent.keysOf(this))
-                _parent.removeChild(key);
-        }
-        parent = null;
+    public <self_t extends node_t> self_t detach() {
+        @SuppressWarnings("unchecked") self_t _this = (self_t) this;
 
-        @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+        if (parent != null) {
+            if (parent.isMutable()) {
+                for (String key : parent.keysOf(this))
+                    parent.removeChild(key);
+            }
+            parent = null;
+        }
+
         return _this;
     }
 
     @Override
-    public void attach(ITreeNode parent, String key) {
-        detach();
+    public <self_t extends node_t> self_t attach(node_t parent) {
+        @SuppressWarnings("unchecked") self_t _this = (self_t) this;
 
-        if (parent != null && parent.isMutable()) {
-            IMutableTreeNode _parent = (IMutableTreeNode) parent;
-            _parent.putChild(key, this);
+        if (this.parent != parent) {
+            detach();
+
+            if (parent != null && parent.isMutable())
+                parent.addChild(_this);
         }
+
+        return _this;
+    }
+
+    @Override
+    public <self_t extends node_t> self_t attach(node_t parent, String key) {
+        @SuppressWarnings("unchecked") self_t _this = (self_t) this;
+
+        if (this.parent != parent) {
+            detach();
+
+            if (parent != null && parent.isMutable())
+                parent.putChild(key, _this);
+        }
+
+        return _this;
     }
 
     protected abstract node_t newChild()

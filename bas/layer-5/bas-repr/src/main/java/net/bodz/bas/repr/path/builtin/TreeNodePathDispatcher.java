@@ -32,9 +32,9 @@ public class TreeNodePathDispatcher
         if (key == null)
             return null;
 
-        ITreeNode node = (ITreeNode) obj;
+        ITreeNode<?> node = (ITreeNode<?>) obj;
 
-        ITreeNode child = node.getChild(key);
+        ITreeNode<?> child = node.getChild(key);
         if (child == null)
             return null;
 
