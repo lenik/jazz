@@ -9,6 +9,10 @@ public class MapTreeNode<node_t extends IMutableTreeNode<node_t>>
 
     private static final long serialVersionUID = 1L;
 
+    public MapTreeNode() {
+        super();
+    }
+
     public MapTreeNode(node_t parent) {
         super(parent);
     }

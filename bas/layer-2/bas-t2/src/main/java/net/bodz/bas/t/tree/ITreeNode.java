@@ -43,7 +43,7 @@ public interface ITreeNode<node_t extends ITreeNode<?>> {
 
     Collection<? extends node_t> getChildren();
 
-    Iterable<? extends node_t> getDescendants();
+    Iterable<? extends node_t> descendants();
 
     String keyOf(ITreeNode<?> child);
 

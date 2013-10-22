@@ -124,7 +124,7 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
     public abstract Collection<? extends node_t> getChildren();
 
     @Override
-    public Iterable<? extends node_t> getDescendants() {
+    public Iterable<? extends node_t> descendants() {
         @SuppressWarnings("unchecked") final node_t start = (node_t) this;
         return new Iterable<node_t>() {
             @Override

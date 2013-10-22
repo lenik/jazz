@@ -9,6 +9,10 @@ public class ListTreeNode<node_t extends IMutableTreeNode<node_t>>
 
     private static final long serialVersionUID = 1L;
 
+    public ListTreeNode() {
+        super();
+    }
+
     public ListTreeNode(node_t parent) {
         super(parent);
     }

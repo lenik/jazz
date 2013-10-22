@@ -14,8 +14,16 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
 
     private node_t parent;
 
+    public AbstractMutableTreeNode() {
+    }
+
     public AbstractMutableTreeNode(node_t parent) {
         attach(parent);
+    }
+
+    @Override
+    public boolean isMutable() {
+        return true;
     }
 
     @Override
@@ -25,7 +33,8 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
 
     @Override
     public <self_t extends node_t> self_t detach() {
-        @SuppressWarnings("unchecked") self_t _this = (self_t) this;
+        @SuppressWarnings("unchecked")
+        self_t _this = (self_t) this;
 
         if (parent != null) {
             if (parent.isMutable()) {
@@ -40,11 +49,13 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
 
     @Override
     public <self_t extends node_t> self_t attach(node_t parent) {
-        @SuppressWarnings("unchecked") self_t _this = (self_t) this;
+        @SuppressWarnings("unchecked")
+        self_t _this = (self_t) this;
 
         if (this.parent != parent) {
             detach();
 
+            this.parent = parent;
             if (parent != null && parent.isMutable())
                 parent.addChild(_this);
         }
@@ -54,7 +65,8 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
 
     @Override
     public <self_t extends node_t> self_t attach(node_t parent, String key) {
-        @SuppressWarnings("unchecked") self_t _this = (self_t) this;
+        @SuppressWarnings("unchecked")
+        self_t _this = (self_t) this;
 
         if (this.parent != parent) {
             detach();
