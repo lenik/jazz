@@ -11,42 +11,51 @@ public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t
 
     private static final long serialVersionUID = 1L;
 
-    private Map<String, node_t> map;
+    private Map<String, node_t> childMap;
+
+    public AbstractMapTreeNode() {
+        this.childMap = createMap();
+    }
 
     public AbstractMapTreeNode(node_t parent) {
-        this(parent, new TreeMap<String, node_t>());
+        super(parent);
+        this.childMap = createMap();
     }
 
     public AbstractMapTreeNode(node_t parent, Map<String, node_t> map) {
         super(parent);
         if (map == null)
             throw new NullPointerException("map");
-        this.map = map;
+        this.childMap = map;
+    }
+
+    protected Map<String, node_t> createMap() {
+        return new TreeMap<String, node_t>();
     }
 
     @Override
     public int size() {
-        return map.size();
+        return childMap.size();
     }
 
     @Override
     public node_t getChild(String key) {
-        return map.get(key);
+        return childMap.get(key);
     }
 
     @Override
     public Set<String> childKeySet() {
-        return map.keySet();
+        return childMap.keySet();
     }
 
     @Override
     public Collection<node_t> getChildren() {
-        return map.values();
+        return childMap.values();
     }
 
     @Override
     public String keyOf(ITreeNode<?> child) {
-        for (Entry<String, node_t> entry : map.entrySet())
+        for (Entry<String, node_t> entry : childMap.entrySet())
             if (entry.getValue() == child)
                 return entry.getKey();
         return null;
@@ -55,7 +64,7 @@ public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t
     @Override
     public List<String> keysOf(ITreeNode<?> child) {
         List<String> keys = new ArrayList<String>(1);
-        for (Entry<String, node_t> entry : map.entrySet())
+        for (Entry<String, node_t> entry : childMap.entrySet())
             if (entry.getValue() == child)
                 keys.add(entry.getKey());
         return keys;
@@ -64,13 +73,13 @@ public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t
     @Override
     public void addChild(node_t child) {
         String prefix = ObjectInfo.getSimpleId(child);
-        String key = TextMap.fn.searchUnusedKey(map, prefix);
+        String key = TextMap.fn.searchUnusedKey(childMap.keySet(), prefix);
         putChild(key, child);
     }
 
     @Override
     public void removeChild(node_t child) {
-        Iterator<Entry<String, node_t>> iterator = map.entrySet().iterator();
+        Iterator<Entry<String, node_t>> iterator = childMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Entry<String, node_t> entry = iterator.next();
             if (entry.getValue() == child)
@@ -80,17 +89,17 @@ public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t
 
     @Override
     public void putChild(String key, node_t child) {
-        map.put(key, (node_t) child);
+        childMap.put(key, (node_t) child);
     }
 
     @Override
     public node_t removeChild(String key) {
-        return map.remove(key);
+        return childMap.remove(key);
     }
 
     @Override
     public void clear() {
-        map.clear();
+        childMap.clear();
     }
 
 }

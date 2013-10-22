@@ -15,8 +15,13 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
 
     private List<node_t> list;
 
+    public AbstractListTreeNode() {
+        this.list = createList();
+    }
+
     public AbstractListTreeNode(node_t parent) {
-        this(parent, new ArrayList<node_t>());
+        super(parent);
+        this.list = createList();
     }
 
     public AbstractListTreeNode(node_t parent, List<node_t> list) {
@@ -24,6 +29,10 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
         if (list == null)
             throw new NullPointerException("list");
         this.list = list;
+    }
+
+    protected List<node_t> createList() {
+        return new ArrayList<node_t>();
     }
 
     @Override
