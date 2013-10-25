@@ -28,7 +28,7 @@ public abstract class AbstractReflectType
      * @see ITypeProvider#EVENTS
      */
     public AbstractReflectType(Class<?> clazz, int infoset, ClassDoc classDoc) {
-        super(clazz.getDeclaringClass(), clazz.getName());
+        super(clazz, clazz.getName());
 
         this.clazz = clazz;
 

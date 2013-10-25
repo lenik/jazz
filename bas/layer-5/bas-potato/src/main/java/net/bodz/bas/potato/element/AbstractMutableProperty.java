@@ -6,8 +6,6 @@ public abstract class AbstractMutableProperty
         extends MutablePotatoElement
         implements IProperty {
 
-    private static final long serialVersionUID = 1L;
-
     private Class<?> propertyType;
     private boolean readable;
     private boolean writable;
