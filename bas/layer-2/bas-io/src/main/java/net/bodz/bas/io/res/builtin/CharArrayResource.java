@@ -6,6 +6,8 @@ import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.ICroppable;
+import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.adapter.CharBufferCharIn;
 import net.bodz.bas.io.adapter.CharBufferCharOut;
 
@@ -68,6 +70,18 @@ public class CharArrayResource
         // XXX CharArrayResource append
         CharBuffer charBuffer = CharBuffer.wrap(array, start, end - start);
         return new CharBufferCharOut(charBuffer);
+    }
+
+    // XXX byte/char IOS, seeker, cropper
+
+    @Override
+    protected ISeekable getSeeker() {
+        return null;
+    }
+
+    @Override
+    protected ICroppable getCropper() {
+        return null;
     }
 
 }

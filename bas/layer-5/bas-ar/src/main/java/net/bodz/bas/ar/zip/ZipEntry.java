@@ -84,7 +84,7 @@ public class ZipEntry
 
     private transient Charset charset;
     private transient String name;
-    transient ExtraFieldMap extraFields;
+    public transient ExtraFieldMap extraFields;
     private transient String password;
     private transient ZipEncryptKey encryptKey;
     private transient String comment;

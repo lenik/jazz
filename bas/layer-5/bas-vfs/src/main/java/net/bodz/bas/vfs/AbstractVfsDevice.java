@@ -86,12 +86,26 @@ public abstract class AbstractVfsDevice
         return file;
     }
 
+    /**
+     * Resolve local file, without following any symlink.
+     * 
+     * @param localPath
+     *            Non-empty local pathname.
+     * @return Local file resolved.
+     */
     protected IFile _resolveNoRec(String localPath)
             throws BadPathException, FileResolveException {
-        IPath path = parse(localPath);
+        IPath path = parseLocalPath(localPath);
         return _resolveNoRec(path);
     }
 
+    /**
+     * Resolve local file, without following any symlink.
+     * 
+     * @param _path
+     *            Parsed local path. Non-<code>null</code>.
+     * @return Local file resolved.
+     */
     protected abstract IFile _resolveNoRec(IPath _path)
             throws FileResolveException;
 

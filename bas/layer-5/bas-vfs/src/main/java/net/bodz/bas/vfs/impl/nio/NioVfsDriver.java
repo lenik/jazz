@@ -60,7 +60,7 @@ public class NioVfsDriver
             localPath = localPath.substring(1);
 
         NioVfsDevice device = getRootDevice(rootName);
-        return device.parse(localPath);
+        return device.parseLocalPath(localPath);
     }
 
     @Override

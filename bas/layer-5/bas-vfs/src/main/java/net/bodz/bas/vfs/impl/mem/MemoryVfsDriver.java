@@ -48,7 +48,7 @@ public class MemoryVfsDriver
     protected MemoryPath parse(String scope, String path)
             throws BadPathException {
         MemoryVfsDevice device = getDevice(scope);
-        return device.parse(path);
+        return device.parseLocalPath(path);
     }
 
     @Override

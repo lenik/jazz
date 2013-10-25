@@ -7,13 +7,15 @@ import java.nio.file.OpenOption;
 import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 
 public class CharsResource
         extends AbstractTextResource {
 
-    MovableCharBuffer buffer;
+    private MovableCharBuffer buffer;
 
     public CharsResource() {
         this(null);
@@ -95,6 +97,18 @@ public class CharsResource
             throw new IllegalStateException("Resource isn't created, yet");
         else
             return new MovableCharBufferCharIn(buffer);
+    }
+
+    // XXX byte/char IOS, seeker, cropper
+
+    @Override
+    protected ISeekable getSeeker() {
+        return null;
+    }
+
+    @Override
+    protected ICroppable getCropper() {
+        return null;
     }
 
 }

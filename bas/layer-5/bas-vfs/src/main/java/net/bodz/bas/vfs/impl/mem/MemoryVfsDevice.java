@@ -19,7 +19,7 @@ public class MemoryVfsDevice
     public MemoryVfsDevice(MemoryVfsDriver driver, String scopeName) {
         super(driver, driver.protocol, scopeName);
 
-        MemoryPath rootPath = parse("");
+        MemoryPath rootPath = parseLocalPath("");
         this.rootFile = new MemoryFile(this, rootPath);
     }
 
@@ -33,7 +33,7 @@ public class MemoryVfsDevice
     }
 
     @Override
-    public MemoryPath parse(String localPath)
+    public MemoryPath parseLocalPath(String localPath)
             throws BadPathException {
         return new MemoryPath(getProtocol(), getScopeName(), localPath);
     }

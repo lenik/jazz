@@ -1,11 +1,10 @@
-package net.bodz.bas.vfs.util;
+package net.bodz.bas.vfs.impl.pojf;
 
 import java.io.File;
 import java.io.FileFilter;
 
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.impl.pojf.PojfFile;
 
 public class Vfs2PojfFileFilter
         implements FileFilter {

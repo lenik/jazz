@@ -59,7 +59,7 @@ public class PojfVfsDriver
             localPath = localPath.substring(1);
 
         PojfVfsDevice device = getDrive(drive);
-        return device.parse(localPath);
+        return device.parseLocalPath(localPath);
     }
 
     @Override

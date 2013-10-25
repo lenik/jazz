@@ -55,7 +55,7 @@ public class ApacheVfsDriver
     protected ApachePath _parse(String protocol, String qPath)
             throws BadPathException {
         ApacheVfsDevice device = getDevice(protocol);
-        return device.parse(qPath);
+        return device.parseLocalPath(qPath);
     }
 
     @Override

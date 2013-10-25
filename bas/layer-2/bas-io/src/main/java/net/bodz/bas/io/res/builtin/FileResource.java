@@ -10,6 +10,8 @@ import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
+import net.bodz.bas.io.ICroppable;
+import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.AbstractIORandomResource;
 
 public class FileResource
@@ -71,6 +73,18 @@ public class FileResource
             throws IOException {
         boolean append = OpenOptions.isAppend(options);
         return new FileOutputStream(file, append);
+    }
+
+    // XXX byte/char IOS, seeker, cropper
+
+    @Override
+    protected ISeekable getSeeker() {
+        return null;
+    }
+
+    @Override
+    protected ICroppable getCropper() {
+        return null;
     }
 
 }

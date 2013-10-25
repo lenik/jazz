@@ -10,6 +10,10 @@ public class ZipArchiver
         extends ZipEngine
         implements IArchiver {
 
+    public ZipArchiver(OutputStream out) {
+        super();
+    }
+
     @Override
     public OutputStream putNextEntry(IArchiveEntry entry)
             throws IOException {

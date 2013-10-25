@@ -16,22 +16,28 @@ public abstract class AbstractRandomResource
         return -1L;
     }
 
+    @Override
     protected IByteIOS _newByteIOS(OpenOption... options)
             throws IOException {
         IByteIn in = _newByteIn(options);
         IByteOut out = _newByteOut(options);
-        ISeekable seeker = null;
-        ICroppable cropper = null;
+        ISeekable seeker = getSeeker();
+        ICroppable cropper = getCropper();
         return new MergedByteIOS(in, out, seeker, cropper);
     }
 
+    @Override
     protected ICharIOS _newCharIOS(OpenOption... options)
             throws IOException {
         ICharIn in = _newCharIn(options);
         ICharOut out = _newCharOut(options);
-        ISeekable seeker = null;
-        ICroppable cropper = null;
+        ISeekable seeker = getSeeker();
+        ICroppable cropper = getCropper();
         return new MergedCharIOS(in, out, seeker, cropper);
     }
+
+    protected abstract ISeekable getSeeker();
+
+    protected abstract ICroppable getCropper();
 
 }

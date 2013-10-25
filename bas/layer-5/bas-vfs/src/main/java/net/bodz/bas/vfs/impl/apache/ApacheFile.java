@@ -6,14 +6,10 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
 
-import org.apache.commons.vfs.FileContent;
-import org.apache.commons.vfs.FileName;
-import org.apache.commons.vfs.FileObject;
-import org.apache.commons.vfs.FileSelectInfo;
-import org.apache.commons.vfs.FileSelector;
-import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.*;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.c.java.nio.DeleteOptions;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.res.IRandomResource;
@@ -55,12 +51,20 @@ public class ApacheFile
     }
 
     @Override
-    public boolean delete(DeleteOption... options) {
-        try {
-            return fileObject.delete();
-        } catch (FileSystemException e) {
-            return false;
+    public int delete(DeleteOption... options)
+            throws IOException {
+        int count = 0;
+
+        if (DeleteOptions.isDeleteTree(options))
+            count = fileObject.delete(Selectors.SELECT_SELF_AND_CHILDREN);
+        else
+            count = fileObject.delete(Selectors.SELECT_SELF);
+
+        if (DeleteOptions.isRemoveEmptyParents(options)) {
+            // TODO
         }
+
+        return count;
     }
 
     @Override

@@ -83,7 +83,7 @@ public class URLVfsDriver
         }
 
         URLVfsDevice device = getDevice(protocol, deviceSpec);
-        return device.parse(localPath);
+        return device.parseLocalPath(localPath);
     }
 
     @Override

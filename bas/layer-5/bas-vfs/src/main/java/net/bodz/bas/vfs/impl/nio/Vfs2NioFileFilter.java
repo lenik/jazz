@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.util;
+package net.bodz.bas.vfs.impl.nio;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -6,7 +6,6 @@ import java.nio.file.Path;
 
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.impl.nio.NioFile;
 
 public class Vfs2NioFileFilter
         implements DirectoryStream.Filter<Path> {

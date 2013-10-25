@@ -21,8 +21,6 @@ import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
-import net.bodz.bas.vfs.util.Vfs2PojfFileFilter;
-import net.bodz.bas.vfs.util.Vfs2PojfFilenameFilter;
 
 /**
  * @see FileResource
@@ -101,7 +99,7 @@ public class PojfFile
     }
 
     @Override
-    public boolean delete(DeleteOption... options) {
+    public int delete(DeleteOption... options) {
         return FileTree.delete(_file, options);
     }
 
@@ -142,8 +140,8 @@ public class PojfFile
     /* _____________________________ */static section.iface __DIR__;
 
     @Override
-    public PojfFile getChild(String entryName) {
-        File file = new File(this._file, entryName);
+    public PojfFile getChild(String childName) {
+        File file = new File(this._file, childName);
         return new PojfFile(file);
     }
 
