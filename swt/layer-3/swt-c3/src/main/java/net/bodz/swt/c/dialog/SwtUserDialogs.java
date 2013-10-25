@@ -631,7 +631,7 @@ public class SwtUserDialogs
                 fillLayout.type = SWT.VERTICAL;
                 parent.setLayout(fillLayout);
 
-                final List listBox = new List(parent, SWT.MULTI);
+                final ListBox listBox = new ListBox(parent, SWT.MULTI);
                 listBox.setFocus();
 
                 class _K {

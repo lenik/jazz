@@ -11,7 +11,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.ListBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
@@ -28,7 +28,7 @@ public class ThreadsMonitor
     private boolean showDaemon;
     private int interval;
 
-    private List threadList;
+    private ListBox threadList;
 
     private IUserDialogs userDialogs;
 
@@ -85,7 +85,7 @@ public class ThreadsMonitor
             }
         });
 
-        threadList = new List(parent, SWT.V_SCROLL | SWT.BORDER);
+        threadList = new ListBox(parent, SWT.V_SCROLL | SWT.BORDER);
         GridData listData = new GridData(GridData.FILL, GridData.FILL, true, true, 4, 1);
         listData.heightHint = 240;
         threadList.setLayoutData(listData);
