@@ -13,8 +13,8 @@ public class IntRange
         extends AbstractSet<Integer>
         implements NavigableSet<Integer> {
 
-    private int start;
-    private int end;
+    public int start;
+    public int end;
 
     public IntRange(int start, int end) {
         this.start = start;
