@@ -1,17 +1,18 @@
-base/                   基础组件
+base/           基础组件
     pkg-api
     
-os/                     操作系统访问支持
+os/             操作系统访问支持
     pkg-win32
     pkg-linux
 
-prepare/                预处理
-    pkg-obfuz        混淆结构支持
+prepare/        预处理
+    pkg-obfuz       混淆结构支持
     
-packager/               打包
-    pkg-pack         包结构
-    pkg-installer    安装程序
+sis/            打包
+    pkg-sis         包结构
+    pkg-sisi        安装程序
     
-support/                支持工具
-    pkg-site         产品支持站点，如自动更新
-    pkg-admin        维护工具如算号器等
+support/        支持工具
+    pkg-site        产品支持站点，如自动更新
+    pkg-admin       维护工具如算号器等
+

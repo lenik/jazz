@@ -1,9 +1,9 @@
 package net.bodz.bas.rtx;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import net.bodz.bas.err.ReadOnlyException;
-import net.bodz.bas.t.iterator.Iterators;
 
 class NullOptions
         extends AbstractOptions {
@@ -15,7 +15,7 @@ class NullOptions
 
     @Override
     public Iterator<IOption> iterator() {
-        return Iterators.empty();
+        return Collections.emptyIterator();
     }
 
     @Override

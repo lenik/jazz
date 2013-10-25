@@ -1,11 +1,14 @@
 package net.bodz.pkg.os.win32;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.jna.win32.IWin32;
-import net.bodz.pkg.installer.BaseDirVariable;
-import net.bodz.pkg.installer.IProject;
+import net.bodz.pkg.sis.ISisProject;
+import net.bodz.pkg.sis.SisVariable;
 
 import com.roxes.win32.Win32;
 
@@ -32,52 +35,66 @@ public class Win32Vars
     public static final String PERSONAL_SEND_TO = "PERSONAL_SEND_TO";
     public static final String PERSONAL_FAVORITES = "PERSONAL_FAVORITES";
 
-    public static void setup(IProject project) {
+    static Map<String, File> map = new HashMap<String, File>();
+
+    public static File get(String varName) {
+        return map.get(varName);
+    }
+
+    static {
+        load();
+    }
+
+    static void load() {
         if (!SystemInfo.isWin32())
             return;
 
-        define(project, WINDIR, //
+        map.put(WINDIR, //
                 new File(Win32.getWindowsDirectory()));
-        define(project, SYSDIR, //
+        map.put(SYSDIR, //
                 new File(Win32.getWindowsSystemDirectory()));
 
-        define(project, PROGRAM_FILES, //
+        map.put(PROGRAM_FILES, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PROGRAM_FILES));
-        define(project, COMMON_FILES, //
+        map.put(COMMON_FILES, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_FILES));
-        define(project, COMMON_DESKTOP, //
+        map.put(COMMON_DESKTOP, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_DESKTOP));
-        define(project, COMMON_DOCUMENTS, //
+        map.put(COMMON_DOCUMENTS, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_DOCUMENTS));
-        define(project, COMMON_START_MENU, //
+        map.put(COMMON_START_MENU, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_START_MENU));
-        define(project, COMMON_PROGRAMS_MENU, //
+        map.put(COMMON_PROGRAMS_MENU, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_PROGRAMS_MENU));
-        define(project, COMMON_AUTOSTART_MENU, //
+        map.put(COMMON_AUTOSTART_MENU, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_AUTOSTART_MENU));
-        define(project, COMMON_TEMPLATES, //
+        map.put(COMMON_TEMPLATES, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_COMMON_TEMPLATES));
-        define(project, PERSONAL_DESKTOP, //
+        map.put(PERSONAL_DESKTOP, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_DESKTOP));
-        define(project, PERSONAL_FILES, //
+        map.put(PERSONAL_FILES, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_FILES));
-        define(project, PERSONAL_START_MENU, //
+        map.put(PERSONAL_START_MENU, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_START_MENU));
-        define(project, PERSONAL_PROGRAMS_MENU, //
+        map.put(PERSONAL_PROGRAMS_MENU, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_PROGRAMS_MENU));
-        define(project, PERSONAL_AUTOSTART_MENU, //
+        map.put(PERSONAL_AUTOSTART_MENU, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_AUTOSTART_MENU));
-        define(project, PERSONAL_TEMPLATES, //
+        map.put(PERSONAL_TEMPLATES, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_TEMPLATES));
-        define(project, PERSONAL_SEND_TO, //
+        map.put(PERSONAL_SEND_TO, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_SEND_TO));
-        define(project, PERSONAL_FAVORITES, //
+        map.put(PERSONAL_FAVORITES, //
                 Win32.getSpecialDirectory(Win32.SPECIALDIRECTORY_PERSONAL_FAVORITES));
     }
 
-    static void define(IProject project, String name, File file) {
-        BaseDirVariable variable = new BaseDirVariable(null, file);
-        project.define(name, variable);
+    public static void populate(ISisProject project) {
+        for (Entry<String, File> entry : map.entrySet()) {
+            String name = entry.getKey();
+            File value = entry.getValue();
+            SisVariable variable = new SisVariable(null, value);
+            project.setVariable(name, variable);
+        }
     }
 
 }

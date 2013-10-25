@@ -23,8 +23,8 @@
     <modules>
         <module>base</module>
         <module>os</module>
-        <module>packager</module>
         <module>prepare</module>
+        <module>sis</module>
         <module>support</module>
         <module>build</module>
     </modules>

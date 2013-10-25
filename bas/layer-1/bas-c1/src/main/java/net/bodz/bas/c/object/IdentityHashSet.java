@@ -49,16 +49,18 @@ public class IdentityHashSet<T>
 
     @Override
     public boolean add(T e) {
-        boolean exists = ihm.containsKey(e);
+        if (ihm.containsKey(e))
+            return false;
         ihm.put(e, existedValue);
-        return !exists;
+        return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        boolean exists = ihm.containsKey(o);
+        if (!ihm.containsKey(o))
+            return false;
         ihm.remove(o);
-        return exists;
+        return true;
     }
 
     @Override

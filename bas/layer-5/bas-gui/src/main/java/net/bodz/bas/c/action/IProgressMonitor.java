@@ -1,5 +1,7 @@
 package net.bodz.bas.c.action;
 
+import net.bodz.bas.log.ILogger;
+
 public interface IProgressMonitor {
 
     int UNKNOWN = -1;
@@ -8,19 +10,17 @@ public interface IProgressMonitor {
 
     void leave();
 
-    void worked(int amount);
+    // void setTotalWork(int totalWork);
 
-    void isCanceled();
+    /**
+     * @return cancel state.
+     */
+    boolean worked(int amount);
+
+    boolean isCanceled();
 
     void setCanceled(boolean canceled);
 
-    void info(String message);
-
-    void warn(String message);
-
-    /**
-     * @return <code>true</code> for retry, <code>false</code> for ignore or cancel.
-     */
-    boolean error(String message, Throwable exception);
+    ILogger getLogger();
 
 }

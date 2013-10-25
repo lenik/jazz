@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<project name="net.bodz.product.buildutil">
-
-	<property environment="env" />
-	<property name="distdir" value="${env.JAVA_LIB}" />
-	<property name="distsrc" value="${env.JAVA_SRC}" />
-
-</project>
