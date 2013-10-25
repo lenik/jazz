@@ -182,18 +182,6 @@ public abstract class BasicGUI
     protected void _start() {
     }
 
-    private Image[] loadImages(URL[] urls)
-            throws IOException {
-        if (urls == null)
-            return null;
-        Image[] images = new Image[urls.length];
-        for (int i = 0; i < urls.length; i++) {
-            URL url = urls[i];
-            images[i] = SWTResources.getImage(url);
-        }
-        return images;
-    }
-
     protected String getTitle() {
         ArtifactDoc artifactDoc = getXjdoc();
         String title = artifactDoc.getName();
