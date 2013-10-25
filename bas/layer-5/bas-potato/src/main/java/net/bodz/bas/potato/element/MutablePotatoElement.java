@@ -11,8 +11,6 @@ public class MutablePotatoElement
         extends MutableAnnotations
         implements IPotatoElement, IMutableElement {
 
-    private static final long serialVersionUID = 1L;
-
     private Class<?> declaringClass;
     private Map<Class<?>, Object> typerMap;
 

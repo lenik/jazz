@@ -4,8 +4,6 @@ public abstract class AbstractMutableMethod
         extends MutablePotatoElement
         implements IMethod {
 
-    private static final long serialVersionUID = 1L;
-
     private Class<?> returnType;
     private Class<?>[] parameterTypes;
 

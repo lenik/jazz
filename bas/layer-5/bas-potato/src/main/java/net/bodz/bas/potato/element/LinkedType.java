@@ -22,7 +22,7 @@ public class LinkedType
     }
 
     public LinkedType(Class<?> clazz, List<IType> types, IJavaElementDoc xjdoc) {
-        super(clazz.getDeclaringClass(), clazz.getName());
+        super(clazz, clazz.getName());
 
         this.clazz = clazz;
 
