@@ -28,6 +28,12 @@
             <version>${bas.version}</version>
         </dependency>
         <dependency>
+            <groupId>net.bodz.swt</groupId>
+            <artifactId>swt-c3</artifactId>
+            <version>${swt.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>

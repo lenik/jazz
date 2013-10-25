@@ -17,11 +17,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Widget;
 
+import net.bodz.bas.c.event.EventHandler;
 import net.bodz.bas.c.java.awt.DesktopApps;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.gui.dialog.IUserDialogs;
-import net.bodz.bas.gui.util.EventHandler;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.swt.c.composite.EmptyComposite;

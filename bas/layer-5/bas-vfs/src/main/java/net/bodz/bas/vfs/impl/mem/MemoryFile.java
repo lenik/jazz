@@ -62,6 +62,10 @@ public class MemoryFile
 
         case blob:
         case mixed:
+            break;
+
+        default:
+            assert false;
         }
 
         if (data == null)

@@ -10,12 +10,12 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.pkg</groupId>
-            <artifactId>pkg-installer</artifactId>
+            <artifactId>pkg-sis</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.pkg</groupId>
-            <artifactId>pkg-installer</artifactId>
+            <artifactId>pkg-sis</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>

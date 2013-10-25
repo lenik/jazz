@@ -14,10 +14,17 @@ public interface IElementHandler {
     boolean attribute(String name, String data)
             throws ParseException, ElementHandlerException;
 
+    /**
+     * Called when the child element begins.
+     */
     IElementHandler beginChild(String name, String[] args)
             throws ParseException, ElementHandlerException;
 
     /**
+     * Post-process child element.
+     * 
+     * @param element
+     *            The child element, contains unprocessed attributes.
      * @return <code>true</code> if this (child-) element is handled, and should be dropped away.
      *         <code>false</code> if this (child-) element should be included in the enclosing
      *         element to be processed in the future.

@@ -4,6 +4,9 @@ import java.lang.reflect.Modifier;
 
 import net.bodz.bas.i18n.dom.iString;
 
+/**
+ * XXX Refactor to IUIDescribed.ui: IUIDescriptor
+ */
 public interface IElement {
 
     /**

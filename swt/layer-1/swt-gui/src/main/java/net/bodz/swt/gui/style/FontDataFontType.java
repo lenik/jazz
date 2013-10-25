@@ -145,6 +145,9 @@ public class FontDataFontType
         case oblique:
             fontStyleInt |= SWT.ITALIC;
             break;
+
+        default:
+            assert false;
         }
 
         fontData.setStyle(fontStyleInt);

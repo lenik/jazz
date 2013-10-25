@@ -11,10 +11,11 @@ public class Iterators {
 
     /**
      * Get an empty iterator.
+     * 
+     * @deprecated See {@link Collections#emptyIterator()}.
      */
     public static <T> Iterator<T> empty() {
-        @SuppressWarnings("unchecked")
-        Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
+        @SuppressWarnings("unchecked") Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
         return empty;
     }
 

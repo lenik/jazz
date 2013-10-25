@@ -22,11 +22,6 @@
             <artifactId>bas-geom</artifactId>
             <version>${bas.version}</version>
         </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-t3</artifactId>
-            <version>${bas.version}</version>
-        </dependency>
     </dependencies>
     <name>SWT :: Layer 1 :: Gui</name>
 </project>

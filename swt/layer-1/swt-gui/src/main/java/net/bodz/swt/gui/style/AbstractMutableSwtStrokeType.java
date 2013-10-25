@@ -42,6 +42,8 @@ public abstract class AbstractMutableSwtStrokeType
         case square:
             swtLineCap = SWT.CAP_SQUARE;
             break;
+        default:
+            assert false;
         }
 
         setSwtLineCap(swtLineCap);
@@ -58,12 +60,17 @@ public abstract class AbstractMutableSwtStrokeType
         case bevel:
             swtLineJoin = SWT.JOIN_BEVEL;
             break;
+
         case miter:
             swtLineJoin = SWT.JOIN_MITER;
             break;
+
         case round:
             swtLineJoin = SWT.JOIN_ROUND;
             break;
+
+        default:
+            assert false;
         }
 
         setSwtLineJoin(swtLineJoin);

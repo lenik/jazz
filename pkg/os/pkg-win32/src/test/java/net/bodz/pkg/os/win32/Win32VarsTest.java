@@ -1,19 +1,17 @@
 package net.bodz.pkg.os.win32;
 
-import org.junit.Assert;
+import java.io.File;
 
-import net.bodz.pkg.installer.IProject;
-import net.bodz.pkg.installer.Variable;
+import org.junit.Assert;
 
 public class Win32VarsTest
         extends Assert {
 
-    public void main()
+    public static void main(String... args)
             throws Exception {
-        IProject project = null;
-        Win32Vars.setup(project);
-        Variable var = project.get(Win32Vars.COMMON_AUTOSTART_MENU);
-        System.out.println("COMMON_AUTOSTART_MENU=" + var.getDefaultValue());
+
+        File value = Win32Vars.get(Win32Vars.COMMON_AUTOSTART_MENU);
+        System.out.println("COMMON_AUTOSTART_MENU=" + value);
     }
 
 }
