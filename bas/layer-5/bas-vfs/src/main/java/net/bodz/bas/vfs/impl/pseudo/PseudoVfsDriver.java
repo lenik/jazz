@@ -57,7 +57,7 @@ public class PseudoVfsDriver
     protected PseudoPath parse(String scope, String path)
             throws BadPathException {
         PseudoVfsDevice device = getDevice(scope);
-        return device.parse(path);
+        return device.parseLocalPath(path);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class PseudoPath
             PseudoVfsDriver driver = PseudoVfsDriver.getInstance();
             PseudoVfsDevice device = driver.getDevice(scope);
             assert device != null;
-            return device.parse(localPath);
+            return device.parseLocalPath(localPath);
         }
     }
 

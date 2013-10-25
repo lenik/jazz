@@ -59,7 +59,7 @@ public interface IVfsDevice {
      * @throws NullPointerException
      *             If <code>localPath</code> is <code>null</code>.
      */
-    IPath parse(String localPath)
+    IPath parseLocalPath(String localPath)
             throws BadPathException;
 
     /**

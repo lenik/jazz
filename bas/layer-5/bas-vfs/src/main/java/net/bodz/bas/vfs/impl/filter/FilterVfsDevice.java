@@ -33,7 +33,7 @@ public class FilterVfsDevice
     }
 
     @Override
-    public FilterPath parse(String localPath)
+    public FilterPath parseLocalPath(String localPath)
             throws BadPathException {
         return null;
     }

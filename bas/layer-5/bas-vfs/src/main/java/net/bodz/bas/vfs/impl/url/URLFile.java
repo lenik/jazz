@@ -69,45 +69,41 @@ public class URLFile
     }
 
     @Override
-    public boolean delete(DeleteOption... options) {
+    public int delete(DeleteOption... options)
+            throws IOException {
         switch (url.getProtocol()) {
         case "file":
             File file = FileURL.toFile(url, null);
             if (file == null)
-                return false;
+                return 0;
             else
                 return FileTree.delete(file, options);
 
         case "jar":
             // jar/zip is read-only.
-            return false;
+            return 0;
 
         case "http":
         case "https":
-            try {
-                URLConnection connection = url.openConnection();
+            URLConnection connection = url.openConnection();
 
-                if (connection instanceof HttpURLConnection) {
-                    HttpURLConnection http = (HttpURLConnection) connection;
-                    http.setRequestMethod("DELETE");
-                    int responseCode = http.getResponseCode();
-                    if (responseCode < 300)
-                        return true;
-                    if (responseCode == 404) // Not found
-                        return false;
-                    // http.getErrorStream();
-                    throw new IOException(http.getResponseMessage());
-                } // HTTP
+            if (connection instanceof HttpURLConnection) {
+                HttpURLConnection http = (HttpURLConnection) connection;
+                http.setRequestMethod("DELETE");
+                int responseCode = http.getResponseCode();
+                if (responseCode < 300)
+                    return 1;
+                if (responseCode == 404) // Not found
+                    return 0;
+                // http.getErrorStream();
+                throw new IOException(http.getResponseMessage());
+            } // HTTP
 
-                else
-                    return false;
-
-            } catch (Exception e) {
-                return false;
-            }
+            else
+                return 0;
 
         default:
-            return false;
+            return 0;
         }
     }
 

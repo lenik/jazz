@@ -50,7 +50,7 @@ public class PojfVfsDevice
     }
 
     @Override
-    public PojfPath parse(String localPath) {
+    public PojfPath parseLocalPath(String localPath) {
         return new PojfPath(getProtocol(), getDriveName(), localPath);
     }
 

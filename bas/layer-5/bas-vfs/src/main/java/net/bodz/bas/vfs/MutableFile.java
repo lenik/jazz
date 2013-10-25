@@ -88,32 +88,36 @@ public abstract class MutableFile
     }
 
     @Override
-    public boolean delete(DeleteOption... options) {
+    public int delete(DeleteOption... options)
+            throws IOException {
         boolean deleteTree = DeleteOptions.isDeleteTree(options);
-        boolean removeEmptyParents = DeleteOptions.isRemoveEmptyParents(options);
 
-        if (!children.isEmpty())
-            if (!deleteTree)
-                return false;
+        int count = 0;
 
-        for (IFile child : children.values())
-            if (!child.delete(options))
-                return false;
+        if (!children.isEmpty()) {
+            if (deleteTree)
+                for (IFile child : children.values()) {
+                    count += child.delete(options);
+                }
+            else
+                return 0;
+        }
 
         MutableFile ancestor = this.parentFile;
-        // free();
+
         setType(FsObjectType.none);
-
         detach();
+        count++;
 
-        if (removeEmptyParents)
+        if (DeleteOptions.isRemoveEmptyParents(options))
             while (ancestor.children.isEmpty()) {
                 MutableFile pp = ancestor.parentFile;
                 ancestor.detach();
                 ancestor = pp;
+                count++;
             }
 
-        return true;
+        return count;
     }
 
     // protected abstract void free();

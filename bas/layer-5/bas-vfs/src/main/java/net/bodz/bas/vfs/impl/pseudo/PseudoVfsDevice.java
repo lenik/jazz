@@ -49,7 +49,7 @@ public class PseudoVfsDevice
     }
 
     @Override
-    public PseudoPath parse(String localPath)
+    public PseudoPath parseLocalPath(String localPath)
             throws BadPathException {
         PseudoFile pseudoFile = _resolveNoRec(localPath);
         return pseudoFile.getPath();

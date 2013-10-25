@@ -63,8 +63,9 @@ public abstract class FsObject
     }
 
     @Override
-    public boolean delete(DeleteOption... options) {
-        return false;
+    public int delete(DeleteOption... options)
+            throws IOException {
+        return 0;
     }
 
     @Override

@@ -15,7 +15,8 @@ public class Iterators {
      * @deprecated See {@link Collections#emptyIterator()}.
      */
     public static <T> Iterator<T> empty() {
-        @SuppressWarnings("unchecked") Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
+        @SuppressWarnings("unchecked")
+        Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
         return empty;
     }
 
@@ -288,10 +289,10 @@ class EnumIterator<T>
 class FilteredIterator<T>
         extends PrefetchedIterator<T> {
 
-    final Iterator<? extends T> orig;
-    IFilter<T> filter;
+    private final Iterator<? extends T> orig;
+    private IFilter<? super T> filter;
 
-    public FilteredIterator(Iterator<? extends T> orig, IFilter<T> filter) {
+    public FilteredIterator(Iterator<? extends T> orig, IFilter<? super T> filter) {
         if (orig == null)
             throw new NullPointerException("orig");
         if (filter == null)

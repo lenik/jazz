@@ -26,12 +26,12 @@ public class BytesFile
     }
 
     @Override
-    public boolean delete(DeleteOption... options) {
+    public int delete(DeleteOption... options) {
         if (resource.isAllocated()) {
             resource.unallocate();
-            return true;
+            return 1;
         } else {
-            return false;
+            return 0;
         }
     }
 

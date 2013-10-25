@@ -90,7 +90,7 @@ public class Iterables {
         return Iterators.toListLimited(iterable.iterator(), limit, appxSize);
     }
 
-    public static <T> Iterable<T> filter(Iterable<? extends T> iterable, IFilter<T> filter) {
+    public static <T> Iterable<T> filter(Iterable<? extends T> iterable, IFilter<? super T> filter) {
         return new FilteredIterable<>(iterable, filter);
     }
 
@@ -170,9 +170,9 @@ class FilteredIterable<T>
         implements Iterable<T> {
 
     final Iterable<? extends T> orig;
-    final IFilter<T> filter;
+    final IFilter<? super T> filter;
 
-    public FilteredIterable(Iterable<? extends T> orig, IFilter<T> filter) {
+    public FilteredIterable(Iterable<? extends T> orig, IFilter<? super T> filter) {
         this.orig = orig;
         this.filter = filter;
     }

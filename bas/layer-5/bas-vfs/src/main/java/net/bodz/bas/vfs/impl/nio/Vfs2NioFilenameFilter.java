@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.util;
+package net.bodz.bas.vfs.impl.nio;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;

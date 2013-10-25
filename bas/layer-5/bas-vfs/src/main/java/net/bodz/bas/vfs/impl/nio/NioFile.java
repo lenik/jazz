@@ -20,8 +20,6 @@ import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.PathResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
-import net.bodz.bas.vfs.util.Vfs2NioFileFilter;
-import net.bodz.bas.vfs.util.Vfs2NioFilenameFilter;
 
 /**
  * @see FileResource
@@ -102,16 +100,13 @@ public class NioFile
     }
 
     @Override
-    public boolean delete(DeleteOption... options) {
+    public int delete(DeleteOption... options)
+            throws IOException {
         if (!Files.exists(_path))
-            return false;
+            return 0;
 
-        try {
-            Files.delete(_path);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+        Files.delete(_path);
+        return 1;
     }
 
     @Override

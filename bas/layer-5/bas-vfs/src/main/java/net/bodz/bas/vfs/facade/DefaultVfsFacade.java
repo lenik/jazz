@@ -161,7 +161,7 @@ public class DefaultVfsFacade
         // src.isDeletable()
         if (moveAcrossDevice)
             if (copy(src, dst)) {
-                if (src.delete())
+                if (src.delete() > 0)
                     return true;
                 else
                     dst.delete();

@@ -53,7 +53,7 @@ public class ApacheVfsDevice
     }
 
     @Override
-    public ApachePath parse(String localPath)
+    public ApachePath parseLocalPath(String localPath)
             throws BadPathException {
         String qPath = localPath;
         String fqPath = getProtocol() + ":" + qPath;

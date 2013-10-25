@@ -86,10 +86,11 @@ public interface IFsObject
      * If {@link TreeDeleteOption#REMOVE_EMPTY_PARENTS remove empty parents} option isn't specified,
      * delete an empty directory should preserve any empty parent dirs.
      * 
-     * @return <code>true</code> if and only if the entry is successfully deleted.
+     * @return Count of fs objects actually been deleted.
      * @see File#delete()
      */
-    boolean delete(DeleteOption... options);
+    int delete(DeleteOption... options)
+            throws IOException;
 
     /**
      * Once deletion has been requested, it is not possible to cancel the request. This method

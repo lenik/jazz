@@ -51,7 +51,7 @@ public class NioVfsDevice
     }
 
     @Override
-    public NioPath parse(String localPath) {
+    public NioPath parseLocalPath(String localPath) {
         return new NioPath(getProtocol(), getRootName(), localPath);
     }
 
@@ -95,7 +95,7 @@ public class NioVfsDevice
     @Override
     public boolean createLink(String _localPath, String targetSpec, boolean symbolic)
             throws IOException {
-        NioPath localPath = parse(_localPath);
+        NioPath localPath = parseLocalPath(_localPath);
         Path link = localPath.toPath();
         File linkFile = link.toFile();
         return FilePath.createLink(linkFile, targetSpec, symbolic);
@@ -104,7 +104,7 @@ public class NioVfsDevice
     @Override
     public String readSymbolicLink(String _localPath)
             throws BadPathException, IOException {
-        NioPath localPath = parse(_localPath);
+        NioPath localPath = parseLocalPath(_localPath);
         Path link = localPath.toPath();
         Path target = Files.readSymbolicLink(link);
         return target.toString();

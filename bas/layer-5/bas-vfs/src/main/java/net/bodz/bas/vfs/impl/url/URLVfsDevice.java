@@ -86,7 +86,7 @@ public class URLVfsDevice
     }
 
     @Override
-    public URLPath parse(String localPath)
+    public URLPath parseLocalPath(String localPath)
             throws BadPathException {
         return rootPath.createLocal(localPath);
     }

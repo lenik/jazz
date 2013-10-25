@@ -8,12 +8,14 @@ import java.nio.file.OpenOption;
 import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICroppable;
+import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 
 public class BytesResource
         extends AbstractBinaryResource {
 
-    MovableByteBuffer buffer;
+    private MovableByteBuffer buffer;
 
     public BytesResource() {
         this(null);
@@ -89,6 +91,18 @@ public class BytesResource
             throw new IllegalStateException("Resource isn't created, yet.");
         else
             return new MovableByteBufferByteIn(buffer);
+    }
+
+    // XXX byte/char IOS, seeker, cropper
+
+    @Override
+    protected ISeekable getSeeker() {
+        return null;
+    }
+
+    @Override
+    protected ICroppable getCropper() {
+        return null;
     }
 
     public byte[] toByteArray() {
