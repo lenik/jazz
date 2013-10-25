@@ -1,6 +1,7 @@
 package net.bodz.swt.c.list;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -16,7 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.ListBox;
 
 import net.bodz.bas.err.CorruptedStateError;
 
@@ -24,8 +25,8 @@ public abstract class AbstractListEditor<T>
         extends Composite {
 
     private Label label;
-    private java.util.List<T> list;
-    private List listBox;
+    private List<T> list;
+    private ListBox listBox;
 
     private int dragIndex = -1;
 
@@ -45,7 +46,7 @@ public abstract class AbstractListEditor<T>
         gd_label.widthHint = 116;
         label.setLayoutData(gd_label);
 
-        listBox = new List(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+        listBox = new ListBox(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
         final GridData gd_list = new GridData(SWT.FILL, SWT.FILL, true, true);
         listBox.setLayoutData(gd_list);
         listBox.addSelectionListener(new SelectionListener() {
@@ -116,11 +117,11 @@ public abstract class AbstractListEditor<T>
         label.setText(text);
     }
 
-    public java.util.List<T> getList() {
+    public List<T> getList() {
         return list;
     }
 
-    public void setList(java.util.List<T> list) {
+    public void setList(List<T> list) {
         this.list = list;
         listBox.removeAll();
         if (list != null) {

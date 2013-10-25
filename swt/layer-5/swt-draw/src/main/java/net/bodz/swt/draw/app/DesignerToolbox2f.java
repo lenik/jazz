@@ -9,7 +9,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.ListBox;
 import org.eclipse.swt.widgets.Shell;
 
 import net.bodz.swt.c.canvas.Canvas;
@@ -20,7 +20,7 @@ import net.bodz.swt.draw.app.tools.*;
 public class DesignerToolbox2f {
 
     protected Shell shell;
-    private List list;
+    private ListBox list;
 
     Canvas canvas;
 
@@ -68,7 +68,7 @@ public class DesignerToolbox2f {
         final SashForm sashForm = new SashForm(shell, SWT.VERTICAL);
         sashForm.setBackground(SWTResources.getColor(87, 87, 87));
 
-        list = new List(sashForm, SWT.BORDER);
+        list = new ListBox(sashForm, SWT.BORDER);
         list.setItems(canvasModes.keySet().toArray(new String[0]));
         list.addSelectionListener(new SelectionAdapter() {
             @Override
