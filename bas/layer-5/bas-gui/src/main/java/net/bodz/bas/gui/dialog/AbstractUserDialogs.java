@@ -114,13 +114,13 @@ public abstract class AbstractUserDialogs
     @Override
     public <X extends Exception> int tryBlock(final IExecutableX<X> runnable, int maxRetry)
             throws X {
-        return new AbstractTryBlock(this, maxRetry, false) {
+        return new AbstractTryBlock(this, maxRetry) {
             @Override
             protected void body()
                     throws Exception {
                 runnable.execute();
             }
-        }._run();
+        }.eval();
     }
 
     @Override

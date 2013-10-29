@@ -9,32 +9,20 @@ import net.bodz.swt.c.dialog.SwtUserDialogs;
 public abstract class DialogTryBlock
         extends AbstractTryBlock {
 
-    public DialogTryBlock(IUserDialogs userInterface, int maxRetry, boolean tryImmediately) {
-        super(userInterface, maxRetry, tryImmediately);
-    }
-
     public DialogTryBlock(IUserDialogs userInterface, int maxRetry) {
         super(userInterface, maxRetry);
     }
 
     public DialogTryBlock(IUserDialogs userInterface) {
-        super(userInterface);
-    }
-
-    public DialogTryBlock(int maxRetry, boolean tryImmediately) {
-        this(new SwtUserDialogs(), maxRetry, tryImmediately);
-    }
-
-    public DialogTryBlock(boolean tryImmediately) {
-        this(INFINITE, tryImmediately);
-    }
-
-    public DialogTryBlock() {
-        this(INFINITE, true);
+        super(userInterface, INFINITE);
     }
 
     public DialogTryBlock(int maxRetry) {
-        this(maxRetry, true);
+        this(new SwtUserDialogs(), maxRetry);
+    }
+
+    public DialogTryBlock() {
+        this(INFINITE);
     }
 
     @Override

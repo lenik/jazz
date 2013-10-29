@@ -7,21 +7,11 @@ public abstract class AbstractTryBlock
 
     protected final IUserDialogs UI;
 
-    public AbstractTryBlock(IUserDialogs ui, int maxRetry, boolean tryImmediately) {
-        super(maxRetry, false);
+    public AbstractTryBlock(IUserDialogs ui, int maxRetry) {
+        super(maxRetry);
         if (ui == null)
             throw new NullPointerException("interaction");
         this.UI = ui;
-        if (tryImmediately)
-            _run();
-    }
-
-    public AbstractTryBlock(IUserDialogs ui) {
-        this(ui, INFINITE, true);
-    }
-
-    public AbstractTryBlock(IUserDialogs ui, int maxRetry) {
-        this(ui, maxRetry, true);
     }
 
     @Override

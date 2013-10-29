@@ -12,25 +12,20 @@ public abstract class TryBlock
     private final int maxRetry;
 
     public TryBlock() {
-        this(INFINITE, true);
+        this(INFINITE);
     }
 
     public TryBlock(int maxRetry) {
-        this(maxRetry, true);
-    }
-
-    public TryBlock(int maxRetry, boolean tryImmediately) {
         this.maxRetry = maxRetry;
-        if (tryImmediately)
-            _run();
     }
 
     @Override
     public final void run() {
-        _run();
+        @SuppressWarnings("unused")
+        int exitCode = eval();
     }
 
-    public int _run() {
+    public int eval() {
         int tried = 0;
         while (true) {
             init();
