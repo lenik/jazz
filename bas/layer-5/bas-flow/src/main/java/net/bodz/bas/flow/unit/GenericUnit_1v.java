@@ -6,7 +6,6 @@ import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.flow.stream.IReceiverEx;
 import net.bodz.bas.flow.unit.metadata.IPortMetadata;
 import net.bodz.bas.flow.unit.metadata.StrictPortMeta;
-import net.bodz.bas.flow.utils.RecvUtil;
 
 public abstract class GenericUnit_1v
         extends AbstractUnit
@@ -47,19 +46,6 @@ public abstract class GenericUnit_1v
     @Override
     public void removeSrc(IOutPort srcPort)
             throws IOException {
-    }
-
-    /**
-     * XXX - how to handle exceptions?
-     */
-    @Override
-    public void recv(Object data)
-            throws IOException {
-        try {
-            RecvUtil.recvEx(this, data);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
     }
 
     @Override
