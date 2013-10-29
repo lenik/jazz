@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 
+import net.bodz.bas.c.java.nio.CreateOptions;
 import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
@@ -60,6 +61,14 @@ public class FileResource
     protected void beforeOpenOutput(OpenOption... options)
             throws IOException {
         super.beforeOpenOutput(options);
+        if (CreateOptions.isCreateParents(options)) {
+            File parentFile = file.getParentFile();
+            if (parentFile != null && !parentFile.isDirectory()) {
+                if (!parentFile.mkdirs())
+                    // throw ...?
+                    ;
+            }
+        }
     }
 
     @Override
