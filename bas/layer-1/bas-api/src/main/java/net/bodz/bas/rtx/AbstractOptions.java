@@ -46,6 +46,9 @@ public abstract class AbstractOptions
     public int getInt(String id, int defaultValue) {
         Object value = get(id);
 
+        if (value == null)
+            return defaultValue;
+
         if (value instanceof Number)
             return ((Number) value).intValue();
 
@@ -63,6 +66,9 @@ public abstract class AbstractOptions
     @Override
     public long getLong(String id, long defaultValue) {
         Object value = get(id);
+
+        if (value == null)
+            return defaultValue;
 
         if (value instanceof Number)
             return ((Number) value).longValue();
@@ -82,6 +88,9 @@ public abstract class AbstractOptions
     public float getFloat(String id, float defaultValue) {
         Object value = get(id);
 
+        if (value == null)
+            return defaultValue;
+
         if (value instanceof Number)
             return ((Number) value).floatValue();
 
@@ -100,6 +109,9 @@ public abstract class AbstractOptions
     public double getDouble(String id, double defaultValue) {
         Object value = get(id);
 
+        if (value == null)
+            return defaultValue;
+
         if (value instanceof Number)
             return ((Number) value).doubleValue();
 
@@ -117,6 +129,9 @@ public abstract class AbstractOptions
     @Override
     public boolean getBoolean(String id, boolean defaultValue) {
         Object value = get(id);
+
+        if (value == null)
+            return defaultValue;
 
         if (value instanceof Boolean)
             return ((Boolean) value).booleanValue();
