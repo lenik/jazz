@@ -19,5 +19,5 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: Gui</name>
+    <name>BAS :: Layer 5 :: Draw</name>
 </project>
