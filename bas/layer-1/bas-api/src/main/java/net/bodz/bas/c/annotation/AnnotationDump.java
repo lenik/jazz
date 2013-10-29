@@ -65,7 +65,10 @@ public class AnnotationDump {
             throws IOException {
         Map<?, ?> annotations;
         try {
-            annotations = (Map<?, ?>) Class_annotations.get(clazz);
+            if (declaredOnly)
+                annotations = (Map<?, ?>) Class_declaredAnnotations.get(clazz);
+            else
+                annotations = (Map<?, ?>) Class_annotations.get(clazz);
         } catch (IllegalAccessException e) {
             throw new Error(e.getMessage(), e);
         }
@@ -73,7 +76,7 @@ public class AnnotationDump {
         for (Entry<?, ?> entry : annotations.entrySet()) {
             Class<?> annotationClass = (Class<?>) entry.getKey();
             Annotation annotationImpl = (Annotation) entry.getValue();
-            out.write(annotationClass + " " + annotationImpl + "\n");
+            out.write(annotationClass.getSimpleName() + ".class => " + annotationImpl + "\n");
         }
     }
 

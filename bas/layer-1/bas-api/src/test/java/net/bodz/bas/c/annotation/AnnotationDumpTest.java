@@ -13,9 +13,9 @@ public class AnnotationDumpTest
      * Return value looks like: XyzHint.class @ XyzHint
      */
     static String formatEntry(Class<? extends Annotation> annotationClass) {
-        String annotationClassName = annotationClass.getCanonicalName();
+        String annotationClassName = annotationClass.getSimpleName();
         String annotationImplName = annotationClass.getCanonicalName();
-        return annotationClassName + ".class @" + annotationImplName;
+        return annotationClassName + ".class => @" + annotationImplName;
     }
 
     @Test
