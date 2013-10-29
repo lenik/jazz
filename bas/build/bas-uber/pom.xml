@@ -203,6 +203,10 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-vfs</groupId>
+            <artifactId>commons-vfs</artifactId>
+        </dependency>
     </dependencies>
     <name>BAS :: Build :: Uber</name>
 </project>
