@@ -1,9 +1,14 @@
 package net.bodz.bas.tool.test;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-public class MultipassTimerTest {
+public class MultipassTimerTest
+        extends Assert {
 
+    /**
+     * XXX too slow.
+     */
     @Test
     public void test1()
             throws Exception {

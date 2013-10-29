@@ -9,7 +9,7 @@ public class MultipassTimer {
     private long skeletonCost = -1;
 
     public MultipassTimer() {
-        this(1000000);
+        this(1000);
     }
 
     public MultipassTimer(int passCount) {
