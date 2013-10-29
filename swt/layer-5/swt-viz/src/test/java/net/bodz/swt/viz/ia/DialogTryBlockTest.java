@@ -33,7 +33,7 @@ public class DialogTryBlockTest {
                 System.out.println("Retry");
             }
 
-        };
+        }.run();
     }
 
 }

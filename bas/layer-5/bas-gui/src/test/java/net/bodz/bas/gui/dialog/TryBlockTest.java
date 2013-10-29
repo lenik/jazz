@@ -1,13 +1,16 @@
 package net.bodz.bas.gui.dialog;
 
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
-public class TryBlockTest {
+public class TryBlockTest
+        extends Assert {
 
+    @Ignore
     @Test
-    public void testMaxRetry()
-            throws Exception {
-        new AbstractTryBlock(ConsoleDialogs.stderr, 3) {
+    public void retry3Times() {
+        TryBlock tryBlock = new AbstractTryBlock(ConsoleDialogs.stderr, 3) {
 
             @Override
             protected void body()
@@ -32,6 +35,7 @@ public class TryBlockTest {
             }
 
         };
+        tryBlock.run();
     }
 
 }
