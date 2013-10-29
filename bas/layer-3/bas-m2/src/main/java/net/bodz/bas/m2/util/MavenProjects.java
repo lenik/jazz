@@ -30,18 +30,24 @@ public class MavenProjects {
 
     public static ClassLoader createCompileClassLoader(MavenProject project)
             throws DependencyResolutionRequiredException {
+        if (project == null)
+            throw new NullPointerException("project");
         List<String> elements = project.getCompileClasspathElements();
         return createClassLoader(elements);
     }
 
     public static ClassLoader createRuntimeClassLoader(MavenProject project)
             throws DependencyResolutionRequiredException {
+        if (project == null)
+            throw new NullPointerException("project");
         List<String> elements = project.getRuntimeClasspathElements();
         return createClassLoader(elements);
     }
 
     public static ClassLoader createTestClassLoader(MavenProject project)
             throws DependencyResolutionRequiredException {
+        if (project == null)
+            throw new NullPointerException("project");
         List<String> elements = project.getTestClasspathElements();
         return createClassLoader(elements);
     }

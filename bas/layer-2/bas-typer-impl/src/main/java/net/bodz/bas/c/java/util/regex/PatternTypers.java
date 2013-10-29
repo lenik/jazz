@@ -29,7 +29,7 @@ public class PatternTypers
      */
     @ParameterType(Integer.class)
     public static final String regexFlags = "regex.flags";
-    public static final int defeaultRegexFlags = 0;
+    public static final int defaultRegexFlags = 0;
 
     public PatternTypers() {
         super(Pattern.class);
@@ -48,7 +48,7 @@ public class PatternTypers
     public Pattern parse(String text, IOptions options)
             throws ParseException {
         String mode = options.get(textformMode, defaultTextformMode);
-        int flags = options.getInt(regexFlags, defeaultRegexFlags);
+        int flags = options.getInt(regexFlags, defaultRegexFlags);
 
         if (javaTextformMode.equals(mode))
             return Pattern.compile(text, flags);
