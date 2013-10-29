@@ -1,7 +1,8 @@
 package net.bodz.bas.typer.spi;
 
-import net.bodz.bas.c.type.CachedInstantiator;
-import net.bodz.bas.err.LazyLoadException;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 
@@ -13,6 +14,8 @@ public class FriendTyperProvider
     private final String prefixName;
     private final String suffixFamilyName = "Typers";
     private final boolean flatten;
+
+    private Map<Class<?>, Object> friendTyperMap = new HashMap<Class<?>, Object>();
 
     public FriendTyperProvider() {
         this.priority = BuiltinProviderOrder.friend.getPriority();
@@ -74,13 +77,14 @@ public class FriendTyperProvider
             return null;
         }
 
-        CachedInstantiator cacher = CachedInstantiator.getInstance();
-        Object friendTyperImpl;
-        try {
-            friendTyperImpl = cacher.instantiate(friendTyperImplClass);
-        } catch (LazyLoadException e) {
-            throw new QueryException(e);
-        }
+        Object friendTyperImpl = friendTyperMap.get(friendTyperImplClass);
+        if (friendTyperImpl == null)
+            try {
+                friendTyperImpl = friendTyperImplClass.newInstance();
+                friendTyperMap.put(friendTyperImplClass, friendTyperImpl);
+            } catch (ReflectiveOperationException e) {
+                throw new QueryException(e);
+            }
 
         if (typerClass.isInstance(friendTyperImpl))
             return typerClass.cast(friendTyperImpl);
