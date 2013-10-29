@@ -6,16 +6,16 @@ import org.junit.Test;
 public class PackageContextTest
         extends Assert {
 
-    static class ContextAddress
+    static class AddressColo
             extends ContextLocal<String> {
 
-        public void addMoreAddr(IContextId context, String moreAddr) {
-            String s = get(context);
-            if (s == null)
-                s = moreAddr;
+        public void addMoreAddr(IContextId contextId, String moreAddr) {
+            String val = get(contextId);
+            if (val == null)
+                val = moreAddr;
             else
-                s += moreAddr;
-            set(context, s);
+                val += moreAddr;
+            set(contextId, val);
         }
 
     }
@@ -23,18 +23,18 @@ public class PackageContextTest
     /**
      * for JUnit test, the static-modifier is off.
      */
-    ContextAddress contextAddress = new ContextAddress();
+    AddressColo addressColo = new AddressColo();
 
     class Inner {
 
         public String getAddress() {
-            PackageContextId innerContext = PackageContextId.getCallerPackageContext();
-            return contextAddress.get(innerContext);
+            PackageContextId callerId = PackageContextId.forCaller();
+            return addressColo.get(callerId);
         }
 
-        public void setMoreAddr(String s) {
-            PackageContextId innerContext = PackageContextId.getCallerPackageContext();
-            contextAddress.addMoreAddr(innerContext, s);
+        public void addMoreAddr(String s) {
+            PackageContextId callerId = PackageContextId.forCaller();
+            addressColo.addMoreAddr(callerId, s);
         }
 
     }
@@ -42,34 +42,34 @@ public class PackageContextTest
     @Test
     public void testSetInnerKeepOuter()
             throws Exception {
-        PackageContextId outerContext = PackageContextId.getCallerPackageContext();
-        String outerAddr = contextAddress.get(outerContext);
+        PackageContextId outerId = PackageContextId.forCaller();
+        String outerAddr = addressColo.get(outerId);
         assertNull(outerAddr);
 
         Inner inner = new Inner();
         assertNull(inner.getAddress());
 
-        inner.setMoreAddr("a");
+        inner.addMoreAddr("a");
         assertEquals("a", inner.getAddress());
-        inner.setMoreAddr("b");
+        inner.addMoreAddr("b");
         assertEquals("ab", inner.getAddress());
 
-        outerAddr = contextAddress.get(outerContext);
+        outerAddr = addressColo.get(outerId);
         assertNull(outerAddr);
     }
 
     @Test
     public void testSetOuterChangeInner()
             throws Exception {
-        PackageContextId outer = PackageContextId.getCallerPackageContext();
-        String outerAddr = contextAddress.get(outer);
+        PackageContextId outerId = PackageContextId.forCaller();
+        String outerAddr = addressColo.get(outerId);
         assertNull(outerAddr);
 
         Inner inner = new Inner();
         assertNull(inner.getAddress());
 
-        contextAddress.set(outer, "x");
-        assertEquals("x", contextAddress.get(outer));
+        addressColo.set(outerId, "x");
+        assertEquals("x", addressColo.get(outerId));
         // assertNull(inner.getAddress());
         assertEquals("x", inner.getAddress());
     }
