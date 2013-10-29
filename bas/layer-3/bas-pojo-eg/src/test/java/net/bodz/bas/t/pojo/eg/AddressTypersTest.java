@@ -36,10 +36,10 @@ public class AddressTypersTest
                 .addOption(new CountryAliasUtil()) //
                 .addOption(new PostCodeUtil());
 
-        String input = "cn:310000:somewhere";
-        String expected = "China:Zhejiang:somewhere";
+        String input = "China:Zhejiang:somewhere";
+        String expected = "cn:310000:somewhere";
         Address address = addressParser.parse(input, options);
-        String actual = addressFormatter.format(address);
+        String actual = addressFormatter.format(address, options);
         assertEquals(expected, actual);
     }
 

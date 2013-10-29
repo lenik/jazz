@@ -48,8 +48,10 @@ public class AddressTypers
                 country = countryAliasUtil.unalias(country);
             if (resolvePostCode) {
                 PostCodeUtil postCodeUtil = options.get(PostCodeUtil.class);
-                postCode = Integer.parseInt(city);
-                city = postCodeUtil.getCityFromCode(postCode);
+                if (postCodeUtil != null) {
+                    postCode = Integer.parseInt(city);
+                    city = postCodeUtil.getCityFromCode(postCode);
+                }
             }
         }
 
@@ -58,7 +60,20 @@ public class AddressTypers
 
     @Override
     public String format(Address a, IOptions options) {
-        return a.getCountry() + ":" + a.getCity() + ":" + a.getAddress();
+        CountryAliasUtil countryAliasUtil = options.get(CountryAliasUtil.class);
+        PostCodeUtil postCodeUtil = options.get(PostCodeUtil.class);
+
+        String country = a.getCountry();
+        String city = a.getCity();
+        String address = a.getAddress();
+        int postCode = a.getPostCode();
+
+        if (countryAliasUtil != null)
+            country = countryAliasUtil.alias(country);
+        if (postCodeUtil != null)
+            postCode = postCodeUtil.getCodeFromCity(city);
+
+        return country + ":" + (postCode != 0 ? postCode : city) + ":" + address;
     }
 
 }

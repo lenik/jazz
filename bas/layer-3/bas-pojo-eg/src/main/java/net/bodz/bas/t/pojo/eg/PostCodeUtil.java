@@ -8,4 +8,10 @@ public class PostCodeUtil {
         throw new IllegalArgumentException("Invalid post code: " + code);
     }
 
+    public int getCodeFromCity(String city) {
+        if ("Zhejiang".equals(city))
+            return 310000;
+        throw new IllegalArgumentException("Unknown city: " + city);
+    }
+
 }

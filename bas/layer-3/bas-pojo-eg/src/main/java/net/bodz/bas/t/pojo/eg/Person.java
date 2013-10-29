@@ -1,7 +1,9 @@
 package net.bodz.bas.t.pojo.eg;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.meta.lang.typer;
 
+@typer.family(PersonTypers.class)
 public class Person {
 
     private String name;
