@@ -1,3 +1,5 @@
 net.bodz.bas.typer.spi.AnnotationTyperProvider
+net.bodz.bas.typer.spi.BasCompanionTyperProvider
+net.bodz.bas.typer.spi.FriendTyperProvider
 net.bodz.bas.typer.spi.QueryMethodTyperProvider
 net.bodz.bas.typer.spi.QuerySelfTyperProvider
