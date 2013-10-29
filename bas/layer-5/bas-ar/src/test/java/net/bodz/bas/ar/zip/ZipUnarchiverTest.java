@@ -7,6 +7,7 @@ import java.util.zip.CRC32;
 import java.util.zip.ZipInputStream;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,15 +33,18 @@ public class ZipUnarchiverTest
             "/home/lenik/.local/chrome/S60_SDK_3.2_v1.1.1_en.zip", // 3
     };
 
-    ITreeOut out = TreeOutImpl.from(Stdio.cout);
+    private ITreeOut out = TreeOutImpl.from(Stdio.cout);
 
-    RafIn in;
-    ZipUnarchiver unarchiver;
+    private RafIn in;
+    private ZipUnarchiver unarchiver;
 
     @Before
     public void setup()
             throws IOException {
-        in = new RafIn(zipFileNames[3], "r");
+        File file = new File(zipFileNames[3]);
+        Assume.assumeTrue(file.exists());
+
+        in = new RafIn(file, "r");
         unarchiver = new ZipUnarchiver(in);
     }
 
