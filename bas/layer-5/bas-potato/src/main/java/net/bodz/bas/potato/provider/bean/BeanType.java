@@ -40,18 +40,24 @@ public class BeanType
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
 
-                MethodDoc xetterDoc = null;
+                Method getter = propertyDescriptor.getReadMethod();
+                Method setter = propertyDescriptor.getWriteMethod();
+                if (getter == null && setter == null)
+                    // TODO This could be an indexed property. Not supported, yet.
+                    continue;
+
+                MethodDoc propertyDoc = null;
                 if (classDoc != null) {
-                    Method xetter = propertyDescriptor.getReadMethod();
-                    if (xetter == null)
-                        xetter = propertyDescriptor.getWriteMethod();
-                    if (xetter != null) {
-                        MethodId xetterId = new MethodId(xetter);
-                        xetterDoc = classDoc.getMethodDoc(xetterId);
+                    if (getter != null) {
+                        MethodId getterId = new MethodId(getter);
+                        propertyDoc = classDoc.getMethodDoc(getterId);
+                    } else if (setter != null) {
+                        MethodId setterId = new MethodId(setter);
+                        propertyDoc = classDoc.getMethodDoc(setterId);
                     }
                 }
 
-                BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, xetterDoc);
+                BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, propertyDoc);
                 propertyMap.addProperty(beanProperty);
             }
         }

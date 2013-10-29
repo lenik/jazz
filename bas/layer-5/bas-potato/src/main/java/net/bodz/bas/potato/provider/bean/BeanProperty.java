@@ -30,6 +30,8 @@ public class BeanProperty
         this.propertyDescriptor = propertyDescriptor;
 
         Method getter = propertyDescriptor.getReadMethod();
+        if (getter == null)
+            throw new NullPointerException("No getter: " + propertyDescriptor.getName());
 
         int _modifiers = getter.getModifiers();
         this.modifiers = getter == null ? 0 : ReflectModifiers.toVerboseLevel(_modifiers);
