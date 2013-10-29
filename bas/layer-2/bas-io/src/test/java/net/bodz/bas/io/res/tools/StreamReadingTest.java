@@ -17,9 +17,10 @@ public class StreamReadingTest
             throws Exception {
         byte[] src = "0123456789abcdefghijklmnopqrstuvwxyz".getBytes();
         ByteArrayInputStream in = new ByteArrayInputStream(src);
-        IStreamReading read = new InputStreamSource(in).to(StreamReading.class);
+        StreamReading reading = new InputStreamSource(in).to(StreamReading.class);
+        reading.setBlockSize(5);
 
-        Mitorx<char[], ? extends IOException> blocks = read.charBlocks(true);
+        Mitorx<char[], ? extends IOException> blocks = reading.charBlocks(true);
         assertEquals("01234", new String(blocks._next()));
         assertEquals("56789", new String(blocks._next()));
         assertEquals("abcde", new String(blocks._next()));
