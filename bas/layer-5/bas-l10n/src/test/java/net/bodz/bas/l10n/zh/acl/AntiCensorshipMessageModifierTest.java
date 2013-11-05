@@ -24,4 +24,10 @@ public class AntiCensorshipMessageModifierTest
         assertTrue(list.contains(output));
     }
 
+    @Test
+    public void match2() {
+        String output = modifier.transform("共产共产党共共产党");
+        System.out.println(output);
+    }
+
 }

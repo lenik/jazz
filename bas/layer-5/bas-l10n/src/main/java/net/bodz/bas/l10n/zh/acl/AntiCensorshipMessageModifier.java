@@ -3,15 +3,14 @@ package net.bodz.bas.l10n.zh.acl;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.TreeMap;
 
 import net.bodz.bas.c.java.net.URLData;
 import net.bodz.bas.c.type.ClassResource;
-import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.text.IMessageModifier;
+import net.bodz.bas.text.TrieNode;
 
 public class AntiCensorshipMessageModifier
         implements IMessageModifier {
@@ -21,47 +20,55 @@ public class AntiCensorshipMessageModifier
     @Override
     public String transform(String input)
             throws RuntimeException {
-        int len = input.length();
+        StringBuilder sb = new StringBuilder(input.length() * 2);
+        int[] root = breakText(input, trieRoot);
+        int start = 0;
+        for (int end = 1; end < root.length; end++) {
+            int head = root[end];
+            if (head != -1) {
+                sb.append(input.substring(start, head));
 
-        IPrintOut buf = new BCharOut(input.length());
-        int last = 0;
-        List<String> lastDst = null;
+                String word = input.substring(head, end);
+                List<String> replacements = trieRoot.resolve(word).getData();
+                String replacement = replacements.get(random.nextInt(replacements.size()));
+                sb.append(replacement);
 
-        for (int i = 1; i <= len; i++) {
-            String substr = input.substring(last, i);
-
-            String ceil = map.ceilingKey(substr);
-            List<String> dst = map.get(substr);
-
-            if (dst == null || i == len) {
-                if (lastDst != null) {
-                    if (!lastDst.isEmpty()) {
-                        String pick;
-                        if (lastDst.size() == 1)
-                            pick = lastDst.get(0);
-                        else {
-                            int rand = random.nextInt(lastDst.size());
-                            pick = lastDst.get(rand);
-                        }
-                        buf.print(pick);
-                    }
-                    lastDst = null;
-                } else {
-                    buf.print(substr);
-                }
-                last = i;
-            } else {
-                lastDst = dst;
+                start = end;
             }
         }
 
-        return buf.toString();
+        String remaining = input.substring(start);
+        sb.append(remaining);
+
+        return sb.toString();
     }
 
-    static TreeMap<String, List<String>> map;
-    static {
-        map = new TreeMap<>();
+    static int[] breakText(String s, TrieNode<?> trieRoot) {
+        int len = s.length();
+        int root[] = new int[len + 1];
+        Arrays.fill(root, -1);
+        for (int start = 0; start < len; start++)
+            // if (start == 0 || root[start] >= 0)
+            breakText(s, start, len, root, trieRoot);
+        return root;
+    }
 
+    static void breakText(String s, int start, int end, int root[], TrieNode<?> node) {
+        for (int i = start; i < end; i++) {
+            char ch = s.charAt(i);
+            node = node.getChild(ch);
+            if (node != null) {
+                if (node.isDefined())
+                    if (root[i + 1] == -1)
+                        root[i + 1] = start;
+            } else
+                break;
+        }
+    }
+
+    static TrieNode<List<String>> trieRoot = new TrieNode<List<String>>();
+
+    static {
         URL csvURL = ClassResource.getDataURL(AntiCensorshipMessageModifier.class, "csv");
         if (csvURL == null)
             throw new NullPointerException("csvURL");
@@ -80,7 +87,7 @@ public class AntiCensorshipMessageModifier
                     dsts.add(fields[i].trim());
                 }
 
-                map.put(src, dsts);
+                trieRoot.resolve(src).define(dsts);
             }
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
