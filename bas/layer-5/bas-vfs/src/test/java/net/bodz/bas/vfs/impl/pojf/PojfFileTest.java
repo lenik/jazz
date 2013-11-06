@@ -19,7 +19,8 @@ public class PojfFileTest
     public void readFooTxt()
             throws Exception {
         URL url = PojfFileTest.class.getResource("foo.txt");
-        IPath _path = VFS.parse(url.toString());
+        String filePath = url.getFile();
+        IPath _path = VFS.parse("pojf:" + filePath);
         // NestedURLPath path = (NestedURLPath) _path;
         IFile file = VFS.resolve(_path);
 
