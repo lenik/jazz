@@ -3,8 +3,10 @@ package net.bodz.bas.vfs.impl.zip;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.MultiEntryPath;
-import net.bodz.bas.vfs.path.PathFormat;
 
+/**
+ * Jar path: jar:FILE!/entry-name
+ */
 public class ZipEntryPath
         extends MultiEntryPath {
 
@@ -33,19 +35,13 @@ public class ZipEntryPath
 
     @Override
     public String getDeviceSpecSeparator() {
-        return ":";
+        return ":/";
     }
 
     @Override
     protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
         return new ZipEntryPath(getProtocol(), zipName, entries, entered);
-    }
-
-    @Override
-    protected String formatLocal(PathFormat format) {
-        String localPath = getLocalPath();
-        return SEPARATOR + localPath;
     }
 
 }

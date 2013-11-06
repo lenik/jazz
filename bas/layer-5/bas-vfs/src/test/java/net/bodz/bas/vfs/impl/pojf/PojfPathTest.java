@@ -6,12 +6,12 @@ import org.junit.Test;
 public class PojfPathTest
         extends Assert {
 
-    PojfVfsDriver driver = PojfVfsDriver.getInstance();
+    PojfVfsDriver pojfDriver = PojfVfsDriver.getInstance();
 
     @Test
     public void linuxRoot() {
-        PojfPath path = (PojfPath) driver.parse("sdf/");
-        assertEquals("file:/sdf/", path.toString());
+        PojfPath path = (PojfPath) pojfDriver.parse("/");
+        assertEquals("pojf:/", path.toString());
     }
 
 }

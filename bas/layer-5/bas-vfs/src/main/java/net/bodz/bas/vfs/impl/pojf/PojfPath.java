@@ -3,7 +3,6 @@ package net.bodz.bas.vfs.impl.pojf;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.MultiEntryPath;
-import net.bodz.bas.vfs.path.PathFormat;
 
 public class PojfPath
         extends MultiEntryPath {
@@ -40,12 +39,6 @@ public class PojfPath
     protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
         return new PojfPath(getProtocol(), driveName, entries, entered);
-    }
-
-    @Override
-    protected String formatLocal(PathFormat format) {
-        String localPath = getLocalPath();
-        return SEPARATOR + localPath;
     }
 
 }
