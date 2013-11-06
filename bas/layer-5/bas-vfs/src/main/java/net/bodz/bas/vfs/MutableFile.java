@@ -1,11 +1,11 @@
 package net.bodz.bas.vfs;
 
 import java.io.IOException;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.DosFileAttributes;
-import java.nio.file.attribute.FileTime;
+import java.nio.file.attribute.*;
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.DeleteOptions;
@@ -14,7 +14,7 @@ import net.bodz.bas.io.res.IRandomResource;
 
 public abstract class MutableFile
         extends AbstractFile
-        implements DosFileAttributes {
+        implements DosFileAttributeView, PosixFileAttributeView, CommonFileAttributes {
 
     private MutableFile parentFile;
 
@@ -22,6 +22,10 @@ public abstract class MutableFile
     private long creationTime = System.currentTimeMillis();
     private long lastModifiedTime = creationTime;
     private long lastAccessTime = creationTime;
+
+    private UserPrincipal owner;
+    private GroupPrincipal group;
+    private Set<PosixFilePermission> permissions = EnumSet.noneOf(PosixFilePermission.class);
 
     private FsObjectType type = FsObjectType.none;
     private String symbolicTarget;
@@ -174,6 +178,17 @@ public abstract class MutableFile
     /* _____________________________ */static section.iface __ATTRS_BASIC__;
 
     @Override
+    public CommonFileAttributes readAttributes()
+            throws IOException {
+        return this;
+    }
+
+    @Override
+    public String name() {
+        return "*";
+    }
+
+    @Override
     public final boolean isBlob() {
         return getResource() != null;
     }
@@ -273,20 +288,65 @@ public abstract class MutableFile
         return FileFlags.isSystem(flags);
     }
 
+    @Override
     public final void setReadOnly(boolean readOnly) {
         setWritable(!readOnly);
     }
 
+    @Override
     public void setHidden(boolean hidden) {
         flags = Flags32.setOrClear(flags, hidden, FileFlags.HIDDEN);
     }
 
+    @Override
     public void setArchive(boolean archive) {
         flags = Flags32.setOrClear(flags, archive, FileFlags.ARCHIVE);
     }
 
+    @Override
     public void setSystem(boolean system) {
         flags = Flags32.setOrClear(flags, system, FileFlags.SYSTEM);
+    }
+
+    /** ⇱ Implementation Of {@link PosixFileAttributes}. */
+    /* _____________________________ */static section.iface __ATTRS_POSIX__;
+
+    @Override
+    public UserPrincipal getOwner()
+            throws IOException {
+        return owner;
+    }
+
+    @Override
+    public UserPrincipal owner() {
+        return owner;
+    }
+
+    @Override
+    public GroupPrincipal group() {
+        return group;
+    }
+
+    @Override
+    public Set<PosixFilePermission> permissions() {
+        return permissions;
+    }
+
+    @Override
+    public void setOwner(UserPrincipal owner) {
+        this.owner = owner;
+    }
+
+    @Override
+    public void setGroup(GroupPrincipal group) {
+        this.group = group;
+    }
+
+    @Override
+    public void setPermissions(Set<PosixFilePermission> permissions) {
+        if (permissions == null)
+            throw new NullPointerException("permissions");
+        this.permissions = permissions;
     }
 
 }

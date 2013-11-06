@@ -33,10 +33,10 @@ public class MemoryFileTest
             throws IOException {
         IFile targetDir = VFS.resolve("mem:test:/createFiles/");
 
-        IFile foo = targetDir.resolve("foo");
-        foo.to(StreamWriting.class).writeString("Foo Data");
+        IFile fooFile = targetDir.resolve("foo");
+        fooFile.to(StreamWriting.class).writeString("Foo Data");
 
-        PosixFileAttributeView view = foo.query(PosixFileAttributeView.class);
+        PosixFileAttributeView view = fooFile.query(PosixFileAttributeView.class);
         Set<PosixFilePermission> permissions = view.readAttributes().permissions();
         permissions.add(PosixFilePermission.OWNER_EXECUTE);
         view.setPermissions(permissions);
