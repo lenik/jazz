@@ -1,6 +1,6 @@
 package net.bodz.bas.shell;
 
-public class Program1 {
+public class StaticFieldSetter {
 
     static String arg0;
 
@@ -14,7 +14,7 @@ public class Program1 {
     }
 
     public static void setArg0(String arg0) {
-        Program1.arg0 = arg0;
+        StaticFieldSetter.arg0 = arg0;
     }
 
 }

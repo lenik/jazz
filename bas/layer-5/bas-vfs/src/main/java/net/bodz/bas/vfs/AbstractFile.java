@@ -399,10 +399,11 @@ public abstract class AbstractFile
             return mkdir();
 
         IFile parentFile = getParentFile();
-        if (parentFile.mkdirs())
-            return mkdir();
-        else
-            return false;
+        if (parentFile != null)
+            if (!parentFile.mkdirs())
+                return false;
+
+        return mkdir();
     }
 
     @Override

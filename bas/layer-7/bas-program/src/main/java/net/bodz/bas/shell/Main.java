@@ -17,12 +17,12 @@ public class Main
     static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     @Override
-    public void execute(String... args)
+    public void execute(String... classAndArgs)
             throws Exception {
-        String className = args[0];
+        String className = classAndArgs[0];
 
-        String[] remaining = new String[args.length - 1];
-        System.arraycopy(args, 1, remaining, 0, remaining.length);
+        String[] args = new String[classAndArgs.length - 1];
+        System.arraycopy(classAndArgs, 1, args, 0, args.length);
 
         Class<?> programClass = Class.forName(className);
         Object instance = null;

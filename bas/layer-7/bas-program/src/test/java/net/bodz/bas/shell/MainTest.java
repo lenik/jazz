@@ -9,9 +9,9 @@ public class MainTest
     @Test
     public void runMainClass()
             throws Exception {
-        Program1.setArg0(null);
-        Main.main(Program1.class.getName(), "test arg");
-        assertEquals("test arg", Program1.getArg0());
+        StaticFieldSetter.setArg0(null);
+        Main.main(StaticFieldSetter.class.getName(), "test arg");
+        assertEquals("test arg", StaticFieldSetter.getArg0());
     }
 
 }
