@@ -2,16 +2,17 @@ package net.bodz.bas.ant.task;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.Assert;
 
-import net.bodz.bas.ant.test.TaskTestApp;
+import net.bodz.bas.ant.test.TaskTester;
 
-public class CountersTaskTest {
+public class CountersTaskTest
+        extends Assert {
 
-    @Test
+    // @Test
     public void test()
             throws IOException {
-        new TaskTestApp(1).run();
+        new TaskTester(1).run();
     }
 
 }
