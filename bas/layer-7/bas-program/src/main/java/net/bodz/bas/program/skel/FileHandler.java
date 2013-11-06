@@ -487,13 +487,14 @@ public class FileHandler
     }
 
     public void save(Boolean modified) {
-        if (targetFile == null)
-            throw new IllegalUsageException("No target file to save.");
-
         method = FileHandleMethod.MODIFY;
 
         try {
             close();
+
+            if (targetFile == null)
+                // throw new NullPointerException("targetFile");
+                return;
 
             switch (getBufferMode()) {
             case DIRECT:
@@ -664,7 +665,7 @@ public class FileHandler
             outputStream = null;
         }
 
-        if (printStream == null) {
+        if (printStream != null) {
             printStream.close();
             printStream = null;
         }
