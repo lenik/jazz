@@ -112,6 +112,12 @@ public class MemoryFile
         return mkdirs();
     }
 
+    @Override
+    public boolean mkdirs() {
+        // TODO make intermediate dirs...
+        return true;
+    }
+
     /** ⇱ Implementation Of {@link IFileAttributes}. */
     /* _____________________________ */static section.iface __ATTRIBUTES__;
 
