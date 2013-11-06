@@ -21,7 +21,7 @@ import net.bodz.bas.jvm.stack.Caller;
  * 
  * <pre>
  * public static void main(String[] args) {
- *     new TaskTestApp().run(new YourTask());
+ *     new TaskTester().run(new YourTask());
  * }
  * </pre>
  * 
@@ -31,18 +31,18 @@ import net.bodz.bas.jvm.stack.Caller;
  * <pre>
  * class YourTask {
  *     public static void main(String[] args) {
- *         new TaskTestApp(1).run();
+ *         new TaskTester(1).run();
  *     }
  * }
  * </pre>
  * 
  */
-public class TaskTestApp {
+public class TaskTester {
 
     public final Project project;
     public BuildLogger logger;
 
-    public TaskTestApp() {
+    public TaskTester() {
         project = new Project();
         project.init(); // set default taskdefs, and load sys props.
 
@@ -54,12 +54,12 @@ public class TaskTestApp {
         logger.setMessageOutputLevel(Project.MSG_INFO);
     }
 
-    public TaskTestApp(int caller)
+    public TaskTester(int caller)
             throws IOException {
         this(caller + 1, null);
     }
 
-    public TaskTestApp(int caller, String resourceName)
+    public TaskTester(int caller, String resourceName)
             throws IOException {
         this();
 
