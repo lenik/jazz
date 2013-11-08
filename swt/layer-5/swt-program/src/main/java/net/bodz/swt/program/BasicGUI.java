@@ -40,8 +40,8 @@ import net.bodz.bas.program.meta.StartMode;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.mda.xjdoc.model.javadoc.Author;
-import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.control.DynamicControl;
+import net.bodz.swt.c.control.Mover;
 import net.bodz.swt.c.control.OnClickBrowse;
 import net.bodz.swt.c.dialog.AboutDialog;
 import net.bodz.swt.c.dialog.CreditDialog;
@@ -243,7 +243,7 @@ public abstract class BasicGUI
         int width = shellWidth == SWT.DEFAULT ? size.x : shellWidth;
         int height = shellHeight == SWT.DEFAULT ? size.y : shellHeight;
         shell.setSize(width, height);
-        Controls.center(shell);
+        Mover.bind(shell).center();
         return shell;
     }
 

@@ -15,6 +15,7 @@ import org.junit.Before;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.swt.c.control.Controls;
+import net.bodz.swt.c.control.Mover;
 import net.bodz.swt.c.layout.BorderLayout;
 
 public abstract class WidgetTester
@@ -98,7 +99,7 @@ public abstract class WidgetTester
 
     public void autoFit() {
         Controls.resizeToPreferredSize(shell);
-        Controls.center(shell);
+        Mover.bind(shell).bottomLeftToCenter();
     }
 
     protected void createBody() {
@@ -106,7 +107,7 @@ public abstract class WidgetTester
 
     public void run() {
         shell.layout();
-        Controls.center(shell);
+        Mover.bind(shell).bottomLeftToCenter();
 
         shell.open();
         while (!shell.isDisposed()) {

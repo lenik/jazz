@@ -10,30 +10,6 @@ import org.eclipse.swt.widgets.Scrollable;
 
 public class Controls {
 
-    public static void center(Control control) {
-        center(control, 0, 0);
-    }
-
-    public static void center(Control control, Control parent) {
-        center(control, parent, 0, 0);
-    }
-
-    public static void center(Control control, double xOffset, double yOffset) {
-        center(control, control.getParent(), xOffset, yOffset);
-    }
-
-    public static void center(Control control, Control parent, double xOffset, double yOffset) {
-        Rectangle outer;
-        if (parent == null || parent == control)
-            outer = control.getDisplay().getBounds();
-        else
-            outer = parent.getBounds();
-        Point size = control.getSize();
-        int x = outer.x + (outer.width - size.x) / 2 + (int) (xOffset * outer.width);
-        int y = outer.y + (outer.height - size.y) / 2 + (int) (yOffset * outer.height);
-        control.setLocation(x, y);
-    }
-
     static final Point defaultMinSize = new Point(1, 1);
     static final Point defaultMaxSize = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
