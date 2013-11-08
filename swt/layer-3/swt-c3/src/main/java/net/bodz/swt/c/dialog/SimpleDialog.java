@@ -30,6 +30,7 @@ import net.bodz.bas.typer.std.ValidationException;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.control.Controls;
+import net.bodz.swt.c.control.Mover;
 import net.bodz.swt.c.resources.SWTResources;
 
 public abstract class SimpleDialog
@@ -98,7 +99,8 @@ public abstract class SimpleDialog
             addEffects();
         }
         Controls.resizeToPreferredSize(shell, minSize, null);
-        Controls.center(shell);
+        Mover.bind(shell).center();
+
         shell.layout();
         shell.open();
 
