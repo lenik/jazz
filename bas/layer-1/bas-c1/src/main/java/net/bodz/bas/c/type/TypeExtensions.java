@@ -12,12 +12,11 @@ import java.util.logging.Logger;
 import net.bodz.bas.c.java.net.URLData;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.codegen.PublishDir;
 
 public class TypeExtensions {
 
     static final Logger logger = Logger.getLogger(TypeExtensions.class.getName());
-
-    String resourcePrefix = "META-INF/services/";
 
     boolean includeAbstract;
     ClassLoader defaultClassLoader;
@@ -25,14 +24,6 @@ public class TypeExtensions {
 
     public TypeExtensions() {
         defaultClassLoader = ClassLoader.getSystemClassLoader();
-    }
-
-    public String getResourcePrefix() {
-        return resourcePrefix;
-    }
-
-    public void setResourcePrefix(String resourcePrefix) {
-        this.resourcePrefix = resourcePrefix;
     }
 
     public boolean isIncludeAbstract() {
@@ -71,7 +62,8 @@ public class TypeExtensions {
     public <T> Iterable<Class<? extends T>> list(Class<T> baseType)
             throws IOException, ClassNotFoundException {
 
-        String resourceName = resourcePrefix + baseType.getName();
+        String prefix = baseType.isAnnotation() ? PublishDir.features : PublishDir.services;
+        String resourceName = prefix + "/" + baseType.getName();
         Enumeration<URL> resources = getResourceClassLoader().getResources(resourceName);
 
         Set<Class<? extends T>> classes = new LinkedHashSet<Class<? extends T>>();

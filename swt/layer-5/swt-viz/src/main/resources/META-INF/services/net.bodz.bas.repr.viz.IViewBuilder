@@ -1,0 +1,6 @@
+net.bodz.swt.viz.form.vbo.BooleanVbo
+net.bodz.swt.viz.form.vbo.DateVbo
+net.bodz.swt.viz.form.vbo.ExceptionVbo
+net.bodz.swt.viz.form.vbo.FileVbo
+net.bodz.swt.viz.form.vbo.StringVbo
+net.bodz.swt.viz.form.vbo.TextFormedVbo
