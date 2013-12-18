@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Map.Entry;
 
 import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.meta.build.MainVersion;
+import net.bodz.bas.program.meta.ProgramName;
 import net.bodz.bas.program.model.IOption;
 import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.rtx.Options;
@@ -14,6 +16,8 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
+@MainVersion({ 0, 0 })
+@ProgramName("battest")
 public class BatchCLITest
         extends BatchCLI {
 
