@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * @see EveryIndexedTypeCollector
  */
 @Documented
-@IndexedType(includeAbstract = true, includeAnnotation = true)
+@IndexedType(publishDir = PublishDir.features, includeAbstract = true, includeAnnotation = true)
 @ExcludedFromIndex
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
