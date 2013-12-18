@@ -23,6 +23,17 @@ public class TagLibrarySet
     }
 
     @Override
+    public String getName() {
+        StringBuilder sb = new StringBuilder();
+        for (ITagLibrary lib : this) {
+            if (sb.length() != 0)
+                sb.append(", ");
+            sb.append(lib.getName());
+        }
+        return sb.toString();
+    }
+
+    @Override
     public String getRootTagName(String tagName) {
         for (ITagLibrary taglib : this) {
             String rootTagName = taglib.getRootTagName(tagName);

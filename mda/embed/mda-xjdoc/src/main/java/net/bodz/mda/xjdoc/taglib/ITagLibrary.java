@@ -6,6 +6,8 @@ import net.bodz.mda.xjdoc.tagtype.ITagType;
 @IndexedType
 public interface ITagLibrary {
 
+    String getName();
+
     String getRootTagName(String tagName);
 
     /**

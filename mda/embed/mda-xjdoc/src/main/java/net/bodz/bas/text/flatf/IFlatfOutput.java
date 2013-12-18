@@ -12,6 +12,9 @@ public interface IFlatfOutput {
      */
     String getHskip();
 
+    void comment(String comment)
+            throws IOException;
+
     void pi(String command, String data)
             throws IOException;
 

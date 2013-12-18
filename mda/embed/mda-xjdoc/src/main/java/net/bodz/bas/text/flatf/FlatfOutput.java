@@ -36,6 +36,12 @@ public class FlatfOutput
     }
 
     @Override
+    public void comment(String comment)
+            throws IOException {
+        out.write("# " + comment+"\n");
+    }
+
+    @Override
     public void pi(String command, String data)
             throws IOException {
         out.write("%" + command + " " + data + "\n");

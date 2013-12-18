@@ -1,5 +1,7 @@
 package net.bodz.mda.xjdoc.taglib;
 
+import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.rtx.IOptions;
@@ -10,6 +12,14 @@ public abstract class AbstractTagLibrary
         implements ITagLibrary {
 
     private PackageMap<ITagType> tagMap = new PackageMap<>();
+
+    @Override
+    public String getName() {
+        String name = getClass().getSimpleName();
+        name = StringPart.rtrim(name, "TagLibrary");
+        name = Strings.lcfirst(name);
+        return name;
+    }
 
     @Override
     public String getRootTagName(String tagName) {
