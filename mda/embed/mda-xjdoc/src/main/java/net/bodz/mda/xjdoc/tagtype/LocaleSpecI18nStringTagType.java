@@ -24,7 +24,8 @@ public class LocaleSpecI18nStringTagType
         if (istr == null)
             istr = new XiString();
 
-        istr.put(tagNameSpec, string);
+        String path = tagNameSpec == null ? null : tagNameSpec.replace('.', '-');
+        istr.put(path, string);
         return istr;
     }
 
@@ -41,7 +42,7 @@ public class LocaleSpecI18nStringTagType
             if (path.isEmpty())
                 tagName = rootTagName;
             else
-                tagName = rootTagName + "." + path;
+                tagName = rootTagName + "." + path.replace('-', '.');
 
             writer.writeTag(tagName, ent.getValue());
         }
