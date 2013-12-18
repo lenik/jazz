@@ -9,6 +9,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.ISectionHandler;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
@@ -140,6 +141,9 @@ public class ClassDoc
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)
             throws IOException {
+        ITagLibrary taglib = options.get(ITagLibrary.class);
+        out.comment("taglibs: " + taglib.getName());
+
         // out.sectionBegin("class");
         for (String fqcn : imports.getMap().values())
             out.pi("import", fqcn);
