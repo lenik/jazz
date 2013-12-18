@@ -6,6 +6,7 @@ import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.program.meta.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.rtx.IOptions;
@@ -27,6 +28,7 @@ import net.bodz.mda.xjdoc.util.ImportMap;
  * @label xjdoc-dumper
  * @label.zh.cn Xjdoc列示器
  */
+@MainVersion({ 0, 0 })
 @ProgramName("xjdmp")
 public class XjdocDumper
         extends BasicCLI {
