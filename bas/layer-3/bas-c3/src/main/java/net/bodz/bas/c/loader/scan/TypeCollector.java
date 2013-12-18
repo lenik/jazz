@@ -20,10 +20,13 @@ import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
+import net.bodz.bas.c.type.CachedInstantiator;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.meta.codegen.IEtcFilesEditor;
+import net.bodz.bas.meta.codegen.IEtcFilesInstaller;
 import net.bodz.bas.meta.codegen.IndexedType;
 
 @IndexedType
@@ -32,8 +35,6 @@ public abstract class TypeCollector<T> {
     static Logger logger = LoggerFactory.getLogger(TypeCollector.class);
 
     final Class<?> baseClass;
-    boolean includeAbstract = true;
-    boolean includeNonPublic = false;
 
     ClassScanner scanner;
     List<String> includePackages = new ArrayList<String>();
@@ -84,22 +85,6 @@ public abstract class TypeCollector<T> {
         this.showPaths = showPaths;
     }
 
-    public boolean isIncludeAbstract() {
-        return includeAbstract;
-    }
-
-    public void setIncludeAbstract(boolean includeAbstract) {
-        this.includeAbstract = includeAbstract;
-    }
-
-    public boolean isIncludeNonPublic() {
-        return includeNonPublic;
-    }
-
-    public void setIncludeNonPublic(boolean includeNonPublic) {
-        this.includeNonPublic = includeNonPublic;
-    }
-
     public ClassScanner getScanner() {
         return scanner;
     }
@@ -123,60 +108,97 @@ public abstract class TypeCollector<T> {
 
         logger.info("For " + baseClass.getCanonicalName());
 
-        for (Class<?> extensionClass : getScannedExtensions(baseClass)) {
-            logger.info("    Extension: " + extensionClass.getCanonicalName());
+        for (Class<?> extension : listFilteredDerivations(baseClass)) {
+            String extensionName = extension.getCanonicalName();
+
+            if (baseClass.isAnnotation())
+                logger.info("    Annotated: " + extensionName);
+            else
+                logger.info("    Subclass: " + extensionName);
 
             if (indexing == null) {
                 logger.debug("        (Not indexed-type, skipped)");
                 continue;
             }
 
-            extensions.add(extensionClass);
-
-            int mod = extensionClass.getModifiers();
-            if (Modifier.isAbstract(mod)) {
+            int modifier = extension.getModifiers();
+            if (Modifier.isAbstract(modifier))
                 if (indexing.includeAbstract())
                     logger.debug("    (Included abstract class)");
                 else
                     continue;
-            }
+            if (!Modifier.isPublic(modifier))
+                if (indexing.includeNonPublic())
+                    logger.debug("    (Included non-public class)");
+                else
+                    continue;
 
-            MavenPomDir pomDir = MavenPomDir.fromClass(extensionClass);
-            File resdir = pomDir.getResourceDir(extensionClass);
-            if (resdir == null)
+            if (extension.isAnnotation())
+                if (indexing.includeAnnotation())
+                    logger.debug("    (Included annotation class)");
+                else
+                    continue;
+
+            extensions.add(extension);
+
+            MavenPomDir pomDir = MavenPomDir.fromClass(extension);
+            if (pomDir == null)
+                continue;
+            final File resDir = pomDir.getResourceDir(extension);
+            if (resDir == null)
                 continue;
 
-            String publishPrefix = indexing.publishDir();
-            if (!publishPrefix.endsWith("/"))
-                publishPrefix += "/";
+            String publishDir = indexing.publishDir();
+            if (!publishDir.isEmpty()) {
+                if (!publishDir.endsWith("/"))
+                    publishDir += "/";
 
-            File sfile = new File(resdir, publishPrefix + baseClass.getName());
-            List<String> lines = fileContentMap.getOrLoad(sfile);
+                File sfile = new File(resDir, publishDir + baseClass.getName());
+                List<String> lines = fileContentMap.getOrLoad(sfile);
 
-            if (indexing.obsoleted()) {
-                // lines.add("# " + extension.getName());
-            } else {
-                lines.add(extensionClass.getName());
-            }
-        }
+                if (indexing.obsoleted()) {
+                    // lines.add("# " + extension.getName());
+                } else {
+                    lines.add(extension.getName());
+                }
+            } // publishDir
+
+            Class<? extends IEtcFilesInstaller> etcFilesClass = indexing.etcFiles();
+            if (etcFilesClass != null && !Modifier.isAbstract(etcFilesClass.getModifiers())) {
+                IEtcFilesInstaller etcFiles = CachedInstantiator.getInstance().instantiate(etcFilesClass);
+
+                IEtcFilesEditor editor = new IEtcFilesEditor() {
+                    @Override
+                    public void clear(String path) {
+                        File file = new File(resDir, path);
+                        List<String> lines = fileContentMap.getOrLoad(file);
+                        lines.clear();
+                    }
+
+                    @Override
+                    public void addLine(String path, String s) {
+                        File file = new File(resDir, path);
+                        List<String> lines = fileContentMap.getOrLoad(file);
+                        lines.add(s);
+                    }
+                };
+
+                etcFiles.install(extension, editor);
+            } // etc-files
+
+        } // for derivations
     }
 
-    protected Collection<Class<?>> getScannedExtensions(Class<?> base) {
+    protected Collection<Class<?>> listFilteredDerivations(Class<?> base) {
         List<Class<?>> list = new ArrayList<Class<?>>();
 
         for (Class<?> derivation : scanner.getDerivations(base)) {
-            int mod = derivation.getModifiers();
-            if (Modifier.isAbstract(mod))
-                if (!includeAbstract)
-                    continue;
-            if (!Modifier.isPublic(mod))
-                if (!includeNonPublic)
-                    continue;
-            // defined in code-block, or inner class with-in enclosing instance.
             if (derivation.isAnonymousClass() || derivation.isLocalClass() || derivation.isMemberClass())
                 continue;
+
             if (derivation.isAnnotationPresent(ExcludedFromIndex.class))
                 continue;
+
             list.add(derivation);
         }
         return list;

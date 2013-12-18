@@ -1,5 +1,6 @@
 package net.bodz.bas.meta.codegen;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -14,18 +15,25 @@ import java.lang.annotation.Target;
  * 
  * @see EveryIndexedTypeCollector
  */
-@IndexedType(includeAbstract = true)
-// @Documented
-// @Inherited
+@Documented
+@IndexedType(includeAbstract = true, includeAnnotation = true)
+@ExcludedFromIndex
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface IndexedType {
 
-    String publishDir() default "META-INF/services";
+    /**
+     * For annotated types, they could be published in META-INF/features
+     */
+    String publishDir() default PublishDir.services;
+
+    Class<? extends IEtcFilesInstaller> etcFiles() default IEtcFilesInstaller.class;
 
     boolean includeAbstract() default false;
 
     boolean includeNonPublic() default false;
+
+    boolean includeAnnotation() default false;
 
     /**
      * No longer index this type.

@@ -17,7 +17,7 @@ public class ClassHashesCollector
 
     @Override
     protected void createFiles() {
-        for (Class<?> clazz : getScannedExtensions(Object.class)) {
+        for (Class<?> clazz : listFilteredDerivations(Object.class)) {
             if (!clazz.getName().startsWith("net.bodz."))
                 continue;
 
