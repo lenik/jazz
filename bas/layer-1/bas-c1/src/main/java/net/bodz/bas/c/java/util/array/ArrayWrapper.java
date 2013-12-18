@@ -120,12 +120,11 @@ public class ArrayWrapper<T>
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
-        Class<?> c = obj.getClass();
-        if (!c.isArray())
+        if (!getClass().equals(obj.getClass()))
             return false;
-        if (c.getComponentType().isPrimitive())
-            return false;
-        Object[] a = (Object[]) obj;
+
+        ArrayWrapper<?> o = (ArrayWrapper<?>) obj;
+        Object[] a = (Object[]) o.array;
         return Arrays.equals(array, a);
     }
 

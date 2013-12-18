@@ -4,6 +4,9 @@ import java.lang.reflect.Method;
 
 import net.bodz.bas.err.OutOfDomainException;
 
+/**
+ * @see CachedInstantiator
+ */
 public class SingletonUtil {
 
     public static <T> T callGetInstance(Class<T> clazz, Object... args)
