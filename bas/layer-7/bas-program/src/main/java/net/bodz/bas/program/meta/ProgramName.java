@@ -6,7 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import net.bodz.bas.c.annotation.AnnotationParseUtil;
+import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.codegen.PublishDir;
 
+@IndexedType(publishDir = PublishDir.features, etcFiles = ProgramEtcFiles.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface ProgramName {

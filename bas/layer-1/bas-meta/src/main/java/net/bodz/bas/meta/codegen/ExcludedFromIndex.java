@@ -10,4 +10,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface ExcludedFromIndex {
 
+    /**
+     * Exclude recursively. By default, only the type annotated with {@link ExcludedFromIndex} is
+     * exclude.
+     */
+    boolean recursive() default false;
+
 }

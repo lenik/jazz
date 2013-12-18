@@ -68,38 +68,39 @@ public class ClassScanner
     /**
      * Get all classes
      */
-    public Set<Class<?>> getDerivations(Class<?> clazz) {
-        return getDerivations(clazz, -1);
+    public Set<Class<?>> getDerivations(Class<?> base) {
+        return getDerivations(base, -1);
     }
 
-    public Set<Class<?>> getDerivations(Class<?> clazz, int selection) {
+    public Set<Class<?>> getDerivations(Class<?> base, int selection) {
         Set<Class<?>> derivations = new HashSet<Class<?>>();
-        findDerivations(derivations, clazz, selection);
+        findDerivations(derivations, base, selection);
         return derivations;
     }
 
-    void findDerivations(Set<Class<?>> markSet, Class<?> clazz, int selection) {
-        if (markSet.add(clazz)) {
+    void findDerivations(Set<Class<?>> markSet, Class<?> base, int selection) {
+        if (markSet.add(base)) {
             if ((selection & SUBCLASSES) != 0) {
                 // assert !clazz.isAnnotation();
-                for (Class<?> subclass : getSubclasses(clazz))
+                for (Class<?> subclass : getSubclasses(base))
                     findDerivations(markSet, subclass, selection);
             }
             if ((selection & ANNOTATED_CLASSES) != 0) {
-                Set<Class<?>> annotatedSet = annotatedClassesMap.get(clazz);
-                if (!(Collections.isEmpty(annotatedSet) || clazz.isAnnotation()))
+                Set<Class<?>> annotatedSet = annotatedClassesMap.get(base);
+                if (annotatedSet == null)
+                    return;
+
+                if (!base.isAnnotation() && !Collections.isEmpty(annotatedSet))
                     throw new IllegalUsageException(String.format(//
-                            "A non-annotation %s is used to annotate on: ", clazz, annotatedSet));
+                            "A non-annotation %s is used to annotate on: ", base, annotatedSet));
 
-                if (annotatedSet != null) {
-                    int sel = selection;
-                    boolean inheritedAnnotation = clazz.isAnnotationPresent(Inherited.class);
-                    if (!inheritedAnnotation)
-                        sel &= ~SUBCLASSES;
+                int sel = selection;
+                boolean inheritedAnnotation = base.isAnnotationPresent(Inherited.class);
+                if (!inheritedAnnotation)
+                    sel &= ~SUBCLASSES;
 
-                    for (Class<?> annotatedClass : getAnnotatedClasses(clazz))
-                        findDerivations(markSet, annotatedClass, sel);
-                }
+                for (Class<?> annotatedClass : getAnnotatedClasses(base))
+                    findDerivations(markSet, annotatedClass, sel);
             }
         }
     }
