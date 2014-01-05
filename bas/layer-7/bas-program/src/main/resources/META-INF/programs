@@ -1,2 +1,3 @@
 fixbatbb = main net.bodz.bas.shell.win32.Fix_BatBB
+tcoll = main net.bodz.bas.shell.util.TypeCollectorCLI
 xjdmp = main net.bodz.bas.shell.util.XjdocDumper

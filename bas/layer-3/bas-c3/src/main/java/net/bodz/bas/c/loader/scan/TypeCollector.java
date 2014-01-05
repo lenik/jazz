@@ -30,7 +30,7 @@ import net.bodz.bas.meta.codegen.IEtcFilesInstaller;
 import net.bodz.bas.meta.codegen.IndexedType;
 
 @IndexedType
-public abstract class TypeCollector<T> {
+public class TypeCollector<T> {
 
     static Logger logger = LoggerFactory.getLogger(TypeCollector.class);
 
@@ -47,7 +47,7 @@ public abstract class TypeCollector<T> {
             new NewArrayList<File, String>());
     boolean deleteEmptyFiles = true;
 
-    public TypeCollector() {
+    protected TypeCollector() {
         this(null, null);
     }
 
