@@ -54,7 +54,7 @@ import net.bodz.swt.c.resources.SWTResources;
 
 /**
  * @style width: 320px; height: 240px;
- * 
+ *
  * @lang en, zh-cn
  * @site.web http://www.bodz.net/products/BasicGUI
  */
@@ -185,9 +185,10 @@ public abstract class BasicGUI
     protected String getTitle() {
         ArtifactDoc artifactDoc = getXjdoc();
         String title = artifactDoc.getName();
-        iString doc = artifactDoc.getText();
-        if (doc != null)
-            title += ": " + doc;
+
+        iString text = artifactDoc.getText();
+        title += ": " + text;
+
         IVersion version = artifactDoc.getVersion();
         return title + " " + version;
     }

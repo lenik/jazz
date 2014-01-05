@@ -23,7 +23,7 @@ public class JavaElementDoc
         implements IJavaElementDoc, IFlatfSerializable {
 
     String name;
-    iString text;
+    iString text = iString.NULL;
     Map<String, Object> tagMap = new LinkedHashMap<String, Object>();
 
     public JavaElementDoc() {
@@ -63,6 +63,8 @@ public class JavaElementDoc
 
     @Override
     public void setText(iString text) {
+        if (text == null)
+            throw new NullPointerException("text");
         this.text = text;
     }
 

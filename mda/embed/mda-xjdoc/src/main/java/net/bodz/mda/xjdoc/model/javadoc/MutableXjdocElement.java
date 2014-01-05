@@ -33,10 +33,8 @@ public class MutableXjdocElement
             setLabel(xjdoc.getLabel());
 
             iString text = xjdoc.getText();
-            if (text != null) {
-                setDescription(text.headPar());
-                setHelpDoc(text.tailPar());
-            }
+            setDescription(text.headPar());
+            setHelpDoc(text.tailPar());
         }
     }
 

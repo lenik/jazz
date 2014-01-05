@@ -55,7 +55,7 @@ public class ClassDocToOptionsConverter {
 
     /**
      * Whether to scan superclass for options.
-     * 
+     *
      * For Bean-Properties:
      * <ul>
      * <li>reflective-mode:
@@ -84,7 +84,7 @@ public class ClassDocToOptionsConverter {
 
     /**
      * The option group inheritance mode.
-     * 
+     *
      * @see OptionGroupInheritance#reflective
      * @see OptionGroupInheritance#reduceEmptyParents
      * @see OptionGroupInheritance#flatten
@@ -231,10 +231,8 @@ public class ClassDocToOptionsConverter {
             group.setLabel(_name);
 
         iString text = classDoc.getText();
-        if (text != null) {
-            group.setDescription(text.headPar());
-            group.setHelpDoc(text.tailPar());
-        }
+        group.setDescription(text.headPar());
+        group.setHelpDoc(text.tailPar());
 
         // Import syntax usages into group.
         Map<String, String> usageMap = (Map<String, String>) classDoc.getTag("usage");

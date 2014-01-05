@@ -29,11 +29,9 @@ public class ArtifactDoc
     public Set<String> getUsedLangs() {
         Set<String> langs = new LinkedHashSet<String>();
 
-        iString iStr = getText();
-        if (iStr != null)
-            for (String domain : iStr.keySet())
-                if (domain != null)
-                    langs.add(domain);
+        for (String domain : getText().keySet())
+            if (domain != null)
+                langs.add(domain);
 
         return langs;
     }
@@ -88,8 +86,7 @@ public class ArtifactDoc
             release.setName(label.toString());
 
         iString text = getText();
-        if (text != null)
-            release.setDescription(text.toString());
+        release.setDescription(text.toString());
 
         release.setVersion(getVersion());
 
