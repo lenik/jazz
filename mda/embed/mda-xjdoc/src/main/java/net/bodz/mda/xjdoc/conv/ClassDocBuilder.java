@@ -63,8 +63,8 @@ public class ClassDocBuilder {
 
         /**
          * <pre>
-         * 1. parameter types => import-map 
-         * 2. javaMethod => method-doc 
+         * 1. parameter types => import-map
+         * 2. javaMethod => method-doc
          * 3. missing-doc => missing params in javadoc
          * 4. missing-doc => missing throws in javadoc
          * </pre>
