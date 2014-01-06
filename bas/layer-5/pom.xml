@@ -37,7 +37,7 @@
                         </goals>
                         <configuration>
                             <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-                            <outputDirectory>${basedir}/target/classes</outputDirectory>
+                            <outputDirectory>${basedir}/${ffdir}</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -49,7 +49,7 @@
                         <configuration>
                             <testClasses>true</testClasses>
                             <sourceDirectory>${basedir}/src/test/java</sourceDirectory>
-                            <outputDirectory>${basedir}/target/test-classes</outputDirectory>
+                            <outputDirectory>${basedir}/${ffdir.test}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

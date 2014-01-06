@@ -31,6 +31,8 @@
     <properties>
         <java.version>1.7</java.version>
         <javaProfile>JavaSE-7</javaProfile>
+        <ffdir>src/main/resources</ffdir>
+        <ffdir.test>src/test/resources</ffdir.test>
     </properties>
     <build>
         <pluginManagement>
