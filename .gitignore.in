@@ -64,7 +64,8 @@
 *.zip                                   # source tarballs
 *~                                      # Backup file
 .#*                                     # Emacs bak file
-.*.bin
+.*.bin                                  # dprog -i
+.*.mjpl                                 # mjpl -B
 .classpath                              # Eclipse project classpath
 .deps                                   # cooldeb
 .dirstamp

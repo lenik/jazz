@@ -65,6 +65,7 @@
 *~
 .
 .*.bin
+.*.mjpl
 .classpath
 .deps
 .dirstamp
