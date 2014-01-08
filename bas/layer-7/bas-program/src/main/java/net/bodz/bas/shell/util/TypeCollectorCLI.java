@@ -76,7 +76,7 @@ public class TypeCollectorCLI
                 continue;
             }
 
-            TypeCollector<?> collector = new TypeCollector<Object>(baseType, null);
+            TypeCollector<?> collector = new TypeCollector<Object>(baseType);
 
             for (String pkg : packages)
                 collector.includePackageToScan(pkg);
