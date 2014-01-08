@@ -3,7 +3,6 @@ package net.bodz.bas.c.loader.scan;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,11 +12,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.io.FileData;
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.java.util.LazyTreeMap;
 import net.bodz.bas.c.java.util.NewArrayList;
 import net.bodz.bas.c.loader.ClassLoaders;
-import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.CachedInstantiator;
@@ -48,24 +47,25 @@ public class TypeCollector<T> {
     boolean deleteEmptyFiles = true;
 
     protected TypeCollector() {
-        this(null, null);
+        this(null);
     }
 
-    public TypeCollector(Class<?> baseClass, Boolean global) {
-        if (global == null)
-            global = getClass().getName().contains(".uber.");
+    public TypeCollector(Class<?> baseClass) {
+        URLClassLoader loader;
 
-        URLClassLoader mainLoader = (URLClassLoader) ClassLoaders.getRuntimeClassLoader();
-        if (!global) {
-            mainLoader = new URLClassLoader(new URL[] { //
-                    ClassResource.getRootURL(getClass()), //
-                    });
+        loader = (URLClassLoader) ClassLoaders.getRuntimeClassLoader();
+        // URL[] callerClasspath = new URL[] { ClassResource.getRootURL(getClass()), };
+        // loader = new URLClassLoader(callerClasspath);
+
+        List<File> localURLs = URLClassLoaders.getLocalURLs(loader);
+        String url0 = localURLs.get(0).toString();
+        if (url0.contains("/test-classes/")) {
+            logger.info("Detect test mode, create test class loader.");
+            loader = MavenTestClassLoader.createMavenTestClassLoader(loader);
         }
 
-        URLClassLoader testLoader = MavenTestClassLoader.createMavenTestClassLoader(mainLoader);
-
         scanner = createClassScanner();
-        scanner.setClassLoader(testLoader);
+        scanner.setClassLoader(loader);
 
         if (baseClass != null)
             this.baseClass = baseClass;
