@@ -1,6 +1,6 @@
 package net.bodz.swt.c.pageflow;
 
-import net.bodz.bas.repr.req.SimpleRequest;
+import net.bodz.bas.repr.req.MutableRequest;
 import net.bodz.bas.t.pojo.PathEntries;
 
 public interface IPageFlow {
@@ -19,7 +19,7 @@ public interface IPageFlow {
 
     boolean go(PathEntries next);
 
-    boolean submit(SimpleRequest request);
+    boolean submit(MutableRequest request);
 
     void addLocationChangeListener(LocationChangeListener listener);
 
