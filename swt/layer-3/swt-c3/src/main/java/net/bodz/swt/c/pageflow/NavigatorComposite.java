@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Label;
 import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.i18n.nls.NLS;
-import net.bodz.bas.repr.req.SimpleRequest;
+import net.bodz.bas.repr.req.MutableRequest;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.dialog.SwtUserDialogs;
@@ -377,7 +377,7 @@ public class NavigatorComposite
                 button.setToolTipText(method.getToolTip());
 
                 String action = method.getAction();
-                final SimpleRequest request = new SimpleRequest(this, contextPath, action);
+                final MutableRequest request = new MutableRequest(this, contextPath, action);
                 button.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {

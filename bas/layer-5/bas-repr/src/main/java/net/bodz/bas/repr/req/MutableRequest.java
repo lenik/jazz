@@ -8,7 +8,7 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.t.variant.AbstractTmVariantLookupMap;
 
-public class SimpleRequest
+public class MutableRequest
         extends AbstractTmVariantLookupMap<String> {
 
     private final Object source;
@@ -18,15 +18,15 @@ public class SimpleRequest
 
     private Map<String, Object> map;
 
-    public SimpleRequest(Object source, PathEntries path) {
+    public MutableRequest(Object source, PathEntries path) {
         this(source, path, null);
     }
 
-    public SimpleRequest(Object source, String url) {
+    public MutableRequest(Object source, String url) {
         this(source, null, url);
     }
 
-    public SimpleRequest(Object source, PathEntries context, String spec) {
+    public MutableRequest(Object source, PathEntries context, String spec) {
         this.map = new HashMap<String, Object>();
         this.source = source;
         parseURL(context, spec);
@@ -38,9 +38,10 @@ public class SimpleRequest
      * @param path
      * @param anchor
      * @param parameters
-     *            referenced parameters map, <code>null</code> to construct a new one.
+     *            Referenced parameters map, <code>null</code> to construct a new one.
      */
-    public SimpleRequest(Object source, String protocol, PathEntries path, String anchor, Map<String, Object> parameters) {
+    public MutableRequest(Object source, String protocol, PathEntries path, String anchor,
+            Map<String, Object> parameters) {
         this.map = parameters;
         this.source = source;
         this.protocol = protocol;
@@ -205,9 +206,9 @@ public class SimpleRequest
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof SimpleRequest))
+        if (!(obj instanceof MutableRequest))
             return false;
-        SimpleRequest r = (SimpleRequest) obj;
+        MutableRequest r = (MutableRequest) obj;
         if (!Nullables.equals(source, source))
             return false;
         if (!Nullables.equals(protocol, r.protocol))

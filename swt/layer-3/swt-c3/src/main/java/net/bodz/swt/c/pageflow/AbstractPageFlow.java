@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Text;
 import net.bodz.bas.c.event.IQuietHint;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.bas.repr.req.SimpleRequest;
+import net.bodz.bas.repr.req.MutableRequest;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.swt.c.control.ControlAdapters;
 
@@ -59,11 +59,11 @@ public abstract class AbstractPageFlow
 
     public boolean go(PathEntries next) {
         // XXX - source?
-        SimpleRequest request = new SimpleRequest(this, next);
+        MutableRequest request = new MutableRequest(this, next);
         return submit(request);
     }
 
-    public boolean submit(SimpleRequest request) {
+    public boolean submit(MutableRequest request) {
         PathEntries prev = history.get();
         PathEntries next = request.getPath();
         if (next == null)
@@ -110,7 +110,7 @@ public abstract class AbstractPageFlow
         return true;
     }
 
-    protected ServiceContext createServiceContext(final SimpleRequest request, final PathEntries referrer) {
+    protected ServiceContext createServiceContext(final MutableRequest request, final PathEntries referrer) {
         return new ServiceContext() {
 
             @Override
@@ -119,7 +119,7 @@ public abstract class AbstractPageFlow
             }
 
             @Override
-            public SimpleRequest getRequest() {
+            public MutableRequest getRequest() {
                 return request;
             }
 
