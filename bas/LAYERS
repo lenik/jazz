@@ -12,7 +12,7 @@ layer-1/ 核心语言增强与语言工具
     bas-typer
     
 layer-2/ 基础数据类型扩展
-    bas-t2
+    bas-t2                              collection
     bas-context
     bas-geom
     bas-io
@@ -23,7 +23,7 @@ layer-2/ 基础数据类型扩展
 layer-3/ 工具和杂项
     bas-http
     bas-log
-    bas-t3
+    bas-t3                              fsm, node
     bas-text
     bas-text-lr
     bas-data
@@ -32,7 +32,7 @@ layer-3/ 工具和杂项
     bas-pojo-eg
 
 layer-5/ 框架基础
-    bas-c5
+    bas-c5                              
     bas-database
     bas-flow
     bas-l10n
@@ -41,12 +41,12 @@ layer-5/ 框架基础
     bas-gui
     bas-gui2
     bas-vfs
-    bas-c5
     
 layer-7/ 应用框架
     bas-ant
     bas-netserv
     bas-program
+    bas-site
     bas-unitperf
     bas-vcs
 
