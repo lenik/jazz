@@ -1,30 +1,36 @@
-package net.bodz.bas.repr.req;
-
-import java.io.IOException;
-import java.io.PrintWriter;
+package net.bodz.bas.repr.view;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.object.ObjectInfo;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.repr.html.AbstractHtmlViewBuilder;
+import net.bodz.bas.repr.html.IHtmlOutputContext;
+import net.bodz.bas.repr.req.IRequestDispatch;
+import net.bodz.bas.repr.req.IRequestMethod;
+import net.bodz.bas.repr.req.RequestUtils;
+import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.rtx.IOptions;
 
 public class ObjectDumpView
-// TODO
-//        extends AbstractHttpRenderer 
-        {
+        extends AbstractHtmlViewBuilder<Object> {
 
-//    @Override
+    // @Override
     public Class<?> getType() {
         return Object.class;
     }
 
-//    @Override
-    public boolean render(Object obj, HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+    @Override
+    public IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<Object> entry, IOptions options)
+            throws ViewBuilderException {
+        HttpServletRequest req = ctx.getRequest();
+
         IRequestDispatch disp = RequestUtils.getRequestDispatch(req);
         IRequestMethod qmethod = RequestUtils.getRequestMethod(req);
 
-        PrintWriter out = resp.getWriter();
+        Object obj = entry.get();
+        IPrintOut out = ctx.getPrintOut();
 
         out.println("<html><head><title>Object Dump</title></head>");
         out.println("<body><h1>Object Dump: " + ObjectInfo.getSimpleId(obj) + "</h1>");
@@ -48,7 +54,7 @@ public class ObjectDumpView
         out.println(disp);
 
         out.println("</pre>");
-        return true;
+        return ctx;
     }
 
 }

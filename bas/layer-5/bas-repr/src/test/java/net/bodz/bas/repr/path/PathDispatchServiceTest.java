@@ -15,7 +15,7 @@ public class PathDispatchServiceTest
     public void testLoadProviders() {
         Set<Class<?>> dispatcherClasses = new HashSet<Class<?>>();
         for (IPathDispatcher dispatcher : PathDispatchService.getInstance().getDispatchers()) {
-            System.out.println(dispatcher);
+            // System.out.println(dispatcher);
             dispatcherClasses.add(dispatcher.getClass());
         }
 
