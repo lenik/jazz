@@ -1,8 +1,6 @@
-package net.bodz.bas.c.javax.servlet.http;
+package net.bodz.bas.std.rfc.http;
 
 import javax.servlet.http.HttpServletResponse;
-
-import net.bodz.bas.std.rfc.http.HttpHeaderNames;
 
 public class HttpCache
         implements HttpHeaderNames {

@@ -33,34 +33,29 @@ public class LazyLoadServlet
     @Override
     public void service(ServletRequest req, ServletResponse res)
             throws ServletException, IOException {
-        HttpServlet servlet;
-
-        try {
-            servlet = getServlet();
-        } catch (ReflectiveOperationException e) {
-            throw new ServletException(e.getMessage(), e);
+        if (servlet == null) {
+            synchronized (this) {
+                if (servlet == null)
+                    try {
+                        servlet = loadServlet();
+                    } catch (ReflectiveOperationException e) {
+                        throw new ServletException(e.getMessage(), e);
+                    }
+            }
         }
-
         servlet.service(req, res);
     }
 
-    protected HttpServlet getServlet()
+    protected HttpServlet loadServlet()
             throws ReflectiveOperationException, ServletException {
-        if (servlet == null) {
-            synchronized (this) {
-                if (servlet == null) {
+        Class<?> servletClass = Class.forName(className);
 
-                    Class<?> servletClass = Class.forName(className);
+        if (HttpServlet.class.isAssignableFrom(servletClass))
+            throw new IllegalUsageException("Not an http-servlet class: " + servletClass);
 
-                    if (HttpServlet.class.isAssignableFrom(servletClass))
-                        throw new IllegalUsageException("Not an http-servlet class: " + servletClass);
+        servlet = (HttpServlet) servletClass.newInstance();
 
-                    servlet = (HttpServlet) servletClass.newInstance();
-
-                    servlet.init(getServletConfig());
-                }
-            }
-        }
+        servlet.init(getServletConfig());
         return servlet;
     }
 

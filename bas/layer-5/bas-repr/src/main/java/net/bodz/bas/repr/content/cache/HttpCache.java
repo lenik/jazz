@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.string.TokensBuilder;
 
 public class HttpCache
-        extends net.bodz.bas.c.javax.servlet.http.HttpCache {
+        extends net.bodz.bas.std.rfc.http.HttpCache {
 
     public static void setCacheControl(HttpServletResponse response, ICacheControl cacheControl) {
         TokensBuilder buf = new TokensBuilder(", ");

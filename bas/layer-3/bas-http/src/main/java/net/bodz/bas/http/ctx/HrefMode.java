@@ -1,4 +1,4 @@
-package net.bodz.bas.c.java.net;
+package net.bodz.bas.http.ctx;
 
 public enum HrefMode {
 
