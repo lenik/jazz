@@ -1,4 +1,4 @@
-package net.bodz.bas.c.java.net;
+package net.bodz.bas.http.ctx;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -6,7 +6,6 @@ import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.c.javax.servlet.http.ThreadServletContext;
 import net.bodz.bas.err.UnexpectedException;
 
 public class Href
