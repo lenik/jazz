@@ -1,5 +1,7 @@
 package net.bodz.bas.potato.ref;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom1.DecoratedElement;
@@ -13,13 +15,41 @@ public abstract class AbstractRefEntry<T>
 
     private static final long serialVersionUID = 1L;
 
-    public AbstractRefEntry(IElement element) {
+    private final AnnotatedElement annotatedElement;
+
+    public AbstractRefEntry(IElement element, AnnotatedElement annotatedElement) {
         super(element);
+        if (annotatedElement == null)
+            throw new NullPointerException("annotatedElement");
+        this.annotatedElement = annotatedElement;
     }
 
     @Override
     public void remove() {
         set(null);
+    }
+
+    /** ⇱ Implementation Of {@link AnnotatedElement}. */
+/* _____________________________ */static section.iface __ANN_ELEM__;
+
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return annotatedElement.isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        return annotatedElement.getAnnotation(annotationClass);
+    }
+
+    @Override
+    public Annotation[] getAnnotations() {
+        return annotatedElement.getAnnotations();
+    }
+
+    @Override
+    public Annotation[] getDeclaredAnnotations() {
+        return annotatedElement.getDeclaredAnnotations();
     }
 
     /** ⇱ {@link java.util.Map.Entry}. */

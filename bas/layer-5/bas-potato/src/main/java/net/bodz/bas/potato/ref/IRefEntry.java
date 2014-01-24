@@ -1,5 +1,7 @@
 package net.bodz.bas.potato.ref;
 
+import java.lang.reflect.AnnotatedElement;
+
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.rtx.IQueryable;
@@ -9,7 +11,7 @@ import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.typer.std.ValidationException;
 
 public interface IRefEntry<T>
-        extends Ref<T>, IElement, IQueryable {
+        extends Ref<T>, IElement, IQueryable, AnnotatedElement {
 
     class fn {
 

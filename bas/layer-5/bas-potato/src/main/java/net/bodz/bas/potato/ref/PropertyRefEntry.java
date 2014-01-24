@@ -9,13 +9,17 @@ public class PropertyRefEntry<T>
 
     private static final long serialVersionUID = 1L;
 
-    Object instance;
-    IProperty property;
+    private Object instance;
+    private IProperty property;
 
     public PropertyRefEntry(Object instance, IProperty property) {
-        super(property);
+        super(property, property);
         this.instance = instance;
         this.property = property;
+    }
+
+    public IProperty getProperty() {
+        return property;
     }
 
     @Override
