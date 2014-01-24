@@ -27,7 +27,7 @@ public class ValueEntry<T>
     }
 
     public ValueEntry(IElement element, Class<? extends T> valueType, T value) {
-        super(element);
+        super(element, valueType);
         this.valueType = valueType;
         this.value = value;
     }

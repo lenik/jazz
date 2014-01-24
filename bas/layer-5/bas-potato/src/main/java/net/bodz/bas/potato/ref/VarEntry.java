@@ -26,7 +26,7 @@ public class VarEntry<T>
     }
 
     public VarEntry(IElement element, Class<? extends T> valueType, T initialValue) {
-        super(element);
+        super(element, valueType);
         this.valueType = valueType;
         this.value = initialValue;
     }
