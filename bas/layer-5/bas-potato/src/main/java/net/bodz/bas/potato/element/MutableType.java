@@ -6,14 +6,18 @@ public class MutableType
         extends AbstractType {
 
     private Class<?> type;
-    private MutablePropertyMap propertyMap = new MutablePropertyMap();
-    private MutableMethodMap methodMap = new MutableMethodMap();
-    private MutableConstructorMap constructorMap = new MutableConstructorMap();
-    private MutableEventMap eventMap = new MutableEventMap();
+    private MutablePropertyMap propertyMap;
+    private MutableMethodMap methodMap;
+    private MutableConstructorMap constructorMap;
+    private MutableEventMap eventMap;
 
     public MutableType(Class<?> type) {
         super(type, type.getName());
         this.type = type;
+        propertyMap = new MutablePropertyMap(false);
+        methodMap = new MutableMethodMap(false);
+        constructorMap = new MutableConstructorMap();
+        eventMap = new MutableEventMap(false);
     }
 
     public void setType(Class<?> type) {

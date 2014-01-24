@@ -11,11 +11,10 @@ public abstract class AbstractReflectType
         extends AbstractType {
 
     private final Class<?> clazz;
-
-    MutablePropertyMap propertyMap = new MutablePropertyMap();
-    MutableMethodMap methodMap = new MutableMethodMap();
-    MutableConstructorMap constructorMap = new MutableConstructorMap();
-    IEventMap eventMap = NullEventMap.getInstance();
+    MutablePropertyMap propertyMap;
+    MutableMethodMap methodMap;
+    MutableConstructorMap constructorMap;
+    IEventMap eventMap;
 
     private final int verboseLevel;
 
@@ -36,6 +35,11 @@ public abstract class AbstractReflectType
         this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
         setXjdoc(classDoc);
+
+        propertyMap = new MutablePropertyMap(false);
+        methodMap = new MutableMethodMap(false);
+        constructorMap = new MutableConstructorMap();
+        eventMap = NullEventMap.getInstance();
     }
 
     /** ⇱ Implementation Of {@link IType}. */

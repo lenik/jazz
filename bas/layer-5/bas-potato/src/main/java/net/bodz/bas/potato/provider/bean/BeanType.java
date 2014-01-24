@@ -23,10 +23,10 @@ public class BeanType
     private BeanDescriptor beanDescriptor;
     private Class<?> beanClass;
 
-    private MutablePropertyMap propertyMap = new MutablePropertyMap();
-    private MutableMethodMap methodMap = new MutableMethodMap();
+    private MutablePropertyMap propertyMap = new MutablePropertyMap(false);
+    private MutableMethodMap methodMap = new MutableMethodMap(false);
     private IConstructorMap constructorMap = NullConstructorMap.getInstance();
-    private MutableEventMap eventMap = new MutableEventMap();
+    private MutableEventMap eventMap = new MutableEventMap(false);
 
     private final int verboseLevel;
 
