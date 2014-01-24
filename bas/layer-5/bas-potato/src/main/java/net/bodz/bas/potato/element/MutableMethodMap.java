@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -13,8 +14,15 @@ public class MutableMethodMap
 
     Map<MethodSignature, IMethod> map;
 
-    public MutableMethodMap() {
-        map = new TreeMap<MethodSignature, IMethod>(MethodSignatureComparator.getInstance());
+    public MutableMethodMap(boolean sorted) {
+        map = createMap(sorted);
+    }
+
+    protected Map<MethodSignature, IMethod> createMap(boolean sorted) {
+        if (sorted)
+            return new TreeMap<>(MethodSignatureComparator.getInstance());
+        else
+            return new LinkedHashMap<>();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -13,8 +14,15 @@ public class MutableEventMap
 
     Map<String, IEvent> map;
 
-    public MutableEventMap() {
-        map = new TreeMap<String, IEvent>(ComparableComparator.getInstance());
+    public MutableEventMap(boolean sorted) {
+        map = createMap(sorted);
+    }
+
+    protected Map<String, IEvent> createMap(boolean sorted) {
+        if (sorted)
+            return new TreeMap<>(ComparableComparator.getInstance());
+        else
+            return new LinkedHashMap<>();
     }
 
     @Override

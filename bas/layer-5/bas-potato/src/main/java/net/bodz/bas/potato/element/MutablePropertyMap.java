@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -13,8 +14,15 @@ public class MutablePropertyMap
 
     Map<String, IProperty> map;
 
-    public MutablePropertyMap() {
-        map = new TreeMap<String, IProperty>(ComparableComparator.getInstance());
+    public MutablePropertyMap(boolean sorted) {
+        map = createMap(sorted);
+    }
+
+    protected Map<String, IProperty> createMap(boolean sorted) {
+        if (sorted)
+            return new TreeMap<>(ComparableComparator.getInstance());
+        else
+            return new LinkedHashMap<>();
     }
 
     @Override
