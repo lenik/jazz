@@ -13,13 +13,15 @@ import net.bodz.bas.t.variant.VariantMap;
 public class WMISystemInfo
         extends VariantMap<String> {
 
+    private static final long serialVersionUID = 1L;
+
     public WMISystemInfo() {
         super(new HashMap<String, Object>());
     }
 
     /**
      * Query WMI, using wmic syntax.
-     * 
+     *
      * @throws IOException
      */
     public void query(String prefix, String... args)
