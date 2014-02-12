@@ -1,9 +1,13 @@
 package net.bodz.swt.viz.form.vbo;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
+
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.dom1.DecoratedGUIElement;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.rtx.QueryException;
+import net.bodz.bas.t.ref.Ref;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
@@ -97,6 +101,29 @@ public class TextFormedSwtGUIRefEntry<T>
     @Override
     public ISwtControlStyleDeclaration getStyle() {
         return getWrapped().getStyle();
+    }
+
+    /** ⇱ Implementation Of {@link AnnotatedElement}. */
+    /* _____________________________ */static section.iface __ANNOTATED__;
+
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return getWrapped().isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        return getWrapped().getAnnotation(annotationClass);
+    }
+
+    @Override
+    public Annotation[] getAnnotations() {
+        return getWrapped().getAnnotations();
+    }
+
+    @Override
+    public Annotation[] getDeclaredAnnotations() {
+        return getWrapped().getDeclaredAnnotations();
     }
 
 }

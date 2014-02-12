@@ -11,7 +11,7 @@ public interface IHtmlOutputContext {
 
     IHtmlOutputContext getParent();
 
-    @Shortcut
+    @Shortcut("parent/.../parent")
     IHtmlOutputContext getRoot();
 
     HttpServletRequest getRequest();
