@@ -1,5 +1,8 @@
 package net.bodz.bas.site;
 
-public class BasicSite {
+import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
+
+public class BasicSite
+        extends XjdocObject {
 
 }
