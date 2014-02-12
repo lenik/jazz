@@ -3,7 +3,6 @@ package net.bodz.mda.xjdoc.conv;
 import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
@@ -110,7 +109,7 @@ public class ClassDocBuilder {
     void populate(JavaElementDoc elementDoc, AbstractJavaEntity javaEntity, IOptions options) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
-            iString text = XiString.parseParaLangString(comment);
+            iString text = iString.fn.parseParaLangString(comment);
             elementDoc.setText(text);
         }
 

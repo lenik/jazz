@@ -11,7 +11,7 @@ import org.apache.maven.project.MavenProject;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.i18n.dom.XiString;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.builtin.FileResource;
@@ -36,7 +36,7 @@ import com.thoughtworks.qdox.model.JavaSource;
 
 /**
  * Generate .classdoc files from Java source files.
- * 
+ *
  * @goal build
  * @phase generate-resources
  * @configurator include-project-dependencies
@@ -47,34 +47,34 @@ public class ClassDocBuilderMojo
 
     /**
      * Include test classes.
-     * 
+     *
      * @parameter expression="${classdoc.tests}"
      */
     boolean testClasses;
 
     /**
      * The extension name used to generate classdoc resource files.
-     * 
+     *
      * @parameter expression="${classdoc.extension}"
      */
     String extension = "ff";
 
     /**
      * Add template attributes for missing elements.
-     * 
+     *
      * @parameter expression="${classdoc.missingDoc}"
      */
-    XiString missingDoc;
+    iString missingDoc;
 
     /**
      * Xjdoc taglib names.
-     * 
+     *
      * This can be the FQCN of the {@link ITagLibrary} implementation, or predefined language name
      * includes:
      * <ul>
      * <li>javadoc: {@link JavadocTagLibrary}
      * </ul>
-     * 
+     *
      * @parameter expression="${classdoc.taglibs}" default-value="*"
      */
     String taglibNames = "*";
@@ -111,7 +111,7 @@ public class ClassDocBuilderMojo
 
     public void setMissingDoc(String missingDoc)
             throws ParseException {
-        this.missingDoc = XiString.parseMultiLangString(missingDoc);
+        this.missingDoc = iString.fn.parseMultiLangString(missingDoc);
     }
 
     @Override

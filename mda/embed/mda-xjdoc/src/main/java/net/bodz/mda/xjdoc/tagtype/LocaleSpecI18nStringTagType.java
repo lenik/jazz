@@ -52,7 +52,7 @@ public class LocaleSpecI18nStringTagType
     @Override
     public iString parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
-        iString text = XiString.parseMultiLangString(string);
+        iString text = iString.fn.parseMultiLangString(string);
         return text;
     }
 

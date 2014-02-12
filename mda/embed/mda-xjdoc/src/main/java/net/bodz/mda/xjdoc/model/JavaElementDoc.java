@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sugar.Tooling;
@@ -166,7 +165,7 @@ public class JavaElementDoc
         public void attribute(String name, String string)
                 throws ParseException {
             if (".".equals(name)) {
-                iString text = XiString.parseMultiLangString(string);
+                iString text = iString.fn.parseMultiLangString(string);
                 setText(text);
                 return;
             }
