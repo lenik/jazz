@@ -19,7 +19,7 @@ public class MultiTextMaps
     public static class PartMap
             extends TreeMap<String, String> {
 
-        private static final long serialVersionUID = 7647573703380582923L;
+        private static final long serialVersionUID = 1L;
 
         final String textKey;
 
