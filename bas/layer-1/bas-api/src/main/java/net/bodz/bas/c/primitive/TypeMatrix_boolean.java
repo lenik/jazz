@@ -13,6 +13,8 @@ public class TypeMatrix_boolean {
             return false;
         if (o instanceof Boolean)
             return ((Boolean) o).booleanValue();
+        if (o instanceof Number)
+            return ((Number) o).intValue() != 0;
         return fromString(o.toString());
     }
 
