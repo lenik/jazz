@@ -9,14 +9,14 @@ public class XDomainStringTest
         extends Assert {
 
     String pl1 = "Default<p  \n lang=\"zh-cn\"  />中文<p lang='et'>Esperanto";
-    iString dstr1 = XiString.parseParaLangString(pl1);
+    iString dstr1 = iString.fn.parseParaLangString(pl1);
 
     String _hello = "Hello<p  \n lang=\"zh-cn\"  />你好<p lang='et'>Saluton";
     String _space = " <p  \n lang=\"zh\"  />　";
     String _world = "World<p  \n lang=\"zh-cn\"  />世界<p lang='et'>La mondo";
-    iString hello = XiString.parseParaLangString(_hello);
-    iString space = XiString.parseParaLangString(_space);
-    iString world = XiString.parseParaLangString(_world);
+    iString hello = iString.fn.parseParaLangString(_hello);
+    iString space = iString.fn.parseParaLangString(_space);
+    iString world = iString.fn.parseParaLangString(_world);
 
     @Test
     public void testDumpContent() {
@@ -45,13 +45,13 @@ public class XDomainStringTest
     @Test
     public void testParseNullMultiLang()
             throws ParseException {
-        XiString dstr = XiString.parseMultiLangString("");
+        XiString dstr = new MultiLangStringParser().parse("");
         assertNull(dstr.getValue());
     }
 
     @Test
     public void testParseNullParaLang() {
-        XiString dstr = XiString.parseParaLangString("");
+        XiString dstr = (XiString) iString.fn.parseParaLangString("");
         assertEquals("", dstr.getValue());
     }
 

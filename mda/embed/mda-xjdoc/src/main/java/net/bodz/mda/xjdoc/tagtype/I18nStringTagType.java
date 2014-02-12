@@ -3,7 +3,6 @@ package net.bodz.mda.xjdoc.tagtype;
 import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -18,7 +17,7 @@ public class I18nStringTagType
      */
     @Override
     public iString parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options) {
-        iString text = XiString.parseParaLangString(string);
+        iString text = iString.fn.parseParaLangString(string);
         return text;
     }
 
@@ -35,7 +34,7 @@ public class I18nStringTagType
     @Override
     public iString parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
-        iString text = XiString.parseMultiLangString(string);
+        iString text = iString.fn.parseMultiLangString(string);
         return text;
     }
 

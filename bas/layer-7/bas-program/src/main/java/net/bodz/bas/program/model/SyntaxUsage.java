@@ -1,11 +1,10 @@
 package net.bodz.bas.program.model;
 
-import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 
 /**
  * Examples:
- * 
+ *
  * <pre>
  * &#64;usage.clean $0 clean -df
  *      Remove all untracked files, and directories.
@@ -38,7 +37,7 @@ public class SyntaxUsage {
             _description = script.substring(lineSep + 1).trim();
         }
 
-        description = XiString.parseParaLangString(_description);
+        description = iString.fn.parseParaLangString(_description);
     }
 
     public String getId() {
