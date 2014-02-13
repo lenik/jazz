@@ -1,8 +1,5 @@
 package net.bodz.bas.repr.html;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -28,16 +25,6 @@ public abstract class AbstractHtmlViewBuilder<T>
     @Override
     public boolean isOrigin(T value) {
         return false;
-    }
-
-    @Override
-    public Collection<String> getRequiredLibraries() {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public Collection<String> getRequiredStylesheets() {
-        return Collections.emptySet();
     }
 
 }

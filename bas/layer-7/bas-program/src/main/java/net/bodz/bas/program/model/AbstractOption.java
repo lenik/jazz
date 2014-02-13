@@ -16,6 +16,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
+import net.bodz.bas.t.order.IMutablePriority;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
@@ -24,7 +25,7 @@ import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
 public abstract class AbstractOption
         extends AbstractXjdocElement
-        implements IOption {
+        implements IOption, IMutablePriority {
 
     String id;
     String longName;
@@ -132,6 +133,7 @@ public abstract class AbstractOption
         return priority;
     }
 
+    @Override
     public void setPriority(int priority) {
         this.priority = priority;
     }

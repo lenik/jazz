@@ -24,6 +24,10 @@ public interface IVersion
 
     class fn {
 
+        public static IVersion parse(String version) {
+            return new MutableVersion(version);
+        }
+
         public static IVersion minClosed(IVersion a, IVersion b) {
             if (a == null)
                 return b;
