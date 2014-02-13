@@ -1,36 +1,24 @@
 package net.bodz.bas.meta.build;
 
-import java.util.Arrays;
-
-import net.bodz.bas.err.IllegalAnnotationException;
-
 public abstract class AbstractVersion
         implements IVersion {
 
     private static final long serialVersionUID = 1L;
 
-    public final int getMajorVersion() {
-        String[] elements = getVersionElements();
-        if (elements.length < 2)
-            throw new IllegalAnnotationException("Bad version elements: must be major.minor.*");
-        String s = elements[0];
-        try {
-            return Integer.parseInt(s);
-        } catch (NumberFormatException e) {
-            throw new IllegalAnnotationException("Major version should be integer.");
-        }
+    public final int getMajor() {
+        if (size() < 1)
+            throw new IllegalVersionException("No major number.");
+        if (!isInt(0))
+            throw new IllegalVersionException("Major version isn't an integer.");
+        return getInt(0);
     }
 
-    public final int getMinorVersion() {
-        String[] elements = getVersionElements();
-        if (elements.length < 2)
-            throw new IllegalAnnotationException("Bad version elements: must be major.minor.*");
-        String s = elements[1];
-        try {
-            return Integer.parseInt(s);
-        } catch (NumberFormatException e) {
-            throw new IllegalAnnotationException("Minor version should be integer.");
-        }
+    public final int getMinor() {
+        if (size() < 2)
+            throw new IllegalVersionException("No minor number.");
+        if (!isInt(1))
+            throw new IllegalVersionException("Minor version isn't an integer.");
+        return getInt(1);
     }
 
     @Override
@@ -40,30 +28,18 @@ public abstract class AbstractVersion
     }
 
     @Override
-    public int hashCode() {
-        String[] elements = getVersionElements();
-        int hash = Arrays.hashCode(elements) * 17;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof AbstractVersion))
-            return false;
-        AbstractVersion v = (AbstractVersion) obj;
-        String[] v1 = getVersionElements();
-        String[] v2 = v.getVersionElements();
-        return Arrays.equals(v1, v2);
-    }
-
-    @Override
     public String toString() {
-        String[] elements = getVersionElements();
-        StringBuilder buf = new StringBuilder(elements.length * 10);
-        for (int i = 0; i < elements.length; i++) {
+        int n = size();
+        StringBuilder buf = new StringBuilder(n * 10);
+        for (int i = 0; i < n; i++) {
             if (i != 0)
                 buf.append('.');
-            buf.append(elements[i]);
+            buf.append(get(i));
+        }
+        String qualifier = getQualifier();
+        if (qualifier != null) {
+            buf.append('-');
+            buf.append(qualifier);
         }
         return buf.toString();
     }

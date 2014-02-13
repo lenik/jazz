@@ -36,8 +36,7 @@ public class RcsKeywordsUtil {
             }
 
         case 3: // 784
-            String[] revisions = parts[2].split("\\.");
-            VersionTuple versionTuple = new VersionTuple(revisions);
+            IVersion versionTuple = new MutableVersion(parts[2]);
             release.setVersion(versionTuple);
 
         case 2: // Rcs.java
