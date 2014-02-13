@@ -13,9 +13,6 @@ public class RcsKeywordsUtilTest
         assertEquals("example.file", release.name);
         assertEquals("lenik", release.author);
 
-        String[] expectedRevision = { "1", "2", "3" };
-        assertArrayEquals(expectedRevision, release.getVersion().getVersionElements());
-
         String versionText = release.getVersion().toString();
         assertEquals("1.2.3", versionText);
     }

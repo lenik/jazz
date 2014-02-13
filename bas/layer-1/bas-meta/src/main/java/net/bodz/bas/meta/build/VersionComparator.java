@@ -17,24 +17,41 @@ public class VersionComparator
     }
 
     public int compareNonNull(IVersion o1, IVersion o2) {
-        String[] v1 = o1.getVersionElements();
-        String[] v2 = o2.getVersionElements();
+        int minLen = Math.min(o1.size(), o2.size());
+        for (int index = 0; index < minLen; index++) {
+            if (o1.isInt(index) && o2.isInt(index)) {
+                int i1 = o1.getInt(index);
+                int i2 = o2.getInt(index);
+                int cmp = i1 - i2;
+                if (cmp != 0)
+                    return cmp;
+            } else {
+                String s1 = o1.get(index);
+                String s2 = o2.get(index);
+                int cmp = s1.compareTo(s2);
+                if (cmp != 0)
+                    return cmp;
+            }
+        }
 
-        int minLen = Math.min(v1.length, v2.length);
-        for (int i = 0; i < minLen; i++) {
-            String e1 = v1[i];
-            String e2 = v2[i];
-            int cmp = e1.compareTo(e2);
+        if (o1.size() > minLen)
+            return 1;
+        if (o2.size() > minLen)
+            return -1;
+
+        String q1 = o1.getQualifier();
+        String q2 = o2.getQualifier();
+        if (q1 != q2) {
+            if (q1 == null)
+                return -1;
+            if (q2 == null)
+                return 1;
+            int cmp = q1.compareTo(q2);
             if (cmp != 0)
                 return cmp;
         }
 
-        if (v1.length > minLen)
-            return 1;
-        else if (v2.length > minLen)
-            return -1;
-        else
-            return 0;
+        return 0;
     }
 
     public static final VersionComparator instance = new VersionComparator();
