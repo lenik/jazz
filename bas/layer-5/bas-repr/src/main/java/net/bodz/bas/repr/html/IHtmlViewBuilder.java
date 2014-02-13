@@ -12,6 +12,8 @@ public interface IHtmlViewBuilder<T>
 
     boolean isOrigin(T value);
 
+    void getDependencies(IRequirements dm);
+
     Collection<String> getRequiredLibraries();
 
     Collection<String> getRequiredStylesheets();
