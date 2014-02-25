@@ -1,8 +1,8 @@
 package net.bodz.bas.repr.req;
 
-public interface IRequestResult {
+public interface IResultOfRequest {
 
-    String ATTRIBUTE_KEY = IRequestResult.class.getCanonicalName();
+    String ATTRIBUTE_KEY = IResultOfRequest.class.getCanonicalName();
 
     /**
      * If target is <code>null</code>, the return value of the controller method is used.
@@ -44,7 +44,7 @@ public interface IRequestResult {
      * 
      * @return <code>null</code> if this is the final method.
      */
-    IRequestMethod getNextMethod();
+    IMethodOfRequest getNextMethod();
 
     /**
      * Set the next method to call immediately.
@@ -52,6 +52,6 @@ public interface IRequestResult {
      * @param nextMethod
      *            The next method to call, <code>null</code> if there's none.
      */
-    void setNextMethod(IRequestMethod nextMethod);
+    void setNextMethod(IMethodOfRequest nextMethod);
 
 }

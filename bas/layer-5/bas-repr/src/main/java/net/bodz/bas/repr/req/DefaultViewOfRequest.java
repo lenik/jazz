@@ -1,27 +1,29 @@
 package net.bodz.bas.repr.req;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.variant.IVariantLookupMap;
 import net.bodz.bas.t.variant.VariantMap;
 
-public class DefaultRequestView
-        extends HttpRequestProcessor
-        implements IRequestView {
+public class DefaultViewOfRequest
+        extends AbstractHttpRequestProcessor
+        implements IViewOfRequest, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String viewName;
     private ContentType contentType = ContentTypes.text_html;
     private IVariantLookupMap<String> parameters;
 
-    DefaultRequestView() {
+    DefaultViewOfRequest() {
     }
 
-    public DefaultRequestView(String viewName, Map<String, Object> parameterMap) {
+    public DefaultViewOfRequest(String viewName, Map<String, Object> parameterMap) {
         this.viewName = viewName;
         this.parameters = new VariantMap<>(parameterMap);
     }
@@ -60,8 +62,7 @@ public class DefaultRequestView
     static boolean contentTypeAuto = true;
 
     @Override
-    public void apply(HttpServletRequest request)
-            throws ParseException {
+    public void apply(HttpServletRequest request) {
         String viewName = null;
         if (viewName == null && paramViewLong)
             viewName = request.getParameter("view:");
@@ -82,13 +83,6 @@ public class DefaultRequestView
         }
 
         request.setAttribute(ATTRIBUTE_KEY, this);
-    }
-
-    public static DefaultRequestView parse(HttpServletRequest request)
-            throws ParseException {
-        DefaultRequestView v = new DefaultRequestView();
-        v.apply(request);
-        return v;
     }
 
 }

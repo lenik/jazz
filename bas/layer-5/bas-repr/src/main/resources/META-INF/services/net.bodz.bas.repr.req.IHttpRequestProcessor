@@ -1,3 +1,2 @@
-net.bodz.bas.repr.req.DefaultRequestDispatch
-net.bodz.bas.repr.req.DefaultRequestMethod
-net.bodz.bas.repr.req.DefaultRequestView
+net.bodz.bas.repr.req.DefaultMethodOfRequest
+net.bodz.bas.repr.req.DefaultViewOfRequest

@@ -3,9 +3,9 @@ package net.bodz.bas.repr.req;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.t.variant.IVariantLookupMap;
 
-public interface IRequestView {
+public interface IViewOfRequest {
 
-    String ATTRIBUTE_KEY = IRequestView.class.getCanonicalName();
+    String ATTRIBUTE_KEY = IViewOfRequest.class.getCanonicalName();
 
     String getViewName();
 
