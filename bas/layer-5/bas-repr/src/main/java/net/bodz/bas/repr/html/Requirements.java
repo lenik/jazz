@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.meta.build.IVersion;
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.meta.build.VersionRange;
 
 public class Requirements
         implements IRequirements, Comparator<String> {
 
-    Map<String, IRequirement> idMap;
-    Map<String, Map<String, IRequirement>> typeMap;
+    private Map<String, IRequirement> idMap;
+    private Map<String, Map<String, IRequirement>> typeMap;
 
     public Requirements() {
         idMap = new TreeMap<String, IRequirement>(this);
@@ -42,38 +42,60 @@ public class Requirements
     }
 
     @Override
-    public void add(String type, String id, String minVersionStr)
+    public final void add(String type, String id, String minVersionStr)
             throws ConflictedVersionException {
         if (type == null)
             throw new NullPointerException("type");
         if (id == null)
             throw new NullPointerException("id");
-
-        IVersion minVersion = null;
-        if (minVersionStr != null)
-            minVersion = IVersion.fn.parse(minVersionStr);
-
-        VersionRange vr = new VersionRange(minVersion);
-
-        Map<String, IRequirement> map = mapOfType(type);
-        IRequirement existing = map.get(id);
-        if (existing != null) {
-            VersionRange vr0 = existing.getVersionRange();
-            if (minVersion != null && vr0.contains(minVersion))
-                throw new ConflictedVersionException();
-
-        }
-
+        add(new MutableRequirement(id, type, VersionRange.parse(minVersionStr)));
     }
 
     @Override
     public void add(IRequirement requirement)
             throws ConflictedVersionException {
+        if (requirement == null)
+            throw new NullPointerException("requirement");
+
+        String id = requirement.getId();
+        String type = requirement.getType();
+        VersionRange range = requirement.getVersionRange();
+
+        Map<String, IRequirement> map = mapOfType(type);
+        IRequirement prev = map.get(id);
+        if (prev != null) {
+            VersionRange prevRange = prev.getVersionRange();
+            VersionRange intersection = prevRange.intersect(range);
+            if (intersection.isEmpty())
+                throw new ConflictedVersionException();
+
+            MutableRequirement merged = new MutableRequirement(id, type, intersection);
+            merged.setOptional(prev.isOptional() && requirement.isOptional());
+            merged.setURL(prev.getURL());
+            merged.setData(prev.getData());
+            requirement = merged;
+        }
+        map.put(id, requirement);
+        idMap.put(id, requirement);
     }
 
     @Override
     public boolean remove(String id) {
-        return false;
+        IRequirement requirement = idMap.remove(id);
+        if (requirement == null)
+            return false;
+
+        String type = requirement.getType();
+        Map<String, IRequirement> map = mapOfType(type);
+        map.remove(id);
+        return true;
+    }
+
+    @Override
+    public int compare(String o1, String o2) {
+        IRequirement r1 = idMap.get(o1);
+        IRequirement r2 = idMap.get(o2);
+        return Nullables.compare(r1, r2);
     }
 
 }

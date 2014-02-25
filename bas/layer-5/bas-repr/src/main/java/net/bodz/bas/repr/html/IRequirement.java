@@ -4,11 +4,7 @@ import net.bodz.bas.meta.build.VersionRange;
 import net.bodz.bas.t.order.IPriority;
 
 public interface IRequirement
-        extends IPriority {
-
-    String HTTP_HEADER = "http";
-    String JAVASCRIPT = "js";
-    String CSS = "css";
+        extends IPriority, Comparable<IRequirement> {
 
     /**
      * Id is always unique regardless of the type.
@@ -33,6 +29,6 @@ public interface IRequirement
      */
     String getURL();
 
-    Object getData();
+    String getData();
 
 }

@@ -10,6 +10,15 @@ public abstract class AbstractHtmlViewBuilder<T>
         implements IHtmlViewBuilder<T> {
 
     @Override
+    public boolean isOrigin(T value) {
+        return false;
+    }
+
+    @Override
+    public void getRequirements(IRequirements requires) {
+    }
+
+    @Override
     public final Object buildView(Object _ctx, IRefEntry<T> entry, IOptions options)
             throws ViewBuilderException {
         IHtmlOutputContext ctx = (IHtmlOutputContext) _ctx;
@@ -20,11 +29,6 @@ public abstract class AbstractHtmlViewBuilder<T>
     public final IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<T> entry)
             throws ViewBuilderException {
         return buildHtmlView(ctx, entry, IOptions.NULL);
-    }
-
-    @Override
-    public boolean isOrigin(T value) {
-        return false;
     }
 
 }
