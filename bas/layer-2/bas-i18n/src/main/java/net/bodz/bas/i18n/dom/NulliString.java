@@ -7,6 +7,9 @@ import java.util.Set;
 public class NulliString
         implements iString {
 
+    private NulliString() {
+    }
+
     @Override
     public String get(String path) {
         return null;
@@ -69,7 +72,10 @@ public class NulliString
 
     @Override
     public String toMultiLangString(String langSeparator, String lineSeparator) {
-        return null;
+        MultiLangStringFormatter formatter = new MultiLangStringFormatter();
+        formatter.setDomainSeparator(langSeparator);
+        formatter.setLineSeparator(lineSeparator);
+        return formatter.format(this);
     }
 
     @Override
@@ -116,5 +122,7 @@ public class NulliString
     public NulliString clone() {
         return this;
     }
+
+    public static final NulliString INSTANCE = new NulliString();
 
 }

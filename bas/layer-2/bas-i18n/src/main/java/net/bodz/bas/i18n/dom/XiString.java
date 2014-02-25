@@ -67,7 +67,7 @@ public class XiString
 
     @Override
     public String toParaLangString(String separator) {
-        return ParaLangString.format(this, separator);
+        return iString.fn.toParaLangString(this, separator);
     }
 
     @Override
@@ -77,10 +77,7 @@ public class XiString
 
     @Override
     public String toMultiLangString(String langSeparator, String lineSeparator) {
-        MultiLangStringFormatter formatter = new MultiLangStringFormatter();
-        formatter.setDomainSeparator(langSeparator);
-        formatter.setLineSeparator(lineSeparator);
-        return formatter.format(this);
+        return iString.fn.toMultiLangString(this, langSeparator, lineSeparator);
     }
 
     @Override

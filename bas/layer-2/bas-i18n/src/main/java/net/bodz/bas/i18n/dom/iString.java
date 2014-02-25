@@ -8,6 +8,8 @@ import net.bodz.bas.err.ParseException;
 public interface iString
         extends IDomainMap<String>, Cloneable {
 
+    iString NULL = NulliString.INSTANCE;
+
     iString clone();
 
     String toString();
@@ -44,8 +46,6 @@ public interface iString
     String getHeadPar();
 
     String getTailPar();
-
-    iString NULL = new NulliString();
 
     class fn {
 
@@ -105,6 +105,17 @@ public interface iString
                 return null;
             MultiLangStringParser parser = new MultiLangStringParser();
             return parser.parse(mlstr);
+        }
+
+        public static String toParaLangString(iString s, String separator) {
+            return ParaLangString.format(s, separator);
+        }
+
+        public static String toMultiLangString(iString s, String langSeparator, String lineSeparator) {
+            MultiLangStringFormatter formatter = new MultiLangStringFormatter();
+            formatter.setDomainSeparator(langSeparator);
+            formatter.setLineSeparator(lineSeparator);
+            return formatter.format(s);
         }
 
     }
