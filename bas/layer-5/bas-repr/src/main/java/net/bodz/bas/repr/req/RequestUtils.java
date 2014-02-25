@@ -1,19 +1,14 @@
 package net.bodz.bas.repr.req;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 
 public class RequestUtils {
-
-    public static <T> T getFeature(ServletRequest req, Class<T> clazz) {
-        Object obj = req.getAttribute(clazz.getCanonicalName());
-        return clazz.cast(obj);
-    }
 
     public static <T> T getFeature(HttpSession session, Class<T> clazz) {
         Object obj = session.getAttribute(clazz.getCanonicalName());
@@ -25,30 +20,14 @@ public class RequestUtils {
         return clazz.cast(obj);
     }
 
-    public static IRequestDispatch getRequestDispatch(ServletRequest req) {
-        return getFeature(req, IRequestDispatch.class);
-    }
-
-    public static IRequestMethod getRequestMethod(ServletRequest req) {
-        return getFeature(req, IRequestMethod.class);
-    }
-
-    public static IRequestView getRequestView(ServletRequest req) {
-        return getFeature(req, IRequestView.class);
-    }
-
-    public static IRequestResult getRequestResult(ServletRequest req) {
-        return getFeature(req, IRequestResult.class);
-    }
-
-    public static String getRestfulPath(HttpServletRequest req) {
-        IRequestDispatch disp = RequestUtils.getRequestDispatch(req);
-        IRequestMethod method = RequestUtils.getRequestMethod(req);
-        IRequestView view = RequestUtils.getRequestView(req);
+    public static String getRestfulPath(HttpServletRequest _req) {
+        HttpServletReqEx req = HttpServletReqEx.of(_req);
+        IMethodOfRequest method = req.getAttribute(IMethodOfRequest.class);
+        IViewOfRequest view = req.getAttribute(IViewOfRequest.class);
 
         StringBuilder buf = new StringBuilder();
 
-        buf.append(disp.getDispatchPath());
+        buf.append(req.getPathInfo());
 
         ContentType contentType = view.getContentType();
         if (contentType != ContentTypes.text_html) {
