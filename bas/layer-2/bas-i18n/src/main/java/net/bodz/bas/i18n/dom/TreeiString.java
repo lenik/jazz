@@ -61,22 +61,22 @@ public class TreeiString
 
     @Override
     public String toParaLangString() {
-        return ParaLangString.format(this);
+        return toParaLangString("\n");
     }
 
     @Override
     public String toParaLangString(String separator) {
-        return ParaLangString.format(this, separator);
+        return iString.fn.toParaLangString(this, separator);
     }
 
     @Override
     public String toMultiLangString() {
-        return null;
+        return toMultiLangString("\n", null);
     }
 
     @Override
     public String toMultiLangString(String langSeparator, String lineSeparator) {
-        return null;
+        return iString.fn.toMultiLangString(this, langSeparator, lineSeparator);
     }
 
     @Override
