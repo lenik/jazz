@@ -8,6 +8,9 @@ public abstract class AbstractPathDispatcher
         return 0;
     }
 
+    /**
+     * @see #dispatch(IPathArrival, ITokenQueue)
+     */
     @Override
     public IPathArrival dispatch(Object startTarget, String path)
             throws PathDispatchException {
@@ -19,6 +22,9 @@ public abstract class AbstractPathDispatcher
         return result;
     }
 
+    /**
+     * @see #dispatch(IPathArrival, ITokenQueue)
+     */
     public IPathArrival dispatch(Object startObject, ITokenQueue tokens)
             throws PathDispatchException {
         IPathArrival start = new PathArrival(startObject, tokens.getRemainingPath());

@@ -11,7 +11,6 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -29,15 +28,15 @@ public class PropertyPathDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws PathDispatchException {
-        Object obj = context.getTarget();
+        Object obj = previous.getTarget();
         if (obj == null)
             throw new PathDispatchException("null target.");
 
         String propertyName = tokens.peek();
         if (propertyName == null)
-            throw new UnexpectedException("no more token.");
+            return previous;
 
         Map<String, PropertyDescriptor> propertyMap = clsPropertyMap.getOrLoad(obj.getClass());
 
@@ -58,7 +57,7 @@ public class PropertyPathDispatcher
             throw new PathDispatchException(e);
         }
 
-        return new PathArrival(context, result, propertyName, tokens.getRemainingPath());
+        return new PathArrival(previous, result, propertyName, tokens.getRemainingPath());
     }
 
     static final String CLS_PROPERTY_MAP_ID;

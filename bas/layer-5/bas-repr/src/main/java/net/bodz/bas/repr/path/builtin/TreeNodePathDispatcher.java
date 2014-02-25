@@ -30,7 +30,7 @@ public class TreeNodePathDispatcher
 
         String key = tokens.peek();
         if (key == null)
-            return null;
+            return previous;
 
         ITreeNode<?> node = (ITreeNode<?>) obj;
 

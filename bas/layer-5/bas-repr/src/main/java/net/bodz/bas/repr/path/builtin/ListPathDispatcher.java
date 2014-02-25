@@ -29,6 +29,8 @@ public class ListPathDispatcher
             return null;
 
         String mayConsume = tokens.peek();
+        if (mayConsume == null)
+            return previous;
 
         Integer index = tokens.shiftInt();
         if (index == null)
