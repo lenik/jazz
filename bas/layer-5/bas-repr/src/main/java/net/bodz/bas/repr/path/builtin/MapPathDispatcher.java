@@ -31,7 +31,7 @@ public class MapPathDispatcher
 
         String key = tokens.shift();
         if (key == null)
-            return null;
+            return previous;
 
         Map<?, ?> map = (Map<?, ?>) obj;
         if (!map.containsKey(key))

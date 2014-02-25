@@ -8,7 +8,6 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -34,7 +33,7 @@ public class FieldPathDispatcher
 
         String fieldName = tokens.peek();
         if (fieldName == null)
-            throw new UnexpectedException("no more token.");
+            return previous;
 
         Map<String, Field> fieldMap = clsFieldMap.getOrLoad(obj.getClass());
 

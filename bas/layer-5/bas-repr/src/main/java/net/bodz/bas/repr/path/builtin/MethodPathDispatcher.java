@@ -12,7 +12,6 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -38,7 +37,7 @@ public class MethodPathDispatcher
 
         String methodName = tokens.peek();
         if (methodName == null)
-            throw new UnexpectedException("no more token.");
+            return previous;
 
         String decoration;
         Class<?>[] wantPV = null;

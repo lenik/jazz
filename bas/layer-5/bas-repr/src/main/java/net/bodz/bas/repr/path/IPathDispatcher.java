@@ -17,10 +17,11 @@ public interface IPathDispatcher
     /**
      * Resolve the tokens with-in the context object.
      *
+     * @param obj
+     *            The start object.
      * @param path
-     *            Path must be fully dispatched, otherwise <code>null</code> is returned.
-     * @return The arrival info, <code>null</code> if the next path token is unknown to the
-     *         dispatcher.
+     *            Path to be dispatched.
+     * @return The arrival info.
      * @throws NullPointerException
      *             If either <code>obj</code> or <code>path</code> is <code>null</code>.
      */
