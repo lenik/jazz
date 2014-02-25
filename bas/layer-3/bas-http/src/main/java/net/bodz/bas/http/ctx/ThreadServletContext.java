@@ -132,6 +132,11 @@ public class ThreadServletContext
     }
 
     @Override
+    public String getPreferredMapping() {
+        return "/*";
+    }
+
+    @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         if (response instanceof HttpServletResponse) {
