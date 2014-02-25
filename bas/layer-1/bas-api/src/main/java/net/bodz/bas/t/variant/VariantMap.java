@@ -15,6 +15,12 @@ public class VariantMap<K>
 
     private Map<K, Object> map;
 
+    /**
+     * Set the wrapped map later.
+     */
+    public VariantMap() {
+    }
+
     public VariantMap(Map<K, Object> map) {
         if (map == null)
             throw new NullPointerException("map");
