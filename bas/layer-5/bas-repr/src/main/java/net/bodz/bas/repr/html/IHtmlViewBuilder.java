@@ -1,7 +1,5 @@
 package net.bodz.bas.repr.html;
 
-import java.util.Collection;
-
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -10,13 +8,13 @@ import net.bodz.bas.rtx.IOptions;
 public interface IHtmlViewBuilder<T>
         extends IViewBuilder<T> {
 
+    String HTTP_HEADER = "http";
+    String JAVASCRIPT = "js";
+    String CSS = "css";
+
     boolean isOrigin(T value);
 
-    void getDependencies(IRequirements dm);
-
-    Collection<String> getRequiredLibraries();
-
-    Collection<String> getRequiredStylesheets();
+    void getRequirements(IRequirements requires);
 
     IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<T> entry)
             throws ViewBuilderException;

@@ -14,6 +14,18 @@ public class MutableRequirement
     private String url;
     private String data;
 
+    public MutableRequirement(String id, String type, VersionRange versionRange) {
+        if (id == null)
+            throw new NullPointerException("id");
+        if (type == null)
+            throw new NullPointerException("type");
+        if (versionRange == null)
+            throw new NullPointerException("versionRange");
+        this.id = id;
+        this.type = type;
+        this.versionRange = versionRange;
+    }
+
     @Override
     public int getPriority() {
         return priority;
@@ -30,6 +42,8 @@ public class MutableRequirement
     }
 
     public void setId(String id) {
+        if (id == null)
+            throw new NullPointerException("id");
         this.id = id;
     }
 
@@ -39,6 +53,8 @@ public class MutableRequirement
     }
 
     public void setType(String type) {
+        if (type == null)
+            throw new NullPointerException("type");
         this.type = type;
     }
 
@@ -48,6 +64,8 @@ public class MutableRequirement
     }
 
     public void setVersionRange(VersionRange versionRange) {
+        if (versionRange == null)
+            throw new NullPointerException("versionRange");
         this.versionRange = versionRange;
     }
 
@@ -76,6 +94,15 @@ public class MutableRequirement
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public int compareTo(IRequirement o) {
+        if (o == null)
+            return 1;
+        VersionRange range1 = getVersionRange();
+        VersionRange range2 = o.getVersionRange();
+        return range1.compareTo(range2);
     }
 
 }
