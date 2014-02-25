@@ -1,11 +1,11 @@
 package net.bodz.bas.repr.req;
 
-public class DefaultRequestResult
-        implements IRequestResult {
+public class DefaultResultOfRequest
+        implements IResultOfRequest {
 
     private Object target;
     private Throwable exception;
-    private IRequestMethod nextMethod;
+    private IMethodOfRequest nextMethod;
 
     @Override
     public Object getTarget() {
@@ -28,12 +28,12 @@ public class DefaultRequestResult
     }
 
     @Override
-    public IRequestMethod getNextMethod() {
+    public IMethodOfRequest getNextMethod() {
         return nextMethod;
     }
 
     @Override
-    public void setNextMethod(IRequestMethod nextMethod) {
+    public void setNextMethod(IMethodOfRequest nextMethod) {
         this.nextMethod = nextMethod;
     }
 

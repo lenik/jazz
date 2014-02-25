@@ -2,9 +2,9 @@ package net.bodz.bas.repr.req;
 
 import net.bodz.bas.t.variant.IVariantLookupMap;
 
-public interface IRequestMethod {
+public interface IMethodOfRequest {
 
-    String ATTRIBUTE_KEY = IRequestMethod.class.getCanonicalName();
+    String ATTRIBUTE_KEY = IMethodOfRequest.class.getCanonicalName();
 
     String getMethodName();
 
