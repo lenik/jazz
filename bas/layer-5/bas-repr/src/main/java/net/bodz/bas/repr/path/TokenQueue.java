@@ -1,5 +1,6 @@
 package net.bodz.bas.repr.path;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +9,10 @@ import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 @ThreadUnsafe
 public class TokenQueue
-        implements ITokenQueue {
+        // extends AbstractHttpRequestProcessor
+        implements ITokenQueue, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String[] tokens;
     private int index;

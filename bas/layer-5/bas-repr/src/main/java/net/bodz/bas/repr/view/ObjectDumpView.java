@@ -1,15 +1,14 @@
 package net.bodz.bas.repr.view;
 
-import javax.servlet.http.HttpServletRequest;
-
+import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.repr.html.IHtmlOutputContext;
-import net.bodz.bas.repr.req.IRequestDispatch;
-import net.bodz.bas.repr.req.IRequestMethod;
-import net.bodz.bas.repr.req.RequestUtils;
+import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.req.IMethodOfRequest;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 
@@ -24,10 +23,9 @@ public class ObjectDumpView
     @Override
     public IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<Object> entry, IOptions options)
             throws ViewBuilderException {
-        HttpServletRequest req = ctx.getRequest();
+        HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 
-        IRequestDispatch disp = RequestUtils.getRequestDispatch(req);
-        IRequestMethod qmethod = RequestUtils.getRequestMethod(req);
+        IMethodOfRequest qmethod = req.getAttribute(IMethodOfRequest.class);
 
         Object obj = entry.get();
         IPrintOut out = ctx.getPrintOut();
@@ -47,11 +45,13 @@ public class ObjectDumpView
         out.println("<pre>");
 
         out.println("Context-Path: " + req.getContextPath());
-        out.println("Dispatch-Path: " + disp.getDispatchPath());
-        out.println("Arrival: " + disp.getArrival());
-        out.println("Remaining-Path: " + disp.getRemainingPath());
+        out.println("Path-Info: " + req.getPathInfo());
+
+        ITokenQueue tq = req.getAttribute(ITokenQueue.class);
+        IPathArrival arrival = req.getAttribute(IPathArrival.class);
+        out.println("Arrival: " + arrival);
+        out.println("Remaining-Path: " + tq.getRemainingPath());
         out.println("Method: " + qmethod.getMethodName());
-        out.println(disp);
 
         out.println("</pre>");
         return ctx;
