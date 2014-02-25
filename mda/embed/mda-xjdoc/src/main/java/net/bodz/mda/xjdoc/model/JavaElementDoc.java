@@ -108,7 +108,7 @@ public class JavaElementDoc
         if (taglib == null)
             throw new IllegalUsageException("Book is not provided in the options.");
 
-        if (text != null)
+        if (text != null && text != iString.NULL)
             out.attribute(".", text);
         for (Entry<String, Object> entry : tagMap.entrySet()) {
             String tagName = entry.getKey();

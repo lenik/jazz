@@ -231,6 +231,8 @@ public class ClassDocToOptionsConverter {
             group.setLabel(_name);
 
         iString text = classDoc.getText();
+        if (text == null)
+            throw new NullPointerException("text");
         group.setDescription(text.headPar());
         group.setHelpDoc(text.tailPar());
 
