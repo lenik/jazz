@@ -38,7 +38,7 @@ public class FlatfOutput
     @Override
     public void comment(String comment)
             throws IOException {
-        out.write("# " + comment+"\n");
+        out.write("# " + comment + "\n");
     }
 
     @Override
@@ -64,6 +64,8 @@ public class FlatfOutput
     @Override
     public void attribute(String name, String string)
             throws IOException {
+        if (string == null)
+            throw new NullPointerException("string (name=" + name + ")");
         String linecont = string.replace("\n", "\\\n");
         for (int d = 0; d < depth; d++)
             out.write(indent);
