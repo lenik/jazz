@@ -14,6 +14,8 @@ import net.bodz.bas.meta.codegen.IndexedType;
 public interface IHttpFilter
         extends Filter {
 
+    String getPreferredMapping();
+
     void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException;
 
