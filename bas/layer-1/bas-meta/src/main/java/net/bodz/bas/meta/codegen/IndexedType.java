@@ -8,12 +8,12 @@ import java.lang.annotation.Target;
 
 /**
  * This annotation is used to scan service classes and generate the index file.
- * 
+ *
  * The annotation is inheritable, so only need to annotate on the base type.
- * 
+ *
  * The result index file is <code>META-INF/services/&lt;base-type&gt;</code> by default.
- * 
- * @see EveryIndexedTypeCollector
+ *
+ * @see tcoll: net.bodz.bas.shell.util.TypeCollectorCLI
  */
 @Documented
 @IndexedType(publishDir = PublishDir.features, includeAbstract = true, includeAnnotation = true)
@@ -37,7 +37,7 @@ public @interface IndexedType {
 
     /**
      * No longer index this type.
-     * 
+     *
      * The collector utility should try to remove all types belong to the obsoleted indexed type.
      */
     boolean obsoleted() default false;
