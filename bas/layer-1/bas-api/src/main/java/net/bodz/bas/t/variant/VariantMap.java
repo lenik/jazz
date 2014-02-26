@@ -2,6 +2,7 @@ package net.bodz.bas.t.variant;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ public class VariantMap<K>
      * Set the wrapped map later.
      */
     public VariantMap() {
+        this.map = Collections.emptyMap();
     }
 
     public VariantMap(Map<K, Object> map) {

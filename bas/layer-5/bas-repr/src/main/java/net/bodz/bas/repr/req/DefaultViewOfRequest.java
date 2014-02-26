@@ -1,7 +1,7 @@
 package net.bodz.bas.repr.req;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,12 +20,8 @@ public class DefaultViewOfRequest
     private ContentType contentType = ContentTypes.text_html;
     private IVariantLookupMap<String> parameters;
 
-    DefaultViewOfRequest() {
-    }
-
-    public DefaultViewOfRequest(String viewName, Map<String, Object> parameterMap) {
-        this.viewName = viewName;
-        this.parameters = new VariantMap<>(parameterMap);
+    public DefaultViewOfRequest() {
+        parameters = new VariantMap<String>(new HashMap<String, Object>());
     }
 
     @Override
@@ -59,7 +55,8 @@ public class DefaultViewOfRequest
 
     static boolean paramViewLong = true;
     static boolean paramView = true;
-    static boolean contentTypeAuto = true;
+
+    // static boolean contentTypeAuto = true;
 
     @Override
     public void apply(HttpServletRequest request) {
@@ -70,8 +67,8 @@ public class DefaultViewOfRequest
         if (viewName == null && paramView)
             viewName = request.getParameter("v:");
 
-        if (viewName == null && contentTypeAuto)
-            request.getParameter("");
+        // if (viewName == null && contentTypeAuto)
+        // request.getParameter("");
 
         // TODO Multiple content-types?
         // Content-type by browser.
@@ -83,6 +80,11 @@ public class DefaultViewOfRequest
         }
 
         request.setAttribute(ATTRIBUTE_KEY, this);
+    }
+
+    @Override
+    public String toString() {
+        return viewName;
     }
 
 }
