@@ -96,4 +96,9 @@ public class DefaultMethodOfRequest
         request.setAttribute(ATTRIBUTE_KEY, this);
     }
 
+    @Override
+    public String toString() {
+        return methodName;
+    }
+
 }
