@@ -28,6 +28,10 @@ import net.bodz.swt.viz.util.SwtStyleInts;
 public class StringVbo
         extends AbstractSwtViewBuilder<String> {
 
+    public StringVbo() {
+        super(String.class);
+    }
+
     @Override
     public Widget buildView(Composite parent, final ISwtGUIRefEntry<String> entry, int styleInt, IOptions options)
             throws ViewBuilderException {

@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
@@ -14,6 +15,11 @@ public abstract class AbstractViewBuilderFactory
         implements IViewBuilderFactory, II18nCapable {
 
     protected TypePoMap<IViewBuilder<?>> typeMap = new TypePoMap<>();
+
+    @Override
+    public String[] getSupportedFeatures() {
+        return IEmptyConsts.emptyStringArray;
+    }
 
     @Override
     public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type) {
@@ -38,15 +44,15 @@ public abstract class AbstractViewBuilderFactory
     protected <T> IViewBuilder<T> getViewBuilder(IRefEntry<? extends T> entry) {
         if (entry == null)
             throw new NullPointerException("entry");
-        Class<? extends T> type = (Class<T>) entry.getValueType();
+        Class<? extends T> type = entry.getValueType();
         return getViewBuilder(type);
     }
 
-    public <T> void addViewBuilder(Class<T> rawType, IViewBuilder<? super T> viewBuilder) {
+    protected <T> void addViewBuilder(Class<?> rawType, IViewBuilder<?> viewBuilder) {
         typeMap.put(rawType, viewBuilder);
     }
 
-    public void addViewBuilder(Type type, Annotation[] annotation, IViewBuilder<?> viewBuilder) {
+    protected void addViewBuilder(Type type, Annotation[] annotation, IViewBuilder<?> viewBuilder) {
         Class<?> rawType;
         // if (type.getClass() == Class.class)
         if (type instanceof Class<?>)

@@ -5,7 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Classification
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Tags {
+public @interface Feature {
 
     String[] value();
 

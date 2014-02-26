@@ -50,6 +50,10 @@ public class ExceptionVbo
     static boolean showTools = true;
     static boolean showDebug = SystemProperties.isDevelopMode();
 
+    public ExceptionVbo() {
+        super(Throwable.class);
+    }
+
     @Override
     public Widget buildView(final Composite parent, ISwtGUIRefEntry<Throwable> entry, int styleInt, IOptions options)
             throws ViewBuilderException {

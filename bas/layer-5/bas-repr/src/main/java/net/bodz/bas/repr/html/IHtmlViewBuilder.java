@@ -1,10 +1,12 @@
 package net.bodz.bas.repr.html;
 
+import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 
+@IndexedType
 public interface IHtmlViewBuilder<T>
         extends IViewBuilder<T> {
 

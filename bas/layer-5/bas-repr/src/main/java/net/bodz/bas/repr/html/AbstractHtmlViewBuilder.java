@@ -9,6 +9,10 @@ public abstract class AbstractHtmlViewBuilder<T>
         extends AbstractViewBuilder<T>
         implements IHtmlViewBuilder<T> {
 
+    public AbstractHtmlViewBuilder(Class<?>... supportedClasses) {
+        super(supportedClasses);
+    }
+
     @Override
     public boolean isOrigin(T value) {
         return false;

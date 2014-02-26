@@ -28,6 +28,10 @@ import net.bodz.swt.viz.util.SwtControlStyler;
 public class BooleanVbo
         extends AbstractSwtViewBuilder<Boolean> {
 
+    public BooleanVbo() {
+        super(Boolean.class);
+    }
+
     @Override
     public Widget buildView(Composite parent, final ISwtGUIRefEntry<Boolean> entry, int styleInt, IOptions options)
             throws ViewBuilderException {
@@ -36,7 +40,7 @@ public class BooleanVbo
 
         boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
 
-        Boolean _val = (Boolean) entry.get();
+        Boolean _val = entry.get();
         boolean val = _val == null ? false : _val;
         final Button check = new Button(parent, styleInt | SWT.CHECK);
         check.setSelection(val);
@@ -55,7 +59,7 @@ public class BooleanVbo
             bindProperty(entry, check, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent event) {
-                    Boolean _val = (Boolean) entry.get();
+                    Boolean _val = entry.get();
                     check.setSelection(_val == null ? false : _val);
                     return true;
                 }
