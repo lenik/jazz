@@ -67,6 +67,7 @@
 .*.bin                                  # dprog -i
 .*.mjpl                                 # mjpl -B
 .classpath                              # Eclipse project classpath
+.classpath.*                            # mjpl
 .deps                                   # cooldeb
 .dirstamp
 .idea                                   # Idea project file
