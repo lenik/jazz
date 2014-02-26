@@ -72,10 +72,10 @@ public class DefaultMethodOfRequest
         String methodName = null;
 
         if (methodName == null && paramMethodLong)
-            methodName = IHttpRequestProcessor.fn.getParameter(request, "method:", true);
+            methodName = request.getParameter("method:");
 
         if (methodName == null && paramMethod)
-            methodName = IHttpRequestProcessor.fn.getParameter(request, "m:", true);
+            methodName = request.getParameter("m:");
 
         if (methodName == null && httpMethods) {
             String httpMethod = HttpMethods.getMethodName(request.getMethod());
