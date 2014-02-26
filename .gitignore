@@ -67,6 +67,7 @@
 .*.bin
 .*.mjpl
 .classpath
+.classpath.*
 .deps
 .dirstamp
 .idea
