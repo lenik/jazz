@@ -34,13 +34,17 @@ import net.bodz.swt.viz.util.SwtControlStyler;
 public class FileVbo
         extends AbstractSwtViewBuilder<File> {
 
+    public FileVbo() {
+        super(File.class);
+    }
+
     @Override
     public Widget buildView(final Composite parent, final ISwtGUIRefEntry<File> entry, int styleInt, IOptions options)
             throws ViewBuilderException {
         final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
         final SwtRenderContext rc = options.get(SwtRenderContext.class);
 
-        File val = (File) entry.get();
+        File val = entry.get();
         assert val != null;
         final Composite comp = new Composite(parent, styleInt);
         BorderLayout layout = new BorderLayout();
@@ -94,7 +98,7 @@ public class FileVbo
             bindProperty(entry, fileText, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent evt) {
-                    File file = (File) entry.get();
+                    File file = entry.get();
                     assert file != null;
                     fileText.setText(String.valueOf(file));
                     return true;

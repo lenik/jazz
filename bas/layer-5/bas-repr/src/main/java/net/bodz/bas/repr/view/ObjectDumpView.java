@@ -15,9 +15,8 @@ import net.bodz.bas.rtx.IOptions;
 public class ObjectDumpView
         extends AbstractHtmlViewBuilder<Object> {
 
-    // @Override
-    public Class<?> getType() {
-        return Object.class;
+    public ObjectDumpView() {
+        super(Object.class);
     }
 
     @Override

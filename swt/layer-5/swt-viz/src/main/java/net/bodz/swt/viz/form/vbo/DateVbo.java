@@ -27,6 +27,10 @@ import net.bodz.swt.viz.ISwtGUIRefEntry;
 public class DateVbo
         extends AbstractSwtViewBuilder<Date> {
 
+    public DateVbo() {
+        super(Date.class);
+    }
+
     protected String format(Date date) {
         return String.valueOf(date);
     }
@@ -37,7 +41,7 @@ public class DateVbo
         ISwtControlStyleDeclaration styleDecl = entry.getStyle();
 
         boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
-        Date date = (Date) entry.get();
+        Date date = entry.get();
 
         if (readOnly) {
             final Label dateLabel = new Label(parent, styleInt);
@@ -46,7 +50,7 @@ public class DateVbo
                 bindProperty(entry, dateLabel, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {
-                        Date date = (Date) entry.get();
+                        Date date = entry.get();
                         dateLabel.setText(format(date));
                         return true;
                     }
@@ -77,7 +81,7 @@ public class DateVbo
                 bindProperty(entry, text, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {
-                        Date date = (Date) entry.get();
+                        Date date = entry.get();
                         text.setText(format(date));
                         return true;
                     }

@@ -13,6 +13,10 @@ import net.bodz.swt.viz.ISwtGUIRefEntry;
 public class TextFormedVbo<T>
         extends AbstractSwtViewBuilder<T> {
 
+    public TextFormedVbo() {
+        super(Object.class);
+    }
+
     @Override
     public Widget buildView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt, IOptions options)
             throws ViewBuilderException {
