@@ -11,9 +11,9 @@ public class IdPool {
 
     public static final String NULL_ID = "(null)";
 
-    final Class<?> clazz;
-    int counter;
-    IdentityHashMap<Object, Integer> allocation;
+    private final Class<?> clazz;
+    private int counter;
+    private IdentityHashMap<Object, Integer> allocation;
 
     public IdPool(Class<?> clazz) {
         this.clazz = clazz;
@@ -57,8 +57,17 @@ public class IdPool {
         return hex + "@" + obj.getClass().getSimpleName();
     }
 
+    @Override
+    public String toString() {
+        return clazz + " next id is " + counter;
+    }
+
     public static IdPool getInstance(Class<?> clazz) {
         return clsIdPool.getOrLoad(clazz);
+    }
+
+    public static IdPool getInstance() {
+        return getInstance(Object.class);
     }
 
     static final LazyTypeMap<IdPool> clsIdPool;
