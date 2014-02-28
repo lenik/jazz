@@ -12,9 +12,4 @@ public class IndexedHtmlViewBuilderFactory
         }
     }
 
-    @Override
-    public <T> IHtmlViewBuilder<T> getViewBuilder(Class<? extends T> type) {
-        return super.getViewBuilder(type);
-    }
-
 }

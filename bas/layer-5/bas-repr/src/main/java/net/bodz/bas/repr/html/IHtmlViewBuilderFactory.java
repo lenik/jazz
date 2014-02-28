@@ -8,6 +8,6 @@ public interface IHtmlViewBuilderFactory
         extends IViewBuilderFactory {
 
     @Override
-    <T> IHtmlViewBuilder<T> getViewBuilder(Class<? extends T> type);
+    <T> IHtmlViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
 
 }
