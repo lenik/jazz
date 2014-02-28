@@ -8,6 +8,6 @@ public interface ISwtViewBuilderFactory
         extends IViewBuilderFactory {
 
     @Override
-    <T> ISwtViewBuilder<T> getViewBuilder(Class<? extends T> type);
+    <T> ISwtViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
 
 }

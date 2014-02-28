@@ -22,7 +22,7 @@ public abstract class AbstractViewBuilderFactory
     }
 
     @Override
-    public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type) {
+    public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
         Class<?> usingType = typeMap.floorKey(type);
         if (usingType == null) {
             if (type.isPrimitive()) {

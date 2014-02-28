@@ -40,7 +40,7 @@ public abstract class AbstractSwtViewBuilderFactory
     }
 
     @Override
-    public <T> ISwtViewBuilder<T> getViewBuilder(Class<? extends T> type) {
+    public <T> ISwtViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
         return (ISwtViewBuilder<T>) super.getViewBuilder(type);
     }
 

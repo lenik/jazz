@@ -12,7 +12,11 @@ public interface IViewBuilderFactory {
      */
     String[] getSupportedFeatures();
 
-    <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type);
+    /**
+     * @param features
+     *            Required features.
+     */
+    <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
 
     /**
      * @return The built widget/control handle.

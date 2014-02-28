@@ -7,7 +7,7 @@ public abstract class AbstractHtmlViewBuilderFactory
         implements IHtmlViewBuilderFactory {
 
     @Override
-    public <T> IHtmlViewBuilder<T> getViewBuilder(Class<? extends T> type) {
+    public <T> IHtmlViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
         return (IHtmlViewBuilder<T>) super.getViewBuilder(type);
     }
 
