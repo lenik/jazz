@@ -6,10 +6,8 @@ public class IndexedHtmlViewBuilderFactory
         extends AbstractHtmlViewBuilderFactory {
 
     public IndexedHtmlViewBuilderFactory() {
-        for (IHtmlViewBuilder<?> vbo : ServiceLoader.load(IHtmlViewBuilder.class)) {
-            for (Class<?> supportedClass : vbo.getSupportedClasses())
-                addViewBuilder(supportedClass, vbo);
-        }
+        for (IHtmlViewBuilder<?> vbo : ServiceLoader.load(IHtmlViewBuilder.class))
+            addViewBuilder(vbo);
     }
 
 }

@@ -3,37 +3,42 @@ package net.bodz.bas.repr.viz;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 
 import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.c.primitive.Primitives;
+import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.repr.view.Feature;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.t.set.QmiTaggedSet;
+import net.bodz.bas.t.set.TaggedSet;
 
 public abstract class AbstractViewBuilderFactory
         implements IViewBuilderFactory, II18nCapable {
 
-    protected TypePoMap<IViewBuilder<?>> typeMap = new TypePoMap<>();
+    private TypePoMap<TaggedSet<IViewBuilder<?>>> typeMap = new TypePoMap<>();
 
     @Override
     public String[] getSupportedFeatures() {
         return IEmptyConsts.emptyStringArray;
     }
 
-    @Override
-    public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
-        Class<?> usingType = typeMap.floorKey(type);
-        if (usingType == null) {
-            if (type.isPrimitive()) {
-                usingType = typeMap.floorKey(Primitives.box(type));
-                if (usingType == null)
-                    return null;
-            } else
-                return null;
+    protected synchronized TaggedSet<IViewBuilder<?>> getTaggedSet(Class<?> clazz, boolean autoCreate) {
+        if (clazz == null)
+            throw new NullPointerException("clazz");
+        TaggedSet<IViewBuilder<?>> set = typeMap.get(clazz);
+        if (set == null) {
+            if (autoCreate) {
+                set = new QmiTaggedSet<>();
+                typeMap.put(clazz, set);
+            } else {
+                // set = TaggedSet.fn.empty();
+            }
         }
-        IViewBuilder<T> viewBuilder = (IViewBuilder<T>) typeMap.get(usingType);
-        return viewBuilder;
+        return set;
     }
 
     /**
@@ -41,18 +46,77 @@ public abstract class AbstractViewBuilderFactory
      *             if var is null.
      * @return <code>null</code> if no matching renderer.
      */
-    protected <T> IViewBuilder<T> getViewBuilder(IRefEntry<? extends T> entry) {
+    protected/* final */<T> IViewBuilder<T> getViewBuilder(IRefEntry<? extends T> entry) {
         if (entry == null)
             throw new NullPointerException("entry");
         Class<? extends T> type = entry.getValueType();
-        return getViewBuilder(type);
+
+        String[] features = {};
+        Feature _feature = entry.getAnnotation(Feature.class);
+        if (_feature != null)
+            features = _feature.value();
+
+        return getViewBuilder(type, features);
     }
 
-    protected <T> void addViewBuilder(Class<?> rawType, IViewBuilder<?> viewBuilder) {
-        typeMap.put(rawType, viewBuilder);
+    @Override
+    public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> clazz, String... features) {
+        Class<?> boxed = Primitives.box(clazz);
+        if (!typeMap.containsKey(boxed))
+            try {
+                IViewBuilder<?> friendVbo = findFriendVbo(clazz);
+                if (friendVbo != null)
+                    addViewBuilder(friendVbo);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+
+        Class<?> meet = typeMap.meetKey(boxed);
+        while (meet != null) {
+            TaggedSet<IViewBuilder<?>> set = getTaggedSet(meet, false);
+            if (set != null) {
+                Collection<IViewBuilder<?>> selection = set.select(features);
+                if (!selection.isEmpty()) {
+                    IViewBuilder<T> first = (IViewBuilder<T>) selection.iterator().next();
+                    return first;
+                }
+            }
+            meet = meet.getSuperclass();
+        }
+        return null;
     }
 
-    protected void addViewBuilder(Type type, Annotation[] annotation, IViewBuilder<?> viewBuilder) {
+    /**
+     * @throws ReflectiveOperationException
+     * @throws LinkageError
+     */
+    IViewBuilder<?> findFriendVbo(Class<?> clazz)
+            throws ReflectiveOperationException {
+        String fqcn = clazz.getName();
+        String vboFqcn = fqcn + "Vbo";
+        Class<?> vboClass;
+        try {
+            vboClass = Class.forName(vboFqcn);
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+        IViewBuilder<?> instance = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);
+        return instance;
+    }
+
+    protected void addViewBuilder(IViewBuilder<?> viewBuilder) {
+        checkViewBuilder(viewBuilder);
+        addViewBuilder(viewBuilder, viewBuilder.getValueType(), getSupportedFeatures());
+    }
+
+    protected void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... features) {
+        checkViewBuilder(viewBuilder);
+        TaggedSet<IViewBuilder<?>> set = getTaggedSet(clazz, true);
+        set.add(viewBuilder, features);
+    }
+
+    protected void addViewBuilder(IViewBuilder<?> viewBuilder, Type type, Annotation[] annotation, String... features) {
+        checkViewBuilder(viewBuilder);
         Class<?> rawType;
         // if (type.getClass() == Class.class)
         if (type instanceof Class<?>)
@@ -63,7 +127,13 @@ public abstract class AbstractViewBuilderFactory
         } else
             throw new IllegalArgumentException("Unsupported type: " + type);
 
-        typeMap.put(rawType, viewBuilder);
+        addViewBuilder(viewBuilder, rawType, features);
+    }
+
+    protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {
+        if (viewBuilder == null)
+            throw new NullPointerException("viewBuilder");
+        checkViewBuilder(viewBuilder);
     }
 
     @Override

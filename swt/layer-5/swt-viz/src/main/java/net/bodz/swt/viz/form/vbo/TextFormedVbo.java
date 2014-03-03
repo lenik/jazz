@@ -18,7 +18,7 @@ public class TextFormedVbo<T>
     }
 
     @Override
-    public Widget buildView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt, IOptions options)
             throws ViewBuilderException {
 
         IParser<T> parser = entry.query(IParser.class);
@@ -26,7 +26,7 @@ public class TextFormedVbo<T>
 
         ISwtGUIRefEntry<String> textFormed = new TextFormedSwtGUIRefEntry<>(entry, parser, formatter);
 
-        return new StringVbo().buildView(parent, textFormed, styleInt, options);
+        return new StringVbo().buildSwtView(parent, textFormed, styleInt, options);
     }
 
 }

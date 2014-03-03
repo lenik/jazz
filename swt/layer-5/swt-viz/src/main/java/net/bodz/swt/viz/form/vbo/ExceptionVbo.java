@@ -55,7 +55,7 @@ public class ExceptionVbo
     }
 
     @Override
-    public Widget buildView(final Composite parent, ISwtGUIRefEntry<Throwable> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(final Composite parent, ISwtGUIRefEntry<Throwable> entry, int styleInt, IOptions options)
             throws ViewBuilderException {
         final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
         final SwtRenderContext rc = options.get(SwtRenderContext.class);

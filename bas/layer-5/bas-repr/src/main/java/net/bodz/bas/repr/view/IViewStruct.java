@@ -1,5 +1,11 @@
 package net.bodz.bas.repr.view;
 
-public interface IViewStruct {
+import java.io.Serializable;
+
+/**
+ * @see MemberViewInfo
+ */
+public interface IViewStruct
+        extends Serializable {
 
 }

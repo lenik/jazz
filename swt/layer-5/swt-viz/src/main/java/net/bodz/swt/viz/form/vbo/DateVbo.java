@@ -36,7 +36,7 @@ public class DateVbo
     }
 
     @Override
-    public Widget buildView(Composite parent, final ISwtGUIRefEntry<Date> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(Composite parent, final ISwtGUIRefEntry<Date> entry, int styleInt, IOptions options)
             throws ViewBuilderException {
         ISwtControlStyleDeclaration styleDecl = entry.getStyle();
 

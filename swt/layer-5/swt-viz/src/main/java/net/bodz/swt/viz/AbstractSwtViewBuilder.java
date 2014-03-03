@@ -20,8 +20,8 @@ public abstract class AbstractSwtViewBuilder<T>
         extends AbstractViewBuilder<T>
         implements ISwtViewBuilder<T>, II18nCapable {
 
-    public AbstractSwtViewBuilder(Class<?>... supportedClasses) {
-        super(supportedClasses);
+    public AbstractSwtViewBuilder(Class<?> valueClass, String... supportedFeatures) {
+        super(valueClass, supportedFeatures);
     }
 
     @Override
@@ -39,13 +39,13 @@ public abstract class AbstractSwtViewBuilder<T>
 
         int styleInt = options.getInt("swt.styleInt", SWT.NONE);
 
-        return buildView(parent, wrapper, styleInt, options);
+        return buildSwtView(parent, wrapper, styleInt, options);
     }
 
     @Override
-    public final Widget buildView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt)
+    public final Widget buildSwtView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt)
             throws ViewBuilderException {
-        return buildView(parent, entry, styleInt, IOptions.NULL);
+        return buildSwtView(parent, entry, styleInt, IOptions.NULL);
     }
 
     protected void bindProperty(final IRefEntry<?> entry, final Control control, final IValueChangeListener listener) {

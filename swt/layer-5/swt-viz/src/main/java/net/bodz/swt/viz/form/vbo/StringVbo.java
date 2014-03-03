@@ -33,7 +33,7 @@ public class StringVbo
     }
 
     @Override
-    public Widget buildView(Composite parent, final ISwtGUIRefEntry<String> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(Composite parent, final ISwtGUIRefEntry<String> entry, int styleInt, IOptions options)
             throws ViewBuilderException {
 
         final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
