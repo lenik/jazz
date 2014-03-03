@@ -1,10 +1,5 @@
 package net.bodz.swt.viz;
 
-import java.io.File;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.Date;
-
 import net.bodz.bas.meta.source.ChainUsage;
 import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.repr.viz.AbstractViewBuilderFactory;
@@ -26,17 +21,14 @@ public abstract class AbstractSwtViewBuilderFactory
 
     @OverrideOption(chain = ChainUsage.MUST)
     protected void setup() {
-        typeMap.put(boolean.class, new BooleanVbo());
-        // typeMap.put(byte[].class, new ByteArrayVbo());
+        addViewBuilder(new BooleanVbo());
 
-        typeMap.put(Boolean.class, new BooleanVbo());
+        addViewBuilder(new TextFormedVbo(), Number.class);
+        addViewBuilder(new StringVbo());
+        addViewBuilder(new ExceptionVbo());
 
-        typeMap.put(Number.class, new TextFormedVbo());
-        typeMap.put(String.class, new StringVbo());
-        typeMap.put(Throwable.class, new ExceptionVbo());
-
-        typeMap.put(Date.class, new DateVbo());
-        typeMap.put(File.class, new FileVbo());
+        addViewBuilder(new DateVbo());
+        addViewBuilder(new FileVbo());
     }
 
     @Override
@@ -44,19 +36,9 @@ public abstract class AbstractSwtViewBuilderFactory
         return (ISwtViewBuilder<T>) super.getViewBuilder(type);
     }
 
-    @Override
-    protected <T> void addViewBuilder(Class<?> type, IViewBuilder<?> viewBuilder) {
+    protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {
         if (!(viewBuilder instanceof ISwtViewBuilder<?>))
             throw new IllegalArgumentException(tr._("Not an SWT view builder: ") + viewBuilder);
-        typeMap.put(type, viewBuilder);
-    }
-
-    @Override
-    protected final void addViewBuilder(Type type, Annotation[] annotation, IViewBuilder<?> viewBuilder) {
-        if (!(viewBuilder instanceof ISwtViewBuilder<?>))
-            throw new IllegalArgumentException("viewBuilder isn't swt capable.");
-        else
-            super.addViewBuilder(type, annotation, viewBuilder);
     }
 
 }

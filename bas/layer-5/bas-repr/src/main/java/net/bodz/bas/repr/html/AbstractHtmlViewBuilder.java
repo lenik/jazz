@@ -9,8 +9,8 @@ public abstract class AbstractHtmlViewBuilder<T>
         extends AbstractViewBuilder<T>
         implements IHtmlViewBuilder<T> {
 
-    public AbstractHtmlViewBuilder(Class<?>... supportedClasses) {
-        super(supportedClasses);
+    public AbstractHtmlViewBuilder(Class<?> valueClass, String... supportedFeatures) {
+        super(valueClass, supportedFeatures);
     }
 
     @Override

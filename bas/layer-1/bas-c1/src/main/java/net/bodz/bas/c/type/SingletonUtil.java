@@ -25,4 +25,8 @@ public class SingletonUtil {
         return clazz.cast(instance);
     }
 
+    public static <T> T instantiateCached(Class<T> clazz) {
+        return CachedInstantiator.getInstance().instantiate(clazz);
+    }
+
 }

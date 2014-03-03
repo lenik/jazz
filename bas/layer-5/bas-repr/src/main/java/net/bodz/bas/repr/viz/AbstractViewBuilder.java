@@ -1,6 +1,5 @@
 package net.bodz.bas.repr.viz;
 
-import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.potato.ref.IRefEntries;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.InstanceProperties;
@@ -9,10 +8,16 @@ import net.bodz.bas.rtx.IOptions;
 public abstract class AbstractViewBuilder<T>
         implements IViewBuilder<T> {
 
-    private Class<?>[] supportedClasses;
+    private Class<?> valueType;
+    private String[] supportedFeatures;
 
-    public AbstractViewBuilder(Class<?>... supportedClasses) {
-        this.supportedClasses = supportedClasses;
+    public AbstractViewBuilder(Class<?> valueClass, String... supportedFeatures) {
+        if (valueClass == null)
+            throw new NullPointerException("valueClass");
+        if (supportedFeatures == null)
+            throw new NullPointerException("supportedFeatures");
+        this.valueType = valueClass;
+        this.supportedFeatures = supportedFeatures;
     }
 
     @Override
@@ -21,13 +26,13 @@ public abstract class AbstractViewBuilder<T>
     }
 
     @Override
-    public Class<?>[] getSupportedClasses() {
-        return supportedClasses;
+    public Class<?> getValueType() {
+        return valueType;
     }
 
     @Override
     public String[] getSupportedFeatures() {
-        return IEmptyConsts.emptyStringArray;
+        return supportedFeatures;
     }
 
     @Override

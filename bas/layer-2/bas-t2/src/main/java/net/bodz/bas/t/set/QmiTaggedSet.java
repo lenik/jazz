@@ -35,6 +35,8 @@ public class QmiTaggedSet<V>
     public synchronized void add(V item, String... tags) {
         if (item == null)
             throw new NullPointerException("item");
+        if (tags == null)
+            throw new NullPointerException("tags");
 
         String[] oldTags = itemTagsMap.get(item);
         if (oldTags != null) {
