@@ -6,6 +6,8 @@ import java.util.Map;
 import net.bodz.bas.c.reflect.DecoratedAnnotatedElement;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public class DecoratedPotatoElement
         extends DecoratedAnnotatedElement
@@ -83,6 +85,14 @@ public class DecoratedPotatoElement
     @Override
     public int getModifiers() {
         return getWrapped().getModifiers();
+    }
+
+    /** ⇱ Implementation Of {@link IXjdocElement}. */
+    /* _____________________________ */static section.iface __XJDOC__;
+
+    @Override
+    public IJavaElementDoc getXjdoc() {
+        return getWrapped().getXjdoc();
     }
 
 }

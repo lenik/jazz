@@ -7,13 +7,13 @@ import net.bodz.bas.potato.PotatoLoader;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
-public class InstanceProperties
+public abstract class AbstractPropertyRefEntries<entry_t extends IRefEntry<?>>
         implements IRefEntries {
 
     private final IType type;
     private final Object instance;
 
-    public InstanceProperties(Object instance) {
+    public AbstractPropertyRefEntries(Object instance) {
         if (instance == null)
             throw new NullPointerException("instance");
         Class<? extends Object> clazz = instance.getClass();
@@ -22,7 +22,7 @@ public class InstanceProperties
         this.instance = instance;
     }
 
-    public InstanceProperties(IType type, Object instance) {
+    public AbstractPropertyRefEntries(IType type, Object instance) {
         if (type == null)
             throw new NullPointerException("type");
         if (instance == null)
@@ -39,11 +39,12 @@ public class InstanceProperties
         return names;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> IRefEntry<T> get(String propertyName) {
         IProperty property = type.getProperty(propertyName);
-        PropertyRefEntry<T> entry = new PropertyRefEntry<T>(instance, property);
-        return entry;
+        PropertyRefEntry entry = new PropertyRefEntry(instance, property);
+        return (IRefEntry<T>) entry;
     }
 
 }

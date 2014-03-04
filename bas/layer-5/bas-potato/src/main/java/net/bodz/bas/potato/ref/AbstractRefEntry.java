@@ -30,7 +30,7 @@ public abstract class AbstractRefEntry<T>
     }
 
     /** ⇱ Implementation Of {@link AnnotatedElement}. */
-/* _____________________________ */static section.iface __ANN_ELEM__;
+/* _____________________________ */static section.iface __ANNOTATED__;
 
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {

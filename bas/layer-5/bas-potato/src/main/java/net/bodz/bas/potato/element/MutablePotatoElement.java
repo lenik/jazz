@@ -6,6 +6,8 @@ import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.IMutableElement;
+import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public class MutablePotatoElement
         extends MutableAnnotations
@@ -15,11 +17,13 @@ public class MutablePotatoElement
     private Map<Class<?>, Object> typerMap;
 
     private String name;
-    private iString label = new XiString();
-    private iString description = new XiString();
-    private iString helpDoc = new XiString();
     private int verboseLevel = PUBLIC_LEVEL;
     private int modifiers;
+
+    private IJavaElementDoc xjdoc;
+    private iString labelOverride = new XiString();
+    private iString descriptionOverride = new XiString();
+    private iString helpDocOverride = new XiString();
 
     /** ⇱ Implementation Of {@link IPotatoElement}. */
     /* _____________________________ */static section.iface __POTATO__;
@@ -67,12 +71,29 @@ public class MutablePotatoElement
 
     @Override
     public iString getLabel() {
-        return label;
+        if (labelOverride != null)
+            return labelOverride;
+        if (xjdoc != null)
+            return xjdoc.getLabel();
+        return null;
     }
 
     @Override
     public iString getDescription() {
-        return description;
+        if (descriptionOverride != null)
+            return descriptionOverride;
+        if (xjdoc != null)
+            return fn.extractDescription(xjdoc.getText());
+        return null;
+    }
+
+    @Override
+    public iString getHelpDoc() {
+        if (helpDocOverride != null)
+            return helpDocOverride;
+        if (xjdoc != null)
+            return fn.extractHelpDoc(xjdoc.getText());
+        return null;
     }
 
     @Override
@@ -94,22 +115,17 @@ public class MutablePotatoElement
 
     @Override
     public void setLabel(iString label) {
-        this.label = label;
+        this.labelOverride = label;
     }
 
     @Override
     public void setDescription(iString description) {
-        this.description = description;
+        this.descriptionOverride = description;
     }
 
     @Override
     public void setHelpDoc(iString helpDoc) {
-        this.helpDoc = helpDoc;
-    }
-
-    @Override
-    public iString getHelpDoc() {
-        return helpDoc;
+        this.helpDocOverride = helpDoc;
     }
 
     @Override
@@ -120,6 +136,18 @@ public class MutablePotatoElement
     @Override
     public void setModifiers(int modifiers) {
         this.modifiers = modifiers;
+    }
+
+    /** ⇱ Implementation Of {@link IXjdocElement}. */
+    /* _____________________________ */static section.iface __XJDOC__;
+
+    @Override
+    public IJavaElementDoc getXjdoc() {
+        return xjdoc;
+    }
+
+    public void setXjdoc(IJavaElementDoc xjdoc) {
+        this.xjdoc = xjdoc;
     }
 
 }

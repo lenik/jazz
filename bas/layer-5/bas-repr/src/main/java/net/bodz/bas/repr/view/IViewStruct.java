@@ -1,11 +1,10 @@
 package net.bodz.bas.repr.view;
 
-import java.io.Serializable;
+import net.bodz.bas.potato.ref.PropertyGUIRefEntry;
 
 /**
- * @see MemberViewInfo
+ * @see PropertyGUIRefEntry
  */
-public interface IViewStruct
-        extends Serializable {
+public interface IViewStruct {
 
 }
