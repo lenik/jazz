@@ -60,7 +60,7 @@ public abstract class AbstractXjdocElement
     public synchronized iString getDescription() {
         if (description == null) {
             iString text = getXjdoc().getText();
-            description = text.headPar();
+            description = fn.extractDescription(text);
         }
         return description;
     }
@@ -72,7 +72,7 @@ public abstract class AbstractXjdocElement
     public synchronized iString getHelpDoc() {
         if (helpDoc == null) {
             iString text = getXjdoc().getText();
-            helpDoc = text.tailPar();
+            helpDoc = fn.extractHelpDoc(text);
         }
         return helpDoc;
     }

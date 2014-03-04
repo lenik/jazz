@@ -7,7 +7,6 @@ import java.util.Map;
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.meta.lang.typer;
 import net.bodz.bas.typer.std.ITyperFamily;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
@@ -67,11 +66,6 @@ public abstract class AbstractPotatoElement
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public void setXjdoc(IJavaElementDoc xjdoc) {
-        super.setXjdoc(xjdoc);
     }
 
     /** ⇱ Implementation Of {@link IAnnotated}. */

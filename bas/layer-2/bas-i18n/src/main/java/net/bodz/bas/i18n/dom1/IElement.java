@@ -11,14 +11,14 @@ public interface IElement {
 
     /**
      * The unique name of the potato element.
-     * 
+     *
      * @return non-<code>null</code> name.
      */
     String getName();
 
     /**
      * The human readable display name.
-     * 
+     *
      * @return non-<code>null</code> string of display name.
      */
     iString getLabel();
@@ -75,10 +75,28 @@ public interface IElement {
     /**
      * Returns the Java language modifiers for this element, as an integer. The {@link Modifier}
      * class should be used to decode the modifiers in the integer.
-     * 
+     *
      * @return the Java language modifiers for the underlying element.
      * @see java.lang.reflect.Modifier
      */
     int getModifiers();
+
+    class fn {
+
+        public static iString extractDescription(iString text) {
+            if (text == null)
+                return null;
+            else
+                return text.headPar();
+        }
+
+        public static iString extractHelpDoc(iString text) {
+            if (text == null)
+                return null;
+            else
+                return text.tailPar();
+        }
+
+    }
 
 }

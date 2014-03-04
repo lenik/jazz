@@ -82,4 +82,15 @@ public class Collections
         return collection;
     }
 
+    public static <K, V> Map<K, V> createMap(Boolean order) {
+        Map<K, V> map;
+        if (order == null)
+            map = new LinkedHashMap<>();
+        else if (order)
+            map = new TreeMap<>();
+        else
+            map = new HashMap<>();
+        return map;
+    }
+
 }

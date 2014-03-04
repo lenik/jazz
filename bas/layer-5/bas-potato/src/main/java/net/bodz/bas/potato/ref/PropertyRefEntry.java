@@ -3,8 +3,8 @@ package net.bodz.bas.potato.ref;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.rtx.QueryException;
 
-public class PropertyRefEntry<T>
-        extends AbstractRefEntry<T>
+public class PropertyRefEntry
+        extends AbstractRefEntry<Object>
         implements IValueChangeSource {
 
     private static final long serialVersionUID = 1L;
@@ -18,19 +18,24 @@ public class PropertyRefEntry<T>
         this.property = property;
     }
 
+    @Override
+    public IProperty getWrapped() {
+        return (IProperty) super.getWrapped();
+    }
+
     public IProperty getProperty() {
         return property;
     }
 
     @Override
-    public Class<? extends T> getValueType() {
-        return (Class<? extends T>) property.getPropertyType();
+    public Class<?> getValueType() {
+        return property.getPropertyType();
     }
 
     @Override
-    public T get() {
+    public Object get() {
         try {
-            T value = (T) property.getValue(instance);
+            Object value = property.getValue(instance);
             return value;
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
