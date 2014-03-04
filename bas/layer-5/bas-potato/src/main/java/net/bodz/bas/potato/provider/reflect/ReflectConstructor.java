@@ -24,7 +24,7 @@ public class ReflectConstructor
         this.ctor = ctor;
 
         int _modifiers = ctor.getModifiers();
-        this.modifiers = ReflectModifiers.toElementModifiers(_modifiers);
+        this.modifiers = _modifiers;
         this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
         setXjdoc(xjdoc);

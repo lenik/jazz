@@ -24,7 +24,7 @@ public class ReflectMethod
         this.method = method;
 
         int _modifiers = method.getModifiers();
-        this.modifiers = ReflectModifiers.toElementModifiers(_modifiers);
+        this.modifiers = _modifiers;
         this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
         setXjdoc(xjdoc);
