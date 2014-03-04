@@ -24,7 +24,7 @@ public class ReflectProperty
         this.field = field;
 
         int _modifiers = field.getModifiers();
-        this.modifiers = ReflectModifiers.toElementModifiers(_modifiers);
+        this.modifiers = _modifiers;
         this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
         setXjdoc(xjdoc);

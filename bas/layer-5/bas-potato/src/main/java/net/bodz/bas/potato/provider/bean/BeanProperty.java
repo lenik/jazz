@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.element.AbstractProperty;
-import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
@@ -34,7 +33,7 @@ public class BeanProperty
             throw new NullPointerException("No getter: " + propertyDescriptor.getName());
 
         int _modifiers = getter.getModifiers();
-        this.modifiers = getter == null ? 0 : ReflectModifiers.toVerboseLevel(_modifiers);
+        this.modifiers = _modifiers;
         this.verboseLevel = FeatureDescriptorUtil.getVerboseLevel(propertyDescriptor);
 
         setXjdoc(xjdoc);
