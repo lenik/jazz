@@ -9,6 +9,10 @@
     <artifactId>parent</artifactId>
     <version>1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <properties>
+        <ffdir>src/main/resources</ffdir>
+        <ffdir.test>src/test/resources</ffdir.test>
+    </properties>
     <name>Jazz Parent</name>
     <profiles>
         <profile>
@@ -33,7 +37,7 @@
                                 </goals>
                                 <configuration>
                                     <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-                                    <outputDirectory>${basedir}/target/classes</outputDirectory>
+                                    <outputDirectory>${basedir}/${ffdir}</outputDirectory>
                                 </configuration>
                             </execution>
                             <execution>
@@ -45,7 +49,7 @@
                                 <configuration>
                                     <testClasses>true</testClasses>
                                     <sourceDirectory>${basedir}/src/test/java</sourceDirectory>
-                                    <outputDirectory>${basedir}/target/test-classes</outputDirectory>
+                                    <outputDirectory>${basedir}/${ffdir.test}</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>
