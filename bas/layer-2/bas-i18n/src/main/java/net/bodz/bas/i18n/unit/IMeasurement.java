@@ -2,7 +2,7 @@ package net.bodz.bas.i18n.unit;
 
 import java.io.Serializable;
 
-public interface IMeasure<U extends IMeasureUnit>
+public interface IMeasurement<U extends IMeasureUnit>
         extends Serializable {
 
     double getValue();
@@ -13,6 +13,6 @@ public interface IMeasure<U extends IMeasureUnit>
 
     void setUnit(U unit);
 
-    IMeasure<U> in(U otherUnit);
+    IMeasurement<U> in(U otherUnit);
 
 }

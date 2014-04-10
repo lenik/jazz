@@ -42,7 +42,7 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
 
     @Override
     public node_t getChild(String key) {
-        if (StringPred.isInteger(key)) {
+        if (StringPred.isDecimal(key)) {
             int index = Integer.parseInt(key);
             if (index >= 0 && index < list.size())
                 return list.get(index);
@@ -98,7 +98,7 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
         if (childParent != null)
             throw new IllegalStateException("Child node is already attached: " + child);
 
-        if (!StringPred.isInteger(key))
+        if (!StringPred.isDecimal(key))
             throw new IllegalArgumentException("key isn't integer: " + key);
 
         int index = Integer.parseInt(key);
@@ -113,7 +113,7 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
 
     @Override
     public synchronized node_t removeChild(String key) {
-        if (StringPred.isInteger(key)) {
+        if (StringPred.isDecimal(key)) {
             int index = Integer.parseInt(key);
             if (index >= 0 && index < list.size()) {
                 node_t child = list.remove(index);

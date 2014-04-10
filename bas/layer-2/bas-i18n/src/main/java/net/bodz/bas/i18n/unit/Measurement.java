@@ -5,28 +5,28 @@ import java.util.List;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
 
-public class Measure
-        extends AbstractMeasure<IMeasureUnit> {
+public class Measurement
+        extends AbstractMeasurement<IMeasureUnit> {
 
     private static final long serialVersionUID = 1L;
 
-    public Measure(double value) {
+    public Measurement(double value) {
         super(value);
     }
 
-    public Measure(double value, IMeasureUnit unit) {
+    public Measurement(double value, IMeasureUnit unit) {
         super(value, unit);
     }
 
     @Override
-    public Measure in(IMeasureUnit otherUnit) {
+    public Measurement in(IMeasureUnit otherUnit) {
         if (unit == otherUnit)
             return this;
         double times = unit.in(otherUnit);
-        return new Measure(value * times, otherUnit);
+        return new Measurement(value * times, otherUnit);
     }
 
-    public static Measure parse(String str)
+    public static Measurement parse(String str)
             throws ParseException {
         if (str == null)
             throw new NullPointerException("str");
@@ -57,7 +57,7 @@ public class Measure
 
         try {
             double value = Double.parseDouble(num);
-            return new Measure(value, unit);
+            return new Measurement(value, unit);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }
