@@ -3,19 +3,19 @@ package net.bodz.bas.i18n.unit;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public abstract class AbstractMeasure<U extends IMeasureUnit>
-        implements IMeasure<U> {
+public abstract class AbstractMeasurement<U extends IMeasureUnit>
+        implements IMeasurement<U> {
 
     private static final long serialVersionUID = 1L;
 
     protected double value;
     protected U unit;
 
-    public AbstractMeasure(double value) {
+    public AbstractMeasurement(double value) {
         this.value = value;
     }
 
-    public AbstractMeasure(double value, U unit) {
+    public AbstractMeasurement(double value, U unit) {
         if (unit == null)
             throw new NullPointerException("unit");
         this.value = value;
@@ -54,6 +54,6 @@ public abstract class AbstractMeasure<U extends IMeasureUnit>
     }
 
     private static NumberFormat NUMBER_FORMAT = new DecimalFormat(",###.#######");
-    public static final Measure NaN = new Measure(Double.NaN);
+    public static final Measurement NaN = new Measurement(Double.NaN);
 
 }

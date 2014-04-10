@@ -1,9 +1,9 @@
 package net.bodz.bas.i18n.unit.std;
 
-import net.bodz.bas.i18n.unit.IMeasureUnitConstants;
+import net.bodz.bas.i18n.unit.IMeasureUnitConsts;
 
-public interface TimeUnits
-        extends IMeasureUnitConstants {
+public interface DurationUnits
+        extends IMeasureUnitConsts {
 
     TimeUnit SECOND = new TimeUnit("second", "sec", 1.0);
     TimeUnit MILLISECOND = new TimeUnit("millisecond", "ms", 1e-3, SECOND);

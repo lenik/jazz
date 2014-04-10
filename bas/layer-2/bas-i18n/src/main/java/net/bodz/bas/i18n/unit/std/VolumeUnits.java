@@ -1,9 +1,9 @@
 package net.bodz.bas.i18n.unit.std;
 
-import net.bodz.bas.i18n.unit.IMeasureUnitConstants;
+import net.bodz.bas.i18n.unit.IMeasureUnitConsts;
 
 public interface VolumeUnits
-        extends IMeasureUnitConstants {
+        extends IMeasureUnitConsts {
 
     VolumeUnit M3 = new VolumeUnit("m3", "m³", 1.0);
     VolumeUnit LITER = new VolumeUnit("Liter", "L", 1e-3, M3);

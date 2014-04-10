@@ -1,9 +1,9 @@
 package net.bodz.bas.i18n.unit.std;
 
-import net.bodz.bas.i18n.unit.IMeasureUnitConstants;
+import net.bodz.bas.i18n.unit.IMeasureUnitConsts;
 
 public interface EnergyUnits
-        extends IMeasureUnitConstants {
+        extends IMeasureUnitConsts {
 
     EnergyUnit JOULE = new EnergyUnit("Joule", "J", 1.0);
     EnergyUnit KILOJOULE = new EnergyUnit("kiloJoule", "kJ", 1e+3, JOULE);

@@ -1,9 +1,9 @@
 package net.bodz.bas.i18n.unit.std;
 
-import net.bodz.bas.i18n.unit.IMeasureUnitConstants;
+import net.bodz.bas.i18n.unit.IMeasureUnitConsts;
 
 public interface ForceUnits
-        extends IMeasureUnitConstants {
+        extends IMeasureUnitConsts {
 
     ForceUnit NEWTON = new ForceUnit("newton", "N", 1.0);
     ForceUnit KILONEWTON = new ForceUnit("kilonewton", "kN", 1e+3, NEWTON);

@@ -1,9 +1,9 @@
 package net.bodz.bas.i18n.unit.std;
 
-import net.bodz.bas.i18n.unit.IMeasureUnitConstants;
+import net.bodz.bas.i18n.unit.IMeasureUnitConsts;
 
 public interface MassUnits
-        extends IMeasureUnitConstants {
+        extends IMeasureUnitConsts {
 
     MassUnit GRAM = new MassUnit("gram", "g", 1.0);
     MassUnit KILOGRAM = new MassUnit("kilogram", "kg", 1e+3, GRAM);

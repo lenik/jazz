@@ -1,9 +1,9 @@
 package net.bodz.bas.i18n.unit.std;
 
-import net.bodz.bas.i18n.unit.IMeasureUnitConstants;
+import net.bodz.bas.i18n.unit.IMeasureUnitConsts;
 
 public interface LengthUnits
-        extends IMeasureUnitConstants {
+        extends IMeasureUnitConsts {
 
     public static final LengthUnit METER = new LengthUnit("meter", "m", 1.0);
     public static final LengthUnit KILOMETER = new LengthUnit("kilometer", "km", 1e+3, METER);

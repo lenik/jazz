@@ -5,7 +5,7 @@ import net.bodz.bas.i18n.unit.IMeasureUnit;
 
 public class TimeUnit
         extends AbstractMeasureUnit
-        implements TimeUnits {
+        implements DurationUnits {
 
     private static final long serialVersionUID = 1L;
 
