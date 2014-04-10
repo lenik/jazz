@@ -7,7 +7,8 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 
-import net.bodz.bas.gui.css3.property.FontSizeType;
+import net.bodz.bas.gui.css3.Css3Length;
+import net.bodz.bas.gui.css3.ICss3Length;
 import net.bodz.bas.gui.css3.property.FontStyleMode;
 import net.bodz.bas.gui.css3.property.FontUseMode;
 import net.bodz.bas.gui.css3.property.FontVariantMode;
@@ -15,7 +16,7 @@ import net.bodz.bas.gui.css3.property.FontWeightMode;
 import net.bodz.bas.gui.css3.property.TextDecorationFlags;
 import net.bodz.bas.gui.style.IFontType;
 import net.bodz.bas.gui.style.IMutableFontType;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.i18n.unit.std.Length;
 
 public class FontDataFontType
         implements IMutableFontType, Serializable {
@@ -83,26 +84,15 @@ public class FontDataFontType
     }
 
     @Override
-    public FontSizeType getFontSizeType() {
-        // logger.debug("font-size-type isn't supported in SwtFontType.");
-        return FontSizeType.medium;
-    }
-
-    @Override
-    public void setFontSizeType(FontSizeType fontSizeType) {
-        // logger.debug("font-size-type isn't supported in SwtFontType.");
-    }
-
-    @Override
-    public LengthMeasure getFontSize() {
+    public ICss3Length getFontSize() {
         FontData fontData = getFontData();
         assert fontData != null : "font data is null";
         int fontHeight = fontData.getHeight();
-        return new LengthMeasure(fontHeight, LengthMeasure.POINT);
+        return new Css3Length(fontHeight, Length.POINT);
     }
 
     @Override
-    public void setFontSize(LengthMeasure fontSize) {
+    public void setFontSize(ICss3Length fontSize) {
         Point ppi = device.getDPI();
 
         FontData fontData = getFontData();

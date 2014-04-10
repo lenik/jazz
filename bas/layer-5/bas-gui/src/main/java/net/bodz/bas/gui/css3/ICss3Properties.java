@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.bodz.bas.gui.css3.property.*;
 import net.bodz.bas.gui.style.IColor;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.t.map.IParsedMap;
 import net.bodz.bas.t.pojo.Pair;
 
 /**
@@ -12,7 +12,9 @@ import net.bodz.bas.t.pojo.Pair;
  * 
  * @see <a href="http://www.w3.org/TR/CSS/#properties">CSS3 Properties</a>
  */
-public interface ICss3StyleProperties {
+public interface ICss3Properties
+        extends IParsedMap<String, String> {
+
     /**
      * This property specifies the content width of boxes.
      * 
@@ -22,17 +24,13 @@ public interface ICss3StyleProperties {
      * line boxes is given by the their containing block, but may be shorted by the presence of
      * floats.
      */
-    OffsetType getWidthType();
+    ICss3Length getWidth();
 
-    OffsetType getHeightType();
+    ICss3Length getHeight();
 
-    LengthMeasure getWidth();
+    void setWidth(ICss3Length width);
 
-    LengthMeasure getHeight();
-
-    void setWidth(OffsetType widthType, LengthMeasure width);
-
-    void setHeight(OffsetType heightType, LengthMeasure height);
+    void setHeight(ICss3Length height);
 
     /**
      * This property specifies how far an absolutely positioned box's top margin edge is offset
@@ -40,68 +38,52 @@ public interface ICss3StyleProperties {
      * is with respect to the top edges of the box itself (i.e., the box is given a position in the
      * normal flow, then offset from that position according to these properties).
      */
-    OffsetType getTopType();
+    ICss3Length getTop();
 
     /**
      * Like 'top', but specifies how far a box's right margin edge is offset to the left of the
      * right edge of the box's containing block. For relatively positioned boxes, the offset is with
      * respect to the right edge of the box itself.
      */
-    OffsetType getRightType();
+    ICss3Length getRight();
 
     /**
      * Like 'top', but specifies how far a box's bottom margin edge is offset above the bottom of
      * the box's containing block. For relatively positioned boxes, the offset is with respect to
      * the bottom edge of the box itself.
      */
-    OffsetType getBottomType();
+    ICss3Length getBottom();
 
     /**
      * Like 'top', but specifies how far a box's left margin edge is offset to the right of the left
      * edge of the box's containing block. For relatively positioned boxes, the offset is with
      * respect to the left edge of the box itself.
      */
-    OffsetType getLeftType();
+    ICss3Length getLeft();
 
-    LengthMeasure getTop();
+    void setTop(ICss3Length top);
 
-    LengthMeasure getRight();
+    void setRight(ICss3Length right);
 
-    LengthMeasure getBottom();
+    void setBottom(ICss3Length bottom);
 
-    LengthMeasure getLeft();
+    void setLeft(ICss3Length left);
 
-    void setTop(OffsetType topType, LengthMeasure top);
+    ICss3Length getMinWidth();
 
-    void setRight(OffsetType rightType, LengthMeasure right);
+    ICss3Length getMaxWidth();
 
-    void setBottom(OffsetType bottomType, LengthMeasure bottom);
+    ICss3Length getMinHeight();
 
-    void setLeft(OffsetType leftType, LengthMeasure left);
+    ICss3Length getMaxHeight();
 
-    OffsetType getMinWidthType();
+    void setMinWidth(ICss3Length minWidth);
 
-    OffsetType getMaxWidthType();
+    void setMaxWidth(ICss3Length maxWidth);
 
-    OffsetType getMinHeightType();
+    void setMinHeight(ICss3Length minHeight);
 
-    OffsetType getMaxHeightType();
-
-    LengthMeasure getMinWidth();
-
-    LengthMeasure getMaxWidth();
-
-    LengthMeasure getMinHeight();
-
-    LengthMeasure getMaxHeight();
-
-    void setMinWidth(OffsetType minWidthType, LengthMeasure minWidth);
-
-    void setMaxWidth(OffsetType maxWidthType, LengthMeasure maxWidth);
-
-    void setMinHeight(OffsetType minHeightType, LengthMeasure minHeight);
-
-    void setMaxHeight(OffsetType maxHeightType, LengthMeasure maxHeight);
+    void setMaxHeight(ICss3Length maxHeight);
 
     /**
      * This property describes the foreground color of an element's text content. In addition it is
@@ -136,11 +118,11 @@ public interface ICss3StyleProperties {
      * unavailable. When the image is available, it is rendered on top of the background color.
      * (Thus, the color is visible in the transparent parts of the image).
      */
-    BackgroundImageType getBackgroundImageType();
+    ImageType getBackgroundImageType();
 
     String getBackgroundImage();
 
-    void setBackgroundImage(BackgroundImageType backgroundImageType, String backgroundImage);
+    void setBackgroundImage(ImageType backgroundImageType, String backgroundImage);
 
     /**
      * If a background image is specified, this property specifies whether the image is repeated
@@ -179,8 +161,29 @@ public interface ICss3StyleProperties {
      * value is not a keyword, then the first value represents the horizontal position and the
      * second represents the vertical position. Negative <percentage> and <length> values are
      * allowed.
+     * 
+     * <ul>
+     * <li>
+     * <i>length</i>: A length L aligns the top left corner of the image a distance L to the right
+     * of (for horizontal) or below (for vertical) the top left corner of the element's padding box.
+     * For example, with a value pair of '2cm 1cm', the upper left corner of the image is placed 2cm
+     * to the right and 1cm below the upper left corner of the padding box.
+     * <li><i>percentage</i>: A percentage X aligns the point X% across (for horizontal) or down
+     * (for vertical) the image with the point X% across (for horizontal) or down (for vertical) the
+     * element's padding box. For example, with a value pair of '0% 0%',the upper left corner of the
+     * image is aligned with the upper left corner of the padding box. A value pair of '100% 100%'
+     * places the lower right corner of the image in the lower right corner of the padding box. With
+     * a value pair of '14% 84%', the point 14% across and 84% down the image is to be placed at the
+     * point 14% across and 84% down the padding box.
+     * <li><code>top</code>: Equivalent to '0%' for the vertical position.
+     * <li><code>right</code>: Equivalent to '100%' for the horizontal position.
+     * <li><code>bottom</code>: Equivalent to '100%' for the vertical position.
+     * <li><code>left</code>: Equivalent to '0%' for the horizontal position.
+     * <li><code>center</code>: Equivalent to '50%' for the horizontal position if it is not
+     * otherwise given, or '50%' for the vertical position if it is.
+     * </ul>
      */
-    BackgroundPositionType getBackgroundPositionXType();
+    ICss3Length getBackgroundPositionX();
 
     /**
      * If a background image has been specified, this property specifies its initial position. If
@@ -189,14 +192,13 @@ public interface ICss3StyleProperties {
      * second represents the vertical position. Negative <percentage> and <length> values are
      * allowed.
      */
-    BackgroundPositionType getBackgroundPositionYType();
+    ICss3Length getBackgroundPositionY();
 
-    LengthMeasure getBackgroundPositionX();
+    void setBackgroundPositionX(ICss3Length backgroundPositionX);
 
-    LengthMeasure getBackgroundPositionY();
+    void setBackgroundPositionY(ICss3Length backgroundPositionY);
 
-    void setBackgroundPosition(BackgroundPositionType backgroundPositionXType, LengthMeasure backgroundPositionX,
-            BackgroundPositionType backgroundPositionYType, LengthMeasure backgroundPositionY);
+    void setBackgroundPosition(ICss3Length backgroundPositionX, ICss3Length backgroundPositionY);
 
     /**
      * The 'margin' property is a shorthand property for setting 'margin-top', 'margin-right',
@@ -208,9 +210,27 @@ public interface ICss3StyleProperties {
      * are set to the second, and the bottom is set to the third. If there are four values, they
      * apply to the top, right, bottom, and left, respectively.
      */
-    MeasureBox getMargin();
+    ICss3Length getMargin();
 
-    void setMargin(MeasureBox margin);
+    void setMargin(ICss3Length margin);
+
+    ICss3Length getMarginTop();
+
+    void setMarginTop(ICss3Length marginTop);
+
+    ICss3Length getMarginRight();
+
+    void setMarginRight(ICss3Length marginRight);
+
+    ICss3Length getMarginBottom();
+
+    void setMarginBottom(ICss3Length marginBottom);
+
+    ICss3Length getMarginLeft();
+
+    void setMarginLeft(ICss3Length marginLeft);
+
+    void setMargin(ICss3Length marginTop, ICss3Length marginRight, ICss3Length marginBottom, ICss3Length marginLeft);
 
     /**
      * The 'padding' property is a shorthand property for setting 'padding-top', 'padding-right',
@@ -224,13 +244,77 @@ public interface ICss3StyleProperties {
      * 
      * The surface color or image of the padding area is specified via the 'background' property:
      */
-    MeasureBox getPadding();
+    ICss3Length getPadding();
 
-    void setPadding(MeasureBox padding);
+    void setPadding(ICss3Length padding);
 
-    BorderBox getBorder();
+    ICss3Length getPaddingTop();
 
-    void setBorder(BorderBox border);
+    void setPaddingTop(ICss3Length paddingTop);
+
+    ICss3Length getPaddingRight();
+
+    void setPaddingRight(ICss3Length paddingRight);
+
+    ICss3Length getPaddingBottom();
+
+    void setPaddingBottom(ICss3Length paddingBottom);
+
+    ICss3Length getPaddingLeft();
+
+    void setPaddingLeft(ICss3Length paddingLeft);
+
+    void setPadding(ICss3Length paddingTop, ICss3Length paddingRight, ICss3Length paddingBottom, ICss3Length paddingLeft);
+
+    Border getBorder();
+
+    void setBorder(Border border);
+
+    Border getBorderTop();
+
+    void setBorderTop(Border borderTop);
+
+    Border getBorderRight();
+
+    void setBorderRight(Border borderRight);
+
+    Border getBorderBottom();
+
+    void setBorderBottom(Border borderBottom);
+
+    Border getBorderLeft();
+
+    void setBorderLeft(Border borderLeft);
+
+    void setBorder(Border borderTop, Border borderRight, Border borderBottom, Border borderLeft);
+
+    ICss3Length getBorderRadius();
+
+    void setBorderRadius(ICss3Length borderRadius);
+
+    ICss3Length getBorderTopLeftRadius();
+
+    void setBorderTopLeftRadius(ICss3Length borderTopLeftRadius);
+
+    ICss3Length getBorderTopRightRadius();
+
+    void setBorderTopRightRadius(ICss3Length borderTopRightRadius);
+
+    ICss3Length getBorderBottomRightRadius();
+
+    void setBorderBottomRightRadius(ICss3Length borderBottomRightRadius);
+
+    ICss3Length getBorderBottomLeftRadius();
+
+    void setBorderBottomLeftRadius(ICss3Length borderBottomLeftRadius);
+
+    /**
+     * The four values for each radii are given in the order top-left, top-right, bottom-right,
+     * bottom-left. If bottom-left is omitted it is the same as top-right. If bottom-right is
+     * omitted it is the same as top-left. If top-right is omitted it is the same as top-left.
+     */
+    void setBorderRadius(ICss3Length borderTopLeftRadius, ICss3Length borderTopRightRadius,
+            ICss3Length borderBottomRightRadius, ICss3Length borderBottomLeftRadius);
 
     /**
      * This property selects a table's border model. The value 'separate' selects the separated
@@ -256,20 +340,22 @@ public interface ICss3StyleProperties {
      * padding edge (including the border spacing but excluding padding and border).
      */
     @_InheritedIfNull
-    LengthMeasure getBorderSpacingHorizontal();
+    ICss3Length getBorderHorizontalSpacing();
 
     @_InheritedIfNull
-    LengthMeasure getBorderSpacingVertical();
+    ICss3Length getBorderVerticalSpacing();
 
-    void setBorderSpacing(LengthMeasure borderSpacingHorizontal, LengthMeasure borderSpacingVertical);
-
-    OutlineColorMode getOutlineColorType();
-
-    void setOutlineColorType(OutlineColorMode outlineColorType);
+    void setBorderSpacing(ICss3Length borderHorizontalSpacing, ICss3Length borderVerticalSpacing);
 
     Border getOutline();
 
-    void setOutline(Border outline);
+    boolean isOutlineInvert();
+
+    void setOutline(Border outline, boolean invert);
+
+    ICss3Length getOutlineOffset();
+
+    void setOutlineOffset(ICss3Length outlineOffset);
 
     /**
      * Opacity can be thought of as a postprocessing operation. Conceptually, after the element
@@ -360,15 +446,21 @@ public interface ICss3StyleProperties {
      * 'z-index' other than 'auto'. Stacking contexts are not necessarily related to containing
      * blocks. In future levels of CSS, other properties may introduce stacking contexts, for
      * example 'opacity' [CSS3COLOR].
+     * 
+     * <ul>
+     * <li><i>number</i>: This integer is the stack level of the generated box in the current
+     * stacking context. The box also establishes a new stacking context.
+     * <li><code>auto</code>: The stack level of the generated box in the current stacking context
+     * is 0. The box does not establish a new stacking context unless it is the root element.
+     * </ul>
+     * 
+     * @return The larger integer means at the front.
+     * @see ICss3Keywords#AUTO
+     * @see ICss3Keywords#NUMBER
      */
-    ZIndexType getZIndexType();
+    ICss3Int getZIndex();
 
-    /**
-     * The larger integer means at the front.
-     */
-    int getZIndex();
-
-    void setZIndex(ZIndexType zIndexType, int zIndex);
+    void setZIndex(ICss3Int zIndex);
 
     /**
      * The property value is a prioritized list of font family names and/or generic family names.
@@ -386,16 +478,19 @@ public interface ICss3StyleProperties {
     void setFontFamily(String fontFamily);
 
     /**
-     * @see FontSizeType#medium
-     * @see FontSizeType#large
-     * @see FontSizeType#small
+     * @see ICss3Length#MEDIUM
+     * @see ICss3Length#LARGE
+     * @see ICss3Length#SMALL
+     * @see ICss3Length#XX_LARGE
+     * @see ICss3Length#X_LARGE
+     * @see ICss3Length#LARGER
+     * @see ICss3Length#SMALLER
+     * @see ICss3Length#X_SMALL
+     * @see ICss3Length#XX_SMALL
      */
-    @_InheritedIfNull
-    FontSizeType getFontSizeType();
+    ICss3Length getFontSize();
 
-    LengthMeasure getFontSize();
-
-    void setFontSize(FontSizeType fontSizeType, LengthMeasure fontSize);
+    void setFontSize(ICss3Length fontSize);
 
     /**
      * @see FontStyleMode#normal
@@ -416,12 +511,6 @@ public interface ICss3StyleProperties {
 
     void setFontVariant(FontVariantMode fontVariant);
 
-    /**
-     * @see FontWeightMode#normal
-     * @see FontWeightMode#bold
-     * @see FontWeightMode#bolder
-     * @see FontWeightMode#lighter
-     */
     @_InheritedIfNull
     FontWeightMode getFontWeight();
 
@@ -444,22 +533,50 @@ public interface ICss3StyleProperties {
 
     /**
      * This property specifies spacing behavior between text characters.
+     * 
+     * <ul>
+     * <li><code>normal</code>: The spacing is the normal spacing for the current font. This value
+     * allows the user agent to alter the space between characters in order to justify text.
+     * <li><i>length</i>: This value indicates inter-character space in addition to the default
+     * space between characters. Values may be negative, but there may be implementation-specific
+     * limits. User agents may not further increase or decrease the inter-character space in order
+     * to justify text.
+     * </ul>
+     * 
+     * @see ICss3Length#NORMAL
+     * @see ICss3Length#LENGTH
      */
     @_InheritedIfNull
-    LetterSpacingType getLetterSpacingType();
+    ICss3Length getLetterSpacing();
 
+    void setLetterSpacing(ICss3Length letterSpacing);
+
+    /**
+     * <ul>
+     * <li><code>normal</code>: Tells user agents to set the used value to a "reasonable" value
+     * based on the font of the element. The value has the same meaning as <number>. We recommend a
+     * used value for 'normal' between 1.0 to 1.2. The computed value is 'normal'.
+     * 
+     * <li><i>length</i>: The specified length is used in the calculation of the line box height.
+     * Negative values are illegal.
+     * 
+     * <li><i>number</i>: The used value of the property is this number multiplied by the element's
+     * font size. Negative values are illegal. The computed value is the same as the specified
+     * value.
+     * 
+     * <li><i>percentage</i>: The computed value of the property is this percentage multiplied by
+     * the element's computed font size. Negative values are illegal.
+     * </ul>
+     * 
+     * @see ICss3Length#NORMAL
+     * @see ICss3Length#LENGTH
+     * @see ICss3Length#NUMBER
+     * @see ICss3Length#PERCENTAGE
+     */
     @_InheritedIfNull
-    LengthMeasure getLetterSpacing();
+    ICss3Length getLineHeight();
 
-    void setLetterSpacing(LetterSpacingType letterSpacingType, LengthMeasure letterSpacing);
-
-    @_InheritedIfNull
-    LineHeightType getLineHeightType();
-
-    @_InheritedIfNull
-    LengthMeasure getLineHeight();
-
-    void setLineHeight(LineHeightType lineHeightType, LengthMeasure lineHeight);
+    void setLineHeight(ICss3Length lineHeight);
 
     /**
      * This property describes decorations that are added to the text of an element using the
@@ -508,16 +625,18 @@ public interface ICss3StyleProperties {
      * example, the first line of an anonymous block box is only affected if it is the first child
      * of its parent element.
      * 
-     * @see TextIndentType#length
-     * @see TextIndentType#percentage
+     * The value of 'text-indent' may be negative, but there may be implementation-specific limits.
+     * If the value of 'text-indent' is either negative or exceeds the width of the block, that
+     * first box, described above, can overflow the block. The value of 'overflow' will affect
+     * whether such text that overflows the block is visible.
+     * 
+     * @see ICss3Length#LENGTH
+     * @see ICss3Length#PERCENTAGE
      */
     @_InheritedIfNull
-    TextIndentType getTextIndentType();
+    ICss3Length getTextIndent();
 
-    @_InheritedIfNull
-    LengthMeasure getTextIndent();
-
-    void setTextIndent(TextIndentType textIndentType, LengthMeasure textIndent);
+    void setTextIndent(ICss3Length textIndent);
 
     /**
      * This property describes how inline-level content of a block container is aligned.
@@ -536,15 +655,62 @@ public interface ICss3StyleProperties {
     /**
      * This property affects the vertical positioning inside a line box of the boxes generated by an
      * inline-level element.
-     * 
+     * <p>
      * Note. Values of this property have different meanings in the context of tables. Please
      * consult the section on table height algorithms for details.
+     * <p>
+     * The following values only have meaning with respect to a parent inline element, or to the
+     * strut of a parent block container element.
+     * <p>
+     * In the following definitions, for inline non-replaced elements, the box used for alignment is
+     * the box whose height is the 'line-height' (containing the box's glyphs and the half-leading
+     * on each side, see above). For all other elements, the box used for alignment is the margin
+     * box.
+     * <ul>
+     * <li><i>length</i>: Raise (positive value) or lower (negative value) the box by this distance.
+     * The value '0cm' means the same as 'baseline'.
+     * <li><code>percentage</code>: Raise (positive value) or lower (negative value) the box by this
+     * distance (a percentage of the 'line-height' value). The value '0%' means the same as
+     * 'baseline'.
+     * <li><code>baseline</code>: Align the baseline of the box with the baseline of the parent box.
+     * If the box does not have a baseline, align the bottom margin edge with the parent's baseline.
+     * <li><code>middle</code>: Align the vertical midpoint of the box with the baseline of the
+     * parent box plus half the x-height of the parent.
+     * <li><code>sub</code>: Lower the baseline of the box to the proper position for subscripts of
+     * the parent's box. (This value has no effect on the font size of the element's text.)
+     * <li><code>super</code>: Raise the baseline of the box to the proper position for superscripts
+     * of the parent's box. (This value has no effect on the font size of the element's text.)
+     * <li><code>text-top</code>: Align the top of the box with the top of the parent's content area
+     * (see 10.6.1).
+     * <li><code>text-bottom</code>: Align the bottom of the box with the bottom of the parent's
+     * content area (see 10.6.1).
+     * </ul>
+     * 
+     * The following values align the element relative to the line box. Since the element may have
+     * children aligned relative to it (which in turn may have descendants aligned relative to
+     * them), these values use the bounds of the aligned subtree. The aligned subtree of an inline
+     * element contains that element and the aligned subtrees of all children inline elements whose
+     * computed 'vertical-align' value is not 'top' or 'bottom'. The top of the aligned subtree is
+     * the highest of the tops of the boxes in the subtree, and the bottom is analogous.
+     * <ul>
+     * <li><code>top</code>: Align the top of the aligned subtree with the top of the line box.
+     * <li><code>bottom</code>: Align the bottom of the aligned subtree with the bottom of the line
+     * box.
+     * </ul>
+     * 
+     * @see ICss3Length#BASELINE
+     * @see ICss3Length#MIDDLE
+     * @see ICss3Length#SUB
+     * @see ICss3Length#SUPER
+     * @see ICss3Length#TEXT_TOP
+     * @see ICss3Length#TEXT_BOTTOM
+     * @see ICss3Length#PERCENTAGE
+     * @see ICss3Length# LENGTH
+     * 
      */
-    VerticalAlignType getVerticalAlignType();
+    ICss3Length getVerticalAlign();
 
-    LengthMeasure getVerticalAlign();
-
-    void setVerticalAlign(VerticalAlignType verticalAlignType, LengthMeasure verticalAlign);
+    void setVerticalAlign(ICss3Length verticalAlign);
 
     /**
      * This property specifies quotation marks for any number of embedded quotations. Values have
@@ -599,13 +765,24 @@ public interface ICss3StyleProperties {
 
     void setWhiteSpace(WhiteSpaceMode whiteSpace);
 
-    @_InheritedIfNull
-    WordSpacingType getWordSpacingType();
+    /**
+     * Word spacing algorithms are user agent-dependent. Word spacing is also influenced by
+     * justification (see the 'text-align' property). Word spacing affects each space (U+0020) and
+     * non-breaking space (U+00A0), left in the text after the white space processing rules have
+     * been applied. The effect of the property on other word-separator characters is undefined.
+     * However general punctuation, characters with zero advance width (such as the zero with space
+     * U+200B) and fixed-width spaces (such as U+3000 and U+2000 through U+200A) are not affected.,
+     * 
+     * <ul>
+     * <li><code>normal</code>: The normal inter-word space, as defined by the current font and/or
+     * the UA.
+     * <li><i>length</i>: This value indicates inter-word space in addition to the default space
+     * between words. Values may be negative, but there may be implementation-specific limits.
+     * </ul>
+     */
+    ICss3Length getWordSpacing();
 
-    @_InheritedIfNull
-    LengthMeasure getWordSpacing();
-
-    void setWordSpacing(WordSpacingType wordSpacingType, LengthMeasure wordSpacing);
+    void setWordSpacing(ICss3Length wordSpacing);
 
     /**
      * The 'clip' property applies only to absolutely positioned elements.
@@ -655,7 +832,7 @@ public interface ICss3StyleProperties {
     void setListStyleType(ListStyleTypeMode listStyleType);
 
     @_InheritedIfNull
-    ListStyleImageType getListStyleImageType();
+    ImageType getListStyleImageType();
 
     /**
      * This property sets the image that will be used as the list item marker. When the image is
@@ -664,7 +841,7 @@ public interface ICss3StyleProperties {
     @_InheritedIfNull
     String getListStyleImage();
 
-    void setListStyleImage(ListStyleImageType listStyleImageType, String listStyleImage);
+    void setListStyleImage(ImageType listStyleImageType, String listStyleImage);
 
     /**
      * This property specifies the position of the marker box with respect to the principal block
@@ -774,5 +951,7 @@ public interface ICss3StyleProperties {
     Integer getWidows();
 
     void setWidows(Integer widows);
+
+    void accept(ICss3Visitor visitor);
 
 }

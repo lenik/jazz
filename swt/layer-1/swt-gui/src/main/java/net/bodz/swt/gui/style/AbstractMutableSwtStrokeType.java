@@ -5,7 +5,7 @@ import org.eclipse.swt.SWT;
 import net.bodz.bas.gui.style.IMutableStrokeType;
 import net.bodz.bas.gui.style.property.LineCapMode;
 import net.bodz.bas.gui.style.property.LineJoinMode;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.i18n.unit.std.Length;
 
 public abstract class AbstractMutableSwtStrokeType
         extends AbstractSwtStrokeType
@@ -20,7 +20,7 @@ public abstract class AbstractMutableSwtStrokeType
     }
 
     @Override
-    public void setWidth(LengthMeasure width) {
+    public void setWidth(Length width) {
         int _width = width.pixels(xppi);
         setSwtLineWidth(_width);
     }

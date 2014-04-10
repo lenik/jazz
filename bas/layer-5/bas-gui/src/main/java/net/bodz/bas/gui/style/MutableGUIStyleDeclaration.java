@@ -3,11 +3,13 @@ package net.bodz.bas.gui.style;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.gui.css3.StaticCss3StyleDeclaration;
+import net.bodz.bas.gui.css3.MutableCss3StyleDeclaration;
 
-public class StaticGUIStyleDeclaration
-        extends StaticCss3StyleDeclaration
+public class MutableGUIStyleDeclaration
+        extends MutableCss3StyleDeclaration
         implements IGUIElementStyleDeclaration {
+
+    private static final long serialVersionUID = 1L;
 
     IFontType fontType;
     IStrokeType strokeType;
@@ -66,7 +68,7 @@ public class StaticGUIStyleDeclaration
     }
 
     @Override
-    public String getViewId() {
+    public String getGroup() {
         return null;
     }
 

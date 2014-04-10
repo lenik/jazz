@@ -1,10 +1,12 @@
 package net.bodz.bas.gui.css3;
 
 import java.io.Serializable;
+import java.util.StringTokenizer;
 
+import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.gui.css3.property.BorderStyleMode;
 import net.bodz.bas.gui.style.IColor;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.i18n.unit.std.Length;
 
 public class Border
         implements IBorderAttributes, Serializable {
@@ -12,12 +14,9 @@ public class Border
     private static final long serialVersionUID = 1L;
 
     BorderStyleMode style = BorderStyleMode.solid;
-    LengthMeasure width;
+    ICss3Length width; // = LengthMeasure.PIXEL(1);
     IColor color;
     boolean useCurrentColor = true;
-
-    LengthMeasure radiusLeft;
-    LengthMeasure radiusRight; // = left.
 
     @Override
     public BorderStyleMode getStyle() {
@@ -32,12 +31,12 @@ public class Border
     }
 
     @Override
-    public LengthMeasure getWidth() {
+    public ICss3Length getWidth() {
         return width;
     }
 
     @Override
-    public void setWidth(LengthMeasure width) {
+    public void setWidth(ICss3Length width) {
         this.width = width;
     }
 
@@ -62,34 +61,25 @@ public class Border
     }
 
     @Override
-    public LengthMeasure getRadius() {
-        return getRadiusLeft();
+    public String toString() {
+        return style + " " + width + " " + color;
     }
 
-    @Override
-    public void setRadius(LengthMeasure radius) {
-        setRadiusLeft(radius);
-        setRadiusRight(radius);
-    }
+    public static Border parse(String str) {
+        if (str.endsWith("%"))
+            str = StringPart.chop(str).trim();
 
-    @Override
-    public LengthMeasure getRadiusLeft() {
-        return radiusLeft;
-    }
+        Border border = new Border();
+        StringTokenizer tokens = new StringTokenizer(str, " ");
+        while (tokens.hasMoreTokens()) {
+            String tok = tokens.nextToken();
 
-    @Override
-    public void setRadiusLeft(LengthMeasure radiusLeft) {
-        this.radiusLeft = radiusLeft;
-    }
+            BorderStyleMode style = BorderStyleMode.valueOf(tok);
 
-    @Override
-    public LengthMeasure getRadiusRight() {
-        return radiusRight;
-    }
-
-    @Override
-    public void setRadiusRight(LengthMeasure radiusRight) {
-        this.radiusRight = radiusRight;
+            IColor color;
+            Length width = Length.parseOrNaN(tok);
+        }
+        return border;
     }
 
 }
