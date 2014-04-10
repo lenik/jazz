@@ -2,13 +2,12 @@ package net.bodz.bas.gui.style;
 
 import java.io.Serializable;
 
-import net.bodz.bas.gui.css3.property.FontSizeType;
+import net.bodz.bas.gui.css3.ICss3Length;
 import net.bodz.bas.gui.css3.property.FontStyleMode;
 import net.bodz.bas.gui.css3.property.FontUseMode;
 import net.bodz.bas.gui.css3.property.FontVariantMode;
 import net.bodz.bas.gui.css3.property.FontWeightMode;
 import net.bodz.bas.gui.css3.property.TextDecorationFlags;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
 
 public interface IFontType
         extends Serializable {
@@ -17,15 +16,13 @@ public interface IFontType
 
     String getFontFamily();
 
-    FontSizeType getFontSizeType();
-
-    LengthMeasure getFontSize();
+    ICss3Length getFontSize();
 
     FontStyleMode getFontStyle();
 
-    FontWeightMode getFontWeight();
-
     FontVariantMode getFontVariant();
+
+    FontWeightMode getFontWeight();
 
     TextDecorationFlags getTextDecoration();
 

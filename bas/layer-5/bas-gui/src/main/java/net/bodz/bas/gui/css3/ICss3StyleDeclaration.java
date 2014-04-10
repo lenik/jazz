@@ -1,7 +1,7 @@
 package net.bodz.bas.gui.css3;
 
 public interface ICss3StyleDeclaration
-        extends ICss3StyleProperties {
+        extends ICss3Properties {
 
     /**
      * Get the parent style class.
@@ -11,7 +11,7 @@ public interface ICss3StyleDeclaration
      */
     ICss3StyleDeclaration getParent();
 
-    void setParent(ICss3StyleDeclaration parent);
+    String get(String key, int maxInherits);
 
     ICss3StyleDeclaration NULL = new NullCss3StyleDeclaration();
 

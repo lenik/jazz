@@ -2,260 +2,202 @@ package net.bodz.bas.gui.css3;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.bodz.bas.c.string.StringPart;
-import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.gui.css3.property.*;
 import net.bodz.bas.gui.style.IColor;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
 import net.bodz.bas.t.pojo.Pair;
 
 public abstract class MappedCss3StyleDeclaration
-        extends AbstractPropertiesMapper
+        extends AbstractCss3Properties
         implements ICss3StyleDeclaration {
 
-    protected OffsetType getOffsetTypeProperty(String key, OffsetType inherited, boolean inheritByDefault) {
-        String str = getProperty(key);
-        if (str == null)
-            return inheritByDefault ? inherited : null;
-        if ("inherited".equals(str))
-            return inherited;
-        if ("auto".equals(str))
-            return OffsetType.auto;
+    private static final long serialVersionUID = 1L;
 
-        String num = StringPart.peekDecimal(str);
-        String suffix = str.substring(num.length()).trim();
-
-        if ("%".equals(suffix))
-            return OffsetType.percentage;
-        else
-            // assume suffix == unit.
-            return OffsetType.length;
+    public MappedCss3StyleDeclaration() {
+        this(new LinkedHashMap<String, String>());
     }
 
-    protected LengthMeasure getOffsetProperty(String key, LengthMeasure inherited, boolean inheritByDefault) {
-        String str = getProperty(key);
-        if (str == null)
-            return inheritByDefault ? inherited : null;
-        if ("inherited".equals(str))
-            return inherited;
-
-        switch (str) {
-        case "auto":
-        case "none":
-            return LengthMeasure.NaN;
-        }
-
-        if (str.endsWith("%"))
-            str = StringPart.chop(str).trim();
-        return LengthMeasure.parseOrNaN(str);
+    public MappedCss3StyleDeclaration(Map<String, String> _orig) {
+        super(_orig);
     }
 
-    protected void setOffsetProperty(String key, OffsetType offsetType, LengthMeasure offset) {
-        Object property = null;
-        if (offsetType != null)
-            switch (offsetType) {
-            case length:
-                property = offset;
-                break;
-            case percentage:
-                property = offset + "%";
-                break;
-            case auto:
-            case none:
-            default:
-                property = offsetType;
-            }
-        setProperty(key, property);
-    }
-
-    protected IColor getColorProperty(String key, IColor inherited, boolean inheritByDefault) {
-        String str = getProperty(key);
-        if (str == null)
-            return inheritByDefault ? inherited : null;
-        if ("inherited".equals(str))
-            return inherited;
+    @Override
+    public ICss3StyleDeclaration getParent() {
         return null;
     }
 
-    @Override
-    public OffsetType getWidthType() {
-        return getOffsetTypeProperty("width", getParent().getWidthType(), false);
+    public void setParent(ICss3StyleDeclaration parent) {
     }
 
     @Override
-    public OffsetType getHeightType() {
-        return getOffsetTypeProperty("height", getParent().getHeightType(), false);
+    public String get(String key, int maxInherits) {
+        String property = get(key);
+
+        boolean inherited = false;
+        if (property == null) {
+            if (maxInherits != 0)
+                maxInherits--;
+            inherited = true;
+        } else if (property.equals("inherit")) {
+            inherited = true;
+        }
+
+        if (!inherited)
+            return property;
+
+        ICss3StyleDeclaration parent = getParent();
+        if (parent == null)
+            return null;
+        else
+            return parent.get(key, maxInherits);
+    }
+
+    public String getInherited(String key) {
+        return get(key, -1);
+    }
+
+    public String getInheritable(String key) {
+        return get(key, 0);
+    }
+
+    public void set(String key, Object value) {
+        if (value == null)
+            remove(key);
+        else
+            put(key, value.toString());
     }
 
     @Override
-    public LengthMeasure getWidth() {
-        return getOffsetProperty("width", getParent().getWidth(), false);
+    public ICss3Length getWidth() {
+        return parseCssLength(get("width"));
     }
 
     @Override
-    public LengthMeasure getHeight() {
-        return getOffsetProperty("height", getParent().getHeight(), false);
+    public ICss3Length getHeight() {
+        return parseCssLength(get("height"));
     }
 
     @Override
-    public void setWidth(OffsetType widthType, LengthMeasure width) {
-        setOffsetProperty("width", widthType, width);
+    public void setWidth(ICss3Length width) {
+        set("width", width);
     }
 
     @Override
-    public void setHeight(OffsetType heightType, LengthMeasure height) {
-        setOffsetProperty("height", heightType, height);
+    public void setHeight(ICss3Length height) {
+        set("height", height);
     }
 
     @Override
-    public OffsetType getTopType() {
-        return getOffsetTypeProperty("top", getParent().getTopType(), false);
+    public ICss3Length getTop() {
+        return parseCssLength(get("top"));
     }
 
     @Override
-    public OffsetType getRightType() {
-        return getOffsetTypeProperty("right", getParent().getRightType(), false);
-    }
-
-    @Override
-    public OffsetType getBottomType() {
-        return getOffsetTypeProperty("bottom", getParent().getBottomType(), false);
-    }
-
-    @Override
-    public OffsetType getLeftType() {
-        return getOffsetTypeProperty("left", getParent().getLeftType(), false);
-    }
-
-    @Override
-    public LengthMeasure getTop() {
-        return getOffsetProperty("top", getParent().getTop(), false);
-    }
-
-    @Override
-    public LengthMeasure getRight() {
-        return getOffsetProperty("right", getParent().getRight(), false);
+    public ICss3Length getRight() {
+        return parseCssLength(get("right"));
 
     }
 
     @Override
-    public LengthMeasure getBottom() {
-        return getOffsetProperty("bottom", getParent().getBottom(), false);
+    public ICss3Length getBottom() {
+        return parseCssLength(get("bottom"));
     }
 
     @Override
-    public LengthMeasure getLeft() {
-        return getOffsetProperty("left", getParent().getLeft(), false);
+    public ICss3Length getLeft() {
+        return parseCssLength(get("left"));
 
     }
 
     @Override
-    public void setTop(OffsetType topType, LengthMeasure top) {
-        setOffsetProperty("top", topType, top);
+    public void setTop(ICss3Length top) {
+        set("top", top);
     }
 
     @Override
-    public void setRight(OffsetType rightType, LengthMeasure right) {
-        setOffsetProperty("right", rightType, right);
+    public void setRight(ICss3Length right) {
+        set("right", right);
     }
 
     @Override
-    public void setBottom(OffsetType bottomType, LengthMeasure bottom) {
-        setOffsetProperty("bottom", bottomType, bottom);
+    public void setBottom(ICss3Length bottom) {
+        set("bottom", bottom);
     }
 
     @Override
-    public void setLeft(OffsetType leftType, LengthMeasure left) {
-        setOffsetProperty("left", leftType, left);
+    public void setLeft(ICss3Length left) {
+        set("left", left);
     }
 
     @Override
-    public OffsetType getMinWidthType() {
-        return getOffsetTypeProperty("min-width", getParent().getMinWidthType(), false);
+    public ICss3Length getMinWidth() {
+        return parseCssLength(get("min-width"));
     }
 
     @Override
-    public OffsetType getMaxWidthType() {
-        return getOffsetTypeProperty("max-width", getParent().getMaxWidthType(), false);
+    public ICss3Length getMaxWidth() {
+        return parseCssLength(get("max-width"));
     }
 
     @Override
-    public OffsetType getMinHeightType() {
-        return getOffsetTypeProperty("min-height", getParent().getMinHeightType(), false);
+    public ICss3Length getMinHeight() {
+        return parseCssLength(get("min-height"));
     }
 
     @Override
-    public OffsetType getMaxHeightType() {
-        return getOffsetTypeProperty("max-height", getParent().getMaxHeightType(), false);
+    public ICss3Length getMaxHeight() {
+        return parseCssLength(get("max-height"));
     }
 
     @Override
-    public LengthMeasure getMinWidth() {
-        return getOffsetProperty("min-width", getParent().getMinWidth(), false);
+    public void setMinWidth(ICss3Length minWidth) {
+        set("min-width", minWidth);
     }
 
     @Override
-    public LengthMeasure getMaxWidth() {
-        return getOffsetProperty("max-width", getParent().getMaxWidth(), false);
+    public void setMaxWidth(ICss3Length maxWidth) {
+        set("max-width", maxWidth);
     }
 
     @Override
-    public LengthMeasure getMinHeight() {
-        return getOffsetProperty("min-height", getParent().getMinHeight(), false);
+    public void setMinHeight(ICss3Length minHeight) {
+        set("min-height", minHeight);
     }
 
     @Override
-    public LengthMeasure getMaxHeight() {
-        return getOffsetProperty("max-height", getParent().getMaxHeight(), false);
-    }
-
-    @Override
-    public void setMinWidth(OffsetType minWidthType, LengthMeasure minWidth) {
-        setOffsetProperty("min-width", minWidthType, minWidth);
-    }
-
-    @Override
-    public void setMaxWidth(OffsetType maxWidthType, LengthMeasure maxWidth) {
-        setOffsetProperty("max-width", maxWidthType, maxWidth);
-    }
-
-    @Override
-    public void setMinHeight(OffsetType minHeightType, LengthMeasure minHeight) {
-        setOffsetProperty("min-height", minHeightType, minHeight);
-    }
-
-    @Override
-    public void setMaxHeight(OffsetType maxHeightType, LengthMeasure maxHeight) {
-        setOffsetProperty("max-height", maxHeightType, maxHeight);
+    public void setMaxHeight(ICss3Length maxHeight) {
+        set("max-height", maxHeight);
     }
 
     @Override
     public IColor getColor() {
-        return getColorProperty("color", getParent().getColor(), true);
+        return parseColor(get("color"));
     }
 
     @Override
     public void setColor(IColor color) {
-        setProperty("color", color);
+        set("color", color);
     }
 
     @Override
     public IColor getBackgroundColor() {
-        return getColorProperty("background-color", getParent().getBackgroundColor(), false);
+        return parseColor(get("background-color"));
     }
 
     @Override
     public void setBackgroundColor(IColor backgroundColor) {
-        setProperty("background-color", backgroundColor);
+        set("background-color", backgroundColor);
     }
 
     @Override
-    public BackgroundImageType getBackgroundImageType() {
-        String str = getProperty("background-image");
+    public ImageType getBackgroundImageType() {
+        String str = getInherited("background-image");
         if (str == null)
             return null;
 
@@ -263,18 +205,18 @@ public abstract class MappedCss3StyleDeclaration
         case "inherited":
             return getParent().getBackgroundImageType();
         case "none":
-            return BackgroundImageType.none;
+            return ImageType.none;
         }
 
         if (str.startsWith("uri(") && str.endsWith(")"))
-            return BackgroundImageType.uri;
+            return ImageType.uri;
 
         throw new IllegalUsageException("Illegal background-image: " + str);
     }
 
     @Override
     public String getBackgroundImage() {
-        String str = getProperty("background-image");
+        String str = getInherited("background-image");
         if (str == null)
             return null;
 
@@ -292,7 +234,7 @@ public abstract class MappedCss3StyleDeclaration
     }
 
     @Override
-    public void setBackgroundImage(BackgroundImageType backgroundImageType, String backgroundImage) {
+    public void setBackgroundImage(ImageType backgroundImageType, String backgroundImage) {
         Object property = null;
         switch (backgroundImageType) {
         case uri:
@@ -302,87 +244,32 @@ public abstract class MappedCss3StyleDeclaration
         default:
             property = "none";
         }
-        setProperty("background-image", property);
+        set("background-image", property);
     }
 
     @Override
     public BackgroundRepeatMode getBackgroundRepeat() {
-        return getEnumProperty("background-repeat", BackgroundRepeatMode.class, //
-                getParent().getBackgroundRepeat(), false);
+        return parseEnum(get("background-repeat"), BackgroundRepeatMode.class);
     }
 
     @Override
     public void setBackgroundRepeat(BackgroundRepeatMode backgroundRepeat) {
-        setProperty("background-repeat", backgroundRepeat);
+        set("background-repeat", backgroundRepeat);
     }
 
     @Override
     public BackgroundAttachmentMode getBackgroundAttachment() {
-        return getEnumProperty("background-attachment", BackgroundAttachmentMode.class, //
-                getParent().getBackgroundAttachment(), false);
+        return parseEnum(get("background-attachment"), BackgroundAttachmentMode.class);
     }
 
     @Override
     public void setBackgroundAttachment(BackgroundAttachmentMode backgroundAttachment) {
-        setProperty("background-attachment", backgroundAttachment);
+        set("background-attachment", backgroundAttachment);
     }
 
     @Override
-    public BackgroundPositionType getBackgroundPositionXType() {
-        String str = getProperty("background-position");
-        if (str == null || "inherited".equals(str))
-            return getParent().getBackgroundPositionXType();
-
-        str = StringPart.before(str, ';', str).trim();
-
-        switch (str) {
-        case "left":
-            return BackgroundPositionType.left;
-        case "right":
-            return BackgroundPositionType.right;
-        case "center":
-        case "":
-            return BackgroundPositionType.center;
-        }
-
-        if (str.endsWith("%"))
-            return BackgroundPositionType.percentage;
-        else
-            // assume endsWith(unit)
-            return BackgroundPositionType.length;
-    }
-
-    @Override
-    public BackgroundPositionType getBackgroundPositionYType() {
-        String str = getProperty("background-position");
-        if (str == null || "inherited".equals(str))
-            return getParent().getBackgroundPositionYType();
-
-        str = StringPart.after(str, ';', null);
-        if (str == null)
-            return BackgroundPositionType.center;
-        str = str.trim();
-
-        switch (str) {
-        case "top":
-            return BackgroundPositionType.top;
-        case "bottom":
-            return BackgroundPositionType.bottom;
-        case "center":
-        case "":
-            return BackgroundPositionType.center;
-        }
-
-        if (str.endsWith("%"))
-            return BackgroundPositionType.percentage;
-        else
-            // assume endsWith(unit)
-            return BackgroundPositionType.length;
-    }
-
-    @Override
-    public LengthMeasure getBackgroundPositionX() {
-        String str = getProperty("background-position");
+    public ICss3Length getBackgroundPositionX() {
+        String str = getInherited("background-position-x");
         if (str == null || "inherited".equals(str))
             return getParent().getBackgroundPositionX();
 
@@ -393,23 +280,23 @@ public abstract class MappedCss3StyleDeclaration
         case "right":
         case "center":
         case "":
-            return LengthMeasure.NaN;
+            return Css3Length.NaN;
         }
 
         if (str.endsWith("%"))
             str = StringPart.chop(str);
-        return LengthMeasure.parseOrNaN(str);
+        return Css3Length.parseOrNaN(str);
     }
 
     @Override
-    public LengthMeasure getBackgroundPositionY() {
-        String str = getProperty("background-position");
+    public ICss3Length getBackgroundPositionY() {
+        String str = get("background-position-y");
         if (str == null || "inherited".equals(str))
             return getParent().getBackgroundPositionY();
 
         str = StringPart.after(str, ';', null);
         if (str == null)
-            return LengthMeasure.NaN;
+            return Css3Length.NaN;
         str = str.trim();
 
         switch (str) {
@@ -417,135 +304,276 @@ public abstract class MappedCss3StyleDeclaration
         case "bottom":
         case "center":
         case "":
-            return LengthMeasure.NaN;
+            return Css3Length.NaN;
         }
 
         if (str.endsWith("%"))
             str = StringPart.chop(str);
-        return LengthMeasure.parseOrNaN(str);
+        return Css3Length.parseOrNaN(str);
     }
 
     @Override
-    public void setBackgroundPosition(BackgroundPositionType backgroundPositionXType,
-            LengthMeasure backgroundPositionX, BackgroundPositionType backgroundPositionYType,
-            LengthMeasure backgroundPositionY) {
-        String xstr = null, ystr = null;
-        if (backgroundPositionXType != null)
-            switch (backgroundPositionXType) {
-            case length:
-                xstr = backgroundPositionX.toString();
-                break;
-            case percentage:
-                xstr = backgroundPositionX.getValue() + "%";
-                break;
-            case center:
-                xstr = "";
-                break;
-            case left:
-            case right:
-            default:
-                xstr = backgroundPositionXType.toString();
-            }
+    public void setBackgroundPositionX(ICss3Length backgroundPositionX) {
+    }
 
-        if (backgroundPositionYType != null)
-            switch (backgroundPositionYType) {
-            case length:
-                ystr = backgroundPositionY.toString();
-                break;
-            case percentage:
-                ystr = backgroundPositionY.getValue() + "%";
-                break;
-            case center:
-                ystr = "";
-            case top:
-            case bottom:
-            default:
-                ystr = backgroundPositionYType.toString();
-            }
+    @Override
+    public void setBackgroundPositionY(ICss3Length backgroundPositionY) {
+    }
 
-        String str;
-        if (xstr == null) {
-            if (ystr == null)
-                str = null;
-            else
-                str = "; " + ystr;
-        } else {
-            if (ystr == null)
-                str = xstr;
-            else
-                str = xstr + "; " + ystr;
+    @Override
+    public void setBackgroundPosition(ICss3Length backgroundPositionX, ICss3Length backgroundPositionY) {
+        String str = null;
+        if (backgroundPositionX != null || backgroundPositionY != null) {
+            str = "";
+            if (backgroundPositionX != null)
+                str = backgroundPositionX.toString();
+            str += ";";
+            if (backgroundPositionY != null)
+                str += backgroundPositionY.toString();
         }
-        setProperty("background-position", str);
+        set("background-position", str);
     }
 
     @Override
-    public MeasureBox getMargin() {
+    public ICss3Length getMargin() {
         return null;
     }
 
     @Override
-    public void setMargin(MeasureBox margin) {
+    public void setMargin(ICss3Length margin) {
+        set("margin", margin);
     }
 
     @Override
-    public MeasureBox getPadding() {
+    public ICss3Length getMarginTop() {
+        return parseCssLength(get("margin-top"));
+    }
+
+    @Override
+    public void setMarginTop(ICss3Length marginTop) {
+        set("margin-top", marginTop);
+    }
+
+    @Override
+    public ICss3Length getMarginRight() {
         return null;
     }
 
     @Override
-    public void setPadding(MeasureBox padding) {
+    public void setMarginRight(ICss3Length marginRight) {
+        set("margin-right", marginRight);
     }
 
     @Override
-    public BorderBox getBorder() {
+    public ICss3Length getMarginBottom() {
         return null;
     }
 
     @Override
-    public void setBorder(BorderBox border) {
+    public void setMarginBottom(ICss3Length marginBottom) {
+        set("margin-bottom", marginBottom);
+    }
+
+    @Override
+    public ICss3Length getMarginLeft() {
+        return null;
+    }
+
+    @Override
+    public void setMarginLeft(ICss3Length marginLeft) {
+        set("margin-left", marginLeft);
+    }
+
+    @Override
+    public ICss3Length getPadding() {
+        return null;
+    }
+
+    @Override
+    public void setPadding(ICss3Length padding) {
+        set("padding", padding);
+    }
+
+    @Override
+    public ICss3Length getPaddingTop() {
+        return null;
+    }
+
+    @Override
+    public void setPaddingTop(ICss3Length paddingTop) {
+        set("padding-top", paddingTop);
+    }
+
+    @Override
+    public ICss3Length getPaddingRight() {
+        return null;
+    }
+
+    @Override
+    public void setPaddingRight(ICss3Length paddingRight) {
+        set("padding-right", paddingRight);
+    }
+
+    @Override
+    public ICss3Length getPaddingBottom() {
+        return null;
+    }
+
+    @Override
+    public void setPaddingBottom(ICss3Length paddingBottom) {
+        set("padding-bottom", paddingBottom);
+    }
+
+    @Override
+    public ICss3Length getPaddingLeft() {
+        return null;
+    }
+
+    @Override
+    public void setPaddingLeft(ICss3Length paddingLeft) {
+        set("padding-left", paddingLeft);
+    }
+
+    @Override
+    public Border getBorder() {
+        return null;
+    }
+
+    @Override
+    public void setBorder(Border border) {
+        set("border", border);
+    }
+
+    @Override
+    public Border getBorderTop() {
+        return null;
+    }
+
+    @Override
+    public void setBorderTop(Border borderTop) {
+        set("border-top", borderTop);
+    }
+
+    @Override
+    public Border getBorderRight() {
+        return null;
+    }
+
+    @Override
+    public void setBorderRight(Border borderRight) {
+        set("border-right", borderRight);
+    }
+
+    @Override
+    public Border getBorderBottom() {
+        return null;
+    }
+
+    @Override
+    public void setBorderBottom(Border borderBottom) {
+        set("border-bottom", borderBottom);
+    }
+
+    @Override
+    public Border getBorderLeft() {
+        return null;
+    }
+
+    @Override
+    public void setBorderLeft(Border borderLeft) {
+        set("border-left", borderLeft);
+    }
+
+    @Override
+    public ICss3Length getBorderRadius() {
+        return parseCssLength(get("border-radius"));
+    }
+
+    @Override
+    public void setBorderRadius(ICss3Length borderRadius) {
+        set("border-radius", borderRadius);
+    }
+
+    @Override
+    public ICss3Length getBorderTopLeftRadius() {
+        return parseCssLength(get("border-top-left-radius"));
+    }
+
+    @Override
+    public void setBorderTopLeftRadius(ICss3Length borderTopLeftRadius) {
+        set("border-top-left-radius", borderTopLeftRadius);
+    }
+
+    @Override
+    public ICss3Length getBorderTopRightRadius() {
+        return parseCssLength(get("border-top-right-radius"));
+    }
+
+    @Override
+    public void setBorderTopRightRadius(ICss3Length borderTopRightRadius) {
+        set("border-top-right-radius", borderTopRightRadius);
+    }
+
+    @Override
+    public ICss3Length getBorderBottomRightRadius() {
+        return parseCssLength(get("border-bottom-right-radius"));
+    }
+
+    @Override
+    public void setBorderBottomRightRadius(ICss3Length borderBottomRightRadius) {
+        set("border-bottom-right-radius", borderBottomRightRadius);
+    }
+
+    @Override
+    public ICss3Length getBorderBottomLeftRadius() {
+        return parseCssLength(get("border-bottom-left-radius"));
+    }
+
+    @Override
+    public void setBorderBottomLeftRadius(ICss3Length borderBottomLeftRadius) {
+        set("border-bottom-left-radius", borderBottomLeftRadius);
     }
 
     @Override
     public BorderCollapseMode getBorderCollapse() {
-        return getEnumProperty("border-collapse", BorderCollapseMode.class, //
-                getParent().getBorderCollapse(), true);
+        return parseEnum(get("border-collapse"), BorderCollapseMode.class);
     }
 
     @Override
     public void setBorderCollapse(BorderCollapseMode borderCollapse) {
-        setProperty("border-collapse", borderCollapse);
+        set("border-collapse", borderCollapse);
     }
 
     @Override
-    public LengthMeasure getBorderSpacingHorizontal() {
-        String str = getProperty("border-spacing");
+    public ICss3Length getBorderHorizontalSpacing() {
+        String str = get("border-spacing");
         if (str == null)
             return null;
         if ("inherit".equals(str))
-            return getParent().getBorderSpacingHorizontal();
+            return getParent().getBorderHorizontalSpacing();
         String[] array = str.split("\\s+");
         String hstr = array[0];
-        return LengthMeasure.parseOrNaN(hstr);
+        return Css3Length.parseOrNaN(hstr);
     }
 
     @Override
-    public LengthMeasure getBorderSpacingVertical() {
-        String str = getProperty("border-spacing");
+    public ICss3Length getBorderVerticalSpacing() {
+        String str = get("border-spacing");
         if (str == null)
             return null;
         if ("inherit".equals(str))
-            return getParent().getBorderSpacingHorizontal();
+            return getParent().getBorderHorizontalSpacing();
         String[] array = str.split("\\s+");
         String vstr;
         if (array.length >= 2)
             vstr = array[1];
         else
             vstr = array[0];
-        return LengthMeasure.parseOrNaN(vstr);
+        return Css3Length.parseOrNaN(vstr);
     }
 
     @Override
-    public void setBorderSpacing(LengthMeasure borderSpacingHorizontal, LengthMeasure borderSpacingVertical) {
+    public void setBorderSpacing(ICss3Length borderSpacingHorizontal, ICss3Length borderSpacingVertical) {
         Object property = null;
         if (borderSpacingHorizontal != null) {
             String str = borderSpacingHorizontal.toString();
@@ -553,16 +581,7 @@ public abstract class MappedCss3StyleDeclaration
                 str += " " + borderSpacingVertical;
             property = str;
         }
-        setProperty("border-spacing", property);
-    }
-
-    @Override
-    public OutlineColorMode getOutlineColorType() {
-        return null;
-    }
-
-    @Override
-    public void setOutlineColorType(OutlineColorMode outlineColorType) {
+        set("border-spacing", property);
     }
 
     @Override
@@ -571,123 +590,130 @@ public abstract class MappedCss3StyleDeclaration
     }
 
     @Override
-    public void setOutline(Border outline) {
+    public boolean isOutlineInvert() {
+        String outlineColor = get("outline-color");
+        return "invert".equals(outlineColor);
+    }
+
+    @Override
+    public void setOutline(Border outline, boolean invert) {
+        BorderStyleMode outlineStyle = null;
+        ICss3Length outlineWidth = null;
+        IColor outlineColor = null;
+
+        if (outline != null) {
+            outlineStyle = outline.getStyle();
+            outlineWidth = outline.getWidth();
+            outlineColor = outline.getColor();
+        }
+
+        set("outline-style", outlineStyle);
+
+        set("outline-width", outlineWidth);
+
+        if (invert)
+            set("outline-color", "invert");
+        else if (outlineColor != null)
+            set("outline-color", outlineColor);
+    }
+
+    @Override
+    public ICss3Length getOutlineOffset() {
+        return parseCssLength(get("outline-offset"));
+    }
+
+    @Override
+    public void setOutlineOffset(ICss3Length outlineOffset) {
+        set("outline-offset", outlineOffset);
     }
 
     @Override
     public Float getOpacity() {
-        return getFloatProperty("opacity", getParent().getOpacity(), false);
+        return parseFloat(get("opacity"));
     }
 
     @Override
     public void setOpacity(Float opacity) {
-        setProperty("opacity", opacity);
+        set("opacity", opacity);
     }
 
     @Override
     public ClearMode getClear() {
-        return getEnumProperty("clear", ClearMode.class, getParent().getClear(), false);
+        return parseEnum(get("clear"), ClearMode.class);
     }
 
     @Override
     public void setClear(ClearMode clear) {
-        setProperty("clear", clear);
+        set("clear", clear);
     }
 
     @Override
     public DisplayMode getDisplay() {
-        return getEnumProperty("display", DisplayMode.class, getParent().getDisplay(), false);
+        return parseEnum(get("display"), DisplayMode.class);
     }
 
     @Override
     public void setDisplay(DisplayMode display) {
-        setProperty("display", display);
+        set("display", display);
     }
 
     @Override
     public PositionMode getPosition() {
-        return getEnumProperty("position", PositionMode.class, getParent().getPosition(), false);
+        return parseEnum(get("position"), PositionMode.class);
     }
 
     @Override
     public void setPosition(PositionMode position) {
-        setProperty("position", position);
+        set("position", position);
     }
 
     @Override
     public FloatMode getFloat() {
-        return getEnumProperty("float", FloatMode.class, getParent().getFloat(), false);
+        return parseEnum(get("float"), FloatMode.class);
     }
 
     @Override
     public void setFloat(FloatMode float_) {
-        setProperty("float", float_);
+        set("float", float_);
     }
 
     @Override
     public OverflowMode getOverflow() {
-        return getEnumProperty("overflow", OverflowMode.class, getParent().getOverflow(), false);
+        return parseEnum(get("overflow"), OverflowMode.class);
     }
 
     @Override
     public void setOverflow(OverflowMode overflow) {
-        setProperty("overflow", overflow);
+        set("overflow", overflow);
     }
 
     @Override
     public VisibilityMode getVisibility() {
-        return getEnumProperty("visibility", VisibilityMode.class, getParent().getVisibility(), true);
+        return parseEnum(get("visibility"), VisibilityMode.class);
     }
 
     @Override
     public void setVisibility(VisibilityMode visibility) {
-        setProperty("visibility", visibility);
+        set("visibility", visibility);
     }
 
     @Override
-    public ZIndexType getZIndexType() {
-        String str = getProperty("z-index");
-        if (str == null)
-            return null;
-        switch (str) {
-        case "auto":
-            return ZIndexType.auto;
-        default:
-            if (StringPred.isInteger(str))
-                return ZIndexType.integer;
-            else
-                throw new IllegalUsageException("Not an integer: " + str);
-        }
+    public ICss3Int getZIndex() {
+        return parseCssInt(get("z-index"));
     }
 
     @Override
-    public int getZIndex() {
-        String str = getProperty("z-index");
-        if (str == null)
-            return 0;
-        switch (str) {
-        case "auto":
-            return 0;
-        default:
-            if (StringPred.isInteger(str))
-                return Integer.parseInt(str);
-            else
-                throw new IllegalUsageException("Not an integer: " + str);
-        }
-    }
-
-    @Override
-    public void setZIndex(ZIndexType zIndexType, int zIndex) {
+    public void setZIndex(ICss3Int zIndex) {
         Object property = null;
-        switch (zIndexType) {
-        case integer:
+        switch (zIndex.getType()) {
+        case ICss3Int.NUMBER:
             property = zIndex;
             break;
-        case auto:
+        case ICss3Int.AUTO:
         default:
-            property = zIndexType;
+            property = zIndex;
         }
-        setProperty("z-index", property);
+        set("z-index", property);
     }
 
     @Override
@@ -700,37 +726,32 @@ public abstract class MappedCss3StyleDeclaration
     }
 
     @Override
-    public FontSizeType getFontSizeType() {
+    public ICss3Length getFontSize() {
         return null;
     }
 
     @Override
-    public LengthMeasure getFontSize() {
-        return null;
-    }
-
-    @Override
-    public void setFontSize(FontSizeType fontSizeType, LengthMeasure fontSize) {
+    public void setFontSize(ICss3Length fontSize) {
     }
 
     @Override
     public FontStyleMode getFontStyle() {
-        return getEnumProperty("font-style", FontStyleMode.class, getParent().getFontStyle(), true);
+        return parseEnum(getInherited("font-style"), FontStyleMode.class);
     }
 
     @Override
     public void setFontStyle(FontStyleMode fontStyle) {
-        setProperty("font-style", fontStyle);
+        set("font-style", fontStyle);
     }
 
     @Override
     public FontVariantMode getFontVariant() {
-        return getEnumProperty("font-variant", FontVariantMode.class, getParent().getFontVariant(), true);
+        return parseEnum(getInherited("font-variant"), FontVariantMode.class);
     }
 
     @Override
     public void setFontVariant(FontVariantMode fontVariant) {
-        setProperty("font-variant", fontVariant);
+        set("font-variant", fontVariant);
     }
 
     @Override
@@ -744,117 +765,83 @@ public abstract class MappedCss3StyleDeclaration
 
     @Override
     public DirectionMode getDirection() {
-        return getEnumProperty("direction", DirectionMode.class, getParent().getDirection(), true);
+        return parseEnum("direction", DirectionMode.class);
     }
 
     @Override
     public void setDirection(DirectionMode direction) {
-        setProperty("direction", direction);
+        set("direction", direction);
     }
 
     @Override
-    public LetterSpacingType getLetterSpacingType() {
-        String str = getProperty("letter-spacing");
-        if (str == null || "inherit".equals(str))
-            return getParent().getLetterSpacingType();
-        switch (str) {
-        case "normal":
-            return LetterSpacingType.normal;
-        default:
-            return LetterSpacingType.length;
-        }
-    }
-
-    @Override
-    public LengthMeasure getLetterSpacing() {
-        String str = getProperty("letter-spacing");
+    public ICss3Length getLetterSpacing() {
+        String str = get("letter-spacing");
         if (str == null || "inherit".equals(str))
             return getParent().getLetterSpacing();
         switch (str) {
         case "normal":
-            return LengthMeasure.NaN;
+            return Css3Length.NaN;
         default:
-            return LengthMeasure.parseOrNaN(str);
+            return Css3Length.parseOrNaN(str);
         }
     }
 
     @Override
-    public void setLetterSpacing(LetterSpacingType letterSpacingType, LengthMeasure letterSpacing) {
+    public void setLetterSpacing(ICss3Length letterSpacing) {
         Object property = null;
-        if (letterSpacingType != null)
-            switch (letterSpacingType) {
-            case length:
+        if (letterSpacing != null)
+            switch (letterSpacing.getType()) {
+            case ICss3Length.LENGTH:
                 property = letterSpacing;
                 break;
-            case normal:
+            case ICss3Length.NORMAL:
             default:
-                property = letterSpacingType;
+                property = letterSpacing;
             }
-        setProperty("letter-spacing", property);
+        set("letter-spacing", property);
     }
 
     @Override
-    public LineHeightType getLineHeightType() {
-        String str = getProperty("line-height");
-        if (str == null || "inherit".equals(str))
-            return getParent().getLineHeightType();
-
-        switch (str) {
-        case "normal":
-            return LineHeightType.normal;
-        }
-
-        if (str.endsWith("%"))
-            return LineHeightType.percentage;
-
-        String num = StringPart.peekDecimal(str);
-        if (num.length() == str.length())
-            return LineHeightType.number;
-        else
-            return LineHeightType.length;
-    }
-
-    @Override
-    public LengthMeasure getLineHeight() {
-        String str = getProperty("line-height");
+    public ICss3Length getLineHeight() {
+        String str = get("line-height");
         if (str == null || "inherit".equals(str))
             return getParent().getLineHeight();
 
         switch (str) {
         case "normal":
-            return LengthMeasure.NaN;
+            return Css3Length.NaN;
         }
 
         if (str.endsWith("%"))
             str = StringPart.chop(str);
 
-        return LengthMeasure.parseOrNaN(str);
+        return Css3Length.parseOrNaN(str);
     }
 
     @Override
-    public void setLineHeight(LineHeightType lineHeightType, LengthMeasure lineHeight) {
+    public void setLineHeight(ICss3Length lineHeight) {
         Object property = null;
-        if (lineHeightType != null)
-            switch (lineHeightType) {
-            case number:
-            case length:
+        if (lineHeight != null)
+            switch (lineHeight.getType()) {
+            case ICss3Length.NUMBER:
+            case ICss3Length.LENGTH:
                 property = lineHeight;
                 break;
-            case percentage:
+            case ICss3Length.PERCENTAGE:
                 property = lineHeight + "%";
                 break;
-            case normal:
+            case ICss3Length.NORMAL:
             default:
-                property = lineHeightType;
+                property = lineHeight;
             }
-        setProperty("line-height", property);
+        set("line-height", property);
     }
 
     @Override
     public TextDecorationFlags getTextDecoration() {
         TextDecorationFlags textDecoration = getParent().getTextDecoration();
 
-        String property = getProperty("text-decoration");
+        String property = getInherited("text-decoration");
         if (property == null || "inherit".equals(property))
             return textDecoration;
 
@@ -879,101 +866,59 @@ public abstract class MappedCss3StyleDeclaration
 
     @Override
     public void setTextDecoration(TextDecorationFlags textDecoration) {
-        setProperty("text-decoration", textDecoration);
+        set("text-decoration", textDecoration);
     }
 
     @Override
     public TextTransformMode getTextTransform() {
-        return getEnumProperty("text-transform", TextTransformMode.class, getParent().getTextTransform(), true);
+        return parseEnum("text-transform", TextTransformMode.class);
     }
 
     @Override
     public void setTextTransform(TextTransformMode textTransform) {
-        setProperty("text-transform", textTransform);
+        set("text-transform", textTransform);
     }
 
     @Override
-    public TextIndentType getTextIndentType() {
-        String str = getProperty("text-indent");
-        if (str == null || "inherit".equals(str))
-            return getParent().getTextIndentType();
-        if (str.endsWith("%"))
-            return TextIndentType.percentage;
-        else
-            return TextIndentType.length;
-    }
-
-    @Override
-    public LengthMeasure getTextIndent() {
-        String str = getProperty("text-indent");
+    public ICss3Length getTextIndent() {
+        String str = getInherited("text-indent");
         if (str == null || "inherit".equals(str))
             return getParent().getTextIndent();
         if (str.endsWith("%"))
             str = StringPart.chop(str);
-        return LengthMeasure.parseOrNaN(str);
+        return Css3Length.parseOrNaN(str);
     }
 
     @Override
-    public void setTextIndent(TextIndentType textIndentType, LengthMeasure textIndent) {
+    public void setTextIndent(ICss3Length textIndent) {
         Object property = null;
-        if (textIndentType != null)
-            switch (textIndentType) {
-            case percentage:
+        if (textIndent != null)
+            switch (textIndent.getType()) {
+            case ICss3Length.PERCENTAGE:
                 property = textIndent + "%";
                 break;
-            case length:
+            case ICss3Length.LENGTH:
                 property = textIndent;
                 break;
             default:
-                property = textIndentType;
+                property = textIndent;
             }
-        setProperty("text-indent", property);
+        set("text-indent", property);
     }
 
     @Override
     public TextAlignMode getTextAlign() {
-        return getEnumProperty("text-align", TextAlignMode.class, getParent().getTextAlign(), true);
+        return parseEnum("text-align", TextAlignMode.class);
     }
 
     @Override
     public void setTextAlign(TextAlignMode textAlign) {
-        setProperty("text-align", textAlign);
+        set("text-align", textAlign);
     }
 
     @Override
-    public VerticalAlignType getVerticalAlignType() {
-        String str = getProperty("vertical-align");
-        if (str == null)
-            return null;
-        switch (str) {
-        case "inherit":
-            return getParent().getVerticalAlignType();
-        case "baseline":
-            return VerticalAlignType.baseline;
-        case "middle":
-            return VerticalAlignType.middle;
-        case "sub":
-            return VerticalAlignType.sub;
-        case "super":
-            return VerticalAlignType.super_;
-        case "text-top":
-            return VerticalAlignType.text_top;
-        case "text-bottom":
-            return VerticalAlignType.text_bottom;
-        case "top":
-            return VerticalAlignType.top;
-        case "bottom":
-            return VerticalAlignType.bottom;
-        }
-        if (str.endsWith("%"))
-            return VerticalAlignType.percentage;
-        else
-            return VerticalAlignType.length;
-    }
-
-    @Override
-    public LengthMeasure getVerticalAlign() {
-        String str = getProperty("vertical-align");
+    public ICss3Length getVerticalAlign() {
+        String str = getInherited("vertical-align");
         if (str == null)
             return null;
         switch (str) {
@@ -987,33 +932,33 @@ public abstract class MappedCss3StyleDeclaration
         case "text-bottom":
         case "top":
         case "bottom":
-            return LengthMeasure.NaN;
+            return Css3Length.NaN;
         }
         if (str.endsWith("%"))
             str = StringPart.chop(str);
-        return LengthMeasure.parseOrNaN(str);
+        return Css3Length.parseOrNaN(str);
     }
 
     @Override
-    public void setVerticalAlign(VerticalAlignType verticalAlignType, LengthMeasure verticalAlign) {
+    public void setVerticalAlign(ICss3Length verticalAlign) {
         Object property = null;
-        if (verticalAlignType != null)
-            switch (verticalAlignType) {
-            case percentage:
+        if (verticalAlign != null)
+            switch (verticalAlign.getType()) {
+            case ICss3Length.PERCENTAGE:
                 property = verticalAlign + "%";
                 break;
-            case length:
+            case ICss3Length.LENGTH:
                 property = verticalAlign;
                 break;
             default:
-                property = verticalAlignType;
+                property = verticalAlign;
             }
-        setProperty("vertical-align", property);
+        set("vertical-align", property);
     }
 
     @Override
     public QuotesType getQuotesType() {
-        String str = getProperty("quotes");
+        String str = getInherited("quotes");
         if (str == null || "inherit".equals(str))
             return getParent().getQuotesType();
         switch (str) {
@@ -1026,7 +971,7 @@ public abstract class MappedCss3StyleDeclaration
 
     @Override
     public List<Pair<String, String>> getQuotes() {
-        String str = getProperty("quotes");
+        String str = getInherited("quotes");
         if (str == null || "inherit".equals(str))
             return getParent().getQuotes();
         switch (str) {
@@ -1062,76 +1007,61 @@ public abstract class MappedCss3StyleDeclaration
             default:
                 property = quotesType;
             }
-        setProperty("quotes", property);
+        set("quotes", property);
     }
 
     @Override
     public UnicodeBidiMode getUnicodeBidi() {
-        return getEnumProperty("unicode-bidi", UnicodeBidiMode.class, getParent().getUnicodeBidi(), false);
+        return parseEnum("unicode-bidi", UnicodeBidiMode.class);
     }
 
     @Override
     public void setUnicodeBidi(UnicodeBidiMode unicodeBidi) {
-        setProperty("unicode-bidi", unicodeBidi);
+        set("unicode-bidi", unicodeBidi);
     }
 
     @Override
     public WhiteSpaceMode getWhiteSpace() {
-        return getEnumProperty("white-space", WhiteSpaceMode.class, getParent().getWhiteSpace(), true);
+        return parseEnum("white-space", WhiteSpaceMode.class);
     }
 
     @Override
     public void setWhiteSpace(WhiteSpaceMode whiteSpace) {
-        setProperty("white-space", whiteSpace);
+        set("white-space", whiteSpace);
     }
 
     @Override
-    public WordSpacingType getWordSpacingType() {
-        String str = getProperty("word-spacing");
-        if (str == null)
-            return null;
-        if ("inherit".equals(str))
-            return getParent().getWordSpacingType();
-        switch (str) {
-        case "normal":
-            return WordSpacingType.normal;
-        default:
-            return WordSpacingType.length;
-        }
-    }
-
-    @Override
-    public LengthMeasure getWordSpacing() {
-        String str = getProperty("word-spacing");
+    public ICss3Length getWordSpacing() {
+        String str = getInherited("word-spacing");
         if (str == null)
             return null;
         switch (str) {
         case "inherit":
             return getParent().getWordSpacing();
         case "normal":
-            return LengthMeasure.NaN;
+            return Css3Length.NaN;
         default:
-            return LengthMeasure.parseOrNaN(str);
+            return Css3Length.parseOrNaN(str);
         }
     }
 
     @Override
-    public void setWordSpacing(WordSpacingType wordSpacingType, LengthMeasure wordSpacing) {
+    public void setWordSpacing(ICss3Length wordSpacing) {
         Object property = null;
-        switch (wordSpacingType) {
-        case length:
+        switch (wordSpacing.getType()) {
+        case ICss3Length.LENGTH:
             property = wordSpacing;
             break;
-        case normal:
+        case ICss3Length.NORMAL:
         default:
-            property = wordSpacingType;
+            property = wordSpacing;
         }
-        setProperty("word-spacing", property);
+        set("word-spacing", property);
     }
 
     @Override
     public ClipType getClipType() {
-        String str = getProperty("clip");
+        String str = getInherited("clip");
         if (str == null)
             return null;
         switch (str) {
@@ -1146,7 +1076,7 @@ public abstract class MappedCss3StyleDeclaration
 
     @Override
     public String getClip() {
-        String str = getProperty("clip");
+        String str = getInherited("clip");
         if (str == null)
             return null;
         switch (str) {
@@ -1170,12 +1100,12 @@ public abstract class MappedCss3StyleDeclaration
         default:
             property = clipType;
         }
-        setProperty("clip", property);
+        set("clip", property);
     }
 
     @Override
     public CursorType getCursorType() {
-        String str = getProperty("cursor");
+        String str = getInherited("cursor");
         if (str == null || "inherit".equals(str))
             return getParent().getCursorType();
 
@@ -1193,7 +1123,7 @@ public abstract class MappedCss3StyleDeclaration
 
     @Override
     public String getCursor() {
-        String str = getProperty("cursor");
+        String str = getInherited("cursor");
         if (str == null || "inherit".equals(str))
             return getParent().getCursor();
 
@@ -1215,40 +1145,40 @@ public abstract class MappedCss3StyleDeclaration
         default:
             property = cursorType;
         }
-        setProperty("cursor", property);
+        set("cursor", property);
     }
 
     @Override
     public ListStyleTypeMode getListStyleType() {
-        return getEnumProperty("list-style-type", ListStyleTypeMode.class, getParent().getListStyleType(), true);
+        return parseEnum("list-style-type", ListStyleTypeMode.class);
     }
 
     @Override
     public void setListStyleType(ListStyleTypeMode listStyleType) {
-        setProperty("list-style-type", listStyleType);
+        set("list-style-type", listStyleType);
     }
 
     @Override
-    public ListStyleImageType getListStyleImageType() {
-        String str = getProperty("list-style-image");
+    public ImageType getListStyleImageType() {
+        String str = getInherited("list-style-image");
         if (str == null)
             return getParent().getListStyleImageType();
         switch (str) {
         case "inherit":
             return getParent().getListStyleImageType();
         case "none":
-            return ListStyleImageType.none;
+            return ImageType.none;
         }
 
         if (str.startsWith("uri(\"") && str.endsWith("\")"))
-            return ListStyleImageType.uri;
+            return ImageType.uri;
 
         throw new IllegalUsageException("Illegal list-style-image: " + str);
     }
 
     @Override
     public String getListStyleImage() {
-        String str = getProperty("list-style-image");
+        String str = getInherited("list-style-image");
         if (str == null)
             return getParent().getListStyleImage();
         switch (str) {
@@ -1267,7 +1197,7 @@ public abstract class MappedCss3StyleDeclaration
     }
 
     @Override
-    public void setListStyleImage(ListStyleImageType listStyleImageType, String listStyleImage) {
+    public void setListStyleImage(ImageType listStyleImageType, String listStyleImage) {
         Object property = null;
         switch (listStyleImageType) {
         case uri:
@@ -1277,48 +1207,47 @@ public abstract class MappedCss3StyleDeclaration
         default:
             property = listStyleImageType;
         }
-        setProperty("list-style-image", property);
+        set("list-style-image", property);
     }
 
     @Override
     public ListStylePositionMode getListStylePosition() {
-        return getEnumProperty("list-style-position", ListStylePositionMode.class, getParent().getListStylePosition(),
-                true);
+        return parseEnum("list-style-position", ListStylePositionMode.class);
     }
 
     @Override
     public void setListStylePosition(ListStylePositionMode listStylePosition) {
-        setProperty("list-style-position", listStylePosition);
+        set("list-style-position", listStylePosition);
     }
 
     @Override
     public TableLayoutMode getTableLayout() {
-        return getEnumProperty("table-layout", TableLayoutMode.class, getParent().getTableLayout(), false);
+        return parseEnum("table-layout", TableLayoutMode.class);
     }
 
     @Override
     public void setTableLayout(TableLayoutMode tableLayout) {
-        setProperty("table-layout", tableLayout);
+        set("table-layout", tableLayout);
     }
 
     @Override
     public CaptionSideMode getCaptionSide() {
-        return getEnumProperty("caption-side", CaptionSideMode.class, getParent().getCaptionSide(), true);
+        return parseEnum("caption-side", CaptionSideMode.class);
     }
 
     @Override
     public void setCaptionSide(CaptionSideMode captionSide) {
-        setProperty("caption-side", captionSide);
+        set("caption-side", captionSide);
     }
 
     @Override
     public EmptyCellsMode getEmptyCells() {
-        return getEnumProperty("empty-cells", EmptyCellsMode.class, getParent().getEmptyCells(), true);
+        return parseEnum("empty-cells", EmptyCellsMode.class);
     }
 
     @Override
     public void setEmptyCells(EmptyCellsMode emptyCells) {
-        setProperty("empty-cells", emptyCells);
+        set("empty-cells", emptyCells);
     }
 
     @Override
@@ -1337,72 +1266,78 @@ public abstract class MappedCss3StyleDeclaration
 
     @Override
     public String getCounterIncrement() {
-        return getProperty("counter-increment");
+        return getInherited("counter-increment");
     }
 
     @Override
     public void setCounterIncrement(String counterIncrement) {
-        setProperty("counter-increment", counterIncrement);
+        set("counter-increment", counterIncrement);
     }
 
     @Override
     public String getCounterReset() {
-        return getProperty("counter-reset");
+        return getInherited("counter-reset");
     }
 
     @Override
     public void setCounterReset(String counterReset) {
-        setProperty("counter-reset", counterReset);
+        set("counter-reset", counterReset);
     }
 
     @Override
     public PageBreakMode getPageBreakAfter() {
-        return getEnumProperty("page-break-after", PageBreakMode.class, getParent().getPageBreakAfter(), false);
+        return parseEnum("page-break-after", PageBreakMode.class);
     }
 
     @Override
     public void setPageBreakAfter(PageBreakMode pageBreakAfter) {
-        setProperty("page-break-after", pageBreakAfter);
+        set("page-break-after", pageBreakAfter);
     }
 
     @Override
     public PageBreakMode getPageBreakBefore() {
-        return getEnumProperty("page-break-before", PageBreakMode.class, getParent().getPageBreakBefore(), false);
+        return parseEnum("page-break-before", PageBreakMode.class);
     }
 
     @Override
     public void setPageBreakBefore(PageBreakMode pageBreakBefore) {
-        setProperty("page-break-before", pageBreakBefore);
+        set("page-break-before", pageBreakBefore);
     }
 
     @Override
     public PageBreakMode getPageBreakInside() {
-        return getEnumProperty("page-break-inside", PageBreakMode.class, getParent().getPageBreakInside(), false);
+        return parseEnum("page-break-inside", PageBreakMode.class);
     }
 
     @Override
     public void setPageBreakInside(PageBreakMode pageBreakInside) {
-        setProperty("page-break-inside", pageBreakInside);
+        set("page-break-inside", pageBreakInside);
     }
 
     @Override
     public Integer getOrphans() {
-        return getIntegerProperty("orphans", getParent().getOrphans(), true);
+        return parseInteger(get("orphans"));
     }
 
     @Override
     public void setOrphans(Integer orphans) {
-        setProperty("orphans", orphans);
+        set("orphans", orphans);
     }
 
     @Override
     public Integer getWidows() {
-        return getIntegerProperty("widows", getParent().getWidows(), true);
+        return parseInteger(get("widows"));
     }
 
     @Override
     public void setWidows(Integer widows) {
-        setProperty("widows", widows);
+        set("widows", widows);
+    }
+
+    @Override
+    public void accept(ICss3Visitor visitor) {
+        MutableCss3StyleDeclaration mutable = new MutableCss3StyleDeclaration(this);
+        mutable.accept(visitor);
     }
 
 }

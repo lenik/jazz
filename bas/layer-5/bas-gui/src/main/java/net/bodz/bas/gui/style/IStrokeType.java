@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 import net.bodz.bas.gui.style.property.LineCapMode;
 import net.bodz.bas.gui.style.property.LineJoinMode;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.i18n.unit.std.ILength;
 
 public interface IStrokeType
         extends Serializable {
 
-    LengthMeasure getWidth();
+    ILength getLineWidth();
 
     LineCapMode getLineCap();
 

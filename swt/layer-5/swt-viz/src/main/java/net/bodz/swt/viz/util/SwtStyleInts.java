@@ -2,7 +2,7 @@ package net.bodz.swt.viz.util;
 
 import org.eclipse.swt.SWT;
 
-import net.bodz.bas.gui.css3.BorderBox;
+import net.bodz.bas.gui.css3.Border;
 import net.bodz.bas.gui.css3.ICss3StyleDeclaration;
 import net.bodz.bas.gui.css3.property.BorderStyleMode;
 import net.bodz.bas.gui.dom1.IGUIRefEntry;
@@ -15,13 +15,13 @@ public class SwtStyleInts {
         if (styleDecl == null)
             return styleBits;
 
-        BorderBox borderBox = styleDecl.getBorder();
-        while (borderBox != null) {
-            BorderStyleMode borderStyle = borderBox.getStyle();
+        Border border = styleDecl.getBorder();
+        while (border != null) {
+            BorderStyleMode borderStyle = border.getStyle();
             if (borderStyle == BorderStyleMode.none)
                 break;
 
-            int borderWidth = borderBox.getWidth().pixels(DEFAULT_PPI);
+            int borderWidth = border.getWidth().pixels(DEFAULT_PPI);
             if (borderWidth == 0)
                 break;
 

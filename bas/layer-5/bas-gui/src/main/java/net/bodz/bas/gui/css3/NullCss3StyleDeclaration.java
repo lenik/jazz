@@ -1,14 +1,82 @@
 package net.bodz.bas.gui.css3;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.gui.css3.property.*;
 import net.bodz.bas.gui.style.IColor;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.t.map.IParsedMap;
 import net.bodz.bas.t.pojo.Pair;
 
 public class NullCss3StyleDeclaration
         implements ICss3StyleDeclaration {
+
+    /** ⇱ Implementation Of {@link IParsedMap}. */
+    /* _____________________________ */static section.iface __MAP__;
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
+    public boolean containsKey(Object key) {
+        return false;
+    }
+
+    @Override
+    public boolean containsValue(Object value) {
+        return false;
+    }
+
+    @Override
+    public String get(Object key) {
+        return null;
+    }
+
+    @Override
+    public String put(String key, String value) {
+        return null;
+    }
+
+    @Override
+    public String remove(Object key) {
+        return null;
+    }
+
+    @Override
+    public void putAll(Map<? extends String, ? extends String> m) {
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    @Override
+    public Set<String> keySet() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public Collection<String> values() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Set<Entry<String, String>> entrySet() {
+        return Collections.emptySet();
+    }
+
+    /** ⇱ Implementation Of {@link ICss3StyleDeclaration}. */
+    /* _____________________________ */static section.iface __CSS3_DECL__;
 
     @Override
     public ICss3StyleDeclaration getParent() {
@@ -16,147 +84,98 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public void setParent(ICss3StyleDeclaration parent) {
-    }
-
-    @Override
-    public OffsetType getWidthType() {
+    public String get(String key, int maxInherits) {
         return null;
     }
 
     @Override
-    public OffsetType getHeightType() {
+    public ICss3Length getWidth() {
         return null;
     }
 
     @Override
-    public LengthMeasure getWidth() {
+    public ICss3Length getHeight() {
         return null;
     }
 
     @Override
-    public LengthMeasure getHeight() {
+    public void setWidth(ICss3Length width) {
+    }
+
+    @Override
+    public void setHeight(ICss3Length height) {
+    }
+
+    @Override
+    public ICss3Length getTop() {
         return null;
     }
 
     @Override
-    public void setWidth(OffsetType widthType, LengthMeasure width) {
-    }
-
-    @Override
-    public void setHeight(OffsetType heightType, LengthMeasure height) {
-    }
-
-    @Override
-    public OffsetType getTopType() {
+    public ICss3Length getRight() {
         return null;
     }
 
     @Override
-    public OffsetType getRightType() {
+    public ICss3Length getBottom() {
         return null;
     }
 
     @Override
-    public OffsetType getBottomType() {
+    public ICss3Length getLeft() {
         return null;
     }
 
     @Override
-    public OffsetType getLeftType() {
+    public void setTop(ICss3Length top) {
+    }
+
+    @Override
+    public void setRight(ICss3Length right) {
+    }
+
+    @Override
+    public void setBottom(ICss3Length bottom) {
+    }
+
+    @Override
+    public void setLeft(ICss3Length left) {
+    }
+
+    @Override
+    public ICss3Length getMinWidth() {
         return null;
     }
 
     @Override
-    public LengthMeasure getTop() {
+    public ICss3Length getMaxWidth() {
         return null;
     }
 
     @Override
-    public LengthMeasure getRight() {
+    public ICss3Length getMinHeight() {
         return null;
     }
 
     @Override
-    public LengthMeasure getBottom() {
+    public ICss3Length getMaxHeight() {
         return null;
     }
 
     @Override
-    public LengthMeasure getLeft() {
-        return null;
+    public void setMinWidth(ICss3Length minWidth) {
     }
 
     @Override
-    public void setTop(OffsetType topType, LengthMeasure top) {
+    public void setMaxWidth(ICss3Length maxWidth) {
     }
 
     @Override
-    public void setRight(OffsetType rightType, LengthMeasure right) {
+    public void setMinHeight(ICss3Length minHeight) {
     }
 
     @Override
-    public void setBottom(OffsetType bottomType, LengthMeasure bottom) {
-    }
-
-    @Override
-    public void setLeft(OffsetType leftType, LengthMeasure left) {
-    }
-
-    @Override
-    public OffsetType getMinWidthType() {
-        return null;
-    }
-
-    @Override
-    public OffsetType getMaxWidthType() {
-        return null;
-    }
-
-    @Override
-    public OffsetType getMinHeightType() {
-        return null;
-    }
-
-    @Override
-    public OffsetType getMaxHeightType() {
-        return null;
-    }
-
-    @Override
-    public LengthMeasure getMinWidth() {
-        return null;
-    }
-
-    @Override
-    public LengthMeasure getMaxWidth() {
-        return null;
-    }
-
-    @Override
-    public LengthMeasure getMinHeight() {
-        return null;
-    }
-
-    @Override
-    public LengthMeasure getMaxHeight() {
-        return null;
-    }
-
-    @Override
-    public void setMinWidth(OffsetType minWidthType, LengthMeasure minWidth) {
-    }
-
-    @Override
-    public void setMaxWidth(OffsetType maxWidthType, LengthMeasure maxWidth) {
-    }
-
-    @Override
-    public void setMinHeight(OffsetType minHeightType, LengthMeasure minHeight) {
-    }
-
-    @Override
-    public void setMaxHeight(OffsetType maxHeightType, LengthMeasure maxHeight) {
+    public void setMaxHeight(ICss3Length maxHeight) {
     }
 
     @Override
@@ -178,7 +197,7 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public BackgroundImageType getBackgroundImageType() {
+    public ImageType getBackgroundImageType() {
         return null;
     }
 
@@ -188,7 +207,7 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public void setBackgroundImage(BackgroundImageType backgroundImageType, String backgroundImage) {
+    public void setBackgroundImage(ImageType backgroundImageType, String backgroundImage) {
     }
 
     @Override
@@ -210,56 +229,174 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public BackgroundPositionType getBackgroundPositionXType() {
+    public ICss3Length getBackgroundPositionX() {
         return null;
     }
 
     @Override
-    public BackgroundPositionType getBackgroundPositionYType() {
+    public ICss3Length getBackgroundPositionY() {
         return null;
     }
 
     @Override
-    public LengthMeasure getBackgroundPositionX() {
+    public void setBackgroundPositionX(ICss3Length backgroundPositionX) {
+    }
+
+    @Override
+    public void setBackgroundPositionY(ICss3Length backgroundPositionY) {
+    }
+
+    @Override
+    public void setBackgroundPosition(ICss3Length backgroundPositionX, ICss3Length backgroundPositionY) {
+    }
+
+    @Override
+    public ICss3Length getMargin() {
         return null;
     }
 
     @Override
-    public LengthMeasure getBackgroundPositionY() {
+    public void setMargin(ICss3Length margin) {
+    }
+
+    @Override
+    public ICss3Length getMarginTop() {
         return null;
     }
 
     @Override
-    public void setBackgroundPosition(BackgroundPositionType backgroundPositionXType,
-            LengthMeasure backgroundPositionX, BackgroundPositionType backgroundPositionYType,
-            LengthMeasure backgroundPositionY) {
+    public void setMarginTop(ICss3Length marginTop) {
     }
 
     @Override
-    public MeasureBox getMargin() {
+    public ICss3Length getMarginRight() {
         return null;
     }
 
     @Override
-    public void setMargin(MeasureBox margin) {
+    public void setMarginRight(ICss3Length marginRight) {
     }
 
     @Override
-    public MeasureBox getPadding() {
+    public ICss3Length getMarginBottom() {
         return null;
     }
 
     @Override
-    public void setPadding(MeasureBox padding) {
+    public void setMarginBottom(ICss3Length marginBottom) {
     }
 
     @Override
-    public BorderBox getBorder() {
+    public ICss3Length getMarginLeft() {
         return null;
     }
 
     @Override
-    public void setBorder(BorderBox border) {
+    public void setMarginLeft(ICss3Length marginLeft) {
+    }
+
+    @Override
+    public void setMargin(ICss3Length marginTop, ICss3Length marginRight, ICss3Length marginBottom,
+            ICss3Length marginLeft) {
+    }
+
+    @Override
+    public ICss3Length getPadding() {
+        return null;
+    }
+
+    @Override
+    public void setPadding(ICss3Length padding) {
+    }
+
+    @Override
+    public ICss3Length getPaddingTop() {
+        return null;
+    }
+
+    @Override
+    public void setPaddingTop(ICss3Length paddingTop) {
+    }
+
+    @Override
+    public ICss3Length getPaddingRight() {
+        return null;
+    }
+
+    @Override
+    public void setPaddingRight(ICss3Length paddingRight) {
+    }
+
+    @Override
+    public ICss3Length getPaddingBottom() {
+        return null;
+    }
+
+    @Override
+    public void setPaddingBottom(ICss3Length paddingBottom) {
+    }
+
+    @Override
+    public ICss3Length getPaddingLeft() {
+        return null;
+    }
+
+    @Override
+    public void setPaddingLeft(ICss3Length paddingLeft) {
+    }
+
+    @Override
+    public void setPadding(ICss3Length paddingTop, ICss3Length paddingRight, ICss3Length paddingBottom,
+            ICss3Length paddingLeft) {
+    }
+
+    @Override
+    public Border getBorder() {
+        return null;
+    }
+
+    @Override
+    public void setBorder(Border border) {
+    }
+
+    @Override
+    public Border getBorderTop() {
+        return null;
+    }
+
+    @Override
+    public void setBorderTop(Border borderTop) {
+    }
+
+    @Override
+    public Border getBorderRight() {
+        return null;
+    }
+
+    @Override
+    public void setBorderRight(Border borderRight) {
+    }
+
+    @Override
+    public Border getBorderBottom() {
+        return null;
+    }
+
+    @Override
+    public void setBorderBottom(Border borderBottom) {
+    }
+
+    @Override
+    public Border getBorderLeft() {
+        return null;
+    }
+
+    @Override
+    public void setBorderLeft(Border borderLeft) {
+    }
+
+    @Override
+    public void setBorder(Border borderTop, Border borderRight, Border borderBottom, Border borderLeft) {
     }
 
     @Override
@@ -272,26 +409,67 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public LengthMeasure getBorderSpacingHorizontal() {
+    public ICss3Length getBorderHorizontalSpacing() {
         return null;
     }
 
     @Override
-    public LengthMeasure getBorderSpacingVertical() {
+    public ICss3Length getBorderVerticalSpacing() {
         return null;
     }
 
     @Override
-    public void setBorderSpacing(LengthMeasure borderSpacingHorizontal, LengthMeasure borderSpacingVertical) {
+    public void setBorderSpacing(ICss3Length borderHorizontalSpacing, ICss3Length borderVerticalSpacing) {
     }
 
     @Override
-    public OutlineColorMode getOutlineColorType() {
+    public ICss3Length getBorderRadius() {
         return null;
     }
 
     @Override
-    public void setOutlineColorType(OutlineColorMode outlineColorType) {
+    public void setBorderRadius(ICss3Length borderRadius) {
+    }
+
+    @Override
+    public ICss3Length getBorderTopLeftRadius() {
+        return null;
+    }
+
+    @Override
+    public void setBorderTopLeftRadius(ICss3Length borderTopLeftRadius) {
+    }
+
+    @Override
+    public ICss3Length getBorderTopRightRadius() {
+        return null;
+    }
+
+    @Override
+    public void setBorderTopRightRadius(ICss3Length borderTopRightRadius) {
+    }
+
+    @Override
+    public ICss3Length getBorderBottomRightRadius() {
+        return null;
+    }
+
+    @Override
+    public void setBorderBottomRightRadius(ICss3Length borderBottomRightRadius) {
+    }
+
+    @Override
+    public ICss3Length getBorderBottomLeftRadius() {
+        return null;
+    }
+
+    @Override
+    public void setBorderBottomLeftRadius(ICss3Length borderBottomLeftRadius) {
+    }
+
+    @Override
+    public void setBorderRadius(ICss3Length borderTopLeftRadius, ICss3Length borderTopRightRadius,
+            ICss3Length borderBottomRightRadius, ICss3Length borderBottomLeftRadius) {
     }
 
     @Override
@@ -300,7 +478,21 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public void setOutline(Border outline) {
+    public boolean isOutlineInvert() {
+        return false;
+    }
+
+    @Override
+    public void setOutline(Border outline, boolean invert) {
+    }
+
+    @Override
+    public ICss3Length getOutlineOffset() {
+        return null;
+    }
+
+    @Override
+    public void setOutlineOffset(ICss3Length outlineOffset) {
     }
 
     @Override
@@ -367,17 +559,12 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public ZIndexType getZIndexType() {
+    public ICss3Int getZIndex() {
         return null;
     }
 
     @Override
-    public int getZIndex() {
-        return 0;
-    }
-
-    @Override
-    public void setZIndex(ZIndexType zIndexType, int zIndex) {
+    public void setZIndex(ICss3Int zIndex) {
     }
 
     @Override
@@ -390,17 +577,12 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public FontSizeType getFontSizeType() {
+    public ICss3Length getFontSize() {
         return null;
     }
 
     @Override
-    public LengthMeasure getFontSize() {
-        return null;
-    }
-
-    @Override
-    public void setFontSize(FontSizeType fontSizeType, LengthMeasure fontSize) {
+    public void setFontSize(ICss3Length fontSize) {
     }
 
     @Override
@@ -440,31 +622,21 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public LetterSpacingType getLetterSpacingType() {
+    public ICss3Length getLetterSpacing() {
         return null;
     }
 
     @Override
-    public LengthMeasure getLetterSpacing() {
+    public void setLetterSpacing(ICss3Length letterSpacing) {
+    }
+
+    @Override
+    public ICss3Length getLineHeight() {
         return null;
     }
 
     @Override
-    public void setLetterSpacing(LetterSpacingType letterSpacingType, LengthMeasure letterSpacing) {
-    }
-
-    @Override
-    public LineHeightType getLineHeightType() {
-        return null;
-    }
-
-    @Override
-    public LengthMeasure getLineHeight() {
-        return null;
-    }
-
-    @Override
-    public void setLineHeight(LineHeightType lineHeightType, LengthMeasure lineHeight) {
+    public void setLineHeight(ICss3Length lineHeight) {
     }
 
     @Override
@@ -486,17 +658,12 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public TextIndentType getTextIndentType() {
+    public ICss3Length getTextIndent() {
         return null;
     }
 
     @Override
-    public LengthMeasure getTextIndent() {
-        return null;
-    }
-
-    @Override
-    public void setTextIndent(TextIndentType textIndentType, LengthMeasure textIndent) {
+    public void setTextIndent(ICss3Length textIndent) {
     }
 
     @Override
@@ -509,17 +676,12 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public VerticalAlignType getVerticalAlignType() {
+    public ICss3Length getVerticalAlign() {
         return null;
     }
 
     @Override
-    public LengthMeasure getVerticalAlign() {
-        return null;
-    }
-
-    @Override
-    public void setVerticalAlign(VerticalAlignType verticalAlignType, LengthMeasure verticalAlign) {
+    public void setVerticalAlign(ICss3Length verticalAlign) {
     }
 
     @Override
@@ -555,17 +717,12 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public WordSpacingType getWordSpacingType() {
+    public ICss3Length getWordSpacing() {
         return null;
     }
 
     @Override
-    public LengthMeasure getWordSpacing() {
-        return null;
-    }
-
-    @Override
-    public void setWordSpacing(WordSpacingType wordSpacingType, LengthMeasure wordSpacing) {
+    public void setWordSpacing(ICss3Length wordSpacing) {
     }
 
     @Override
@@ -606,7 +763,7 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public ListStyleImageType getListStyleImageType() {
+    public ImageType getListStyleImageType() {
         return null;
     }
 
@@ -616,7 +773,7 @@ public class NullCss3StyleDeclaration
     }
 
     @Override
-    public void setListStyleImage(ListStyleImageType listStyleImageType, String listStyleImage) {
+    public void setListStyleImage(ImageType listStyleImageType, String listStyleImage) {
     }
 
     @Override
@@ -730,6 +887,10 @@ public class NullCss3StyleDeclaration
 
     @Override
     public void setWidows(Integer widows) {
+    }
+
+    @Override
+    public void accept(ICss3Visitor visitor) {
     }
 
 }

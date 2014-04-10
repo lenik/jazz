@@ -24,6 +24,22 @@ public class RGB24Color
         this.blue8 = (byte) blue8;
     }
 
+    public static RGB24Color fromBE(int _0xrrggbb) {
+        byte blue = (byte) (_0xrrggbb & 0xff);
+        int _0xrrgg = _0xrrggbb >> 8;
+        byte green = (byte) (_0xrrgg & 0xff);
+        byte red = (byte) (_0xrrgg >> 8);
+        return new RGB24Color(red, green, blue);
+    }
+
+    public static RGB24Color fromLE(int _0xbbggrr) {
+        byte red = (byte) (_0xbbggrr & 0xff);
+        int _0xbbgg = _0xbbggrr >> 8;
+        byte green = (byte) (_0xbbgg & 0xff);
+        byte blue = (byte) (_0xbbgg >> 8);
+        return new RGB24Color(red, green, blue);
+    }
+
     @Override
     public int getRed8() {
         return red8;

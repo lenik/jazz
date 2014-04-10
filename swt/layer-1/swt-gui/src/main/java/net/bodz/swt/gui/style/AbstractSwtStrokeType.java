@@ -6,7 +6,8 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.gui.style.IStrokeType;
 import net.bodz.bas.gui.style.property.LineCapMode;
 import net.bodz.bas.gui.style.property.LineJoinMode;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.i18n.unit.std.ILength;
+import net.bodz.bas.i18n.unit.std.Length;
 
 public abstract class AbstractSwtStrokeType
         implements ISwtStrokePattern, IStrokeType {
@@ -17,9 +18,9 @@ public abstract class AbstractSwtStrokeType
     /* _____________________________ */static section.iface __GUI__;
 
     @Override
-    public LengthMeasure getWidth() {
+    public ILength getLineWidth() {
         int lineWidth = getSwtLineWidth();
-        return LengthMeasure.PIXEL(lineWidth);
+        return Length.PIXEL(lineWidth);
     }
 
     @Override

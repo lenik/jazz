@@ -13,8 +13,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
-import net.bodz.bas.gui.css3.BorderBox;
-import net.bodz.bas.i18n.unit.std.LengthMeasure;
+import net.bodz.bas.gui.css3.Border;
+import net.bodz.bas.gui.css3.ICss3Length;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
@@ -59,10 +59,10 @@ public class DateVbo
 
         } else {
 
-            BorderBox borderBox = styleDecl.getBorder();
-            if (borderBox != null) {
-                LengthMeasure _border = borderBox.getWidth();
-                if (_border != null && _border.getValue() > 0.0)
+            Border border = styleDecl.getBorder();
+            if (border != null) {
+                ICss3Length borderWidth = border.getWidth();
+                if (borderWidth != null && borderWidth.getValue() > 0.0)
                     styleInt |= SWT.BORDER;
             }
 

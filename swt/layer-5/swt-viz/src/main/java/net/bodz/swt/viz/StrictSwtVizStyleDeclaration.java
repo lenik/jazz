@@ -1,10 +1,12 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.style.StaticGUIStyleDeclaration;
+import net.bodz.bas.gui.style.MutableGUIStyleDeclaration;
 
 public class StrictSwtVizStyleDeclaration
-        extends StaticGUIStyleDeclaration
+        extends MutableGUIStyleDeclaration
         implements ISwtControlStyleDeclaration {
+
+    private static final long serialVersionUID = 1L;
 
     @Override
     public ISwtControlStyleDeclaration getParent() {

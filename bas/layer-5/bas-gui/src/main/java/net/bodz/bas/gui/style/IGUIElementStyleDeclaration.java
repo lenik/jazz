@@ -33,6 +33,11 @@ public interface IGUIElementStyleDeclaration
 
     void setImage(ImageUsage usage, IImageData imageData);
 
-    String getViewId();
+    /**
+     * Example:
+     * 
+     * @group advanced/optim
+     */
+    String getGroup();
 
 }

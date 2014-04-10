@@ -27,7 +27,7 @@ public class GUIElementDoc
             String script = (String) getTag("style");
             if (script != null)
                 try {
-                    style.parse(script);
+                    style.parseCss(script);
                 } catch (ParseException e) {
                     throw new RuntimeException(e.getMessage(), e);
                 }
