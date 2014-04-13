@@ -15,12 +15,16 @@ import net.bodz.bas.t.list.Stack;
 @ThreadUnsafe
 public abstract class AbstractXmlOut
         extends AbstractTreeOut
-        implements IXmlOut {
+        implements IXmlOut, IXmlTagBuilder {
 
     private XmlOutputFormat outputFormat;
     private Stack<String> tagStack = new ArrayStack<>();
 
     private boolean startTagMalformed;
+
+    private boolean autoTagStart;
+    private boolean autoTagEnd;
+    private String tagTextBuffer;
 
     private XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute(this);
     private XmlStringEncoder textEncoder = XmlStringEncoder.forText(this);
@@ -55,61 +59,73 @@ public abstract class AbstractXmlOut
     }
 
     @Override
-    public final void tag(String name, String text) {
-        tag(name, null, text);
+    public final IXmlTagBuilder tag(String name, String text) {
+        return tag(name, null, text);
     }
 
     @Override
-    public void tag(String name, Map<String, ?> attributes, String text) {
+    public IXmlTagBuilder tag(String name, Map<String, ?> attributes, String text) {
+        ensureTextState();
+
         checkName(name);
         print("<", name);
 
         if (attributes != null)
             attributes(attributes);
 
-        if (text == null || text.isEmpty()) {
-            println("/>");
-        } else {
-            print(">");
-            text(text);
-            println("</", name, ">");
-        }
+        autoTagStart = true;
+        tagTextBuffer = text;
+        autoTagEnd = true;
+
+        enter();
+        tagStack.push(name);
+
+        return this;
     }
 
     @Override
-    public final void startTag(String name) {
-        startTag(name, null);
+    public final IXmlTagBuilder startTag(String name) {
+        return startTag(name, null);
     }
 
     @Override
-    public void startTag(String name, Map<String, ?> attributes) {
+    public IXmlTagBuilder startTag(String name, Map<String, ?> attributes) {
         ensureTextState();
 
         checkName(name);
-        print('<' + name);
+        print("<", name);
 
         if (attributes != null)
             attributes(attributes);
 
-        print('>');
+        autoTagStart = true;
 
         enter();
         tagStack.push(name);
+
+        return this;
     }
 
     @Override
     public void endTag() {
+        ensureTextState();
+        _endTag();
+    }
+
+    private void _endTag() {
         if (tagStack.isEmpty())
             throw new IllegalStateException("Tag stack empty.");
 
         leave();
 
         String name = tagStack.pop();
-        print("</" + name + ">");
+        println("</" + name + ">");
     }
 
     @Override
     public void startTagBegin(String name) {
+        ensureTextState();
+
         print("<" + name);
         startTagMalformed = true;
 
@@ -156,6 +172,11 @@ public abstract class AbstractXmlOut
 
     @Override
     public void text(String str) {
+        ensureTextState();
+        _text(str);
+    }
+
+    private void _text(String str) {
         try {
             textEncoder.encode(str);
         } catch (IOException e) {
@@ -171,6 +192,8 @@ public abstract class AbstractXmlOut
 
     @Override
     public final void cdata(String cdata) {
+        ensureTextState();
+
         int start = 0;
         int len = cdata.length();
         while (start < len) {
@@ -188,6 +211,21 @@ public abstract class AbstractXmlOut
     void ensureTextState() {
         if (startTagMalformed)
             throw new IllegalStateException("Start tag malformed.");
+
+        if (autoTagStart) {
+            print('>');
+            autoTagStart = false;
+        }
+
+        if (tagTextBuffer != null) {
+            _text(tagTextBuffer);
+            tagTextBuffer = null;
+        }
+
+        if (autoTagEnd) {
+            _endTag();
+            autoTagEnd = false;
+        }
     }
 
     void checkName(String name) {
@@ -208,6 +246,26 @@ public abstract class AbstractXmlOut
                     throw new IllegalArgumentException("Illegal char in the name: " + ch);
             }
         }
+    }
+
+    /** ⇱ Implementation Of {@link IXmlTagBuilder}. */
+    /* _____________________________ */static section.iface __TAG_BUILDER__;
+
+    @Override
+    public IXmlTagBuilder attr(String name, Object value) {
+        attribute(name, value);
+        return this;
+    }
+
+    @Override
+    public IXmlTagBuilder id(String id) {
+        return attr("id", id);
+    }
+
+    @Override
+    public IXmlTagBuilder tagText(String text) {
+        this.tagTextBuffer = text;
+        return this;
     }
 
 }

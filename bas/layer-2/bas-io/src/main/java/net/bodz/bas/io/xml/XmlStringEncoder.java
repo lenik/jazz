@@ -3,6 +3,8 @@ package net.bodz.bas.io.xml;
 import java.io.IOException;
 
 /**
+ * Escape special chars using XML entities.
+ * <p>
  * See <a href="http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references">List
  * of XML and HTML character entity references</a>
  */

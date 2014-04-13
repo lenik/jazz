@@ -17,19 +17,23 @@ public class NullXmlOut
     }
 
     @Override
-    public void tag(String name, String text) {
+    public IXmlTagBuilder tag(String name, String text) {
+        return IXmlTagBuilder.NULL;
     }
 
     @Override
-    public void tag(String name, Map<String, ?> attributes, String text) {
+    public IXmlTagBuilder tag(String name, Map<String, ?> attributes, String text) {
+        return IXmlTagBuilder.NULL;
     }
 
     @Override
-    public void startTag(String name) {
+    public IXmlTagBuilder startTag(String name) {
+        return IXmlTagBuilder.NULL;
     }
 
     @Override
-    public void startTag(String name, Map<String, ?> attributes) {
+    public IXmlTagBuilder startTag(String name, Map<String, ?> attributes) {
+        return IXmlTagBuilder.NULL;
     }
 
     @Override
