@@ -28,7 +28,7 @@ public abstract class AbstractPrintOut
     }
 
     @Override
-    public void print(boolean b) {
+    public final void print(boolean b) {
         print(String.valueOf(b));
     }
 
@@ -53,30 +53,34 @@ public abstract class AbstractPrintOut
     }
 
     @Override
-    public void print(double d) {
+    public final void print(double d) {
         print(String.valueOf(d));
     }
 
     @Override
-    public void print(float f) {
+    public final void print(float f) {
         print(String.valueOf(f));
     }
 
     @Override
-    public void print(int i) {
+    public final void print(int i) {
         print(String.valueOf(i));
     }
 
     @Override
-    public void print(long l) {
+    public final void print(long l) {
         print(String.valueOf(l));
     }
 
     @Override
-    public void print(Object obj) {
+    public final void print(Object obj) {
         print(String.valueOf(obj));
     }
 
+    /**
+     * @note.impl buffer-optim: Since {@link Object#toString()} is expensive, to reduce method calls
+     *            by buffering isn't necessary.
+     */
     @Override
     public void print(Object... args) {
         for (Object arg : args)
@@ -93,9 +97,8 @@ public abstract class AbstractPrintOut
     }
 
     @Override
-    public void println(boolean x) {
-        print(x);
-        println();
+    public final void println(boolean x) {
+        println(String.valueOf(x));
     }
 
     @Override
@@ -111,33 +114,28 @@ public abstract class AbstractPrintOut
     }
 
     @Override
-    public void println(double x) {
-        print(x);
-        println();
+    public final void println(double x) {
+        println(String.valueOf(x));
     }
 
     @Override
-    public void println(float x) {
-        print(x);
-        println();
+    public final void println(float x) {
+        println(String.valueOf(x));
     }
 
     @Override
-    public void println(int x) {
-        print(x);
-        println();
+    public final void println(int x) {
+        println(String.valueOf(x));
     }
 
     @Override
-    public void println(long x) {
-        print(x);
-        println();
+    public final void println(long x) {
+        println(String.valueOf(x));
     }
 
     @Override
-    public void println(Object x) {
-        print(x);
-        println();
+    public final void println(Object x) {
+        println(String.valueOf(x));
     }
 
     @Override
@@ -146,6 +144,10 @@ public abstract class AbstractPrintOut
         println();
     }
 
+    /**
+     * @note.impl buffer-optim: Since {@link Object#toString()} is expensive, to reduce method calls
+     *            by buffering isn't necessary.
+     */
     @Override
     public void println(Object... args) {
         if (args.length == 0) {
@@ -159,12 +161,12 @@ public abstract class AbstractPrintOut
     }
 
     @Override
-    public void printf(Locale l, String format, Object... args) {
+    public final void printf(Locale l, String format, Object... args) {
         print(String.format(l, format, args));
     }
 
     @Override
-    public void printf(String format, Object... args) {
+    public final void printf(String format, Object... args) {
         print(String.format(format, args));
     }
 

@@ -38,11 +38,6 @@ public abstract class DynamicPrintStreamPrintOut
     }
 
     @Override
-    public void print(Object obj) {
-        getPrintStream().print(obj);
-    }
-
-    @Override
     public void print(String s) {
         getPrintStream().print(s);
     }

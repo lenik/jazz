@@ -5,13 +5,22 @@ import java.util.Arrays;
 public class TextIndention
         implements ITextIndention {
 
-    private int indentSize = 4;
-    private int tabSize = 8;
+    private int indentSize;
+    private int tabSize;
 
     static final int SPACEONLY = 0;
     static final int TABONLY = 1;
     static final int MIXED = 2;
-    private int mode;
+    private int mode = SPACEONLY;
+
+    public TextIndention() {
+        this(4, 8);
+    }
+
+    public TextIndention(int indentSize, int tabSize) {
+        this.indentSize = indentSize;
+        this.tabSize = tabSize;
+    }
 
     @Override
     public int getIndentSize() {

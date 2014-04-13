@@ -1,7 +1,6 @@
 package net.bodz.bas.io.impl;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import net.bodz.bas.io.*;
 
@@ -13,26 +12,8 @@ public class TreeOutImpl
     private final ITextIndention textIndention;
     private boolean linePrefixPrinted;
 
-    protected TreeOutImpl(ICharOut charOut) {
-        this(new PrintOutImpl(charOut), new TextIndention());
-    }
-
     protected TreeOutImpl(IPrintOut printOut) {
         this(printOut, new TextIndention());
-    }
-
-    public static ITreeOut from(IPrintOut charOut) {
-        if (charOut instanceof ITreeOut)
-            return (ITreeOut) charOut;
-        else
-            return new TreeOutImpl((IPrintOut) charOut);
-    }
-
-    public static ITreeOut from(ICharOut charOut) {
-        if (charOut instanceof IPrintOut)
-            return from((IPrintOut) charOut);
-        else
-            return new TreeOutImpl(charOut);
     }
 
     /**
@@ -48,6 +29,20 @@ public class TreeOutImpl
             throw new NullPointerException("textIndention");
         this.printOut = printOut;
         this.textIndention = textIndention;
+    }
+
+    public static ITreeOut from(IPrintOut printOut) {
+        if (printOut instanceof ITreeOut)
+            return (ITreeOut) printOut;
+        else
+            return new TreeOutImpl((IPrintOut) printOut);
+    }
+
+    public static ITreeOut from(ICharOut charOut) {
+        if (charOut instanceof ITreeOut)
+            return ((ITreeOut) charOut);
+        else
+            return new TreeOutImpl(PrintOutImpl.from(charOut));
     }
 
     void flushPrefix() {
@@ -89,12 +84,6 @@ public class TreeOutImpl
     }
 
     @Override
-    public void print(boolean b) {
-        flushPrefix();
-        printOut.print(b);
-    }
-
-    @Override
     public void print(char c) {
         flushPrefix();
         printOut.print(c);
@@ -107,58 +96,9 @@ public class TreeOutImpl
     }
 
     @Override
-    public void print(double d) {
-        flushPrefix();
-        printOut.print(d);
-    }
-
-    @Override
-    public void print(float f) {
-        flushPrefix();
-        printOut.print(f);
-    }
-
-    @Override
-    public void print(int i) {
-        flushPrefix();
-        printOut.print(i);
-    }
-
-    @Override
-    public void print(long l) {
-        flushPrefix();
-        printOut.print(l);
-    }
-
-    @Override
     public void print(Object... args) {
         flushPrefix();
         printOut.print(args);
-    }
-
-    @Override
-    public void print(Object obj) {
-        flushPrefix();
-        printOut.print(obj);
-    }
-
-    @Override
-    public void printf(Locale l, String format, Object... args) {
-        flushPrefix();
-        printOut.printf(l, format, args);
-    }
-
-    @Override
-    public void printf(String format, Object... args) {
-        flushPrefix();
-        printOut.printf(format, args);
-    }
-
-    @Override
-    public void println(boolean x) {
-        flushPrefix();
-        printOut.println(x);
-        linePrefixPrinted = false;
     }
 
     @Override
@@ -176,44 +116,9 @@ public class TreeOutImpl
     }
 
     @Override
-    public void println(double x) {
-        flushPrefix();
-        printOut.println(x);
-        linePrefixPrinted = false;
-    }
-
-    @Override
-    public void println(float x) {
-        flushPrefix();
-        printOut.println(x);
-        linePrefixPrinted = false;
-    }
-
-    @Override
-    public void println(int x) {
-        flushPrefix();
-        printOut.println(x);
-        linePrefixPrinted = false;
-    }
-
-    @Override
-    public void println(long x) {
-        flushPrefix();
-        printOut.println(x);
-        linePrefixPrinted = false;
-    }
-
-    @Override
     public void println(Object... args) {
         flushPrefix();
         printOut.println(args);
-        linePrefixPrinted = false;
-    }
-
-    @Override
-    public void println(Object x) {
-        flushPrefix();
-        printOut.println(x);
         linePrefixPrinted = false;
     }
 

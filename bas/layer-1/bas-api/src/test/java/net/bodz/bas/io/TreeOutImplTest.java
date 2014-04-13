@@ -27,4 +27,18 @@ public class TreeOutImplTest
         out.close();
     }
 
+    @Test
+    public void testIndentPrintln() {
+        BCharOut buffer = new BCharOut();
+        ITreeOut out = TreeOutImpl.from(buffer);
+        out.getTextIndention().setIndentSize(2);
+        out.println("a");
+        out.enter();
+        out.println("b\nc");
+        out.leave();
+        out.println("d");
+        // assertEquals("a\n  b\n    c\n  d\ne\n", buffer.toString());
+        System.out.println(buffer);
+    }
+
 }
