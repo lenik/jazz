@@ -45,11 +45,6 @@ public class PrintStreamPrintOut
     }
 
     @Override
-    public void print(Object obj) {
-        ps.print(obj);
-    }
-
-    @Override
     public void print(String s) {
         ps.print(s);
     }
