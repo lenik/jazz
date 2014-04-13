@@ -1,6 +1,5 @@
 package net.bodz.bas.potato.ref;
 
-import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.potato.element.IProperty;
 
 public class PropertyGUIRefMap
@@ -14,8 +13,8 @@ public class PropertyGUIRefMap
     }
 
     @Override
-    public <T> IGUIRefEntry<T> get(String name) {
-        return (IGUIRefEntry<T>) super.get(name);
+    public PropertyGUIRefEntry get(String name) {
+        return (PropertyGUIRefEntry) super.get(name);
     }
 
     @Override

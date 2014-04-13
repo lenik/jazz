@@ -1,6 +1,5 @@
 package net.bodz.bas.repr.viz;
 
-import net.bodz.bas.potato.ref.IGUIRefEntries;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.PropertyGUIRefMap;
 import net.bodz.bas.rtx.IOptions;
@@ -41,7 +40,7 @@ public abstract class AbstractViewBuilder<T>
         return buildView(ctx, entry, IOptions.NULL);
     }
 
-    protected static IGUIRefEntries properties(Object obj) {
+    protected static PropertyGUIRefMap explode(Object obj) {
         return new PropertyGUIRefMap(obj.getClass(), obj, null);
     }
 

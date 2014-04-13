@@ -10,16 +10,29 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.potato.ref.ValueEntry;
+import net.bodz.bas.repr.html.IHtmlOutputContext;
+import net.bodz.bas.repr.html.IHtmlViewBuilder;
+import net.bodz.bas.repr.html.IHtmlViewBuilderFactory;
+import net.bodz.bas.repr.html.IndexedHtmlViewBuilderFactory;
+import net.bodz.bas.repr.html.RootHtmlOutputContext;
 import net.bodz.bas.repr.req.IHttpRequestProcessor;
+import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public class PathDispatchServlet
         extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    PathDispatchService pathDispatchService = PathDispatchService.getInstance();
+    // static final Logger logger = LoggerFactory.getLogger(PathDispatchServlet.class);
+
+    PathDispatchService pathDispatchService;
+    IHtmlViewBuilderFactory viewBuilderFactory;
 
     public PathDispatchServlet() {
+        pathDispatchService = PathDispatchService.getInstance();
+        viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
     }
 
     @Override
@@ -60,6 +73,20 @@ public class PathDispatchServlet
         if (target == null)
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Arrival: " + arrival);
 
+        if (!tokenQueue.isEmpty()) {
+            System.out.println(tokenQueue);
+        }
+
+        Class<?> targetClass = target.getClass();
+        IRefEntry<Object> entry = new ValueEntry<>(target);
+
+        IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(targetClass);
+        IHtmlOutputContext ctx = new RootHtmlOutputContext(req, resp);
+        try {
+            viewBuilder.buildHtmlView(ctx, entry);
+        } catch (ViewBuilderException e) {
+            throw new ServletException("Build html view: " + e.getMessage(), e);
+        }
     }
 
     protected Object getStartObject() {

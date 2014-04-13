@@ -3,9 +3,10 @@ package net.bodz.bas.repr.html;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.html.IHtmlOut;
 
 public abstract class AbstractHtmlOutputContext
+        extends AbstractHtmlReprContext
         implements IHtmlOutputContext {
 
     @Override
@@ -36,12 +37,12 @@ public abstract class AbstractHtmlOutputContext
     }
 
     @Override
-    public IPrintOut getPrintOut() {
+    public IHtmlOut getOut() {
         IHtmlOutputContext parent = getParent();
         if (parent == null)
-            return IPrintOut.NULL;
+            return IHtmlOut.NULL;
         else
-            return parent.getPrintOut();
+            return parent.getOut();
     }
 
 }

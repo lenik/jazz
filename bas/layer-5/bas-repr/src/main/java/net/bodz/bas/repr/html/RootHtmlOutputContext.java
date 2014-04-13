@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharOut;
-import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.OutputStreamByteOut;
+import net.bodz.bas.io.html.HtmlOutImpl;
+import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.io.impl.EncodedCharOut;
-import net.bodz.bas.io.impl.PrintOutImpl;
 
 public class RootHtmlOutputContext
+        extends AbstractHtmlReprContext
         implements IHtmlOutputContext {
 
     private final HttpServletRequest request;
@@ -22,7 +23,7 @@ public class RootHtmlOutputContext
 
     private OutputStream outputStream;
     private IByteOut byteOut;
-    private IPrintOut printOut;
+    private IHtmlOut htmlOut;
 
     public RootHtmlOutputContext(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -41,7 +42,7 @@ public class RootHtmlOutputContext
             encoding = Charset.defaultCharset().name(); // or utf-8?
 
         ICharOut charOut = new EncodedCharOut(byteOut, encoding);
-        printOut = PrintOutImpl.from(charOut);
+        htmlOut = HtmlOutImpl.from(charOut);
     }
 
     @Override
@@ -74,8 +75,8 @@ public class RootHtmlOutputContext
     }
 
     @Override
-    public IPrintOut getPrintOut() {
-        return printOut;
+    public IHtmlOut getOut() {
+        return htmlOut;
     }
 
 }

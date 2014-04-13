@@ -10,4 +10,16 @@ public class IndexedHtmlViewBuilderFactory
             addViewBuilder(vbo);
     }
 
+    private static IndexedHtmlViewBuilderFactory instance;
+
+    public static IndexedHtmlViewBuilderFactory getInstance() {
+        if (instance == null) {
+            synchronized (IndexedHtmlViewBuilderFactory.class) {
+                if (instance == null)
+                    instance = new IndexedHtmlViewBuilderFactory();
+            }
+        }
+        return instance;
+    }
+
 }
