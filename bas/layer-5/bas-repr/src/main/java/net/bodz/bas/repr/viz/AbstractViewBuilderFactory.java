@@ -100,8 +100,11 @@ public abstract class AbstractViewBuilderFactory
         } catch (ClassNotFoundException e) {
             return null;
         }
-        IViewBuilder<?> instance = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);
-        return instance;
+
+        IViewBuilder<?> vbo;
+        // vbo = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);
+        vbo = (IViewBuilder<?>) SingletonUtil.instantiateCached(vboClass);
+        return vbo;
     }
 
     protected void addViewBuilder(IViewBuilder<?> viewBuilder) {

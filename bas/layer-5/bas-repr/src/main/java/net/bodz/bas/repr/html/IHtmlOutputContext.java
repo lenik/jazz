@@ -4,10 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.meta.decl.Shortcut;
 
-public interface IHtmlOutputContext {
+public interface IHtmlOutputContext
+        extends IHtmlReprContext {
 
     IHtmlOutputContext getParent();
 
@@ -20,6 +21,6 @@ public interface IHtmlOutputContext {
 
     IByteOut getByteOut();
 
-    IPrintOut getPrintOut();
+    IHtmlOut getOut();
 
 }

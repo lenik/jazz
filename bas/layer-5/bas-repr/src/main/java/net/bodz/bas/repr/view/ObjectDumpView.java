@@ -2,7 +2,7 @@ package net.bodz.bas.repr.view;
 
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
-import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.repr.html.IHtmlOutputContext;
@@ -27,7 +27,7 @@ public class ObjectDumpView
         IMethodOfRequest qmethod = req.getAttribute(IMethodOfRequest.class);
 
         Object obj = entry.get();
-        IPrintOut out = ctx.getPrintOut();
+        IHtmlOut out = ctx.getOut();
 
         out.println("<html><head><title>Object Dump</title></head>");
         out.println("<body><h1>Object Dump: " + ObjectInfo.getSimpleId(obj) + "</h1>");
