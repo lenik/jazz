@@ -11,9 +11,9 @@ public interface IXmlOut
 
     void comment(String str);
 
-    void tag(String name, String text);
+    IXmlTagBuilder tag(String name, String text);
 
-    void tag(String name, Map<String, ?> attributes, String text);
+    IXmlTagBuilder tag(String name, Map<String, ?> attributes, String text);
 
     /**
      * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
@@ -23,7 +23,7 @@ public interface IXmlOut
      * @param name
      *            The tag name, non-<code>null</code>.
      */
-    void startTag(String name);
+    IXmlTagBuilder startTag(String name);
 
     /**
      * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
@@ -35,7 +35,7 @@ public interface IXmlOut
      * @param attributes
      *            Attributes for the tag, can be <code>null</code> if none.
      */
-    void startTag(String name, Map<String, ?> attributes);
+    IXmlTagBuilder startTag(String name, Map<String, ?> attributes);
 
     /**
      * Write the end part of the tag pair, for example, <code>&lt;/tag&gt;</code>.
