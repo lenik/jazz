@@ -11,6 +11,8 @@ public interface IXmlOut
 
     void comment(String str);
 
+    IXmlTagBuilder tag(String name);
+
     IXmlTagBuilder tag(String name, String text);
 
     IXmlTagBuilder tag(String name, Map<String, ?> attributes, String text);

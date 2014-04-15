@@ -17,6 +17,11 @@ public class NullXmlOut
     }
 
     @Override
+    public IXmlTagBuilder tag(String name) {
+        return IXmlTagBuilder.NULL;
+    }
+
+    @Override
     public IXmlTagBuilder tag(String name, String text) {
         return IXmlTagBuilder.NULL;
     }

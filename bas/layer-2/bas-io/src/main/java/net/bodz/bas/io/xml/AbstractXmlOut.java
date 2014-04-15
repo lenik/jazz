@@ -59,6 +59,11 @@ public abstract class AbstractXmlOut
     }
 
     @Override
+    public IXmlTagBuilder tag(String name) {
+        return tag(name, null, null);
+    }
+
+    @Override
     public final IXmlTagBuilder tag(String name, String text) {
         return tag(name, null, text);
     }
