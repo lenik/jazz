@@ -26,8 +26,8 @@ public abstract class DecoratedHtmlTagBuilder<self_t extends IXmlTagBuilder>
     }
 
     @Override
-    public self_t tagText(String text) {
-        orig.tagText(text);
+    public self_t text(String text) {
+        orig.text(text);
         return (self_t) this;
     }
 

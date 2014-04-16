@@ -1,29 +1,24 @@
 package net.bodz.bas.io.xml;
 
-import java.util.LinkedHashMap;
-
-public class XmlTagBuffer
-        extends LinkedHashMap<String, Object>
+public class XmlOutTagBuffer
         implements IXmlTagBuilder {
 
-    private static final long serialVersionUID = 1L;
+    IXmlOut out;
+    String text;
 
-    private String text;
+    public XmlOutTagBuffer(IXmlOut out) {
+        this.out = out;
+    }
 
     @Override
     public IXmlTagBuilder attr(String name, Object value) {
-        put(name, value);
+        out.attribute(name, value);
         return this;
     }
 
     @Override
     public IXmlTagBuilder id(String id) {
-        put("id", id);
-        return this;
-    }
-
-    public String getText() {
-        return text;
+        return attr("id", id);
     }
 
     @Override
