@@ -49,7 +49,9 @@ public class MavenPomDir {
 
         File classFile = ClassResource.getClassBytesFile(clazz);
         if (classFile == null) {
-            throw new UnexpectedException("No class bytes for " + clazz);
+            // It's just in the jar
+            // throw new UnexpectedException("No class bytes for " + clazz);
+            return null;
         }
 
         String path = classFile.getPath();

@@ -12,10 +12,15 @@ import java.util.Set;
 
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.object.IdentityObjectSet;
+import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class ClassScanner
         extends ResourceScanner {
+
+    static final Logger logger = LoggerFactory.getLogger(ClassScanner.class);
 
     public static final int SUBCLASSES = 1;
     public static final int ANNOTATED_CLASSES = 2;
@@ -166,7 +171,8 @@ public class ClassScanner
             try {
                 clazz = Class.forName(fqcn, false, getClassLoader());
             } catch (ClassNotFoundException | NoClassDefFoundError e) {
-                throw new RuntimeException("Failed to resolve class: " + fqcn, e);
+                logger.error("Failed to resolve class: " + fqcn, e);
+                return false;
             }
             return typeCallback.type(clazz);
         }
@@ -186,8 +192,20 @@ public class ClassScanner
             assert resourceName.endsWith(".class");
             String rawName = resourceName.substring(0, resourceName.length() - 6);
             String fqcn = rawName.replace('/', '.');
+
+            int dollar = fqcn.lastIndexOf('$');
+            if (dollar != -1) {
+                String tail = fqcn.substring(dollar + 1);
+                if (StringPred.isDecimal(tail)) {
+                    // Ignore anonymous inner classes.
+                    continue;
+                }
+            }
+
             // fqcn = fqcn.replace('$', '.');
-            callback.typeName(fqcn);
+            if (!callback.typeName(fqcn))
+                // break;
+                ;
         }
     }
 
