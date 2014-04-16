@@ -54,10 +54,4 @@ public class PotatoLoader {
         return instance;
     }
 
-    public static IType getType(Class<?> clazz) {
-        PotatoLoader potatoLoader = getInstance();
-        IType type = potatoLoader.load(clazz);
-        return type;
-    }
-
 }

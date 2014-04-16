@@ -17,6 +17,10 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry>
     private Class<?> clazz;
     private Object instance;
 
+    private boolean autoImport = true;
+    private boolean autoImported;
+    private int newImportedCount;
+
     public AbstractPropertyRefMap(Class<?> clazz, Object instance, Boolean order) {
         super(Collections.<String, entry_t> createMap(order));
         if (clazz == null)
@@ -29,7 +33,18 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry>
 
     @Override
     public <T> IRefEntry<T> get(String name) {
-        return (IRefEntry<T>) super.get(name);
+        IRefEntry<T> entry = (IRefEntry<T>) super.get(name);
+        if (entry != null)
+            return entry;
+
+        synchronized (this) {
+            if (autoImport && !autoImported) {
+                importProperties();
+                autoImported = true;
+                return get(name);
+            }
+        }
+        return null;
     }
 
     public final void importProperties() {
@@ -38,18 +53,30 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry>
                 0);
     }
 
-    public void importProperties(int mask, int selection) {
-        IType type = PotatoLoader.getType(clazz);
+    public synchronized void importProperties(int mask, int selection) {
+        IType type = PotatoLoader.getInstance().load(clazz);
         for (IProperty property : type.getProperties()) {
             int modifiers = property.getModifiers();
             if ((modifiers & mask) == selection) {
                 String name = property.getName();
                 entry_t entry = createPropertyEntry(instance, property);
-                super.put(name, entry);
+
+                entry_t old = super.put(name, entry);
+                if (old == null)
+                    newImportedCount++;
             }
         }
     }
 
     protected abstract entry_t createPropertyEntry(Object instance, IProperty property);
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(size() + " entries in the map (" + newImportedCount + " new imported):");
+        for (Entry<?, ?> entry : entrySet())
+            sb.append("  " + entry.getKey() + ": " + entry.getValue() + "\n");
+        return sb.toString();
+    }
 
 }

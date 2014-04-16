@@ -17,7 +17,7 @@ public abstract class AbstractPropertyRefEntries<entry_t extends IRefEntry<?>>
         if (instance == null)
             throw new NullPointerException("instance");
         Class<? extends Object> clazz = instance.getClass();
-        IType type = PotatoLoader.getType(clazz);
+        IType type = PotatoLoader.getInstance().load(clazz);
         this.type = type;
         this.instance = instance;
     }
