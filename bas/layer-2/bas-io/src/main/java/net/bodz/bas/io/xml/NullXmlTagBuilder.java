@@ -14,7 +14,7 @@ public class NullXmlTagBuilder
     }
 
     @Override
-    public IXmlTagBuilder tagText(String text) {
+    public IXmlTagBuilder text(String text) {
         return this;
     }
 

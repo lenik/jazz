@@ -6,7 +6,7 @@ public interface IXmlTagBuilder {
 
     IXmlTagBuilder id(String id);
 
-    IXmlTagBuilder tagText(String text);
+    IXmlTagBuilder text(String text);
 
     IXmlTagBuilder NULL = new NullXmlTagBuilder();
 

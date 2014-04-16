@@ -15,16 +15,15 @@ import net.bodz.bas.t.list.Stack;
 @ThreadUnsafe
 public abstract class AbstractXmlOut
         extends AbstractTreeOut
-        implements IXmlOut, IXmlTagBuilder {
+        implements IXmlOut {
 
     private XmlOutputFormat outputFormat;
     private Stack<String> tagStack = new ArrayStack<>();
 
     private boolean startTagMalformed;
 
-    private boolean autoTagStart;
-    private boolean autoTagEnd;
-    private String tagTextBuffer;
+    private XmlOutTagBuffer pending;
+    private boolean autoEndTag;
 
     private XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute(this);
     private XmlStringEncoder textEncoder = XmlStringEncoder.forText(this);
@@ -78,14 +77,14 @@ public abstract class AbstractXmlOut
         if (attributes != null)
             attributes(attributes);
 
-        autoTagStart = true;
-        tagTextBuffer = text;
-        autoTagEnd = true;
+        pending = new XmlOutTagBuffer(this);
+        pending.text = text;
+        autoEndTag = true;
 
         enter();
         tagStack.push(name);
 
-        return this;
+        return pending;
     }
 
     @Override
@@ -103,12 +102,12 @@ public abstract class AbstractXmlOut
         if (attributes != null)
             attributes(attributes);
 
-        autoTagStart = true;
+        pending = new XmlOutTagBuffer(this);
 
         enter();
         tagStack.push(name);
 
-        return this;
+        return pending;
     }
 
     @Override
@@ -217,19 +216,16 @@ public abstract class AbstractXmlOut
         if (startTagMalformed)
             throw new IllegalStateException("Start tag malformed.");
 
-        if (autoTagStart) {
+        if (pending != null) {
             print('>');
-            autoTagStart = false;
+            if (pending.text != null)
+                _text(pending.text);
+            pending = null;
         }
 
-        if (tagTextBuffer != null) {
-            _text(tagTextBuffer);
-            tagTextBuffer = null;
-        }
-
-        if (autoTagEnd) {
+        if (autoEndTag) {
             _endTag();
-            autoTagEnd = false;
+            autoEndTag = false;
         }
     }
 
@@ -251,26 +247,6 @@ public abstract class AbstractXmlOut
                     throw new IllegalArgumentException("Illegal char in the name: " + ch);
             }
         }
-    }
-
-    /** ⇱ Implementation Of {@link IXmlTagBuilder}. */
-    /* _____________________________ */static section.iface __TAG_BUILDER__;
-
-    @Override
-    public IXmlTagBuilder attr(String name, Object value) {
-        attribute(name, value);
-        return this;
-    }
-
-    @Override
-    public IXmlTagBuilder id(String id) {
-        return attr("id", id);
-    }
-
-    @Override
-    public IXmlTagBuilder tagText(String text) {
-        this.tagTextBuffer = text;
-        return this;
     }
 
 }

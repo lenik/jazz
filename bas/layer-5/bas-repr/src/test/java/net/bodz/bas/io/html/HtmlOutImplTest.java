@@ -12,7 +12,7 @@ public class HtmlOutImplTest
         out.tag("ver", "Text");
         out.startTag("html");
         {
-            out.h1().style("color: red").tagText("Title");
+            out.h1().style("color: red").text("Title");
             out.tag("div", "Welcome").id("div1");
 
             out.startTag("form");
