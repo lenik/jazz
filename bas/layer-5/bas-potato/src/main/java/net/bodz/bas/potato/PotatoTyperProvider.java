@@ -72,7 +72,7 @@ public class PotatoTyperProvider
     }
 
     public IType getType(Class<?> objType) {
-        return PotatoLoader.getType(objType);
+        return PotatoLoader.getInstance().load(objType);
     }
 
 }

@@ -23,7 +23,7 @@ public class ValueEntry<T>
     }
 
     public ValueEntry(Class<? extends T> valueType, T value) {
-        this(PotatoLoader.getType(valueType), valueType, value);
+        this(PotatoLoader.getInstance().load(valueType), valueType, value);
     }
 
     public ValueEntry(IElement element, Class<? extends T> valueType, T value) {

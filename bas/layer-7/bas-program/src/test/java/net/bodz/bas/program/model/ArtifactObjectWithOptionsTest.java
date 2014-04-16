@@ -90,7 +90,7 @@ public class ArtifactObjectWithOptionsTest
     @Ignore
     @Test
     public void testGetProperties() {
-        IType type = PotatoLoader.getType(getClass());
+        IType type = PotatoLoader.getInstance().load(getClass());
 
         for (IProperty property : type.getProperties())
             System.out.println("prop: " + property + ": " + property.getClass());
@@ -99,7 +99,7 @@ public class ArtifactObjectWithOptionsTest
     @Test
     public void testSetProperties()
             throws Exception {
-        IType type = PotatoLoader.getType(getClass());
+        IType type = PotatoLoader.getInstance().load(getClass());
 
         type.getProperty("myName").getValue(this);
 
@@ -115,7 +115,7 @@ public class ArtifactObjectWithOptionsTest
     @Test
     public void testInvoke()
             throws Exception {
-        IType type = PotatoLoader.getType(getClass());
+        IType type = PotatoLoader.getInstance().load(getClass());
         Object retval = type.invoke(this, "hello", "Kate");
         assertEquals("Yes, this is Kate", retval);
     }
