@@ -2,16 +2,19 @@ package net.bodz.bas.repr.html;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.OutputStreamByteOut;
+import net.bodz.bas.io.adapter.WriterPrintOut;
 import net.bodz.bas.io.html.HtmlOutImpl;
 import net.bodz.bas.io.html.IHtmlOut;
+import net.bodz.bas.io.impl.DecodedByteOut;
 import net.bodz.bas.io.impl.EncodedCharOut;
 
 public class RootHtmlOutputContext
@@ -34,15 +37,22 @@ public class RootHtmlOutputContext
         this.request = request;
         this.response = response;
 
-        outputStream = response.getOutputStream();
-        byteOut = new OutputStreamByteOut(outputStream);
-
         String encoding = response.getCharacterEncoding();
         if (encoding == null)
-            encoding = Charset.defaultCharset().name(); // or utf-8?
+            encoding = "utf-8";
 
-        ICharOut charOut = new EncodedCharOut(byteOut, encoding);
-        htmlOut = HtmlOutImpl.from(charOut);
+        boolean charBased = true;
+        if (charBased) {
+            PrintWriter writer = response.getWriter();
+            IPrintOut printOut = new WriterPrintOut(writer);
+            htmlOut = HtmlOutImpl.from(printOut);
+            byteOut = new DecodedByteOut(printOut, encoding);
+        } else {
+            outputStream = response.getOutputStream();
+            byteOut = new OutputStreamByteOut(outputStream);
+            ICharOut charOut = new EncodedCharOut(byteOut, encoding);
+            htmlOut = HtmlOutImpl.from(charOut);
+        }
     }
 
     @Override
