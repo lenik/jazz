@@ -48,4 +48,9 @@ public class AttributedText
         this.text = text;
     }
 
+    @Override
+    public String toString() {
+        return text + "\n---\n" + super.toString();
+    }
+
 }
