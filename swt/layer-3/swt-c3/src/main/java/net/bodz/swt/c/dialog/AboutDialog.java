@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 
 public class AboutDialog

@@ -12,7 +12,7 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
-import net.bodz.mda.xjdoc.conv.ClassDocFlatfLoader;
+import net.bodz.mda.xjdoc.conv.FlatfClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
@@ -78,8 +78,8 @@ public class QdoxTest
 
                 StringSource ffSource = new StringSource(ff);
 
-                ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(taglibs);
-                ClassDoc doc2 = ffLoader.load(fqcn, ffSource);
+                FlatfClassDocLoader ffLoader = new FlatfClassDocLoader();
+                ClassDoc doc2 = ffLoader.load(fqcn, ffSource, taglibs);
 
                 BCharOut buf2 = new BCharOut();
                 FlatfOutput ffout2 = new FlatfOutput(buf2);

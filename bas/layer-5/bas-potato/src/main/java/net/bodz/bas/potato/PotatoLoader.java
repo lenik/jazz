@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.element.LinkedType;
 import net.bodz.bas.t.order.PriorityComparator;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public class PotatoLoader {

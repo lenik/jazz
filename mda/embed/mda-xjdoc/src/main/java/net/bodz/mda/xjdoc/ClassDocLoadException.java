@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.conv;
+package net.bodz.mda.xjdoc;
 
 import net.bodz.bas.err.IllegalConfigException;
 

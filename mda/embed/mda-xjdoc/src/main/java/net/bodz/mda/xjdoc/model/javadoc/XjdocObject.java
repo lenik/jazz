@@ -3,7 +3,7 @@ package net.bodz.mda.xjdoc.model.javadoc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 

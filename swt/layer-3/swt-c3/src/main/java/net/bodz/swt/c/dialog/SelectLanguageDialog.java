@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import net.bodz.bas.c.java.util.LocaleTypers;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 

@@ -71,6 +71,12 @@ public class TagLibraryLoader {
         return null;
     }
 
+    /**
+     * @param taglibNames
+     *            Tag library names, separated by comma(<code>,</code>).
+     * 
+     *            Specify "<code>*</code>" for all available tag libraries in the classpath.
+     */
     public TagLibrarySet parseSet(String taglibNames) {
         if (taglibNames == null)
             throw new NullPointerException("taglibNames");
@@ -94,6 +100,28 @@ public class TagLibraryLoader {
             set.add(taglib);
         }
         return set;
+    }
+
+    public static TagLibrarySet allFor(Class<?> clazz) {
+        if (clazz == null)
+            throw new NullPointerException("clazz");
+
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        if (classLoader == null) {
+            classLoader = clazz.getClassLoader();
+            if (classLoader == null)
+                throw new NullPointerException("resourceLoader");
+        }
+        return allFor(classLoader);
+    }
+
+    public static TagLibrarySet allFor(ClassLoader classLoader) {
+        if (classLoader == null)
+            throw new NullPointerException("classLoader");
+
+        TagLibraryLoader tagLibraryLoader = new TagLibraryLoader(classLoader);
+        TagLibrarySet taglibs = tagLibraryLoader.parseSet("*");
+        return taglibs;
     }
 
 }

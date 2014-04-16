@@ -23,8 +23,8 @@ import com.thoughtworks.qdox.model.*;
  */
 public class ClassDocBuilder {
 
-    ITagLibrary taglib;
-    iString missingDoc;
+    private ITagLibrary taglib;
+    private iString missingDoc;
 
     public ClassDocBuilder(ITagLibrary taglib) {
         if (taglib == null)

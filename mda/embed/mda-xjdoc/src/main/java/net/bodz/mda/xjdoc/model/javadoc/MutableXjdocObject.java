@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 

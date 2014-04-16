@@ -12,7 +12,7 @@ import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.text.flatf.FlatfOutput;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
