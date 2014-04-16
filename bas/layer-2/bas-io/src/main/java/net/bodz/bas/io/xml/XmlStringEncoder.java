@@ -12,7 +12,7 @@ public class XmlStringEncoder {
 
     private final Appendable out;
 
-    private String[] tab = new String[256];
+    private String[] entityTab = new String[256];
 
     XmlStringEncoder(Appendable out, String[] tab) {
         if (out == null)
@@ -20,7 +20,7 @@ public class XmlStringEncoder {
         if (tab == null)
             throw new NullPointerException("tab");
         this.out = out;
-        this.tab = tab;
+        this.entityTab = tab;
     }
 
     static String[] simpleHtmlTab;
@@ -40,8 +40,8 @@ public class XmlStringEncoder {
         simpleNumericTab['<'] = "&#60;";
         simpleNumericTab['>'] = "&#62;";
 
-        for (int i = 0; i < 32; i++)
-            simpleHtmlTab[i] = simpleNumericTab[i] = "&#" + i + ";";
+        // for (int i = 0; i < 32; i++)
+        // simpleHtmlTab[i] = simpleNumericTab[i] = "&#" + i + ";";
     }
 
     public static XmlStringEncoder forAttribute(Appendable out) {
@@ -50,7 +50,7 @@ public class XmlStringEncoder {
     }
 
     public static XmlStringEncoder forText(Appendable out) {
-        XmlStringEncoder escaper = new XmlStringEncoder(out, simpleNumericTab);
+        XmlStringEncoder escaper = new XmlStringEncoder(out, simpleHtmlTab);
         return escaper;
     }
 
@@ -59,8 +59,8 @@ public class XmlStringEncoder {
         int len = str.length();
         for (int i = 0; i < len; i++) {
             char ch = str.charAt(i);
-            if (ch < tab.length) {
-                String t = tab[ch];
+            if (ch < entityTab.length) {
+                String t = entityTab[ch];
                 if (t != null) {
                     out.append(t);
                     continue;
