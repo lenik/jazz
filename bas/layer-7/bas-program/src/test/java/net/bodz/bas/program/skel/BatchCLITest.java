@@ -11,7 +11,7 @@ import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;

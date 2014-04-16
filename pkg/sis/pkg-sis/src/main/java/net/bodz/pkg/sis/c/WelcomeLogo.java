@@ -13,7 +13,7 @@ import net.bodz.bas.gui.style.ImageUsage;
 import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.pkg.sis.ISisComponent;
 import net.bodz.pkg.sis.ISisProject;

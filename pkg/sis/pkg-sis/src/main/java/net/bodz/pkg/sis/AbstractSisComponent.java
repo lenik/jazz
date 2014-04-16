@@ -32,7 +32,7 @@ import net.bodz.bas.text.rst.IElementHandler;
 import net.bodz.bas.text.rst.IRstElement;
 import net.bodz.bas.text.rst.IRstOutput;
 import net.bodz.bas.text.rst.IRstSerializable;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
 import net.bodz.swt.c.pageflow.IPage;

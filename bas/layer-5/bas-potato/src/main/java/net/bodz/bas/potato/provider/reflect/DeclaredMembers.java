@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.potato.ITypeProvider;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;

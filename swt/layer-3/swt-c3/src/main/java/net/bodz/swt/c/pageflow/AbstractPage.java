@@ -21,7 +21,7 @@ import net.bodz.bas.gui.style.ImageUsage;
 import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.mda.xjdoc.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public abstract class AbstractPage
