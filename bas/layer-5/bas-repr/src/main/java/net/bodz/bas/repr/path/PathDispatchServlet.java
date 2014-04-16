@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.io.html.IHtmlOut;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.html.IHtmlOutputContext;
@@ -25,7 +28,7 @@ public class PathDispatchServlet
 
     private static final long serialVersionUID = 1L;
 
-    // static final Logger logger = LoggerFactory.getLogger(PathDispatchServlet.class);
+    static final Logger logger = LoggerFactory.getLogger(PathDispatchServlet.class);
 
     PathDispatchService pathDispatchService;
     IHtmlViewBuilderFactory viewBuilderFactory;
@@ -74,18 +77,26 @@ public class PathDispatchServlet
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Arrival: " + arrival);
 
         if (!tokenQueue.isEmpty()) {
-            System.out.println(tokenQueue);
+            logger.debug(tokenQueue);
         }
 
         Class<?> targetClass = target.getClass();
         IRefEntry<Object> entry = new ValueEntry<>(target);
 
-        IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(targetClass);
-        IHtmlOutputContext ctx = new RootHtmlOutputContext(req, resp);
-        try {
-            viewBuilder.buildHtmlView(ctx, entry);
-        } catch (ViewBuilderException e) {
-            throw new ServletException("Build html view: " + e.getMessage(), e);
+        IHtmlViewBuilder<Object> htmlVbo = viewBuilderFactory.getViewBuilder(targetClass);
+        if (htmlVbo != null) {
+            // Using UTF-8 by default.
+            resp.setCharacterEncoding("utf-8");
+
+            IHtmlOutputContext ctx = new RootHtmlOutputContext(req, resp);
+            try {
+                htmlVbo.buildHtmlView(ctx, entry);
+            } catch (ViewBuilderException e) {
+                throw new ServletException("Build html view: " + e.getMessage(), e);
+            }
+
+            IHtmlOut htmlOut = ctx.getOut();
+            htmlOut.flush();
         }
     }
 
