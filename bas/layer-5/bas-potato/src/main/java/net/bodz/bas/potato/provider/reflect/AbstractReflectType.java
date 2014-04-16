@@ -34,6 +34,8 @@ public abstract class AbstractReflectType
         int _modifiers = clazz.getModifiers();
         this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
+        if (classDoc == null)
+            throw new NullPointerException("classDoc");
         setXjdoc(classDoc);
 
         propertyMap = new MutablePropertyMap(false);

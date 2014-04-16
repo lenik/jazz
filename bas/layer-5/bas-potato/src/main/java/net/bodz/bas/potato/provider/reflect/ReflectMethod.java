@@ -27,6 +27,8 @@ public class ReflectMethod
         this.modifiers = _modifiers;
         this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
+        if (xjdoc == null)
+            throw new NullPointerException("xjdoc");
         setXjdoc(xjdoc);
     }
 

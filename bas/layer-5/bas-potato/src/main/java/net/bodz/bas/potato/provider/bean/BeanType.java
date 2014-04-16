@@ -36,6 +36,13 @@ public class BeanType
         beanDescriptor = beanInfo.getBeanDescriptor();
         beanClass = beanDescriptor.getBeanClass();
 
+        int _modifiers = beanClass.getModifiers();
+        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+
+        if (classDoc == null)
+            throw new NullPointerException("classDoc");
+        setXjdoc(classDoc);
+
         if ((infoset & ITypeProvider.PROPERTIES) != 0) {
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
@@ -47,15 +54,15 @@ public class BeanType
                     continue;
 
                 MethodDoc propertyDoc = null;
-                if (classDoc != null) {
-                    if (getter != null) {
-                        MethodId getterId = new MethodId(getter);
-                        propertyDoc = classDoc.getMethodDoc(getterId);
-                    } else if (setter != null) {
-                        MethodId setterId = new MethodId(setter);
-                        propertyDoc = classDoc.getMethodDoc(setterId);
-                    }
+                if (getter != null) {
+                    MethodId getterId = new MethodId(getter);
+                    propertyDoc = classDoc.getMethodDoc(getterId);
+                } else if (setter != null) {
+                    MethodId setterId = new MethodId(setter);
+                    propertyDoc = classDoc.getMethodDoc(setterId);
                 }
+                if (propertyDoc == null)
+                    propertyDoc = new MethodDoc(classDoc, new MethodId(getter));
 
                 BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, propertyDoc);
                 propertyMap.addProperty(beanProperty);
@@ -66,12 +73,14 @@ public class BeanType
             MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
             for (MethodDescriptor methodDescriptor : methodDescriptors) {
 
+                Method method = methodDescriptor.getMethod();
+                MethodId methodId = new MethodId(method);
+
                 MethodDoc methodDoc = null;
-                if (classDoc != null) {
-                    Method method = methodDescriptor.getMethod();
-                    MethodId methodId = new MethodId(method);
+                if (classDoc != null)
                     methodDoc = classDoc.getMethodDoc(methodId);
-                }
+                if (methodDoc == null)
+                    methodDoc = new MethodDoc(classDoc, methodId);
 
                 BeanMethod beanMethod = new BeanMethod(methodDescriptor, methodDoc);
                 methodMap.addMethod(beanMethod);
@@ -91,11 +100,6 @@ public class BeanType
                 eventMap.addEvent(beanEvent);
             }
         }
-
-        int _modifiers = beanClass.getModifiers();
-        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
-
-        setXjdoc(classDoc);
     }
 
     public BeanDescriptor getBeanDescriptor() {

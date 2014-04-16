@@ -16,7 +16,7 @@ public class ReflectTypeProvider
 
     @Override
     public IType getType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc) {
-        return new PublicMembers(clazz, infoset, classDoc);
+        return new ReflectType_public(clazz, infoset, classDoc);
     }
 
 }

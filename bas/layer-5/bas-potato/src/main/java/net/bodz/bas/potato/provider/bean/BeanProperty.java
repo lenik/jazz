@@ -36,6 +36,8 @@ public class BeanProperty
         this.modifiers = _modifiers;
         this.verboseLevel = FeatureDescriptorUtil.getVerboseLevel(propertyDescriptor);
 
+        if (xjdoc == null)
+            throw new NullPointerException("xjdoc");
         setXjdoc(xjdoc);
     }
 
@@ -44,14 +46,22 @@ public class BeanProperty
         return propertyDescriptor.getName();
     }
 
-    @Override
-    public iString getLabel() {
+    /**
+     * NOTICE: {@link PropertyDescriptor#getDisplayName()} always return the property name.
+     * 
+     * @see AbstractProperty#getLabel()
+     */
+    iString getLabel_() {
         String displayName = propertyDescriptor.getDisplayName();
         return iString.fn.val(displayName);
     }
 
-    @Override
-    public iString getDescription() {
+    /**
+     * NOTICE: {@link PropertyDescriptor#getShortDescription()} always return the property name. See
+     * 
+     * @see AbstractProperty#getDescription()
+     */
+    iString getDescription_() {
         String shortDescription = propertyDescriptor.getShortDescription();
         return iString.fn.val(shortDescription);
     }

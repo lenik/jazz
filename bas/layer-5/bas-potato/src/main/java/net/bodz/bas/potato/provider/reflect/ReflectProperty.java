@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.potato.element.AbstractProperty;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
@@ -27,8 +28,13 @@ public class ReflectProperty
         this.modifiers = _modifiers;
         this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
+        if (xjdoc == null)
+            throw new NullPointerException("xjdoc");
         setXjdoc(xjdoc);
     }
+
+    /** ⇱ Implementation Of {@link IProperty}. */
+    /* _____________________________ */static section.iface __PROPERTY__;
 
     @Override
     public Class<?> getPropertyType() {

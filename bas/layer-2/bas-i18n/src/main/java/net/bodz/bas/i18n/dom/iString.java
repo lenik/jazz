@@ -64,17 +64,17 @@ public interface iString
 
         /**
          * A para-lang string is formatted as:
-         *
+         * 
          * <pre>
          * string for default-locale
-         *
+         * 
          * &lt;p lang="LOCALE1"&gt;
          *      string for locale1...
-         *
+         * 
          * &lt;p lang="LOCALE2"&gt;
          *      string for locale2...
          * </pre>
-         *
+         * 
          * @see ParaLangString#parse(iString, String)
          */
         public static iString parseParaLangString(String plText) {
@@ -85,7 +85,7 @@ public interface iString
 
         /**
          * A multi-lang string is formatted as:
-         *
+         * 
          * <pre>
          * "default-locale"
          * LOCALE1 "string for locale1"
@@ -93,7 +93,7 @@ public interface iString
          * LOCALE2 "string for locale2"
          *         "more..."
          * </pre>
-         *
+         * 
          * @param mlstr
          *            multi-lang string to be parsed.
          * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
@@ -116,6 +116,16 @@ public interface iString
             formatter.setDomainSeparator(langSeparator);
             formatter.setLineSeparator(lineSeparator);
             return formatter.format(s);
+        }
+
+        public static boolean isEmpty(iString s) {
+            if (s == null)
+                return true;
+            String str = s.toString();
+            // if (str == null) return true;
+            if (str.trim().isEmpty())
+                return true;
+            return false;
         }
 
     }

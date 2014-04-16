@@ -1,6 +1,7 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.AbstractElement;
 import net.bodz.mda.xjdoc.model.IJavaElementDoc;
@@ -21,6 +22,8 @@ public abstract class AbstractXjdocElement
 
     /**
      * @return Non-<code>null</code> {@link IJavaElementDoc}.
+     * @throws IllegalUsageException
+     *             If xjdoc isn't available.
      */
     @Override
     public IJavaElementDoc getXjdoc() {
@@ -32,13 +35,18 @@ public abstract class AbstractXjdocElement
                 }
             }
             if (xjdoc == null)
-                throw new IllegalUsageException("Artifact doc isn't set.");
+                throw new IllegalUsageException("xjdoc isn't available.");
         }
         return xjdoc;
     }
 
+    protected void setXjdoc(IJavaElementDoc xjdoc) {
+        this.xjdoc = xjdoc;
+        this.xjdocLoaded = xjdoc != null;
+    }
+
     protected IJavaElementDoc loadXjdoc() {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
@@ -53,6 +61,10 @@ public abstract class AbstractXjdocElement
         return label;
     }
 
+    protected void setLabel(iString label) {
+        this.label = label;
+    }
+
     /**
      * The default description is the header line of the text.
      */
@@ -65,6 +77,10 @@ public abstract class AbstractXjdocElement
         return description;
     }
 
+    protected void setDescription(iString description) {
+        this.description = description;
+    }
+
     /**
      * The default helpDoc is from the text without the header line.
      */
@@ -75,19 +91,6 @@ public abstract class AbstractXjdocElement
             helpDoc = fn.extractHelpDoc(text);
         }
         return helpDoc;
-    }
-
-    protected void setXjdoc(IJavaElementDoc xjdoc) {
-        this.xjdoc = xjdoc;
-        this.xjdocLoaded = true;
-    }
-
-    protected void setLabel(iString label) {
-        this.label = label;
-    }
-
-    protected void setDescription(iString description) {
-        this.description = description;
     }
 
     protected void setHelpDoc(iString helpDoc) {
