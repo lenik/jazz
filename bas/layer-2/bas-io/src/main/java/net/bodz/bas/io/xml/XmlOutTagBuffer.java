@@ -27,4 +27,10 @@ public class XmlOutTagBuffer
         return this;
     }
 
+    @Override
+    public IXmlTagBuilder text(Object content) {
+        this.text = content == null ? null : content.toString();
+        return this;
+    }
+
 }

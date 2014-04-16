@@ -21,6 +21,12 @@ public interface IHtmlTagBuilder<self_t extends IXmlTagBuilder>
     @Override
     self_t attr(String name, Object value);
 
+    @Override
+    self_t text(String text);
+
+    @Override
+    self_t text(Object content);
+
     // HTML5 Global Attributes
 
     /**

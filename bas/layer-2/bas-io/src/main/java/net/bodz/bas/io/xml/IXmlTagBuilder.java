@@ -8,6 +8,8 @@ public interface IXmlTagBuilder {
 
     IXmlTagBuilder text(String text);
 
+    IXmlTagBuilder text(Object content);
+
     IXmlTagBuilder NULL = new NullXmlTagBuilder();
 
 }
