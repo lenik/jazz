@@ -6,12 +6,8 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.log.Logger;
-import net.bodz.bas.log.LoggerFactory;
 
 public class MavenPomDir {
-
-    static final Logger logger = LoggerFactory.getLogger(MavenPomDir.class);
 
     private File pomFile;
     private File baseDir;
@@ -53,8 +49,7 @@ public class MavenPomDir {
 
         File classFile = ClassResource.getClassBytesFile(clazz);
         if (classFile == null) {
-            logger.warn("No class bytes for " + clazz);
-            return null;
+            throw new UnexpectedException("No class bytes for " + clazz);
         }
 
         String path = classFile.getPath();
