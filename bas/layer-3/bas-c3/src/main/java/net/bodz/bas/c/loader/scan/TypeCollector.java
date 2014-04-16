@@ -108,45 +108,70 @@ public class TypeCollector<T> {
 
         logger.info("For " + baseClass.getCanonicalName());
 
+        String info = null;
         for (Class<?> extension : listFilteredDerivations(baseClass)) {
+            if (info != null)
+                logger.info(info);
+
             String extensionName = extension.getCanonicalName();
 
             if (baseClass.isAnnotation())
-                logger.info("    Annotated: " + extensionName);
+                info = "    Subclass: @" + extensionName;
             else
-                logger.info("    Subclass: " + extensionName);
+                info = "    Subclass: " + extensionName;
 
             if (indexing == null) {
-                logger.debug("        (Not indexed-type, skipped)");
+                // Not indexed-type, skipped
+                info += " -N";
                 continue;
             }
 
             int modifier = extension.getModifiers();
             if (Modifier.isAbstract(modifier))
                 if (indexing.includeAbstract())
-                    logger.debug("    (Included abstract class)");
-                else
+                    // Included abstract class
+                    info += " +a";
+                else {
+                    info += " -a";
                     continue;
+                }
+
             if (!Modifier.isPublic(modifier))
                 if (indexing.includeNonPublic())
-                    logger.debug("    (Included non-public class)");
-                else
+                    // Included non-public class
+                    info += " -";
+                else {
+                    info += " +";
                     continue;
+                }
 
             if (extension.isAnnotation())
                 if (indexing.includeAnnotation())
-                    logger.debug("    (Included annotation class)");
-                else
+                    // Included annotation class
+                    info += " +@";
+                else {
+                    info += " -@";
                     continue;
+                }
 
             extensions.add(extension);
 
             MavenPomDir pomDir = MavenPomDir.fromClass(extension);
-            if (pomDir == null)
+            if (pomDir == null) {
+                logger.debug("Not belongs to maven project. Maybe in the jar: " + extension);
+                info += " jar";
                 continue;
+            }
+
             final File resDir = pomDir.getResourceDir(extension);
-            if (resDir == null)
+            if (resDir == null) {
+                logger.debug("No resource dir: " + extensionName);
+                info += " nrd";
                 continue;
+            }
+
+            logger.info(info);
+            info = null;
 
             String publishDir = indexing.publishDir();
             if (!publishDir.isEmpty()) {
@@ -185,8 +210,10 @@ public class TypeCollector<T> {
 
                 etcFiles.install(extension, editor);
             } // etc-files
-
         } // for derivations
+
+        if (info != null)
+            logger.info(info);
     }
 
     protected Collection<Class<?>> listFilteredDerivations(Class<?> base) {
@@ -228,14 +255,16 @@ public class TypeCollector<T> {
             // The same?
             if (file.exists() == Boolean.TRUE) {
                 String old = FileData.readString(file);
-                if (content.equals(old))
+                if (content.equals(old)) {
+                    logger.debug("Not changed: " + file);
                     continue;
+                }
             }
 
             try {
+                logger.info("Update: " + file);
                 file.getParentFile().mkdirs();
                 FileData.writeString(file, content);
-                logger.info("Updated " + file);
             } catch (IOException e) {
                 logger.error("Failed to update " + file, e);
             }
