@@ -18,4 +18,9 @@ public class NullXmlTagBuilder
         return this;
     }
 
+    @Override
+    public IXmlTagBuilder text(Object content) {
+        return this;
+    }
+
 }

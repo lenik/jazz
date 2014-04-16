@@ -12,6 +12,11 @@ public abstract class AbstractHtmlTagBuilder<self_t extends IXmlTagBuilder>
     }
 
     @Override
+    public final self_t text(Object content) {
+        return text(content == null ? null : content.toString());
+    }
+
+    @Override
     public self_t accesskey(String accesskey) {
         return attr("accesskey", accesskey);
     }
