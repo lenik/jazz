@@ -10,10 +10,10 @@ import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
-public class PublicMembers
+public class ReflectType_public
         extends AbstractReflectType {
 
-    public PublicMembers(Class<?> clazz, int infoset, ClassDoc classDoc) {
+    public ReflectType_public(Class<?> clazz, int infoset, ClassDoc classDoc) {
         super(clazz, infoset, classDoc);
 
         if ((infoset & ITypeProvider.PROPERTIES) != 0)
@@ -25,6 +25,8 @@ public class PublicMembers
                 FieldDoc fieldDoc = null;
                 if (classDoc != null)
                     fieldDoc = classDoc.getFieldDoc(field.getName());
+                if (fieldDoc == null)
+                    fieldDoc = new FieldDoc(classDoc, field.getName());
 
                 ReflectProperty reflectProperty = new ReflectProperty(field, fieldDoc);
                 propertyMap.addProperty(reflectProperty);
@@ -37,10 +39,11 @@ public class PublicMembers
                     continue;
 
                 MethodDoc methodDoc = null;
-                if (classDoc != null) {
-                    MethodId methodId = new MethodId(method);
+                MethodId methodId = new MethodId(method);
+                if (classDoc != null)
                     methodDoc = classDoc.getMethodDoc(methodId);
-                }
+                if (methodDoc == null)
+                    methodDoc = new MethodDoc(classDoc, methodId);
 
                 ReflectMethod reflectMethod = new ReflectMethod(method, methodDoc);
                 methodMap.addMethod(reflectMethod);
@@ -53,10 +56,11 @@ public class PublicMembers
                     continue;
 
                 MethodDoc ctorDoc = null;
-                if (classDoc != null) {
-                    MethodId ctorId = new MethodId(ctor);
+                MethodId ctorId = new MethodId(ctor);
+                if (classDoc != null)
                     ctorDoc = classDoc.getMethodDoc(ctorId);
-                }
+                if (ctorDoc == null)
+                    ctorDoc = new MethodDoc(classDoc, ctorId);
 
                 ReflectConstructor reflectCtor = new ReflectConstructor(ctor, ctorDoc);
                 constructorMap.addConstructor(reflectCtor);

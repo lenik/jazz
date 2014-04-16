@@ -1,5 +1,6 @@
 package net.bodz.bas.potato.ref;
 
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.rtx.QueryException;
 
@@ -73,6 +74,24 @@ public class PropertyRefEntry
     public void removeValueChangeListener(IValueChangeListener listener) {
         ValueOfPropertyChangeListener _listener = new ValueOfPropertyChangeListener(listener);
         property.removePropertyChangeListener(listener, property.getName(), _listener);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        String name = property.getName();
+        Object value = get();
+        sb.append(name);
+        sb.append(" = ");
+        sb.append(value);
+
+        iString description = property.getDescription();
+        if (!iString.fn.isEmpty(description)) {
+            sb.append("  /* ");
+            sb.append(description);
+            sb.append(" */");
+        }
+        return sb.toString();
     }
 
 }
