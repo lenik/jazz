@@ -13,6 +13,13 @@
             <artifactId>bas-api</artifactId>
             <version>${bas.version}</version>
         </dependency>
+        <!-- NOTICE: Force to use the linux version. -->
+        <!-- TODO Add profile/activation support in mjpl.  -->
+        <dependency>
+            <groupId>org.eclipse.swt</groupId>
+            <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+            <version>${swt.version}</version>
+        </dependency>
     </dependencies>
     <name>SWT :: Layer 1 :: Swt</name>
     <properties>
