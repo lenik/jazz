@@ -66,6 +66,7 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry>
                     newImportedCount++;
             }
         }
+        autoImported = true;
     }
 
     protected abstract entry_t createPropertyEntry(Object instance, IProperty property);
@@ -73,7 +74,7 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry>
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(size() + " entries in the map (" + newImportedCount + " new imported):");
+        sb.append(size() + " entries in the map (" + newImportedCount + " new imported):\n");
         for (Entry<?, ?> entry : entrySet())
             sb.append("  " + entry.getKey() + ": " + entry.getValue() + "\n");
         return sb.toString();

@@ -113,4 +113,16 @@ public class VariantMap<K>
         return map.hashCode();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Entry<K, Object> entry : entrySet()) {
+            sb.append(entry.getKey());
+            sb.append(" = ");
+            sb.append(entry.getValue());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
 }
