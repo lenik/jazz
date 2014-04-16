@@ -201,7 +201,7 @@ public abstract class AbstractPrintOut
             throws IOException {
     }
 
-    protected void _flush()
+    protected final void _flush()
             throws IOException {
         _flush(true);
     }

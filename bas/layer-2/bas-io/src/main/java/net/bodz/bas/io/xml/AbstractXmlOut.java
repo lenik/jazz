@@ -212,6 +212,12 @@ public abstract class AbstractXmlOut
         }
     }
 
+    @Override
+    protected void _flush(boolean strict)
+            throws IOException {
+        ensureTextState();
+    }
+
     void ensureTextState() {
         if (startTagMalformed)
             throw new IllegalStateException("Start tag malformed.");
