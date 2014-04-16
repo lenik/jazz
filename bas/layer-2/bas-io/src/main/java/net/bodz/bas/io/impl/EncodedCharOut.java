@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CoderResult;
 
 import net.bodz.bas.io.AbstractCharOut;
 import net.bodz.bas.io.IByteOut;
@@ -53,7 +54,12 @@ public class EncodedCharOut
         // charBuffer: ****C|_____________| byteBuffer: ****|________|
         charBuffer.flip();
         // charBuffer: |****C|_____________ byteBuffer: ****|________|
-        encoder.encode(charBuffer, byteBuffer, false);
+        CoderResult result = encoder.encode(charBuffer, byteBuffer, false);
+        if (result.isError()) {
+            char errorChar = charBuffer.get();
+            errorChar = '?';
+            byteBuffer.put((byte) errorChar);
+        }
         // charBuffer: ***|*C|_____________ byteBuffer: ****###|_____|
         charBuffer.compact();
         // charBuffer: *C|________________| byteBuffer: ****###|_____|
@@ -76,7 +82,12 @@ public class EncodedCharOut
             // charBuffer: ****C|_____________| byteBuffer: ****|________|
             charBuffer.flip();
             // charBuffer: |****C|_____________ byteBuffer: ****|________|
-            encoder.encode(charBuffer, byteBuffer, false);
+            CoderResult result = encoder.encode(charBuffer, byteBuffer, false);
+            if (result.isError()) {
+                char errorChar = charBuffer.get();
+                errorChar = '?';
+                byteBuffer.put((byte) errorChar);
+            }
             // charBuffer: ***|*C|_____________ byteBuffer: ****###|_____|
             charBuffer.compact();
             // charBuffer: *C|________________| byteBuffer: ****###|_____|
