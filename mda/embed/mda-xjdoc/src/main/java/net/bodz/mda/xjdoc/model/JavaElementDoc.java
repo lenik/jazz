@@ -46,13 +46,13 @@ public class JavaElementDoc
 
     @Override
     public iString getLabel() {
-        iString label = (iString) getTag("name");
+        iString label = (iString) getTag("label");
         return label;
     }
 
     @Override
     public void setLabel(iString label) {
-        setTag("name", label);
+        setTag("label", label);
     }
 
     @Override
@@ -206,6 +206,23 @@ public class JavaElementDoc
     @Override
     public <T> T to(Class<T> clazz) {
         return new Tooling(this).getWrapper(clazz);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        iString label = getLabel();
+        if (!iString.fn.isEmpty(label)) {
+            sb.append(label);
+            sb.append(": ");
+        }
+
+        iString text = getText();
+        if (!iString.fn.isEmpty(text))
+            sb.append(text);
+
+        return sb.toString();
     }
 
 }
