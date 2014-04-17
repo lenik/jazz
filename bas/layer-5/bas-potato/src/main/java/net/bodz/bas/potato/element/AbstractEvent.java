@@ -25,9 +25,10 @@ public abstract class AbstractEvent
 
         if (listenerClass == null)
             throw new NullPointerException("listenerClass");
-        if (eventClass == null)
-            throw new NullPointerException("eventClass");
         this.listenerClass = listenerClass;
+
+        // if (eventClass == null)
+        // throw new NullPointerException("eventClass");
         this.eventClass = eventClass;
     }
 
