@@ -1,3 +1,3 @@
 net.bodz.bas.potato.provider.bean.BeanTypeProvider
-net.bodz.bas.potato.provider.reflect.DeclaredTypeProvider
 net.bodz.bas.potato.provider.reflect.ReflectTypeProvider
+net.bodz.bas.potato.provider.reflect.ReflectTypeProvider_declared
