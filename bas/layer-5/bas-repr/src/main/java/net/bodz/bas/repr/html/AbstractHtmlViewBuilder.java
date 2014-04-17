@@ -1,5 +1,7 @@
 package net.bodz.bas.repr.html;
 
+import java.io.IOException;
+
 import net.bodz.bas.gui.css3.Border;
 import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.bas.io.html.IHtmlOut;
@@ -29,18 +31,26 @@ public abstract class AbstractHtmlViewBuilder<T>
     public final Object buildView(Object _ctx, IRefEntry<T> entry, IOptions options)
             throws ViewBuilderException {
         IHtmlOutputContext ctx = (IHtmlOutputContext) _ctx;
-        return buildHtmlView(ctx, entry, options);
+        try {
+            return buildHtmlView(ctx, entry, options);
+        } catch (IOException e) {
+            throw new ViewBuilderException(e.getMessage(), e);
+        }
     }
 
     @Override
     public final IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<T> entry)
             throws ViewBuilderException {
-        return buildHtmlView(ctx, entry, IOptions.NULL);
+        try {
+            return buildHtmlView(ctx, entry, IOptions.NULL);
+        } catch (IOException e) {
+            throw new ViewBuilderException(e.getMessage(), e);
+        }
     }
 
     protected void makeOutmostTag(IHtmlOutputContext ctx, String tagName, IGUIElementStyleDeclaration style) {
         IHtmlOut out = ctx.getOut();
-        out.startTag(tagName);
+        out.startTagBegin(tagName);
 
         Border border = style.getBorder();
         if (border != null) {
@@ -53,7 +63,7 @@ public abstract class AbstractHtmlViewBuilder<T>
             style.getBorderLeft();
         }
 
-        out.endTag();
+        out.startTagEnd(false);
     }
 
 }
