@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.IRefEntry;
@@ -73,11 +72,16 @@ public class PathDispatchServlet
         // throw new ServletException("Dispatch incomplete: " + arrival);
 
         Object target = arrival.getTarget();
-        if (target == null)
+        if (target == null) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Arrival: " + arrival);
+            return;
+        }
 
         if (!tokenQueue.isEmpty()) {
-            logger.debug(tokenQueue);
+            logger.error("Incomplete-Dispatch: " + tokenQueue);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, //
+                    "Path-Remaining: " + tokenQueue.getRemainingPath());
+            return;
         }
 
         Class<?> targetClass = target.getClass();
@@ -86,6 +90,7 @@ public class PathDispatchServlet
         IHtmlViewBuilder<Object> htmlVbo = viewBuilderFactory.getViewBuilder(targetClass);
         if (htmlVbo != null) {
             // Using UTF-8 by default.
+            resp.setContentType("text/html");
             resp.setCharacterEncoding("utf-8");
 
             IHtmlOutputContext ctx = new RootHtmlOutputContext(req, resp);
@@ -95,8 +100,7 @@ public class PathDispatchServlet
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
 
-            IHtmlOut htmlOut = ctx.getOut();
-            htmlOut.flush();
+            ctx.flush();
         }
     }
 
