@@ -10,10 +10,10 @@ import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
-public class ReflectType_public
+public class ReflectType
         extends AbstractReflectType {
 
-    public ReflectType_public(Class<?> clazz, int infoset, ClassDoc classDoc) {
+    public ReflectType(Class<?> clazz, int infoset, ClassDoc classDoc) {
         super(clazz, infoset, classDoc);
 
         if ((infoset & ITypeProvider.PROPERTIES) != 0)

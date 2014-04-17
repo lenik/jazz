@@ -14,7 +14,7 @@ import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
-public class DeclaredMembers
+public class ReflectType_declared
         extends AbstractReflectType {
 
     public static final int PACKAGE_PRIVATE = 0x0001;
@@ -30,7 +30,7 @@ public class DeclaredMembers
      * @param flatten
      *            Include members declared in superclasses.
      */
-    public DeclaredMembers(Class<?> clazz, int infoset, ClassDoc classDoc, boolean flatten) {
+    public ReflectType_declared(Class<?> clazz, int infoset, ClassDoc classDoc, boolean flatten) {
         super(clazz, infoset, classDoc);
 
         int visibilityMask = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE;
@@ -60,6 +60,8 @@ public class DeclaredMembers
                     FieldDoc fieldDoc = null;
                     if (classDoc != null)
                         fieldDoc = classDoc.getFieldDoc(field.getName());
+                    if (fieldDoc == null)
+                        fieldDoc = new FieldDoc(classDoc, field.getName());
 
                     ReflectProperty reflectProperty = new ReflectProperty(field, fieldDoc);
                     propertyMap.addProperty(reflectProperty);
@@ -77,11 +79,12 @@ public class DeclaredMembers
 
                     method.setAccessible(true);
 
+                    MethodId methodId = new MethodId(method);
                     MethodDoc methodDoc = null;
-                    if (classDoc != null) {
-                        MethodId methodId = new MethodId(method);
+                    if (classDoc != null)
                         methodDoc = classDoc.getMethodDoc(methodId);
-                    }
+                    if (methodDoc == null)
+                        methodDoc = new MethodDoc(classDoc, methodId);
 
                     ReflectMethod reflectMethod = new ReflectMethod(method, methodDoc);
                     methodMap.addMethod(reflectMethod);
@@ -99,11 +102,12 @@ public class DeclaredMembers
 
                     ctor.setAccessible(true);
 
+                    MethodId ctorId = new MethodId(ctor);
                     MethodDoc ctorDoc = null;
-                    if (classDoc != null) {
-                        MethodId ctorId = new MethodId(ctor);
+                    if (classDoc != null)
                         ctorDoc = classDoc.getMethodDoc(ctorId);
-                    }
+                    if (ctorDoc == null)
+                        ctorDoc = new MethodDoc(classDoc, ctorId);
 
                     ReflectConstructor reflectCtor = new ReflectConstructor(ctor, ctorDoc);
                     constructorMap.addConstructor(reflectCtor);
