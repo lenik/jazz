@@ -24,6 +24,7 @@ public class RootHtmlOutputContext
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
+    private boolean charBased;
     private OutputStream outputStream;
     private IByteOut byteOut;
     private IHtmlOut htmlOut;
@@ -41,7 +42,7 @@ public class RootHtmlOutputContext
         if (encoding == null)
             encoding = "utf-8";
 
-        boolean charBased = true;
+        charBased = true;
         if (charBased) {
             PrintWriter writer = response.getWriter();
             IPrintOut printOut = new WriterPrintOut(writer);
@@ -87,6 +88,30 @@ public class RootHtmlOutputContext
     @Override
     public IHtmlOut getOut() {
         return htmlOut;
+    }
+
+    @Override
+    public void flush() {
+        htmlOut.endAllTags();
+    }
+
+    @Override
+    public boolean enter()
+            throws IOException {
+        if (getTokenQueue().isEntered())
+            return false;
+
+        StringBuffer url = getRequest().getRequestURL();
+        url.append('/');
+
+        String queryString = getRequest().getQueryString();
+        if (queryString != null) {
+            url.append('?');
+            url.append(queryString);
+        }
+
+        getResponse().sendRedirect(url.toString());
+        return true;
     }
 
 }
