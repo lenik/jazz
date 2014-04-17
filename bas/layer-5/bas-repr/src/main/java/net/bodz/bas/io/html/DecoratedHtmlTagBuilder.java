@@ -14,6 +14,21 @@ public abstract class DecoratedHtmlTagBuilder<self_t extends IXmlTagBuilder>
     }
 
     @Override
+    public self_t start() {
+        return (self_t) orig.start();
+    }
+
+    @Override
+    public self_t end() {
+        return (self_t) orig.end();
+    }
+
+    @Override
+    public int getExit() {
+        return orig.getExit();
+    }
+
+    @Override
     public self_t attr(String name, Object value) {
         orig.attr(name, value);
         return (self_t) this;

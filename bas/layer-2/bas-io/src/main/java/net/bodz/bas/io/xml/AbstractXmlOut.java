@@ -23,7 +23,6 @@ public abstract class AbstractXmlOut
     private boolean startTagMalformed;
 
     private XmlOutTagBuffer pending;
-    private boolean autoEndTag;
 
     private XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute(this);
     private XmlStringEncoder textEncoder = XmlStringEncoder.forText(this);
@@ -77,12 +76,11 @@ public abstract class AbstractXmlOut
         if (attributes != null)
             attributes(attributes);
 
-        pending = new XmlOutTagBuffer(this);
-        pending.text = text;
-        autoEndTag = true;
-
         enter();
         tagStack.push(name);
+
+        pending = new XmlOutTagBuffer(this);
+        pending.text = text;
 
         return pending;
     }
@@ -102,18 +100,13 @@ public abstract class AbstractXmlOut
         if (attributes != null)
             attributes(attributes);
 
-        pending = new XmlOutTagBuffer(this);
-
         enter();
         tagStack.push(name);
 
-        return pending;
-    }
+        pending = new XmlOutTagBuffer(this);
+        pending.start();
 
-    @Override
-    public void endTag() {
-        ensureTextState();
-        _endTag();
+        return pending;
     }
 
     private void _endTag() {
@@ -124,6 +117,25 @@ public abstract class AbstractXmlOut
 
         String name = tagStack.pop();
         println("</" + name + ">");
+    }
+
+    @Override
+    public void endTag() {
+        ensureTextState();
+        _endTag();
+    }
+
+    @Override
+    public void endAllTags() {
+        ensureTextState();
+        while (!tagStack.isEmpty())
+            _endTag();
+    }
+
+    @Override
+    protected void _close()
+            throws IOException {
+        endAllTags();
     }
 
     @Override
@@ -212,12 +224,6 @@ public abstract class AbstractXmlOut
         }
     }
 
-    @Override
-    protected void _flush(boolean strict)
-            throws IOException {
-        ensureTextState();
-    }
-
     void ensureTextState() {
         if (startTagMalformed)
             throw new IllegalStateException("Start tag malformed.");
@@ -226,12 +232,12 @@ public abstract class AbstractXmlOut
             print('>');
             if (pending.text != null)
                 _text(pending.text);
-            pending = null;
-        }
 
-        if (autoEndTag) {
-            _endTag();
-            autoEndTag = false;
+            int exit = pending.getExit();
+            for (int i = 0; i < exit; i++)
+                _endTag();
+
+            pending = null;
         }
     }
 

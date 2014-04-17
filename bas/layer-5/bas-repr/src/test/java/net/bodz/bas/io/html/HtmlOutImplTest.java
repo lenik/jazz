@@ -10,21 +10,18 @@ public class HtmlOutImplTest
     public static void main(String[] args) {
         IHtmlOut out = HtmlOutImpl.from(Stdio.cout);
         out.tag("ver", "Text");
-        out.startTag("html");
+        out.html().start();
         {
             out.h1().style("color: red").text("Title");
             out.tag("div", "Welcome").id("div1");
 
-            out.startTag("form");
+            out.form().start();
             {
                 out.textln("a <simple> form");
-                out.startTag("input");
-                out.text("Click me!");
-                out.endTag();
+                out.input().id("button1").text("Click me!");
             }
-            out.endTag();
         }
-        out.endTag();
+        out.close();
     }
 
 }

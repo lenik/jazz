@@ -2,6 +2,12 @@ package net.bodz.bas.io.xml;
 
 public interface IXmlTagBuilder {
 
+    IXmlTagBuilder start();
+
+    IXmlTagBuilder end();
+
+    int getExit();
+
     IXmlTagBuilder attr(String name, Object value);
 
     IXmlTagBuilder id(String id);

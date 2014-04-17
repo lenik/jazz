@@ -8,7 +8,25 @@ public class XmlTagBuffer
 
     private static final long serialVersionUID = 1L;
 
+    private int exit = 1;
     private String text;
+
+    @Override
+    public IXmlTagBuilder start() {
+        exit = 0;
+        return this;
+    }
+
+    @Override
+    public IXmlTagBuilder end() {
+        exit++;
+        return this;
+    }
+
+    @Override
+    public int getExit() {
+        return exit;
+    }
 
     @Override
     public IXmlTagBuilder attr(String name, Object value) {

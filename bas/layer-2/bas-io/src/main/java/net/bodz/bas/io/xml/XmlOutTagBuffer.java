@@ -4,10 +4,28 @@ public class XmlOutTagBuffer
         implements IXmlTagBuilder {
 
     IXmlOut out;
+    int exit = 1;
     String text;
 
     public XmlOutTagBuffer(IXmlOut out) {
         this.out = out;
+    }
+
+    @Override
+    public IXmlTagBuilder start() {
+        exit = 0;
+        return this;
+    }
+
+    @Override
+    public IXmlTagBuilder end() {
+        exit++;
+        return this;
+    }
+
+    @Override
+    public int getExit() {
+        return exit;
     }
 
     @Override

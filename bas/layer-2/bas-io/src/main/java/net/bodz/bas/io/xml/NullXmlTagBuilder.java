@@ -4,6 +4,21 @@ public class NullXmlTagBuilder
         implements IXmlTagBuilder {
 
     @Override
+    public IXmlTagBuilder start() {
+        return this;
+    }
+
+    @Override
+    public IXmlTagBuilder end() {
+        return this;
+    }
+
+    @Override
+    public int getExit() {
+        return 0;
+    }
+
+    @Override
     public IXmlTagBuilder attr(String name, Object value) {
         return this;
     }

@@ -46,6 +46,10 @@ public class NullXmlOut
     }
 
     @Override
+    public void endAllTags() {
+    }
+
+    @Override
     public void startTagBegin(String name) {
     }
 
