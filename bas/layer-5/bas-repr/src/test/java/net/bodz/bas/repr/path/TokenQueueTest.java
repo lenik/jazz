@@ -46,16 +46,16 @@ public class TokenQueueTest
     public void testParsePathTrailingSlash() {
         TokenQueue queue = new TokenQueue("a/");
         assertEquals("a", queue.shift());
-        assertEquals(ITokenQueue.INDEX, queue.shift());
         assertNull(queue.shift());
+        assertTrue(queue.isEntered());
     }
 
     @Test
     public void testParsePathTrailingSlashes() {
         TokenQueue queue = new TokenQueue("a//////");
         assertEquals("a", queue.shift());
-        assertEquals(ITokenQueue.INDEX, queue.shift());
         assertNull(queue.shift());
+        assertTrue(queue.isEntered());
     }
 
     @Test
@@ -64,7 +64,8 @@ public class TokenQueueTest
         assertNull(queue.shift());
 
         queue = new TokenQueue("////");
-        assertEquals(ITokenQueue.INDEX, queue.shift());
+        assertTrue(queue.isEntered());
+        assertTrue(queue.isEmpty());
     }
 
 }

@@ -1,5 +1,7 @@
 package net.bodz.bas.repr.path;
 
+import net.bodz.bas.vfs.path.IPath;
+
 /**
  * Records the state of token preprocessing.
  *
@@ -9,8 +11,6 @@ package net.bodz.bas.repr.path;
 public interface ITokenQueue {
 
     String ATTRIBUTE_KEY = ITokenQueue.class.getCanonicalName();
-
-    String INDEX = ""; // "<<index>>";
 
     /**
      * Get the available count of remaining tokens.
@@ -25,6 +25,14 @@ public interface ITokenQueue {
      * @return The joined remaining path, without leading slash('/').
      */
     String getRemainingPath();
+
+    /**
+     * Whether there is a trailing slash.
+     *
+     * @return <code>true</code> if there is a trailing slash.
+     * @see IPath#isEntered()
+     */
+    boolean isEntered();
 
     /**
      * Test if the queue is empty.
@@ -44,8 +52,6 @@ public interface ITokenQueue {
     /**
      * Shift out a number of head tokens.
      *
-     * A trailing slash (<code>'/'</code>) should be translated into {@link #INDEX}.
-     *
      * @return A token array consists of n tokens.
      * @throws IndexOutOfBoundsException
      *             If <code>n</code> is out of range.
@@ -59,8 +65,6 @@ public interface ITokenQueue {
 
     /**
      * Shift out the head token.
-     *
-     * A trailing slash (<code>'/'</code>) should be translated into {@link #INDEX}.
      *
      * @return <code>null</code> If no more token.
      */
