@@ -13,7 +13,8 @@ public class BeanEvent
     private final EventSetDescriptor eventSetDescriptor;
 
     public BeanEvent(Class<?> declaringType, EventSetDescriptor eventSetDescriptor, IJavaElementDoc xjdoc) {
-        super(declaringType, eventSetDescriptor.getName(), eventSetDescriptor.getListenerType(), null);
+        super(declaringType, eventSetDescriptor.getName(), //
+                eventSetDescriptor.getListenerType(), null);
         this.eventSetDescriptor = eventSetDescriptor;
 
         setXjdoc(xjdoc);
