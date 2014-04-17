@@ -12,11 +12,17 @@ public interface IViewBuilder<T>
         extends IPriority {
 
     /**
+     * Get the value type.
+     *
+     * Only sub-classes of this type can be built by this view builder.
+     *
      * @return Non-<code>null</code> array of supported classes.
      */
     Class<?> getValueType();
 
     /**
+     * Get supported features.
+     *
      * @return Non-<code>null</code> array of supported feature names.
      */
     String[] getSupportedFeatures();

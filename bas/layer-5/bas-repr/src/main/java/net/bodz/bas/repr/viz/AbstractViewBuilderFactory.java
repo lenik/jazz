@@ -6,8 +6,8 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 
 import net.bodz.bas.c.object.IEmptyConsts;
-import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.type.SingletonUtil;
+import net.bodz.bas.c.type.TypeChain;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
@@ -61,19 +61,21 @@ public abstract class AbstractViewBuilderFactory
 
     @Override
     public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> clazz, String... features) {
-        Class<?> boxed = Primitives.box(clazz);
-        if (!typeMap.containsKey(boxed))
-            try {
-                IViewBuilder<?> friendVbo = findFriendVbo(clazz);
-                if (friendVbo != null)
-                    addViewBuilder(friendVbo);
-            } catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e.getMessage(), e);
+        for (Class<?> c : TypeChain.ancestors(clazz, Object.class)) {
+            TaggedSet<IViewBuilder<?>> set = typeMap.get(c);
+
+            if (set == null) {
+                // auto load...
+                try {
+                    IViewBuilder<?> friendVbo = findFriendVbo(c);
+                    if (friendVbo != null)
+                        addViewBuilder(friendVbo);
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
             }
 
-        Class<?> meet = typeMap.meetKey(boxed);
-        while (meet != null) {
-            TaggedSet<IViewBuilder<?>> set = getTaggedSet(meet, false);
+            set = getTaggedSet(c, false);
             if (set != null) {
                 Collection<IViewBuilder<?>> selection = set.select(features);
                 if (!selection.isEmpty()) {
@@ -81,7 +83,6 @@ public abstract class AbstractViewBuilderFactory
                     return first;
                 }
             }
-            meet = meet.getSuperclass();
         }
         return null;
     }
@@ -92,8 +93,20 @@ public abstract class AbstractViewBuilderFactory
      */
     IViewBuilder<?> findFriendVbo(Class<?> clazz)
             throws ReflectiveOperationException {
-        String fqcn = clazz.getName();
-        String vboFqcn = fqcn + "Vbo";
+        String vboFqcn;
+
+        String simpleName = clazz.getSimpleName();
+        if (clazz.isInterface() //
+                && simpleName.charAt(0) == 'I' //
+                && simpleName.length() > 1 //
+                && Character.isUpperCase(simpleName.charAt(1))) {
+            String unprefix = clazz.getPackage().getName() + "." + simpleName.substring(1);
+            vboFqcn = unprefix + "Vbo";
+        } else {
+            String fqcn = clazz.getName();
+            vboFqcn = fqcn + "Vbo";
+        }
+
         Class<?> vboClass;
         try {
             vboClass = Class.forName(vboFqcn);
