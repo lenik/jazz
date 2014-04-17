@@ -21,7 +21,7 @@ public interface IXmlOut
      * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
      * <p>
      * A tag name stack is used to remember names from previous calls.
-     * 
+     *
      * @param name
      *            The tag name, non-<code>null</code>.
      */
@@ -31,7 +31,7 @@ public interface IXmlOut
      * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
      * <p>
      * A tag name stack is used to remember names from previous calls.
-     * 
+     *
      * @param name
      *            The tag name, non-<code>null</code>.
      * @param attributes
@@ -43,11 +43,13 @@ public interface IXmlOut
      * Write the end part of the tag pair, for example, <code>&lt;/tag&gt;</code>.
      * <p>
      * The last tag name is used.
-     * 
+     *
      * @throws IllegalStateException
      *             If no more tag to end.
      */
     void endTag();
+
+    void endAllTags();
 
     /**
      * Write the left angle and the name of the begin tag, for example, <code>&lt;tag</code>.
