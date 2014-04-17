@@ -16,6 +16,7 @@ public class TokenQueue
 
     private final String[] tokens;
     private int index;
+    private boolean entered;
 
     public TokenQueue(String[] tokens) {
         if (tokens == null)
@@ -33,13 +34,13 @@ public class TokenQueue
             return;
         }
 
-        boolean hasTrailingSlash = path.charAt(path.length() - 1) == '/';
+        entered = path.charAt(path.length() - 1) == '/';
 
         List<String> tokens = new ArrayList<String>(20);
         int start = 0;
         int slash;
         while ((slash = path.indexOf('/', start)) != -1) {
-            if (slash > start) { // skip empty tokens like '//'
+            if (slash > start) { // skip empty tokens like '//', and trailing token.
                 String token = path.substring(start, slash);
                 tokens.add(token);
             }
@@ -51,9 +52,6 @@ public class TokenQueue
             String token = path.substring(start);
             tokens.add(token);
         }
-
-        if (hasTrailingSlash)
-            tokens.add(INDEX);
 
         this.tokens = tokens.toArray(new String[0]);
     }
@@ -73,6 +71,11 @@ public class TokenQueue
             buf.append(tokens[i]);
         }
         return buf.toString();
+    }
+
+    @Override
+    public boolean isEntered() {
+        return entered;
     }
 
     @Override
@@ -191,7 +194,7 @@ public class TokenQueue
         }
 
         // "a/b <---> /c"
-        buf.append(" <---> ");
+        buf.append(" → ");
 
         for (int i = index; i < tokens.length; i++) {
             buf.append('/');
