@@ -2,6 +2,9 @@ package net.bodz.bas.repr.html;
 
 import java.util.ServiceLoader;
 
+/**
+ * @see IHtmlViewBuilder The indexed type.
+ */
 public class IndexedHtmlViewBuilderFactory
         extends AbstractHtmlViewBuilderFactory {
 
