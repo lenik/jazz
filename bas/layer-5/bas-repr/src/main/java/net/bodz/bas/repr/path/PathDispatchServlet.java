@@ -12,7 +12,6 @@ import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.html.IHtmlOutputContext;
 import net.bodz.bas.repr.html.IHtmlViewBuilder;
@@ -21,6 +20,7 @@ import net.bodz.bas.repr.html.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.repr.html.RootHtmlOutputContext;
 import net.bodz.bas.repr.req.IHttpRequestProcessor;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class PathDispatchServlet
         extends HttpServlet {
@@ -31,10 +31,12 @@ public class PathDispatchServlet
 
     PathDispatchService pathDispatchService;
     IHtmlViewBuilderFactory viewBuilderFactory;
+    PathArrivalHtmlViewBuilder pathArrivalVbo;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
+        pathArrivalVbo = new PathArrivalHtmlViewBuilder();
     }
 
     @Override
@@ -68,9 +70,6 @@ public class PathDispatchServlet
         if (arrival == null)
             throw new ServletException("Dispatch failed: " + tokenQueue);
 
-        // if (!tokenQueue.isEmpty())
-        // throw new ServletException("Dispatch incomplete: " + arrival);
-
         Object target = arrival.getTarget();
         if (target == null) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Arrival: " + arrival);
@@ -84,24 +83,20 @@ public class PathDispatchServlet
             return;
         }
 
-        Class<?> targetClass = target.getClass();
-        IRefEntry<Object> entry = new ValueEntry<>(target);
+        IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(target.getClass());
+        ContentType contentType = viewBuilder.getContentType(target);
+        resp.setContentType(contentType.getName());
 
-        IHtmlViewBuilder<Object> htmlVbo = viewBuilderFactory.getViewBuilder(targetClass);
-        if (htmlVbo != null) {
-            // Using UTF-8 by default.
-            resp.setContentType("text/html");
-            resp.setCharacterEncoding("utf-8");
+        // Using UTF-8 by default.
+        resp.setCharacterEncoding("utf-8");
 
-            IHtmlOutputContext ctx = new RootHtmlOutputContext(req, resp);
-            try {
-                htmlVbo.buildHtmlView(ctx, entry);
-            } catch (ViewBuilderException e) {
-                throw new ServletException("Build html view: " + e.getMessage(), e);
-            }
-
-            ctx.flush();
+        IHtmlOutputContext ctx = new RootHtmlOutputContext(req, resp);
+        try {
+            pathArrivalVbo.buildHtmlView(ctx, ValueEntry.wrap(arrival));
+        } catch (ViewBuilderException e) {
+            throw new ServletException("Build html view: " + e.getMessage(), e);
         }
+        ctx.flush();
     }
 
     protected Object getStartObject() {

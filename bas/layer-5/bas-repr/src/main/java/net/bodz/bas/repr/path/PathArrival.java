@@ -1,7 +1,10 @@
 package net.bodz.bas.repr.path;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import net.bodz.bas.c.object.ITreeDump;
 import net.bodz.bas.c.object.Nullables;
@@ -26,8 +29,6 @@ public class PathArrival
     public PathArrival(IPathArrival parent, Object target, String[] consumedTokens, String remainingPath) {
         if (consumedTokens == null)
             throw new NullPointerException("consumedTokens");
-        if (remainingPath == null)
-            throw new NullPointerException("remainingPath");
         this.parent = parent;
         this.target = target;
         this.consumedTokens = consumedTokens;
@@ -70,10 +71,6 @@ public class PathArrival
         return remainingPath;
     }
 
-    public void setRemainingPath(String remainingPath) {
-        this.remainingPath = remainingPath;
-    }
-
     @Override
     public Object getTarget() {
         return target;
@@ -108,6 +105,31 @@ public class PathArrival
             if (cmp > 0)
                 this.expires = afterDate;
         }
+    }
+
+    @Override
+    public Date getMinExpires() {
+        Date min = this.expires;
+        IPathArrival prev = this;
+        while ((prev = prev.getPrevious()) != null) {
+            Date expires1 = prev.getExpires();
+            if (min == null)
+                min = expires1;
+            else if (expires1 != null && expires1.compareTo(min) < 0)
+                min = expires1;
+        }
+        return min;
+    }
+
+    public List<IPathArrival> reverse() {
+        List<IPathArrival> list = new ArrayList<IPathArrival>();
+        IPathArrival a = this;
+        while (a != null) {
+            list.add(a);
+            a = a.getPrevious();
+        }
+        Collections.reverse(list);
+        return list;
     }
 
     @Override

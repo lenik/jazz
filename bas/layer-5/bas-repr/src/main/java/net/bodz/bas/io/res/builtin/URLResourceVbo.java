@@ -26,20 +26,29 @@ public class URLResourceVbo
     }
 
     @Override
-    public IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<URLResource> entry, IOptions options)
-            throws ViewBuilderException, IOException {
-        HttpServletResponse response = ctx.getResponse();
-
-        URLResource resource = entry.get();
-        URL url = resource.getURL();
-
+    public ContentType getContentType(URLResource value) {
+        URL url = value.getURL();
         String fileName = url.getFile();
         String extension = FilePath.getExtension(fileName);
         ContentType contentType = ContentType.forExtension(extension);
         if (contentType == null)
             contentType = ContentTypes.application_octet_stream;
-        response.setContentType(contentType.getName());
+        return contentType;
+    }
 
+    @Override
+    public boolean isOrigin(URLResource value) {
+        return true;
+    }
+
+    @Override
+    public IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<URLResource> entry, IOptions options)
+            throws ViewBuilderException, IOException {
+        HttpServletResponse response = ctx.getResponse();
+
+        URLResource resource = entry.get();
+
+        URL url = resource.getURL();
         Long length = FileURL.length(url, null);
         if (length == null)
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

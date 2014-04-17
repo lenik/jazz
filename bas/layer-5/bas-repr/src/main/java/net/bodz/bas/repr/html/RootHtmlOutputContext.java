@@ -29,6 +29,11 @@ public class RootHtmlOutputContext
     private IByteOut byteOut;
     private IHtmlOut htmlOut;
 
+    /**
+     * TODO xxxxxxxxxxxxxxxx ctx.pushBegin ... ctx. return new SubHtmlOutCtx(ctx)
+     * 
+     * @see #flush()
+     */
     public RootHtmlOutputContext(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         if (request == null)
@@ -42,7 +47,8 @@ public class RootHtmlOutputContext
         if (encoding == null)
             encoding = "utf-8";
 
-        charBased = true;
+        String contentType = response.getContentType();
+        charBased = contentType.startsWith("text/");
         if (charBased) {
             PrintWriter writer = response.getWriter();
             IPrintOut printOut = new WriterPrintOut(writer);
@@ -93,25 +99,6 @@ public class RootHtmlOutputContext
     @Override
     public void flush() {
         htmlOut.endAllTags();
-    }
-
-    @Override
-    public boolean enter()
-            throws IOException {
-        if (getTokenQueue().isEntered())
-            return false;
-
-        StringBuffer url = getRequest().getRequestURL();
-        url.append('/');
-
-        String queryString = getRequest().getQueryString();
-        if (queryString != null) {
-            url.append('?');
-            url.append(queryString);
-        }
-
-        getResponse().sendRedirect(url.toString());
-        return true;
     }
 
 }

@@ -64,6 +64,9 @@ public class TokenQueue
     @Override
     public String getRemainingPath() {
         int remaining = tokens.length - index;
+        if (remaining == 0)
+            return null;
+
         StringBuilder buf = new StringBuilder(remaining * 20);
         for (int i = index; i < tokens.length; i++) {
             if (i != index)

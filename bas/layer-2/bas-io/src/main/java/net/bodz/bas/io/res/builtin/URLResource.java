@@ -53,7 +53,7 @@ public class URLResource
     public URL getURL() {
         return url;
     }
-//
+
 //    @Override
 //    public long getLength() {
 //        switch (url.getProtocol()) {
