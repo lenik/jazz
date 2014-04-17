@@ -41,8 +41,6 @@ public class FieldPathDispatcher
         if (field == null)
             return null;
 
-        tokens.shift();
-
         Object result;
         try {
             result = field.get(obj);
@@ -50,7 +48,7 @@ public class FieldPathDispatcher
             throw new PathDispatchException(e);
         }
 
-        return new PathArrival(previous, result, fieldName, tokens.getRemainingPath());
+        return PathArrival.shift(previous, result, tokens);
     }
 
     static final String CLS_FIELD_MAP_ID;

@@ -44,8 +44,6 @@ public class PropertyPathDispatcher
         if (propertyDescriptor == null)
             return null;
 
-        tokens.shift();
-
         Method readMethod = propertyDescriptor.getReadMethod();
         if (readMethod == null)
             throw new PathDispatchException("Property " + propertyName + " isn't readable");
@@ -57,7 +55,7 @@ public class PropertyPathDispatcher
             throw new PathDispatchException(e);
         }
 
-        return new PathArrival(previous, result, propertyName, tokens.getRemainingPath());
+        return PathArrival.shift(previous, result, tokens);
     }
 
     static final String CLS_PROPERTY_MAP_ID;

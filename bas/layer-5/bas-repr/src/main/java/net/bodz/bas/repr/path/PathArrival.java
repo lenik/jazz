@@ -38,6 +38,11 @@ public class PathArrival
         this(parent, target, new String[] { consumedToken }, remainingPath);
     }
 
+    public static PathArrival shift(IPathArrival parent, Object target, ITokenQueue tokens) {
+        String token = tokens.shift();
+        return new PathArrival(parent, target, token, tokens.getRemainingPath());
+    }
+
     @Override
     public IPathArrival getPrevious() {
         return parent;

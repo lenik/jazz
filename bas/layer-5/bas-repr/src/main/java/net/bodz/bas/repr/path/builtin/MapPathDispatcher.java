@@ -29,7 +29,7 @@ public class MapPathDispatcher
         if (!(obj instanceof Map<?, ?>))
             return null;
 
-        String key = tokens.shift();
+        String key = tokens.peek();
         if (key == null)
             return previous;
 
@@ -38,7 +38,7 @@ public class MapPathDispatcher
             return null;
 
         Object result = map.get(key);
-        return new PathArrival(previous, result, key, tokens.getRemainingPath());
+        return PathArrival.shift(previous, result, tokens);
     }
 
 }
