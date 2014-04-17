@@ -1,5 +1,7 @@
 package net.bodz.bas.repr.html;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,5 +24,10 @@ public interface IHtmlOutputContext
     IByteOut getByteOut();
 
     IHtmlOut getOut();
+
+    void flush();
+
+    boolean enter()
+            throws IOException;
 
 }
