@@ -1,11 +1,16 @@
 package net.bodz.bas.c.java.io;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.Map.Entry;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.t.pojo.Pair;
 
 public class FileURL {
 
@@ -38,24 +43,9 @@ public class FileURL {
         }
     }
 
-    static File getJarFile(URL jarURL) {
-        assert "jar".equals(jarURL.getProtocol());
-        String s = jarURL.getPath(); // path = file:/...!...
-        assert s.startsWith("file:");
-        int excl = s.lastIndexOf('!');
-        if (excl != -1) // assert
-            s = s.substring(0, excl); // path = file:/...
-        try {
-            URL truncatedURL = new URL(s);
-            return FilePath.canoniOf(truncatedURL);
-        } catch (MalformedURLException e) {
-            throw new UnexpectedException(e);
-        }
-    }
-
     /**
      * Convert the url to file is possible, otherwise return <code>null</code>.
-     * 
+     *
      * @return The corresponding file, or <code>null</code> if not available.
      */
     public static File toFile(URL url, File fallback) {
@@ -73,7 +63,7 @@ public class FileURL {
 
     /**
      * If url is an entry of a jar file, then the jar file is returned.
-     * 
+     *
      * @return The nearest local file for the url. If no such file exists, returns <code>null</code>
      */
     public static File toNearestFile(URL url) {
@@ -122,6 +112,73 @@ public class FileURL {
         }
         File dir = FilePath.canoniOf(truncatedURL);
         return dir;
+    }
+
+    public static Long length(URL url, Long notExisted)
+            throws IOException {
+        if (url == null)
+            throw new NullPointerException("url");
+        switch (url.getProtocol()) {
+        case "file":
+            File file = new File(url.getPath());
+            if (file.exists())
+                return file.length();
+            else
+                return notExisted;
+
+        case "jar":
+            Entry<ZipFile, ZipEntry> pair = openEntry(url);
+            if (pair == null)
+                return null;
+            ZipFile zipFile = pair.getKey();
+            ZipEntry zipEntry = pair.getValue();
+            long size = zipEntry.getSize();
+            zipFile.close();
+            return size;
+
+        default:
+            return null;
+        }
+    }
+
+    static File getJarFile(URL jarURL) {
+        assert "jar".equals(jarURL.getProtocol());
+        String s = jarURL.getPath(); // path = file:/...!...
+        assert s.startsWith("file:");
+        int excl = s.lastIndexOf('!');
+        if (excl != -1) // assert
+            s = s.substring(0, excl); // path = file:/...
+        try {
+            URL truncatedURL = new URL(s);
+            return FilePath.canoniOf(truncatedURL);
+        } catch (MalformedURLException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
+    public static Entry<ZipFile, ZipEntry> openEntry(URL zipURL)
+            throws IOException {
+        if (!"jar".equals(zipURL.getProtocol()))
+            throw new IllegalArgumentException("Not a zip URL: " + zipURL);
+
+        String path = zipURL.getPath(); // path = file:/...!...
+        assert path.startsWith("file:");
+        int excl = path.lastIndexOf('!');
+
+        assert excl != -1;
+        String zipFileName = path.substring(5, excl); // path = file:/...
+        String entryName = path.substring(excl + 1);
+
+        ZipFile zipFile = new ZipFile(zipFileName);
+        try {
+            ZipEntry zipEntry = zipFile.getEntry(entryName);
+            if (zipEntry == null)
+                return null;
+            else
+                return Pair.of(zipFile, zipEntry);
+        } finally {
+            zipFile.close();
+        }
     }
 
 }
