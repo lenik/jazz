@@ -191,6 +191,7 @@ public abstract class AbstractPrintOut
     @Override
     public final void close() {
         try {
+            super.close();
             _close();
         } catch (IOException e) {
             throw new PrintException(e);
