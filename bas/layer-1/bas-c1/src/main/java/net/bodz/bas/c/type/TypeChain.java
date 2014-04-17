@@ -1,11 +1,16 @@
 package net.bodz.bas.c.type;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class TypeChain {
 
@@ -48,6 +53,83 @@ public class TypeChain {
         }
 
         out.leave(); // decreaseIndentLevel();
+    }
+
+    public static Iterable<Class<?>> ancestors(final Class<?> type, Class<?>... deferred) {
+        final List<Class<?>> deferredList;
+        if (deferred != null && deferred.length != 0)
+            deferredList = Collections.toList(deferred);
+        else
+            deferredList = null;
+
+        return new Iterable<Class<?>>() {
+            @Override
+            public Iterator<Class<?>> iterator() {
+                return new AncestorIterator(type, deferredList);
+            }
+        };
+    }
+
+}
+
+class AncestorIterator
+        extends PrefetchedIterator<Class<?>> {
+
+    private Set<Class<?>> markSet;
+    private List<Class<?>> queue;
+    private List<Class<?>> newQueue;
+    private List<Class<?>> deferredQueue;
+    private int index;
+
+    AncestorIterator(Class<?> start) {
+        markSet = new HashSet<Class<?>>();
+        queue = new ArrayList<Class<?>>();
+        newQueue = new ArrayList<Class<?>>();
+
+        queue.add(start);
+    }
+
+    AncestorIterator(Class<?> start, List<Class<?>> deferred) {
+        this(start);
+
+        if (deferred != null && !deferred.isEmpty()) {
+            this.deferredQueue = deferred;
+            for (Class<?> ex : deferred)
+                markSet.add(ex);
+        }
+    }
+
+    @Override
+    protected Class<?> fetch() {
+        if (queue.isEmpty()) {
+            if (deferredQueue != null) {
+                queue = deferredQueue;
+                deferredQueue = null;
+            } else
+                return end();
+        }
+
+        Class<?> c = queue.get(index++);
+        if (index == queue.size()) {
+            for (Class<?> q : queue) {
+                Class<?> qSuper = q.getSuperclass();
+                if (qSuper != null && markSet.add(qSuper))
+                    newQueue.add(qSuper);
+
+                Class<?>[] qInterfaces = q.getInterfaces();
+                for (int i = 0; i < qInterfaces.length; i++) {
+                    Class<?> qInterface = qInterfaces[i];
+                    if (markSet.add(qInterface))
+                        newQueue.add(qInterface);
+                }
+            }
+            List<Class<?>> tmp = queue;
+            queue = newQueue;
+            newQueue = tmp;
+            newQueue.clear();
+            index = 0;
+        }
+        return c;
     }
 
 }
