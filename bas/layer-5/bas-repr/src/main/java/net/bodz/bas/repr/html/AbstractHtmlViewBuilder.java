@@ -9,6 +9,8 @@ import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.std.rfc.mime.ContentTypes;
 
 public abstract class AbstractHtmlViewBuilder<T>
         extends AbstractViewBuilder<T>
@@ -19,7 +21,17 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
+    public ContentType getContentType(T value) {
+        return ContentTypes.text_html;
+    }
+
+    @Override
     public boolean isOrigin(T value) {
+        return false;
+    }
+
+    @Override
+    public boolean isFrame() {
         return false;
     }
 
@@ -32,7 +44,9 @@ public abstract class AbstractHtmlViewBuilder<T>
             throws ViewBuilderException {
         IHtmlOutputContext ctx = (IHtmlOutputContext) _ctx;
         try {
-            return buildHtmlView(ctx, entry, options);
+            IHtmlOutputContext innerCtx = buildHtmlView(ctx, entry, options);
+            buildHtmlViewTail(ctx, entry, options);
+            return innerCtx;
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
@@ -40,12 +54,20 @@ public abstract class AbstractHtmlViewBuilder<T>
 
     @Override
     public final IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<T> entry)
-            throws ViewBuilderException {
-        try {
-            return buildHtmlView(ctx, entry, IOptions.NULL);
-        } catch (IOException e) {
-            throw new ViewBuilderException(e.getMessage(), e);
-        }
+            throws ViewBuilderException, IOException {
+        return buildHtmlView(ctx, entry, IOptions.NULL);
+    }
+
+    @Override
+    public final void buildHtmlViewTail(IHtmlOutputContext ctx, IRefEntry<T> entry)
+            throws ViewBuilderException, IOException {
+        buildHtmlViewTail(ctx, entry, IOptions.NULL);
+    }
+
+    @Override
+    public void buildHtmlViewTail(IHtmlOutputContext ctx, IRefEntry<T> entry, IOptions options)
+            throws ViewBuilderException, IOException {
+        // Do nothing in default implementation.
     }
 
     protected void makeOutmostTag(IHtmlOutputContext ctx, String tagName, IGUIElementStyleDeclaration style) {
@@ -64,6 +86,24 @@ public abstract class AbstractHtmlViewBuilder<T>
         }
 
         out.startTagEnd(false);
+    }
+
+    protected static boolean enter(IHtmlOutputContext ctx)
+            throws IOException {
+        if (ctx.getTokenQueue().isEntered())
+            return false;
+
+        StringBuffer url = ctx.getRequest().getRequestURL();
+        url.append('/');
+
+        String queryString = ctx.getRequest().getQueryString();
+        if (queryString != null) {
+            url.append('?');
+            url.append(queryString);
+        }
+
+        ctx.getResponse().sendRedirect(url.toString());
+        return true;
     }
 
 }
