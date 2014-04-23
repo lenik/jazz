@@ -9,7 +9,7 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 
-public class ResourcePathDispatcher
+public class ClassResourcePathDispatcher
         extends AbstractPathDispatcher {
 
     @Override
