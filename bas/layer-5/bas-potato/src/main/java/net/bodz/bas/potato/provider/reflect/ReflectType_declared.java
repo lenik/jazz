@@ -61,7 +61,7 @@ public class ReflectType_declared
                     if (classDoc != null)
                         fieldDoc = classDoc.getFieldDoc(field.getName());
                     if (fieldDoc == null)
-                        fieldDoc = new FieldDoc(classDoc, field.getName());
+                        fieldDoc = FieldDoc.n_a(classDoc, field.getName());
 
                     ReflectProperty reflectProperty = new ReflectProperty(field, fieldDoc);
                     propertyMap.addProperty(reflectProperty);
@@ -84,7 +84,7 @@ public class ReflectType_declared
                     if (classDoc != null)
                         methodDoc = classDoc.getMethodDoc(methodId);
                     if (methodDoc == null)
-                        methodDoc = new MethodDoc(classDoc, methodId);
+                        methodDoc = MethodDoc.n_a(classDoc, methodId);
 
                     ReflectMethod reflectMethod = new ReflectMethod(method, methodDoc);
                     methodMap.addMethod(reflectMethod);
@@ -107,7 +107,7 @@ public class ReflectType_declared
                     if (classDoc != null)
                         ctorDoc = classDoc.getMethodDoc(ctorId);
                     if (ctorDoc == null)
-                        ctorDoc = new MethodDoc(classDoc, ctorId);
+                        ctorDoc = MethodDoc.n_a(classDoc, ctorId);
 
                     ReflectConstructor reflectCtor = new ReflectConstructor(ctor, ctorDoc);
                     constructorMap.addConstructor(reflectCtor);

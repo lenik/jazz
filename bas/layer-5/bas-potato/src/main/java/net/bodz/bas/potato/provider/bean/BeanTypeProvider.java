@@ -19,7 +19,7 @@ public class BeanTypeProvider
     }
 
     @Override
-    public IType getType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc) {
+    public IType loadType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc) {
         try {
             BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
             return new BeanType(beanInfo, infoset, classDoc);

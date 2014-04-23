@@ -14,6 +14,6 @@ public interface ITypeProvider
     int CONSTRUCTORS = 0x4_0000;
     int EVENTS = 0x8_0000;
 
-    IType getType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc);
+    IType loadType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc);
 
 }

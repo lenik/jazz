@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.ISectionHandler;
@@ -25,6 +26,14 @@ public class ClassDoc
         super(fqcn);
         fieldDocs = new LinkedHashMap<String, FieldDoc>();
         methodDocs = new LinkedHashMap<MethodId, MethodDoc>();
+    }
+
+    public static ClassDoc n_a(String fqcn) {
+        ClassDoc classDoc = new ClassDoc(fqcn);
+        classDoc.setLabel(iString.fn.val("no label"));
+        // classDoc.setDescription(iString.fn.val(fqcn));
+        classDoc.setText(iString.fn.val(fqcn));
+        return classDoc;
     }
 
     @Override
@@ -105,19 +114,19 @@ public class ClassDoc
 
     /**
      * classdoc file format.
-     * 
+     *
      * The .classdoc file should be located along with the .class file:
      * <ul>
      * <li>foo/Bar$Inner.class
      * <li>foo/Bar$Inner.classdoc
      * </ul>
-     * 
+     *
      * Example:
-     * 
+     *
      * <pre>
      * #comments
      * %import f.q.c.Name
-     * 
+     *
      * # optional "[type]"
      * [field:...]
      * [method(int,String[],...)]
@@ -131,7 +140,7 @@ public class ClassDoc
      * param.bar = Bar is another parameter.
      * throws.IOException = I/O error occurred.
      * </pre>
-     * 
+     *
      * Features:
      * <ul>
      * <li>'\' in the end-of-line means continuation.
