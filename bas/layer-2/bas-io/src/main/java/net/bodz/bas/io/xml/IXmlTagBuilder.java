@@ -16,6 +16,8 @@ public interface IXmlTagBuilder {
 
     IXmlTagBuilder text(Object content);
 
+    IXmlTagBuilder textf(String format, Object... args);
+
     IXmlTagBuilder NULL = new NullXmlTagBuilder();
 
 }

@@ -46,4 +46,10 @@ public abstract class DecoratedHtmlTagBuilder<self_t extends IXmlTagBuilder>
         return (self_t) this;
     }
 
+    @Override
+    public self_t textf(String format, Object... args) {
+        orig.textf(format, args);
+        return (self_t) this;
+    }
+
 }

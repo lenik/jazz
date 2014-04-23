@@ -38,4 +38,9 @@ public class NullXmlTagBuilder
         return this;
     }
 
+    @Override
+    public IXmlTagBuilder textf(String format, Object... args) {
+        return this;
+    }
+
 }
