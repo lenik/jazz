@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.err.UnexpectedException;
 
+/**
+ * @see AbsoluteHref
+ */
+@Deprecated
 public class Href
         implements Serializable {
 
