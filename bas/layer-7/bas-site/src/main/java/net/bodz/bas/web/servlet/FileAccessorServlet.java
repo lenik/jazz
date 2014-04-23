@@ -26,6 +26,11 @@ public class FileAccessorServlet
      */
     private String path;
 
+    /**
+     * 1 day by default.
+     */
+    private int maxAge = 86400;
+
     @Override
     public void init()
             throws ServletException {
@@ -64,6 +69,11 @@ public class FileAccessorServlet
             resp.setContentLength((int) length);
         else
             resp.setHeader("Content-Length", String.valueOf(length));
+
+        resp.setHeader("Cache-Control", "max-age=" + maxAge);
+        resp.setDateHeader("Last-Modified", file.lastModified());
+        resp.setDateHeader("Expires", file.lastModified() + maxAge * 1000L);
+        // resp.setHeader("E-Tag", eTag);
 
         ContentRange contentRange = null;
         String contentRangeHeader = req.getHeader("Content-Range");
