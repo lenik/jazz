@@ -264,23 +264,6 @@ public class StringArray {
         return splitBySize(s, size, 0);
     }
 
-    public static int countWords(String data) {
-        int count = 0;
-        int pos = 0;
-        int len = data.length();
-        boolean started = false;
-        while (pos < len) {
-            char ch = data.charAt(pos++);
-            boolean space = Character.isWhitespace(ch);
-            if (space && started)
-                count++;
-            started = !space;
-        }
-        if (started)
-            count++;
-        return count;
-    }
-
     public static List<String> extractWords(String data, int maxCount) {
         if (maxCount == 0)
             return Collections.emptyList();

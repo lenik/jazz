@@ -3,7 +3,7 @@ package net.bodz.bas.c.string;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class StringFeatureTest
+public class StringStatTest
         extends Assert {
 
     @Test
@@ -11,7 +11,7 @@ public class StringFeatureTest
             throws Exception {
         class D {
             void o(String input, int expected) {
-                int actual = StringFeature.count(input, '.');
+                int actual = StringStat.count(input, '.');
                 assertEquals(expected, actual);
             }
         }
@@ -27,7 +27,7 @@ public class StringFeatureTest
             throws Exception {
         class D {
             void o(String input, int expected) {
-                int actual = StringFeature.count(input, ".");
+                int actual = StringStat.count(input, ".");
                 assertEquals(expected, actual);
             }
         }
@@ -42,7 +42,7 @@ public class StringFeatureTest
     public void testCount_StringPattern2() {
         class D {
             void o(String input, int expected) {
-                int actual = StringFeature.count(input, "..");
+                int actual = StringStat.count(input, "..");
                 assertEquals(expected, actual);
             }
         }
