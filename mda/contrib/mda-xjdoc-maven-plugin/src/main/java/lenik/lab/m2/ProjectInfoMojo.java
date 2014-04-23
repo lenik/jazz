@@ -10,7 +10,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.MavenProjectBuilder;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 
 import net.bodz.bas.c.loader.ClassLoaderAnalyzer;
@@ -21,10 +20,10 @@ import net.bodz.bas.io.res.builtin.FileResource;
 
 /**
  * A project-info plugin rewritten by Lenik.
- * 
+ *
  * <p>
  * The usage of <b>&#64;requiresDependencyResolution</b>:
- * 
+ *
  * Flags this Mojo as requiring the dependencies in the specified class path to be resolved before
  * it can execute. The matrix below illustrates which values for <i>&lt;requiredClassPath&gt;</i>
  * (first column) are supported and which dependency scopes (first row) they will request to
@@ -76,7 +75,7 @@ import net.bodz.bas.io.res.builtin.FileResource;
  * If this annotation is present but no scope is specified, the scope defaults to <tt>runtime</tt>.
  * If the annotation is not present at all, the mojo must not make any assumptions about the
  * artifacts associated with a Maven project.
- * 
+ *
  * @author <a href="mailto:xjl@99jsj.com">Lenik</a>
  * @goal dump
  * @phase generate-resources
@@ -87,26 +86,26 @@ public class ProjectInfoMojo
 
     /**
      * The current Maven project.
-     * 
+     *
      * @parameter default-value="${project}"
      * @readonly
      * @required
      */
     MavenProject project;
 
-    /** @component */
-    MavenProjectBuilder projectBuilder;
+    // /** @component */
+    // MavenProjectBuilder projectBuilder;
 
     /**
      * The directory to find source files, like JavaCC grammar files, or .java sources.
-     * 
+     *
      * @parameter expression="${sourceDirectory}" default-value="${basedir}/src/main/java"
      */
     File sourceDirectory;
 
     /**
      * The directory to save generated files.
-     * 
+     *
      * @parameter expression="${outputDirectory}"
      *            default-value="${project.build.directory}/generated-resources/project"
      */
@@ -140,10 +139,10 @@ public class ProjectInfoMojo
 
             /**
              * The dependency artifacts is only resolved since the compile phase.
-             * 
+             *
              * That is, "@phase" must be compile or above, or the
              * "@requiresDependencyResolution test" must be set.
-             * 
+             *
              * Otherwise, the dpendency artifacts is null.
              */
             Set<Artifact> dependencyArtifacts = project.getDependencyArtifacts();

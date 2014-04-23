@@ -8,16 +8,6 @@
     <artifactId>bas-vfs</artifactId>
     <dependencies>
         <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-std</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-typer-impl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
         </dependency>
@@ -28,15 +18,24 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-ar</artifactId>
+            <artifactId>bas-std</artifactId>
             <version>${project.version}</version>
-            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-typer-impl</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c3</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-ar</artifactId>
+            <version>${project.version}</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
