@@ -40,6 +40,16 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
+    public void buildTitle(StringBuilder buffer, T value) {
+        if (value == null)
+            throw new NullPointerException("value");
+        String string = value.toString();
+        if (buffer.length() != 0)
+            buffer.append(" - ");
+        buffer.append(string);
+    }
+
+    @Override
     public final Object buildView(Object _ctx, IRefEntry<T> entry, IOptions options)
             throws ViewBuilderException {
         IHtmlOutputContext ctx = (IHtmlOutputContext) _ctx;

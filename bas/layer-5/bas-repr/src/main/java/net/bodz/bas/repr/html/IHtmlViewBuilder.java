@@ -31,6 +31,8 @@ public interface IHtmlViewBuilder<T>
 
     void getRequirements(IRequirements requires);
 
+    void buildTitle(StringBuilder buffer, T value);
+
     IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<T> entry)
             throws ViewBuilderException, IOException;
 
