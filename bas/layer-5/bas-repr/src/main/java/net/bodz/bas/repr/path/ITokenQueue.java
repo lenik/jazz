@@ -1,7 +1,5 @@
 package net.bodz.bas.repr.path;
 
-import net.bodz.bas.vfs.path.IPath;
-
 /**
  * Records the state of token preprocessing.
  *
@@ -30,7 +28,7 @@ public interface ITokenQueue {
      * Whether there is a trailing slash.
      *
      * @return <code>true</code> if there is a trailing slash.
-     * @see IPath#isEntered()
+     * @see net.bodz.bas.vfs.path.IPath#isEntered()
      */
     boolean isEntered();
 

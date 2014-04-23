@@ -23,10 +23,14 @@ public class TagLibraryLoader {
         taglibMap = new HashMap<String, ITagLibrary>();
 
         logger.info("Search taglibs in class loader:");
-        for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class, loader)) {
-            String name = taglib.getName();
-            logger.info("    Found taglib " + name + " = " + ObjectInfo.getSimpleId(taglib));
-            register(name, taglib);
+        try {
+            for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class, loader)) {
+                String name = taglib.getName();
+                logger.info("    Found taglib " + name + " = " + ObjectInfo.getSimpleId(taglib));
+                register(name, taglib);
+            }
+        } catch (Error e) {
+            logger.error("Service configuration error", e);
         }
     }
 
@@ -74,7 +78,7 @@ public class TagLibraryLoader {
     /**
      * @param taglibNames
      *            Tag library names, separated by comma(<code>,</code>).
-     * 
+     *
      *            Specify "<code>*</code>" for all available tag libraries in the classpath.
      */
     public TagLibrarySet parseSet(String taglibNames) {
