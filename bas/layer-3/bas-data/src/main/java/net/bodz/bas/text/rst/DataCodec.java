@@ -3,6 +3,7 @@ package net.bodz.bas.text.rst;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.StringNum;
+import net.bodz.bas.c.string.StringStat;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 
@@ -273,7 +274,7 @@ public class DataCodec
     @Override
     public byte[] parseBytes(String field, String data)
             throws ParseException {
-        int n = StringArray.countWords(data);
+        int n = StringStat.wordCount(data);
         byte[] buf = new byte[n];
         parseBytes(field, data, buf, 0, n);
         return buf;
@@ -298,7 +299,7 @@ public class DataCodec
     @Override
     public short[] parseShorts(String field, String data)
             throws ParseException {
-        int n = StringArray.countWords(data);
+        int n = StringStat.wordCount(data);
         short[] buf = new short[n];
         parseShorts(field, data, buf, 0, n);
         return buf;
@@ -323,7 +324,7 @@ public class DataCodec
     @Override
     public int[] parseInts(String field, String data)
             throws ParseException {
-        int n = StringArray.countWords(data);
+        int n = StringStat.wordCount(data);
         int[] buf = new int[n];
         parseInts(field, data, buf, 0, n);
         return buf;
@@ -348,7 +349,7 @@ public class DataCodec
     @Override
     public long[] parseLongs(String field, String data)
             throws ParseException {
-        int n = StringArray.countWords(data);
+        int n = StringStat.wordCount(data);
         long[] buf = new long[n];
         parseLongs(field, data, buf, 0, n);
         return buf;
@@ -373,7 +374,7 @@ public class DataCodec
     @Override
     public float[] parseFloats(String field, String data)
             throws ParseException {
-        int n = StringArray.countWords(data);
+        int n = StringStat.wordCount(data);
         float[] buf = new float[n];
         parseFloats(field, data, buf, 0, n);
         return buf;
@@ -398,7 +399,7 @@ public class DataCodec
     @Override
     public double[] parseDoubles(String field, String data)
             throws ParseException {
-        int n = StringArray.countWords(data);
+        int n = StringStat.wordCount(data);
         double[] buf = new double[n];
         parseDoubles(field, data, buf, 0, n);
         return buf;
@@ -423,7 +424,7 @@ public class DataCodec
     @Override
     public boolean[] parseBools(String field, String data)
             throws ParseException {
-        int n = StringArray.countWords(data);
+        int n = StringStat.wordCount(data);
         boolean[] buf = new boolean[n];
         parseBools(field, data, buf, 0, n);
         return buf;
