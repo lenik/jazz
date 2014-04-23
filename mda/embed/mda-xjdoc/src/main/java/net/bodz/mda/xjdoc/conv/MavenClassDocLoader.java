@@ -26,8 +26,11 @@ public class MavenClassDocLoader
     public ClassDoc load(Class<?> clazz)
             throws ClassDocLoadException {
         MavenPomDir pomDir = MavenPomDir.fromClass(clazz);
+        if (pomDir == null) // Not in a maven project.
+            return null;
+
         File sourceFile = pomDir.getSourceFile(clazz);
-        if (sourceFile == null)
+        if (sourceFile == null) // Not belong to the maven project.
             return null;
 
         ClassLoader classLoader = clazz.getClassLoader();
