@@ -15,7 +15,7 @@ public class ReflectTypeProvider
     }
 
     @Override
-    public IType getType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc) {
+    public IType loadType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc) {
         return new ReflectType(clazz, infoset, classDoc);
     }
 

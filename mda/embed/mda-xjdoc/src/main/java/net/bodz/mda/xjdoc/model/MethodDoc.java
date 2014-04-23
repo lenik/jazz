@@ -23,6 +23,13 @@ public class MethodDoc
         this.methodId = methodId;
     }
 
+    public static MethodDoc n_a(ClassDoc classDoc, MethodId methodId) {
+        MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
+        methodDoc.setLabel(iString.fn.val("no label"));
+        methodDoc.setText(iString.fn.val(methodId));
+        return methodDoc;
+    }
+
     public ClassDoc getClassDoc() {
         return classDoc;
     }
@@ -33,7 +40,7 @@ public class MethodDoc
 
     /**
      * Get the return doc.
-     * 
+     *
      * @return <code>null</code> if return doc isn't existed.
      */
     public iString getReturnDoc() {
@@ -49,9 +56,9 @@ public class MethodDoc
 
     /**
      * Get the docs of parameters.
-     * 
+     *
      * @return Non-<code>null</code> map (e.g. {@link LinkedHashMap}) of parameters.
-     * 
+     *
      *         The map is order-preserved, so that the first parameter is in the first iteration.
      */
     public Map<String, iString> getParamDocs() {

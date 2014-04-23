@@ -62,7 +62,7 @@ public class BeanType
                     propertyDoc = classDoc.getMethodDoc(setterId);
                 }
                 if (propertyDoc == null)
-                    propertyDoc = new MethodDoc(classDoc, new MethodId(getter));
+                    propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter));
 
                 BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, propertyDoc);
                 propertyMap.addProperty(beanProperty);
@@ -80,7 +80,7 @@ public class BeanType
                 if (classDoc != null)
                     methodDoc = classDoc.getMethodDoc(methodId);
                 if (methodDoc == null)
-                    methodDoc = new MethodDoc(classDoc, methodId);
+                    methodDoc = MethodDoc.n_a(classDoc, methodId);
 
                 BeanMethod beanMethod = new BeanMethod(methodDescriptor, methodDoc);
                 methodMap.addMethod(beanMethod);
