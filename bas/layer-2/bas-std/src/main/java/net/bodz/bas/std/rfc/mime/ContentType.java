@@ -2,6 +2,8 @@ package net.bodz.bas.std.rfc.mime;
 
 import java.io.Serializable;
 
+import net.bodz.bas.c.java.io.FilePath;
+
 public class ContentType
         implements Serializable {
 
@@ -25,7 +27,7 @@ public class ContentType
 
     /**
      * The preferred extension name.
-     * 
+     *
      * @return The extension name, without the dot(.).
      */
     public String getPreferredExtension() {
@@ -74,6 +76,13 @@ public class ContentType
 
     public static ContentType forName(String name) {
         return ContentTypes.nameMap.get(name);
+    }
+
+    public static ContentType forPath(String path) {
+        if (path == null)
+            throw new NullPointerException("path");
+        String extension = FilePath.getExtension(path);
+        return forExtension(extension);
     }
 
     public static ContentType forExtension(String extension) {
