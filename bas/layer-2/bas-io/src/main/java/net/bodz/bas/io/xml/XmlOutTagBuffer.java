@@ -51,4 +51,10 @@ public class XmlOutTagBuffer
         return this;
     }
 
+    @Override
+    public IXmlTagBuilder textf(String format, Object... args) {
+        this.text = String.format(format, args);
+        return this;
+    }
+
 }
