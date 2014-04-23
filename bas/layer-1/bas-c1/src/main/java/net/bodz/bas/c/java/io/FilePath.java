@@ -191,7 +191,7 @@ public class FilePath {
 
     /**
      * Get the extension name from the given path string.
-     * 
+     *
      * @param path
      *            The path string, can't be <code>null</code>.
      * @param includeDot
@@ -267,6 +267,14 @@ public class FilePath {
         return path;
     }
 
+    public static String removeTrailingSlashes(String path) {
+        if (path == null)
+            throw new NullPointerException("path");
+        while (path.endsWith("/") || path.endsWith("\\"))
+            path = path.substring(0, path.length() - 1);
+        return path;
+    }
+
     static File[] environPathArray;
     static String[] environPathExtArray;
     static {
@@ -297,7 +305,7 @@ public class FilePath {
 
     /**
      * Find program using system default PATHEXT (win32 only).
-     * 
+     *
      * @return <code>null</code> if couldn't find name.
      */
     public static File which(String name, File... paths) {
