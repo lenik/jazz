@@ -17,6 +17,7 @@
         <module>bas-draw</module>
         <module>bas-flow</module>
         <module>bas-gui</module>
+        <module>bas-html</module>
         <module>bas-l10n</module>
         <module>bas-potato</module>
         <module>bas-repr</module>
