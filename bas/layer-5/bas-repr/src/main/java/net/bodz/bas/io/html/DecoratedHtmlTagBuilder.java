@@ -9,18 +9,19 @@ public abstract class DecoratedHtmlTagBuilder<self_t extends IHtmlTagBuilder<?>>
     private IXmlTagBuilder orig;
 
     public DecoratedHtmlTagBuilder(IXmlTagBuilder orig) {
-        super();
         this.orig = orig;
     }
 
     @Override
     public self_t start() {
-        return (self_t) orig.start();
+        orig.start();
+        return (self_t) this;
     }
 
     @Override
     public self_t end() {
-        return (self_t) orig.end();
+        orig.end();
+        return (self_t) this;
     }
 
     @Override
