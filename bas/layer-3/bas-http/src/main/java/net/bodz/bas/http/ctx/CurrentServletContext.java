@@ -31,6 +31,10 @@ public class CurrentServletContext
         initialized = false;
     }
 
+    public boolean isInitialized() {
+        return initialized;
+    }
+
     // ________________________________________________________________________
     // ⇱ Part: Static Accessor
     //
@@ -44,7 +48,7 @@ public class CurrentServletContext
     }
 
     public static ServletContext getServletContext() {
-        ServletContext servletContext = getServletContext();
+        ServletContext servletContext = getServletContextOpt();
         if (servletContext == null)
             throw new IllegalStateException("Not initialized yet.");
         return servletContext;
