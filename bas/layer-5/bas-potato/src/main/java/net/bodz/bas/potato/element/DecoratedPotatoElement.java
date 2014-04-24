@@ -95,4 +95,9 @@ public class DecoratedPotatoElement
         return getWrapped().getXjdoc();
     }
 
+    @Override
+    public void setXjdoc(IJavaElementDoc xjdoc) {
+        getWrapped().setXjdoc(xjdoc);
+    }
+
 }

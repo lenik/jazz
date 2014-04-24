@@ -40,7 +40,8 @@ public abstract class AbstractXjdocElement
         return xjdoc;
     }
 
-    protected void setXjdoc(IJavaElementDoc xjdoc) {
+    @Override
+    public void setXjdoc(IJavaElementDoc xjdoc) {
         this.xjdoc = xjdoc;
         this.xjdocLoaded = xjdoc != null;
     }
