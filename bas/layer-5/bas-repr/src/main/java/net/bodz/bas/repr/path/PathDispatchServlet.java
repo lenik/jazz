@@ -13,7 +13,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.ValueEntry;
-import net.bodz.bas.repr.html.IHtmlOutputContext;
+import net.bodz.bas.repr.html.IHttpReprContext;
 import net.bodz.bas.repr.html.IHtmlViewBuilder;
 import net.bodz.bas.repr.html.IHtmlViewBuilderFactory;
 import net.bodz.bas.repr.html.IndexedHtmlViewBuilderFactory;
@@ -90,7 +90,7 @@ public class PathDispatchServlet
         // Using UTF-8 by default.
         resp.setCharacterEncoding("utf-8");
 
-        IHtmlOutputContext ctx = new RootHtmlOutputContext(req, resp);
+        IHttpReprContext ctx = new RootHtmlOutputContext(req, resp);
         try {
             pathArrivalVbo.buildHtmlView(ctx, ValueEntry.wrap(arrival));
         } catch (ViewBuilderException e) {

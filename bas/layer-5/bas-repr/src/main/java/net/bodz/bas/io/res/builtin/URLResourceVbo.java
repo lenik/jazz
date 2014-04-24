@@ -12,7 +12,7 @@ import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.html.AbstractHtmlViewBuilder;
-import net.bodz.bas.repr.html.IHtmlOutputContext;
+import net.bodz.bas.repr.html.IHttpReprContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
@@ -42,7 +42,7 @@ public class URLResourceVbo
     }
 
     @Override
-    public IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<URLResource> entry, IOptions options)
+    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<URLResource> entry, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse response = ctx.getResponse();
 

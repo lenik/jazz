@@ -5,7 +5,7 @@ import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.html.AbstractHtmlViewBuilder;
-import net.bodz.bas.repr.html.IHtmlOutputContext;
+import net.bodz.bas.repr.html.IHttpReprContext;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.req.IMethodOfRequest;
@@ -20,7 +20,7 @@ public class ObjectDumpView
     }
 
     @Override
-    public IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<Object> entry, IOptions options)
+    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<Object> entry, IOptions options)
             throws ViewBuilderException {
         HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 
