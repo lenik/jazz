@@ -42,7 +42,7 @@ public class Href
     }
 
     protected HttpServletRequest getRequest() {
-        HttpServletRequest request = ThreadServletContext.getRequestOpt();
+        HttpServletRequest request = CurrentHttpService.getRequestOpt();
         return request;
     }
 

@@ -15,7 +15,7 @@ public abstract class AbstractHref
 
     @Override
     public String getRelativeHref() {
-        HttpServletRequest req = ThreadServletContext.getRequest();
+        HttpServletRequest req = CurrentHttpService.getRequest();
         return getRelativeHrefTo(req);
     }
 

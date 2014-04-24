@@ -13,7 +13,7 @@ public interface IHref {
     /**
      * Get the relative href, based on the thread local request.
      *
-     * @see ThreadServletContext#getRequest()
+     * @see CurrentHttpService#getRequest()
      */
     String getRelativeHref();
 
