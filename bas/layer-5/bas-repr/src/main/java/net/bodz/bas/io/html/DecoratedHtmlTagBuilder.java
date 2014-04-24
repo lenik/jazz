@@ -3,7 +3,7 @@ package net.bodz.bas.io.html;
 import net.bodz.bas.io.xml.IXmlTagBuilder;
 
 @SuppressWarnings("unchecked")
-public abstract class DecoratedHtmlTagBuilder<self_t extends IXmlTagBuilder>
+public abstract class DecoratedHtmlTagBuilder<self_t extends IHtmlTagBuilder<?>>
         extends AbstractHtmlTagBuilder<self_t> {
 
     private IXmlTagBuilder orig;
