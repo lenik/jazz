@@ -32,21 +32,21 @@ public class NullXmlOut
     }
 
     @Override
-    public IXmlTagBuilder startTag(String name) {
+    public IXmlTagBuilder start(String name) {
         return IXmlTagBuilder.NULL;
     }
 
     @Override
-    public IXmlTagBuilder startTag(String name, Map<String, ?> attributes) {
+    public IXmlTagBuilder start(String name, Map<String, ?> attributes) {
         return IXmlTagBuilder.NULL;
     }
 
     @Override
-    public void endTag() {
+    public void end() {
     }
 
     @Override
-    public void endAllTags() {
+    public void endAll() {
     }
 
     @Override

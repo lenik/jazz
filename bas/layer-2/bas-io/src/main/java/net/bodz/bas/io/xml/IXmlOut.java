@@ -25,7 +25,7 @@ public interface IXmlOut
      * @param name
      *            The tag name, non-<code>null</code>.
      */
-    IXmlTagBuilder startTag(String name);
+    IXmlTagBuilder start(String name);
 
     /**
      * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
@@ -37,7 +37,7 @@ public interface IXmlOut
      * @param attributes
      *            Attributes for the tag, can be <code>null</code> if none.
      */
-    IXmlTagBuilder startTag(String name, Map<String, ?> attributes);
+    IXmlTagBuilder start(String name, Map<String, ?> attributes);
 
     /**
      * Write the end part of the tag pair, for example, <code>&lt;/tag&gt;</code>.
@@ -47,9 +47,9 @@ public interface IXmlOut
      * @throws IllegalStateException
      *             If no more tag to end.
      */
-    void endTag();
+    void end();
 
-    void endAllTags();
+    void endAll();
 
     /**
      * Write the left angle and the name of the begin tag, for example, <code>&lt;tag</code>.

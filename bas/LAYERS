@@ -38,6 +38,7 @@ layer-5/ 框架基础
     bas-l10n
     bas-potato
     bas-repr
+    bas-html
     bas-gui
     bas-vfs
     

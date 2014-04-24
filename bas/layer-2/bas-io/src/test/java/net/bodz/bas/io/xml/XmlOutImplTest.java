@@ -18,7 +18,7 @@ public class XmlOutImplTest
             out.tag("form").start();
             {
                 out.textln("a <simple> form");
-                out.startTag("input");
+                out.start("input");
                 out.text("Click me!");
             }
         }
