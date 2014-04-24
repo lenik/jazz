@@ -86,12 +86,12 @@ public abstract class AbstractXmlOut
     }
 
     @Override
-    public final IXmlTagBuilder startTag(String name) {
-        return startTag(name, null);
+    public final IXmlTagBuilder start(String name) {
+        return start(name, null);
     }
 
     @Override
-    public IXmlTagBuilder startTag(String name, Map<String, ?> attributes) {
+    public IXmlTagBuilder start(String name, Map<String, ?> attributes) {
         ensureTextState();
 
         checkName(name);
@@ -120,13 +120,13 @@ public abstract class AbstractXmlOut
     }
 
     @Override
-    public void endTag() {
+    public void end() {
         ensureTextState();
         _endTag();
     }
 
     @Override
-    public void endAllTags() {
+    public void endAll() {
         ensureTextState();
         while (!tagStack.isEmpty())
             _endTag();
@@ -135,7 +135,7 @@ public abstract class AbstractXmlOut
     @Override
     protected void _close()
             throws IOException {
-        endAllTags();
+        endAll();
     }
 
     @Override
