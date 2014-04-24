@@ -19,6 +19,7 @@ sub mkdir_p;
 
 my $opt_package = 'net.bodz.bas.io.html.tag';
 my $opt_outdir;
+my $opt_wrapper = 0;
 
 my %keywords = (
     'for'       => 'for_',
@@ -31,6 +32,7 @@ sub _boot {
                'version'        => sub { _version; exit 0 },
                'h|help'         => sub { _help; exit 0 },
                'p|package=s'    => \$opt_package,
+               'w|wrapper'      => \$opt_wrapper,
                )
         or exit(1);
 
@@ -110,6 +112,7 @@ sub _help {
 
 Common options:
     -p, --package=FQPN      Specify the package name
+    -w, --wrapper           Generate wrapper classes
     -q, --quiet             Repeat to get less info
     -v, --verbose           Repeat to get more info
     -h, --help              Show this help page
@@ -186,7 +189,8 @@ sub _main {
 
     for my $name (@names) {
         my $Name = ucfirst $name;
-        my $Class = "Html${Name}Builder";
+        my $Class0 = "_Html${Name}Builder";
+        my $Class = $opt_wrapper ? "Html${Name}Builder" : $Class0;
         my $fqcn = "$opt_package.$Class";
 
         my $file = $fqcn;
@@ -199,51 +203,70 @@ sub _main {
 
         print OUT "package $opt_package;\n";
         print OUT "\n";
-        print OUT "import net.bodz.bas.io.html.DecoratedHtmlTagBuilder;\n";
-        print OUT "import net.bodz.bas.io.xml.IXmlTagBuilder;\n";
-        print OUT "\n";
-
-        if (defined $doc) {
-            print OUT "/**\n";
-            print OUT "  * $doc\n";
-            print OUT "  */\n";
-        }
-        print OUT "public class $Class\n";
-        print OUT "        extends DecoratedHtmlTagBuilder<$Class> {\n";
-        print OUT "\n";
-        print OUT "    public $Class(IXmlTagBuilder o) {\n";
-        print OUT "        super(o);\n";
-        print OUT "    }\n";
-        
-        for my $attrh (@attrs) {
-            my $Attr = '';
-            for my $w (split('-', $attrh)) {
-                $Attr .= ucfirst $w;
-            }
-            my $attr = lcfirst $Attr;
-
-            my $attr_ = $keywords{$attr};
-                $attr_ = $attr unless defined $attr_;
-
+        if ($opt_wrapper) {
+            my $impl = $Class0;
+            print OUT "import net.bodz.bas.io.xml.IXmlTagBuilder;\n";
             print OUT "\n";
-            my $adoc = $map{$attrh};
-            if (defined $adoc) {
-                print OUT "    /**\n";
-                print OUT "      * $adoc\n";
-                print OUT "      */\n";
-            }
-
-            print OUT "    public $Class $attr_(String val) {\n";
-            print OUT "        attr(\"$attrh\", val);\n";
-            print OUT "        return this;\n";
+            print OUT "public class $Class\n";
+            print OUT "        extends $Class0<$Class> {\n";
+            print OUT "\n";
+            print OUT "    public $Class(IXmlTagBuilder o) {\n";
+            print OUT "        super(o);\n";
             print OUT "    }\n";
-        } #for attrs
+        } else {
+            print OUT "import net.bodz.bas.io.html.DecoratedHtmlTagBuilder;\n";
+            print OUT "import net.bodz.bas.io.html.IHtmlTagBuilder;\n";
+            print OUT "import net.bodz.bas.io.xml.IXmlTagBuilder;\n";
+            print OUT "\n";
+
+            if (defined $doc) {
+                print OUT "/**\n";
+                print OUT "  * $doc\n";
+                print OUT "  */\n";
+            }
+            print OUT "\@SuppressWarnings(\"unchecked\")\n" if scalar(@attrs);
+            print OUT "class $Class<self_t extends IHtmlTagBuilder<?>>\n";
+            print OUT "        extends DecoratedHtmlTagBuilder<self_t> {\n";
+            print OUT "\n";
+            print OUT "    public $Class(IXmlTagBuilder o) {\n";
+            print OUT "        super(o);\n";
+            print OUT "    }\n";
+            
+            for my $attrh (@attrs) {
+                my $Attr = '';
+                for my $w (split('-', $attrh)) {
+                    $Attr .= ucfirst $w;
+                }
+                my $attr = lcfirst $Attr;
+
+                my $attr_ = $keywords{$attr};
+                    $attr_ = $attr unless defined $attr_;
+
+                print OUT "\n";
+                my $adoc = $map{$attrh};
+                if (defined $adoc) {
+                    print OUT "    /**\n";
+                    print OUT "      * $adoc\n";
+                    print OUT "      */\n";
+                }
+
+                print OUT "    public self_t $attr_(String val) {\n";
+                print OUT "        attr(\"$attrh\", val);\n";
+                print OUT "        return (self_t) this;\n";
+                print OUT "    }\n";
+            } #for attrs
+        }
 
         print OUT "\n}\n";
 
+        # FOR IHtmlOut
         # print "    $Class $name();\n";
+        
+        # FOR NullHtmlOut
+        # print "    public $Class $name() { return new $Class(IXmlTagBuilder.NULL); }\n";
+        
+        # FOR AbstractHtmlOut
         # print "    public $Class $name() { return new $Class(tag(\"$name\")); }\n";
-        print "    public $Class $name() { return new $Class(IXmlTagBuilder.NULL); }\n";
     } #for names
 
 } #main
