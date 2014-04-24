@@ -1,0 +1,65 @@
+#!/bin/bash
+    : ${RCSID:=$Id: - @VERSION@ @DATE@ @TIME@ - $}
+    : ${PACKAGE:=@PACKAGE@}
+    : ${PROGRAM_TITLE:=}
+    : ${PROGRAM_SYNTAX:=[OPTIONS] [--] ...}
+
+    . shlib-import cliboot
+    option -m --mode =NAME      "Specify the mode, can be I/A/N" \
+        "I for interface, " \
+        "A for abstract implementation, " \
+        "N for null implementation."
+    option -q --quiet
+    option -v --verbose
+    option -h --help
+    option    --version
+
+    mode=Unspecified
+
+function setopt() {
+    case "$1" in
+        -m|--mode)
+            mode="$2";;
+        -h|--help)
+            help $1; exit;;
+        -q|--quiet)
+            LOGLEVEL=$((LOGLEVEL - 1));;
+        -v|--verbose)
+            LOGLEVEL=$((LOGLEVEL + 1));;
+        --version)
+            show_version; exit;;
+        *)
+            quit "invalid option: $1";;
+    esac
+}
+
+function main() {
+    while read name; do
+        case "$mode" in    
+        I)
+            echo "    self_t $name(String handler);"
+            ;;
+
+        A)
+            echo "    @Override"
+            echo "    public self_t $name(String handler) {"
+            echo "        return attr(\"$name\", handler);"
+            echo "    }"
+            echo
+            ;;
+
+        N)
+            echo "    @Override"
+            echo "    public self_t $name(String handler) {"
+            echo "    }"
+            echo
+            ;;
+
+        *)
+            quit "invalid mode: $mode";;
+        esac
+    done <names
+}
+
+boot "$@"
+

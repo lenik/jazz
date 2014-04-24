@@ -189,4 +189,122 @@ public interface IHtmlTagBuilder<self_t extends IXmlTagBuilder>
      */
     self_t translate(Boolean translate);
 
+    // Events
+
+    self_t onblur(String handler);
+
+    self_t oncancel(String handler);
+
+    self_t oncanplay(String handler);
+
+    self_t oncanplaythrough(String handler);
+
+    self_t onchange(String handler);
+
+    self_t onclick(String handler);
+
+    self_t onclose(String handler);
+
+    self_t oncuechange(String handler);
+
+    self_t ondblclick(String handler);
+
+    self_t ondrag(String handler);
+
+    self_t ondragend(String handler);
+
+    self_t ondragenter(String handler);
+
+    self_t ondragexit(String handler);
+
+    self_t ondragleave(String handler);
+
+    self_t ondragover(String handler);
+
+    self_t ondragstart(String handler);
+
+    self_t ondrop(String handler);
+
+    self_t ondurationchange(String handler);
+
+    self_t onemptied(String handler);
+
+    self_t onended(String handler);
+
+    self_t onerror(String handler);
+
+    self_t onfocus(String handler);
+
+    self_t oninput(String handler);
+
+    self_t oninvalid(String handler);
+
+    self_t onkeydown(String handler);
+
+    self_t onkeypress(String handler);
+
+    self_t onkeyup(String handler);
+
+    self_t onload(String handler);
+
+    self_t onloadeddata(String handler);
+
+    self_t onloadedmetadata(String handler);
+
+    self_t onloadstart(String handler);
+
+    self_t onmousedown(String handler);
+
+    self_t onmouseenter(String handler);
+
+    self_t onmouseleave(String handler);
+
+    self_t onmousemove(String handler);
+
+    self_t onmouseout(String handler);
+
+    self_t onmouseover(String handler);
+
+    self_t onmouseup(String handler);
+
+    self_t onmousewheel(String handler);
+
+    self_t onpause(String handler);
+
+    self_t onplay(String handler);
+
+    self_t onplaying(String handler);
+
+    self_t onprogress(String handler);
+
+    self_t onratechange(String handler);
+
+    self_t onreset(String handler);
+
+    self_t onresize(String handler);
+
+    self_t onscroll(String handler);
+
+    self_t onseeked(String handler);
+
+    self_t onseeking(String handler);
+
+    self_t onselect(String handler);
+
+    self_t onshow(String handler);
+
+    self_t onstalled(String handler);
+
+    self_t onsubmit(String handler);
+
+    self_t onsuspend(String handler);
+
+    self_t ontimeupdate(String handler);
+
+    self_t ontoggle(String handler);
+
+    self_t onvolumechange(String handler);
+
+    self_t onwaiting(String handler);
+
 }
