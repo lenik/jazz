@@ -9,7 +9,7 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.err.UnexpectedException;
 
 /**
- * @see AbsoluteHref
+ * @see AbsoluteBasePath
  */
 @Deprecated
 public class Href
