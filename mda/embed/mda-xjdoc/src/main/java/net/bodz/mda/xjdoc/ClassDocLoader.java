@@ -1,6 +1,9 @@
 package net.bodz.mda.xjdoc;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,6 +12,8 @@ import java.util.WeakHashMap;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.model.FieldDoc;
+import net.bodz.mda.xjdoc.model.javadoc.IXjdocAware;
 
 @ExcludedFromIndex
 public class ClassDocLoader {
@@ -26,7 +31,7 @@ public class ClassDocLoader {
 
     /**
      * Query the cache or re-load from the providers.
-     * 
+     *
      * @param clazz
      *            The class whose class-doc will be returned.
      * @return <code>null</code> if no aavailable class doc.
@@ -47,6 +52,43 @@ public class ClassDocLoader {
             }
         }
         return classDoc;
+    }
+
+    public static String injectFields(Class<?> clazz, boolean includeNonPublic) {
+        int modifiers = clazz.getModifiers();
+        if (!(includeNonPublic || Modifier.isPublic(modifiers)))
+            return "Non-public: " + clazz;
+
+        ClassDoc classDoc = ClassDocLoader.load(clazz);
+
+        for (Entry<String, FieldDoc> entry : classDoc.getFieldDocs().entrySet()) {
+            String fieldName = entry.getKey();
+            FieldDoc fieldDoc = entry.getValue();
+
+            Field field;
+            try {
+                field = clazz.getField(fieldName);
+            } catch (NoSuchFieldException e) {
+                return "No such field: " + fieldName;
+            }
+
+            modifiers = field.getModifiers();
+            if (!Modifier.isStatic(modifiers))
+                return "Non-static: " + field;
+
+            if (!(includeNonPublic || Modifier.isPublic(modifiers)))
+                return "Non-public: " + field;
+
+            Class<?> fieldType = field.getType();
+            if (IXjdocAware.class.isAssignableFrom(fieldType))
+                try {
+                    IXjdocAware xjdocAware = (IXjdocAware) field.get(null);
+                    xjdocAware.setXjdoc(fieldDoc);
+                } catch (IllegalAccessException e) {
+                    return "Can't access field: " + e.getMessage();
+                }
+        } // for fieldDocs
+        return null;
     }
 
 }

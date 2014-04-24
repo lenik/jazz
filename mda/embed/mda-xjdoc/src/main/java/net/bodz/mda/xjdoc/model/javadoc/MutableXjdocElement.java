@@ -22,6 +22,11 @@ public class MutableXjdocElement
         return xjdoc;
     }
 
+    @Override
+    public void setXjdoc(IJavaElementDoc xjdoc) {
+        setXjdoc(xjdoc, false);
+    }
+
     public void setXjdoc(IJavaElementDoc xjdoc, boolean applyToElementProperties) {
         this.xjdoc = xjdoc;
 

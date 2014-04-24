@@ -14,6 +14,11 @@ public class MutableArtifactElement
     }
 
     @Override
+    public final void setXjdoc(IJavaElementDoc xjdoc) {
+        setXjdoc(xjdoc, false);
+    }
+
+    @Override
     public final void setXjdoc(IJavaElementDoc xjdoc, boolean applyToElementProperties) {
         ArtifactDoc artifactDoc = (ArtifactDoc) xjdoc;
         setArtifactDoc(artifactDoc, applyToElementProperties);
