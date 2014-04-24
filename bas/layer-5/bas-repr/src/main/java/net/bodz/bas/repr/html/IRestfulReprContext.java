@@ -5,7 +5,7 @@ import net.bodz.bas.repr.req.IMethodOfRequest;
 import net.bodz.bas.repr.req.IResultOfRequest;
 import net.bodz.bas.repr.req.IViewOfRequest;
 
-public interface IHtmlReprContext {
+public interface IRestfulReprContext {
 
     ITokenQueue getTokenQueue();
 

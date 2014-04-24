@@ -52,9 +52,9 @@ public abstract class AbstractHtmlViewBuilder<T>
     @Override
     public final Object buildView(Object _ctx, IRefEntry<T> entry, IOptions options)
             throws ViewBuilderException {
-        IHtmlOutputContext ctx = (IHtmlOutputContext) _ctx;
+        IHttpReprContext ctx = (IHttpReprContext) _ctx;
         try {
-            IHtmlOutputContext innerCtx = buildHtmlView(ctx, entry, options);
+            IHttpReprContext innerCtx = buildHtmlView(ctx, entry, options);
             buildHtmlViewTail(ctx, entry, options);
             return innerCtx;
         } catch (IOException e) {
@@ -63,24 +63,24 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<T> entry)
+    public final IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<T> entry)
             throws ViewBuilderException, IOException {
         return buildHtmlView(ctx, entry, IOptions.NULL);
     }
 
     @Override
-    public final void buildHtmlViewTail(IHtmlOutputContext ctx, IRefEntry<T> entry)
+    public final void buildHtmlViewTail(IHttpReprContext ctx, IRefEntry<T> entry)
             throws ViewBuilderException, IOException {
         buildHtmlViewTail(ctx, entry, IOptions.NULL);
     }
 
     @Override
-    public void buildHtmlViewTail(IHtmlOutputContext ctx, IRefEntry<T> entry, IOptions options)
+    public void buildHtmlViewTail(IHttpReprContext ctx, IRefEntry<T> entry, IOptions options)
             throws ViewBuilderException, IOException {
         // Do nothing in default implementation.
     }
 
-    protected void makeOutmostTag(IHtmlOutputContext ctx, String tagName, IGUIElementStyleDeclaration style) {
+    protected void makeOutmostTag(IHttpReprContext ctx, String tagName, IGUIElementStyleDeclaration style) {
         IHtmlOut out = ctx.getOut();
         out.startTagBegin(tagName);
 
@@ -98,7 +98,7 @@ public abstract class AbstractHtmlViewBuilder<T>
         out.startTagEnd(false);
     }
 
-    protected static boolean enter(IHtmlOutputContext ctx)
+    protected static boolean enter(IHttpReprContext ctx)
             throws IOException {
         if (ctx.getTokenQueue().isEntered())
             return false;

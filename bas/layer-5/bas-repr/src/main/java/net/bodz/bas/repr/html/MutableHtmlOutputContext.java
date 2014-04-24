@@ -2,6 +2,7 @@ package net.bodz.bas.repr.html;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.html.IHtmlOut;
@@ -12,15 +13,15 @@ import net.bodz.bas.io.html.IHtmlOut;
 @Deprecated
 public class MutableHtmlOutputContext
         extends MutableHtmlReprContext
-        implements IHtmlOutputContext {
+        implements IHttpReprContext {
 
-    IHtmlOutputContext parent;
+    IHttpReprContext parent;
     HttpServletRequest request;
     HttpServletResponse response;
     IByteOut byteOut;
     IHtmlOut htmlOut;
 
-    public MutableHtmlOutputContext(IHtmlOutputContext o) {
+    public MutableHtmlOutputContext(IHttpReprContext o) {
         super(o);
         parent = o.getParent();
         request = o.getRequest();
@@ -34,17 +35,17 @@ public class MutableHtmlOutputContext
     }
 
     @Override
-    public IHtmlOutputContext getParent() {
+    public IHttpReprContext getParent() {
         return parent;
     }
 
-    public void setParent(IHtmlOutputContext parent) {
+    public void setParent(IHttpReprContext parent) {
         this.parent = parent;
     }
 
     @Override
-    public final IHtmlOutputContext getRoot() {
-        IHtmlOutputContext parent = getParent();
+    public final IHttpReprContext getRoot() {
+        IHttpReprContext parent = getParent();
         if (parent == null)
             return this;
         else
@@ -67,6 +68,14 @@ public class MutableHtmlOutputContext
 
     public void setResponse(HttpServletResponse response) {
         this.response = response;
+    }
+
+    @Override
+    public final HttpSession getSession() {
+        if (request == null)
+            return null;
+        else
+            return request.getSession();
     }
 
     @Override

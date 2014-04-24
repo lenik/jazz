@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharOut;
@@ -19,7 +20,7 @@ import net.bodz.bas.io.impl.EncodedCharOut;
 
 public class RootHtmlOutputContext
         extends AbstractHtmlReprContext
-        implements IHtmlOutputContext {
+        implements IHttpReprContext {
 
     private final HttpServletRequest request;
     private final HttpServletResponse response;
@@ -31,7 +32,7 @@ public class RootHtmlOutputContext
 
     /**
      * TODO xxxxxxxxxxxxxxxx ctx.pushBegin ... ctx. return new SubHtmlOutCtx(ctx)
-     * 
+     *
      * @see #flush()
      */
     public RootHtmlOutputContext(HttpServletRequest request, HttpServletResponse response)
@@ -63,12 +64,12 @@ public class RootHtmlOutputContext
     }
 
     @Override
-    public IHtmlOutputContext getRoot() {
+    public IHttpReprContext getRoot() {
         return this;
     }
 
     @Override
-    public IHtmlOutputContext getParent() {
+    public IHttpReprContext getParent() {
         return null;
     }
 
@@ -80,6 +81,14 @@ public class RootHtmlOutputContext
     @Override
     public HttpServletResponse getResponse() {
         return response;
+    }
+
+    @Override
+    public final HttpSession getSession() {
+        if (request == null)
+            return null;
+        else
+            return request.getSession();
     }
 
     public OutputStream getOutputStream() {

@@ -10,14 +10,14 @@ import net.bodz.bas.repr.req.IViewOfRequest;
  */
 @Deprecated
 public class MutableHtmlReprContext
-        implements IHtmlReprContext {
+        implements IRestfulReprContext {
 
     ITokenQueue tokenQueue;
     IMethodOfRequest methodOfRequest;
     IResultOfRequest resultOfRequest;
     IViewOfRequest viewOfRequest;
 
-    public MutableHtmlReprContext(IHtmlReprContext o) {
+    public MutableHtmlReprContext(IRestfulReprContext o) {
         if (o == null)
             throw new NullPointerException("o");
         tokenQueue = o.getTokenQueue();

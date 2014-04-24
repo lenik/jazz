@@ -3,16 +3,16 @@ package net.bodz.bas.repr.html;
 public abstract class ElementHtmlOutputContext
         extends AbstractHtmlOutputContext {
 
-    private IHtmlOutputContext parent;
+    private IHttpReprContext parent;
 
-    public ElementHtmlOutputContext(IHtmlOutputContext parent) {
+    public ElementHtmlOutputContext(IHttpReprContext parent) {
         if (parent == null)
             throw new NullPointerException("parent");
         this.parent = parent;
     }
 
     @Override
-    public IHtmlOutputContext getParent() {
+    public IHttpReprContext getParent() {
         return parent;
     }
 

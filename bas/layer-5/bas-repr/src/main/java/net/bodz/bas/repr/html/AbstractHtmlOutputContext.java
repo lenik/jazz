@@ -2,17 +2,18 @@ package net.bodz.bas.repr.html;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.html.IHtmlOut;
 
 public abstract class AbstractHtmlOutputContext
         extends AbstractHtmlReprContext
-        implements IHtmlOutputContext {
+        implements IHttpReprContext {
 
     @Override
-    public IHtmlOutputContext getRoot() {
-        IHtmlOutputContext parent = getParent();
+    public IHttpReprContext getRoot() {
+        IHttpReprContext parent = getParent();
         if (parent == null)
             return this;
         else
@@ -21,7 +22,7 @@ public abstract class AbstractHtmlOutputContext
 
     @Override
     public HttpServletRequest getRequest() {
-        IHtmlOutputContext parent = getParent();
+        IHttpReprContext parent = getParent();
         if (parent == null)
             return null;
         else
@@ -30,7 +31,7 @@ public abstract class AbstractHtmlOutputContext
 
     @Override
     public HttpServletResponse getResponse() {
-        IHtmlOutputContext parent = getParent();
+        IHttpReprContext parent = getParent();
         if (parent == null)
             return null;
         else
@@ -38,8 +39,17 @@ public abstract class AbstractHtmlOutputContext
     }
 
     @Override
+    public HttpSession getSession() {
+        HttpServletRequest req = getRequest();
+        if (req == null)
+            return null;
+        else
+            return req.getSession();
+    }
+
+    @Override
     public IByteOut getByteOut() {
-        IHtmlOutputContext parent = getParent();
+        IHttpReprContext parent = getParent();
         if (parent == null)
             return IByteOut.NULL;
         else
@@ -48,7 +58,7 @@ public abstract class AbstractHtmlOutputContext
 
     @Override
     public IHtmlOut getOut() {
-        IHtmlOutputContext parent = getParent();
+        IHttpReprContext parent = getParent();
         if (parent == null)
             return IHtmlOut.NULL;
         else
@@ -57,7 +67,7 @@ public abstract class AbstractHtmlOutputContext
 
     @Override
     public void flush() {
-        IHtmlOutputContext parent = getParent();
+        IHttpReprContext parent = getParent();
         if (parent != null)
             parent.flush();
     }

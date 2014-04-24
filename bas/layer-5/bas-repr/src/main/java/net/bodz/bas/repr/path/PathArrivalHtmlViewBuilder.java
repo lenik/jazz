@@ -7,7 +7,7 @@ import java.util.List;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.html.AbstractHtmlViewBuilder;
-import net.bodz.bas.repr.html.IHtmlOutputContext;
+import net.bodz.bas.repr.html.IHttpReprContext;
 import net.bodz.bas.repr.html.IHtmlViewBuilder;
 import net.bodz.bas.repr.html.IHtmlViewBuilderFactory;
 import net.bodz.bas.repr.html.IndexedHtmlViewBuilderFactory;
@@ -25,7 +25,7 @@ public class PathArrivalHtmlViewBuilder
     }
 
     @Override
-    public IHtmlOutputContext buildHtmlView(IHtmlOutputContext ctx, IRefEntry<IPathArrival> entry, IOptions options)
+    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<IPathArrival> entry, IOptions options)
             throws ViewBuilderException, IOException {
         IPathArrival arrival = entry.get();
 
@@ -81,7 +81,7 @@ public class PathArrivalHtmlViewBuilder
         private static final long serialVersionUID = 1L;
 
         IHtmlViewBuilder<Object> viewBuilder;
-        IHtmlOutputContext ctx0;
+        IHttpReprContext ctx0;
 
         public Frame(IPathArrival arrival) {
             super(arrival);

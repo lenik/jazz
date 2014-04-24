@@ -8,7 +8,7 @@ import net.bodz.bas.repr.req.IResultOfRequest;
 import net.bodz.bas.repr.req.IViewOfRequest;
 
 public abstract class AbstractHtmlReprContext
-        implements IHtmlReprContext {
+        implements IRestfulReprContext {
 
     @Override
     public ITokenQueue getTokenQueue() {
