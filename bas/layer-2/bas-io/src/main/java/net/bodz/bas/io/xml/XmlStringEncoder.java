@@ -23,15 +23,19 @@ public class XmlStringEncoder {
         this.entityTab = tab;
     }
 
-    static String[] simpleHtmlTab;
+    static String[] simpleTextTab;
+    static String[] simpleAttributeTab;
     static String[] simpleNumericTab;
     static {
-        simpleHtmlTab = new String[256];
-        simpleHtmlTab['\"'] = "&quot;";
-        simpleHtmlTab['&'] = "&amp;";
-        simpleHtmlTab['\''] = "&apos;";
-        simpleHtmlTab['<'] = "&lt;";
-        simpleHtmlTab['>'] = "&rt;";
+        simpleTextTab = new String[256];
+        simpleTextTab['&'] = "&amp;";
+        simpleTextTab['<'] = "&lt;";
+        simpleTextTab['>'] = "&rt;";
+
+        simpleAttributeTab = new String[256];
+        simpleAttributeTab['\"'] = "&quot;";
+        simpleAttributeTab['&'] = "&amp;";
+        simpleAttributeTab['\''] = "&apos;";
 
         simpleNumericTab = new String[256];
         simpleNumericTab['\"'] = "&#34;";
@@ -39,18 +43,15 @@ public class XmlStringEncoder {
         simpleNumericTab['\''] = "&#;39";
         simpleNumericTab['<'] = "&#60;";
         simpleNumericTab['>'] = "&#62;";
-
-        // for (int i = 0; i < 32; i++)
-        // simpleHtmlTab[i] = simpleNumericTab[i] = "&#" + i + ";";
     }
 
     public static XmlStringEncoder forAttribute(Appendable out) {
-        XmlStringEncoder escaper = new XmlStringEncoder(out, simpleHtmlTab);
+        XmlStringEncoder escaper = new XmlStringEncoder(out, simpleAttributeTab);
         return escaper;
     }
 
     public static XmlStringEncoder forText(Appendable out) {
-        XmlStringEncoder escaper = new XmlStringEncoder(out, simpleHtmlTab);
+        XmlStringEncoder escaper = new XmlStringEncoder(out, simpleTextTab);
         return escaper;
     }
 
