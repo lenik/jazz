@@ -22,10 +22,13 @@ public interface IHtmlViewBuilder<T>
 
     ContentType getContentType(T value);
 
+    /**
+     * Starts a new frame chain.
+     */
     boolean isOrigin(T value);
 
     /**
-     * or, is-container.
+     * A view frame can contain child views.
      */
     boolean isFrame();
 
