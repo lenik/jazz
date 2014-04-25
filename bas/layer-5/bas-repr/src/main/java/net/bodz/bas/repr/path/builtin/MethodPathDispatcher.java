@@ -18,14 +18,17 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 
+/**
+ * Using method signature as the name.
+ *
+ * The colon(":") is required to separate parameter types from the method signature.
+ */
 public class MethodPathDispatcher
         extends AbstractPathDispatcher {
 
-    public static final int PRIORITY = 51;
-
     @Override
     public int getPriority() {
-        return PRIORITY;
+        return BuiltinPathDispatcherPriorities.PRIORITY_METHOD;
     }
 
     @Override
@@ -39,21 +42,18 @@ public class MethodPathDispatcher
         if (methodName == null)
             return previous;
 
+        // colon(:) must be present.
+        int colon = methodName.indexOf(':');
+        if (colon == -1)
+            return null;
+
         String decoration;
         Class<?>[] wantPV = null;
 
         int availableParameters = tokens.available() - 1;
 
-        int colon = methodName.indexOf(':');
-        if (colon == -1) {
-            if (availableParameters == 0)
-                decoration = "";
-            else
-                decoration = "S";
-        } else {
-            decoration = methodName.substring(colon + 1);
-            methodName = methodName.substring(0, colon);
-        }
+        decoration = methodName.substring(colon + 1);
+        methodName = methodName.substring(0, colon);
 
         if (availableParameters < decoration.length())
             return null;

@@ -20,11 +20,9 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class PropertyPathDispatcher
         extends AbstractPathDispatcher {
 
-    public static final int PRIORITY = 40;
-
     @Override
     public int getPriority() {
-        return PRIORITY;
+        return BuiltinPathDispatcherPriorities.PRIORITY_PROPERTY;
     }
 
     @Override

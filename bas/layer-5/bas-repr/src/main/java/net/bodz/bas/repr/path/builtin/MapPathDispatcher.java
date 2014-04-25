@@ -11,11 +11,9 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class MapPathDispatcher
         extends AbstractPathDispatcher {
 
-    public static final int PRIORITY = 20;
-
     @Override
     public int getPriority() {
-        return PRIORITY;
+        return BuiltinPathDispatcherPriorities.PRIORITY_MAP;
     }
 
     @Override
