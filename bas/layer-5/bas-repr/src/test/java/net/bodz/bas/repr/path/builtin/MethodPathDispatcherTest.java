@@ -16,7 +16,7 @@ public class MethodPathDispatcherTest
     public void testGreet()
             throws PathDispatchException {
         MethodPathDispatcher disp = new MethodPathDispatcher();
-        Object actual = disp.dispatchTest(this, "greet/lily");
+        Object actual = disp.dispatchTest(this, "greet:S/lily");
         assertEquals("hey, lily", actual);
     }
 

@@ -8,6 +8,10 @@ public interface IInvocation {
 
     void setReturnValue(Object returnValue);
 
+    int getParameterCount();
+
+    Class<?>[] getParameterTypes();
+
     Class<?> getParameterType(int index);
 
     Object[] getParameters();
