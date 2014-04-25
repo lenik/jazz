@@ -17,12 +17,12 @@ import net.bodz.bas.repr.path.PathArrivalEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 
-public class PathArrivalHtmlViewBuilder
+public class PathArrivalVbo
         extends AbstractHtmlViewBuilder<IPathArrival> {
 
     IHtmlViewBuilderFactory viewBuilderFactory;
 
-    public PathArrivalHtmlViewBuilder() {
+    public PathArrivalVbo() {
         super(PathArrival.class);
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
     }
@@ -44,16 +44,13 @@ public class PathArrivalHtmlViewBuilder
             if (htmlVbo == null)
                 throw new UnexpectedException("Can't build view for " + targetClass);
 
-            boolean rootFrame = htmlVbo.isOrigin(target);
-            boolean leafFrame = frames.isEmpty();
-
-            if (leafFrame || rootFrame || htmlVbo.isFrame()) {
+            if (frames.isEmpty() || htmlVbo.isFrame()) {
                 Frame frame = new Frame(a);
                 frame.viewBuilder = htmlVbo;
                 frames.add(frame);
             }
 
-            if (rootFrame)
+            if (htmlVbo.isOrigin(target))
                 break;
             else
                 a = a.getPrevious();

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
+import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.IHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilderFactory;
@@ -36,12 +37,12 @@ public class PathDispatchServlet
 
     PathDispatchService pathDispatchService;
     IHtmlViewBuilderFactory viewBuilderFactory;
-    PathArrivalHtmlViewBuilder pathArrivalVbo;
+    PathArrivalVbo pathArrivalVbo;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
-        pathArrivalVbo = new PathArrivalHtmlViewBuilder();
+        pathArrivalVbo = new PathArrivalVbo();
     }
 
     @Override
@@ -89,6 +90,9 @@ public class PathDispatchServlet
         }
 
         IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(target.getClass());
+        if (viewBuilder == null)
+            throw new IllegalUsageError("No available view builder");
+
         ContentType contentType = viewBuilder.getContentType(target);
         resp.setContentType(contentType.getName());
 
