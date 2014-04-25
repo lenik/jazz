@@ -14,7 +14,7 @@ public class ClassResourcePathDispatcher
 
     @Override
     public int getPriority() {
-        return 10;
+        return BuiltinPathDispatcherPriorities.PRIORITY_CLASS_RESOURCE;
     }
 
     @Override
