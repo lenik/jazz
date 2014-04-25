@@ -48,6 +48,11 @@ public abstract class AbstractInvocation
     }
 
     @Override
+    public int getParameterCount() {
+        return parameterCount;
+    }
+
+    @Override
     public Object[] getParameters() {
         return parameters;
     }

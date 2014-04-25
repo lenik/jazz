@@ -24,6 +24,11 @@ public class Instantiation
     }
 
     @Override
+    public Class<?>[] getParameterTypes() {
+        return parameterTypes;
+    }
+
+    @Override
     public Class<?> getParameterType(int index) {
         return parameterTypes[index];
     }
