@@ -3,11 +3,19 @@ package net.bodz.bas.c.string;
 public class StringQuote {
 
     public static String q(String s) {
-        return "'" + s + "'";
+        return "\'" + s + "\'";
     }
 
     public static String qq(String s) {
-        return '"' + s + '"';
+        return '\"' + s + '\"';
+    }
+
+    public static String q(Object s) {
+        return q(s == null ? null : s.toString());
+    }
+
+    public static String qq(Object s) {
+        return qq(s == null ? null : s.toString());
     }
 
     public static String qJavaEscaped(String s) {
