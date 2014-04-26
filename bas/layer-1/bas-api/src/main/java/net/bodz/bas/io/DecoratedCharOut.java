@@ -1,6 +1,7 @@
 package net.bodz.bas.io;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.t.model.AbstractDecorator;
@@ -73,6 +74,11 @@ public abstract class DecoratedCharOut
     public void close()
             throws IOException {
         getWrapped().close();
+    }
+
+    @Override
+    public Writer toWriter() {
+        return getWrapped().toWriter();
     }
 
 }

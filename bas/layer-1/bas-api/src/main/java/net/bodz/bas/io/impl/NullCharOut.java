@@ -1,11 +1,13 @@
 package net.bodz.bas.io.impl;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.io.ICharOut;
 
 public class NullCharOut
+        extends Writer
         implements ICharOut {
 
     @Override
@@ -61,6 +63,32 @@ public class NullCharOut
     @Override
     public boolean isClosed() {
         return false;
+    }
+
+    @Override
+    public Writer toWriter() {
+        return this;
+    }
+
+    /** ⇱ Implementation Of {@link Writer}. */
+    /* _____________________________ */static section.iface __WRITER__;
+
+    @Override
+    public Writer append(CharSequence csq)
+            throws IOException {
+        return this;
+    }
+
+    @Override
+    public Writer append(CharSequence csq, int start, int end)
+            throws IOException {
+        return this;
+    }
+
+    @Override
+    public Writer append(char c)
+            throws IOException {
+        return this;
     }
 
 }

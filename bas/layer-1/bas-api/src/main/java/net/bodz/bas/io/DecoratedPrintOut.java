@@ -1,5 +1,6 @@
 package net.bodz.bas.io;
 
+import java.io.PrintWriter;
 import java.util.Locale;
 
 public abstract class DecoratedPrintOut
@@ -127,6 +128,11 @@ public abstract class DecoratedPrintOut
     @Override
     public void flush() {
         getWrapped().flush();
+    }
+
+    @Override
+    public PrintWriter toPrintWriter() {
+        return getWrapped().toPrintWriter();
     }
 
 }

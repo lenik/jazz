@@ -1,7 +1,10 @@
 package net.bodz.bas.io;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.CharBuffer;
+
+import net.bodz.bas.io.adapter.CharOutWriter;
 
 public abstract class AbstractCharIOS
         extends AbstractCloseable
@@ -72,6 +75,11 @@ public abstract class AbstractCharIOS
     @Override
     public void flush()
             throws IOException {
+    }
+
+    @Override
+    public Writer toWriter() {
+        return new CharOutWriter(this);
     }
 
 }

@@ -1,6 +1,7 @@
 package net.bodz.bas.io.impl;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.io.ICharIOS;
@@ -8,6 +9,7 @@ import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
+import net.bodz.bas.io.adapter.CharOutWriter;
 import net.bodz.bas.io.res.IStreamResource;
 
 public class MergedCharIOS
@@ -133,6 +135,11 @@ public class MergedCharIOS
     public void flush()
             throws IOException {
         out.flush();
+    }
+
+    @Override
+    public Writer toWriter() {
+        return new CharOutWriter(this);
     }
 
     /** ⇱ Implementation Of {@link ISeekable}. */

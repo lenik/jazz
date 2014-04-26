@@ -1,5 +1,6 @@
 package net.bodz.bas.io;
 
+import java.io.PrintWriter;
 import java.util.Locale;
 
 import net.bodz.bas.io.impl.NullPrintOut;
@@ -85,6 +86,8 @@ public interface IPrintOut
 
     @Override
     void close();
+
+    PrintWriter toPrintWriter();
 
     IPrintOut NULL = new NullPrintOut();
 
