@@ -6,9 +6,28 @@ import java.nio.CharBuffer;
 
 public abstract class AbstractCharOut
         extends Writer
-        implements ICharOut {
+        implements ICharOut, Appendable {
 
     private boolean closed;
+
+    protected void ensureOpen() {
+        if (closed)
+            throw new IllegalStateException("already closed");
+    }
+
+    @Override
+    public Writer toWriter() {
+        // return new CharOutWriter(this);
+        return this;
+    }
+
+    public void dump(ICharIn charIn)
+            throws IOException {
+        fn.dump(this, charIn);
+    }
+
+    /** ⇱ Implementation Of {@link ICharOut}. */
+    /* _____________________________ */static section.iface __CHAR_OUT__;
 
     @Override
     public void write(char[] chars)
@@ -43,11 +62,6 @@ public abstract class AbstractCharOut
         fn.write(this, buf);
     }
 
-    public void dump(ICharIn charIn)
-            throws IOException {
-        fn.dump(this, charIn);
-    }
-
     @Override
     public void flush(boolean strict)
             throws IOException {
@@ -69,15 +83,6 @@ public abstract class AbstractCharOut
     @Override
     public boolean isClosed() {
         return closed;
-    }
-
-    protected void ensureOpen() {
-        if (closed)
-            throw new IllegalStateException("already closed");
-    }
-
-    public Writer toWriter() {
-        return this;
     }
 
 }

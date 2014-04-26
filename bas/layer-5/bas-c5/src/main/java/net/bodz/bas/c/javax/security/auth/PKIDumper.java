@@ -1,6 +1,5 @@
 package net.bodz.bas.c.javax.security.auth;
 
-import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.KeyStore.Builder;
@@ -28,7 +27,6 @@ import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.io.adapter.CharOutWriter;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.t.order.ComparableComparator;
 
@@ -579,7 +577,7 @@ public class PKIDumper {
         }
         out.println(": " + t.getMessage());
         if (detail >= 2)
-            t.printStackTrace(new PrintWriter(new CharOutWriter(out)));
+            t.printStackTrace(out.toPrintWriter());
     }
 
     static final int bitsWidth = 60;

@@ -2,6 +2,7 @@ package net.bodz.bas.io;
 
 import java.io.Flushable;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.io.impl.NullCharOut;
@@ -65,6 +66,8 @@ public interface ICharOut
     @Override
     void flush()
             throws IOException;
+
+    Writer toWriter();
 
     ICharOut NULL = new NullCharOut();
 
