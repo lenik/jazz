@@ -61,7 +61,10 @@ public abstract class AbstractViewBuilderFactory
             cache = findViewBuilder(clazz, features);
             viewBuilderCache.put(key, cache != null ? cache : NONE);
         }
-        return (IViewBuilder<T>) cache;
+        if (cache == NONE)
+            return null;
+        else
+            return (IViewBuilder<T>) cache;
     }
 
     <T> IViewBuilder<T> findViewBuilder(Class<? extends T> clazz, String... features) {
