@@ -24,10 +24,14 @@ public abstract class AbstractMutableMethod
     /* _____________________________ */static section.iface __MUTABLE__;
 
     public void setReturnType(Class<?> returnType) {
+        if (returnType == null)
+            throw new NullPointerException("returnType");
         this.returnType = returnType;
     }
 
     public void setParameterTypes(Class<?>[] parameterTypes) {
+        if (parameterTypes == null)
+            throw new NullPointerException("parameterTypes");
         this.parameterTypes = parameterTypes;
     }
 

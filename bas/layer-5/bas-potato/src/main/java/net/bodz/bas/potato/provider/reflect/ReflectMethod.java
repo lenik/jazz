@@ -11,6 +11,7 @@ public class ReflectMethod
         extends AbstractMethod {
 
     private final Method method;
+    private final int parameterCount;
 
     private final int modifiers;
     private final int verboseLevel;
@@ -22,6 +23,7 @@ public class ReflectMethod
     public ReflectMethod(Method method, IJavaElementDoc xjdoc) {
         super(method.getDeclaringClass(), method.getName());
         this.method = method;
+        this.parameterCount = method.getParameterTypes().length;
 
         int _modifiers = method.getModifiers();
         this.modifiers = _modifiers;
@@ -35,6 +37,11 @@ public class ReflectMethod
     @Override
     public Class<?> getReturnType() {
         return method.getReturnType();
+    }
+
+    @Override
+    public int getParameterCount() {
+        return parameterCount;
     }
 
     @Override

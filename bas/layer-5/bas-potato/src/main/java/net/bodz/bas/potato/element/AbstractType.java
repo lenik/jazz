@@ -1,5 +1,11 @@
 package net.bodz.bas.potato.element;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeArray;
@@ -9,12 +15,10 @@ public abstract class AbstractType
         extends AbstractPotatoElement
         implements IType {
 
-    public AbstractType(String name) {
-        super(null, name);
-    }
+    private Map<String, IMethod> overloadedMethodMap;
 
-    public AbstractType(Class<?> type, String name) {
-        super(type.getDeclaringClass(), name);
+    public AbstractType(Class<?> declaringType, String name) {
+        super(declaringType, name);
     }
 
     @Override
@@ -55,6 +59,41 @@ public abstract class AbstractType
         // if (methodMap == null) return null;
         MethodSignature methodKey = new MethodSignature(methodName, parameterTypes);
         return methodMap.getMethod(methodKey);
+    }
+
+    @Override
+    public IMethod getOverloadedMethod(String methodName) {
+        if (overloadedMethodMap == null)
+            synchronized (this) {
+                if (overloadedMethodMap == null)
+                    overloadedMethodMap = loadOverloadedMethods();
+            }
+        return overloadedMethodMap.get(methodName);
+    }
+
+    private Map<String, IMethod> loadOverloadedMethods() {
+        Map<String, List<IMethod>> nameListMap = new HashMap<>();
+        for (IMethod method : getMethods()) {
+            String name = method.getName();
+            List<IMethod> list = nameListMap.get(name);
+            if (list == null) {
+                list = new ArrayList<IMethod>();
+                nameListMap.put(name, list);
+            }
+            list.add(method);
+        }
+
+        Map<String, IMethod> map = new HashMap<>();
+        for (Entry<String, List<IMethod>> entry : nameListMap.entrySet()) {
+            String name = entry.getKey();
+            List<IMethod> list = entry.getValue();
+            IMethod method0 = list.get(0);
+            if (list.size() == 1)
+                map.put(name, method0);
+            else
+                map.put(name, new OverloadedMethod(method0.getDeclaringClass(), list));
+        }
+        return map;
     }
 
     @Override

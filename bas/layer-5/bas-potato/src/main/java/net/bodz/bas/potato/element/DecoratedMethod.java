@@ -18,8 +18,18 @@ public class DecoratedMethod
     }
 
     @Override
+    public boolean isOverloaded() {
+        return getWrapped().isOverloaded();
+    }
+
+    @Override
     public Class<?> getReturnType() {
         return getWrapped().getReturnType();
+    }
+
+    @Override
+    public int getParameterCount() {
+        return getWrapped().getParameterCount();
     }
 
     @Override
