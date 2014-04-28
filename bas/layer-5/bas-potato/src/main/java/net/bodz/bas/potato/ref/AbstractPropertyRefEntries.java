@@ -3,7 +3,7 @@ package net.bodz.bas.potato.ref;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import net.bodz.bas.potato.PotatoLoader;
+import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
@@ -17,7 +17,7 @@ public abstract class AbstractPropertyRefEntries<entry_t extends IRefEntry<?>>
         if (instance == null)
             throw new NullPointerException("instance");
         Class<? extends Object> clazz = instance.getClass();
-        IType type = PotatoLoader.getInstance().load(clazz);
+        IType type = PotatoTypes.getInstance().forClass(clazz);
         this.type = type;
         this.instance = instance;
     }

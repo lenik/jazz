@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import net.bodz.bas.potato.PotatoLoader;
+import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
@@ -90,7 +90,7 @@ public class ArtifactObjectWithOptionsTest
     @Ignore
     @Test
     public void testGetProperties() {
-        IType type = PotatoLoader.getInstance().load(getClass());
+        IType type = PotatoTypes.getInstance().forClass(getClass());
 
         for (IProperty property : type.getProperties())
             System.out.println("prop: " + property + ": " + property.getClass());
@@ -99,7 +99,7 @@ public class ArtifactObjectWithOptionsTest
     @Test
     public void testSetProperties()
             throws Exception {
-        IType type = PotatoLoader.getInstance().load(getClass());
+        IType type = PotatoTypes.getInstance().forClass(getClass());
 
         type.getProperty("myName").getValue(this);
 
@@ -115,7 +115,7 @@ public class ArtifactObjectWithOptionsTest
     @Test
     public void testInvoke()
             throws Exception {
-        IType type = PotatoLoader.getInstance().load(getClass());
+        IType type = PotatoTypes.getInstance().forClass(getClass());
         Object retval = type.invoke(this, "hello", "Kate");
         assertEquals("Yes, this is Kate", retval);
     }

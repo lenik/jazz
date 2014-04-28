@@ -3,7 +3,7 @@ package net.bodz.bas.potato.ref;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.c.java.util.Collections;
-import net.bodz.bas.potato.PotatoLoader;
+import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.proxy.java.util.DecoratedMap;
@@ -54,7 +54,7 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry>
     }
 
     public synchronized void importProperties(int mask, int selection) {
-        IType type = PotatoLoader.getInstance().load(clazz);
+        IType type = PotatoTypes.getInstance().forClass(clazz);
         for (IProperty property : type.getProperties()) {
             int modifiers = property.getModifiers();
             if ((modifiers & mask) == selection) {

@@ -4,7 +4,7 @@ import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.MutableElement;
-import net.bodz.bas.potato.PotatoLoader;
+import net.bodz.bas.potato.PotatoTypes;
 
 public class ValueEntry<T>
         extends AbstractRefEntry<T> {
@@ -23,7 +23,7 @@ public class ValueEntry<T>
     }
 
     public ValueEntry(Class<? extends T> valueType, T value) {
-        this(PotatoLoader.getInstance().load(valueType), valueType, value);
+        this(PotatoTypes.getInstance().forClass(valueType), valueType, value);
     }
 
     public ValueEntry(IElement element, Class<? extends T> valueType, T value) {
