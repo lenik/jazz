@@ -10,7 +10,7 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.potato.PotatoLoader;
+import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.invoke.Invocation;
@@ -42,7 +42,7 @@ public class InvocationPathDispatcher
         if (methodName == null)
             return previous;
 
-        IType type = PotatoLoader.getInstance().load(obj.getClass());
+        IType type = PotatoTypes.getInstance().forClass(obj.getClass());
         IMethod method = type.getMethod("");
         Invocation invocation = new Invocation(obj, method);
 

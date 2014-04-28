@@ -3,7 +3,7 @@ package net.bodz.bas.potato.ref;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.MutableElement;
-import net.bodz.bas.potato.PotatoLoader;
+import net.bodz.bas.potato.PotatoTypes;
 
 public class VarEntry<T>
         extends AbstractRefEntry<T> {
@@ -22,7 +22,7 @@ public class VarEntry<T>
     }
 
     public VarEntry(Class<? extends T> valueType, T initialValue) {
-        this(PotatoLoader.getInstance().load(valueType), valueType, initialValue);
+        this(PotatoTypes.getInstance().forClass(valueType), valueType, initialValue);
     }
 
     public VarEntry(IElement element, Class<? extends T> valueType, T initialValue) {
