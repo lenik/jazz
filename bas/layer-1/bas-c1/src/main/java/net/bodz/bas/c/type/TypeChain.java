@@ -55,6 +55,10 @@ public class TypeChain {
         out.leave(); // decreaseIndentLevel();
     }
 
+    public static Iterable<Class<?>> getImpliedTypes(Class<?> type) {
+        return new ImpliedTypes(type);
+    }
+
     public static Iterable<Class<?>> ancestors(final Class<?> type, Class<?>... deferred) {
         final List<Class<?>> deferredList;
         if (deferred != null && deferred.length != 0)
@@ -130,6 +134,46 @@ class AncestorIterator
             index = 0;
         }
         return c;
+    }
+
+}
+
+class ImpliedTypes
+        implements Iterable<Class<?>> {
+
+    private final Class<?> type;
+    private Set<Class<?>> all;
+
+    public ImpliedTypes(Class<?> type) {
+        if (type == null)
+            throw new NullPointerException("type");
+        this.type = type;
+    }
+
+    @Override
+    public Iterator<Class<?>> iterator() {
+        if (all == null) {
+            all = new HashSet<Class<?>>();
+            traverse(type);
+        }
+        return all.iterator();
+    }
+
+    void traverse(Class<?> type) {
+        if (!all.add(type)) // already added
+            return;
+
+        if (type.isInterface())
+            return;
+
+        Class<?> superclass = type.getSuperclass();
+        if (superclass != null)
+            traverse(superclass);
+
+        // getInterfaces == getDeclaredInterfaces
+        for (Class<?> iface : type.getInterfaces()) {
+            traverse(iface);
+        }
     }
 
 }

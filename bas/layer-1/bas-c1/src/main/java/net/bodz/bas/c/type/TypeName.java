@@ -1,8 +1,6 @@
 package net.bodz.bas.c.type;
 
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.Collection;
 
 import net.bodz.bas.c.string.Strings;
 
@@ -26,7 +24,7 @@ public class TypeName {
     /**
      * Get a user-friendly simple name of a type. The name suffix (like "List" in "ArrayList") is
      * auto removed, to make the result name shorter.
-     * 
+     *
      * @param type
      *            Get friendly name from this type. <code>type</code>.
      * @return Hyphenatized simple name.
@@ -38,7 +36,7 @@ public class TypeName {
     /**
      * Get a user-friendly simple name of a type. The name suffix (like "List" in "ArrayList") is
      * auto removed, to make the result name shorter.
-     * 
+     *
      * @param type
      *            Get friendly name from this type. <code>type</code>.
      * @param findShortest
@@ -67,7 +65,7 @@ public class TypeName {
     /**
      * Get a user-friendly simple name of a type. The name suffix (like "List" in "ArrayList") is
      * auto removed, to make the result name shorter.
-     * 
+     *
      * @param type
      *            Get friendly name from this type.
      * @param baseType
@@ -141,36 +139,6 @@ public class TypeName {
             stemName = simpleName;
 
         return stemName;
-    }
-
-    public static String join(String delim, boolean simpleNames, Collection<Class<?>> types) {
-        StringBuilder b = null;
-        for (Class<?> t : types) {
-            if (b == null)
-                b = new StringBuilder(types.size() * 30);
-            else
-                b.append(delim);
-            String n;
-            if (simpleNames)
-                // || t.getCanonicalName().startsWith("java.lang."))
-                n = t.getSimpleName();
-            else
-                n = t.getName();
-            b.append(n);
-        }
-        return b == null ? "" : b.toString();
-    }
-
-    public static String join(String delim, boolean simpleNames, Class<?>... types) {
-        return join(delim, simpleNames, Arrays.asList(types));
-    }
-
-    public static String join(String delim, Class<?>... types) {
-        return join(delim, false, types);
-    }
-
-    public static String join(Class<?>... types) {
-        return join(", ", types);
     }
 
 }

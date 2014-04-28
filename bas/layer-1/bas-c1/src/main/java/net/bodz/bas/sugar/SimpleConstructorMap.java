@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
-import net.bodz.bas.c.type.TypeDistance;
+import net.bodz.bas.c.type.TypeMath;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
 
@@ -50,7 +50,7 @@ public class SimpleConstructorMap
                 if (declType == actualType)
                     return ctor;
 
-                int dist = TypeDistance.dist(declType, actualType);
+                int dist = TypeMath.dist(declType, actualType);
                 if (dist == -1)
                     continue;
 
