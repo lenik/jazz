@@ -8,7 +8,7 @@ public class HtmlOutImplTest
         extends Assert {
 
     public static void main(String[] args) {
-        IHtmlOut out = HtmlOutImpl.from(Stdio.cout);
+        IHtmlOut out = HtmlOutImpl.from(Stdio.cout.toWriter());
         out.tag("ver", "Text");
         out.html().start();
         {
