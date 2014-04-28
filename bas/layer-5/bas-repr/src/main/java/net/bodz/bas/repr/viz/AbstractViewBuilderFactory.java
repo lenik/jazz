@@ -4,10 +4,13 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.c.type.TypeChain;
+import net.bodz.bas.c.type.TypeNearby;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
@@ -21,53 +24,54 @@ public abstract class AbstractViewBuilderFactory
 
     private TypePoMap<TaggedSet<IViewBuilder<?>>> typeMap = new TypePoMap<>();
 
+    private Map<FeaturedType, Object> viewBuilderCache;
+    private static final Object NONE = new Object();
+
+    public AbstractViewBuilderFactory() {
+        viewBuilderCache = new HashMap<>();
+    }
+
     @Override
     public String[] getSupportedFeatures() {
         return IEmptyConsts.emptyStringArray;
     }
 
-    protected synchronized TaggedSet<IViewBuilder<?>> getTaggedSet(Class<?> clazz, boolean autoCreate) {
-        if (clazz == null)
-            throw new NullPointerException("clazz");
-        TaggedSet<IViewBuilder<?>> set = typeMap.get(clazz);
-        if (set == null) {
-            if (autoCreate) {
-                set = new QmiTaggedSet<>();
-                typeMap.put(clazz, set);
-            } else {
-                // set = TaggedSet.fn.empty();
-            }
-        }
-        return set;
-    }
-
-    /**
-     * @throws NullPointerException
-     *             if var is null.
-     * @return <code>null</code> if no matching renderer.
-     */
     protected/* final */<T> IViewBuilder<T> getViewBuilder(IRefEntry<? extends T> entry) {
         if (entry == null)
             throw new NullPointerException("entry");
-        Class<? extends T> type = entry.getValueType();
+        Class<? extends T> valueType = entry.getValueType();
 
         String[] features = {};
         Feature _feature = entry.getAnnotation(Feature.class);
         if (_feature != null)
             features = _feature.value();
 
-        return getViewBuilder(type, features);
+        return getViewBuilder(valueType, features);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> clazz, String... features) {
+        if (clazz == null)
+            throw new NullPointerException("clazz");
+
+        FeaturedType key = new FeaturedType(clazz, features);
+        Object cache = viewBuilderCache.get(key);
+        if (cache == null) {
+            cache = findViewBuilder(clazz, features);
+            viewBuilderCache.put(key, cache != null ? cache : NONE);
+        }
+        return (IViewBuilder<T>) cache;
+    }
+
+    <T> IViewBuilder<T> findViewBuilder(Class<? extends T> clazz, String... features) {
         for (Class<?> c : TypeChain.ancestors(clazz, Object.class)) {
             TaggedSet<IViewBuilder<?>> set = typeMap.get(c);
 
             if (set == null) {
                 // auto load...
                 try {
-                    IViewBuilder<?> friendVbo = findFriendVbo(c);
+                    IViewBuilder<?> friendVbo = findNearbyVbo(c);
                     if (friendVbo != null)
                         addViewBuilder(friendVbo);
                 } catch (ReflectiveOperationException e) {
@@ -87,32 +91,32 @@ public abstract class AbstractViewBuilderFactory
         return null;
     }
 
+    protected synchronized TaggedSet<IViewBuilder<?>> getTaggedSet(Class<?> clazz, boolean autoCreate) {
+        if (clazz == null)
+            throw new NullPointerException("clazz");
+        TaggedSet<IViewBuilder<?>> set = typeMap.get(clazz);
+        if (set == null) {
+            if (autoCreate) {
+                set = new QmiTaggedSet<>();
+                typeMap.put(clazz, set);
+            } else {
+                // set = TaggedSet.fn.empty();
+            }
+        }
+        return set;
+    }
+
+    TypeNearby nearbyVbos = new TypeNearby("Vbo", true);
+
     /**
      * @throws ReflectiveOperationException
      * @throws LinkageError
      */
-    IViewBuilder<?> findFriendVbo(Class<?> clazz)
+    IViewBuilder<?> findNearbyVbo(Class<?> clazz)
             throws ReflectiveOperationException {
-        String vboFqcn;
-
-        String simpleName = clazz.getSimpleName();
-        if (clazz.isInterface() //
-                && simpleName.charAt(0) == 'I' //
-                && simpleName.length() > 1 //
-                && Character.isUpperCase(simpleName.charAt(1))) {
-            String unprefix = clazz.getPackage().getName() + "." + simpleName.substring(1);
-            vboFqcn = unprefix + "Vbo";
-        } else {
-            String fqcn = clazz.getName();
-            vboFqcn = fqcn + "Vbo";
-        }
-
-        Class<?> vboClass;
-        try {
-            vboClass = Class.forName(vboFqcn);
-        } catch (ClassNotFoundException e) {
+        Class<?> vboClass = nearbyVbos.find(clazz);
+        if (vboClass == null)
             return null;
-        }
 
         IViewBuilder<?> vbo;
         // vbo = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);
