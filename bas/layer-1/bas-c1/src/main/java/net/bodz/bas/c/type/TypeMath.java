@@ -1,6 +1,11 @@
 package net.bodz.bas.c.type;
 
-public class TypeDistance {
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class TypeMath {
 
     public static final int DEFAULT_NULL_DISTANCE = 1000;
 
@@ -88,7 +93,7 @@ public class TypeDistance {
      * Get the inheritance-distance from <code>declType</code> to <code>actualType</code>.
      * <p>
      * The distance is directed, i.e., <b>dist(a, b) != decl(b, a) with exception of a==b</b>.
-     * 
+     *
      * @param declType
      *            The "base" type
      * @param actualType
@@ -106,10 +111,10 @@ public class TypeDistance {
 
     /**
      * Calculate distance from one base type vector to another derived type vector.
-     * 
+     *
      * The same to {@link #dist(Class[], Class[], int)} with <code>nullDistance</code> set to
      * {@value #DEFAULT_NULL_DISTANCE}.
-     * 
+     *
      * @return -1 If <code>actualTypes</code> is not compatible with <code>declTypes</code>. I.e.,
      *         they have different lengths, or any decl-type is not assignable from corresponding
      *         actual-type.
@@ -123,7 +128,7 @@ public class TypeDistance {
 
     /**
      * Calculate distance from one base type vector to another derived type vector.
-     * 
+     *
      * @param nullDistance
      *            The fallback distance from declType to <code>null</code>.
      * @return -1 If <code>actualTypes</code> is not compatible with <code>declTypes</code>. I.e.,
@@ -159,6 +164,89 @@ public class TypeDistance {
             totalDistance += distance;
         }
         return totalDistance;
+    }
+
+    public static Class<?> getCommonSuperclass(Class<?> a, Class<?> b) {
+        while (a != null && !a.isAssignableFrom(b))
+            a = a.getSuperclass();
+        return a;
+    }
+
+    public static Class<?> getCommonSuperclass(Collection<Class<?>> classes) {
+        Class<?> base = null;
+        for (Class<?> clazz : classes) {
+            if (base == null)
+                base = clazz;
+            else
+                base = getCommonSuperclass(base, clazz);
+        }
+        return base;
+    }
+
+    static class CommonInterfaces {
+
+        private Set<Class<?>> trueSet;
+        private Set<Class<?>> falseSet;
+
+        public CommonInterfaces(boolean sort) {
+            if (sort) {
+                trueSet = new TreeSet<Class<?>>(TypeComparator.getInstance());
+            } else
+                trueSet = new HashSet<Class<?>>();
+            falseSet = new HashSet<Class<?>>();
+        }
+
+        public void _solve(Class<?> a, Class<?> b) {
+            assert !a.isAssignableFrom(b) : "illegal usage";
+            for (Class<?> iface : a.getInterfaces()) {
+                if (iface.isAssignableFrom(b))
+                    trueSet.add(iface);
+                else {
+                    if (falseSet.add(iface)) {
+                        trueSet.remove(iface);
+                        _solve(iface, b);
+                    }
+                }
+            }
+            Class<?> _super = a.getSuperclass();
+            if (_super != null)
+                _solve(_super, b);
+        }
+
+        public Class<?>[] solve(Class<?> a, Class<?> b) {
+            _solve(a, b);
+            return trueSet.toArray(new Class<?>[0]);
+        }
+
+    }
+
+    public static Class<?>[] getCommonInterfaces(Class<?> a, Class<?> b, boolean sort) {
+        Class<?> gcd = getCommonSuperclass(a, b);
+        if (gcd != null)
+            return new Class<?>[] { gcd };
+        CommonInterfaces igcd = new CommonInterfaces(sort);
+        return igcd.solve(a, b);
+    }
+
+    public static Class<?>[] getCommonInterfaces(Class<?> a, Class<?> b) {
+        return getCommonInterfaces(a, b, false);
+    }
+
+    /** under dev */
+    @Deprecated
+    public static Class<?>[] getCommonInterfaces(Collection<Class<?>> types, boolean sort) {
+        CommonInterfaces igcd = new CommonInterfaces(sort);
+        Class<?> prev = null;
+        for (Class<?> clazz : types) {
+            if (prev != null)
+                igcd._solve(prev, clazz);
+            prev = clazz;
+        }
+        return igcd.trueSet.toArray(new Class<?>[0]);
+    }
+
+    public static Class<?>[] getCommonInterfaces(Collection<Class<?>> types) {
+        return getCommonInterfaces(types, false);
     }
 
 }

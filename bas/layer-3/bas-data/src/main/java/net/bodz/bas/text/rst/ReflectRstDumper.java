@@ -178,7 +178,7 @@ public class ReflectRstDumper {
                     break;
 
                 case CLASS_ARRAY:
-                    out.attribute(name, TypeArray.getCanonicalNames((Class<?>[]) value));
+                    out.attribute(name, TypeArray.of((Class<?>[]) value).getNames());
                     break;
 
                 case OBJECT:

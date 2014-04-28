@@ -10,7 +10,7 @@ public class TypeNameTest
     public void testJoinNamesClassOfQArray() {
         class D {
             void o(Class<?>[] input, String expected) {
-                String actual = TypeName.join(", ", true, input);
+                String actual = TypeArray.of(input).joinNames(", ", true);
                 assertEquals(expected, actual);
             }
         }

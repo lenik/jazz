@@ -1,21 +1,37 @@
 package net.bodz.bas.c.type;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TypeArray {
 
-    public static String[] getCanonicalNames(Class<?>[] types) {
-        String[] names = new String[types.length];
-        for (int i = 0; i < types.length; i++)
-            names[i] = types[i].getCanonicalName();
-        return names;
+    private final List<Class<?>> array;
+    private final int length;
+
+    public TypeArray(Class<?>... array) {
+        if (array == null)
+            throw new NullPointerException("array");
+        this.array = Arrays.asList(array);
+        this.length = array.length;
+    }
+
+    public TypeArray(List<Class<?>> array) {
+        if (array == null)
+            throw new NullPointerException("array");
+        this.array = array;
+        this.length = array.size();
+    }
+
+    public static TypeArray of(Class<?>... array) {
+        return new TypeArray(array);
     }
 
     /**
      * Get class for each component in the object array.
-     * 
+     *
      * @param nullClass
      *            Which class to be assumed for <code>null</code>-value in the object array.
      * @param objects
@@ -35,6 +51,46 @@ public class TypeArray {
                 classes[i] = objects[i].getClass();
         }
         return classes;
+    }
+
+    public String[] getNames() {
+        String[] names = new String[length];
+        for (int i = 0; i < length; i++)
+            names[i] = array.get(i).getName();
+        return names;
+    }
+
+    public String[] getCanonicalNames() {
+        String[] names = new String[length];
+        for (int i = 0; i < length; i++)
+            names[i] = array.get(i).getCanonicalName();
+        return names;
+    }
+
+    public String joinNames(String delim, boolean simpleNames) {
+        StringBuilder b = null;
+        for (Class<?> t : array) {
+            if (b == null)
+                b = new StringBuilder(length * 30);
+            else
+                b.append(delim);
+            String n;
+            if (simpleNames)
+                // || t.getCanonicalName().startsWith("java.lang."))
+                n = t.getSimpleName();
+            else
+                n = t.getName();
+            b.append(n);
+        }
+        return b == null ? "" : b.toString();
+    }
+
+    public String joinNames(String delim) {
+        return joinNames(delim, false);
+    }
+
+    public String joinNames(Class<?>... types) {
+        return joinNames(", ");
     }
 
     /**
@@ -69,8 +125,8 @@ public class TypeArray {
 
             Method existing = map.get(method.getName());
             if (existing != null) {
-                int prev = TypeDistance.dist(parameterTypes, existing.getParameterTypes());
-                int dist = TypeDistance.dist(parameterTypes, method.getParameterTypes());
+                int prev = TypeMath.dist(parameterTypes, existing.getParameterTypes());
+                int dist = TypeMath.dist(parameterTypes, method.getParameterTypes());
                 // if (dist==prev) throw new ambiguous;
                 if (dist < prev)
                     map.put(method.getName(), method);
