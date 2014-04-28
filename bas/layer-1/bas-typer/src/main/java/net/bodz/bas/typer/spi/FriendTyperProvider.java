@@ -6,6 +6,9 @@ import java.util.Map;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 
+/**
+ * @see net.bodz.bas.c.type.TypeNearby
+ */
 public class FriendTyperProvider
         extends AbstractTyperProvider {
 
