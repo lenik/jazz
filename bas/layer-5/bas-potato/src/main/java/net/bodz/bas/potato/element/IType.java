@@ -79,6 +79,8 @@ public interface IType
      */
     IMethod getMethod(String methodName, Class<?>... parameterTypes);
 
+    IMethod getOverloadedMethod(String methodName);
+
     /**
      * Get constructor of the specific signature.
      * 

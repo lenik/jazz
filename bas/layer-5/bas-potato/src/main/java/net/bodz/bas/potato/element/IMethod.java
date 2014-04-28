@@ -5,7 +5,11 @@ import net.bodz.bas.c.reflect.MethodSignature;
 public interface IMethod
         extends IPotatoElement {
 
+    boolean isOverloaded();
+
     Class<?> getReturnType();
+
+    int getParameterCount();
 
     Class<?>[] getParameterTypes();
 

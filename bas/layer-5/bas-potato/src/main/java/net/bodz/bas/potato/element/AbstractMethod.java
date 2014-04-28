@@ -6,10 +6,15 @@ public abstract class AbstractMethod
         extends AbstractPotatoElement
         implements IMethod {
 
-    transient IParameter[] parameters;
+    private transient IParameter[] parameters;
 
     public AbstractMethod(Class<?> declaringType, String methodName) {
         super(declaringType, methodName);
+    }
+
+    @Override
+    public boolean isOverloaded() {
+        return false;
     }
 
     @Override
@@ -21,23 +26,31 @@ public abstract class AbstractMethod
     }
 
     @Override
-    public synchronized IParameter[] getParameters() {
-        if (parameters == null) {
-            Class<?>[] parameterTypes = getParameterTypes();
+    public IParameter[] getParameters() {
+        if (parameters == null)
+            synchronized (this) {
+                if (parameters == null)
+                    parameters = createParameters();
+            }
+        return parameters;
+    }
 
-            int n = parameterTypes.length;
-            parameters = new IParameter[n];
+    private IParameter[] createParameters() {
+        Class<?>[] parameterTypes = getParameterTypes();
 
-            for (int i = 0; i < n; i++)
-                parameters[i] = createParameter(i);
-        }
+        int n = parameterTypes.length;
+        IParameter[] parameters = new IParameter[n];
+
+        for (int i = 0; i < n; i++)
+            parameters[i] = createParameter(i);
+
         return parameters;
     }
 
     protected abstract IParameter createParameter(int index);
 
     @Override
-    public Object invokeStatic(Object... parameters)
+    public final Object invokeStatic(Object... parameters)
             throws ReflectiveOperationException {
         return invoke(null, parameters);
     }

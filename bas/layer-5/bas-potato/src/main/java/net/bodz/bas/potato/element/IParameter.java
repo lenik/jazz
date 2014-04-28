@@ -13,4 +13,6 @@ public interface IParameter
      */
     Class<?> getType();
 
+    boolean isOptional();
+
 }

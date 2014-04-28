@@ -31,7 +31,8 @@ public class BeanType
     private final int verboseLevel;
 
     public BeanType(BeanInfo beanInfo, int infoset, ClassDoc classDoc) {
-        super(beanInfo.getBeanDescriptor().getName());
+        super(beanInfo.getBeanDescriptor().getBeanClass().getDeclaringClass(), //
+                beanInfo.getBeanDescriptor().getName());
 
         beanDescriptor = beanInfo.getBeanDescriptor();
         beanClass = beanDescriptor.getBeanClass();
