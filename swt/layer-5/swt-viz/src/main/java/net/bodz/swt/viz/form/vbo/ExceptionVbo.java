@@ -35,9 +35,6 @@ import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtGUIRefEntry;
 import net.bodz.swt.viz.SwtRenderContext;
 
-/**
- * @test R_ThrowableTest
- */
 public class ExceptionVbo
         extends AbstractSwtViewBuilder<Throwable> {
 
