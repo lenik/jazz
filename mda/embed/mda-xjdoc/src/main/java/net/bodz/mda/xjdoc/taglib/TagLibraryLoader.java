@@ -106,6 +106,27 @@ public class TagLibraryLoader {
         return set;
     }
 
+    static Map<ClassLoader, TagLibraryLoader> classLoaderMap = new HashMap<>();
+
+    public static TagLibraryLoader getInstance() {
+        return getInstance(TagLibraryLoader.class.getClassLoader());
+    }
+
+    public static TagLibraryLoader getInstance(ClassLoader classLoader) {
+        TagLibraryLoader instance = classLoaderMap.get(classLoader);
+        if (instance == null) {
+            instance = new TagLibraryLoader(classLoader);
+            classLoaderMap.put(classLoader, instance);
+        }
+        return instance;
+    }
+
+    public static TagLibrarySet allFor(ClassLoader classLoader) {
+        if (classLoader == null)
+            throw new NullPointerException("classLoader");
+        return getInstance(classLoader).parseSet("*");
+    }
+
     public static TagLibrarySet allFor(Class<?> clazz) {
         if (clazz == null)
             throw new NullPointerException("clazz");
@@ -117,15 +138,6 @@ public class TagLibraryLoader {
                 throw new NullPointerException("resourceLoader");
         }
         return allFor(classLoader);
-    }
-
-    public static TagLibrarySet allFor(ClassLoader classLoader) {
-        if (classLoader == null)
-            throw new NullPointerException("classLoader");
-
-        TagLibraryLoader tagLibraryLoader = new TagLibraryLoader(classLoader);
-        TagLibrarySet taglibs = tagLibraryLoader.parseSet("*");
-        return taglibs;
     }
 
 }
