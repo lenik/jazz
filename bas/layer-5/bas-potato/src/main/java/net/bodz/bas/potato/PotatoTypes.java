@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.potato.element.LinkedType;
+import net.bodz.bas.potato.element.MergedType;
 import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -52,8 +52,7 @@ public class PotatoTypes {
         case 1:
             return type1v.get(0);
         default:
-            IType linked = new LinkedType(clazz, type1v, classDoc);
-            return linked;
+            return new MergedType(clazz, type1v, classDoc);
         }
     }
 
