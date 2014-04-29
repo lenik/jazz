@@ -70,65 +70,6 @@ public class TypeMathTest
     }
 
     @Test
-    public void testDist()
-            throws Exception {
-        class D {
-            void o(Class<?> decl, Class<?> actual, int expected) {
-                int dist = TypeMath.dist(decl, actual);
-                assertEquals(expected, dist);
-            }
-        }
-        D d = new D();
-
-        // A → Y
-        d.o(Y.class, A.class, 1);
-
-        // A → Y → X
-        d.o(X.class, A.class, 2);
-
-        // B → A → Y → X
-        // B → Z2 → Y → X
-        d.o(X.class, B.class, 3);
-
-        // C → B → A → Y → X
-        // C → Z1 → X
-        d.o(X.class, C.class, 2);
-
-        // C → B → A → Y
-        // C → B → Z2 → Y
-        // C → Z1 → Y
-        d.o(Y.class, C.class, 2);
-
-    }
-
-    static Class<?>[] _(Class<?>... types) {
-        return types;
-    }
-
-    @Test
-    public void testDistSum()
-            throws Exception {
-        class D {
-            void o(Class<?>[] decl, Class<?>[] actual, int expected) {
-                int dist = TypeMath.dist(decl, actual);
-                assertEquals(expected, dist);
-            }
-        }
-        D d = new D();
-
-        // illegal numbers
-        d.o(_(A.class), _(B.class, C.class), -1);
-
-        // B → A
-        // C → B
-        d.o(_(A.class, B.class), _(B.class, C.class), 2);
-
-        // A → Y → X
-        // C → Z1 → Y
-        d.o(_(X.class, Y.class), _(A.class, C.class), 4);
-    }
-
-    @Test
     public void testGcdClassOfQClassOfQ() {
         class D {
             void o(Class<?>[] types, Class<?> expected) {

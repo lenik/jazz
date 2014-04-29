@@ -116,6 +116,8 @@ public class TypeArray {
         return true;
     }
 
+    static TypeSpace typeSpace = TypeSpace.getDefault();
+
     public static Map<String, Method> getAssignableMethodMap(Class<?> clazz, Class<?>[] parameterTypes) {
         Map<String, Method> map = new HashMap<String, Method>();
 
@@ -125,8 +127,8 @@ public class TypeArray {
 
             Method existing = map.get(method.getName());
             if (existing != null) {
-                int prev = TypeMath.dist(parameterTypes, existing.getParameterTypes());
-                int dist = TypeMath.dist(parameterTypes, method.getParameterTypes());
+                int prev = typeSpace.dist(parameterTypes, existing.getParameterTypes());
+                int dist = typeSpace.dist(parameterTypes, method.getParameterTypes());
                 // if (dist==prev) throw new ambiguous;
                 if (dist < prev)
                     map.put(method.getName(), method);
