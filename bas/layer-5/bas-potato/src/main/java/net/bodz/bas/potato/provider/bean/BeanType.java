@@ -13,7 +13,7 @@ import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
@@ -92,7 +92,7 @@ public class BeanType
             EventSetDescriptor[] eventSetDescriptors = beanInfo.getEventSetDescriptors();
             for (EventSetDescriptor eventSetDescriptor : eventSetDescriptors) {
 
-                IJavaElementDoc eventDoc = null;
+                IElementDoc eventDoc = null;
                 if (classDoc != null) {
                     // TODO Event xjdoc..
                 }

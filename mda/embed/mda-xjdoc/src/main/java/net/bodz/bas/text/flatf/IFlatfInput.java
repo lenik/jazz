@@ -38,8 +38,8 @@ public interface IFlatfInput
 
     /**
      * Get the name of the current section.
-     * 
-     * @return <code>null</code> if current section is not set.
+     *
+     * @return <code>null</code> if currently it's outside of any section.
      */
     String getSectionName();
 

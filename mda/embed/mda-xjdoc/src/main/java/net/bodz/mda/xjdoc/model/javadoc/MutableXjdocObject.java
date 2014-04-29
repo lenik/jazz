@@ -3,7 +3,7 @@ package net.bodz.mda.xjdoc.model.javadoc;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class MutableXjdocObject
         extends SemiMutableXjdocElement {
@@ -13,10 +13,10 @@ public class MutableXjdocObject
     transient boolean xjdocLoaded;
 
     /**
-     * @return Non-<code>null</code> {@link IJavaElementDoc}.
+     * @return Non-<code>null</code> {@link IElementDoc}.
      */
     @Override
-    public IJavaElementDoc getXjdoc() {
+    public IElementDoc getXjdoc() {
         if (xjdoc == null) {
             synchronized (this) {
                 if (!xjdocLoaded) {
@@ -29,7 +29,7 @@ public class MutableXjdocObject
     }
 
     @Override
-    protected IJavaElementDoc loadXjdoc() {
+    protected IElementDoc loadXjdoc() {
         ClassDoc classDoc = ClassDocLoader.load(getClass());
 
         if (classDoc == null)

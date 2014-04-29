@@ -6,7 +6,7 @@ import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.IMutableElement;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public class MutablePotatoElement
@@ -20,7 +20,7 @@ public class MutablePotatoElement
     private int verboseLevel = PUBLIC_LEVEL;
     private int modifiers;
 
-    private IJavaElementDoc xjdoc;
+    private IElementDoc xjdoc;
     private iString labelOverride = new XiString();
     private iString descriptionOverride = new XiString();
     private iString helpDocOverride = new XiString();
@@ -142,11 +142,11 @@ public class MutablePotatoElement
     /* _____________________________ */static section.iface __XJDOC__;
 
     @Override
-    public IJavaElementDoc getXjdoc() {
+    public IElementDoc getXjdoc() {
         return xjdoc;
     }
 
-    public void setXjdoc(IJavaElementDoc xjdoc) {
+    public void setXjdoc(IElementDoc xjdoc) {
         this.xjdoc = xjdoc;
     }
 

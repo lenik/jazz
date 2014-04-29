@@ -7,7 +7,7 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class FieldDoc
-        extends JavaElementDoc
+        extends MutableElementDoc
         implements IFieldDoc {
 
     final ClassDoc classDoc;

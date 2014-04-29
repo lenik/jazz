@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class MergedType
         extends AbstractType {
@@ -16,11 +16,11 @@ public class MergedType
     private IConstructorMap constructorMap;
     private IEventMap eventMap;
 
-    public MergedType(Class<?> clazz, IType[] types, IJavaElementDoc xjdoc) {
+    public MergedType(Class<?> clazz, IType[] types, IElementDoc xjdoc) {
         this(clazz, Arrays.asList(types), xjdoc);
     }
 
-    public MergedType(Class<?> clazz, List<IType> types, IJavaElementDoc xjdoc) {
+    public MergedType(Class<?> clazz, List<IType> types, IElementDoc xjdoc) {
         super(clazz, clazz.getName());
         this.clazz = clazz;
 

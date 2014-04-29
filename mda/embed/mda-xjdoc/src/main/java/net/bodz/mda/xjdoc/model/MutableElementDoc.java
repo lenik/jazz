@@ -18,17 +18,17 @@ import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.tagtype.DefaultTagType;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
 
-public class JavaElementDoc
-        implements IJavaElementDoc, IFlatfSerializable {
+public class MutableElementDoc
+        implements IElementDoc, IFlatfSerializable {
 
     String name;
     iString text = iString.NULL;
     Map<String, Object> tagMap = new LinkedHashMap<String, Object>();
 
-    public JavaElementDoc() {
+    public MutableElementDoc() {
     }
 
-    public JavaElementDoc(String name) {
+    public MutableElementDoc(String name) {
         this.name = name;
     }
 

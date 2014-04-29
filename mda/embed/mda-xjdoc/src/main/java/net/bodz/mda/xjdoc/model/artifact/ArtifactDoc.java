@@ -14,7 +14,7 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.Author;
 
 public class ArtifactDoc
@@ -22,7 +22,7 @@ public class ArtifactDoc
 
     private static final long serialVersionUID = 1L;
 
-    public ArtifactDoc(IJavaElementDoc _orig) {
+    public ArtifactDoc(IElementDoc _orig) {
         super(_orig);
     }
 

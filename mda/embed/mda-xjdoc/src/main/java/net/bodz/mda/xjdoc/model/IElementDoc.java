@@ -5,7 +5,7 @@ import java.util.Map;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.sugar.IToChain;
 
-public interface IJavaElementDoc
+public interface IElementDoc
         extends IToChain {
 
     /**

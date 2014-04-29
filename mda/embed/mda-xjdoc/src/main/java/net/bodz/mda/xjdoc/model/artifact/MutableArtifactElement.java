@@ -1,6 +1,6 @@
 package net.bodz.mda.xjdoc.model.artifact;
 
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.MutableXjdocElement;
 
 public class MutableArtifactElement
@@ -14,12 +14,12 @@ public class MutableArtifactElement
     }
 
     @Override
-    public final void setXjdoc(IJavaElementDoc xjdoc) {
+    public final void setXjdoc(IElementDoc xjdoc) {
         setXjdoc(xjdoc, false);
     }
 
     @Override
-    public final void setXjdoc(IJavaElementDoc xjdoc, boolean applyToElementProperties) {
+    public final void setXjdoc(IElementDoc xjdoc, boolean applyToElementProperties) {
         ArtifactDoc artifactDoc = (ArtifactDoc) xjdoc;
         setArtifactDoc(artifactDoc, applyToElementProperties);
     }

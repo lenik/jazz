@@ -34,7 +34,7 @@ import net.bodz.bas.text.rst.IRstOutput;
 import net.bodz.bas.text.rst.IRstSerializable;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.swt.c.pageflow.IPage;
 
 public abstract class AbstractSisComponent
@@ -50,7 +50,7 @@ public abstract class AbstractSisComponent
     private String name;
     private String id;
 
-    private IJavaElementDoc xjdoc;
+    private IElementDoc xjdoc;
 
     private boolean locked = false;
     private boolean selected = true;
@@ -81,7 +81,7 @@ public abstract class AbstractSisComponent
     }
 
     @Override
-    public IJavaElementDoc getXjdoc() {
+    public IElementDoc getXjdoc() {
         if (xjdoc == null) {
             Class<?> clazz = getClass();
             ClassDoc classDoc = ClassDocLoader.load(clazz);
@@ -96,7 +96,7 @@ public abstract class AbstractSisComponent
         return xjdoc;
     }
 
-    public void setXjdoc(IJavaElementDoc xjdoc) {
+    public void setXjdoc(IElementDoc xjdoc) {
         if (xjdoc == null)
             throw new NullPointerException("xjdoc");
         this.xjdoc = xjdoc;

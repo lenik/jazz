@@ -9,7 +9,7 @@ import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.potato.element.IProperty;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class PropertyGUIRefEntry
         extends PropertyRefEntry
@@ -26,7 +26,7 @@ public class PropertyGUIRefEntry
 
     @Override
     public IGUIElementStyleDeclaration getStyle() {
-        IJavaElementDoc xjdoc = getProperty().getXjdoc();
+        IElementDoc xjdoc = getProperty().getXjdoc();
         xjdoc.getTag("style");
         // TODO
         throw new NotImplementedException();

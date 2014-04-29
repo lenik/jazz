@@ -12,6 +12,10 @@ public interface IFlatfSerializable {
     // void readObject(IFlatfInput in, INegotiation options)
     // throws IOException, ParseException;
 
+    /**
+     * @param sectionName
+     *            <code>null</code> if it's outside of any section.
+     */
     ISectionHandler getSectionHandler(String sectionName, IOptions options);
 
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dom1.SemiMutableElement;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class SemiMutableXjdocElement
         extends SemiMutableElement
@@ -12,13 +12,13 @@ public abstract class SemiMutableXjdocElement
 
     private static final long serialVersionUID = 1L;
 
-    transient IJavaElementDoc xjdoc;
+    transient IElementDoc xjdoc;
     transient boolean xjdocLoaded;
 
     /**
-     * @return Non-<code>null</code> {@link IJavaElementDoc}.
+     * @return Non-<code>null</code> {@link IElementDoc}.
      */
-    public IJavaElementDoc getXjdoc() {
+    public IElementDoc getXjdoc() {
         if (xjdoc == null) {
             synchronized (this) {
                 if (!xjdocLoaded) {
@@ -32,12 +32,12 @@ public abstract class SemiMutableXjdocElement
         return xjdoc;
     }
 
-    protected IJavaElementDoc loadXjdoc() {
+    protected IElementDoc loadXjdoc() {
         return null;
     }
 
     @Override
-    public void setXjdoc(IJavaElementDoc xjdoc) {
+    public void setXjdoc(IElementDoc xjdoc) {
         this.xjdoc = xjdoc;
         this.xjdocLoaded = true;
     }

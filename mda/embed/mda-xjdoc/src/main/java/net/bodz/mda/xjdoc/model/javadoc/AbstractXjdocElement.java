@@ -1,16 +1,20 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
+import java.io.IOException;
+
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.AbstractElement;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractXjdocElement
         extends AbstractElement
         implements IXjdocElement {
 
-    private transient IJavaElementDoc xjdoc;
+    private transient IElementDoc xjdoc;
     private transient boolean xjdocLoaded;
 
     private transient iString label;
@@ -21,16 +25,20 @@ public abstract class AbstractXjdocElement
     }
 
     /**
-     * @return Non-<code>null</code> {@link IJavaElementDoc}.
+     * @return Non-<code>null</code> {@link IElementDoc}.
      * @throws IllegalUsageException
      *             If xjdoc isn't available.
      */
     @Override
-    public IJavaElementDoc getXjdoc() {
+    public IElementDoc getXjdoc() {
         if (xjdoc == null) {
             synchronized (this) {
                 if (!xjdocLoaded) {
-                    xjdoc = loadXjdoc();
+                    try {
+                        xjdoc = loadXjdoc();
+                    } catch (Exception e) {
+                        throw new LazyLoadException(e.getMessage(), e);
+                    }
                     xjdocLoaded = true;
                 }
             }
@@ -41,12 +49,13 @@ public abstract class AbstractXjdocElement
     }
 
     @Override
-    public void setXjdoc(IJavaElementDoc xjdoc) {
+    public void setXjdoc(IElementDoc xjdoc) {
         this.xjdoc = xjdoc;
         this.xjdocLoaded = xjdoc != null;
     }
 
-    protected IJavaElementDoc loadXjdoc() {
+    protected IElementDoc loadXjdoc()
+            throws ParseException, IOException {
         throw new NotImplementedException();
     }
 

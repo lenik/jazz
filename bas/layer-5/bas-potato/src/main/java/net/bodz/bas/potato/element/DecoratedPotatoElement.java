@@ -6,7 +6,7 @@ import java.util.Map;
 import net.bodz.bas.c.reflect.DecoratedAnnotatedElement;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public class DecoratedPotatoElement
@@ -91,12 +91,12 @@ public class DecoratedPotatoElement
     /* _____________________________ */static section.iface __XJDOC__;
 
     @Override
-    public IJavaElementDoc getXjdoc() {
+    public IElementDoc getXjdoc() {
         return getWrapped().getXjdoc();
     }
 
     @Override
-    public void setXjdoc(IJavaElementDoc xjdoc) {
+    public void setXjdoc(IElementDoc xjdoc) {
         getWrapped().setXjdoc(xjdoc);
     }
 

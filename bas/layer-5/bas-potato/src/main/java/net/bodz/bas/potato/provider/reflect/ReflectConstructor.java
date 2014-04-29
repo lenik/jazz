@@ -5,7 +5,7 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.potato.element.AbstractConstructor;
 import net.bodz.bas.potato.element.IConstructor;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class ReflectConstructor
         extends AbstractConstructor {
@@ -19,7 +19,7 @@ public class ReflectConstructor
      * @throws NullPointerException
      *             If <code>method</code> is <code>null</code>.
      */
-    public ReflectConstructor(Constructor<?> ctor, IJavaElementDoc xjdoc) {
+    public ReflectConstructor(Constructor<?> ctor, IElementDoc xjdoc) {
         super(ctor.getDeclaringClass());
         this.ctor = ctor;
 
