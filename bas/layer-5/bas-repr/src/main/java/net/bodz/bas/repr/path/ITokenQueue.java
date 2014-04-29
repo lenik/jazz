@@ -128,4 +128,8 @@ public interface ITokenQueue {
      */
     Long peekLong(int offset);
 
+    boolean isStopped();
+
+    void stop();
+
 }

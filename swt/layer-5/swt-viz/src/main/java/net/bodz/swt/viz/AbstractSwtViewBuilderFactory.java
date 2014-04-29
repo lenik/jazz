@@ -1,7 +1,5 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.meta.source.ChainUsage;
-import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.repr.viz.AbstractViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.swt.viz.form.vbo.BooleanVbo;
@@ -15,12 +13,8 @@ public abstract class AbstractSwtViewBuilderFactory
         extends AbstractViewBuilderFactory
         implements ISwtViewBuilderFactory {
 
-    public AbstractSwtViewBuilderFactory() {
-        setup();
-    }
-
-    @OverrideOption(chain = ChainUsage.MUST)
-    protected void setup() {
+    @Override
+    protected void initialize() {
         addViewBuilder(new BooleanVbo());
 
         addViewBuilder(new TextFormedVbo(), Number.class);

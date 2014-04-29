@@ -17,6 +17,7 @@ public class TokenQueue
     private final String[] tokens;
     private int index;
     private boolean entered;
+    private boolean stopped;
 
     public TokenQueue(String[] tokens) {
         if (tokens == null)
@@ -175,6 +176,16 @@ public class TokenQueue
             return null;
         long n = Long.parseLong(tokens[index]);
         return n;
+    }
+
+    @Override
+    public boolean isStopped() {
+        return stopped;
+    }
+
+    @Override
+    public void stop() {
+        this.stopped = true;
     }
 
     static boolean isNumber(String str) {

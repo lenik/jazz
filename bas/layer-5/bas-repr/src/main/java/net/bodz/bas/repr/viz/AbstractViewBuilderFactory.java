@@ -24,12 +24,15 @@ public abstract class AbstractViewBuilderFactory
 
     private TypePoMap<TaggedSet<IViewBuilder<?>>> typeMap = new TypePoMap<>();
 
+    private boolean initialized;
     private Map<FeaturedType, Object> viewBuilderCache;
     private static final Object NONE = new Object();
 
     public AbstractViewBuilderFactory() {
         viewBuilderCache = new HashMap<>();
     }
+
+    protected abstract void initialize();
 
     @Override
     public String[] getSupportedFeatures() {
@@ -54,6 +57,14 @@ public abstract class AbstractViewBuilderFactory
     public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> clazz, String... features) {
         if (clazz == null)
             throw new NullPointerException("clazz");
+
+        if (!initialized)
+            synchronized (this) {
+                if (!initialized) {
+                    initialize();
+                    initialized = true;
+                }
+            }
 
         FeaturedType key = new FeaturedType(clazz, features);
         Object cache = viewBuilderCache.get(key);
