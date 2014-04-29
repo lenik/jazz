@@ -83,7 +83,7 @@ public class PathDispatchServlet
             return;
         }
 
-        if (!tokenQueue.isEmpty()) {
+        if (!tokenQueue.isEmpty() && !tokenQueue.isStopped()) {
             logger.error("Incomplete-Dispatch: " + tokenQueue);
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, //
                     "Path-Remaining: " + tokenQueue.getRemainingPath());
