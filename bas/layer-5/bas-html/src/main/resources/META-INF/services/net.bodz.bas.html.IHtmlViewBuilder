@@ -1,1 +1,3 @@
-net.bodz.bas.repr.view.ObjectDumpView
+net.bodz.bas.html.vbo.ObjectDumpVbo
+net.bodz.bas.html.vbo.PathFramesVbo
+net.bodz.bas.html.vbo.URLResourceVbo

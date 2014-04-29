@@ -1,4 +1,4 @@
-package net.bodz.bas.io.res.builtin;
+package net.bodz.bas.html.vbo;
 
 import java.io.IOException;
 import java.net.URL;
@@ -11,6 +11,7 @@ import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHttpReprContext;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;

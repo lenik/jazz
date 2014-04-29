@@ -1,4 +1,4 @@
-package net.bodz.bas.html.path;
+package net.bodz.bas.html.vbo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,12 +17,12 @@ import net.bodz.bas.repr.path.PathArrivalEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 
-public class PathArrivalVbo
+public class PathFramesVbo
         extends AbstractHtmlViewBuilder<IPathArrival> {
 
     IHtmlViewBuilderFactory viewBuilderFactory;
 
-    public PathArrivalVbo() {
+    public PathFramesVbo() {
         super(PathArrival.class);
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
     }

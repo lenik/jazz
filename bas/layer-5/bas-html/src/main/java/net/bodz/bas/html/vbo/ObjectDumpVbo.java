@@ -1,4 +1,4 @@
-package net.bodz.bas.html.viz;
+package net.bodz.bas.html.vbo;
 
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
@@ -12,10 +12,10 @@ import net.bodz.bas.repr.req.IMethodOfRequest;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 
-public class ObjectDumpView
+public class ObjectDumpVbo
         extends AbstractHtmlViewBuilder<Object> {
 
-    public ObjectDumpView() {
+    public ObjectDumpVbo() {
         super(Object.class);
     }
 
