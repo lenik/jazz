@@ -3,67 +3,63 @@ package net.bodz.bas.c.type;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import net.bodz.bas.c.primitive.Primitives;
 
 public class TypeArray {
 
-    private final List<Class<?>> array;
+    private final Class<?>[] array;
     private final int length;
 
     public TypeArray(Class<?>... array) {
         if (array == null)
             throw new NullPointerException("array");
-        this.array = Arrays.asList(array);
-        this.length = array.length;
-    }
-
-    public TypeArray(List<Class<?>> array) {
-        if (array == null)
-            throw new NullPointerException("array");
         this.array = array;
-        this.length = array.size();
+        this.length = array.length;
     }
 
     public static TypeArray of(Class<?>... array) {
         return new TypeArray(array);
     }
 
-    /**
-     * Get class for each component in the object array.
-     *
-     * @param nullClass
-     *            Which class to be assumed for <code>null</code>-value in the object array.
-     * @param objects
-     *            Non-<code>null</code> object array, however, its element maybe <code>null</code>.
-     * @return Non-<code>null</code> class array, each element is the class of the corresponding
-     *         object in the object array, or <code>nullClass</code> if the object is
-     *         <code>null</code>.
-     */
-    public static Class<?>[] getClasses(Class<?> nullClass, Object... objects) {
-        if (objects == null)
-            throw new NullPointerException("objects");
-        Class<?>[] classes = new Class[objects.length];
-        for (int i = 0; i < objects.length; i++) {
-            if (objects[i] == null)
-                classes[i] = nullClass;
-            else
-                classes[i] = objects[i].getClass();
-        }
-        return classes;
+    public static TypeArray fromObjects(Class<?> nullClass, Object... objects) {
+        return new TypeArray(getClasses(nullClass, objects));
+    }
+
+    public Class<?>[] getArray() {
+        return array;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public Class<?> get(int parameterIndex) {
+        return array[parameterIndex];
+    }
+
+    public void box() {
+        for (int i = 0; i < array.length; i++)
+            array[i] = Primitives.box(array[i]);
+    }
+
+    public void unbox() {
+        for (int i = 0; i < array.length; i++)
+            array[i] = Primitives.unbox(array[i]);
     }
 
     public String[] getNames() {
         String[] names = new String[length];
         for (int i = 0; i < length; i++)
-            names[i] = array.get(i).getName();
+            names[i] = array[i].getName();
         return names;
     }
 
     public String[] getCanonicalNames() {
         String[] names = new String[length];
         for (int i = 0; i < length; i++)
-            names[i] = array.get(i).getCanonicalName();
+            names[i] = array[i].getCanonicalName();
         return names;
     }
 
@@ -91,6 +87,60 @@ public class TypeArray {
 
     public String joinNames(Class<?>... types) {
         return joinNames(", ");
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(array);
+        result = prime * result + length;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TypeArray other = (TypeArray) obj;
+        if (!Arrays.equals(array, other.array))
+            return false;
+        if (length != other.length)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return joinNames(",  ", true);
+    }
+
+    /**
+     * Get class for each component in the object array.
+     *
+     * @param nullClass
+     *            Which class to be assumed for <code>null</code>-value in the object array.
+     * @param objects
+     *            Non-<code>null</code> object array, however, its element maybe <code>null</code>.
+     * @return Non-<code>null</code> class array, each element is the class of the corresponding
+     *         object in the object array, or <code>nullClass</code> if the object is
+     *         <code>null</code>.
+     */
+    public static Class<?>[] getClasses(Class<?> nullClass, Object... objects) {
+        if (objects == null)
+            throw new NullPointerException("objects");
+        Class<?>[] classes = new Class[objects.length];
+        for (int i = 0; i < objects.length; i++) {
+            if (objects[i] == null)
+                classes[i] = nullClass;
+            else
+                classes[i] = objects[i].getClass();
+        }
+        return classes;
     }
 
     /**
