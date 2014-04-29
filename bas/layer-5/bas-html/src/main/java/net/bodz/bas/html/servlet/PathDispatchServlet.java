@@ -1,4 +1,4 @@
-package net.bodz.bas.html.path;
+package net.bodz.bas.html.servlet;
 
 import java.io.IOException;
 import java.util.ServiceLoader;
@@ -16,6 +16,7 @@ import net.bodz.bas.html.IHtmlViewBuilderFactory;
 import net.bodz.bas.html.IHttpReprContext;
 import net.bodz.bas.html.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.RootHtmlOutputContext;
+import net.bodz.bas.html.vbo.PathFramesVbo;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.ValueEntry;
@@ -37,12 +38,12 @@ public class PathDispatchServlet
 
     PathDispatchService pathDispatchService;
     IHtmlViewBuilderFactory viewBuilderFactory;
-    PathArrivalVbo pathArrivalVbo;
+    PathFramesVbo pathArrivalVbo;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
-        pathArrivalVbo = new PathArrivalVbo();
+        pathArrivalVbo = new PathFramesVbo();
     }
 
     @Override
