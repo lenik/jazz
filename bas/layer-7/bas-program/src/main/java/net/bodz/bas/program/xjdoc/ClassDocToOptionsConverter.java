@@ -23,7 +23,7 @@ import net.bodz.mda.xjdoc.ClassDocLoadException;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
@@ -333,7 +333,7 @@ public class ClassDocToOptionsConverter {
         return true;
     }
 
-    String getOptionDescriptor(IJavaElementDoc doc) {
+    String getOptionDescriptor(IElementDoc doc) {
         if (doc == null)
             return xjdocRequired ? null : "";
 

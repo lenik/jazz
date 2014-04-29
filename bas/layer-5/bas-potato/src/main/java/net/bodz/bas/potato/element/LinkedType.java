@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class LinkedType
         extends AbstractType {
@@ -17,11 +17,11 @@ public class LinkedType
     private LinkedConstructorMap constructorMap;
     private LinkedEventMap eventMap;
 
-    public LinkedType(Class<?> clazz, IType[] types, IJavaElementDoc xjdoc) {
+    public LinkedType(Class<?> clazz, IType[] types, IElementDoc xjdoc) {
         this(clazz, Arrays.asList(types), xjdoc);
     }
 
-    public LinkedType(Class<?> clazz, List<IType> types, IJavaElementDoc xjdoc) {
+    public LinkedType(Class<?> clazz, List<IType> types, IElementDoc xjdoc) {
         super(clazz, clazz.getName());
 
         this.clazz = clazz;

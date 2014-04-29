@@ -8,7 +8,7 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class BeanProperty
         extends AbstractProperty {
@@ -24,7 +24,7 @@ public class BeanProperty
      *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
      *             <code>null</code>.
      */
-    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor, IJavaElementDoc xjdoc) {
+    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor, IElementDoc xjdoc) {
         super(beanClass, propertyDescriptor.getName());
         this.propertyDescriptor = propertyDescriptor;
 

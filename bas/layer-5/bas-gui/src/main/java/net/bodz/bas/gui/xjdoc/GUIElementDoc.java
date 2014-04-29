@@ -4,7 +4,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.gui.style.GUIElementStyleDeclaration;
 import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class GUIElementDoc
         extends DecoratedJavaElementDoc {
@@ -13,7 +13,7 @@ public class GUIElementDoc
 
     private transient IGUIElementStyleDeclaration styleClass;
 
-    public GUIElementDoc(IJavaElementDoc _orig) {
+    public GUIElementDoc(IElementDoc _orig) {
         super(_orig);
     }
 

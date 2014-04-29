@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.model;
 
 public interface IDocVisitor {
 
-    void visit(JavaElementDoc elementDoc);
+    void visit(MutableElementDoc elementDoc);
 
     void visit(ClassDoc classDoc);
 

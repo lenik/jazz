@@ -8,7 +8,7 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
-import net.bodz.mda.xjdoc.model.JavaElementDoc;
+import net.bodz.mda.xjdoc.model.MutableElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.tagtype.DefaultTagType;
@@ -106,7 +106,7 @@ public class ClassDocBuilder {
         return classDoc;
     }
 
-    void populate(JavaElementDoc elementDoc, AbstractJavaEntity javaEntity, IOptions options) {
+    void populate(MutableElementDoc elementDoc, AbstractJavaEntity javaEntity, IOptions options) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
             iString text = iString.fn.parseParaLangString(comment);

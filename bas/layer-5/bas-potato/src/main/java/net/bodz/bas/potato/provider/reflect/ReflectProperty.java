@@ -8,7 +8,7 @@ import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class ReflectProperty
         extends AbstractProperty {
@@ -20,7 +20,7 @@ public class ReflectProperty
 
     private PropertyChangeSourceMode propertyChangeSourceMode;
 
-    public ReflectProperty(Field field, IJavaElementDoc xjdoc) {
+    public ReflectProperty(Field field, IElementDoc xjdoc) {
         super(field.getDeclaringClass(), field.getName());
         this.field = field;
 

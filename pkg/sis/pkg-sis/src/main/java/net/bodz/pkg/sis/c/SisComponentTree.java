@@ -24,7 +24,7 @@ import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.tree.IQuadState;
 import net.bodz.bas.t.tree.QuadStateTreeItems;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 import net.bodz.pkg.sis.ISisComponent;
 import net.bodz.swt.gui.style.SwtImageMapper;
@@ -80,7 +80,7 @@ public class SisComponentTree
             item.setText(text.toString());
 
         if (component instanceof IXjdocElement) {
-            IJavaElementDoc xjdoc = ((IXjdocElement) component).getXjdoc();
+            IElementDoc xjdoc = ((IXjdocElement) component).getXjdoc();
             GUIElementDoc guidoc = xjdoc.to(GUIElementDoc.class);
             IGUIElementStyleDeclaration styleClass = guidoc.getStyleClass();
 

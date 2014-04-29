@@ -20,7 +20,7 @@ import net.bodz.bas.t.order.IMutablePriority;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
 public abstract class AbstractOption
@@ -48,11 +48,11 @@ public abstract class AbstractOption
 
     Object defaultValue;
 
-    public AbstractOption(String id, IJavaElementDoc xjdoc, Type _type) {
+    public AbstractOption(String id, IElementDoc xjdoc, Type _type) {
         this(id, id, xjdoc, _type);
     }
 
-    public AbstractOption(String id, String longName, IJavaElementDoc xjdoc, Type _type) {
+    public AbstractOption(String id, String longName, IElementDoc xjdoc, Type _type) {
         this.id = id;
         this.longName = Strings.hyphenatize(longName);
 

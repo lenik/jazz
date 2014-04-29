@@ -6,7 +6,7 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class JavaPackageDoc
-        extends JavaElementDoc {
+        extends MutableElementDoc {
 
     public JavaPackageDoc() {
         super();

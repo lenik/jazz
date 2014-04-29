@@ -1,13 +1,13 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
 import net.bodz.bas.meta.decl.Internal;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public interface IXjdocAware {
 
     @Internal
-    IJavaElementDoc getXjdoc();
+    IElementDoc getXjdoc();
 
-    void setXjdoc(IJavaElementDoc xjdoc);
+    void setXjdoc(IElementDoc xjdoc);
 
 }

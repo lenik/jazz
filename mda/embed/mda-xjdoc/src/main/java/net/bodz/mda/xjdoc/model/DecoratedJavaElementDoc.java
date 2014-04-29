@@ -6,12 +6,12 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedJavaElementDoc
-        extends AbstractDecorator<IJavaElementDoc>
-        implements IJavaElementDoc {
+        extends AbstractDecorator<IElementDoc>
+        implements IElementDoc {
 
     private static final long serialVersionUID = 1L;
 
-    public DecoratedJavaElementDoc(IJavaElementDoc _orig) {
+    public DecoratedJavaElementDoc(IElementDoc _orig) {
         super(_orig);
     }
 

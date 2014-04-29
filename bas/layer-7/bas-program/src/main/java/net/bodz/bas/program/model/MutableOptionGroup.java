@@ -9,7 +9,7 @@ import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.t.preorder.PrefixMap;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class MutableOptionGroup
         extends AbstractOptionGroup
@@ -32,7 +32,7 @@ public class MutableOptionGroup
     }
 
     @Override
-    protected IJavaElementDoc loadXjdoc() {
+    protected IElementDoc loadXjdoc() {
         ClassDoc classDoc = ClassDocLoader.load(declaringClass);
         return classDoc;
     }

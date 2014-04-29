@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 import net.bodz.bas.potato.element.AbstractMethod;
 import net.bodz.bas.potato.element.IParameter;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class ReflectMethod
         extends AbstractMethod {
@@ -20,7 +20,7 @@ public class ReflectMethod
      * @throws NullPointerException
      *             If <code>method</code> is <code>null</code>.
      */
-    public ReflectMethod(Method method, IJavaElementDoc xjdoc) {
+    public ReflectMethod(Method method, IElementDoc xjdoc) {
         super(method.getDeclaringClass(), method.getName());
         this.method = method;
         this.parameterCount = method.getParameterTypes().length;

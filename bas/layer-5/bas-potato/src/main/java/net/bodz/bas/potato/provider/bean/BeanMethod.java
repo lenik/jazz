@@ -4,14 +4,14 @@ import java.beans.MethodDescriptor;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.provider.reflect.ReflectMethod;
-import net.bodz.mda.xjdoc.model.IJavaElementDoc;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class BeanMethod
         extends ReflectMethod {
 
     private final MethodDescriptor methodDescriptor;
 
-    public BeanMethod(MethodDescriptor methodDescriptor, IJavaElementDoc xjdoc) {
+    public BeanMethod(MethodDescriptor methodDescriptor, IElementDoc xjdoc) {
         super(methodDescriptor.getMethod(), xjdoc);
         this.methodDescriptor = methodDescriptor;
     }
