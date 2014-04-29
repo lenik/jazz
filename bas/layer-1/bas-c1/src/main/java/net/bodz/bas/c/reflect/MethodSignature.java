@@ -6,9 +6,11 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.c.type.TypeMath;
+import net.bodz.bas.c.type.TypeSpace;
 
 public class MethodSignature {
+
+    static TypeSpace typeSpace = TypeSpace.getDefault();
 
     protected final String name;
     protected final Class<?>[] parameterTypes;
@@ -174,7 +176,7 @@ public class MethodSignature {
         Method finest = null;
         for (Method m : methods) {
             Class<?>[] o = m.getParameterTypes();
-            int dist = TypeMath.dist(parameterTypes, o);
+            int dist = typeSpace.dist(parameterTypes, o);
             if (dist != -1) {
                 if (mindist == -1 || dist < mindist) {
                     mindist = dist;
@@ -190,7 +192,7 @@ public class MethodSignature {
         Constructor<?> finest = null;
         for (Constructor<?> ctor : constructors) {
             Class<?>[] o = ctor.getParameterTypes();
-            int dist = TypeMath.dist(parameterTypes, o);
+            int dist = typeSpace.dist(parameterTypes, o);
             if (dist != -1) {
                 if (mindist == -1 || dist < mindist) {
                     mindist = dist;

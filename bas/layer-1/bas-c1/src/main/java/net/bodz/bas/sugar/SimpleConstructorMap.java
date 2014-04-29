@@ -4,8 +4,8 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
-import net.bodz.bas.c.type.TypeMath;
 import net.bodz.bas.c.type.TypeMapRegistry;
+import net.bodz.bas.c.type.TypeSpace;
 import net.bodz.bas.err.LazyLoadException;
 
 public class SimpleConstructorMap
@@ -23,6 +23,8 @@ public class SimpleConstructorMap
         this.type = type;
     }
 
+    static TypeSpace typeSpace = TypeSpace.getDefault();
+
     static class EntryLoader
             implements IMapEntryLoader<Class<?>, Constructor<?>> {
 
@@ -38,8 +40,8 @@ public class SimpleConstructorMap
         public Constructor<?> loadValue(Class<?> actualType)
                 throws LazyLoadException {
 
-            Constructor<?> minctor = null;
-            int mindist = Integer.MAX_VALUE;
+            Constructor<?> minCtor = null;
+            int minDist = Integer.MAX_VALUE;
 
             for (Constructor<?> ctor : type.getConstructors()) {
                 Class<?>[] parameterTypes = ctor.getParameterTypes();
@@ -50,16 +52,16 @@ public class SimpleConstructorMap
                 if (declType == actualType)
                     return ctor;
 
-                int dist = TypeMath.dist(declType, actualType);
+                int dist = typeSpace.dist(declType, actualType);
                 if (dist == -1)
                     continue;
 
-                if (dist < mindist) {
-                    mindist = dist;
-                    minctor = ctor;
+                if (dist < minDist) {
+                    minDist = dist;
+                    minCtor = ctor;
                 }
             }
-            return minctor;
+            return minCtor;
         }
 
     } // EntryLoader
