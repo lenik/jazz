@@ -39,12 +39,11 @@ public abstract class AbstractPropertyRefEntries<entry_t extends IRefEntry<?>>
         return names;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T> IRefEntry<T> get(String propertyName) {
         IProperty property = type.getProperty(propertyName);
-        PropertyRefEntry entry = new PropertyRefEntry(instance, property);
-        return (IRefEntry<T>) entry;
+        PropertyRefEntry<T> entry = new PropertyRefEntry<T>(instance, property);
+        return entry;
     }
 
 }

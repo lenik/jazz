@@ -8,7 +8,7 @@ import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.proxy.java.util.DecoratedMap;
 
-public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry>
+public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>>
         extends DecoratedMap<String, entry_t>
         implements IRefEntries {
 
