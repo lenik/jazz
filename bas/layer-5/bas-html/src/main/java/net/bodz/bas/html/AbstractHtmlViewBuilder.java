@@ -3,10 +3,11 @@ package net.bodz.bas.html;
 import java.io.IOException;
 
 import net.bodz.bas.gui.css3.Border;
+import net.bodz.bas.gui.dom1.GUIValueEntry;
+import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.potato.ref.IRefEntry;
-import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -51,9 +52,10 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object _ctx, IRefEntry<T> entry, IOptions options)
+    public final Object buildView(Object _ctx, IRefEntry<T> _entry, IOptions options)
             throws ViewBuilderException {
         IHttpReprContext ctx = (IHttpReprContext) _ctx;
+        IGUIRefEntry<T> entry = (IGUIRefEntry<T>) _entry;
         try {
             IHttpReprContext innerCtx = buildHtmlView(ctx, entry, options);
             buildHtmlViewTail(ctx, entry, options);
@@ -64,19 +66,19 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<T> entry)
+    public final IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<T> entry)
             throws ViewBuilderException, IOException {
         return buildHtmlView(ctx, entry, IOptions.NULL);
     }
 
     @Override
-    public final void buildHtmlViewTail(IHttpReprContext ctx, IRefEntry<T> entry)
+    public final void buildHtmlViewTail(IHttpReprContext ctx, IGUIRefEntry<T> entry)
             throws ViewBuilderException, IOException {
         buildHtmlViewTail(ctx, entry, IOptions.NULL);
     }
 
     @Override
-    public void buildHtmlViewTail(IHttpReprContext ctx, IRefEntry<T> entry, IOptions options)
+    public void buildHtmlViewTail(IHttpReprContext ctx, IGUIRefEntry<T> entry, IOptions options)
             throws ViewBuilderException, IOException {
         // Do nothing in default implementation.
     }
@@ -85,11 +87,11 @@ public abstract class AbstractHtmlViewBuilder<T>
 
     protected <_t> void embed(IHttpReprContext ctx, Object obj, String... features)
             throws ViewBuilderException, IOException {
-        ValueEntry<Object> entry = ValueEntry.wrap(obj);
+        GUIValueEntry<Object> entry = GUIValueEntry.wrap(obj);
         embed(ctx, entry, features);
     }
 
-    protected <_t> void embed(IHttpReprContext ctx, ValueEntry<_t> entry, String... features)
+    protected <_t> void embed(IHttpReprContext ctx, IGUIRefEntry<_t> entry, String... features)
             throws ViewBuilderException, IOException {
         Class<? extends _t> type = entry.getValueType();
 

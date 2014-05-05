@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.gui.dom1.GUIValueEntry;
 import net.bodz.bas.html.IHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilderFactory;
 import net.bodz.bas.html.IHttpReprContext;
@@ -19,7 +20,6 @@ import net.bodz.bas.html.RootHtmlOutputContext;
 import net.bodz.bas.html.vbo.PathFramesVbo;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
@@ -102,7 +102,7 @@ public class PathDispatchServlet
 
         IHttpReprContext ctx = new RootHtmlOutputContext(req, resp);
         try {
-            pathArrivalVbo.buildHtmlView(ctx, ValueEntry.wrap(arrival));
+            pathArrivalVbo.buildHtmlView(ctx, GUIValueEntry.wrap(arrival));
         } catch (ViewBuilderException e) {
             throw new ServletException("Build html view: " + e.getMessage(), e);
         }

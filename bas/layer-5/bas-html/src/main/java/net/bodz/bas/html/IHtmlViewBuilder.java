@@ -2,8 +2,8 @@ package net.bodz.bas.html;
 
 import java.io.IOException;
 
+import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -36,16 +36,16 @@ public interface IHtmlViewBuilder<T>
 
     void buildTitle(StringBuilder buffer, T value);
 
-    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<T> entry)
+    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<T> entry)
             throws ViewBuilderException, IOException;
 
-    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<T> entry, IOptions options)
+    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<T> entry, IOptions options)
             throws ViewBuilderException, IOException;
 
-    void buildHtmlViewTail(IHttpReprContext ctx, IRefEntry<T> entry)
+    void buildHtmlViewTail(IHttpReprContext ctx, IGUIRefEntry<T> entry)
             throws ViewBuilderException, IOException;
 
-    void buildHtmlViewTail(IHttpReprContext ctx, IRefEntry<T> entry, IOptions options)
+    void buildHtmlViewTail(IHttpReprContext ctx, IGUIRefEntry<T> entry, IOptions options)
             throws ViewBuilderException, IOException;
 
 }
