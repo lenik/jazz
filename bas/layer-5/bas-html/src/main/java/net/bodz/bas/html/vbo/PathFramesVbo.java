@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilderFactory;
@@ -42,7 +41,7 @@ public class PathFramesVbo
             String[] features = {};
             IHtmlViewBuilder<Object> htmlVbo = viewBuilderFactory.getViewBuilder(targetClass, features);
             if (htmlVbo == null)
-                throw new UnexpectedException("Can't build view for " + targetClass);
+                throw new ViewBuilderException("Can't build view for " + targetClass);
 
             if (frames.isEmpty() || htmlVbo.isFrame()) {
                 Frame frame = new Frame(a);
