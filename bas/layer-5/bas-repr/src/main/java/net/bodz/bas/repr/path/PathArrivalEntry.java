@@ -1,9 +1,9 @@
 package net.bodz.bas.repr.path;
 
-import net.bodz.bas.potato.ref.ValueEntry;
+import net.bodz.bas.gui.dom1.GUIValueEntry;
 
 public class PathArrivalEntry<T>
-        extends ValueEntry<T> {
+        extends GUIValueEntry<T> {
 
     private static final long serialVersionUID = 1L;
 

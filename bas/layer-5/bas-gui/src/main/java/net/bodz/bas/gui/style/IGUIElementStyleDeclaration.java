@@ -40,4 +40,6 @@ public interface IGUIElementStyleDeclaration
      */
     String getGroup();
 
+    IGUIElementStyleDeclaration NULL = new NullGUIElementStyleDeclaration();
+
 }

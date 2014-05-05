@@ -2,10 +2,10 @@ package net.bodz.bas.html.vbo;
 
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
+import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHttpReprContext;
 import net.bodz.bas.io.html.IHtmlOut;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.req.IMethodOfRequest;
@@ -20,7 +20,7 @@ public class ObjectDumpVbo
     }
 
     @Override
-    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<Object> entry, IOptions options)
+    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<Object> entry, IOptions options)
             throws ViewBuilderException {
         HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 

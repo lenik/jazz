@@ -7,10 +7,10 @@ import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHttpReprContext;
 import net.bodz.bas.potato.invoke.IInvocation;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -37,7 +37,7 @@ public class InvocationVbo
     }
 
     @Override
-    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<IInvocation> entry, IOptions options)
+    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<IInvocation> entry, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         PrintWriter out = resp.getWriter();

@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHttpReprContext;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.io.res.tools.StreamReading;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
@@ -43,7 +43,7 @@ public class URLResourceVbo
     }
 
     @Override
-    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IRefEntry<URLResource> entry, IOptions options)
+    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<URLResource> entry, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse response = ctx.getResponse();
 
