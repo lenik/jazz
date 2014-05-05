@@ -22,9 +22,9 @@ public class FileAccessorServlet
     public static final String ATTRIBUTE_PATH = "path";
 
     /**
-     * The target path.
+     * The target path, without traling slash.
      */
-    private String path;
+    private String startPath;
 
     /**
      * 1 day by default.
@@ -35,17 +35,17 @@ public class FileAccessorServlet
     public void init()
             throws ServletException {
         ServletConfig config = getServletConfig();
-        path = config.getInitParameter(ATTRIBUTE_PATH);
-        if (path == null)
+        startPath = config.getInitParameter(ATTRIBUTE_PATH);
+        if (startPath == null)
             throw new NullPointerException(ATTRIBUTE_PATH);
-        path = FilePath.removeTrailingSlashes(path);
+        startPath = FilePath.removeTrailingSlashes(startPath);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
-        String path = this.path;
+        String path = this.startPath;
         if (pathInfo != null)
             path += pathInfo;
 
@@ -78,24 +78,13 @@ public class FileAccessorServlet
         ContentRange contentRange = null;
         String contentRangeHeader = req.getHeader("Content-Range");
         if (contentRangeHeader != null) {
-            contentRange = new ContentRange();
-            String error = contentRange.parse(contentRangeHeader);
-            if (error != null) {
-                resp.setHeader("Content-Range", "*/" + length);
-                resp.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, //
-                        error + ": " + contentRangeHeader);
+            contentRange = ContentRange.parseAndSet(length, contentRangeHeader, resp);
+            if (contentRange == null)
                 return;
-            } else if (contentRange.end >= length) {
-                resp.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, //
-                        "out of length");
-                return;
-            } else {
-                resp.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-            }
         }
 
         long start = 0;
-        long end = file.length();
+        long end = length;
         if (contentRange != null)
             end = contentRange.end;
         long remaining = end - start;

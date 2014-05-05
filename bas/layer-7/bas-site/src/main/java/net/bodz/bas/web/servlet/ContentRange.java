@@ -1,6 +1,9 @@
 package net.bodz.bas.web.servlet;
 
+import java.io.IOException;
 import java.io.Serializable;
+
+import javax.servlet.http.HttpServletResponse;
 
 public class ContentRange
         implements Serializable {
@@ -68,6 +71,25 @@ public class ContentRange
             return null;
         } catch (NumberFormatException e) {
             return "illegal number format.";
+        }
+    }
+
+    public static ContentRange parseAndSet(long length, String contentRangeHeader, HttpServletResponse resp)
+            throws IOException {
+        ContentRange contentRange = new ContentRange();
+        String error = contentRange.parse(contentRangeHeader);
+        if (error != null) {
+            resp.setHeader("Content-Range", "*/" + length);
+            resp.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, //
+                    error + ": " + contentRangeHeader);
+            return null;
+        } else if (contentRange.end >= length) {
+            resp.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, //
+                    "out of length");
+            return null;
+        } else {
+            resp.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+            return contentRange;
         }
     }
 
