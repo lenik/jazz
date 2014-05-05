@@ -6,6 +6,7 @@ import net.bodz.bas.gui.css3.Border;
 import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -78,6 +79,25 @@ public abstract class AbstractHtmlViewBuilder<T>
     public void buildHtmlViewTail(IHttpReprContext ctx, IRefEntry<T> entry, IOptions options)
             throws ViewBuilderException, IOException {
         // Do nothing in default implementation.
+    }
+
+    static IndexedHtmlViewBuilderFactory factory = IndexedHtmlViewBuilderFactory.getInstance();
+
+    protected <_t> void embed(IHttpReprContext ctx, Object obj, String... features)
+            throws ViewBuilderException, IOException {
+        ValueEntry<Object> entry = ValueEntry.wrap(obj);
+        embed(ctx, entry, features);
+    }
+
+    protected <_t> void embed(IHttpReprContext ctx, ValueEntry<_t> entry, String... features)
+            throws ViewBuilderException, IOException {
+        Class<? extends _t> type = entry.getValueType();
+
+        IHtmlViewBuilder<_t> viewBuilder = factory.getViewBuilder(type, features);
+        if (viewBuilder == null)
+            throw new ViewBuilderException("Can't build view for " + type);
+
+        viewBuilder.buildHtmlView(ctx, entry);
     }
 
     protected void makeOutmostTag(IHttpReprContext ctx, String tagName, IGUIElementStyleDeclaration style) {
