@@ -3,7 +3,7 @@ package net.bodz.bas.potato.ref;
 import net.bodz.bas.potato.element.IProperty;
 
 public class PropertyGUIRefMap
-        extends AbstractPropertyRefMap<PropertyGUIRefEntry>
+        extends AbstractPropertyRefMap<PropertyGUIRefEntry<?>>
         implements IGUIRefEntries {
 
     private static final long serialVersionUID = 1L;
@@ -13,13 +13,13 @@ public class PropertyGUIRefMap
     }
 
     @Override
-    public PropertyGUIRefEntry get(String name) {
-        return (PropertyGUIRefEntry) super.get(name);
+    public <T> PropertyGUIRefEntry<T> get(String name) {
+        return (PropertyGUIRefEntry<T>) super.get(name);
     }
 
     @Override
-    protected PropertyGUIRefEntry createPropertyEntry(Object instance, IProperty property) {
-        PropertyGUIRefEntry entry = new PropertyGUIRefEntry(instance, property);
+    protected PropertyGUIRefEntry<?> createPropertyEntry(Object instance, IProperty property) {
+        PropertyGUIRefEntry<Object> entry = new PropertyGUIRefEntry<Object>(instance, property);
         return entry;
     }
 

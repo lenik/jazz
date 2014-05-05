@@ -11,13 +11,13 @@ import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
-public class PropertyGUIRefEntry
-        extends PropertyRefEntry
-        implements IGUIRefEntry<Object>, IAnnotated {
+public class PropertyGUIRefEntry<T>
+        extends PropertyRefEntry<T>
+        implements IGUIRefEntry<T>, IAnnotated {
 
     private static final long serialVersionUID = 1L;
 
-    public PropertyGUIRefEntry(Object instance, IProperty property) {
+    public PropertyGUIRefEntry(T instance, IProperty property) {
         super(instance, property);
     }
 
