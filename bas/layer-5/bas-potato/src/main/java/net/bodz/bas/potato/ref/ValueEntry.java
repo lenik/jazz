@@ -5,6 +5,7 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.potato.PotatoTypes;
+import net.bodz.bas.t.tree.IPathInfo;
 
 public class ValueEntry<T>
         extends AbstractRefEntry<T> {
@@ -45,6 +46,16 @@ public class ValueEntry<T>
     @Override
     public void set(T value) {
         throw new ReadOnlyException("value entry is read-only.");
+    }
+
+    @Override
+    public IPathInfo getParent() {
+        return null;
+    }
+
+    @Override
+    public String getLocalPath() {
+        return null;
     }
 
     public static <T> ValueEntry<T> wrap(T obj) {

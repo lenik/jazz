@@ -1,7 +1,11 @@
 package net.bodz.bas.gui.dom1;
 
-import net.bodz.bas.potato.ref.IRefEntry;
+import java.lang.annotation.Annotation;
+
+import net.bodz.bas.potato.element.IAnnotated;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
+import net.bodz.bas.t.tree.IPathInfo;
 
 public abstract class DecoratedGUIRefEntry<T>
         extends DecoratedGUIElement
@@ -42,8 +46,21 @@ public abstract class DecoratedGUIRefEntry<T>
         getWrapped().remove();
     }
 
-    /** ⇱ Implementation Of {@link IRefEntry}. */
-    /* _____________________________ */static section.iface __REFENTRY__;
+    /** ⇱ Implementation Of {@link IPathInfo}. */
+    /* _____________________________ */static section.iface __PATH_INFO__;
+
+    @Override
+    public IPathInfo getParent() {
+        return getWrapped().getParent();
+    }
+
+    @Override
+    public String getLocalPath() {
+        return getWrapped().getLocalPath();
+    }
+
+    /** ⇱ Implementation Of {@link IQueryable}. */
+    /* _____________________________ */static section.iface __QUERYABLE__;
 
     @Override
     public Object query(Object specification)
@@ -61,6 +78,29 @@ public abstract class DecoratedGUIRefEntry<T>
     public <spec_t> spec_t query(Class<spec_t> specificationType)
             throws QueryException {
         return getWrapped().query(specificationType);
+    }
+
+    /** ⇱ Implementation Of {@link IAnnotated}. */
+    /* _____________________________ */static section.iface __ANNOTATED__;
+
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return getWrapped().isAnnotationPresent(annotationClass);
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        return getWrapped().getAnnotation(annotationClass);
+    }
+
+    @Override
+    public Annotation[] getAnnotations() {
+        return getWrapped().getAnnotations();
+    }
+
+    @Override
+    public Annotation[] getDeclaredAnnotations() {
+        return getWrapped().getDeclaredAnnotations();
     }
 
 }

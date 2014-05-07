@@ -2,7 +2,9 @@ package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
+import net.bodz.bas.t.tree.IPathInfo;
 
 public class PropertyRefEntry<T>
         extends AbstractRefEntry<T>
@@ -10,12 +12,12 @@ public class PropertyRefEntry<T>
 
     private static final long serialVersionUID = 1L;
 
-    private Object instance;
+    private IRefEntry<?> instanceRef;
     private IProperty property;
 
-    public PropertyRefEntry(Object instance, IProperty property) {
+    public PropertyRefEntry(IRefEntry<?> instanceRef, IProperty property) {
         super(property, property);
-        this.instance = instance;
+        this.instanceRef = instanceRef;
         this.property = property;
     }
 
@@ -35,6 +37,7 @@ public class PropertyRefEntry<T>
 
     @Override
     public T get() {
+        Object instance = instanceRef.get();
         try {
             T value = (T) property.getValue(instance);
             return value;
@@ -45,12 +48,29 @@ public class PropertyRefEntry<T>
 
     @Override
     public void set(T value) {
+        Object instance = instanceRef.get();
         try {
             property.setValue(instance, value);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+
+    /** ⇱ Implementation Of {@link IPathInfo}. */
+    /* _____________________________ */static section.iface __PATH_INFO__;
+
+    @Override
+    public IPathInfo getParent() {
+        return instanceRef;
+    }
+
+    @Override
+    public String getLocalPath() {
+        return getName();
+    }
+
+    /** ⇱ Implementation Of {@link IQueryable}. */
+    /* _____________________________ */static section.iface __QUERYABLE__;
 
     @Override
     public <spec_t> spec_t query(Class<spec_t> specificationType)
@@ -67,7 +87,7 @@ public class PropertyRefEntry<T>
     @Override
     public void addValueChangeListener(IValueChangeListener listener) {
         ValueOfPropertyChangeListener _listener = new ValueOfPropertyChangeListener(listener);
-        property.addPropertyChangeListener(instance, property.getName(), _listener);
+        property.addPropertyChangeListener(instanceRef.get(), property.getName(), _listener);
     }
 
     @Override

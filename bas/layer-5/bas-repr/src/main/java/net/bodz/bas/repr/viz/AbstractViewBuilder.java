@@ -1,5 +1,6 @@
 package net.bodz.bas.repr.viz;
 
+import net.bodz.bas.gui.dom1.GUIValueEntry;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.IRefEntry;
@@ -47,7 +48,13 @@ public abstract class AbstractViewBuilder<T>
     }
 
     protected static PropertyGUIRefMap explode(Object obj) {
-        return new PropertyGUIRefMap(obj.getClass(), obj, null);
+        return explode(GUIValueEntry.wrap(obj));
+    }
+
+    protected static PropertyGUIRefMap explode(IRefEntry<?> objRef) {
+        PropertyGUIRefMap refMap = new PropertyGUIRefMap(objRef, false);
+        refMap.importProperties();
+        return refMap;
     }
 
 }

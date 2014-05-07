@@ -7,13 +7,13 @@ public class PropertyRefMap
 
     private static final long serialVersionUID = 1L;
 
-    public PropertyRefMap(Class<?> clazz, Object instance, Boolean order) {
-        super(clazz, instance, order);
+    public PropertyRefMap(IRefEntry<?> objRef, Boolean order) {
+        super(objRef, order);
     }
 
     @Override
-    protected PropertyRefEntry<?> createPropertyEntry(Object instance, IProperty property) {
-        return new PropertyRefEntry<Object>(instance, property);
+    protected PropertyRefEntry<?> createPropertyEntry(IRefEntry<?> instanceRef, IProperty property) {
+        return new PropertyRefEntry<Object>(instanceRef, property);
     }
 
 }
