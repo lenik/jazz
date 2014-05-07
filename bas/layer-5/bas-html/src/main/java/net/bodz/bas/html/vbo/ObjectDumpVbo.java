@@ -1,5 +1,7 @@
 package net.bodz.bas.html.vbo;
 
+import java.io.IOException;
+
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
@@ -21,7 +23,7 @@ public class ObjectDumpVbo
 
     @Override
     public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<Object> ref, IOptions options)
-            throws ViewBuilderException {
+            throws ViewBuilderException, IOException {
         HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 
         IMethodOfRequest qmethod = req.getAttribute(IMethodOfRequest.class);
