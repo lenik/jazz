@@ -17,9 +17,11 @@ public class FieldDoc
         this.classDoc = classDoc;
     }
 
+    static iString NO_LABEL = null; // iString.fn.val("no label");
+
     public static FieldDoc n_a(ClassDoc classDoc, String name) {
         FieldDoc fieldDoc = new FieldDoc(classDoc, name);
-        fieldDoc.setLabel(iString.fn.val("no label"));
+        fieldDoc.setLabel(NO_LABEL);
         // fieldDoc.setDescription(iString.fn.val(name));
         fieldDoc.setText(iString.fn.val(name));
         return fieldDoc;

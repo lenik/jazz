@@ -23,9 +23,11 @@ public class MethodDoc
         this.methodId = methodId;
     }
 
+    static iString NO_LABEL = null; // iString.fn.val("no label");
+
     public static MethodDoc n_a(ClassDoc classDoc, MethodId methodId) {
         MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
-        methodDoc.setLabel(iString.fn.val("no label"));
+        methodDoc.setLabel(NO_LABEL);
         methodDoc.setText(iString.fn.val(methodId));
         return methodDoc;
     }
