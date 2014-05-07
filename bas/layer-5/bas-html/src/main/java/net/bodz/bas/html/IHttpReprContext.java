@@ -1,5 +1,7 @@
 package net.bodz.bas.html;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,10 +25,13 @@ public interface IHttpReprContext
     @Shortcut("getRequest().getSession()")
     HttpSession getSession();
 
-    IByteOut getByteOut();
+    IByteOut getByteOut()
+            throws IOException;
 
-    IHtmlOut getOut();
+    IHtmlOut getOut()
+            throws IOException;
 
-    void flush();
+    void flush()
+            throws IOException;
 
 }

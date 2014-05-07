@@ -1,5 +1,7 @@
 package net.bodz.bas.html;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,7 +50,8 @@ public abstract class AbstractHtmlOutputContext
     }
 
     @Override
-    public IByteOut getByteOut() {
+    public IByteOut getByteOut()
+            throws IOException {
         IHttpReprContext parent = getParent();
         if (parent == null)
             return IByteOut.NULL;
@@ -57,7 +60,8 @@ public abstract class AbstractHtmlOutputContext
     }
 
     @Override
-    public IHtmlOut getOut() {
+    public IHtmlOut getOut()
+            throws IOException {
         IHttpReprContext parent = getParent();
         if (parent == null)
             return IHtmlOut.NULL;
@@ -66,7 +70,8 @@ public abstract class AbstractHtmlOutputContext
     }
 
     @Override
-    public void flush() {
+    public void flush()
+            throws IOException {
         IHttpReprContext parent = getParent();
         if (parent != null)
             parent.flush();

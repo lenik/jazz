@@ -25,42 +25,52 @@ public class RootHtmlOutputContext
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
-    private boolean charBased;
+    private boolean outputCreated;
     private OutputStream outputStream;
     private IByteOut byteOut;
     private IHtmlOut htmlOut;
 
     /**
      * TODO xxxxxxxxxxxxxxxx ctx.pushBegin ... ctx. return new SubHtmlOutCtx(ctx)
-     *
+     * 
      * @see #flush()
      */
-    public RootHtmlOutputContext(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    public RootHtmlOutputContext(HttpServletRequest request, HttpServletResponse response) {
         if (request == null)
             throw new NullPointerException("request");
         if (response == null)
             throw new NullPointerException("response");
         this.request = request;
         this.response = response;
+    }
+
+    void createOutput()
+            throws IOException {
+        if (outputCreated)
+            return;
 
         String encoding = response.getCharacterEncoding();
         if (encoding == null)
             encoding = "utf-8";
 
         String contentType = response.getContentType();
-        charBased = contentType.startsWith("text/");
+        boolean charBased = contentType.startsWith("text/");
+
         if (charBased) {
             PrintWriter writer = response.getWriter();
             IPrintOut printOut = new WriterPrintOut(writer);
             htmlOut = HtmlOutImpl.from(printOut);
-            byteOut = new DecodedByteOut(printOut, encoding);
+            DecodedByteOut decodedByteOut = new DecodedByteOut(printOut, encoding);
+            byteOut = decodedByteOut;
+            outputStream = decodedByteOut;
         } else {
             outputStream = response.getOutputStream();
             byteOut = new OutputStreamByteOut(outputStream);
             ICharOut charOut = new EncodedCharOut(byteOut, encoding);
             htmlOut = HtmlOutImpl.from(charOut);
         }
+
+        outputCreated = true;
     }
 
     @Override
@@ -91,23 +101,31 @@ public class RootHtmlOutputContext
             return request.getSession();
     }
 
-    public OutputStream getOutputStream() {
+    public OutputStream getOutputStream()
+            throws IOException {
+        createOutput();
         return outputStream;
     }
 
     @Override
-    public IByteOut getByteOut() {
+    public IByteOut getByteOut()
+            throws IOException {
+        createOutput();
         return byteOut;
     }
 
     @Override
-    public IHtmlOut getOut() {
+    public IHtmlOut getOut()
+            throws IOException {
+        createOutput();
         return htmlOut;
     }
 
     @Override
-    public void flush() {
-        htmlOut.endAll();
+    public void flush()
+            throws IOException {
+        if (htmlOut != null)
+            htmlOut.endAll();
     }
 
 }

@@ -3,6 +3,7 @@ package net.bodz.bas.html;
 import java.io.IOException;
 
 import net.bodz.bas.io.html.IHtmlOut;
+import net.bodz.bas.io.xml.IXmlTagBuilder;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -100,9 +101,10 @@ public abstract class AbstractHtmlViewBuilder<T>
         viewBuilder.buildHtmlView(ctx, ref);
     }
 
-    protected void makeOutmostTag(IHttpReprContext ctx, String tagName, IUiElementStyleDeclaration style) {
+    protected IXmlTagBuilder createTag(IHttpReprContext ctx, String tagName, IUiElementStyleDeclaration style)
+            throws IOException {
         IHtmlOut out = ctx.getOut();
-        out.startTagBegin(tagName);
+        IXmlTagBuilder tag = out.start(tagName);
 
         Border border = style.getBorder();
         if (border != null) {
@@ -115,7 +117,7 @@ public abstract class AbstractHtmlViewBuilder<T>
             style.getBorderLeft();
         }
 
-        out.startTagEnd(false);
+        return tag;
     }
 
     protected static boolean enter(IHttpReprContext ctx)
