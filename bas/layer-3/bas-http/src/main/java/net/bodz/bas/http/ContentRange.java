@@ -1,4 +1,4 @@
-package net.bodz.bas.web.servlet;
+package net.bodz.bas.http;
 
 import java.io.IOException;
 import java.io.Serializable;
