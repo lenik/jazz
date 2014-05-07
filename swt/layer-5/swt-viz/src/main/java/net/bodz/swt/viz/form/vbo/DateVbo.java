@@ -13,16 +13,16 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
-import net.bodz.bas.gui.css3.Border;
-import net.bodz.bas.gui.css3.ICss3Length;
 import net.bodz.bas.potato.ref.IValueChangeListener;
 import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.ui.css3.Border;
+import net.bodz.bas.ui.css3.ICss3Length;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.ISwtGUIRefEntry;
+import net.bodz.swt.viz.ISwtUiRef;
 
 public class DateVbo
         extends AbstractSwtViewBuilder<Date> {
@@ -36,21 +36,21 @@ public class DateVbo
     }
 
     @Override
-    public Widget buildSwtView(Composite parent, final ISwtGUIRefEntry<Date> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(Composite parent, final ISwtUiRef<Date> ref, int styleInt, IOptions options)
             throws ViewBuilderException {
-        ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        ISwtControlStyleDeclaration styleDecl = ref.getStyle();
 
         boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
-        Date date = entry.get();
+        Date date = ref.get();
 
         if (readOnly) {
             final Label dateLabel = new Label(parent, styleInt);
             dateLabel.setText(format(date));
-            if (entry.query(IValueChangeSource.class) != null)
-                bindProperty(entry, dateLabel, new IValueChangeListener() {
+            if (ref.query(IValueChangeSource.class) != null)
+                bindProperty(ref, dateLabel, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {
-                        Date date = entry.get();
+                        Date date = ref.get();
                         dateLabel.setText(format(date));
                         return true;
                     }
@@ -77,11 +77,11 @@ public class DateVbo
                 text.setTextLimit(maxLength);
 
             text.setText(format(date));
-            if (entry.query(IValueChangeSource.class) != null)
-                bindProperty(entry, text, new IValueChangeListener() {
+            if (ref.query(IValueChangeSource.class) != null)
+                bindProperty(ref, text, new IValueChangeListener() {
                     @Override
                     public boolean valueChange(ValueChangeEvent evt) {
-                        Date date = entry.get();
+                        Date date = ref.get();
                         text.setText(format(date));
                         return true;
                     }

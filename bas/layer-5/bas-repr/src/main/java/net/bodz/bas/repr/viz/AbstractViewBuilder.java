@@ -1,11 +1,12 @@
 package net.bodz.bas.repr.viz;
 
-import net.bodz.bas.gui.dom1.GUIValueEntry;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.IRefEntry;
-import net.bodz.bas.potato.ref.PropertyGUIRefMap;
+import net.bodz.bas.potato.ref.UiPropertyRefMap;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.bas.ui.dom1.UiValue;
 
 public abstract class AbstractViewBuilder<T>
         implements IViewBuilder<T> {
@@ -42,17 +43,17 @@ public abstract class AbstractViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object ctx, IRefEntry<T> entry)
+    public final Object buildView(Object ctx, IUiRef<T> ref)
             throws ViewBuilderException {
-        return buildView(ctx, entry, IOptions.NULL);
+        return buildView(ctx, ref, IOptions.NULL);
     }
 
-    protected static PropertyGUIRefMap explode(Object obj) {
-        return explode(GUIValueEntry.wrap(obj));
+    protected static UiPropertyRefMap explode(Object obj) {
+        return explode(UiValue.wrap(obj));
     }
 
-    protected static PropertyGUIRefMap explode(IRefEntry<?> objRef) {
-        PropertyGUIRefMap refMap = new PropertyGUIRefMap(objRef, false);
+    protected static UiPropertyRefMap explode(IRefEntry<?> objRef) {
+        UiPropertyRefMap refMap = new UiPropertyRefMap(objRef, false);
         refMap.importProperties();
         return refMap;
     }

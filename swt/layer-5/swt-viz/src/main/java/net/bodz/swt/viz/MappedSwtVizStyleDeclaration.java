@@ -1,10 +1,10 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.css3.ICss3StyleDeclaration;
-import net.bodz.bas.gui.style.MappedGUIElementStyleDeclaration;
+import net.bodz.bas.ui.css3.ICss3StyleDeclaration;
+import net.bodz.bas.ui.style.MappedUiElementStyleDeclaration;
 
 public abstract class MappedSwtVizStyleDeclaration
-        extends MappedGUIElementStyleDeclaration
+        extends MappedUiElementStyleDeclaration
         implements ISwtControlStyleDeclaration /* , IDisposable */{
 
     private static final long serialVersionUID = 1L;

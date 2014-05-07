@@ -24,22 +24,22 @@ import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fn.legacy.Func0;
-import net.bodz.bas.gui.dialog.AbstractUserDialogs;
-import net.bodz.bas.gui.dialog.IDirectiveCommand;
-import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
+import net.bodz.bas.ui.dialog.AbstractUserDialogs;
+import net.bodz.bas.ui.dialog.IDirectiveCommand;
+import net.bodz.bas.ui.dom1.UiValue;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.gui.model.ICommand;
-import net.bodz.swt.gui.model.ICommandGroup;
+import net.bodz.swt.ui.model.ICommand;
+import net.bodz.swt.ui.model.ICommandGroup;
 
 public class SwtUserDialogs
         extends AbstractUserDialogs {
@@ -199,7 +199,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), getOptions());
+                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), getOptions());
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -234,7 +234,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -270,7 +270,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -336,7 +336,7 @@ public class SwtUserDialogs
                     throws SWTException, CreateException {
                 IOptions options = getOptions();
                 try {
-                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -383,7 +383,7 @@ public class SwtUserDialogs
 
         public int render(Object value)
                 throws ViewBuilderException, SWTException {
-            Control control = (Control) viz.buildView(stack, ValueEntry.wrap(value), options);
+            Control control = (Control) viz.buildView(stack, UiValue.wrap(value), options);
             controls[next] = control;
             return next++;
         }
@@ -447,7 +447,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -473,7 +473,7 @@ public class SwtUserDialogs
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
-                        viewBuilderFactory.buildView(parent, ValueEntry.wrap(value), options);
+                        viewBuilderFactory.buildView(parent, UiValue.wrap(value), options);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -569,7 +569,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, ValueEntry.wrap(detail), options);
+                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -608,7 +608,7 @@ public class SwtUserDialogs
                     button.setSelection(selected);
                     keyButtons[index++] = new KeyButton(key, button);
                     try {
-                        viewBuilderFactory.buildView(parent, ValueEntry.wrap(value), options);
+                        viewBuilderFactory.buildView(parent, UiValue.wrap(value), options);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }

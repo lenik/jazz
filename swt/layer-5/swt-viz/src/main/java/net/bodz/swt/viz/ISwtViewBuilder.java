@@ -10,10 +10,10 @@ import net.bodz.bas.rtx.IOptions;
 public interface ISwtViewBuilder<T>
         extends IViewBuilder<T> {
 
-    Widget buildSwtView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt)
+    Widget buildSwtView(Composite parent, ISwtUiRef<T> ref, int styleInt)
             throws ViewBuilderException;
 
-    Widget buildSwtView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt, IOptions options)
+    Widget buildSwtView(Composite parent, ISwtUiRef<T> ref, int styleInt, IOptions options)
             throws ViewBuilderException;
 
 }

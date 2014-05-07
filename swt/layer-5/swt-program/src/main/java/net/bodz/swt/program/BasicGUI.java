@@ -32,12 +32,12 @@ import org.eclipse.swt.widgets.*;
 import net.bodz.bas.c.java.util.LocaleTypers;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.gui.dialog.IUserDialogs;
-import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.program.meta.StartMode;
 import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.bas.ui.dialog.IUserDialogs;
+import net.bodz.bas.ui.err.UiException;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.mda.xjdoc.model.javadoc.Author;
 import net.bodz.swt.c.control.DynamicControl;
@@ -194,7 +194,7 @@ public abstract class BasicGUI
     }
 
     protected Shell createShell()
-            throws GUIException {
+            throws UiException {
         Shell shell = new Shell();
         shell.setText(getTitle());
         ArtifactDoc artifactDoc = getXjdoc();
@@ -249,7 +249,7 @@ public abstract class BasicGUI
     }
 
     protected Menu createMenu(Shell shell)
-            throws GUIException {
+            throws UiException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -263,7 +263,7 @@ public abstract class BasicGUI
     }
 
     protected Menu createStartMenu(Shell shell)
-            throws GUIException {
+            throws UiException {
         Menu menu = new Menu(shell, SWT.POP_UP);
 
         MenuItem about = new MenuItem(menu, SWT.PUSH);
@@ -322,7 +322,7 @@ public abstract class BasicGUI
     }
 
     protected Control createToolBar(Composite parent)
-            throws GUIException {
+            throws UiException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -331,7 +331,7 @@ public abstract class BasicGUI
     }
 
     protected Control createStatusBar(Composite parent)
-            throws GUIException {
+            throws UiException {
         Composite bottomBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
         GridLayout bottomGrid = new GridLayout(3, false);
         bottomGrid.marginWidth = 0;
@@ -404,7 +404,7 @@ public abstract class BasicGUI
     }
 
     protected Control createExpandBar(Composite parent)
-            throws GUIException {
+            throws UiException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -413,14 +413,14 @@ public abstract class BasicGUI
     }
 
     protected void createInitialView(Composite holder)
-            throws GUIException {
+            throws UiException {
         holder.setLayout(new FillLayout());
         Label welcomeLabel = new Label(holder, SWT.NONE);
         welcomeLabel.setText(tr._("Welcome BasicGUI!"));
     }
 
     protected void createView(Composite holder, Object key)
-            throws GUIException {
+            throws UiException {
         if (key == null) {
             createInitialView(holder);
             return;
@@ -429,7 +429,7 @@ public abstract class BasicGUI
     }
 
     protected void openView(Composite holder, Object key)
-            throws GUIException {
+            throws UiException {
         Composite view = views.get(key);
         if (view == null) {
             view = new Composite(holder, SWT.NONE);

@@ -2,7 +2,7 @@ package net.bodz.swt.c.list;
 
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.gui.dialog.IUserDialogs;
+import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.swt.c.dialog.SwtUserDialogs;
 
 public class ListEditor

@@ -6,8 +6,8 @@ import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
-import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
+import net.bodz.bas.ui.dialog.IUserDialogs;
 
 public abstract class CommitAdapter
         implements CommitListener, CommitFailListener, II18nCapable {

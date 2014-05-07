@@ -4,13 +4,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
+import net.bodz.bas.ui.err.UiException;
 import net.bodz.pkg.sisi.page.SisiNavigator;
 import net.bodz.swt.c.pageflow.BadPathEvent;
 import net.bodz.swt.c.pageflow.IBadPathListener;
@@ -60,7 +60,7 @@ public class SisProjectInstaller
 
     @Override
     protected void createInitialView(final Composite parent)
-            throws GUIException {
+            throws UiException {
 
         SisiNavigator navigator = new SisiNavigator(project, parent, SWT.NONE);
 

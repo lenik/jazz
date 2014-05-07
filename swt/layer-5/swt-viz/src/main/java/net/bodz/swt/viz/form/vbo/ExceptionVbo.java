@@ -21,18 +21,18 @@ import net.bodz.bas.c.event.EventHandler;
 import net.bodz.bas.c.java.awt.DesktopApps;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.ExpectedException;
-import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.gui.model.AbstractCommand;
-import net.bodz.swt.gui.model.ICommand;
+import net.bodz.swt.ui.model.AbstractCommand;
+import net.bodz.swt.ui.model.ICommand;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.ISwtGUIRefEntry;
+import net.bodz.swt.viz.ISwtUiRef;
 import net.bodz.swt.viz.SwtRenderContext;
 
 public class ExceptionVbo
@@ -52,9 +52,9 @@ public class ExceptionVbo
     }
 
     @Override
-    public Widget buildSwtView(final Composite parent, ISwtGUIRefEntry<Throwable> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(final Composite parent, ISwtUiRef<Throwable> ref, int styleInt, IOptions options)
             throws ViewBuilderException {
-        final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        final ISwtControlStyleDeclaration styleDecl = ref.getStyle();
         final SwtRenderContext rc = options.get(SwtRenderContext.class);
 
         final Display display = parent == null ? Display.getCurrent() : parent.getDisplay();
@@ -66,7 +66,7 @@ public class ExceptionVbo
 
         // assert var.getMeta().isReadOnly();
         Color errorColor = new Color(display, 0xCC, 0, 0);
-        final Throwable throwable = entry.get();
+        final Throwable throwable = ref.get();
         int causeLevel = 0;
         int traceSkipped = 0;
         StringBuilder errbuf = new StringBuilder(4000);

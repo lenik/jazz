@@ -20,7 +20,7 @@ import net.bodz.swt.c.control.CommitException;
 import net.bodz.swt.c.control.OnFocusCommit;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.ISwtGUIRefEntry;
+import net.bodz.swt.viz.ISwtUiRef;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.util.SwtControlStyler;
 import net.bodz.swt.viz.util.SwtStyleInts;
@@ -33,37 +33,37 @@ public class StringVbo
     }
 
     @Override
-    public Widget buildSwtView(Composite parent, final ISwtGUIRefEntry<String> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(Composite parent, final ISwtUiRef<String> ref, int styleInt, IOptions options)
             throws ViewBuilderException {
 
-        final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        final ISwtControlStyleDeclaration styleDecl = ref.getStyle();
         styleInt |= SwtStyleInts.merge(styleInt, styleDecl);
 
         // capitalize, uppercase, lowercase:
         // TextTransformMode textTransform = styleDecl.getTextTransform();
         boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
 
-        Control control = readOnly ? buildLabel(parent, entry, styleInt, options) //
-                : buildText(parent, entry, styleInt, options);
+        Control control = readOnly ? buildLabel(parent, ref, styleInt, options) //
+                : buildText(parent, ref, styleInt, options);
 
         SwtControlStyler.apply(control, styleDecl);
 
         return control;
     }
 
-    Label buildLabel(Composite parent, final ISwtGUIRefEntry<String> entry, int styleInt, IOptions options)
+    Label buildLabel(Composite parent, final ISwtUiRef<String> ref, int styleInt, IOptions options)
             throws ViewBuilderException {
 
         final Label label = new Label(parent, styleInt);
 
-        String value = entry.get();
+        String value = ref.get();
         label.setText(value);
 
-        if (entry.query(IValueChangeSource.class) != null)
-            bindProperty(entry, label, new IValueChangeListener() {
+        if (ref.query(IValueChangeSource.class) != null)
+            bindProperty(ref, label, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent evt) {
-                    label.setText(String.valueOf(entry.get()));
+                    label.setText(String.valueOf(ref.get()));
                     return true;
                 }
             });
@@ -71,10 +71,10 @@ public class StringVbo
         return label;
     }
 
-    Text buildText(Composite parent, final ISwtGUIRefEntry<String> entry, int styleInt, IOptions options)
+    Text buildText(Composite parent, final ISwtUiRef<String> ref, int styleInt, IOptions options)
             throws ViewBuilderException {
 
-        ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        ISwtControlStyleDeclaration styleDecl = ref.getStyle();
         final Text text = new Text(parent, styleInt);
 
         Character echoChar = styleDecl.getEchoChar();
@@ -85,15 +85,15 @@ public class StringVbo
         if (maxLength != null)
             text.setTextLimit(maxLength);
 
-        String value = entry.get();
+        String value = ref.get();
         text.setText(value);
 
-        IValueChangeSource valueChangeSource = entry.query(IValueChangeSource.class);
+        IValueChangeSource valueChangeSource = ref.query(IValueChangeSource.class);
         if (valueChangeSource != null)
-            bindProperty(entry, text, new IValueChangeListener() {
+            bindProperty(ref, text, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent evt) {
-                    text.setText(entry.get());
+                    text.setText(ref.get());
                     return true;
                 }
             });
@@ -105,7 +105,7 @@ public class StringVbo
                     throws CommitException {
                 String str = text.getText();
                 try {
-                    IRefEntry.fn.validateAndSet(entry, str);
+                    IRefEntry.fn.validateAndSet(ref, str);
                 } catch (ValidationException e) {
                     throw new CommitException(e.getMessage(), e);
                 }

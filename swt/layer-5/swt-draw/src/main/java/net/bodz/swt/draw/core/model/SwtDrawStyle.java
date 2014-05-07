@@ -1,9 +1,9 @@
 package net.bodz.swt.draw.core.model;
 
-import net.bodz.bas.gui.style.IColor;
-import net.bodz.bas.gui.style.IFillType;
-import net.bodz.bas.gui.style.IFontType;
-import net.bodz.bas.gui.style.IStrokeType;
+import net.bodz.bas.ui.style.IColor;
+import net.bodz.bas.ui.style.IFillType;
+import net.bodz.bas.ui.style.IFontType;
+import net.bodz.bas.ui.style.IStrokeType;
 
 public class SwtDrawStyle {
 

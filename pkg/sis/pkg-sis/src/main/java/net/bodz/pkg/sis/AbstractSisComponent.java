@@ -13,7 +13,6 @@ import net.bodz.bas.c.action.IProgressMonitor;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.nls.II18nCapable;
@@ -32,6 +31,7 @@ import net.bodz.bas.text.rst.IElementHandler;
 import net.bodz.bas.text.rst.IRstElement;
 import net.bodz.bas.text.rst.IRstOutput;
 import net.bodz.bas.text.rst.IRstSerializable;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -189,7 +189,7 @@ public abstract class AbstractSisComponent
     }
 
     @Override
-    public IGUIElementStyleDeclaration getStyle() {
+    public IUiElementStyleDeclaration getStyle() {
         return null;
     }
 

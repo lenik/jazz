@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.gui.dom1.GUIValueEntry;
 import net.bodz.bas.html.IHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilderFactory;
 import net.bodz.bas.html.IHttpReprContext;
@@ -28,6 +27,7 @@ import net.bodz.bas.repr.path.TokenQueue;
 import net.bodz.bas.repr.req.IHttpRequestProcessor;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.ui.dom1.UiValue;
 
 public class PathDispatchServlet
         extends HttpServlet {
@@ -102,7 +102,7 @@ public class PathDispatchServlet
 
         IHttpReprContext ctx = new RootHtmlOutputContext(req, resp);
         try {
-            pathArrivalVbo.buildHtmlView(ctx, GUIValueEntry.wrap(arrival));
+            pathArrivalVbo.buildHtmlView(ctx, UiValue.wrap(arrival));
         } catch (ViewBuilderException e) {
             throw new ServletException("Build html view: " + e.getMessage(), e);
         }

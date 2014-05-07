@@ -12,9 +12,9 @@ import org.junit.Test;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ExpectedException;
-import net.bodz.bas.gui.dialog.DirectiveCommands;
 import net.bodz.bas.t.pojo.eg.Address;
 import net.bodz.bas.t.pojo.eg.Person;
+import net.bodz.bas.ui.dialog.DirectiveCommands;
 
 public class SwtUserDialogsTest
         extends Assert {

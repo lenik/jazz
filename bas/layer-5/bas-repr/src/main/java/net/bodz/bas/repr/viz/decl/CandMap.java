@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.gui.dialog.IProposalMapProvider;
+import net.bodz.bas.ui.dialog.IProposalMapProvider;
 
 /**
  * Bean Annotation

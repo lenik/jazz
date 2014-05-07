@@ -5,10 +5,10 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.gui.dialog.ConsoleDialogs;
-import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.rtx.Options;
+import net.bodz.bas.ui.dialog.ConsoleDialogs;
+import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.pkg.sis.test.TestConfig;
 import net.bodz.pkg.sis.util.SisDumper;
 

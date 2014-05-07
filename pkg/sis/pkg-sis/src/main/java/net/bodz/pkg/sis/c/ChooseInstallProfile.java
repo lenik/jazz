@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.ui.err.UiValidationException;
 import net.bodz.pkg.sis.ISisComponent;
 import net.bodz.pkg.sis.ISisInstallProfile;
 import net.bodz.pkg.sisi.page.ConfigPage;
@@ -100,9 +100,9 @@ class ChooseInstallProfilePage
 
     @Override
     public void validate()
-            throws GUIValidationException {
+            throws UiValidationException {
         if (selectedIndex == -1)
-            throw new GUIValidationException(tr._("Scheme isn\'t selected"));
+            throw new UiValidationException(tr._("Scheme isn\'t selected"));
         ISisInstallProfile profile = profiles.get(selectedIndex);
         getProject().setInstallProfile(profile);
     }

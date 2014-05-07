@@ -6,8 +6,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
-import net.bodz.bas.gui.css3.ICss3Length;
-import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
+import net.bodz.bas.ui.css3.ICss3Length;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 
 public class SizeResolver {
 
@@ -30,11 +30,11 @@ public class SizeResolver {
         this.yppi = yppi;
     }
 
-    public Integer resolveWidth(IGUIElementStyleDeclaration styleDecl) {
+    public Integer resolveWidth(IUiElementStyleDeclaration styleDecl) {
         ICss3Length width = styleDecl.getWidth();
 
         if (width == null) {
-            IGUIElementStyleDeclaration parentStyle = styleDecl.getParent();
+            IUiElementStyleDeclaration parentStyle = styleDecl.getParent();
             if (parentStyle == null)
                 return null;
             else
@@ -60,11 +60,11 @@ public class SizeResolver {
         }
     }
 
-    public Integer resolveHeight(IGUIElementStyleDeclaration styleDecl) {
+    public Integer resolveHeight(IUiElementStyleDeclaration styleDecl) {
         ICss3Length height = styleDecl.getHeight();
 
         if (height == null) {
-            IGUIElementStyleDeclaration parentStyle = styleDecl.getParent();
+            IUiElementStyleDeclaration parentStyle = styleDecl.getParent();
             if (parentStyle == null)
                 return null;
             else
@@ -90,7 +90,7 @@ public class SizeResolver {
         }
     }
 
-    public Point resolveSize(IGUIElementStyleDeclaration styleDecl) {
+    public Point resolveSize(IUiElementStyleDeclaration styleDecl) {
         Integer width = resolveWidth(styleDecl);
         Integer height = resolveHeight(styleDecl);
         if (width == null || height == null)
@@ -99,7 +99,7 @@ public class SizeResolver {
             return new Point(width, height);
     }
 
-    public static Point resolveSize(IGUIElementStyleDeclaration styleDecl, Control controlReference) {
+    public static Point resolveSize(IUiElementStyleDeclaration styleDecl, Control controlReference) {
         Display device = controlReference.getDisplay();
         Point ppi = device.getDPI();
 
