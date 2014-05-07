@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ServiceLoader;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +16,7 @@ import net.bodz.bas.html.IHttpReprContext;
 import net.bodz.bas.html.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.RootHtmlOutputContext;
 import net.bodz.bas.html.vbo.PathFramesVbo;
+import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -47,8 +47,10 @@ public class PathDispatchServlet
     }
 
     @Override
-    protected void service(HttpServletRequest _req, HttpServletResponse resp)
+    protected void serviceImpl(HttpServletRequest _req, HttpServletResponse resp)
             throws ServletException, IOException {
+        resp.setHeader("X-Powered-By", "Jazz BAS Repr/Html Server 2.0");
+
         HttpServletReqEx req = HttpServletReqEx.of(_req);
 
         for (IHttpRequestProcessor proc : ServiceLoader.load(IHttpRequestProcessor.class))

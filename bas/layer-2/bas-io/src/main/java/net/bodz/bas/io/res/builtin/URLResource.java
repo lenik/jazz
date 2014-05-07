@@ -54,19 +54,19 @@ public class URLResource
         return url;
     }
 
-//    @Override
-//    public long getLength() {
-//        switch (url.getProtocol()) {
-//        case "file":
-//            File file = FileURL.toFile(url, null);
-//            if (file != null)
-//                return file.length();
-//            else
-//                return -1L;
-//        default:
-//            return -1L;
-//        }
-//    }
+// @Override
+// public long getLength() {
+// switch (url.getProtocol()) {
+// case "file":
+// File file = FileURL.toFile(url, null);
+// if (file != null)
+// return file.length();
+// else
+// return -1L;
+// default:
+// return -1L;
+// }
+// }
 
     @Override
     protected InputStream _newInputStream(OpenOption... options)
@@ -95,6 +95,18 @@ public class URLResource
         default:
             return url.openConnection().getOutputStream();
         }
+    }
+
+    public long lastModified() {
+        return lastModified(-1L);
+    }
+
+    public long lastModified(long fallback) {
+        long lastModified = fallback;
+        File file = FileURL.toNearestFile(url);
+        if (file != null)
+            lastModified = file.lastModified();
+        return lastModified;
     }
 
 }

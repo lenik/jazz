@@ -7,11 +7,12 @@ import java.io.RandomAccessFile;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.http.ContentRange;
+import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class FileAccessorServlet
@@ -60,6 +61,21 @@ public class FileAccessorServlet
             return;
         }
 
+        resp.setHeader("Cache-Control", "max-age=" + maxAge);
+
+        long lastModified = file.lastModified();
+        if (lastModified > 0) {
+            long ifModifiedSince = req.getDateHeader("If-Modified-Since");
+            if (ifModifiedSince > 0 && ifModifiedSince >= lastModified) {
+                resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+                return;
+            }
+            resp.setDateHeader("Last-Modified", lastModified);
+            resp.setDateHeader("Expires", lastModified + maxAge * 1000L);
+        }
+
+        // resp.setHeader("E-Tag", eTag);
+
         ContentType contentType = ContentType.forPath(file.getName());
         if (contentType != null)
             resp.setContentType(contentType.getName());
@@ -69,11 +85,6 @@ public class FileAccessorServlet
             resp.setContentLength((int) length);
         else
             resp.setHeader("Content-Length", String.valueOf(length));
-
-        resp.setHeader("Cache-Control", "max-age=" + maxAge);
-        resp.setDateHeader("Last-Modified", file.lastModified());
-        resp.setDateHeader("Expires", file.lastModified() + maxAge * 1000L);
-        // resp.setHeader("E-Tag", eTag);
 
         ContentRange contentRange = null;
         String contentRangeHeader = req.getHeader("Content-Range");
