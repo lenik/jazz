@@ -8,9 +8,9 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.c.event.IQuietHint;
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.gui.err.GUIValidationException;
 import net.bodz.bas.repr.req.MutableRequest;
 import net.bodz.bas.t.pojo.PathEntries;
+import net.bodz.bas.ui.err.UiValidationException;
 import net.bodz.swt.c.control.ControlAdapters;
 
 public abstract class AbstractPageFlow
@@ -73,7 +73,7 @@ public abstract class AbstractPageFlow
                 IPage page = book.getPage(prev);
                 try {
                     page.validate();
-                } catch (GUIValidationException e) {
+                } catch (UiValidationException e) {
                     handleQException(e);
                     Control control = e.getControl();
                     if (control != null)
@@ -167,7 +167,7 @@ public abstract class AbstractPageFlow
     /**
      * @see ControlAdapters#autocommitForFocus(Control, net.bodz.swt.adapters.CommitAdapter)
      */
-    protected void handleValidateException(GUIValidationException e) {
+    protected void handleValidateException(UiValidationException e) {
         handleQException(e);
         Control control = e.getControl();
         if (control != null) {

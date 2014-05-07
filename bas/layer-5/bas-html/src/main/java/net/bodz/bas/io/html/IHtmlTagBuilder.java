@@ -1,7 +1,7 @@
 package net.bodz.bas.io.html;
 
-import net.bodz.bas.gui.css3.property.DirectionMode;
 import net.bodz.bas.io.xml.IXmlTagBuilder;
+import net.bodz.bas.ui.css3.property.DirectionMode;
 
 /**
  * See: <a href="http://www.w3.org/TR/html5/dom.html#global-attributes">HTML5 Global Attributes</a>

@@ -1,8 +1,8 @@
 package net.bodz.bas.repr.viz;
 
 import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.ui.dom1.IUiRef;
 
 @IndexedType
 public interface IViewBuilderFactory {
@@ -21,13 +21,13 @@ public interface IViewBuilderFactory {
     /**
      * @return The built widget/control handle.
      */
-    Object buildView(Object ctx, IRefEntry<?> entry)
+    Object buildView(Object ctx, IUiRef<?> ref)
             throws ViewBuilderException;
 
     /**
      * @return The built widget/control handle.
      */
-    Object buildView(Object ctx, IRefEntry<?> entry, IOptions options)
+    Object buildView(Object ctx, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException;
 
 }

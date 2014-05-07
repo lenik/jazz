@@ -9,7 +9,7 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-gui</artifactId>
+            <artifactId>bas-ui</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -39,7 +39,7 @@ layer-5/ 框架基础
     bas-potato
     bas-repr
     bas-html
-    bas-gui
+    bas-ui
     bas-vfs
     
 layer-7/ 应用框架

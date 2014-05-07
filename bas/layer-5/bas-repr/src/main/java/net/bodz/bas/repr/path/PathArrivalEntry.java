@@ -1,9 +1,9 @@
 package net.bodz.bas.repr.path;
 
-import net.bodz.bas.gui.dom1.GUIValueEntry;
+import net.bodz.bas.ui.dom1.UiValue;
 
 public class PathArrivalEntry<T>
-        extends GUIValueEntry<T> {
+        extends UiValue<T> {
 
     private static final long serialVersionUID = 1L;
 

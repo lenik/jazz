@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Spinner;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.gui.dialog.IUserDialogs;
+import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.resources.SWTResources;
 

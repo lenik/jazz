@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilderFactory;
@@ -15,6 +14,7 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathArrivalEntry;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.ui.dom1.IUiRef;
 
 public class PathFramesVbo
         extends AbstractHtmlViewBuilder<IPathArrival> {
@@ -27,9 +27,9 @@ public class PathFramesVbo
     }
 
     @Override
-    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<IPathArrival> entry, IOptions options)
+    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<IPathArrival> ref, IOptions options)
             throws ViewBuilderException, IOException {
-        IPathArrival arrival = entry.get();
+        IPathArrival arrival = ref.get();
 
         List<Frame> frames = new ArrayList<Frame>();
 

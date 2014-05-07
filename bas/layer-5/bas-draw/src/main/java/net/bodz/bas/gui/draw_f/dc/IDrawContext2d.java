@@ -1,9 +1,9 @@
 package net.bodz.bas.gui.draw_f.dc;
 
-import net.bodz.bas.gui.style.IColor;
-import net.bodz.bas.gui.style.IFillType;
-import net.bodz.bas.gui.style.IFontType;
-import net.bodz.bas.gui.style.IStrokeType;
+import net.bodz.bas.ui.style.IColor;
+import net.bodz.bas.ui.style.IFillType;
+import net.bodz.bas.ui.style.IFontType;
+import net.bodz.bas.ui.style.IStrokeType;
 
 public interface IDrawContext2d
         extends IBaseDrawContext2d {

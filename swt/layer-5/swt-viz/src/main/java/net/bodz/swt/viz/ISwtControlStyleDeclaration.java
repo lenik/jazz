@@ -1,9 +1,9 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 
 public interface ISwtControlStyleDeclaration
-        extends IGUIElementStyleDeclaration {
+        extends IUiElementStyleDeclaration {
 
     @Override
     ISwtControlStyleDeclaration getParent();

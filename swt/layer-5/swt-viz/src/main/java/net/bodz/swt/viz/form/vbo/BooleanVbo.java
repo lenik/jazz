@@ -21,7 +21,7 @@ import net.bodz.swt.c.control.CommitException;
 import net.bodz.swt.c.control.OnFocusCommit;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.ISwtGUIRefEntry;
+import net.bodz.swt.viz.ISwtUiRef;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.util.SwtControlStyler;
 
@@ -33,14 +33,14 @@ public class BooleanVbo
     }
 
     @Override
-    public Widget buildSwtView(Composite parent, final ISwtGUIRefEntry<Boolean> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(Composite parent, final ISwtUiRef<Boolean> ref, int styleInt, IOptions options)
             throws ViewBuilderException {
-        final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        final ISwtControlStyleDeclaration styleDecl = ref.getStyle();
         final SwtRenderContext rc = options.get(SwtRenderContext.class);
 
         boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
 
-        Boolean _val = entry.get();
+        Boolean _val = ref.get();
         boolean val = _val == null ? false : _val;
         final Button check = new Button(parent, styleInt | SWT.CHECK);
         check.setSelection(val);
@@ -50,16 +50,16 @@ public class BooleanVbo
             check.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
-                    entry.set(check.getSelection());
+                    ref.set(check.getSelection());
                 }
             });
         }
 
-        if (entry.query(IValueChangeSource.class) != null)
-            bindProperty(entry, check, new IValueChangeListener() {
+        if (ref.query(IValueChangeSource.class) != null)
+            bindProperty(ref, check, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent event) {
-                    Boolean _val = entry.get();
+                    Boolean _val = ref.get();
                     check.setSelection(_val == null ? false : _val);
                     return true;
                 }
@@ -72,7 +72,7 @@ public class BooleanVbo
                         throws CommitException {
                     boolean val = check.getSelection();
                     try {
-                        IRefEntry.fn.validateAndSet(entry, val);
+                        IRefEntry.fn.validateAndSet(ref, val);
                     } catch (ValidationException e) {
                         throw new CommitException(e);
                     }

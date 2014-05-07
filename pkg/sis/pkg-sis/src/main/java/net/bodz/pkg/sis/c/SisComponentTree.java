@@ -17,17 +17,17 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
-import net.bodz.bas.gui.style.IImageData;
-import net.bodz.bas.gui.style.ImageUsage;
-import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.tree.IQuadState;
 import net.bodz.bas.t.tree.QuadStateTreeItems;
+import net.bodz.bas.ui.style.IImageData;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
+import net.bodz.bas.ui.style.ImageUsage;
+import net.bodz.bas.ui.xjdoc.UiElementDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 import net.bodz.pkg.sis.ISisComponent;
-import net.bodz.swt.gui.style.SwtImageMapper;
+import net.bodz.swt.ui.style.SwtImageMapper;
 
 public class SisComponentTree
         extends Tree
@@ -81,8 +81,8 @@ public class SisComponentTree
 
         if (component instanceof IXjdocElement) {
             IElementDoc xjdoc = ((IXjdocElement) component).getXjdoc();
-            GUIElementDoc guidoc = xjdoc.to(GUIElementDoc.class);
-            IGUIElementStyleDeclaration styleClass = guidoc.getStyleClass();
+            UiElementDoc guidoc = xjdoc.to(UiElementDoc.class);
+            IUiElementStyleDeclaration styleClass = guidoc.getStyleClass();
 
             IImageData imageData = styleClass.getImage(ImageUsage.NORMAL);
             if (imageData != null) {

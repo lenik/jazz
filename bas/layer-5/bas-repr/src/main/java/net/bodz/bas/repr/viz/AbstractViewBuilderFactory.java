@@ -18,6 +18,7 @@ import net.bodz.bas.repr.view.Feature;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.set.QmiTaggedSet;
 import net.bodz.bas.t.set.TaggedSet;
+import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractViewBuilderFactory
         implements IViewBuilderFactory, II18nCapable {
@@ -171,18 +172,18 @@ public abstract class AbstractViewBuilderFactory
     }
 
     @Override
-    public Object buildView(Object ctx, IRefEntry<?> entry)
+    public Object buildView(Object ctx, IUiRef<?> ref)
             throws ViewBuilderException {
-        return buildView(ctx, entry, IOptions.NULL);
+        return buildView(ctx, ref, IOptions.NULL);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public Object buildView(Object ctx, IRefEntry<?> entry, IOptions options)
+    public Object buildView(Object ctx, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException {
-        Class<?> valueType = entry.getValueType();
+        Class<?> valueType = ref.getValueType();
         IViewBuilder viewBuilder = getViewBuilder(valueType);
-        Object view = viewBuilder.buildView(ctx, entry, options);
+        Object view = viewBuilder.buildView(ctx, ref, options);
         return view;
     }
 

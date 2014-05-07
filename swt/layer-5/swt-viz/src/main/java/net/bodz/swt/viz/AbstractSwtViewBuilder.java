@@ -15,6 +15,7 @@ import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractSwtViewBuilder<T>
         extends AbstractViewBuilder<T>
@@ -25,7 +26,7 @@ public abstract class AbstractSwtViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object ctx, IRefEntry<T> entry, IOptions options)
+    public final Object buildView(Object ctx, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
         Composite parent = null;
         if (ctx != null) {
@@ -35,17 +36,17 @@ public abstract class AbstractSwtViewBuilder<T>
         }
 
         // TODO wrap...
-        ISwtGUIRefEntry<T> wrapper = (ISwtGUIRefEntry<T>) entry;
+        ISwtUiRef<T> swtRef = (ISwtUiRef<T>) ref;
 
         int styleInt = options.getInt("swt.styleInt", SWT.NONE);
 
-        return buildSwtView(parent, wrapper, styleInt, options);
+        return buildSwtView(parent, swtRef, styleInt, options);
     }
 
     @Override
-    public final Widget buildSwtView(Composite parent, ISwtGUIRefEntry<T> entry, int styleInt)
+    public final Widget buildSwtView(Composite parent, ISwtUiRef<T> ref, int styleInt)
             throws ViewBuilderException {
-        return buildSwtView(parent, entry, styleInt, IOptions.NULL);
+        return buildSwtView(parent, ref, styleInt, IOptions.NULL);
     }
 
     protected void bindProperty(final IRefEntry<?> entry, final Control control, final IValueChangeListener listener) {

@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.ui.err.UiValidationException;
 
 /**
  * Test page 1
@@ -51,14 +51,14 @@ public class TestPage1
 
     @Override
     public void validate()
-            throws GUIValidationException {
+            throws UiValidationException {
         String agestr = ageText.getText();
         try {
             int age = Integer.parseInt(agestr);
             if (age < 0)
-                throw new GUIValidationException(ageText, new OutOfDomainException("age", age, 0));
+                throw new UiValidationException(ageText, new OutOfDomainException("age", age, 0));
         } catch (NumberFormatException e) {
-            throw new GUIValidationException(ageText, e);
+            throw new UiValidationException(ageText, e);
         }
     }
 

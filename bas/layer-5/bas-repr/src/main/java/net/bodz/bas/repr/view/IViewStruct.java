@@ -1,9 +1,9 @@
 package net.bodz.bas.repr.view;
 
-import net.bodz.bas.potato.ref.PropertyGUIRefEntry;
+import net.bodz.bas.potato.ref.UiPropertyRef;
 
 /**
- * @see PropertyGUIRefEntry
+ * @see UiPropertyRef
  */
 public interface IViewStruct {
 

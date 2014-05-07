@@ -27,7 +27,7 @@ import net.bodz.swt.c.control.OnFocusCommit;
 import net.bodz.swt.c.layout.BorderLayout;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
-import net.bodz.swt.viz.ISwtGUIRefEntry;
+import net.bodz.swt.viz.ISwtUiRef;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.util.SwtControlStyler;
 
@@ -39,12 +39,12 @@ public class FileVbo
     }
 
     @Override
-    public Widget buildSwtView(final Composite parent, final ISwtGUIRefEntry<File> entry, int styleInt, IOptions options)
+    public Widget buildSwtView(final Composite parent, final ISwtUiRef<File> ref, int styleInt, IOptions options)
             throws ViewBuilderException {
-        final ISwtControlStyleDeclaration styleDecl = entry.getStyle();
+        final ISwtControlStyleDeclaration styleDecl = ref.getStyle();
         final SwtRenderContext rc = options.get(SwtRenderContext.class);
 
-        File val = entry.get();
+        File val = ref.get();
         assert val != null;
         final Composite comp = new Composite(parent, styleInt);
         BorderLayout layout = new BorderLayout();
@@ -70,7 +70,7 @@ public class FileVbo
             fileText.setEnabled(false);
             browseButton.setEnabled(false);
         } else {
-            Class<?> valueType = entry.getValueType();
+            Class<?> valueType = ref.getValueType();
             final IValidator<Object> validator;
             try {
                 validator = Typers.getTyper(valueType, IValidator.class);
@@ -89,16 +89,16 @@ public class FileVbo
                     } catch (ValidationException e) {
                         throw new CommitException(e);
                     }
-                    entry.set(file);
+                    ref.set(file);
                 }
             });
         }
 
-        if (entry.query(IValueChangeSource.class) != null)
-            bindProperty(entry, fileText, new IValueChangeListener() {
+        if (ref.query(IValueChangeSource.class) != null)
+            bindProperty(ref, fileText, new IValueChangeListener() {
                 @Override
                 public boolean valueChange(ValueChangeEvent evt) {
-                    File file = entry.get();
+                    File file = ref.get();
                     assert file != null;
                     fileText.setText(String.valueOf(file));
                     return true;

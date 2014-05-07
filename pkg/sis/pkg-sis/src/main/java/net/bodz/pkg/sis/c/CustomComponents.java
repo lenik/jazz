@@ -21,11 +21,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
 
-import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.bas.gui.err.QuietValidationException;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.t.tree.IQuadState;
 import net.bodz.bas.t.tree.QuadStateTreeItems;
+import net.bodz.bas.ui.err.UiValidationException;
+import net.bodz.bas.ui.err.QuietValidationException;
 import net.bodz.pkg.sis.ISisComponent;
 import net.bodz.pkg.sis.ISisProject;
 import net.bodz.pkg.sis.SisVariable;
@@ -221,7 +221,7 @@ class CustomComponentsPage
 
     @Override
     public void validate()
-            throws GUIValidationException {
+            throws UiValidationException {
         ISisProject project = getProject();
 
         List<ISisComponent> selection = new ArrayList<ISisComponent>();
@@ -251,14 +251,14 @@ class CustomComponentsPage
             String path = dirText.getText();
             File dirFile = new File(path);
             if (dirFile.isFile())
-                throw new GUIValidationException(dirText, tr._("file exists"));
+                throw new UiValidationException(dirText, tr._("file exists"));
             else if (!dirFile.exists()) {
                 boolean confirmed = userDialogs.confirm(tr._("Create the directory?"),
                         tr._("CustomPage.confirmMkdir", dirFile));
                 if (!confirmed) {
                     throw new QuietValidationException(dirText);
                 } else if (!dirFile.mkdirs())
-                    throw new GUIValidationException(dirText, tr._("Can\'t create ") + dirFile);
+                    throw new UiValidationException(dirText, tr._("Can\'t create ") + dirFile);
             }
             project.setValue(varName, dirFile);
         }

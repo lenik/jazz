@@ -1,9 +1,9 @@
 package net.bodz.swt.gui.dialog;
 
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.gui.dialog.AbstractTryBlock;
-import net.bodz.bas.gui.dialog.DirectiveCommands;
-import net.bodz.bas.gui.dialog.IUserDialogs;
+import net.bodz.bas.ui.dialog.AbstractTryBlock;
+import net.bodz.bas.ui.dialog.DirectiveCommands;
+import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.swt.c.dialog.SwtUserDialogs;
 
 public abstract class DialogTryBlock

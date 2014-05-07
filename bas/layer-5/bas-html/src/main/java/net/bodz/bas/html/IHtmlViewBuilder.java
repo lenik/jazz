@@ -2,12 +2,12 @@ package net.bodz.bas.html;
 
 import java.io.IOException;
 
-import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.ui.dom1.IUiRef;
 
 /**
  * HTML view builder interface.
@@ -36,16 +36,16 @@ public interface IHtmlViewBuilder<T>
 
     void buildTitle(StringBuilder buffer, T value);
 
-    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<T> entry)
+    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<T> entry, IOptions options)
+    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
-    void buildHtmlViewTail(IHttpReprContext ctx, IGUIRefEntry<T> entry)
+    void buildHtmlViewTail(IHttpReprContext ctx, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    void buildHtmlViewTail(IHttpReprContext ctx, IGUIRefEntry<T> entry, IOptions options)
+    void buildHtmlViewTail(IHttpReprContext ctx, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
 }

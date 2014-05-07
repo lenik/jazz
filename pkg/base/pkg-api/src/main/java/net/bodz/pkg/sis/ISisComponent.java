@@ -1,18 +1,18 @@
 package net.bodz.pkg.sis;
 
 import net.bodz.bas.c.action.IProgressMonitor;
-import net.bodz.bas.gui.dom1.IGUIElement;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.IDependencyAware;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.bas.t.tree.IMutableTreeNode;
 import net.bodz.bas.text.rst.IRstSerializable;
+import net.bodz.bas.ui.dom1.IUiElement;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 import net.bodz.swt.c.pageflow.IPage;
 
 public interface ISisComponent
         extends //
-        IGUIElement, //
+        IUiElement, //
         IXjdocElement, //
         IMutableTreeNode<ISisComponent>, //
         IDependencyAware<ISisComponent>, //

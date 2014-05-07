@@ -4,7 +4,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 
 import net.bodz.bas.gui.draw_f.dc.IDrawContext2d;
-import net.bodz.swt.gui.draw_f.dc.SwtDrawContext2d;
+import net.bodz.swt.ui.draw_f.dc.SwtDrawContext2d;
 
 public abstract class ImagePainter {
 

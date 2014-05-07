@@ -2,17 +2,16 @@ package net.bodz.bas.html;
 
 import java.io.IOException;
 
-import net.bodz.bas.gui.css3.Border;
-import net.bodz.bas.gui.dom1.GUIValueEntry;
-import net.bodz.bas.gui.dom1.IGUIRefEntry;
-import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
 import net.bodz.bas.io.html.IHtmlOut;
-import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
+import net.bodz.bas.ui.css3.Border;
+import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.bas.ui.dom1.UiValue;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 
 public abstract class AbstractHtmlViewBuilder<T>
         extends AbstractViewBuilder<T>
@@ -52,13 +51,12 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object _ctx, IRefEntry<T> _entry, IOptions options)
+    public final Object buildView(Object _ctx, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
         IHttpReprContext ctx = (IHttpReprContext) _ctx;
-        IGUIRefEntry<T> entry = (IGUIRefEntry<T>) _entry;
         try {
-            IHttpReprContext innerCtx = buildHtmlView(ctx, entry, options);
-            buildHtmlViewTail(ctx, entry, options);
+            IHttpReprContext innerCtx = buildHtmlView(ctx, ref, options);
+            buildHtmlViewTail(ctx, ref, options);
             return innerCtx;
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
@@ -66,19 +64,19 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final IHttpReprContext buildHtmlView(IHttpReprContext ctx, IGUIRefEntry<T> entry)
+    public final IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
-        return buildHtmlView(ctx, entry, IOptions.NULL);
+        return buildHtmlView(ctx, ref, IOptions.NULL);
     }
 
     @Override
-    public final void buildHtmlViewTail(IHttpReprContext ctx, IGUIRefEntry<T> entry)
+    public final void buildHtmlViewTail(IHttpReprContext ctx, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
-        buildHtmlViewTail(ctx, entry, IOptions.NULL);
+        buildHtmlViewTail(ctx, ref, IOptions.NULL);
     }
 
     @Override
-    public void buildHtmlViewTail(IHttpReprContext ctx, IGUIRefEntry<T> entry, IOptions options)
+    public void buildHtmlViewTail(IHttpReprContext ctx, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
         // Do nothing in default implementation.
     }
@@ -87,22 +85,22 @@ public abstract class AbstractHtmlViewBuilder<T>
 
     protected <_t> void embed(IHttpReprContext ctx, Object obj, String... features)
             throws ViewBuilderException, IOException {
-        GUIValueEntry<Object> entry = GUIValueEntry.wrap(obj);
+        UiValue<Object> entry = UiValue.wrap(obj);
         embed(ctx, entry, features);
     }
 
-    protected <_t> void embed(IHttpReprContext ctx, IGUIRefEntry<_t> entry, String... features)
+    protected <_t> void embed(IHttpReprContext ctx, IUiRef<_t> ref, String... features)
             throws ViewBuilderException, IOException {
-        Class<? extends _t> type = entry.getValueType();
+        Class<? extends _t> type = ref.getValueType();
 
         IHtmlViewBuilder<_t> viewBuilder = factory.getViewBuilder(type, features);
         if (viewBuilder == null)
             throw new ViewBuilderException("Can't build view for " + type);
 
-        viewBuilder.buildHtmlView(ctx, entry);
+        viewBuilder.buildHtmlView(ctx, ref);
     }
 
-    protected void makeOutmostTag(IHttpReprContext ctx, String tagName, IGUIElementStyleDeclaration style) {
+    protected void makeOutmostTag(IHttpReprContext ctx, String tagName, IUiElementStyleDeclaration style) {
         IHtmlOut out = ctx.getOut();
         out.startTagBegin(tagName);
 

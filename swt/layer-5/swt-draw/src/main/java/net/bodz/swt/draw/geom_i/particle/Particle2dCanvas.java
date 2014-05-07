@@ -20,8 +20,8 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.t._int.IntIterable;
 import net.bodz.bas.t._int.IntIterator;
-import net.bodz.swt.gui.draw_f.dc.SwtRegion;
-import net.bodz.swt.gui.geom.SwtShapes;
+import net.bodz.swt.ui.draw_f.dc.SwtRegion;
+import net.bodz.swt.ui.geom.SwtShapes;
 
 public class Particle2dCanvas
         extends Canvas

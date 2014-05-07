@@ -1,7 +1,7 @@
 package net.bodz.bas.io.html;
 
-import net.bodz.bas.gui.css3.property.DirectionMode;
 import net.bodz.bas.io.xml.IXmlTagBuilder;
+import net.bodz.bas.ui.css3.property.DirectionMode;
 
 public abstract class AbstractHtmlTagBuilder<self_t extends IXmlTagBuilder>
         implements IHtmlTagBuilder<self_t> {

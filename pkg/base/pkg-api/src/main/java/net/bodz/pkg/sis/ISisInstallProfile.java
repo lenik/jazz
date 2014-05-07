@@ -1,9 +1,9 @@
 package net.bodz.pkg.sis;
 
-import net.bodz.bas.gui.dom1.IGUIElement;
+import net.bodz.bas.ui.dom1.IUiElement;
 
 public interface ISisInstallProfile
-        extends IGUIElement {
+        extends IUiElement {
 
     void preset(ISisComponent component);
 

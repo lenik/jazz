@@ -2,10 +2,10 @@ package net.bodz.swt.viz.util;
 
 import org.eclipse.swt.SWT;
 
-import net.bodz.bas.gui.css3.Border;
-import net.bodz.bas.gui.css3.ICss3StyleDeclaration;
-import net.bodz.bas.gui.css3.property.BorderStyleMode;
-import net.bodz.bas.gui.dom1.IGUIRefEntry;
+import net.bodz.bas.ui.css3.Border;
+import net.bodz.bas.ui.css3.ICss3StyleDeclaration;
+import net.bodz.bas.ui.css3.property.BorderStyleMode;
+import net.bodz.bas.ui.dom1.IUiRef;
 
 public class SwtStyleInts {
 
@@ -32,7 +32,7 @@ public class SwtStyleInts {
         return styleBits;
     }
 
-    public static int merge(int styleBits, IGUIRefEntry<?> entry) {
+    public static int merge(int styleBits, IUiRef<?> entry) {
         return merge(styleBits, entry.getStyle());
     }
 

@@ -2,8 +2,8 @@ package net.bodz.pkg.sisi.page;
 
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.gui.err.GUIException;
 import net.bodz.bas.t.pojo.PathEntries;
+import net.bodz.bas.ui.err.UiException;
 import net.bodz.pkg.sis.ISisComponent;
 import net.bodz.pkg.sis.ISisProject;
 import net.bodz.swt.c.pageflow.IBook;
@@ -17,7 +17,7 @@ public class SisiNavigator
     protected final ISisProject project;
 
     public SisiNavigator(ISisProject project, Composite parent, int style)
-            throws GUIException {
+            throws UiException {
         super(createBook(project), parent, style);
         this.project = project;
 
@@ -28,7 +28,7 @@ public class SisiNavigator
     }
 
     static IBook createBook(final ISisProject project)
-            throws GUIException {
+            throws UiException {
         SimpleBook book = new SimpleBook();
         book.add(SummaryPage.class, new SummaryPage(project));
         book.add(ProgressPage.class, new ProgressPage(project));

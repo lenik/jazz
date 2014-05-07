@@ -1,9 +1,9 @@
 package net.bodz.pkg.sis;
 
-import net.bodz.bas.gui.dom1.AbstractGUIElement;
+import net.bodz.bas.ui.dom1.AbstractUiElement;
 
 public abstract class AbstractSisInstallProfile
-        extends AbstractGUIElement
+        extends AbstractUiElement
         implements ISisInstallProfile {
 
 }

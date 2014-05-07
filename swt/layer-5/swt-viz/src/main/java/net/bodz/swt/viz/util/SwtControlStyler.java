@@ -7,22 +7,22 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.*;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.gui.css3.ICss3StyleDeclaration;
-import net.bodz.bas.gui.css3.property.VisibilityMode;
-import net.bodz.bas.gui.style.FontType;
-import net.bodz.bas.gui.style.IColor;
-import net.bodz.bas.gui.style.IFontType;
-import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
-import net.bodz.bas.gui.style.IImageData;
-import net.bodz.bas.gui.style.ImageUsage;
-import net.bodz.swt.gui.style.FontDataFontType;
-import net.bodz.swt.gui.style.SwtColors;
-import net.bodz.swt.gui.style.SwtImageMapper;
+import net.bodz.bas.ui.css3.ICss3StyleDeclaration;
+import net.bodz.bas.ui.css3.property.VisibilityMode;
+import net.bodz.bas.ui.style.FontType;
+import net.bodz.bas.ui.style.IColor;
+import net.bodz.bas.ui.style.IFontType;
+import net.bodz.bas.ui.style.IImageData;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
+import net.bodz.bas.ui.style.ImageUsage;
+import net.bodz.swt.ui.style.FontDataFontType;
+import net.bodz.swt.ui.style.SwtColors;
+import net.bodz.swt.ui.style.SwtImageMapper;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 
 public class SwtControlStyler {
 
-    public static void apply(Control control, IGUIElementStyleDeclaration styleDecl) {
+    public static void apply(Control control, IUiElementStyleDeclaration styleDecl) {
         applyVisibility(control, styleDecl.getVisibility());
         applyEnabled(control, styleDecl.getEnabled());
         applyColor(control, styleDecl.getColor());
@@ -66,7 +66,7 @@ public class SwtControlStyler {
         }
     }
 
-    public static void applySize(Control control, IGUIElementStyleDeclaration styleDecl) {
+    public static void applySize(Control control, IUiElementStyleDeclaration styleDecl) {
         Point size = SizeResolver.resolveSize(styleDecl, control);
         if (size != null)
             control.setSize(size);
@@ -88,7 +88,7 @@ public class SwtControlStyler {
      * @param item
      *            SWT item, can be {@link ToolItem}, {@link MenuItem}, {@link TreeItem}, etc.
      */
-    public static void apply(Item item, IGUIElementStyleDeclaration styleDecl)
+    public static void apply(Item item, IUiElementStyleDeclaration styleDecl)
             throws InjectException {
         Device display = item.getDisplay();
 
@@ -126,7 +126,7 @@ public class SwtControlStyler {
         }
     }
 
-    public static void apply(Menu menu, IGUIElementStyleDeclaration style) {
+    public static void apply(Menu menu, IUiElementStyleDeclaration style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:
@@ -142,7 +142,7 @@ public class SwtControlStyler {
             menu.setEnabled(style.getEnabled());
     }
 
-    public static void apply(ScrollBar bar, IGUIElementStyleDeclaration style) {
+    public static void apply(ScrollBar bar, IUiElementStyleDeclaration style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:
@@ -158,7 +158,7 @@ public class SwtControlStyler {
             bar.setEnabled(style.getEnabled());
     }
 
-    public static void apply(ToolTip tooltip, IGUIElementStyleDeclaration style) {
+    public static void apply(ToolTip tooltip, IUiElementStyleDeclaration style) {
         if (style.getVisibility() != null)
             switch (style.getVisibility()) {
             case visible:

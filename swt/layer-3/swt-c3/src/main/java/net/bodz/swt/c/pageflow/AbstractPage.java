@@ -14,13 +14,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.gui.err.GUIValidationException;
-import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
-import net.bodz.bas.gui.style.IImageData;
-import net.bodz.bas.gui.style.ImageUsage;
-import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.t.pojo.PathEntries;
+import net.bodz.bas.ui.err.UiValidationException;
+import net.bodz.bas.ui.style.IImageData;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
+import net.bodz.bas.ui.style.ImageUsage;
+import net.bodz.bas.ui.xjdoc.UiElementDoc;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
@@ -54,8 +54,8 @@ public abstract class AbstractPage
 
     @Override
     public ImageData getPageIcon() {
-        GUIElementDoc gdoc = classDoc.to(GUIElementDoc.class);
-        IGUIElementStyleDeclaration style = gdoc.getStyleClass();
+        UiElementDoc gdoc = classDoc.to(UiElementDoc.class);
+        IUiElementStyleDeclaration style = gdoc.getStyleClass();
         IImageData image = style.getImage(ImageUsage.NORMAL);
         // TODO Convert to SWT image data...
         return null;
@@ -118,7 +118,7 @@ public abstract class AbstractPage
      */
     @Override
     public void validate()
-            throws PageException, GUIValidationException {
+            throws PageException, UiValidationException {
     }
 
     /**

@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import net.bodz.bas.c.java.util.LocaleTypers;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.gui.err.GUIValidationException;
+import net.bodz.bas.ui.err.UiValidationException;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
@@ -51,10 +51,10 @@ public class SelectLanguageDialog
 
     @Override
     protected String evaluate()
-            throws GUIValidationException {
+            throws UiValidationException {
         int index = combo.getSelectionIndex();
         if (index == -1)
-            throw new GUIValidationException(combo, "Language isn't selected");
+            throw new UiValidationException(combo, "Language isn't selected");
         return langNames.get(index);
     }
 

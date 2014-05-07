@@ -1,10 +1,10 @@
 package net.bodz.pkg.sis.c;
 
 import net.bodz.bas.c.action.IProgressMonitor;
-import net.bodz.bas.gui.dialog.ConsoleDialogs;
-import net.bodz.bas.gui.dialog.IUserDialogs;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.rtx.Options;
+import net.bodz.bas.ui.dialog.ConsoleDialogs;
+import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.pkg.sis.ConsoleProgressMonitor;
 import net.bodz.pkg.sis.test.SisComponentTestProject;
 import net.bodz.pkg.sis.test.TestConfig;

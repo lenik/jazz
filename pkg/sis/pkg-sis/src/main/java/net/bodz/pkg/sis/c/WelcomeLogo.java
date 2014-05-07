@@ -7,12 +7,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
-import net.bodz.bas.gui.style.IImageData;
-import net.bodz.bas.gui.style.ImageUsage;
-import net.bodz.bas.gui.xjdoc.GUIElementDoc;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
+import net.bodz.bas.ui.style.IImageData;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
+import net.bodz.bas.ui.style.ImageUsage;
+import net.bodz.bas.ui.xjdoc.UiElementDoc;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.pkg.sis.ISisComponent;
@@ -21,7 +21,7 @@ import net.bodz.pkg.sis.SisProjectInstaller;
 import net.bodz.pkg.sisi.page.ConfigPage;
 import net.bodz.swt.c.canvas.Picture;
 import net.bodz.swt.c.pageflow.PageException;
-import net.bodz.swt.gui.style.SwtImageMapper;
+import net.bodz.swt.ui.style.SwtImageMapper;
 
 public class WelcomeLogo
         extends ConfigComponent {
@@ -72,7 +72,7 @@ class WelcomeLogoPage
 
         if (logoData == null) {
             ClassDoc classDoc = ClassDocLoader.load(SisProjectInstaller.class);
-            IGUIElementStyleDeclaration styleDecl = classDoc.to(GUIElementDoc.class).getStyleClass();
+            IUiElementStyleDeclaration styleDecl = classDoc.to(UiElementDoc.class).getStyleClass();
             logoData = styleDecl.getImage(ImageUsage.NORMAL);
         }
         if (logoData != null) {
