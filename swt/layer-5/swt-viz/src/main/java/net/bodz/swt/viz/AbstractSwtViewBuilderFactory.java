@@ -7,7 +7,6 @@ import net.bodz.swt.viz.form.vbo.DateVbo;
 import net.bodz.swt.viz.form.vbo.ExceptionVbo;
 import net.bodz.swt.viz.form.vbo.FileVbo;
 import net.bodz.swt.viz.form.vbo.StringVbo;
-import net.bodz.swt.viz.form.vbo.TextFormedVbo;
 
 public abstract class AbstractSwtViewBuilderFactory
         extends AbstractViewBuilderFactory
@@ -17,7 +16,7 @@ public abstract class AbstractSwtViewBuilderFactory
     protected void initialize() {
         addViewBuilder(new BooleanVbo());
 
-        addViewBuilder(new TextFormedVbo(), Number.class);
+        // TODO addViewBuilder(new TextFormedVbo(), Number.class);
         addViewBuilder(new StringVbo());
         addViewBuilder(new ExceptionVbo());
 
