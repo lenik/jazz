@@ -14,9 +14,16 @@ public class ExtraTyperProvider
     /**
      * TODO Not implemented.
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public <T> T getTyper(Class<?> objType, Class<T> typerClass)
             throws QueryException {
+        if (objType.isEnum()) {
+            EnumTypers<?> enumTypers = new EnumTypers(objType);
+            T typer = enumTypers.query(typerClass);
+            if (typer != null)
+                return typer;
+        }
         return null;
     }
 

@@ -6,12 +6,12 @@ import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.ISampleGenerator;
 
-public class CollectionTypers<T>
-        extends AbstractCommonTypers<Collection<T>> {
+public class CollectionTypers
+        extends AbstractCommonTypers<Collection<?>> {
 
-    @SuppressWarnings("unchecked")
-    public CollectionTypers(Class<T> valueType) {
-        super((Class<Collection<T>>) (Class<?>) Collection.class);
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public CollectionTypers() {
+        super((Class) Collection.class);
     }
 
     @Override

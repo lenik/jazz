@@ -11,7 +11,7 @@ public class DiffComparatorTypers
 
     public DiffComparatorTypers() {
         super(IDiffComparator.class);
-        addStaticFieldsToStore(DiffComparators.class);
+        addStoreInstancesFromStaticFields(DiffComparators.class, IDiffComparator.class);
     }
 
     @Override
