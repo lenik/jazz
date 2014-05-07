@@ -11,7 +11,7 @@ public class DiffFormatTypers
 
     public DiffFormatTypers() {
         super(IDiffFormat.class);
-        addStaticFieldsToStore(IDiffFormat.class);
+        addStoreInstancesFromStaticFields(IDiffFormat.class, IDiffFormat.class);
     }
 
     @Override

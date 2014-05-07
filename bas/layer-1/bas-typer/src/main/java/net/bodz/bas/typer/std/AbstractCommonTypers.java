@@ -48,6 +48,10 @@ public abstract class AbstractCommonTypers<T>
         commonTyperIndex.put(IValidator.class.getName(), IValidator.typerIndex);
     }
 
+    public Class<T> getType() {
+        return type;
+    }
+
     @Override
     public <spec_t> spec_t query(Class<spec_t> specificationType) {
         Integer index = commonTyperIndex.get(specificationType);
@@ -269,7 +273,7 @@ public abstract class AbstractCommonTypers<T>
         storeInstances.put(name, instance);
     }
 
-    protected final void addStaticFieldsToStore(Class<?> declaringClass) {
+    protected final void addStoreInstancesFromStaticFields(Class<?> declaringClass, Class<? extends T> restriction) {
         if (declaringClass == null)
             throw new NullPointerException("declaringClass");
         for (Field field : declaringClass.getFields()) {
@@ -277,9 +281,9 @@ public abstract class AbstractCommonTypers<T>
             if (Modifier.isStatic(modifiers)) {
                 try {
                     String name = field.getName();
-                    Object object = field.get(null);
-                    if (type.isInstance(object)) {
-                        T instance = type.cast(object);
+                    Object value = field.get(null);
+                    if (restriction.isInstance(value)) {
+                        T instance = restriction.cast(value);
                         addStoreInstance(name, instance);
                     }
                 } catch (IllegalAccessException e) {
