@@ -11,24 +11,24 @@ public abstract class AbstractPropertyRefEntries<entry_t extends IRefEntry<?>>
         implements IRefEntries {
 
     private final IType type;
-    private final Object instance;
+    private final IRefEntry<?> instanceRef;
 
-    public AbstractPropertyRefEntries(Object instance) {
-        if (instance == null)
-            throw new NullPointerException("instance");
-        Class<? extends Object> clazz = instance.getClass();
-        IType type = PotatoTypes.getInstance().forClass(clazz);
+    public AbstractPropertyRefEntries(IRefEntry<?> instanceRef) {
+        if (instanceRef == null)
+            throw new NullPointerException("instanceRef");
+        Class<?> instanceClass = instanceRef.getValueType();
+        IType type = PotatoTypes.getInstance().forClass(instanceClass);
         this.type = type;
-        this.instance = instance;
+        this.instanceRef = instanceRef;
     }
 
-    public AbstractPropertyRefEntries(IType type, Object instance) {
+    public AbstractPropertyRefEntries(IType type, IRefEntry<?> instanceRef) {
         if (type == null)
             throw new NullPointerException("type");
-        if (instance == null)
-            throw new NullPointerException("instance");
+        if (instanceRef == null)
+            throw new NullPointerException("instanceRef");
         this.type = type;
-        this.instance = instance;
+        this.instanceRef = instanceRef;
     }
 
     @Override
@@ -42,7 +42,7 @@ public abstract class AbstractPropertyRefEntries<entry_t extends IRefEntry<?>>
     @Override
     public <T> IRefEntry<T> get(String propertyName) {
         IProperty property = type.getProperty(propertyName);
-        PropertyRefEntry<T> entry = new PropertyRefEntry<T>(instance, property);
+        PropertyRefEntry<T> entry = new PropertyRefEntry<T>(instanceRef, property);
         return entry;
     }
 

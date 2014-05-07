@@ -14,21 +14,17 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
 
     private static final long serialVersionUID = 1L;
 
-    private Class<?> clazz;
-    private Object instance;
+    private IRefEntry<?> objRef;
 
     private boolean autoImport = true;
     private boolean autoImported;
     private int newImportedCount;
 
-    public AbstractPropertyRefMap(Class<?> clazz, Object instance, Boolean order) {
+    public AbstractPropertyRefMap(IRefEntry<?> objRef, Boolean order) {
         super(Collections.<String, entry_t> createMap(order));
-        if (clazz == null)
-            throw new NullPointerException("clazz");
-        if (instance == null)
-            throw new NullPointerException("instance");
-        this.clazz = clazz;
-        this.instance = instance;
+        if (objRef == null)
+            throw new NullPointerException("objRef");
+        this.objRef = objRef;
     }
 
     @Override
@@ -54,12 +50,13 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
     }
 
     public synchronized void importProperties(int mask, int selection) {
-        IType type = PotatoTypes.getInstance().forClass(clazz);
+        Class<?> objType = objRef.getValueType();
+        IType type = PotatoTypes.getInstance().forClass(objType);
         for (IProperty property : type.getProperties()) {
             int modifiers = property.getModifiers();
             if ((modifiers & mask) == selection) {
                 String name = property.getName();
-                entry_t entry = createPropertyEntry(instance, property);
+                entry_t entry = createPropertyEntry(objRef, property);
 
                 entry_t old = super.put(name, entry);
                 if (old == null)
@@ -69,7 +66,7 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
         autoImported = true;
     }
 
-    protected abstract entry_t createPropertyEntry(Object instance, IProperty property);
+    protected abstract entry_t createPropertyEntry(IRefEntry<?> instanceRef, IProperty property);
 
     @Override
     public String toString() {

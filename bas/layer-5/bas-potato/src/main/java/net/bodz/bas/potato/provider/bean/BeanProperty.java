@@ -48,7 +48,7 @@ public class BeanProperty
 
     /**
      * NOTICE: {@link PropertyDescriptor#getDisplayName()} always return the property name.
-     * 
+     *
      * @see AbstractProperty#getLabel()
      */
     iString getLabel_() {
@@ -58,12 +58,16 @@ public class BeanProperty
 
     /**
      * NOTICE: {@link PropertyDescriptor#getShortDescription()} always return the property name. See
-     * 
+     *
      * @see AbstractProperty#getDescription()
      */
     iString getDescription_() {
         String shortDescription = propertyDescriptor.getShortDescription();
         return iString.fn.val(shortDescription);
+    }
+
+    public PropertyDescriptor getPropertyDescriptor() {
+        return propertyDescriptor;
     }
 
     @Override

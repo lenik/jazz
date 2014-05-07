@@ -1,5 +1,10 @@
 package net.bodz.bas.vfs.path;
 
+import net.bodz.bas.t.pojo.PathEntries;
+
+/**
+ * @TODO Replace {@link PathEntries}.
+ */
 public class MultiEntryPath
         extends AbstractMultiEntryPath {
 

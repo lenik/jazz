@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.gui.dom1.GUIValueEntry;
 import net.bodz.bas.gui.dom1.IGUIElement;
 import net.bodz.bas.gui.dom1.IGUIRefEntry;
 import net.bodz.bas.gui.style.IGUIElementStyleDeclaration;
@@ -17,7 +18,7 @@ public class PropertyGUIRefEntry<T>
 
     private static final long serialVersionUID = 1L;
 
-    public PropertyGUIRefEntry(T instance, IProperty property) {
+    public PropertyGUIRefEntry(IRefEntry<?> instance, IProperty property) {
         super(instance, property);
     }
 
@@ -51,13 +52,15 @@ public class PropertyGUIRefEntry<T>
     }
 
     public static PropertyGUIRefMap map(Object obj) {
-        if (obj == null)
-            throw new NullPointerException("obj");
-        return map(obj.getClass(), obj, null);
+        return map(GUIValueEntry.wrap(obj));
     }
 
-    public static PropertyGUIRefMap map(Class<?> clazz, Object obj, Boolean order) {
-        return new PropertyGUIRefMap(clazz, obj, order);
+    public static PropertyGUIRefMap map(IRefEntry<?> objRef) {
+        return map(objRef, null);
+    }
+
+    public static PropertyGUIRefMap map(IRefEntry<?> objRef, Boolean order) {
+        return new PropertyGUIRefMap(objRef, order);
     }
 
 }

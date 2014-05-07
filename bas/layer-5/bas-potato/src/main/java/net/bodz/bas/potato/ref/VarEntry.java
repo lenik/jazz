@@ -4,6 +4,7 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.potato.PotatoTypes;
+import net.bodz.bas.t.tree.IPathInfo;
 
 public class VarEntry<T>
         extends AbstractRefEntry<T> {
@@ -49,6 +50,16 @@ public class VarEntry<T>
     @Override
     public void remove() {
         this.value = null;
+    }
+
+    @Override
+    public IPathInfo getParent() {
+        return null;
+    }
+
+    @Override
+    public String getLocalPath() {
+        return null;
     }
 
     public static <T> VarEntry<T> wrap(T obj) {
