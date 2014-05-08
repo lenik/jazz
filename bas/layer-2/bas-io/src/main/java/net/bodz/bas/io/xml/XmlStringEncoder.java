@@ -30,7 +30,7 @@ public class XmlStringEncoder {
         simpleTextTab = new String[256];
         simpleTextTab['&'] = "&amp;";
         simpleTextTab['<'] = "&lt;";
-        simpleTextTab['>'] = "&rt;";
+        simpleTextTab['>'] = "&gt;";
 
         simpleAttributeTab = new String[256];
         simpleAttributeTab['\"'] = "&quot;";
