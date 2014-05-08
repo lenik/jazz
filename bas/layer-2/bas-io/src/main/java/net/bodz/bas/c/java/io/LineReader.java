@@ -2,12 +2,17 @@ package net.bodz.bas.c.java.io;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Iterator;
+
+import net.bodz.bas.err.IteratorTargetException;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 /**
  * Line includes EOL characters.
  */
 public class LineReader
-        extends Reader {
+        extends Reader
+        implements ILineReader {
 
     private final Reader reader;
     private StringBuilder buf;
@@ -23,13 +28,32 @@ public class LineReader
         return reader;
     }
 
-    protected boolean isLineTerm(int c) {
-        switch (c) {
-        case '\n':
-        case '\r':
-            return true;
-        }
-        return false;
+    /**
+     * @return <code>null</code> if EOF.
+     */
+    @Override
+    public String readLine()
+            throws IOException {
+        return readLine(Integer.MAX_VALUE);
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new PrefetchedIterator<String>() {
+
+            @Override
+            protected String fetch() {
+                try {
+                    String line = readLine();
+                    if (line != null)
+                        return line;
+                } catch (IOException e) {
+                    throw new IteratorTargetException(e.getMessage(), e);
+                }
+                return end();
+            }
+
+        };
     }
 
     /**
@@ -77,12 +101,13 @@ public class LineReader
         return line;
     }
 
-    /**
-     * @return <code>null</code> if EOF.
-     */
-    public String readLine()
-            throws IOException {
-        return readLine(Integer.MAX_VALUE);
+    protected boolean isLineTerm(int c) {
+        switch (c) {
+        case '\n':
+        case '\r':
+            return true;
+        }
+        return false;
     }
 
     @Override
