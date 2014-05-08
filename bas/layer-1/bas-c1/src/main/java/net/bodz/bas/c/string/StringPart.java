@@ -25,8 +25,20 @@ public class StringPart {
         return s;
     }
 
+    public static String chomp(String s, char ch) {
+        assert s != null;
+        if (!s.isEmpty()) {
+            int len = s.length();
+            if (s.charAt(len - 1) == ch)
+                s = s.substring(0, len - 1);
+        }
+        return s;
+    }
+
     public static String chomp(String s) {
-        return chomp(s, "\n");
+        s = chomp(s, '\n');
+        s = chomp(s, '\r');
+        return s;
     }
 
     public static String trimLeft(String s, int end) {
