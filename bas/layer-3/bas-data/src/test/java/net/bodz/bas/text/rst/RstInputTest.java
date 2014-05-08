@@ -2,25 +2,25 @@ package net.bodz.bas.text.rst;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.type.ClassResource;
+import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.tools.StreamReading;
+
 public class RstInputTest
         extends Assert {
 
-    String script = "header {\n" + //
-            "    major: 100\n" + //
-            "    minor: 200\n" + //
-            "    child c1 {\n" + //
-            "        color: red\n" + //
-            "    }\n" + //
-            "}\n" + //
-            "chunk RIFF v1 {\n" + //
-            "    description: A multi-line \\\n" + //
-            "text.\n" + //
-            "    name: today\n" + //
-            "}";
+    String script;
+
+    public RstInputTest()
+            throws IOException {
+        URL script1 = ClassResource.getDataURL(RstInputTest.class, "rst");
+        script = new URLResource(script1).to(StreamReading.class).readString();
+    }
 
     @Test
     public void test1()
