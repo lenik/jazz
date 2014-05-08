@@ -12,6 +12,11 @@
             <artifactId>bas-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-c3</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 7 :: Vcs</name>
 </project>
