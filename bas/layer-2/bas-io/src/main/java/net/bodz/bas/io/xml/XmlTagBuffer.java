@@ -30,7 +30,10 @@ public class XmlTagBuffer
 
     @Override
     public IXmlTagBuilder attr(String name, Object value) {
-        put(name, value);
+        if (value == null)
+            remove(name);
+        else
+            put(name, value);
         return this;
     }
 
