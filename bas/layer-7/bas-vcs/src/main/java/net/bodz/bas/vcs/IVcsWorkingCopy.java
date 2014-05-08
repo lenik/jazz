@@ -10,4 +10,7 @@ public interface IVcsWorkingCopy {
     Iterable<IVcsLogEntry> log(String name, VcsLogOptions options)
             throws IOException, InterruptedException;
 
+    Iterable<String> getDiff(String name, String version)
+            throws IOException, InterruptedException;
+
 }

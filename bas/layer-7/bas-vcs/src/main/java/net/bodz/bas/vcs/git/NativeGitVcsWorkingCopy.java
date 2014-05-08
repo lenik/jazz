@@ -43,11 +43,14 @@ public class NativeGitVcsWorkingCopy
         if (options.followRenames)
             cmdl.add("--follow");
 
-        if (options.fromEntry != null)
-            cmdl.add(options.fromEntry.getVersion());
+        if (options.includeChanges)
+            cmdl.add("--name-status");
 
         if (options.maxEntries > 0)
             cmdl.add("--max-count=" + options.maxEntries);
+
+        if (options.fromEntry != null)
+            cmdl.add(options.fromEntry.getVersion());
 
         cmdl.add(name);
 
@@ -57,7 +60,33 @@ public class NativeGitVcsWorkingCopy
         Process process = Runtime.getRuntime().exec(cmdv, null, getDirectory());
         String result = Processes.iocap(process, Charset.defaultCharset());
         Iterable<String> lines = new StringSource(result).to(StreamReading.class).lines();
-        return NativeGitLogParser.parse(lines);
+        return NativeGitLogParser.parse(this, lines, options);
+    }
+
+    @Override
+    public Iterable<String> getDiff(String name, String version)
+            throws IOException, InterruptedException {
+        File file = new File(getDirectory(), name);
+        if (!file.exists())
+            logger.warn("Non-existing file: " + file);
+
+        List<String> cmdl = new ArrayList<String>();
+
+        /**
+         * git log [--follow] name
+         */
+        cmdl.add("git");
+        cmdl.add("show");
+        cmdl.add(version);
+        cmdl.add("--");
+        cmdl.add(name);
+
+        String[] cmdv = cmdl.toArray(new String[0]);
+        // logger.debug("Execute: ", StringArray.join(" ", cmdv));
+
+        Process process = Runtime.getRuntime().exec(cmdv, null, getDirectory());
+        String result = Processes.iocap(process, Charset.defaultCharset());
+        return new StringSource(result).to(StreamReading.class).lines();
     }
 
 }

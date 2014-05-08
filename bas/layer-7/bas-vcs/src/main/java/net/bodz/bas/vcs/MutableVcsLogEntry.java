@@ -23,8 +23,8 @@ public class MutableVcsLogEntry
     private String subject;
     private String body;
 
-    private final List<IVcsLogEntry> parents;
-    private final List<IFileChangement> changes;
+    private List<IVcsLogEntry> parents;
+    private List<IFileChangement> changes;
 
     public MutableVcsLogEntry() {
         parents = new ArrayList<IVcsLogEntry>();
@@ -155,6 +155,10 @@ public class MutableVcsLogEntry
     @Override
     public List<IFileChangement> getChanges() {
         return changes;
+    }
+
+    public void setChanges(List<IFileChangement> changes) {
+        this.changes = changes;
     }
 
     @Override

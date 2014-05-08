@@ -4,7 +4,7 @@ public enum FileChangeStatus {
 
     ADD,
 
-    REMOVE,
+    DELETE,
 
     RENAME,
 
