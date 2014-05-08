@@ -3,6 +3,8 @@ package net.bodz.bas.t.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.err.IteratorTargetException;
+
 public abstract class PrefetchedIterator<T>
         implements Iterator<T> {
 
@@ -69,6 +71,8 @@ public abstract class PrefetchedIterator<T>
      * Fetch the next element and return.
      * 
      * @return Ignored if ended.
+     * @throws IteratorTargetException
+     *             If something wrong inside the fetch function.
      */
     protected abstract T fetch();
 
