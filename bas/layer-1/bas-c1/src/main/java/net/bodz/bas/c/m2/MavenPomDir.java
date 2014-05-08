@@ -95,15 +95,15 @@ public class MavenPomDir {
         return new File(path);
     }
 
-    public File getSiblingResource(File dir) {
-        String path = dir.getPath();
+    public File getSiblingResource(File javaOrClassFile) {
+        String path = javaOrClassFile.getPath();
         path = FilePath.toUnixStyle(path);
         // src/main/java => src/main/resources
         // target/classes => src/main/resources
         // target/test-classes => src/test/resources
-        path = path.replaceFirst("/src/main/java", "/src/main/resources");
-        path = path.replaceFirst("/target/classes", "/src/main/resources");
-        path = path.replaceFirst("/target/test-classes", "/src/test/resources");
+        path = path.replaceFirst("/src/main/java/", "/src/main/resources/");
+        path = path.replaceFirst("/target/classes/", "/src/main/resources/");
+        path = path.replaceFirst("/target/test-classes/", "/src/test/resources/");
         return new File(path);
     }
 
