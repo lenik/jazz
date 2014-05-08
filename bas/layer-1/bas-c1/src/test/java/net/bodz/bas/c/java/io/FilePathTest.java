@@ -18,6 +18,8 @@ public class FilePathTest
         d.o("..",/* input */"a/b", "a");
         d.o(".",/* input */"a/b", "a/");
         d.o("b",/* input */"a/b", "a/b");
+        d.o("a/b",/* input */"a", "a/b");
+        d.o("b",/* input */"a/", "a/b");
     }
 
 }
