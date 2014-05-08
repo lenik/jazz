@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.CopyOption;
 import java.nio.file.OpenOption;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -69,7 +70,7 @@ public class FileHandler
     // private Charset outputCharset;
     private OpenOption[] inputOpenOptions = {};
     private OpenOption[] outputOpenOptions = {};
-    private CopyOption[] copyOptions = {};
+    private CopyOption[] copyOptions = { StandardCopyOption.REPLACE_EXISTING };
     private DeleteOption[] deleteOptions = {};
 
     private IVfsFacade vfs = DefaultVfsFacade.getInstance();
@@ -564,7 +565,7 @@ public class FileHandler
     synchronized boolean checkDiffOnce(IFile source, IFile target)
             throws IOException {
         if (diffComparator == null)
-            return FileDiff.equals(source, target);
+            return !FileDiff.equals(source, target);
         else {
             if (diffs == null)
                 diffs = FileDiff.compareDiff(source, target, diffComparator);
