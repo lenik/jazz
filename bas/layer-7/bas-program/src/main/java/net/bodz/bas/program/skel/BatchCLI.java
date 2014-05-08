@@ -134,7 +134,7 @@ public abstract class BatchCLI
     private IFile _contextFile;
     private IPath _contextPath;
     private String _tmpPrefix = getClass().getSimpleName() + "-";
-    private StatNode _statRoot;
+    private StatNode _statRoot = new StatNode();
 
     class DefaultFileFilter
             implements IFilter<IFile> {
