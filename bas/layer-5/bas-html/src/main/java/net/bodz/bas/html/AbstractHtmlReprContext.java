@@ -2,6 +2,7 @@ package net.bodz.bas.html;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.req.IMethodOfRequest;
 import net.bodz.bas.repr.req.IResultOfRequest;
@@ -14,6 +15,12 @@ public abstract class AbstractHtmlReprContext
     public ITokenQueue getTokenQueue() {
         HttpServletRequest request = getRequest();
         return (ITokenQueue) request.getAttribute(ITokenQueue.ATTRIBUTE_KEY);
+    }
+
+    @Override
+    public IPathArrival getPathArrival() {
+        HttpServletRequest request = getRequest();
+        return (IPathArrival) request.getAttribute(IPathArrival.ATTRIBUTE_KEY);
     }
 
     @Override

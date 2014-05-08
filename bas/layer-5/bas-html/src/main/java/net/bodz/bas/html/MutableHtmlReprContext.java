@@ -1,5 +1,6 @@
 package net.bodz.bas.html;
 
+import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.req.IMethodOfRequest;
 import net.bodz.bas.repr.req.IResultOfRequest;
@@ -13,6 +14,7 @@ public class MutableHtmlReprContext
         implements IRestfulReprContext {
 
     ITokenQueue tokenQueue;
+    IPathArrival pathArrival;
     IMethodOfRequest methodOfRequest;
     IResultOfRequest resultOfRequest;
     IViewOfRequest viewOfRequest;
@@ -21,6 +23,7 @@ public class MutableHtmlReprContext
         if (o == null)
             throw new NullPointerException("o");
         tokenQueue = o.getTokenQueue();
+        pathArrival = o.getPathArrival();
         methodOfRequest = o.getMethodOfRequest();
         resultOfRequest = o.getResultOfRequest();
         viewOfRequest = o.getViewOfRequest();
@@ -30,6 +33,7 @@ public class MutableHtmlReprContext
         if (o == null)
             throw new NullPointerException("o");
         tokenQueue = o.tokenQueue;
+        pathArrival = o.pathArrival;
         methodOfRequest = o.methodOfRequest;
         resultOfRequest = o.resultOfRequest;
         viewOfRequest = o.viewOfRequest;
@@ -42,6 +46,15 @@ public class MutableHtmlReprContext
 
     public void setTokenQueue(ITokenQueue tokenQueue) {
         this.tokenQueue = tokenQueue;
+    }
+
+    @Override
+    public IPathArrival getPathArrival() {
+        return pathArrival;
+    }
+
+    public void setPathArrival(IPathArrival pathArrival) {
+        this.pathArrival = pathArrival;
     }
 
     @Override

@@ -50,6 +50,15 @@ public class PathArrival
     }
 
     @Override
+    public IPathArrival getPrevious(int n) {
+        IPathArrival a = this;
+        for (int i = 0; i < n; i++)
+            if ((a = a.getPrevious()) == null)
+                break;
+        return a;
+    }
+
+    @Override
     public String[] getConsumedTokens() {
         return consumedTokens;
     }
