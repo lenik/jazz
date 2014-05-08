@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilderFactory;
@@ -29,6 +31,7 @@ public class PathFramesVbo
     @Override
     public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<IPathArrival> ref, IOptions options)
             throws ViewBuilderException, IOException {
+        HttpServletResponse resp = ctx.getResponse();
         IPathArrival arrival = ref.get();
 
         List<Frame> frames = new ArrayList<Frame>();
@@ -60,8 +63,7 @@ public class PathFramesVbo
         int size = frames.size();
         for (int i = size - 1; i >= 0; i--) {
             Frame frame = frames.get(i);
-            // System.out.println("A: " + frame.arrival);
-            // System.out.println("    VBO: " + frame.viewBuilder);
+            resp.addHeader("X-Path-Frame", frame.viewBuilder.getClass().getSimpleName());
             frame.ctx0 = ctx;
             ctx = frame.viewBuilder.buildHtmlView(ctx, frame, viewOptions);
         }

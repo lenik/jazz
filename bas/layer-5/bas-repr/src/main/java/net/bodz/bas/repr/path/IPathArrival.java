@@ -6,12 +6,16 @@ import net.bodz.bas.meta.decl.Shortcut;
 
 public interface IPathArrival {
 
+    String ATTRIBUTE_KEY = IPathArrival.class.getCanonicalName();
+
     /**
      * Get the previous arrival node.
      * 
      * @return Previous arrival node, <code>null</code> if none.
      */
     IPathArrival getPrevious();
+
+    IPathArrival getPrevious(int n);
 
     /**
      * The partial path tokens consumed by this context.
