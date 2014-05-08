@@ -3,6 +3,7 @@ package net.bodz.bas.vcs;
 public class FileChangement
         implements IFileChangement {
 
+    IVcsWorkingCopy workingCopy;
     String path;
     FileChangeStatus status = FileChangeStatus.MODIFY;
     String renamedFrom;
@@ -10,6 +11,15 @@ public class FileChangement
 
     int addedLines;
     int removedLines;
+
+    public FileChangement(IVcsWorkingCopy workingCopy) {
+        this.workingCopy = workingCopy;
+    }
+
+    @Override
+    public IVcsWorkingCopy getWorkingCopy() {
+        return workingCopy;
+    }
 
     @Override
     public String getPath() {

@@ -2,6 +2,8 @@ package net.bodz.bas.vcs;
 
 public interface IFileChangement {
 
+    IVcsWorkingCopy getWorkingCopy();
+
     String getPath();
 
     FileChangeStatus getStatus();
