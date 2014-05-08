@@ -174,6 +174,8 @@ public abstract class AbstractXmlOut
     @Override
     public void attribute(String name, Object value) {
         checkName(name);
+        if (value == null)
+            return;
 
         String valStr = value.toString();
 
