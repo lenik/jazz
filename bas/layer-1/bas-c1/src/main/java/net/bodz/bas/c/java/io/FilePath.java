@@ -64,6 +64,8 @@ public class FilePath {
     }
 
     /**
+     * This function return a relative path used for href: it treats trailing slash carefully.
+     *
      * @param path
      *            Should be in canonical form
      * @param ref
@@ -95,7 +97,7 @@ public class FilePath {
             }
         }
 
-        int lastSlash = path.lastIndexOf('/', clen);
+        int lastSlash = path.lastIndexOf('/', clen - 1);
         if (lastSlash == -1)
             clen = 0;
         else
