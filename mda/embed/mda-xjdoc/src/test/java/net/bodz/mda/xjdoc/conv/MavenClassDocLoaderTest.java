@@ -24,7 +24,7 @@ public class MavenClassDocLoaderTest
         MavenClassDocLoader loader = new MavenClassDocLoader();
         ClassDoc doc = loader.load(MavenClassDocLoaderTest.class);
 
-        iString label = doc.getLabel();
+        iString label = (iString) doc.getTag("label");
         assertEquals("测试", label.toString());
 
         iString text = doc.getText();

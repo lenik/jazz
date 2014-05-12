@@ -8,24 +8,8 @@ import net.bodz.bas.sugar.IToChain;
 public interface IElementDoc
         extends IToChain {
 
-    /**
-     * Get the (canonical/unique) element name.
-     *
-     * @return Non-<code>null</code> element name.
-     */
-    String getName();
-
-    /**
-     * Set the (canonical/unique) element name.
-     *
-     * @param name
-     *            Non-<code>null</code> element name.
-     */
-    void setName(String name);
-
-    iString getLabel();
-
-    void setLabel(iString label);
+    String LABEL = "label";
+    String DESCRIPTION = "description";
 
     /**
      * The main text of the element.
@@ -54,6 +38,15 @@ public interface IElementDoc
      * @return <code>null</code> if the tag isn't defined.
      */
     Object getTag(String tagName);
+
+    /**
+     * Get the value of a named tag.
+     *
+     * The tag value type may be scalar, collection, map, or other user type.
+     *
+     * @return <code>null</code> if the tag isn't defined.
+     */
+    iString getTextTag(String tagName);
 
     /**
      * Get the value of a named tag, with value type checked.

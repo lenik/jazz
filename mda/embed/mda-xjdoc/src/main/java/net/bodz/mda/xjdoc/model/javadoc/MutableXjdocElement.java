@@ -2,7 +2,6 @@ package net.bodz.mda.xjdoc.model.javadoc;
 
 import java.io.Serializable;
 
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
@@ -33,13 +32,9 @@ public class MutableXjdocElement
         if (applyToElementProperties) {
             if (xjdoc == null)
                 throw new NullPointerException("xjdoc");
-
-            setName(xjdoc.getName());
-            setLabel(xjdoc.getLabel());
-
-            iString text = xjdoc.getText();
-            setDescription(text.headPar());
-            setHelpDoc(text.tailPar());
+            setLabel(xjdoc.getTextTag(IElementDoc.LABEL));
+            setDescription(xjdoc.getTextTag(IElementDoc.DESCRIPTION));
+            setHelpDoc(xjdoc.getText());
         }
     }
 

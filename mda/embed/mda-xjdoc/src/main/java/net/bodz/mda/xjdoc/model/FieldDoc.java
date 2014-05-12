@@ -10,10 +10,11 @@ public class FieldDoc
         extends MutableElementDoc
         implements IFieldDoc {
 
-    final ClassDoc classDoc;
+    private String name;
+    private final ClassDoc classDoc;
 
     public FieldDoc(ClassDoc classDoc, String name) {
-        super(name);
+        this.name = name;
         this.classDoc = classDoc;
     }
 
@@ -21,7 +22,7 @@ public class FieldDoc
 
     public static FieldDoc n_a(ClassDoc classDoc, String name) {
         FieldDoc fieldDoc = new FieldDoc(classDoc, name);
-        fieldDoc.setLabel(NO_LABEL);
+        fieldDoc.setTag(LABEL, NO_LABEL);
         // fieldDoc.setDescription(iString.fn.val(name));
         fieldDoc.setText(iString.fn.val(name));
         return fieldDoc;
@@ -38,7 +39,7 @@ public class FieldDoc
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)
             throws IOException {
-        out.beginSection("field:" + getName());
+        out.beginSection("field:" + name);
         super.writeObject(out, options);
         out.endSection();
     }
