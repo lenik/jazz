@@ -66,7 +66,7 @@ public class TreeiString
 
     @Override
     public String toParaLangString(String separator) {
-        return iString.fn.toParaLangString(this, separator);
+        return ParaLangStrings.format(this, separator);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class TreeiString
 
     @Override
     public String toMultiLangString(String langSeparator, String lineSeparator) {
-        return iString.fn.toMultiLangString(this, langSeparator, lineSeparator);
+        return MultiLangStrings.format(this, langSeparator, lineSeparator);
     }
 
     @Override

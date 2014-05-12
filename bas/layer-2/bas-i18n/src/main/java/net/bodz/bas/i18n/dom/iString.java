@@ -1,7 +1,5 @@
 package net.bodz.bas.i18n.dom;
 
-import net.bodz.bas.err.ParseException;
-
 /**
  * I18n-capable String
  */
@@ -60,62 +58,6 @@ public interface iString
 
         public static iString val(String plainString) {
             return new XiString(plainString);
-        }
-
-        /**
-         * A para-lang string is formatted as:
-         * 
-         * <pre>
-         * string for default-locale
-         * 
-         * &lt;p lang="LOCALE1"&gt;
-         *      string for locale1...
-         * 
-         * &lt;p lang="LOCALE2"&gt;
-         *      string for locale2...
-         * </pre>
-         * 
-         * @see ParaLangString#parse(iString, String)
-         */
-        public static iString parseParaLangString(String plText) {
-            XiString ds = new XiString();
-            ParaLangString.parse(ds, plText);
-            return ds;
-        }
-
-        /**
-         * A multi-lang string is formatted as:
-         * 
-         * <pre>
-         * "default-locale"
-         * LOCALE1 "string for locale1"
-         *         "more..."
-         * LOCALE2 "string for locale2"
-         *         "more..."
-         * </pre>
-         * 
-         * @param mlstr
-         *            multi-lang string to be parsed.
-         * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
-         * @throws ParseException
-         */
-        public static iString parseMultiLangString(String mlstr)
-                throws ParseException {
-            if (mlstr == null)
-                return null;
-            MultiLangStringParser parser = new MultiLangStringParser();
-            return parser.parse(mlstr);
-        }
-
-        public static String toParaLangString(iString s, String separator) {
-            return ParaLangString.format(s, separator);
-        }
-
-        public static String toMultiLangString(iString s, String langSeparator, String lineSeparator) {
-            MultiLangStringFormatter formatter = new MultiLangStringFormatter();
-            formatter.setDomainSeparator(langSeparator);
-            formatter.setLineSeparator(lineSeparator);
-            return formatter.format(s);
         }
 
         public static boolean isEmpty(iString s) {

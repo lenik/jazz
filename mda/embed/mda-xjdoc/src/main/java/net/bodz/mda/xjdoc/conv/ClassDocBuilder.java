@@ -3,13 +3,14 @@ package net.bodz.mda.xjdoc.conv;
 import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.i18n.dom.ParaLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
-import net.bodz.mda.xjdoc.model.MutableElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
+import net.bodz.mda.xjdoc.model.MutableElementDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.tagtype.DefaultTagType;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
@@ -109,7 +110,7 @@ public class ClassDocBuilder {
     void populate(MutableElementDoc elementDoc, AbstractJavaEntity javaEntity, IOptions options) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
-            iString text = iString.fn.parseParaLangString(comment);
+            iString text = ParaLangStrings.parse(comment);
             elementDoc.setText(text);
         }
 

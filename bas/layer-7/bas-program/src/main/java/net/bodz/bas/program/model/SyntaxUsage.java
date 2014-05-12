@@ -1,5 +1,6 @@
 package net.bodz.bas.program.model;
 
+import net.bodz.bas.i18n.dom.ParaLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 
 /**
@@ -37,7 +38,7 @@ public class SyntaxUsage {
             _description = script.substring(lineSep + 1).trim();
         }
 
-        description = iString.fn.parseParaLangString(_description);
+        description = ParaLangStrings.parse(_description);
     }
 
     public String getId() {

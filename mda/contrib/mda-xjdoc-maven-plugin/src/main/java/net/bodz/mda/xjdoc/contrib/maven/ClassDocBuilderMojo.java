@@ -11,6 +11,7 @@ import org.apache.maven.project.MavenProject;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.res.IStreamOutputTarget;
@@ -111,7 +112,7 @@ public class ClassDocBuilderMojo
 
     public void setMissingDoc(String missingDoc)
             throws ParseException {
-        this.missingDoc = iString.fn.parseMultiLangString(missingDoc);
+        this.missingDoc = MultiLangStrings.parse(missingDoc);
     }
 
     @Override

@@ -2,7 +2,9 @@ package net.bodz.bas.i18n.dom;
 
 import net.bodz.bas.c.string.SimpleJavaStringDFA;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.ThreadUnsafe;
 
+@ThreadUnsafe
 public abstract class MultiTagStringParser
         extends SimpleJavaStringDFA {
 
@@ -18,7 +20,7 @@ public abstract class MultiTagStringParser
 
     /**
      * Example: <code>"for default lang" xxx "for xxx" "concat..." ...</code>
-     * 
+     *
      * @return Not used, it should be overrided in the subclass.
      */
     @Override

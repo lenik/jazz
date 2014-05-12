@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sugar.Tooling;
@@ -165,7 +166,7 @@ public class MutableElementDoc
         public void attribute(String name, String string)
                 throws ParseException {
             if (".".equals(name)) {
-                iString text = iString.fn.parseMultiLangString(string);
+                iString text = MultiLangStrings.parse(string);
                 setText(text);
                 return;
             }
