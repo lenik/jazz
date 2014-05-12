@@ -26,6 +26,14 @@ public class ArtifactDoc
         super(_orig);
     }
 
+    public iString getLabel() {
+        return super.getTextTag(LABEL);
+    }
+
+    public iString getDescription() {
+        return super.getTextTag(DESCRIPTION);
+    }
+
     public Set<String> getUsedLangs() {
         Set<String> langs = new LinkedHashSet<String>();
 

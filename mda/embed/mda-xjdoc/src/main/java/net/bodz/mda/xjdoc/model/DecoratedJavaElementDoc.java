@@ -16,26 +16,6 @@ public abstract class DecoratedJavaElementDoc
     }
 
     @Override
-    public String getName() {
-        return getWrapped().getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        getWrapped().setName(name);
-    }
-
-    @Override
-    public iString getLabel() {
-        return getWrapped().getLabel();
-    }
-
-    @Override
-    public void setLabel(iString label) {
-        getWrapped().setLabel(label);
-    }
-
-    @Override
     public iString getText() {
         return getWrapped().getText();
     }
@@ -53,6 +33,11 @@ public abstract class DecoratedJavaElementDoc
     @Override
     public <T> T getTag(String tagName, Class<T> tagValueType) {
         return getWrapped().getTag(tagName, tagValueType);
+    }
+
+    @Override
+    public iString getTextTag(String tagName) {
+        return getWrapped().getTextTag(tagName);
     }
 
     @Override

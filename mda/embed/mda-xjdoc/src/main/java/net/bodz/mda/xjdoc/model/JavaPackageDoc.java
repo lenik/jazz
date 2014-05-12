@@ -8,12 +8,10 @@ import net.bodz.bas.text.flatf.IFlatfOutput;
 public class JavaPackageDoc
         extends MutableElementDoc {
 
-    public JavaPackageDoc() {
-        super();
-    }
+    String fqpn;
 
-    public JavaPackageDoc(String name) {
-        super(name);
+    public JavaPackageDoc(String fqpn) {
+        this.fqpn = fqpn;
     }
 
     @Override

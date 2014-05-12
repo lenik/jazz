@@ -60,14 +60,9 @@ public abstract class AbstractXjdocElement
     }
 
     @Override
-    public String getName() {
-        return getXjdoc().getName();
-    }
-
-    @Override
     public iString getLabel() {
         if (label == null)
-            label = getXjdoc().getLabel();
+            label = getXjdoc().getTextTag(IElementDoc.LABEL);
         return label;
     }
 
@@ -80,10 +75,8 @@ public abstract class AbstractXjdocElement
      */
     @Override
     public synchronized iString getDescription() {
-        if (description == null) {
-            iString text = getXjdoc().getText();
-            description = fn.extractDescription(text);
-        }
+        if (description == null)
+            description = getXjdoc().getTextTag(IElementDoc.DESCRIPTION);
         return description;
     }
 
@@ -96,10 +89,8 @@ public abstract class AbstractXjdocElement
      */
     @Override
     public synchronized iString getHelpDoc() {
-        if (helpDoc == null) {
-            iString text = getXjdoc().getText();
-            helpDoc = fn.extractHelpDoc(text);
-        }
+        if (helpDoc == null)
+            helpDoc = getXjdoc().getText();
         return helpDoc;
     }
 

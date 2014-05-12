@@ -81,22 +81,4 @@ public interface IElement {
      */
     int getModifiers();
 
-    class fn {
-
-        public static iString extractDescription(iString text) {
-            if (text == null)
-                return null;
-            else
-                return text.headPar();
-        }
-
-        public static iString extractHelpDoc(iString text) {
-            if (text == null)
-                return null;
-            else
-                return text.tailPar();
-        }
-
-    }
-
 }

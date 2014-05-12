@@ -18,19 +18,22 @@ public class ClassDoc
         extends MutableElementDoc
         implements IClassDoc {
 
+    private String fqcn;
     private ImportMap imports;
     private Map<String, FieldDoc> fieldDocs;
     private Map<MethodId, MethodDoc> methodDocs;
 
     public ClassDoc(String fqcn) {
-        super(fqcn);
+        this.fqcn = fqcn;
         fieldDocs = new LinkedHashMap<String, FieldDoc>();
         methodDocs = new LinkedHashMap<MethodId, MethodDoc>();
     }
 
+    static iString NO_LABEL = null; // iString.fn.val("no label");
+
     public static ClassDoc n_a(String fqcn) {
         ClassDoc classDoc = new ClassDoc(fqcn);
-        classDoc.setLabel(iString.fn.val("no label"));
+        classDoc.setTag(LABEL, NO_LABEL);
         // classDoc.setDescription(iString.fn.val(fqcn));
         classDoc.setText(iString.fn.val(fqcn));
         return classDoc;
@@ -44,7 +47,6 @@ public class ClassDoc
     @Override
     public synchronized ImportMap getOrCreateImports() {
         if (imports == null) {
-            String fqcn = getName();
             String packageName;
             int lastDot = fqcn.lastIndexOf('.');
             if (lastDot == -1)

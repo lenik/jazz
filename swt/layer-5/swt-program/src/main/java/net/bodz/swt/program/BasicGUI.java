@@ -184,7 +184,7 @@ public abstract class BasicGUI
 
     protected String getTitle() {
         ArtifactDoc artifactDoc = getXjdoc();
-        String title = artifactDoc.getName();
+        String title = getName();
 
         iString text = artifactDoc.getText();
         title += ": " + text;

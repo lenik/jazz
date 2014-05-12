@@ -17,8 +17,6 @@ public class MethodDoc
     final MethodId methodId;
 
     public MethodDoc(ClassDoc classDoc, MethodId methodId) {
-        // super(signature.getMethodId(null));
-        super(methodId.getMethodName());
         this.classDoc = classDoc;
         this.methodId = methodId;
     }
@@ -27,7 +25,7 @@ public class MethodDoc
 
     public static MethodDoc n_a(ClassDoc classDoc, MethodId methodId) {
         MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
-        methodDoc.setLabel(NO_LABEL);
+        methodDoc.setTag(LABEL, NO_LABEL);
         methodDoc.setText(iString.fn.val(methodId));
         return methodDoc;
     }

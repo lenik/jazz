@@ -22,38 +22,10 @@ import net.bodz.mda.xjdoc.tagtype.ITagType;
 public class MutableElementDoc
         implements IElementDoc, IFlatfSerializable {
 
-    String name;
     iString text = iString.NULL;
     Map<String, Object> tagMap = new LinkedHashMap<String, Object>();
 
     public MutableElementDoc() {
-    }
-
-    public MutableElementDoc(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        if (name == null)
-            throw new NullPointerException("name");
-        this.name = name;
-    }
-
-    @Override
-    public iString getLabel() {
-        iString label = (iString) getTag("label");
-        return label;
-    }
-
-    @Override
-    public void setLabel(iString label) {
-        setTag("label", label);
     }
 
     @Override
@@ -71,6 +43,11 @@ public class MutableElementDoc
     @Override
     public Object getTag(String tagName) {
         return tagMap.get(tagName);
+    }
+
+    @Override
+    public iString getTextTag(String tagName) {
+        return getTag(tagName, iString.class);
     }
 
     @Override
@@ -213,15 +190,15 @@ public class MutableElementDoc
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        iString label = getLabel();
+        iString label = getTextTag(LABEL);
         if (!iString.fn.isEmpty(label)) {
             sb.append(label);
             sb.append(": ");
         }
 
-        iString text = getText();
-        if (!iString.fn.isEmpty(text))
-            sb.append(text);
+        iString description = getTextTag(DESCRIPTION);
+        if (!iString.fn.isEmpty(description))
+            sb.append(description);
 
         return sb.toString();
     }
