@@ -216,14 +216,25 @@ public abstract class AbstractXmlOut
         int len = cdata.length();
         while (start < len) {
             int brk = cdata.indexOf("]]>", start);
-            int end = brk == -1 ? len : (brk + 2);
+            int end = brk == -1 ? len : brk;
 
             print("<![CDATA[");
             print(cdata.substring(start, end));
             print("]]>");
 
+            if (brk != -1) {
+                print("]]&gt;");
+                end += 3;
+            }
+
             start = end;
         }
+    }
+
+    @Override
+    public void verbatim(String str) {
+        ensureTextState();
+        print(str);
     }
 
     void ensureTextState() {

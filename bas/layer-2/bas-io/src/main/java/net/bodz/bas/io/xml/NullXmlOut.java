@@ -73,4 +73,8 @@ public class NullXmlOut
     public void cdata(String cdata) {
     }
 
+    @Override
+    public void verbatim(String str) {
+    }
+
 }
