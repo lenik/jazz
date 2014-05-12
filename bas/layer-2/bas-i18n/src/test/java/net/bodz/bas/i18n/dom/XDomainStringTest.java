@@ -9,14 +9,14 @@ public class XDomainStringTest
         extends Assert {
 
     String pl1 = "Default<p  \n lang=\"zh-cn\"  />中文<p lang='et'>Esperanto";
-    iString dstr1 = iString.fn.parseParaLangString(pl1);
+    iString dstr1 = ParaLangStrings.parse(pl1);
 
     String _hello = "Hello<p  \n lang=\"zh-cn\"  />你好<p lang='et'>Saluton";
     String _space = " <p  \n lang=\"zh\"  />　";
     String _world = "World<p  \n lang=\"zh-cn\"  />世界<p lang='et'>La mondo";
-    iString hello = iString.fn.parseParaLangString(_hello);
-    iString space = iString.fn.parseParaLangString(_space);
-    iString world = iString.fn.parseParaLangString(_world);
+    iString hello = ParaLangStrings.parse(_hello);
+    iString space = ParaLangStrings.parse(_space);
+    iString world = ParaLangStrings.parse(_world);
 
     @Test
     public void testDumpContent() {
@@ -51,7 +51,7 @@ public class XDomainStringTest
 
     @Test
     public void testParseNullParaLang() {
-        XiString dstr = (XiString) iString.fn.parseParaLangString("");
+        XiString dstr = (XiString) ParaLangStrings.parse("");
         assertEquals("", dstr.getValue());
     }
 

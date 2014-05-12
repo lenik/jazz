@@ -4,7 +4,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ParaLangString {
+public class ParaLangStrings {
 
     public static String format(iString ds) {
         return format(ds, "\n");
@@ -34,6 +34,27 @@ public class ParaLangString {
     static final int LANG_GROUP = 2;
     static {
         TAG_PATTERN = Pattern.compile("<p\\s+lang=([\'\"])(.*?)\\1.*?>");
+    }
+
+    /**
+     * A para-lang string is formatted as:
+     *
+     * <pre>
+     * string for default-locale
+     *
+     * &lt;p lang="LOCALE1"&gt;
+     *      string for locale1...
+     *
+     * &lt;p lang="LOCALE2"&gt;
+     *      string for locale2...
+     * </pre>
+     *
+     * @see ParaLangStrings#parse(iString, String)
+     */
+    public static iString parse(String plText) {
+        XiString ds = new XiString();
+        ParaLangStrings.parse(ds, plText);
+        return ds;
     }
 
     public static void parse(iString output, String plText) {

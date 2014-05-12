@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map.Entry;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
@@ -52,7 +53,7 @@ public class LocaleSpecI18nStringTagType
     @Override
     public iString parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
-        iString text = iString.fn.parseMultiLangString(string);
+        iString text = MultiLangStrings.parse(string);
         return text;
     }
 

@@ -1,7 +1,9 @@
 package net.bodz.bas.i18n.dom;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.ThreadUnsafe;
 
+@ThreadUnsafe
 public class MultiLangStringParser
         extends MultiTagStringParser {
 
@@ -9,7 +11,7 @@ public class MultiLangStringParser
 
     /**
      * Parse multi-lang string in format of <code>lang1 "..." lang2 "..."</code> into domain string.
-     * 
+     *
      * @return The parsed {@link iString domain string}.
      * @throws ParseException
      */

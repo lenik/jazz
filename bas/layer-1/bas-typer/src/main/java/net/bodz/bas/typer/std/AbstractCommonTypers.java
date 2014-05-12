@@ -138,7 +138,7 @@ public abstract class AbstractCommonTypers<T>
     /* _____________________________ */static section.iface __FORMAT__;
 
     @Override
-    public final String format(T object) {
+    public String format(T object) {
         return format(object, IOptions.NULL);
     }
 
@@ -151,7 +151,7 @@ public abstract class AbstractCommonTypers<T>
     /* _____________________________ */static section.iface __PARSE__;
 
     @Override
-    public final T parse(String text)
+    public T parse(String text)
             throws ParseException {
         return parse(text, IOptions.NULL);
     }

@@ -70,4 +70,6 @@ public class StringTypers
         return sample.toString();
     }
 
+    public static StringTypers INSTANCE = new StringTypers();
+
 }
