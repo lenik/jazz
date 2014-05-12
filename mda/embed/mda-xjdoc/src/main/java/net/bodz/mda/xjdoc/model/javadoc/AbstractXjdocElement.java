@@ -36,6 +36,7 @@ public abstract class AbstractXjdocElement
                 if (!xjdocLoaded) {
                     try {
                         xjdoc = loadXjdoc();
+                        XjdocModifier.process(xjdoc);
                     } catch (Exception e) {
                         throw new LazyLoadException(e.getMessage(), e);
                     }

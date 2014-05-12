@@ -29,6 +29,10 @@ public class BrokenCharsTokenizer
         return nextStart;
     }
 
+    public String getRemaining() {
+        return str.substring(nextStart);
+    }
+
     @Override
     public String fetch() {
         if (ended)
