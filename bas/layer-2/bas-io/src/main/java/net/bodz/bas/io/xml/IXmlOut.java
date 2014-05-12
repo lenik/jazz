@@ -71,6 +71,8 @@ public interface IXmlOut
 
     void cdata(String cdata);
 
+    void verbatim(String str);
+
     IXmlOut NULL = new NullXmlOut();
 
 }
