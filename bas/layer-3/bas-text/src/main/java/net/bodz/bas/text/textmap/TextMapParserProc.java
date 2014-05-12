@@ -9,7 +9,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.typer.std.IParser;
 
-public class TextMapParserImpl<K, V> {
+public class TextMapParserProc<K, V> {
 
     private IParser<K> keyParser;
     private IParser<V> valueParser;
@@ -27,7 +27,7 @@ public class TextMapParserImpl<K, V> {
     private String key;
     private StringBuilder buffer;
 
-    public TextMapParserImpl(IParser<K> keyParser, IParser<V> valueParser) {
+    public TextMapParserProc(IParser<K> keyParser, IParser<V> valueParser) {
         if (keyParser == null)
             throw new NullPointerException("keyParser");
         if (valueParser == null)
@@ -81,11 +81,11 @@ public class TextMapParserImpl<K, V> {
         int len = line.length();
         if (len >= keyPatternLen) {
             if (line.substring(0, keyStartLen).equals(format.keyStartPattern)
-                    && line.substring(len - keyEndLen - 1).equals(format.keyEndPattern)) {
+                    && line.substring(len - keyEndLen).equals(format.keyEndPattern)) {
                 Pair<String, String> pair = null;
                 if (key != null)
                     pair = Pair.of(key, buffer.toString());
-                key = line.substring(keyStartLen, len - keyEndLen - 1);
+                key = line.substring(keyStartLen, len - keyEndLen);
                 buffer.setLength(0);
                 return pair;
             }
@@ -115,11 +115,11 @@ public class TextMapParserImpl<K, V> {
 
         int startLen = 0;
         for (int i = 0; i < len; i++) {
-            int ch = line.charAt(i);
+            char ch = line.charAt(i);
             if (Character.isWhitespace(ch))
                 throw new BadFormatException("First line has leading space.");
-            if (!Character.isLetterOrDigit(ch)) {
-                startLen = i + 1;
+            if (Character.isLetterOrDigit(ch)) {
+                startLen = i;
                 break;
             }
         }
@@ -129,7 +129,7 @@ public class TextMapParserImpl<K, V> {
             char ch = line.charAt(i);
             if (Character.isWhitespace(ch))
                 throw new BadFormatException("First line has trailing space.");
-            if (!Character.isLetterOrDigit(ch)) {
+            if (Character.isLetterOrDigit(ch)) {
                 endLen = len - i - 1;
                 break;
             }
@@ -139,7 +139,9 @@ public class TextMapParserImpl<K, V> {
             throw new BadFormatException("First line doesn't include start/end pattern.");
 
         format.keyStartPattern = line.substring(0, startLen);
-        format.keyEndPattern = line.substring(len - endLen - 1);
+        format.keyEndPattern = line.substring(len - endLen);
+        keyStartLen = startLen;
+        keyEndLen = endLen;
         keyPatternLen = startLen + endLen;
     }
 

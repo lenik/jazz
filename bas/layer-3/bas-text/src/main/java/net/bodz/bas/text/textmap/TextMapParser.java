@@ -8,7 +8,7 @@ import net.bodz.bas.t.iterator.PrefetchedIterator;
 import net.bodz.bas.typer.std.IParser;
 
 public class TextMapParser<K, V>
-        extends TextMapParserImpl<K, V>
+        extends TextMapParserProc<K, V>
         implements Iterable<Entry<K, V>> {
 
     private Iterator<String> lines;
