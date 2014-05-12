@@ -250,19 +250,19 @@ public class StringPart {
     }
 
     public static String getHeadPar(String str) {
-        String par = str.trim();
-        int newline = par.indexOf('\n');
-        if (newline != -1)
-            par = par.substring(0, newline).trim();
-        return par;
+        BrokenCharsTokenizer nl2toks = new BrokenCharsTokenizer(str, '\n', '\n');
+        if (nl2toks.hasNext())
+            return nl2toks.next();
+        return null;
     }
 
     public static String getTailPar(String str) {
-        String par = str.trim();
-        int newline = par.indexOf('\n');
-        if (newline != -1)
-            par = par.substring(newline + 1).trim();
-        return par;
+        BrokenCharsTokenizer nl2toks = new BrokenCharsTokenizer(str, '\n', '\n');
+        if (!nl2toks.hasNext())
+            return null;
+        nl2toks.next();
+        int nextStart = nl2toks.getNextStart();
+        return str.substring(nextStart);
     }
 
     public static String peekDecimal(String str) {

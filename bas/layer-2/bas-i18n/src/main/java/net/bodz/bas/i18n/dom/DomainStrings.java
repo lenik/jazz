@@ -2,6 +2,8 @@ package net.bodz.bas.i18n.dom;
 
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.string.BrokenCharsTokenizer;
+
 public class DomainStrings {
 
     public static iString concat(iString... dstrings) {
@@ -34,19 +36,14 @@ public class DomainStrings {
         iString par = new XiString();
         for (Entry<String, String> entry : text.entrySet()) {
             String domain = entry.getKey();
-            String _text = entry.getValue();
-            if (_text == null)
+            String str = entry.getValue();
+            if (str == null)
                 continue;
 
-            String _header;
+            BrokenCharsTokenizer pars = new BrokenCharsTokenizer(str, '\n', '\n');
+            String head = pars.next();
 
-            int parbreak = indexOfParbreak(_text);
-            if (parbreak == -1)
-                _header = _text;
-            else
-                _header = _text.substring(0, parbreak);
-
-            par.put(domain, _header.trim());
+            par.put(domain, head.trim());
         }
         return par;
     }
@@ -55,42 +52,17 @@ public class DomainStrings {
         iString par = new XiString();
         for (Entry<String, String> entry : text.entrySet()) {
             String domain = entry.getKey();
-            String _text = entry.getValue();
-            if (_text == null)
+            String str = entry.getValue();
+            if (str == null)
                 continue;
 
-            String _body;
+            BrokenCharsTokenizer pars = new BrokenCharsTokenizer(str, '\n', '\n');
+            pars.next();
+            String tail = pars.hasNext() ? pars.next() : "";
 
-            int parbreak = indexOfParbreak(_text);
-            if (parbreak == -1)
-                continue;
-            else
-                _body = _text.substring(parbreak + 1);
-
-            par.put(domain, _body.trim());
+            par.put(domain, tail.trim());
         }
         return par;
-    }
-
-    static int indexOfParbreak(String s) {
-        int off = 0;
-        while ((off = s.indexOf('\n', off)) != -1) {
-            int ahead = off + 1;
-            if (ahead < s.length()) {
-                char ch = s.charAt(ahead);
-                if (ch == '\n') // \n\n
-                    return off;
-                String after = s.substring(off + 1).trim();
-                if (!after.isEmpty()) {
-                    ch = after.charAt(0);
-                    if (ch == '-') // \n- Here '-' is a special char for line-continue.
-                        continue;
-                    if (!Character.isAlphabetic(ch)) // \n<punct>
-                        return off;
-                }
-            }
-        }
-        return -1;
     }
 
 }
