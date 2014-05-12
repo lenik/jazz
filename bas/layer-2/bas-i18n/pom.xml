@@ -12,6 +12,11 @@
             <artifactId>bas-context</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-typer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: I18n</name>
 </project>
