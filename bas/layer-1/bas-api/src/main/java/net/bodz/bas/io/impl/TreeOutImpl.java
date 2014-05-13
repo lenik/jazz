@@ -150,4 +150,40 @@ public class TreeOutImpl
         printOut.write(ch);
     }
 
+    @Override
+    protected void _flush(boolean strict)
+            throws IOException {
+        printOut.flush(strict);
+    }
+
+    @Override
+    protected void _close()
+            throws IOException {
+        printOut.close();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0x9b675cd7;
+        hash += printOut.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof TreeOutImpl))
+            return false;
+        TreeOutImpl o = (TreeOutImpl) obj;
+        if (!printOut.equals(o.printOut))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return printOut.toString();
+    }
+
 }
