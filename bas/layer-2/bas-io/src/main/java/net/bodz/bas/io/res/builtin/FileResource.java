@@ -96,4 +96,28 @@ public class FileResource
         return null;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof FileResource))
+            return false;
+        FileResource o = (FileResource) obj;
+        if (!file.equals(o.file))
+            return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0xd47cc0ba;
+        hash += file.hashCode();
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return file.toString();
+    }
+
 }

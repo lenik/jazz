@@ -86,6 +86,8 @@ public class PrintOutImpl
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
         if (!(obj instanceof PrintOutImpl))
             return false;
         PrintOutImpl o = (PrintOutImpl) obj;
