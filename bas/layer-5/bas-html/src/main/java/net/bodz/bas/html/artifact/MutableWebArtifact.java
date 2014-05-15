@@ -1,6 +1,6 @@
 package net.bodz.bas.html.artifact;
 
-import net.bodz.bas.http.ctx.IBasePath;
+import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 
@@ -10,29 +10,27 @@ public class MutableWebArtifact
 
     private static final long serialVersionUID = 1L;
 
-    private IBasePath basePath;
-    private String path;
+    private IAnchor anchor;
 
     public MutableWebArtifact() {
     }
 
-    public MutableWebArtifact(String name, String versionStr, ContentType contentType, IBasePath basePath, String path) {
+    public MutableWebArtifact(String name, String versionStr, ContentType contentType, IAnchor anchor) {
         super(name, versionStr, contentType);
-        this.basePath = basePath;
-        this.path = path;
+        this.anchor = anchor;
     }
 
-    public static MutableWebArtifact javascript(String name, String versionStr, IBasePath basePath, String path) {
-        return new MutableWebArtifact(name, versionStr, ContentTypes.text_javascript, basePath, path);
+    public static MutableWebArtifact javascript(String name, String versionStr, IAnchor anchor) {
+        return new MutableWebArtifact(name, versionStr, ContentTypes.text_javascript, anchor);
     }
 
-    public static MutableWebArtifact css(String name, String versionStr, IBasePath basePath, String path) {
-        return new MutableWebArtifact(name, versionStr, ContentTypes.text_css, basePath, path);
+    public static MutableWebArtifact css(String name, String versionStr, IAnchor anchor) {
+        return new MutableWebArtifact(name, versionStr, ContentTypes.text_css, anchor);
     }
 
     @Override
-    public String getHref(String requestURI) {
-        return basePath.from(requestURI) + path;
+    public IAnchor getAnchor() {
+        return anchor;
     }
 
 }
