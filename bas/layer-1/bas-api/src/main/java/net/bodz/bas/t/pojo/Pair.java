@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.object.Nullables;
+
 public class Pair<K, V>
         implements Entry<K, V>, Serializable {
 
@@ -42,30 +44,26 @@ public class Pair<K, V>
 
     @Override
     public boolean equals(Object object) {
-        if (this == object)
+        if (object == this)
             return true;
         if (object == null)
             return false;
-        if (!(object instanceof Pair<?, ?>))
+        if (object.getClass() != Pair.class)
             return false;
-        Pair<?, ?> objectPair = (Pair<?, ?>) object;
-        if (first == null) {
-            if (objectPair.first != null)
-                return false;
-        } else if (!first.equals(objectPair.first))
-            return false;
-        if (second == null) {
-            if (objectPair.second != null)
-                return false;
-        } else if (!second.equals(objectPair.second))
-            return false;
+        return partialEquals((Pair<?, ?>) object);
+    }
 
+    public boolean partialEquals(Pair<?, ?> o) {
+        if (!Nullables.equals(first, o.first))
+            return false;
+        if (!Nullables.equals(second, o.second))
+            return false;
         return true;
     }
 
     @Override
     public int hashCode() {
-        int hash = super.hashCode();
+        int hash = 0xb18e0b25;
         if (first != null)
             hash += first.hashCode();
         if (second != null)
