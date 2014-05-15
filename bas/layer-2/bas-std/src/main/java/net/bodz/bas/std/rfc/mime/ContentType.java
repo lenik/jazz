@@ -17,8 +17,8 @@ public class ContentType
             throw new NullPointerException("name");
         if (preferredExtension == null)
             throw new NullPointerException("preferredExtension");
-        this.name = name;
-        this.preferredExtension = preferredExtension;
+        this.name = name.intern();
+        this.preferredExtension = preferredExtension.intern();
     }
 
     public String getName() {
@@ -27,7 +27,7 @@ public class ContentType
 
     /**
      * The preferred extension name.
-     *
+     * 
      * @return The extension name, without the dot(.).
      */
     public String getPreferredExtension() {
@@ -52,18 +52,10 @@ public class ContentType
         if (getClass() != obj.getClass())
             return false;
 
-        ContentType other = (ContentType) obj;
-
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
+        ContentType o = (ContentType) obj;
+        if (name != o.name)
             return false;
-
-        if (preferredExtension == null) {
-            if (other.preferredExtension != null)
-                return false;
-        } else if (!preferredExtension.equals(other.preferredExtension))
+        if (preferredExtension != o.preferredExtension)
             return false;
 
         return true;

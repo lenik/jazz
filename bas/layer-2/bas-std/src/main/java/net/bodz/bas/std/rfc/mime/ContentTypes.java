@@ -149,6 +149,8 @@ public class ContentTypes {
     /** Comma-separated values; Defined in RFC 4180 */
     public static final ContentType text_csv = register("text/csv", "csv");
 
+    public static final ContentType text_javascript = register("text/javascript", "js");
+
     /** HTML; Defined in RFC 2854 */
     public static final ContentType text_html = register("text/html", "html", "htm");
     public static final ContentType text_xhtml = register("text/xhtml", "xhtml", "xhtm");
