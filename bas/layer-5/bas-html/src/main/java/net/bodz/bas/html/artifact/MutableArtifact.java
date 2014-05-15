@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import net.bodz.bas.html.ConflictedVersionException;
+import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
@@ -61,7 +62,7 @@ public class MutableArtifact
     }
 
     @Override
-    public String getHref(String requestURI) {
+    public IAnchor getAnchor() {
         return null;
     }
 

@@ -139,12 +139,12 @@ public abstract class AbstractHtmlViewBuilder<T>
 
         for (IArtifact artifact : artifactManager.getClosure(metaData, IArtifactDependency.STYLESHEET, null)) {
             MutableWebArtifact wa = (MutableWebArtifact) artifact;
-            out.link().css(wa.getHref(ctx.getRequest().getRequestURI()));
+            out.link().css(wa.getAnchor().toString());
         }
 
         for (IArtifact artifact : artifactManager.getClosure(metaData, IArtifactDependency.SCRIPT, null)) {
             MutableWebArtifact wa = (MutableWebArtifact) artifact;
-            out.script().javascriptSrc(wa.getHref(ctx.getRequest().getRequestURI()));
+            out.script().javascriptSrc(wa.getAnchor().toString());
         }
     }
 
