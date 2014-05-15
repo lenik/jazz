@@ -124,6 +124,9 @@ public abstract class AbstractHtmlViewBuilder<T>
         if (title != null)
             out.title().text(title);
 
+        out.meta().httpEquiv(IHtmlMetaData.HTTP_CONTENT_TYPE).content(ctx.getResponse().getContentType());
+        out.meta().name(IHtmlMetaData.META_GENERATOR).content("Jazz BAS Repr/HTML 2.0");
+
         for (Entry<String, String> entry : metaData.getHttpEquivMetaMap().entrySet())
             out.meta().httpEquiv(entry.getKey()).content(entry.getValue());
 
