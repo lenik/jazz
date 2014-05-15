@@ -1,2 +1,3 @@
+net.bodz.bas.html.artifact.IArtifactProvider
 net.bodz.bas.html.IHtmlViewBuilder
 net.bodz.bas.html.IHtmlViewBuilderFactory

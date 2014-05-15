@@ -16,10 +16,6 @@ import net.bodz.bas.ui.dom1.IUiRef;
 public interface IHtmlViewBuilder<T>
         extends IViewBuilder<T> {
 
-    String HTTP_HEADER = "http";
-    String JAVASCRIPT = "js";
-    String CSS = "css";
-
     ContentType getContentType(T value);
 
     /**
@@ -32,20 +28,20 @@ public interface IHtmlViewBuilder<T>
      */
     boolean isFrame();
 
-    void getRequirements(IRequirements requires);
+    // boolean isDirectory();
 
-    void buildTitle(StringBuilder buffer, T value);
+    void preview(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options);
 
-    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<T> ref)
+    IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<T> ref, IOptions options)
+    IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
-    void buildHtmlViewTail(IHttpReprContext ctx, IUiRef<T> ref)
+    void buildHtmlViewTail(IHtmlViewContext ctx, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    void buildHtmlViewTail(IHttpReprContext ctx, IUiRef<T> ref, IOptions options)
+    void buildHtmlViewTail(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
 }

@@ -12,9 +12,11 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.IHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilderFactory;
-import net.bodz.bas.html.IHttpReprContext;
+import net.bodz.bas.html.IHtmlViewContext;
 import net.bodz.bas.html.IndexedHtmlViewBuilderFactory;
-import net.bodz.bas.html.RootHtmlOutputContext;
+import net.bodz.bas.html.RootHtmlViewContext;
+import net.bodz.bas.html.artifact.IArtifactManager;
+import net.bodz.bas.html.artifact.IndexedArtifactManager;
 import net.bodz.bas.html.vbo.PathFramesVbo;
 import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.log.Logger;
@@ -92,6 +94,9 @@ public class PathDispatchServlet
             return;
         }
 
+        req.setAttribute(IHtmlViewBuilderFactory.class, viewBuilderFactory);
+        req.setAttribute(IArtifactManager.class, IndexedArtifactManager.getInstance());
+
         IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(target.getClass());
         if (viewBuilder == null)
             throw new IllegalUsageError("No available view builder");
@@ -102,7 +107,7 @@ public class PathDispatchServlet
         // Using UTF-8 by default.
         resp.setCharacterEncoding("utf-8");
 
-        IHttpReprContext ctx = new RootHtmlOutputContext(req, resp);
+        IHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
         try {
             pathArrivalVbo.buildHtmlView(ctx, UiValue.wrap(arrival));
         } catch (ViewBuilderException e) {
