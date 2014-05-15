@@ -8,8 +8,6 @@ package net.bodz.bas.repr.path;
  */
 public interface ITokenQueue {
 
-    String ATTRIBUTE_KEY = ITokenQueue.class.getCanonicalName();
-
     /**
      * Get the available count of remaining tokens.
      *
