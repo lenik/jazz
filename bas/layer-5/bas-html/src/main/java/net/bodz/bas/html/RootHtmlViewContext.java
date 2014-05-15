@@ -3,6 +3,8 @@ package net.bodz.bas.html;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,30 +20,97 @@ import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.io.impl.DecodedByteOut;
 import net.bodz.bas.io.impl.EncodedCharOut;
 
-public class RootHtmlOutputContext
-        extends AbstractHtmlReprContext
-        implements IHttpReprContext {
+public class RootHtmlViewContext
+        extends AbstractHtmlViewContext
+        implements IHtmlViewContext {
 
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
+    private IHtmlMetaData metaData;
     private boolean outputCreated;
     private OutputStream outputStream;
     private IByteOut byteOut;
     private IHtmlOut htmlOut;
 
-    /**
-     * TODO xxxxxxxxxxxxxxxx ctx.pushBegin ... ctx. return new SubHtmlOutCtx(ctx)
-     * 
-     * @see #flush()
-     */
-    public RootHtmlOutputContext(HttpServletRequest request, HttpServletResponse response) {
+    private Map<Object, IHtmlViewBuilder<?>> viewBuilderCache;
+
+    public RootHtmlViewContext(HttpServletRequest request, HttpServletResponse response) {
         if (request == null)
             throw new NullPointerException("request");
         if (response == null)
             throw new NullPointerException("response");
         this.request = request;
         this.response = response;
+
+        metaData = new HtmlMetaData();
+        viewBuilderCache = new IdentityHashMap<>();
+    }
+
+    @Override
+    public IHtmlViewContext getRoot() {
+        return this;
+    }
+
+    @Override
+    public IHtmlViewContext getParent() {
+        return null;
+    }
+
+    @Override
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    @Override
+    public HttpServletResponse getResponse() {
+        return response;
+    }
+
+    @Override
+    public final HttpSession getSession() {
+        if (request == null)
+            return null;
+        else
+            return request.getSession();
+    }
+
+    @Override
+    public IHtmlMetaData getMetaData() {
+        return metaData;
+    }
+
+    @Override
+    public <T> IHtmlViewBuilder<T> getViewBuilder(Object obj) {
+        IHtmlViewBuilder<T> viewBuilder = (IHtmlViewBuilder<T>) viewBuilderCache.get(obj);
+        return viewBuilder;
+    }
+
+    public OutputStream getOutputStream()
+            throws IOException {
+        createOutput();
+        return outputStream;
+    }
+
+    @Override
+    public IByteOut getByteOut()
+            throws IOException {
+        createOutput();
+        return byteOut;
+    }
+
+    @Override
+    public IHtmlOut getOut()
+            throws IOException {
+        createOutput();
+        return htmlOut;
+    }
+
+    @Override
+    public void flush()
+            throws IOException {
+        if (htmlOut != null)
+            htmlOut.endAll();
     }
 
     void createOutput()
@@ -71,61 +140,6 @@ public class RootHtmlOutputContext
         }
 
         outputCreated = true;
-    }
-
-    @Override
-    public IHttpReprContext getRoot() {
-        return this;
-    }
-
-    @Override
-    public IHttpReprContext getParent() {
-        return null;
-    }
-
-    @Override
-    public HttpServletRequest getRequest() {
-        return request;
-    }
-
-    @Override
-    public HttpServletResponse getResponse() {
-        return response;
-    }
-
-    @Override
-    public final HttpSession getSession() {
-        if (request == null)
-            return null;
-        else
-            return request.getSession();
-    }
-
-    public OutputStream getOutputStream()
-            throws IOException {
-        createOutput();
-        return outputStream;
-    }
-
-    @Override
-    public IByteOut getByteOut()
-            throws IOException {
-        createOutput();
-        return byteOut;
-    }
-
-    @Override
-    public IHtmlOut getOut()
-            throws IOException {
-        createOutput();
-        return htmlOut;
-    }
-
-    @Override
-    public void flush()
-            throws IOException {
-        if (htmlOut != null)
-            htmlOut.endAll();
     }
 
 }

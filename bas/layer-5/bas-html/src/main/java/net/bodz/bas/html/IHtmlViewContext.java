@@ -9,21 +9,25 @@ import javax.servlet.http.HttpSession;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.meta.decl.Shortcut;
+import net.bodz.bas.rtx.IQueryable;
 
-public interface IHttpReprContext
-        extends IRestfulReprContext {
+public interface IHtmlViewContext
+        extends IQueryable {
 
-    IHttpReprContext getParent();
+    IHtmlViewContext getParent();
 
     @Shortcut("parent/.../parent")
-    IHttpReprContext getRoot();
+    IHtmlViewContext getRoot();
 
     HttpServletRequest getRequest();
 
     HttpServletResponse getResponse();
 
-    @Shortcut("getRequest().getSession()")
     HttpSession getSession();
+
+    IHtmlMetaData getMetaData();
+
+    <T> IHtmlViewBuilder<T> getViewBuilder(Object obj);
 
     IByteOut getByteOut()
             throws IOException;
@@ -33,5 +37,4 @@ public interface IHttpReprContext
 
     void flush()
             throws IOException;
-
 }

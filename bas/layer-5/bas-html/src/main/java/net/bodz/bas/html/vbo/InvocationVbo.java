@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.IHttpReprContext;
+import net.bodz.bas.html.IHtmlViewContext;
 import net.bodz.bas.potato.invoke.IInvocation;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -37,13 +37,13 @@ public class InvocationVbo
     }
 
     @Override
-    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<IInvocation> ref, IOptions options)
+    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<IInvocation> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         PrintWriter out = resp.getWriter();
         IInvocation invocation = ref.get();
 
-        ITokenQueue tokenQueue = ctx.getTokenQueue();
+        ITokenQueue tokenQueue = ctx.query(ITokenQueue.class);
         String[] args = tokenQueue.shiftAll();
         int max = invocation.getParameterCount();
         if (args.length > max)

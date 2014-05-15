@@ -8,14 +8,44 @@ import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.html.IHtmlOut;
+import net.bodz.bas.rtx.QueryException;
 
-public abstract class AbstractHtmlOutputContext
-        extends AbstractHtmlReprContext
-        implements IHttpReprContext {
+public abstract class ChildHtmlViewContext
+        implements IHtmlViewContext {
 
     @Override
-    public IHttpReprContext getRoot() {
-        IHttpReprContext parent = getParent();
+    public Object query(Object specification)
+            throws QueryException {
+        IHtmlViewContext parent = getParent();
+        if (parent == null)
+            return null;
+        else
+            return parent.query(specification);
+    }
+
+    @Override
+    public Object query(String specificationId)
+            throws QueryException {
+        IHtmlViewContext parent = getParent();
+        if (parent == null)
+            return null;
+        else
+            return parent.query(specificationId);
+    }
+
+    @Override
+    public <spec_t> spec_t query(Class<spec_t> specificationType)
+            throws QueryException {
+        IHtmlViewContext parent = getParent();
+        if (parent == null)
+            return null;
+        else
+            return parent.query(specificationType);
+    }
+
+    @Override
+    public IHtmlViewContext getRoot() {
+        IHtmlViewContext parent = getParent();
         if (parent == null)
             return this;
         else
@@ -24,7 +54,7 @@ public abstract class AbstractHtmlOutputContext
 
     @Override
     public HttpServletRequest getRequest() {
-        IHttpReprContext parent = getParent();
+        IHtmlViewContext parent = getParent();
         if (parent == null)
             return null;
         else
@@ -33,7 +63,7 @@ public abstract class AbstractHtmlOutputContext
 
     @Override
     public HttpServletResponse getResponse() {
-        IHttpReprContext parent = getParent();
+        IHtmlViewContext parent = getParent();
         if (parent == null)
             return null;
         else
@@ -52,7 +82,7 @@ public abstract class AbstractHtmlOutputContext
     @Override
     public IByteOut getByteOut()
             throws IOException {
-        IHttpReprContext parent = getParent();
+        IHtmlViewContext parent = getParent();
         if (parent == null)
             return IByteOut.NULL;
         else
@@ -62,7 +92,7 @@ public abstract class AbstractHtmlOutputContext
     @Override
     public IHtmlOut getOut()
             throws IOException {
-        IHttpReprContext parent = getParent();
+        IHtmlViewContext parent = getParent();
         if (parent == null)
             return IHtmlOut.NULL;
         else
@@ -72,7 +102,7 @@ public abstract class AbstractHtmlOutputContext
     @Override
     public void flush()
             throws IOException {
-        IHttpReprContext parent = getParent();
+        IHtmlViewContext parent = getParent();
         if (parent != null)
             parent.flush();
     }

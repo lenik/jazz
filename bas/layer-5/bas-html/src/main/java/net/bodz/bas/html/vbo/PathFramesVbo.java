@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewBuilderFactory;
-import net.bodz.bas.html.IHttpReprContext;
+import net.bodz.bas.html.IHtmlViewContext;
 import net.bodz.bas.html.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.PathArrival;
@@ -29,11 +29,12 @@ public class PathFramesVbo
     }
 
     @Override
-    public IHttpReprContext buildHtmlView(IHttpReprContext ctx, IUiRef<IPathArrival> ref, IOptions options)
+    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<IPathArrival> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         IPathArrival arrival = ref.get();
 
+        // From inside to outside.
         List<Frame> frames = new ArrayList<Frame>();
 
         IPathArrival a = arrival;
@@ -63,7 +64,12 @@ public class PathFramesVbo
         int size = frames.size();
         for (int i = size - 1; i >= 0; i--) {
             Frame frame = frames.get(i);
-            resp.addHeader("X-Path-Frame", frame.viewBuilder.getClass().getSimpleName());
+            frame.viewBuilder.preview(ctx, frame, viewOptions);
+        }
+
+        for (int i = size - 1; i >= 0; i--) {
+            Frame frame = frames.get(i);
+            resp.addHeader("X-Html-Frame", frame.viewBuilder.getClass().getSimpleName());
             frame.ctx0 = ctx;
             ctx = frame.viewBuilder.buildHtmlView(ctx, frame, viewOptions);
         }
@@ -82,7 +88,7 @@ public class PathFramesVbo
         private static final long serialVersionUID = 1L;
 
         IHtmlViewBuilder<Object> viewBuilder;
-        IHttpReprContext ctx0;
+        IHtmlViewContext ctx0;
 
         public Frame(IPathArrival arrival) {
             super(arrival);
