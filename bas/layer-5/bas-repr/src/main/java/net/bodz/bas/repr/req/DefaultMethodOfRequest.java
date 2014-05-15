@@ -93,7 +93,7 @@ public class DefaultMethodOfRequest
         this.methodName = methodName;
         this.parameters.setWrapped(params);
 
-        request.setAttribute(ATTRIBUTE_KEY, this);
+        request.setAttribute(IMethodOfRequest.class.getName(), this);
     }
 
     @Override

@@ -79,7 +79,7 @@ public class DefaultViewOfRequest
                 setContentType(contentType);
         }
 
-        request.setAttribute(ATTRIBUTE_KEY, this);
+        request.setAttribute(IViewOfRequest.class.getName(), this);
     }
 
     @Override
