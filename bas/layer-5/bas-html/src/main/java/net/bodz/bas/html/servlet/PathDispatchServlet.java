@@ -126,6 +126,7 @@ public class PathDispatchServlet
             break;
 
         default:
+            resp.addHeader("X-Content-View", viewBuilder.getClass().getSimpleName());
             IHtmlViewContext _ctx = new RootHtmlViewContext(req, resp);
             try {
                 viewBuilder.buildHtmlView(_ctx, UiValue.wrap(target));
