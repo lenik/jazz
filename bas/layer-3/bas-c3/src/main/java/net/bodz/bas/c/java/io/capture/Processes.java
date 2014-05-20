@@ -13,6 +13,11 @@ import net.bodz.bas.c.string.StringArray;
 
 public class Processes {
 
+    public static Process exec(String... cmdarray)
+            throws IOException {
+        return Runtime.getRuntime().exec(cmdarray);
+    }
+
     private static String[] shvec;
     private static String shprefix;
     static {
