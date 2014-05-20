@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.std.rfc.http.ContentRange;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class ResourceTransferer {

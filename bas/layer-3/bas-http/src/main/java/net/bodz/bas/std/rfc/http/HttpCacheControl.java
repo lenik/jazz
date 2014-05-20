@@ -1,15 +1,36 @@
-package net.bodz.bas.repr.content.cache;
+package net.bodz.bas.std.rfc.http;
 
 import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.c.string.TokensBuilder;
 
-public class HttpCache
-        extends net.bodz.bas.std.rfc.http.HttpCache {
+public class HttpCacheControl
+        implements HttpHeaderNames, IDateFormatConsts {
 
-    public static void setCacheControl(HttpServletResponse response, ICacheControl cacheControl) {
+    public static void setShouldNotCache(HttpServletResponse response) {
+        response.setHeader(CACHE_CONTROL, "public, max-age=0");
+    }
+
+    public static void setNoCache(HttpServletResponse response) {
+        response.setHeader(PRAGMA, "no-cache");
+
+        // Basically it's the same to:
+        // response.setHeader(CACHE_CONTROL, "max-age=0; must-revalidate");
+        response.setHeader(CACHE_CONTROL, "no-cache");
+
+        response.setHeader(EXPIRES, "-1");
+    }
+
+    public static void setNoStore(HttpServletResponse response) {
+        response.setHeader(PRAGMA, "no-store");
+        response.setHeader(CACHE_CONTROL, "no-store");
+        response.setHeader(EXPIRES, "-1");
+    }
+
+    public static void apply(HttpServletResponse response, ICacheControl cacheControl) {
         TokensBuilder buf = new TokensBuilder(", ");
         boolean cachable = true;
 
@@ -50,16 +71,12 @@ public class HttpCache
         if (cachable) {
             Date expires = new Date(System.currentTimeMillis() + cacheControl.getMaxAge() * 1000L);
             // timezone...?
-            response.setHeader(EXPIRES, toRFCDate(expires));
+            response.setHeader(EXPIRES, RFC1123.format(expires));
         } else {
             response.setHeader(EXPIRES, "-1");
         }
 
-        response.setHeader(LAST_MODIFIED, toRFCDate(cacheControl.getLastModifiedDate()));
-    }
-
-    static String toRFCDate(Date date) {
-        return null;
+        response.setHeader(LAST_MODIFIED, RFC1123.format(cacheControl.getLastModified()));
     }
 
 }

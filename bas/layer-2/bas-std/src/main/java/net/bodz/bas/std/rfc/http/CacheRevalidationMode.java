@@ -1,4 +1,4 @@
-package net.bodz.bas.repr.content.cache;
+package net.bodz.bas.std.rfc.http;
 
 public enum CacheRevalidationMode {
 

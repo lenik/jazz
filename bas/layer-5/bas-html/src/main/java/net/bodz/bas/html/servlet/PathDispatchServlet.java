@@ -28,6 +28,8 @@ import net.bodz.bas.repr.path.PathDispatchService;
 import net.bodz.bas.repr.path.TokenQueue;
 import net.bodz.bas.repr.req.IHttpRequestProcessor;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.std.rfc.http.HttpCacheControl;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.ui.dom1.UiValue;
 
