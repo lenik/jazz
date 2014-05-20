@@ -3,7 +3,10 @@ package net.bodz.bas.text.textmap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.java.lang.StringTypers;
 import net.bodz.bas.err.IteratorTargetException;
+import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 import net.bodz.bas.typer.std.IParser;
 
@@ -50,5 +53,10 @@ public class TextMapParser<K, V>
 
         }; // PrefetchIterator+
     } // iterator()
+
+    public static Iterable<Entry<String, String>> parse(IStreamInputSource src) {
+        Iterator<String> iterator = src.to(StreamReading.class).lines().iterator();
+        return new TextMapParser<String, String>(iterator, StringTypers.INSTANCE, StringTypers.INSTANCE);
+    }
 
 }
