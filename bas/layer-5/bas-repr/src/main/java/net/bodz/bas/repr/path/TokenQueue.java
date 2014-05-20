@@ -133,10 +133,8 @@ public class TokenQueue
     }
 
     @Override
-    public String peek() {
-        if (index >= tokens.length)
-            return null;
-        return tokens[index];
+    public final String peek() {
+        return peek(0);
     }
 
     @Override
@@ -148,7 +146,7 @@ public class TokenQueue
     }
 
     @Override
-    public Integer peekInt() {
+    public final Integer peekInt() {
         return peekInt(0);
     }
 
@@ -163,7 +161,7 @@ public class TokenQueue
     }
 
     @Override
-    public Long peekLong() {
+    public final Long peekLong() {
         return peekLong(0);
     }
 
