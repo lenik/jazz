@@ -3,7 +3,6 @@ package net.bodz.bas.repr.path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import net.bodz.bas.c.object.ITreeDump;
@@ -18,7 +17,6 @@ public class PathArrival
     private String[] consumedTokens = new String[0];
     private Object target;
     private String remainingPath;
-    private Date expires;
 
     public PathArrival(Object startTarget, String remainingPath) {
         this.parent = null;
@@ -100,36 +98,6 @@ public class PathArrival
         return parent.getLastNonNullTarget();
     }
 
-    @Override
-    public Date getExpires() {
-        return expires;
-    }
-
-    public void expires(Date afterDate) {
-        if (this.expires == null)
-            this.expires = afterDate;
-        else {
-            // Get the min date
-            int cmp = this.expires.compareTo(afterDate);
-            if (cmp > 0)
-                this.expires = afterDate;
-        }
-    }
-
-    @Override
-    public Date getMinExpires() {
-        Date min = this.expires;
-        IPathArrival prev = this;
-        while ((prev = prev.getPrevious()) != null) {
-            Date expires1 = prev.getExpires();
-            if (min == null)
-                min = expires1;
-            else if (expires1 != null && expires1.compareTo(min) < 0)
-                min = expires1;
-        }
-        return min;
-    }
-
     public List<IPathArrival> reverse() {
         List<IPathArrival> list = new ArrayList<IPathArrival>();
         IPathArrival a = this;
@@ -146,7 +114,6 @@ public class PathArrival
         final int prime = 31;
         int result = 1;
         result = prime * result + Arrays.hashCode(consumedTokens);
-        result = prime * result + ((expires == null) ? 0 : expires.hashCode());
         result = prime * result + ((parent == null) ? 0 : parent.hashCode());
         result = prime * result + ((target == null) ? 0 : target.hashCode());
         return result;
@@ -160,8 +127,6 @@ public class PathArrival
             return false;
         PathArrival other = (PathArrival) obj;
         if (!Arrays.equals(consumedTokens, other.consumedTokens))
-            return false;
-        if (!Nullables.equals(expires, other.expires))
             return false;
         if (!Nullables.equals(parent, other.parent))
             return false;

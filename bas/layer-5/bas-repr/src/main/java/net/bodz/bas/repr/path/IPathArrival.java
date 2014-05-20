@@ -1,7 +1,5 @@
 package net.bodz.bas.repr.path;
 
-import java.util.Date;
-
 import net.bodz.bas.meta.decl.Shortcut;
 
 public interface IPathArrival {
@@ -50,20 +48,5 @@ public interface IPathArrival {
      */
     @Shortcut
     Object getLastNonNullTarget();
-
-    /**
-     * The expire date of the target.
-     *
-     * @return Expires date, <code>null</code> for no-cache.
-     * @see PathArrival#expires(Date)
-     */
-    Date getExpires();
-
-    /**
-     * The expire date of all targets in the arrival chain.
-     *
-     * @return Expires date, <code>null</code> for no-cache.
-     */
-    Date getMinExpires();
 
 }
