@@ -3,9 +3,9 @@ package net.bodz.lily.type;
 import java.util.Date;
 
 import net.bodz.bas.i18n.dom1.SemiMutableElement;
-import net.bodz.bas.repr.content.cache.CacheControlMode;
-import net.bodz.bas.repr.content.cache.CacheRevalidationMode;
-import net.bodz.bas.repr.content.cache.ICacheControl;
+import net.bodz.bas.std.rfc.http.CacheControlMode;
+import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 
 public class ManagedEntity
         extends SemiMutableElement
@@ -13,9 +13,7 @@ public class ManagedEntity
 
     private static final long serialVersionUID = 1L;
 
-    Date createdDate = new Date();
-    Date lastModifiedDate = createdDate;
-    int maxAge; // in seconds.
+    Date lastModified = new Date();
 
     int ownerId;
     int groupId;
@@ -31,35 +29,34 @@ public class ManagedEntity
         return CacheRevalidationMode.WANTED;
     }
 
-    @Override
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        if (createdDate == null)
-            throw new NullPointerException("createdDate");
-        this.createdDate = createdDate;
-    }
-
-    @Override
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        if (lastModifiedDate == null)
-            throw new NullPointerException("lastModifiedDate");
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
+    /**
+     * One day by default.
+     */
     @Override
     public int getMaxAge() {
-        return maxAge;
+        return 86400;
     }
 
-    public void setMaxAge(int maxAge) {
-        this.maxAge = maxAge;
+    @Override
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        if (lastModified == null)
+            throw new NullPointerException("lastModified");
+        this.lastModified = lastModified;
+    }
+
+    @Override
+    public String getETag() {
+        long time = getLastModified().getTime();
+        return String.valueOf(time);
+    }
+
+    @Override
+    public boolean isWeakValidation() {
+        return true;
     }
 
     @Override
