@@ -13,6 +13,7 @@ import net.bodz.bas.site.org.ICrawlable;
 import net.bodz.bas.site.org.SiteGraph;
 import net.bodz.bas.site.org.Sitemap;
 import net.bodz.bas.site.org.SitemapGenerator;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 
 public abstract class BasicSite
         extends AbstractXjdocContent
@@ -31,6 +32,14 @@ public abstract class BasicSite
         graph.setXjdoc(getXjdoc());
         crawlableIntrospect(graph);
         return graph;
+    }
+
+    /** ⇱ Implementation Of {@link ICacheControl}. */
+    /* _____________________________ */static section.iface __CACHE__;
+
+    @Override
+    public int getMaxAge() {
+        return 3600;
     }
 
     /** ⇱ Implementation Of {@link IPathDispatchable}. */
