@@ -7,17 +7,14 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.std.rfc.mime.StringContent;
-
-public class ContentURLTest
+public class InMemoryURLTest
         extends Assert {
 
     @Test
     public void testGetContent()
             throws IOException {
-        StringContent helloContent = new StringContent("hello");
-        URL url = ContentURL.create("/hello1", helloContent);
-        assertEquals("c:/hello1", url.toExternalForm());
+        URL url = InMemoryURL.create("/hello1", "hello");
+        assertEquals("mem:/hello1", url.toExternalForm());
 
         List<String> lines = URLData.readUtf8Lines(url);
         assertEquals(1, lines.size());
