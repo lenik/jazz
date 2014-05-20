@@ -42,12 +42,12 @@ public class PathDispatchServlet
 
     PathDispatchService pathDispatchService;
     IHtmlViewBuilderFactory viewBuilderFactory;
-    PathFramesVbo pathArrivalVbo;
+    PathFramesVbo pathFramesVbo;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
-        pathArrivalVbo = new PathFramesVbo();
+        pathFramesVbo = new PathFramesVbo();
     }
 
     @Override
@@ -109,13 +109,31 @@ public class PathDispatchServlet
         // Using UTF-8 by default.
         resp.setCharacterEncoding("utf-8");
 
-        IHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
-        try {
-            pathArrivalVbo.buildHtmlView(ctx, UiValue.wrap(arrival));
-        } catch (ViewBuilderException e) {
-            throw new ServletException("Build html view: " + e.getMessage(), e);
+        if (target instanceof ICacheControl) {
+            HttpCacheControl.apply(resp, (ICacheControl) target);
         }
-        ctx.flush();
+
+        switch (contentType.getName()) {
+        case "text/html":
+        case "text/xhtml":
+            IHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
+            try {
+                pathFramesVbo.buildHtmlView(ctx, UiValue.wrap(arrival));
+            } catch (ViewBuilderException e) {
+                throw new ServletException("Build html view: " + e.getMessage(), e);
+            }
+            ctx.flush();
+            break;
+
+        default:
+            IHtmlViewContext _ctx = new RootHtmlViewContext(req, resp);
+            try {
+                viewBuilder.buildHtmlView(_ctx, UiValue.wrap(target));
+            } catch (ViewBuilderException e) {
+                throw new ServletException("Build view: " + e.getMessage(), e);
+            }
+            _ctx.flush();
+        }
     }
 
     protected Object getStartObject() {
