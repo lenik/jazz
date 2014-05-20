@@ -183,4 +183,8 @@ public class Pair<K, V>
         return new Pair<K, V>(key, value);
     }
 
+    public static <K, V> Pair<K, V> of(Entry<K, V> entry) {
+        return new Pair<K, V>(entry.getKey(), entry.getValue());
+    }
+
 }
