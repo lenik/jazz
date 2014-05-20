@@ -9,8 +9,13 @@ public class NullXmlOut
         implements IXmlOut {
 
     @Override
+    public void _xml_pi(String version, String encoding) {
+    }
+
+    @Override
     public void processInstruction(String target, String data) {
     }
+
 
     @Override
     public void comment(String str) {

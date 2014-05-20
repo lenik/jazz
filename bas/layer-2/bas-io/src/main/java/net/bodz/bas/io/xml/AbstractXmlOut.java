@@ -43,6 +43,12 @@ public abstract class AbstractXmlOut
     }
 
     @Override
+    public void _xml_pi(String version, String encoding) {
+        processInstruction("xml", //
+                "version=\"" + version + "\" encoding=\"" + encoding + "\"");
+    }
+
+    @Override
     public void processInstruction(String target, String data) {
         ensureTextState();
         print("<?" + target + ' ' + data + "?>");
