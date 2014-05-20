@@ -1,8 +1,11 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.ClassDocLoadException;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -14,8 +17,8 @@ public class XjdocObject
     static final Logger logger = LoggerFactory.getLogger(XjdocObject.class);
 
     @Override
-    public IElementDoc loadXjdoc()
-            throws ClassDocLoadException {
+    protected IElementDoc loadXjdoc()
+            throws ClassDocLoadException, ParseException, IOException {
         Class<?> clazz = getClass();
         ClassDoc classDoc = ClassDocLoader.load(clazz);
 
