@@ -94,6 +94,8 @@ public interface ITokenQueue {
     /**
      * Peek at the n-th token from the head.
      *
+     * @param offset
+     *            The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
     String peek(int offset);
@@ -108,6 +110,8 @@ public interface ITokenQueue {
     /**
      * Peek at the n-th token from the head as int.
      *
+     * @param offset
+     *            The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist, or it's not a int integer.
      */
     Integer peekInt(int offset);
@@ -122,6 +126,8 @@ public interface ITokenQueue {
     /**
      * Peek at the n-th token from the head as long.
      *
+     * @param offset
+     *            The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist, or it's not a long integer.
      */
     Long peekLong(int offset);
