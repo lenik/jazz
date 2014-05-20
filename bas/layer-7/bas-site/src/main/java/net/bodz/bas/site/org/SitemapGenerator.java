@@ -11,10 +11,6 @@ public class SitemapGenerator {
     public SitemapGenerator(String siteUrl) {
         if (siteUrl == null)
             throw new NullPointerException("siteUrl");
-
-        while (siteUrl.endsWith("/"))
-            siteUrl = siteUrl.substring(0, siteUrl.length() - 1);
-
         this.siteUrl = siteUrl;
     }
 
@@ -40,6 +36,8 @@ public class SitemapGenerator {
         private int level;
 
         public Crawler(String prefix, int level) {
+            if (!prefix.endsWith("/"))
+                prefix += "/";
             this.prefix = prefix;
             this.level = level;
         }
@@ -55,7 +53,7 @@ public class SitemapGenerator {
 
             if (contentInfo instanceof ICrawlable) {
                 ICrawlable child = (ICrawlable) contentInfo;
-                Crawler childCrawler = new Crawler(prefix + subpath + "/", level + 1);
+                Crawler childCrawler = new Crawler(prefix + subpath, level + 1);
                 child.crawlableIntrospect(childCrawler);
             }
         }
