@@ -43,17 +43,17 @@ public class PathFramesVbo
             Class<?> targetClass = target.getClass();
 
             String[] features = {};
-            IHtmlViewBuilder<Object> htmlVbo = viewBuilderFactory.getViewBuilder(targetClass, features);
-            if (htmlVbo == null)
+            IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(targetClass, features);
+            if (viewBuilder == null)
                 throw new ViewBuilderException("Can't build view for " + targetClass);
 
-            if (frames.isEmpty() || htmlVbo.isFrame()) {
+            if (frames.isEmpty() || viewBuilder.isFrame()) {
                 Frame frame = new Frame(a);
-                frame.viewBuilder = htmlVbo;
+                frame.viewBuilder = viewBuilder;
                 frames.add(frame);
             }
 
-            if (htmlVbo.isOrigin(target))
+            if (viewBuilder.isOrigin(target))
                 break;
             else
                 a = a.getPrevious();
@@ -69,7 +69,7 @@ public class PathFramesVbo
 
         for (int i = size - 1; i >= 0; i--) {
             Frame frame = frames.get(i);
-            resp.addHeader("X-Html-Frame", frame.viewBuilder.getClass().getSimpleName());
+            resp.addHeader("X-Page-Frame", frame.viewBuilder.getClass().getSimpleName());
             frame.ctx0 = ctx;
             ctx = frame.viewBuilder.buildHtmlView(ctx, frame, viewOptions);
         }
