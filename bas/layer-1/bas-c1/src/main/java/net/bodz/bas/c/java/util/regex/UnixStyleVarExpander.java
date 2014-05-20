@@ -3,7 +3,7 @@ package net.bodz.bas.c.java.util.regex;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class UnixStyleVarProcessor
+public class UnixStyleVarExpander
         extends PatternProcessor {
 
     private static Pattern variableRefPattern;
@@ -14,7 +14,7 @@ public class UnixStyleVarProcessor
 
     private Map<String, ?> map;
 
-    public UnixStyleVarProcessor() {
+    public UnixStyleVarExpander() {
         super(variableRefPattern);
     }
 
@@ -22,7 +22,7 @@ public class UnixStyleVarProcessor
      * @param map
      *            is referenced, any changes to the map are reflected by this class.
      */
-    public UnixStyleVarProcessor(Map<String, ?> map) {
+    public UnixStyleVarExpander(Map<String, ?> map) {
         super(variableRefPattern);
         this.map = map;
     }
