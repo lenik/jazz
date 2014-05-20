@@ -49,13 +49,13 @@ public enum ChangeFreq {
             return NEVER;
         if (maxAge == 0)
             return ALWAYS;
-        if (maxAge < HOURLY.getTimeout())
+        if (maxAge <= HOURLY.getTimeout())
             return HOURLY;
-        if (maxAge < DAILY.getTimeout())
+        if (maxAge <= DAILY.getTimeout())
             return DAILY;
-        if (maxAge < WEEKLY.getTimeout())
+        if (maxAge <= WEEKLY.getTimeout())
             return WEEKLY;
-        if (maxAge < MONTHLY.getTimeout())
+        if (maxAge <= MONTHLY.getTimeout())
             return MONTHLY;
         return YEARLY;
     }
