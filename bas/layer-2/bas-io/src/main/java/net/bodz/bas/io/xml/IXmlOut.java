@@ -7,6 +7,8 @@ import net.bodz.bas.io.ITreeOut;
 public interface IXmlOut
         extends ITreeOut {
 
+    void _xml_pi(String version, String encoding);
+
     void processInstruction(String target, String data);
 
     void comment(String str);
