@@ -288,7 +288,7 @@ public class DiffPrint {
             if (label != null)
                 outfile.println(mark + ' ' + label);
             else if (inf.lastModified() > 0)
-                outfile.println(mark + ' ' + inf.getPath() + '\t' + Dates.sysDateTimeFormat.format(inf.lastModified()));
+                outfile.println(mark + ' ' + inf.getPath() + '\t' + Dates.SYS_DATETIME.format(inf.lastModified()));
             else
                 /* Don't pretend that standard input is ancient. */
                 outfile.println(mark + ' ' + inf.getPath());
