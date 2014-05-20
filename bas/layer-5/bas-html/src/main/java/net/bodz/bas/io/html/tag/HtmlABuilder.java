@@ -9,4 +9,9 @@ public class HtmlABuilder
         super(o);
     }
 
+    public HtmlABuilder nofollow() {
+        rel("nofollow");
+        return this;
+    }
+
 }
