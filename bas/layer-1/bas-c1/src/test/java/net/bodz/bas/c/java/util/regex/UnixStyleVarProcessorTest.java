@@ -19,7 +19,7 @@ public class UnixStyleVarProcessorTest
         vars.put("{", "left brace");
         vars.put("}", "right brace");
 
-        final UnixStyleVarProcessor ve = new UnixStyleVarProcessor(vars);
+        final UnixStyleVarExpander ve = new UnixStyleVarExpander(vars);
 
         class D {
             void o(String input, String expected) {

@@ -7,7 +7,7 @@ import net.bodz.bas.c.action.IProgressMonitor;
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
-import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
+import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.res.IRandomResource;
@@ -128,7 +128,7 @@ public class AbstractSisProject
 
     @Override
     public String expand(String s) {
-        UnixStyleVarProcessor expander = new UnixStyleVarProcessor(variableMap);
+        UnixStyleVarExpander expander = new UnixStyleVarExpander(variableMap);
         String expansion = expander.process(s);
         return expansion;
     }
