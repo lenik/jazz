@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.http.ContentRange;
 import net.bodz.bas.http.HttpServlet;
+import net.bodz.bas.std.rfc.http.ContentRange;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class FileAccessorServlet
