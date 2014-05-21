@@ -10,11 +10,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.io.FileData;
-import net.bodz.bas.c.system.SystemColos;
+import net.bodz.bas.c.system.UserDirCtl;
 
 public class WildcardsExpanderTest
-        extends Assert
-        implements SystemColos {
+        extends Assert {
 
     @Test
     public void testMatcher()
@@ -22,7 +21,7 @@ public class WildcardsExpanderTest
         Path tmpWorkDirPath = Files.createTempDirectory("wildtest");
         File tmpWorkDir = tmpWorkDirPath.toFile();
 
-        workdir.set(tmpWorkDir);
+        UserDirCtl.getInstance().set(tmpWorkDir);
 
         touch(tmpWorkDir, "a.log");
         touch(tmpWorkDir, "b.txt");

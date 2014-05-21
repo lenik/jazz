@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.i18n.LocaleColo;
+import net.bodz.bas.i18n.LocaleCtl;
 import net.bodz.bas.t.variant.AbstractTmVariantLookupMap;
 
 public abstract class AbstractNLS
@@ -18,14 +18,14 @@ public abstract class AbstractNLS
     private String name;
 
     public AbstractNLS() {
-        this(null, LocaleColo.getInstance().get());
+        this(null, LocaleCtl.LOCALE.get());
     }
 
     /**
      * This constructor doesn't call {@link #reload(Locale)}.
      */
     public AbstractNLS(NLS parent) {
-        this(parent, LocaleColo.getInstance().get());
+        this(parent, LocaleCtl.LOCALE.get());
     }
 
     /**
@@ -93,7 +93,7 @@ public abstract class AbstractNLS
 
     /**
      * Reload the dict.
-     * 
+     *
      * @throws Exception
      *             If failed to reload for the specified locale.
      */
@@ -104,7 +104,7 @@ public abstract class AbstractNLS
 
     /**
      * The local contains() implementation for the dict chain.
-     * 
+     *
      * @def localGet(key) != null
      */
     protected boolean localContainsKey(Object key) {
@@ -118,7 +118,7 @@ public abstract class AbstractNLS
 
     /**
      * The local get(key) implementation for the dict chain.
-     * 
+     *
      * @def localGet(key, null)
      */
     protected Object localGet(Object key) {

@@ -4,7 +4,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.StringHtml;
 import net.bodz.bas.c.string.StringPart;
-import net.bodz.bas.i18n.LocaleColo;
+import net.bodz.bas.i18n.LocaleCtl;
 
 public class XiString
         extends XDomainNode<XiString, String>
@@ -46,7 +46,7 @@ public class XiString
     @Override
     public String toString() {
         // TODO locale path normalization.
-        String path = LocaleColo.getInstance().getPath();
+        String path = LocaleCtl.LOCALE.getPath();
         path = path.toLowerCase();
         path = path.replace('_', '-');
 
