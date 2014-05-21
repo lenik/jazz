@@ -27,9 +27,9 @@ public class SystemProperties {
         javaVersion7OrAbove = javaVersion.compareTo("1.7.0") >= 0;
     }
 
-    /**
-     * @generator SystemPropertiesTest
-     */
+    // ________________________________________________________________________
+    // ⇱ Part: Partial Generated Methods
+    //
 
     /** awt.toolkit = sun.awt.windows.WToolkit */
     public static String getAwtToolkit() {
@@ -46,7 +46,9 @@ public class SystemProperties {
         return System.getProperty("file.encoding.pkg");
     }
 
-    /** file.separator = / */
+    /**
+     * Character that separates components of a file path. This is "/" on UNIX and "\" on Windows.
+     */
     public static String getFileSeparator() {
         return System.getProperty("file.separator");
     }
@@ -62,7 +64,8 @@ public class SystemProperties {
     }
 
     /**
-     * java.class.path =...
+     * Path used to find directories and JAR archives containing class files. Elements of the class
+     * path are separated by a platform-specific character specified in the path.separator property.
      */
     public static String getJavaClassPath() {
         return System.getProperty("java.class.path");
@@ -87,7 +90,9 @@ public class SystemProperties {
         return System.getProperty("java.ext.dirs");
     }
 
-    /** java.home = C:/lam/kala/abc.d/j/jdk-1.7.0/jre */
+    /**
+     * Installation directory for Java Runtime Environment (JRE)
+     */
     public static String getJavaHome() {
         return System.getProperty("java.home");
     }
@@ -129,12 +134,14 @@ public class SystemProperties {
         return System.getProperty("java.specification.version");
     }
 
-    /** java.vendor = Sun Microsystems Inc. */
+    /**
+     * JRE vendor name
+     */
     public static String getJavaVendor() {
         return System.getProperty("java.vendor");
     }
 
-    /** java.vendor.url = http://java.sun.com/ */
+    /** JRE vendor URL */
     public static String getJavaVendorUrl() {
         return System.getProperty("java.vendor.url");
     }
@@ -144,7 +151,9 @@ public class SystemProperties {
         return System.getProperty("java.vendor.url.bug");
     }
 
-    /** java.version = 1.7.0-ea */
+    /**
+     * JRE version number
+     */
     public static String getJavaVersion() {
         return System.getProperty("java.version");
     }
@@ -184,27 +193,35 @@ public class SystemProperties {
         return System.getProperty("java.vm.version");
     }
 
-    /** line.separator = \r\n */
+    /**
+     * Sequence used by operating system to separate lines in text files
+     */
     public static String getLineSeparator() {
         return System.getProperty("line.separator");
     }
 
-    /** os.arch = x86 */
+    /**
+     * Operating system architecture
+     */
     public static String getOsArch() {
         return System.getProperty("os.arch");
     }
 
-    /** os.name = Windows XP */
+    /** Operating system name */
     public static String getOsName() {
         return System.getProperty("os.name");
     }
 
-    /** os.version = 5.1 */
+    /**
+     * Operating system version
+     */
     public static String getOsVersion() {
         return System.getProperty("os.version");
     }
 
-    /** path.separator = ; */
+    /**
+     * Path separator character used in java.class.path
+     */
     public static String getPathSeparator() {
         return System.getProperty("path.separator");
     }
@@ -270,17 +287,21 @@ public class SystemProperties {
         return System.getProperty("sun.os.patch.level");
     }
 
-    /** user.country = CN */
+    /**
+     * User country.
+     *
+     * user.country = CN
+     */
     public static String getUserCountry() {
         return System.getProperty("user.country");
     }
 
-    /** user.dir = K:/workspace/net.bodz/net.bodz.bas */
+    /** User working directory */
     public static String getUserDir() {
         return System.getProperty("user.dir");
     }
 
-    /** user.home = C:/Profiles/Shecti */
+    /** User home directory */
     public static String getUserHome() {
         return System.getProperty("user.home");
     }
@@ -290,12 +311,12 @@ public class SystemProperties {
         return System.getProperty("user.language");
     }
 
-    /** user.name = Shecti */
+    /** User account name */
     public static String getUserName() {
         return System.getProperty("user.name");
     }
 
-    /** user.timezone = */
+    /** User time zone */
     public static String getUserTimezone() {
         return System.getProperty("user.timezone");
     }
