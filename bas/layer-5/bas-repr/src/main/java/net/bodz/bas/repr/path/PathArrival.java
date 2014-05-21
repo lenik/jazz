@@ -42,6 +42,11 @@ public class PathArrival
         return new PathArrival(parent, target, token, tokens.getRemainingPath());
     }
 
+    public static PathArrival shift(int n, IPathArrival parent, Object target, ITokenQueue tokens) {
+        String[] array = tokens.shift(n);
+        return new PathArrival(parent, target, array, tokens.getRemainingPath());
+    }
+
     @Override
     public IPathArrival getPrevious() {
         return parent;
