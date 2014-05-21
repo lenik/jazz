@@ -1,8 +1,11 @@
 package net.bodz.bas.site;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.http.ctx.CurrentHttpService;
+import net.bodz.bas.i18n.LocaleCtl;
 import net.bodz.bas.repr.content.AbstractXjdocContent;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
@@ -60,7 +63,9 @@ public abstract class BasicSite
             String lang = tokens.peek(1);
             if (lang != null) {
                 HttpServletRequest request = CurrentHttpService.getRequest();
-                request.setAttribute("LOCALE", lang);
+                Locale locale = Locale.forLanguageTag(lang); // non-null.
+                request.setAttribute(LocaleCtl.LOCALE.getName(), locale);
+                return PathArrival.shift(2, previous, this, tokens);
             }
             break;
         }
