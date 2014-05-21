@@ -6,10 +6,14 @@ import org.junit.Test;
 public class PackageContextTest
         extends Assert {
 
-    static class AddressColo
+    static class AddressCtl
             extends ContextLocal<String> {
 
-        public void addMoreAddr(IContextId contextId, String moreAddr) {
+        public AddressCtl() {
+            super(String.class);
+        }
+
+        public void addMoreAddr(IContext contextId, String moreAddr) {
             String val = get(contextId);
             if (val == null)
                 val = moreAddr;
@@ -23,17 +27,17 @@ public class PackageContextTest
     /**
      * for JUnit test, the static-modifier is off.
      */
-    AddressColo addressColo = new AddressColo();
+    AddressCtl addressColo = new AddressCtl();
 
     class Inner {
 
         public String getAddress() {
-            PackageContextId callerId = PackageContextId.forCaller();
+            PackageContext callerId = PackageContext.forCaller();
             return addressColo.get(callerId);
         }
 
         public void addMoreAddr(String s) {
-            PackageContextId callerId = PackageContextId.forCaller();
+            PackageContext callerId = PackageContext.forCaller();
             addressColo.addMoreAddr(callerId, s);
         }
 
@@ -42,7 +46,7 @@ public class PackageContextTest
     @Test
     public void testSetInnerKeepOuter()
             throws Exception {
-        PackageContextId outerId = PackageContextId.forCaller();
+        PackageContext outerId = PackageContext.forCaller();
         String outerAddr = addressColo.get(outerId);
         assertNull(outerAddr);
 
@@ -61,7 +65,7 @@ public class PackageContextTest
     @Test
     public void testSetOuterChangeInner()
             throws Exception {
-        PackageContextId outerId = PackageContextId.forCaller();
+        PackageContext outerId = PackageContext.forCaller();
         String outerAddr = addressColo.get(outerId);
         assertNull(outerAddr);
 

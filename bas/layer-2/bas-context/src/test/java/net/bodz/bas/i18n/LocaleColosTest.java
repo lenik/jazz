@@ -6,18 +6,18 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.context.StaticContextId;
+import net.bodz.bas.context.IContext;
 
 public class LocaleColosTest
         extends Assert {
 
     @Test
     public void testCharset() {
-        Charset staticCharset = LocaleColos.charset.get(StaticContextId.getInstance());
-        assertEquals(Charset.defaultCharset(), staticCharset);
+        Charset defaultCharset = II18nCtlConsts.CHARSET.get(IContext.DEFAULT);
+        assertEquals(Charset.defaultCharset(), defaultCharset);
 
-        Locale staticLocale = LocaleColos.locale.get(StaticContextId.getInstance());
-        assertEquals(Locale.getDefault(), staticLocale);
+        Locale defaultLocale = II18nCtlConsts.LOCALE.get(IContext.DEFAULT);
+        assertEquals(Locale.getDefault(), defaultLocale);
     }
 
 }

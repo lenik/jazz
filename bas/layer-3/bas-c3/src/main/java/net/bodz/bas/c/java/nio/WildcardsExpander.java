@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.c.system.SystemColos;
+import net.bodz.bas.c.system.UserDirCtl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.iterator.Iterators;
@@ -52,7 +52,7 @@ public class WildcardsExpander
         if (slash == -1) {
             bareName = true;
             // knownDir = ".";
-            knownDir = SystemColos.workdir.get().toString();
+            knownDir = UserDirCtl.getInstance().get().toString();
             expr = knownDir + "/" + expr;
         } else {
             knownDir = expr.substring(0, slash);

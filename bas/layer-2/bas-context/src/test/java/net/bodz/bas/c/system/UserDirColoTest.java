@@ -5,7 +5,8 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.context.ClassContextId;
+import net.bodz.bas.context.ClassContext;
+import net.bodz.bas.context.Contexts;
 
 public class UserDirColoTest
         extends Assert {
@@ -16,13 +17,13 @@ public class UserDirColoTest
 
         class Inner {
             File getcwd() {
-                ClassContextId innerContext = ClassContextId.getCallerClassContext();
-                return UserDirColo.getInstance().get(innerContext);
+                ClassContext innerContext = Contexts.caller();
+                return UserDirCtl.getInstance().get(innerContext);
             }
 
             void chdir(File dir) {
-                ClassContextId innerContext = ClassContextId.getCallerClassContext();
-                UserDirColo.getInstance().chdir(innerContext, dir);
+                ClassContext innerContext = Contexts.caller();
+                UserDirCtl.getInstance().chdir(innerContext, dir);
             }
         }
 
@@ -31,12 +32,12 @@ public class UserDirColoTest
         File innercwd = inner.getcwd();
         assertEquals(userDir, innercwd);
 
-        ClassContextId outerContext = ClassContextId.getCallerClassContext();
-        File outercwd = UserDirColo.getInstance().get(outerContext);
+        ClassContext outerContext = Contexts.caller();
+        File outercwd = UserDirCtl.getInstance().get(outerContext);
         assertEquals(userDir, innercwd);
 
         inner.chdir(new File("/"));
-        outercwd = UserDirColo.getInstance().get(outerContext);
+        outercwd = UserDirCtl.getInstance().get(outerContext);
         assertEquals(userDir, outercwd);
     }
 

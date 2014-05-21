@@ -26,7 +26,7 @@ import net.bodz.bas.ant.util.TextElement;
 import net.bodz.bas.ant.util.ValueConstruct;
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.c.system.SystemColos;
+import net.bodz.bas.c.system.UserDirCtl;
 import net.bodz.bas.c.type.TypePoSet;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
@@ -207,7 +207,7 @@ public class PropertyBeanTask
         final Project project = getProject();
         File baseDir = project.getBaseDir();
         if (baseDir != null)
-            SystemColos.workdir.chdir(baseDir);
+            UserDirCtl.getInstance().chdir(baseDir);
 
         try {
             Class<?>[] tryProjectTypes = { Project.class };

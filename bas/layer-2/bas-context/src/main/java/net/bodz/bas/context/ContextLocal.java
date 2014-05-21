@@ -3,46 +3,8 @@ package net.bodz.bas.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.jvm.stack.Caller;
-
-/**
- * The context local class provides an inheritable variable management. If the variable is allocated
- * in one context, it will be also the default variable storage for all its children contexts unless
- * it's overrided.
- * <p>
- * This is a little bit similar to the {@link ThreadLocal}. While {@link Thread} isn't hierachical,
- * (maybe a Thread belongs to a {@link ThreadGroup}, that's all. You won't go any further beyond the
- * ThreadGroup.) Imaging there is a parent thread, however, ThreadLocal won't treat the parent
- * thread any different. If the variable is allocated in the parent thread, it won't be accessible
- * in the child thread.
- * 
- * (See {@link ThreadContextId} and {@link ThreadGroupContextId} to get the idea how to make a
- * ThreadGroup be <i>"parent"</i> of a Thread.)
- */
-public class ContextLocal<T> {
-
-    private T root;
-    private Map<IContextId, T> map;
-
-    public ContextLocal() {
-        this.map = new HashMap<IContextId, T>();
-    }
-
-    public ContextLocal(T root) {
-        this();
-        this.root = root;
-    }
-
-    // protected abstract T create(T valueInParentContext)
-    // throws CreateException;
-
-    public T getRoot() {
-        return root;
-    }
-
-    public void setRoot(T root) {
-        this.root = root;
-    }
+public class ContextLocal<T>
+        implements IContextLocal<T> {
 
     /**
      * The max inheritance depth. If there are more then this many parents in the context, exception
@@ -56,40 +18,87 @@ public class ContextLocal<T> {
      */
     public static final int maxTransientDepth = 16;
 
-    /**
-     * Return value in the given context, or the nearest ancestor context if it's not defined.
-     * 
-     * @param context
-     *            Non-<code>null</code> context.
-     * @return {@link #getDefault() default} value if the value isn't defined in the context chain.
-     */
-    public T get(IContextId context) {
-        IContextId ancestor = context;
-        int depth = 0;
-        while (ancestor != null) {
-            T value = map.get(ancestor);
-            if (value != null || map.containsKey(ancestor))
-                return value;
-            if (++depth > maxDepth)
-                throw new ContextOverflowException("Context too deep");
-            ancestor = ancestor.getParentContextId();
-        }
-        // getOrCreate()?
-        return getRoot();
+    static IContextTeller DEFAULT_TELLER = new IndirectContextTeller();
+
+    private Class<T> valueType;
+    private Map<IContext, T> map = new HashMap<IContext, T>();
+    private IContextTeller teller = DEFAULT_TELLER;
+
+    public ContextLocal(Class<T> valueType) {
+        if (valueType == null)
+            throw new NullPointerException("valueType");
+        this.valueType = valueType;
     }
 
-    /**
-     * Set value in the given context, or the nearest ancestor context if it's transient.
-     * 
-     * @param context
-     *            The context to be affected, all transient contexts in the context chain are
-     *            skipped.
-     */
-    public void set(IContextId context, T value) {
-        IContextId concreteContext = context;
+    @Override
+    public IContext getCurrentContext() {
+        return teller.tell();
+    }
+
+    public IContextTeller getTeller() {
+        return teller;
+    }
+
+    public void setTeller(IContextTeller teller) {
+        this.teller = teller;
+    }
+
+    @Override
+    public String getName() {
+        return getClass().getName();
+    }
+
+    @Override
+    public Class<? extends T> getValueType() {
+        return valueType;
+    }
+
+    public T getDefaultValue() {
+        return null;
+    }
+
+    @Override
+    public final T get() {
+        return get(getCurrentContext());
+    }
+
+    @Override
+    public final void set(T value) {
+        set(getCurrentContext(), value);
+    }
+
+    @Override
+    public final void remove() {
+        remove(getCurrentContext());
+    }
+
+    @Override
+    public T get(IContext context) {
+        String varName = getName();
+
         int depth = 0;
-        while (concreteContext.isTransient()) {
-            concreteContext = concreteContext.getParentContextId();
+        while (context != null) {
+            if (context.contains(varName))
+                return (T) context.get(varName);
+
+            T value = map.get(context);
+            if (value != null || map.containsKey(context))
+                return value;
+
+            if (++depth > maxDepth)
+                throw new ContextOverflowException("Context too deep");
+            context = context.getParent();
+        }
+        // getOrCreate()?
+        return getDefaultValue();
+    }
+
+    @Override
+    public void set(IContext context, T value) {
+        IContext concreteContext = context;
+        int depth = 0;
+        while (concreteContext.isTransparent()) {
+            concreteContext = concreteContext.getParent();
             if (concreteContext == null)
                 // throw new IllegalUsageException("No concrete context, transient to death.");
                 break;
@@ -100,61 +109,8 @@ public class ContextLocal<T> {
         map.put(concreteContext, value);
     }
 
-    /**
-     * A shortcut to get the value in the default context.
-     * 
-     * @return Context thread local value.
-     * @def get(DefaultContext.getInstance())
-     * @see ContextResolverConfig
-     */
-    public T get() {
-        IContextId context = ContextResolverConfig.defaultContextResolver.resolve();
-        return get(context);
-    }
-
-    /**
-     * A shortcut to set the value in the default context.
-     * 
-     * @def set(DefaultContext.getInstance(), value)
-     * @see ContextResolverConfig
-     */
-    public void set(T value) {
-        IContextId context = getDefaultContext();
-        set(context, value);
-    }
-
-    /**
-     * A shortcut to get the value in the context of the given class.
-     * 
-     * @param clazz
-     *            Non-<code>null</code> context class.
-     * @return Context class local value.
-     * @def get(ClassContext.getInstance(clazz))
-     */
-    public T get(Class<?> clazz) {
-        return get(ClassContextId.getInstance(clazz));
-    }
-
-    public T get(int caller) {
-        Class<?> callerClass = Caller.getCallerClass(caller + 1);
-        T instance = get(callerClass);
-        return instance;
-    }
-
-    /**
-     * A shortcut to set the value in the context of the given class.
-     * 
-     * @param clazz
-     *            Non-<code>null</code> context class.
-     * @def set(ClassContext.getInstance(clazz), value)
-     */
-    public void set(Class<?> clazz, T value) {
-        set(ClassContextId.getInstance(clazz), value);
-    }
-
-    protected IContextId getDefaultContext() {
-        IContextId defaultContext = ContextResolverConfig.defaultContextResolver.resolve();
-        return defaultContext;
+    @Override
+    public void remove(IContext context) {
     }
 
 }
