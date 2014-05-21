@@ -67,14 +67,19 @@ public class PathFramesVbo
             frame.viewBuilder.preview(ctx, frame, viewOptions);
         }
 
-        for (int i = size - 1; i >= 0; i--) {
-            Frame frame = frames.get(i);
+        int builtFrames = 0;
+        while (builtFrames < size) {
+            Frame frame = frames.get(size - 1 - builtFrames);
             resp.addHeader("X-Page-Frame", frame.viewBuilder.getClass().getSimpleName());
             frame.ctx0 = ctx;
             ctx = frame.viewBuilder.buildHtmlView(ctx, frame, viewOptions);
+            if (ctx == null)
+                break;
+            else
+                builtFrames++;
         }
 
-        for (int i = 0; i < size; i++) {
+        for (int i = size - builtFrames; i < size; i++) {
             Frame frame = frames.get(i);
             frame.viewBuilder.buildHtmlViewTail(frame.ctx0, frame, viewOptions);
         }

@@ -10,7 +10,6 @@ import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.io.html.IHtmlOut;
 import net.bodz.bas.io.xml.IXmlTagBuilder;
-import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -99,7 +98,8 @@ public abstract class AbstractHtmlViewBuilder<T>
 
     protected static boolean enter(IHtmlViewContext ctx)
             throws IOException {
-        if (ctx.query(ITokenQueue.class).isEntered())
+        String uri = ctx.getRequest().getRequestURI();
+        if (uri.endsWith("/"))
             return false;
 
         StringBuffer url = ctx.getRequest().getRequestURL();
