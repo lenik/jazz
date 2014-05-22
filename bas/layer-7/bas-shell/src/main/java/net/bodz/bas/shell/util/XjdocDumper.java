@@ -1,5 +1,6 @@
 package net.bodz.bas.shell.util;
 
+import net.bodz.bas.fmt.flatf.FlatfOutput;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
@@ -11,7 +12,6 @@ import net.bodz.bas.program.meta.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
-import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.ClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
