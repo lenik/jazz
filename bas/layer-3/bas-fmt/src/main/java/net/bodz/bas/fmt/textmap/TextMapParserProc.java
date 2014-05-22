@@ -1,4 +1,4 @@
-package net.bodz.bas.text.textmap;
+package net.bodz.bas.fmt.textmap;
 
 import java.io.IOException;
 import java.util.Map.Entry;

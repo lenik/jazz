@@ -1,4 +1,4 @@
-package net.bodz.bas.text.textmap;
+package net.bodz.bas.fmt.textmap;
 
 import java.util.Iterator;
 import java.util.Map.Entry;

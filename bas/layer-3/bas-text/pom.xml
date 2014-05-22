@@ -27,11 +27,6 @@
             <artifactId>bas-i18n</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>net.bodz.mda</groupId>
-            <artifactId>mda-xjdoc</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
     <name>BAS :: Layer 3 :: Text</name>
 </project>
