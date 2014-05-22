@@ -6,10 +6,10 @@ import java.util.Map;
 
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
+import net.bodz.bas.fmt.flatf.ISectionHandler;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.text.flatf.IFlatfOutput;
-import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
@@ -111,7 +111,7 @@ public class ClassDoc
         return methodDocs.remove(methodId);
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.text.flatf.IFlatfSerializable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfSerializable}. */
     /* _____________________________ */static section.iface __FLATF__;
 
     /**

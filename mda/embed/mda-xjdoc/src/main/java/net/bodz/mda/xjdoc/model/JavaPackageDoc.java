@@ -2,8 +2,8 @@ package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
 
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class JavaPackageDoc
         extends MutableElementDoc {

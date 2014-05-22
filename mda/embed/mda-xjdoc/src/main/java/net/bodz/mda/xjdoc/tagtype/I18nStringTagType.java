@@ -3,11 +3,11 @@ package net.bodz.mda.xjdoc.tagtype;
 import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.ParaLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class I18nStringTagType
         extends AbstractTagType {

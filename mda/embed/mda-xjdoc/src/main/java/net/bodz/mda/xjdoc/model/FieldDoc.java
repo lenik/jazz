@@ -2,9 +2,9 @@ package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
 
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class FieldDoc
         extends MutableElementDoc
@@ -33,7 +33,7 @@ public class FieldDoc
         return classDoc;
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.text.flatf.IFlatfSerializable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfSerializable}. */
     /* _____________________________ */static section.iface __FLATF__;
 
     @Override

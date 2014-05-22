@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class RepeatForListTagType
         extends AbstractTagType {

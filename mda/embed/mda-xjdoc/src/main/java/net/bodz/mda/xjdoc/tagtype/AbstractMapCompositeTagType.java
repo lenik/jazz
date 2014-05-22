@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public abstract class AbstractMapCompositeTagType
         extends AbstractTagType {

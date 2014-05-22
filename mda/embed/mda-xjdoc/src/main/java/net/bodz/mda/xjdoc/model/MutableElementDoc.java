@@ -7,13 +7,13 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
+import net.bodz.bas.fmt.flatf.IFlatfSerializable;
+import net.bodz.bas.fmt.flatf.ISectionHandler;
 import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sugar.Tooling;
-import net.bodz.bas.text.flatf.IFlatfOutput;
-import net.bodz.bas.text.flatf.IFlatfSerializable;
-import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.tagtype.DefaultTagType;
@@ -74,7 +74,7 @@ public class MutableElementDoc
         return tagMap;
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.text.flatf.IFlatfSerializable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfSerializable}. */
     /* _____________________________ */static section.iface __FLATF__;
 
     @Override
