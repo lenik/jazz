@@ -1,6 +1,6 @@
 @graph.attrs
 	layout = $layout;
-	mindist = 0;
+	mindist = $mindist;
 	overlap = false;
 	
 	fontname = "$fontname";
