@@ -10,9 +10,9 @@ import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
 import net.bodz.bas.c.object.IdentityHashSet;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.c.type.ClassResource;
+import net.bodz.bas.fmt.textmap.TextMapParser;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.res.builtin.URLResource;
-import net.bodz.bas.text.textmap.TextMapParser;
 
 public class SiteGraphDotBuilder
         extends HashMap<String, Object> {
