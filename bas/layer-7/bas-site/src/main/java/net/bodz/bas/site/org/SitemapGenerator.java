@@ -1,17 +1,23 @@
 package net.bodz.bas.site.org;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.bodz.bas.repr.content.IContent;
 
 public class SitemapGenerator {
 
     String siteUrl;
+    Map<String, String> alternateUrls;
+
     Sitemap sitemap = new Sitemap();
     double levelWeight = -0.1;
 
-    public SitemapGenerator(String siteUrl) {
+    public SitemapGenerator(String siteUrl, Map<String, String> alternateUrls) {
         if (siteUrl == null)
             throw new NullPointerException("siteUrl");
         this.siteUrl = siteUrl;
+        this.alternateUrls = alternateUrls;
     }
 
     public double getLevelWeight() {
@@ -23,7 +29,7 @@ public class SitemapGenerator {
     }
 
     public Sitemap traverse(IContent siteObj) {
-        Crawler crawler = new Crawler(siteUrl, 0);
+        Crawler crawler = new Crawler("", 0);
         crawler.follow("", siteObj);
         sitemap.normalizePriorities(0.1, 0.9);
         return sitemap;
@@ -45,7 +51,14 @@ public class SitemapGenerator {
         @Override
         public void follow(String subpath, IContent contentInfo) {
             SitemapEntry entry = new SitemapEntry();
-            entry.setUrl(prefix + subpath);
+            entry.setUrl(siteUrl + prefix + subpath);
+
+            for (Entry<String, String> alternate : alternateUrls.entrySet()) {
+                String lang = alternate.getKey();
+                String url = alternate.getValue();
+                entry.getAlternates().put(lang, url + prefix + subpath);
+            }
+
             entry.setLastModified(contentInfo.getLastModified().getTime());
             entry.setChangeFreq(ChangeFreq.fromMaxAge(contentInfo.getMaxAge()));
             entry.setPriority(level * levelWeight + contentInfo.getPriority());

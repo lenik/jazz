@@ -1,8 +1,12 @@
 package net.bodz.bas.site.org;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class SitemapEntry {
 
     private String url;
+    private Map<String, String> alternates = new LinkedHashMap<>();
     private long lastModified;
     private ChangeFreq changeFreq = ChangeFreq.ALWAYS;
     private double priority;
@@ -18,6 +22,10 @@ public class SitemapEntry {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Map<String, String> getAlternates() {
+        return alternates;
     }
 
     /**
