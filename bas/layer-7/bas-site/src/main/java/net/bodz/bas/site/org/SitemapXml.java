@@ -1,6 +1,7 @@
 package net.bodz.bas.site.org;
 
 import java.io.IOException;
+import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
@@ -17,6 +18,7 @@ public class SitemapXml
         implements IDateFormatConsts {
 
     static final String SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9";
+    static final String XHTML_NS = "http://www.w3.org/1999/xhtml";
 
     public SitemapXml() {
         super(Sitemap.class);
@@ -39,11 +41,19 @@ public class SitemapXml
         IXmlOut out = ctx.getOut();
 
         out._xml_pi("1.0", "utf-8");
-        out.start("urlset").attr("xmlns", SITEMAP_NS);
+        out.start("urlset")//
+                .attr("xmlns", SITEMAP_NS) //
+                .attr("xmlns:xhtml", XHTML_NS);
 
         for (SitemapEntry entry : sitemap) {
             out.start("url");
             out.tag("loc").text(entry.getUrl());
+
+            for (Entry<String, String> alternate : entry.getAlternates().entrySet())
+                out.tag("xhtml:link") //
+                        .attr("rel", "alternate") //
+                        .attr("hreflang", alternate.getKey()) //
+                        .attr("href", alternate.getValue());
             out.tag("lastmod").text(ISO8601.format(entry.getLastModified()));
             out.tag("changefreq").text(entry.getChangeFreq());
             out.tag("priority").text(entry.getPriority());

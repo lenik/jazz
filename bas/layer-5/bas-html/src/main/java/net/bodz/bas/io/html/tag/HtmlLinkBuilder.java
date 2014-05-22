@@ -12,8 +12,8 @@ public class HtmlLinkBuilder
     public HtmlLinkBuilder css(String href) {
         if (href == null)
             throw new NullPointerException("href");
-        type("text/css");
         rel("stylesheet");
+        type("text/css");
         href(href);
         return this;
     }

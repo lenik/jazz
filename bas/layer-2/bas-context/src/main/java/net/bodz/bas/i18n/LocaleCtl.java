@@ -17,7 +17,6 @@ public class LocaleCtl
     public String getPath() {
         Locale locale = get();
         String tag = locale.toLanguageTag();
-        // tag = locale.toString();
         return tag;
     }
 

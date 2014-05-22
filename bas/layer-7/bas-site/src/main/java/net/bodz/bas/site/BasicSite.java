@@ -1,6 +1,8 @@
 package net.bodz.bas.site;
 
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,16 +24,56 @@ public abstract class BasicSite
         extends AbstractXjdocContent
         implements IPathDispatchable, ICrawlable {
 
-    public abstract String getHomeUrl();
+    public String getSiteUrl() {
+        StringBuilder sb = new StringBuilder();
+        HttpServletRequest request = CurrentHttpService.getRequest();
+
+        sb.append(request.getScheme());
+        sb.append("://");
+
+        String forwardedFor = request.getHeader("X-Forwarded-For");
+        String forwardedServer = request.getHeader("X-Forwarded-Server");
+        if ("127.0.0.1".equals(forwardedFor) && forwardedServer != null) {
+            sb.append(forwardedServer);
+        } else {
+            sb.append(request.getServerName());
+            if (request.getServerPort() != 80) {
+                sb.append(":");
+                sb.append(request.getServerPort());
+            }
+        }
+
+        sb.append(request.getContextPath());
+        return sb.toString();
+    }
+
+    protected String getStartUrl() {
+        String url = getSiteUrl();
+
+        HttpServletRequest request = CurrentHttpService.getRequestOpt();
+        if (request != null) {
+            Locale locale = (Locale) request.getAttribute(LocaleCtl.LOCALE.getName());
+            if (locale != null)
+                url += "/intl/" + locale.toLanguageTag().toLowerCase();
+        }
+
+        return url;
+    }
+
+    protected Map<String, String> getAlternateUrls() {
+        return Collections.emptyMap();
+    }
 
     public Sitemap getSitemap() {
-        return new SitemapGenerator(getHomeUrl()).traverse(this);
+        String siteUrl = getStartUrl();
+        Map<String, String> alternateUrls = getAlternateUrls();
+        return new SitemapGenerator(siteUrl, alternateUrls).traverse(this);
     }
 
     public SiteGraph getSiteGraph() {
         SiteGraph graph = new SiteGraph();
-        graph.setName(getHomeUrl());
-        graph.setHref("");
+        graph.setName(getSiteUrl());
+        graph.setHref(getStartUrl());
         graph.setXjdoc(getXjdoc());
         crawlableIntrospect(graph);
         return graph;
