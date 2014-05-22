@@ -45,13 +45,9 @@ public class XiString
      */
     @Override
     public String toString() {
-        // TODO locale path normalization.
         String path = LocaleCtl.LOCALE.getPath();
         path = path.toLowerCase();
-        path = path.replace('_', '-');
-
-        String leaf = getNearest(path);
-        return leaf;
+        return getNearest(path);
     }
 
     @Override
