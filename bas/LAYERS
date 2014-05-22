@@ -47,6 +47,7 @@ layer-7/ 应用框架
     bas-ant
     bas-netserv
     bas-program
+    bas-shell
     bas-site
     bas-unitperf
     bas-vcs
