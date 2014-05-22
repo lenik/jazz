@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.data.struct.RstDataStruct;
+import net.bodz.bas.fmt.rst.RstDataStruct;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.IDataOut;
 

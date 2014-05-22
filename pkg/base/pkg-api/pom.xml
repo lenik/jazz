@@ -9,7 +9,7 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-data</artifactId>
+            <artifactId>bas-fmt</artifactId>
             <version>${bas.version}</version>
         </dependency>
         <dependency>

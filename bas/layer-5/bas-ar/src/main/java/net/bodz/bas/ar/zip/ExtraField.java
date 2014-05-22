@@ -2,7 +2,7 @@ package net.bodz.bas.ar.zip;
 
 import java.io.IOException;
 
-import net.bodz.bas.data.struct.RstDataStruct;
+import net.bodz.bas.fmt.rst.RstDataStruct;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.meta.codegen.IndexedType;

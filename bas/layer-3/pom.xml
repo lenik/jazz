@@ -13,6 +13,7 @@
     <modules>
         <module>bas-c3</module>
         <module>bas-data</module>
+        <module>bas-fmt</module>
         <module>bas-http</module>
         <module>bas-log</module>
         <module>bas-m2</module>
