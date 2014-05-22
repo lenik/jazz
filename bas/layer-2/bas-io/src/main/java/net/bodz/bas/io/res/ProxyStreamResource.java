@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.IDataOutput;
+import net.bodz.bas.c.java.io.IObjectInput;
 import net.bodz.bas.c.java.io.IObjectOutput;
 import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.io.IByteIn;
@@ -66,7 +67,7 @@ public abstract class ProxyStreamResource
     }
 
     @Override
-    protected ObjectInput _newObjectInput(OpenOption... options)
+    protected IObjectInput _newObjectInput(OpenOption... options)
             throws IOException {
         return getWrapped().newObjectInput(options);
     }

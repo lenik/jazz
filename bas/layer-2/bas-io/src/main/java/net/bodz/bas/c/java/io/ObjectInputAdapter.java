@@ -10,8 +10,8 @@ public class ObjectInputAdapter
 
     private static final long serialVersionUID = 1L;
 
-    public ObjectInputAdapter(ObjectInput objInput, Closeable closable) {
-        super(objInput, closable);
+    public ObjectInputAdapter(ObjectInput objInput, Closeable closeable) {
+        super(objInput, closeable);
     }
 
     @Override

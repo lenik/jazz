@@ -1,15 +1,15 @@
 package net.bodz.bas.io.res;
 
 import java.io.BufferedReader;
-import java.io.DataInput;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInput;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.file.OpenOption;
 
+import net.bodz.bas.c.java.io.IDataInput;
+import net.bodz.bas.c.java.io.IObjectInput;
 import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.io.impl.LAReader;
 import net.bodz.bas.sugar.IToChain;
@@ -19,7 +19,7 @@ public interface IStreamInputSource
 
     /**
      * Set the charset of the file.
-     * 
+     *
      * @param charset
      *            Non-<code>null</code> {@link Charset} to be used.
      */
@@ -28,7 +28,7 @@ public interface IStreamInputSource
 
     /**
      * Set the charset of the file.
-     * 
+     *
      * @param charset
      *            Non-<code>null</code> charset name to be used.
      * @throws IllegalCharsetNameException
@@ -45,13 +45,13 @@ public interface IStreamInputSource
     /**
      * @return non-<code>null</code> value.
      */
-    DataInput newDataInput(OpenOption... options)
+    IDataInput newDataInput(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    ObjectInput newObjectInput(OpenOption... options)
+    IObjectInput newObjectInput(OpenOption... options)
             throws IOException;
 
     /**
