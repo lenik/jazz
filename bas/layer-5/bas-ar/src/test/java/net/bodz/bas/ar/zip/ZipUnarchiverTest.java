@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import net.bodz.bas.c.java.io.DbgInputStream;
 import net.bodz.bas.c.java.nio.Charsets;
+import net.bodz.bas.fmt.rst.RstObject;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.RafIn;
@@ -20,7 +21,6 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.tools.StreamReading;
-import net.bodz.bas.text.rst.RstObject;
 
 public class ZipUnarchiverTest
         extends Assert {
