@@ -25,6 +25,7 @@ public class SiteGraphDotBuilder
     public SiteGraphDotBuilder(ITreeOut out) {
         this.out = out;
         put("layout", "circo");
+        put("mindist", "0");
         put("fontname", "Sans Serif");
         put("fontsize", 20);
     }

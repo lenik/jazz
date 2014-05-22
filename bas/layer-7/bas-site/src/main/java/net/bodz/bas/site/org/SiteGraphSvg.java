@@ -3,6 +3,9 @@ package net.bodz.bas.site.org;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
+
+import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.Charsets;
@@ -36,6 +39,15 @@ public class SiteGraphSvg
             throws ViewBuilderException, IOException {
         BCharOut dotBuf = new BCharOut();
         SiteGraphDotBuilder dotBuilder = new SiteGraphDotBuilder(TreeOutImpl.from(dotBuf));
+
+        HttpServletRequest request = ctx.getRequest();
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String name = parameterNames.nextElement();
+            String value = request.getParameter(name);
+            dotBuilder.put(name, value);
+        }
+
         dotBuilder.buildGraph(ref.get());
 
         File tempDotFile = File.createTempFile("site", ".dot");
