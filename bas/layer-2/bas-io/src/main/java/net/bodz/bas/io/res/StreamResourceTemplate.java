@@ -6,11 +6,7 @@ import java.nio.file.OpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.c.java.io.DataOutputAdapter;
-import net.bodz.bas.c.java.io.IDataOutput;
-import net.bodz.bas.c.java.io.IObjectOutput;
-import net.bodz.bas.c.java.io.LineReader;
-import net.bodz.bas.c.java.io.ObjectOutputAdapter;
+import net.bodz.bas.c.java.io.*;
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.io.*;
@@ -18,6 +14,8 @@ import net.bodz.bas.io.adapter.ByteInInputStream;
 import net.bodz.bas.io.adapter.ByteOutOutputStream;
 import net.bodz.bas.io.adapter.CharInReader;
 import net.bodz.bas.io.adapter.CharOutWriter;
+import net.bodz.bas.io.data.DataInImplBE;
+import net.bodz.bas.io.data.DataInImplLE;
 import net.bodz.bas.io.data.DataOutImplBE;
 import net.bodz.bas.io.data.DataOutImplLE;
 import net.bodz.bas.io.impl.LAReader;
@@ -194,12 +192,42 @@ public abstract class StreamResourceTemplate {
         return in;
     }
 
-    // DataInput
+    // IDataIn
+
+    protected IDataIn _newDataInLE(OpenOption... options)
+            throws IOException {
+        IByteIn byteIn = newByteIn(options);
+        return DataInImplLE.from(byteIn);
+    }
+
+    public final IDataIn newDataInLE(OpenOption... options)
+            throws IOException {
+        beforeOpenInput(options);
+        IDataIn out = _newDataInLE(options);
+        afterOpenInput(out);
+        return out;
+    }
+
+    protected IDataIn _newDataInBE(OpenOption... options)
+            throws IOException {
+        IByteIn byteIn = newByteIn(options);
+        return DataInImplBE.from(byteIn);
+    }
+
+    public final IDataIn newDataInBE(OpenOption... options)
+            throws IOException {
+        beforeOpenInput(options);
+        IDataIn out = _newDataInBE(options);
+        afterOpenInput(out);
+        return out;
+    }
+
+    // IDataInput
 
     /**
      * @def new DataInputStream(newInputStream())
      */
-    protected DataInputStream _newDataInput(OpenOption... options)
+    protected IDataInput _newDataInput(OpenOption... options)
             throws IOException {
         InputStream inputStream = _newInputStream(options);
         if (inputStream == null)
@@ -211,13 +239,13 @@ public abstract class StreamResourceTemplate {
         else
             dataIn = new DataInputStream(inputStream);
 
-        return dataIn;
+        return new DataInputAdapter(dataIn);
     }
 
-    public final DataInput newDataInput(OpenOption... options)
+    public final IDataInput newDataInput(OpenOption... options)
             throws IOException {
         beforeOpenInput(options);
-        DataInputStream in = _newDataInput(options);
+        IDataInput in = _newDataInput(options);
         afterOpenInput(in);
         return in;
     }
@@ -227,20 +255,21 @@ public abstract class StreamResourceTemplate {
     /**
      * @def new ObjectInputStream(newInputStream())
      */
-    protected ObjectInput _newObjectInput(OpenOption... options)
+    protected IObjectInput _newObjectInput(OpenOption... options)
             throws IOException {
         InputStream inputStream = _newInputStream(options);
         if (inputStream == null)
             throw new NullPointerException("inputStream");
-        if (inputStream instanceof ObjectInput)
-            return (ObjectInput) inputStream;
-        return new ObjectInputStream(inputStream);
+        if (inputStream instanceof IObjectInput)
+            return (IObjectInput) inputStream;
+        ObjectInputStream in = new ObjectInputStream(inputStream);
+        return new ObjectInputAdapter(in, in);
     }
 
-    public final ObjectInput newObjectInput(OpenOption... options)
+    public final IObjectInput newObjectInput(OpenOption... options)
             throws IOException {
         beforeOpenInput(options);
-        ObjectInput in = _newObjectInput(options);
+        IObjectInput in = _newObjectInput(options);
         afterOpenInput(in);
         return in;
     }
