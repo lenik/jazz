@@ -272,11 +272,15 @@ public abstract class AbstractXmlOut
             } else if (i == len - 1) {
                 if (!(letter || digit))
                     throw new IllegalArgumentException("Name must end with a letter or digit.");
-            } else {
-                boolean dashDot = ch == '-' || ch == '.';
-                if (!(letter || digit || dashDot))
+            } else if (!letter)
+                switch (ch) {
+                case '-':
+                case '.':
+                case ':':
+                    break;
+                default:
                     throw new IllegalArgumentException("Illegal char in the name: " + ch);
-            }
+                }
         }
     }
 
