@@ -1,4 +1,4 @@
-package net.bodz.bas.text.flatf;
+package net.bodz.bas.fmt.flatf;
 
 import java.io.BufferedReader;
 import java.io.IOException;

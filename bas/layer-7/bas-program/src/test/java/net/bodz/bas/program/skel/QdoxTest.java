@@ -6,11 +6,11 @@ import java.util.ServiceLoader;
 import org.junit.Assert;
 
 import net.bodz.bas.c.m2.MavenPomDir;
+import net.bodz.bas.fmt.flatf.FlatfOutput;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.res.builtin.StringSource;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
-import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.conv.FlatfClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;

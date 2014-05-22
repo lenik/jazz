@@ -5,13 +5,13 @@ import java.io.Reader;
 import java.net.URL;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.flatf.FlatfInput;
+import net.bodz.bas.fmt.flatf.FlatfLoader;
+import net.bodz.bas.fmt.flatf.IFlatfInput;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
-import net.bodz.bas.text.flatf.FlatfInput;
-import net.bodz.bas.text.flatf.FlatfLoader;
-import net.bodz.bas.text.flatf.IFlatfInput;
 import net.bodz.mda.xjdoc.ClassDocLoadException;
 import net.bodz.mda.xjdoc.IClassDocLoader;
 import net.bodz.mda.xjdoc.model.ClassDoc;

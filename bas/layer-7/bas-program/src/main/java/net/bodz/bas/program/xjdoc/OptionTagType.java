@@ -3,8 +3,8 @@ package net.bodz.bas.program.xjdoc;
 import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.tagtype.AbstractTagType;
 import net.bodz.mda.xjdoc.tagtype.IJavadocWriter;
 

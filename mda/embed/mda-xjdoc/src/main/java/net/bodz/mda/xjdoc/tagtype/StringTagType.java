@@ -5,8 +5,8 @@ import java.io.IOException;
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class StringTagType
         extends AbstractTagType {
