@@ -7,30 +7,25 @@ package net.bodz.bas.t.project;
 public abstract class AbstractJazzModule
         implements IJazzModule {
 
+    private String name;
     private String packageName;
-    private String moduleName;
 
     public AbstractJazzModule() {
+        String baseName = getClass().getSimpleName();
+        if (baseName.endsWith("Module"))
+            baseName = baseName.substring(0, baseName.length() - 6);
+
+        this.name = baseName;
         this.packageName = getClass().getPackage().getName();
+    }
 
-        String moduleClassName = getClass().getSimpleName();
-        if (moduleClassName.endsWith("ModuleInfo"))
-            moduleName = moduleClassName.substring(0, moduleClassName.length() - "ModuleInfo".length());
-        else if (moduleClassName.endsWith("Info"))
-            moduleName = moduleClassName.substring(0, moduleClassName.length() - "Info".length());
-        else
-            moduleName = moduleClassName;
-
-        // ResourceBundleNLS rbNLS = new ResourceBundleNLS(null, moduleName);
-        // this.NLS = rbNLS;
+    @Override
+    public String getName() {
+        return name;
     }
 
     public String getPackageName() {
         return packageName;
-    }
-
-    public String getModuleName() {
-        return moduleName;
     }
 
 }
