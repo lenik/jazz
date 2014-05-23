@@ -6,6 +6,8 @@ import net.bodz.bas.meta.codegen.IndexedType;
 public interface IJazzModule
         extends IClassHashConstants {
 
+    String getName();
+
     IJazzProject getProject();
 
 }
