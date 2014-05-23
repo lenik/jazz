@@ -1,9 +1,9 @@
 package net.bodz.bas;
 
 /**
- * BAS Representation Framework
+ * BAS File Formats
  */
-public class BasReprModule
+public class BasFmtModule
         extends AbstractBasModule {
 
 }
