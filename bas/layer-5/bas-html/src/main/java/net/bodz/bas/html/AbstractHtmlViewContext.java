@@ -30,4 +30,13 @@ public abstract class AbstractHtmlViewContext
         return super.query(specificationId);
     }
 
+    @Override
+    public IHtmlViewContext getRoot() {
+        IHtmlViewContext node = this;
+        IHtmlViewContext parent;
+        while ((parent = node.getParent()) != null)
+            node = parent;
+        return node;
+    }
+
 }

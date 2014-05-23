@@ -1,6 +1,7 @@
 package net.bodz.bas.html.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ServiceLoader;
 
 import javax.servlet.ServletException;
@@ -17,8 +18,12 @@ import net.bodz.bas.html.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.RootHtmlViewContext;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.vbo.PathFramesVbo;
 import net.bodz.bas.http.HttpServlet;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.adapter.WriterCharOut;
+import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -32,6 +37,7 @@ import net.bodz.bas.std.rfc.http.HttpCacheControl;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.ui.dom1.UiValue;
+import net.bodz.bas.xml.dom.XmlFormatter;
 
 public class PathDispatchServlet
         extends HttpServlet {
@@ -117,12 +123,19 @@ public class PathDispatchServlet
         case "text/html":
         case "text/xhtml":
             IHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
+            IHtmlTag doc = ctx.getOut();
+
             try {
                 pathFramesVbo.buildHtmlView(ctx, UiValue.wrap(arrival));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
-            ctx.flush();
+
+            PrintWriter writer = resp.getWriter();
+            WriterCharOut charOut = new WriterCharOut(writer);
+            ITreeOut treeOut = TreeOutImpl.from(charOut);
+            XmlFormatter formatter = new XmlFormatter(treeOut);
+            formatter.format(doc);
             break;
 
         default:
@@ -133,7 +146,6 @@ public class PathDispatchServlet
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build view: " + e.getMessage(), e);
             }
-            _ctx.flush();
         }
     }
 

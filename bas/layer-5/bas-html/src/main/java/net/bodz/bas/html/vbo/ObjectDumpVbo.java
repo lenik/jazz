@@ -6,7 +6,7 @@ import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewContext;
-import net.bodz.bas.io.html.IHtmlOut;
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.req.IMethodOfRequest;
@@ -29,22 +29,23 @@ public class ObjectDumpVbo
         IMethodOfRequest qmethod = req.getAttribute(IMethodOfRequest.class);
 
         Object obj = ref.get();
-        IHtmlOut out = ctx.getOut();
+        IHtmlTag out = ctx.getOut();
+        out = out.html();
 
-        out.println("<html><head><title>Object Dump</title></head>");
-        out.println("<body><h1>Object Dump: " + ObjectInfo.getSimpleId(obj) + "</h1>");
-        out.println("<hr/>");
+        out.head().title("Object Dump");
+
+        out = out.body();
+        out.h1().text("Object Dump: " + ObjectInfo.getSimpleId(obj));
+        out.hr();
 
         String string = String.valueOf(obj);
         String html = string; // TODO HtmlUtils.htmlEscape(string);
-        out.println("<pre>");
-        out.println(html);
-        out.println("</pre>");
+        out.pre().verbatim(html);
 
-        out.println("<hr/>");
-        out.println("<h2>Request Info</h2>");
-        out.println("<pre>");
+        out.hr();
+        out.h2().text("Request Info");
 
+        out = out.pre();
         out.println("Context-Path: " + req.getContextPath());
         out.println("Path-Info: " + req.getPathInfo());
 

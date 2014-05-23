@@ -79,12 +79,7 @@ public class PathFramesVbo
                 builtFrames++;
         }
 
-        for (int i = size - builtFrames; i < size; i++) {
-            Frame frame = frames.get(i);
-            frame.viewBuilder.buildHtmlViewTail(frame.ctx0, frame, viewOptions);
-        }
-
-        return null;
+        return ctx;
     }
 
     static class Frame

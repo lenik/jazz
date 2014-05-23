@@ -6,12 +6,12 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewContext;
-import net.bodz.bas.io.xml.IXmlOut;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.bas.xml.dom.IXmlTag;
 
 public class SitemapXml
         extends AbstractHtmlViewBuilder<Sitemap>
@@ -38,29 +38,26 @@ public class SitemapXml
     public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<Sitemap> ref, IOptions options)
             throws ViewBuilderException, IOException {
         Sitemap sitemap = ref.get();
-        IXmlOut out = ctx.getOut();
+        IXmlTag out = ctx.getOut();
 
-        out._xml_pi("1.0", "utf-8");
-        out.start("urlset")//
+        out.pi("xml").xml("1.0", "utf-8");
+        out = out.insert("urlset")//
                 .attr("xmlns", SITEMAP_NS) //
                 .attr("xmlns:xhtml", XHTML_NS);
 
         for (SitemapEntry entry : sitemap) {
-            out.start("url");
-            out.tag("loc").text(entry.getUrl());
+            IXmlTag tag = out.insert("url");
+            tag.insert("loc").text(entry.getUrl());
 
             for (Entry<String, String> alternate : entry.getAlternates().entrySet())
-                out.tag("xhtml:link") //
+                tag.insert("xhtml:link") //
                         .attr("rel", "alternate") //
                         .attr("hreflang", alternate.getKey()) //
                         .attr("href", alternate.getValue());
-            out.tag("lastmod").text(ISO8601.format(entry.getLastModified()));
-            out.tag("changefreq").text(entry.getChangeFreq());
-            out.tag("priority").text(entry.getPriority());
-            out.end();
+            tag.insert("lastmod").text(ISO8601.format(entry.getLastModified()));
+            tag.insert("changefreq").text(entry.getChangeFreq());
+            tag.insert("priority").text(entry.getPriority());
         }
-
-        out.end();
         return ctx;
     }
 

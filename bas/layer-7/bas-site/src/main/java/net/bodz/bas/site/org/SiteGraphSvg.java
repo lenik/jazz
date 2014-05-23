@@ -3,16 +3,17 @@ package net.bodz.bas.site.org;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.html.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.IHtmlViewContext;
 import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.tools.StreamWriting;
@@ -37,14 +38,16 @@ public class SiteGraphSvg
     @Override
     public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<SiteGraphNode> ref, IOptions options)
             throws ViewBuilderException, IOException {
+        HttpServletRequest req = ctx.getRequest();
+        HttpServletResponse resp = ctx.getResponse();
+
         BCharOut dotBuf = new BCharOut();
         SiteGraphDotBuilder dotBuilder = new SiteGraphDotBuilder(TreeOutImpl.from(dotBuf));
 
-        HttpServletRequest request = ctx.getRequest();
-        Enumeration<String> parameterNames = request.getParameterNames();
+        Enumeration<String> parameterNames = req.getParameterNames();
         while (parameterNames.hasMoreElements()) {
             String name = parameterNames.nextElement();
-            String value = request.getParameter(name);
+            String value = req.getParameter(name);
             dotBuilder.put(name, value);
         }
 
@@ -57,7 +60,7 @@ public class SiteGraphSvg
 
         InputStream svgIn;
         try {
-            IByteOut out = ctx.getByteOut();
+            OutputStream out = resp.getOutputStream();
 
             Process proc = Processes.exec("/usr/bin/dot", "-Tsvg", tempDotFile.getPath());
             svgIn = proc.getInputStream();

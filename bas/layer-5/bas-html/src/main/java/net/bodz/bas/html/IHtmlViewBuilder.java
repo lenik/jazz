@@ -38,10 +38,4 @@ public interface IHtmlViewBuilder<T>
     IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
-    void buildHtmlViewTail(IHtmlViewContext ctx, IUiRef<T> ref)
-            throws ViewBuilderException, IOException;
-
-    void buildHtmlViewTail(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options)
-            throws ViewBuilderException, IOException;
-
 }
