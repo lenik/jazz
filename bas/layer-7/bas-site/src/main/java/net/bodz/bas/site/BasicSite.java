@@ -3,9 +3,12 @@ package net.bodz.bas.site;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.bodz.bas.JazzBasProject;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.i18n.LocaleCtl;
 import net.bodz.bas.repr.content.AbstractXjdocContent;
@@ -19,10 +22,25 @@ import net.bodz.bas.site.org.SiteGraph;
 import net.bodz.bas.site.org.Sitemap;
 import net.bodz.bas.site.org.SitemapGenerator;
 import net.bodz.bas.std.rfc.http.ICacheControl;
+import net.bodz.bas.t.project.IJazzModule;
 
 public abstract class BasicSite
         extends AbstractXjdocContent
         implements IPathDispatchable, ICrawlable {
+
+    protected Map<String, IJazzModule> modules = new TreeMap<>();
+
+    public BasicSite() {
+        for (IJazzModule module : JazzBasProject.getInstance().getModules()) {
+            String name = module.getName();
+            name = Strings.hyphenatize(name);
+            modules.put(name, module);
+        }
+    }
+
+    public Map<String, IJazzModule> getModules() {
+        return modules;
+    }
 
     public String getSiteUrl() {
         StringBuilder sb = new StringBuilder();
