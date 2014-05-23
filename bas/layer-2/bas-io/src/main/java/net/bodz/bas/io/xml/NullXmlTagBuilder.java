@@ -39,7 +39,7 @@ public class NullXmlTagBuilder
     }
 
     @Override
-    public IXmlTagBuilder textf(String format, Object... args) {
+    public IXmlTagBuilder text(String format, Object... args) {
         return this;
     }
 

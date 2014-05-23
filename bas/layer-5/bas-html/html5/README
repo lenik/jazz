@@ -2,21 +2,16 @@ How to generate the HTML model
 ==============================
 
 1. Download the document files from http://www.w3.org/TR/html5/:
-    total 3056
     -rw-r--r-- 1 lenik 160772 Apr 15 15:18 document-metadata.html
     -rw-r--r-- 1 lenik  41856 Apr 15 15:15 edits.html
-    drwxr-xr-x 2 lenik   4096 Apr 15 15:37 elm/
     -rw-r--r-- 1 lenik 867632 Apr 15 15:14 embedded-content-0.html
     -rw-r--r-- 1 lenik 944978 Apr 15 15:15 forms.html
     -rw-r--r-- 1 lenik 126406 Apr 15 15:14 grouping-content.html
     -rw-r--r-- 1 lenik  65259 Apr 15 15:15 interactive-elements.html
     -rw-r--r-- 1 lenik 110726 Apr 15 15:15 links.html
-    -rw-r--r-- 1 lenik      0 Apr 15 15:40 README
     -rw-r--r-- 1 lenik 159180 Apr 15 15:15 scripting-1.html
     -rw-r--r-- 1 lenik 132001 Apr 15 15:14 sections.html
     -rw-r--r-- 1 lenik  26730 Apr 15 15:18 semantics.html
-    -rwxr-xr-x 1 lenik   3083 Apr 15 15:38 split-elements.pl*
-    -rw-r--r-- 1 lenik  12288 Apr 15 15:38 .split-elements.pl.swp
     -rw-r--r-- 1 lenik 168310 Apr 15 15:15 tabular-data.html
     -rw-r--r-- 1 lenik 233129 Apr 15 15:14 text-level-semantics.html
 

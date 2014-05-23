@@ -1,8 +1,6 @@
 package net.bodz.bas.html;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
@@ -10,15 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.ICharOut;
-import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.io.adapter.OutputStreamByteOut;
-import net.bodz.bas.io.adapter.WriterPrintOut;
-import net.bodz.bas.io.html.HtmlOutImpl;
-import net.bodz.bas.io.html.IHtmlOut;
-import net.bodz.bas.io.impl.DecodedByteOut;
-import net.bodz.bas.io.impl.EncodedCharOut;
+import net.bodz.bas.html.dom.HtmlDoc;
+import net.bodz.bas.html.dom.IHtmlTag;
 
 public class RootHtmlViewContext
         extends AbstractHtmlViewContext
@@ -28,10 +19,10 @@ public class RootHtmlViewContext
     private final HttpServletResponse response;
 
     private IHtmlMetaData metaData;
-    private boolean outputCreated;
-    private OutputStream outputStream;
-    private IByteOut byteOut;
-    private IHtmlOut htmlOut;
+    private Map<String, Object> attributes;
+
+    private IHtmlTag outerTag;
+    private Map<String, IHtmlTag> anchors;
 
     private Map<Object, IHtmlViewBuilder<?>> viewBuilderCache;
 
@@ -44,6 +35,11 @@ public class RootHtmlViewContext
         this.response = response;
 
         metaData = new HtmlMetaData();
+        attributes = new HashMap<String, Object>();
+
+        outerTag = new HtmlDoc();
+        anchors = new HashMap<>();
+
         viewBuilderCache = new IdentityHashMap<>();
     }
 
@@ -81,65 +77,48 @@ public class RootHtmlViewContext
     }
 
     @Override
+    public Map<String, Object> getAttributeMap() {
+        return attributes;
+    }
+
+    @Override
+    public Object getAttribute(String name) {
+        return attributes.get(name);
+    }
+
+    @Override
+    public void setAttribute(String name, Object value) {
+        if (name == null)
+            throw new NullPointerException("name");
+        attributes.put(name, value);
+    }
+
+    @Override
+    public IHtmlTag getOut() {
+        return outerTag;
+    }
+
+    @Override
+    public void setOut(IHtmlTag outerTag) {
+        if (outerTag == null)
+            throw new NullPointerException("outerTag");
+        this.outerTag = outerTag;
+    }
+
+    @Override
+    public IHtmlTag getAnchor(String name) {
+        return anchors.get(name);
+    }
+
+    @Override
+    public void setAnchor(String name, IHtmlTag anchor) {
+        anchors.put(name, anchor);
+    }
+
+    @Override
     public <T> IHtmlViewBuilder<T> getViewBuilder(Object obj) {
         IHtmlViewBuilder<T> viewBuilder = (IHtmlViewBuilder<T>) viewBuilderCache.get(obj);
         return viewBuilder;
-    }
-
-    public OutputStream getOutputStream()
-            throws IOException {
-        createOutput();
-        return outputStream;
-    }
-
-    @Override
-    public IByteOut getByteOut()
-            throws IOException {
-        createOutput();
-        return byteOut;
-    }
-
-    @Override
-    public IHtmlOut getOut()
-            throws IOException {
-        createOutput();
-        return htmlOut;
-    }
-
-    @Override
-    public void flush()
-            throws IOException {
-        if (htmlOut != null)
-            htmlOut.endAll();
-    }
-
-    void createOutput()
-            throws IOException {
-        if (outputCreated)
-            return;
-
-        String encoding = response.getCharacterEncoding();
-        if (encoding == null)
-            encoding = "utf-8";
-
-        String contentType = response.getContentType();
-        boolean charBased = contentType.startsWith("text/");
-
-        if (charBased) {
-            PrintWriter writer = response.getWriter();
-            IPrintOut printOut = new WriterPrintOut(writer);
-            htmlOut = HtmlOutImpl.from(printOut);
-            DecodedByteOut decodedByteOut = new DecodedByteOut(printOut, encoding);
-            byteOut = decodedByteOut;
-            outputStream = decodedByteOut;
-        } else {
-            outputStream = response.getOutputStream();
-            byteOut = new OutputStreamByteOut(outputStream);
-            ICharOut charOut = new EncodedCharOut(byteOut, encoding);
-            htmlOut = HtmlOutImpl.from(charOut);
-        }
-
-        outputCreated = true;
     }
 
 }

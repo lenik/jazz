@@ -1,13 +1,12 @@
 package net.bodz.bas.html;
 
-import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.html.IHtmlOut;
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.meta.decl.Shortcut;
 import net.bodz.bas.rtx.IQueryable;
 
@@ -27,14 +26,23 @@ public interface IHtmlViewContext
 
     IHtmlMetaData getMetaData();
 
+    Map<String, Object> getAttributeMap();
+
+    Object getAttribute(String name);
+
+    void setAttribute(String name, Object value);
+
+    /**
+     * Get the outer tag.
+     */
+    IHtmlTag getOut();
+
+    void setOut(IHtmlTag out);
+
+    IHtmlTag getAnchor(String name);
+
+    void setAnchor(String name, IHtmlTag anchor);
+
     <T> IHtmlViewBuilder<T> getViewBuilder(Object obj);
 
-    IByteOut getByteOut()
-            throws IOException;
-
-    IHtmlOut getOut()
-            throws IOException;
-
-    void flush()
-            throws IOException;
 }

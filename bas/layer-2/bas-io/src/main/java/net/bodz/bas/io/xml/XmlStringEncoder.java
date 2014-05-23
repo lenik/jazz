@@ -1,6 +1,5 @@
 package net.bodz.bas.io.xml;
 
-import java.io.IOException;
 
 /**
  * Escape special chars using XML entities.
@@ -10,16 +9,11 @@ import java.io.IOException;
  */
 public class XmlStringEncoder {
 
-    private final Appendable out;
-
     private String[] entityTab = new String[256];
 
-    XmlStringEncoder(Appendable out, String[] tab) {
-        if (out == null)
-            throw new NullPointerException("out");
+    XmlStringEncoder(String[] tab) {
         if (tab == null)
             throw new NullPointerException("tab");
-        this.out = out;
         this.entityTab = tab;
     }
 
@@ -45,35 +39,31 @@ public class XmlStringEncoder {
         simpleNumericTab['>'] = "&#62;";
     }
 
-    public static XmlStringEncoder forAttribute(Appendable out) {
-        XmlStringEncoder escaper = new XmlStringEncoder(out, simpleAttributeTab);
+    public static XmlStringEncoder forAttribute() {
+        XmlStringEncoder escaper = new XmlStringEncoder(simpleAttributeTab);
         return escaper;
     }
 
-    public static XmlStringEncoder forText(Appendable out) {
-        XmlStringEncoder escaper = new XmlStringEncoder(out, simpleTextTab);
+    public static XmlStringEncoder forText() {
+        XmlStringEncoder escaper = new XmlStringEncoder(simpleTextTab);
         return escaper;
     }
 
-    public void encode(String str)
-            throws IOException {
+    public String encode(String str) {
+        StringBuilder sb = new StringBuilder(str.length() * 5 / 4);
         int len = str.length();
         for (int i = 0; i < len; i++) {
             char ch = str.charAt(i);
             if (ch < entityTab.length) {
                 String t = entityTab[ch];
                 if (t != null) {
-                    out.append(t);
+                    sb.append(t);
                     continue;
                 }
             }
-            out.append(ch);
+            sb.append(ch);
         }
-    }
-
-    @Override
-    public String toString() {
-        return out.toString();
+        return sb.toString();
     }
 
 }

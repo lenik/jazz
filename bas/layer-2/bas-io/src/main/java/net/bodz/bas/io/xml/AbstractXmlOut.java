@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.io.AbstractTreeOut;
 import net.bodz.bas.io.ITextIndention;
-import net.bodz.bas.io.PrintException;
 import net.bodz.bas.io.TextIndention;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 import net.bodz.bas.t.list.ArrayStack;
@@ -24,8 +23,8 @@ public abstract class AbstractXmlOut
 
     private XmlOutTagBuffer pending;
 
-    private XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute(this);
-    private XmlStringEncoder textEncoder = XmlStringEncoder.forText(this);
+    private XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute();
+    private XmlStringEncoder textEncoder = XmlStringEncoder.forText();
 
     public AbstractXmlOut() {
         this(new XmlOutputFormat());
@@ -186,11 +185,8 @@ public abstract class AbstractXmlOut
         String valStr = value.toString();
 
         print(' ' + name + "=\"");
-        try {
-            attribEncoder.encode(valStr);
-        } catch (IOException e) {
-            throw new PrintException(e.getMessage(), e);
-        }
+        String encoded = attribEncoder.encode(valStr);
+        print(encoded);
         print('\"');
     }
 
@@ -201,11 +197,8 @@ public abstract class AbstractXmlOut
     }
 
     private void _text(String str) {
-        try {
-            textEncoder.encode(str);
-        } catch (IOException e) {
-            throw new PrintException(e.getMessage(), e);
-        }
+        String encoded = textEncoder.encode(str);
+        print(encoded);
     }
 
     @Override

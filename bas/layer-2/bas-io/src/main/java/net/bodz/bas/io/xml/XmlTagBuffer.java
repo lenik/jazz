@@ -60,7 +60,7 @@ public class XmlTagBuffer
     }
 
     @Override
-    public IXmlTagBuilder textf(String format, Object... args) {
+    public IXmlTagBuilder text(String format, Object... args) {
         this.text = String.format(format, args);
         return this;
     }
