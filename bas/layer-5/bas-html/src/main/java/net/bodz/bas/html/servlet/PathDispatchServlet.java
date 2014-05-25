@@ -18,7 +18,6 @@ import net.bodz.bas.html.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.RootHtmlViewContext;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
-import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.vbo.PathFramesVbo;
 import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.io.ITreeOut;
@@ -123,7 +122,6 @@ public class PathDispatchServlet
         case "text/html":
         case "text/xhtml":
             IHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
-            IHtmlTag doc = ctx.getOut();
 
             try {
                 pathFramesVbo.buildHtmlView(ctx, UiValue.wrap(arrival));
@@ -135,7 +133,7 @@ public class PathDispatchServlet
             WriterCharOut charOut = new WriterCharOut(writer);
             ITreeOut treeOut = TreeOutImpl.from(charOut);
             XmlFormatter formatter = new XmlFormatter(treeOut);
-            formatter.format(doc);
+            formatter.format(ctx.getHtmlDoc());
             break;
 
         default:

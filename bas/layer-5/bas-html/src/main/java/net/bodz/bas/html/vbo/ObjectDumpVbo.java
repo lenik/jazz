@@ -30,7 +30,6 @@ public class ObjectDumpVbo
 
         Object obj = ref.get();
         IHtmlTag out = ctx.getOut();
-        out = out.html();
 
         out.head().title("Object Dump");
 

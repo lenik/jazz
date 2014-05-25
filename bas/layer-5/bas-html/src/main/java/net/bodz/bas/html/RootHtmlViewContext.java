@@ -21,6 +21,7 @@ public class RootHtmlViewContext
     private IHtmlMetaData metaData;
     private Map<String, Object> attributes;
 
+    private HtmlDoc htmlDoc;
     private IHtmlTag outerTag;
     private Map<String, IHtmlTag> anchors;
 
@@ -37,7 +38,8 @@ public class RootHtmlViewContext
         metaData = new HtmlMetaData();
         attributes = new HashMap<String, Object>();
 
-        outerTag = new HtmlDoc();
+        htmlDoc = new HtmlDoc();
+        outerTag = htmlDoc.getRoot();
         anchors = new HashMap<>();
 
         viewBuilderCache = new IdentityHashMap<>();
@@ -91,6 +93,10 @@ public class RootHtmlViewContext
         if (name == null)
             throw new NullPointerException("name");
         attributes.put(name, value);
+    }
+
+    public HtmlDoc getHtmlDoc() {
+        return htmlDoc;
     }
 
     @Override
