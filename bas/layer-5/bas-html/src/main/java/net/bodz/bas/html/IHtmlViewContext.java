@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.bodz.bas.html.dom.HtmlDoc;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.meta.decl.Shortcut;
 import net.bodz.bas.rtx.IQueryable;
@@ -32,9 +33,8 @@ public interface IHtmlViewContext
 
     void setAttribute(String name, Object value);
 
-    /**
-     * Get the outer tag.
-     */
+    HtmlDoc getHtmlDoc();
+
     IHtmlTag getOut();
 
     void setOut(IHtmlTag out);
