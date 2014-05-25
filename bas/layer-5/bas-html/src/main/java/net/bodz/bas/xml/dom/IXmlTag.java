@@ -5,6 +5,9 @@ import java.util.Map;
 public interface IXmlTag
         extends IXmlNode {
 
+    /**
+     * @return <code>null</code> for pseudo-tag.
+     */
     String getTagName();
 
     Map<String, String> getAttributeMap();

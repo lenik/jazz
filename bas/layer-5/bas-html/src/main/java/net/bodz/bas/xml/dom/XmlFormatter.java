@@ -31,39 +31,47 @@ public class XmlFormatter {
         case ELEMENT:
             IXmlTag tag = (IXmlTag) node;
             {
-                StringBuilder sb = new StringBuilder();
-                sb.append('<');
-                sb.append(tag.getTagName());
+                boolean pseudo = tag.getTagName() == null;
 
-                Map<String, String> attributeMap = tag.getAttributeMap();
-                if (!attributeMap.isEmpty())
-                    for (Entry<String, String> entry : attributeMap.entrySet()) {
-                        sb.append(' ');
-                        sb.append(entry.getKey());
-                        sb.append("=\"");
-                        sb.append(attribEncoder.encode(entry.getValue()));
-                        sb.append('"');
+                if (!pseudo) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append('<');
+                    sb.append(tag.getTagName());
+
+                    Map<String, String> attributeMap = tag.getAttributeMap();
+                    if (!attributeMap.isEmpty())
+                        for (Entry<String, String> entry : attributeMap.entrySet()) {
+                            sb.append(' ');
+                            sb.append(entry.getKey());
+                            sb.append("=\"");
+                            sb.append(attribEncoder.encode(entry.getValue()));
+                            sb.append('"');
+                        }
+
+                    Collection<? extends IXmlNode> children = tag.getChildren();
+                    if (children.isEmpty()) {
+                        sb.append("/>");
+                        out.println(sb.toString());
+                    } else {
+                        sb.append(">");
+                        out.print(sb.toString());
+                        sb.setLength(0);
+
+                        out.enter();
                     }
 
-                Collection<? extends IXmlNode> children = tag.getChildren();
-                if (children.isEmpty() && !"script".equals(tag.getTagName())) {
-                    sb.append("/>");
-                    out.println(sb.toString());
-                } else {
-                    sb.append(">");
-                    out.print(sb.toString());
-                    sb.setLength(0);
-
-                    out.enter();
                     for (IXmlNode child : children) {
                         format(child);
                     }
-                    out.leave();
 
-                    sb.append("</");
-                    sb.append(tag.getTagName());
-                    sb.append(">");
-                    out.println(sb.toString());
+                    if (!pseudo) {
+                        out.leave();
+
+                        sb.append("</");
+                        sb.append(tag.getTagName());
+                        sb.append(">");
+                        out.println(sb.toString());
+                    }
                 }
             }
             break;
@@ -113,17 +121,23 @@ public class XmlFormatter {
             }
             break;
 
+        case DTD_TAG:
+            DtdTag dtdTag = (DtdTag) node;
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.append("<!");
+                sb.append(dtdTag.getTagName());
+                sb.append(" ");
+                sb.append(dtdTag.getContent());
+                sb.append(">");
+                out.println(sb.toString());
+            }
+            break;
+
         case VERBATIM:
             XmlVerbatim verbatim = (XmlVerbatim) node;
             {
                 out.print(verbatim.getContent());
-            }
-            break;
-
-        case ANCHOR:
-            IXmlTag anchor = (IXmlTag) node;
-            for (IXmlNode child : anchor.getChildren()) {
-                format(child);
             }
             break;
 
