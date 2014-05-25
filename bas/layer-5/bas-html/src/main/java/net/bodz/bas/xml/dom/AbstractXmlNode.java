@@ -3,6 +3,9 @@ package net.bodz.bas.xml.dom;
 import java.util.Collection;
 import java.util.Collections;
 
+import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.impl.TreeOutImpl;
+
 public abstract class AbstractXmlNode<self_t extends IXmlNode>
         implements IXmlNode {
 
@@ -61,6 +64,13 @@ public abstract class AbstractXmlNode<self_t extends IXmlNode>
     @Override
     public Collection<? extends IXmlNode> getChildren() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public String toString() {
+        BCharOut buf = new BCharOut();
+        new XmlFormatter(TreeOutImpl.from(buf)).format(this);
+        return buf.toString();
     }
 
 }

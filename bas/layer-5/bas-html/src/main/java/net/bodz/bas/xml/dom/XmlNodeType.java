@@ -12,8 +12,8 @@ public enum XmlNodeType {
 
     CDATA,
 
-    VERBATIM,
+    DTD_TAG,
 
-    ANCHOR,
+    VERBATIM,
 
 }

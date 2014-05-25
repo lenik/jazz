@@ -6,8 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 @SuppressWarnings("unchecked")
@@ -30,14 +28,16 @@ public abstract class AbstractXmlTag<self_t extends IXmlTag>
 
     public AbstractXmlTag(IXmlTag parent, String tagName) {
         this(parent);
-        if (tagName == null)
-            throw new NullPointerException("tagName");
         this.tagName = tagName;
     }
 
     @Override
     public XmlNodeType getType() {
         return XmlNodeType.ELEMENT;
+    }
+
+    public boolean isPseudo() {
+        return tagName == null;
     }
 
     @Override
@@ -164,13 +164,6 @@ public abstract class AbstractXmlTag<self_t extends IXmlTag>
     public self_t verbatim(String content) {
         new XmlVerbatim(this, content);
         return (self_t) this;
-    }
-
-    @Override
-    public String toString() {
-        BCharOut buf = new BCharOut();
-        new XmlFormatter(TreeOutImpl.from(buf)).format(this);
-        return buf.toString();
     }
 
 }

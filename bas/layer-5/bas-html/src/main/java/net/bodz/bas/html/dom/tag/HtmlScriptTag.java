@@ -7,6 +7,7 @@ public class HtmlScriptTag
 
     public HtmlScriptTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
+        text("");
     }
 
     public HtmlScriptTag javascript(String src) {
