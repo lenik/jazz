@@ -62,6 +62,17 @@ public class PathArrival
     }
 
     @Override
+    public IPathArrival getPrevious(Object target) {
+        IPathArrival a = this;
+        while (a != null) {
+            if (a.getTarget() == target)
+                return a;
+            a = a.getPrevious();
+        }
+        return null;
+    }
+
+    @Override
     public String[] getConsumedTokens() {
         return consumedTokens;
     }
@@ -73,6 +84,20 @@ public class PathArrival
     @Override
     public String getConsumedPath() {
         return StringArray.join("/", consumedTokens);
+    }
+
+    @Override
+    public String getConsumedFullPath() {
+        List<String> tokens = new ArrayList<String>();
+        IPathArrival a = this;
+        while (a != null) {
+            String[] cv = a.getConsumedTokens();
+            for (int i = cv.length - 1; i >= 0; i--)
+                tokens.add(cv[i]);
+            a = a.getPrevious();
+        }
+        Collections.reverse(tokens);
+        return StringArray.join("/", tokens);
     }
 
     /**
@@ -103,7 +128,8 @@ public class PathArrival
         return parent.getLastNonNullTarget();
     }
 
-    public List<IPathArrival> reverse() {
+    @Override
+    public List<IPathArrival> toList() {
         List<IPathArrival> list = new ArrayList<IPathArrival>();
         IPathArrival a = this;
         while (a != null) {
