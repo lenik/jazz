@@ -1,4 +1,4 @@
-package net.bodz.bas.db.filedb;
+package net.bodz.bas.fmt.records;
 
 import java.io.IOException;
 
@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.loader.ClassResource;
+import net.bodz.bas.fmt.records.CSVRecords;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
