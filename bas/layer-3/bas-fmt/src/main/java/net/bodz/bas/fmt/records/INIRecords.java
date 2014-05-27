@@ -1,4 +1,4 @@
-package net.bodz.bas.db.filedb;
+package net.bodz.bas.fmt.records;
 
 import java.io.File;
 import java.io.IOException;

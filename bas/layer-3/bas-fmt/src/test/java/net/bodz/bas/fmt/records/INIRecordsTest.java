@@ -1,6 +1,6 @@
-package net.bodz.bas.db.filedb;
+package net.bodz.bas.fmt.records;
 
-import static net.bodz.bas.db.filedb.MultiTextMapsTest.map2str;
+import static net.bodz.bas.fmt.records.MultiTextMapsTest.map2str;
 
 import java.io.IOException;
 import java.util.Map;
@@ -10,6 +10,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import net.bodz.bas.c.loader.ClassResource;
+import net.bodz.bas.fmt.records.INIRecords;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 

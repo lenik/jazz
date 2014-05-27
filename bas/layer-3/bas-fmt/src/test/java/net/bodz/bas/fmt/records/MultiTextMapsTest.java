@@ -1,4 +1,4 @@
-package net.bodz.bas.db.filedb;
+package net.bodz.bas.fmt.records;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.db.filedb.MultiTextMaps.PartMap;
+import net.bodz.bas.fmt.records.MultiTextMaps;
+import net.bodz.bas.fmt.records.MultiTextMaps.PartMap;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
