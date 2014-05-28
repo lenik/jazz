@@ -1,6 +1,8 @@
 package net.bodz.bas.fmt.textmap;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.lang.StringTypers;
@@ -21,6 +23,13 @@ public class TextMapParser<K, V>
         if (lines == null)
             throw new NullPointerException("lines");
         this.lines = lines;
+    }
+
+    public Map<K, V> toMap() {
+        Map<K, V> map = new LinkedHashMap<>();
+        for (Entry<K, V> entry : this)
+            map.put(entry.getKey(), entry.getValue());
+        return map;
     }
 
     @Override
@@ -54,7 +63,7 @@ public class TextMapParser<K, V>
         }; // PrefetchIterator+
     } // iterator()
 
-    public static Iterable<Entry<String, String>> parse(IStreamInputSource src) {
+    public static TextMapParser<String, String> parse(IStreamInputSource src) {
         Iterator<String> iterator = src.to(StreamReading.class).lines().iterator();
         return new TextMapParser<String, String>(iterator, StringTypers.INSTANCE, StringTypers.INSTANCE);
     }
