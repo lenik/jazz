@@ -49,7 +49,7 @@ public class SitemapGenerator {
         }
 
         @Override
-        public void follow(String subpath, IContent contentInfo) {
+        public void follow(String subpath, IContent content) {
             SitemapEntry entry = new SitemapEntry();
             entry.setUrl(siteUrl + prefix + subpath);
 
@@ -59,13 +59,13 @@ public class SitemapGenerator {
                 entry.getAlternates().put(lang, url + prefix + subpath);
             }
 
-            entry.setLastModified(contentInfo.getLastModified().getTime());
-            entry.setChangeFreq(ChangeFreq.fromMaxAge(contentInfo.getMaxAge()));
-            entry.setPriority(level * levelWeight + contentInfo.getPriority());
+            entry.setLastModified(content.getLastModified());
+            entry.setChangeFreq(ChangeFreq.fromMaxAge(content.getMaxAge()));
+            entry.setPriority(level * levelWeight + content.getPriority());
             sitemap.add(entry);
 
-            if (contentInfo instanceof ICrawlable) {
-                ICrawlable child = (ICrawlable) contentInfo;
+            if (content instanceof ICrawlable) {
+                ICrawlable child = (ICrawlable) content;
                 Crawler childCrawler = new Crawler(prefix + subpath, level + 1);
                 child.crawlableIntrospect(childCrawler);
             }
