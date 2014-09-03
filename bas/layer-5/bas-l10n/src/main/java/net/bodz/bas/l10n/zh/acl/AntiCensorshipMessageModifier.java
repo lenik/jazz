@@ -10,7 +10,7 @@ import java.util.Random;
 import net.bodz.bas.c.java.net.URLData;
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.text.IMessageModifier;
-import net.bodz.bas.text.TrieNode;
+import net.bodz.bas.text.trie.CharTrie;
 
 public class AntiCensorshipMessageModifier
         implements IMessageModifier {
@@ -21,7 +21,7 @@ public class AntiCensorshipMessageModifier
     public String transform(String input)
             throws RuntimeException {
         StringBuilder sb = new StringBuilder(input.length() * 2);
-        int[] root = breakText(input, trieRoot);
+        int[] root = breakText(input, trie);
         int start = 0;
         for (int end = 1; end < root.length; end++) {
             int head = root[end];
@@ -29,7 +29,7 @@ public class AntiCensorshipMessageModifier
                 sb.append(input.substring(start, head));
 
                 String word = input.substring(head, end);
-                List<String> replacements = trieRoot.resolve(word).getData();
+                List<String> replacements = trie.resolve(word).getData();
                 String replacement = replacements.get(random.nextInt(replacements.size()));
                 sb.append(replacement);
 
@@ -43,7 +43,7 @@ public class AntiCensorshipMessageModifier
         return sb.toString();
     }
 
-    static int[] breakText(String s, TrieNode<?> trieRoot) {
+    static int[] breakText(String s, CharTrie<?> trieRoot) {
         int len = s.length();
         int root[] = new int[len + 1];
         Arrays.fill(root, -1);
@@ -53,7 +53,8 @@ public class AntiCensorshipMessageModifier
         return root;
     }
 
-    static void breakText(String s, int start, int end, int root[], TrieNode<?> node) {
+    static void breakText(String s, int start, int end, int root[], CharTrie<?> trie) {
+        CharTrie.Node<?> node = trie.getRoot();
         for (int i = start; i < end; i++) {
             char ch = s.charAt(i);
             node = node.getChild(ch);
@@ -66,7 +67,7 @@ public class AntiCensorshipMessageModifier
         }
     }
 
-    static TrieNode<List<String>> trieRoot = new TrieNode<List<String>>();
+    static CharTrie<List<String>> trie = new CharTrie<List<String>>();
 
     static {
         URL csvURL = ClassResource.getDataURL(AntiCensorshipMessageModifier.class, "csv");
@@ -87,7 +88,7 @@ public class AntiCensorshipMessageModifier
                     dsts.add(fields[i].trim());
                 }
 
-                trieRoot.resolve(src).define(dsts);
+                trie.resolve(src).define(dsts);
             }
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
