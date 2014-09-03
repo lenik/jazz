@@ -27,7 +27,7 @@ public class ContentType
 
     /**
      * The preferred extension name.
-     * 
+     *
      * @return The extension name, without the dot(.).
      */
     public String getPreferredExtension() {
@@ -77,6 +77,10 @@ public class ContentType
         return forExtension(extension);
     }
 
+    /**
+     * @param extension
+     *            Without dot.
+     */
     public static ContentType forExtension(String extension) {
         if (extension == null)
             return null;
