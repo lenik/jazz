@@ -2,7 +2,7 @@ package net.bodz.bas.t.variant;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,17 +10,14 @@ import net.bodz.bas.t.model.IWrapper;
 
 public class VariantMap<K>
         extends AbstractTmVariantLookupMap<K>
-        implements IWrapper<Map<K, Object>>, Map<K, Object>, Serializable {
+        implements IWrapper<Map<K, Object>>, IVariantMap<K>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Map<K, Object> map;
 
-    /**
-     * Set the wrapped map later.
-     */
     public VariantMap() {
-        this.map = Collections.emptyMap();
+        this.map = new HashMap<K, Object>();
     }
 
     public VariantMap(Map<K, Object> map) {
