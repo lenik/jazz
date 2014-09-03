@@ -2,7 +2,6 @@ package net.bodz.bas.fmt.rst;
 
 import net.bodz.bas.data.struct.IDataStruct;
 import net.bodz.bas.data.struct.ReflectSizeComputer;
-import net.bodz.bas.data.struct.IDataStruct.fn;
 import net.bodz.bas.io.IDataIn;
 
 public abstract class RstDataStruct

@@ -7,6 +7,8 @@ public class MutableUiElement
         extends MutableElement
         implements IUiElement {
 
+    private static final long serialVersionUID = 1L;
+
     private IUiElementStyleDeclaration styleDecl;
 
     @Override

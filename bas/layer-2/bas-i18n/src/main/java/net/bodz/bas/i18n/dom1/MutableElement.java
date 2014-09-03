@@ -1,10 +1,14 @@
 package net.bodz.bas.i18n.dom1;
 
+import java.io.Serializable;
+
 import net.bodz.bas.i18n.dom.iString;
 
 public class MutableElement
         extends AbstractElement
-        implements IMutableElement {
+        implements IMutableElement, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String name;
     private iString label;

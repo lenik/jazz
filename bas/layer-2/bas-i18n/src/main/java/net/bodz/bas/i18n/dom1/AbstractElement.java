@@ -37,4 +37,9 @@ public abstract class AbstractElement
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
 }

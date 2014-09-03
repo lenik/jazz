@@ -2,6 +2,9 @@ package net.bodz.bas.fmt.rst;
 
 import net.bodz.bas.err.ParseException;
 
+/**
+ * @see RstElement
+ */
 public interface IElementHandler {
 
     IDataCodec codec = new DataCodec();
