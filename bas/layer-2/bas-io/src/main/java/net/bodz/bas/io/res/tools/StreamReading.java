@@ -373,8 +373,10 @@ public class StreamReading
                 public String _next()
                         throws IOException {
                     String line = bufferedReader.readLine();
-                    if (line == null)
-                        end();
+                    if (line == null) {
+                        bufferedReader.close();
+                        return end();
+                    }
                     return line;
                 }
 
@@ -386,8 +388,10 @@ public class StreamReading
                 public String _next()
                         throws IOException {
                     String line = lineReader.readLine();
-                    if (line == null)
-                        end();
+                    if (line == null) {
+                        lineReader.close();
+                        return end();
+                    }
                     return line;
                 }
 
