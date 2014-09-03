@@ -9,4 +9,9 @@ public class HtmlTableTag
         super(parent, tagName);
     }
 
+    public HtmlTableTag width(String val) {
+        attr("width", val);
+        return this;
+    }
+
 }
