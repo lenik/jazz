@@ -1,7 +1,5 @@
 package net.bodz.bas.std.rfc.http;
 
-import java.util.Date;
-
 public interface ICacheControl {
 
     /**
@@ -29,7 +27,7 @@ public interface ICacheControl {
     /**
      * Get the last modified date.
      */
-    Date getLastModified();
+    long getLastModified();
 
     /**
      * An ETag is an opaque identifier assigned by a web server to a specific version of a resource
