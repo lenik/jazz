@@ -9,4 +9,11 @@ public class HtmlDivTag
         super(parent, tagName);
     }
 
+    public HtmlDivTag align(String val) {
+        if (val == null)
+            throw new NullPointerException("val");
+        attr("align", val);
+        return this;
+    }
+
 }
