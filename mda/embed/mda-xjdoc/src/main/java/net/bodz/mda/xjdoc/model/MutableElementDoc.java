@@ -16,7 +16,6 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.tagtype.DefaultTagType;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
 
 public class MutableElementDoc
@@ -95,7 +94,7 @@ public class MutableElementDoc
             ITagType tagType = taglib.getTagType(tagName);
             if (tagType == null) {
                 // throw new IllegalUsageException("Undefined tag: " + tagName);
-                tagType = DefaultTagType.getInstance();
+                tagType = taglib.getDefaultTagType();
             }
 
             try {
@@ -160,7 +159,7 @@ public class MutableElementDoc
 
             ITagType tagType = taglib.getTagType(tagName);
             if (tagType == null)
-                tagType = DefaultTagType.getInstance();
+                tagType = taglib.getDefaultTagType();
 
             Object cont = getTag(tagName);
             Object tagValue;

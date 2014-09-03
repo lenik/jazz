@@ -7,11 +7,16 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.preorder.PackageMap;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
+import net.bodz.mda.xjdoc.tagtype.RepeatForListTagType;
+import net.bodz.mda.xjdoc.tagtype.StringTagType;
 
 public abstract class AbstractTagLibrary
         implements ITagLibrary {
 
     private PackageMap<ITagType> tagMap = new PackageMap<>();
+
+    // private ITagType defaultTagType = StringTagType.getInstance();
+    private ITagType defaultTagType = new RepeatForListTagType(StringTagType.getInstance());
 
     @Override
     public String getName() {
@@ -42,6 +47,11 @@ public abstract class AbstractTagLibrary
             throw new DuplicatedKeyException(rootTagName);
 
         tagMap.put(rootTagName, tagType);
+    }
+
+    @Override
+    public ITagType getDefaultTagType() {
+        return defaultTagType;
     }
 
     public static ITagLibrary fromOptions(IOptions options) {
