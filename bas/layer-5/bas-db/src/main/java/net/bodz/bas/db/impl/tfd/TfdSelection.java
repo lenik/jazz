@@ -1,4 +1,4 @@
-package net.bodz.bas.db.tfd;
+package net.bodz.bas.db.impl.tfd;
 
 import net.bodz.bas.dbi.ISelection;
 
