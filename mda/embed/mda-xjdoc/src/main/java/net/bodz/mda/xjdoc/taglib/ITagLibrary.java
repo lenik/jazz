@@ -15,4 +15,6 @@ public interface ITagLibrary {
      */
     ITagType getTagType(String rootTagName);
 
+    ITagType getDefaultTagType();
+
 }

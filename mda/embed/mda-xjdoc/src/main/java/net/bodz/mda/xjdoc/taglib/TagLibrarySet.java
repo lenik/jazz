@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
+import net.bodz.mda.xjdoc.tagtype.StringTagType;
 
 @ExcludedFromIndex
 public class TagLibrarySet
@@ -13,6 +14,8 @@ public class TagLibrarySet
         implements ITagLibrary {
 
     private static final long serialVersionUID = 1L;
+
+    private ITagType defaultTagType = StringTagType.getInstance();
 
     public TagLibrarySet(ITagLibrary... taglibs) {
         this(Arrays.asList(taglibs));
@@ -51,6 +54,13 @@ public class TagLibrarySet
                 return tagType;
         }
         return null;
+    }
+
+    @Override
+    public ITagType getDefaultTagType() {
+        for (ITagLibrary taglib : this)
+            return taglib.getDefaultTagType();
+        return defaultTagType;
     }
 
 }
