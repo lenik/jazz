@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import net.bodz.bas.typer.TyperProviders;
 
-public class TyperProviderLoaderTest
+public class TyperProvidersTest
         extends Assert {
 
     static Set<Class<?>> providerClasses;

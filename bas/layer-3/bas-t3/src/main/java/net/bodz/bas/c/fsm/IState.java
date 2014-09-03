@@ -22,36 +22,36 @@ public interface IState
     /**
      * Error state
      */
-    int ERROR = 2;
+    int ERROR = -1;
 
     /**
      * Get the state name.
-     * 
+     *
      * @return The state name
      */
     String getName();
 
     /**
      * May be NORMAL, ACCEPT, ERROR
-     * 
+     *
      * @return The type of state.
      */
     int getType();
 
     /**
      * Get the owner graph.
-     * 
+     *
      * A state is appeared in only 1 graph.
-     * 
+     *
      * @return The owner graph
      */
 //    IStateGraph getGraph();
 
     /**
      * Set the owner graph
-     * 
+     *
      * A state is appeared in only 1 graph.
-     * 
+     *
      * @param graph
      *            The new owner graph to set.
      */
@@ -59,7 +59,7 @@ public interface IState
 
     /**
      * Receive message and do transition
-     * 
+     *
      * @param message
      *            The received message
      * @return null If message isn't recognized
@@ -68,7 +68,7 @@ public interface IState
 
     /**
      * Enter into this state
-     * 
+     *
      * @param prev
      *            The previous state enter from
      */
@@ -76,7 +76,7 @@ public interface IState
 
     /**
      * Leave from this atate
-     * 
+     *
      * @param next
      *            The next state leave into
      */
@@ -84,10 +84,10 @@ public interface IState
 
     /**
      * Static message/target state transition map.
-     * 
+     *
      * This is the static part of the transition map, defined for help purpose, such as
      * visualization, etc.
-     * 
+     *
      * @return the map
      */
     Map<Object, IState> getStaticMap();
