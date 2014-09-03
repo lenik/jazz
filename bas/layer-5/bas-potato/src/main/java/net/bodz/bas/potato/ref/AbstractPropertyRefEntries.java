@@ -40,7 +40,7 @@ public abstract class AbstractPropertyRefEntries<entry_t extends IRefEntry<?>>
     }
 
     @Override
-    public <T> IRefEntry<T> get(String propertyName) {
+    public <T> IRefEntry<T> getEntry(String propertyName) {
         IProperty property = type.getProperty(propertyName);
         PropertyRefEntry<T> entry = new PropertyRefEntry<T>(instanceRef, property);
         return entry;

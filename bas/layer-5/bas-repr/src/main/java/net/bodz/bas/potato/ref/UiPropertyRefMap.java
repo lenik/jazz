@@ -6,15 +6,13 @@ public class UiPropertyRefMap
         extends AbstractPropertyRefMap<UiPropertyRef<Object>>
         implements IUiRefEntries {
 
-    private static final long serialVersionUID = 1L;
-
     public UiPropertyRefMap(IRefEntry<?> objRef, Boolean order) {
         super(objRef, order);
     }
 
     @Override
-    public <T> UiPropertyRef<T> get(String name) {
-        return (UiPropertyRef<T>) super.get(name);
+    public <T> UiPropertyRef<T> getEntry(String name) {
+        return (UiPropertyRef<T>) super.getEntry(name);
     }
 
     @Override

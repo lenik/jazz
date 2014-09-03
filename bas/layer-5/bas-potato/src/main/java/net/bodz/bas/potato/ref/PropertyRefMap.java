@@ -5,8 +5,6 @@ import net.bodz.bas.potato.element.IProperty;
 public class PropertyRefMap
         extends AbstractPropertyRefMap<PropertyRefEntry<?>> {
 
-    private static final long serialVersionUID = 1L;
-
     public PropertyRefMap(IRefEntry<?> objRef, Boolean order) {
         super(objRef, order);
     }

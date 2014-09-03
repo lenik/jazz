@@ -1,46 +1,57 @@
 package net.bodz.bas.potato.ref;
 
 import java.lang.reflect.Modifier;
+import java.util.AbstractMap;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.proxy.java.util.DecoratedMap;
 
 public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>>
-        extends DecoratedMap<String, entry_t>
+        extends AbstractMap<String, Object>
         implements IRefEntries {
-
-    private static final long serialVersionUID = 1L;
 
     private IRefEntry<?> objRef;
 
+    private Map<String, entry_t> cache;
     private boolean autoImport = true;
     private boolean autoImported;
     private int newImportedCount;
 
     public AbstractPropertyRefMap(IRefEntry<?> objRef, Boolean order) {
-        super(Collections.<String, entry_t> createMap(order));
+        cache = Collections.<String, entry_t> createMap(order);
         if (objRef == null)
             throw new NullPointerException("objRef");
         this.objRef = objRef;
     }
 
     @Override
-    public <T> IRefEntry<T> get(String name) {
-        IRefEntry<T> entry = (IRefEntry<T>) super.get(name);
-        if (entry != null)
-            return entry;
+    public Set<String> keySet() {
+        load();
+        return cache.keySet();
+    }
 
-        synchronized (this) {
-            if (autoImport && !autoImported) {
-                importProperties();
-                autoImported = true;
-                return get(name);
-            }
+    @Override
+    public <T> IRefEntry<T> getEntry(String name) {
+        load();
+        return (IRefEntry<T>) cache.get(name);
+    }
+
+    public Collection<entry_t> getEntries() {
+        load();
+        return cache.values();
+    }
+
+    private synchronized void load() {
+        if (autoImport && !autoImported) {
+            importProperties();
+            autoImported = true;
         }
-        return null;
     }
 
     public final void importProperties() {
@@ -58,7 +69,7 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
                 String name = property.getName();
                 entry_t entry = createPropertyEntry(objRef, property);
 
-                entry_t old = super.put(name, entry);
+                entry_t old = cache.put(name, entry);
                 if (old == null)
                     newImportedCount++;
             }
@@ -68,11 +79,49 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
 
     protected abstract entry_t createPropertyEntry(IRefEntry<?> instanceRef, IProperty property);
 
+    /** ⇱ Implementation Of {@link Map}. */
+    /* _____________________________ */static section.iface __MAP__;
+
+    @Override
+    public int size() {
+        load();
+        return cache.size();
+    }
+
+    @Override
+    public Object get(Object key) {
+        if (!(key instanceof String))
+            return null;
+        String name = (String) key;
+        IRefEntry<Object> entry = getEntry(name);
+        if (entry == null)
+            return null;
+        return entry.get();
+    }
+
+    @Override
+    public Object put(String key, Object value) {
+        if (!(key instanceof String))
+            return null;
+        String name = (String) key;
+        IRefEntry<Object> entry = getEntry(name);
+        if (entry == null)
+            return null;
+        Object old = entry.get();
+        entry.set(value);
+        return old;
+    }
+
+    @Override
+    public Set<Entry<String, Object>> entrySet() {
+        throw new NotImplementedException();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(size() + " entries in the map (" + newImportedCount + " new imported):\n");
-        for (Entry<?, ?> entry : entrySet())
+        sb.append(cache.size() + " entries in the map (" + newImportedCount + " new imported):\n");
+        for (Entry<?, ?> entry : cache.entrySet())
             sb.append("  " + entry.getKey() + ": " + entry.getValue() + "\n");
         return sb.toString();
     }
