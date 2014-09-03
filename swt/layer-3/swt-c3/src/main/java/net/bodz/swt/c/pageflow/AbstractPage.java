@@ -56,8 +56,10 @@ public abstract class AbstractPage
     public ImageData getPageIcon() {
         UiElementDoc gdoc = classDoc.to(UiElementDoc.class);
         IUiElementStyleDeclaration style = gdoc.getStyleClass();
-        IImageData image = style.getImage(ImageUsage.NORMAL);
-        // TODO Convert to SWT image data...
+        if (style != null) {
+            IImageData image = style.getImage(ImageUsage.NORMAL);
+            // TODO Convert to SWT image data...
+        }
         return null;
     }
 
