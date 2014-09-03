@@ -2,17 +2,15 @@ package net.bodz.bas.dbi;
 
 public interface IRepository<T, K> {
 
-    T get(K key);
+    T load(K key)
+            throws DataAccessException;
 
-    ISelection<T> query();
+    T save(K key, T value)
+            throws DataAccessException;
 
-}
+    int delete(K key)
+            throws DataAccessException;
 
-class Test {
-
-    IRepository<Object, Long> repo;
-    {
-        repo.query().limit(100, 20).limit(null).read();
-    }
+    ISelection<T, K> all();
 
 }
