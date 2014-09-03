@@ -16,6 +16,8 @@ public class XmlFormatter {
     private XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute();
     private XmlStringEncoder textEncoder = XmlStringEncoder.forText();
 
+    private String nullVerbatim = "<i>(null)</i>";
+
     public XmlFormatter(ICharOut out) {
         this(TreeOutImpl.from(out));
     }
@@ -26,15 +28,24 @@ public class XmlFormatter {
         this.out = out;
     }
 
+    public String getNullVerbatim() {
+        return nullVerbatim;
+    }
+
+    public void setNullVerbatim(String nullVerbatim) {
+        this.nullVerbatim = nullVerbatim;
+    }
+
     public void format(IXmlNode node) {
         switch (node.getType()) {
         case ELEMENT:
             IXmlTag tag = (IXmlTag) node;
             {
                 boolean pseudo = tag.getTagName() == null;
+                StringBuilder sb = new StringBuilder();
+                Collection<? extends IXmlNode> children = tag.getChildren();
 
                 if (!pseudo) {
-                    StringBuilder sb = new StringBuilder();
                     sb.append('<');
                     sb.append(tag.getTagName());
 
@@ -48,30 +59,27 @@ public class XmlFormatter {
                             sb.append('"');
                         }
 
-                    Collection<? extends IXmlNode> children = tag.getChildren();
                     if (children.isEmpty()) {
                         sb.append("/>");
                         out.println(sb.toString());
                     } else {
                         sb.append(">");
                         out.print(sb.toString());
-                        sb.setLength(0);
-
                         out.enter();
                     }
+                    sb.setLength(0);
+                }
 
-                    for (IXmlNode child : children) {
-                        format(child);
-                    }
+                for (IXmlNode child : children) {
+                    format(child);
+                }
 
-                    if (!pseudo) {
-                        out.leave();
-
-                        sb.append("</");
-                        sb.append(tag.getTagName());
-                        sb.append(">");
-                        out.println(sb.toString());
-                    }
+                if (!pseudo && !children.isEmpty()) {
+                    out.leave();
+                    sb.append("</");
+                    sb.append(tag.getTagName());
+                    sb.append(">");
+                    out.println(sb.toString());
                 }
             }
             break;
@@ -80,8 +88,16 @@ public class XmlFormatter {
             XmlText text = (XmlText) node;
             {
                 String content = text.getContent();
-                String encoded = textEncoder.encode(content);
-                out.print(encoded);
+                if (content == null) {
+                    String nv = text.getNullVerbatim();
+                    if (nv == null)
+                        nv = nullVerbatim;
+                    if (nv != null)
+                        out.print(nv);
+                } else {
+                    String encoded = textEncoder.encode(content);
+                    out.print(encoded);
+                }
             }
             break;
 

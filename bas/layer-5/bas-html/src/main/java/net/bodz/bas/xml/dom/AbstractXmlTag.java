@@ -111,6 +111,13 @@ public abstract class AbstractXmlTag<self_t extends IXmlTag>
     }
 
     @Override
+    public self_t text(String text, String nullVerbatim) {
+        XmlText node = new XmlText(this, text);
+        node.setNullVerbatim(nullVerbatim);
+        return (self_t) this;
+    }
+
+    @Override
     public self_t text(String text) {
         new XmlText(this, text);
         return (self_t) this;
