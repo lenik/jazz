@@ -4,6 +4,7 @@ public class XmlText
         extends AbstractXmlNode<XmlText> {
 
     private String content;
+    private String nullVerbatim;
 
     public XmlText(IXmlTag parent, String content) {
         super(parent);
@@ -21,6 +22,14 @@ public class XmlText
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getNullVerbatim() {
+        return nullVerbatim;
+    }
+
+    public void setNullVerbatim(String nullVerbatim) {
+        this.nullVerbatim = nullVerbatim;
     }
 
 }

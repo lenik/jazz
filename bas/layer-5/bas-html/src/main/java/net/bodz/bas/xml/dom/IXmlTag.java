@@ -28,6 +28,8 @@ public interface IXmlTag
 
     XmlPI pi(String target);
 
+    IXmlTag text(String content, String nullVerbatim);
+
     IXmlTag text(String content);
 
     IXmlTag text(Object content);
