@@ -33,7 +33,17 @@ public class ClassResourcePathDispatcher
             return null;
 
         Class<?> clazz = obj.getClass();
-        URL url = clazz.getResource(remaining);
+        URL url = null;
+        while (clazz != null) {
+            String packageName = clazz.getPackage().getName();
+            if (packageName.startsWith("java."))
+                break;
+
+            url = clazz.getResource(remaining);
+            if (url != null)
+                break;
+            clazz = clazz.getSuperclass();
+        }
         if (url == null)
             return null;
 
