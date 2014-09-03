@@ -29,6 +29,7 @@ public abstract class BasicSite
         implements IPathDispatchable, ICrawlable {
 
     protected Map<String, IJazzModule> modules = new TreeMap<>();
+    Map<String, IPathDispatchable> pathMap;
 
     public BasicSite() {
         for (IJazzModule module : JazzBasProject.getInstance().getModules()) {
@@ -112,6 +113,13 @@ public abstract class BasicSite
     public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws PathDispatchException {
         String token = tokens.peek();
+
+        if (pathMap != null) {
+            IPathDispatchable disp = pathMap.get(token);
+            if (disp != null)
+                return PathArrival.shift(previous, disp, tokens);
+        }
+
         switch (token) {
         case "sitemap.xml":
             return PathArrival.shift(previous, getSitemap(), tokens);
