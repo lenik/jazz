@@ -6,6 +6,6 @@ public interface IRefEntries {
 
     Set<String> keySet();
 
-    <T> IRefEntry<T> get(String name);
+    <T> IRefEntry<T> getEntry(String name);
 
 }

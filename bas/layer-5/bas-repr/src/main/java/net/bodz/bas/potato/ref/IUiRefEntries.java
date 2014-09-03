@@ -6,6 +6,6 @@ public interface IUiRefEntries
         extends IRefEntries {
 
     @Override
-    <T> IUiRef<T> get(String name);
+    <T> IUiRef<T> getEntry(String name);
 
 }
