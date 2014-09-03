@@ -1,7 +1,5 @@
 package net.bodz.bas.repr.content;
 
-import java.util.Date;
-
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
@@ -11,8 +9,8 @@ public abstract class AbstractXjdocContent
         extends XjdocObject
         implements IContent {
 
-    private Date creationDate = new Date();
-    private Date lastModified = creationDate;
+    private long creationDate = System.currentTimeMillis();
+    private long lastModified = creationDate;
 
     @Override
     public int getPriority() {
@@ -38,30 +36,26 @@ public abstract class AbstractXjdocContent
     }
 
     @Override
-    public Date getCreationDate() {
+    public long getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        if (creationDate == null)
-            throw new NullPointerException("creationDate");
+    public void setCreationDate(long creationDate) {
         this.creationDate = creationDate;
     }
 
     @Override
-    public Date getLastModified() {
+    public long getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(Date lastModified) {
-        if (lastModified == null)
-            throw new NullPointerException("lastModified");
+    public void setLastModified(long lastModified) {
         this.lastModified = lastModified;
     }
 
     @Override
     public String getETag() {
-        long time = getLastModified().getTime();
+        long time = getLastModified();
         return String.valueOf(time);
     }
 

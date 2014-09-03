@@ -1,7 +1,5 @@
 package net.bodz.bas.repr.content;
 
-import java.util.Date;
-
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
@@ -11,12 +9,12 @@ public class MutableContent
         implements IContent {
 
     int priority;
-    Date creationDate = new Date();
+    long creationDate = System.currentTimeMillis();
 
     CacheControlMode cacheControlMode = CacheControlMode.AUTO;
     CacheRevalidationMode cacheRevalidateMode = CacheRevalidationMode.OPTIONAL;
     int maxAge;
-    Date lastModified = creationDate;
+    long lastModified = creationDate;
     String eTag;
     boolean weakValidation;
 
@@ -30,13 +28,11 @@ public class MutableContent
     }
 
     @Override
-    public Date getCreationDate() {
+    public long getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        if (creationDate == null)
-            throw new NullPointerException("creationDate");
+    public void setCreationDate(long creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -75,11 +71,11 @@ public class MutableContent
     }
 
     @Override
-    public Date getLastModified() {
+    public long getLastModified() {
         return lastModified;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(long lastModifiedDate) {
         this.lastModified = lastModifiedDate;
     }
 

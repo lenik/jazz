@@ -1,7 +1,6 @@
 package net.bodz.bas.site.org;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
@@ -62,8 +61,8 @@ public class Sitemap
     }
 
     @Override
-    public Date getLastModified() {
-        return new Date();
+    public long getLastModified() {
+        return System.currentTimeMillis();
     }
 
     @Override
