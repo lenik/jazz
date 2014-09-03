@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Delimiter
         implements Serializable {
 
-    private static final long serialVersionUID = 1766948183124423805L;
+    private static final long serialVersionUID = 1L;
 
     private final String start;
     private final String end;
