@@ -89,11 +89,11 @@ public class SiteGraphNode
     }
 
     @Override
-    public void follow(String subpath, IContent contentInfo) {
+    public void follow(String subpath, IContent content) {
         SiteGraphNode node = new SiteGraphNode(this);
 
-        if (contentInfo instanceof IElement) {
-            IElement element = ((IElement) contentInfo);
+        if (content instanceof IElement) {
+            IElement element = ((IElement) content);
             node.setName(element.getName());
         }
 
@@ -104,16 +104,16 @@ public class SiteGraphNode
         hrefBuf.append(subpath);
         node.setHref(hrefBuf.toString());
 
-        if (contentInfo instanceof IXjdocAware) {
-            IElementDoc xjdoc = ((IXjdocAware) contentInfo).getXjdoc();
+        if (content instanceof IXjdocAware) {
+            IElementDoc xjdoc = ((IXjdocAware) content).getXjdoc();
             node.setXjdoc(xjdoc);
         }
 
         SiteGraphRelation relation = new SiteGraphRelation(subpath, this, node);
         relations.add(relation);
 
-        if (contentInfo instanceof ICrawlable) {
-            ICrawlable composite = (ICrawlable) contentInfo;
+        if (content instanceof ICrawlable) {
+            ICrawlable composite = (ICrawlable) content;
             composite.crawlableIntrospect(node);
         }
     }
