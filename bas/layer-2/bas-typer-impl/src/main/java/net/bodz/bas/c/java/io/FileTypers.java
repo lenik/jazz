@@ -35,6 +35,10 @@ public class FileTypers
     @Override
     public File parse(String text, IOptions options)
             throws ParseException {
+        // TODO Lapiota Override:
+        // if (text.startsWith("?"))
+        // return ModulesRoot.DEFAULT.findexp(text.substring(1));
+
         File contextDirectory = options.get(textformContextDirectory, defaultTextformContextDirectory);
         File file = new File(contextDirectory, text);
         return file;
