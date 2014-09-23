@@ -11,7 +11,6 @@ import net.bodz.bas.c.java.util.array.*;
 import net.bodz.bas.fn.legacy.Func1;
 import net.bodz.bas.t._int.IntIterable;
 import net.bodz.bas.t._int.IntIterator;
-import net.bodz.bas.t.pojo.Pair;
 
 public class Arrays
         extends _Arrays {
@@ -218,12 +217,12 @@ public class Arrays
      *         if the array is empty.
      */
     @SafeVarargs
-    public static <T> Pair<T, T[]> shift(T... array) {
+    public static <T> ArrayAndScalar<T[], T> shift(T... array) {
         if (array.length == 0)
             return null;
         T[] remaining = (T[]) Array.newInstance(array.getClass().getComponentType(), array.length - 1);
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<T, T[]>(array[0], remaining);
+        return new ArrayAndScalar<T[], T>(remaining, array[0]);
     }
 
     /**
@@ -233,12 +232,12 @@ public class Arrays
      *         if the array is empty.
      */
     @SafeVarargs
-    public static <T> Pair<T[], T> pop(T... array) {
+    public static <T> ArrayAndScalar<T[], T> pop(T... array) {
         if (array.length == 0)
             return null;
         T[] remaining = (T[]) Array.newInstance(array.getClass().getComponentType(), array.length - 1);
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<T[], T>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     public static <T> T[] map(T[] array, Func1<T, T> fn) {
@@ -628,12 +627,12 @@ public class Arrays
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<Byte, byte[]> shift(byte... array) {
+    public static ArrayAndScalar<byte[], Byte> shift(byte... array) {
         if (array.length == 0)
             return null;
         byte[] remaining = new byte[array.length - 1];
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<Byte, byte[]>(array[0], remaining);
+        return ArrayAndScalar.of(remaining, array[0]);
     }
 
     /**
@@ -642,12 +641,12 @@ public class Arrays
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<Short, short[]> shift(short... array) {
+    public static ArrayAndScalar<short[], Short> shift(short... array) {
         if (array.length == 0)
             return null;
         short[] remaining = new short[array.length - 1];
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<Short, short[]>(array[0], remaining);
+        return ArrayAndScalar.of(remaining, array[0]);
     }
 
     /**
@@ -656,12 +655,12 @@ public class Arrays
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<Integer, int[]> shift(int... array) {
+    public static ArrayAndScalar<int[], Integer> shift(int... array) {
         if (array.length == 0)
             return null;
         int[] remaining = new int[array.length - 1];
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<Integer, int[]>(array[0], remaining);
+        return ArrayAndScalar.of(remaining, array[0]);
     }
 
     /**
@@ -670,12 +669,12 @@ public class Arrays
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<Long, long[]> shift(long... array) {
+    public static ArrayAndScalar<long[], Long> shift(long... array) {
         if (array.length == 0)
             return null;
         long[] remaining = new long[array.length - 1];
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<Long, long[]>(array[0], remaining);
+        return ArrayAndScalar.of(remaining, array[0]);
     }
 
     /**
@@ -684,12 +683,12 @@ public class Arrays
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<Float, float[]> shift(float... array) {
+    public static ArrayAndScalar<float[], Float> shift(float... array) {
         if (array.length == 0)
             return null;
         float[] remaining = new float[array.length - 1];
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<Float, float[]>(array[0], remaining);
+        return ArrayAndScalar.of(remaining, array[0]);
     }
 
     /**
@@ -698,12 +697,12 @@ public class Arrays
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<Double, double[]> shift(double... array) {
+    public static ArrayAndScalar<double[], Double> shift(double... array) {
         if (array.length == 0)
             return null;
         double[] remaining = new double[array.length - 1];
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<Double, double[]>(array[0], remaining);
+        return ArrayAndScalar.of(remaining, array[0]);
     }
 
     /**
@@ -712,12 +711,12 @@ public class Arrays
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<Character, char[]> shift(char... array) {
+    public static ArrayAndScalar<char[], Character> shift(char... array) {
         if (array.length == 0)
             return null;
         char[] remaining = new char[array.length - 1];
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<Character, char[]>(array[0], remaining);
+        return ArrayAndScalar.of(remaining, array[0]);
     }
 
     /**
@@ -726,12 +725,12 @@ public class Arrays
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<Boolean, boolean[]> shift(boolean... array) {
+    public static ArrayAndScalar<boolean[], Boolean> shift(boolean... array) {
         if (array.length == 0)
             return null;
         boolean[] remaining = new boolean[array.length - 1];
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
-        return new Pair<Boolean, boolean[]>(array[0], remaining);
+        return ArrayAndScalar.of(remaining, array[0]);
     }
 
     /**
@@ -740,12 +739,12 @@ public class Arrays
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<byte[], Byte> pop(byte... array) {
+    public static ArrayAndScalar<byte[], Byte> pop(byte... array) {
         if (array.length == 0)
             return null;
         byte[] remaining = new byte[array.length - 1];
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<byte[], Byte>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     /**
@@ -754,12 +753,12 @@ public class Arrays
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<short[], Short> pop(short... array) {
+    public static ArrayAndScalar<short[], Short> pop(short... array) {
         if (array.length == 0)
             return null;
         short[] remaining = new short[array.length - 1];
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<short[], Short>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     /**
@@ -768,12 +767,12 @@ public class Arrays
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<int[], Integer> pop(int... array) {
+    public static ArrayAndScalar<int[], Integer> pop(int... array) {
         if (array.length == 0)
             return null;
         int[] remaining = new int[array.length - 1];
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<int[], Integer>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     /**
@@ -782,12 +781,12 @@ public class Arrays
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<long[], Long> pop(long... array) {
+    public static ArrayAndScalar<long[], Long> pop(long... array) {
         if (array.length == 0)
             return null;
         long[] remaining = new long[array.length - 1];
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<long[], Long>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     /**
@@ -796,12 +795,12 @@ public class Arrays
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<float[], Float> pop(float... array) {
+    public static ArrayAndScalar<float[], Float> pop(float... array) {
         if (array.length == 0)
             return null;
         float[] remaining = new float[array.length - 1];
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<float[], Float>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     /**
@@ -810,12 +809,12 @@ public class Arrays
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<double[], Double> pop(double... array) {
+    public static ArrayAndScalar<double[], Double> pop(double... array) {
         if (array.length == 0)
             return null;
         double[] remaining = new double[array.length - 1];
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<double[], Double>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     /**
@@ -824,12 +823,12 @@ public class Arrays
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<char[], Character> pop(char... array) {
+    public static ArrayAndScalar<char[], Character> pop(char... array) {
         if (array.length == 0)
             return null;
         char[] remaining = new char[array.length - 1];
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<char[], Character>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     /**
@@ -838,12 +837,12 @@ public class Arrays
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
-    public static Pair<boolean[], Boolean> pop(boolean... array) {
+    public static ArrayAndScalar<boolean[], Boolean> pop(boolean... array) {
         if (array.length == 0)
             return null;
         boolean[] remaining = new boolean[array.length - 1];
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
-        return new Pair<boolean[], Boolean>(remaining, array[array.length - 1]);
+        return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
     /**
