@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 
-@IndexedType(publishDir = "META-INF/enum")
+@IndexedType(publishDir = "META-INF/enums")
 public abstract class Enum<E extends Enum<E, K>, K extends Comparable<K>>
         // extends AbstractElement
         implements Serializable, Comparable<E> {
@@ -33,8 +33,7 @@ public abstract class Enum<E extends Enum<E, K>, K extends Comparable<K>>
             metadata = EnumMetadata.forClass(type);
         }
 
-        @SuppressWarnings("unchecked")
-        E self = (E) this;
+        @SuppressWarnings("unchecked") E self = (E) this;
         metadata.addValue(self);
         this.metadata = metadata;
     }
@@ -49,6 +48,11 @@ public abstract class Enum<E extends Enum<E, K>, K extends Comparable<K>>
 
     public EnumMetadata<? extends E, K> getMetadata() {
         return metadata;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     @Override
