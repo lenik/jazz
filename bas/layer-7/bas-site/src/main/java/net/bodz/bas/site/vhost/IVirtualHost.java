@@ -3,9 +3,10 @@ package net.bodz.bas.site.vhost;
 import java.util.List;
 
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.rtx.IQueryable;
 
 public interface IVirtualHost
-        extends IElement {
+        extends IElement, IQueryable {
 
     List<HostSpecifier> getHostSpecifiers();
 

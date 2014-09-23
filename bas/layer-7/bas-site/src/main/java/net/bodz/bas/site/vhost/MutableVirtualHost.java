@@ -14,6 +14,8 @@ import net.bodz.bas.fmt.rst.IRstElement;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.i18n.dom1.MutableElement;
+import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.rtx.QueryException;
 
 public class MutableVirtualHost
         extends MutableElement
@@ -24,6 +26,9 @@ public class MutableVirtualHost
     private List<HostSpecifier> hostSpecifiers = new ArrayList<HostSpecifier>();
     private Map<String, String> parameters = new TreeMap<String, String>();
     private Map<String, Object> attributes = new TreeMap<String, Object>();
+
+    /** ⇱ Implementation Of {@link IVirtualHost}. */
+    /* _____________________________ */static section.iface __VHOST__;
 
     @Override
     public List<HostSpecifier> getHostSpecifiers() {
@@ -86,6 +91,34 @@ public class MutableVirtualHost
     @Override
     public void removeAttribute(String name) {
         attributes.remove(name);
+    }
+
+    /** ⇱ Implementation Of {@link IQueryable}. */
+    /* _____________________________ */static section.iface __QUERY__;
+
+    @Override
+    public Object query(Object specification)
+            throws QueryException {
+        if (specification instanceof Class<?>)
+            return query((Class<?>) specification);
+        if (specification instanceof String)
+            return query((String) specification);
+        return null;
+    }
+
+    @Override
+    public <spec_t> spec_t query(Class<spec_t> specificationType)
+            throws QueryException {
+        Object val = getAttribute(specificationType.getName());
+        if (val == null)
+            return null;
+        return (specificationType.cast(val));
+    }
+
+    @Override
+    public Object query(String specificationId)
+            throws QueryException {
+        return null;
     }
 
     /** ⇱ Implementation Of {@link IRstSerializable}. */
