@@ -3,17 +3,14 @@ package net.bodz.bas.db.jdbc;
 import java.io.File;
 import java.io.Serializable;
 
-import net.bodz.bas.potato.ref.PropertyRefMap;
-import net.bodz.bas.potato.ref.ValueEntry;
-
-public class JdbcProperties
-        implements Serializable {
+public class DataSourceArguments
+        implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String ATTRIBUTE_KEY = JdbcProperties.class.getName();
+    public static final String ATTRIBUTE_KEY = DataSourceArguments.class.getName();
 
-    Dialect dialect = Dialect.PostgreSQL;
+    DataSourceType type = DataSourceType.PostgreSQL;
     String hostName = "localhost";
     int port;
     File rootDir;
@@ -21,16 +18,29 @@ public class JdbcProperties
     String userName;
     String password;
 
-    public JdbcProperties() {
-        // rootDir = new File("/var/data");
+    public DataSourceArguments() {
     }
 
-    public Dialect getDialect() {
-        return dialect;
+    public DataSourceArguments clone() {
+        DataSourceArguments o = new DataSourceArguments();
+        o.type = type;
+        o.hostName = hostName;
+        o.port = port;
+        o.rootDir = rootDir;
+        o.database = database;
+        o.userName = userName;
+        o.password = password;
+        return o;
     }
 
-    public void setDialect(Dialect dialect) {
-        this.dialect = dialect;
+    public DataSourceType getType() {
+        return type;
+    }
+
+    public void setType(DataSourceType type) {
+        if (type == null)
+            throw new NullPointerException("type");
+        this.type = type;
     }
 
     public String getServer() {
@@ -105,14 +115,9 @@ public class JdbcProperties
         this.password = password;
     }
 
-    public static void main(String[] args) {
-        JdbcProperties inst = new JdbcProperties();
-        inst.hostName = "foo";
-        inst.database = "mas";
-
-        PropertyRefMap refMap = new PropertyRefMap(ValueEntry.wrap(inst), null);
-        String url = Dialect.MySQL.getConnectionUrl(refMap);
-        System.out.println(url);
+    public String getConnectionUrl() {
+        String url = type.getConnectionUrl(this);
+        return url;
     }
 
 }
