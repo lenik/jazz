@@ -8,18 +8,18 @@ import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.t.enm.Enum;
 import net.bodz.bas.t.enm.EnumMetadata;
 
-public class Dialect
-        extends Enum<Dialect, String> {
+public class DataSourceType
+        extends Enum<DataSourceType, String> {
 
     private static final long serialVersionUID = 1L;
 
-    public static final EnumMetadata<Dialect, String> METADATA = EnumMetadata.forClass(Dialect.class);
+    public static final EnumMetadata<DataSourceType, String> METADATA = EnumMetadata.forClass(DataSourceType.class);
 
     private final String hibernateDialect;
     private final String driverClass;
     private final String urlFormat;
 
-    private Dialect(String name, String hibernateDialect, String driverClass, String urlFormat) {
+    private DataSourceType(String name, String hibernateDialect, String driverClass, String urlFormat) {
         super(name, name, METADATA);
         this.hibernateDialect = hibernateDialect;
         this.driverClass = driverClass;
@@ -30,7 +30,7 @@ public class Dialect
         return hibernateDialect;
     }
 
-    public String getDriverClass() {
+    public String getDriverClassName() {
         return driverClass;
     }
 
@@ -52,7 +52,7 @@ public class Dialect
     /**
      * H2 Embedded Database
      */
-    public static final Dialect H2 = new Dialect("h2", //
+    public static final DataSourceType H2 = new DataSourceType("h2", //
             "org.hibernate.dialect.H2Dialect", //
             "org.h2.Driver", //
             "jdbc:h2://${rootDir}/${database};DB_CLOSE_ON_EXIT=FALSE");
@@ -60,7 +60,7 @@ public class Dialect
     /**
      * HSQL Embedded Database
      */
-    public static final Dialect HSQL = new Dialect("hsql",//
+    public static final DataSourceType HSQL = new DataSourceType("hsql",//
             "org.hibernate.dialect.HSQLDialect", //
             "org.hsql.Driver", //
             "jdbc:hsql://${rootDir}/${database}");
@@ -68,7 +68,7 @@ public class Dialect
     /**
      * PostgreSQL RDBMS
      */
-    public static final Dialect PostgreSQL = new Dialect("postgresql", //
+    public static final DataSourceType PostgreSQL = new DataSourceType("postgresql", //
             "org.hibernate.dialect.PostgreSQLDialect", //
             "org.postgresql.Driver", //
             "jdbc:postgresql://${server}/${database}");
@@ -76,7 +76,7 @@ public class Dialect
     /**
      * Oracle Enterprise Database
      */
-    public static final Dialect Oracle = new Dialect("oracle",//
+    public static final DataSourceType Oracle = new DataSourceType("oracle",//
             "org.hibernate.dialect.OracleDialect", //
             "com.oracle.jdbc.Driver", //
             "jdbc:oracle://${server}/${database}");
@@ -84,7 +84,7 @@ public class Dialect
     /**
      * MySQL RDBMS
      */
-    public static final Dialect MySQL = new Dialect("mysql",//
+    public static final DataSourceType MySQL = new DataSourceType("mysql",//
             "org.hibernate.dialect.MySQLDialect", //
             "org.mysql.Driver", //
             "jdbc:mysql://${server}/${database}");
