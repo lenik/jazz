@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.bodz.lily</groupId>
+        <artifactId>layer-2</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>lily-model</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>lily-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+    <name>Lily :: Layer 2 :: Lily Model</name>
+</project>

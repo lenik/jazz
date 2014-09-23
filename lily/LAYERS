@@ -1,0 +1,13 @@
+layer-1/ API
+    lily-api
+
+layer-2/ Models
+    lily-model
+    lily-erp
+
+layer-3/ Libraries
+    # lily-search
+    lily-graph
+    
+layer-5/ Framework
+    lily-site
