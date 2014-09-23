@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.t.util.CollectionToString;
+import net.bodz.bas.c.java.util.CollectionToString;
 
 public class TransformValueMap<K, V, _V>
         implements Map<K, V> {
