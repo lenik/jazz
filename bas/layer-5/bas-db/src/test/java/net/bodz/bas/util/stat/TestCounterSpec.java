@@ -1,4 +1,8 @@
-package net.bodz.bas.db.stat;
+package net.bodz.bas.util.stat;
+
+import net.bodz.bas.util.stat.AbstractCounterSpec;
+import net.bodz.bas.util.stat.CounterDef;
+import net.bodz.bas.util.stat.ICounterDef;
 
 public class TestCounterSpec
         extends AbstractCounterSpec {

@@ -1,4 +1,4 @@
-package net.bodz.bas.db.stat;
+package net.bodz.bas.util.stat;
 
 public class SumUpCounter<T extends Number>
         implements ICounter<T> {
