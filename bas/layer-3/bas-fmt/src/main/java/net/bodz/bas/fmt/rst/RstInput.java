@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import net.bodz.bas.c.java.util.ArrayAndScalar;
 import net.bodz.bas.c.java.util.Arrays;
-import net.bodz.bas.t.pojo.Pair;
 
 public class RstInput
         implements IRstInput {
@@ -58,9 +58,9 @@ public class RstInput
 
             if (line.endsWith("{")) {
                 line = line.substring(0, line.length() - 1);
-                Pair<String, String[]> pair = Arrays.shift(line.split("\\s+"));
-                elementName = pair.getFirst();
-                elementArguments = pair.getSecond();
+                ArrayAndScalar<String[], String> pair = Arrays.shift(line.split("\\s+"));
+                elementName = pair.scalar;
+                elementArguments = pair.array;
                 return ELEMENT_BEGIN;
             }
 
