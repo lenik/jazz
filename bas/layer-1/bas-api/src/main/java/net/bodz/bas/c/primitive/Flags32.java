@@ -28,14 +28,14 @@ public class Flags32
         this.value |= mask;
     }
 
-    public final void setOrClear(boolean condition, int mask) {
+    public final void setOrClear(int mask, boolean condition) {
         if (condition)
             this.value |= mask;
         else
             this.value &= ~mask;
     }
 
-    public static int setOrClear(int value, boolean condition, int mask) {
+    public static int setOrClear(int value, int mask, boolean condition) {
         if (condition)
             value |= mask;
         else
@@ -47,14 +47,14 @@ public class Flags32
         this.value &= ~mask;
     }
 
-    public final void clearOrSet(boolean condition, int mask) {
+    public final void clearOrSet(int mask, boolean condition) {
         if (condition)
             this.value &= ~mask;
         else
             this.value |= mask;
     }
 
-    public static int clearOrSet(int value, boolean condition, int mask) {
+    public static int clearOrSet(int value, int mask, boolean condition) {
         if (condition)
             value &= ~mask;
         else

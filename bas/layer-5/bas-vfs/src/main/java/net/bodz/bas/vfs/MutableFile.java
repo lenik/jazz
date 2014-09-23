@@ -254,15 +254,15 @@ public abstract class MutableFile
     }
 
     public void setReadable(boolean readable) {
-        flags = Flags32.setOrClear(flags, readable, FileFlags.READABLE);
+        flags = Flags32.setOrClear(flags, FileFlags.READABLE, readable);
     }
 
     public void setWritable(boolean writable) {
-        flags = Flags32.setOrClear(flags, writable, FileFlags.WRITABLE);
+        flags = Flags32.setOrClear(flags, FileFlags.WRITABLE, writable);
     }
 
     public void setExecutable(boolean executable) {
-        flags = Flags32.setOrClear(flags, executable, FileFlags.EXECUTABLE);
+        flags = Flags32.setOrClear(flags, FileFlags.EXECUTABLE, executable);
     }
 
     /** ⇱ Implementation Of {@link DosFileAttributes}. */
@@ -295,17 +295,17 @@ public abstract class MutableFile
 
     @Override
     public void setHidden(boolean hidden) {
-        flags = Flags32.setOrClear(flags, hidden, FileFlags.HIDDEN);
+        flags = Flags32.setOrClear(flags, FileFlags.HIDDEN, hidden);
     }
 
     @Override
     public void setArchive(boolean archive) {
-        flags = Flags32.setOrClear(flags, archive, FileFlags.ARCHIVE);
+        flags = Flags32.setOrClear(flags, FileFlags.ARCHIVE, archive);
     }
 
     @Override
     public void setSystem(boolean system) {
-        flags = Flags32.setOrClear(flags, system, FileFlags.SYSTEM);
+        flags = Flags32.setOrClear(flags, FileFlags.SYSTEM, system);
     }
 
     /** ⇱ Implementation Of {@link PosixFileAttributes}. */
