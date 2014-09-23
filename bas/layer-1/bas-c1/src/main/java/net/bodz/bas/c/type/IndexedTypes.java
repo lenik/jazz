@@ -25,15 +25,23 @@ public class IndexedTypes {
 
     static Logger logger = Logger.getLogger(IndexedTypes.class.getName());
 
-    public static <T> Iterable<Class<? extends T>> list(Class<T> serviceBaseType, boolean includeAbstract)
-            throws IOException, ClassNotFoundException {
-        // Or using Context class loader?...
+    public static <T> Iterable<Class<? extends T>> list(Class<T> serviceBaseType, boolean includeAbstract) {
+        // TODO Or using Context class loader?...
         ClassLoader classLoader = serviceBaseType.getClassLoader();
         return list(SERVICES, serviceBaseType, includeAbstract, classLoader);
     }
 
     public static <T> Iterable<Class<? extends T>> list(String dirName, Class<T> serviceBaseType,
-            boolean includeAbstract, ClassLoader classLoader)
+            boolean includeAbstract, ClassLoader classLoader) {
+        try {
+            return _list(dirName, serviceBaseType, includeAbstract, classLoader);
+        } catch (Exception e) {
+            throw new IllegalUsageException("Error occurred when listing indexed types: " + e.getMessage(), e);
+        }
+    }
+
+    static <T> Iterable<Class<? extends T>> _list(String dirName, Class<T> serviceBaseType, boolean includeAbstract,
+            ClassLoader classLoader)
             throws IOException, ClassNotFoundException {
 
         String resourceName = dirName + "/" + serviceBaseType.getName();
