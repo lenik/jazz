@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.t.util.CollectionToString;
+import net.bodz.bas.c.java.util.CollectionToString;
 
 public class UntransformCollection<S, T>
         implements Collection<S> {

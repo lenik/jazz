@@ -1,4 +1,4 @@
-package net.bodz.bas.t.util;
+package net.bodz.bas.c.java.util;
 
 import java.util.Collection;
 import java.util.Map;
@@ -12,7 +12,7 @@ public class CollectionToString {
         return toString(collection, collection.size() * 10);
     }
 
-    public static String toString(Collection<?> collection, int estimatedSize) {
+    public static String toString(Iterable<?> collection, int estimatedSize) {
         if (collection == null)
             throw new NullPointerException("collection");
         StringBuilder buf = new StringBuilder(estimatedSize);
