@@ -1,4 +1,4 @@
-package net.bodz.bas.db.stat;
+package net.bodz.bas.util.stat;
 
 import java.io.Serializable;
 import java.util.Collection;

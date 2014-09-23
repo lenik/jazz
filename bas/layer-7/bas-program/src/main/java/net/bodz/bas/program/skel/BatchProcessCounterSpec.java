@@ -1,8 +1,8 @@
 package net.bodz.bas.program.skel;
 
-import net.bodz.bas.db.stat.AbstractCounterSpec;
-import net.bodz.bas.db.stat.CounterDef;
-import net.bodz.bas.db.stat.ICounterDef;
+import net.bodz.bas.util.stat.AbstractCounterSpec;
+import net.bodz.bas.util.stat.CounterDef;
+import net.bodz.bas.util.stat.ICounterDef;
 
 public class BatchProcessCounterSpec
         extends AbstractCounterSpec {

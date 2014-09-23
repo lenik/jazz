@@ -8,13 +8,13 @@ import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
-import net.bodz.bas.db.stat.StatNode;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.builtin.OutputStreamTarget;
+import net.bodz.bas.util.stat.StatNode;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;

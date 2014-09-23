@@ -1,4 +1,4 @@
-package net.bodz.bas.db.stat;
+package net.bodz.bas.util.stat;
 
 import net.bodz.bas.err.NotImplementedException;
 
