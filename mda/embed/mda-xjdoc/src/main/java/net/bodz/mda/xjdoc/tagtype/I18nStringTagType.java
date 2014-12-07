@@ -12,6 +12,11 @@ import net.bodz.bas.rtx.IOptions;
 public class I18nStringTagType
         extends AbstractTagType {
 
+    @Override
+    public Class<?> getValueType() {
+        return iString.class;
+    }
+
     /**
      * @param cont
      *            is skipped: if there are duplicated tags (with the same tagname), take last one.

@@ -22,6 +22,11 @@ public class TokensTagType
     }
 
     @Override
+    public Class<?> getValueType() {
+        return String[].class;
+    }
+
+    @Override
     protected String[] parse(String s)
             throws ParseException {
         List<String> tokenList = _parse(s);

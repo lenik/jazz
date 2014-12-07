@@ -9,6 +9,11 @@ public class URLTagType
         extends AbstractScalarTagType<URL> {
 
     @Override
+    public Class<?> getValueType() {
+        return URL.class;
+    }
+
+    @Override
     protected URL parse(String s)
             throws ParseException {
         try {

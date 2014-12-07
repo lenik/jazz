@@ -7,6 +7,11 @@ public class AuthorTagType
         extends AbstractScalarTagType<Author> {
 
     @Override
+    public Class<?> getValueType() {
+        return Author.class;
+    }
+
+    @Override
     protected Author parse(String s)
             throws ParseException {
         return Author.parse(s);
