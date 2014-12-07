@@ -1,5 +1,7 @@
 package net.bodz.bas.potato.element;
 
+import net.bodz.bas.c.reflect.NoSuchPropertyException;
+
 /**
  * This is also usable as member/inner type.
  */
@@ -70,6 +72,12 @@ public interface IType
      * @return The property with the specific name, <code>null</code> if the property doesn't exist.
      */
     IProperty getProperty(String propertyName);
+
+    /**
+     * Resolve the property path.
+     */
+    IProperty getPathProperty(String pathProperty)
+            throws NoSuchPropertyException;
 
     /**
      * Get method of the specific signature.
