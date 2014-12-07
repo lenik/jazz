@@ -93,8 +93,10 @@ public class ClassResource {
      * Same as {@link #getDataURLBySuffix(Class, String)} with ".class" as <code>extension</code>.
      */
     public static URL getClassBytesURL(Class<?> clazz) {
-        String classSimpleName = clazz.getSimpleName();
-        URL url = clazz.getResource(classSimpleName + ".class");
+        String name = clazz.getName(); // keep '$' as is.
+        int lastDot = name.lastIndexOf('.');
+        String base = lastDot == -1 ? name : name.substring(lastDot + 1);
+        URL url = clazz.getResource(base + ".class");
         return url;
     }
 
