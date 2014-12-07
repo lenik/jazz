@@ -6,7 +6,6 @@ import java.io.IOException;
 public interface ICloseable
         extends Closeable {
 
-    @Override
     void close()
             throws IOException;
 
