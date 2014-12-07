@@ -7,6 +7,27 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.err.IllegalUsageException;
 
+/**
+ * Examples:
+ * 
+ * <pre>
+ * TypeMap-Registry:
+ *     "..IdPool":
+ *         Map: Class -> IdPool
+ * 
+ *     "..RecvUtil"
+ *         Map: Class -> IMethod  // IType .. recv(Object)
+ *         
+ *     "..ClassDocToOptionsConverter"
+ *         Map: Class -> IOptionGroup
+ *     
+ *     "..FieldPathDispatcher.EntryLoader"
+ *         Map: Class -> Map<String, Field>
+ *     
+ *     "..SimpleConstructorMap"
+ *         Map: Class -> SimpleConstructorMap
+ * </pre>
+ */
 public class TypeMapRegistry
         extends TreeMap<String, LazyTypeMap<?>> {
 

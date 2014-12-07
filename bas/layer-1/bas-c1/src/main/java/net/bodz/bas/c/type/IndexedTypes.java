@@ -8,7 +8,6 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
-import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +16,7 @@ import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.IllegalUsageException;
 
 /**
- * Similar to {@link ServiceLoader} but won't instantiate.
+ * Similar to {@link java.util.ServiceLoader} but won't instantiate.
  */
 public class IndexedTypes {
 
