@@ -162,7 +162,14 @@ public class Strings {
         return buf.toString();
     }
 
-    public static String ellipse(String s, int len, String ellipse) {
+    public static String ellipsisNull = null;
+
+    /**
+     * @return {@link #ellipsisNull} if <code>s</code> is <code>null</code>.
+     */
+    public static String ellipsis(String s, int len, String ellipse) {
+        if (s == null)
+            return null;
         if (s.length() <= len)
             return s;
         int elen = ellipse.length();
@@ -172,11 +179,21 @@ public class Strings {
             return ellipse.substring(0, len);
     }
 
-    public static String ellipse(String s, int len) {
-        return ellipse(s, len, "...");
+    /**
+     * Returns <code>"head..."</code> if given <code>s</code> is too long.
+     * 
+     * @return {@link #ellipsisNull} if <code>s</code> is <code>null</code>.
+     */
+    public static String ellipsis(String s, int len) {
+        return ellipsis(s, len, "...");
     }
 
-    public static String ellipse(String s, int len, String ellipse, String epstart, String epend) {
+    /**
+     * @return {@link #ellipsisNull} if <code>s</code> is <code>null</code>.
+     */
+    public static String ellipsis(String s, int len, String ellipse, String epstart, String epend) {
+        if (s == null)
+            return ellipsisNull;
         int estart = 0;
         if (epstart != null)
             if ((estart = s.indexOf(epstart)) == -1)
@@ -191,9 +208,9 @@ public class Strings {
         String prefix = s.substring(0, estart);
         String suffix = s.substring(eend);
         if (len > trims + ellipse.length())
-            return prefix + ellipse(s.substring(estart, eend), len - trims, ellipse) + suffix;
+            return prefix + ellipsis(s.substring(estart, eend), len - trims, ellipse) + suffix;
         else
-            return ellipse(s, len, ellipse);
+            return ellipsis(s, len, ellipse);
     }
 
 }

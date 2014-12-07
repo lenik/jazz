@@ -60,7 +60,7 @@ public class CreateFile
             if (CreateFile.this.append)
                 openOptions = new OpenOption[] { StandardOpenOption.APPEND };
 
-            String abbr = Strings.ellipse(String.valueOf(source), 40);
+            String abbr = Strings.ellipsis(String.valueOf(source), 40);
             if (append)
                 logger.infof(tr._("Append to %s: %s"), dest, abbr);
             else
