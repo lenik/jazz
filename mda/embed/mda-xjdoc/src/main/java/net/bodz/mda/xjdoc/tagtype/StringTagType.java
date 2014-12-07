@@ -12,7 +12,12 @@ public class StringTagType
         extends AbstractTagType {
 
     @Override
-    public Object parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
+    public Class<?> getValueType() {
+        return String.class;
+    }
+
+    @Override
+    public String parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         // TODO normalize-space?
         return string;
@@ -27,7 +32,7 @@ public class StringTagType
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, IOptions options)
+    public String parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         if (string.startsWith("\"") && string.endsWith("\"")) {
             String quotedString = string;

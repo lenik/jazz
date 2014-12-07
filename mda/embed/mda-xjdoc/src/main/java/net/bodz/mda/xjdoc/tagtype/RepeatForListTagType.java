@@ -20,7 +20,12 @@ public class RepeatForListTagType
     }
 
     @Override
-    public Object parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
+    public Class<?> getValueType() {
+        return List.class;
+    }
+
+    @Override
+    public List<Object> parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         @SuppressWarnings("unchecked")
         List<Object> list = (List<Object>) cont;
@@ -41,7 +46,7 @@ public class RepeatForListTagType
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, IOptions options)
+    public List<Object> parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         @SuppressWarnings("unchecked")
         List<Object> list = (List<Object>) cont;

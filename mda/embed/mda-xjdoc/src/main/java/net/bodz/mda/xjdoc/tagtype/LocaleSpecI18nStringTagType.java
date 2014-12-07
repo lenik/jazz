@@ -18,6 +18,11 @@ public class LocaleSpecI18nStringTagType
         extends AbstractTagType {
 
     @Override
+    public Class<?> getValueType() {
+        return iString.class;
+    }
+
+    @Override
     public iString parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
 

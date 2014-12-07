@@ -2,12 +2,17 @@ package net.bodz.mda.xjdoc.tagtype;
 
 import java.io.IOException;
 
+import net.bodz.bas.c.type.AggregationEnum;
 import net.bodz.bas.err.FormatterException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
 
 public interface ITagType {
+
+    Class<?> getValueType();
+
+    AggregationEnum getAggregationEnum();
 
     /**
      * Parse a javadoc tag into value object.

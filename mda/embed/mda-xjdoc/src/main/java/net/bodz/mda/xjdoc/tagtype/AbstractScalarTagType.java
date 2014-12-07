@@ -10,7 +10,7 @@ public abstract class AbstractScalarTagType<T>
         extends AbstractTagType {
 
     @Override
-    public Object parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
+    public T parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         return parse(string);
     }
@@ -26,7 +26,7 @@ public abstract class AbstractScalarTagType<T>
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, IOptions options)
+    public T parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         T value = parse(string);
         return value;

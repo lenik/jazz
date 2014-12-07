@@ -20,6 +20,11 @@ public class FirstWordKeyTagType
     }
 
     @Override
+    public Class<?> getValueType() {
+        return Map.class;
+    }
+
+    @Override
     public Map<?, ?> parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         String keyStr = WordTokenizer.firstWord(string);
