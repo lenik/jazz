@@ -2,6 +2,8 @@ package net.bodz.bas.potato.element;
 
 import java.lang.annotation.Annotation;
 
+import net.bodz.mda.xjdoc.model.IElementDoc;
+
 public class MutableType
         extends AbstractType {
 
@@ -11,8 +13,8 @@ public class MutableType
     private MutableConstructorMap constructorMap;
     private MutableEventMap eventMap;
 
-    public MutableType(Class<?> type) {
-        super(type, type.getName());
+    public MutableType(Class<?> type, IElementDoc doc) {
+        super(type, type.getName(), doc);
         this.type = type;
         propertyMap = new MutablePropertyMap(false);
         methodMap = new MutableMethodMap(false);

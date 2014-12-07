@@ -1,13 +1,14 @@
 package net.bodz.bas.potato.element;
 
 import net.bodz.bas.t.event.IPropertyChangeListener;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractProperty
         extends AbstractPotatoElement
         implements IProperty {
 
-    public AbstractProperty(Class<?> declaringType, String propertyName) {
-        super(declaringType, propertyName);
+    public AbstractProperty(Class<?> declaringType, String propertyName, IElementDoc doc) {
+        super(declaringType, propertyName, doc);
     }
 
     @Override

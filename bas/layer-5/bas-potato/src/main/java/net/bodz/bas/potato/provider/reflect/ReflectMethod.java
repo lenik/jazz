@@ -21,8 +21,8 @@ public class ReflectMethod
      * @throws NullPointerException
      *             If <code>method</code> is <code>null</code>.
      */
-    public ReflectMethod(Method method, IElementDoc xjdoc) {
-        super(method.getDeclaringClass(), method.getName());
+    public ReflectMethod(Method method, IElementDoc doc) {
+        super(method.getDeclaringClass(), method.getName(), doc);
         this.method = method;
         this.parameterCount = method.getParameterTypes().length;
 

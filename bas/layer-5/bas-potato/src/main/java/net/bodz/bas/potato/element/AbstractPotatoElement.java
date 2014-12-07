@@ -1,12 +1,16 @@
 package net.bodz.bas.potato.element;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.type.SingletonUtil;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.lang.typer;
 import net.bodz.bas.typer.std.ITyperFamily;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
@@ -23,9 +27,13 @@ public abstract class AbstractPotatoElement
      * @param name
      *            May be <code>null</code>.
      */
-    public AbstractPotatoElement(Class<?> declaringType, String name) {
+    public AbstractPotatoElement(Class<?> declaringType, String name, IElementDoc doc) {
         this.name = name;
         this.declaringClass = declaringType;
+
+        if (doc == null)
+            throw new NullPointerException("doc");
+        setXjdoc(doc);
     }
 
     @Override
@@ -66,6 +74,12 @@ public abstract class AbstractPotatoElement
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    protected IElementDoc loadXjdoc()
+            throws ParseException, IOException {
+        throw new UnexpectedException("already loaded.");
     }
 
     /** ⇱ Implementation Of {@link IAnnotated}. */

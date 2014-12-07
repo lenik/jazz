@@ -19,8 +19,8 @@ public class ReflectConstructor
      * @throws NullPointerException
      *             If <code>method</code> is <code>null</code>.
      */
-    public ReflectConstructor(Constructor<?> ctor, IElementDoc xjdoc) {
-        super(ctor.getDeclaringClass());
+    public ReflectConstructor(Constructor<?> ctor, IElementDoc doc) {
+        super(ctor.getDeclaringClass(), doc);
         this.ctor = ctor;
 
         int _modifiers = ctor.getModifiers();

@@ -28,8 +28,8 @@ public abstract class AbstractReflectType
      * @see ITypeProvider#CONSTRUCTORS
      * @see ITypeProvider#EVENTS
      */
-    public AbstractReflectType(Class<?> clazz, int infoset, ClassDoc classDoc) {
-        super(clazz, clazz.getName());
+    public AbstractReflectType(Class<?> clazz, int infoset, IClassDoc doc) {
+        super(clazz, clazz.getName(), doc);
 
         this.clazz = clazz;
 
