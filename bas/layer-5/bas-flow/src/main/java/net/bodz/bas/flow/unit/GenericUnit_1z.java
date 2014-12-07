@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.flow.stream.IReceiverEx;
 import net.bodz.bas.flow.unit.metadata.IPortMetadata;
-import net.bodz.bas.flow.unit.metadata.StrictPortMeta;
+import net.bodz.bas.flow.unit.metadata.StrictPortMetadata;
 import net.bodz.bas.flow.utils.RecvUtil;
 
 public abstract class GenericUnit_1z
@@ -44,7 +44,7 @@ public abstract class GenericUnit_1z
 
     @Override
     public IPortMetadata getInPortMeta() {
-        return new StrictPortMeta("in", Object.class);
+        return new StrictPortMetadata("in", Object.class);
     }
 
     @Override

@@ -7,7 +7,7 @@ import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.flow.stream.IReceiverEx;
 import net.bodz.bas.flow.unit.metadata.IPortMetadata;
-import net.bodz.bas.flow.unit.metadata.PortMetaEntryLoader;
+import net.bodz.bas.flow.unit.metadata.PortMetadataEntryLoader;
 
 public abstract class AbstractInPort
         extends AbstractPort
@@ -21,7 +21,7 @@ public abstract class AbstractInPort
     }
 
     private static LazyTypeMap<IPortMetadata> clsPortMetadata = TypeMapRegistry.createMap(//
-            IPortMetadata.class.getCanonicalName(), PortMetaEntryLoader.INSTANCE);
+            IPortMetadata.class.getCanonicalName(), PortMetadataEntryLoader.INSTANCE);
 
     @Override
     public IPortMetadata getInPortMeta() {

@@ -2,8 +2,8 @@ package net.bodz.bas.flow.unit.metadata;
 
 import net.bodz.bas.c.type.TypeName;
 
-public class UnitMetaEntryLoader
-        extends MetaClassEntryLoader<IUnitMetadata> {
+public class UnitMetadataEntryLoader
+        extends MetadataEntryLoader<IUnitMetadata> {
 
     @Override
     protected IUnitMetadata createWithoutAnnotation(Class<?> clazz) {
@@ -12,6 +12,6 @@ public class UnitMetaEntryLoader
         return meta;
     }
 
-    public static final UnitMetaEntryLoader INSTANCE = new UnitMetaEntryLoader();
+    public static final UnitMetadataEntryLoader INSTANCE = new UnitMetadataEntryLoader();
 
 }
