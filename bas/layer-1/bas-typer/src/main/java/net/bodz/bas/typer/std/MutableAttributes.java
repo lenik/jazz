@@ -7,29 +7,38 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.object.Nullables;
 
-public class Attributes
-        implements IAttributes {
+public class MutableAttributes
+        implements IMutableAttributes {
 
     private Map<String, Object> valueMap;
     private Map<String, ITyperFamily<?>> typersMap;
 
-    public Attributes() {
+    public MutableAttributes() {
         this(null);
     }
 
-    public Attributes(Map<String, ITyperFamily<?>> typerMap) {
+    public MutableAttributes(Map<String, ITyperFamily<?>> typerMap) {
         this.valueMap = new TreeMap<String, Object>();
         this.typersMap = typerMap;
     }
 
     @Override
-    public Object getAttribute(String name) {
-        return valueMap.get(name);
+    public Collection<String> getAttributeNames() {
+        return valueMap.keySet();
     }
 
     @Override
-    public Collection<String> getAttributeNames() {
-        return valueMap.keySet();
+    public <T> T getAttribute(String name) {
+        return (T) valueMap.get(name);
+    }
+
+    @Override
+    public <T> T getAttribute(String name, T defaultValue) {
+        T value = (T) valueMap.get(name);
+        if (value == null && !valueMap.containsKey(name))
+            return defaultValue;
+        else
+            return value;
     }
 
     @Override
@@ -39,12 +48,19 @@ public class Attributes
         return null;
     }
 
+    @Override
     public void setAttribute(String name, Object value) {
         if (name == null)
             throw new NullPointerException("name");
         valueMap.put(name, value);
     }
 
+    @Override
+    public void removeAttribute(String name) {
+        valueMap.remove(name);
+    }
+
+    @Override
     public void setAttributeTypers(String name, ITyperFamily<?> typers) {
         if (name == null)
             throw new NullPointerException("name");
@@ -68,9 +84,9 @@ public class Attributes
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof Attributes))
+        if (!(obj instanceof MutableAttributes))
             return false;
-        Attributes o = (Attributes) obj;
+        MutableAttributes o = (MutableAttributes) obj;
         if (!valueMap.equals(o.valueMap))
             return false;
         if (!Nullables.equals(typersMap, o.typersMap))

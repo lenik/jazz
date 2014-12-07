@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class EmptyAttributes
-        implements IAttributes {
+        implements IMutableAttributes {
 
     EmptyAttributes() {
     }
@@ -15,13 +15,30 @@ public class EmptyAttributes
     }
 
     @Override
-    public Object getAttribute(String attributeName) {
+    public <T> T getAttribute(String attributeName) {
         return null;
+    }
+
+    @Override
+    public <T> T getAttribute(String name, T defaultValue) {
+        return defaultValue;
     }
 
     @Override
     public ITyperFamily<?> getAttributeTypers(String attributeName) {
         return null;
+    }
+
+    @Override
+    public void setAttribute(String name, Object value) {
+    }
+
+    @Override
+    public void removeAttribute(String name) {
+    }
+
+    @Override
+    public void setAttributeTypers(String name, ITyperFamily<?> typers) {
     }
 
     private static EmptyAttributes instance = new EmptyAttributes();

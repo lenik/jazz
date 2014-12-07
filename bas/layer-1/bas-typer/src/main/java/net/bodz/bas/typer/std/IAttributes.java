@@ -13,7 +13,9 @@ public interface IAttributes {
     /**
      * @return <code>null</code> if specified id doesn't exist.
      */
-    Object getAttribute(String attributeName);
+    <T> T getAttribute(String name);
+
+    <T> T getAttribute(String name, T defaultValue);
 
     /**
      * @return <code>null</code> if no type info available.
