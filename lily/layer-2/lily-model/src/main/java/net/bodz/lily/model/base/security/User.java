@@ -45,7 +45,8 @@ public class User
     private long lastLoginTime;
     private InetAddress lastLoginIP; // =Inet4Address.getByAddress();
 
-    public int getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 

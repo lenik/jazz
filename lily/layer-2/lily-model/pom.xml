@@ -12,6 +12,11 @@
             <artifactId>lily-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <name>Lily :: Layer 2 :: Lily Model</name>
 </project>

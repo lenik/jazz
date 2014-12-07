@@ -1,5 +1,7 @@
 package net.bodz.lily.model.base.security;
 
+import java.util.List;
+
 import net.bodz.lily.model.base.CoEntity;
 
 /**
@@ -31,8 +33,10 @@ public class Group
     public static final int N_FULL_NAME = 40;
 
     private int id;
+    private List<User> users;
 
-    public int getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
@@ -56,6 +60,14 @@ public class Group
 
     public final void setFullName(String fullName) {
         setLabel(fullName);
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
 }
