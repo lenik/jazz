@@ -21,8 +21,8 @@ public class EntryKeyComparator<K>
         return cmp.compare(ak, bk);
     }
 
-    public static final <K> EntryKeyComparator<K> getNaturalInstance() {
-        return new EntryKeyComparator<K>(ComparableComparator.getRawInstance());
+    public static final <K> EntryKeyComparator<K> getDefaultInstance() {
+        return new EntryKeyComparator<K>(DefaultComparator.INSTANCE);
     }
 
 }

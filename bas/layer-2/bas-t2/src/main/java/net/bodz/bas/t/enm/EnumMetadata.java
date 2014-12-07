@@ -7,15 +7,17 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.err.DuplicatedKeyException;
-import net.bodz.bas.t.order.ComparableComparator;
+import net.bodz.bas.meta.stereo.IMetadata;
+import net.bodz.bas.t.order.DefaultComparator;
 
-public class EnumMetadata<E extends Enum<?, K>, K extends Comparable<K>> {
+public class EnumMetadata<E extends Enum<?, K>, K extends Comparable<K>>
+        implements IMetadata {
 
     private final Class<E> type;
     private final int level;
 
-    private Map<K, E> local = new TreeMap<>(ComparableComparator.getInstance());
-    private Map<K, E> extension = new TreeMap<>(ComparableComparator.getInstance());
+    private Map<K, E> local = new TreeMap<>(DefaultComparator.getInstance());
+    private Map<K, E> extension = new TreeMap<>(DefaultComparator.getInstance());
 
     public EnumMetadata(Class<E> clazz) {
         if (clazz == null)

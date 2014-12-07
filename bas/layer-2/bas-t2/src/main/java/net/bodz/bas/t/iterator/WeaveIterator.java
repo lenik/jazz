@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.t.list.DyingList;
 import net.bodz.bas.t.list.SortedList;
-import net.bodz.bas.t.order.ComparableComparator;
+import net.bodz.bas.t.order.DefaultComparator;
 
 public class WeaveIterator<T>
         implements Iterator<T> {
@@ -87,7 +87,7 @@ public class WeaveIterator<T>
 
     @SafeVarargs
     public static <T> Iterator<T> from(Iterator<T>... iterators) {
-        return from(ComparableComparator.getRawInstance(), iterators);
+        return from(DefaultComparator.INSTANCE, iterators);
     }
 
     @Override

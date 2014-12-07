@@ -9,7 +9,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 
-import net.bodz.bas.t.order.ComparableComparator;
+import net.bodz.bas.t.order.DefaultComparator;
 
 public class EchoReferencesTask
         extends Task {
@@ -21,7 +21,7 @@ public class EchoReferencesTask
 
         Hashtable<?, ?> references = project.getReferences();
         List<Object> keys = new ArrayList<Object>(references.keySet());
-        Collections.sort(keys, ComparableComparator.getRawInstance());
+        Collections.sort(keys, DefaultComparator.INSTANCE);
 
         for (Object key : keys) {
             Object value = references.get(key);
