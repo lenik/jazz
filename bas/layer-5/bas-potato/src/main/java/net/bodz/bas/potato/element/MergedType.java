@@ -10,19 +10,21 @@ public class MergedType
         extends AbstractType {
 
     private final Class<?> clazz;
+    List<IType> sourceTypes;
 
     private IPropertyMap propertyMap;
     private IMethodMap methodMap;
     private IConstructorMap constructorMap;
     private IEventMap eventMap;
 
-    public MergedType(Class<?> clazz, IType[] types, IElementDoc xjdoc) {
-        this(clazz, Arrays.asList(types), xjdoc);
+    public MergedType(Class<?> clazz, IType[] types, IElementDoc doc) {
+        this(clazz, Arrays.asList(types), doc);
     }
 
-    public MergedType(Class<?> clazz, List<IType> types, IElementDoc xjdoc) {
-        super(clazz, clazz.getName());
+    public MergedType(Class<?> clazz, List<IType> types, IElementDoc doc) {
+        super(clazz, clazz.getName(), doc);
         this.clazz = clazz;
+        this.sourceTypes = types;
 
         boolean sort = false;
 
@@ -53,8 +55,6 @@ public class MergedType
         this.methodMap = methodMap;
         this.constructorMap = constructorMap;
         this.eventMap = eventMap;
-
-        setXjdoc(xjdoc);
     }
 
     /** ⇱ Implementation Of {@link IType}. */

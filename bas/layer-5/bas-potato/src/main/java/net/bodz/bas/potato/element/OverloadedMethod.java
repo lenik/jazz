@@ -2,7 +2,6 @@ package net.bodz.bas.potato.element;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +10,7 @@ import net.bodz.bas.c.type.TypeArray;
 import net.bodz.bas.c.type.TypeMath;
 import net.bodz.bas.c.type.TypeSpace;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class OverloadedMethod
         extends AbstractMethod {
@@ -26,12 +26,8 @@ public class OverloadedMethod
     private Map<TypeArray, Object> tvConvMap = new HashMap<>();
     private static Object NONE = new Object();
 
-    public OverloadedMethod(Class<?> declaringType, IMethod... methods) {
-        this(declaringType, Arrays.asList(methods));
-    }
-
-    public OverloadedMethod(Class<?> declaringType, List<IMethod> methods) {
-        super(declaringType, methods.get(0).getName());
+    public OverloadedMethod(Class<?> declaringType, List<IMethod> methods, IElementDoc doc) {
+        super(declaringType, methods.get(0).getName(), doc);
         this.methods = methods;
 
         IMethod method0 = methods.get(0);

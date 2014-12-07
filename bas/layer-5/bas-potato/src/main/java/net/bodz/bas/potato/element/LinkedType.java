@@ -17,12 +17,12 @@ public class LinkedType
     private LinkedConstructorMap constructorMap;
     private LinkedEventMap eventMap;
 
-    public LinkedType(Class<?> clazz, IType[] types, IElementDoc xjdoc) {
-        this(clazz, Arrays.asList(types), xjdoc);
+    public LinkedType(Class<?> clazz, IType[] types, IElementDoc doc) {
+        this(clazz, Arrays.asList(types), doc);
     }
 
-    public LinkedType(Class<?> clazz, List<IType> types, IElementDoc xjdoc) {
-        super(clazz, clazz.getName());
+    public LinkedType(Class<?> clazz, List<IType> types, IElementDoc doc) {
+        super(clazz, clazz.getName(), doc);
 
         this.clazz = clazz;
 
@@ -48,8 +48,6 @@ public class LinkedType
         methodMap = new LinkedMethodMap(methodMaps);
         constructorMap = new LinkedConstructorMap(constructorMaps);
         eventMap = new LinkedEventMap(eventMaps);
-
-        setXjdoc(xjdoc);
     }
 
     /** ⇱ Implementation Of {@link IType}. */

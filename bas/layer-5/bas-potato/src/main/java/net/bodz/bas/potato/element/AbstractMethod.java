@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import net.bodz.bas.c.reflect.MethodSignature;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractMethod
         extends AbstractPotatoElement
@@ -8,8 +9,8 @@ public abstract class AbstractMethod
 
     private transient IParameter[] parameters;
 
-    public AbstractMethod(Class<?> declaringType, String methodName) {
-        super(declaringType, methodName);
+    public AbstractMethod(Class<?> declaringType, String methodName, IElementDoc doc) {
+        super(declaringType, methodName, doc);
     }
 
     @Override

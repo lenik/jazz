@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractEvent
         extends AbstractPotatoElement
@@ -15,8 +16,9 @@ public abstract class AbstractEvent
     private final Class<?> listenerClass;
     private final Class<?> eventClass;
 
-    public AbstractEvent(Class<?> declaringType, String eventName, Class<?> listenerClass, Class<?> eventClass) {
-        super(declaringType, eventName);
+    public AbstractEvent(Class<?> declaringType, String eventName, Class<?> listenerClass, Class<?> eventClass,
+            IElementDoc doc) {
+        super(declaringType, eventName, doc);
         if (eventName == null)
             throw new NullPointerException("eventName");
         if (eventName.isEmpty())

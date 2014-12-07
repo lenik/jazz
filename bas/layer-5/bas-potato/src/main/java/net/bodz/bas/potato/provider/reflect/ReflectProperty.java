@@ -21,8 +21,8 @@ public class ReflectProperty
 
     private PropertyChangeSourceMode propertyChangeSourceMode;
 
-    public ReflectProperty(Field field, IElementDoc xjdoc) {
-        super(field.getDeclaringClass(), field.getName());
+    public ReflectProperty(Field field, IElementDoc doc) {
+        super(field.getDeclaringClass(), field.getName(), doc);
         this.field = field;
 
         int _modifiers = field.getModifiers();

@@ -17,8 +17,8 @@ public abstract class AbstractType
 
     private Map<String, IMethod> overloadedMethodMap;
 
-    public AbstractType(Class<?> declaringType, String name) {
-        super(declaringType, name);
+    public AbstractType(Class<?> declaringType, String name, IElementDoc doc) {
+        super(declaringType, name, doc);
     }
 
     @Override
