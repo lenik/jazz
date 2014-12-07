@@ -9,4 +9,9 @@ public class HtmlBrTag
         super(parent, tagName);
     }
 
+    @Override
+    public boolean isVoid() {
+        return true;
+    }
+
 }
