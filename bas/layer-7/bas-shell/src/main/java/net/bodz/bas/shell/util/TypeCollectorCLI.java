@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.c.loader.scan.TypeCollector;
-import net.bodz.bas.c.type.TypeExtensions;
+import net.bodz.bas.c.type.TypeIndex;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedType;
@@ -64,14 +64,14 @@ public class TypeCollectorCLI
         }
 
         if (baseTypes.isEmpty())
-            for (Class<?> type : TypeExtensions.forClassWithAnnotation(IndexedType.class))
+            for (Class<?> type : TypeIndex.forClassWithAnnotation(IndexedType.class))
                 baseTypes.add(type);
 
         for (Class<?> baseType : baseTypes) {
             logger.info("Base-Type: ", baseType);
 
             if (listOnly) {
-                for (Class<?> extension : TypeExtensions.forClass(baseType))
+                for (Class<?> extension : TypeIndex.forClass(baseType))
                     logger.info("    Extension: ", extension);
                 continue;
             }

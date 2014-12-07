@@ -14,15 +14,15 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.codegen.PublishDir;
 
-public class TypeExtensions {
+public class TypeIndex {
 
-    static final Logger logger = Logger.getLogger(TypeExtensions.class.getName());
+    static final Logger logger = Logger.getLogger(TypeIndex.class.getName());
 
     boolean includeAbstract;
     ClassLoader defaultClassLoader;
     boolean initialize = true;
 
-    public TypeExtensions() {
+    public TypeIndex() {
         defaultClassLoader = ClassLoader.getSystemClassLoader();
     }
 
@@ -123,17 +123,17 @@ public class TypeExtensions {
 
     public static <T> Iterable<Class<? extends T>> forClass(Class<T> baseType, boolean includeAbstract)
             throws IOException, ClassNotFoundException {
-        TypeExtensions exts = new TypeExtensions();
-        exts.setIncludeAbstract(includeAbstract);
-        return exts.list(baseType);
+        TypeIndex index = new TypeIndex();
+        index.setIncludeAbstract(includeAbstract);
+        return index.list(baseType);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public static Iterable<Class<?>> forClassWithAnnotation(Class<? extends Annotation> annotationType)
             throws IOException, ClassNotFoundException {
-        TypeExtensions exts = new TypeExtensions();
-        exts.setIncludeAbstract(true);
-        Iterable list = exts.list(annotationType);
+        TypeIndex index = new TypeIndex();
+        index.setIncludeAbstract(true);
+        Iterable list = index.list(annotationType);
         return list;
     }
 
