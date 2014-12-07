@@ -78,4 +78,41 @@ public class Region {
         return children;
     }
 
+    @Override
+    public String toString() {
+        return toString(", ");
+    }
+
+    public String toString(String delimit) {
+        StringBuilder sb = new StringBuilder();
+        Region r = this;
+        while (true) {
+            sb.append(r.enName);
+            r = r.parent;
+            if (r != null)
+                sb.append(delimit);
+            else
+                break;
+        }
+        return sb.toString();
+    }
+
+    public String toZhString() {
+        return toZhString(" ");
+    }
+
+    public String toZhString(String delimit) {
+        StringBuilder sb = new StringBuilder();
+        buildZhString(sb, delimit);
+        return sb.toString();
+    }
+
+    private void buildZhString(StringBuilder sb, String delimit) {
+        if (parent != null) {
+            parent.buildZhString(sb, delimit);
+            sb.append(delimit);
+        }
+        sb.append(zhName);
+    }
+
 }

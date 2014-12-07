@@ -21,8 +21,8 @@ public class Regions {
         return china;
     }
 
-    public static Region getChinaRegion(String joinId) {
-        return chinaIndex.get(joinId);
+    public static Region getChinaRegion(String id) {
+        return chinaIndex.get(id);
     }
 
     static {
