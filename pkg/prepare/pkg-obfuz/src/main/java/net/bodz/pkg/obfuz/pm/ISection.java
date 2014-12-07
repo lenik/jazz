@@ -9,7 +9,7 @@ public interface ISection {
 
     int getType();
 
-    SectionMetaData getMetaData();
+    SectionMetadata getMetadata();
 
     void lock(KeyBytes key)
             throws ProtectException;
