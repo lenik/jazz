@@ -3,12 +3,12 @@ package net.bodz.bas.flow.unit.metadata;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class StrictPortMeta
+public class StrictPortMetadata
         extends AbstractPortMetadata {
 
     private final Class<?> baseType;
 
-    public StrictPortMeta(String name, Class<?> baseType) {
+    public StrictPortMetadata(String name, Class<?> baseType) {
         super(name);
         this.baseType = baseType;
     }

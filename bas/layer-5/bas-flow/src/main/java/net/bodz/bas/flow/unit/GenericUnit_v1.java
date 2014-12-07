@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.flow.stream.IReceiver;
 import net.bodz.bas.flow.unit.metadata.IPortMetadata;
-import net.bodz.bas.flow.unit.metadata.StrictPortMeta;
+import net.bodz.bas.flow.unit.metadata.StrictPortMetadata;
 
 // code copy-paste from SISOUnit.
 
@@ -33,7 +33,7 @@ public abstract class GenericUnit_v1
 
     @Override
     public IPortMetadata getOutPortMeta() {
-        return new StrictPortMeta("out", Object.class);
+        return new StrictPortMetadata("out", Object.class);
     }
 
     @Override

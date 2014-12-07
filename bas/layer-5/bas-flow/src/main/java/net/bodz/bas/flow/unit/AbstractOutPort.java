@@ -3,7 +3,7 @@ package net.bodz.bas.flow.unit;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.flow.unit.metadata.IPortMetadata;
-import net.bodz.bas.flow.unit.metadata.PortMetaEntryLoader;
+import net.bodz.bas.flow.unit.metadata.PortMetadataEntryLoader;
 
 public abstract class AbstractOutPort
         extends AbstractPort
@@ -17,7 +17,7 @@ public abstract class AbstractOutPort
     }
 
     private static LazyTypeMap<IPortMetadata> clsPortMetadata = TypeMapRegistry.createMap(//
-            IPortMetadata.class.getCanonicalName(), PortMetaEntryLoader.INSTANCE);
+            IPortMetadata.class.getCanonicalName(), PortMetadataEntryLoader.INSTANCE);
 
     @Override
     public IPortMetadata getOutPortMeta() {
