@@ -36,8 +36,13 @@ public abstract class AbstractXmlTag<self_t extends IXmlTag>
         return XmlNodeType.ELEMENT;
     }
 
-    public boolean isPseudo() {
-        return tagName == null;
+    @Override
+    public IXmlTag getRoot() {
+        IXmlTag parent = getParent();
+        if (parent == null)
+            return this;
+        else
+            return parent.getRoot();
     }
 
     @Override
@@ -48,6 +53,11 @@ public abstract class AbstractXmlTag<self_t extends IXmlTag>
     @Override
     public Map<String, String> getAttributeMap() {
         return attributes;
+    }
+
+    @Override
+    public boolean isVoid() {
+        return false;
     }
 
     @Override

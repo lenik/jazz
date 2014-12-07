@@ -16,6 +16,7 @@ public class XmlFormatter {
     private XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute();
     private XmlStringEncoder textEncoder = XmlStringEncoder.forText();
 
+    private boolean selfClosing = true;
     private String nullVerbatim = "<i>(null)</i>";
 
     public XmlFormatter(ICharOut out) {
@@ -26,6 +27,14 @@ public class XmlFormatter {
         if (out == null)
             throw new NullPointerException("out");
         this.out = out;
+    }
+
+    public boolean isSelfClosing() {
+        return selfClosing;
+    }
+
+    public void setSelfClosing(boolean selfClosing) {
+        this.selfClosing = selfClosing;
     }
 
     public String getNullVerbatim() {
@@ -42,45 +51,49 @@ public class XmlFormatter {
             IXmlTag tag = (IXmlTag) node;
             {
                 boolean pseudo = tag.getTagName() == null;
-                StringBuilder sb = new StringBuilder();
                 Collection<? extends IXmlNode> children = tag.getChildren();
 
+                // no child element and no child text.
+                boolean closeable = children.isEmpty() && (selfClosing || tag.isVoid());
+
                 if (!pseudo) {
-                    sb.append('<');
-                    sb.append(tag.getTagName());
+                    StringBuilder stbuf = new StringBuilder();
+                    stbuf.append('<');
+                    stbuf.append(tag.getTagName());
 
                     Map<String, String> attributeMap = tag.getAttributeMap();
                     if (!attributeMap.isEmpty())
                         for (Entry<String, String> entry : attributeMap.entrySet()) {
-                            sb.append(' ');
-                            sb.append(entry.getKey());
-                            sb.append("=\"");
-                            sb.append(attribEncoder.encode(entry.getValue()));
-                            sb.append('"');
+                            stbuf.append(' ');
+                            stbuf.append(entry.getKey());
+                            stbuf.append("=\"");
+                            stbuf.append(attribEncoder.encode(entry.getValue()));
+                            stbuf.append('"');
                         }
 
-                    if (children.isEmpty()) {
-                        sb.append("/>");
-                        out.println(sb.toString());
+                    if (closeable) {
+                        stbuf.append("/>");
+                        out.println(stbuf.toString());
                     } else {
-                        sb.append(">");
-                        out.print(sb.toString());
+                        stbuf.append(">");
+                        out.print(stbuf.toString());
                         out.enter();
                     }
-                    sb.setLength(0);
                 }
 
                 for (IXmlNode child : children) {
                     format(child);
                 }
 
-                if (!pseudo && !children.isEmpty()) {
-                    out.leave();
-                    sb.append("</");
-                    sb.append(tag.getTagName());
-                    sb.append(">");
-                    out.println(sb.toString());
-                }
+                if (!pseudo)
+                    if (!closeable) {
+                        out.leave();
+                        StringBuilder etbuf = new StringBuilder();
+                        etbuf.append("</");
+                        etbuf.append(tag.getTagName());
+                        etbuf.append(">");
+                        out.println(etbuf.toString());
+                    }
             }
             break;
 
