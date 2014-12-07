@@ -1,36 +1,44 @@
 package net.bodz.bas.repr.view;
 
-public interface ICommonViewNames {
+public @interface StandardViews {
 
     /**
      * The index listing for the specific object type.
      * 
-     * @see #FORMAT_PARAM
+     * @see StandardViews#PARAM_FORMAT
      */
-    public static final String LIST = "list";
+    @interface Index {
+    }
 
     /**
      * The normal view of the object.
      * 
-     * @see #ID_PARAM
-     * @see #FORMAT_PARAM
+     * @see StandardViews#PARAM_ID
+     * @see StandardViews#PARAM_FORMAT
      */
-    public static final String CONTENT = "content";
+    @interface Content {
+    }
 
     /**
      * The creating form of the object.
+     * 
+     * @see StandardViews#PARAM_ID Copy-From-Id. Initial values from this instance.
      */
-    public static final String CREATE_FORM = "createForm";
+    @interface CreateForm {
+    }
 
     /**
      * The editing form of the object.
+     * 
+     * @see StandardViews#PARAM_ID
      */
-    public static final String EDIT_FORM = "editForm";
+    @interface EditForm {
+    }
 
     /**
      * The id of object (or entity).
      */
-    public static final String ID_PARAM = "id";
+    String PARAM_ID = "id";
 
     /**
      * The presentation format.
@@ -43,6 +51,6 @@ public interface ICommonViewNames {
      * <li>PDF: Portable document format.
      * </ul>
      */
-    public static final String FORMAT_PARAM = "format";
+    String PARAM_FORMAT = "format";
 
 }

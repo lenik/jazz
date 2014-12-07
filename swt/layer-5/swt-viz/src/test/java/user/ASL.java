@@ -1,6 +1,6 @@
 package user;
 
-import net.bodz.bas.repr.validate.MaxLength;
+import net.bodz.bas.repr.form.validate.MaxLength;
 
 /**
  * Age/Sex/Location
