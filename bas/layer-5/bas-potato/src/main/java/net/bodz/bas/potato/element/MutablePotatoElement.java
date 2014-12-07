@@ -6,6 +6,7 @@ import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.IMutableElement;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
@@ -17,7 +18,7 @@ public class MutablePotatoElement
     private Map<Class<?>, Object> typerMap;
 
     private String name;
-    private int verboseLevel = PUBLIC_LEVEL;
+    private int detailLevel = DetailLevel.NORMAL;
     private int modifiers;
 
     private IElementDoc xjdoc;
@@ -97,8 +98,8 @@ public class MutablePotatoElement
     }
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public int getDetailLevel() {
+        return detailLevel;
     }
 
     @Override
@@ -129,8 +130,8 @@ public class MutablePotatoElement
     }
 
     @Override
-    public void setVerboseLevel(int userLevel) {
-        this.verboseLevel = userLevel;
+    public void setDetailLevel(int detailLevel) {
+        this.detailLevel = detailLevel;
     }
 
     @Override

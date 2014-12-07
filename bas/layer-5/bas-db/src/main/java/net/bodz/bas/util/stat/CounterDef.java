@@ -50,7 +50,7 @@ public abstract class CounterDef<T extends Number>
     }
 
     @Override
-    public int getVerboseLevel() {
+    public int getDetailLevel() {
         return userLevel;
     }
 

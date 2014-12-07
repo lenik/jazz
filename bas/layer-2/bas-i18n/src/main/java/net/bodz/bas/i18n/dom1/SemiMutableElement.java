@@ -3,6 +3,7 @@ package net.bodz.bas.i18n.dom1;
 import java.io.Serializable;
 
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.meta.bean.DetailLevel;
 
 /**
  * Semi-mutable is for serializable, however, setters are protected.
@@ -17,7 +18,7 @@ public class SemiMutableElement
     private iString label;
     private iString description;
     private iString helpDoc;
-    private int verboseLevel = PUBLIC_LEVEL;
+    private int detailLevel = DetailLevel.NORMAL;
     private int modifiers;
 
     @Override
@@ -57,12 +58,12 @@ public class SemiMutableElement
     }
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public int getDetailLevel() {
+        return detailLevel;
     }
 
-    protected void setVerboseLevel(int userLevel) {
-        this.verboseLevel = userLevel;
+    protected void setDetailLevel(int userLevel) {
+        this.detailLevel = userLevel;
     }
 
     @Override

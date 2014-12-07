@@ -3,9 +3,10 @@ package net.bodz.bas.potato.provider.reflect;
 import java.lang.annotation.Annotation;
 
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
-import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.model.IClassDoc;
 
 public abstract class AbstractReflectType
         extends AbstractType {
@@ -16,11 +17,12 @@ public abstract class AbstractReflectType
     MutableConstructorMap constructorMap;
     IEventMap eventMap;
 
-    private final int verboseLevel;
+    private final int modifiers;
+    private final int detailLevel;
 
     /**
      * @param infoset
-     *            Selection bits.
+     *            Selection bits. See
      * @see ITypeProvider#PROPERTIES
      * @see ITypeProvider#METHODS
      * @see ITypeProvider#CONSTRUCTORS
@@ -32,11 +34,13 @@ public abstract class AbstractReflectType
         this.clazz = clazz;
 
         int _modifiers = clazz.getModifiers();
-        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+        this.modifiers = _modifiers;
 
-        if (classDoc == null)
-            throw new NullPointerException("classDoc");
-        setXjdoc(classDoc);
+        DetailLevel aDetailLevel = clazz.getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null)
+            this.detailLevel = aDetailLevel.value();
+        else
+            this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
 
         propertyMap = new MutablePropertyMap(false);
         methodMap = new MutableMethodMap(false);
@@ -99,8 +103,13 @@ public abstract class AbstractReflectType
     /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public int getModifiers() {
+        return modifiers;
+    }
+
+    @Override
+    public int getDetailLevel() {
+        return detailLevel;
     }
 
 }

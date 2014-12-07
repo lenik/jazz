@@ -2,28 +2,28 @@ package net.bodz.bas.potato.provider.bean;
 
 import java.beans.FeatureDescriptor;
 
-import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IPotatoElement;
 
 public class FeatureDescriptorUtil {
 
-    public static int getVerboseLevel(FeatureDescriptor descriptor) {
-        int verboseLevel = IElement.PUBLIC_LEVEL;
+    public static int getDetailLevel(FeatureDescriptor descriptor) {
+        int detail = DetailLevel.NORMAL;
 
         if (descriptor.isPreferred())
-            verboseLevel = IElement.PREFERRED_LEVEL;
-        else if (descriptor.isExpert())
-            verboseLevel = IElement.EXPERT_LEVEL;
+            detail = DetailLevel.CRITICAL;
         else if (descriptor.isHidden())
-            verboseLevel = IElement.HIDDEN_LEVEL;
+            detail = DetailLevel.HIDDEN;
+        else if (descriptor.isExpert())
+            detail = DetailLevel.EXPERT;
 
-        return verboseLevel;
+        return detail;
     }
 
-    public static void setVerboseLevel(FeatureDescriptor descriptor, int verboseLevel) {
-        descriptor.setPreferred(verboseLevel <= IElement.PREFERRED_LEVEL);
-        descriptor.setExpert(verboseLevel <= IElement.EXPERT_LEVEL);
-        descriptor.setHidden(verboseLevel <= 0);
+    public static void setDetailLevel(FeatureDescriptor descriptor, int detail) {
+        descriptor.setPreferred(detail <= DetailLevel.CRITICAL);
+        descriptor.setExpert(detail >= DetailLevel.EXPERT && detail < DetailLevel.HIDDEN);
+        descriptor.setHidden(detail >= DetailLevel.HIDDEN);
     }
 
     public static void initFeatureDescriptorFromPotatoElement(FeatureDescriptor descriptor, IPotatoElement element) {
@@ -31,8 +31,8 @@ public class FeatureDescriptorUtil {
         descriptor.setDisplayName(element.getLabel().toString());
         descriptor.setShortDescription(element.getDescription().toString());
 
-        int verboseLevel = element.getVerboseLevel();
-        setVerboseLevel(descriptor, verboseLevel);
+        int detailLevel = element.getDetailLevel();
+        setDetailLevel(descriptor, detailLevel);
     }
 
 }

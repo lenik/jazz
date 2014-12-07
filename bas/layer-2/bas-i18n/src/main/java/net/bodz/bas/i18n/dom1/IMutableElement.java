@@ -13,7 +13,7 @@ public interface IMutableElement
 
     void setHelpDoc(iString helpDoc);
 
-    void setVerboseLevel(int verboseLevel);
+    void setDetailLevel(int verboseLevel);
 
     void setModifiers(int modifiers);
 

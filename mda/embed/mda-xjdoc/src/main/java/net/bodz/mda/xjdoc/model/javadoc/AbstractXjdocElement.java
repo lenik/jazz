@@ -99,4 +99,14 @@ public abstract class AbstractXjdocElement
         this.helpDoc = helpDoc;
     }
 
+    @Override
+    public int getDetailLevel() {
+        return DetailLevel.NORMAL;
+    }
+
+    @Override
+    public int getModifiers() {
+        return 0;
+    }
+
 }

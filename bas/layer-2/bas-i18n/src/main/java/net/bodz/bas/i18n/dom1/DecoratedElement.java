@@ -34,8 +34,8 @@ public abstract class DecoratedElement
     }
 
     @Override
-    public int getVerboseLevel() {
-        return getWrapped().getVerboseLevel();
+    public int getDetailLevel() {
+        return getWrapped().getDetailLevel();
     }
 
     @Override

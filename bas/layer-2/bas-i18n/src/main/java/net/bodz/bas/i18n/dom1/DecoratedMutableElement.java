@@ -38,8 +38,8 @@ public class DecoratedMutableElement
     }
 
     @Override
-    public void setVerboseLevel(int userLevel) {
-        getWrapped().setVerboseLevel(userLevel);
+    public void setDetailLevel(int userLevel) {
+        getWrapped().setDetailLevel(userLevel);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class DecoratedMutableElement
     }
 
     @Override
-    public int getVerboseLevel() {
-        return getWrapped().getVerboseLevel();
+    public int getDetailLevel() {
+        return getWrapped().getDetailLevel();
     }
 
     @Override
