@@ -6,13 +6,19 @@ package net.bodz.bas.t.order;
 public abstract class AbstractNonNullComparator<T>
         implements NonNullComparator<T> {
 
+    private final int nullOrder;
+
+    public AbstractNonNullComparator() {
+        nullOrder = getNullOrder();
+    }
+
     public int compare(T o1, T o2) {
         if (o1 == o2)
             return 0;
         if (o1 == null)
-            return getNullOrder();
+            return nullOrder;
         if (o2 == null)
-            return -getNullOrder();
+            return -nullOrder;
         return compareNonNull(o1, o2);
     }
 
