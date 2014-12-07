@@ -24,6 +24,10 @@ public abstract class AbstractHtmlTag<self_t extends IHtmlTag>
 
     @Override
     public self_t id(String id) {
+        HtmlDoc doc = (HtmlDoc) getRoot();
+        if (doc != null) {
+            doc.getTagMap().add(id, this);
+        }
         return attr("id", id);
     }
 
