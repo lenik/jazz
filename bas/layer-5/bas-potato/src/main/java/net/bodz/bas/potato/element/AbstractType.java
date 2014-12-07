@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeArray;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.potato.PotatoTypes;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public abstract class AbstractType
@@ -51,6 +55,31 @@ public abstract class AbstractType
         IPropertyMap propertyMap = getPropertyMap();
         // if (propertyMap == null) return null;
         return propertyMap.getProperty(propertyName);
+    }
+
+    @Override
+    public IProperty getPathProperty(String pathProperty)
+            throws NoSuchPropertyException {
+        if (pathProperty == null)
+            throw new NullPointerException("pathProperty");
+        IType type = this;
+        IProperty property = null;
+
+        StringTokenizer tokens = new StringTokenizer(pathProperty, ".");
+        while (tokens.hasMoreTokens()) {
+            String token = tokens.nextToken();
+
+            if (type == null) {
+                Class<?> propertyType = property.getPropertyType();
+                type = PotatoTypes.getInstance().forClass(propertyType);
+            }
+
+            property = type.getProperty(token);
+            if (property == null)
+                throw new NoSuchPropertyException(token + " in " + type.getName());
+            type = null;
+        }
+        return property;
     }
 
     @Override
