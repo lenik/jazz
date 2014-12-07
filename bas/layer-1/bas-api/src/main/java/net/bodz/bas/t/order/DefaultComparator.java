@@ -3,7 +3,7 @@ package net.bodz.bas.t.order;
 import java.util.Comparator;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class ComparableComparator
+public class DefaultComparator
         extends AbstractNonNullComparator<Comparable> {
 
     @Override
@@ -11,14 +11,12 @@ public class ComparableComparator
         return o1.compareTo(o2);
     }
 
-    private static final ComparableComparator instance = new ComparableComparator();
+    private static final DefaultComparator _instance = new DefaultComparator();
 
     public static <T extends Comparable> Comparator<T> getInstance() {
-        return (Comparator<T>) instance;
+        return (Comparator<T>) _instance;
     }
 
-    public static Comparator<Object> getRawInstance() {
-        return (Comparator<Object>) (Comparator<?>) instance;
-    }
+    public static Comparator<Object> INSTANCE = (Comparator<Object>) (Object) _instance;
 
 }

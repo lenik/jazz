@@ -1,11 +1,13 @@
 package net.bodz.pkg.obfuz.sysid;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.util.MapDump;
-import net.bodz.bas.t.order.ComparableComparator;
+import net.bodz.bas.t.order.DefaultComparator;
 
-public class WMISystemInfoTest {
+public class WMISystemInfoTest
+        extends Assert {
 
     @Test
     public void testWmic()
@@ -18,7 +20,7 @@ public class WMISystemInfoTest {
     public void testInstance()
             throws Exception {
         WMISystemInfo info = WMISystemInfo.getInstance();
-        String dump = MapDump.dump(info, ComparableComparator.getRawInstance());
+        String dump = MapDump.dump(info, DefaultComparator.INSTANCE);
         System.out.println(dump);
     }
 

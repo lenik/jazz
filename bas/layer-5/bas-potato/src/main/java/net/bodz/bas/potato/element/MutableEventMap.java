@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import net.bodz.bas.err.DuplicatedKeyException;
-import net.bodz.bas.t.order.ComparableComparator;
+import net.bodz.bas.t.order.DefaultComparator;
 
 public class MutableEventMap
         implements IEventMap {
@@ -20,7 +20,7 @@ public class MutableEventMap
 
     protected Map<String, IEvent> createMap(boolean sorted) {
         if (sorted)
-            return new TreeMap<>(ComparableComparator.getInstance());
+            return new TreeMap<>(DefaultComparator.getInstance());
         else
             return new LinkedHashMap<>();
     }

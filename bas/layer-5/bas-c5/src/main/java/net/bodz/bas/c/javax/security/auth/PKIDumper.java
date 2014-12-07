@@ -28,7 +28,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.t.order.ComparableComparator;
+import net.bodz.bas.t.order.DefaultComparator;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 
@@ -203,7 +203,7 @@ public class PKIDumper {
     public void dumpProperties(String prefix, String title, Properties properties) {
         out.println(prefix, title, " properties: ");
         List<Object> keys = new ArrayList<Object>(properties.keySet());
-        Collections.sort(keys, ComparableComparator.getRawInstance());
+        Collections.sort(keys, DefaultComparator.INSTANCE);
         for (Object key : keys) {
             Object value = properties.get(key);
             out.println(prefix, "  ", key, " = ", value);

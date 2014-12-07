@@ -7,10 +7,10 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import net.bodz.bas.err.DuplicatedKeyException;
-import net.bodz.bas.t.order.ComparableComparator;
+import net.bodz.bas.t.order.DefaultComparator;
 
 public class MutablePropertyMap
-        implements IPropertyMap {
+        extends AbstractPropertyMap {
 
     Map<String, IProperty> map;
 
@@ -20,7 +20,7 @@ public class MutablePropertyMap
 
     protected Map<String, IProperty> createMap(boolean sorted) {
         if (sorted)
-            return new TreeMap<>(ComparableComparator.getInstance());
+            return new TreeMap<>(DefaultComparator.getInstance());
         else
             return new LinkedHashMap<>();
     }
