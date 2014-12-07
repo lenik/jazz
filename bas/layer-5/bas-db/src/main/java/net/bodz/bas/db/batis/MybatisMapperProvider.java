@@ -6,8 +6,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.sql.DataSource;
 
@@ -19,14 +19,20 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.apache.ibatis.type.TypeAliasRegistry;
 
+import net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler;
+import net.bodz.bas.c.type.ClassNameComparator;
 import net.bodz.bas.c.type.IndexedTypes;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class MybatisMapperProvider
         implements IMapperProvider {
 
-    private Set<Class<?>> mapperClasses = new HashSet<>();
+    static final Logger logger = LoggerFactory.getLogger(MybatisMapperProvider.class);
+
+    private Set<Class<?>> mapperClasses = new TreeSet<>(ClassNameComparator.getInstance());
     private DataSource dataSource;
     private SqlSessionFactory sqlSessionFactory;
 
@@ -34,7 +40,6 @@ public class MybatisMapperProvider
         if (dataSource == null)
             throw new NullPointerException("dataSource");
         this.dataSource = dataSource;
-
         addIndexedClasses();
     }
 
@@ -57,18 +62,28 @@ public class MybatisMapperProvider
         Configuration config = new Configuration();
         config.setEnvironment(buildEnvironment());
 
-        for (Class<?> mapperClass : mapperClasses)
-            config.addMapper(mapperClass);
+        TypeAliasRegistry registry = config.getTypeAliasRegistry();
+        registry.registerAlias(MillisecondTypeHandler.class);
+        registry.registerAlias(PgInetAddressTypeHandler.class);
 
-        String resName = "user/batis/Tag.xml";
-        URL url = getClass().getClassLoader().getResource(resName);
-        try {
-            URLResource res = new URLResource(url);
-            InputStream in = res.newInputStream();
-            XMLMapperBuilder xmb = new XMLMapperBuilder(in, config, resName, null);
-            xmb.parse();
-        } catch (IOException e) {
-            throw new Error(e);
+        String[] builtins = { "base", "message" };
+        for (String builtin : builtins) {
+            String resName = "com/tinylily/model/share/" + builtin + ".xml";
+            getClass().getClassLoader().getResource(resName);
+            URL url = getClass().getClassLoader().getResource(resName);
+            try {
+                InputStream in = url.openStream();
+                XMLMapperBuilder xmb = new XMLMapperBuilder(in, config, resName, config.getSqlFragments());
+                xmb.parse();
+                in.close();
+            } catch (IOException e) {
+                throw new Error(e);
+            }
+        }
+
+        for (Class<?> mapperClass : mapperClasses) {
+            System.out.println(mapperClass);
+            config.addMapper(mapperClass);
         }
 
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
@@ -97,7 +112,6 @@ public class MybatisMapperProvider
                     new Class<?>[] { mapperClass }, handler);
             return mapperClass.cast(proxy);
         }
-
         return null;
     }
 
