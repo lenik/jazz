@@ -2,23 +2,25 @@ package net.bodz.bas.potato.provider.reflect;
 
 import java.lang.reflect.Modifier;
 
-import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.meta.bean.DetailLevel;
 
 public class ReflectModifiers {
 
-    public static int toVerboseLevel(int reflectModifiers) {
+    public static int toDetailLevel(int reflectModifiers) {
         int visibility = reflectModifiers & (Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE);
         switch (visibility) {
         case Modifier.PUBLIC:
-            return IElement.PUBLIC_LEVEL;
+            return DetailLevel.NORMAL;
 
         case Modifier.PROTECTED:
-        case 0:
-            return IElement.EXPERT_LEVEL;
+            return DetailLevel.EXPERT;
+
+        case 0: /* package-protected */
+            return DetailLevel.EXPERT2;
 
         case Modifier.PRIVATE:
         default:
-            return IElement.INTERNAL_LEVEL;
+            return DetailLevel.HIDDEN;
         }
     }
 

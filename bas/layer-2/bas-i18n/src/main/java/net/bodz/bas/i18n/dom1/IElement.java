@@ -3,9 +3,10 @@ package net.bodz.bas.i18n.dom1;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.meta.bean.DetailLevel;
 
 /**
- * XXX Refactor to IUIDescribed.ui: IUIDescriptor
+ * TODO Refactor to IUIDescribed.ui: IUIDescriptor
  */
 public interface IElement {
 
@@ -33,44 +34,19 @@ public interface IElement {
      */
     iString getHelpDoc();
 
-    int HIDDEN_LEVEL = -1; // private
-    int PREFERRED_LEVEL = 0; //
-    int PUBLIC_LEVEL = 100; // public
-    int EXTENDEDLEVEL = 200; // child map, etc.
-    int EXPERT_LEVEL = 500; // protected
-    int INTERNAL_LEVEL = 1000; // package-protected
-
     /**
-     * The user level controls whether this element is displayed. When user specifies a display user
-     * level, then only elements with user level smaller then the the display user level is
-     * displayed. For negative user levels, they are hidden by default and only shown if show-hidden
-     * is enabled.
-     * <p>
-     * Preference level compared to Java Beans' {@link java.beans.PropertyDescriptor}:
-     * <table>
-     * <tr>
-     * <th>Java Bean</th>
-     * <th>User Level</th>
-     * </tr>
-     * <tr>
-     * <td> {@link java.beans.FeatureDescriptor#isHidden()}</td>
-     * <td> {@value #HIDDEN_LEVEL}</td>
-     * </tr>
-     * <tr>
-     * <td> {@link java.beans.FeatureDescriptor#isPreferred()}</td>
-     * <td> {@value #PREFERRED_LEVEL}</td>
-     * </tr>
-     * <tr>
-     * <td><i>(Default)</i></td>
-     * <td> {@value #PUBLIC_LEVEL}</td>
-     * </tr>
-     * <tr>
-     * <td> {@link java.beans.FeatureDescriptor#isExpert()}</td>
-     * <td> {@value #EXPERT_LEVEL}</td>
-     * </tr>
-     * </table>
+     * The detail level controls whether this element is displayed. When user specifies a display
+     * detail level, then only elements with detail level smaller then the the display detail level
+     * is displayed.
+     *
+     * @see DetailLevel#CRITICAL
+     * @see DetailLevel#NORMAL
+     * @see DetailLevel#EXTEND
+     * @see DetailLevel#EXPERT
+     * @see DetailLevel#EXPERT2
+     * @see DetailLevel#HIDDEN
      */
-    int getVerboseLevel();
+    int getDetailLevel();
 
     /**
      * Returns the Java language modifiers for this element, as an integer. The {@link Modifier}

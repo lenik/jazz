@@ -78,8 +78,8 @@ public class DecoratedPotatoElement
     }
 
     @Override
-    public int getVerboseLevel() {
-        return getWrapped().getVerboseLevel();
+    public int getDetailLevel() {
+        return getWrapped().getDetailLevel();
     }
 
     @Override

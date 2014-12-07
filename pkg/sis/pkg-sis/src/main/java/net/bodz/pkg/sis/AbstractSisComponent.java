@@ -179,7 +179,7 @@ public abstract class AbstractSisComponent
     }
 
     @Override
-    public int getVerboseLevel() {
+    public int getDetailLevel() {
         return 0;
     }
 

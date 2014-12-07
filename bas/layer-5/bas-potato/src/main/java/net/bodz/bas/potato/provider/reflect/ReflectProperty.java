@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
@@ -16,7 +17,7 @@ public class ReflectProperty
     private final Field field;
 
     private final int modifiers;
-    private final int verboseLevel;
+    private final int detailLevel;
 
     private PropertyChangeSourceMode propertyChangeSourceMode;
 
@@ -26,11 +27,12 @@ public class ReflectProperty
 
         int _modifiers = field.getModifiers();
         this.modifiers = _modifiers;
-        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
-        if (xjdoc == null)
-            throw new NullPointerException("xjdoc");
-        setXjdoc(xjdoc);
+        DetailLevel aDetailLevel = field.getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null)
+            this.detailLevel = aDetailLevel.value();
+        else
+            this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
     }
 
     /** ⇱ Implementation Of {@link IProperty}. */
@@ -145,8 +147,8 @@ public class ReflectProperty
     }
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public int getDetailLevel() {
+        return detailLevel;
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */

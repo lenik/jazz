@@ -1,5 +1,6 @@
 package net.bodz.pkg.sis;
 
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.ui.dom1.IUiElement;
 
 public interface ISisInstallProfile
@@ -25,8 +26,8 @@ class Standard
 
     @Override
     public void preset(ISisComponent component) {
-        int verboseLevel = component.getVerboseLevel();
-        component.setSelected(verboseLevel <= PUBLIC_LEVEL);
+        int detailLevel = component.getDetailLevel();
+        component.setSelected(detailLevel <= DetailLevel.NORMAL);
     }
 
 }
@@ -41,8 +42,8 @@ class Minimum
 
     @Override
     public void preset(ISisComponent component) {
-        int verboseLevel = component.getVerboseLevel();
-        component.setVisible(verboseLevel <= PREFERRED_LEVEL);
+        int detailLevel = component.getDetailLevel();
+        component.setVisible(detailLevel <= DetailLevel.CRITICAL);
     }
 
 }
@@ -57,8 +58,8 @@ class Maximum
 
     @Override
     public void preset(ISisComponent component) {
-        int verboseLevel = component.getVerboseLevel();
-        component.setSelected(verboseLevel <= EXTENDEDLEVEL);
+        int detailLevel = component.getDetailLevel();
+        component.setSelected(detailLevel <= DetailLevel.EXTEND);
     }
 
 }
@@ -73,8 +74,8 @@ class Custom
 
     @Override
     public void preset(ISisComponent component) {
-        int verboseLevel = component.getVerboseLevel();
-        component.setSelected(verboseLevel <= PUBLIC_LEVEL);
+        int detailLevel = component.getDetailLevel();
+        component.setSelected(detailLevel <= DetailLevel.NORMAL);
     }
 
 }

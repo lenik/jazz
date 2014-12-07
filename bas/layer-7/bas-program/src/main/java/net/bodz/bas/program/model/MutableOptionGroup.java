@@ -7,7 +7,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.t.preorder.PrefixMap;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
@@ -33,7 +33,7 @@ public class MutableOptionGroup
 
     @Override
     protected IElementDoc loadXjdoc() {
-        ClassDoc classDoc = ClassDocLoader.load(declaringClass);
+        ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(declaringClass);
         return classDoc;
     }
 
@@ -228,8 +228,8 @@ public class MutableOptionGroup
     }
 
     @Override
-    public void setVerboseLevel(int verboseLevel) {
-        super.setVerboseLevel(verboseLevel);
+    public void setDetailLevel(int detailLevel) {
+        super.setDetailLevel(detailLevel);
     }
 
     @Override

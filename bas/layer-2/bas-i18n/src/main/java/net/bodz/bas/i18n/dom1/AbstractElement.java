@@ -2,6 +2,7 @@ package net.bodz.bas.i18n.dom1;
 
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.meta.bean.DetailLevel;
 
 public abstract class AbstractElement
         implements IElement {
@@ -28,8 +29,8 @@ public abstract class AbstractElement
     }
 
     @Override
-    public int getVerboseLevel() {
-        return PUBLIC_LEVEL;
+    public int getDetailLevel() {
+        return DetailLevel.NORMAL;
     }
 
     @Override

@@ -9,9 +9,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
+import net.bodz.mda.xjdoc.IXjdocProvider;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
@@ -28,21 +30,27 @@ public class BeanType
     private IConstructorMap constructorMap = NullConstructorMap.getInstance();
     private MutableEventMap eventMap = new MutableEventMap(false);
 
-    private final int verboseLevel;
+    private final int modifiers;
+    private final int detailLevel;
 
-    public BeanType(BeanInfo beanInfo, int infoset, ClassDoc classDoc) {
-        super(beanInfo.getBeanDescriptor().getBeanClass().getDeclaringClass(), //
-                beanInfo.getBeanDescriptor().getName());
+    public BeanType(BeanInfo beanInfo, int infoset, ClassDoc classDoc, IXjdocProvider docLoader) {
+        super(beanInfo.getBeanDescriptor().getBeanClass(), //
+                beanInfo.getBeanDescriptor().getName(), //
+                classDoc);
 
         beanDescriptor = beanInfo.getBeanDescriptor();
         beanClass = beanDescriptor.getBeanClass();
 
         int _modifiers = beanClass.getModifiers();
-        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
+        this.modifiers = _modifiers;
 
-        if (classDoc == null)
-            throw new NullPointerException("classDoc");
-        setXjdoc(classDoc);
+        DetailLevel aDetailLevel = beanClass.getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null)
+            this.detailLevel = aDetailLevel.value();
+        else
+            this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
+
+        boolean docs = (infoset & ITypeProvider.DOCS) != 0;
 
         if ((infoset & ITypeProvider.PROPERTIES) != 0) {
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
@@ -55,15 +63,11 @@ public class BeanType
                     continue;
 
                 MethodDoc propertyDoc = null;
-                if (getter != null) {
-                    MethodId getterId = new MethodId(getter);
-                    propertyDoc = classDoc.getMethodDoc(getterId);
-                } else if (setter != null) {
-                    MethodId setterId = new MethodId(setter);
-                    propertyDoc = classDoc.getMethodDoc(setterId);
+                if (docs) {
+                    propertyDoc = docLoader.getMethodDoc(beanClass, classDoc, getter, setter);
+                    if (propertyDoc == null)
+                        propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter));
                 }
-                if (propertyDoc == null)
-                    propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter));
 
                 BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, propertyDoc);
                 propertyMap.addProperty(beanProperty);
@@ -75,13 +79,13 @@ public class BeanType
             for (MethodDescriptor methodDescriptor : methodDescriptors) {
 
                 Method method = methodDescriptor.getMethod();
-                MethodId methodId = new MethodId(method);
 
                 MethodDoc methodDoc = null;
-                if (classDoc != null)
-                    methodDoc = classDoc.getMethodDoc(methodId);
-                if (methodDoc == null)
-                    methodDoc = MethodDoc.n_a(classDoc, methodId);
+                if (docs) {
+                    methodDoc = docLoader.getMethodDoc(beanClass, classDoc, method);
+                    if (methodDoc == null)
+                        methodDoc = MethodDoc.n_a(classDoc, new MethodId(method));
+                }
 
                 BeanMethod beanMethod = new BeanMethod(methodDescriptor, methodDoc);
                 methodMap.addMethod(beanMethod);
@@ -93,7 +97,7 @@ public class BeanType
             for (EventSetDescriptor eventSetDescriptor : eventSetDescriptors) {
 
                 IElementDoc eventDoc = null;
-                if (classDoc != null) {
+                if (docs) {
                     // TODO Event xjdoc..
                 }
 
@@ -162,13 +166,13 @@ public class BeanType
     /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public int getModifiers() {
+        return modifiers;
     }
 
     @Override
-    public int getModifiers() {
-        return beanClass.getModifiers();
+    public int getDetailLevel() {
+        return detailLevel;
     }
 
 }

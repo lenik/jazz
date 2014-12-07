@@ -4,7 +4,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
@@ -14,7 +14,8 @@ public class BeanProperty
         extends AbstractProperty {
 
     private final PropertyDescriptor propertyDescriptor;
-    private final int verboseLevel;
+    // private final Method xetter;
+    private final int detailLevel;
     private final int modifiers;
 
     private Boolean propertyChangeSource;
@@ -24,46 +25,37 @@ public class BeanProperty
      *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
      *             <code>null</code>.
      */
-    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor, IElementDoc xjdoc) {
-        super(beanClass, propertyDescriptor.getName());
+    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor, IElementDoc doc) {
+        this(beanClass, propertyDescriptor, doc, xetter(propertyDescriptor));
+    }
+
+    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor, IElementDoc doc, Method xetter) {
+        super(xetter.getDeclaringClass(), propertyDescriptor.getName(), doc);
+
         this.propertyDescriptor = propertyDescriptor;
+        // this.xetter = xetter;
 
-        Method getter = propertyDescriptor.getReadMethod();
-        if (getter == null)
-            throw new NullPointerException("No getter: " + propertyDescriptor.getName());
-
-        int _modifiers = getter.getModifiers();
+        int _modifiers = xetter.getModifiers();
         this.modifiers = _modifiers;
-        this.verboseLevel = FeatureDescriptorUtil.getVerboseLevel(propertyDescriptor);
 
-        if (xjdoc == null)
-            throw new NullPointerException("xjdoc");
-        setXjdoc(xjdoc);
+        DetailLevel aDetailLevel = xetter.getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null)
+            this.detailLevel = aDetailLevel.value();
+        else
+            this.detailLevel = FeatureDescriptorUtil.getDetailLevel(propertyDescriptor);
+    }
+
+    static Method xetter(PropertyDescriptor propertyDescriptor) {
+        Method xetter = propertyDescriptor.getReadMethod();
+        if (xetter == null)
+            xetter = propertyDescriptor.getWriteMethod();
+        assert xetter != null;
+        return xetter;
     }
 
     @Override
     public String getName() {
         return propertyDescriptor.getName();
-    }
-
-    /**
-     * NOTICE: {@link PropertyDescriptor#getDisplayName()} always return the property name.
-     *
-     * @see AbstractProperty#getLabel()
-     */
-    iString getLabel_() {
-        String displayName = propertyDescriptor.getDisplayName();
-        return iString.fn.val(displayName);
-    }
-
-    /**
-     * NOTICE: {@link PropertyDescriptor#getShortDescription()} always return the property name. See
-     *
-     * @see AbstractProperty#getDescription()
-     */
-    iString getDescription_() {
-        String shortDescription = propertyDescriptor.getShortDescription();
-        return iString.fn.val(shortDescription);
     }
 
     public PropertyDescriptor getPropertyDescriptor() {
@@ -157,8 +149,8 @@ public class BeanProperty
     }
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public int getDetailLevel() {
+        return detailLevel;
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */

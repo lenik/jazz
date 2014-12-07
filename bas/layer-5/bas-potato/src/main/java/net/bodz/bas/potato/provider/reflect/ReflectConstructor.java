@@ -25,9 +25,7 @@ public class ReflectConstructor
 
         int _modifiers = ctor.getModifiers();
         this.modifiers = _modifiers;
-        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
-
-        setXjdoc(xjdoc);
+        this.verboseLevel = ReflectModifiers.toDetailLevel(_modifiers);
     }
 
     /** ⇱ Implementation Of {@link IConstructor}. */
@@ -53,7 +51,7 @@ public class ReflectConstructor
     }
 
     @Override
-    public int getVerboseLevel() {
+    public int getDetailLevel() {
         return verboseLevel;
     }
 

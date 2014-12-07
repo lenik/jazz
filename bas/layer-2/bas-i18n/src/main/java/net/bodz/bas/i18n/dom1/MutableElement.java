@@ -14,7 +14,7 @@ public class MutableElement
     private iString label;
     private iString description;
     private iString helpDoc;
-    private int verboseLevel;
+    private int detailLevel;
     private int modifiers;
 
     @Override
@@ -58,13 +58,13 @@ public class MutableElement
     }
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public int getDetailLevel() {
+        return detailLevel;
     }
 
     @Override
-    public void setVerboseLevel(int verboseLevel) {
-        this.verboseLevel = verboseLevel;
+    public void setDetailLevel(int detailLevel) {
+        this.detailLevel = detailLevel;
     }
 
     @Override

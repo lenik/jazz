@@ -3,6 +3,7 @@ package net.bodz.bas.potato.provider.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.AbstractMethod;
 import net.bodz.bas.potato.element.IParameter;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -14,7 +15,7 @@ public class ReflectMethod
     private final int parameterCount;
 
     private final int modifiers;
-    private final int verboseLevel;
+    private final int detailLevel;
 
     /**
      * @throws NullPointerException
@@ -27,11 +28,13 @@ public class ReflectMethod
 
         int _modifiers = method.getModifiers();
         this.modifiers = _modifiers;
-        this.verboseLevel = ReflectModifiers.toVerboseLevel(_modifiers);
 
-        if (xjdoc == null)
-            throw new NullPointerException("xjdoc");
-        setXjdoc(xjdoc);
+        // TODO InheritableAnnotations...
+        DetailLevel aDetailLevel = method.getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null)
+            this.detailLevel = aDetailLevel.value();
+        else
+            this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
     }
 
     @Override
@@ -69,8 +72,8 @@ public class ReflectMethod
     }
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public int getDetailLevel() {
+        return detailLevel;
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
