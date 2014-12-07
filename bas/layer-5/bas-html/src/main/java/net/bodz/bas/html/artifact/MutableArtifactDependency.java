@@ -10,7 +10,7 @@ public class MutableArtifactDependency
 
     private int priority;
     private String name;
-    private String type;
+    private ArtifactType type;
     private VersionRange versionRange;
     private boolean optional = false;
 
@@ -24,7 +24,7 @@ public class MutableArtifactDependency
         optional = o.isOptional();
     }
 
-    public MutableArtifactDependency(String name, String type, VersionRange versionRange) {
+    public MutableArtifactDependency(String name, ArtifactType type, VersionRange versionRange) {
         if (name == null)
             throw new NullPointerException("name");
         if (type == null)
@@ -56,11 +56,11 @@ public class MutableArtifactDependency
     }
 
     @Override
-    public String getType() {
+    public ArtifactType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ArtifactType type) {
         if (type == null)
             throw new NullPointerException("type");
         this.type = type;

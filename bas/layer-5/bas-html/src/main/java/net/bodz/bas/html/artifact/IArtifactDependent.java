@@ -6,6 +6,6 @@ public interface IArtifactDependent {
 
     Collection<? extends IArtifactDependency> getDependencies();
 
-    Collection<? extends IArtifactDependency> getDependencies(String type);
+    Collection<? extends IArtifactDependency> getDependencies(ArtifactType type);
 
 }

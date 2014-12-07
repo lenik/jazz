@@ -3,20 +3,22 @@ package net.bodz.bas.html.artifact;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.html.ConflictedVersionException;
+import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.VersionRange;
 
 public class MutableArtifactDependent
         implements IMutableArtifactDependent, Comparator<String> {
 
     private Map<String, MutableArtifactDependency> nameMap;
-    private Map<String, Map<String, MutableArtifactDependency>> typeMap;
+    private Map<ArtifactType, Map<String, MutableArtifactDependency>> typeMap;
 
     public MutableArtifactDependent() {
-        nameMap = new HashMap<>();
+        nameMap = new LinkedHashMap<>();
         typeMap = new HashMap<>();
     }
 
@@ -26,18 +28,18 @@ public class MutableArtifactDependent
     }
 
     @Override
-    public Collection<? extends IArtifactDependency> getDependencies(String type) {
+    public Collection<? extends IArtifactDependency> getDependencies(ArtifactType type) {
         return getDependencyMap(type).values();
     }
 
-    protected Map<String, MutableArtifactDependency> getDependencyMap(String type) {
+    protected Map<String, MutableArtifactDependency> getDependencyMap(ArtifactType type) {
         if (type == null)
             throw new NullPointerException("type");
         Map<String, MutableArtifactDependency> map = typeMap.get(type);
         if (map == null)
             synchronized (typeMap) {
                 if ((map = typeMap.get(type)) == null)
-                    typeMap.put(type, map = new HashMap<>());
+                    typeMap.put(type, map = new LinkedHashMap<>());
             }
         return map;
     }
@@ -46,7 +48,7 @@ public class MutableArtifactDependent
     /* _____________________________ */static section.iface __MUTABLE__;
 
     @Override
-    public final MutableArtifactDependency addDependency(String name, String type) {
+    public final MutableArtifactDependency addDependency(String name, ArtifactType type) {
         if (name == null)
             throw new NullPointerException("name");
         if (type == null)
@@ -64,7 +66,7 @@ public class MutableArtifactDependent
     }
 
     @Override
-    public final MutableArtifactDependency addDependency(String name, String type, String minVersionStr,
+    public final MutableArtifactDependency addDependency(String name, ArtifactType type, String minVersionStr,
             String maxVersionStr)
             throws ConflictedVersionException {
         if (name == null)
@@ -77,13 +79,26 @@ public class MutableArtifactDependent
     }
 
     @Override
+    public MutableArtifactDependency addDependency(IArtifact artifact) {
+        String name = artifact.getName();
+        ArtifactType type = artifact.getType();
+        IVersion version = artifact.getVersion();
+        if (version == null)
+            return addDependency(name, type);
+        else {
+            String versionStr = version.toString();
+            return addDependency(name, type, versionStr, versionStr);
+        }
+    }
+
+    @Override
     public void addDependency(IArtifactDependency dependency)
             throws ConflictedVersionException {
         if (dependency == null)
             throw new NullPointerException("dependency");
 
         String name = dependency.getName();
-        String type = dependency.getType();
+        ArtifactType type = dependency.getType();
 
         MutableArtifactDependency prev = nameMap.get(name);
         if (dependency.equals(prev))

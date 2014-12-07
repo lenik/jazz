@@ -10,12 +10,9 @@ public interface IArtifactDependency
     int NORMAL = 0;
     int LOW = 100;
 
-    String SCRIPT = "script";
-    String STYLESHEET = "stylesheet";
-
     String getName();
 
-    String getType();
+    ArtifactType getType();
 
     VersionRange getVersionRange();
 

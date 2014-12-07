@@ -3,8 +3,8 @@ package net.bodz.bas.html;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+import net.bodz.bas.html.artifact.ArtifactType;
 import net.bodz.bas.html.artifact.IArtifact;
-import net.bodz.bas.html.artifact.IArtifactDependency;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.html.dom.IHtmlTag;
@@ -44,7 +44,7 @@ public abstract class AbstractHtmlViewBuilder<T>
 
     @Override
     public void preview(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options) {
-        IHtmlMetaData metaData = ctx.getMetaData();
+        IHtmlHeadData metaData = ctx.getHeadData();
 
         T value = ref.get();
         if (value == null)
@@ -102,14 +102,14 @@ public abstract class AbstractHtmlViewBuilder<T>
 
     protected static void writeHeadMetas(IHtmlViewContext ctx, IHtmlTag head)
             throws IOException {
-        IHtmlMetaData metaData = ctx.getMetaData();
+        IHtmlHeadData metaData = ctx.getHeadData();
 
         String title = metaData.getTitle().trim();
         if (title != null)
             head.title().text(title);
 
-        head.meta().httpEquiv(IHtmlMetaData.HTTP_CONTENT_TYPE).content(ctx.getResponse().getContentType());
-        head.meta().name(IHtmlMetaData.META_GENERATOR).content("Jazz BAS Repr/HTML 2.0");
+        head.meta().httpEquiv(IHtmlHeadData.HTTP_CONTENT_TYPE).content(ctx.getResponse().getContentType());
+        head.meta().name(IHtmlHeadData.META_GENERATOR).content("Jazz BAS Repr/HTML 2.0");
 
         for (Entry<String, String> entry : metaData.getHttpEquivMetaMap().entrySet())
             head.meta().httpEquiv(entry.getKey()).content(entry.getValue());
@@ -121,14 +121,14 @@ public abstract class AbstractHtmlViewBuilder<T>
     protected static void writeHeadImports(IHtmlViewContext ctx, IHtmlTag head)
             throws IOException {
         IArtifactManager artifactManager = ctx.query(IArtifactManager.class);
-        IHtmlMetaData metaData = ctx.getMetaData();
+        IHtmlHeadData metaData = ctx.getHeadData();
 
-        for (IArtifact artifact : artifactManager.getClosure(metaData, IArtifactDependency.STYLESHEET, null)) {
+        for (IArtifact artifact : artifactManager.getClosure(metaData, ArtifactType.STYLESHEET, null)) {
             MutableWebArtifact wa = (MutableWebArtifact) artifact;
             head.link().css(wa.getAnchor().toString());
         }
 
-        for (IArtifact artifact : artifactManager.getClosure(metaData, IArtifactDependency.SCRIPT, null)) {
+        for (IArtifact artifact : artifactManager.getClosure(metaData, ArtifactType.SCRIPT, null)) {
             MutableWebArtifact wa = (MutableWebArtifact) artifact;
             head.script().javascriptSrc(wa.getAnchor().toString());
         }
