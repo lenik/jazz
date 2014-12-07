@@ -1,5 +1,12 @@
 package net.bodz.bas.c.type;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class TypeKind {
 
     /**
@@ -20,18 +27,55 @@ public class TypeKind {
         return type == boolean.class || type == Boolean.class;
     }
 
+    static Set<Class<?>> setOf(Class<?>... v) {
+        HashSet<Class<?>> set = new HashSet<>();
+        for (Class<?> c : v)
+            set.add(c);
+        return set;
+    }
+
+    static Set<Class<?>> integerTypes = setOf(//
+            byte.class, Byte.class, //
+            short.class, Short.class, //
+            int.class, Integer.class, //
+            long.class, Long.class, //
+            BigInteger.class);
+
+    static Set<Class<?>> numericTypes = setOf(//
+            byte.class, Byte.class, //
+            short.class, Short.class, //
+            int.class, Integer.class, //
+            long.class, Long.class, //
+            float.class, Float.class, //
+            double.class, Double.class, //
+            BigInteger.class, //
+            BigDecimal.class);
+
     /**
      * Whether the type is byte, short, int, long, or their boxed type.
      */
     public static boolean isInteger(Class<?> type) {
-        return type == byte.class //
-                || type == short.class //
-                || type == int.class //
-                || type == long.class //
-                || type == Byte.class //
-                || type == Short.class //
-                || type == Integer.class //
-                || type == Long.class;
+        return integerTypes.contains(type);
+    }
+
+    public static boolean isNumeric(Class<?> type) {
+        return numericTypes.contains(type);
+    }
+
+    public static AggregationEnum getAggregationEnum(Class<?> type) {
+        if (type.isArray())
+            return AggregationEnum.ARRAY;
+
+        if (List.class.isAssignableFrom(type))
+            return AggregationEnum.LIST;
+
+        if (Map.class.isAssignableFrom(type))
+            return AggregationEnum.MAP;
+
+        if (Set.class.isAssignableFrom(type))
+            return AggregationEnum.SET;
+
+        return AggregationEnum.SCALAR;
     }
 
 }
