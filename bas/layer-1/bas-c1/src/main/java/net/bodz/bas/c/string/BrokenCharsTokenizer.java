@@ -15,6 +15,16 @@ public class BrokenCharsTokenizer
     private int m;
     private int end;
 
+    /**
+     * Should be optimized by the caller.
+     * 
+     * @see #BrokenCharsTokenizer(String, char...)
+     */
+    @Deprecated
+    public BrokenCharsTokenizer(String str, String pattern) {
+        this(str, pattern.toCharArray());
+    }
+
     public BrokenCharsTokenizer(String str, char... pattern) {
         this.str = str;
         this.len = str.length();
