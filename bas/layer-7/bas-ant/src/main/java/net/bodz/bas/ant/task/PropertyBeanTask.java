@@ -246,7 +246,7 @@ public class PropertyBeanTask
         public void traverse(String _name, Object node, int level)
                 throws Exception {
             if (verbose) {
-                String abbr = Strings.ellipse(String.valueOf(node), 30);
+                String abbr = Strings.ellipsis(String.valueOf(node), 30);
                 logger.debug(Strings.repeat(level, ' ') + _name + " = " + abbr);
             }
 

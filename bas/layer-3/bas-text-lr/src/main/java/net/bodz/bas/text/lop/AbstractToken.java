@@ -119,7 +119,7 @@ public abstract class AbstractToken
             if (text.length() == 1 && text.charAt(0) == id)
                 ; // possible (char)ID
             else {
-                String textBrief = Strings.ellipse(text, 20);
+                String textBrief = Strings.ellipsis(text, 20);
                 buf.append("(\"");
                 buf.append(StringEscape.escapeJava(textBrief));
                 buf.append("\")");
