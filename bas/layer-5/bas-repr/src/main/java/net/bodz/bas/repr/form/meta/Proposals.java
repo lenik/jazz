@@ -1,4 +1,4 @@
-package net.bodz.bas.repr.viz.decl;
+package net.bodz.bas.repr.form.meta;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,16 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import net.bodz.bas.ui.dialog.IProposalListProvider;
+import net.bodz.bas.ui.dialog.IProposalMapProvider;
 
-/**
- * Bean Annotation
- * 
- * Candidates List
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
-public @interface CandList {
+public @interface Proposals {
 
-    Class<? extends IProposalListProvider> value() default IProposalListProvider.class;
+    Class<? extends IProposalListProvider> list() default IProposalListProvider.class;
+
+    Class<? extends IProposalMapProvider> map() default IProposalMapProvider.class;
 
 }

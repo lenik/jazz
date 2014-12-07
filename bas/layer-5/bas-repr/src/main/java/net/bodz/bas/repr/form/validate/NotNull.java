@@ -1,4 +1,4 @@
-package net.bodz.bas.repr.validate;
+package net.bodz.bas.repr.form.validate;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
