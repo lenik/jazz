@@ -2,12 +2,12 @@ package net.bodz.bas.t.order;
 
 import java.util.Comparator;
 
-public class ReverseComparator<T>
+public class ReversedComparator<T>
         implements Comparator<T> {
 
     private final Comparator<T> comparator;
 
-    public ReverseComparator(Comparator<T> comparator) {
+    public ReversedComparator(Comparator<T> comparator) {
         if (comparator == null)
             throw new NullPointerException("comparator");
         this.comparator = comparator;
@@ -15,7 +15,7 @@ public class ReverseComparator<T>
 
     @Override
     public int compare(T o1, T o2) {
-        return -comparator.compare(o1, o2);
+        return comparator.compare(o2, o1);
     }
 
 }
