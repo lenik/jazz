@@ -25,7 +25,7 @@ public interface IHtmlViewContext
 
     HttpSession getSession();
 
-    IHtmlMetaData getMetaData();
+    IHtmlHeadData getHeadData();
 
     Map<String, Object> getAttributeMap();
 

@@ -20,17 +20,21 @@ public class MutableWebArtifact
         this.anchor = anchor;
     }
 
-    public static MutableWebArtifact javascript(String name, String versionStr, IAnchor anchor) {
-        return new MutableWebArtifact(name, versionStr, ContentTypes.text_javascript, anchor);
-    }
-
-    public static MutableWebArtifact css(String name, String versionStr, IAnchor anchor) {
-        return new MutableWebArtifact(name, versionStr, ContentTypes.text_css, anchor);
-    }
-
     @Override
     public IAnchor getAnchor() {
         return anchor;
+    }
+
+    public static MutableWebArtifact javascript(String name, String versionStr, IAnchor anchor) {
+        MutableWebArtifact artifact = new MutableWebArtifact(name, versionStr, ContentTypes.text_javascript, anchor);
+        artifact.setType(ArtifactType.SCRIPT);
+        return artifact;
+    }
+
+    public static MutableWebArtifact css(String name, String versionStr, IAnchor anchor) {
+        MutableWebArtifact artifact = new MutableWebArtifact(name, versionStr, ContentTypes.text_css, anchor);
+        artifact.setType(ArtifactType.STYLESHEET);
+        return artifact;
     }
 
 }

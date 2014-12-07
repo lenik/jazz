@@ -16,6 +16,7 @@ public class MutableArtifact
 
     private String name;
     private IVersion version;
+    private ArtifactType type;
     private ContentType contentType;
     private MutableArtifactDependent dependent = new MutableArtifactDependent();
 
@@ -34,6 +35,7 @@ public class MutableArtifact
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -43,6 +45,7 @@ public class MutableArtifact
         return version;
     }
 
+    @Override
     public void setVersion(IVersion version) {
         this.version = version;
     }
@@ -53,10 +56,21 @@ public class MutableArtifact
     }
 
     @Override
+    public ArtifactType getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(ArtifactType type) {
+        this.type = type;
+    }
+
+    @Override
     public ContentType getContentType() {
         return contentType;
     }
 
+    @Override
     public void setContentType(ContentType contentType) {
         this.contentType = contentType;
     }
@@ -75,26 +89,35 @@ public class MutableArtifact
     }
 
     @Override
-    public Collection<? extends IArtifactDependency> getDependencies(String type) {
+    public Collection<? extends IArtifactDependency> getDependencies(ArtifactType type) {
         return dependent.getDependencies(type);
     }
 
-    public final MutableArtifactDependency addDependency(String name, String type) {
+    @Override
+    public final MutableArtifactDependency addDependency(String name, ArtifactType type) {
         return dependent.addDependency(name, type);
     }
 
-    public final MutableArtifactDependency addDependency(String name, String type, String minVersionStr,
+    @Override
+    public final MutableArtifactDependency addDependency(String name, ArtifactType type, String minVersionStr,
             String maxVersionStr)
             throws ConflictedVersionException {
         return dependent.addDependency(name, type, minVersionStr, maxVersionStr);
     }
 
-    public void addDependency(IArtifactDependency dependency)
+    @Override
+    public final MutableArtifactDependency addDependency(IArtifact artifact) {
+        return dependent.addDependency(artifact);
+    }
+
+    @Override
+    public final void addDependency(IArtifactDependency dependency)
             throws ConflictedVersionException {
         dependent.addDependency(dependency);
     }
 
-    public void removeDependency(String name) {
+    @Override
+    public final void removeDependency(String name) {
         dependent.removeDependency(name);
     }
 

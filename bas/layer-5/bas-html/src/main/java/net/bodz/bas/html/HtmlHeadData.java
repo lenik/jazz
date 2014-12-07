@@ -5,15 +5,15 @@ import java.util.TreeMap;
 
 import net.bodz.bas.html.artifact.MutableArtifactDependent;
 
-public class HtmlMetaData
+public class HtmlHeadData
         extends MutableArtifactDependent
-        implements IHtmlMetaData {
+        implements IHtmlHeadData {
 
     private String title;
     private Map<String, String> metaMap;
     private Map<String, String> httpEquivMetaMap;
 
-    public HtmlMetaData() {
+    public HtmlHeadData() {
         metaMap = new TreeMap<>();
         httpEquivMetaMap = new TreeMap<>();
     }

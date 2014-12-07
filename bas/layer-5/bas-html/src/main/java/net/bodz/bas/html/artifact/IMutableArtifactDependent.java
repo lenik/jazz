@@ -5,10 +5,12 @@ import net.bodz.bas.html.ConflictedVersionException;
 public interface IMutableArtifactDependent
         extends IArtifactDependent {
 
-    MutableArtifactDependency addDependency(String name, String type);
+    MutableArtifactDependency addDependency(String name, ArtifactType type);
 
-    MutableArtifactDependency addDependency(String name, String type, String minVersionStr, String maxVersionStr)
+    MutableArtifactDependency addDependency(String name, ArtifactType type, String minVersionStr, String maxVersionStr)
             throws ConflictedVersionException;
+
+    MutableArtifactDependency addDependency(IArtifact artifact);
 
     void addDependency(IArtifactDependency dependency)
             throws ConflictedVersionException;

@@ -17,6 +17,6 @@ public interface IArtifactManager
 
     Set<IArtifact> getClosure(IArtifactDependent dependent);
 
-    Set<IArtifact> getClosure(IArtifactDependent dependent, String type, Boolean optional);
+    Set<IArtifact> getClosure(IArtifactDependent dependent, ArtifactType type, Boolean optional);
 
 }

@@ -7,7 +7,7 @@ public class MutableWebArtifactDependency
 
     String candidateUrl;
 
-    public MutableWebArtifactDependency(String name, String type, VersionRange versionRange) {
+    public MutableWebArtifactDependency(String name, ArtifactType type, VersionRange versionRange) {
         super(name, type, versionRange);
     }
 

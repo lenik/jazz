@@ -4,7 +4,7 @@ import java.util.Map;
 
 import net.bodz.bas.html.artifact.IMutableArtifactDependent;
 
-public interface IHtmlMetaData
+public interface IHtmlHeadData
         extends IMutableArtifactDependent {
 
     String getTitle();

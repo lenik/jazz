@@ -6,13 +6,23 @@ import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public interface IArtifact
-        extends IQueryable, IArtifactDependent {
+        extends IQueryable, IMutableArtifactDependent {
 
     String getName();
 
+    void setName(String name);
+
     IVersion getVersion();
 
+    void setVersion(IVersion version);
+
+    ArtifactType getType();
+
+    void setType(ArtifactType type);
+
     ContentType getContentType();
+
+    void setContentType(ContentType contentType);
 
     IAnchor getAnchor();
 

@@ -18,7 +18,7 @@ public class RootHtmlViewContext
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
-    private IHtmlMetaData metaData;
+    private IHtmlHeadData headData;
     private Map<String, Object> attributes;
 
     private HtmlDoc htmlDoc;
@@ -35,7 +35,7 @@ public class RootHtmlViewContext
         this.request = request;
         this.response = response;
 
-        metaData = new HtmlMetaData();
+        headData = new HtmlHeadData();
         attributes = new HashMap<String, Object>();
 
         htmlDoc = new HtmlDoc();
@@ -74,8 +74,8 @@ public class RootHtmlViewContext
     }
 
     @Override
-    public IHtmlMetaData getMetaData() {
-        return metaData;
+    public IHtmlHeadData getHeadData() {
+        return headData;
     }
 
     @Override
