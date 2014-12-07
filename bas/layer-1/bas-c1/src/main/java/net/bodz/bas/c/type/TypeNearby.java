@@ -5,22 +5,33 @@ import java.util.Map;
 
 public class TypeNearby {
 
-    // String prefix;
+    private String prefix;
     private String suffix;
     private boolean decodeIInterface;
     private boolean cacheEnabled;
 
-    private Map<Class<?>, Object> cache;
-    private static Object NONE = new Object();
+    private Map<Class<?>, Class<?>> cache;
+    private static Class<?> NONE = void.class;
 
-    public TypeNearby(String suffix, boolean cacheEnabled) {
+    public TypeNearby(String prefix, String suffix, boolean cacheEnabled) {
         if (suffix == null)
             throw new NullPointerException("suffix");
+        if (suffix.isEmpty())
+            throw new IllegalArgumentException("suffix is empty.");
+        this.prefix = prefix;
         this.suffix = suffix;
         this.cacheEnabled = cacheEnabled;
 
         if (cacheEnabled)
-            cache = new HashMap<Class<?>, Object>();
+            cache = new HashMap<Class<?>, Class<?>>();
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     public String getSuffix() {
@@ -39,38 +50,65 @@ public class TypeNearby {
         this.decodeIInterface = decodeIInterface;
     }
 
-    public Class<?> find(Class<?> class0) {
-        if (class0 == null)
-            throw new NullPointerException("clazz");
+    public Class<?> find(Class<?> src) {
+        if (src == null)
+            throw new NullPointerException("src");
 
+        Class<?> target = NONE;
         if (cacheEnabled) {
-            Object nearby = cache.get(class0);
-            if (nearby != null)
-                return nearby != NONE ? (Class<?>) nearby : null;
+            target = cache.get(src);
+            if (target != null)
+                return target != NONE ? target : null;
         }
 
-        String simpleName = class0.getSimpleName();
-        String fqcn0 = class0.getName();
+        String base = src.getSimpleName();
 
-        if (class0.isInterface() && decodeIInterface) {
-            if (simpleName.charAt(0) == 'I' //
-                    && simpleName.length() > 1 //
-                    && Character.isUpperCase(simpleName.charAt(1)))
-                fqcn0 = class0.getPackage().getName() + "." + simpleName.substring(1);
+        if (src.isInterface() && decodeIInterface) {
+            if (base.charAt(0) == 'I' //
+                    && base.length() > 1 //
+                    && Character.isUpperCase(base.charAt(1)))
+                base = base.substring(1);
         }
 
-        String nearbyFQCN = fqcn0 + suffix;
-        Class<?> nearby;
+        String dstName;
+        if (prefix == null) {
+            String fqcn = src.getName();
+            dstName = fqcn + suffix;
+        } else {
+            String pkg = src.getPackage().getName();
+            StringBuilder sb = new StringBuilder();
+            if (pkg != null) {
+                sb.append(pkg);
+                sb.append('.');
+            }
+            sb.append(prefix);
+            sb.append(base);
+            sb.append(suffix);
+            dstName = sb.toString();
+        }
+
+        Class<?> dst;
         try {
-            nearby = Class.forName(nearbyFQCN);
+            dst = Class.forName(dstName);
         } catch (ClassNotFoundException e) {
-            nearby = null;
+            dst = null;
         }
 
         if (cacheEnabled)
-            cache.put(class0, nearby != null ? nearby : NONE);
+            cache.put(src, dst != null ? dst : NONE);
 
-        return nearby;
+        return dst;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (prefix != null) {
+            sb.append(prefix);
+            sb.append(" :: ");
+        }
+        sb.append(suffix);
+        return sb.toString();
     }
 
 }
