@@ -2,26 +2,37 @@ package net.bodz.lily.model.base;
 
 import java.io.Serializable;
 
+import net.bodz.bas.c.type.TypeExtras;
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.PotatoTypes;
+import net.bodz.bas.potato.element.IPropertyAccessor;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.content.IContent;
+import net.bodz.bas.repr.form.FormStructBuilder;
+import net.bodz.bas.repr.form.IFormField;
+import net.bodz.bas.repr.form.IFormStruct;
+import net.bodz.bas.repr.form.IFormView;
+import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 
+import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
+import net.bodz.lily.model.base.security.User;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
  */
 public abstract class CoEntity
-        implements IContent, IStateful, IAccessControlled, Serializable {
+        implements Serializable, IContent, IStateful, IAccessControlled, IFormView {
 
     private static final long serialVersionUID = 1L;
 
     public static final int N_CODE_NAME = 20;
     public static final int N_LABEL = 80;
     public static final int N_DESCRIPTION = 200;
-
-    public static final int S_INIT = 0;
-    public static final int S_INVALID = -1;
 
     /** 私密 */
     public static final int M_PRIVATE = 0600;
@@ -44,14 +55,22 @@ public abstract class CoEntity
     private long lastModified; // = creationDate;
     private int flags = 0;
     private int state = S_INIT;
+    private int version;
 
-    private int userId;
-    private int groupId;
+    private User owner;
+    private Group ownerGroup;
     private int accessMode = M_COOP;
     private int acl;
 
-    // public abstract Serializable getIdentity();
+    /**
+     * @return Non-<code>null</code> id.
+     */
+    public abstract Object getId();
 
+    /**
+     * @label Code Name
+     * @label.zh.cn 代码
+     */
     public String getCodeName() {
         return codeName;
     }
@@ -60,6 +79,10 @@ public abstract class CoEntity
         this.codeName = codeName;
     }
 
+    /**
+     * @label Label
+     * @label.zh.cn 标签
+     */
     public String getLabel() {
         return label;
     }
@@ -68,6 +91,10 @@ public abstract class CoEntity
         this.label = label;
     }
 
+    /**
+     * @label Description
+     * @label.zh.cn 描述
+     */
     public String getDescription() {
         return description;
     }
@@ -84,9 +111,19 @@ public abstract class CoEntity
         this.image = image;
     }
 
+    @Override
+    public String toString() {
+        return getCodeName() + " - " + getLabel();
+    }
+
     /** ⇱ Implementation Of {@link IContent}. */
     /* _____________________________ */static section.iface __CONTENT__;
 
+    /**
+     * @label Priority
+     * @label.zh.cn 优先级
+     */
+    @OfGroup(IContent.class)
     @Override
     public int getPriority() {
         return priority;
@@ -96,6 +133,11 @@ public abstract class CoEntity
         this.priority = priority;
     }
 
+    /**
+     * @label Creation Date
+     * @label.zh.cn 创建时间
+     */
+    @OfGroup(IContent.class)
     @Override
     public long getCreationDate() {
         return creationDate;
@@ -111,6 +153,11 @@ public abstract class CoEntity
             creationDate = lastModified;
     }
 
+    /**
+     * @label Last Modified Date
+     * @label.zh.cn 修改时间
+     */
+    @OfGroup({ IContent.class, ICacheControl.class })
     @Override
     public long getLastModified() {
         return lastModified;
@@ -120,6 +167,10 @@ public abstract class CoEntity
         this.lastModified = lastModified;
     }
 
+    /**
+     * @label Flags
+     * @label.zh.cn 标志位
+     */
     public int getFlags() {
         return flags;
     }
@@ -128,11 +179,13 @@ public abstract class CoEntity
         this.flags = flags;
     }
 
+    @OfGroup(ICacheControl.class)
     @Override
     public CacheControlMode getCacheControlMode() {
         return CacheControlMode.AUTO;
     }
 
+    @OfGroup(ICacheControl.class)
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
         return CacheRevalidationMode.WANTED;
@@ -140,18 +193,32 @@ public abstract class CoEntity
 
     /**
      * One day by default.
+     * 
+     * @label Max Age
+     * @label.zh.cn 缓存寿命
      */
+    @OfGroup(ICacheControl.class)
     @Override
     public int getMaxAge() {
         return 86400;
     }
 
+    /**
+     * @label E-Tag
+     * @label.zh.cn 实体标签
+     */
+    @OfGroup(ICacheControl.class)
     @Override
     public String getETag() {
         long time = getLastModified();
         return String.valueOf(time);
     }
 
+    /**
+     * @label Weak Validation
+     * @labal.zh.cn 弱校验
+     */
+    @OfGroup(ICacheControl.class)
     @Override
     public boolean isWeakValidation() {
         return true;
@@ -160,6 +227,10 @@ public abstract class CoEntity
     /** ⇱ Implementation Of {@link IStateful}. */
     /* _____________________________ */static section.iface __STATE__;
 
+    /**
+     * @label State
+     * @label.zh.cn 状态
+     */
     @Override
     public int getState() {
         return state;
@@ -170,27 +241,64 @@ public abstract class CoEntity
         this.state = state;
     }
 
+    /**
+     * @label Version
+     * @label.zh.cn 版本
+     */
+    @OfGroup(IContent.class)
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     /** ⇱ Implementation Of {@link IAccessControlled}. */
     /* _____________________________ */static section.iface __ACL__;
 
-    @Override
-    public int getUserId() {
-        return userId;
+    /**
+     * @label Owner
+     * @label.zh.cn 属主
+     */
+    @OfGroup(IAccessControlled.class)
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    /**
+     * @label Group
+     * @label.zh.cn 属组
+     */
+    @OfGroup(IAccessControlled.class)
+    public Group getOwnerGroup() {
+        return ownerGroup;
+    }
+
+    public void setOwnerGroup(Group ownerGroup) {
+        this.ownerGroup = ownerGroup;
+    }
+
+    @OfGroup(IAccessControlled.class)
+    @Override
+    public int getUserId() {
+        return owner == null ? 0 : owner.getId();
     }
 
     @Override
     public int getGroupId() {
-        return groupId;
+        return ownerGroup == null ? 0 : ownerGroup.getId();
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
-
+    /**
+     * @label Access Mode
+     * @label.zh.cn 访问模式
+     */
+    @OfGroup(IAccessControlled.class)
     @Override
     public int getAccessMode() {
         return accessMode;
@@ -200,6 +308,11 @@ public abstract class CoEntity
         this.accessMode = accessMode;
     }
 
+    /**
+     * @label ACL
+     * @label.zh.cn ACL
+     */
+    @OfGroup(IAccessControlled.class)
     @Override
     public int getAcl() {
         return acl;
@@ -209,12 +322,60 @@ public abstract class CoEntity
         this.acl = acl;
     }
 
-    /** ⇱ Implementation Of {@link Object}. */
-    /* _____________________________ */static section.iface __OBJ__;
+    /** ⇱ Implementation Of {@link IFormView}. */
+    /* _____________________________ */static section.iface __DATA__;
 
     @Override
-    public String toString() {
-        return getCodeName() + " - " + getLabel();
+    public IFormStruct getFormStruct() {
+        IType type = PotatoTypes.getInstance().forClass(getClass());
+        TypeExtras extras = TypeExtras.of(getClass());
+        IFormStruct struct = extras.getFeature(IFormStruct.class);
+        if (struct == null) {
+            struct = buildFormStruct(type);
+            extras.setFeature(IFormStruct.class, struct);
+        }
+        return struct;
+    }
+
+    protected IFormStruct buildFormStruct(IType type) {
+        FormStructBuilder formStructBuilder = new FormStructBuilder();
+        try {
+            return formStructBuilder.buildFromType(type);
+        } catch (ParseException e) {
+            throw new IllegalUsageError(e.getMessage(), e);
+        }
+    }
+
+    public Object getFormFieldValue(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        IFormStruct metadata = getFormStruct();
+        IFormField field = metadata.getField(name);
+        if (field == null)
+            throw new IllegalArgumentException("bad field: " + name);
+
+        IPropertyAccessor accessor = field.getAccessor();
+        try {
+            return accessor.getValue(this);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public void setFormFieldValue(String name, Object value) {
+        if (name == null)
+            throw new NullPointerException("name");
+        IFormStruct metadata = getFormStruct();
+        IFormField field = metadata.getField(name);
+        if (field == null)
+            throw new IllegalArgumentException("bad field: " + name);
+
+        IPropertyAccessor accessor = field.getAccessor();
+        try {
+            accessor.setValue(this, value);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
 }

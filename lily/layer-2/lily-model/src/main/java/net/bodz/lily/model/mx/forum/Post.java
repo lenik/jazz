@@ -1,9 +1,9 @@
 package net.bodz.lily.model.mx.forum;
 
-import net.bodz.lily.model.mx.base.Message;
+import net.bodz.lily.model.mx.base.CoMessage;
 
 public class Post
-        extends Message {
+        extends CoMessage {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,7 +1,7 @@
 package net.bodz.lily.model.mx.base;
 
 public abstract class MessageFromProvider
-        extends Message {
+        extends CoMessage {
 
     private static final long serialVersionUID = 1L;
 

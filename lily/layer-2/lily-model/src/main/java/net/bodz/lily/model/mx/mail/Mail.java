@@ -3,10 +3,10 @@ package net.bodz.lily.model.mx.mail;
 import java.util.List;
 
 import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.model.mx.base.Message;
+import net.bodz.lily.model.mx.base.CoMessage;
 
 public class Mail
-        extends Message {
+        extends CoMessage {
 
     private static final long serialVersionUID = 1L;
 

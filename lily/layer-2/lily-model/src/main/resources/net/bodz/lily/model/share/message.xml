@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="message">
+
+    <resultMap id="mapX" type="com.bee32.zebra.oa.thread.Topic" extends="base.mapUSA">
+        <id property="id" column="id" />
+        <result property="subject" column="subject" />
+        <result property="text" column="text" />
+        <result property="voteUps" column="voteu" />
+        <result property="voteDowns" column="voted" />
+        <result property="favorites" column="favs" />
+        <association property="op" javaType="net.bodz.lily.model.base.security.User">
+            <id property="id" column="op" />
+            <result property="label" column="op_label" />
+        </association>
+    </resultMap>
+
+    <sql id="setX">
+        <include refid="base.setUSA" />
+        <if test="subject != null">subject=#{subject},</if>
+        <if test="text != null">text=#{text},</if>
+        voteu=#{voteUps},
+        voted=#{voteDowns},
+        favs=#{favorites},
+        <if test="op != null">op=#{op.id},</if>
+    </sql>
+
+</mapper>

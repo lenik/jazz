@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="base">
+
+    <!-- UI -->
+    <resultMap id="mapU" type="net.bodz.lily.model.base.CoEntity">
+        <result property="codeName" column="code" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+    </resultMap>
+
+    <sql id="setU">
+        <if test="codeName != null">code=#{codeName},</if>
+        <if test="label != null">label=#{label},</if>
+        <if test="description != null">description=#{description},</if>
+    </sql>
+
+    <!-- UI, States -->
+    <resultMap id="mapUS" type="net.bodz.lily.model.base.CoEntity" extends="mapU">
+        <result property="priority" column="priority" />
+        <result property="creationDate" column="creation" typeHandler="MillisecondTypeHandler" />
+        <result property="lastModified" column="lastmod" typeHandler="MillisecondTypeHandler" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="version" column="version" />
+    </resultMap>
+
+    <sql id="setUS">
+        <include refid="base.setU" />
+        priority=#{priority},
+        lastmod=#{lastModified},
+        flags=#{flags},
+        state=#{state},
+        <!-- if test="version != null">version=#{version},</if -->
+    </sql>
+
+    <!-- UI, States, ACL -->
+    <resultMap id="mapUSA" type="net.bodz.lily.model.base.CoEntity" extends="mapUS">
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <association property="owner" javaType="net.bodz.lily.model.base.security.User">
+            <id property="id" column="uid" />
+            <result property="codeName" column="uid_code" />
+            <result property="label" column="uid_label" />
+        </association>
+        <association property="ownerGroup" javaType="net.bodz.lily.model.base.security.Group">
+            <id property="id" column="gid" />
+            <result property="codeName" column="gid_code" />
+            <result property="label" column="gid_label" />
+        </association>
+    </resultMap>
+
+    <sql id="setUSA">
+        <include refid="base.setUS" />
+        mode=#{accessMode},
+        acl=#{acl},
+        <if test="owner != null">uid=#{owner.id},</if>
+        <if test="ownerGroup != null">gid=#{ownerGroup.id},</if>
+    </sql>
+
+</mapper>
