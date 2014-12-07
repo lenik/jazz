@@ -33,15 +33,14 @@ public interface IHtmlViewContext
 
     void setAttribute(String name, Object value);
 
-    HtmlDoc getHtmlDoc();
-
     IHtmlTag getOut();
 
     void setOut(IHtmlTag out);
 
-    IHtmlTag getAnchor(String name);
+    /** bufferred */
+    HtmlDoc getHtmlDoc();
 
-    void setAnchor(String name, IHtmlTag anchor);
+    IHtmlTag getTag(String id);
 
     <T> IHtmlViewBuilder<T> getViewBuilder(Object obj);
 

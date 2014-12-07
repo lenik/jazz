@@ -4,29 +4,35 @@ import net.bodz.bas.html.dom.tag.HtmlHtmlTag;
 import net.bodz.bas.xml.dom.DtdTag;
 
 public class HtmlDoc
-        extends AbstractHtmlTag<HtmlDoc> {
+        extends HtmlHtmlTag {
 
     private HtmlDocType docType;
-    private HtmlHtmlTag root;
+    private IHtmlTagMap tagMap = new HtmlTagMap();
 
     public HtmlDoc() {
         this(HtmlDocType.HTML_5);
     }
 
     public HtmlDoc(HtmlDocType docType) {
-        super(null);
+        super(null, "html");
+
         if (docType == null)
             throw new NullPointerException("docType");
         this.docType = docType;
 
-        String publicId = docType.getPublicId();
-        if (publicId != null)
+        switch (docType) {
+        case HTML_5:
+            verbatim("<!DOCTYPE html>");
+            break;
+        default:
             doctype(docType.getPublicId(), docType.getSystemId());
+        }
 
-        root = html();
-        String ns = docType.getNamespace();
-        if (ns != null)
-            root.attr("xmlns", docType.getNamespace());
+        if (docType.isXhtml()) {
+            String ns = docType.getNamespace();
+            assert ns != null;
+            attr("xmlns", ns);
+        }
     }
 
     public HtmlDocType getDocType() {
@@ -38,8 +44,13 @@ public class HtmlDoc
         docType.setContent("html PUBLIC \"" + publicId + "\" \"" + systemId + "\"");
     }
 
+    @Override
     public HtmlHtmlTag getRoot() {
-        return root;
+        return this;
+    }
+
+    public IHtmlTagMap getTagMap() {
+        return tagMap;
     }
 
 }

@@ -23,7 +23,6 @@ public class RootHtmlViewContext
 
     private HtmlDoc htmlDoc;
     private IHtmlTag outerTag;
-    private Map<String, IHtmlTag> anchors;
 
     private Map<Object, IHtmlViewBuilder<?>> viewBuilderCache;
 
@@ -40,7 +39,6 @@ public class RootHtmlViewContext
 
         htmlDoc = new HtmlDoc();
         outerTag = htmlDoc.getRoot();
-        anchors = new HashMap<>();
 
         viewBuilderCache = new IdentityHashMap<>();
     }
@@ -95,10 +93,6 @@ public class RootHtmlViewContext
         attributes.put(name, value);
     }
 
-    public HtmlDoc getHtmlDoc() {
-        return htmlDoc;
-    }
-
     @Override
     public IHtmlTag getOut() {
         return outerTag;
@@ -112,13 +106,13 @@ public class RootHtmlViewContext
     }
 
     @Override
-    public IHtmlTag getAnchor(String name) {
-        return anchors.get(name);
+    public HtmlDoc getHtmlDoc() {
+        return htmlDoc;
     }
 
     @Override
-    public void setAnchor(String name, IHtmlTag anchor) {
-        anchors.put(name, anchor);
+    public IHtmlTag getTag(String id) {
+        return htmlDoc.getTagMap().get(id);
     }
 
     @Override
