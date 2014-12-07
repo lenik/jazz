@@ -10,7 +10,6 @@
         <dependency>
             <groupId>com.jolbox</groupId>
             <artifactId>bonecp</artifactId>
-            <version>0.8.0.RELEASE</version>
             <optional>false</optional>
         </dependency>
         <dependency>
@@ -22,8 +21,12 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>3.2.3</version>
             <optional>false</optional>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
