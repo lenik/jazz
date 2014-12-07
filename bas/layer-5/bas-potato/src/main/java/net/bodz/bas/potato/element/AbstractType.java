@@ -117,10 +117,15 @@ public abstract class AbstractType
             String name = entry.getKey();
             List<IMethod> list = entry.getValue();
             IMethod method0 = list.get(0);
-            if (list.size() == 1)
+            switch (list.size()) {
+            case 0:
+                throw new UnexpectedException("empty list");
+            case 1:
                 map.put(name, method0);
-            else
-                map.put(name, new OverloadedMethod(method0.getDeclaringClass(), list));
+            default:
+                IElementDoc doc0 = method0.getXjdoc();
+                map.put(name, new OverloadedMethod(method0.getDeclaringClass(), list, doc0));
+            }
         }
         return map;
     }
