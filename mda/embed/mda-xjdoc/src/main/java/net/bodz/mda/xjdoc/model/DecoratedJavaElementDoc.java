@@ -1,9 +1,11 @@
 package net.bodz.mda.xjdoc.model;
 
+import java.util.Collection;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.model.AbstractDecorator;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public abstract class DecoratedJavaElementDoc
         extends AbstractDecorator<IElementDoc>
@@ -13,6 +15,11 @@ public abstract class DecoratedJavaElementDoc
 
     public DecoratedJavaElementDoc(IElementDoc _orig) {
         super(_orig);
+    }
+
+    @Override
+    public ITagLibrary getTagLibrary() {
+        return getWrapped().getTagLibrary();
     }
 
     @Override
@@ -36,11 +43,6 @@ public abstract class DecoratedJavaElementDoc
     }
 
     @Override
-    public iString getTextTag(String tagName) {
-        return getWrapped().getTextTag(tagName);
-    }
-
-    @Override
     public void setTag(String tagName, Object tagValue) {
         getWrapped().setTag(tagName, tagValue);
     }
@@ -53,6 +55,21 @@ public abstract class DecoratedJavaElementDoc
     @Override
     public Map<String, Object> getTagMap() {
         return getWrapped().getTagMap();
+    }
+
+    @Override
+    public Object getFirstTag(String tagName) {
+        return getWrapped().getFirstTag(tagName);
+    }
+
+    @Override
+    public Collection<?> getAllTag(String tagName) {
+        return getWrapped().getAllTag(tagName);
+    }
+
+    @Override
+    public iString getTextTag(String tagName) {
+        return getWrapped().getTextTag(tagName);
     }
 
     @Override

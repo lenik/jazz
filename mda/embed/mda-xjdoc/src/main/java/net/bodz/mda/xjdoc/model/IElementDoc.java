@@ -1,9 +1,11 @@
 package net.bodz.mda.xjdoc.model;
 
+import java.util.Collection;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.sugar.IToChain;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public interface IElementDoc
         extends IToChain {
@@ -11,20 +13,22 @@ public interface IElementDoc
     String LABEL = "label";
     String DESCRIPTION = "description";
 
+    ITagLibrary getTagLibrary();
+
     /**
      * The main text of the element.
-     *
+     * 
      * While tags are strict typed, the main text is always (domain-)string.
-     *
+     * 
      * @return Non-<code>null</code>.
      */
     iString getText();
 
     /**
      * Set the main text of the element.
-     *
+     * 
      * While tags are strict typed, the main text is always (domain-)string.
-     *
+     * 
      * @param text
      *            Non-<code>null</code>. Empty-string if the text isn't specified.
      */
@@ -32,27 +36,18 @@ public interface IElementDoc
 
     /**
      * Get the value of a named tag.
-     *
+     * 
      * The tag value type may be scalar, collection, map, or other user type.
-     *
+     * 
      * @return <code>null</code> if the tag isn't defined.
      */
     Object getTag(String tagName);
 
     /**
-     * Get the value of a named tag.
-     *
-     * The tag value type may be scalar, collection, map, or other user type.
-     *
-     * @return <code>null</code> if the tag isn't defined.
-     */
-    iString getTextTag(String tagName);
-
-    /**
      * Get the value of a named tag, with value type checked.
-     *
+     * 
      * The tag value type may be scalar, collection, map, or other user type.
-     *
+     * 
      * @param tagValueType
      *            The value type.
      * @return <code>null</code> if the tag isn't defined.
@@ -63,17 +58,19 @@ public interface IElementDoc
 
     /**
      * Set the tag value.
-     *
+     * 
      * @param tagName
      *            Non-<code>null</code> tag name.
      * @param tagValue
      *            Tag value, maybe <code>null</code>.
+     * @throws IllegalArgumentException
+     *             If the type of the value is invalid.
      */
     void setTag(String tagName, Object tagValue);
 
     /**
      * Remove the named tag.
-     *
+     * 
      * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value
      *         is <code>null</code>.
      */
@@ -81,9 +78,22 @@ public interface IElementDoc
 
     /**
      * Get the named tag map.
-     *
+     * 
      * @return non-<code>null</code> {@link Map} contains all the tags.
      */
     Map<String, Object> getTagMap();
+
+    Object getFirstTag(String tagName);
+
+    Collection<?> getAllTag(String tagName);
+
+    /**
+     * Get the value of a named tag.
+     * 
+     * The tag value type may be scalar, collection, map, or other user type.
+     * 
+     * @return <code>null</code> if the tag isn't defined.
+     */
+    iString getTextTag(String tagName);
 
 }
