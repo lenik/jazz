@@ -1,8 +1,8 @@
 package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
@@ -21,10 +21,21 @@ import net.bodz.mda.xjdoc.tagtype.ITagType;
 public class MutableElementDoc
         implements IElementDoc, IFlatfSerializable {
 
+    ITagLibrary tagLibrary;
     iString text = iString.NULL;
     Map<String, Object> tagMap = new LinkedHashMap<String, Object>();
 
-    public MutableElementDoc() {
+    public MutableElementDoc(ITagLibrary tagLibrary) {
+        this.tagLibrary = tagLibrary;
+    }
+
+    @Override
+    public ITagLibrary getTagLibrary() {
+        return tagLibrary;
+    }
+
+    public void setTagLibrary(ITagLibrary tagLibrary) {
+        this.tagLibrary = tagLibrary;
     }
 
     @Override
@@ -42,11 +53,6 @@ public class MutableElementDoc
     @Override
     public Object getTag(String tagName) {
         return tagMap.get(tagName);
-    }
-
-    @Override
-    public iString getTextTag(String tagName) {
-        return getTag(tagName, iString.class);
     }
 
     @Override
@@ -71,6 +77,76 @@ public class MutableElementDoc
     @Override
     public Map<String, Object> getTagMap() {
         return tagMap;
+    }
+
+    @Override
+    public Object getFirstTag(String tagName) {
+        Object value = getTag(tagName);
+        if (value == null)
+            return null;
+
+        ITagType tagType = tagLibrary.getTagType(tagName);
+        if (tagType == null)
+            tagType = tagLibrary.getDefaultTagType();
+
+        switch (tagType.getAggregationEnum()) {
+        case ARRAY:
+            int length = Array.getLength(value);
+            if (length == 0)
+                return null;
+            else
+                return Array.get(value, 0);
+
+        case LIST:
+            List<?> list = (List<?>) value;
+            if (list.isEmpty())
+                return null;
+            else
+                return list.get(0);
+
+        case COLLECTION:
+        case SET:
+            Collection<?> collection = (Collection<?>) value;
+            Iterator<?> iterator = collection.iterator();
+            return iterator.hasNext() ? iterator.next() : null;
+
+        case MAP:
+        case SCALAR:
+        default:
+            return value;
+        }
+    }
+
+    @Override
+    public Collection<?> getAllTag(String tagName) {
+        Object value = getTag(tagName);
+        if (value == null)
+            return Collections.emptyList();
+
+        ITagType tagType = tagLibrary.getTagType(tagName);
+        if (tagType == null)
+            tagType = tagLibrary.getDefaultTagType();
+
+        switch (tagType.getAggregationEnum()) {
+        case ARRAY:
+            Object[] array = (Object[]) value;
+            List<?> list = Arrays.asList(array);
+            return list;
+
+        case COLLECTION:
+        case LIST:
+            return (Collection<?>) value;
+
+        case MAP:
+        case SCALAR:
+        default:
+            return Arrays.asList(value);
+        }
+    }
+
+    @Override
+    public iString getTextTag(String tagName) {
+        return getTag(tagName, iString.class);
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfSerializable}. */
