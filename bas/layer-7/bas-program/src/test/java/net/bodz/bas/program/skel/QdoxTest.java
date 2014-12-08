@@ -57,14 +57,14 @@ public class QdoxTest
             // String packageName = jsource.getPackageName();
 
             for (JavaClass jclass : jsource.getClasses()) {
-                ClassDocBuilder builder = new ClassDocBuilder(taglibs);
+                ClassDocBuilder builder = new ClassDocBuilder(tagLibrary);
                 ClassDoc classDoc = builder.buildClass(jclass);
 
                 String fqcn = jclass.getFullyQualifiedName();
                 ImportMap builderMap = classDoc.getOrCreateImports();
 
                 IOptions n_ffout = new Options() //
-                        .addOption(ITagLibrary.class, taglibs) //
+                        .addOption(ITagLibrary.class, tagLibrary) //
                         .addOption(ImportMap.class, builderMap);
 
                 BCharOut buf = new BCharOut();
