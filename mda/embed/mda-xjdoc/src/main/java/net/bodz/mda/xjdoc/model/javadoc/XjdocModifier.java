@@ -12,9 +12,11 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class XjdocModifier {
 
+    static String _DOCPAR = ".docpar";
+
     public static void process(IElementDoc doc) {
-        String docpar = "description";
-        Object _docpar = doc.getTag(".docpar");
+        String docpar = IElementDoc.DESCRIPTION;
+        Object _docpar = doc.getFirstTag(_DOCPAR);
         if (_docpar != null) {
             docpar = _docpar.toString().trim();
             if (docpar.isEmpty())
@@ -48,8 +50,10 @@ public class XjdocModifier {
             if (str == null)
                 continue;
             BrokenCharsTokenizer pars = new BrokenCharsTokenizer(str, '\n', '\n');
-            for (int i = 0; i < ntag && pars.hasNext(); i++)
-                vals[i].put(lang, i == ntag - 1 ? pars.getRemaining() : pars.next());
+            for (int i = 0; i < ntag && pars.hasNext(); i++) {
+                String s = i == ntag - 1 ? pars.getRemaining() : pars.next();
+                vals[i].put(lang, s);
+            }
         }
 
         // rewrite tags.

@@ -4,13 +4,15 @@ import java.io.IOException;
 
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public class JavaPackageDoc
         extends MutableElementDoc {
 
     String fqpn;
 
-    public JavaPackageDoc(String fqpn) {
+    public JavaPackageDoc(ITagLibrary tagLibrary, String fqpn) {
+        super(tagLibrary);
         this.fqpn = fqpn;
     }
 

@@ -114,6 +114,16 @@ public class ImportMap {
         return fqcn;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(map.size() * 40);
+        for (String fqcn : map.values()) {
+            sb.append(fqcn);
+            sb.append('\n');
+        }
+        return sb.toString();
+    }
+
     static String expandJavaLang(String name) {
         String fqcn = "java.lang." + name;
         try {
