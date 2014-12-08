@@ -1,24 +1,28 @@
 package net.bodz.bas.std.rfc.http;
 
+/**
+ * @label Cache Control
+ * @label.zh.cn 缓存控制
+ */
 public interface ICacheControl {
 
     /**
      * Get cache control mode.
-     *
+     * 
      * @return Non-<code>null</code> value.
      */
     CacheControlMode getCacheControlMode();
 
     /**
      * Get cache revalidation mode.
-     *
+     * 
      * @return Non-<code>null</code> value.
      */
     CacheRevalidationMode getCacheRevalidationMode();
 
     /**
      * Get the maximum amount of time that a representation will be considered fresh.
-     *
+     * 
      * @return The number of seconds from the time of the request you wish the representation to be
      *         fresh for. Returns positive integer or zero.
      */
@@ -46,7 +50,7 @@ public interface ICacheControl {
      * thus weak ETags are not suitable for byte-range requests. Weak ETags may be useful for cases
      * in which strong ETags are impractical for a web server to generate, such as with
      * dynamically-generated content.
-     *
+     * 
      * @return <code>true</code> for weak validation.
      */
     boolean isWeakValidation();

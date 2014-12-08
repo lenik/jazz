@@ -1,13 +1,9 @@
 package net.bodz.bas.repr.viz;
 
-import net.bodz.bas.repr.view.IViewStruct;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-/**
- * @see IViewStruct
- */
 public interface IViewBuilder<T>
         extends IPriority {
 
