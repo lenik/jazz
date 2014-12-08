@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
+import net.bodz.bas.program.model.IOption;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.mda.xjdoc.tagtype.AbstractTagType;
 import net.bodz.mda.xjdoc.tagtype.IJavadocWriter;
@@ -12,7 +13,12 @@ public class OptionTagType
         extends AbstractTagType {
 
     @Override
-    public Object parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
+    public Class<?> getValueType() {
+        return IOption.class;
+    }
+
+    @Override
+    public IOption parseJavadoc(String tagNameSpec, Object cont, String string, IOptions options)
             throws ParseException {
         return null;
     }
@@ -23,7 +29,7 @@ public class OptionTagType
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, IOptions options)
+    public IOption parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
         return null;
     }
