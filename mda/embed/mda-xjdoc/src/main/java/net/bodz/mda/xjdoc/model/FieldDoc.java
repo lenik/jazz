@@ -11,16 +11,17 @@ public class FieldDoc
         implements IFieldDoc {
 
     private String name;
-    private final ClassDoc classDoc;
+    private final IClassDoc classDoc;
 
-    public FieldDoc(ClassDoc classDoc, String name) {
+    public FieldDoc(IClassDoc classDoc, String name) {
+        super(classDoc.getTagLibrary());
         this.name = name;
         this.classDoc = classDoc;
     }
 
     static iString NO_LABEL = null; // iString.fn.val("no label");
 
-    public static FieldDoc n_a(ClassDoc classDoc, String name) {
+    public static FieldDoc n_a(IClassDoc classDoc, String name) {
         FieldDoc fieldDoc = new FieldDoc(classDoc, name);
         fieldDoc.setTag(LABEL, NO_LABEL);
         // fieldDoc.setDescription(iString.fn.val(name));
@@ -29,7 +30,7 @@ public class FieldDoc
     }
 
     @Override
-    public ClassDoc getClassDoc() {
+    public IClassDoc getClassDoc() {
         return classDoc;
     }
 
