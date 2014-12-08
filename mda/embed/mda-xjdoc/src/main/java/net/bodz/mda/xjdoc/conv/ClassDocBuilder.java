@@ -23,15 +23,15 @@ import com.thoughtworks.qdox.model.*;
  */
 public class ClassDocBuilder {
 
-    private ITagLibrary taglib;
+    private ITagLibrary tagLibrary;
     private iString missingDoc;
 
-    public ClassDocBuilder(ITagLibrary taglib) {
-        if (taglib == null)
-            throw new NullPointerException("taglib");
+    public ClassDocBuilder(ITagLibrary tagLibrary) {
+        if (tagLibrary == null)
+            throw new NullPointerException("tagLibrary");
         // if (sourceFileImports == null)
         // throw new NullPointerException("sourceFileImports");
-        this.taglib = taglib;
+        this.tagLibrary = tagLibrary;
         // this.sourceFileImports = sourceFileImports;
     }
 
@@ -45,7 +45,7 @@ public class ClassDocBuilder {
 
     public ClassDoc buildClass(JavaClass javaClass) {
         String fqcn = javaClass.getFullyQualifiedName();
-        ClassDoc classDoc = new ClassDoc(fqcn);
+        ClassDoc classDoc = new ClassDoc(tagLibrary, fqcn);
 
         ImportMap classImports = classDoc.getOrCreateImports();
         IOptions options = new Options() //
@@ -119,7 +119,7 @@ public class ClassDocBuilder {
             String tagName = docletTag.getName();
             String tagValueString = docletTag.getValue();
 
-            String rootTagName = taglib.getRootTagName(tagName);
+            String rootTagName = tagLibrary.getRootTagName(tagName);
             String tagNameSpec = null;
 
             if (rootTagName == null) {
@@ -138,9 +138,9 @@ public class ClassDocBuilder {
             }
 
             // DomainString value = DomainString.parseParaLang(tagValueString);
-            ITagType tagType = taglib.getTagType(rootTagName);
+            ITagType tagType = tagLibrary.getTagType(rootTagName);
             if (tagType == null) // fallback to string.
-                tagType = taglib.getDefaultTagType();
+                tagType = tagLibrary.getDefaultTagType();
 
             Object cont = rootTagContMap.get(rootTagName);
             Object tagValue;
