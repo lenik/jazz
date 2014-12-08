@@ -2,16 +2,16 @@ package net.bodz.mda.xjdoc.model.javadoc;
 
 import java.io.IOException;
 
+import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.i18n.dom1.AbstractElement;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractXjdocElement
-        extends AbstractElement
+        // extends AbstractElement
         implements IXjdocElement {
 
     private transient IElementDoc xjdoc;
@@ -55,15 +55,24 @@ public abstract class AbstractXjdocElement
         this.xjdocLoaded = xjdoc != null;
     }
 
-    protected IElementDoc loadXjdoc()
-            throws ParseException, IOException {
-        throw new NotImplementedException();
+    protected abstract IElementDoc loadXjdoc()
+            throws ParseException, IOException;
+
+    @Override
+    public String getName() {
+        String id = ObjectInfo.getSimpleId(this);
+        return id;
     }
 
     @Override
     public iString getLabel() {
-        if (label == null)
-            label = getXjdoc().getTextTag(IElementDoc.LABEL);
+        if (label == null) {
+            IElementDoc xjdoc = getXjdoc();
+            label = xjdoc.getTextTag(IElementDoc.LABEL);
+
+            if (label == null)
+                label = xjdoc.getText().headPar();
+        }
         return label;
     }
 
