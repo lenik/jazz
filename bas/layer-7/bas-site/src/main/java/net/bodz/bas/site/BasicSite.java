@@ -1,6 +1,7 @@
 package net.bodz.bas.site;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -28,8 +29,8 @@ public abstract class BasicSite
         extends AbstractXjdocContent
         implements IPathDispatchable, ICrawlable {
 
-    protected Map<String, IJazzModule> modules = new TreeMap<>();
-    Map<String, IPathDispatchable> pathMap;
+    private Map<String, IJazzModule> modules = new TreeMap<>();
+    protected final Map<String, IPathDispatchable> pathMap;
 
     public BasicSite() {
         for (IJazzModule module : JazzBasProject.getInstance().getModules()) {
@@ -37,6 +38,7 @@ public abstract class BasicSite
             name = Strings.hyphenatize(name);
             modules.put(name, module);
         }
+        pathMap = new HashMap<String, IPathDispatchable>();
     }
 
     public Map<String, IJazzModule> getModules() {
