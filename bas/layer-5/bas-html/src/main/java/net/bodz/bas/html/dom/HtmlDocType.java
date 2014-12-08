@@ -93,4 +93,16 @@ public enum HtmlDocType {
         return namespace;
     }
 
+    public boolean isXhtml() {
+        switch (this) {
+        case XHTML_1_0_Frameset:
+        case XHTML_1_0_Strict:
+        case XHTML_1_0_Transitional:
+        case XHTML_1_1:
+            return true;
+        default:
+            return false;
+        }
+    }
+
 }
