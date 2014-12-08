@@ -121,7 +121,10 @@ public abstract class AbstractViewBuilderFactory
         return set;
     }
 
-    TypeNearby nearbyVbos = new TypeNearby("Vbo", true);
+    TypeNearby[] nearbies = {
+            //
+            new TypeNearby(null, "Vbo", true), //
+            new TypeNearby("impl", "Vbo", true) };
 
     /**
      * @throws ReflectiveOperationException
@@ -129,14 +132,16 @@ public abstract class AbstractViewBuilderFactory
      */
     IViewBuilder<?> findNearbyVbo(Class<?> clazz)
             throws ReflectiveOperationException {
-        Class<?> vboClass = nearbyVbos.find(clazz);
-        if (vboClass == null)
-            return null;
-
-        IViewBuilder<?> vbo;
-        // vbo = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);
-        vbo = (IViewBuilder<?>) SingletonUtil.instantiateCached(vboClass);
-        return vbo;
+        for (TypeNearby nearby : nearbies) {
+            Class<?> vboClass = nearby.find(clazz);
+            if (vboClass != null) {
+                IViewBuilder<?> vbo;
+                // vbo = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);
+                vbo = (IViewBuilder<?>) SingletonUtil.instantiateCached(vboClass);
+                return vbo;
+            }
+        }
+        return null;
     }
 
     protected void addViewBuilder(IViewBuilder<?> viewBuilder) {
