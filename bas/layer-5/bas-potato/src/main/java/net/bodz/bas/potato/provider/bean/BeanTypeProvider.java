@@ -5,7 +5,10 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 
 import net.bodz.bas.potato.AbstractTypeProvider;
+import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.mda.xjdoc.UnionXjdocProvider;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public class BeanTypeProvider
@@ -19,10 +22,15 @@ public class BeanTypeProvider
     }
 
     @Override
-    public IType loadType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc) {
+    public IType loadType(Class<?> clazz, Object obj, int infoset) {
         try {
             BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
-            return new BeanType(beanInfo, infoset, classDoc);
+
+            ClassDoc classDoc = null;
+            if ((infoset & ITypeProvider.DOCS) != 0)
+                classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
+
+            return new BeanType(beanInfo, infoset, classDoc, UnionXjdocProvider.getInstance());
         } catch (IntrospectionException e) {
             return null;
         }

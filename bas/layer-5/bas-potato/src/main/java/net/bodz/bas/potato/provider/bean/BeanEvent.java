@@ -12,12 +12,10 @@ public class BeanEvent
 
     private final EventSetDescriptor eventSetDescriptor;
 
-    public BeanEvent(Class<?> declaringType, EventSetDescriptor eventSetDescriptor, IElementDoc xjdoc) {
-        super(declaringType, eventSetDescriptor.getName(), //
-                eventSetDescriptor.getListenerType(), null);
+    public BeanEvent(Class<?> declaringType, EventSetDescriptor eventSetDescriptor, IElementDoc doc) {
+        super(declaringType, //
+                eventSetDescriptor.getName(), eventSetDescriptor.getListenerType(), null, doc);
         this.eventSetDescriptor = eventSetDescriptor;
-
-        setXjdoc(xjdoc);
     }
 
     @Override

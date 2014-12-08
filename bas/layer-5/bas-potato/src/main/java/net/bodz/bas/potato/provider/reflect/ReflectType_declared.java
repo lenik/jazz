@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.potato.ITypeProvider;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
@@ -30,8 +30,10 @@ public class ReflectType_declared
      * @param flatten
      *            Include members declared in superclasses.
      */
-    public ReflectType_declared(Class<?> clazz, int infoset, ClassDoc classDoc, boolean flatten) {
+    public ReflectType_declared(Class<?> clazz, int infoset, boolean flatten, ClassDoc classDoc) {
         super(clazz, infoset, classDoc);
+
+        boolean docs = (infoset & ITypeProvider.DOCS) != 0;
 
         int visibilityMask = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE;
         Set<Integer> includeVisibilities = new HashSet<Integer>();
@@ -58,10 +60,12 @@ public class ReflectType_declared
                     field.setAccessible(true);
 
                     FieldDoc fieldDoc = null;
-                    if (classDoc != null)
-                        fieldDoc = classDoc.getFieldDoc(field.getName());
-                    if (fieldDoc == null)
-                        fieldDoc = FieldDoc.n_a(classDoc, field.getName());
+                    if (docs) {
+                        if (classDoc != null)
+                            fieldDoc = classDoc.getFieldDoc(field.getName());
+                        if (fieldDoc == null)
+                            fieldDoc = FieldDoc.n_a(classDoc, field.getName());
+                    }
 
                     ReflectProperty reflectProperty = new ReflectProperty(field, fieldDoc);
                     propertyMap.addProperty(reflectProperty);
@@ -79,12 +83,14 @@ public class ReflectType_declared
 
                     method.setAccessible(true);
 
-                    MethodId methodId = new MethodId(method);
                     MethodDoc methodDoc = null;
-                    if (classDoc != null)
-                        methodDoc = classDoc.getMethodDoc(methodId);
-                    if (methodDoc == null)
-                        methodDoc = MethodDoc.n_a(classDoc, methodId);
+                    if (docs) {
+                        MethodId methodId = new MethodId(method);
+                        if (classDoc != null)
+                            methodDoc = classDoc.getMethodDoc(methodId);
+                        if (methodDoc == null)
+                            methodDoc = MethodDoc.n_a(classDoc, methodId);
+                    }
 
                     ReflectMethod reflectMethod = new ReflectMethod(method, methodDoc);
                     methodMap.addMethod(reflectMethod);
@@ -102,12 +108,14 @@ public class ReflectType_declared
 
                     ctor.setAccessible(true);
 
-                    MethodId ctorId = new MethodId(ctor);
                     MethodDoc ctorDoc = null;
-                    if (classDoc != null)
-                        ctorDoc = classDoc.getMethodDoc(ctorId);
-                    if (ctorDoc == null)
-                        ctorDoc = MethodDoc.n_a(classDoc, ctorId);
+                    if (docs) {
+                        MethodId ctorId = new MethodId(ctor);
+                        if (classDoc != null)
+                            ctorDoc = classDoc.getMethodDoc(ctorId);
+                        if (ctorDoc == null)
+                            ctorDoc = MethodDoc.n_a(classDoc, ctorId);
+                    }
 
                     ReflectConstructor reflectCtor = new ReflectConstructor(ctor, ctorDoc);
                     constructorMap.addConstructor(reflectCtor);
@@ -120,7 +128,7 @@ public class ReflectType_declared
             if (clazz == null)
                 break;
 
-            classDoc = ClassDocLoader.load(clazz);
+            classDoc = Xjdocs.getDefaultProvider().getClassDoc(clazz);
         } // while (clazz != null)
     }
 

@@ -13,7 +13,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
  * 
  * @label 测试
  */
-public class MavenClassDocLoaderTest
+public class MavenXjdocProviderTest
         extends Assert {
 
     /**
@@ -21,8 +21,8 @@ public class MavenClassDocLoaderTest
      */
     @Test
     public void testClassDoc() {
-        MavenClassDocLoader loader = new MavenClassDocLoader();
-        ClassDoc doc = loader.load(MavenClassDocLoaderTest.class);
+        MavenXjdocProvider loader = new MavenXjdocProvider();
+        ClassDoc doc = loader.getClassDoc(MavenXjdocProviderTest.class);
 
         iString label = (iString) doc.getTag("label");
         assertEquals("测试", label.toString());

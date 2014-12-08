@@ -1,7 +1,9 @@
 package net.bodz.bas.potato.provider.reflect;
 
 import net.bodz.bas.potato.AbstractTypeProvider;
+import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public class ReflectTypeProvider
@@ -15,7 +17,10 @@ public class ReflectTypeProvider
     }
 
     @Override
-    public IType loadType(Class<?> clazz, Object obj, int infoset, ClassDoc classDoc) {
+    public IType loadType(Class<?> clazz, Object obj, int infoset) {
+        ClassDoc classDoc = null;
+        if ((infoset & ITypeProvider.DOCS) != 0)
+            classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
         return new ReflectType(clazz, infoset, classDoc);
     }
 

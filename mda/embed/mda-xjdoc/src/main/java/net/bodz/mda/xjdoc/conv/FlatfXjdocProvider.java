@@ -12,16 +12,14 @@ import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
-import net.bodz.mda.xjdoc.ClassDocLoadException;
-import net.bodz.mda.xjdoc.IClassDocLoader;
+import net.bodz.mda.xjdoc.AbstractXjdocProvider;
+import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
-import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
-public class FlatfClassDocLoader
-        implements IClassDocLoader {
+public class FlatfXjdocProvider
+        extends AbstractXjdocProvider {
 
     public static final String DEFAULT_EXTENSION = "ff";
 
@@ -36,8 +34,8 @@ public class FlatfClassDocLoader
      * @return <code>null</code> if no classdoc resource available.
      */
     @Override
-    public ClassDoc load(Class<?> clazz)
-            throws ClassDocLoadException {
+    public ClassDoc getClassDoc(Class<?> clazz)
+            throws XjdocLoaderException {
         return load(clazz, DEFAULT_EXTENSION);
     }
 
@@ -45,7 +43,7 @@ public class FlatfClassDocLoader
      * @return <code>null</code> if no classdoc resource available.
      */
     public ClassDoc load(Class<?> clazz, String extension)
-            throws ClassDocLoadException {
+            throws XjdocLoaderException {
         if (clazz == null)
             throw new NullPointerException("clazz");
         if (extension == null)
@@ -70,17 +68,16 @@ public class FlatfClassDocLoader
             return null;
 
         IStreamInputSource in = new URLResource(resource);
-        TagLibrarySet taglibs = TagLibraryLoader.allFor(clazz);
         ClassDoc doc;
         try {
-            doc = load(clazz.getName(), in, taglibs);
+            doc = load(clazz.getName(), in);
         } catch (Exception e) {
-            throw new ClassDocLoadException(e.getMessage(), e);
+            throw new XjdocLoaderException(e.getMessage(), e);
         }
         return doc;
     }
 
-    public final ClassDoc load(String fqcn, IStreamInputSource inputSource, ITagLibrary taglib)
+    public final ClassDoc load(String fqcn, IStreamInputSource inputSource)
             throws IOException, ParseException {
         if (fqcn == null)
             throw new NullPointerException("fqcn");
@@ -90,13 +87,13 @@ public class FlatfClassDocLoader
         Reader reader = inputSource.newReader();
         try {
             FlatfInput in = new FlatfInput(reader);
-            return load(fqcn, in, taglib);
+            return load(fqcn, in);
         } finally {
             reader.close();
         }
     }
 
-    public ClassDoc load(String fqcn, IFlatfInput in, ITagLibrary taglib)
+    public ClassDoc load(String fqcn, IFlatfInput in)
             throws ParseException, IOException {
         if (fqcn == null)
             throw new NullPointerException("fqcn");
@@ -107,7 +104,7 @@ public class FlatfClassDocLoader
         ImportMap importMap = classDoc.getOrCreateImports();
 
         IOptions options = new Options() //
-                .addOption(ITagLibrary.class, taglib) //
+                .addOption(ITagLibrary.class, getTagLibrary()) //
                 .addOption(ImportMap.class, importMap);
 
         flatfLoader.load(in, classDoc, options);
@@ -115,7 +112,7 @@ public class FlatfClassDocLoader
     }
 
     ClassDoc createClassDoc(String fqcn) {
-        return new ClassDoc(fqcn);
+        return new ClassDoc(getTagLibrary(), fqcn);
     }
 
 }

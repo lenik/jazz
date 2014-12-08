@@ -12,11 +12,10 @@ import net.bodz.bas.program.meta.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.IXjdocProvider;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
-import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 /**
@@ -38,15 +37,15 @@ public class XjdocDumper
     @Override
     protected void mainImpl(String... args)
             throws Exception {
-        ClassLoader classLoader = getClass().getClassLoader();
-        TagLibraryLoader taglibLoader = new TagLibraryLoader(classLoader);
-        TagLibrarySet taglibs = taglibLoader.parseSet("*");
+        ITagLibrary taglibs = Xjdocs.getDefaultTagLibrary();
+        IXjdocProvider xjdocProvider = Xjdocs.getDefaultProvider();
+        xjdocProvider.setTagLibrary(taglibs);
 
         ITreeOut out = TreeOutImpl.from(Stdio.cout);
 
         for (String fqcn : args) {
             for (Class<?> clazz = Class.forName(fqcn); clazz != null; clazz = clazz.getSuperclass()) {
-                ClassDoc classDoc = ClassDocLoader.load(clazz);
+                ClassDoc classDoc = xjdocProvider.getClassDoc(clazz);
                 if (classDoc == null) {
                     out.println("Class has no doc: ", clazz.getName());
                     continue;

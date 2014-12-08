@@ -11,18 +11,18 @@ import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MutableElementDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
 
 public class FlatfDocLoader {
 
     private FlatfLoader flatfLoader;
     private IOptions options;
+    private ITagLibrary tagLibrary;
 
     public FlatfDocLoader() {
         flatfLoader = new FlatfLoader();
 
         Options options = new Options();
-        ITagLibrary tagLibrary = TagLibraryLoader.getInstance().parseSet("*");
+        tagLibrary = Xjdocs.getDefaultTagLibrary();
         options.addOption(ITagLibrary.class, tagLibrary);
         // ImportMap importMap=new ImportMap("");
         // options.addOption(ImportMap.class, importMap);
@@ -31,14 +31,14 @@ public class FlatfDocLoader {
 
     public IElementDoc load(IStreamInputSource inputSource)
             throws ParseException, IOException {
-        MutableElementDoc doc = new MutableElementDoc();
+        MutableElementDoc doc = new MutableElementDoc(tagLibrary);
         flatfLoader.load(inputSource, doc, options);
         return doc;
     }
 
     public IElementDoc load(IFlatfInput in)
             throws ParseException, IOException {
-        MutableElementDoc doc = new MutableElementDoc();
+        MutableElementDoc doc = new MutableElementDoc(tagLibrary);
         flatfLoader.load(in, doc, options);
         return doc;
     }

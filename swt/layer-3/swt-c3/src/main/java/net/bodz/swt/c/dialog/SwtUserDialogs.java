@@ -33,7 +33,7 @@ import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.ui.dialog.AbstractUserDialogs;
 import net.bodz.bas.ui.dialog.IDirectiveCommand;
 import net.bodz.bas.ui.dom1.UiValue;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.swt.c.composite.StackComposite;
@@ -120,6 +120,7 @@ public class SwtUserDialogs
         setIcon(image);
     }
 
+
     abstract class _Dialog
             extends SimpleDialog {
 
@@ -139,8 +140,9 @@ public class SwtUserDialogs
                 String doc = action.getDoc();
                 Image image = action.getImage();
                 if (text == null) {
-                    ClassDoc classDoc = ClassDocLoader.load(action.getClass());
-                    text = classDoc.to(ArtifactDoc.class).getLabel().toString();
+                    ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(action.getClass());
+                    if (classDoc != null)
+                        text = classDoc.to(ArtifactDoc.class).getLabel().toString();
                 }
                 button.setText(text);
                 if (doc != null)

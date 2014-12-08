@@ -16,6 +16,8 @@ public class ReflectType
     public ReflectType(Class<?> clazz, int infoset, ClassDoc classDoc) {
         super(clazz, infoset, classDoc);
 
+        boolean docs = (infoset & ITypeProvider.DOCS) != 0;
+
         if ((infoset & ITypeProvider.PROPERTIES) != 0)
             for (Field field : clazz.getFields()) {
 
@@ -23,10 +25,12 @@ public class ReflectType
                     continue;
 
                 FieldDoc fieldDoc = null;
-                if (classDoc != null)
-                    fieldDoc = classDoc.getFieldDoc(field.getName());
-                if (fieldDoc == null)
-                    fieldDoc = FieldDoc.n_a(classDoc, field.getName());
+                if (docs) {
+                    if (classDoc != null)
+                        fieldDoc = classDoc.getFieldDoc(field.getName());
+                    if (fieldDoc == null)
+                        fieldDoc = FieldDoc.n_a(classDoc, field.getName());
+                }
 
                 ReflectProperty reflectProperty = new ReflectProperty(field, fieldDoc);
                 propertyMap.addProperty(reflectProperty);
@@ -39,11 +43,13 @@ public class ReflectType
                     continue;
 
                 MethodDoc methodDoc = null;
-                MethodId methodId = new MethodId(method);
-                if (classDoc != null)
-                    methodDoc = classDoc.getMethodDoc(methodId);
-                if (methodDoc == null)
-                    methodDoc = MethodDoc.n_a(classDoc, methodId);
+                if (docs) {
+                    MethodId methodId = new MethodId(method);
+                    if (classDoc != null)
+                        methodDoc = classDoc.getMethodDoc(methodId);
+                    if (methodDoc == null)
+                        methodDoc = MethodDoc.n_a(classDoc, methodId);
+                }
 
                 ReflectMethod reflectMethod = new ReflectMethod(method, methodDoc);
                 methodMap.addMethod(reflectMethod);
@@ -56,11 +62,13 @@ public class ReflectType
                     continue;
 
                 MethodDoc ctorDoc = null;
-                MethodId ctorId = new MethodId(ctor);
-                if (classDoc != null)
-                    ctorDoc = classDoc.getMethodDoc(ctorId);
-                if (ctorDoc == null)
-                    ctorDoc = MethodDoc.n_a(classDoc, ctorId);
+                if (docs) {
+                    MethodId ctorId = new MethodId(ctor);
+                    if (classDoc != null)
+                        ctorDoc = classDoc.getMethodDoc(ctorId);
+                    if (ctorDoc == null)
+                        ctorDoc = MethodDoc.n_a(classDoc, ctorId);
+                }
 
                 ReflectConstructor reflectCtor = new ReflectConstructor(ctor, ctorDoc);
                 constructorMap.addConstructor(reflectCtor);

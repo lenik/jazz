@@ -4,27 +4,20 @@ import java.io.File;
 import java.io.IOException;
 
 import net.bodz.bas.c.m2.MavenPomDir;
-import net.bodz.mda.xjdoc.ClassDocLoadException;
-import net.bodz.mda.xjdoc.IClassDocLoader;
+import net.bodz.mda.xjdoc.AbstractXjdocProvider;
+import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
-import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaClass;
 
-public class MavenClassDocLoader
-        implements IClassDocLoader {
+public class MavenXjdocProvider
+        extends AbstractXjdocProvider {
 
     @Override
-    public int getPriority() {
-        return 0;
-    }
-
-    @Override
-    public ClassDoc load(Class<?> clazz)
-            throws ClassDocLoadException {
+    public ClassDoc getClassDoc(Class<?> clazz)
+            throws XjdocLoaderException {
         MavenPomDir pomDir = MavenPomDir.fromClass(clazz);
         if (pomDir == null) // Not in a maven project.
             return null;
@@ -34,8 +27,7 @@ public class MavenClassDocLoader
             return null;
 
         ClassLoader classLoader = clazz.getClassLoader();
-        TagLibrarySet taglibs = TagLibraryLoader.allFor(classLoader);
-        ClassDocBuilder classDocBuilder = new ClassDocBuilder(taglibs);
+        ClassDocBuilder classDocBuilder = new ClassDocBuilder(getTagLibrary());
 
         ClassLibrary classLibrary = new ClassLibrary(classLoader);
         JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
@@ -43,12 +35,12 @@ public class MavenClassDocLoader
         try {
             javaDocBuilder.addSource(sourceFile);
         } catch (IOException e) {
-            throw new ClassDocLoadException("Failed to add source " + sourceFile, e);
+            throw new XjdocLoaderException("Failed to add source " + sourceFile, e);
         }
 
         JavaClass javaClass = javaDocBuilder.getClassByName(clazz.getName());
         if (javaClass == null)
-            throw new ClassDocLoadException("No class source in file: " + sourceFile);
+            throw new XjdocLoaderException("No class source in file: " + sourceFile);
 
         ClassDoc classDoc = classDocBuilder.buildClass(javaClass);
         return classDoc;

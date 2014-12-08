@@ -6,12 +6,14 @@ import java.util.List;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.repr.content.IContent;
 import net.bodz.mda.xjdoc.model.IElementDoc;
-import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocAware;
+import net.bodz.mda.xjdoc.model.javadoc.MutableXjdocElement;
 
 public class SiteGraphNode
-        extends AbstractXjdocElement
+        extends MutableXjdocElement
         implements ICrawler {
+
+    private static final long serialVersionUID = 1L;
 
     private String id;
     private String name;

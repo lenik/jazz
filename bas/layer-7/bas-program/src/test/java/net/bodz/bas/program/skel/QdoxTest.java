@@ -11,12 +11,11 @@ import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.res.builtin.StringSource;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
-import net.bodz.mda.xjdoc.conv.FlatfClassDocLoader;
+import net.bodz.mda.xjdoc.conv.FlatfXjdocProvider;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
-import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -45,8 +44,7 @@ public class QdoxTest
         ClassLibrary syslib = new ClassLibrary(scl);
         JavaDocBuilder javaDocBuilder = new JavaDocBuilder(syslib);
 
-        TagLibraryLoader taglibLoader = new TagLibraryLoader(scl);
-        TagLibrarySet taglibs = taglibLoader.parseSet("*");
+        ITagLibrary tagLibrary = Xjdocs.getDefaultTagLibrary();
 
         MavenPomDir pomDir = MavenPomDir.fromClass(BasicCLI.class);
 
@@ -78,8 +76,9 @@ public class QdoxTest
 
                 StringSource ffSource = new StringSource(ff);
 
-                FlatfClassDocLoader ffLoader = new FlatfClassDocLoader();
-                ClassDoc doc2 = ffLoader.load(fqcn, ffSource, taglibs);
+                FlatfXjdocProvider ffLoader = new FlatfXjdocProvider();
+                ffLoader.setTagLibrary(tagLibrary);
+                ClassDoc doc2 = ffLoader.load(fqcn, ffSource);
 
                 BCharOut buf2 = new BCharOut();
                 FlatfOutput ffout2 = new FlatfOutput(buf2);

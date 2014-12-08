@@ -198,13 +198,13 @@ public class ClassDocToOptionsConverter
             throws ParseException {
         ClassDoc classDoc;
         try {
-            classDoc = ClassDocLoader.load(clazz);
-        } catch (ClassDocLoadException e) {
+            classDoc = Xjdocs.getDefaultProvider().getClassDoc(clazz);
+        } catch (XjdocLoaderException e) {
             throw new ParseException(e.getMessage(), e);
         }
 
         if (classDoc == null)
-            classDoc = new ClassDoc(clazz.getName());
+            classDoc = new ClassDoc(Xjdocs.getDefaultTagLibrary(), clazz.getName());
 
         return convert(clazz, classDoc, parent);
     }

@@ -10,6 +10,7 @@ import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.fmt.flatf.ISectionHandler;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
@@ -23,7 +24,8 @@ public class ClassDoc
     private Map<String, FieldDoc> fieldDocs;
     private Map<MethodId, MethodDoc> methodDocs;
 
-    public ClassDoc(String fqcn) {
+    public ClassDoc(ITagLibrary tagLibrary, String fqcn) {
+        super(tagLibrary);
         this.fqcn = fqcn;
         fieldDocs = new LinkedHashMap<String, FieldDoc>();
         methodDocs = new LinkedHashMap<MethodId, MethodDoc>();
@@ -32,7 +34,7 @@ public class ClassDoc
     static iString NO_LABEL = null; // iString.fn.val("no label");
 
     public static ClassDoc n_a(String fqcn) {
-        ClassDoc classDoc = new ClassDoc(fqcn);
+        ClassDoc classDoc = new ClassDoc(Xjdocs.getDefaultTagLibrary(), fqcn);
         classDoc.setTag(LABEL, NO_LABEL);
         // classDoc.setDescription(iString.fn.val(fqcn));
         classDoc.setText(iString.fn.val(fqcn));
@@ -116,19 +118,19 @@ public class ClassDoc
 
     /**
      * classdoc file format.
-     *
+     * 
      * The .classdoc file should be located along with the .class file:
      * <ul>
      * <li>foo/Bar$Inner.class
      * <li>foo/Bar$Inner.classdoc
      * </ul>
-     *
+     * 
      * Example:
-     *
+     * 
      * <pre>
      * #comments
      * %import f.q.c.Name
-     *
+     * 
      * # optional "[type]"
      * [field:...]
      * [method(int,String[],...)]
@@ -142,7 +144,7 @@ public class ClassDoc
      * param.bar = Bar is another parameter.
      * throws.IOException = I/O error occurred.
      * </pre>
-     *
+     * 
      * Features:
      * <ul>
      * <li>'\' in the end-of-line means continuation.
