@@ -9,7 +9,7 @@ import java.util.Set;
 import net.bodz.bas.t.iterator.Iterables;
 
 public class LinkedPropertyMap
-        implements IPropertyMap {
+        extends AbstractPropertyMap {
 
     private List<IPropertyMap> maps;
 
