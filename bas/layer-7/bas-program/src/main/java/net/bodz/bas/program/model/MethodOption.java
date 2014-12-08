@@ -8,6 +8,7 @@ import net.bodz.bas.err.control.Control;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.typer.std.ParserUtil;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
@@ -17,11 +18,9 @@ public class MethodOption
     private final Method method;
     private Class<?>[] parameterTypes;
 
-    public MethodOption(Method method, MethodDoc methodDoc) {
+    public MethodOption(Method method, MethodDoc doc) {
         super("method:" + new MethodId(method).toString(), //
-                method.getName(), //
-                methodDoc, //
-                method.getGenericReturnType());
+                method.getName(), method.getGenericReturnType(), doc);
         this.method = method;
         this.parameterTypes = method.getParameterTypes();
     }
@@ -46,7 +45,8 @@ public class MethodOption
 
     @Override
     public IProperty property() {
-        return new InvocationAsProperty(method);
+        IElementDoc doc = getXjdoc();
+        return new InvocationAsProperty(method, doc);
     }
 
 }
@@ -58,8 +58,8 @@ class InvocationAsProperty
     private Object[] args;
     private Object returnValue;
 
-    public InvocationAsProperty(Method method) {
-        super(method.getDeclaringClass(), method.getName());
+    public InvocationAsProperty(Method method, IElementDoc doc) {
+        super(method.getDeclaringClass(), method.getName(), doc);
         this.method = method;
     }
 
