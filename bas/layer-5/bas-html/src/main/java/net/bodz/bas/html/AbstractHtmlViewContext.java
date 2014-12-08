@@ -9,14 +9,14 @@ public abstract class AbstractHtmlViewContext
         implements IHtmlViewContext {
 
     @Override
-    public <spec_t> spec_t query(Class<spec_t> specificationType) {
+    public <spec_t> spec_t query(Class<spec_t> specificationClass) {
         HttpServletRequest request = getRequest();
 
-        Object requestAttribute = request.getAttribute(specificationType.getName());
+        Object requestAttribute = request.getAttribute(specificationClass.getName());
         if (requestAttribute != null)
-            return specificationType.cast(requestAttribute);
+            return specificationClass.cast(requestAttribute);
 
-        return super.query(specificationType);
+        return super.query(specificationClass);
     }
 
     @Override
