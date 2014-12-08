@@ -132,7 +132,9 @@ public class PathDispatchServlet
             PrintWriter writer = resp.getWriter();
             WriterCharOut charOut = new WriterCharOut(writer);
             ITreeOut treeOut = TreeOutImpl.from(charOut);
+
             XmlFormatter formatter = new XmlFormatter(treeOut);
+            formatter.setSelfClosing(false); // HTML5
             formatter.format(ctx.getHtmlDoc());
             break;
 
