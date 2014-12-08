@@ -13,7 +13,7 @@ import net.bodz.bas.ui.style.IImageData;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 import net.bodz.bas.ui.style.ImageUsage;
 import net.bodz.bas.ui.xjdoc.UiElementDoc;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.pkg.sis.ISisComponent;
 import net.bodz.pkg.sis.ISisProject;
@@ -71,7 +71,7 @@ class WelcomeLogoPage
         IImageData logoData = getProject().getStyle().getImage(ImageUsage.normal(320));
 
         if (logoData == null) {
-            ClassDoc classDoc = ClassDocLoader.load(SisProjectInstaller.class);
+            ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(SisProjectInstaller.class);
             IUiElementStyleDeclaration styleDecl = classDoc.to(UiElementDoc.class).getStyleClass();
             logoData = styleDecl.getImage(ImageUsage.NORMAL);
         }

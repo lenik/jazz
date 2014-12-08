@@ -11,7 +11,8 @@ import net.bodz.bas.program.model.IOption;
 import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.IXjdocProvider;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
@@ -20,6 +21,8 @@ import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 @ProgramName("battest")
 public class BatchCLITest
         extends BatchCLI {
+
+    static IXjdocProvider xjdocs = Xjdocs.getDefaultProvider();
 
     @Override
     public void processFile(FileHandler handler)
@@ -36,7 +39,7 @@ public class BatchCLITest
 
     static void printBaseDoc()
             throws IOException {
-        ClassDoc doc = ClassDocLoader.load(BatchCLI.class);
+        ClassDoc doc = xjdocs.getClassDoc(BatchCLI.class);
         BCharOut buf = new BCharOut();
         FlatfOutput out = new FlatfOutput(buf);
         doc.writeObject(out, new Options() //

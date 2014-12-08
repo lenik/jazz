@@ -32,7 +32,7 @@ import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.bas.t.tree.ITreeNode;
 import net.bodz.bas.t.tree.MapTreeNode;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.swt.c.pageflow.IPage;
@@ -84,11 +84,11 @@ public abstract class AbstractSisComponent
     public IElementDoc getXjdoc() {
         if (xjdoc == null) {
             Class<?> clazz = getClass();
-            ClassDoc classDoc = ClassDocLoader.load(clazz);
+            ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(clazz);
 
             if (classDoc == null) {
                 logger.warn("No class doc available for " + clazz);
-                classDoc = new ClassDoc(clazz.getName());
+                classDoc = new ClassDoc(Xjdocs.getDefaultTagLibrary(), clazz.getName());
             }
 
             xjdoc = classDoc;

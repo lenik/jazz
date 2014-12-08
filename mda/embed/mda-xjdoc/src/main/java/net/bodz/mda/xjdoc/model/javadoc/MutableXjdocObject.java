@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
@@ -30,7 +30,7 @@ public class MutableXjdocObject
 
     @Override
     protected IElementDoc loadXjdoc() {
-        ClassDoc classDoc = ClassDocLoader.load(getClass());
+        ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(getClass());
 
         if (classDoc == null)
             throw new IllegalUsageException("No class doc available.");

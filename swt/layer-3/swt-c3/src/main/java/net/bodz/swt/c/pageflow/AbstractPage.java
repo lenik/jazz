@@ -21,7 +21,7 @@ import net.bodz.bas.ui.style.IImageData;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 import net.bodz.bas.ui.style.ImageUsage;
 import net.bodz.bas.ui.xjdoc.UiElementDoc;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public abstract class AbstractPage
@@ -37,7 +37,7 @@ public abstract class AbstractPage
     protected PropertyChangeSupport propertyChangeSupport;
 
     public AbstractPage() {
-        classDoc = ClassDocLoader.load(getClass());
+        classDoc = Xjdocs.getDefaultProvider().getClassDoc(getClass());
         propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
