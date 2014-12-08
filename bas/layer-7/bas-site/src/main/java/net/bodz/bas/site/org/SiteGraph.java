@@ -8,6 +8,8 @@ public class SiteGraph
         extends SiteGraphNode
         implements ICacheControl {
 
+    private static final long serialVersionUID = 1L;
+
     @Override
     public CacheControlMode getCacheControlMode() {
         return CacheControlMode.AUTO;

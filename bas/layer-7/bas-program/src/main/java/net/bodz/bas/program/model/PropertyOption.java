@@ -15,11 +15,10 @@ public class PropertyOption
     Class<?> beanClass;
     PropertyDescriptor propertyDescriptor;
 
-    public PropertyOption(PropertyDescriptor propertyDescriptor, MethodDoc getterDoc) {
+    public PropertyOption(PropertyDescriptor propertyDescriptor, MethodDoc doc) {
         super("property:" + propertyDescriptor.getName(), //
                 propertyDescriptor.getName(), //
-                getterDoc, //
-                findPropertyGenericType(propertyDescriptor));
+                findPropertyGenericType(propertyDescriptor), doc);
         this.beanClass = propertyDescriptor.getReadMethod().getDeclaringClass();
         this.propertyDescriptor = propertyDescriptor;
     }
