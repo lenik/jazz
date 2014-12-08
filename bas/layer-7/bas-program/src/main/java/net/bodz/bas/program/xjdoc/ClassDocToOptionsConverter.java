@@ -11,23 +11,21 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.java.util.IMapEntryLoader;
+import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.program.model.FieldOption;
-import net.bodz.bas.program.model.IMutableOptionGroup;
-import net.bodz.bas.program.model.MethodOption;
-import net.bodz.bas.program.model.MutableOptionGroup;
-import net.bodz.bas.program.model.PropertyOption;
-import net.bodz.bas.program.model.SyntaxUsage;
-import net.bodz.mda.xjdoc.ClassDocLoadException;
-import net.bodz.mda.xjdoc.ClassDocLoader;
+import net.bodz.bas.program.model.*;
+import net.bodz.mda.xjdoc.XjdocLoaderException;
+import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
-public class ClassDocToOptionsConverter {
+public class ClassDocToOptionsConverter
+        implements IMapEntryLoader<Class<?>, IOptionGroup> {
 
     boolean xjdocRequired = true;
 
@@ -55,7 +53,7 @@ public class ClassDocToOptionsConverter {
 
     /**
      * Whether to scan superclass for options.
-     *
+     * 
      * For Bean-Properties:
      * <ul>
      * <li>reflective-mode:
@@ -84,7 +82,7 @@ public class ClassDocToOptionsConverter {
 
     /**
      * The option group inheritance mode.
-     *
+     * 
      * @see OptionGroupInheritance#reflective
      * @see OptionGroupInheritance#reduceEmptyParents
      * @see OptionGroupInheritance#flatten
@@ -343,6 +341,21 @@ public class ClassDocToOptionsConverter {
                 return "";
 
         return descriptor;
+    }
+
+    /** ⇱ Implementation Of {@link IMapEntryLoader}. */
+    /* _____________________________ */static section.iface __ENTRY_LOADER__;
+
+    @Override
+    public IOptionGroup loadValue(Class<?> clazz)
+            throws LazyLoadException {
+        IOptionGroup options;
+        try {
+            options = convertTree(clazz);
+        } catch (ParseException e) {
+            throw new LazyLoadException(e.getMessage(), e);
+        }
+        return options;
     }
 
 }

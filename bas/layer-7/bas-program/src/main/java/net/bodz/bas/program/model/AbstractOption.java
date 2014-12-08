@@ -1,5 +1,6 @@
 package net.bodz.bas.program.model;
 
+import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -14,6 +15,7 @@ import net.bodz.bas.c.type.addor.IAddor;
 import net.bodz.bas.c.type.addor.MapAddor;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.order.IMutablePriority;
@@ -48,11 +50,11 @@ public abstract class AbstractOption
 
     Object defaultValue;
 
-    public AbstractOption(String id, IElementDoc xjdoc, Type _type) {
-        this(id, id, xjdoc, _type);
+    public AbstractOption(String id, Type _type, IElementDoc doc) {
+        this(id, id, _type, doc);
     }
 
-    public AbstractOption(String id, String longName, IElementDoc xjdoc, Type _type) {
+    public AbstractOption(String id, String longName, Type _type, IElementDoc doc) {
         this.id = id;
         this.longName = Strings.hyphenatize(longName);
 
@@ -115,7 +117,9 @@ public abstract class AbstractOption
 
         defaultValue = TrueValues.getTrueValue(valueType);
 
-        setXjdoc(xjdoc);
+        if (doc == null)
+            throw new NullPointerException("doc");
+        setXjdoc(doc);
     }
 
     @Override
@@ -278,6 +282,12 @@ public abstract class AbstractOption
 
     public void setDefaultValue(Object defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    @Override
+    protected IElementDoc loadXjdoc()
+            throws ParseException, IOException {
+        throw new UnexpectedException("already loaded.");
     }
 
 }
