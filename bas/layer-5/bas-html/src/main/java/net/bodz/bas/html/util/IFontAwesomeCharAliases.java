@@ -1,6 +1,6 @@
 package net.bodz.bas.html.util;
 
-import net.bodz.bas.repr.view.util.IFontCharAliases;
+import net.bodz.bas.repr.sugar.IFontCharAliases;
 
 public interface IFontAwesomeCharAliases
         extends IFontCharAliases {
