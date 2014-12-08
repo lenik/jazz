@@ -17,4 +17,17 @@ public interface IMutableElement
 
     void setModifiers(int modifiers);
 
+    class fn {
+
+        public static void copy1(IElement src, IMutableElement dst) {
+            dst.setName(src.getName());
+            dst.setLabel(src.getLabel());
+            dst.setDescription(src.getDescription());
+            dst.setHelpDoc(src.getHelpDoc());
+            dst.setDetailLevel(src.getDetailLevel());
+            dst.setModifiers(src.getModifiers());
+        }
+
+    }
+
 }
