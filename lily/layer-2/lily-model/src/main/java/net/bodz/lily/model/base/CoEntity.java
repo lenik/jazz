@@ -51,7 +51,7 @@ public abstract class CoEntity
     private String image;
 
     private int priority;
-    private long creationDate; // = System.currentTimeMillis();
+    private long creationTime; // = System.currentTimeMillis();
     private long lastModified; // = creationDate;
     private int flags = 0;
     private int state = S_INIT;
@@ -139,18 +139,18 @@ public abstract class CoEntity
      */
     @OfGroup(IContent.class)
     @Override
-    public long getCreationDate() {
-        return creationDate;
+    public long getCreationTime() {
+        return creationTime;
     }
 
-    public void setCreationDate(long creationDate) {
-        this.creationDate = creationDate;
+    public void setCreationTime(long creationTime) {
+        this.creationTime = creationTime;
     }
 
     public void touch() {
         lastModified = System.currentTimeMillis();
-        if (creationDate == 0L)
-            creationDate = lastModified;
+        if (creationTime == 0L)
+            creationTime = lastModified;
     }
 
     /**
@@ -193,7 +193,7 @@ public abstract class CoEntity
 
     /**
      * One day by default.
-     * 
+     *
      * @label Max Age
      * @label.zh.cn 缓存寿命
      */
