@@ -28,7 +28,7 @@ public class MutableContent
     }
 
     @Override
-    public long getCreationDate() {
+    public long getCreationTime() {
         return creationDate;
     }
 
