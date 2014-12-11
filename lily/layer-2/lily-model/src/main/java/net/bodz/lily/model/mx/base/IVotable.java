@@ -1,7 +1,15 @@
 package net.bodz.lily.model.mx.base;
 
+import java.util.Collection;
+
+/**
+ * @label Votable
+ * @label.zh.cn 投票
+ */
 public interface IVotable {
 
     int getVoteCount();
+
+    Collection<Voter> getVoters();
 
 }
