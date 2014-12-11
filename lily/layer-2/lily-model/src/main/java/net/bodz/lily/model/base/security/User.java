@@ -136,4 +136,9 @@ public class User
         this.lastLoginIP = lastLoginIP;
     }
 
+    @Override
+    public String toString() {
+        return getLabel();
+    }
+
 }
