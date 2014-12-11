@@ -36,7 +36,7 @@ public abstract class AbstractXjdocContent
     }
 
     @Override
-    public long getCreationDate() {
+    public long getCreationTime() {
         return creationDate;
     }
 

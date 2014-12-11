@@ -10,6 +10,6 @@ import net.bodz.bas.t.order.IPriority;
 public interface IContent
         extends ICacheControl, IPriority {
 
-    long getCreationDate();
+    long getCreationTime();
 
 }

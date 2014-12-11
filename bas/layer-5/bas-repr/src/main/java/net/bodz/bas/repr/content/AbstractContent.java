@@ -23,7 +23,7 @@ public abstract class AbstractContent
     /* _____________________________ */static section.iface __CONTENT__;
 
     @Override
-    public long getCreationDate() {
+    public long getCreationTime() {
         return creationDate;
     }
 
