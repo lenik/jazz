@@ -4,8 +4,8 @@ import java.lang.reflect.Array;
 
 import net.bodz.bas.c.object.Nullables;
 
-public abstract class AbstractVariantLookupMap<K>
-        implements IVariantLookupMap<K> {
+public abstract class AbstractVariantMap<K>
+        extends AbstractTmVariantMap<K> {
 
     @Override
     public String format(K formatKey, Object... args) {
@@ -22,7 +22,7 @@ public abstract class AbstractVariantLookupMap<K>
     }
 
     @Override
-    public Object getScalar(K key) {
+    public final Object getScalar(K key) {
         return getScalar(key, null);
     }
 
@@ -38,6 +38,22 @@ public abstract class AbstractVariantLookupMap<K>
             return null;
         else
             return Array.get(value, 0);
+    }
+
+    @Override
+    public final Object[] getArray(K key) {
+        return getArray(key, null);
+    }
+
+    @Override
+    public Object[] getArray(K key, Object[] defaultValue) {
+        Object value = get(key);
+        if (value == null)
+            return containsKey(key) ? new String[] { null } : defaultValue;
+        if (value.getClass().isArray())
+            return (Object[]) value;
+        else
+            return new Object[] { value };
     }
 
     @Override
@@ -64,7 +80,7 @@ public abstract class AbstractVariantLookupMap<K>
     public String[] getStringArray(K key, String[] defaultValue) {
         Object value = get(key);
         if (value == null)
-            return containsKey(key) ? null : defaultValue;
+            return containsKey(key) ? new String[] { null } : defaultValue;
         return toStringArray(value);
     }
 

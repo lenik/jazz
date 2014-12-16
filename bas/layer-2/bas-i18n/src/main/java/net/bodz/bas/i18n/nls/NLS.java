@@ -4,10 +4,10 @@ import java.util.Locale;
 import java.util.Set;
 
 import net.bodz.bas.t.variant.ILookupMap;
-import net.bodz.bas.t.variant.IVariantLookupMap;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public interface NLS
-        extends IVariantLookupMap<String> {
+        extends IVariantMap<String> {
 
     NLS getParent();
 

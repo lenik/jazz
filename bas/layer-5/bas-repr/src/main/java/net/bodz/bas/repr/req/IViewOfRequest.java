@@ -1,7 +1,7 @@
 package net.bodz.bas.repr.req;
 
 import net.bodz.bas.std.rfc.mime.ContentType;
-import net.bodz.bas.t.variant.IVariantLookupMap;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public interface IViewOfRequest {
 
@@ -18,6 +18,6 @@ public interface IViewOfRequest {
 
     void setContentType(ContentType contentType);
 
-    IVariantLookupMap<String> getParameters();
+    IVariantMap<String> getParameters();
 
 }

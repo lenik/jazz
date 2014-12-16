@@ -6,10 +6,10 @@ import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.LocaleCtl;
-import net.bodz.bas.t.variant.AbstractTmVariantLookupMap;
+import net.bodz.bas.t.variant.AbstractVariantMap;
 
 public abstract class AbstractNLS
-        extends AbstractTmVariantLookupMap<String>
+        extends AbstractVariantMap<String>
         implements NLS {
 
     private final NLS parent;

@@ -6,10 +6,10 @@ import java.util.Set;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.bas.t.variant.AbstractTmVariantLookupMap;
+import net.bodz.bas.t.variant.AbstractVariantMap;
 
 public class MutableRequest
-        extends AbstractTmVariantLookupMap<String> {
+        extends AbstractVariantMap<String> {
 
     private final Object source;
     private String protocol;
