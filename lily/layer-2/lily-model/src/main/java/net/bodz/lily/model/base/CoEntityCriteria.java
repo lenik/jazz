@@ -1,8 +1,14 @@
 package net.bodz.lily.model.base;
 
+import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.c.java.util.DateInterval;
+import net.bodz.bas.err.ParseException;
+
+import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * @see net.bodz.lily.model.base.CoEntity
@@ -81,6 +87,24 @@ public class CoEntityCriteria {
 
     public void setAcls(Set<Integer> acls) {
         this.acls = acls;
+    }
+
+    public void populate(HttpServletRequest req) {
+        Map<String, String[]> parameterMap = req.getParameterMap();
+// IVariantMap<?> v;
+// reqEx.getParameterMap();
+    }
+
+    protected void populate(QVariantMap<String> map)
+            throws ParseException {
+        queryText = map.getString("q", queryText);
+        dateInterval = map.getDateInterval("dates", dateInterval);
+        priorities = map.getInts("priorities", priorities);
+        flags = map.getInts("flags", flags);
+        states = map.getInts("states", states);
+        ownerId = map.getInt("uid", ownerId);
+        ownerGroupId = map.getInt("gid", ownerGroupId);
+        acls = map.getInts("acls", acls);
     }
 
 }

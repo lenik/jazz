@@ -7,7 +7,6 @@ import net.bodz.bas.repr.form.NullConvertion;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.repr.form.SpaceNormalization;
 
-
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FormInput {
 

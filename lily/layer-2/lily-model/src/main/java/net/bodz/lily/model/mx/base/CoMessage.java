@@ -32,14 +32,16 @@ public class CoMessage
     private Date sentTime;
     private Date receivedTime;
 
-    private int voteUps;
-    private int voteDowns;
+    private Integer voteUps;
+    private Integer voteDowns;
     private List<Voter> voters;
     private Voter iVoter;
 
-    private int likerCount;
+    private Integer likerCount;
     private List<Liker> likers;
     private Liker iLiker;
+
+    private Integer readCount;
 
     @Override
     public Long getId() {
@@ -144,11 +146,11 @@ public class CoMessage
      * @label.zh.cn 赞
      */
     @OfGroup(IVotable.class)
-    public int getVoteUps() {
+    public Integer getVoteUps() {
         return voteUps;
     }
 
-    public void setVoteUps(int voteUps) {
+    public void setVoteUps(Integer voteUps) {
         this.voteUps = voteUps;
     }
 
@@ -157,11 +159,11 @@ public class CoMessage
      * @label.zh.cn 踩
      */
     @OfGroup(IVotable.class)
-    public int getVoteDowns() {
+    public Integer getVoteDowns() {
         return voteDowns;
     }
 
-    public void setVoteDowns(int voteDowns) {
+    public void setVoteDowns(Integer voteDowns) {
         this.voteDowns = voteDowns;
     }
 
@@ -240,6 +242,14 @@ public class CoMessage
 
     public void setiLiker(Liker iLiker) {
         this.iLiker = iLiker;
+    }
+
+    public Integer getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(Integer readCount) {
+        this.readCount = readCount;
     }
 
 }
