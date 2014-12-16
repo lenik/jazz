@@ -1,11 +1,9 @@
 package cg;
 
-import net.bodz.bas.t.variant.AbstractTmVariantLookupMap;
-
 /**
- * @see AbstractTmVariantLookupMap
+ * @see net.bodz.bas.t.variant.AbstractTmVariantMap
  */
-public class VariantLookupMapGenerator {
+public class VariantMapGenerator {
 
     public static void main(String[] args) {
         String[] types = { // "Object", "String", //

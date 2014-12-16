@@ -2,12 +2,12 @@ package net.bodz.bas.t.variant;
 
 import java.util.Set;
 
-public class VariantLookupMap<K>
-        extends AbstractTmVariantLookupMap<K> {
+public class VariantMapImpl<K>
+        extends AbstractVariantMap<K> {
 
     private final ILookupMap<K, Object> lookupMap;
 
-    public VariantLookupMap(ILookupMap<K, Object> lookupMap) {
+    public VariantMapImpl(ILookupMap<K, Object> lookupMap) {
         if (lookupMap == null)
             throw new NullPointerException("lookupMap");
         this.lookupMap = lookupMap;

@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.t.variant.IVariantLookupMap;
-import net.bodz.bas.t.variant.VariantMap;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.MutableVariantMap;
 
 /**
  * Find method name in the dispatch path, translate into request attributes and remove them from
@@ -31,10 +31,10 @@ public class DefaultMethodOfRequest
     private static final long serialVersionUID = 1L;
 
     String methodName;
-    VariantMap<String> parameters;
+    MutableVariantMap<String> parameters;
 
     public DefaultMethodOfRequest() {
-        this.parameters = new VariantMap<>();
+        this.parameters = new MutableVariantMap<>();
     }
 
     public DefaultMethodOfRequest(String methodName, Map<String, Object> parameterMap) {
@@ -43,7 +43,7 @@ public class DefaultMethodOfRequest
         if (parameterMap == null)
             throw new NullPointerException("parameterMap");
         this.methodName = methodName;
-        this.parameters = new VariantMap<String>(parameterMap);
+        this.parameters = new MutableVariantMap<String>(parameterMap);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class DefaultMethodOfRequest
     }
 
     @Override
-    public IVariantLookupMap<String> getParameters() {
+    public IVariantMap<String> getParameters() {
         return parameters;
     }
 

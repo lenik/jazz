@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
-import net.bodz.bas.t.variant.IVariantLookupMap;
-import net.bodz.bas.t.variant.VariantMap;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.MutableVariantMap;
 
 public class DefaultViewOfRequest
         extends AbstractHttpRequestProcessor
@@ -18,10 +18,10 @@ public class DefaultViewOfRequest
 
     private String viewName;
     private ContentType contentType = ContentTypes.text_html;
-    private IVariantLookupMap<String> parameters;
+    private IVariantMap<String> parameters;
 
     public DefaultViewOfRequest() {
-        parameters = new VariantMap<String>(new HashMap<String, Object>());
+        parameters = new MutableVariantMap<String>(new HashMap<String, Object>());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class DefaultViewOfRequest
     }
 
     @Override
-    public IVariantLookupMap<String> getParameters() {
+    public IVariantMap<String> getParameters() {
         return parameters;
     }
 

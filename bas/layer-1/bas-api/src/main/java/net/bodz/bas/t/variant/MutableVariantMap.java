@@ -8,19 +8,19 @@ import java.util.Set;
 
 import net.bodz.bas.t.model.IWrapper;
 
-public class VariantMap<K>
-        extends AbstractTmVariantLookupMap<K>
-        implements IWrapper<Map<K, Object>>, IVariantMap<K>, Serializable {
+public class MutableVariantMap<K>
+        extends AbstractVariantMap<K>
+        implements IWrapper<Map<K, Object>>, IMutableVariantMap<K>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Map<K, Object> map;
 
-    public VariantMap() {
+    public MutableVariantMap() {
         this.map = new HashMap<K, Object>();
     }
 
-    public VariantMap(Map<K, Object> map) {
+    public MutableVariantMap(Map<K, Object> map) {
         if (map == null)
             throw new NullPointerException("map");
         this.map = map;

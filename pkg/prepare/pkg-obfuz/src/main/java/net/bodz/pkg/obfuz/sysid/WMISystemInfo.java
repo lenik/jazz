@@ -8,10 +8,10 @@ import java.util.HashMap;
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.system.SystemInfo;
-import net.bodz.bas.t.variant.VariantMap;
+import net.bodz.bas.t.variant.MutableVariantMap;
 
 public class WMISystemInfo
-        extends VariantMap<String> {
+        extends MutableVariantMap<String> {
 
     private static final long serialVersionUID = 1L;
 

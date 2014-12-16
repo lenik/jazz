@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.req;
 
-import net.bodz.bas.t.variant.IVariantLookupMap;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public interface IMethodOfRequest {
 
@@ -8,6 +8,6 @@ public interface IMethodOfRequest {
 
     void setMethodName(String methodName);
 
-    IVariantLookupMap<String> getParameters();
+    IVariantMap<String> getParameters();
 
 }
