@@ -8,9 +8,9 @@
         <id property="id" column="id" />
         <result property="subject" column="subject" />
         <result property="text" column="text" />
-        <result property="voteUps" column="voteu" />
-        <result property="voteDowns" column="voted" />
-        <result property="favorites" column="favs" />
+        <result property="voteUps" column="nvote" />
+        <result property="likerCount" column="nlike" />
+        <result property="readCount" column="nread" />
         <association property="op" javaType="net.bodz.lily.model.base.security.User">
             <id property="id" column="op" />
             <result property="label" column="op_label" />
@@ -21,9 +21,9 @@
         <include refid="base.setUSA" />
         <if test="subject != null">subject=#{subject},</if>
         <if test="text != null">text=#{text},</if>
-        voteu=#{voteUps},
-        voted=#{voteDowns},
-        favs=#{favorites},
+        <if test="voteUps != null">nvote=#{voteUps - voteDowns},</if>
+        <if test="likerCount != null">nlike=#{likerCount},</if>
+        <if test="readCount != null">nread=#{readCount},</if>
         <if test="op != null">op=#{op.id},</if>
     </sql>
 
