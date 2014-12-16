@@ -8,7 +8,7 @@ import java.util.List;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.Stdio;
-import net.bodz.bas.meta.decl.Redundant;
+import net.bodz.bas.meta.cache.Derived;
 
 public abstract class CoNode<self_t extends CoNode<self_t>>
         extends CoEntity {
@@ -104,7 +104,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return children.size();
     }
 
-    @Redundant
+    @Derived
     public int getDepth() {
         int safeDepth = getSafeDepth();
         int depth = 0;
