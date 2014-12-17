@@ -8,6 +8,11 @@
     <artifactId>lily-model</artifactId>
     <dependencies>
         <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-site</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.lily</groupId>
             <artifactId>lily-api</artifactId>
             <version>${project.version}</version>

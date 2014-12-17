@@ -1,15 +1,17 @@
 package net.bodz.lily.model.base.schema;
 
-import net.bodz.bas.meta.cache.Statistics;
-
 public class TagDef
         extends AbstractDefinition<TagDef> {
 
     private static final long serialVersionUID = 1L;
 
     private TagSetDef tagSet;
-    private long refCount;
 
+    /**
+     * Tag Set
+     * 
+     * @label.zh.cn 标签集
+     */
     public TagSetDef getTagSet() {
         return tagSet;
     }
@@ -22,13 +24,9 @@ public class TagDef
         (this.tagSet = new TagSetDef()).setId(tagSetId);
     }
 
-    @Statistics
-    public long getRefCount() {
-        return refCount;
-    }
-
-    public void setRefCount(long refCount) {
-        this.refCount = refCount;
+    @Override
+    public String toString() {
+        return getCode() + ":" + getLabel();
     }
 
 }

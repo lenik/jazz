@@ -81,7 +81,7 @@ public abstract class CoEntity
 
     /**
      * @label Label
-     * @label.zh.cn 标签
+     * @label.zh.cn 名称
      */
     public String getLabel() {
         return label;
@@ -193,7 +193,7 @@ public abstract class CoEntity
 
     /**
      * One day by default.
-     *
+     * 
      * @label Max Age
      * @label.zh.cn 缓存寿命
      */

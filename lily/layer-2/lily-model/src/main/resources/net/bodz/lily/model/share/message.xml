@@ -5,7 +5,6 @@
 <mapper namespace="message">
 
     <resultMap id="mapX" type="com.bee32.zebra.oa.thread.Topic" extends="base.mapUSA">
-        <id property="id" column="id" />
         <result property="subject" column="subject" />
         <result property="text" column="text" />
         <result property="voteUps" column="nvote" />

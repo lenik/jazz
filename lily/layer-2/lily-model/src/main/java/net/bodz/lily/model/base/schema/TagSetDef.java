@@ -2,6 +2,11 @@ package net.bodz.lily.model.base.schema;
 
 import java.util.List;
 
+/**
+ * Tag Set Definition
+ * 
+ * @label.zh.cn 标签集定义
+ */
 public class TagSetDef
         extends AbstractDefinition<TagSetDef> {
 
@@ -10,6 +15,11 @@ public class TagSetDef
     private boolean ortho;
     private List<TagDef> tags;
 
+    /**
+     * Orthogonal
+     * 
+     * @label.zh.cn 正交
+     */
     public boolean isOrtho() {
         return ortho;
     }
@@ -18,6 +28,11 @@ public class TagSetDef
         this.ortho = ortho;
     }
 
+    /**
+     * Tag List
+     * 
+     * @label.zh.cn 标签列表
+     */
     public List<TagDef> getTags() {
         return tags;
     }

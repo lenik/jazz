@@ -1,0 +1,7 @@
+net.bodz.lily.model.base.schema.impl.AttributeDefVbo
+net.bodz.lily.model.base.schema.impl.CategoryDefVbo
+net.bodz.lily.model.base.schema.impl.PhaseDefVbo
+net.bodz.lily.model.base.schema.impl.PriorityDefVbo
+net.bodz.lily.model.base.schema.impl.SchemaDefVbo
+net.bodz.lily.model.base.schema.impl.TagDefVbo
+net.bodz.lily.model.base.schema.impl.TagSetDefVbo

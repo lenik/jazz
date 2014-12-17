@@ -1,2 +1,9 @@
-net.bodz.lily.model.base.security.UserMapper
+net.bodz.lily.model.base.schema.impl.AttributeDefMapper
+net.bodz.lily.model.base.schema.impl.CategoryDefMapper
+net.bodz.lily.model.base.schema.impl.PhaseDefMapper
+net.bodz.lily.model.base.schema.impl.PriorityDefMapper
+net.bodz.lily.model.base.schema.impl.SchemaDefMapper
+net.bodz.lily.model.base.schema.impl.TagDefMapper
+net.bodz.lily.model.base.schema.impl.TagSetDefMapper
 net.bodz.lily.model.base.security.GroupMapper
+net.bodz.lily.model.base.security.UserMapper
