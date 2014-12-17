@@ -28,76 +28,85 @@ public class CoEntityCriteria {
         return queryText;
     }
 
-    public void setQueryText(String queryText) {
+    public CoEntityCriteria setQueryText(String queryText) {
         this.queryText = queryText;
+        return this;
     }
 
-    public DateInterval getDateInterval() {
-        return dateInterval;
+    public DateRange getTimeRange() {
+        return timeRange;
     }
 
-    public void setDateInterval(DateInterval dateInterval) {
-        this.dateInterval = dateInterval;
+    public CoEntityCriteria setTimeRange(DateRange timeRange) {
+        this.timeRange = timeRange;
+        return this;
     }
 
     public Set<Integer> getPriorities() {
         return priorities;
     }
 
-    public void setPriorities(Set<Integer> priorities) {
+    public CoEntityCriteria setPriorities(Set<Integer> priorities) {
         this.priorities = priorities;
+        return this;
     }
 
     public Set<Integer> getFlags() {
         return flags;
     }
 
-    public void setFlags(Set<Integer> flags) {
+    public CoEntityCriteria setFlags(Set<Integer> flags) {
         this.flags = flags;
+        return this;
     }
 
     public Set<Integer> getStates() {
         return states;
     }
 
-    public void setStates(Set<Integer> states) {
+    public CoEntityCriteria setStates(Set<Integer> states) {
         this.states = states;
+        return this;
     }
 
     public Integer getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(Integer ownerId) {
+    public CoEntityCriteria setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
+        return this;
     }
 
     public Integer getOwnerGroupId() {
         return ownerGroupId;
     }
 
-    public void setOwnerGroupId(Integer ownerGroupId) {
+    public CoEntityCriteria setOwnerGroupId(Integer ownerGroupId) {
         this.ownerGroupId = ownerGroupId;
+        return this;
     }
 
     public Set<Integer> getAcls() {
         return acls;
     }
 
-    public void setAcls(Set<Integer> acls) {
+    public CoEntityCriteria setAcls(Set<Integer> acls) {
         this.acls = acls;
+        return this;
     }
 
-    public void populate(HttpServletRequest req) {
-        Map<String, String[]> parameterMap = req.getParameterMap();
-// IVariantMap<?> v;
-// reqEx.getParameterMap();
+    public void populate(Map<String, String[]> parameterMap)
+            throws ParseException {
+        ParameterMapVariantMap variantMap = new ParameterMapVariantMap(parameterMap);
+        QVariantMap<String> qMap = new QVariantMap<>(variantMap);
+        populate(qMap);
     }
 
     protected void populate(QVariantMap<String> map)
             throws ParseException {
         queryText = map.getString("q", queryText);
-        dateInterval = map.getDateInterval("dates", dateInterval);
+        timeRange = map.getDateRange("times", timeRange);
         priorities = map.getInts("priorities", priorities);
         flags = map.getInts("flags", flags);
         states = map.getInts("states", states);

@@ -6,6 +6,7 @@
 
     <!-- UI -->
     <resultMap id="mapU" type="net.bodz.lily.model.base.CoEntity">
+        <id property="id" column="id" />
         <result property="codeName" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />

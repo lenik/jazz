@@ -24,6 +24,12 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
         this.id = id;
     }
 
+    /**
+     * Code
+     * 
+     * @label Code
+     * @label.zh.cn 代码
+     */
     public String getCode() {
         return getCodeName();
     }

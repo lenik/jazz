@@ -190,7 +190,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * Check if the given node may be added to the tree.
-     *
+     * 
      * @param child
      *            <code>true</code> for child node, <code>false</code> for parent node.
      * @param node
@@ -206,7 +206,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * TODO conformadate to PrincipalDiag#checkDeadLoop.
-     *
+     * 
      * @param order
      *            Max number of nodes in the graph, this enables fast check.
      */
