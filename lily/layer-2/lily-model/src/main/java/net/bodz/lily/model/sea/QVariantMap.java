@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import net.bodz.bas.c.java.util.DateInterval;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.set.DoubleRange;
-import net.bodz.bas.t.set.FloatRange;
-import net.bodz.bas.t.set.IntRange;
-import net.bodz.bas.t.set.LongRange;
+import net.bodz.bas.t.range.DateRange;
+import net.bodz.bas.t.range.DoubleRange;
+import net.bodz.bas.t.range.FloatRange;
+import net.bodz.bas.t.range.IntRange;
+import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.variant.DecoratedVariantMap;
 import net.bodz.bas.t.variant.IVariantMap;
 
@@ -106,12 +106,12 @@ public class QVariantMap<K>
         return DoubleRange.parse(s);
     }
 
-    public DateInterval getDateInterval(K key, DateInterval defaultValue)
+    public DateRange getDateRange(K key, DateRange defaultValue)
             throws ParseException {
         String s = getString(key);
         if (s == null || s.isEmpty())
             return defaultValue;
-        return DateInterval.parse(s, false);
+        return DateRange.parse(s, false);
     }
 
 }

@@ -3,11 +3,10 @@ package net.bodz.lily.model.base;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
-import net.bodz.bas.c.java.util.DateInterval;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.t.range.DateRange;
 
+import net.bodz.lily.model.sea.ParameterMapVariantMap;
 import net.bodz.lily.model.sea.QVariantMap;
 
 /**
@@ -16,7 +15,7 @@ import net.bodz.lily.model.sea.QVariantMap;
 public class CoEntityCriteria {
 
     String queryText;
-    DateInterval dateInterval;
+    DateRange timeRange;
 
     Set<Integer> priorities;
     Set<Integer> flags;

@@ -1,4 +1,4 @@
-package net.bodz.bas.t.set;
+package net.bodz.bas.t.range;
 
 import java.util.AbstractSet;
 import java.util.Comparator;
@@ -7,68 +7,68 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
-import net.bodz.bas.c.primitive.IntegerComparator;
+import net.bodz.bas.c.primitive.LongComparator;
 import net.bodz.bas.err.ParseException;
 
-public class IntRange
-        extends AbstractSet<Integer>
-        implements NavigableSet<Integer> {
+public class LongRange
+        extends AbstractSet<Long>
+        implements NavigableSet<Long> {
 
-    public int start;
-    public int end;
+    public long start;
+    public long end;
 
-    public IntRange(int start, int end) {
+    public LongRange(long start, long end) {
         this.start = start;
         this.end = end;
     }
 
-    public static IntRange parse(String s)
+    public static LongRange parse(String s)
             throws ParseException {
         try {
             int colon = s.indexOf(':');
             if (colon == -1) {
-                int point = Integer.parseInt(s);
-                return new IntRange(point, point + 1);
+                long point = Long.parseLong(s);
+                return new LongRange(point, point + 1);
             }
             String startStr = s.substring(0, colon);
             String endStr = s.substring(colon + 1);
-            int start = startStr.isEmpty() ? Integer.MIN_VALUE : Integer.parseInt(startStr);
-            int end = endStr.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(endStr);
-            return new IntRange(start, end);
+            long start = startStr.isEmpty() ? Long.MIN_VALUE : Long.parseLong(startStr);
+            long end = endStr.isEmpty() ? Long.MAX_VALUE : Long.parseLong(endStr);
+            return new LongRange(start, end);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }
     }
 
-    public int getStart() {
+    public long getStart() {
         return start;
     }
 
-    public void setStart(int start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public int getEnd() {
+    public long getEnd() {
         return end;
     }
 
-    public void setEnd(int end) {
+    public void setEnd(long end) {
         this.end = end;
     }
 
-    public int getMin() {
+    public long getMin() {
         return start;
     }
 
-    public int getMax() {
+    public long getMax() {
         return end - 1;
     }
 
     class Iter
-            implements Iterator<Integer> {
+            implements Iterator<Long> {
 
-        private int i = start;
-        private int last = start - 1;
+        private long i = start;
+        private long last = start - 1;
 
         @Override
         public boolean hasNext() {
@@ -76,7 +76,7 @@ public class IntRange
         }
 
         @Override
-        public Integer next() {
+        public Long next() {
             return last = i++;
         }
 
@@ -93,23 +93,27 @@ public class IntRange
     }
 
     @Override
-    public Iterator<Integer> iterator() {
+    public Iterator<Long> iterator() {
         return new Iter();
     }
 
     @Override
     public int size() {
-        return end - start;
+        long sizel = end - start;
+        if (sizel >= Integer.MAX_VALUE)
+            return -1;
+        else
+            return (int) sizel;
     }
 
     @Override
     public boolean contains(Object o) {
-        int i = (Integer) o;
+        long i = (Long) o;
         return i >= start && i < end;
     }
 
     @Override
-    public boolean add(Integer e) {
+    public boolean add(Long e) {
         if (e >= start && e < end)
             return false;
         else if (e == start - 1)
@@ -123,7 +127,7 @@ public class IntRange
 
     @Override
     public boolean remove(Object o) {
-        int i = (Integer) o;
+        long i = (Long) o;
         if (i < start || i >= end)
             return false;
         if (i == end - 1)
@@ -148,19 +152,19 @@ public class IntRange
     // SortedSet
 
     @Override
-    public Comparator<? super Integer> comparator() {
-        return IntegerComparator.INSTANCE;
+    public Comparator<? super Long> comparator() {
+        return LongComparator.INSTANCE;
     }
 
     @Override
-    public Integer first() {
+    public Long first() {
         if (start >= end)
             throw new NoSuchElementException();
         return start;
     }
 
     @Override
-    public Integer last() {
+    public Long last() {
         if (start >= end)
             throw new NoSuchElementException();
         return end - 1;
@@ -169,10 +173,10 @@ public class IntRange
     // NavigableSet
 
     class DIter
-            implements Iterator<Integer> {
+            implements Iterator<Long> {
 
-        private int i = end;
-        private int last = end;
+        private long i = end;
+        private long last = end;
 
         @Override
         public boolean hasNext() {
@@ -180,7 +184,7 @@ public class IntRange
         }
 
         @Override
-        public Integer next() {
+        public Long next() {
             return last = --i;
         }
 
@@ -196,12 +200,12 @@ public class IntRange
     }
 
     @Override
-    public Iterator<Integer> descendingIterator() {
+    public Iterator<Long> descendingIterator() {
         return new DIter();
     }
 
     @Override
-    public Integer floor(Integer e) {
+    public Long floor(Long e) {
         if (start >= end)
             return null;
         if (e < start)
@@ -212,7 +216,7 @@ public class IntRange
     }
 
     @Override
-    public Integer ceiling(Integer e) {
+    public Long ceiling(Long e) {
         if (start >= end)
             return null;
         if (e < start)
@@ -223,10 +227,10 @@ public class IntRange
     }
 
     @Override
-    public Integer lower(Integer _e) {
+    public Long lower(Long _e) {
         if (start >= end)
             return null;
-        int e = _e;
+        long e = _e;
         if (e >= end)
             return end;
         if (e <= start)
@@ -235,10 +239,10 @@ public class IntRange
     }
 
     @Override
-    public Integer higher(Integer _e) {
+    public Long higher(Long _e) {
         if (start >= end)
             return null;
-        int e = _e;
+        long e = _e;
         if (e < start)
             return start;
         if (e >= end - 1)
@@ -247,64 +251,63 @@ public class IntRange
     }
 
     @Override
-    public Integer pollFirst() {
+    public Long pollFirst() {
         if (start < end)
             return start++;
         return null;
     }
 
     @Override
-    public Integer pollLast() {
+    public Long pollLast() {
         if (start < end)
             return --end;
         return null;
     }
 
     @Override
-    public NavigableSet<Integer> headSet(Integer toElement, boolean inclusive) {
+    public NavigableSet<Long> headSet(Long toElement, boolean inclusive) {
         if (inclusive)
             toElement++;
-        int _end = Math.min(end, toElement);
-        return new IntRange(start, _end);
+        long _end = Math.min(end, toElement);
+        return new LongRange(start, _end);
     }
 
     @Override
-    public SortedSet<Integer> headSet(Integer toElement) {
+    public SortedSet<Long> headSet(Long toElement) {
         return headSet(toElement, false);
     }
 
     @Override
-    public NavigableSet<Integer> tailSet(Integer fromElement, boolean inclusive) {
+    public NavigableSet<Long> tailSet(Long fromElement, boolean inclusive) {
         if (!inclusive)
             fromElement++;
-        int _start = Math.max(start, fromElement);
-        return new IntRange(_start, end);
+        long _start = Math.max(start, fromElement);
+        return new LongRange(_start, end);
     }
 
     @Override
-    public SortedSet<Integer> tailSet(Integer fromElement) {
+    public SortedSet<Long> tailSet(Long fromElement) {
         return tailSet(fromElement, true);
     }
 
     @Override
-    public NavigableSet<Integer> subSet(Integer fromElement, boolean fromInclusive, Integer toElement,
-            boolean toInclusive) {
+    public NavigableSet<Long> subSet(Long fromElement, boolean fromInclusive, Long toElement, boolean toInclusive) {
         if (!fromInclusive)
             fromElement++;
         if (toInclusive)
             toElement++;
-        int _start = Math.max(start, fromElement);
-        int _end = Math.min(end, toElement);
-        return new IntRange(_start, _end);
+        long _start = Math.max(start, fromElement);
+        long _end = Math.min(end, toElement);
+        return new LongRange(_start, _end);
     }
 
     @Override
-    public SortedSet<Integer> subSet(Integer fromElement, Integer toElement) {
+    public SortedSet<Long> subSet(Long fromElement, Long toElement) {
         return subSet(fromElement, true, toElement, false);
     }
 
     @Override
-    public NavigableSet<Integer> descendingSet() {
+    public NavigableSet<Long> descendingSet() {
         // abstract descending set?
         throw new UnsupportedOperationException();
     }

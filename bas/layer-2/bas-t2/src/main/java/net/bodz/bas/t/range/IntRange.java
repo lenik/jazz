@@ -1,4 +1,4 @@
-package net.bodz.bas.t.set;
+package net.bodz.bas.t.range;
 
 import java.util.AbstractSet;
 import java.util.Comparator;
@@ -7,68 +7,68 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
-import net.bodz.bas.c.primitive.ShortComparator;
+import net.bodz.bas.c.primitive.IntegerComparator;
 import net.bodz.bas.err.ParseException;
 
-public class ShortRange
-        extends AbstractSet<Short>
-        implements NavigableSet<Short> {
+public class IntRange
+        extends AbstractSet<Integer>
+        implements NavigableSet<Integer> {
 
-    public short start;
-    public short end;
+    public int start;
+    public int end;
 
-    public ShortRange(short start, short end) {
+    public IntRange(int start, int end) {
         this.start = start;
         this.end = end;
     }
 
-    public static ShortRange parse(String s)
+    public static IntRange parse(String s)
             throws ParseException {
         try {
             int colon = s.indexOf(':');
             if (colon == -1) {
-                short point = Short.parseShort(s);
-                return new ShortRange(point, (short) (point + 1));
+                int point = Integer.parseInt(s);
+                return new IntRange(point, point + 1);
             }
             String startStr = s.substring(0, colon);
             String endStr = s.substring(colon + 1);
-            short start = startStr.isEmpty() ? Short.MIN_VALUE : Short.parseShort(startStr);
-            short end = endStr.isEmpty() ? Short.MAX_VALUE : Short.parseShort(endStr);
-            return new ShortRange(start, end);
+            int start = startStr.isEmpty() ? Integer.MIN_VALUE : Integer.parseInt(startStr);
+            int end = endStr.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(endStr);
+            return new IntRange(start, end);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }
     }
 
-    public short getStart() {
+    public int getStart() {
         return start;
     }
 
-    public void setStart(short start) {
+    public void setStart(int start) {
         this.start = start;
     }
 
-    public short getEnd() {
+    public int getEnd() {
         return end;
     }
 
-    public void setEnd(short end) {
+    public void setEnd(int end) {
         this.end = end;
     }
 
-    public short getMin() {
+    public int getMin() {
         return start;
     }
 
-    public short getMax() {
-        return (short) (end - 1);
+    public int getMax() {
+        return end - 1;
     }
 
     class Iter
-            implements Iterator<Short> {
+            implements Iterator<Integer> {
 
-        private short i = start;
-        private short last = (short) (start - 1);
+        private int i = start;
+        private int last = start - 1;
 
         @Override
         public boolean hasNext() {
@@ -76,7 +76,7 @@ public class ShortRange
         }
 
         @Override
-        public Short next() {
+        public Integer next() {
             return last = i++;
         }
 
@@ -93,7 +93,7 @@ public class ShortRange
     }
 
     @Override
-    public Iterator<Short> iterator() {
+    public Iterator<Integer> iterator() {
         return new Iter();
     }
 
@@ -104,12 +104,12 @@ public class ShortRange
 
     @Override
     public boolean contains(Object o) {
-        short i = (Short) o;
+        int i = (Integer) o;
         return i >= start && i < end;
     }
 
     @Override
-    public boolean add(Short e) {
+    public boolean add(Integer e) {
         if (e >= start && e < end)
             return false;
         else if (e == start - 1)
@@ -123,7 +123,7 @@ public class ShortRange
 
     @Override
     public boolean remove(Object o) {
-        short i = (Short) o;
+        int i = (Integer) o;
         if (i < start || i >= end)
             return false;
         if (i == end - 1)
@@ -148,31 +148,31 @@ public class ShortRange
     // SortedSet
 
     @Override
-    public Comparator<? super Short> comparator() {
-        return ShortComparator.INSTANCE;
+    public Comparator<? super Integer> comparator() {
+        return IntegerComparator.INSTANCE;
     }
 
     @Override
-    public Short first() {
+    public Integer first() {
         if (start >= end)
             throw new NoSuchElementException();
         return start;
     }
 
     @Override
-    public Short last() {
+    public Integer last() {
         if (start >= end)
             throw new NoSuchElementException();
-        return (short) (end - 1);
+        return end - 1;
     }
 
     // NavigableSet
 
     class DIter
-            implements Iterator<Short> {
+            implements Iterator<Integer> {
 
-        private short i = end;
-        private short last = end;
+        private int i = end;
+        private int last = end;
 
         @Override
         public boolean hasNext() {
@@ -180,7 +180,7 @@ public class ShortRange
         }
 
         @Override
-        public Short next() {
+        public Integer next() {
             return last = --i;
         }
 
@@ -196,23 +196,23 @@ public class ShortRange
     }
 
     @Override
-    public Iterator<Short> descendingIterator() {
+    public Iterator<Integer> descendingIterator() {
         return new DIter();
     }
 
     @Override
-    public Short floor(Short e) {
+    public Integer floor(Integer e) {
         if (start >= end)
             return null;
         if (e < start)
             return null;
         if (e >= end)
-            return (short) (end - 1);
+            return end - 1;
         return e;
     }
 
     @Override
-    public Short ceiling(Short e) {
+    public Integer ceiling(Integer e) {
         if (start >= end)
             return null;
         if (e < start)
@@ -223,87 +223,88 @@ public class ShortRange
     }
 
     @Override
-    public Short lower(Short _e) {
+    public Integer lower(Integer _e) {
         if (start >= end)
             return null;
-        short e = _e;
+        int e = _e;
         if (e >= end)
             return end;
         if (e <= start)
             return null;
-        return (short) (e - 1);
+        return e - 1;
     }
 
     @Override
-    public Short higher(Short _e) {
+    public Integer higher(Integer _e) {
         if (start >= end)
             return null;
-        short e = _e;
+        int e = _e;
         if (e < start)
             return start;
         if (e >= end - 1)
             return null;
-        return (short) (e + 1);
+        return e + 1;
     }
 
     @Override
-    public Short pollFirst() {
+    public Integer pollFirst() {
         if (start < end)
             return start++;
         return null;
     }
 
     @Override
-    public Short pollLast() {
+    public Integer pollLast() {
         if (start < end)
             return --end;
         return null;
     }
 
     @Override
-    public NavigableSet<Short> headSet(Short toElement, boolean inclusive) {
+    public NavigableSet<Integer> headSet(Integer toElement, boolean inclusive) {
         if (inclusive)
             toElement++;
-        short _end = (short) Math.min(end, toElement);
-        return new ShortRange(start, _end);
+        int _end = Math.min(end, toElement);
+        return new IntRange(start, _end);
     }
 
     @Override
-    public SortedSet<Short> headSet(Short toElement) {
+    public SortedSet<Integer> headSet(Integer toElement) {
         return headSet(toElement, false);
     }
 
     @Override
-    public NavigableSet<Short> tailSet(Short fromElement, boolean inclusive) {
+    public NavigableSet<Integer> tailSet(Integer fromElement, boolean inclusive) {
         if (!inclusive)
             fromElement++;
-        short _start = (short) Math.max(start, fromElement);
-        return new ShortRange(_start, end);
+        int _start = Math.max(start, fromElement);
+        return new IntRange(_start, end);
     }
 
     @Override
-    public SortedSet<Short> tailSet(Short fromElement) {
+    public SortedSet<Integer> tailSet(Integer fromElement) {
         return tailSet(fromElement, true);
     }
 
     @Override
-    public NavigableSet<Short> subSet(Short fromElement, boolean fromInclusive, Short toElement, boolean toInclusive) {
+    public NavigableSet<Integer> subSet(Integer fromElement, boolean fromInclusive, Integer toElement,
+            boolean toInclusive) {
         if (!fromInclusive)
             fromElement++;
         if (toInclusive)
             toElement++;
-        short _start = (short) Math.max(start, fromElement);
-        short _end = (short) Math.min(end, toElement);
-        return new ShortRange(_start, _end);
+        int _start = Math.max(start, fromElement);
+        int _end = Math.min(end, toElement);
+        return new IntRange(_start, _end);
     }
 
     @Override
-    public SortedSet<Short> subSet(Short fromElement, Short toElement) {
+    public SortedSet<Integer> subSet(Integer fromElement, Integer toElement) {
         return subSet(fromElement, true, toElement, false);
     }
 
     @Override
-    public NavigableSet<Short> descendingSet() {
+    public NavigableSet<Integer> descendingSet() {
         // abstract descending set?
         throw new UnsupportedOperationException();
     }
