@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
 import net.bodz.bas.c.primitive.IntegerComparator;
+import net.bodz.bas.err.ParseException;
 
 public class IntRange
         extends AbstractSet<Integer>
@@ -19,6 +20,24 @@ public class IntRange
     public IntRange(int start, int end) {
         this.start = start;
         this.end = end;
+    }
+
+    public static IntRange parse(String s)
+            throws ParseException {
+        try {
+            int colon = s.indexOf(':');
+            if (colon == -1) {
+                int point = Integer.parseInt(s);
+                return new IntRange(point, point + 1);
+            }
+            String startStr = s.substring(0, colon);
+            String endStr = s.substring(colon + 1);
+            int start = startStr.isEmpty() ? Integer.MIN_VALUE : Integer.parseInt(startStr);
+            int end = endStr.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(endStr);
+            return new IntRange(start, end);
+        } catch (NumberFormatException e) {
+            throw new ParseException(e.getMessage(), e);
+        }
     }
 
     public int getStart() {
