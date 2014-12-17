@@ -12,12 +12,14 @@ import net.bodz.bas.io.xml.XmlStringEncoder;
 
 public class XmlFormatter {
 
+    public static String NULL_VERBATIM = "<i>(null)</i>";
+
     private ITreeOut out;
     private XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute();
     private XmlStringEncoder textEncoder = XmlStringEncoder.forText();
 
     private boolean selfClosing = true;
-    private String nullVerbatim = "<i>(null)</i>";
+    private String nullVerbatim = NULL_VERBATIM;
 
     public XmlFormatter(ICharOut out) {
         this(TreeOutImpl.from(out));
