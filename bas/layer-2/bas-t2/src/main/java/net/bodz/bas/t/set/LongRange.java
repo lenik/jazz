@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
 import net.bodz.bas.c.primitive.LongComparator;
+import net.bodz.bas.err.ParseException;
 
 public class LongRange
         extends AbstractSet<Long>
@@ -19,6 +20,24 @@ public class LongRange
     public LongRange(long start, long end) {
         this.start = start;
         this.end = end;
+    }
+
+    public static LongRange parse(String s)
+            throws ParseException {
+        try {
+            int colon = s.indexOf(':');
+            if (colon == -1) {
+                long point = Long.parseLong(s);
+                return new LongRange(point, point + 1);
+            }
+            String startStr = s.substring(0, colon);
+            String endStr = s.substring(colon + 1);
+            long start = startStr.isEmpty() ? Long.MIN_VALUE : Long.parseLong(startStr);
+            long end = endStr.isEmpty() ? Long.MAX_VALUE : Long.parseLong(endStr);
+            return new LongRange(start, end);
+        } catch (NumberFormatException e) {
+            throw new ParseException(e.getMessage(), e);
+        }
     }
 
     public long getStart() {

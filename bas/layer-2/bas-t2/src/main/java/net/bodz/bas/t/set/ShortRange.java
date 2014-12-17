@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
 import net.bodz.bas.c.primitive.ShortComparator;
+import net.bodz.bas.err.ParseException;
 
 public class ShortRange
         extends AbstractSet<Short>
@@ -19,6 +20,24 @@ public class ShortRange
     public ShortRange(short start, short end) {
         this.start = start;
         this.end = end;
+    }
+
+    public static ShortRange parse(String s)
+            throws ParseException {
+        try {
+            int colon = s.indexOf(':');
+            if (colon == -1) {
+                short point = Short.parseShort(s);
+                return new ShortRange(point, (short) (point + 1));
+            }
+            String startStr = s.substring(0, colon);
+            String endStr = s.substring(colon + 1);
+            short start = startStr.isEmpty() ? Short.MIN_VALUE : Short.parseShort(startStr);
+            short end = endStr.isEmpty() ? Short.MAX_VALUE : Short.parseShort(endStr);
+            return new ShortRange(start, end);
+        } catch (NumberFormatException e) {
+            throw new ParseException(e.getMessage(), e);
+        }
     }
 
     public short getStart() {
