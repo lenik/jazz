@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.t.set.IntRange;
+import net.bodz.bas.t.range.IntRange;
 
 public class ListMap<V>
         implements Map<Integer, V> {

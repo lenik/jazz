@@ -1,33 +1,34 @@
-package net.bodz.bas.c.java.util;
+package net.bodz.bas.t.range;
 
 import java.text.DateFormat;
 import java.util.Date;
 
+import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.err.ParseException;
 
-public class DateInterval {
+public class DateRange {
 
     Date start;
     Date end;
     boolean inclusiveEnd;
 
-    public DateInterval(Date start, Date end) {
+    public DateRange(Date start, Date end) {
         this.start = start;
         this.end = end;
     }
 
-    public static DateInterval minMax(Date min, Date max) {
-        DateInterval interval = new DateInterval(min, max);
-        interval.inclusiveEnd = true;
-        return interval;
+    public static DateRange minMax(Date min, Date max) {
+        DateRange dateRange = new DateRange(min, max);
+        dateRange.inclusiveEnd = true;
+        return dateRange;
     }
 
-    public static DateInterval parse(String s, boolean inclusiveEnd)
+    public static DateRange parse(String s, boolean inclusiveEnd)
             throws ParseException {
         return parse(s, inclusiveEnd, Dates.YYYY_MM_DD);
     }
 
-    public static DateInterval parse(String s, boolean inclusiveEnd, DateFormat dateFormat)
+    public static DateRange parse(String s, boolean inclusiveEnd, DateFormat dateFormat)
             throws ParseException {
         try {
             int colon = s.indexOf(':');
@@ -39,9 +40,9 @@ public class DateInterval {
             String endStr = s.substring(colon + 1);
             Date start = startStr.isEmpty() ? null : dateFormat.parse(startStr);
             Date end = endStr.isEmpty() ? null : dateFormat.parse(endStr);
-            DateInterval dateInterval = new DateInterval(start, end);
-            dateInterval.inclusiveEnd = inclusiveEnd;
-            return dateInterval;
+            DateRange dateRange = new DateRange(start, end);
+            dateRange.inclusiveEnd = inclusiveEnd;
+            return dateRange;
         } catch (java.text.ParseException e) {
             throw new ParseException(e.getMessage(), e);
         }

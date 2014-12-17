@@ -1,4 +1,4 @@
-package net.bodz.bas.t.set;
+package net.bodz.bas.t.range;
 
 import net.bodz.bas.err.ParseException;
 
