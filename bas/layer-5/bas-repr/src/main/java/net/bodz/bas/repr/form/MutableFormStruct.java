@@ -45,10 +45,14 @@ public class MutableFormStruct
     }
 
     @Override
-    public Map<FieldGroup, Collection<IFormField>> getFieldsGrouped() {
+    public Map<FieldGroup, Collection<IFormField>> getFieldsGrouped(int maxDetailLevel) {
         Map<FieldGroup, Collection<IFormField>> fgMap = new TreeMap<>(FieldGroupComparator.INSTANCE);
 
         for (IFormField field : map.values()) {
+            int detailLevel = field.getDetailLevel();
+            if (detailLevel > maxDetailLevel)
+                continue;
+
             FieldGroup fg = field.getFieldGroup();
             if (fg == null)
                 fg = FieldGroup.NULL;
