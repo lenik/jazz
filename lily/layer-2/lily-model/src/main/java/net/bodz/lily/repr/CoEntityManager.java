@@ -1,5 +1,6 @@
 package net.bodz.lily.repr;
 
+import net.bodz.bas.db.batis.IMapperTemplate;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.potato.PotatoTypes;
@@ -23,6 +24,8 @@ public abstract class CoEntityManager
             throw new NullPointerException("entityType");
         this.entityType = entityType;
     }
+
+    public abstract IMapperTemplate<?, ?> getMapper();
 
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)

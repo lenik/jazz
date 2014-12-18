@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.bodz.bas.c.type.TypeExtras;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.potato.element.IType;
@@ -171,6 +172,7 @@ public abstract class CoEntity
      * @label Flags
      * @label.zh.cn 标志位
      */
+    @DetailLevel(DetailLevel.EXPERT)
     public int getFlags() {
         return flags;
     }
@@ -179,12 +181,14 @@ public abstract class CoEntity
         this.flags = flags;
     }
 
+    @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(ICacheControl.class)
     @Override
     public CacheControlMode getCacheControlMode() {
         return CacheControlMode.AUTO;
     }
 
+    @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(ICacheControl.class)
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
@@ -197,6 +201,7 @@ public abstract class CoEntity
      * @label Max Age
      * @label.zh.cn 缓存寿命
      */
+    @DetailLevel(DetailLevel.EXPERT2)
     @OfGroup(ICacheControl.class)
     @Override
     public int getMaxAge() {
@@ -207,6 +212,7 @@ public abstract class CoEntity
      * @label E-Tag
      * @label.zh.cn 实体标签
      */
+    @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(ICacheControl.class)
     @Override
     public String getETag() {
@@ -218,6 +224,7 @@ public abstract class CoEntity
      * @label Weak Validation
      * @labal.zh.cn 弱校验
      */
+    @DetailLevel(DetailLevel.EXPERT2)
     @OfGroup(ICacheControl.class)
     @Override
     public boolean isWeakValidation() {
@@ -231,6 +238,7 @@ public abstract class CoEntity
      * @label State
      * @label.zh.cn 状态
      */
+    @DetailLevel(DetailLevel.EXPERT)
     @Override
     public int getState() {
         return state;
@@ -245,6 +253,7 @@ public abstract class CoEntity
      * @label Version
      * @label.zh.cn 版本
      */
+    @DetailLevel(DetailLevel.EXPERT)
     @OfGroup(IContent.class)
     public int getVersion() {
         return version;
@@ -283,12 +292,14 @@ public abstract class CoEntity
         this.ownerGroup = ownerGroup;
     }
 
+    @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(IAccessControlled.class)
     @Override
     public int getUserId() {
         return owner == null ? 0 : owner.getId();
     }
 
+    @DetailLevel(DetailLevel.HIDDEN)
     @Override
     public int getGroupId() {
         return ownerGroup == null ? 0 : ownerGroup.getId();
@@ -325,6 +336,7 @@ public abstract class CoEntity
     /** ⇱ Implementation Of {@link IFormView}. */
     /* _____________________________ */static section.iface __DATA__;
 
+    @DetailLevel(DetailLevel.HIDDEN)
     @Override
     public IFormStruct getFormStruct() {
         IType type = PotatoTypes.getInstance().forClass(getClass());
