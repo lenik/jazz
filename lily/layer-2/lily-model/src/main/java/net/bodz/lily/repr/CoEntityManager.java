@@ -7,15 +7,39 @@ import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+
+import net.bodz.lily.model.base.CoEntity;
 
 @IndexedType
 public abstract class CoEntityManager
         implements IPathDispatchable {
 
+    protected Class<? extends CoEntity> entityType;
+
+    public CoEntityManager(Class<? extends CoEntity> entityType) {
+        if (entityType == null)
+            throw new NullPointerException("entityType");
+        this.entityType = entityType;
+    }
+
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws PathDispatchException {
+        String token = tokens.peek();
+
+        switch (token) {
+        case "new":
+            CoEntity obj;
+            try {
+                obj = entityType.newInstance();
+            } catch (Exception e) {
+                throw new PathDispatchException(e.getMessage(), e);
+            }
+            return PathArrival.shift(previous, obj, tokens);
+        }
+
         return null;
     }
 
