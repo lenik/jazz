@@ -4,9 +4,31 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="message">
 
-    <resultMap id="mapX" type="com.bee32.zebra.oa.thread.Topic" extends="base.mapUSA">
+    <resultMap id="map1" type="com.bee32.zebra.oa.thread.Topic" extends="co.mapUSA">
         <result property="subject" column="subject" />
         <result property="text" column="text" />
+        <result property="formArgs" column="args" />
+        <result property="voteUps" column="nvote" />
+        <result property="likerCount" column="nlike" />
+        <result property="readCount" column="nread" />
+        <association property="op" javaType="net.bodz.lily.model.base.security.User">
+            <id property="id" column="op" />
+        </association>
+        <association property="form" javaType="net.bodz.lily.model.base.schema.FormDef">
+            <id property="id" column="form" />
+        </association>
+        <association property="category" javaType="net.bodz.lily.model.base.schema.CategoryDef">
+            <id property="id" column="cat" />
+        </association>
+        <association property="phase" javaType="net.bodz.lily.model.base.schema.PhaseDef">
+            <id property="id" column="phase" />
+        </association>
+    </resultMap>
+
+    <resultMap id="map2" type="com.bee32.zebra.oa.thread.Topic" extends="co.mapUSA">
+        <result property="subject" column="subject" />
+        <result property="text" column="text" />
+        <result property="formArgs" column="args" />
         <result property="voteUps" column="nvote" />
         <result property="likerCount" column="nlike" />
         <result property="readCount" column="nread" />
@@ -14,16 +36,31 @@
             <id property="id" column="op" />
             <result property="label" column="op_label" />
         </association>
+        <association property="form" javaType="net.bodz.lily.model.base.schema.FormDef">
+            <id property="id" column="form" />
+            <result property="label" column="form_label" />
+        </association>
+        <association property="category" javaType="net.bodz.lily.model.base.schema.CategoryDef">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
+        <association property="phase" javaType="net.bodz.lily.model.base.schema.PhaseDef">
+            <id property="id" column="phase" />
+            <result property="label" column="phase_label" />
+        </association>
     </resultMap>
 
-    <sql id="setX">
-        <include refid="base.setUSA" />
+    <sql id="set1">
+        <include refid="co.setUSA" />
         <if test="subject != null">subject=#{subject},</if>
         <if test="text != null">text=#{text},</if>
         <if test="voteUps != null">nvote=#{voteUps - voteDowns},</if>
         <if test="likerCount != null">nlike=#{likerCount},</if>
         <if test="readCount != null">nread=#{readCount},</if>
         <if test="op != null">op=#{op.id},</if>
+        <if test="form != null">form=#{form.id},</if>
+        <if test="category != null">cat=#{category.id},</if>
+        <if test="phase != null">phase=#{phase.id},</if>
     </sql>
 
 </mapper>

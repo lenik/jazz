@@ -2,7 +2,7 @@
 <!DOCTYPE mapper 
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="base">
+<mapper namespace="co">
 
     <!-- UI -->
     <resultMap id="mapU" type="net.bodz.lily.model.base.CoEntity">
@@ -29,7 +29,7 @@
     </resultMap>
 
     <sql id="setUS">
-        <include refid="base.setU" />
+        <include refid="co.setU" />
         priority=#{priority},
         lastmod=#{lastModified},
         flags=#{flags},
@@ -54,7 +54,7 @@
     </resultMap>
 
     <sql id="setUSA">
-        <include refid="base.setUS" />
+        <include refid="co.setUS" />
         mode=#{accessMode},
         acl=#{acl},
         <if test="owner != null">uid=#{owner.id},</if>

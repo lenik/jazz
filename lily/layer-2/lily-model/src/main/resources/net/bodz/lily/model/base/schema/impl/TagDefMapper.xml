@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.model.base.schema.impl.TagDefMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.model.base.schema.TagDef" extends="base.mapUS">
+    <resultMap id="map1" type="net.bodz.lily.model.base.schema.TagDef" extends="co.mapUS">
         <association property="tagSet" javaType="net.bodz.lily.model.base.schema.TagSetDef">
             <id property="id" column="tagv" />
             <id property="label" column="tagv_label" />
@@ -53,7 +53,7 @@
     <update id="update">
         update tag
         <set>
-            <include refid="base.setUS" />
+            <include refid="co.setUS" />
         </set>
         <where>
             <if test="id != null">id=#{id}, </if>

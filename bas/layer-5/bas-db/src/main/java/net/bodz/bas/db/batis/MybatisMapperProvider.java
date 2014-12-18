@@ -66,7 +66,7 @@ public class MybatisMapperProvider
         registry.registerAlias(MillisecondTypeHandler.class);
         registry.registerAlias(PgInetAddressTypeHandler.class);
 
-        String[] builtins = { "base", "message" };
+        String[] builtins = { "co", "message" };
         for (String builtin : builtins) {
             String resName = "com/tinylily/model/share/" + builtin + ".xml";
             getClass().getClassLoader().getResource(resName);

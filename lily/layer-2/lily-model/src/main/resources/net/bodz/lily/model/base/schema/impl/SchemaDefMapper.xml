@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.model.base.schema.impl.SchemaDefMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.model.base.schema.SchemaDef" extends="base.mapUS">
+    <resultMap id="map1" type="net.bodz.lily.model.base.schema.SchemaDef" extends="co.mapUS">
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -45,7 +45,7 @@
     <update id="update">
         update schema
         <set>
-            <include refid="base.setUS" />
+            <include refid="co.setUS" />
         </set>
         <where>
             <if test="id != null">id=#{id}, </if>
