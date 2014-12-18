@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.model.base.schema.impl.PhaseDefMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.model.base.schema.PhaseDef" extends="base.mapUS">
+    <resultMap id="map1" type="net.bodz.lily.model.base.schema.PhaseDef" extends="co.mapUS">
         <association property="schema" javaType="net.bodz.lily.model.base.schema.SchemaDef">
             <id property="id" column="schema" />
             <id property="label" column="schema_label" />
@@ -53,7 +53,7 @@
     <update id="update">
         update phase
         <set>
-            <include refid="base.setUS" />
+            <include refid="co.setUS" />
         </set>
         <where>
             <if test="id != null">id=#{id}, </if>

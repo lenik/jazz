@@ -3,12 +3,16 @@ package net.bodz.lily.model.mx.base;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.t.order.IPriority;
 
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.model.base.schema.CategoryDef;
+import net.bodz.lily.model.base.schema.FormDef;
+import net.bodz.lily.model.base.schema.PhaseDef;
 import net.bodz.lily.model.base.security.User;
 
 /**
@@ -16,7 +20,7 @@ import net.bodz.lily.model.base.security.User;
  * @label.zh.cn 消息
  */
 public class CoMessage
-        extends CoEntity
+        extends CoMomentInterval
         implements IPriority, IVotable, ILikable {
 
     private static final long serialVersionUID = 1L;
@@ -26,18 +30,24 @@ public class CoMessage
     long id;
 
     private User op;
+    private CategoryDef category;
     private String subject;
     private String text;
+    private FormDef form;
+    private String formArgs;
+    private Set<String> tags;
     private Map<String, String> attributes;
+
     private Date sentTime;
     private Date receivedTime;
+    private PhaseDef phase;
 
     private Integer voteUps;
     private Integer voteDowns;
     private List<Voter> voters;
     private Voter iVoter;
 
-    private Integer likerCount;
+    private int likerCount;
     private List<Liker> likers;
     private Liker iLiker;
 
@@ -104,15 +114,81 @@ public class CoMessage
     }
 
     /**
+     * @label Category
+     * @label.zh.cn 类别
+     */
+    @OfGroup(CoMessage.class)
+    public CategoryDef getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryDef category) {
+        this.category = category;
+    }
+
+    /**
+     * @label Phase
+     * @label.zh.cn 阶段
+     */
+    @OfGroup(CoMessage.class)
+    public PhaseDef getPhase() {
+        return phase;
+    }
+
+    public void setPhase(PhaseDef phase) {
+        this.phase = phase;
+    }
+
+    /**
+     * @label Form
+     * @label.zh.cn 表单
+     */
+    @OfGroup(CoMessage.class)
+    public FormDef getForm() {
+        return form;
+    }
+
+    public void setForm(FormDef form) {
+        this.form = form;
+    }
+
+    /**
+     * @label Form Arguments
+     * @label.zh.cn 表单参数
+     * @placeholder 输入表单参数
+     */
+    @OfGroup(CoMessage.class)
+    public String getFormArgs() {
+        return formArgs;
+    }
+
+    public void setFormArgs(String formArgs) {
+        this.formArgs = formArgs;
+    }
+
+    /**
      * @label Attributes
      * @label.zh.cn 属性
      */
+    @OfGroup(CoMessage.class)
     public Map<String, String> getAttributes() {
         return attributes;
     }
 
     public void setAttributes(Map<String, String> attributes) {
         this.attributes = attributes;
+    }
+
+    /**
+     * @label Tags
+     * @label.zh.cn 标签列表
+     */
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
     }
 
     /**
@@ -174,7 +250,9 @@ public class CoMessage
     @OfGroup(IVotable.class)
     @Override
     public int getVoteCount() {
-        return voteUps - voteDowns;
+        int nUp = voteUps == null ? 0 : voteUps;
+        int nDown = voteDowns == null ? 0 : voteDowns;
+        return nUp - nDown;
     }
 
     /**
@@ -244,6 +322,10 @@ public class CoMessage
         this.iLiker = iLiker;
     }
 
+    /**
+     * @label Read Count
+     * @label.zh.cn 阅读数
+     */
     public Integer getReadCount() {
         return readCount;
     }

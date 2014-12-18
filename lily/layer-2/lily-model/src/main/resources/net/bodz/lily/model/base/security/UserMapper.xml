@@ -4,11 +4,11 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.model.base.security.UserMapper">
 
-    <resultMap id="Group_U" type="net.bodz.lily.model.base.security.Group" extends="base.mapU">
+    <resultMap id="Group_U" type="net.bodz.lily.model.base.security.Group" extends="co.mapU">
         <id property="id" column="id" />
     </resultMap>
 
-    <resultMap id="User_X" type="net.bodz.lily.model.base.security.User" extends="base.mapUS">
+    <resultMap id="User_X" type="net.bodz.lily.model.base.security.User" extends="co.mapUS">
         <id property="id" column="id" />
         <result property="email" column="email" />
         <result property="emailValidated" column="emailok" />
@@ -74,7 +74,7 @@
     <update id="update">
         update "user"
         <set>
-            <include refid="base.setU" />
+            <include refid="co.setU" />
         </set>
         where id=#{id}
     </update>
