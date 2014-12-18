@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -18,6 +19,7 @@ public class FormStructBuilder {
     int modifierPattern = Modifier.PUBLIC;
     Class<?> stopClass = Object.class;
 
+    int maxDetailLevel = DetailLevel.EXPERT2;
     Set<String> excludes = new HashSet<String>();
     boolean xjdocRequired;
 
@@ -55,6 +57,14 @@ public class FormStructBuilder {
         this.stopClass = stopClass;
     }
 
+    public int getMaxDetailLevel() {
+        return maxDetailLevel;
+    }
+
+    public void setMaxDetailLevel(int maxDetailLevel) {
+        this.maxDetailLevel = maxDetailLevel;
+    }
+
     public Set<String> getExcludes() {
         return excludes;
     }
@@ -66,6 +76,10 @@ public class FormStructBuilder {
         for (IProperty property : type.getProperties()) {
             int modifiers = property.getModifiers();
             if ((modifiers & modifierMask) != modifierPattern)
+                continue;
+
+            int detailLevel = property.getDetailLevel();
+            if (detailLevel > maxDetailLevel)
                 continue;
 
             if (excludes.contains(property.getName()))

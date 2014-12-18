@@ -13,6 +13,6 @@ public interface IFormStruct
 
     Collection<IFormField> getFields();
 
-    Map<FieldGroup, Collection<IFormField>> getFieldsGrouped();
+    Map<FieldGroup, Collection<IFormField>> getFieldsGrouped(int maxDetailLevel);
 
 }
