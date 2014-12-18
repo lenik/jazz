@@ -9,7 +9,7 @@ public interface IMapperTemplate<T, C>
 
     List<T> filter(C criteria);
 
-    T select(int id);
+    T select(long id);
 
     int insert(T obj);
 
