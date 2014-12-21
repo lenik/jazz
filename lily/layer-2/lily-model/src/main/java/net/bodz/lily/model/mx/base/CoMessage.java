@@ -27,8 +27,7 @@ public class CoMessage
 
     public static final int N_SUBJECT = 200;
 
-    long id;
-
+    private long id;
     private User op;
     private CategoryDef category;
     private String subject;
@@ -53,7 +52,6 @@ public class CoMessage
 
     private Integer readCount;
 
-    @Override
     public Long getId() {
         return id;
     }
