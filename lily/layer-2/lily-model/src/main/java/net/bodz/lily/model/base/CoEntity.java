@@ -15,6 +15,8 @@ import net.bodz.bas.repr.form.IFormField;
 import net.bodz.bas.repr.form.IFormStruct;
 import net.bodz.bas.repr.form.IFormView;
 import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.repr.state.State;
+import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
@@ -27,7 +29,7 @@ import net.bodz.lily.model.base.security.User;
  * Co/Con: Concrete, also Content, Controlled
  */
 public abstract class CoEntity
-        implements Serializable, IContent, IStateful, IAccessControlled, IFormView {
+        implements Serializable, IContent, IAccessControlled, IFormView {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,7 +57,7 @@ public abstract class CoEntity
     private long creationTime; // = System.currentTimeMillis();
     private long lastModified; // = creationDate;
     private int flags = 0;
-    private int state = S_INIT;
+    private State state = StdStates.START;
     private int version;
 
     private User owner;
@@ -239,13 +241,13 @@ public abstract class CoEntity
      * @label.zh.cn 状态
      */
     @DetailLevel(DetailLevel.EXPERT)
-    @Override
-    public int getState() {
+    public State getState() {
         return state;
     }
 
-    @Override
-    public void setState(int state) {
+    public void setState(State state) {
+        if (state == null)
+            throw new NullPointerException("state");
         this.state = state;
     }
 
