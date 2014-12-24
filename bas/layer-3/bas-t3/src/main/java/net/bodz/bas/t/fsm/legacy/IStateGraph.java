@@ -1,4 +1,4 @@
-package net.bodz.bas.c.fsm;
+package net.bodz.bas.t.fsm.legacy;
 
 import java.io.Serializable;
 
