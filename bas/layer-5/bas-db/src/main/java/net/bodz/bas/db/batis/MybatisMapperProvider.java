@@ -22,6 +22,7 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeAliasRegistry;
 
 import net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler;
+import net.bodz.bas.c.org.postgresql.util.StateTypeHandler;
 import net.bodz.bas.c.type.ClassNameComparator;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.log.Logger;
@@ -65,6 +66,7 @@ public class MybatisMapperProvider
         TypeAliasRegistry registry = config.getTypeAliasRegistry();
         registry.registerAlias(MillisecondTypeHandler.class);
         registry.registerAlias(PgInetAddressTypeHandler.class);
+        registry.registerAlias(StateTypeHandler.class);
 
         String[] builtins = { "co", "message" };
         for (String builtin : builtins) {
