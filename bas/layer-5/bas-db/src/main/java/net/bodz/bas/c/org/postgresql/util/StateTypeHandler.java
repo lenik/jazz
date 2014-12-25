@@ -14,14 +14,8 @@ import net.bodz.bas.repr.state.StateGroup;
 public class StateTypeHandler
         extends AbstractTypeHandler<State> {
 
-    private StateGroup states;
+    private StateGroup states = StateGroup.INDEXED;
     private int nullStateId = 0;
-
-    public StateTypeHandler(StateGroup states) {
-        if (states == null)
-            throw new NullPointerException("states");
-        this.states = states;
-    }
 
     public int getNullStateId() {
         return nullStateId;
@@ -62,4 +56,5 @@ public class StateTypeHandler
         int id = cs.getInt(columnIndex);
         return states.getState(id);
     }
+
 }

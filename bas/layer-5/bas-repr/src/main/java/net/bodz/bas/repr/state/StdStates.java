@@ -1,7 +1,7 @@
 package net.bodz.bas.repr.state;
 
 public class StdStates
-        extends StateGroup {
+        implements IStateConsts {
 
     public static final int ID_START = 0;
     public static final int ID_ACCEPTED = 1;
