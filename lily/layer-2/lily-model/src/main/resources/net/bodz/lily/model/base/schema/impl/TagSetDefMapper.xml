@@ -64,4 +64,8 @@
         delete from tagv where id=#{id}
     </delete>
 
+    <select id="count" resultType="hashmap">
+        select count(*) "total" from tagv
+    </select>
+    
 </mapper>

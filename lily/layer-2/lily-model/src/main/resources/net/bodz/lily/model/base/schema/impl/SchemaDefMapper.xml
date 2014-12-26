@@ -55,5 +55,9 @@
     <delete id="delete">
         delete from schema where id=#{id}
     </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "total" from schema
+    </select>
     
 </mapper>

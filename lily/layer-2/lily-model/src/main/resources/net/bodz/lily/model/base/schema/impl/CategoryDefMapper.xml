@@ -63,5 +63,9 @@
     <delete id="delete">
         delete from cat where id=#{id}
     </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "total" from cat
+    </select>
     
 </mapper>
