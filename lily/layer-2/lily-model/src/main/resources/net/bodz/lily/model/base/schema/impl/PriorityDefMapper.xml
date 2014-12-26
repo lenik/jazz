@@ -63,5 +63,9 @@
     <delete id="delete">
         delete from priority where id=#{id}
     </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "total" from priority
+    </select>
     
 </mapper>
