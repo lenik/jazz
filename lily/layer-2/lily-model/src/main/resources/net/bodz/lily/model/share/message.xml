@@ -4,7 +4,9 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="message">
 
-    <resultMap id="map1" type="com.bee32.zebra.oa.thread.Topic" extends="co.mapUSA">
+    <resultMap id="map1" type="net.bodz.lily.model.mx.base.CoMessage" extends="co.mapUSA">
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
         <result property="subject" column="subject" />
         <result property="text" column="text" />
         <result property="formArgs" column="args" />
@@ -25,7 +27,7 @@
         </association>
     </resultMap>
 
-    <resultMap id="map2" type="com.bee32.zebra.oa.thread.Topic" extends="co.mapUSA">
+    <resultMap id="map2" type="net.bodz.lily.model.mx.base.CoMessage" extends="co.mapUSA">
         <result property="subject" column="subject" />
         <result property="text" column="text" />
         <result property="formArgs" column="args" />

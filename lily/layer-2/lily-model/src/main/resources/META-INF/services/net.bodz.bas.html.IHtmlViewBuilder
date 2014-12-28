@@ -5,3 +5,5 @@ net.bodz.lily.model.base.schema.impl.PriorityDefVbo
 net.bodz.lily.model.base.schema.impl.SchemaDefVbo
 net.bodz.lily.model.base.schema.impl.TagDefVbo
 net.bodz.lily.model.base.schema.impl.TagSetDefVbo
+net.bodz.lily.model.base.security.impl.GroupVbo
+net.bodz.lily.model.base.security.impl.UserVbo

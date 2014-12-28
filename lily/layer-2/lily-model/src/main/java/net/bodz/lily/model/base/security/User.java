@@ -1,9 +1,8 @@
 package net.bodz.lily.model.base.security;
 
 import java.net.InetAddress;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import net.bodz.lily.model.base.CoEntity;
 
@@ -33,7 +32,7 @@ public class User
 
     private int id;
     private Group primaryGroup;
-    private final Set<Group> groups = new HashSet<Group>();
+    private List<Group> groups;
 
     private String email;
     private boolean emailValidated;
@@ -54,6 +53,10 @@ public class User
         this.id = id;
     }
 
+    /**
+     * @label Login Name
+     * @label.zh.cn 用户名
+     */
     public final String getLoginName() {
         return getCodeName();
     }
@@ -64,6 +67,10 @@ public class User
         setCodeName(loginName);
     }
 
+    /**
+     * @label Full Name
+     * @label.zh.cn 真实姓名
+     */
     public final String getFullName() {
         return getLabel();
     }
@@ -72,6 +79,10 @@ public class User
         setLabel(fullName);
     }
 
+    /**
+     * @label Primary Group
+     * @label.zh.cn 首要的组
+     */
     public Group getPrimaryGroup() {
         return primaryGroup;
     }
@@ -80,14 +91,17 @@ public class User
         this.primaryGroup = primaryGroup;
     }
 
-    public void setPrimaryGroupId(int primaryGroupId) {
-        (this.primaryGroup = new Group()).setId(primaryGroupId);
-    }
-
-    public Set<Group> getGroups() {
+    public List<Group> getGroups() {
         return groups;
     }
 
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    /**
+     * E-mail
+     */
     public String getEmail() {
         return email;
     }
@@ -96,6 +110,10 @@ public class User
         this.email = email;
     }
 
+    /**
+     * @label Email-Validated
+     * @label.zh.cn 邮箱通过验证
+     */
     public boolean isEmailValidated() {
         return emailValidated;
     }
@@ -120,6 +138,10 @@ public class User
         this.password = password;
     }
 
+    /**
+     * @label Last Login Time
+     * @label.zh.cn 上次登录时间
+     */
     public long getLastLoginTime() {
         return lastLoginTime;
     }
@@ -128,6 +150,10 @@ public class User
         this.lastLoginTime = lastLoginTime;
     }
 
+    /**
+     * @label Last Login IP
+     * @label.zh.cn 上次登录IP
+     */
     public InetAddress getLastLoginIP() {
         return lastLoginIP;
     }

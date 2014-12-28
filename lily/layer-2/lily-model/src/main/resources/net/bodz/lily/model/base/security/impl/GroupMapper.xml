@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.model.base.security.impl.GroupMapper">
+
+    <resultMap id="map1" type="net.bodz.lily.model.base.security.Group" extends="co.mapUS">
+        <collection property="users" javaType="ArrayList" ofType="net.bodz.lily.model.base.security.User">
+            <id property="id" column="y_id" />
+            <result property="codeName" column="y_code" />
+            <result property="label" column="y_label" />
+            <result property="description" column="y_description" />
+        </collection>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.id,
+            a.code,
+            a.label,
+            a.description,
+            
+            y.id "y_id",
+            y.code "y_code",
+            y.label "y_label",
+            y.description "y_description"
+        from "group" a
+            left join group_user x on x."group"=a.id
+            left join "user" y on y.id=x."user" 
+        ]]>
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <if test="_parameter != null">a.id=#{id}</if>
+        </where>
+    </select>
+
+    <select id="insert" resultType="int">
+        <![CDATA[
+        insert into "group"(code, label, description)
+        values(#{codeName},#{label},#{description})
+        returning id
+    ]]></select>
+
+    <update id="update">
+        update "group"
+        <set>
+            <include refid="co.setU" />
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from "group" where id=#{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "total" from "group"
+    </select>
+
+</mapper>
