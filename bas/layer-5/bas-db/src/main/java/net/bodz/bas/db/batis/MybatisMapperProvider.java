@@ -21,10 +21,10 @@ import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeAliasRegistry;
 
-import net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler;
-import net.bodz.bas.c.org.postgresql.util.StateTypeHandler;
 import net.bodz.bas.c.type.ClassNameComparator;
 import net.bodz.bas.c.type.IndexedTypes;
+import net.bodz.bas.c.type.TypeIndex;
+import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -64,9 +64,12 @@ public class MybatisMapperProvider
         config.setEnvironment(buildEnvironment());
 
         TypeAliasRegistry registry = config.getTypeAliasRegistry();
-        registry.registerAlias(MillisecondTypeHandler.class);
-        registry.registerAlias(PgInetAddressTypeHandler.class);
-        registry.registerAlias(StateTypeHandler.class);
+        try {
+            for (Class<?> typeHandlerClass : TypeIndex.forClass(MyBatisTypeHandler.class, false))
+                registry.registerAlias(typeHandlerClass);
+        } catch (Exception e) {
+            throw new IllegalUsageError(e.getMessage(), e);
+        }
 
         String[] builtins = { "co", "message" };
         for (String builtin : builtins) {
@@ -84,7 +87,7 @@ public class MybatisMapperProvider
         }
 
         for (Class<?> mapperClass : mapperClasses) {
-            System.out.println(mapperClass);
+            logger.log("Add Mapper: ", mapperClass);
             config.addMapper(mapperClass);
         }
 

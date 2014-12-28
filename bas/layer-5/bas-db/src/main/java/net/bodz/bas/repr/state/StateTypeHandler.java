@@ -1,4 +1,4 @@
-package net.bodz.bas.c.org.postgresql.util;
+package net.bodz.bas.repr.state;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -7,12 +7,12 @@ import java.sql.SQLException;
 
 import org.apache.ibatis.type.JdbcType;
 
-import net.bodz.bas.db.batis.AbstractTypeHandler;
+import net.bodz.bas.db.batis.MyBatisTypeHandler;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StateGroup;
 
 public class StateTypeHandler
-        extends AbstractTypeHandler<State> {
+        extends MyBatisTypeHandler<State> {
 
     private StateGroup states = StateGroup.INDEXED;
     private int nullStateId = 0;
