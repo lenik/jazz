@@ -6,11 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
 public class MillisecondTypeHandler
-        extends BaseTypeHandler<Long> {
+        extends MyBatisTypeHandler<Long> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Long parameter, JdbcType jdbcType)
