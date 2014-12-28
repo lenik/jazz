@@ -10,7 +10,7 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.model.base.security.UserMapper;
+import net.bodz.lily.model.base.security.impl.UserMapper;
 
 public class UserPlayer
         extends Assert {

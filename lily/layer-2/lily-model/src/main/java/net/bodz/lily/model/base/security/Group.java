@@ -44,16 +44,9 @@ public class Group
         this.id = id;
     }
 
-    public final String getLoginName() {
-        return getCodeName();
-    }
-
-    public final void setLoginName(String loginName) {
-        if (loginName == null)
-            throw new NullPointerException("loginName");
-        setCodeName(loginName);
-    }
-
+    /**
+     * 全称
+     */
     public final String getFullName() {
         return getLabel();
     }
@@ -62,6 +55,9 @@ public class Group
         setLabel(fullName);
     }
 
+    /**
+     * 用户
+     */
     public List<User> getUsers() {
         return users;
     }
