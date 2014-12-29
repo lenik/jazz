@@ -30,7 +30,7 @@ public class TagSetDefCriteria
 
     public static TagSetDefCriteria forSchema(int id) {
         TagSetDefCriteria criteria = new TagSetDefCriteria();
-        criteria.setSchemaId(id);
+        criteria.schemaId = id;
         return criteria;
     }
 

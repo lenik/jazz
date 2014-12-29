@@ -8,7 +8,7 @@ public class AttributeDefCriteria
 
     public static AttributeDefCriteria forSchema(int id) {
         AttributeDefCriteria criteria = new AttributeDefCriteria();
-        criteria.setSchemaId(id);
+        criteria.schemaId = id;
         return criteria;
     }
 

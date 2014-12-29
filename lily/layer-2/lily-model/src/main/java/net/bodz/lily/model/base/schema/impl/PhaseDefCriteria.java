@@ -8,7 +8,7 @@ public class PhaseDefCriteria
 
     public static PhaseDefCriteria forSchema(int id) {
         PhaseDefCriteria criteria = new PhaseDefCriteria();
-        criteria.setSchemaId(id);
+        criteria.schemaId = id;
         return criteria;
     }
 
