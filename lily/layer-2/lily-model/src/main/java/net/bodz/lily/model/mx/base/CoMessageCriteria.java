@@ -4,14 +4,17 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.range.IntRange;
 
-import net.bodz.lily.model.base.CoEntityCriteria;
+import net.bodz.lily.model.base.CoMomentIntervalCriteria;
 import net.bodz.lily.model.sea.QVariantMap;
 
 public class CoMessageCriteria
-        extends CoEntityCriteria {
+        extends CoMomentIntervalCriteria {
 
     Integer opId;
+    boolean opNull;
+
     DateRange mailDateRange;
+    boolean mailDateNull;
 
     IntRange voteCountRange;
     IntRange likerCountRange;

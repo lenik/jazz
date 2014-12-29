@@ -28,4 +28,10 @@ public class TagSetDefCriteria
         ortho = map.getBoolean("ortho", ortho);
     }
 
+    public static TagSetDefCriteria forSchema(int id) {
+        TagSetDefCriteria criteria = new TagSetDefCriteria();
+        criteria.setSchemaId(id);
+        return criteria;
+    }
+
 }

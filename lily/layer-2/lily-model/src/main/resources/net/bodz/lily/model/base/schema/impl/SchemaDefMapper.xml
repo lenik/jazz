@@ -24,7 +24,6 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
-            <if test="categoryId != null">and a.id=#{categoryId}</if>
         </where>
     </select>
 

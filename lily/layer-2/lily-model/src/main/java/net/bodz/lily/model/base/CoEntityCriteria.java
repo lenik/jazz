@@ -96,7 +96,7 @@ public class CoEntityCriteria {
         return this;
     }
 
-    public void populate(Map<String, String[]> parameterMap)
+    public final void populate(Map<String, String[]> parameterMap)
             throws ParseException {
         ParameterMapVariantMap variantMap = new ParameterMapVariantMap(parameterMap);
         QVariantMap<String> qMap = new QVariantMap<>(variantMap);

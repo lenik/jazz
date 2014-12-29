@@ -6,4 +6,10 @@ package net.bodz.lily.model.base.schema.impl;
 public class PhaseDefCriteria
         extends AbstractDefinitionCriteria {
 
+    public static PhaseDefCriteria forSchema(int id) {
+        PhaseDefCriteria criteria = new PhaseDefCriteria();
+        criteria.setSchemaId(id);
+        return criteria;
+    }
+
 }

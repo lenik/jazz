@@ -7,21 +7,21 @@ import net.bodz.lily.model.sea.QVariantMap;
 public class CoNodeCriteria
         extends CoEntityCriteria {
 
-    Integer depth;
+    public Integer maxDepth;
 
-    public Integer getDepth() {
-        return depth;
+    public Integer getMaxDepth() {
+        return maxDepth;
     }
 
-    public void setDepth(Integer depth) {
-        this.depth = depth;
+    public void setMaxDepth(Integer maxDepth) {
+        this.maxDepth = maxDepth;
     }
 
     @Override
     protected void populate(QVariantMap<String> map)
             throws ParseException {
         super.populate(map);
-        depth = map.getInt("depth", depth);
+        maxDepth = map.getInt("maxdepth", maxDepth);
     }
 
 }
