@@ -18,6 +18,8 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.site.org.ICrawlable;
 import net.bodz.bas.site.org.SiteGraph;
 import net.bodz.bas.site.org.Sitemap;
@@ -27,8 +29,9 @@ import net.bodz.bas.t.project.IJazzModule;
 
 public abstract class BasicSite
         extends AbstractXjdocContent
-        implements IPathDispatchable, ICrawlable {
+        implements IQueryable, IPathDispatchable, ICrawlable {
 
+    private IQueryable queryContext;
     private Map<String, IJazzModule> modules = new TreeMap<>();
     protected final Map<String, IPathDispatchable> pathMap;
 
@@ -39,6 +42,14 @@ public abstract class BasicSite
             modules.put(name, module);
         }
         pathMap = new HashMap<String, IPathDispatchable>();
+    }
+
+    public IQueryable getQueryContext() {
+        return queryContext;
+    }
+
+    public void setQueryContext(IQueryable queryContext) {
+        this.queryContext = queryContext;
     }
 
     public Map<String, IJazzModule> getModules() {
@@ -106,6 +117,33 @@ public abstract class BasicSite
     @Override
     public int getMaxAge() {
         return 3600;
+    }
+
+    /** ⇱ Implementation Of {@link IQueryable}. */
+    /* _____________________________ */static section.iface __QUERYABLE__;
+
+    @Override
+    public Object query(Object specification)
+            throws QueryException {
+        if (queryContext != null)
+            return queryContext.query(specification);
+        return null;
+    }
+
+    @Override
+    public Object query(String specificationId)
+            throws QueryException {
+        if (queryContext != null)
+            return queryContext.query(specificationId);
+        return null;
+    }
+
+    @Override
+    public <spec_t> spec_t query(Class<spec_t> specificationType)
+            throws QueryException {
+        if (queryContext != null)
+            return queryContext.query(specificationType);
+        return null;
     }
 
     /** ⇱ Implementation Of {@link IPathDispatchable}. */
