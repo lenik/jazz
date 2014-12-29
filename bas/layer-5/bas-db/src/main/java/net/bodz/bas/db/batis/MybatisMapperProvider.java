@@ -20,6 +20,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeAliasRegistry;
+import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import net.bodz.bas.c.type.ClassNameComparator;
 import net.bodz.bas.c.type.IndexedTypes;
@@ -63,10 +64,15 @@ public class MybatisMapperProvider
         Configuration config = new Configuration();
         config.setEnvironment(buildEnvironment());
 
-        TypeAliasRegistry registry = config.getTypeAliasRegistry();
+        TypeAliasRegistry typeAliasRegistry = config.getTypeAliasRegistry();
+        TypeHandlerRegistry typeHandlerRegistry = config.getTypeHandlerRegistry();
         try {
-            for (Class<?> typeHandlerClass : TypeIndex.forClass(MyBatisTypeHandler.class, false))
-                registry.registerAlias(typeHandlerClass);
+            for (Class<?> typeHandlerClass : TypeIndex.forClass(MybatisTypeHandler.class, false)) {
+                if (MybatisBaseTypeHandler.class.isAssignableFrom(typeHandlerClass))
+                    typeAliasRegistry.registerAlias(typeHandlerClass);
+                else
+                    typeHandlerRegistry.register(typeHandlerClass);
+            }
         } catch (Exception e) {
             throw new IllegalUsageError(e.getMessage(), e);
         }

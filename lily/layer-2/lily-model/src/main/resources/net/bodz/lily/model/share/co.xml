@@ -24,7 +24,7 @@
         <result property="creationTime" column="creation" typeHandler="MillisecondTypeHandler" />
         <result property="lastModified" column="lastmod" typeHandler="MillisecondTypeHandler" />
         <result property="flags" column="flags" />
-        <result property="state" column="state" typeHandler="StateTypeHandler" />
+        <result property="state" column="state" />
         <result property="version" column="version" />
     </resultMap>
 

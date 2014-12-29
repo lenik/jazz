@@ -7,12 +7,12 @@ import java.sql.SQLException;
 
 import org.apache.ibatis.type.JdbcType;
 
-import net.bodz.bas.db.batis.MyBatisTypeHandler;
+import net.bodz.bas.db.batis.MybatisTypeHandler;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StateGroup;
 
 public class StateTypeHandler
-        extends MyBatisTypeHandler<State> {
+        extends MybatisTypeHandler<State> {
 
     private StateGroup states = StateGroup.INDEXED;
     private int nullStateId = 0;
