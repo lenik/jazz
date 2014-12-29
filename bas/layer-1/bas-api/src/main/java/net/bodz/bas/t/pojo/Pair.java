@@ -192,12 +192,4 @@ public class Pair<K, V>
         return new Pair<K, V>(entry.getKey(), entry.getValue());
     }
 
-    @SafeVarargs
-    public static <T> List<Pair<T, T>> convertList(T... array) {
-        List<Pair<T, T>> pairs = new ArrayList<>(array.length);
-        for (T o : array)
-            pairs.add(Pair.of(o, o));
-        return pairs;
-    }
-
 }

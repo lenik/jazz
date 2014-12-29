@@ -5,15 +5,15 @@ import java.util.Map;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
 import net.bodz.bas.potato.ref.PropertyRefMap;
 import net.bodz.bas.potato.ref.ValueEntry;
-import net.bodz.bas.t.enm.Enum;
-import net.bodz.bas.t.enm.EnumMetadata;
+import net.bodz.bas.repr.util.Predef;
+import net.bodz.bas.repr.util.PredefMetadata;
 
 public class DataSourceType
-        extends Enum<DataSourceType, String> {
+        extends Predef<DataSourceType, String> {
 
     private static final long serialVersionUID = 1L;
 
-    public static final EnumMetadata<DataSourceType, String> METADATA = EnumMetadata.forClass(DataSourceType.class);
+    public static final PredefMetadata<DataSourceType, String> METADATA = PredefMetadata.forClass(DataSourceType.class);
 
     private final String hibernateDialect;
     private final String driverClass;
