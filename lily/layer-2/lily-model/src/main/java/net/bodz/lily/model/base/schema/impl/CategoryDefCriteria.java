@@ -8,7 +8,7 @@ public class CategoryDefCriteria
 
     public static CategoryDefCriteria forSchema(int id) {
         CategoryDefCriteria criteria = new CategoryDefCriteria();
-        criteria.setSchemaId(id);
+        criteria.schemaId = id;
         return criteria;
     }
 

@@ -3,16 +3,17 @@ package net.bodz.lily.model.mx.base;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.t.order.IPriority;
 
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.model.base.schema.AttributeDef;
 import net.bodz.lily.model.base.schema.CategoryDef;
 import net.bodz.lily.model.base.schema.FormDef;
 import net.bodz.lily.model.base.schema.PhaseDef;
+import net.bodz.lily.model.base.schema.TagDef;
 import net.bodz.lily.model.base.security.User;
 
 /**
@@ -34,8 +35,8 @@ public class CoMessage
     private String text;
     private FormDef form;
     private String formArgs;
-    private Set<String> tags;
-    private Map<String, String> attributes;
+    private List<TagDef> tags;
+    private Map<AttributeDef, String> attributes;
 
     private Date sentTime;
     private Date receivedTime;
@@ -169,11 +170,11 @@ public class CoMessage
      * @label.zh.cn 属性
      */
     @OfGroup(CoMessage.class)
-    public Map<String, String> getAttributes() {
+    public Map<AttributeDef, String> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(Map<String, String> attributes) {
+    public void setAttributes(Map<AttributeDef, String> attributes) {
         this.attributes = attributes;
     }
 
@@ -181,11 +182,11 @@ public class CoMessage
      * @label Tags
      * @label.zh.cn 标签列表
      */
-    public Set<String> getTags() {
+    public List<TagDef> getTags() {
         return tags;
     }
 
-    public void setTags(Set<String> tags) {
+    public void setTags(List<TagDef> tags) {
         this.tags = tags;
     }
 

@@ -8,7 +8,7 @@ public class PriorityDefCriteria
 
     public static PriorityDefCriteria forSchema(int id) {
         PriorityDefCriteria criteria = new PriorityDefCriteria();
-        criteria.setSchemaId(id);
+        criteria.schemaId = id;
         return criteria;
     }
 

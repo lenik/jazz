@@ -5,6 +5,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.repr.util.Predef;
+import net.bodz.bas.repr.util.PredefMetadata;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.range.DoubleRange;
 import net.bodz.bas.t.range.FloatRange;
@@ -57,6 +59,15 @@ public class QVariantMap<K>
         if (s == null || s.isEmpty())
             return defaultValue;
         T value = Enum.valueOf(enumType, s);
+        return value;
+    }
+
+    public <T extends Predef<T, Km>, Km extends Comparable<Km>> T getPredef(Class<T> type, K key, T defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        PredefMetadata<T, Km> metadata = PredefMetadata.forClass(type);
+        T value = metadata.ofName(s);
         return value;
     }
 

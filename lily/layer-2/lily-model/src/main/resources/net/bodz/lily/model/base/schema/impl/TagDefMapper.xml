@@ -32,7 +32,7 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
-            <if test="schemaId != null">and a.schema=#{schemaId}</if>
+            <if test="tagSetId != null">and a.tagv=#{tagSetId}</if>
         </where>
     </select>
 
