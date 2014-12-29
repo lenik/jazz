@@ -71,6 +71,11 @@ public class Pair<K, V>
         return hash;
     }
 
+    @Override
+    public String toString() {
+        return "(" + first + ", " + second + ")";
+    }
+
     // Map Interface
 
     public void clear() {
@@ -185,6 +190,14 @@ public class Pair<K, V>
 
     public static <K, V> Pair<K, V> of(Entry<K, V> entry) {
         return new Pair<K, V>(entry.getKey(), entry.getValue());
+    }
+
+    @SafeVarargs
+    public static <T> List<Pair<T, T>> convertList(T... array) {
+        List<Pair<T, T>> pairs = new ArrayList<>(array.length);
+        for (T o : array)
+            pairs.add(Pair.of(o, o));
+        return pairs;
     }
 
 }
