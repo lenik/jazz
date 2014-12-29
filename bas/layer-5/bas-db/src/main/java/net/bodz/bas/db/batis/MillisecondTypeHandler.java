@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import org.apache.ibatis.type.JdbcType;
 
 public class MillisecondTypeHandler
-        extends MyBatisTypeHandler<Long> {
+        extends MybatisBaseTypeHandler<Long> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Long parameter, JdbcType jdbcType)

@@ -10,7 +10,7 @@
         <result property="salt" column="salt" />
         <result property="password" column="passwd" />
         <result property="lastLoginTime" column="lastlog" />
-        <result property="lastLoginIP" column="lastlogip" typeHandler="PgInetAddressTypeHandler" />
+        <result property="lastLoginIP" column="lastlogip" />
         <association property="primaryGroup" javaType="net.bodz.lily.model.base.security.Group">
             <id column="gid0" />
             <result property="codeName" column="g_code" />

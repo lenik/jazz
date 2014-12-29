@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.JdbcType;
 import org.postgresql.util.PGobject;
 
-import net.bodz.bas.db.batis.MyBatisTypeHandler;
+import net.bodz.bas.db.batis.MybatisTypeHandler;
 
 public class PgInetAddressTypeHandler
-        extends MyBatisTypeHandler<InetAddress> {
+        extends MybatisTypeHandler<InetAddress> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, InetAddress parameter, JdbcType jdbcType)
