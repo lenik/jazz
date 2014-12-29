@@ -1,6 +1,5 @@
 package net.bodz.lily.repr;
 
-import net.bodz.bas.db.batis.IMapperTemplate;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.potato.PotatoTypes;
@@ -10,22 +9,54 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.rtx.AbstractQueryable;
+import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.rtx.QueryException;
 
 import net.bodz.lily.model.base.CoEntity;
 
 @IndexedType
 public abstract class CoEntityManager
+        extends AbstractQueryable
         implements IPathDispatchable {
 
-    protected Class<? extends CoEntity> entityType;
+    private Class<? extends CoEntity> entityType;
+    private IQueryable context;
 
-    public CoEntityManager(Class<? extends CoEntity> entityType) {
+    public CoEntityManager(Class<? extends CoEntity> entityType, IQueryable context) {
         if (entityType == null)
             throw new NullPointerException("entityType");
+        if (context == null)
+            throw new NullPointerException("context");
         this.entityType = entityType;
+        this.context = context;
     }
 
-    public abstract IMapperTemplate<?, ?> getMapper();
+    public Class<? extends CoEntity> getEntityType() {
+        return entityType;
+    }
+
+    /** ⇱ Implementation Of {@link IQueryable}. */
+    /* _____________________________ */static section.iface __QUERYABLE__;
+
+    @Override
+    public Object query(Object specification)
+            throws QueryException {
+        return context.query(specification);
+    }
+
+    @Override
+    public <spec_t> spec_t query(Class<spec_t> specificationClass) {
+        return context.query(specificationClass);
+    }
+
+    @Override
+    public Object query(String specificationId) {
+        return context.query(specificationId);
+    }
+
+    /** ⇱ Implementation Of {@link IPathDispatchable}. */
+    /* _____________________________ */static section.iface __PATH_DISP__;
 
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)

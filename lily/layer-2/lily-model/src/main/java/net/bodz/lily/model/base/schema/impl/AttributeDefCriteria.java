@@ -6,4 +6,10 @@ package net.bodz.lily.model.base.schema.impl;
 public class AttributeDefCriteria
         extends AbstractDefinitionCriteria {
 
+    public static AttributeDefCriteria forSchema(int id) {
+        AttributeDefCriteria criteria = new AttributeDefCriteria();
+        criteria.setSchemaId(id);
+        return criteria;
+    }
+
 }
