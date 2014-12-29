@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LazyLoadException;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -55,8 +56,13 @@ public abstract class AbstractXjdocElement
         this.xjdocLoaded = xjdoc != null;
     }
 
-    protected abstract IElementDoc loadXjdoc()
-            throws ParseException, IOException;
+    protected IElementDoc loadXjdoc()
+            throws ParseException, IOException {
+        if (xjdoc != null)
+            throw new IllegalStateException("already loaded.");
+        else
+            throw new NotImplementedException();
+    }
 
     @Override
     public String getName() {

@@ -1,6 +1,5 @@
 package net.bodz.bas.program.model;
 
-import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -15,7 +14,6 @@ import net.bodz.bas.c.type.addor.IAddor;
 import net.bodz.bas.c.type.addor.MapAddor;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.order.IMutablePriority;
@@ -282,12 +280,6 @@ public abstract class AbstractOption
 
     public void setDefaultValue(Object defaultValue) {
         this.defaultValue = defaultValue;
-    }
-
-    @Override
-    protected IElementDoc loadXjdoc()
-            throws ParseException, IOException {
-        throw new UnexpectedException("already loaded.");
     }
 
 }

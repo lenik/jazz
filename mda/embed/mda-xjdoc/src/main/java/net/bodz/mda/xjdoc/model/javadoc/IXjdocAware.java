@@ -37,7 +37,7 @@ public interface IXjdocAware {
 
                 Field field;
                 try {
-                    field = clazz.getField(fieldName);
+                    field = clazz.getDeclaredField(fieldName);
                 } catch (NoSuchFieldException e) {
                     return "No such field: " + fieldName;
                 }
@@ -47,7 +47,8 @@ public interface IXjdocAware {
                     return "Non-static: " + field;
 
                 if (!(includeNonPublic || Modifier.isPublic(modifiers)))
-                    return "Non-public: " + field;
+                    // return "Non-public: " + field;
+                    continue;
 
                 Class<?> fieldType = field.getType();
                 if (IXjdocAware.class.isAssignableFrom(fieldType))
