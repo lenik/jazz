@@ -1,26 +1,28 @@
-package net.bodz.bas.t.enm;
+package net.bodz.bas.repr.util;
 
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.codegen.PublishDir;
+import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
 
-@IndexedType(publishDir = "META-INF/enums")
-public abstract class Enum<E extends Enum<E, K>, K extends Comparable<K>>
-        // extends AbstractElement
-        implements Serializable, Comparable<E> {
+@IndexedType(publishDir = PublishDir.features)
+public abstract class Predef<self_t extends Predef<self_t, K>, K extends Comparable<K>>
+        extends AbstractXjdocElement
+        implements Serializable, Comparable<self_t> {
 
     private static final long serialVersionUID = 1L;
 
-    protected EnumMetadata<E, K> metadata;
+    protected PredefMetadata<self_t, K> metadata;
     protected final K key;
     protected final String name;
 
-    public Enum(K key, String name) {
+    public Predef(K key, String name) {
         this(key, name, null);
     }
 
-    public Enum(K key, String name, EnumMetadata<E, K> metadata) {
+    public Predef(K key, String name, PredefMetadata<self_t, K> metadata) {
         if (key == null)
             throw new NullPointerException("key");
         if (name == null)
@@ -29,11 +31,11 @@ public abstract class Enum<E extends Enum<E, K>, K extends Comparable<K>>
         this.name = name;
 
         if (metadata == null) {
-            Class<E> type = (Class<E>) getClass();
-            metadata = EnumMetadata.forClass(type);
+            Class<self_t> type = (Class<self_t>) getClass();
+            metadata = PredefMetadata.forClass(type);
         }
 
-        @SuppressWarnings("unchecked") E self = (E) this;
+        @SuppressWarnings("unchecked") self_t self = (self_t) this;
         metadata.addValue(self);
         this.metadata = metadata;
     }
@@ -46,7 +48,7 @@ public abstract class Enum<E extends Enum<E, K>, K extends Comparable<K>>
         return name;
     }
 
-    public EnumMetadata<? extends E, K> getMetadata() {
+    public PredefMetadata<? extends self_t, K> getMetadata() {
         return metadata;
     }
 
@@ -56,16 +58,16 @@ public abstract class Enum<E extends Enum<E, K>, K extends Comparable<K>>
     }
 
     @Override
-    public int compareTo(E o) {
+    public int compareTo(self_t o) {
         if (o == null)
             return 1;
         K k2 = o.getKey();
         return key.compareTo(k2);
     }
 
-    E readResolve()
+    self_t readResolve()
             throws ObjectStreamException {
-        return getMetadata().getLocalValue(key);
+        return getMetadata().ofKey(key);
     }
 
 }
