@@ -1,4 +1,4 @@
-package net.bodz.bas.repr.sugar;
+package net.bodz.bas.repr.util;
 
 import net.bodz.bas.sugar.IConstants;
 
