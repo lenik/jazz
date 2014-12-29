@@ -2,8 +2,10 @@ package net.bodz.bas.html.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.ServiceLoader;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,9 +34,12 @@ import net.bodz.bas.repr.path.PathDispatchService;
 import net.bodz.bas.repr.path.TokenQueue;
 import net.bodz.bas.repr.req.IHttpRequestProcessor;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.rtx.QueryableUnion;
 import net.bodz.bas.std.rfc.http.HttpCacheControl;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.t.ref.Ref;
 import net.bodz.bas.ui.dom1.UiValue;
 import net.bodz.bas.xml.dom.XmlFormatter;
 
@@ -42,17 +47,34 @@ public class PathDispatchServlet
         extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger logger = LoggerFactory.getLogger(PathDispatchServlet.class);
 
-    static final Logger logger = LoggerFactory.getLogger(PathDispatchServlet.class);
+    public static final String ROOT_CLASS = "root";
 
-    PathDispatchService pathDispatchService;
-    IHtmlViewBuilderFactory viewBuilderFactory;
-    PathFramesVbo pathFramesVbo;
+    private Object rootObject;
+    private int maxRefDepth = 10;
+
+    private PathDispatchService pathDispatchService;
+    private IHtmlViewBuilderFactory viewBuilderFactory;
+    private PathFramesVbo pathFramesVbo;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
         pathFramesVbo = new PathFramesVbo();
+    }
+
+    @Override
+    public void init(ServletConfig config)
+            throws ServletException {
+        super.init(config);
+        String rootClassName = config.getInitParameter(ROOT_CLASS);
+        try {
+            Class<?> rootClass = Class.forName(rootClassName);
+            rootObject = rootClass.newInstance();
+        } catch (Exception e) {
+            throw new ServletException(e.getMessage(), e);
+        }
     }
 
     @Override
@@ -74,10 +96,17 @@ public class PathDispatchServlet
             pathInfo = pathInfo.substring(1);
         TokenQueue tokenQueue = new TokenQueue(pathInfo);
 
-        Object startObject = getStartObject();
+        Object start = rootObject;
+        int startRefDepth = 0;
+        while (start instanceof Ref<?>) {
+            if (++startRefDepth > maxRefDepth)
+                throw new ServletException("Out of start ref depth.");
+            start = ((Ref<?>) start).get();
+        }
+
         IPathArrival arrival;
         try {
-            arrival = pathDispatchService.dispatch(startObject, tokenQueue);
+            arrival = pathDispatchService.dispatch(start, tokenQueue);
         } catch (PathDispatchException e) {
             throw new ServletException(e.getMessage(), e);
         }
@@ -121,7 +150,16 @@ public class PathDispatchServlet
         switch (contentType.getName()) {
         case "text/html":
         case "text/xhtml":
-            IHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
+            RootHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
+
+            QueryableUnion union = new QueryableUnion();
+            for (IPathArrival a : arrival.toList())
+                if (a.getTarget() instanceof IQueryable)
+                    union.add((IQueryable) a.getTarget());
+            if (!union.isEmpty()) {
+                Collections.reverse(union);
+                ctx.setQueryContext(union);
+            }
 
             try {
                 pathFramesVbo.buildHtmlView(ctx, UiValue.wrap(arrival));
@@ -148,11 +186,5 @@ public class PathDispatchServlet
             }
         }
     }
-
-    protected Object getStartObject() {
-        return startObject;
-    }
-
-    public static Object startObject;
 
 }
