@@ -1,11 +1,6 @@
 package net.bodz.bas.t.range;
 
-import java.util.AbstractSet;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.NavigableSet;
-import java.util.NoSuchElementException;
-import java.util.SortedSet;
+import java.util.*;
 
 import net.bodz.bas.c.primitive.IntegerComparator;
 import net.bodz.bas.err.ParseException;
@@ -20,6 +15,10 @@ public class IntRange
     public IntRange(int start, int end) {
         this.start = start;
         this.end = end;
+    }
+
+    public static IntRange minMax(int min, int max) {
+        return new IntRange(min, max + 1);
     }
 
     public static IntRange parse(String s)
@@ -143,6 +142,12 @@ public class IntRange
     @Override
     public String toString() {
         return "IntRange[" + start + "," + end + ")";
+    }
+
+    public List<Integer> toReversedList() {
+        List<Integer> list = new ArrayList<Integer>(this);
+        Collections.reverse(list);
+        return list;
     }
 
     // SortedSet
