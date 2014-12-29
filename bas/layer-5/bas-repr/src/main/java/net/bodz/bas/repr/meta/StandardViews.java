@@ -1,4 +1,4 @@
-package net.bodz.bas.repr.view;
+package net.bodz.bas.repr.meta;
 
 public @interface StandardViews {
 
