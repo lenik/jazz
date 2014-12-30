@@ -1,6 +1,5 @@
 package net.bodz.bas.io.xml;
 
-
 /**
  * Escape special chars using XML entities.
  * <p>
@@ -50,6 +49,8 @@ public class XmlStringEncoder {
     }
 
     public String encode(String str) {
+        if (str == null)
+            throw new NullPointerException("str");
         StringBuilder sb = new StringBuilder(str.length() * 5 / 4);
         int len = str.length();
         for (int i = 0; i < len; i++) {
