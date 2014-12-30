@@ -19,10 +19,10 @@ import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-public class InvocationVbo
+public class Invocation_txt
         extends AbstractHtmlViewBuilder<IInvocation> {
 
-    public InvocationVbo() {
+    public Invocation_txt() {
         super(IInvocation.class);
     }
 
