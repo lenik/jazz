@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
@@ -59,7 +60,7 @@ public class DefaultViewOfRequest
     // static boolean contentTypeAuto = true;
 
     @Override
-    public void apply(HttpServletRequest request) {
+    public boolean apply(HttpServletRequest request, HttpServletResponse response) {
         String viewName = null;
         if (viewName == null && paramViewLong)
             viewName = request.getParameter("view:");
@@ -80,6 +81,7 @@ public class DefaultViewOfRequest
         }
 
         request.setAttribute(IViewOfRequest.class.getName(), this);
+        return true;
     }
 
     @Override

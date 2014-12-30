@@ -173,7 +173,6 @@ public abstract class AbstractViewBuilderFactory
     protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {
         if (viewBuilder == null)
             throw new NullPointerException("viewBuilder");
-        checkViewBuilder(viewBuilder);
     }
 
     @Override
