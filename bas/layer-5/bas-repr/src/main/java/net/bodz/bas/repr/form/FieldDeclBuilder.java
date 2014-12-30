@@ -11,6 +11,7 @@ import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.repr.form.meta.FormInput;
+import net.bodz.bas.repr.form.meta.IndexColumn;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.ui.style.UiElementStyleDeclaration;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -58,6 +59,13 @@ public class FieldDeclBuilder {
                 FieldCategory category = FieldCategory.fromTagClass(ofGroups[0]);
                 fieldDecl.setCategory(category);
             }
+        }
+
+        IndexColumn aIndexColumn = annotations.getAnnotation(IndexColumn.class);
+        if (aIndexColumn != null) {
+            int maxLength = aIndexColumn.maxLength();
+            fieldDecl.columnMaxLength = maxLength == -1 ? null : maxLength;
+            fieldDecl.columnVisibility = aIndexColumn.display() ? aIndexColumn.visible() ? true : false : false;
         }
 
         FormInput aFormInput = annotations.getAnnotation(FormInput.class);
