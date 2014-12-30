@@ -48,7 +48,7 @@ public class URLResource_bin
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<URLResource> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<URLResource> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
         HttpServletResponse resp = ctx.getResponse();

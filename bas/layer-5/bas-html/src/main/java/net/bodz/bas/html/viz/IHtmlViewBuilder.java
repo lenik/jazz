@@ -33,10 +33,10 @@ public interface IHtmlViewBuilder<T>
 
     void preview(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options);
 
-    IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
 }

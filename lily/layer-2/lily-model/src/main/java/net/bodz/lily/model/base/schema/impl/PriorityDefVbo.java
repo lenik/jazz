@@ -18,9 +18,9 @@ public class PriorityDefVbo
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<PriorityDef> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<PriorityDef> ref, IOptions options)
             throws ViewBuilderException, IOException {
-        return ctx;
+        return out;
     }
 
 }

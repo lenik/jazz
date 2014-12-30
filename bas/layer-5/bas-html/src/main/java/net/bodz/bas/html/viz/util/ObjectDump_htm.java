@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.dom.tag.HtmlPreTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -22,7 +23,7 @@ public class ObjectDump_htm
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Object> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Object> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 
@@ -33,9 +34,14 @@ public class ObjectDump_htm
         out.h1().text("Object Dump: " + ObjectInfo.getSimpleId(obj));
         out.hr();
 
+        HtmlPreTag pre = out.pre();
+
+        Class<?> valueType = ref.getValueType();
+        pre.div().text("Type: " + valueType);
+
         String string = String.valueOf(obj);
         String html = string; // TODO HtmlUtils.htmlEscape(string);
-        out.pre().verbatim(html);
+        pre.verbatim(html);
 
         out.hr();
         out.h2().text("Request Info");
@@ -50,7 +56,7 @@ public class ObjectDump_htm
         out.println("Remaining-Path: " + tq.getRemainingPath());
         out.println("Method: " + qmethod.getMethodName());
 
-        return ctx;
+        return out;
     }
 
 }

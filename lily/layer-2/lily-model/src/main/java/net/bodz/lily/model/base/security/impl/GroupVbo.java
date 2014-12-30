@@ -21,9 +21,9 @@ public class GroupVbo
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Group> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Group> ref, IOptions options)
             throws ViewBuilderException, IOException {
-        return ctx;
+        return out;
     }
 
 }

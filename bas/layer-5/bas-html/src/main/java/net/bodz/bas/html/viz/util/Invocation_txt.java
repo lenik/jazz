@@ -38,7 +38,7 @@ public class Invocation_txt
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<IInvocation> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<IInvocation> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         PrintWriter out = resp.getWriter();
@@ -88,7 +88,7 @@ public class Invocation_txt
             // resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
-        return ctx;
+        return parent;
     }
 
 }

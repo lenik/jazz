@@ -76,7 +76,7 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    public final IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return buildHtmlView(ctx, out, ref, IOptions.NULL);
     }
