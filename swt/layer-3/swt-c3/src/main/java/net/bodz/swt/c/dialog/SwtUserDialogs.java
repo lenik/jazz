@@ -120,7 +120,6 @@ public class SwtUserDialogs
         setIcon(image);
     }
 
-
     abstract class _Dialog
             extends SimpleDialog {
 
@@ -201,7 +200,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), getOptions());
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), getOptions());
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -236,7 +235,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -272,7 +271,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -338,7 +337,7 @@ public class SwtUserDialogs
                     throws SWTException, CreateException {
                 IOptions options = getOptions();
                 try {
-                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -385,7 +384,7 @@ public class SwtUserDialogs
 
         public int render(Object value)
                 throws ViewBuilderException, SWTException {
-            Control control = (Control) viz.buildView(stack, UiValue.wrap(value), options);
+            Control control = (Control) viz.buildView(null, stack, UiValue.wrap(value), options);
             controls[next] = control;
             return next++;
         }
@@ -449,7 +448,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -475,7 +474,7 @@ public class SwtUserDialogs
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
-                        viewBuilderFactory.buildView(parent, UiValue.wrap(value), options);
+                        viewBuilderFactory.buildView(null, parent, UiValue.wrap(value), options);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -571,7 +570,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -610,7 +609,7 @@ public class SwtUserDialogs
                     button.setSelection(selected);
                     keyButtons[index++] = new KeyButton(key, button);
                     try {
-                        viewBuilderFactory.buildView(parent, UiValue.wrap(value), options);
+                        viewBuilderFactory.buildView(null, parent, UiValue.wrap(value), options);
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }

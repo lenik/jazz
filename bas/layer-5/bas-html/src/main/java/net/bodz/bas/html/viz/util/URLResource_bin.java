@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ResourceTransferer;
@@ -47,7 +48,7 @@ public class URLResource_bin
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<URLResource> ref, IOptions options)
+    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<URLResource> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
         HttpServletResponse resp = ctx.getResponse();

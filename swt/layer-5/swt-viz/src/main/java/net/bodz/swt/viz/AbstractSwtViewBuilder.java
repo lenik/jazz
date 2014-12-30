@@ -26,13 +26,13 @@ public abstract class AbstractSwtViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object ctx, IUiRef<T> ref, IOptions options)
+    public final Object buildView(Object ctx, Object _parent, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
         Composite parent = null;
-        if (ctx != null) {
-            if (!(ctx instanceof Control))
-                throw new IllegalUsageException("ctx isn't an SWT Composite: " + ctx.getClass());
-            parent = (Composite) ctx;
+        if (_parent != null) {
+            if (!(_parent instanceof Control))
+                throw new IllegalUsageException("parent isn't an SWT Composite: " + _parent.getClass());
+            parent = (Composite) _parent;
         }
 
         // TODO wrap...

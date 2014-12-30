@@ -40,9 +40,9 @@ public abstract class AbstractViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object ctx, IUiRef<T> ref)
+    public final Object buildView(Object ctx, Object parent, IUiRef<T> ref)
             throws ViewBuilderException {
-        return buildView(ctx, ref, IOptions.NULL);
+        return buildView(ctx, parent, ref, IOptions.NULL);
     }
 
 }

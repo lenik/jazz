@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
@@ -29,7 +30,7 @@ public class PathFrames_htm
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<IPathArrival> ref, IOptions options)
+    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<IPathArrival> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         IPathArrival arrival = ref.get();
@@ -72,7 +73,7 @@ public class PathFrames_htm
             Frame frame = frames.get(size - 1 - builtFrames);
             resp.addHeader("X-Page-Frame", frame.viewBuilder.getClass().getSimpleName());
             frame.ctx0 = ctx;
-            ctx = frame.viewBuilder.buildHtmlView(ctx, frame, viewOptions);
+            ctx = frame.viewBuilder.buildHtmlView(ctx, out, frame, viewOptions);
             if (ctx == null)
                 break;
             else

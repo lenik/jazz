@@ -169,7 +169,7 @@ public class PathDispatchServlet
             }
 
             try {
-                pathFramesVbo.buildHtmlView(ctx, UiValue.wrap(arrival));
+                pathFramesVbo.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiValue.wrap(arrival));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
@@ -187,7 +187,7 @@ public class PathDispatchServlet
             resp.addHeader("X-Content-View", viewBuilder.getClass().getSimpleName());
             IHtmlViewContext _ctx = new RootHtmlViewContext(req, resp);
             try {
-                viewBuilder.buildHtmlView(_ctx, UiValue.wrap(target));
+                viewBuilder.buildHtmlView(_ctx, _ctx.getHtmlDoc().getRoot(), UiValue.wrap(target));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build view: " + e.getMessage(), e);
             }

@@ -22,14 +22,13 @@ public class ObjectDump_htm
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<Object> ref, IOptions options)
+    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Object> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 
         IMethodOfRequest qmethod = req.getAttribute(IMethodOfRequest.class);
 
         Object obj = ref.get();
-        IHtmlTag out = ctx.getOut();
 
         out.h1().text("Object Dump: " + ObjectInfo.getSimpleId(obj));
         out.hr();

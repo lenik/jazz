@@ -2,6 +2,7 @@ package net.bodz.lily.model.base.security.impl;
 
 import java.io.IOException;
 
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -20,7 +21,7 @@ public class UserVbo
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<User> ref, IOptions options)
+    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<User> ref, IOptions options)
             throws ViewBuilderException, IOException {
         return ctx;
     }

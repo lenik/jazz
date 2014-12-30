@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.util.IDateFormatConsts;
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -35,10 +36,10 @@ public class SitemapXml
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<Sitemap> ref, IOptions options)
+    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<Sitemap> ref, IOptions options)
             throws ViewBuilderException, IOException {
         Sitemap sitemap = ref.get();
-        IXmlTag out = ctx.getOut();
+        IXmlTag out = parent;
 
         out.pi("xml").xml("1.0", "utf-8");
         out = out.insert("urlset")//
