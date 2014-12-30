@@ -14,6 +14,7 @@ public class CoMessageCriteria
 
     public Integer opId;
     public Integer categoryId;
+    public Integer tagId;
     public Collection<Integer> tagIds;
 
     public DateRange mailDateRange;
@@ -43,6 +44,14 @@ public class CoMessageCriteria
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Integer getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
     }
 
     public Collection<Integer> getTagIds() {

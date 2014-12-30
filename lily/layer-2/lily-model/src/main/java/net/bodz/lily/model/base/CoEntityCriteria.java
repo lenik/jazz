@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
+import net.bodz.bas.t.variant.IVariantMap;
 
 import net.bodz.lily.model.sea.ParameterMapVariantMap;
 import net.bodz.lily.model.sea.QVariantMap;
@@ -94,6 +95,12 @@ public class CoEntityCriteria {
     public CoEntityCriteria setAcls(Set<Integer> acls) {
         this.acls = acls;
         return this;
+    }
+
+    public final void populate(IVariantMap<String> variantMap)
+            throws ParseException {
+        QVariantMap<String> qMap = new QVariantMap<>(variantMap);
+        populate(qMap);
     }
 
     public final void populate(Map<String, String[]> parameterMap)
