@@ -1,4 +1,4 @@
-package net.bodz.bas.repr.util;
+package net.bodz.bas.t.predef;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.repr.util.Predef;
-import net.bodz.bas.repr.util.PredefMetadata;
+import net.bodz.bas.t.predef.Predef;
+import net.bodz.bas.t.predef.PredefMetadata;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.range.DoubleRange;
 import net.bodz.bas.t.range.FloatRange;
