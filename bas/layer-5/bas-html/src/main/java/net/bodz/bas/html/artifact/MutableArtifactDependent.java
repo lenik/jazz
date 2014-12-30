@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.html.ConflictedVersionException;
+import net.bodz.bas.err.ConflictedVersionException;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.VersionRange;
 

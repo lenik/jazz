@@ -1,4 +1,4 @@
-package net.bodz.bas.html.vbo;
+package net.bodz.bas.html.viz.util;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,8 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.html.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.IHtmlViewContext;
+import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.invoke.IInvocation;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.viz.ViewBuilderException;

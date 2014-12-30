@@ -1,4 +1,4 @@
-package net.bodz.bas.html;
+package net.bodz.bas.html.viz;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.repr.viz.IViewBuilderFactory;
