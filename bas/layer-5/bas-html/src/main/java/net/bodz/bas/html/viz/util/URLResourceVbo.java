@@ -1,4 +1,4 @@
-package net.bodz.bas.html.vbo;
+package net.bodz.bas.html.viz.util;
 
 import java.io.IOException;
 import java.net.URL;
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.html.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.IHtmlViewContext;
+import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ResourceTransferer;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.URLResource;

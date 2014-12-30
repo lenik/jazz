@@ -1,4 +1,4 @@
-package net.bodz.bas.html;
+package net.bodz.bas.html.viz;
 
 import net.bodz.bas.repr.viz.AbstractViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;

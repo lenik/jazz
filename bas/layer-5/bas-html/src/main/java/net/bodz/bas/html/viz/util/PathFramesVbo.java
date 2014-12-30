@@ -1,4 +1,4 @@
-package net.bodz.bas.html.vbo;
+package net.bodz.bas.html.viz.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import net.bodz.bas.html.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.IHtmlViewBuilder;
-import net.bodz.bas.html.IHtmlViewBuilderFactory;
-import net.bodz.bas.html.IHtmlViewContext;
-import net.bodz.bas.html.IndexedHtmlViewBuilderFactory;
+import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
+import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathArrivalEntry;

@@ -1,4 +1,4 @@
-package net.bodz.bas.html;
+package net.bodz.bas.html.viz;
 
 import java.io.IOException;
 

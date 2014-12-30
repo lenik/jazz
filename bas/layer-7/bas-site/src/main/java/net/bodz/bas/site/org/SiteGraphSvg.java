@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.html.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.IHtmlViewContext;
+import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.builtin.FileResource;

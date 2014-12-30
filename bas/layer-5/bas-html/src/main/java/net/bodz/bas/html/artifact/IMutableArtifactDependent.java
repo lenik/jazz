@@ -1,6 +1,6 @@
 package net.bodz.bas.html.artifact;
 
-import net.bodz.bas.html.ConflictedVersionException;
+import net.bodz.bas.err.ConflictedVersionException;
 
 public interface IMutableArtifactDependent
         extends IArtifactDependent {
