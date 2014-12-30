@@ -95,7 +95,7 @@ public class FormDeclBuilder {
                     continue;
             }
 
-            MutableFieldDecl fieldDecl = fieldDeclBuilder.build(property);
+            IFieldDecl fieldDecl = fieldDeclBuilder.build(property);
             result.addFieldDef(property.getName(), fieldDecl);
         }
         return result;

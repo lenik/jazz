@@ -51,7 +51,7 @@ public class FieldDeclListBuilder {
             IProperty property = type.getPathProperty(pathProperty);
             if (property == null)
                 throw new NoSuchPropertyException(pathProperty);
-            MutableFieldDecl field = fieldDeclBuilder.build(property);
+            IFieldDecl field = fieldDeclBuilder.build(property);
             fieldDecls.add(field);
         }
     }

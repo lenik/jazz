@@ -18,7 +18,7 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class FieldDeclBuilder {
 
-    public MutableFieldDecl build(IProperty property)
+    public IFieldDecl build(IProperty property)
             throws ParseException {
         MutableFieldDecl fieldDecl = new MutableFieldDecl();
         populate(fieldDecl, property);
@@ -70,6 +70,9 @@ public class FieldDeclBuilder {
 
         FormInput aFormInput = annotations.getAnnotation(FormInput.class);
         if (aFormInput != null) {
+            String inputName = aFormInput.name();
+            fieldDecl.inputName = inputName.isEmpty() ? null : inputName;
+
             fieldDecl.preferredSortOrder = aFormInput.sort();
             fieldDecl.readOnly = aFormInput.readOnly();
             fieldDecl.maxLength = aFormInput.maxLength();
