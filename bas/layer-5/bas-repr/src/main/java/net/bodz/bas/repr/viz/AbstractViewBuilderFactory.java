@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.object.IEmptyConsts;
+import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.c.type.TypeChain;
 import net.bodz.bas.c.type.TypeNearby;
@@ -72,6 +73,9 @@ public abstract class AbstractViewBuilderFactory
                     initialized = true;
                 }
             }
+
+        if (clazz.isPrimitive())
+            clazz = (Class<? extends T>) Primitives.box(clazz);
 
         FeaturedType key = new FeaturedType(clazz, features);
         Object cache = viewBuilderCache.get(key);
