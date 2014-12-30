@@ -15,6 +15,9 @@ import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.variant.DecoratedVariantMap;
 import net.bodz.bas.t.variant.IVariantMap;
 
+/**
+ * "Quick/Easy"-VariantMap.
+ */
 public class QVariantMap<K>
         extends DecoratedVariantMap<K> {
 
