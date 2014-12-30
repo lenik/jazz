@@ -10,9 +10,9 @@ import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
-public class FormStructBuilder {
+public class FormDefBuilder {
 
-    FormFieldBuilder formFieldBuilder = new FormFieldBuilder();
+    FieldDefBuilder formFieldBuilder = new FieldDefBuilder();
     SortOrder sortOrder = SortOrder.NONE;
 
     int modifierMask = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE | Modifier.STATIC;
@@ -23,11 +23,11 @@ public class FormStructBuilder {
     Set<String> excludes = new HashSet<String>();
     boolean xjdocRequired;
 
-    public FormFieldBuilder getFormFieldBuilder() {
+    public FieldDefBuilder getFormFieldBuilder() {
         return formFieldBuilder;
     }
 
-    public void setFormFieldBuilder(FormFieldBuilder formFieldBuilder) {
+    public void setFormFieldBuilder(FieldDefBuilder formFieldBuilder) {
         if (formFieldBuilder == null)
             throw new NullPointerException("formFieldBuilder");
         this.formFieldBuilder = formFieldBuilder;
@@ -69,9 +69,9 @@ public class FormStructBuilder {
         return excludes;
     }
 
-    public MutableFormStruct buildFromType(IType type)
+    public MutableFormDef build(IType type)
             throws ParseException {
-        MutableFormStruct result = new MutableFormStruct(SortOrder.NONE);
+        MutableFormDef result = new MutableFormDef(SortOrder.NONE);
 
         for (IProperty property : type.getProperties()) {
             int modifiers = property.getModifiers();
@@ -95,8 +95,8 @@ public class FormStructBuilder {
                     continue;
             }
 
-            MutableFormField field = formFieldBuilder.build(property);
-            result.addField(property.getName(), field);
+            MutableFieldDef fieldDef = formFieldBuilder.build(property);
+            result.addFieldDef(property.getName(), fieldDef);
         }
         return result;
     }

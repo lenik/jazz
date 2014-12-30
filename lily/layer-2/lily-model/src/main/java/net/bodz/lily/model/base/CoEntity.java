@@ -10,10 +10,10 @@ import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.content.IContent;
-import net.bodz.bas.repr.form.FormStructBuilder;
-import net.bodz.bas.repr.form.IFormField;
-import net.bodz.bas.repr.form.IFormStruct;
-import net.bodz.bas.repr.form.IFormView;
+import net.bodz.bas.repr.form.FormDefBuilder;
+import net.bodz.bas.repr.form.IFieldDef;
+import net.bodz.bas.repr.form.IFormDef;
+import net.bodz.bas.repr.form.IFormExported;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
@@ -29,7 +29,7 @@ import net.bodz.lily.model.base.security.User;
  * Co/Con: Concrete, also Content, Controlled
  */
 public abstract class CoEntity
-        implements Serializable, IContent, IAccessControlled, IFormView {
+        implements Serializable, IContent, IAccessControlled, IFormExported {
 
     private static final long serialVersionUID = 1L;
 
@@ -116,7 +116,15 @@ public abstract class CoEntity
 
     @Override
     public String toString() {
-        return getCodeName() + " - " + getLabel();
+        StringBuilder sb = new StringBuilder(80);
+        String codeName = getCodeName();
+        if (codeName != null)
+            sb.append(codeName);
+        else
+            sb.append(getId());
+        sb.append(" - ");
+        sb.append(getLabel());
+        return sb.toString();
     }
 
     /** ⇱ Implementation Of {@link IContent}. */
@@ -335,40 +343,40 @@ public abstract class CoEntity
         this.acl = acl;
     }
 
-    /** ⇱ Implementation Of {@link IFormView}. */
-    /* _____________________________ */static section.iface __DATA__;
+    /** ⇱ Implementation Of {@link IFormExported}. */
+    /* _____________________________ */static section.iface __FORM__;
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Override
-    public IFormStruct getFormStruct() {
+    public IFormDef getFormDef() {
         IType type = PotatoTypes.getInstance().forClass(getClass());
         TypeExtras extras = TypeExtras.of(getClass());
-        IFormStruct struct = extras.getFeature(IFormStruct.class);
-        if (struct == null) {
-            struct = buildFormStruct(type);
-            extras.setFeature(IFormStruct.class, struct);
+        IFormDef formDef = extras.getFeature(IFormDef.class);
+        if (formDef == null) {
+            formDef = buildFormDef(type);
+            extras.setFeature(IFormDef.class, formDef);
         }
-        return struct;
+        return formDef;
     }
 
-    protected IFormStruct buildFormStruct(IType type) {
-        FormStructBuilder formStructBuilder = new FormStructBuilder();
+    protected IFormDef buildFormDef(IType type) {
+        FormDefBuilder formStructBuilder = new FormDefBuilder();
         try {
-            return formStructBuilder.buildFromType(type);
+            return formStructBuilder.build(type);
         } catch (ParseException e) {
             throw new IllegalUsageError(e.getMessage(), e);
         }
     }
 
-    public Object getFormFieldValue(String name) {
+    public Object getFieldValue(String name) {
         if (name == null)
             throw new NullPointerException("name");
-        IFormStruct metadata = getFormStruct();
-        IFormField field = metadata.getField(name);
-        if (field == null)
+        IFormDef metadata = getFormDef();
+        IFieldDef fieldDef = metadata.getFieldDef(name);
+        if (fieldDef == null)
             throw new IllegalArgumentException("bad field: " + name);
 
-        IPropertyAccessor accessor = field.getAccessor();
+        IPropertyAccessor accessor = fieldDef.getAccessor();
         try {
             return accessor.getValue(this);
         } catch (ReflectiveOperationException e) {
@@ -376,15 +384,15 @@ public abstract class CoEntity
         }
     }
 
-    public void setFormFieldValue(String name, Object value) {
+    public void setFieldValue(String name, Object value) {
         if (name == null)
             throw new NullPointerException("name");
-        IFormStruct metadata = getFormStruct();
-        IFormField field = metadata.getField(name);
-        if (field == null)
+        IFormDef metadata = getFormDef();
+        IFieldDef fieldDef = metadata.getFieldDef(name);
+        if (fieldDef == null)
             throw new IllegalArgumentException("bad field: " + name);
 
-        IPropertyAccessor accessor = field.getAccessor();
+        IPropertyAccessor accessor = fieldDef.getAccessor();
         try {
             accessor.setValue(this, value);
         } catch (ReflectiveOperationException e) {
