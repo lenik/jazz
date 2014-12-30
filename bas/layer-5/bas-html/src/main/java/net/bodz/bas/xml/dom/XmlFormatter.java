@@ -66,10 +66,13 @@ public class XmlFormatter {
                     Map<String, String> attributeMap = tag.getAttributeMap();
                     if (!attributeMap.isEmpty())
                         for (Entry<String, String> entry : attributeMap.entrySet()) {
+                            String value = entry.getValue();
+                            if (value == null)
+                                continue;
                             stbuf.append(' ');
                             stbuf.append(entry.getKey());
                             stbuf.append("=\"");
-                            stbuf.append(attribEncoder.encode(entry.getValue()));
+                            stbuf.append(attribEncoder.encode(value));
                             stbuf.append('"');
                         }
 
