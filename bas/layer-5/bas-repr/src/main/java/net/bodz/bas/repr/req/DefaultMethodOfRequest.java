@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.MutableVariantMap;
@@ -13,10 +14,10 @@ import net.bodz.bas.t.variant.MutableVariantMap;
 /**
  * Find method name in the dispatch path, translate into request attributes and remove them from
  * path.
- *
+ * 
  * This preprocessor find method name in following order, [F] means "final", if there are multiple
  * non-final method name occurrences, the latter ones will overwrite the former ones.
- *
+ * 
  * <ol>
  * <li>HTTP request parameter: method:
  * <li>HTTP request parameter: m:
@@ -68,7 +69,7 @@ public class DefaultMethodOfRequest
     static boolean paramMethod = true;
 
     @Override
-    public void apply(HttpServletRequest request) {
+    public boolean apply(HttpServletRequest request, HttpServletResponse response) {
         String methodName = null;
 
         if (methodName == null && paramMethodLong)
@@ -94,6 +95,7 @@ public class DefaultMethodOfRequest
         this.parameters.setWrapped(params);
 
         request.setAttribute(IMethodOfRequest.class.getName(), this);
+        return true;
     }
 
     @Override

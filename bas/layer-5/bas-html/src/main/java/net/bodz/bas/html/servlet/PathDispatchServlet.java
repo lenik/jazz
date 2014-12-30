@@ -32,6 +32,7 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.PathDispatchService;
 import net.bodz.bas.repr.path.TokenQueue;
+import net.bodz.bas.repr.req.HttpSnapManager;
 import net.bodz.bas.repr.req.IHttpRequestProcessor;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IQueryable;
@@ -57,11 +58,13 @@ public class PathDispatchServlet
     private PathDispatchService pathDispatchService;
     private IHtmlViewBuilderFactory viewBuilderFactory;
     private PathFramesVbo pathFramesVbo;
+    private HttpSnapManager snapManager;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
         pathFramesVbo = new PathFramesVbo();
+        snapManager = new HttpSnapManager();
     }
 
     @Override
@@ -83,10 +86,14 @@ public class PathDispatchServlet
         resp.setHeader("X-Powered-By", "Jazz BAS Repr/Html Server 2.0");
 
         HttpServletReqEx req = HttpServletReqEx.of(_req);
+        req.setAttribute(HttpSnapManager.ATTRIBUTE_KEY, snapManager);
 
         for (IHttpRequestProcessor proc : ServiceLoader.load(IHttpRequestProcessor.class))
             try {
-                proc.apply(req);
+                if (!proc.apply(req, resp)) {
+                    // invalid request.
+                    return;
+                }
             } catch (ParseException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
