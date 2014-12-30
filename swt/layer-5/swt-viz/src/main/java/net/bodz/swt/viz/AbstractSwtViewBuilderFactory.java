@@ -2,6 +2,7 @@ package net.bodz.swt.viz;
 
 import net.bodz.bas.repr.viz.AbstractViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;
+import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.swt.viz.form.vbo.BooleanVbo;
 import net.bodz.swt.viz.form.vbo.DateVbo;
 import net.bodz.swt.viz.form.vbo.ExceptionVbo;
@@ -27,6 +28,11 @@ public abstract class AbstractSwtViewBuilderFactory
     @Override
     public <T> ISwtViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
         return (ISwtViewBuilder<T>) super.getViewBuilder(type);
+    }
+
+    @Override
+    public <T> ISwtViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features) {
+        return (ISwtViewBuilder<T>) super.getViewBuilder(ref);
     }
 
     protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {

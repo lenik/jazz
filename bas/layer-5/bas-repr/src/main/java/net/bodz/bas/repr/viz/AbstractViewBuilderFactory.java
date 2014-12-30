@@ -53,6 +53,12 @@ public abstract class AbstractViewBuilderFactory
         return getViewBuilder(valueType, features);
     }
 
+    @Override
+    public <T> IViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features) {
+        Class<? extends T> valueType = ref.getValueType();
+        return getViewBuilder(valueType, features);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> clazz, String... features) {

@@ -19,6 +19,12 @@ public interface IViewBuilderFactory {
     <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
 
     /**
+     * @param features
+     *            Required features.
+     */
+    <T> IViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features);
+
+    /**
      * @return The built widget/control handle.
      */
     Object buildView(Object ctx, IUiRef<?> ref)
