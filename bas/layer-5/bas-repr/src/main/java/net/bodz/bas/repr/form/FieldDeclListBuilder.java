@@ -9,16 +9,16 @@ import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
-public class FieldDefListBuilder {
+public class FieldDeclListBuilder {
 
-    FieldDefBuilder formFieldBuilder;
-    List<IFieldDef> fieldDefs = new ArrayList<IFieldDef>();
+    FieldDeclBuilder fieldDeclBuilder;
+    List<IFieldDecl> fieldDecls = new ArrayList<IFieldDecl>();
 
-    public FieldDefListBuilder(FieldDefBuilder formFieldBuilder) {
-        this.formFieldBuilder = formFieldBuilder;
+    public FieldDeclListBuilder(FieldDeclBuilder fieldDeclBuilder) {
+        this.fieldDeclBuilder = fieldDeclBuilder;
     }
 
-    public void fromPathProperties(IFormDef knownStruct, String... pathProperties)
+    public void fromPathProperties(IFormDecl knownStruct, String... pathProperties)
             throws NoSuchPropertyException, ParseException {
         for (String pathProperty : pathProperties) {
             int dot = pathProperty.indexOf('.');
@@ -31,14 +31,14 @@ public class FieldDefListBuilder {
                 remaining = pathProperty.substring(dot + 1);
             }
 
-            IFieldDef fieldDef = knownStruct.getFieldDef(head);
-            if (fieldDef == null)
+            IFieldDecl fieldDecl = knownStruct.getFieldDef(head);
+            if (fieldDecl == null)
                 throw new NoSuchPropertyException("Bad head: " + head);
 
             if (remaining == null)
-                fieldDefs.add(fieldDef);
+                fieldDecls.add(fieldDecl);
             else {
-                Class<?> valueType = fieldDef.getValueType();
+                Class<?> valueType = fieldDecl.getValueType();
                 IType type = PotatoTypes.getInstance().forClass(valueType);
                 fromPathProperties(type, remaining);
             }
@@ -51,13 +51,13 @@ public class FieldDefListBuilder {
             IProperty property = type.getPathProperty(pathProperty);
             if (property == null)
                 throw new NoSuchPropertyException(pathProperty);
-            MutableFieldDef field = formFieldBuilder.build(property);
-            fieldDefs.add(field);
+            MutableFieldDecl field = fieldDeclBuilder.build(property);
+            fieldDecls.add(field);
         }
     }
 
-    public List<IFieldDef> getFields() {
-        return fieldDefs;
+    public List<IFieldDecl> getFields() {
+        return fieldDecls;
     }
 
 }

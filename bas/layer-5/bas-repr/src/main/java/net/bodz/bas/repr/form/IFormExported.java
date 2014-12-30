@@ -5,6 +5,6 @@ public interface IFormExported {
     /**
      * @return Non-<code>null</code> value.
      */
-    IFormDef getFormDef();
+    IFormDecl getFormDef();
 
 }

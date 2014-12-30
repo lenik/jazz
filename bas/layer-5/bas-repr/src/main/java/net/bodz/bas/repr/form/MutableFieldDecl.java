@@ -10,9 +10,9 @@ import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.ui.dom1.MutableUiElement;
 
-public class MutableFieldDef
+public class MutableFieldDecl
         extends MutableUiElement
-        implements IFieldDef {
+        implements IFieldDecl {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,16 +20,21 @@ public class MutableFieldDef
     IProperty property;
     Class<?> valueType;
     Object valueOverride;
+
     int priority;
-    SortOrder preferredSortOrder = SortOrder.NONE;
-    FieldCategory fieldGroup;
+    FieldCategory category;
+
     String styleClass;
+    Boolean columnVisibility;
+    Integer columnMaxLength;
+    SortOrder preferredSortOrder = SortOrder.NONE;
+
     boolean readOnly;
-    int maxLength;
-    int textWidth;
+    Integer maxLength;
+    Integer textWidth;
     iString placeholder;
     NumberFormat numberFormat;
-    char echoChar;
+    Character echoChar;
     NullConvertion nullConvertion = NullConvertion.NONE;
     SpaceNormalization spaceNormalization = SpaceNormalization.NONE;
     List<IValidator<Object>> validators;
@@ -63,12 +68,39 @@ public class MutableFieldDef
     }
 
     @Override
+    public Object getValueOverride() {
+        return valueOverride;
+    }
+
+    public void setValueOverride(Object value) {
+        this.valueOverride = value;
+    }
+
+    @Override
     public int getPriority() {
         return priority;
     }
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    @Override
+    public FieldCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(FieldCategory category) {
+        this.category = category;
+    }
+
+    @Override
+    public String getStyleClass() {
+        return styleClass;
+    }
+
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
     }
 
     @Override
@@ -83,21 +115,21 @@ public class MutableFieldDef
     }
 
     @Override
-    public FieldCategory getCategory() {
-        return fieldGroup;
+    public Boolean getColumnVisibility() {
+        return columnVisibility;
     }
 
-    public void setFieldGroup(FieldCategory fieldGroup) {
-        this.fieldGroup = fieldGroup;
+    public void setColumnVisibility(Boolean columnVisibility) {
+        this.columnVisibility = columnVisibility;
     }
 
     @Override
-    public String getStyleClass() {
-        return styleClass;
+    public Integer getColumnMaxLength() {
+        return columnMaxLength;
     }
 
-    public void setStyleClass(String styleClass) {
-        this.styleClass = styleClass;
+    public void setColumnMaxLength(Integer columnMaxLength) {
+        this.columnMaxLength = columnMaxLength;
     }
 
     @Override
@@ -110,20 +142,20 @@ public class MutableFieldDef
     }
 
     @Override
-    public int getMaxLength() {
+    public Integer getMaxLength() {
         return maxLength;
     }
 
-    public void setMaxLength(int maxLength) {
+    public void setMaxLength(Integer maxLength) {
         this.maxLength = maxLength;
     }
 
     @Override
-    public int getTextWidth() {
+    public Integer getTextWidth() {
         return textWidth;
     }
 
-    public void setTextWidth(int textWidth) {
+    public void setTextWidth(Integer textWidth) {
         this.textWidth = textWidth;
     }
 
@@ -137,15 +169,6 @@ public class MutableFieldDef
     }
 
     @Override
-    public Object getValueOverride() {
-        return valueOverride;
-    }
-
-    public void setValue(Object value) {
-        this.valueOverride = value;
-    }
-
-    @Override
     public NumberFormat getNumberFormat() {
         return numberFormat;
     }
@@ -155,11 +178,11 @@ public class MutableFieldDef
     }
 
     @Override
-    public char getEchoChar() {
+    public Character getEchoChar() {
         return echoChar;
     }
 
-    public void setEchoChar(char echoChar) {
+    public void setEchoChar(Character echoChar) {
         this.echoChar = echoChar;
     }
 

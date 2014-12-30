@@ -12,7 +12,7 @@ import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.ui.dom1.IUiElement;
 import net.bodz.bas.ui.style.IInputBehaviorDeclaration;
 
-public interface IFieldDef
+public interface IFieldDecl
         extends IMetadata, IUiElement, IPriority {
 
     IPropertyAccessor getAccessor();
@@ -24,16 +24,27 @@ public interface IFieldDef
     Object getValueOverride();
 
     /**
-     * @return Non-<code>null</code> sort order.
-     */
-    SortOrder getPreferredSortOrder();
-
-    /**
      * @return <code>null</code> if it's not belong to any category.
      */
     FieldCategory getCategory();
 
     String getStyleClass();
+
+    /**
+     * @return Non-<code>null</code> sort order.
+     */
+    SortOrder getPreferredSortOrder();
+
+    /**
+     * <ul>
+     * <li><code>true</code>: visible by default
+     * <li><code>null</code>: hidden by default
+     * <li><code>false</code>: display none.
+     * </ul>
+     */
+    Boolean getColumnVisibility();
+
+    Integer getColumnMaxLength();
 
     /**
      * @see IInputBehaviorDeclaration#getReadOnly()
@@ -43,12 +54,12 @@ public interface IFieldDef
     /**
      * @see IInputBehaviorDeclaration#getMaxLength()
      */
-    int getMaxLength();
+    Integer getMaxLength();
 
     /**
      * It's the column width in the index view, and the text input width in the edit form view.
      */
-    int getTextWidth();
+    Integer getTextWidth();
 
     /**
      * @return <code>null</code> if no placeholder.
@@ -60,10 +71,7 @@ public interface IFieldDef
      */
     NumberFormat getNumberFormat();
 
-    /**
-     * @return <code>'\0'</code> if none.
-     */
-    char getEchoChar();
+    Character getEchoChar();
 
     /**
      * @return Non-<code>null</code> value.

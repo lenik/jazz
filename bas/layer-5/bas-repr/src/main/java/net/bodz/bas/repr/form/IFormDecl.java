@@ -5,16 +5,16 @@ import java.util.Collection;
 import net.bodz.bas.meta.stereo.IMetadata;
 import net.bodz.bas.ui.dom1.IUiElement;
 
-public interface IFormDef
+public interface IFormDecl
         extends IMetadata, IUiElement {
 
-    IFieldDef getFieldDef(String name);
+    IFieldDecl getFieldDef(String name);
 
     /**
      * @see FieldCategory#group(Iterable)
      */
-    Collection<IFieldDef> getFieldDefs();
+    Collection<IFieldDecl> getFieldDefs();
 
-    Collection<IFieldDef> getFieldDefs(int maxDetailLevel);
+    Collection<IFieldDecl> getFieldDefs(int maxDetailLevel);
 
 }
