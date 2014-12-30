@@ -18,9 +18,9 @@ public class TagSetDefVbo
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<TagSetDef> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<TagSetDef> ref, IOptions options)
             throws ViewBuilderException, IOException {
-        return ctx;
+        return out;
     }
 
 }

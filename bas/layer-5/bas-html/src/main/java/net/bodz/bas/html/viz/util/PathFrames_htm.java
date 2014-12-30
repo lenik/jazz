@@ -30,7 +30,7 @@ public class PathFrames_htm
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<IPathArrival> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<IPathArrival> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         IPathArrival arrival = ref.get();
@@ -72,15 +72,15 @@ public class PathFrames_htm
         while (builtFrames < size) {
             Frame frame = frames.get(size - 1 - builtFrames);
             resp.addHeader("X-Page-Frame", frame.viewBuilder.getClass().getSimpleName());
-            frame.ctx0 = ctx;
-            ctx = frame.viewBuilder.buildHtmlView(ctx, out, frame, viewOptions);
-            if (ctx == null)
+            frame.out0 = out;
+            out = frame.viewBuilder.buildHtmlView(ctx, out, frame, viewOptions);
+            if (out == null)
                 break;
             else
                 builtFrames++;
         }
 
-        return ctx;
+        return out;
     }
 
     static class Frame
@@ -89,7 +89,7 @@ public class PathFrames_htm
         private static final long serialVersionUID = 1L;
 
         IHtmlViewBuilder<Object> viewBuilder;
-        IHtmlViewContext ctx0;
+        IHtmlTag out0;
 
         public Frame(IPathArrival arrival) {
             super(arrival);

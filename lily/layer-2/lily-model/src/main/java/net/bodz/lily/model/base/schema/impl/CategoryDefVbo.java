@@ -18,9 +18,9 @@ public class CategoryDefVbo
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<CategoryDef> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<CategoryDef> ref, IOptions options)
             throws ViewBuilderException, IOException {
-        return ctx;
+        return out;
     }
 
 }

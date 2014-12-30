@@ -24,10 +24,10 @@ import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-public class SiteGraphSvg
+public class SiteGraph_svg
         extends AbstractHtmlViewBuilder<SiteGraphNode> {
 
-    public SiteGraphSvg() {
+    public SiteGraph_svg() {
         super(SiteGraphNode.class);
     }
 
@@ -37,7 +37,7 @@ public class SiteGraphSvg
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<SiteGraphNode> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<SiteGraphNode> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
         HttpServletResponse resp = ctx.getResponse();

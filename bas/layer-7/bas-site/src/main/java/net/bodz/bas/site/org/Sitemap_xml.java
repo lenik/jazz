@@ -14,14 +14,14 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.bas.xml.dom.IXmlTag;
 
-public class SitemapXml
+public class Sitemap_xml
         extends AbstractHtmlViewBuilder<Sitemap>
         implements IDateFormatConsts {
 
     static final String SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9";
     static final String XHTML_NS = "http://www.w3.org/1999/xhtml";
 
-    public SitemapXml() {
+    public Sitemap_xml() {
         super(Sitemap.class);
     }
 
@@ -36,7 +36,7 @@ public class SitemapXml
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<Sitemap> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<Sitemap> ref, IOptions options)
             throws ViewBuilderException, IOException {
         Sitemap sitemap = ref.get();
         IXmlTag out = parent;
@@ -59,7 +59,7 @@ public class SitemapXml
             tag.insert("changefreq").text(entry.getChangeFreq());
             tag.insert("priority").text(entry.getPriority());
         }
-        return ctx;
+        return parent;
     }
 
 }
