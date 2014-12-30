@@ -10,9 +10,9 @@ import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.content.IContent;
-import net.bodz.bas.repr.form.FormDefBuilder;
-import net.bodz.bas.repr.form.IFieldDef;
-import net.bodz.bas.repr.form.IFormDef;
+import net.bodz.bas.repr.form.FormDeclBuilder;
+import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.bas.repr.form.IFormExported;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.state.State;
@@ -348,21 +348,21 @@ public abstract class CoEntity
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Override
-    public IFormDef getFormDef() {
+    public IFormDecl getFormDef() {
         IType type = PotatoTypes.getInstance().forClass(getClass());
         TypeExtras extras = TypeExtras.of(getClass());
-        IFormDef formDef = extras.getFeature(IFormDef.class);
+        IFormDecl formDef = extras.getFeature(IFormDecl.class);
         if (formDef == null) {
             formDef = buildFormDef(type);
-            extras.setFeature(IFormDef.class, formDef);
+            extras.setFeature(IFormDecl.class, formDef);
         }
         return formDef;
     }
 
-    protected IFormDef buildFormDef(IType type) {
-        FormDefBuilder formStructBuilder = new FormDefBuilder();
+    protected IFormDecl buildFormDef(IType type) {
+        FormDeclBuilder builder = new FormDeclBuilder();
         try {
-            return formStructBuilder.build(type);
+            return builder.build(type);
         } catch (ParseException e) {
             throw new IllegalUsageError(e.getMessage(), e);
         }
@@ -371,8 +371,8 @@ public abstract class CoEntity
     public Object getFieldValue(String name) {
         if (name == null)
             throw new NullPointerException("name");
-        IFormDef metadata = getFormDef();
-        IFieldDef fieldDef = metadata.getFieldDef(name);
+        IFormDecl metadata = getFormDef();
+        IFieldDecl fieldDef = metadata.getFieldDef(name);
         if (fieldDef == null)
             throw new IllegalArgumentException("bad field: " + name);
 
@@ -387,8 +387,8 @@ public abstract class CoEntity
     public void setFieldValue(String name, Object value) {
         if (name == null)
             throw new NullPointerException("name");
-        IFormDef metadata = getFormDef();
-        IFieldDef fieldDef = metadata.getFieldDef(name);
+        IFormDecl metadata = getFormDef();
+        IFieldDecl fieldDef = metadata.getFieldDef(name);
         if (fieldDef == null)
             throw new IllegalArgumentException("bad field: " + name);
 

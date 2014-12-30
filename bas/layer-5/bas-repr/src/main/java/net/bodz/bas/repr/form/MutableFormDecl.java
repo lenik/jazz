@@ -6,15 +6,15 @@ import net.bodz.bas.t.order.DefaultComparator;
 import net.bodz.bas.t.order.DefaultDescendingComparator;
 import net.bodz.bas.ui.dom1.MutableUiElement;
 
-public class MutableFormDef
+public class MutableFormDecl
         extends MutableUiElement
-        implements IFormDef {
+        implements IFormDecl {
 
     private static final long serialVersionUID = 1L;
 
-    private Map<String, IFieldDef> map;
+    private Map<String, IFieldDecl> map;
 
-    public MutableFormDef(SortOrder sortOrder) {
+    public MutableFormDecl(SortOrder sortOrder) {
         switch (sortOrder) {
         case NONE:
             map = new HashMap<>();
@@ -30,19 +30,19 @@ public class MutableFormDef
     }
 
     @Override
-    public IFieldDef getFieldDef(String name) {
+    public IFieldDecl getFieldDef(String name) {
         return map.get(name);
     }
 
     @Override
-    public Collection<IFieldDef> getFieldDefs() {
+    public Collection<IFieldDecl> getFieldDefs() {
         return map.values();
     }
 
     @Override
-    public Collection<IFieldDef> getFieldDefs(int maxDetailLevel) {
-        List<IFieldDef> list = new ArrayList<IFieldDef>(map.size());
-        for (IFieldDef a : map.values())
+    public Collection<IFieldDecl> getFieldDefs(int maxDetailLevel) {
+        List<IFieldDecl> list = new ArrayList<IFieldDecl>(map.size());
+        for (IFieldDecl a : map.values())
             if (a.getDetailLevel() > maxDetailLevel)
                 continue;
             else
@@ -50,12 +50,12 @@ public class MutableFormDef
         return list;
     }
 
-    public void addFieldDef(String name, IFieldDef fieldDef) {
+    public void addFieldDef(String name, IFieldDecl fieldDecl) {
         if (name == null)
             throw new NullPointerException("name");
-        if (fieldDef == null)
-            throw new NullPointerException("fieldDef");
-        map.put(name, fieldDef);
+        if (fieldDecl == null)
+            throw new NullPointerException("fieldDecl");
+        map.put(name, fieldDecl);
     }
 
 }

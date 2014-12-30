@@ -3,11 +3,11 @@ package net.bodz.bas.repr.form;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.t.order.AbstractNonNullComparator;
 
-public class FieldDefComparator
-        extends AbstractNonNullComparator<IFieldDef> {
+public class FieldDeclComparator
+        extends AbstractNonNullComparator<IFieldDecl> {
 
     @Override
-    public int compareNonNull(IFieldDef o1, IFieldDef o2) {
+    public int compareNonNull(IFieldDecl o1, IFieldDecl o2) {
         int cmp;
 
         int level1 = o1.getDetailLevel();
@@ -38,6 +38,6 @@ public class FieldDefComparator
         return o1.equals(o2) ? 0 : -1;
     }
 
-    public static FieldDefComparator INSTANCE = new FieldDefComparator();
+    public static FieldDeclComparator INSTANCE = new FieldDeclComparator();
 
 }

@@ -10,9 +10,9 @@ import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
-public class FormDefBuilder {
+public class FormDeclBuilder {
 
-    FieldDefBuilder formFieldBuilder = new FieldDefBuilder();
+    FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
     SortOrder sortOrder = SortOrder.NONE;
 
     int modifierMask = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE | Modifier.STATIC;
@@ -23,14 +23,14 @@ public class FormDefBuilder {
     Set<String> excludes = new HashSet<String>();
     boolean xjdocRequired;
 
-    public FieldDefBuilder getFormFieldBuilder() {
-        return formFieldBuilder;
+    public FieldDeclBuilder getFormFieldBuilder() {
+        return fieldDeclBuilder;
     }
 
-    public void setFormFieldBuilder(FieldDefBuilder formFieldBuilder) {
-        if (formFieldBuilder == null)
-            throw new NullPointerException("formFieldBuilder");
-        this.formFieldBuilder = formFieldBuilder;
+    public void setFormFieldBuilder(FieldDeclBuilder fieldDeclBuilder) {
+        if (fieldDeclBuilder == null)
+            throw new NullPointerException("fieldDeclBuilder");
+        this.fieldDeclBuilder = fieldDeclBuilder;
     }
 
     public int getModifierMask() {
@@ -69,9 +69,9 @@ public class FormDefBuilder {
         return excludes;
     }
 
-    public MutableFormDef build(IType type)
+    public MutableFormDecl build(IType type)
             throws ParseException {
-        MutableFormDef result = new MutableFormDef(SortOrder.NONE);
+        MutableFormDecl result = new MutableFormDecl(SortOrder.NONE);
 
         for (IProperty property : type.getProperties()) {
             int modifiers = property.getModifiers();
@@ -95,8 +95,8 @@ public class FormDefBuilder {
                     continue;
             }
 
-            MutableFieldDef fieldDef = formFieldBuilder.build(property);
-            result.addFieldDef(property.getName(), fieldDef);
+            MutableFieldDecl fieldDecl = fieldDeclBuilder.build(property);
+            result.addFieldDef(property.getName(), fieldDecl);
         }
         return result;
     }

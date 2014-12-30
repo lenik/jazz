@@ -61,20 +61,20 @@ public class FieldCategory
         return instance;
     }
 
-    public static Map<FieldCategory, Collection<IFieldDef>> group(Iterable<IFieldDef> fieldDefs) {
-        Map<FieldCategory, Collection<IFieldDef>> map;
+    public static Map<FieldCategory, Collection<IFieldDecl>> group(Iterable<IFieldDecl> fieldDecls) {
+        Map<FieldCategory, Collection<IFieldDecl>> map;
         map = new TreeMap<>(FieldCategoryComparator.INSTANCE);
 
-        for (IFieldDef fieldDef : fieldDefs) {
-            FieldCategory fg = fieldDef.getCategory();
+        for (IFieldDecl fieldDecl : fieldDecls) {
+            FieldCategory fg = fieldDecl.getCategory();
             if (fg == null)
                 fg = FieldCategory.NULL;
 
-            Collection<IFieldDef> coll = map.get(fg);
+            Collection<IFieldDecl> coll = map.get(fg);
             if (coll == null)
-                map.put(fg, coll = new TreeSet<IFieldDef>(FieldDefComparator.INSTANCE));
+                map.put(fg, coll = new TreeSet<IFieldDecl>(FieldDeclComparator.INSTANCE));
 
-            coll.add(fieldDef);
+            coll.add(fieldDecl);
         }
         return map;
     }
