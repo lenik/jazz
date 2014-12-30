@@ -12,6 +12,10 @@ public interface IMapperTemplate<T, C>
 
     T select(long id);
 
+    T selectPrev(long id);
+
+    T selectNext(long id);
+
     int insert(T obj);
 
     void update(T obj);
