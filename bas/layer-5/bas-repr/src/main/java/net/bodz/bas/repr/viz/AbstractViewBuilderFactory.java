@@ -182,18 +182,18 @@ public abstract class AbstractViewBuilderFactory
     }
 
     @Override
-    public Object buildView(Object ctx, IUiRef<?> ref)
+    public Object buildView(Object ctx, Object parent, IUiRef<?> ref)
             throws ViewBuilderException {
-        return buildView(ctx, ref, IOptions.NULL);
+        return buildView(ctx, parent, ref, IOptions.NULL);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public Object buildView(Object ctx, IUiRef<?> ref, IOptions options)
+    public Object buildView(Object ctx, Object parent, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException {
         Class<?> valueType = ref.getValueType();
         IViewBuilder viewBuilder = getViewBuilder(valueType);
-        Object view = viewBuilder.buildView(ctx, ref, options);
+        Object view = viewBuilder.buildView(ctx, parent, ref, options);
         return view;
     }
 

@@ -2,8 +2,6 @@ package net.bodz.bas.html.dom;
 
 import org.junit.Assert;
 
-import net.bodz.bas.html.dom.HtmlDoc;
-import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlFormTag;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.xml.dom.XmlFormatter;

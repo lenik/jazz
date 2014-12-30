@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.invoke.IInvocation;
@@ -37,7 +38,7 @@ public class Invocation_txt
     }
 
     @Override
-    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<IInvocation> ref, IOptions options)
+    public IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<IInvocation> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         PrintWriter out = resp.getWriter();

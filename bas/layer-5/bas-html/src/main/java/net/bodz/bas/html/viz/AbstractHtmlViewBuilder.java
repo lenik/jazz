@@ -65,20 +65,20 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object _ctx, IUiRef<T> ref, IOptions options)
+    public final Object buildView(Object _ctx, Object out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
         try {
-            return buildHtmlView(ctx, ref, options);
+            return buildHtmlView(ctx, (IHtmlTag) out, ref, options);
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
     }
 
     @Override
-    public final IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IUiRef<T> ref)
+    public final IHtmlViewContext buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
-        return buildHtmlView(ctx, ref, IOptions.NULL);
+        return buildHtmlView(ctx, out, ref, IOptions.NULL);
     }
 
     protected static boolean enter(IHtmlViewContext ctx)
@@ -150,18 +150,11 @@ public abstract class AbstractHtmlViewBuilder<T>
         if (viewBuilder == null)
             throw new ViewBuilderException("Can't build view for " + type);
 
-        IHtmlTag old = ctx.getOut();
-        ctx.setOut(out);
-        try {
-            viewBuilder.buildHtmlView(ctx, ref);
-        } finally {
-            ctx.setOut(old);
-        }
+        viewBuilder.buildHtmlView(ctx, out, ref);
     }
 
-    protected IHtmlTag createTag(IHtmlViewContext ctx, String tagName, IUiElementStyleDeclaration style)
+    protected IHtmlTag createTag(IHtmlTag out, String tagName, IUiElementStyleDeclaration style)
             throws IOException {
-        IHtmlTag out = ctx.getOut();
         IHtmlTag tag = out.insert(tagName);
 
         Border border = style.getBorder();

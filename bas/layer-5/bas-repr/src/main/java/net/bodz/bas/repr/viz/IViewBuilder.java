@@ -26,13 +26,13 @@ public interface IViewBuilder<T>
     /**
      * @return The built widget/control handle.
      */
-    Object buildView(Object ctx, IUiRef<T> ref)
+    Object buildView(Object ctx, Object parent, IUiRef<T> ref)
             throws ViewBuilderException;
 
     /**
      * @return The built widget/control handle.
      */
-    Object buildView(Object ctx, IUiRef<T> ref, IOptions options)
+    Object buildView(Object ctx, Object parent, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException;
 
 }

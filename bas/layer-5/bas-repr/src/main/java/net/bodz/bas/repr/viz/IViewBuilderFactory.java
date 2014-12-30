@@ -27,13 +27,13 @@ public interface IViewBuilderFactory {
     /**
      * @return The built widget/control handle.
      */
-    Object buildView(Object ctx, IUiRef<?> ref)
+    Object buildView(Object ctx, Object parent, IUiRef<?> ref)
             throws ViewBuilderException;
 
     /**
      * @return The built widget/control handle.
      */
-    Object buildView(Object ctx, IUiRef<?> ref, IOptions options)
+    Object buildView(Object ctx, Object parent, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException;
 
 }
