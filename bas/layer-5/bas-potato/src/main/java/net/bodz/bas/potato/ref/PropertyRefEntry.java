@@ -1,5 +1,6 @@
 package net.bodz.bas.potato.ref;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.rtx.IQueryable;
@@ -37,6 +38,9 @@ public class PropertyRefEntry<T>
 
     @Override
     public T get() {
+        if (!property.isReadable())
+            throw new IllegalUsageException("Property isn't readable: " + property);
+
         Object instance = instanceRef.get();
         try {
             T value = (T) property.getValue(instance);
@@ -48,6 +52,9 @@ public class PropertyRefEntry<T>
 
     @Override
     public void set(T value) {
+        if (!property.isWritable())
+            throw new IllegalUsageException("Property isn't writable: " + property);
+
         Object instance = instanceRef.get();
         try {
             property.setValue(instance, value);
