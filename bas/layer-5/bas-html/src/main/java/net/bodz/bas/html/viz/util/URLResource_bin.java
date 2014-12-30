@@ -18,7 +18,7 @@ import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-public class URLResourceVbo
+public class URLResource_bin
         extends AbstractHtmlViewBuilder<URLResource> {
 
     /**
@@ -26,7 +26,7 @@ public class URLResourceVbo
      */
     private int maxAge = 86400;
 
-    public URLResourceVbo() {
+    public URLResource_bin() {
         super(IStreamResource.class);
     }
 

@@ -14,10 +14,10 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-public class ObjectDumpVbo
+public class ObjectDump_htm
         extends AbstractHtmlViewBuilder<Object> {
 
-    public ObjectDumpVbo() {
+    public ObjectDump_htm() {
         super(Object.class);
     }
 

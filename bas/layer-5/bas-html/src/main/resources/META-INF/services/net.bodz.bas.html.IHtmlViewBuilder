@@ -1,4 +1,4 @@
-net.bodz.bas.html.vbo.InvocationVbo
-net.bodz.bas.html.vbo.ObjectDumpVbo
-net.bodz.bas.html.vbo.PathFramesVbo
-net.bodz.bas.html.vbo.URLResourceVbo
+net.bodz.bas.html.viz.util.Invocation_txt
+net.bodz.bas.html.viz.util.ObjectDump_htm
+net.bodz.bas.html.viz.util.PathFrames_htm
+net.bodz.bas.html.viz.util.URLResource_bin

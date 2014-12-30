@@ -18,12 +18,12 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-public class PathFramesVbo
+public class PathFrames_htm
         extends AbstractHtmlViewBuilder<IPathArrival> {
 
     IHtmlViewBuilderFactory viewBuilderFactory;
 
-    public PathFramesVbo() {
+    public PathFrames_htm() {
         super(PathArrival.class);
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
     }

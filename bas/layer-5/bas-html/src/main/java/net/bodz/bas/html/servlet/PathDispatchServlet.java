@@ -20,7 +20,7 @@ import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.viz.RootHtmlViewContext;
-import net.bodz.bas.html.viz.util.PathFramesVbo;
+import net.bodz.bas.html.viz.util.PathFrames_htm;
 import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.adapter.WriterCharOut;
@@ -57,13 +57,13 @@ public class PathDispatchServlet
 
     private PathDispatchService pathDispatchService;
     private IHtmlViewBuilderFactory viewBuilderFactory;
-    private PathFramesVbo pathFramesVbo;
+    private PathFrames_htm pathFramesVbo;
     private HttpSnapManager snapManager;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
         viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
-        pathFramesVbo = new PathFramesVbo();
+        pathFramesVbo = new PathFrames_htm();
         snapManager = new HttpSnapManager();
     }
 
