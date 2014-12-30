@@ -29,6 +29,7 @@ public class MutableFieldDecl
     Integer columnMaxLength;
     SortOrder preferredSortOrder = SortOrder.NONE;
 
+    String inputName;
     boolean readOnly;
     Integer maxLength;
     Integer textWidth;
@@ -130,6 +131,15 @@ public class MutableFieldDecl
 
     public void setColumnMaxLength(Integer columnMaxLength) {
         this.columnMaxLength = columnMaxLength;
+    }
+
+    @Override
+    public String getInputName() {
+        return inputName;
+    }
+
+    public void setInputName(String inputName) {
+        this.inputName = inputName;
     }
 
     @Override

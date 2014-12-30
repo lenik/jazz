@@ -46,6 +46,8 @@ public interface IFieldDecl
 
     Integer getColumnMaxLength();
 
+    String getInputName();
+
     /**
      * @see IInputBehaviorDeclaration#getReadOnly()
      */

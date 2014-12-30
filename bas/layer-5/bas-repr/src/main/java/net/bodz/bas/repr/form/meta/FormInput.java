@@ -10,6 +10,8 @@ import net.bodz.bas.repr.form.SpaceNormalization;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FormInput {
 
+    String name() default "";
+
     SortOrder sort() default SortOrder.NONE;
 
     boolean readOnly() default false;
