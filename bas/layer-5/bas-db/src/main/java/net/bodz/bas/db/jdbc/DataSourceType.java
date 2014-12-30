@@ -5,8 +5,8 @@ import java.util.Map;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
 import net.bodz.bas.potato.ref.PropertyRefMap;
 import net.bodz.bas.potato.ref.ValueEntry;
-import net.bodz.bas.repr.util.Predef;
-import net.bodz.bas.repr.util.PredefMetadata;
+import net.bodz.bas.t.predef.Predef;
+import net.bodz.bas.t.predef.PredefMetadata;
 
 public class DataSourceType
         extends Predef<DataSourceType, String> {
