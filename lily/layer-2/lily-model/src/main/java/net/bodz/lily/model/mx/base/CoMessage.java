@@ -333,4 +333,17 @@ public class CoMessage
         this.readCount = readCount;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(80);
+        sb.append(id);
+        sb.append(" - ");
+        sb.append(subject);
+        if (op != null) {
+            sb.append("@");
+            sb.append(op.getLabel());
+        }
+        return sb.toString();
+    }
+
 }
