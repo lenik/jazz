@@ -2,10 +2,7 @@ package net.bodz.bas.c.type;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class TypeKind {
 
@@ -76,6 +73,56 @@ public class TypeKind {
             return AggregationEnum.SET;
 
         return AggregationEnum.SCALAR;
+    }
+
+    static final Map<Class<?>, Integer> typeIdMap;
+    static {
+        typeIdMap = new HashMap<>();
+        typeIdMap.put(void.class, TypeId._void);
+        typeIdMap.put(char.class, TypeId._char);
+        typeIdMap.put(byte.class, TypeId._byte);
+        typeIdMap.put(short.class, TypeId._short);
+        typeIdMap.put(int.class, TypeId._int);
+        typeIdMap.put(long.class, TypeId._long);
+        typeIdMap.put(float.class, TypeId._float);
+        typeIdMap.put(double.class, TypeId._double);
+        typeIdMap.put(boolean.class, TypeId._boolean);
+        typeIdMap.put(Void.class, TypeId.VOID);
+        typeIdMap.put(Character.class, TypeId.CHARACTER);
+        typeIdMap.put(Byte.class, TypeId.BYTE);
+        typeIdMap.put(Short.class, TypeId.SHORT);
+        typeIdMap.put(Integer.class, TypeId.INTEGER);
+        typeIdMap.put(Long.class, TypeId.LONG);
+        typeIdMap.put(Float.class, TypeId.FLOAT);
+        typeIdMap.put(Double.class, TypeId.DOUBLE);
+        typeIdMap.put(Boolean.class, TypeId.BOOLEAN);
+
+        typeIdMap.put(Class.class, TypeId.STRING);
+        typeIdMap.put(StringBuffer.class, TypeId.STRING_BUFFER);
+        typeIdMap.put(System.class, TypeId.SYSTEM);
+        typeIdMap.put(Error.class, TypeId.ERROR);
+        typeIdMap.put(Throwable.class, TypeId.THROWABLE);
+
+        typeIdMap.put(RuntimeException.class, TypeId.RUNTIME_EXCEPTION);
+        typeIdMap.put(Exception.class, TypeId.EXCEPTION);
+        typeIdMap.put(Iterable.class, TypeId.ITERABLE);
+        typeIdMap.put(StringBuilder.class, TypeId.STRING_BUILDER);
+        typeIdMap.put(Enum.class, TypeId.ENUM);
+        typeIdMap.put(Deprecated.class, TypeId.DEPRECATED);
+        typeIdMap.put(Override.class, TypeId.OVERRIDE);
+        typeIdMap.put(SuppressWarnings.class, TypeId.SUPPRESS_WARNINGS);
+        typeIdMap.put(Date.class, TypeId.DATE);
+        typeIdMap.put(java.sql.Date.class, TypeId.SQL_DATE);
+        typeIdMap.put(Calendar.class, TypeId.CALENDAR);
+    }
+
+    public static int getTypeId(Class<?> clazz) {
+        Integer id = typeIdMap.get(clazz);
+        if (id != null)
+            return id.intValue();
+        if (clazz.isEnum())
+            return TypeId.ENUM;
+        return TypeId.UNDEFINED;
     }
 
 }
