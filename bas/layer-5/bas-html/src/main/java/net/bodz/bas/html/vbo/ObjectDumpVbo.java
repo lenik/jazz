@@ -31,9 +31,6 @@ public class ObjectDumpVbo
         Object obj = ref.get();
         IHtmlTag out = ctx.getOut();
 
-        out.head().title("Object Dump");
-
-        out = out.body();
         out.h1().text("Object Dump: " + ObjectInfo.getSimpleId(obj));
         out.hr();
 
@@ -54,7 +51,6 @@ public class ObjectDumpVbo
         out.println("Remaining-Path: " + tq.getRemainingPath());
         out.println("Method: " + qmethod.getMethodName());
 
-        out.println("</pre>");
         return ctx;
     }
 

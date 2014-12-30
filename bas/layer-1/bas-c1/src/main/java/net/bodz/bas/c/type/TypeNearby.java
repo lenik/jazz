@@ -75,10 +75,10 @@ public class TypeNearby {
             String fqcn = src.getName();
             dstName = fqcn + suffix;
         } else {
-            String pkg = src.getPackage().getName();
+            Package pkg = src.getPackage();
             StringBuilder sb = new StringBuilder();
             if (pkg != null) {
-                sb.append(pkg);
+                sb.append(pkg.getName());
                 sb.append('.');
             }
             sb.append(prefix);
