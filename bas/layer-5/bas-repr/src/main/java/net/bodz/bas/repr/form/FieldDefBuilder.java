@@ -15,79 +15,79 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.ui.style.UiElementStyleDeclaration;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
-public class FormFieldBuilder {
+public class FieldDefBuilder {
 
-    public MutableFormField build(IProperty property)
+    public MutableFieldDef build(IProperty property)
             throws ParseException {
-        MutableFormField formField = new MutableFormField();
-        populate(formField, property);
-        return formField;
+        MutableFieldDef fieldDef = new MutableFieldDef();
+        populate(fieldDef, property);
+        return fieldDef;
     }
 
-    void populate(MutableFormField formField, IProperty property)
+    void populate(MutableFieldDef fieldDef, IProperty property)
             throws ParseException {
-        formField.setAccessor(property);
-        formField.setValueType(property.getPropertyType());
+        fieldDef.setProperty(property);
+        fieldDef.setValueType(property.getPropertyType());
 
-        IMutableElement.fn.copy1(property, formField);
+        IMutableElement.fn.copy1(property, fieldDef);
 
         Class<?> propertyType = property.getPropertyType();
         if (TypeKind.isNumeric(propertyType))
-            formField.setStyleClass("numeric");
+            fieldDef.setStyleClass("numeric");
 
-        populate(formField, (IAnnotated) property);
+        populate(fieldDef, (IAnnotated) property);
 
         IElementDoc xjdoc = property.getXjdoc();
         if (xjdoc != null)
-            populate(formField, xjdoc);
+            populate(fieldDef, xjdoc);
     }
 
-    void populate(MutableFormField formField, IAnnotated annotations) {
+    void populate(MutableFieldDef fieldDef, IAnnotated annotations) {
         Priority aPriority = annotations.getAnnotation(Priority.class);
         if (aPriority != null)
-            formField.setPriority(aPriority.value());
+            fieldDef.setPriority(aPriority.value());
 
         DetailLevel aDetailLevel = annotations.getAnnotation(DetailLevel.class);
         if (aDetailLevel != null)
-            formField.setDetailLevel(aDetailLevel.value());
+            fieldDef.setDetailLevel(aDetailLevel.value());
 
         OfGroup aOfGroup = annotations.getAnnotation(OfGroup.class);
         if (aOfGroup != null) {
             Class<?>[] ofGroups = aOfGroup.value();
             if (ofGroups.length >= 1) {
-                FieldGroup fieldGroup = FieldGroup.forClass(ofGroups[0]);
-                formField.setFieldGroup(fieldGroup);
+                FieldCategory fieldGroup = FieldCategory.fromTagClass(ofGroups[0]);
+                fieldDef.setFieldGroup(fieldGroup);
             }
         }
 
         FormInput aFormField = annotations.getAnnotation(FormInput.class);
         if (aFormField != null) {
-            formField.preferredSortOrder = aFormField.sort();
-            formField.readOnly = aFormField.readOnly();
-            formField.maxLength = aFormField.maxLength();
-            formField.textWidth = aFormField.textWidth();
-            formField.echoChar = aFormField.echoChar();
+            fieldDef.preferredSortOrder = aFormField.sort();
+            fieldDef.readOnly = aFormField.readOnly();
+            fieldDef.maxLength = aFormField.maxLength();
+            fieldDef.textWidth = aFormField.textWidth();
+            fieldDef.echoChar = aFormField.echoChar();
 
             String pattern = aFormField.numberFormat();
-            formField.numberFormat = pattern.isEmpty() ? null : new DecimalFormat(pattern);
+            fieldDef.numberFormat = pattern.isEmpty() ? null : new DecimalFormat(pattern);
 
             String s = aFormField.placeholder();
-            formField.placeholder = s.isEmpty() ? null : iString.fn.val(s);
+            fieldDef.placeholder = s.isEmpty() ? null : iString.fn.val(s);
 
-            formField.nullConvertion = aFormField.nullconv();
-            formField.spaceNormalization = aFormField.space();
+            fieldDef.nullConvertion = aFormField.nullconv();
+            fieldDef.spaceNormalization = aFormField.space();
         }
     }
 
-    void populate(MutableFormField formField, IElementDoc doc)
+    void populate(MutableFieldDef fieldDef, IElementDoc doc)
             throws ParseException {
-        formField.placeholder = (iString) doc.getTag("placeholder");
+        fieldDef.placeholder = (iString) doc.getTag("placeholder");
 
         String css = (String) doc.getTag("style");
         if (css != null) {
             UiElementStyleDeclaration styleDecl = new UiElementStyleDeclaration(null);
             styleDecl.parseCss(css);
-            formField.setStyle(styleDecl);
+            fieldDef.setStyle(styleDecl);
         }
     }
 

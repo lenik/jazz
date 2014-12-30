@@ -5,23 +5,23 @@ import java.util.Collection;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.stereo.IMetadata;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.ui.dom1.IUiElement;
 import net.bodz.bas.ui.style.IInputBehaviorDeclaration;
 
-public interface IFormField
+public interface IFieldDef
         extends IMetadata, IUiElement, IPriority {
-
-    // IFormStruct getFormStruct();
 
     IPropertyAccessor getAccessor();
 
+    IProperty getProperty();
+
     Class<?> getValueType();
 
-    // value-override...
-    Object getValue();
+    Object getValueOverride();
 
     /**
      * @return Non-<code>null</code> sort order.
@@ -29,9 +29,9 @@ public interface IFormField
     SortOrder getPreferredSortOrder();
 
     /**
-     * @return <code>null</code> if it's not belong to any group.
+     * @return <code>null</code> if it's not belong to any category.
      */
-    FieldGroup getFieldGroup();
+    FieldCategory getCategory();
 
     String getStyleClass();
 

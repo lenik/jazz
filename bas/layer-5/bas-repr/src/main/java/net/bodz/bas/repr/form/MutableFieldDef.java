@@ -5,27 +5,29 @@ import java.util.Collection;
 import java.util.List;
 
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.ui.dom1.MutableUiElement;
 
-public class MutableFormField
+public class MutableFieldDef
         extends MutableUiElement
-        implements IFormField {
+        implements IFieldDef {
 
     private static final long serialVersionUID = 1L;
 
     IPropertyAccessor accessor;
+    IProperty property;
     Class<?> valueType;
+    Object valueOverride;
     int priority;
     SortOrder preferredSortOrder = SortOrder.NONE;
-    FieldGroup fieldGroup;
+    FieldCategory fieldGroup;
     String styleClass;
     boolean readOnly;
     int maxLength;
     int textWidth;
     iString placeholder;
-    Object value;
     NumberFormat numberFormat;
     char echoChar;
     NullConvertion nullConvertion = NullConvertion.NONE;
@@ -39,6 +41,16 @@ public class MutableFormField
 
     public void setAccessor(IPropertyAccessor accessor) {
         this.accessor = accessor;
+    }
+
+    @Override
+    public IProperty getProperty() {
+        return property;
+    }
+
+    public void setProperty(IProperty property) {
+        this.property = property;
+        this.accessor = property;
     }
 
     @Override
@@ -71,11 +83,11 @@ public class MutableFormField
     }
 
     @Override
-    public FieldGroup getFieldGroup() {
+    public FieldCategory getCategory() {
         return fieldGroup;
     }
 
-    public void setFieldGroup(FieldGroup fieldGroup) {
+    public void setFieldGroup(FieldCategory fieldGroup) {
         this.fieldGroup = fieldGroup;
     }
 
@@ -125,12 +137,12 @@ public class MutableFormField
     }
 
     @Override
-    public Object getValue() {
-        return value;
+    public Object getValueOverride() {
+        return valueOverride;
     }
 
     public void setValue(Object value) {
-        this.value = value;
+        this.valueOverride = value;
     }
 
     @Override
