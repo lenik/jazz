@@ -82,7 +82,7 @@ public class BeanProperty
             throws ReflectiveOperationException {
         Method getter = propertyDescriptor.getReadMethod();
         if (getter == null)
-            throw new NoSuchMethodException("No getter method");
+            throw new NoSuchMethodException("No getter method: " + propertyDescriptor.getName());
         return getter.invoke(instance);
     }
 
@@ -91,7 +91,7 @@ public class BeanProperty
             throws ReflectiveOperationException {
         Method setter = propertyDescriptor.getWriteMethod();
         if (setter == null)
-            throw new NoSuchMethodException("No setter method");
+            throw new NoSuchMethodException("No setter method: " + propertyDescriptor.getName());
         setter.invoke(instance, value);
     }
 
