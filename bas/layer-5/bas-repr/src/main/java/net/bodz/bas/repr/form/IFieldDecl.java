@@ -28,12 +28,9 @@ public interface IFieldDecl
      */
     FieldCategory getCategory();
 
-    String getStyleClass();
+    String getFace();
 
-    /**
-     * @return Non-<code>null</code> sort order.
-     */
-    SortOrder getPreferredSortOrder();
+    String getStyleClass();
 
     /**
      * <ul>
@@ -45,6 +42,11 @@ public interface IFieldDecl
     Boolean getColumnVisibility();
 
     Integer getColumnMaxLength();
+
+    /**
+     * @return Non-<code>null</code> value.
+     */
+    SortOrder getPreferredSortOrder();
 
     String getInputName();
 
@@ -58,10 +60,18 @@ public interface IFieldDecl
      */
     Integer getMaxLength();
 
+    Double getMinValue();
+
+    Double getMaxValue();
+
+    Double getStepValue();
+
     /**
      * It's the column width in the index view, and the text input width in the edit form view.
      */
     Integer getTextWidth();
+
+    String getInputMask();
 
     /**
      * @return <code>null</code> if no placeholder.
@@ -84,6 +94,8 @@ public interface IFieldDecl
      * @return Non-<code>null</code> value.
      */
     SpaceNormalization getSpaceNormalization();
+
+    SortOrder getItemSortOrder();
 
     Collection<IValidator<Object>> getValidators();
 

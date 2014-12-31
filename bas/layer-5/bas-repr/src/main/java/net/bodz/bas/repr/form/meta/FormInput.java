@@ -4,30 +4,22 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import net.bodz.bas.repr.form.NullConvertion;
-import net.bodz.bas.repr.form.SortOrder;
-import net.bodz.bas.repr.form.SpaceNormalization;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FormInput {
 
-    String name() default "";
+    String face() default "";
 
-    SortOrder sort() default SortOrder.NONE;
+    String name() default "";
 
     boolean readOnly() default false;
 
-    int maxLength() default 0;
-
     int textWidth() default 0;
 
-    char echoChar() default 0;
+    String inputMask() default "";
 
     String placeholder() default "";
 
-    String numberFormat() default "";
-
     NullConvertion nullconv() default NullConvertion.NONE;
-
-    SpaceNormalization space() default SpaceNormalization.NONE;
 
 }

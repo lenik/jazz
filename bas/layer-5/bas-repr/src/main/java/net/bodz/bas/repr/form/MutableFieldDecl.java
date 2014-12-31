@@ -24,7 +24,9 @@ public class MutableFieldDecl
     int priority;
     FieldCategory category;
 
+    String face;
     String styleClass;
+
     Boolean columnVisibility;
     Integer columnMaxLength;
     SortOrder preferredSortOrder = SortOrder.NONE;
@@ -32,12 +34,18 @@ public class MutableFieldDecl
     String inputName;
     boolean readOnly;
     Integer maxLength;
+    Double minValue;
+    Double maxValue;
+    Double stepValue;
     Integer textWidth;
-    iString placeholder;
+    String inputMask;
     NumberFormat numberFormat;
+    iString placeholder;
     Character echoChar;
     NullConvertion nullConvertion = NullConvertion.NONE;
     SpaceNormalization spaceNormalization = SpaceNormalization.NONE;
+    SortOrder itemSortOrder = SortOrder.NONE;
+
     List<IValidator<Object>> validators;
 
     @Override
@@ -96,23 +104,21 @@ public class MutableFieldDecl
     }
 
     @Override
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
+
+    @Override
     public String getStyleClass() {
         return styleClass;
     }
 
     public void setStyleClass(String styleClass) {
         this.styleClass = styleClass;
-    }
-
-    @Override
-    public SortOrder getPreferredSortOrder() {
-        return preferredSortOrder;
-    }
-
-    public void setPreferredSortOrder(SortOrder sortOrder) {
-        if (sortOrder == null)
-            throw new NullPointerException("sortOrder");
-        this.preferredSortOrder = sortOrder;
     }
 
     @Override
@@ -131,6 +137,17 @@ public class MutableFieldDecl
 
     public void setColumnMaxLength(Integer columnMaxLength) {
         this.columnMaxLength = columnMaxLength;
+    }
+
+    @Override
+    public SortOrder getPreferredSortOrder() {
+        return preferredSortOrder;
+    }
+
+    public void setPreferredSortOrder(SortOrder sortOrder) {
+        if (sortOrder == null)
+            throw new NullPointerException("sortOrder");
+        this.preferredSortOrder = sortOrder;
     }
 
     @Override
@@ -170,12 +187,39 @@ public class MutableFieldDecl
     }
 
     @Override
-    public iString getPlaceholder() {
-        return placeholder;
+    public Double getMinValue() {
+        return minValue;
     }
 
-    public void setPlaceholder(iString placeholder) {
-        this.placeholder = placeholder;
+    public void setMinValue(Double minValue) {
+        this.minValue = minValue;
+    }
+
+    @Override
+    public Double getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(Double maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    @Override
+    public Double getStepValue() {
+        return stepValue;
+    }
+
+    public void setStepValue(Double stepValue) {
+        this.stepValue = stepValue;
+    }
+
+    @Override
+    public String getInputMask() {
+        return inputMask;
+    }
+
+    public void setInputMask(String inputMask) {
+        this.inputMask = inputMask;
     }
 
     @Override
@@ -185,6 +229,15 @@ public class MutableFieldDecl
 
     public void setNumberFormat(NumberFormat numberFormat) {
         this.numberFormat = numberFormat;
+    }
+
+    @Override
+    public iString getPlaceholder() {
+        return placeholder;
+    }
+
+    public void setPlaceholder(iString placeholder) {
+        this.placeholder = placeholder;
     }
 
     @Override
@@ -216,6 +269,17 @@ public class MutableFieldDecl
         if (spaceNormalization == null)
             throw new NullPointerException("spaceNormalization");
         this.spaceNormalization = spaceNormalization;
+    }
+
+    @Override
+    public SortOrder getItemSortOrder() {
+        return itemSortOrder;
+    }
+
+    public void setItemSortOrder(SortOrder itemSortOrder) {
+        if (itemSortOrder == null)
+            throw new NullPointerException("itemSortOrder");
+        this.itemSortOrder = itemSortOrder;
     }
 
     @Override

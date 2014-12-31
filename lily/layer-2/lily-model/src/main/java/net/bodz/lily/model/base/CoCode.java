@@ -1,6 +1,6 @@
 package net.bodz.lily.model.base;
 
-import net.bodz.bas.repr.form.meta.FormInput;
+import net.bodz.bas.repr.form.meta.TextInput;
 
 public abstract class CoCode<self_t extends CoCode<self_t>>
         extends CoNode<self_t> {
@@ -32,7 +32,7 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
      * @label Code
      * @label.zh.cn 代码
      */
-    @FormInput(maxLength = N_CODE_NAME)
+    @TextInput(maxLength = N_CODE_NAME)
     public String getCode() {
         return getCodeName();
     }
