@@ -6,4 +6,12 @@ public enum NullConvertion {
 
     EMPTY,
 
+    NULL_TEXT,
+
+    ZERO,
+
+    NEGATIVE_ONE,
+
+    FALSE,
+
 }

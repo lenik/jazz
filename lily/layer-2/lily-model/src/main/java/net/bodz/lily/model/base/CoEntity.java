@@ -14,7 +14,7 @@ import net.bodz.bas.repr.form.FormDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.bas.repr.form.IFormExported;
-import net.bodz.bas.repr.form.meta.FormInput;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
@@ -75,7 +75,7 @@ public abstract class CoEntity
      * @label Code Name
      * @label.zh.cn 代码
      */
-    @FormInput(maxLength = N_CODE_NAME)
+    @TextInput(maxLength = N_CODE_NAME)
     public String getCodeName() {
         return codeName;
     }
@@ -88,7 +88,7 @@ public abstract class CoEntity
      * @label Label
      * @label.zh.cn 名称
      */
-    @FormInput(maxLength = N_LABEL)
+    @TextInput(maxLength = N_LABEL)
     public String getLabel() {
         return label;
     }
@@ -101,7 +101,7 @@ public abstract class CoEntity
      * @label Description
      * @label.zh.cn 描述
      */
-    @FormInput(maxLength = N_DESCRIPTION)
+    @TextInput(maxLength = N_DESCRIPTION)
     public String getDescription() {
         return description;
     }

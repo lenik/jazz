@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.repr.form.meta.FormInput;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.t.order.IPriority;
 
@@ -80,7 +80,7 @@ public class CoMessage
      * @label.zh.cn 主题
      * @placeholder 输入主题
      */
-    @FormInput(maxLength = N_SUBJECT)
+    @TextInput(maxLength = N_SUBJECT)
     @OfGroup(CoMessage.class)
     public String getSubject() {
         return subject;
