@@ -6,10 +6,11 @@ import java.util.Date;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
 import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
+import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.ui.dom1.IUiRef;
 
 public class Date_htm
         extends AbstractFormInput_htm<Date> {
@@ -21,15 +22,16 @@ public class Date_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Date> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Date> ref, IFieldDecl fieldDecl,
+            IOptions options)
             throws ViewBuilderException, IOException {
         Date value = ref.get();
 
         HtmlInputTag input = out.input();
 
-        apply(input, ref);
+        apply(input, fieldDecl);
 
-        input.type("date");
+        input.type("datetime");
         if (value != null) {
             input.value(value.toString());
         }
