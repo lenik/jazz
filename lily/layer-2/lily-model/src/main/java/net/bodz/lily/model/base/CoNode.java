@@ -33,6 +33,10 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return (self_t) this;
     }
 
+    /**
+     * @label Parent
+     * @label.zh.cn 父对象
+     */
     public self_t getParent() {
         return parent;
     }
@@ -85,6 +89,11 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return true;
     }
 
+    /**
+     * @label Root
+     * @label.zh.cn 根对象
+     */
+    @Derived
     public boolean isRoot() {
         return parent != null;
     }
@@ -93,6 +102,10 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return children.indexOf(child);
     }
 
+    /**
+     * @label Index
+     * @label.zh.cn 序号
+     */
     public int getIndex() {
         if (parent == null)
             return 0;
@@ -104,6 +117,10 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return children.size();
     }
 
+    /**
+     * @label Depth
+     * @label.zh.cn 深度
+     */
     @Derived
     public int getDepth() {
         int safeDepth = getSafeDepth();
@@ -126,6 +143,11 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return 1000;
     }
 
+    /**
+     * @label First
+     * @label.zh.cn 首位
+     */
+    @Derived
     public boolean isFirst() {
         if (parent == null)
             return true;
@@ -133,6 +155,11 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
             return getIndex() == 0;
     }
 
+    /**
+     * @label Last
+     * @label.zh.cn 末位
+     */
+    @Derived
     public boolean isLast() {
         if (parent == null)
             return true;
@@ -140,6 +167,10 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
             return getIndex() == parent.size() - 1;
     }
 
+    /**
+     * @label Chain
+     * @label.zh.cn 链
+     */
     public List<self_t> getChain() {
         List<self_t> chain = new ArrayList<self_t>();
         self_t node = self();
@@ -151,6 +182,10 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return chain;
     }
 
+    /**
+     * @label Graph Prefix
+     * @label.zh.cn 图前缀
+     */
     public String getGraphPrefix() {
         if (parent == null)
             return "";
@@ -175,6 +210,10 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return buf.toString();
     }
 
+    /**
+     * @label Node Label
+     * @label.zh.cn 结点标签
+     */
     public String getNodeLabel() {
         // return naturalId().toString();
         String str = getCodeName();
