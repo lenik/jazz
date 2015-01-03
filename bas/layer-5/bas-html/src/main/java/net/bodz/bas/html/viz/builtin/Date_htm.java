@@ -3,6 +3,7 @@ package net.bodz.bas.html.viz.builtin;
 import java.io.IOException;
 import java.util.Date;
 
+import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -29,11 +30,13 @@ public class Date_htm
 
         HtmlInputTag input = out.input();
 
-        apply(input, fieldDecl);
+        apply(input, fieldDecl, options);
 
-        input.type("datetime");
+        // When not supported, the browser defaults to the text input type.
+        // input.type("datetime"); // deprecated
+        input.type("date");
         if (value != null) {
-            input.value(value.toString());
+            input.value(Dates.D10T8.format(value));
         }
 
         return out;

@@ -23,7 +23,7 @@ public class Boolean_htm
             throws ViewBuilderException, IOException {
 
         HtmlInputTag input = out.input().type("checkbox");
-        apply(input, fieldDecl);
+        apply(input, fieldDecl, options);
 
         Boolean value = ref.get();
         if (value != null && value)

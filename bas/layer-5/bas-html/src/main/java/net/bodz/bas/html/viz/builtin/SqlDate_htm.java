@@ -3,6 +3,7 @@ package net.bodz.bas.html.viz.builtin;
 import java.io.IOException;
 import java.sql.Date;
 
+import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -29,11 +30,12 @@ public class SqlDate_htm
 
         HtmlInputTag input = out.input();
 
-        apply(input, fieldDecl);
+        apply(input, fieldDecl, options);
 
         input.type("date");
         if (value != null) {
-            input.value(value.toString());
+            // The RFC 3339/ISO 8601 "wire format": YYYY-MM-DD.
+            input.value(Dates.YYYY_MM_DD.format(value));
         }
 
         return out;
