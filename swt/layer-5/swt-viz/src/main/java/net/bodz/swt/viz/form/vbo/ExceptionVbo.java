@@ -23,6 +23,7 @@ import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
@@ -52,7 +53,8 @@ public class ExceptionVbo
     }
 
     @Override
-    public Widget buildSwtView(final Composite parent, ISwtUiRef<Throwable> ref, int styleInt, IOptions options)
+    public Widget buildSwtView(IQueryable ctx, final Composite parent, ISwtUiRef<Throwable> ref, int styleInt,
+            IOptions options)
             throws ViewBuilderException {
         final ISwtControlStyleDeclaration styleDecl = ref.getStyle();
         final SwtRenderContext rc = options.get(SwtRenderContext.class);

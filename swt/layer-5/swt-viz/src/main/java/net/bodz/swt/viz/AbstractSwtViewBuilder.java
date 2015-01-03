@@ -15,6 +15,7 @@ import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractSwtViewBuilder<T>
@@ -26,7 +27,7 @@ public abstract class AbstractSwtViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object ctx, Object _parent, IUiRef<T> ref, IOptions options)
+    public final Object buildView(IQueryable ctx, Object _parent, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
         Composite parent = null;
         if (_parent != null) {
@@ -40,13 +41,13 @@ public abstract class AbstractSwtViewBuilder<T>
 
         int styleInt = options.getInt("swt.styleInt", SWT.NONE);
 
-        return buildSwtView(parent, swtRef, styleInt, options);
+        return buildSwtView(ctx, parent, swtRef, styleInt, options);
     }
 
     @Override
-    public final Widget buildSwtView(Composite parent, ISwtUiRef<T> ref, int styleInt)
+    public final Widget buildSwtView(IQueryable ctx, Composite parent, ISwtUiRef<T> ref, int styleInt)
             throws ViewBuilderException {
-        return buildSwtView(parent, ref, styleInt, IOptions.NULL);
+        return buildSwtView(ctx, parent, ref, styleInt, IOptions.NULL);
     }
 
     protected void bindProperty(final IRefEntry<?> entry, final Control control, final IValueChangeListener listener) {

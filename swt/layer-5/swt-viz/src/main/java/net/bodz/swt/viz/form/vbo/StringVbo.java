@@ -14,6 +14,7 @@ import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.typer.std.ValidationException;
 import net.bodz.swt.c.control.CommitAdapter;
 import net.bodz.swt.c.control.CommitException;
@@ -33,7 +34,8 @@ public class StringVbo
     }
 
     @Override
-    public Widget buildSwtView(Composite parent, final ISwtUiRef<String> ref, int styleInt, IOptions options)
+    public Widget buildSwtView(IQueryable ctx, Composite parent, final ISwtUiRef<String> ref, int styleInt,
+            IOptions options)
             throws ViewBuilderException {
 
         final ISwtControlStyleDeclaration styleDecl = ref.getStyle();
