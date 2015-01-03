@@ -37,9 +37,9 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
     }
 
     @Override
-    public <T> IRefEntry<T> getEntry(String name) {
+    public <T> PropertyRefEntry<T> getEntry(String name) {
         load();
-        return (IRefEntry<T>) cache.get(name);
+        return (PropertyRefEntry<T>) cache.get(name);
     }
 
     public Collection<entry_t> getEntries() {

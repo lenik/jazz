@@ -12,9 +12,11 @@ public class MutableFormDecl
 
     private static final long serialVersionUID = 1L;
 
+    private Object source;
     private Map<String, IFieldDecl> map;
 
-    public MutableFormDecl(SortOrder sortOrder) {
+    public MutableFormDecl(Object source, SortOrder sortOrder) {
+        this.source = source;
         switch (sortOrder) {
         case NONE:
             map = new HashMap<>();
@@ -27,6 +29,10 @@ public class MutableFormDecl
         case DESCENDING:
             map = new TreeMap<>(DefaultDescendingComparator.getInstance());
         }
+    }
+
+    public Object getDeclaringSource() {
+        return source;
     }
 
     @Override

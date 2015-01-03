@@ -71,34 +71,40 @@ public class FormDeclBuilder {
 
     public MutableFormDecl build(IType type)
             throws ParseException {
-        MutableFormDecl result = new MutableFormDecl(SortOrder.NONE);
+        MutableFormDecl result = new MutableFormDecl(type, SortOrder.NONE);
 
         for (IProperty property : type.getProperties()) {
-            int modifiers = property.getModifiers();
-            if ((modifiers & modifierMask) != modifierPattern)
+            if (!filter(property))
                 continue;
-
-            int detailLevel = property.getDetailLevel();
-            if (detailLevel > maxDetailLevel)
-                continue;
-
-            if (excludes.contains(property.getName()))
-                continue;
-
-            // ignore properties like: Object.class
-            if (property.getDeclaringClass().isAssignableFrom(stopClass))
-                continue;
-
-            if (xjdocRequired) {
-                IElementDoc xjdoc = property.getXjdoc();
-                if (xjdoc == null)
-                    continue;
-            }
 
             IFieldDecl fieldDecl = fieldDeclBuilder.build(property);
             result.addFieldDef(property.getName(), fieldDecl);
         }
         return result;
+    }
+
+    protected boolean filter(IProperty property) {
+        int modifiers = property.getModifiers();
+        if ((modifiers & modifierMask) != modifierPattern)
+            return false;
+
+        int detailLevel = property.getDetailLevel();
+        if (detailLevel > maxDetailLevel)
+            return false;
+
+        if (excludes.contains(property.getName()))
+            return false;
+
+        // ignore properties like: Object.class
+        if (property.getDeclaringClass().isAssignableFrom(stopClass))
+            return false;
+
+        if (xjdocRequired) {
+            IElementDoc xjdoc = property.getXjdoc();
+            if (xjdoc == null)
+                return false;
+        }
+        return true;
     }
 
 }

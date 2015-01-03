@@ -19,7 +19,7 @@ public class ObjectDump_htm
         extends AbstractHtmlViewBuilder<Object> {
 
     public ObjectDump_htm() {
-        super(Object.class);
+        super(Object.class, "debug");
     }
 
     @Override
