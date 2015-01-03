@@ -5,35 +5,17 @@
 <mapper namespace="message">
 
     <resultMap id="map1" type="net.bodz.lily.model.mx.base.CoMessage" extends="co.mapUSA">
-        <result property="beginTime" column="t0" />
-        <result property="endTime" column="t1" />
+        <result property="beginDate" column="t0" />
+        <result property="endDate" column="t1" />
         <result property="subject" column="subject" />
         <result property="text" column="text" />
         <result property="formArgs" column="args" />
         <result property="voteUps" column="nvote" />
         <result property="likerCount" column="nlike" />
         <result property="readCount" column="nread" />
-        <association property="op" javaType="net.bodz.lily.model.base.security.User">
-            <id property="id" column="op" />
-        </association>
-        <association property="form" javaType="net.bodz.lily.model.base.schema.FormDef">
-            <id property="id" column="form" />
-        </association>
-        <association property="category" javaType="net.bodz.lily.model.base.schema.CategoryDef">
-            <id property="id" column="cat" />
-        </association>
-        <association property="phase" javaType="net.bodz.lily.model.base.schema.PhaseDef">
-            <id property="id" column="phase" />
-        </association>
     </resultMap>
 
-    <resultMap id="map2" type="net.bodz.lily.model.mx.base.CoMessage" extends="co.mapUSA">
-        <result property="subject" column="subject" />
-        <result property="text" column="text" />
-        <result property="formArgs" column="args" />
-        <result property="voteUps" column="nvote" />
-        <result property="likerCount" column="nlike" />
-        <result property="readCount" column="nread" />
+    <resultMap id="map2" type="net.bodz.lily.model.mx.base.CoMessage" extends="map1">
         <association property="op" javaType="net.bodz.lily.model.base.security.User">
             <id property="id" column="op" />
             <result property="label" column="op_label" />
@@ -54,6 +36,8 @@
 
     <sql id="set1">
         <include refid="co.setUSA" />
+        <if test="beginDate != null">t0=#{beginDate},</if>
+        <if test="endDate != null">t1=#{endDate},</if>
         <if test="subject != null">subject=#{subject},</if>
         <if test="text != null">text=#{text},</if>
         <if test="voteUps != null">nvote=#{voteUps - voteDowns},</if>

@@ -21,8 +21,8 @@
     <!-- UI, States -->
     <resultMap id="mapUS" type="net.bodz.lily.model.base.CoEntity" extends="mapU">
         <result property="priority" column="priority" />
-        <result property="creationTime" column="creation" typeHandler="MillisecondTypeHandler" />
-        <result property="lastModified" column="lastmod" typeHandler="MillisecondTypeHandler" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="version" column="version" />
@@ -31,7 +31,7 @@
     <sql id="setUS">
         <include refid="co.setU" />
         priority=#{priority},
-        lastmod=#{lastModified},
+        lastmod=#{lastModifiedDate},
         flags=#{flags},
         state=#{state},
         <!-- if test="version != null">version=#{version},</if -->

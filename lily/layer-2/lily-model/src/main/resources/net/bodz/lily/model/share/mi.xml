@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mi">
+
+    <resultMap id="map1" type="net.bodz.lily.model.base.CoMomentInterval" extends="co.mapUSA">
+        <result property="beginDate" column="t0" />
+        <result property="endDate" column="t1" />
+    </resultMap>
+
+    <sql id="set1">
+        <include refid="co.setUSA" />
+        <if test="beginDate != null">t0=#{beginDate},</if>
+        <if test="endDate != null">t1=#{endDate},</if>
+    </sql>
+
+</mapper>

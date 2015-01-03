@@ -4,12 +4,12 @@ import java.util.Date;
 
 public interface IMomentInterval {
 
-    Date getBeginTime();
+    Date getBeginDate();
 
-    void setBeginTime(Date beginTime);
+    void setBeginDate(Date beginDate);
 
-    Date getEndTime();
+    Date getEndDate();
 
-    void setEndTime(Date endTime);
+    void setEndDate(Date endDate);
 
 }
