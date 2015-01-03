@@ -17,6 +17,7 @@ import net.bodz.bas.potato.ref.IValueChangeSource;
 import net.bodz.bas.potato.ref.ValueChangeEvent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IValidator;
@@ -39,7 +40,8 @@ public class FileVbo
     }
 
     @Override
-    public Widget buildSwtView(final Composite parent, final ISwtUiRef<File> ref, int styleInt, IOptions options)
+    public Widget buildSwtView(IQueryable ctx, final Composite parent, final ISwtUiRef<File> ref, int styleInt,
+            IOptions options)
             throws ViewBuilderException {
         final ISwtControlStyleDeclaration styleDecl = ref.getStyle();
         final SwtRenderContext rc = options.get(SwtRenderContext.class);

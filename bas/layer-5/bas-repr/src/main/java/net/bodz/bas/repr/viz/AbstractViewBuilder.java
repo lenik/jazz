@@ -3,6 +3,7 @@ package net.bodz.bas.repr.viz;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractViewBuilder<T>
@@ -40,7 +41,7 @@ public abstract class AbstractViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object ctx, Object parent, IUiRef<T> ref)
+    public final Object buildView(IQueryable ctx, Object parent, IUiRef<T> ref)
             throws ViewBuilderException {
         return buildView(ctx, parent, ref, IOptions.NULL);
     }

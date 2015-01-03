@@ -12,6 +12,7 @@ import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.css3.Border;
@@ -65,7 +66,7 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(Object _ctx, Object out, IUiRef<T> ref, IOptions options)
+    public final Object buildView(IQueryable _ctx, Object out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
         try {

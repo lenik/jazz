@@ -17,6 +17,7 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.view.Feature;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.t.set.QmiTaggedSet;
 import net.bodz.bas.t.set.TaggedSet;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -186,14 +187,14 @@ public abstract class AbstractViewBuilderFactory
     }
 
     @Override
-    public Object buildView(Object ctx, Object parent, IUiRef<?> ref)
+    public Object buildView(IQueryable ctx, Object parent, IUiRef<?> ref)
             throws ViewBuilderException {
         return buildView(ctx, parent, ref, IOptions.NULL);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public Object buildView(Object ctx, Object parent, IUiRef<?> ref, IOptions options)
+    public Object buildView(IQueryable ctx, Object parent, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException {
         Class<?> valueType = ref.getValueType();
         IViewBuilder viewBuilder = getViewBuilder(valueType);
