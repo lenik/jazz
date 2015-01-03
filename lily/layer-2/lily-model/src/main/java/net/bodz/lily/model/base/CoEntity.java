@@ -1,21 +1,15 @@
 package net.bodz.lily.model.base;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import net.bodz.bas.c.type.TypeExtras;
-import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.bean.DetailLevel;
-import net.bodz.bas.potato.PotatoTypes;
-import net.bodz.bas.potato.element.IPropertyAccessor;
-import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.content.IContent;
-import net.bodz.bas.repr.form.FormDeclBuilder;
-import net.bodz.bas.repr.form.IFieldDecl;
-import net.bodz.bas.repr.form.IFormDecl;
-import net.bodz.bas.repr.form.IFormExported;
-import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.repr.form.meta.FormInput;
+import net.bodz.bas.repr.form.meta.NumericInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -30,7 +24,7 @@ import net.bodz.lily.model.base.security.User;
  * Co/Con: Concrete, also Content, Controlled
  */
 public abstract class CoEntity
-        implements Serializable, IContent, IAccessControlled, IFormExported {
+        implements Serializable, IContent, IAccessControlled {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,8 +49,8 @@ public abstract class CoEntity
     private String image;
 
     private int priority;
-    private long creationTime; // = System.currentTimeMillis();
-    private long lastModified; // = creationDate;
+    private Date creationDate; // = System.currentTimeMillis();
+    private Date lastModifiedDate; // = creationDate;
     private int flags = 0;
     private State state = StdStates.START;
     private int version;
@@ -139,6 +133,8 @@ public abstract class CoEntity
      * @label.zh.cn 优先级
      */
     @OfGroup(IContent.class)
+    @FormInput(textWidth = 4)
+    @NumericInput(min = -1000, max = 1000)
     @Override
     public int getPriority() {
         return priority;
@@ -153,19 +149,25 @@ public abstract class CoEntity
      * @label.zh.cn 创建时间
      */
     @OfGroup(IContent.class)
-    @Override
-    public long getCreationTime() {
-        return creationTime;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreationTime(long creationTime) {
-        this.creationTime = creationTime;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @OfGroup(IContent.class)
+    @Derived
+    @Override
+    public long getCreationTime() {
+        return creationDate.getTime();
     }
 
     public void touch() {
-        lastModified = System.currentTimeMillis();
-        if (creationTime == 0L)
-            creationTime = lastModified;
+        lastModifiedDate = new Date();
+        if (creationDate == null)
+            creationDate = lastModifiedDate;
     }
 
     /**
@@ -173,13 +175,19 @@ public abstract class CoEntity
      * @label.zh.cn 修改时间
      */
     @OfGroup({ IContent.class, ICacheControl.class })
-    @Override
-    public long getLastModified() {
-        return lastModified;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setLastModified(long lastModified) {
-        this.lastModified = lastModified;
+    public void setLastModifiedDate(Date lastModified) {
+        this.lastModifiedDate = lastModified;
+    }
+
+    @OfGroup(IContent.class)
+    @Derived
+    @Override
+    public long getLastModified() {
+        return lastModifiedDate.getTime();
     }
 
     /**
@@ -345,63 +353,6 @@ public abstract class CoEntity
 
     public void setAcl(int acl) {
         this.acl = acl;
-    }
-
-    /** ⇱ Implementation Of {@link IFormExported}. */
-    /* _____________________________ */static section.iface __FORM__;
-
-    @DetailLevel(DetailLevel.HIDDEN)
-    @Override
-    public IFormDecl getFormDef() {
-        IType type = PotatoTypes.getInstance().forClass(getClass());
-        TypeExtras extras = TypeExtras.of(getClass());
-        IFormDecl formDef = extras.getFeature(IFormDecl.class);
-        if (formDef == null) {
-            formDef = buildFormDef(type);
-            extras.setFeature(IFormDecl.class, formDef);
-        }
-        return formDef;
-    }
-
-    protected IFormDecl buildFormDef(IType type) {
-        FormDeclBuilder builder = new FormDeclBuilder();
-        try {
-            return builder.build(type);
-        } catch (ParseException e) {
-            throw new IllegalUsageError(e.getMessage(), e);
-        }
-    }
-
-    public Object getFieldValue(String name) {
-        if (name == null)
-            throw new NullPointerException("name");
-        IFormDecl metadata = getFormDef();
-        IFieldDecl fieldDef = metadata.getFieldDef(name);
-        if (fieldDef == null)
-            throw new IllegalArgumentException("bad field: " + name);
-
-        IPropertyAccessor accessor = fieldDef.getAccessor();
-        try {
-            return accessor.getValue(this);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
-
-    public void setFieldValue(String name, Object value) {
-        if (name == null)
-            throw new NullPointerException("name");
-        IFormDecl metadata = getFormDef();
-        IFieldDecl fieldDef = metadata.getFieldDef(name);
-        if (fieldDef == null)
-            throw new IllegalArgumentException("bad field: " + name);
-
-        IPropertyAccessor accessor = fieldDef.getAccessor();
-        try {
-            accessor.setValue(this, value);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
     }
 
 }
