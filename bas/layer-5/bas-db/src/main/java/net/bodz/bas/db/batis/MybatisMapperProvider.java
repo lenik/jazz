@@ -77,7 +77,7 @@ public class MybatisMapperProvider
             throw new IllegalUsageError(e.getMessage(), e);
         }
 
-        String[] builtins = { "co", "message" };
+        String[] builtins = { "co", "mi", "message" };
         for (String builtin : builtins) {
             String resName = "com/tinylily/model/share/" + builtin + ".xml";
             getClass().getClassLoader().getResource(resName);
