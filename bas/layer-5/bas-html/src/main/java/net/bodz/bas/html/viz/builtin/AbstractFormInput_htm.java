@@ -19,7 +19,8 @@ import net.bodz.bas.ui.dom1.IUiRef;
 public abstract class AbstractFormInput_htm<T>
         extends AbstractHtmlViewBuilder<T> {
 
-    static FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
+    public static final String NAME_PREFIX = "prefix";
+    private static FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
 
     public AbstractFormInput_htm(Class<?> valueClass, String... supportedFeatures) {
         super(valueClass, supportedFeatures);
@@ -47,17 +48,27 @@ public abstract class AbstractFormInput_htm<T>
             IFieldDecl fieldDecl, IOptions options)
             throws ViewBuilderException, IOException;
 
-    protected void apply(HtmlInputTag input, IFieldDecl fieldDecl) {
-        apply(input, fieldDecl, null);
+    static String name(IFieldDecl fieldDecl, String prefix, String suffix) {
+        String inputName = fieldDecl.getInputName();
+        if (inputName == null)
+            inputName = fieldDecl.getName();
+
+        if (prefix != null)
+            inputName = prefix + inputName;
+
+        if (suffix != null)
+            inputName += suffix;
+
+        return inputName;
     }
 
-    protected void apply(HtmlInputTag input, IFieldDecl fieldDecl, String suffix) {
-        String inputName = fieldDecl.getInputName();
-        if (inputName != null) {
-            if (suffix != null)
-                inputName += suffix;
-            input.name(inputName);
-        }
+    protected void apply(HtmlInputTag input, IFieldDecl fieldDecl, IOptions options) {
+        apply(input, fieldDecl, options, null);
+    }
+
+    protected void apply(HtmlInputTag input, IFieldDecl fieldDecl, IOptions options, String nameSuffix) {
+        String inputName = name(fieldDecl, options.<String> get(NAME_PREFIX), nameSuffix);
+        input.name(inputName);
 
         String face = fieldDecl.getFace();
         if (face != null)
@@ -80,28 +91,30 @@ public abstract class AbstractFormInput_htm<T>
                 input.type(fieldDecl.getFace());
             }
 
-        if (fieldDecl.getMaxLength() != null)
-            input.maxlength(fieldDecl.getMaxLength().toString());
+        Integer maxLength = fieldDecl.getMaxLength();
+        Integer textWidth = fieldDecl.getTextWidth();
 
-        if (fieldDecl.getTextWidth() != null)
-            input.width(fieldDecl.getTextWidth().toString());
+        if (maxLength != null) {
+            input.maxlength(maxLength.toString());
+            if (textWidth == null)
+                textWidth = Math.min(maxLength, 40);
+        }
+
+        if (textWidth != null)
+            input.size(textWidth.toString());
 
         iString placeholder = fieldDecl.getPlaceholder();
         if (placeholder != null)
             input.placeholder(placeholder.toString());
     }
 
-    protected void apply(HtmlSelectTag select, IFieldDecl fieldDecl) {
-        apply(select, fieldDecl, null);
+    protected void apply(HtmlSelectTag select, IFieldDecl fieldDecl, IOptions options) {
+        apply(select, fieldDecl, options, null);
     }
 
-    protected void apply(HtmlSelectTag select, IFieldDecl fieldDecl, String suffix) {
-        String inputName = fieldDecl.getInputName();
-        if (inputName != null) {
-            if (suffix != null)
-                inputName += suffix;
-            select.name(inputName);
-        }
+    protected void apply(HtmlSelectTag select, IFieldDecl fieldDecl, IOptions options, String nameSuffix) {
+        String inputName = name(fieldDecl, options.<String> get(NAME_PREFIX), nameSuffix);
+        select.name(inputName);
 
         if (fieldDecl.getTextWidth() != null)
             select.size(fieldDecl.getTextWidth().toString());

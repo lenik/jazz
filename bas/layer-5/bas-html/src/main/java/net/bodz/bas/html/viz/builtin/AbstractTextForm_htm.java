@@ -29,10 +29,8 @@ public abstract class AbstractTextForm_htm<T>
             throws ViewBuilderException, IOException {
         T value = ref.get();
 
-        HtmlInputTag input = out.input();
-        IHtmlTag tag = input;
-
-        apply(input, fieldDecl);
+        HtmlInputTag input = createInput(out);
+        apply(input, fieldDecl, options);
 
         IFormatter<T> formatter = Typers.getTyper(ref.getValueType(), IFormatter.class);
         if (formatter == null)
@@ -45,6 +43,10 @@ public abstract class AbstractTextForm_htm<T>
         }
 
         return out;
+    }
+
+    protected HtmlInputTag createInput(IHtmlTag out) {
+        return out.input();
     }
 
 }

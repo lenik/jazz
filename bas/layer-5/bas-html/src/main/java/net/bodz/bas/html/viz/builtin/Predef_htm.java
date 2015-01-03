@@ -52,7 +52,7 @@ public class Predef_htm
                 option.selected("selected");
         }
 
-        apply(select, fieldDecl);
+        apply(select, fieldDecl, options);
         return out;
     }
 
