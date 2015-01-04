@@ -17,7 +17,6 @@ import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
 import net.bodz.bas.html.viz.IHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
-import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.viz.RootHtmlViewContext;
 import net.bodz.bas.html.viz.util.PathFrames_htm;
@@ -144,7 +143,7 @@ public class PathDispatchServlet
         if (viewBuilder == null)
             throw new IllegalUsageError("No available view builder");
 
-        ContentType contentType = viewBuilder.getContentType(target);
+        ContentType contentType = viewBuilder.getContentType(req, target);
         resp.setContentType(contentType.getName());
 
         // Using UTF-8 by default.
@@ -154,20 +153,19 @@ public class PathDispatchServlet
             HttpCacheControl.apply(resp, (ICacheControl) target);
         }
 
+        RootHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
+        QueryableUnion union = new QueryableUnion();
+        for (IPathArrival a : arrival.toList())
+            if (a.getTarget() instanceof IQueryable)
+                union.add((IQueryable) a.getTarget());
+        if (!union.isEmpty()) {
+            Collections.reverse(union);
+            ctx.setQueryContext(union);
+        }
+
         switch (contentType.getName()) {
         case "text/html":
         case "text/xhtml":
-            RootHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
-
-            QueryableUnion union = new QueryableUnion();
-            for (IPathArrival a : arrival.toList())
-                if (a.getTarget() instanceof IQueryable)
-                    union.add((IQueryable) a.getTarget());
-            if (!union.isEmpty()) {
-                Collections.reverse(union);
-                ctx.setQueryContext(union);
-            }
-
             try {
                 pathFramesVbo.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiValue.wrap(arrival));
             } catch (ViewBuilderException e) {
@@ -185,9 +183,8 @@ public class PathDispatchServlet
 
         default:
             resp.addHeader("X-Content-View", viewBuilder.getClass().getSimpleName());
-            IHtmlViewContext _ctx = new RootHtmlViewContext(req, resp);
             try {
-                viewBuilder.buildHtmlView(_ctx, _ctx.getHtmlDoc().getRoot(), UiValue.wrap(target));
+                viewBuilder.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiValue.wrap(target));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build view: " + e.getMessage(), e);
             }

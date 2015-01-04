@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.ParseException;
@@ -33,7 +34,7 @@ public class Invocation_txt
     }
 
     @Override
-    public ContentType getContentType(IInvocation value) {
+    public ContentType getContentType(HttpServletRequest request, IInvocation value) {
         return ContentTypes.text_plain;
     }
 
