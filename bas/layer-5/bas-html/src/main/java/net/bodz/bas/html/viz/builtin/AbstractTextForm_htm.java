@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
+import net.bodz.bas.html.util.FieldHtmlUtil;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
@@ -30,7 +31,7 @@ public abstract class AbstractTextForm_htm<T>
         T value = ref.get();
 
         HtmlInputTag input = createInput(out);
-        apply(input, fieldDecl, options);
+        FieldHtmlUtil.apply(input, fieldDecl, options);
 
         IFormatter<T> formatter = Typers.getTyper(ref.getValueType(), IFormatter.class);
         if (formatter == null)

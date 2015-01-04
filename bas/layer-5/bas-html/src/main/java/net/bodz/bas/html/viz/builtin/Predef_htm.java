@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlOptionTag;
 import net.bodz.bas.html.dom.tag.HtmlSelectTag;
+import net.bodz.bas.html.util.FieldHtmlUtil;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
@@ -52,7 +53,7 @@ public class Predef_htm
                 option.selected("selected");
         }
 
-        apply(select, fieldDecl, options);
+        FieldHtmlUtil.apply(select, fieldDecl, options);
         return out;
     }
 
