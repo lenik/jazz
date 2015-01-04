@@ -1,5 +1,7 @@
 package net.bodz.bas.potato.element;
 
+import java.util.List;
+
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 
 /**
@@ -76,7 +78,7 @@ public interface IType
     /**
      * Resolve the property path.
      */
-    IProperty getPathProperty(String pathProperty)
+    List<IProperty> getPropertiesForPath(String pathProperty)
             throws NoSuchPropertyException;
 
     /**
