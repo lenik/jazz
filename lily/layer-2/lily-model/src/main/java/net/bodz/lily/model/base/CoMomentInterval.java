@@ -15,6 +15,10 @@ public abstract class CoMomentInterval
 
     public abstract Object getId();
 
+    /**
+     * @label Begin Date
+     * @label.zh 开始时间
+     */
     @OfGroup(IMomentInterval.class)
     @Override
     public Date getBeginDate() {
@@ -26,6 +30,10 @@ public abstract class CoMomentInterval
         this.beginDate = beginTime;
     }
 
+    /**
+     * @label End Date
+     * @label.zh 结束时间
+     */
     @OfGroup(IMomentInterval.class)
     @Override
     public Date getEndDate() {

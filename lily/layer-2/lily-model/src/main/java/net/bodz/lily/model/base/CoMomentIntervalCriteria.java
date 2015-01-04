@@ -16,7 +16,7 @@ public class CoMomentIntervalCriteria
 
     /**
      * @label Date Range
-     * @label.zh.cn 时间范围
+     * @label.zh 时间范围
      */
     public DateRange getDateRange() {
         return dateRange;
@@ -28,7 +28,7 @@ public class CoMomentIntervalCriteria
 
     /**
      * @label Year
-     * @label.zh.cn 年份
+     * @label.zh 年份
      */
     public Integer getYear() {
         return year;

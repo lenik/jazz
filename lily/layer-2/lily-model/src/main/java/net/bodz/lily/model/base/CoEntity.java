@@ -67,7 +67,7 @@ public abstract class CoEntity
 
     /**
      * @label Code Name
-     * @label.zh.cn 代码
+     * @label.zh 代码
      */
     @TextInput(maxLength = N_CODE_NAME)
     public String getCodeName() {
@@ -80,7 +80,7 @@ public abstract class CoEntity
 
     /**
      * @label Label
-     * @label.zh.cn 名称
+     * @label.zh 名称
      */
     @TextInput(maxLength = N_LABEL)
     public String getLabel() {
@@ -93,7 +93,7 @@ public abstract class CoEntity
 
     /**
      * @label Description
-     * @label.zh.cn 描述
+     * @label.zh 描述
      */
     @TextInput(maxLength = N_DESCRIPTION)
     public String getDescription() {
@@ -130,7 +130,7 @@ public abstract class CoEntity
 
     /**
      * @label Priority
-     * @label.zh.cn 优先级
+     * @label.zh 优先级
      */
     @OfGroup(IContent.class)
     @FormInput(textWidth = 4)
@@ -146,7 +146,7 @@ public abstract class CoEntity
 
     /**
      * @label Creation Date
-     * @label.zh.cn 创建时间
+     * @label.zh 创建时间
      */
     @OfGroup(IContent.class)
     public Date getCreationDate() {
@@ -172,7 +172,7 @@ public abstract class CoEntity
 
     /**
      * @label Last Modified Date
-     * @label.zh.cn 修改时间
+     * @label.zh 修改时间
      */
     @OfGroup({ IContent.class, ICacheControl.class })
     public Date getLastModifiedDate() {
@@ -192,7 +192,7 @@ public abstract class CoEntity
 
     /**
      * @label Flags
-     * @label.zh.cn 标志位
+     * @label.zh 标志位
      */
     @DetailLevel(DetailLevel.EXPERT)
     public int getFlags() {
@@ -221,7 +221,7 @@ public abstract class CoEntity
      * One day by default.
      * 
      * @label Max Age
-     * @label.zh.cn 缓存寿命
+     * @label.zh 缓存寿命
      */
     @DetailLevel(DetailLevel.EXPERT2)
     @OfGroup(ICacheControl.class)
@@ -232,7 +232,7 @@ public abstract class CoEntity
 
     /**
      * @label E-Tag
-     * @label.zh.cn 实体标签
+     * @label.zh 实体标签
      */
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(ICacheControl.class)
@@ -244,7 +244,7 @@ public abstract class CoEntity
 
     /**
      * @label Weak Validation
-     * @labal.zh.cn 弱校验
+     * @labal.zh 弱校验
      */
     @DetailLevel(DetailLevel.EXPERT2)
     @OfGroup(ICacheControl.class)
@@ -258,7 +258,7 @@ public abstract class CoEntity
 
     /**
      * @label State
-     * @label.zh.cn 状态
+     * @label.zh 状态
      */
     @DetailLevel(DetailLevel.EXPERT)
     public State getState() {
@@ -273,7 +273,7 @@ public abstract class CoEntity
 
     /**
      * @label Version
-     * @label.zh.cn 版本
+     * @label.zh 版本
      */
     @DetailLevel(DetailLevel.EXPERT)
     @OfGroup(IContent.class)
@@ -290,7 +290,7 @@ public abstract class CoEntity
 
     /**
      * @label Owner
-     * @label.zh.cn 属主
+     * @label.zh 属主
      */
     @OfGroup(IAccessControlled.class)
     public User getOwner() {
@@ -303,7 +303,7 @@ public abstract class CoEntity
 
     /**
      * @label Group
-     * @label.zh.cn 属组
+     * @label.zh 属组
      */
     @OfGroup(IAccessControlled.class)
     public Group getOwnerGroup() {
@@ -329,7 +329,7 @@ public abstract class CoEntity
 
     /**
      * @label Access Mode
-     * @label.zh.cn 访问模式
+     * @label.zh 访问模式
      */
     @OfGroup(IAccessControlled.class)
     @Override
@@ -343,7 +343,7 @@ public abstract class CoEntity
 
     /**
      * @label ACL
-     * @label.zh.cn ACL
+     * @label.zh ACL
      */
     @OfGroup(IAccessControlled.class)
     @Override

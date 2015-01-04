@@ -35,7 +35,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Parent
-     * @label.zh.cn 父对象
+     * @label.zh 父对象
      */
     public self_t getParent() {
         return parent;
@@ -91,7 +91,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Root
-     * @label.zh.cn 根对象
+     * @label.zh 根对象
      */
     @Derived
     public boolean isRoot() {
@@ -104,7 +104,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Index
-     * @label.zh.cn 序号
+     * @label.zh 序号
      */
     public int getIndex() {
         if (parent == null)
@@ -119,7 +119,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Depth
-     * @label.zh.cn 深度
+     * @label.zh 深度
      */
     @Derived
     public int getDepth() {
@@ -145,7 +145,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label First
-     * @label.zh.cn 首位
+     * @label.zh 首位
      */
     @Derived
     public boolean isFirst() {
@@ -157,7 +157,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Last
-     * @label.zh.cn 末位
+     * @label.zh 末位
      */
     @Derived
     public boolean isLast() {
@@ -169,7 +169,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Chain
-     * @label.zh.cn 链
+     * @label.zh 链
      */
     public List<self_t> getChain() {
         List<self_t> chain = new ArrayList<self_t>();
@@ -184,7 +184,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Graph Prefix
-     * @label.zh.cn 图前缀
+     * @label.zh 图前缀
      */
     public String getGraphPrefix() {
         if (parent == null)
@@ -212,7 +212,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Node Label
-     * @label.zh.cn 结点标签
+     * @label.zh 结点标签
      */
     public String getNodeLabel() {
         // return naturalId().toString();

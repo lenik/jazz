@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Tag Set Definition
  * 
- * @label.zh.cn 标签集定义
+ * @label.zh 标签集定义
  */
 public class TagSetDef
         extends AbstractDefinition<TagSetDef> {
@@ -18,7 +18,7 @@ public class TagSetDef
     /**
      * Orthogonal
      * 
-     * @label.zh.cn 正交
+     * @label.zh 正交
      */
     public boolean isOrtho() {
         return ortho;
@@ -31,7 +31,7 @@ public class TagSetDef
     /**
      * Tag List
      * 
-     * @label.zh.cn 标签列表
+     * @label.zh 标签列表
      */
     public List<TagDef> getTags() {
         return tags;
