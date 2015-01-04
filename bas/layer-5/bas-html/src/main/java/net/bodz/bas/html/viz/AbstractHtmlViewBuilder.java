@@ -3,12 +3,15 @@ package net.bodz.bas.html.viz;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.html.artifact.ArtifactType;
 import net.bodz.bas.html.artifact.IArtifact;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.repr.req.IViewOfRequest;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -29,8 +32,12 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public ContentType getContentType(T value) {
-        return ContentTypes.text_html;
+    public ContentType getContentType(HttpServletRequest request, T value) {
+        IViewOfRequest view = (IViewOfRequest) request.getAttribute(IViewOfRequest.class.getName());
+        if (view != null)
+            return view.getContentType();
+        else
+            return ContentTypes.text_html;
     }
 
     @Override

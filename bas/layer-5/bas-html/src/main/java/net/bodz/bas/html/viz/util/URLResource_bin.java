@@ -32,7 +32,7 @@ public class URLResource_bin
     }
 
     @Override
-    public ContentType getContentType(URLResource value) {
+    public ContentType getContentType(HttpServletRequest request, URLResource value) {
         URL url = value.getURL();
         String fileName = url.getFile();
         String extension = FilePath.getExtension(fileName);

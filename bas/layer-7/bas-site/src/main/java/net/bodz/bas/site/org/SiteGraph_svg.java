@@ -32,7 +32,7 @@ public class SiteGraph_svg
     }
 
     @Override
-    public ContentType getContentType(SiteGraphNode value) {
+    public ContentType getContentType(HttpServletRequest request, SiteGraphNode value) {
         return ContentTypes.image_svg_xml;
     }
 

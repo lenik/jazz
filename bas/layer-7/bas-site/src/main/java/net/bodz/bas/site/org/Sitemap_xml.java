@@ -3,6 +3,8 @@ package net.bodz.bas.site.org;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
@@ -26,7 +28,7 @@ public class Sitemap_xml
     }
 
     @Override
-    public ContentType getContentType(Sitemap value) {
+    public ContentType getContentType(HttpServletRequest request, Sitemap value) {
         return ContentTypes.text_xml;
     }
 

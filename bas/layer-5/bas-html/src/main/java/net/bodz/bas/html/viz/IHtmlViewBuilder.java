@@ -2,6 +2,8 @@ package net.bodz.bas.html.viz;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.repr.viz.IViewBuilder;
@@ -17,7 +19,7 @@ import net.bodz.bas.ui.dom1.IUiRef;
 public interface IHtmlViewBuilder<T>
         extends IViewBuilder<T> {
 
-    ContentType getContentType(T value);
+    ContentType getContentType(HttpServletRequest request, T value);
 
     /**
      * Starts a new frame chain.
