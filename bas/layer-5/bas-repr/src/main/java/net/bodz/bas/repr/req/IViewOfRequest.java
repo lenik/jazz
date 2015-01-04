@@ -5,13 +5,15 @@ import net.bodz.bas.t.variant.IVariantMap;
 
 public interface IViewOfRequest {
 
+    String ATTRIBUTE_KEY = IViewOfRequest.class.getName();
+
     String getViewName();
 
     void setViewName(String viewName);
 
     /**
      * The MIME type for the desired output.
-     *
+     * 
      * @return Non-<code>null</code> MIME literal.
      */
     ContentType getContentType();

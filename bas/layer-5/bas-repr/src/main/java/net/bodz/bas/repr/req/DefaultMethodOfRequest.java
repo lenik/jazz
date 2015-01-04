@@ -94,7 +94,7 @@ public class DefaultMethodOfRequest
         this.methodName = methodName;
         this.parameters.setWrapped(params);
 
-        request.setAttribute(IMethodOfRequest.class.getName(), this);
+        request.setAttribute(IMethodOfRequest.ATTRIBUTE_KEY, this);
         return true;
     }
 

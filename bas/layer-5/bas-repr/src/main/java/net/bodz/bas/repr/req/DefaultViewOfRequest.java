@@ -70,6 +70,7 @@ public class DefaultViewOfRequest
 
         // if (viewName == null && contentTypeAuto)
         // request.getParameter("");
+        this.viewName = viewName;
 
         // TODO Multiple content-types?
         // Content-type by browser.
@@ -80,7 +81,7 @@ public class DefaultViewOfRequest
                 setContentType(contentType);
         }
 
-        request.setAttribute(IViewOfRequest.class.getName(), this);
+        request.setAttribute(IViewOfRequest.ATTRIBUTE_KEY, this);
         return true;
     }
 
