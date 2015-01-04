@@ -12,6 +12,8 @@ import net.bodz.lily.model.sea.QVariantMap;
 public class CoMessageCriteria
         extends CoMomentIntervalCriteria {
 
+    public Integer formId;
+
     public Integer opId;
     public Integer categoryId;
     public Integer tagId;
@@ -24,6 +26,7 @@ public class CoMessageCriteria
     public IntRange likerCountRange;
     public IntRange readCountRange;
 
+    public boolean noForm;
     public boolean noOp;
     public boolean noCategory;
     public boolean noTag;
@@ -152,6 +155,7 @@ public class CoMessageCriteria
     protected void populate(QVariantMap<String> map)
             throws ParseException {
         super.populate(map);
+        formId = map.getInt("form", formId);
 
         opId = map.getInt("op", opId);
         categoryId = map.getInt("cat", categoryId);
@@ -164,6 +168,7 @@ public class CoMessageCriteria
         likerCountRange = map.getIntRange("likes", likerCountRange);
         readCountRange = map.getIntRange("reads", readCountRange);
 
+        noForm = map.getBoolean("no-form");
         noOp = map.getBoolean("no-op");
         noCategory = map.getBoolean("no-cat");
         noTag = map.getBoolean("no-tag");
