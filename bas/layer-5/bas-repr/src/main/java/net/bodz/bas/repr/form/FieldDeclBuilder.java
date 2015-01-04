@@ -7,6 +7,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IMutableElement;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.potato.element.IProperty;
@@ -54,6 +55,10 @@ public class FieldDeclBuilder {
         DetailLevel aDetailLevel = annotations.getAnnotation(DetailLevel.class);
         if (aDetailLevel != null)
             fieldDecl.setDetailLevel(aDetailLevel.value());
+
+        Derived aDerived = annotations.getAnnotation(Derived.class);
+        if (aDerived != null)
+            fieldDecl.setReadOnly(true);
 
         OfGroup aOfGroup = annotations.getAnnotation(OfGroup.class);
         if (aOfGroup != null) {
