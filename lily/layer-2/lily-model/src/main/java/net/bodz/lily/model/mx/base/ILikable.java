@@ -4,7 +4,7 @@ import java.util.Collection;
 
 /**
  * @label Likable
- * @label.zh.cn 收藏
+ * @label.zh 收藏
  */
 public interface ILikable {
 

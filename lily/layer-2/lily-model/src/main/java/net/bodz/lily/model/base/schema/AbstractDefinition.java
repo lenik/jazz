@@ -23,7 +23,7 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
     /**
      * Schema
      * 
-     * @label.zh.cn 模式
+     * @label.zh 模式
      */
     public final SchemaDef getSchema() {
         return schema;
@@ -36,7 +36,7 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
     /**
      * Reference Count
      * 
-     * @label.zh.cn 引用统计
+     * @label.zh 引用统计
      */
     @Statistics
     public final long getRefCount() {

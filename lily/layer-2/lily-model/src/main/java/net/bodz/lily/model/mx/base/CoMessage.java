@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.t.order.IPriority;
 
 import net.bodz.lily.model.base.CoMomentInterval;
@@ -19,7 +19,7 @@ import net.bodz.lily.model.base.security.User;
 
 /**
  * @label Message
- * @label.zh.cn 消息
+ * @label.zh 消息
  */
 public class CoMessage
         extends CoMomentInterval
@@ -64,7 +64,7 @@ public class CoMessage
 
     /**
      * @label Original Poster
-     * @label.zh.cn 发起人
+     * @label.zh 发起人
      */
     @OfGroup(CoMessage.class)
     public User getOp() {
@@ -77,7 +77,7 @@ public class CoMessage
 
     /**
      * @label Subject
-     * @label.zh.cn 主题
+     * @label.zh 主题
      * @placeholder 输入主题
      */
     @TextInput(maxLength = N_SUBJECT)
@@ -94,7 +94,7 @@ public class CoMessage
 
     /**
      * @label Text
-     * @label.zh.cn 正文
+     * @label.zh 正文
      */
     @OfGroup(CoMessage.class)
     public String getText() {
@@ -107,7 +107,7 @@ public class CoMessage
 
     /**
      * @label Text Preview
-     * @label.zh.cn 正文预览
+     * @label.zh 正文预览
      */
     @OfGroup(CoMessage.class)
     public String getTextPreview() {
@@ -116,7 +116,7 @@ public class CoMessage
 
     /**
      * @label Category
-     * @label.zh.cn 类别
+     * @label.zh 类别
      */
     @OfGroup(CoMessage.class)
     public CategoryDef getCategory() {
@@ -129,7 +129,7 @@ public class CoMessage
 
     /**
      * @label Phase
-     * @label.zh.cn 阶段
+     * @label.zh 阶段
      */
     @OfGroup(CoMessage.class)
     public PhaseDef getPhase() {
@@ -142,7 +142,7 @@ public class CoMessage
 
     /**
      * @label Form
-     * @label.zh.cn 表单
+     * @label.zh 表单
      */
     @OfGroup(CoMessage.class)
     public FormDef getForm() {
@@ -155,7 +155,7 @@ public class CoMessage
 
     /**
      * @label Form Arguments
-     * @label.zh.cn 表单参数
+     * @label.zh 表单参数
      * @placeholder 输入表单参数
      */
     @OfGroup(CoMessage.class)
@@ -169,7 +169,7 @@ public class CoMessage
 
     /**
      * @label Attributes
-     * @label.zh.cn 属性
+     * @label.zh 属性
      */
     @OfGroup(CoMessage.class)
     public Map<AttributeDef, String> getAttributes() {
@@ -182,7 +182,7 @@ public class CoMessage
 
     /**
      * @label Tags
-     * @label.zh.cn 标签列表
+     * @label.zh 标签列表
      */
     public List<TagDef> getTags() {
         return tags;
@@ -194,7 +194,7 @@ public class CoMessage
 
     /**
      * @label Sent Time
-     * @label.zh.cn 发送时间
+     * @label.zh 发送时间
      */
     @OfGroup(CoMessage.class)
     public Date getSentTime() {
@@ -207,7 +207,7 @@ public class CoMessage
 
     /**
      * @label Received Time
-     * @label.zh.cn 接收时间
+     * @label.zh 接收时间
      */
     @OfGroup(CoMessage.class)
     public Date getReceivedTime() {
@@ -220,7 +220,7 @@ public class CoMessage
 
     /**
      * @label Vote Ups
-     * @label.zh.cn 赞
+     * @label.zh 赞
      */
     @OfGroup(IVotable.class)
     public Integer getVoteUps() {
@@ -233,7 +233,7 @@ public class CoMessage
 
     /**
      * @label Vote Downs
-     * @label.zh.cn 踩
+     * @label.zh 踩
      */
     @OfGroup(IVotable.class)
     public Integer getVoteDowns() {
@@ -246,7 +246,7 @@ public class CoMessage
 
     /**
      * @label Vote Count
-     * @label.zh.cn 票数
+     * @label.zh 票数
      */
     @OfGroup(IVotable.class)
     @Override
@@ -258,7 +258,7 @@ public class CoMessage
 
     /**
      * @label Voters
-     * @label.zh.cn 投票人
+     * @label.zh 投票人
      */
     @OfGroup(IVotable.class)
     @Override
@@ -272,7 +272,7 @@ public class CoMessage
 
     /**
      * @label I Voter
-     * @label.zh.cn 我的投票
+     * @label.zh 我的投票
      */
     @OfGroup(IVotable.class)
     public Voter getiVoter() {
@@ -285,7 +285,7 @@ public class CoMessage
 
     /**
      * @label Liker Count
-     * @label.zh.cn 收藏数
+     * @label.zh 收藏数
      */
     @OfGroup(ILikable.class)
     public int getLikerCount() {
@@ -298,7 +298,7 @@ public class CoMessage
 
     /**
      * @label Likers
-     * @label.zh.cn 收藏人
+     * @label.zh 收藏人
      */
     @OfGroup(ILikable.class)
     @Override
@@ -312,7 +312,7 @@ public class CoMessage
 
     /**
      * @label I Liker
-     * @label.zh.cn 我的收藏
+     * @label.zh 我的收藏
      */
     @OfGroup(ILikable.class)
     public Liker getiLiker() {
@@ -325,7 +325,7 @@ public class CoMessage
 
     /**
      * @label Read Count
-     * @label.zh.cn 阅读数
+     * @label.zh 阅读数
      */
     public Integer getReadCount() {
         return readCount;

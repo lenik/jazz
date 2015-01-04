@@ -11,7 +11,7 @@ import net.bodz.lily.model.base.CoEntity;
  * 使用本系统的用户，在登录系统时需要输入密码。和“联系人”不同，用户不具有联系信息。
  * 
  * @label User (Account)
- * @label.zh.cn 用户（帐户）
+ * @label.zh 用户（帐户）
  * 
  * @rel group: 管理用户组
  * @rel person: 管理联系人（自然人）
@@ -55,7 +55,7 @@ public class User
 
     /**
      * @label Login Name
-     * @label.zh.cn 用户名
+     * @label.zh 用户名
      */
     public final String getLoginName() {
         return getCodeName();
@@ -69,7 +69,7 @@ public class User
 
     /**
      * @label Full Name
-     * @label.zh.cn 真实姓名
+     * @label.zh 真实姓名
      */
     public final String getFullName() {
         return getLabel();
@@ -81,7 +81,7 @@ public class User
 
     /**
      * @label Primary Group
-     * @label.zh.cn 首要的组
+     * @label.zh 首要的组
      */
     public Group getPrimaryGroup() {
         return primaryGroup;
@@ -112,7 +112,7 @@ public class User
 
     /**
      * @label Email-Validated
-     * @label.zh.cn 邮箱通过验证
+     * @label.zh 邮箱通过验证
      */
     public boolean isEmailValidated() {
         return emailValidated;
@@ -140,7 +140,7 @@ public class User
 
     /**
      * @label Last Login Time
-     * @label.zh.cn 上次登录时间
+     * @label.zh 上次登录时间
      */
     public long getLastLoginTime() {
         return lastLoginTime;
@@ -152,7 +152,7 @@ public class User
 
     /**
      * @label Last Login IP
-     * @label.zh.cn 上次登录IP
+     * @label.zh 上次登录IP
      */
     public InetAddress getLastLoginIP() {
         return lastLoginIP;

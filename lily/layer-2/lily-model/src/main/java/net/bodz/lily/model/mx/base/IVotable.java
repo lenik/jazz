@@ -4,7 +4,7 @@ import java.util.Collection;
 
 /**
  * @label Votable
- * @label.zh.cn 投票
+ * @label.zh 投票
  */
 public interface IVotable {
 

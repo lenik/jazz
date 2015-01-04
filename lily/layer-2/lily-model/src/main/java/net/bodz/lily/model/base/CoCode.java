@@ -30,7 +30,7 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
      * Code
      * 
      * @label Code
-     * @label.zh.cn 代码
+     * @label.zh 代码
      */
     @TextInput(maxLength = N_CODE_NAME)
     public String getCode() {

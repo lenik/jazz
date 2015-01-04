@@ -15,7 +15,7 @@ import net.bodz.lily.model.base.CoEntity;
  * 一个用户组可以有多个用户，一个用户也可以属于多个用户组。
  * 
  * @label Group (Role)
- * @label.zh.cn 用户组（角色）
+ * @label.zh 用户组（角色）
  * 
  * @rel user: 管理用户帐户
  * @rel orgunit: 管理组织单元（部门、车间）
@@ -34,6 +34,7 @@ public class Group
 
     private int id;
     private List<User> users;
+    private List<Permission> permissions;
 
     @Override
     public Integer getId() {
@@ -64,6 +65,17 @@ public class Group
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    /**
+     * 权限
+     */
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 
 }

@@ -10,7 +10,7 @@ public class TagDef
     /**
      * Tag Set
      * 
-     * @label.zh.cn 标签集
+     * @label.zh 标签集
      */
     public TagSetDef getTagSet() {
         return tagSet;
