@@ -6,6 +6,7 @@ import java.util.Locale;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlOptionTag;
 import net.bodz.bas.html.dom.tag.HtmlSelectTag;
+import net.bodz.bas.html.util.FieldHtmlUtil;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
@@ -31,7 +32,7 @@ public class Locale_htm
             value = Locale.getDefault();
 
         HtmlSelectTag select = out.select();
-        apply(select, fieldDecl, options);
+        FieldHtmlUtil.apply(select, fieldDecl, options);
 
         for (Locale locale : Locale.getAvailableLocales()) {
             boolean selected = locale.equals(value);
