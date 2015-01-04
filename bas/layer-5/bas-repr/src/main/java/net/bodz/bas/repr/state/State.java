@@ -50,4 +50,9 @@ public class State
         return type;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
 }

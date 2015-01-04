@@ -3,22 +3,24 @@ package net.bodz.lily.model.base;
 import java.io.Serializable;
 import java.util.Date;
 
+import net.bodz.bas.html.meta.HtmlViewBuilder;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.content.IContent;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.NumericInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
-import net.bodz.bas.std.rfc.http.ICacheControl;
 
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.User;
+import net.bodz.lily.repr.AccessMode_htm;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
@@ -49,8 +51,8 @@ public abstract class CoEntity
     private String image;
 
     private int priority;
-    private Date creationDate; // = System.currentTimeMillis();
-    private Date lastModifiedDate; // = creationDate;
+    private Date creationDate = new Date();
+    private Date lastModifiedDate = creationDate;
     private int flags = 0;
     private State state = StdStates.START;
     private int version;
@@ -132,7 +134,7 @@ public abstract class CoEntity
      * @label Priority
      * @label.zh 优先级
      */
-    @OfGroup(IContent.class)
+    @OfGroup(StdGroup.Schedule.class)
     @FormInput(textWidth = 4)
     @NumericInput(min = -1000, max = 1000)
     @Override
@@ -148,16 +150,18 @@ public abstract class CoEntity
      * @label Creation Date
      * @label.zh 创建时间
      */
-    @OfGroup(IContent.class)
+    @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     public Date getCreationDate() {
         return creationDate;
     }
 
     public void setCreationDate(Date creationDate) {
+        if (creationDate == null)
+            throw new NullPointerException("creationDate");
         this.creationDate = creationDate;
     }
 
-    @OfGroup(IContent.class)
+    @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Derived
     @Override
     public long getCreationTime() {
@@ -174,16 +178,18 @@ public abstract class CoEntity
      * @label Last Modified Date
      * @label.zh 修改时间
      */
-    @OfGroup({ IContent.class, ICacheControl.class })
+    @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModified) {
+        if (lastModified == null)
+            throw new NullPointerException("lastModified");
         this.lastModifiedDate = lastModified;
     }
 
-    @OfGroup(IContent.class)
+    @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Derived
     @Override
     public long getLastModified() {
@@ -194,6 +200,7 @@ public abstract class CoEntity
      * @label Flags
      * @label.zh 标志位
      */
+    @OfGroup(StdGroup.Settings.class)
     @DetailLevel(DetailLevel.EXPERT)
     public int getFlags() {
         return flags;
@@ -203,15 +210,15 @@ public abstract class CoEntity
         this.flags = flags;
     }
 
+    @OfGroup(StdGroup.Cache.class)
     @DetailLevel(DetailLevel.HIDDEN)
-    @OfGroup(ICacheControl.class)
     @Override
     public CacheControlMode getCacheControlMode() {
         return CacheControlMode.AUTO;
     }
 
+    @OfGroup(StdGroup.Cache.class)
     @DetailLevel(DetailLevel.HIDDEN)
-    @OfGroup(ICacheControl.class)
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
         return CacheRevalidationMode.WANTED;
@@ -224,7 +231,7 @@ public abstract class CoEntity
      * @label.zh 缓存寿命
      */
     @DetailLevel(DetailLevel.EXPERT2)
-    @OfGroup(ICacheControl.class)
+    @OfGroup(StdGroup.Cache.class)
     @Override
     public int getMaxAge() {
         return 86400;
@@ -235,7 +242,7 @@ public abstract class CoEntity
      * @label.zh 实体标签
      */
     @DetailLevel(DetailLevel.HIDDEN)
-    @OfGroup(ICacheControl.class)
+    @OfGroup(StdGroup.Cache.class)
     @Override
     public String getETag() {
         long time = getLastModified();
@@ -246,8 +253,8 @@ public abstract class CoEntity
      * @label Weak Validation
      * @labal.zh 弱校验
      */
+    @OfGroup(StdGroup.Cache.class)
     @DetailLevel(DetailLevel.EXPERT2)
-    @OfGroup(ICacheControl.class)
     @Override
     public boolean isWeakValidation() {
         return true;
@@ -260,6 +267,7 @@ public abstract class CoEntity
      * @label State
      * @label.zh 状态
      */
+    @OfGroup(StdGroup.Status.class)
     @DetailLevel(DetailLevel.EXPERT)
     public State getState() {
         return state;
@@ -275,8 +283,8 @@ public abstract class CoEntity
      * @label Version
      * @label.zh 版本
      */
+    @OfGroup(StdGroup.Version.class)
     @DetailLevel(DetailLevel.EXPERT)
-    @OfGroup(IContent.class)
     public int getVersion() {
         return version;
     }
@@ -292,7 +300,7 @@ public abstract class CoEntity
      * @label Owner
      * @label.zh 属主
      */
-    @OfGroup(IAccessControlled.class)
+    @OfGroup(StdGroup.Security.class)
     public User getOwner() {
         return owner;
     }
@@ -305,7 +313,7 @@ public abstract class CoEntity
      * @label Group
      * @label.zh 属组
      */
-    @OfGroup(IAccessControlled.class)
+    @OfGroup(StdGroup.Security.class)
     public Group getOwnerGroup() {
         return ownerGroup;
     }
@@ -314,14 +322,17 @@ public abstract class CoEntity
         this.ownerGroup = ownerGroup;
     }
 
+    @OfGroup(StdGroup.Security.class)
     @DetailLevel(DetailLevel.HIDDEN)
-    @OfGroup(IAccessControlled.class)
+    @Derived
     @Override
     public int getUserId() {
         return owner == null ? 0 : owner.getId();
     }
 
+    @OfGroup(StdGroup.Security.class)
     @DetailLevel(DetailLevel.HIDDEN)
+    @Derived
     @Override
     public int getGroupId() {
         return ownerGroup == null ? 0 : ownerGroup.getId();
@@ -331,7 +342,8 @@ public abstract class CoEntity
      * @label Access Mode
      * @label.zh 访问模式
      */
-    @OfGroup(IAccessControlled.class)
+    @HtmlViewBuilder(AccessMode_htm.class)
+    @OfGroup(StdGroup.Security.class)
     @Override
     public int getAccessMode() {
         return accessMode;
@@ -345,7 +357,7 @@ public abstract class CoEntity
      * @label ACL
      * @label.zh ACL
      */
-    @OfGroup(IAccessControlled.class)
+    @OfGroup(StdGroup.Security.class)
     @Override
     public int getAcl() {
         return acl;

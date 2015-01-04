@@ -1,9 +1,5 @@
 package net.bodz.bas.std.rfc.http;
 
-/**
- * @label Cache Control
- * @label.zh.cn 缓存控制
- */
 public interface ICacheControl {
 
     /**

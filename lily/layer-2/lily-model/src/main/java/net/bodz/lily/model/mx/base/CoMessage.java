@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.t.order.IPriority;
 
@@ -66,7 +68,6 @@ public class CoMessage
      * @label Original Poster
      * @label.zh 发起人
      */
-    @OfGroup(CoMessage.class)
     public User getOp() {
         return op;
     }
@@ -81,7 +82,6 @@ public class CoMessage
      * @placeholder 输入主题
      */
     @TextInput(maxLength = N_SUBJECT)
-    @OfGroup(CoMessage.class)
     public String getSubject() {
         return subject;
     }
@@ -95,8 +95,9 @@ public class CoMessage
     /**
      * @label Text
      * @label.zh 正文
+     * @placeholder 输入正文
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Content.class)
     public String getText() {
         return text;
     }
@@ -109,7 +110,8 @@ public class CoMessage
      * @label Text Preview
      * @label.zh 正文预览
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Content.class)
+    @Derived
     public String getTextPreview() {
         return Strings.ellipsis(getText(), 50);
     }
@@ -118,7 +120,7 @@ public class CoMessage
      * @label Category
      * @label.zh 类别
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Classification.class)
     public CategoryDef getCategory() {
         return category;
     }
@@ -131,7 +133,7 @@ public class CoMessage
      * @label Phase
      * @label.zh 阶段
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Status.class)
     public PhaseDef getPhase() {
         return phase;
     }
@@ -144,7 +146,7 @@ public class CoMessage
      * @label Form
      * @label.zh 表单
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Metadata.class)
     public FormDef getForm() {
         return form;
     }
@@ -158,7 +160,7 @@ public class CoMessage
      * @label.zh 表单参数
      * @placeholder 输入表单参数
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Metadata.class)
     public String getFormArgs() {
         return formArgs;
     }
@@ -171,7 +173,7 @@ public class CoMessage
      * @label Attributes
      * @label.zh 属性
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Content.class)
     public Map<AttributeDef, String> getAttributes() {
         return attributes;
     }
@@ -184,6 +186,7 @@ public class CoMessage
      * @label Tags
      * @label.zh 标签列表
      */
+    @OfGroup(StdGroup.Classification.class)
     public List<TagDef> getTags() {
         return tags;
     }
@@ -196,7 +199,7 @@ public class CoMessage
      * @label Sent Time
      * @label.zh 发送时间
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Status.class)
     public Date getSentTime() {
         return sentTime;
     }
@@ -209,7 +212,7 @@ public class CoMessage
      * @label Received Time
      * @label.zh 接收时间
      */
-    @OfGroup(CoMessage.class)
+    @OfGroup(StdGroup.Status.class)
     public Date getReceivedTime() {
         return receivedTime;
     }
@@ -222,7 +225,7 @@ public class CoMessage
      * @label Vote Ups
      * @label.zh 赞
      */
-    @OfGroup(IVotable.class)
+    @OfGroup(StdGroup.Ranking.class)
     public Integer getVoteUps() {
         return voteUps;
     }
@@ -235,7 +238,7 @@ public class CoMessage
      * @label Vote Downs
      * @label.zh 踩
      */
-    @OfGroup(IVotable.class)
+    @OfGroup(StdGroup.Ranking.class)
     public Integer getVoteDowns() {
         return voteDowns;
     }
@@ -248,7 +251,8 @@ public class CoMessage
      * @label Vote Count
      * @label.zh 票数
      */
-    @OfGroup(IVotable.class)
+    @OfGroup(StdGroup.Ranking.class)
+    @Derived
     @Override
     public int getVoteCount() {
         int nUp = voteUps == null ? 0 : voteUps;
@@ -260,7 +264,7 @@ public class CoMessage
      * @label Voters
      * @label.zh 投票人
      */
-    @OfGroup(IVotable.class)
+    @OfGroup(StdGroup.Ranking.class)
     @Override
     public List<Voter> getVoters() {
         return voters;
@@ -274,7 +278,7 @@ public class CoMessage
      * @label I Voter
      * @label.zh 我的投票
      */
-    @OfGroup(IVotable.class)
+    @OfGroup(StdGroup.Ranking.class)
     public Voter getiVoter() {
         return iVoter;
     }
@@ -287,7 +291,7 @@ public class CoMessage
      * @label Liker Count
      * @label.zh 收藏数
      */
-    @OfGroup(ILikable.class)
+    @OfGroup(StdGroup.Ranking.class)
     public int getLikerCount() {
         return likerCount;
     }
@@ -300,7 +304,7 @@ public class CoMessage
      * @label Likers
      * @label.zh 收藏人
      */
-    @OfGroup(ILikable.class)
+    @OfGroup(StdGroup.Ranking.class)
     @Override
     public List<Liker> getLikers() {
         return likers;
@@ -314,7 +318,7 @@ public class CoMessage
      * @label I Liker
      * @label.zh 我的收藏
      */
-    @OfGroup(ILikable.class)
+    @OfGroup(StdGroup.Ranking.class)
     public Liker getiLiker() {
         return iLiker;
     }
@@ -327,6 +331,7 @@ public class CoMessage
      * @label Read Count
      * @label.zh 阅读数
      */
+    @OfGroup(StdGroup.Ranking.class)
     public Integer getReadCount() {
         return readCount;
     }
