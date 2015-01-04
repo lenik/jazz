@@ -3,6 +3,7 @@ package net.bodz.bas.html.viz.util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.repr.form.FieldCategory;
+import net.bodz.bas.repr.form.FieldDeclLabelComparator;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -52,6 +54,8 @@ public abstract class AbstractForm_htm<T>
                     selection.add(fieldDecl);
             if (selection.isEmpty())
                 continue;
+
+            Collections.sort(selection, FieldDeclLabelComparator.INSTANCE);
 
             IHtmlTag catTag = beginCategory(formTag, category);
 
@@ -105,7 +109,7 @@ public abstract class AbstractForm_htm<T>
 
     protected HtmlFormTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
-        HtmlFormTag form = out.form().method("post");
+        HtmlFormTag form = out.form();
         return form;
     }
 
