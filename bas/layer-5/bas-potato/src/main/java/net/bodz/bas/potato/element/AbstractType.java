@@ -58,28 +58,31 @@ public abstract class AbstractType
     }
 
     @Override
-    public IProperty getPathProperty(String pathProperty)
+    public List<IProperty> getPropertiesForPath(String pathProperty)
             throws NoSuchPropertyException {
         if (pathProperty == null)
             throw new NullPointerException("pathProperty");
         IType type = this;
-        IProperty property = null;
+        List<IProperty> properties = new ArrayList<>(2);
+        IProperty lastProperty = null;
 
         StringTokenizer tokens = new StringTokenizer(pathProperty, ".");
         while (tokens.hasMoreTokens()) {
             String token = tokens.nextToken();
 
             if (type == null) {
-                Class<?> propertyType = property.getPropertyType();
+                Class<?> propertyType = lastProperty.getPropertyType();
                 type = PotatoTypes.getInstance().forClass(propertyType);
             }
 
-            property = type.getProperty(token);
-            if (property == null)
+            lastProperty = type.getProperty(token);
+            if (lastProperty == null)
                 throw new NoSuchPropertyException(token + " in " + type.getName());
+            else
+                properties.add(lastProperty);
             type = null;
         }
-        return property;
+        return properties;
     }
 
     @Override
