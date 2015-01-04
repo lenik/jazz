@@ -3,6 +3,7 @@ package net.bodz.lily.model.base;
 import java.util.Date;
 
 import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.repr.form.meta.StdGroup;
 
 public abstract class CoMomentInterval
         extends CoEntity
@@ -19,7 +20,7 @@ public abstract class CoMomentInterval
      * @label Begin Date
      * @label.zh 开始时间
      */
-    @OfGroup(IMomentInterval.class)
+    @OfGroup(StdGroup.Schedule.class)
     @Override
     public Date getBeginDate() {
         return beginDate;
@@ -34,7 +35,7 @@ public abstract class CoMomentInterval
      * @label End Date
      * @label.zh 结束时间
      */
-    @OfGroup(IMomentInterval.class)
+    @OfGroup(StdGroup.Schedule.class)
     @Override
     public Date getEndDate() {
         return endDate;
