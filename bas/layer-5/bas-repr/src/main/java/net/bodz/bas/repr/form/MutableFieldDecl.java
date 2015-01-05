@@ -41,7 +41,7 @@ public class MutableFieldDecl
     String inputMask;
     NumberFormat numberFormat;
     iString placeholder;
-    Character echoChar;
+    char echoChar;
     NullConvertion nullConvertion = NullConvertion.NONE;
     SpaceNormalization spaceNormalization = SpaceNormalization.NONE;
     SortOrder itemSortOrder = SortOrder.NONE;
@@ -241,7 +241,7 @@ public class MutableFieldDecl
     }
 
     @Override
-    public Character getEchoChar() {
+    public char getEchoChar() {
         return echoChar;
     }
 
