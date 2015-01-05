@@ -1,10 +1,7 @@
 package net.bodz.bas.repr.form;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import net.bodz.bas.i18n.dom1.IMutableElement;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -23,8 +20,17 @@ public class FieldCategory
 
     private static final long serialVersionUID = 1L;
 
+    Class<?> tagClass;
     IType groupType;
     int priority;
+
+    public FieldCategory(Class<?> tagClass) {
+        this.tagClass = tagClass;
+    }
+
+    public Class<?> getTagClass() {
+        return tagClass;
+    }
 
     @Override
     public int getPriority() {
@@ -35,48 +41,30 @@ public class FieldCategory
         this.priority = priority;
     }
 
-    public static final FieldCategory NULL = new FieldCategory();
+    public static final FieldCategory NULL = new FieldCategory(Object.class);
 
     static Map<Class<?>, FieldCategory> registry = new HashMap<Class<?>, FieldCategory>();
 
     public static FieldCategory fromTagClass(Class<?> clazz) {
-        FieldCategory instance = registry.get(clazz);
-        if (instance == null) {
-            instance = new FieldCategory();
+        FieldCategory category = registry.get(clazz);
+        if (category == null) {
+            category = new FieldCategory(clazz);
             IType type = PotatoTypes.getInstance().forClass(clazz);
 
             // instance.setName(type.getType().getSimpleName());
-            IMutableElement.fn.copy1(type, instance);
+            IMutableElement.fn.copy1(type, category);
             // instance.setStyle(type.getStyle());
 
             Priority aPriority = type.getAnnotation(Priority.class);
             if (aPriority != null)
-                instance.setPriority(aPriority.value());
+                category.setPriority(aPriority.value());
             DetailLevel aDetailLevel = type.getAnnotation(DetailLevel.class);
             if (aDetailLevel != null)
-                instance.setDetailLevel(aDetailLevel.value());
+                category.setDetailLevel(aDetailLevel.value());
 
-            registry.put(clazz, instance);
+            registry.put(clazz, category);
         }
-        return instance;
-    }
-
-    public static Map<FieldCategory, Collection<IFieldDecl>> group(Iterable<IFieldDecl> fieldDecls) {
-        Map<FieldCategory, Collection<IFieldDecl>> map;
-        map = new TreeMap<>(FieldCategoryComparator.INSTANCE);
-
-        for (IFieldDecl fieldDecl : fieldDecls) {
-            FieldCategory fg = fieldDecl.getCategory();
-            if (fg == null)
-                fg = FieldCategory.NULL;
-
-            Collection<IFieldDecl> coll = map.get(fg);
-            if (coll == null)
-                map.put(fg, coll = new TreeSet<IFieldDecl>(FieldDeclComparator.INSTANCE));
-
-            coll.add(fieldDecl);
-        }
-        return map;
+        return category;
     }
 
 }

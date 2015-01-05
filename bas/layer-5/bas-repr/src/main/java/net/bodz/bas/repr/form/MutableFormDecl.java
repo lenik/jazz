@@ -4,11 +4,9 @@ import java.util.*;
 
 import net.bodz.bas.t.order.DefaultComparator;
 import net.bodz.bas.t.order.DefaultDescendingComparator;
-import net.bodz.bas.ui.dom1.MutableUiElement;
 
 public class MutableFormDecl
-        extends MutableUiElement
-        implements IFormDecl {
+        extends AbstractFormDecl {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,27 +34,25 @@ public class MutableFormDecl
     }
 
     @Override
-    public IFieldDecl getFieldDef(String name) {
+    public IFieldDecl getFieldDecl(String name) {
         return map.get(name);
     }
 
     @Override
-    public Collection<IFieldDecl> getFieldDefs() {
+    public Collection<IFieldDecl> getFieldDecls() {
         return map.values();
     }
 
     @Override
-    public Collection<IFieldDecl> getFieldDefs(int maxDetailLevel) {
+    public Collection<IFieldDecl> getFieldDecls(IFieldDeclFilter filter) {
         List<IFieldDecl> list = new ArrayList<IFieldDecl>(map.size());
         for (IFieldDecl a : map.values())
-            if (a.getDetailLevel() > maxDetailLevel)
-                continue;
-            else
+            if (filter.accept(a))
                 list.add(a);
         return list;
     }
 
-    public void addFieldDef(String name, IFieldDecl fieldDecl) {
+    public void addFieldDecl(String name, IFieldDecl fieldDecl) {
         if (name == null)
             throw new NullPointerException("name");
         if (fieldDecl == null)

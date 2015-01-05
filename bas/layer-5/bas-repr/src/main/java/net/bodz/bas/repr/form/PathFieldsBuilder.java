@@ -32,7 +32,7 @@ public class PathFieldsBuilder {
                 remaining = path.substring(dot + 1);
             }
 
-            IFieldDecl fieldDecl = knownStruct.getFieldDef(head);
+            IFieldDecl fieldDecl = knownStruct.getFieldDecl(head);
             if (fieldDecl == null)
                 throw new NoSuchPropertyException("Bad head: " + head);
 

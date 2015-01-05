@@ -78,7 +78,7 @@ public class FormDeclBuilder {
                 continue;
 
             IFieldDecl fieldDecl = fieldDeclBuilder.build(property);
-            result.addFieldDef(property.getName(), fieldDecl);
+            result.addFieldDecl(property.getName(), fieldDecl);
         }
         return result;
     }
