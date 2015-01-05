@@ -2,19 +2,31 @@ package net.bodz.lily.model.base;
 
 import java.util.Date;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 
+import net.bodz.lily.model.sea.QVariantMap;
+
 public abstract class CoMomentInterval
         extends CoEntity
-        implements IMomentInterval {
+        implements IMomentInterval, IId<Long> {
 
     private static final long serialVersionUID = 1L;
 
+    private long id;
     private Date beginDate;
     private Date endDate;
 
-    public abstract Object getId();
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /**
      * @label Begin Date
@@ -44,6 +56,15 @@ public abstract class CoMomentInterval
     @Override
     public void setEndDate(Date endTime) {
         this.endDate = endTime;
+    }
+
+    @Override
+    protected void populate(QVariantMap<String> map)
+            throws ParseException {
+        super.populate(map);
+        id = map.getLong("id", id);
+        beginDate = map.getDate("beginDate", beginDate);
+        endDate = map.getDate("endDate", endDate);
     }
 
 }

@@ -1,11 +1,15 @@
 package net.bodz.lily.model.base;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.meta.HtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -26,11 +30,14 @@ import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.base.security.impl.AccessMode_htm;
+import net.bodz.lily.model.sea.AbstractTextParametric;
+import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
  */
 public abstract class CoEntity
+        extends AbstractTextParametric
         implements Serializable, IContent, IAccessControlled {
 
     private static final long serialVersionUID = 1L;
@@ -392,6 +399,26 @@ public abstract class CoEntity
 
     public void setAcl(int acl) {
         this.acl = acl;
+    }
+
+    @Override
+    protected void populate(QVariantMap<String> map)
+            throws ParseException {
+        codeName = map.getString("codeName");
+        label = map.getString("label");
+        description = map.getString("description");
+        image = map.getString("image");
+
+        priority = map.getInt("priority", priority);
+        flags = map.getInt("flags", flags);
+        state = StdStates.START;
+
+        accessMode = map.getInt("accessMode", accessMode);
+        acl = map.getInt("acl", acl);
+    }
+
+    public void persist(IHtmlViewContext ctx, IHtmlTag out)
+            throws IOException {
     }
 
 }
