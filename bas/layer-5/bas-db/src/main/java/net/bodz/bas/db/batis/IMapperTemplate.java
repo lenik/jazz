@@ -16,7 +16,7 @@ public interface IMapperTemplate<T, C>
 
     T selectNext(long id);
 
-    int insert(T obj);
+    long insert(T obj);
 
     void update(T obj);
 
