@@ -18,6 +18,8 @@ public interface IBasicSiteAnchors {
 
     /** @see BasicSiteServerConfig#javascriptDir */
     IAnchor _js_ = _webApp_.join("js/");
+    IAnchor _jQueryUI_ = _webApp_.join("js/jquery-ui/");
+    IAnchor _jQueryUIThemes_ = _webApp_.join("js/jquery-ui-themes/");
 
     /** @see BasicSiteServerConfig#webjarsDir */
     IAnchor _webjars_ = _webApp_.join("webjars/");

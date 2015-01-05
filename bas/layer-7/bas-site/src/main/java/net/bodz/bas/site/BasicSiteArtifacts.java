@@ -7,6 +7,8 @@ public class BasicSiteArtifacts
         extends MutableArtifactManager
         implements IBasicSiteAnchors {
 
+    public static final String BIGVIDEO_CSS = "bigvideo.css";
+    public static final String BIGVIDEO_JS = "bigvideo.js";
     public static final String BOOTSTRAP3_CSS = "bootstrap3.css";
     public static final String BOOTSTRAP3_JS = "bootstrap3.js";
     public static final String DATATABLES_CSS = "datatables.css";
@@ -20,13 +22,18 @@ public class BasicSiteArtifacts
     public static final String DATATABLES_TABLETOOLS_CSS = "datatables.tableTools.css";
     public static final String DATATABLES_TABLETOOLS_JS = "datatables.tableTools.js";
     public static final String FONT_AWESOME = "font-awesome";
+    public static final String HANDSONTABLE_CSS = "handsontable.css";
+    public static final String HANDSONTABLE_JS = "handsontable.js";
     public static final String ICHECK_CSS = "icheck.css";
     public static final String ICHECK_JS = "icheck.js";
     public static final String JQUERY_MIN = "jquery-min";
+    public static final String JQUERY_UI_MIN = "jquery-ui-min";
     public static final String MAGNIFIC_POPUP_CSS = "magnific-popup.css";
     public static final String MAGNIFIC_POPUP_JS = "magnific-popup.js";
     public static final String PARSLEY_CSS = "parsley.css";
     public static final String PARSLEY_JS = "parsley.js";
+    public static final String WALLPAPER_CSS = "wallpaper.css";
+    public static final String WALLPAPER_JS = "wallpaper.js";
 
     IArtifact bootstrap3_css = css(BOOTSTRAP3_CSS, "3.2.0", //
             _js_.join("twitter-bootstrap3/css/bootstrap.min.css"));
@@ -39,6 +46,20 @@ public class BasicSiteArtifacts
 
     IArtifact jQueryMin = javascript(JQUERY_MIN, null, //
             _js_.join("jquery/jquery.min.js"));
+    IArtifact jQueryUiMin = javascript(JQUERY_UI_MIN, null, //
+            _js_.join("jquery-ui/jquery-ui.min.js"));
+    {
+        jQueryUiMin.addDependency(jQueryMin);
+    }
+
+    IArtifact bigvideo_css = css(BIGVIDEO_CSS, "1.1.3", //
+            _js_.join("jquery-bigvideo/css/bigvideo.css"));
+    IArtifact bigvideo_js = javascript(BIGVIDEO_JS, "1.1.3", //
+            _js_.join("jquery-bigvideo/lib/bigvideo.js"));
+    {
+        bigvideo_js.addDependency(jQueryMin);
+        bigvideo_js.addDependency(bigvideo_css);
+    }
 
     IArtifact datatables_css = css(DATATABLES_CSS, "1.10.3", //
             _js_.join("datatables/media/css/jquery.dataTables.min.css"));
@@ -94,6 +115,15 @@ public class BasicSiteArtifacts
         fontAwesome.addDependency(jQueryMin);
     }
 
+    IArtifact handsontable_css = css(HANDSONTABLE_CSS, "0.12.2", //
+            _js_.join("jquery-handsontable/dist/handsontable.full.min.css"));
+    IArtifact handsontable_js = javascript(HANDSONTABLE_JS, "0.12.2", //
+            _js_.join("jquery-handsontable/dist/handsontable.full.min.js"));
+    {
+        handsontable_js.addDependency(jQueryMin);
+        handsontable_js.addDependency(handsontable_css);
+    }
+
     IArtifact icheck_css = css(ICHECK_CSS, "1.0.2", //
             _js_.join("jquery-icheck/skins/all.css"));
     IArtifact icheck_js = javascript(ICHECK_JS, "1.0.2", //
@@ -119,6 +149,15 @@ public class BasicSiteArtifacts
     {
         parsley_js.addDependency(jQueryMin);
         parsley_js.addDependency(parsley_css);
+    }
+
+    IArtifact wallpaper_css = css(WALLPAPER_CSS, "3.1.18", //
+            _js_.join("jquery-wallpaper/jquery.fs.wallpaper.css"));
+    IArtifact wallpaper_js = javascript(WALLPAPER_JS, "3.1.18", //
+            _js_.join("jquery-wallpaper/jquery.fs.wallpaper.min.js"));
+    {
+        wallpaper_js.addDependency(jQueryMin);
+        wallpaper_js.addDependency(wallpaper_css);
     }
 
 }
