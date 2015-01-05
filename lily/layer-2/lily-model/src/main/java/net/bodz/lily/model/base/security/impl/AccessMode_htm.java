@@ -1,4 +1,4 @@
-package net.bodz.lily.repr;
+package net.bodz.lily.model.base.security.impl;
 
 import java.io.IOException;
 

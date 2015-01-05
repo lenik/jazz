@@ -79,7 +79,7 @@ public class CoMessage
     /**
      * @label Subject
      * @label.zh 主题
-     * @placeholder 输入主题
+     * @placeholder 输入主题…
      */
     @TextInput(maxLength = N_SUBJECT)
     public String getSubject() {
@@ -95,9 +95,8 @@ public class CoMessage
     /**
      * @label Text
      * @label.zh 正文
-     * @placeholder 输入正文
+     * @placeholder 输入正文…
      */
-    @OfGroup(StdGroup.Content.class)
     public String getText() {
         return text;
     }
@@ -110,7 +109,6 @@ public class CoMessage
      * @label Text Preview
      * @label.zh 正文预览
      */
-    @OfGroup(StdGroup.Content.class)
     @Derived
     public String getTextPreview() {
         return Strings.ellipsis(getText(), 50);

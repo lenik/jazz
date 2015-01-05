@@ -8,6 +8,7 @@ import java.util.List;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.Stdio;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 
 public abstract class CoNode<self_t extends CoNode<self_t>>
@@ -106,6 +107,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Index
      * @label.zh 序号
      */
+    @Derived
     public int getIndex() {
         if (parent == null)
             return 0;
@@ -139,6 +141,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
     void setDepth(int depth) {
     }
 
+    @DetailLevel(DetailLevel.HIDDEN)
     protected int getSafeDepth() {
         return 1000;
     }
@@ -171,8 +174,8 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Chain
      * @label.zh 链
      */
-    public List<self_t> getChain() {
-        List<self_t> chain = new ArrayList<self_t>();
+    public CoNodeChain<self_t> getChain() {
+        CoNodeChain<self_t> chain = new CoNodeChain<self_t>();
         self_t node = self();
         while (node != null) {
             chain.add(node);
@@ -186,6 +189,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Graph Prefix
      * @label.zh 图前缀
      */
+    @Derived
     public String getGraphPrefix() {
         if (parent == null)
             return "";
@@ -214,6 +218,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Node Label
      * @label.zh 结点标签
      */
+    @Derived
     public String getNodeLabel() {
         // return naturalId().toString();
         String str = getCodeName();

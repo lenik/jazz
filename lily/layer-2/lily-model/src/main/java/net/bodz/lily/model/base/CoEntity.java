@@ -17,10 +17,11 @@ import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 
+import net.bodz.lily.model.base.impl.Priority_htm;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.repr.AccessMode_htm;
+import net.bodz.lily.model.base.security.impl.AccessMode_htm;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
@@ -33,6 +34,7 @@ public abstract class CoEntity
     public static final int N_CODE_NAME = 20;
     public static final int N_LABEL = 80;
     public static final int N_DESCRIPTION = 200;
+    public static final int N_IMAGE = 100;
 
     /** 私密 */
     public static final int M_PRIVATE = 0600;
@@ -70,6 +72,7 @@ public abstract class CoEntity
     /**
      * @label Code Name
      * @label.zh 代码
+     * @placeholder 输入代码/别名…
      */
     @TextInput(maxLength = N_CODE_NAME)
     public String getCodeName() {
@@ -83,6 +86,7 @@ public abstract class CoEntity
     /**
      * @label Label
      * @label.zh 名称
+     * @placeholder 输入简短的描述性名称…
      */
     @TextInput(maxLength = N_LABEL)
     public String getLabel() {
@@ -96,6 +100,7 @@ public abstract class CoEntity
     /**
      * @label Description
      * @label.zh 描述
+     * @placeholder 输入概括性的描述信息…
      */
     @TextInput(maxLength = N_DESCRIPTION)
     public String getDescription() {
@@ -106,6 +111,12 @@ public abstract class CoEntity
         this.description = description;
     }
 
+    /**
+     * @label Image
+     * @label.zh 图像
+     * @placeholder 输入图像的名称…
+     */
+    @TextInput(maxLength = N_IMAGE)
     public String getImage() {
         return image;
     }
@@ -134,6 +145,7 @@ public abstract class CoEntity
      * @label Priority
      * @label.zh 优先级
      */
+    @HtmlViewBuilder(Priority_htm.class)
     @OfGroup(StdGroup.Schedule.class)
     @FormInput(textWidth = 4)
     @NumericInput(min = -1000, max = 1000)
