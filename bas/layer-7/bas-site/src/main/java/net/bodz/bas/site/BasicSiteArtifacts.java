@@ -20,55 +20,54 @@ public class BasicSiteArtifacts
     public static final String DATATABLES_TABLETOOLS_CSS = "datatables.tableTools.css";
     public static final String DATATABLES_TABLETOOLS_JS = "datatables.tableTools.js";
     public static final String FONT_AWESOME = "font-awesome";
+    public static final String ICHECK_CSS = "icheck.css";
+    public static final String ICHECK_JS = "icheck.js";
     public static final String JQUERY_MIN = "jquery-min";
+    public static final String MAGNIFIC_POPUP_CSS = "magnific-popup.css";
+    public static final String MAGNIFIC_POPUP_JS = "magnific-popup.js";
+    public static final String PARSLEY_CSS = "parsley.css";
+    public static final String PARSLEY_JS = "parsley.js";
 
     IArtifact bootstrap3_css = css(BOOTSTRAP3_CSS, "3.2.0", //
             _js_.join("twitter-bootstrap3/css/bootstrap.min.css"));
-
     IArtifact bootstrap3_js = javascript(BOOTSTRAP3_JS, "3.2.0", //
             _js_.join("twitter-bootstrap3/js/bootstrap.min.js"));
 
+    {
+        bootstrap3_js.addDependency(bootstrap3_css);
+    }
+
+    IArtifact jQueryMin = javascript(JQUERY_MIN, null, //
+            _js_.join("jquery/jquery.min.js"));
+
     IArtifact datatables_css = css(DATATABLES_CSS, "1.10.3", //
             _js_.join("datatables/media/css/jquery.dataTables.min.css"));
-
     IArtifact datatables_js = javascript(DATATABLES_JS, "1.10.3", //
             _js_.join("datatables/media/js/jquery.dataTables.min.js"));
 
     IArtifact datatablesBootstrap_css = css(DATATABLES_BOOTSTRAP_CSS, "1.10.3", //
             _js_.join("datatables/examples/resources/bootstrap/3/dataTables.bootstrap.css"));
-
     IArtifact datatablesBootstrap_js = javascript(DATATABLES_BOOTSTRAP_JS, "1.10.3", //
             _js_.join("datatables/examples/resources/bootstrap/3/dataTables.bootstrap.js"));
 
     IArtifact datatablesColVis_css = css(DATATABLES_COLVIS_CSS, "1.10.3", //
             _js_.join("datatables/extensions/ColVis/css/dataTables.colVis.css"));
-
     IArtifact datatablesColVis_js = javascript(DATATABLES_COLVIS_JS, "1.10.3", //
             _js_.join("datatables/extensions/ColVis/js/dataTables.colVis.js"));
 
     IArtifact datatablesResponsive_css = css(DATATABLES_RESPONSIVE_CSS, "1.10.3", //
             _js_.join("datatables/extensions/Responsive/css/dataTables.responsive.css"));
-
     IArtifact datatablesResponsive_js = javascript(DATATABLES_RESPONSIVE_JS, "1.10.3", //
             _js_.join("datatables/extensions/Responsive/js/dataTables.responsive.js"));
 
     IArtifact datatablesTableTools_css = css(DATATABLES_TABLETOOLS_CSS, "1.10.3", //
             _js_.join("datatables/extensions/TableTools/css/dataTables.tableTools.css"));
-
     IArtifact datatablesTableTools_js = javascript(DATATABLES_TABLETOOLS_JS, "1.10.3", //
             _js_.join("datatables/extensions/TableTools/js/dataTables.tableTools.js"));
 
-    IArtifact fontAwesome = css(FONT_AWESOME, "4.2.0", //
-            _fonts_.join("font-awesome/css/font-awesome.min.css"));
-
-    IArtifact jQueryMin = javascript(JQUERY_MIN, null, //
-            _js_.join("jquery/jquery.min.js"));
-
-    public BasicSiteArtifacts() {
-        bootstrap3_js.addDependency(bootstrap3_css);
-
-        datatables_js.addDependency(datatables_css);
+    {
         datatables_js.addDependency(jQueryMin);
+        datatables_js.addDependency(datatables_css);
 
         datatablesBootstrap_js.addDependency(datatablesBootstrap_css);
         datatablesBootstrap_js.addDependency(datatables_js);
@@ -87,8 +86,39 @@ public class BasicSiteArtifacts
         datatablesTableTools_js.addDependency(datatablesTableTools_css);
         datatablesTableTools_js.addDependency(datatablesBootstrap_js);
         datatablesTableTools_css.addDependency(datatablesBootstrap_css);
+    }
 
+    IArtifact fontAwesome = css(FONT_AWESOME, "4.2.0", //
+            _fonts_.join("font-awesome/css/font-awesome.min.css"));
+    {
         fontAwesome.addDependency(jQueryMin);
+    }
+
+    IArtifact icheck_css = css(ICHECK_CSS, "1.0.2", //
+            _js_.join("jquery-icheck/skins/all.css"));
+    IArtifact icheck_js = javascript(ICHECK_JS, "1.0.2", //
+            _js_.join("jquery-icheck/icheck.min.js"));
+    {
+        icheck_js.addDependency(jQueryMin);
+        icheck_js.addDependency(icheck_css);
+    }
+
+    IArtifact magnificPopup_css = css(MAGNIFIC_POPUP_CSS, "1.0.0", //
+            _js_.join("jquery-magnific-popup/dist/magnific-popup.css"));
+    IArtifact magnificPopup_js = javascript(MAGNIFIC_POPUP_JS, "1.0.0", //
+            _js_.join("jquery-magnific-popup/dist/jquery.magnific-popup.min.js"));
+    {
+        magnificPopup_js.addDependency(jQueryMin);
+        magnificPopup_js.addDependency(magnificPopup_css);
+    }
+
+    IArtifact parsley_css = css(PARSLEY_CSS, "2.0.6", //
+            _js_.join("jquery-parsley/src/parsley.css"));
+    IArtifact parsley_js = javascript(PARSLEY_JS, "2.0.6", //
+            _js_.join("jquery-parsley/dist/parsley.min.js"));
+    {
+        parsley_js.addDependency(jQueryMin);
+        parsley_js.addDependency(parsley_css);
     }
 
 }
