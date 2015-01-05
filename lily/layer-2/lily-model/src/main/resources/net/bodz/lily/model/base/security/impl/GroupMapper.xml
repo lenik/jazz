@@ -15,11 +15,7 @@
 
     <sql id="select1"><![CDATA[
         select
-            a.id,
-            a.code,
-            a.label,
-            a.description,
-            
+            a.*,
             y.id "y_id",
             y.code "y_code",
             y.label "y_label",
@@ -32,6 +28,13 @@
 
     <select id="all" resultMap="map1">
         <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <if test="codeName != null">and a.code=#{codeName}</if>
+        </where>
     </select>
 
     <select id="select" parameterType="int" resultMap="map1">

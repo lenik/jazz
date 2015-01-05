@@ -11,10 +11,13 @@ import net.bodz.lily.model.sea.QVariantMap;
 public class UserCriteria
         extends CoEntityCriteria {
 
+    public String password;
+
     @Override
     protected void populate(QVariantMap<String> map)
             throws ParseException {
         super.populate(map);
+        password = map.getString("passwd", password);
     }
 
 }

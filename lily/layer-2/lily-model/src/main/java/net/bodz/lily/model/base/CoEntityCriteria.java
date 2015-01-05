@@ -1,19 +1,22 @@
 package net.bodz.lily.model.base;
 
-import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
-import net.bodz.bas.t.variant.IVariantMap;
 
-import net.bodz.lily.model.sea.ParameterMapVariantMap;
+import net.bodz.lily.model.sea.AbstractTextParametric;
 import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * @see net.bodz.lily.model.base.CoEntity
  */
-public class CoEntityCriteria {
+public class CoEntityCriteria
+        extends AbstractTextParametric {
+
+    String codeName;
+    String label;
+    String description;
 
     String queryText;
     DateRange timeRange;
@@ -24,6 +27,30 @@ public class CoEntityCriteria {
     Integer ownerId;
     Integer ownerGroupId;
     Set<Integer> acls;
+
+    public String getCodeName() {
+        return codeName;
+    }
+
+    public void setCodeName(String codeName) {
+        this.codeName = codeName;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getQueryText() {
         return queryText;
@@ -97,21 +124,11 @@ public class CoEntityCriteria {
         return this;
     }
 
-    public final void populate(IVariantMap<String> variantMap)
-            throws ParseException {
-        QVariantMap<String> qMap = new QVariantMap<>(variantMap);
-        populate(qMap);
-    }
-
-    public final void populate(Map<String, String[]> parameterMap)
-            throws ParseException {
-        ParameterMapVariantMap variantMap = new ParameterMapVariantMap(parameterMap);
-        QVariantMap<String> qMap = new QVariantMap<>(variantMap);
-        populate(qMap);
-    }
-
     protected void populate(QVariantMap<String> map)
             throws ParseException {
+        codeName = map.getString("code", codeName);
+        label = map.getString("label", label);
+        description = map.getString("description", description);
         queryText = map.getString("q", queryText);
         timeRange = map.getDateRange("times", timeRange);
         priorities = map.getInts("priorities", priorities);
