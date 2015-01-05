@@ -22,7 +22,11 @@ class HttpMethods {
 
         httpMethod = httpMethod.toLowerCase();
 
-        return map.get(httpMethod);
+        String name = map.get(httpMethod);
+        if (name != null)
+            return name;
+        else
+            return httpMethod;
     }
 
 }
