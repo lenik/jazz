@@ -145,6 +145,12 @@ public class ResourceTransferer {
 
                 if ((cb = in.read(block, 0, cb)) == -1)
                     break;
+
+                // PATCH out closed when 304 Not Modified.
+                // BufferedInputStream may return 0 for EOF.
+                if (cb == 0)
+                    break;
+
                 out.write(block, 0, cb);
 
                 if (remaining != -1)
