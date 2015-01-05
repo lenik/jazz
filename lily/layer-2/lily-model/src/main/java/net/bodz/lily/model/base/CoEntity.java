@@ -3,7 +3,10 @@ package net.bodz.lily.model.base;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import net.bodz.bas.html.meta.HtmlViewBuilder;
+import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.content.IContent;
@@ -20,6 +23,7 @@ import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.lily.model.base.impl.Priority_htm;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
+import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.base.security.impl.AccessMode_htm;
 
@@ -63,6 +67,17 @@ public abstract class CoEntity
     private Group ownerGroup;
     private int accessMode = M_COOP;
     private int acl;
+
+    public CoEntity() {
+        HttpSession session = CurrentHttpService.getSessionOpt();
+        if (session != null) {
+            LoginContext loginContext = (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);
+            if (loginContext != null) {
+                owner = loginContext.user;
+                ownerGroup = loginContext.user.getPrimaryGroup();
+            }
+        }
+    }
 
     /**
      * @return Non-<code>null</code> id.

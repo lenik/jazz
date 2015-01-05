@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
@@ -17,6 +20,7 @@ import net.bodz.lily.model.base.schema.CategoryDef;
 import net.bodz.lily.model.base.schema.FormDef;
 import net.bodz.lily.model.base.schema.PhaseDef;
 import net.bodz.lily.model.base.schema.TagDef;
+import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.base.security.User;
 
 /**
@@ -55,6 +59,16 @@ public class CoMessage
     private Liker iLiker;
 
     private Integer readCount;
+
+    public CoMessage() {
+        HttpSession session = CurrentHttpService.getSessionOpt();
+        if (session != null) {
+            LoginContext loginContext = (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);
+            if (loginContext != null) {
+                op = loginContext.user;
+            }
+        }
+    }
 
     public Long getId() {
         return id;
