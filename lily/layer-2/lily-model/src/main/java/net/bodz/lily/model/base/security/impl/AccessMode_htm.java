@@ -6,10 +6,12 @@ import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.builtin.Integer_htm;
+import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
+@ExcludedFromIndex
 public class AccessMode_htm
         extends AbstractHtmlViewBuilder<Integer> {
 

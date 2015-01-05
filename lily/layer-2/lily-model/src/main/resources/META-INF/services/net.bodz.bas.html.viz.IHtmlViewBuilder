@@ -1,5 +1,4 @@
 net.bodz.lily.model.base.impl.CoNodeChain_htm
-net.bodz.lily.model.base.impl.Priority_htm
 net.bodz.lily.model.base.schema.impl.AttributeDefVbo
 net.bodz.lily.model.base.schema.impl.CategoryDefVbo
 net.bodz.lily.model.base.schema.impl.PhaseDefVbo
@@ -7,6 +6,5 @@ net.bodz.lily.model.base.schema.impl.PriorityDefVbo
 net.bodz.lily.model.base.schema.impl.SchemaDefVbo
 net.bodz.lily.model.base.schema.impl.TagDefVbo
 net.bodz.lily.model.base.schema.impl.TagSetDefVbo
-net.bodz.lily.model.base.security.impl.AccessMode_htm
 net.bodz.lily.model.base.security.impl.GroupVbo
 net.bodz.lily.model.base.security.impl.UserVbo
