@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.dom.tag.HtmlDivTag;
 import net.bodz.bas.html.dom.tag.HtmlFormTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.repr.form.FieldCategory;
+import net.bodz.bas.repr.form.FieldDeclFilters;
+import net.bodz.bas.repr.form.FieldDeclGroup;
 import net.bodz.bas.repr.form.FieldDeclLabelComparator;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.form.IFormDecl;
@@ -42,32 +44,35 @@ public abstract class AbstractForm_htm<T>
         IFormDecl formDecl = IFormDecl.fn.forClass(ref.getValueType());
         HtmlFormTag formTag = beginForm(ctx, out, ref, options);
 
-        Map<FieldCategory, Collection<IFieldDecl>> categories = FieldCategory.group(//
-                formDecl.getFieldDefs(DetailLevel.EXTEND));
+        HtmlDivTag fgv = formTag.div().class_("field-groups");
+        Collection<FieldDeclGroup> groups = formDecl
+                .getFieldGroups(FieldDeclFilters.maxDetailLevel(DetailLevel.EXTEND));
 
-        for (FieldCategory category : categories.keySet()) {
+        for (FieldDeclGroup group : groups) {
+            if (buildFieldGroup(ctx, fgv, ref, group, options))
+                continue;
+
+            FieldCategory category = group.getCategory();
+            IHtmlTag catTag = beginCategory(ctx, fgv, category);
 
             // filter field[category] -> selection
             List<IFieldDecl> selection = new ArrayList<>();
-            for (IFieldDecl fieldDecl : categories.get(category))
+            for (IFieldDecl fieldDecl : group)
                 if (filterField(fieldDecl))
                     selection.add(fieldDecl);
             if (selection.isEmpty())
                 continue;
-
             Collections.sort(selection, FieldDeclLabelComparator.INSTANCE);
 
-            IHtmlTag catTag = beginCategory(formTag, category);
+            selection = processFieldSelection(ctx, catTag, ref, group, selection, options);
+            if (selection != null)
+                for (IFieldDecl fieldDecl : selection) {
+                    IHtmlTag fieldTag = beginField(ctx, catTag, fieldDecl);
+                    fieldBody(ctx, fieldTag, ref, fieldDecl, options);
+                    endField(ctx, catTag, fieldTag, fieldDecl);
+                }
 
-            for (IFieldDecl fieldDecl : selection) {
-                IHtmlTag fieldTag = beginField(catTag, fieldDecl);
-
-                fieldBody(ctx, fieldTag, ref, fieldDecl, options);
-
-                endField(fieldTag, fieldDecl);
-            }
-
-            endCategory(catTag, category);
+            endCategory(ctx, fgv, catTag, category);
         }
 
         endForm(ctx, formTag, ref, options);
@@ -86,21 +91,8 @@ public abstract class AbstractForm_htm<T>
         return true;
     }
 
-    protected abstract void nullInstance(IHtmlTag out, IUiRef<T> ref);
-
-    protected abstract IHtmlTag beginCategory(IHtmlTag out, FieldCategory category)
-            throws ViewBuilderException;
-
-    protected abstract void endCategory(IHtmlTag out, FieldCategory category);
-
-    protected abstract IHtmlTag beginField(IHtmlTag out, IFieldDecl fieldDecl)
-            throws ViewBuilderException;
-
-    protected abstract void fieldBody(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef, IFieldDecl fieldDecl,
-            IOptions options)
+    protected abstract void nullInstance(IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
-
-    protected abstract void endField(IHtmlTag out, IFieldDecl fieldDecl);
 
     protected IHtmlTag beforeForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
@@ -112,6 +104,33 @@ public abstract class AbstractForm_htm<T>
         HtmlFormTag form = out.form();
         return form;
     }
+
+    protected boolean buildFieldGroup(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef, FieldDeclGroup group,
+            IOptions options)
+            throws ViewBuilderException, IOException {
+        return false;
+    }
+
+    protected abstract IHtmlTag beginCategory(IHtmlViewContext ctx, IHtmlTag out, FieldCategory category)
+            throws ViewBuilderException, IOException;
+
+    protected abstract void endCategory(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category);
+
+    protected List<IFieldDecl> processFieldSelection(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef,
+            FieldDeclGroup group, List<IFieldDecl> selection, IOptions options)
+            throws ViewBuilderException, IOException {
+        return selection;
+    }
+
+    protected abstract IHtmlTag beginField(IHtmlViewContext ctx, IHtmlTag out, IFieldDecl fieldDecl)
+            throws ViewBuilderException, IOException;
+
+    protected abstract void fieldBody(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef, IFieldDecl fieldDecl,
+            IOptions options)
+            throws ViewBuilderException, IOException;
+
+    protected abstract void endField(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag fieldOut, IFieldDecl fieldDecl)
+            throws ViewBuilderException, IOException;
 
     protected void endForm(IHtmlViewContext ctx, HtmlFormTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
