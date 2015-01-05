@@ -2,6 +2,7 @@ package net.bodz.bas.html.util;
 
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
 import net.bodz.bas.html.dom.tag.HtmlSelectTag;
+import net.bodz.bas.html.dom.tag.HtmlTextareaTag;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.rtx.IOptions;
@@ -71,6 +72,34 @@ public class FieldHtmlUtil {
         iString placeholder = fieldDecl.getPlaceholder();
         if (placeholder != null)
             input.placeholder(placeholder.toString());
+    }
+
+    public static void apply(HtmlTextareaTag textarea, IFieldDecl fieldDecl, IOptions options) {
+        apply(textarea, fieldDecl, options, null);
+    }
+
+    public static void apply(HtmlTextareaTag textarea, IFieldDecl fieldDecl, IOptions options, String nameSuffix) {
+        String inputName = name(fieldDecl, options.<String> get(NAME_PREFIX), nameSuffix);
+        textarea.name(inputName);
+
+        if (fieldDecl.isReadOnly())
+            textarea.readonly("readonly");
+
+        Integer maxLength = fieldDecl.getMaxLength();
+        Integer textWidth = fieldDecl.getTextWidth();
+
+        if (maxLength != null) {
+            textarea.maxlength(maxLength.toString());
+            if (textWidth == null)
+                textWidth = Math.min(maxLength, 40);
+        }
+
+        if (textWidth != null)
+            textarea.cols(textWidth.toString());
+
+        iString placeholder = fieldDecl.getPlaceholder();
+        if (placeholder != null)
+            textarea.placeholder(placeholder.toString());
     }
 
     public static void apply(HtmlSelectTag select, IFieldDecl fieldDecl, IOptions options) {
