@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
+import net.bodz.bas.html.dom.tag.HtmlTextareaTag;
 import net.bodz.bas.html.util.FieldHtmlUtil;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
@@ -30,8 +31,12 @@ public abstract class AbstractTextForm_htm<T>
             throws ViewBuilderException, IOException {
         T value = ref.get();
 
-        HtmlInputTag input = createInput(out);
-        FieldHtmlUtil.apply(input, fieldDecl, options);
+        IHtmlTag tag = createInput(out, ref, fieldDecl);
+
+        if (tag instanceof HtmlInputTag)
+            FieldHtmlUtil.apply((HtmlInputTag) tag, fieldDecl, options);
+        else if (tag instanceof HtmlTextareaTag)
+            FieldHtmlUtil.apply((HtmlTextareaTag) tag, fieldDecl, options);
 
         IFormatter<T> formatter = Typers.getTyper(ref.getValueType(), IFormatter.class);
         if (formatter == null)
@@ -40,14 +45,13 @@ public abstract class AbstractTextForm_htm<T>
         if (value != null) {
             String text = formatter.format(value/* ,options */);
             if (text != null)
-                input.value(text);
+                tag.attr("value", text);
         }
 
         return out;
     }
 
-    protected HtmlInputTag createInput(IHtmlTag out) {
-        return out.input();
-    }
+    protected abstract IHtmlTag createInput(IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
+            throws ViewBuilderException, IOException;
 
 }
