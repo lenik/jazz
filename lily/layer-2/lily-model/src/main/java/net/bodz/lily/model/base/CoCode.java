@@ -3,7 +3,8 @@ package net.bodz.lily.model.base;
 import net.bodz.bas.repr.form.meta.TextInput;
 
 public abstract class CoCode<self_t extends CoCode<self_t>>
-        extends CoNode<self_t> {
+        extends CoNode<self_t>
+        implements IId<Integer> {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,7 +23,8 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
         return id;
     }
 
-    public void setId(int id) {
+    @Override
+    public void setId(Integer id) {
         this.id = id;
     }
 

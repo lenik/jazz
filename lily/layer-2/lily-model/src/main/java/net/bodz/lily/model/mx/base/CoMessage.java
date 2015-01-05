@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -15,6 +16,7 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.t.order.IPriority;
 
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.model.base.IId;
 import net.bodz.lily.model.base.schema.AttributeDef;
 import net.bodz.lily.model.base.schema.CategoryDef;
 import net.bodz.lily.model.base.schema.FormDef;
@@ -22,6 +24,7 @@ import net.bodz.lily.model.base.schema.PhaseDef;
 import net.bodz.lily.model.base.schema.TagDef;
 import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.base.security.User;
+import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * @label Message
@@ -29,13 +32,12 @@ import net.bodz.lily.model.base.security.User;
  */
 public class CoMessage
         extends CoMomentInterval
-        implements IPriority, IVotable, ILikable {
+        implements IPriority, IVotable, ILikable, IId<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final int N_SUBJECT = 200;
 
-    private long id;
     private User op;
     private CategoryDef category;
     private String subject;
@@ -68,14 +70,6 @@ public class CoMessage
                 op = loginContext.user;
             }
         }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     /**
@@ -353,9 +347,28 @@ public class CoMessage
     }
 
     @Override
+    protected void populate(QVariantMap<String> map)
+            throws ParseException {
+        super.populate(map);
+
+        op = map.getIntIdRef("op", new User());
+        category = map.getIntIdRef("category", new CategoryDef());
+        subject = map.getString("subject");
+        text = map.getString("text");
+        form = map.getIntIdRef("form", new FormDef());
+        formArgs = map.getString("formArgs");
+        // tags=map.getStringArray("tags");
+        // attributes;
+
+        sentTime = map.getDate("sentTime", sentTime);
+        receivedTime = map.getDate("receivedTime", receivedTime);
+        phase = map.getIntIdRef("phase", phase);
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(80);
-        sb.append(id);
+        sb.append(getId());
         sb.append(" - ");
         sb.append(subject);
         if (op != null) {

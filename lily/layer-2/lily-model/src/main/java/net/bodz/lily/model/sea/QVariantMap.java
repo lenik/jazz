@@ -15,6 +15,8 @@ import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.variant.DecoratedVariantMap;
 import net.bodz.bas.t.variant.IVariantMap;
 
+import net.bodz.lily.model.base.IId;
+
 /**
  * "Quick/Easy"-VariantMap.
  */
@@ -126,6 +128,24 @@ public class QVariantMap<K>
         if (s == null || s.isEmpty())
             return defaultValue;
         return DateRange.parse(s, false);
+    }
+
+    public <T extends IId<Integer>> T getIntIdRef(K key, T skel) {
+        String s = getString(key);
+        if (s != null && !s.isEmpty()) {
+            int id = getInt(key);
+            skel.setId(id);
+        }
+        return skel;
+    }
+
+    public <T extends IId<Long>> T getLongIdRef(K key, T skel) {
+        String s = getString(key);
+        if (s != null && !s.isEmpty()) {
+            long id = getLong(key);
+            skel.setId(id);
+        }
+        return skel;
     }
 
 }

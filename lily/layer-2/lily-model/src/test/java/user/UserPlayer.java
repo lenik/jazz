@@ -28,7 +28,7 @@ public class UserPlayer
         user.setCodeName("Test" + random.nextInt());
         user.setLabel("Test1");
         user.setPassword("hello");
-        int id = userMapper.insert(user);
+        int id = (int) userMapper.insert(user);
 
         user.setId(id);
         user.setLabel("Changed");

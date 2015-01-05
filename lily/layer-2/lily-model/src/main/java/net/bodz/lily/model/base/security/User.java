@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IId;
 
 /**
  * <p lang="zh-cn">
@@ -21,7 +22,8 @@ import net.bodz.lily.model.base.CoEntity;
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
 public class User
-        extends CoEntity {
+        extends CoEntity
+        implements IId<Integer> {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +51,8 @@ public class User
         return id;
     }
 
-    public void setId(int id) {
+    @Override
+    public void setId(Integer id) {
         this.id = id;
     }
 
