@@ -2,6 +2,8 @@ package net.bodz.bas.html.viz.builtin;
 
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
+import net.bodz.bas.potato.ref.UiPropertyRef;
+import net.bodz.bas.repr.form.IFieldDecl;
 
 public class Integer_htm
         extends AbstractNumericForm_htm<Integer> {
@@ -11,7 +13,7 @@ public class Integer_htm
     }
 
     @Override
-    protected HtmlInputTag createInput(IHtmlTag out) {
+    protected HtmlInputTag createInput(IHtmlTag out, UiPropertyRef<Integer> ref, IFieldDecl fieldDecl) {
         HtmlInputTag input = out.input().type("number");
         input.min("" + Integer.MIN_VALUE);
         input.max("" + Integer.MAX_VALUE);
