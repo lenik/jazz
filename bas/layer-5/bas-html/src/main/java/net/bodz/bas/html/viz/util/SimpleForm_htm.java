@@ -29,18 +29,18 @@ public class SimpleForm_htm
     }
 
     @Override
-    protected IHtmlTag beginCategory(IHtmlTag out, FieldCategory category)
+    protected IHtmlTag beginCategory(IHtmlViewContext ctx, IHtmlTag out, FieldCategory category)
             throws ViewBuilderException {
         HtmlTableTag table = out.table().border("1");
         return table;
     }
 
     @Override
-    protected void endCategory(IHtmlTag out, FieldCategory category) {
+    protected void endCategory(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category) {
     }
 
     @Override
-    protected IHtmlTag beginField(IHtmlTag out, IFieldDecl fieldDecl)
+    protected IHtmlTag beginField(IHtmlViewContext ctx, IHtmlTag out, IFieldDecl fieldDecl)
             throws ViewBuilderException {
         HtmlTrTag tr = out.tr();
         tr.td().text(fieldDecl.getLabel());
@@ -62,7 +62,7 @@ public class SimpleForm_htm
     }
 
     @Override
-    protected void endField(IHtmlTag out, IFieldDecl fieldDecl) {
+    protected void endField(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag fieldOut, IFieldDecl fieldDecl) {
     }
 
 }
