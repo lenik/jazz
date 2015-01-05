@@ -2,7 +2,7 @@ package net.bodz.bas.repr.req;
 
 public interface MethodNames {
 
-    String READ = "content";
+    String READ = "read";
     String EDIT = "edit";
 
     String CREATE = "create";

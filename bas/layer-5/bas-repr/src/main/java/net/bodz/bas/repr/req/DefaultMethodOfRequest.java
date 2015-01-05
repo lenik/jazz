@@ -31,7 +31,7 @@ public class DefaultMethodOfRequest
 
     private static final long serialVersionUID = 1L;
 
-    String methodName;
+    String methodName = MethodNames.READ;
     MutableVariantMap<String> parameters;
 
     public DefaultMethodOfRequest() {
@@ -80,8 +80,7 @@ public class DefaultMethodOfRequest
 
         if (methodName == null && httpMethods) {
             String httpMethod = HttpMethods.getMethodName(request.getMethod());
-            if (!MethodNames.READ.equals(httpMethod))
-                methodName = httpMethod;
+            methodName = httpMethod;
         }
 
         Map<String, Object> params = new HashMap<String, Object>();

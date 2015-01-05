@@ -6,6 +6,10 @@ public interface IMethodOfRequest {
 
     String ATTRIBUTE_KEY = IMethodOfRequest.class.getName();
 
+    /**
+     * @return Non-<code>null</code> method name.
+     * @see MethodNames
+     */
     String getMethodName();
 
     void setMethodName(String methodName);
