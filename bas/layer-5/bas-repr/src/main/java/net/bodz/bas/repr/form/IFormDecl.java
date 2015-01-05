@@ -13,14 +13,18 @@ import net.bodz.bas.ui.dom1.IUiElement;
 public interface IFormDecl
         extends IMetadata, IUiElement {
 
-    IFieldDecl getFieldDef(String name);
+    IFieldDecl getFieldDecl(String name);
 
     /**
-     * @see FieldCategory#group(Iterable)
+     * @see FieldCategory#groupByCategory(Iterable)
      */
-    Collection<IFieldDecl> getFieldDefs();
+    Collection<IFieldDecl> getFieldDecls();
 
-    Collection<IFieldDecl> getFieldDefs(int maxDetailLevel);
+    Collection<IFieldDecl> getFieldDecls(IFieldDeclFilter filter);
+
+    Collection<FieldDeclGroup> getFieldGroups();
+
+    Collection<FieldDeclGroup> getFieldGroups(IFieldDeclFilter filter);
 
     class fn {
 
