@@ -83,7 +83,10 @@ public interface IFieldDecl
      */
     NumberFormat getNumberFormat();
 
-    Character getEchoChar();
+    /**
+     * @return '\0' if no echo char.
+     */
+    char getEchoChar();
 
     /**
      * @return Non-<code>null</code> value.
