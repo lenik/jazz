@@ -3,7 +3,6 @@ package net.bodz.bas.html.viz.util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.html.dom.IHtmlTag;
@@ -16,7 +15,6 @@ import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.repr.form.FieldCategory;
 import net.bodz.bas.repr.form.FieldDeclFilters;
 import net.bodz.bas.repr.form.FieldDeclGroup;
-import net.bodz.bas.repr.form.FieldDeclLabelComparator;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -42,7 +40,7 @@ public abstract class AbstractForm_htm<T>
         beforeForm(ctx, out, ref, options);
 
         IFormDecl formDecl = IFormDecl.fn.forClass(ref.getValueType());
-        HtmlFormTag formTag = beginForm(ctx, out, ref, options);
+        IHtmlTag formTag = beginForm(ctx, out, ref, options);
 
         HtmlDivTag fgv = formTag.div().class_("field-groups");
         Collection<FieldDeclGroup> groups = formDecl
@@ -62,7 +60,6 @@ public abstract class AbstractForm_htm<T>
                     selection.add(fieldDecl);
             if (selection.isEmpty())
                 continue;
-            Collections.sort(selection, FieldDeclLabelComparator.INSTANCE);
 
             selection = processFieldSelection(ctx, catTag, ref, group, selection, options);
             if (selection != null)
@@ -99,7 +96,7 @@ public abstract class AbstractForm_htm<T>
         return out;
     }
 
-    protected HtmlFormTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HtmlFormTag form = out.form();
         return form;
@@ -132,7 +129,7 @@ public abstract class AbstractForm_htm<T>
     protected abstract void endField(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag fieldOut, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
-    protected void endForm(IHtmlViewContext ctx, HtmlFormTag out, IUiRef<T> ref, IOptions options)
+    protected void endForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
     }
 
