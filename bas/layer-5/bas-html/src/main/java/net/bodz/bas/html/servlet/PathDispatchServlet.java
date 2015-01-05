@@ -20,7 +20,6 @@ import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
 import net.bodz.bas.html.viz.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.viz.RootHtmlViewContext;
 import net.bodz.bas.html.viz.util.PathFrames_htm;
-import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.adapter.WriterCharOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
@@ -44,7 +43,7 @@ import net.bodz.bas.ui.dom1.UiValue;
 import net.bodz.bas.xml.dom.XmlFormatter;
 
 public class PathDispatchServlet
-        extends HttpServlet {
+        extends DumpServlet {
 
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(PathDispatchServlet.class);
