@@ -39,6 +39,7 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     /**
      * @label Parent
      * @label.zh 父结点
+     * @placeholder 选择一个父结点…
      */
     @OfGroup(StdGroup.Graph.class)
     public Self getParent() {
