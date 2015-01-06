@@ -36,8 +36,8 @@
         <if test="lastModifiedDate != null">lastmod = now(),</if>
         flags = #{flags},
         state = #{state},
-        <if test="version == null">version = version + 1,</if>
-        <if test="version != null">version = #{version},</if>
+        <!-- <if test="version != null">version = #{version},</if> -->
+        version = version + 1,
     </sql>
 
     <!-- UI, States, ACL -->
