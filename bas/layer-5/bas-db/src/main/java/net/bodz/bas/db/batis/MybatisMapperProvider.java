@@ -152,4 +152,10 @@ public class MybatisMapperProvider
 
     }
 
+    @Override
+    public <M extends IMapper> M getMapperForObject(Class<?> objClass) {
+        Class<M> mapperClass = (Class<M>) IMapper.fn.getMapperClass(objClass);
+        return getMapper(mapperClass);
+    }
+
 }
