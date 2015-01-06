@@ -39,7 +39,7 @@ import net.bodz.bas.std.rfc.http.HttpCacheControl;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.t.ref.Ref;
-import net.bodz.bas.ui.dom1.UiValue;
+import net.bodz.bas.ui.dom1.UiVar;
 import net.bodz.bas.xml.dom.XmlFormatter;
 
 public class PathDispatchServlet
@@ -166,7 +166,7 @@ public class PathDispatchServlet
         case "text/html":
         case "text/xhtml":
             try {
-                pathFramesVbo.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiValue.wrap(arrival));
+                pathFramesVbo.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiVar.wrap(arrival));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
@@ -183,7 +183,7 @@ public class PathDispatchServlet
         default:
             resp.addHeader("X-Content-View", viewBuilder.getClass().getSimpleName());
             try {
-                viewBuilder.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiValue.wrap(target));
+                viewBuilder.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiVar.wrap(target));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build view: " + e.getMessage(), e);
             }
