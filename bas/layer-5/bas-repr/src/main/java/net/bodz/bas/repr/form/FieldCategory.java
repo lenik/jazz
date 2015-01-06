@@ -42,6 +42,9 @@ public class FieldCategory
     }
 
     public static final FieldCategory NULL = new FieldCategory(Object.class);
+    static {
+        NULL.setPriority(-100);
+    }
 
     static Map<Class<?>, FieldCategory> registry = new HashMap<Class<?>, FieldCategory>();
 
