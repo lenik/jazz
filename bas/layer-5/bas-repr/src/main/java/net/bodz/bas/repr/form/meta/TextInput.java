@@ -12,6 +12,6 @@ public @interface TextInput {
 
     char echoChar() default 0;
 
-    SpaceNormalization space() default SpaceNormalization.NONE;
+    SpaceNormalization space() default SpaceNormalization.TRIM;
 
 }
