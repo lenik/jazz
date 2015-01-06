@@ -43,9 +43,10 @@ public @interface DetailLevel {
 
     int CRITICAL = -1; // "preferred"
     int NORMAL = 0; // public
-    int EXTEND = 1; // child map, etc.
-    int EXPERT = 2; // protected
-    int EXPERT2 = 3; // package-protected
+    int DETAIL = 1; // protected
+    int EXTEND = 2; // child map, etc.
+    int EXPERT = 3; // protected
+    int EXPERT2 = 4; // package-protected
     int HIDDEN = 10; // private
 
     int value();
