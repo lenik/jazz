@@ -31,7 +31,7 @@
     <sql id="setUS">
         <include refid="co.setU" />
         priority=#{priority},
-        lastmod=#{lastModifiedDate},
+        <if test="lastModifiedDate != null">lastmod=#{lastModifiedDate},</if>
         flags=#{flags},
         state=#{state},
         <!-- if test="version != null">version=#{version},</if -->

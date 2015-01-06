@@ -9,7 +9,7 @@ import net.bodz.lily.model.sea.AbstractTextParametric;
 import net.bodz.lily.model.sea.QVariantMap;
 
 /**
- * @see net.bodz.lily.model.base.CoEntity
+ * @see net.bodz.lily.model.base.CoObject
  */
 public class CoEntityCriteria
         extends AbstractTextParametric {

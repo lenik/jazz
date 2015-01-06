@@ -4,8 +4,11 @@ import java.net.InetAddress;
 import java.util.List;
 import java.util.Random;
 
+import net.bodz.bas.err.ParseException;
+
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.IId;
+import net.bodz.lily.model.base.IdType;
+import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * <p lang="zh-cn">
@@ -21,9 +24,9 @@ import net.bodz.lily.model.base.IId;
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
+@IdType(Integer.class)
 public class User
-        extends CoEntity
-        implements IId<Integer> {
+        extends CoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +35,6 @@ public class User
     public static final int N_EMAIL = 30;
     public static final int N_PASSWORD = 40;
 
-    private int id;
     private Group primaryGroup;
     private List<Group> groups;
 
@@ -45,16 +47,6 @@ public class User
 
     private long lastLoginTime;
     private InetAddress lastLoginIP; // =Inet4Address.getByAddress();
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     /**
      * @label Login Name
@@ -168,6 +160,12 @@ public class User
     @Override
     public String toString() {
         return getLabel();
+    }
+
+    @Override
+    protected void populate(QVariantMap<String> map)
+            throws ParseException {
+        super.populate(map);
     }
 
 }

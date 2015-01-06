@@ -3,7 +3,7 @@ package net.bodz.lily.model.base.security;
 import java.util.List;
 
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.IId;
+import net.bodz.lily.model.base.IdType;
 
 /**
  * <p lang="zh-cn">
@@ -25,28 +25,17 @@ import net.bodz.lily.model.base.IId;
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
+@IdType(Integer.class)
 public class Group
-        extends CoEntity
-        implements IId<Integer> {
+        extends CoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final int N_LOGIN_NAME = 30;
     public static final int N_FULL_NAME = 40;
 
-    private int id;
     private List<User> users;
     private List<Permission> permissions;
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     /**
      * 全称
