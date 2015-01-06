@@ -10,49 +10,58 @@ import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.repr.form.meta.StdGroup;
 
-public abstract class CoNode<self_t extends CoNode<self_t>>
-        extends CoEntity {
+public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
+        extends CoEntity<Id> {
 
     private static final long serialVersionUID = 1L;
 
-    private self_t parent;
-    private List<self_t> children = new ArrayList<self_t>();
+    private Self parent;
+    private List<Self> children = new ArrayList<Self>();
 
     public CoNode() {
         this(null);
     }
 
-    public CoNode(self_t parent) {
+    public CoNode(Self parent) {
         this.parent = parent;
         if (parent != null)
             parent.addChild(self());
     }
 
     @SuppressWarnings("unchecked")
-    private self_t self() {
-        return (self_t) this;
+    private Self self() {
+        return (Self) this;
     }
 
     /**
      * @label Parent
-     * @label.zh 父对象
+     * @label.zh 父结点
      */
-    public self_t getParent() {
+    @OfGroup(StdGroup.Graph.class)
+    public Self getParent() {
         return parent;
     }
 
-    public void setParent(self_t parent) {
+    public void setParent(Self parent) {
         if (parent != null)
             checkNode(false, parent);
         this.parent = parent;
     }
 
-    public List<self_t> getChildren() {
+    /**
+     * @label Children
+     * @label.zh 子结点
+     */
+    @OfGroup(StdGroup.Graph.class)
+    @DetailLevel(DetailLevel.EXTEND)
+    public List<Self> getChildren() {
         return children;
     }
 
-    public void setChildren(List<self_t> children) {
+    public void setChildren(List<Self> children) {
         if (children == null)
             throw new NullPointerException("children");
         this.children = children;
@@ -62,7 +71,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return false;
     }
 
-    public boolean addChild(self_t child) {
+    public boolean addChild(Self child) {
         if (child == null)
             throw new NullPointerException("child");
 
@@ -77,7 +86,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         return true;
     }
 
-    public boolean removeChild(self_t child) {
+    public boolean removeChild(Self child) {
         if (child == null)
             throw new NullPointerException("child");
 
@@ -92,14 +101,15 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
 
     /**
      * @label Root
-     * @label.zh 根对象
+     * @label.zh 根结点
      */
+    @OfGroup(StdGroup.Graph.class)
     @Derived
     public boolean isRoot() {
         return parent != null;
     }
 
-    int indexOf(self_t child) {
+    int indexOf(Self child) {
         return children.indexOf(child);
     }
 
@@ -107,11 +117,12 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Index
      * @label.zh 序号
      */
+    @OfGroup(StdGroup.Graph.class)
     @Derived
     public int getIndex() {
         if (parent == null)
             return 0;
-        self_t self = self();
+        Self self = self();
         return parent.indexOf(self);
     }
 
@@ -123,11 +134,12 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Depth
      * @label.zh 深度
      */
+    @OfGroup(StdGroup.Graph.class)
     @Derived
     public int getDepth() {
         int safeDepth = getSafeDepth();
         int depth = 0;
-        self_t node = self();
+        Self node = self();
         while (node != null) {
             node = node.getParent();
             depth++;
@@ -141,6 +153,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
     void setDepth(int depth) {
     }
 
+    @OfGroup(StdGroup.Graph.class)
     @DetailLevel(DetailLevel.HIDDEN)
     protected int getSafeDepth() {
         return 1000;
@@ -150,6 +163,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label First
      * @label.zh 首位
      */
+    @OfGroup(StdGroup.Graph.class)
     @Derived
     public boolean isFirst() {
         if (parent == null)
@@ -162,6 +176,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Last
      * @label.zh 末位
      */
+    @OfGroup(StdGroup.Graph.class)
     @Derived
     public boolean isLast() {
         if (parent == null)
@@ -171,12 +186,13 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
     }
 
     /**
-     * @label Chain
-     * @label.zh 链
+     * @label Node Chain
+     * @label.zh 结点链
      */
-    public CoNodeChain<self_t> getChain() {
-        CoNodeChain<self_t> chain = new CoNodeChain<self_t>();
-        self_t node = self();
+    @OfGroup(StdGroup.Graph.class)
+    public CoNodeChain<Self> getChain() {
+        CoNodeChain<Self> chain = new CoNodeChain<Self>();
+        Self node = self();
         while (node != null) {
             chain.add(node);
             node = node.getParent();
@@ -189,6 +205,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Graph Prefix
      * @label.zh 图前缀
      */
+    @OfGroup(StdGroup.Graph.class)
     @Derived
     public String getGraphPrefix() {
         if (parent == null)
@@ -201,7 +218,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         else
             buf.append(" -` "); // _`-_
 
-        self_t node = parent;
+        Self node = parent;
         while (node != null) {
             if (!node.isLast())
                 buf.append("  | "); // _|__
@@ -218,6 +235,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @label Node Label
      * @label.zh 结点标签
      */
+    @OfGroup(StdGroup.Graph.class)
     @Derived
     public String getNodeLabel() {
         // return naturalId().toString();
@@ -242,7 +260,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
      * @throws IllegalArgumentException
      *             If the node type is illegal.
      */
-    protected void checkNode(boolean child, self_t node) {
+    protected void checkNode(boolean child, Self node) {
         Class<?> selfType = getClass();
         if (!selfType.isInstance(node))
             throw new IllegalArgumentException("Inconsistent node type: tree=" + selfType + ", node=" + node.getClass());
@@ -257,10 +275,10 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
     public boolean checkLoopFast(int order) {
         if (order < 1)
             throw new IllegalArgumentException("Order should be positive integer: " + order);
-        self_t node = self();
+        Self node = self();
         for (int i = 0; i < order; i++) {
 
-            self_t _node = node.getParent();
+            Self _node = node.getParent();
             node = _node;
 
             if (node == null)
@@ -285,7 +303,7 @@ public abstract class CoNode<self_t extends CoNode<self_t>>
         out.write(getNodeLabel());
         out.write('\n');
 
-        for (self_t child : children)
+        for (Self child : children)
             child.dump(out);
     }
 

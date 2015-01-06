@@ -24,6 +24,13 @@ public @interface StdGroup {
     }
 
     /**
+     * @label Graph
+     * @label.zh 图
+     */
+    @interface Graph {
+    }
+
+    /**
      * @label Meta Data
      * @label.zh 型式
      */
