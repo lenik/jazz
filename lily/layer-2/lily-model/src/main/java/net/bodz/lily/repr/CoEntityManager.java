@@ -13,17 +13,17 @@ import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.CoObject;
 
 @IndexedType
 public abstract class CoEntityManager
         extends AbstractQueryable
         implements IPathDispatchable {
 
-    private Class<? extends CoEntity> entityType;
+    private Class<? extends CoObject> entityType;
     private IQueryable context;
 
-    public CoEntityManager(Class<? extends CoEntity> entityType, IQueryable context) {
+    public CoEntityManager(Class<? extends CoObject> entityType, IQueryable context) {
         if (entityType == null)
             throw new NullPointerException("entityType");
         if (context == null)
@@ -32,7 +32,7 @@ public abstract class CoEntityManager
         this.context = context;
     }
 
-    public Class<? extends CoEntity> getEntityType() {
+    public Class<? extends CoObject> getEntityType() {
         return entityType;
     }
 
@@ -65,7 +65,7 @@ public abstract class CoEntityManager
 
         switch (token) {
         case "new":
-            CoEntity obj;
+            CoObject obj;
             try {
                 obj = entityType.newInstance();
             } catch (Exception e) {

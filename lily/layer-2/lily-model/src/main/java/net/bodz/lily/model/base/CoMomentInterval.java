@@ -1,30 +1,38 @@
 package net.bodz.lily.model.base;
 
+import java.io.IOException;
 import java.util.Date;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 
 import net.bodz.lily.model.sea.QVariantMap;
 
-public abstract class CoMomentInterval
-        extends CoEntity
-        implements IMomentInterval, IId<Long> {
+public abstract class CoMomentInterval<Id>
+        extends CoObject
+        implements IMomentInterval, IId<Id> {
 
     private static final long serialVersionUID = 1L;
 
-    private long id;
+    private Id id;
     private Date beginDate;
     private Date endDate;
 
     @Override
-    public Long getId() {
+    public Class<Id> idType() {
+        return IId.fn._getIdType(getClass());
+    }
+
+    @Override
+    public Id getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(Id id) {
         this.id = id;
     }
 
@@ -62,9 +70,17 @@ public abstract class CoMomentInterval
     protected void populate(QVariantMap<String> map)
             throws ParseException {
         super.populate(map);
-        id = map.getLong("id", id);
+// id = map.getLong("id", id);
         beginDate = map.getDate("beginDate", beginDate);
         endDate = map.getDate("endDate", endDate);
+    }
+
+    @Override
+    public Id persist(IHtmlViewContext ctx, IHtmlTag out)
+            throws IOException {
+        Id id = (Id) super.persist(ctx, out);
+        setId(id);
+        return id;
     }
 
 }

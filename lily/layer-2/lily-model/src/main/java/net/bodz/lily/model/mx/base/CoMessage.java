@@ -30,9 +30,9 @@ import net.bodz.lily.model.sea.QVariantMap;
  * @label Message
  * @label.zh 消息
  */
-public class CoMessage
-        extends CoMomentInterval
-        implements IPriority, IVotable, ILikable, IId<Long> {
+public class CoMessage<Id>
+        extends CoMomentInterval<Id>
+        implements IPriority, IVotable, ILikable, IId<Id> {
 
     private static final long serialVersionUID = 1L;
 
