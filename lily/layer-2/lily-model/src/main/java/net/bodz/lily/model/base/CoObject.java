@@ -134,6 +134,7 @@ public abstract class CoObject
      * @label.zh 描述
      * @placeholder 输入概括性的描述信息…
      */
+    @FormInput(nullconv = NullConvertion.EMPTY)
     @TextInput(maxLength = N_DESCRIPTION)
     public String getDescription() {
         return description;
@@ -148,6 +149,7 @@ public abstract class CoObject
      * @label.zh 注释
      * @placeholder 输入注释…
      */
+    @FormInput(nullconv = NullConvertion.EMPTY)
     @TextInput(maxLength = N_COMMENT)
     public String getComment() {
         return comment;
@@ -162,6 +164,7 @@ public abstract class CoObject
      * @label.zh 图像
      * @placeholder 输入图像的名称…
      */
+    @FormInput(nullconv = NullConvertion.EMPTY)
     @TextInput(maxLength = N_IMAGE)
     public String getImage() {
         return image;
@@ -416,6 +419,7 @@ public abstract class CoObject
      * @label.zh ACL
      */
     @OfGroup(StdGroup.Security.class)
+    @FormInput(nullconv = NullConvertion.ZERO)
     @Override
     public int getAcl() {
         return acl;

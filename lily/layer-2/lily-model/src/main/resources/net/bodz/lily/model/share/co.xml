@@ -13,9 +13,10 @@
     </resultMap>
 
     <sql id="setU">
-        <if test="codeName != null">code=#{codeName},</if>
-        <if test="label != null">label=#{label},</if>
-        <if test="description != null">description=#{description},</if>
+        <if test="codeName != null">code = #{codeName},</if>
+        <if test="label != null">label = #{label},</if>
+        <if test="description != null">description = #{description},</if>
+        <if test="comment != null">comment = #{comment},</if>
     </sql>
 
     <!-- UI, States -->
@@ -30,11 +31,13 @@
 
     <sql id="setUS">
         <include refid="co.setU" />
-        priority=#{priority},
-        <if test="lastModifiedDate != null">lastmod=#{lastModifiedDate},</if>
-        flags=#{flags},
-        state=#{state},
-        <!-- if test="version != null">version=#{version},</if -->
+        priority = #{priority},
+        <if test="lastModifiedDate == null">lastmod = #{lastModifiedDate},</if>
+        <if test="lastModifiedDate != null">lastmod = now(),</if>
+        flags = #{flags},
+        state = #{state},
+        <if test="version == null">version = version + 1,</if>
+        <if test="version != null">version = #{version},</if>
     </sql>
 
     <!-- UI, States, ACL -->
@@ -55,10 +58,10 @@
 
     <sql id="setUSA">
         <include refid="co.setUS" />
-        mode=#{accessMode},
-        acl=#{acl},
         <if test="owner != null">uid=#{owner.id},</if>
         <if test="ownerGroup != null">gid=#{ownerGroup.id},</if>
+        mode=#{accessMode},
+        acl=#{acl},
     </sql>
 
 </mapper>
