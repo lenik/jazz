@@ -9,6 +9,8 @@ public interface IMapperProvider {
     /**
      * @see SqlSession#getMapper(Class)
      */
-    <T extends IMapper> T getMapper(Class<T> mapperClass);
+    <M extends IMapper> M getMapper(Class<M> mapperClass);
+
+    <M extends IMapper> M getMapperForObject(Class<?> objClass);
 
 }
