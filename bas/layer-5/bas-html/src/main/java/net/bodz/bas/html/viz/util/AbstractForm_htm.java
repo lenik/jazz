@@ -44,7 +44,7 @@ public abstract class AbstractForm_htm<T>
 
         HtmlDivTag fgv = formTag.div().class_("field-groups");
         Collection<FieldDeclGroup> groups = formDecl
-                .getFieldGroups(FieldDeclFilters.maxDetailLevel(DetailLevel.EXTEND));
+                .getFieldGroups(FieldDeclFilters.maxDetailLevel(DetailLevel.DETAIL));
 
         for (FieldDeclGroup group : groups) {
             if (buildFieldGroup(ctx, fgv, ref, group, options))

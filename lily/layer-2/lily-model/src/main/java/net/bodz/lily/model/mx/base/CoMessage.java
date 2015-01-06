@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.http.ctx.CurrentHttpService;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
@@ -86,8 +87,8 @@ public class CoMessage<Id>
 
     /**
      * @label Subject
-     * @label.zh 主题
-     * @placeholder 输入主题…
+     * @label.zh 标题
+     * @placeholder 输入标题…
      */
     @TextInput(maxLength = N_SUBJECT)
     public String getSubject() {
@@ -206,6 +207,7 @@ public class CoMessage<Id>
      * @label.zh 发送时间
      */
     @OfGroup(StdGroup.Status.class)
+    @DetailLevel(DetailLevel.EXPERT)
     public Date getSentTime() {
         return sentTime;
     }
@@ -219,6 +221,7 @@ public class CoMessage<Id>
      * @label.zh 接收时间
      */
     @OfGroup(StdGroup.Status.class)
+    @DetailLevel(DetailLevel.EXPERT)
     public Date getReceivedTime() {
         return receivedTime;
     }
