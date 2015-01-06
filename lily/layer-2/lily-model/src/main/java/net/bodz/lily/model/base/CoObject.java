@@ -275,7 +275,7 @@ public abstract class CoObject
     @DetailLevel(DetailLevel.HIDDEN)
     @Override
     public CacheControlMode getCacheControlMode() {
-        return CacheControlMode.AUTO;
+        return CacheControlMode.NO_CACHE;
     }
 
     @OfGroup(StdGroup.Cache.class)
@@ -345,7 +345,7 @@ public abstract class CoObject
      * @label.zh 版本
      */
     @OfGroup(StdGroup.Version.class)
-    @DetailLevel(DetailLevel.EXPERT)
+    @DetailLevel(DetailLevel.NORMAL)
     public int getVersion() {
         return version;
     }
