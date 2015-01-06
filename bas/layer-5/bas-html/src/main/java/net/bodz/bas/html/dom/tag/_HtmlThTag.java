@@ -14,17 +14,17 @@ class _HtmlThTag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t colspan(String val) {
+    public self_t colspan(Object val) {
         attr("colspan", val);
         return (self_t) this;
     }
 
-    public self_t rowspan(String val) {
+    public self_t rowspan(Object val) {
         attr("rowspan", val);
         return (self_t) this;
     }
 
-    public self_t headers(String val) {
+    public self_t headers(Object val) {
         attr("headers", val);
         return (self_t) this;
     }
@@ -32,12 +32,12 @@ class _HtmlThTag<self_t extends IHtmlTag>
     /**
       * The scope attribute's missing value default is the auto state. 
       */
-    public self_t scope(String val) {
+    public self_t scope(Object val) {
         attr("scope", val);
         return (self_t) this;
     }
 
-    public self_t abbr(String val) {
+    public self_t abbr(Object val) {
         attr("abbr", val);
         return (self_t) this;
     }

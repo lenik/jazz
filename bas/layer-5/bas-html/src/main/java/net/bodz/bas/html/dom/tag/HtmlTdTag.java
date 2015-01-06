@@ -9,21 +9,21 @@ public class HtmlTdTag
         super(parent, tagName);
     }
 
-    public HtmlTdTag align(String val) {
+    public HtmlTdTag align(Object val) {
         if (val == null)
             throw new NullPointerException("val");
         attr("align", val);
         return this;
     }
 
-    public HtmlTdTag valign(String val) {
+    public HtmlTdTag valign(Object val) {
         if (val == null)
             throw new NullPointerException("val");
         attr("valign", val);
         return this;
     }
 
-    public HtmlTdTag width(String val) {
+    public HtmlTdTag width(Object val) {
         if (val == null)
             throw new NullPointerException("val");
         attr("width", val);

@@ -17,7 +17,7 @@ class _HtmlOptionTag<self_t extends IHtmlTag>
     /**
       * The disabled attribute is a boolean attribute. An option element is disabled if its disabled attribute is present or if it is a child of an optgroup element whose disabled attribute is present. 
       */
-    public self_t disabled(String val) {
+    public self_t disabled(Object val) {
         attr("disabled", val);
         return (self_t) this;
     }
@@ -25,7 +25,7 @@ class _HtmlOptionTag<self_t extends IHtmlTag>
     /**
       * The label content attribute, if specified, must not be empty. 
       */
-    public self_t label(String val) {
+    public self_t label(Object val) {
         attr("label", val);
         return (self_t) this;
     }
@@ -33,7 +33,7 @@ class _HtmlOptionTag<self_t extends IHtmlTag>
     /**
       * The selected attribute is a boolean attribute. It represents the default selectedness of the element. 
       */
-    public self_t selected(String val) {
+    public self_t selected(Object val) {
         attr("selected", val);
         return (self_t) this;
     }
@@ -41,7 +41,7 @@ class _HtmlOptionTag<self_t extends IHtmlTag>
     /**
       * The value attribute provides a value for element. The value of an option element is the value of the value content attribute, if there is one, or, if there is not, the value of the element's text IDL attribute. 
       */
-    public self_t value(String val) {
+    public self_t value(Object val) {
         attr("value", val);
         return (self_t) this;
     }

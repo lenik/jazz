@@ -41,7 +41,7 @@ public class Priority_htm
 
         for (Pair<Integer, String> predef : predefs) {
             Integer n = predef.getKey();
-            HtmlOptionTag option = select.option().value("" + n).text(predef.getValue());
+            HtmlOptionTag option = select.option().value(n).text(predef.getValue());
             if (nearest == null || (n <= priority && n > nearestN)) {
                 nearest = option;
                 nearestN = n;

@@ -17,7 +17,7 @@ class _HtmlLabelTag<self_t extends IHtmlTag>
     /**
       * The form attribute is used to explicitly associate the label element with its form owner. 
       */
-    public self_t form(String val) {
+    public self_t form(Object val) {
         attr("form", val);
         return (self_t) this;
     }
@@ -25,7 +25,7 @@ class _HtmlLabelTag<self_t extends IHtmlTag>
     /**
       * The for attribute may be specified to indicate a form control with which the caption is to be associated. If the attribute is specified, the attribute's value must be the ID of a labelable element in the same Document as the label element. If the attribute is specified and there is an element in the Document whose ID is equal to the value of the for attribute, and the first such element is a labelable element, then that element is the label element's labeled control. 
       */
-    public self_t for_(String val) {
+    public self_t for_(Object val) {
         attr("for", val);
         return (self_t) this;
     }

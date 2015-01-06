@@ -14,7 +14,7 @@ class _HtmlColgroupTag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t span(String val) {
+    public self_t span(Object val) {
         attr("span", val);
         return (self_t) this;
     }

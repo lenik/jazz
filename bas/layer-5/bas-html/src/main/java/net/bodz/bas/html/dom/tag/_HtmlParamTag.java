@@ -17,7 +17,7 @@ class _HtmlParamTag<self_t extends IHtmlTag>
     /**
       * The name attribute gives the name of the parameter. 
       */
-    public self_t name(String val) {
+    public self_t name(Object val) {
         attr("name", val);
         return (self_t) this;
     }
@@ -25,7 +25,7 @@ class _HtmlParamTag<self_t extends IHtmlTag>
     /**
       * The value attribute gives the value of the parameter. 
       */
-    public self_t value(String val) {
+    public self_t value(Object val) {
         attr("value", val);
         return (self_t) this;
     }

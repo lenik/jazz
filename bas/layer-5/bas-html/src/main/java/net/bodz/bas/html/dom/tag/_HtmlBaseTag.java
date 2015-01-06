@@ -17,7 +17,7 @@ class _HtmlBaseTag<self_t extends IHtmlTag>
     /**
       * The href content attribute, if specified, must contain a valid URL potentially surrounded by spaces. 
       */
-    public self_t href(String val) {
+    public self_t href(Object val) {
         attr("href", val);
         return (self_t) this;
     }
@@ -25,7 +25,7 @@ class _HtmlBaseTag<self_t extends IHtmlTag>
     /**
       * The target attribute, if specified, must contain a valid browsing context name or keyword, which specifies which browsing context is to be used as the default when hyperlinks and forms in the Document cause navigation. 
       */
-    public self_t target(String val) {
+    public self_t target(Object val) {
         attr("target", val);
         return (self_t) this;
     }

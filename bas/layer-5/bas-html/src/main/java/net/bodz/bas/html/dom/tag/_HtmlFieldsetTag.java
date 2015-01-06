@@ -17,7 +17,7 @@ class _HtmlFieldsetTag<self_t extends IHtmlTag>
     /**
       * The disabled attribute, when specified, causes all the form control descendants of the fieldset element, excluding those that are descendants of the fieldset element's first legend element child, if any, to be disabled. 
       */
-    public self_t disabled(String val) {
+    public self_t disabled(Object val) {
         attr("disabled", val);
         return (self_t) this;
     }
@@ -25,12 +25,12 @@ class _HtmlFieldsetTag<self_t extends IHtmlTag>
     /**
       * The form attribute is used to explicitly associate the fieldset element with its form owner. The name attribute represents the element's name. 
       */
-    public self_t form(String val) {
+    public self_t form(Object val) {
         attr("form", val);
         return (self_t) this;
     }
 
-    public self_t name(String val) {
+    public self_t name(Object val) {
         attr("name", val);
         return (self_t) this;
     }

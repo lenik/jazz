@@ -17,7 +17,7 @@ class _HtmlHtmlTag<self_t extends IHtmlTag>
     /**
       * The manifest attribute only has an effect during the early stages of document load. Changing the attribute dynamically thus has no effect (and thus, no DOM API is provided for this attribute). 
       */
-    public self_t manifest(String val) {
+    public self_t manifest(Object val) {
         attr("manifest", val);
         return (self_t) this;
     }

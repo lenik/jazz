@@ -17,7 +17,7 @@ class _HtmlDataTag<self_t extends IHtmlTag>
     /**
       * The value attribute must be present. Its value must be a representation of the element's contents in a machine-readable format. 
       */
-    public self_t value(String val) {
+    public self_t value(Object val) {
         attr("value", val);
         return (self_t) this;
     }

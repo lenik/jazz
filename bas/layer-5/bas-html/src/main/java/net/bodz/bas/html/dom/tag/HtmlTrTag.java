@@ -9,7 +9,7 @@ public class HtmlTrTag
         super(parent, tagName);
     }
 
-    public HtmlTrTag valign(String val) {
+    public HtmlTrTag valign(Object val) {
         if (val == null)
             throw new NullPointerException("val");
         attr("valign", val);

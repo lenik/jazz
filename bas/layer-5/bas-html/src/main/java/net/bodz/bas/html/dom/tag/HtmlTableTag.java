@@ -9,7 +9,7 @@ public class HtmlTableTag
         super(parent, tagName);
     }
 
-    public HtmlTableTag dataToggle(String val) {
+    public HtmlTableTag dataToggle(Object val) {
         attr("data-toggle", val);
         return this;
     }
@@ -26,12 +26,12 @@ public class HtmlTableTag
      *     &lt;/thead&gt;
      * &lt;/table&gt;
      */
-    public HtmlTableTag dataUrl(String val) {
+    public HtmlTableTag dataUrl(Object val) {
         attr("data-url", val);
         return this;
     }
 
-    public HtmlTableTag width(String val) {
+    public HtmlTableTag width(Object val) {
         attr("width", val);
         return this;
     }

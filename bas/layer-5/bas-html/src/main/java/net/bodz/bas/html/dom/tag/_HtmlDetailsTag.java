@@ -17,7 +17,7 @@ class _HtmlDetailsTag<self_t extends IHtmlTag>
     /**
       * The open content attribute is a boolean attribute. If present, it indicates that both the summary and the additional information is to be shown to the user. If the attribute is absent, only the summary is to be shown. 
       */
-    public self_t open(String val) {
+    public self_t open(Object val) {
         attr("open", val);
         return (self_t) this;
     }
