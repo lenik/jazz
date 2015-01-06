@@ -2,6 +2,10 @@ package net.bodz.bas.err;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.UndeclaredThrowableException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Utility functions for {@link Throwable}s.
@@ -81,6 +85,23 @@ public class Err {
         } catch (ReflectiveOperationException _roe) {
             throw new UnexpectedException(_roe.getMessage(), _roe);
         }
+    }
+
+    static Set<Class<? extends Throwable>> unwraps;
+    static {
+        unwraps = new HashSet<>();
+        unwraps.add(UndeclaredThrowableException.class);
+        unwraps.add(InvocationTargetException.class);
+        unwraps.add(RuntimizedException.class);
+    }
+
+    public static Throwable unwrap(Throwable exception) {
+        while (exception != null)
+            if (unwraps.contains(exception.getClass()))
+                exception = exception.getCause();
+            else
+                break;
+        return exception;
     }
 
 }
