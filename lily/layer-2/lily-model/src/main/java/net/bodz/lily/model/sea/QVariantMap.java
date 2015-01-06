@@ -29,6 +29,28 @@ public class QVariantMap<K>
         super(_orig);
     }
 
+    /**
+     * Treat empty value as <code>null</code>.
+     * 
+     * @see #getString(Object, String)
+     */
+    public final String getStringE4n(K key) {
+        return getStringE4n(key, null);
+    }
+
+    /**
+     * Treat empty value as <code>null</code>.
+     * 
+     * @see #getString(Object, String)
+     */
+    public String getStringE4n(K key, String defaultValue) {
+        String s = super.getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        else
+            return s;
+    }
+
     public Integer getInt(K key, Integer defaultValue) {
         String s = getString(key);
         if (s == null || s.isEmpty())
