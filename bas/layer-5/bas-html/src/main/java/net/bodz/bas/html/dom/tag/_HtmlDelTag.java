@@ -14,12 +14,12 @@ class _HtmlDelTag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t cite(String val) {
+    public self_t cite(Object val) {
         attr("cite", val);
         return (self_t) this;
     }
 
-    public self_t datetime(String val) {
+    public self_t datetime(Object val) {
         attr("datetime", val);
         return (self_t) this;
     }

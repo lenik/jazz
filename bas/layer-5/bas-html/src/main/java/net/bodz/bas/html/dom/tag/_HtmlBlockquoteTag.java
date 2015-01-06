@@ -14,7 +14,7 @@ class _HtmlBlockquoteTag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t cite(String val) {
+    public self_t cite(Object val) {
         attr("cite", val);
         return (self_t) this;
     }

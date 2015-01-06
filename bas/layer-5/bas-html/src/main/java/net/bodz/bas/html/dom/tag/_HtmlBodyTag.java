@@ -14,62 +14,62 @@ class _HtmlBodyTag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t onafterprint(String val) {
+    public self_t onafterprint(Object val) {
         attr("onafterprint", val);
         return (self_t) this;
     }
 
-    public self_t onbeforeprint(String val) {
+    public self_t onbeforeprint(Object val) {
         attr("onbeforeprint", val);
         return (self_t) this;
     }
 
-    public self_t onbeforeunload(String val) {
+    public self_t onbeforeunload(Object val) {
         attr("onbeforeunload", val);
         return (self_t) this;
     }
 
-    public self_t onhashchange(String val) {
+    public self_t onhashchange(Object val) {
         attr("onhashchange", val);
         return (self_t) this;
     }
 
-    public self_t onmessage(String val) {
+    public self_t onmessage(Object val) {
         attr("onmessage", val);
         return (self_t) this;
     }
 
-    public self_t onoffline(String val) {
+    public self_t onoffline(Object val) {
         attr("onoffline", val);
         return (self_t) this;
     }
 
-    public self_t ononline(String val) {
+    public self_t ononline(Object val) {
         attr("ononline", val);
         return (self_t) this;
     }
 
-    public self_t onpagehide(String val) {
+    public self_t onpagehide(Object val) {
         attr("onpagehide", val);
         return (self_t) this;
     }
 
-    public self_t onpageshow(String val) {
+    public self_t onpageshow(Object val) {
         attr("onpageshow", val);
         return (self_t) this;
     }
 
-    public self_t onpopstate(String val) {
+    public self_t onpopstate(Object val) {
         attr("onpopstate", val);
         return (self_t) this;
     }
 
-    public self_t onstorage(String val) {
+    public self_t onstorage(Object val) {
         attr("onstorage", val);
         return (self_t) this;
     }
 
-    public self_t onunload(String val) {
+    public self_t onunload(Object val) {
         attr("onunload", val);
         return (self_t) this;
     }

@@ -17,12 +17,12 @@ class _HtmlProgressTag<self_t extends IHtmlTag>
     /**
       * The value and max attributes, when present, must have values that are valid floating-point numbers. The value attribute, if present, must have a value equal to or greater than zero, and less than or equal to the value of the max attribute, if present, or 1.0, otherwise. The max attribute, if present, must have a value greater than zero. 
       */
-    public self_t value(String val) {
+    public self_t value(Object val) {
         attr("value", val);
         return (self_t) this;
     }
 
-    public self_t max(String val) {
+    public self_t max(Object val) {
         attr("max", val);
         return (self_t) this;
     }

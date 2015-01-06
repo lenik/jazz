@@ -14,32 +14,32 @@ class _HtmlATag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t href(String val) {
+    public self_t href(Object val) {
         attr("href", val);
         return (self_t) this;
     }
 
-    public self_t target(String val) {
+    public self_t target(Object val) {
         attr("target", val);
         return (self_t) this;
     }
 
-    public self_t download(String val) {
+    public self_t download(Object val) {
         attr("download", val);
         return (self_t) this;
     }
 
-    public self_t rel(String val) {
+    public self_t rel(Object val) {
         attr("rel", val);
         return (self_t) this;
     }
 
-    public self_t hreflang(String val) {
+    public self_t hreflang(Object val) {
         attr("hreflang", val);
         return (self_t) this;
     }
 
-    public self_t type(String val) {
+    public self_t type(Object val) {
         attr("type", val);
         return (self_t) this;
     }

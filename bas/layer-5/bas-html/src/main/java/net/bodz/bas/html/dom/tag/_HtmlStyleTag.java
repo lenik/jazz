@@ -17,7 +17,7 @@ class _HtmlStyleTag<self_t extends IHtmlTag>
     /**
       * The media attribute says which media the styles apply to. The value must be a valid media query. The user agent must apply the styles when the media attribute's value matches the environment and the other relevant conditions apply, and must not apply them otherwise.<!-- note similar text in section --> 
       */
-    public self_t media(String val) {
+    public self_t media(Object val) {
         attr("media", val);
         return (self_t) this;
     }
@@ -25,7 +25,7 @@ class _HtmlStyleTag<self_t extends IHtmlTag>
     /**
       * The type attribute gives the styling language. If the attribute is present, its value must be a valid MIME type that designates a styling language. The charset parameter must not be specified. The default value for the type attribute, which is used if the attribute is absent, is "text/css". [RFC2318] 
       */
-    public self_t type(String val) {
+    public self_t type(Object val) {
         attr("type", val);
         return (self_t) this;
     }

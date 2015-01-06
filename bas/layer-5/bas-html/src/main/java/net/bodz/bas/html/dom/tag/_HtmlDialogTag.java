@@ -17,7 +17,7 @@ class _HtmlDialogTag<self_t extends IHtmlTag>
     /**
       * The open attribute is a boolean attribute. When specified, it indicates that the dialog element is active and that the user can interact with it. 
       */
-    public self_t open(String val) {
+    public self_t open(Object val) {
         attr("open", val);
         return (self_t) this;
     }

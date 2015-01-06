@@ -14,42 +14,42 @@ class _HtmlAudioTag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t src(String val) {
+    public self_t src(Object val) {
         attr("src", val);
         return (self_t) this;
     }
 
-    public self_t crossorigin(String val) {
+    public self_t crossorigin(Object val) {
         attr("crossorigin", val);
         return (self_t) this;
     }
 
-    public self_t preload(String val) {
+    public self_t preload(Object val) {
         attr("preload", val);
         return (self_t) this;
     }
 
-    public self_t autoplay(String val) {
+    public self_t autoplay(Object val) {
         attr("autoplay", val);
         return (self_t) this;
     }
 
-    public self_t mediagroup(String val) {
+    public self_t mediagroup(Object val) {
         attr("mediagroup", val);
         return (self_t) this;
     }
 
-    public self_t loop(String val) {
+    public self_t loop(Object val) {
         attr("loop", val);
         return (self_t) this;
     }
 
-    public self_t muted(String val) {
+    public self_t muted(Object val) {
         attr("muted", val);
         return (self_t) this;
     }
 
-    public self_t controls(String val) {
+    public self_t controls(Object val) {
         attr("controls", val);
         return (self_t) this;
     }

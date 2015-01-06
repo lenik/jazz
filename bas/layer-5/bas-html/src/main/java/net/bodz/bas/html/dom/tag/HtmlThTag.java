@@ -14,7 +14,7 @@ public class HtmlThTag
      * 
      * @default false
      */
-    public HtmlThTag dataRadio(String val) {
+    public HtmlThTag dataRadio(Object val) {
         attr("data-radio", val);
         return this;
     }
@@ -24,7 +24,7 @@ public class HtmlThTag
      * 
      * @default false
      */
-    public HtmlThTag dataCheckbox(String val) {
+    public HtmlThTag dataCheckbox(Object val) {
         attr("data-checkbox", val);
         return this;
     }
@@ -41,7 +41,7 @@ public class HtmlThTag
      *     &lt;/thead&gt;
      * &lt;/table&gt;
      */
-    public HtmlThTag dataField(String val) {
+    public HtmlThTag dataField(Object val) {
         attr("data-field", val);
         return this;
     }
@@ -49,7 +49,7 @@ public class HtmlThTag
     /**
      * The column title text.
      */
-    public HtmlThTag dataTitle(String val) {
+    public HtmlThTag dataTitle(Object val) {
         attr("data-title", val);
         return this;
     }
@@ -57,7 +57,7 @@ public class HtmlThTag
     /**
      * The column class name.
      */
-    public HtmlThTag dataClass(String val) {
+    public HtmlThTag dataClass(Object val) {
         attr("data-class", val);
         return this;
     }
@@ -65,7 +65,7 @@ public class HtmlThTag
     /**
      * Indicate how to align the column data. "left", "right", "center" can be used.
      */
-    public HtmlThTag dataAlign(String val) {
+    public HtmlThTag dataAlign(Object val) {
         attr("data-align", val);
         return this;
     }
@@ -73,7 +73,7 @@ public class HtmlThTag
     /**
      * Indicate how to align the table header. "left", "right", "center" can be used.
      */
-    public HtmlThTag dataHalign(String val) {
+    public HtmlThTag dataHalign(Object val) {
         attr("data-halign", val);
         return this;
     }
@@ -81,7 +81,7 @@ public class HtmlThTag
     /**
      * Indicate how to align the cell data. "top", "middle", "bottom" can be used.
      */
-    public HtmlThTag dataValign(String val) {
+    public HtmlThTag dataValign(Object val) {
         attr("data-valign", val);
         return this;
     }
@@ -89,7 +89,7 @@ public class HtmlThTag
     /**
      * The width of column. If not defined, the width will auto expand to fit its contents.
      */
-    public HtmlThTag dataWidth(String val) {
+    public HtmlThTag dataWidth(Object val) {
         attr("data-width", val);
         return this;
     }
@@ -109,7 +109,7 @@ public class HtmlThTag
      * 
      * @default asc
      */
-    public HtmlThTag dataOrder(String val) {
+    public HtmlThTag dataOrder(Object val) {
         attr("data-order", val);
         return this;
     }
@@ -119,7 +119,7 @@ public class HtmlThTag
      * 
      * @default true
      */
-    public HtmlThTag dataVisible(String val) {
+    public HtmlThTag dataVisible(Object val) {
         attr("data-visible", val);
         return this;
     }
@@ -129,7 +129,7 @@ public class HtmlThTag
      * 
      * @default true
      */
-    public HtmlThTag dataSwitchable(String val) {
+    public HtmlThTag dataSwitchable(Object val) {
         attr("data-switchable", val);
         return this;
     }
@@ -139,7 +139,7 @@ public class HtmlThTag
      * 
      * @default true
      */
-    public HtmlThTag dataClickToStart(String val) {
+    public HtmlThTag dataClickToStart(Object val) {
         attr("data-click-to-start", val);
         return this;
     }
@@ -152,7 +152,7 @@ public class HtmlThTag
      * <li>index: the row index.
      * </ul>
      */
-    public HtmlThTag dataFormatter(String val) {
+    public HtmlThTag dataFormatter(Object val) {
         attr("data-formatter", val);
         return this;
     }
@@ -166,7 +166,7 @@ public class HtmlThTag
      * <li>index: the row index.
      * </ul>
      */
-    public HtmlThTag dataEvents(String val) {
+    public HtmlThTag dataEvents(Object val) {
         attr("data-events", val);
         return this;
     }
@@ -178,7 +178,7 @@ public class HtmlThTag
      * <li>b: the second field value.
      * </ul>
      */
-    public HtmlThTag dataSorter(String val) {
+    public HtmlThTag dataSorter(Object val) {
         attr("data-sorter", val);
         return this;
     }
@@ -192,12 +192,12 @@ public class HtmlThTag
      * <li>Support classes or css.
      * </ul>
      */
-    public HtmlThTag dataCellStyle(String val) {
+    public HtmlThTag dataCellStyle(Object val) {
         attr("data-cell-style", val);
         return this;
     }
 
-    public HtmlThTag dataHeight(String val) {
+    public HtmlThTag dataHeight(Object val) {
         attr("data-height", val);
         return this;
     }

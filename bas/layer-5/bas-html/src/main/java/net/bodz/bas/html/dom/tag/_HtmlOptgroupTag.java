@@ -17,7 +17,7 @@ class _HtmlOptgroupTag<self_t extends IHtmlTag>
     /**
       * The disabled attribute is a boolean attribute and can be used to disable a group of option elements together. 
       */
-    public self_t disabled(String val) {
+    public self_t disabled(Object val) {
         attr("disabled", val);
         return (self_t) this;
     }
@@ -25,7 +25,7 @@ class _HtmlOptgroupTag<self_t extends IHtmlTag>
     /**
       * The label attribute must be specified. Its value gives the name of the group, for the purposes of the user interface. User agents should use this attribute's value when labeling the group of option elements in a select element. 
       */
-    public self_t label(String val) {
+    public self_t label(Object val) {
         attr("label", val);
         return (self_t) this;
     }

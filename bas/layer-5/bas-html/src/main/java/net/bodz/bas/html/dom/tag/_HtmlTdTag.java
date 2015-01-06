@@ -14,17 +14,17 @@ class _HtmlTdTag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t colspan(String val) {
+    public self_t colspan(Object val) {
         attr("colspan", val);
         return (self_t) this;
     }
 
-    public self_t rowspan(String val) {
+    public self_t rowspan(Object val) {
         attr("rowspan", val);
         return (self_t) this;
     }
 
-    public self_t headers(String val) {
+    public self_t headers(Object val) {
         attr("headers", val);
         return (self_t) this;
     }

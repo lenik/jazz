@@ -14,12 +14,12 @@ class _HtmlMetaTag<self_t extends IHtmlTag>
         super(parent, tagName);
     }
 
-    public self_t name(String val) {
+    public self_t name(Object val) {
         attr("name", val);
         return (self_t) this;
     }
 
-    public self_t httpEquiv(String val) {
+    public self_t httpEquiv(Object val) {
         attr("http-equiv", val);
         return (self_t) this;
     }
@@ -27,7 +27,7 @@ class _HtmlMetaTag<self_t extends IHtmlTag>
     /**
       * The content attribute gives the value of the document metadata or pragma directive when the element is used for those purposes. The allowed values depend on the exact context, as described in subsequent sections of this specification. 
       */
-    public self_t content(String val) {
+    public self_t content(Object val) {
         attr("content", val);
         return (self_t) this;
     }
@@ -35,7 +35,7 @@ class _HtmlMetaTag<self_t extends IHtmlTag>
     /**
       * The charset attribute on the meta element has no effect in XML documents, and is only allowed in order to facilitate migration to and from XHTML. 
       */
-    public self_t charset(String val) {
+    public self_t charset(Object val) {
         attr("charset", val);
         return (self_t) this;
     }

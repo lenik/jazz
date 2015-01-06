@@ -17,7 +17,7 @@ class _HtmlTimeTag<self_t extends IHtmlTag>
     /**
       * The datetime attribute may be present. If present, its value must be a representation of the element's contents in a machine-readable format. 
       */
-    public self_t datetime(String val) {
+    public self_t datetime(Object val) {
         attr("datetime", val);
         return (self_t) this;
     }
