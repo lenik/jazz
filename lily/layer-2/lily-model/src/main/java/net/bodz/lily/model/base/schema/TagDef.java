@@ -1,5 +1,8 @@
 package net.bodz.lily.model.base.schema;
 
+import net.bodz.bas.db.meta.TableName;
+
+@TableName("tag")
 public class TagDef
         extends AbstractDefinition<TagDef> {
 
