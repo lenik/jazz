@@ -13,7 +13,7 @@ import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.lily.model.base.CoNode;
 import net.bodz.lily.model.base.CoNodeChain;
 
-public class CoNodeChain_htm<T extends CoNode<T>>
+public class CoNodeChain_htm<T extends CoNode<T, ?>>
         extends AbstractHtmlViewBuilder<CoNodeChain<T>> {
 
     public CoNodeChain_htm() {
