@@ -6,6 +6,9 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -77,11 +80,17 @@ public class MybatisMapperProvider
             throw new IllegalUsageError(e.getMessage(), e);
         }
 
-        String[] builtins = { "co", "mi", "message" };
-        for (String builtin : builtins) {
-            String resName = "com/tinylily/model/share/" + builtin + ".xml";
+        List<String> builtins = new ArrayList<>();
+        for (String s : Arrays.asList("co", "mi", "message"))
+            builtins.add("com/tinylily/model/share/" + s + ".xml");
+
+        for (String resName : builtins) {
             getClass().getClassLoader().getResource(resName);
             URL url = getClass().getClassLoader().getResource(resName);
+            if (url == null) {
+                System.err.println("Bad resource: " + resName);
+                continue;
+            }
             try {
                 InputStream in = url.openStream();
                 XMLMapperBuilder xmb = new XMLMapperBuilder(in, config, resName, config.getSqlFragments());

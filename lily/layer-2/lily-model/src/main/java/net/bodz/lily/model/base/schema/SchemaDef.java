@@ -2,6 +2,9 @@ package net.bodz.lily.model.base.schema;
 
 import java.util.List;
 
+import net.bodz.bas.db.meta.TableName;
+
+@TableName("schema")
 public class SchemaDef
         extends AbstractDefinition<SchemaDef> {
 

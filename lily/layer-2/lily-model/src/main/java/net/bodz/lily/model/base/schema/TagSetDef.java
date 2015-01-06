@@ -2,11 +2,14 @@ package net.bodz.lily.model.base.schema;
 
 import java.util.List;
 
+import net.bodz.bas.db.meta.TableName;
+
 /**
  * Tag Set Definition
  * 
  * @label.zh 标签集定义
  */
+@TableName("tagv")
 public class TagSetDef
         extends AbstractDefinition<TagSetDef> {
 
