@@ -12,13 +12,13 @@
         <result property="lastLoginTime" column="lastlog" />
         <result property="lastLoginIP" column="lastlogip" />
         <association property="primaryGroup" javaType="net.bodz.lily.model.base.security.Group">
-            <id column="gid0" />
+            <id property="id" column="gid0" />
             <result property="codeName" column="g_code" />
             <result property="label" column="g_label" />
             <result property="description" column="g_description" />
         </association>
         <collection property="groups" javaType="ArrayList" ofType="net.bodz.lily.model.base.security.Group">
-            <id column="y_id" />
+            <id property="id" column="y_id" />
             <result property="codeName" column="y_code" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
