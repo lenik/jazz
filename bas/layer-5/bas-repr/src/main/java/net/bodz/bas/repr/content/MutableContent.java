@@ -9,12 +9,12 @@ public class MutableContent
         implements IContent {
 
     int priority;
-    long creationDate = System.currentTimeMillis();
+    long creationTime = System.currentTimeMillis();
 
     CacheControlMode cacheControlMode = CacheControlMode.AUTO;
     CacheRevalidationMode cacheRevalidateMode = CacheRevalidationMode.OPTIONAL;
     int maxAge;
-    long lastModified = creationDate;
+    long lastModifiedTime = creationTime;
     String eTag;
     boolean weakValidation;
 
@@ -29,11 +29,11 @@ public class MutableContent
 
     @Override
     public long getCreationTime() {
-        return creationDate;
+        return creationTime;
     }
 
     public void setCreationDate(long creationDate) {
-        this.creationDate = creationDate;
+        this.creationTime = creationDate;
     }
 
     /** ⇱ Implementation Of {@link ICacheControl}. */
@@ -72,11 +72,11 @@ public class MutableContent
 
     @Override
     public long getLastModified() {
-        return lastModified;
+        return lastModifiedTime;
     }
 
-    public void setLastModifiedDate(long lastModifiedDate) {
-        this.lastModified = lastModifiedDate;
+    public void setLastModified(long lastModified) {
+        this.lastModifiedTime = lastModified;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class MutableContent
         // OPTIONAL -> WANTED -> REQUIRED.
         cacheRevalidateMode = Nullables.min(cacheRevalidateMode, o.getCacheRevalidationMode());
 
-        lastModified = Nullables.max(lastModified, o.getLastModified());
+        lastModifiedTime = Nullables.max(lastModifiedTime, o.getLastModified());
         maxAge = Math.min(maxAge, o.getMaxAge());
 
         String eTag2 = o.getETag();

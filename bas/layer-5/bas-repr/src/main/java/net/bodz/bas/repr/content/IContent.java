@@ -6,6 +6,9 @@ import net.bodz.bas.t.order.IPriority;
 public interface IContent
         extends ICacheControl, IPriority {
 
+    /**
+     * Get the creation time in milliseconds.
+     */
     long getCreationTime();
 
 }

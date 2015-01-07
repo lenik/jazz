@@ -1,5 +1,7 @@
 package net.bodz.bas.std.rfc.http;
 
+import java.io.File;
+
 public interface ICacheControl {
 
     /**
@@ -25,7 +27,9 @@ public interface ICacheControl {
     int getMaxAge();
 
     /**
-     * Get the last modified date.
+     * Get the last modified time in milliseconds.
+     * 
+     * @see File#lastModified()
      */
     long getLastModified();
 
