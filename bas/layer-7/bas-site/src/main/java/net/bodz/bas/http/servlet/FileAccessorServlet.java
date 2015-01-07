@@ -11,16 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.std.rfc.http.ContentRange;
 import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.t.iterator.Iterables;
 
 public class FileAccessorServlet
         extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String ATTRIBUTE_PATH = "path";
+    public static final String ATTRIBUTE_PATH = "start-path";
+    public static final String ATTRIBUTE_MAX_AGE = "max-age";
 
     /**
      * The target path, without traling slash.
@@ -36,9 +39,22 @@ public class FileAccessorServlet
     public void init()
             throws ServletException {
         ServletConfig config = getServletConfig();
-        startPath = config.getInitParameter(ATTRIBUTE_PATH);
+
+        for (String name : Iterables.otp(config.getInitParameterNames())) {
+            String param = config.getInitParameter(name);
+            switch (name) {
+            case ATTRIBUTE_PATH:
+                startPath = param;
+                break;
+
+            case ATTRIBUTE_MAX_AGE:
+                maxAge = Integer.parseInt(param);
+                break;
+            }
+        }
+
         if (startPath == null)
-            throw new NullPointerException(ATTRIBUTE_PATH);
+            throw new IllegalConfigException(ATTRIBUTE_PATH + " isn't set.");
         startPath = FilePath.removeTrailingSlashes(startPath);
     }
 

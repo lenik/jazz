@@ -16,31 +16,30 @@ public class BasicSiteServerConfig
     ServletDescriptor webjarsDir;
 
     public BasicSiteServerConfig() {
+        backgroundsDir = addLocalLink("/backgrounds", "/usr/share/backgrounds", 365);
+        fontsDir = addLocalLink("/fonts", "/usr/share/fonts", 365);
+        fontsFontAwesomeDir = addLocalLink("/fonts/font-awesome", "/usr/share/fonts-font-awesome", 365);
+        iconsDir = addLocalLink("/icons", "/usr/share/icons", 365);
+        javascriptDir = addLocalLink("/js", "/usr/share/javascript", 365);
+        webjarsDir = addResourceLink("/webjars", "META-INF/resources/webjars", 365);
+    }
 
-        backgroundsDir = addServlet(FileAccessorServlet.class, "/backgrounds/*");
-        backgroundsDir.setInitParam(FileAccessorServlet.ATTRIBUTE_PATH, //
-                "/usr/share/backgrounds");
+    protected ServletDescriptor addLocalLink(String linkName, String target, int maxAgeDays) {
+        String mapping = linkName + "/*";
+        int maxAge = maxAgeDays * 86400;
+        ServletDescriptor servlet = addServlet(FileAccessorServlet.class, mapping);
+        servlet.setInitParam(FileAccessorServlet.ATTRIBUTE_PATH, target);
+        servlet.setInitParam(FileAccessorServlet.ATTRIBUTE_MAX_AGE, maxAge);
+        return servlet;
+    }
 
-        fontsDir = addServlet(FileAccessorServlet.class, "/fonts/*");
-        fontsDir.setInitParam(FileAccessorServlet.ATTRIBUTE_PATH, //
-                "/usr/share/fonts");
-
-        fontsFontAwesomeDir = addServlet(FileAccessorServlet.class, "/fonts/font-awesome/*");
-        fontsFontAwesomeDir.setInitParam(FileAccessorServlet.ATTRIBUTE_PATH, //
-                "/usr/share/fonts-font-awesome");
-
-        iconsDir = addServlet(FileAccessorServlet.class, "/icons/*");
-        iconsDir.setInitParam(FileAccessorServlet.ATTRIBUTE_PATH, //
-                "/usr/share/icons");
-
-        javascriptDir = addServlet(FileAccessorServlet.class, "/js/*");
-        javascriptDir.setInitParam(FileAccessorServlet.ATTRIBUTE_PATH, //
-                "/usr/share/javascript");
-
-        webjarsDir = addServlet(ClassResourceAccessorServlet.class, "/webjars/*");
-        webjarsDir.setInitParam(FileAccessorServlet.ATTRIBUTE_PATH, //
-                "META-INF/resources/webjars");
-
+    protected ServletDescriptor addResourceLink(String linkName, String target, int maxAgeDays) {
+        String mapping = linkName + "/*";
+        int maxAge = maxAgeDays * 86400;
+        ServletDescriptor servlet = addServlet(ClassResourceAccessorServlet.class, mapping);
+        servlet.setInitParam(ClassResourceAccessorServlet.ATTRIBUTE_PATH, target);
+        servlet.setInitParam(ClassResourceAccessorServlet.ATTRIBUTE_MAX_AGE, maxAge);
+        return servlet;
     }
 
 }

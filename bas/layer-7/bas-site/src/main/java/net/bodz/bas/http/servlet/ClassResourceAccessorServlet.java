@@ -10,16 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassLoaders;
+import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.http.ResourceTransferer;
 import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.t.iterator.Iterables;
 
 public class ClassResourceAccessorServlet
         extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String ATTRIBUTE_PATH = "path";
+    public static final String ATTRIBUTE_PATH = "start-path";
+    public static final String ATTRIBUTE_MAX_AGE = "max-age";
 
     /**
      * The prefix, should start with '/', but without trailing slash.
@@ -35,9 +38,22 @@ public class ClassResourceAccessorServlet
     public void init()
             throws ServletException {
         ServletConfig config = getServletConfig();
-        startPath = config.getInitParameter(ATTRIBUTE_PATH);
+
+        for (String name : Iterables.otp(config.getInitParameterNames())) {
+            String param = config.getInitParameter(name);
+            switch (name) {
+            case ATTRIBUTE_PATH:
+                startPath = param;
+                break;
+
+            case ATTRIBUTE_MAX_AGE:
+                maxAge = Integer.parseInt(param);
+                break;
+            }
+        }
+
         if (startPath == null)
-            throw new NullPointerException(ATTRIBUTE_PATH);
+            throw new IllegalConfigException(ATTRIBUTE_PATH + " isn't set.");
         startPath = FilePath.removeTrailingSlashes(startPath);
     }
 
