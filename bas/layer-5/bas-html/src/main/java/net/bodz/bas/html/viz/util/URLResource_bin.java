@@ -23,9 +23,9 @@ public class URLResource_bin
         extends AbstractHtmlViewBuilder<URLResource> {
 
     /**
-     * 1 day by default.
+     * 1 hour by default.
      */
-    private int maxAge = 86400;
+    private int maxAge = 3600 * 1;
 
     public URLResource_bin() {
         super(IStreamResource.class);
