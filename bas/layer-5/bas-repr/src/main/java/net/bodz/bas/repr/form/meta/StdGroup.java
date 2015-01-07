@@ -52,6 +52,13 @@ public @interface StdGroup {
     }
 
     /**
+     * @label Process Control
+     * @label.zh 过程控制
+     */
+    @interface Process {
+    }
+
+    /**
      * @label Ranking
      * @label.zh 分级
      */
@@ -98,6 +105,13 @@ public @interface StdGroup {
      * @label.zh 版本
      */
     @interface Version {
+    }
+
+    /**
+     * @label Visualization
+     * @label.zh 可视化
+     */
+    @interface Visual {
     }
 
 }

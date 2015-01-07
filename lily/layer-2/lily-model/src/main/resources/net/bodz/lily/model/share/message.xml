@@ -34,19 +34,21 @@
         </association>
     </resultMap>
 
-    <sql id="set1">
+    <sql id="set1u">
         <include refid="co.setUSA" />
         <if test="beginDate != null">t0=#{beginDate},</if>
         <if test="endDate != null">t1=#{endDate},</if>
-        <if test="subject != null">subject=#{subject},</if>
-        <if test="text != null">text=#{text},</if>
-        <if test="voteUps != null">nvote=#{voteUps - voteDowns},</if>
-        <if test="likerCount != null">nlike=#{likerCount},</if>
-        <if test="readCount != null">nread=#{readCount},</if>
         <if test="op != null">op=#{op.id},</if>
-        <if test="form != null">form=#{form.id},</if>
         <if test="category != null">cat=#{category.id},</if>
         <if test="phase != null">phase=#{phase.id},</if>
     </sql>
 
+    <sql id="set1">
+        <include refid="message.set1u" />
+        <if test="subject != null">subject=#{subject},</if>
+        <if test="text != null">text=#{text},</if>
+        <if test="form != null">form=#{form.id},</if>
+        args=#{formArgs},
+    </sql>
+    
 </mapper>

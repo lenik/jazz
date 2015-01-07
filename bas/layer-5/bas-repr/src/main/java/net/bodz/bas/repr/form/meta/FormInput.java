@@ -20,6 +20,6 @@ public @interface FormInput {
 
     String placeholder() default "";
 
-    NullConvertion nullconv() default NullConvertion.NONE;
+    NullConvertion nullconv() default NullConvertion.EMPTY;
 
 }

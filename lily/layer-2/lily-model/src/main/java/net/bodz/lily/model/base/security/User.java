@@ -4,11 +4,8 @@ import java.net.InetAddress;
 import java.util.List;
 import java.util.Random;
 
-import net.bodz.bas.err.ParseException;
-
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.model.base.IdType;
-import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * <p lang="zh-cn">
@@ -160,12 +157,6 @@ public class User
     @Override
     public String toString() {
         return getLabel();
-    }
-
-    @Override
-    protected void populate(QVariantMap<String> map)
-            throws ParseException {
-        super.populate(map);
     }
 
 }

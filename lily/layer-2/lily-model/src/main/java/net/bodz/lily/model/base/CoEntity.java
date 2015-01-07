@@ -1,8 +1,6 @@
 package net.bodz.lily.model.base;
 
-import net.bodz.bas.err.ParseException;
-
-import net.bodz.lily.model.sea.QVariantMap;
+import net.bodz.bas.repr.form.meta.FormInput;
 
 public class CoEntity<Id>
         extends CoObject
@@ -17,6 +15,7 @@ public class CoEntity<Id>
         return IId.fn._getIdType(getClass());
     }
 
+    @FormInput(readOnly = true)
     @Override
     public Id getId() {
         return id;
@@ -25,13 +24,6 @@ public class CoEntity<Id>
     @Override
     public void setId(Id id) {
         this.id = id;
-    }
-
-    @Override
-    protected void populate(QVariantMap<String> map)
-            throws ParseException {
-        super.populate(map);
-        // XXX id = map.getInt("id", id);
     }
 
 }
