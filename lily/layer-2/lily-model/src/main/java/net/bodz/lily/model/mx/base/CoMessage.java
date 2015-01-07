@@ -7,10 +7,11 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.repr.form.NullConvertion;
+import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -25,7 +26,6 @@ import net.bodz.lily.model.base.schema.PhaseDef;
 import net.bodz.lily.model.base.schema.TagDef;
 import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * @label Message
@@ -90,6 +90,7 @@ public class CoMessage<Id>
      * @label.zh 标题
      * @placeholder 输入标题…
      */
+    @FormInput(nullconv = NullConvertion.NONE)
     @TextInput(maxLength = N_SUBJECT)
     public String getSubject() {
         return subject;
@@ -347,25 +348,6 @@ public class CoMessage<Id>
 
     public void setReadCount(Integer readCount) {
         this.readCount = readCount;
-    }
-
-    @Override
-    protected void populate(QVariantMap<String> map)
-            throws ParseException {
-        super.populate(map);
-
-        op = map.getIntIdRef("op", new User());
-        category = map.getIntIdRef("category", new CategoryDef());
-        subject = map.getString("subject");
-        text = map.getString("text");
-        form = map.getIntIdRef("form", new FormDef());
-        formArgs = map.getString("formArgs");
-        // tags=map.getStringArray("tags");
-        // attributes;
-
-        sentTime = map.getDate("sentTime", sentTime);
-        receivedTime = map.getDate("receivedTime", receivedTime);
-        phase = map.getIntIdRef("phase", phase);
     }
 
     @Override

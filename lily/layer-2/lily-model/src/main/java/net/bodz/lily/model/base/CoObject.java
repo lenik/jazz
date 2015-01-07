@@ -10,7 +10,6 @@ import org.apache.ibatis.exceptions.PersistenceException;
 
 import net.bodz.bas.db.batis.IMapperProvider;
 import net.bodz.bas.db.batis.IMapperTemplate;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.meta.HtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -37,14 +36,12 @@ import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.base.security.impl.AccessMode_htm;
-import net.bodz.lily.model.sea.AbstractTextParametric;
-import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
  */
 public abstract class CoObject
-        extends AbstractTextParametric
+        // extends AbstractTextParametric
         implements Serializable, IContent, IAccessControlled {
 
     private static final long serialVersionUID = 1L;
@@ -105,7 +102,6 @@ public abstract class CoObject
      * @label.zh 代码
      * @placeholder 输入代码/别名…
      */
-    @FormInput(nullconv = NullConvertion.EMPTY)
     @TextInput(maxLength = N_CODE_NAME)
     public String getCodeName() {
         return codeName;
@@ -120,6 +116,7 @@ public abstract class CoObject
      * @label.zh 名称
      * @placeholder 输入简短的描述性名称…
      */
+    @FormInput(nullconv = NullConvertion.NONE)
     @TextInput(maxLength = N_LABEL)
     public String getLabel() {
         return label;
@@ -134,7 +131,6 @@ public abstract class CoObject
      * @label.zh 描述
      * @placeholder 输入概括性的描述信息…
      */
-    @FormInput(nullconv = NullConvertion.EMPTY)
     @TextInput(maxLength = N_DESCRIPTION)
     public String getDescription() {
         return description;
@@ -149,7 +145,7 @@ public abstract class CoObject
      * @label.zh 注释
      * @placeholder 输入注释…
      */
-    @FormInput(nullconv = NullConvertion.EMPTY)
+    @DetailLevel(DetailLevel.HIDDEN)
     @TextInput(maxLength = N_COMMENT)
     public String getComment() {
         return comment;
@@ -164,7 +160,7 @@ public abstract class CoObject
      * @label.zh 图像
      * @placeholder 输入图像的名称…
      */
-    @FormInput(nullconv = NullConvertion.EMPTY)
+    @OfGroup(StdGroup.Visual.class)
     @TextInput(maxLength = N_IMAGE)
     public String getImage() {
         return image;
@@ -427,23 +423,6 @@ public abstract class CoObject
 
     public void setAcl(int acl) {
         this.acl = acl;
-    }
-
-    @Override
-    protected void populate(QVariantMap<String> map)
-            throws ParseException {
-        codeName = map.getString("codeName");
-        label = map.getString("label");
-        description = map.getStringE4n("description");
-        comment = map.getStringE4n("comment");
-        image = map.getString("image");
-
-        priority = map.getInt("priority", priority);
-        flags = map.getInt("flags", flags);
-        state = StdStates.START;
-
-        accessMode = map.getInt("accessMode", accessMode);
-        acl = map.getInt("acl", acl);
     }
 
     public Object persist(IHtmlViewContext ctx, IHtmlTag out)

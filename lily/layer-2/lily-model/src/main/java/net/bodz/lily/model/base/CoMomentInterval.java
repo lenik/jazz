@@ -3,13 +3,11 @@ package net.bodz.lily.model.base;
 import java.io.IOException;
 import java.util.Date;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
-
-import net.bodz.lily.model.sea.QVariantMap;
 
 public abstract class CoMomentInterval<Id>
         extends CoObject
@@ -26,6 +24,7 @@ public abstract class CoMomentInterval<Id>
         return IId.fn._getIdType(getClass());
     }
 
+    @FormInput(readOnly = true)
     @Override
     public Id getId() {
         return id;
@@ -64,15 +63,6 @@ public abstract class CoMomentInterval<Id>
     @Override
     public void setEndDate(Date endTime) {
         this.endDate = endTime;
-    }
-
-    @Override
-    protected void populate(QVariantMap<String> map)
-            throws ParseException {
-        super.populate(map);
-// id = map.getLong("id", id);
-        beginDate = map.getDate("beginDate", beginDate);
-        endDate = map.getDate("endDate", endDate);
     }
 
     @Override

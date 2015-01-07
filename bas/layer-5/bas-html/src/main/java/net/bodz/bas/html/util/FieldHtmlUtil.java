@@ -54,8 +54,11 @@ public class FieldHtmlUtil {
                 input.type(fieldDecl.getFace());
             }
 
-        if (fieldDecl.isReadOnly())
+        if (!fieldDecl.isEnabled())
             input.disabled("disabled");
+
+        if (fieldDecl.isReadOnly())
+            input.readonly("readonly");
 
         Integer maxLength = fieldDecl.getMaxLength();
         Integer textWidth = fieldDecl.getTextWidth();

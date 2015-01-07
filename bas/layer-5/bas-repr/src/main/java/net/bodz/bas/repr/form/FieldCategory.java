@@ -54,9 +54,9 @@ public class FieldCategory
             category = new FieldCategory(clazz);
             IType type = PotatoTypes.getInstance().forClass(clazz);
 
-            // instance.setName(type.getType().getSimpleName());
             IMutableElement.fn.copy1(type, category);
-            // instance.setStyle(type.getStyle());
+            category.setName(type.getType().getSimpleName());
+            // category.setStyle(type.getStyle());
 
             Priority aPriority = type.getAnnotation(Priority.class);
             if (aPriority != null)

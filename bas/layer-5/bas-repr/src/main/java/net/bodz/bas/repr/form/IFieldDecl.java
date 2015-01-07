@@ -51,6 +51,11 @@ public interface IFieldDecl
     String getInputName();
 
     /**
+     * @see IInputBehaviorDeclaration#getEnabled()
+     */
+    boolean isEnabled();
+
+    /**
      * @see IInputBehaviorDeclaration#getReadOnly()
      */
     boolean isReadOnly();

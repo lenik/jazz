@@ -8,6 +8,7 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IMutableElement;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.potato.element.IProperty;
@@ -58,7 +59,11 @@ public class FieldDeclBuilder {
 
         Derived aDerived = annotations.getAnnotation(Derived.class);
         if (aDerived != null)
-            fieldDecl.setReadOnly(true);
+            fieldDecl.setEnabled(false);
+
+        Statistics aStatistics = annotations.getAnnotation(Statistics.class);
+        if (aStatistics != null)
+            fieldDecl.setEnabled(false);
 
         OfGroup aOfGroup = annotations.getAnnotation(OfGroup.class);
         if (aOfGroup != null) {

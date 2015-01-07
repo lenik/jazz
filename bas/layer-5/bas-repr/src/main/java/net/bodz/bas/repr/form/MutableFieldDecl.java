@@ -32,6 +32,7 @@ public class MutableFieldDecl
     SortOrder preferredSortOrder = SortOrder.NONE;
 
     String inputName;
+    boolean enabled = true;
     boolean readOnly;
     Integer maxLength;
     Double minValue;
@@ -42,7 +43,7 @@ public class MutableFieldDecl
     NumberFormat numberFormat;
     iString placeholder;
     char echoChar;
-    NullConvertion nullConvertion = NullConvertion.NONE;
+    NullConvertion nullConvertion = NullConvertion.EMPTY;
     SpaceNormalization spaceNormalization = SpaceNormalization.NONE;
     SortOrder itemSortOrder = SortOrder.NONE;
 
@@ -157,6 +158,15 @@ public class MutableFieldDecl
 
     public void setInputName(String inputName) {
         this.inputName = inputName;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

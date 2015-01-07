@@ -36,7 +36,10 @@ public class Locale_htm
 
         for (Locale locale : Locale.getAvailableLocales()) {
             boolean selected = locale.equals(value);
-            HtmlOptionTag option = select.option().value(locale.getLanguage()).text(locale.getDisplayName());
+            HtmlOptionTag option = select.option();
+            option.value(locale.getLanguage());
+            option.text(locale.getDisplayName());
+            option.label(locale.getLanguage());
             if (selected)
                 option.selected("selected");
         }
