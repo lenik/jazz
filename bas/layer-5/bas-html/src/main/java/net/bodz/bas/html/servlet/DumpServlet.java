@@ -3,6 +3,7 @@ package net.bodz.bas.html.servlet;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +21,14 @@ public abstract class DumpServlet
             serviceImpl(req, resp);
         } catch (Throwable e) {
             e.printStackTrace(System.err);
-            OutputStream os = resp.getOutputStream();
-            PrintStream out = new PrintStream(os);
-            out.println("<pre>");
-            e.printStackTrace(out);
-            out.println("</pre>");
+            try {
+                OutputStream os = resp.getOutputStream();
+                PrintStream ps = new PrintStream(os);
+                e.printStackTrace(ps);
+            } catch (IllegalStateException ise) {
+                PrintWriter pw = resp.getWriter();
+                e.printStackTrace(pw);
+            }
         }
     }
 
