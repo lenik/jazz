@@ -9,7 +9,7 @@ public class CoMomentIntervalCriteria
         extends CoEntityCriteria {
 
     public DateRange dateRange;
-    public Integer year;
+    public Integer year; // = Calendar.getInstance().get(Calendar.YEAR);
 
     public boolean noDate;
     public boolean noYear;
