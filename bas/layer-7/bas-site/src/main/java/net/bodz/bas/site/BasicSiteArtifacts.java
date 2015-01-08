@@ -9,6 +9,8 @@ public class BasicSiteArtifacts
 
     public static final String BIGVIDEO_CSS = "bigvideo.css";
     public static final String BIGVIDEO_JS = "bigvideo.js";
+    public static final String CHOSEN_CSS = "chosen.css";
+    public static final String CHOSEN_JS = "chosen.js";
     public static final String BOOTSTRAP3_CSS = "bootstrap3.css";
     public static final String BOOTSTRAP3_JS = "bootstrap3.js";
     public static final String DATATABLES_CSS = "datatables.css";
@@ -28,10 +30,13 @@ public class BasicSiteArtifacts
     public static final String ICHECK_JS = "icheck.js";
     public static final String JQUERY_MIN = "jquery-min";
     public static final String JQUERY_UI_MIN = "jquery-ui-min";
+    public static final String KNOB_JS = "knob.js";
     public static final String MAGNIFIC_POPUP_CSS = "magnific-popup.css";
     public static final String MAGNIFIC_POPUP_JS = "magnific-popup.js";
     public static final String PARSLEY_CSS = "parsley.css";
     public static final String PARSLEY_JS = "parsley.js";
+    public static final String SELECTIZE_CSS = "selectize.css";
+    public static final String SELECTIZE_JS = "selectize.js";
     public static final String WALLPAPER_CSS = "wallpaper.css";
     public static final String WALLPAPER_JS = "wallpaper.js";
 
@@ -59,6 +64,15 @@ public class BasicSiteArtifacts
     {
         bigvideo_js.addDependency(jQueryMin);
         bigvideo_js.addDependency(bigvideo_css);
+    }
+
+    IArtifact chosen_css = css(CHOSEN_CSS, "1.3.0", //
+            _js_.join("jquery-chosen/chosen.css"));
+    IArtifact chosen_js = javascript(CHOSEN_JS, "1.3.0", //
+            _js_.join("jquery-chosen/chosen.jquery.min.js"));
+    {
+        chosen_js.addDependency(jQueryMin);
+        chosen_js.addDependency(chosen_css);
     }
 
     IArtifact datatables_css = css(DATATABLES_CSS, "1.10.3", //
@@ -133,6 +147,12 @@ public class BasicSiteArtifacts
         icheck_js.addDependency(icheck_css);
     }
 
+    IArtifact knob_js = javascript(KNOB_JS, "1.2.11", //
+            _js_.join("jquery-knob/dist/jquery.knob.min.js"));
+    {
+        knob_js.addDependency(jQueryMin);
+    }
+
     IArtifact magnificPopup_css = css(MAGNIFIC_POPUP_CSS, "1.0.0", //
             _js_.join("jquery-magnific-popup/dist/magnific-popup.css"));
     IArtifact magnificPopup_js = javascript(MAGNIFIC_POPUP_JS, "1.0.0", //
@@ -151,6 +171,15 @@ public class BasicSiteArtifacts
         parsley_js.addDependency(parsley_css);
     }
 
+    IArtifact selectize_css = css(SELECTIZE_CSS, "0.11.2", //
+            _js_.join("jquery-selectize/dist/css/selectize.css"));
+    IArtifact selectize_js = javascript(SELECTIZE_JS, "0.11.2", //
+            _js_.join("jquery-selectize/dist/js/standalone/selectize.min.js"));
+    {
+        selectize_js.addDependency(jQueryMin);
+        selectize_js.addDependency(selectize_css);
+    }
+
     IArtifact wallpaper_css = css(WALLPAPER_CSS, "3.1.18", //
             _js_.join("jquery-wallpaper/jquery.fs.wallpaper.css"));
     IArtifact wallpaper_js = javascript(WALLPAPER_JS, "3.1.18", //
@@ -158,6 +187,21 @@ public class BasicSiteArtifacts
     {
         wallpaper_js.addDependency(jQueryMin);
         wallpaper_js.addDependency(wallpaper_css);
+    }
+
+    public static final String ALL_INPUTS = "all-inputs";
+    public static final String ALL_EFFECTS = "all-effects";
+    IArtifact allInputs = pseudo(ALL_INPUTS);
+    {
+        allInputs.addDependency(chosen_js);
+        allInputs.addDependency(icheck_js);
+        allInputs.addDependency(knob_js);
+        allInputs.addDependency(parsley_js);
+        allInputs.addDependency(selectize_js);
+    }
+    IArtifact allEffects = pseudo(ALL_EFFECTS);
+    {
+        allEffects.addDependency(magnificPopup_js);
     }
 
 }
