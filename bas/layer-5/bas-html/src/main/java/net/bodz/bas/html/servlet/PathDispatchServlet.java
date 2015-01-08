@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fn.EvalException;
+import net.bodz.bas.fn.IEvaluable;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
 import net.bodz.bas.html.viz.IHtmlViewBuilder;
@@ -27,6 +29,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.PathDispatchService;
 import net.bodz.bas.repr.path.TokenQueue;
@@ -38,7 +41,6 @@ import net.bodz.bas.rtx.QueryableUnion;
 import net.bodz.bas.std.rfc.http.HttpCacheControl;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
-import net.bodz.bas.t.ref.Ref;
 import net.bodz.bas.ui.dom1.UiVar;
 import net.bodz.bas.xml.dom.XmlFormatter;
 
@@ -48,10 +50,11 @@ public class PathDispatchServlet
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(PathDispatchServlet.class);
 
-    public static final String ROOT_CLASS = "root";
+    public static final String ROOT_CLASS = "rootClass";
+    public static final String MAX_EVAL_DEPTH = "maxEvalDepth";
 
     private Object rootObject;
-    private int maxRefDepth = 10;
+    private int maxEvalDepth = 10;
 
     private PathDispatchService pathDispatchService;
     private IHtmlViewBuilderFactory viewBuilderFactory;
@@ -76,6 +79,10 @@ public class PathDispatchServlet
         } catch (Exception e) {
             throw new ServletException(e.getMessage(), e);
         }
+
+        String maxRefDepthStr = config.getInitParameter(MAX_EVAL_DEPTH);
+        if (maxRefDepthStr != null)
+            maxEvalDepth = Integer.parseInt(maxRefDepthStr);
     }
 
     @Override
@@ -102,18 +109,25 @@ public class PathDispatchServlet
         TokenQueue tokenQueue = new TokenQueue(pathInfo);
 
         Object start = rootObject;
-        int startRefDepth = 0;
-        while (start instanceof Ref<?>) {
-            if (++startRefDepth > maxRefDepth)
-                throw new ServletException("Out of start ref depth.");
-            start = ((Ref<?>) start).get();
-        }
-
         IPathArrival arrival;
         try {
             arrival = pathDispatchService.dispatch(start, tokenQueue);
         } catch (PathDispatchException e) {
             throw new ServletException(e.getMessage(), e);
+        }
+
+        for (int i = 0; i < maxEvalDepth; i++) {
+            Object target = arrival.getTarget();
+            if (target instanceof IEvaluable<?>) {
+                IEvaluable<?> ref = (IEvaluable<?>) target;
+                try {
+                    target = ref.eval();
+                } catch (EvalException e) {
+                    throw new ServletException(e.getMessage(), e);
+                }
+                arrival = new PathArrival(arrival, target, new String[0], arrival.getRemainingPath());
+            } else
+                break;
         }
 
         req.setAttribute(ITokenQueue.class, tokenQueue);
@@ -154,7 +168,7 @@ public class PathDispatchServlet
 
         RootHtmlViewContext ctx = new RootHtmlViewContext(req, resp);
         QueryableUnion union = new QueryableUnion();
-        for (IPathArrival a : arrival.toList())
+        for (IPathArrival a : arrival.toList(false))
             if (a.getTarget() instanceof IQueryable)
                 union.add((IQueryable) a.getTarget());
         if (!union.isEmpty()) {

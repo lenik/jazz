@@ -55,6 +55,6 @@ public interface IPathArrival {
     @Shortcut
     Object getLastNonNullTarget();
 
-    List<IPathArrival> toList();
+    List<IPathArrival> toList(boolean mergeTransients);
 
 }

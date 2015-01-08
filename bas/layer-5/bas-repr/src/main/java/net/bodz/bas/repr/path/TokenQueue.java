@@ -15,15 +15,18 @@ public class TokenQueue
     private static final long serialVersionUID = 1L;
 
     private final String[] tokens;
+    private final boolean entered;
     private int index;
-    private boolean entered;
     private boolean stopped;
 
-    public TokenQueue(String[] tokens) {
+    private int savedIndex;
+    private boolean savedStopped;
+
+    public TokenQueue(String[] tokens, boolean entered) {
         if (tokens == null)
             throw new NullPointerException("tokens");
         this.tokens = tokens;
-        this.index = 0;
+        this.entered = entered;
     }
 
     public TokenQueue(String path) {
@@ -32,6 +35,7 @@ public class TokenQueue
 
         if (path.isEmpty()) {
             this.tokens = new String[0];
+            this.entered = false;
             return;
         }
 
@@ -186,14 +190,16 @@ public class TokenQueue
         this.stopped = true;
     }
 
-    static boolean isNumber(String str) {
-        int i = str.length();
-        while (--i >= 0) {
-            char c = str.charAt(i);
-            if (c < '0' || c > '9')
-                return false;
-        }
-        return true;
+    @Override
+    public void save() {
+        savedIndex = index;
+        savedStopped = stopped;
+    }
+
+    @Override
+    public void restore() {
+        index = savedIndex;
+        stopped = savedStopped;
     }
 
     @Override
@@ -213,6 +219,16 @@ public class TokenQueue
             buf.append(tokens[i]);
         }
         return buf.toString();
+    }
+
+    static boolean isNumber(String str) {
+        int i = str.length();
+        while (--i >= 0) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9')
+                return false;
+        }
+        return true;
     }
 
 }
