@@ -52,6 +52,13 @@ public abstract class AbstractArtifactManager
         return buf.toString();
     }
 
+    protected IArtifact pseudo(String name) {
+        MutableWebArtifact artifact = new MutableWebArtifact(name, "x", null, null);
+        artifact.setType(ArtifactType.PSEUDO);
+        addArtifact(artifact);
+        return artifact;
+    }
+
     protected IArtifact javascript(String name, String versionStr, IAnchor anchor) {
         MutableWebArtifact artifact = MutableWebArtifact.javascript(name, versionStr, anchor);
         addArtifact(artifact);
