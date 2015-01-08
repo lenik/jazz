@@ -47,7 +47,7 @@ public abstract class AbstractForm_htm<T>
                 .getFieldGroups(FieldDeclFilters.maxDetailLevel(DetailLevel.DETAIL));
 
         for (FieldDeclGroup group : groups) {
-            if (buildFieldGroup(ctx, fgv, ref, group, options))
+            if (overrideFieldGroup(ctx, fgv, ref, group, options))
                 continue;
 
             FieldCategory category = group.getCategory();
@@ -61,7 +61,7 @@ public abstract class AbstractForm_htm<T>
             if (selection.isEmpty())
                 continue;
 
-            selection = processFieldSelection(ctx, catTag, ref, group, selection, options);
+            selection = overrideFieldSelection(ctx, catTag, ref, group, selection, options);
             if (selection != null)
                 for (IFieldDecl fieldDecl : selection) {
                     IHtmlTag fieldTag = beginField(ctx, catTag, fieldDecl);
@@ -102,8 +102,8 @@ public abstract class AbstractForm_htm<T>
         return form;
     }
 
-    protected boolean buildFieldGroup(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef, FieldDeclGroup group,
-            IOptions options)
+    protected boolean overrideFieldGroup(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef,
+            FieldDeclGroup group, IOptions options)
             throws ViewBuilderException, IOException {
         return false;
     }
@@ -111,9 +111,7 @@ public abstract class AbstractForm_htm<T>
     protected abstract IHtmlTag beginCategory(IHtmlViewContext ctx, IHtmlTag out, FieldCategory category)
             throws ViewBuilderException, IOException;
 
-    protected abstract void endCategory(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category);
-
-    protected List<IFieldDecl> processFieldSelection(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef,
+    protected List<IFieldDecl> overrideFieldSelection(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef,
             FieldDeclGroup group, List<IFieldDecl> selection, IOptions options)
             throws ViewBuilderException, IOException {
         return selection;
@@ -128,6 +126,8 @@ public abstract class AbstractForm_htm<T>
 
     protected abstract void endField(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag fieldOut, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
+
+    protected abstract void endCategory(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category);
 
     protected void endForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
