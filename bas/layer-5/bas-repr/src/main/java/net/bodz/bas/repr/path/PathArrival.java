@@ -13,7 +13,7 @@ import net.bodz.bas.c.string.StringArray;
 public class PathArrival
         implements IPathArrival {
 
-    private final IPathArrival parent;
+    private IPathArrival parent;
     private String[] consumedTokens = new String[0];
     private Object target;
     private String remainingPath;
@@ -35,6 +35,13 @@ public class PathArrival
 
     public PathArrival(IPathArrival parent, Object target, String consumedToken, String remainingPath) {
         this(parent, target, new String[] { consumedToken }, remainingPath);
+    }
+
+    public PathArrival(IPathArrival o) {
+        this.parent = o.getPrevious();
+        this.target = o.getTarget();
+        this.consumedTokens = o.getConsumedTokens();
+        this.remainingPath = o.getRemainingPath();
     }
 
     public static PathArrival shift(IPathArrival parent, Object target, ITokenQueue tokens) {
@@ -129,7 +136,9 @@ public class PathArrival
     }
 
     @Override
-    public List<IPathArrival> toList() {
+    public List<IPathArrival> toList(boolean mergeTransients) {
+        if (mergeTransients)
+            return merge(toList(false));
         List<IPathArrival> list = new ArrayList<IPathArrival>();
         IPathArrival a = this;
         while (a != null) {
@@ -138,6 +147,22 @@ public class PathArrival
         }
         Collections.reverse(list);
         return list;
+    }
+
+    static List<IPathArrival> merge(List<IPathArrival> list) {
+        List<IPathArrival> result = new ArrayList<>(list.size());
+        PathArrival last = null;
+        for (IPathArrival a : list) {
+            PathArrival m = new PathArrival(a);
+            if (m.parent != null && m.consumedTokens.length == 0)
+                if (last == null)
+                    throw new IllegalArgumentException("Dangling transient path arrival.");
+                else
+                    last.target = m.target;
+            else
+                result.add(last = m);
+        }
+        return result;
     }
 
     @Override

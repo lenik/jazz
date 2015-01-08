@@ -3,6 +3,8 @@ package net.bodz.bas.repr.path;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.bodz.bas.fn.EvalException;
+import net.bodz.bas.fn.IEvaluable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
@@ -16,6 +18,7 @@ public class CompositePathDispatcher
 
     private Set<IPathDispatcher> dispatchers;
     private int maxDispatchCount = 100;
+    private int maxEvalDepth = 10;
 
     public CompositePathDispatcher() {
         dispatchers = new TreeSet<IPathDispatcher>(PriorityComparator.INSTANCE);
@@ -33,6 +36,22 @@ public class CompositePathDispatcher
         dispatchers.remove(dispatcher);
     }
 
+    public int getMaxDispatchCount() {
+        return maxDispatchCount;
+    }
+
+    public void setMaxDispatchCount(int maxDispatchCount) {
+        this.maxDispatchCount = maxDispatchCount;
+    }
+
+    public int getMaxRefDepth() {
+        return maxEvalDepth;
+    }
+
+    public void setMaxRefDepth(int maxRefDepth) {
+        this.maxEvalDepth = maxRefDepth;
+    }
+
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws PathDispatchException {
@@ -46,36 +65,67 @@ public class CompositePathDispatcher
         if (dispatchers.isEmpty())
             return null;
 
-        IPathArrival arrival = previous;
-        int count = 0;
+        Process process = new Process(previous, tokens);
+        process.run();
+        return process.arrival;
+    }
 
-        while (!tokens.isEmpty()) {
-            boolean processed = false;
+    class Process {
+        IPathArrival arrival;
+        ITokenQueue tokens;
+        int count;
 
-            for (IPathDispatcher dispatcher : dispatchers) {
-                IPathArrival next = dispatcher.dispatch(arrival, tokens);
-                if (next != null) {
-                    arrival = next;
-                    processed = true;
-                    break;
-                }
-            }
-
-            if (!processed)
-                break;
-
-            logger.debug("    " + arrival);
-
-            target = arrival.getTarget();
-            if (target == null)
-                break;
-
-            if (++count > maxDispatchCount)
-                throw new PathDispatchException(String.format("Too many dispatches (%d), maybe dead loop?",
-                        maxDispatchCount));
+        public Process(IPathArrival previous, ITokenQueue tokens) {
+            this.arrival = previous;
+            this.tokens = tokens;
         }
 
-        return arrival;
+        public void run()
+                throws PathDispatchException {
+            while (!tokens.isEmpty()) {
+                if (!move())
+                    break;
+
+                logger.debug("    " + arrival);
+                Object target = arrival.getTarget();
+                if (target == null)
+                    break;
+
+                if (++count > maxDispatchCount)
+                    throw new PathDispatchException(String.format("Too many dispatches (%d), maybe dead loop?",
+                            maxDispatchCount));
+            }
+        }
+
+        boolean move()
+                throws PathDispatchException {
+            IPathArrival tmp = arrival;
+            tokens.save();
+            for (int refDepth = 0; refDepth < maxEvalDepth; refDepth++) {
+                for (IPathDispatcher dispatcher : dispatchers) {
+                    IPathArrival next = dispatcher.dispatch(tmp, tokens);
+                    if (next != null) {
+                        arrival = next;
+                        return true;
+                    }
+                }
+
+                Object target = tmp.getTarget();
+                if (target instanceof IEvaluable<?>) {
+                    IEvaluable<?> ref = (IEvaluable<?>) target;
+                    try {
+                        target = ref.eval();
+                    } catch (EvalException e) {
+                        throw new PathDispatchException(e.getMessage(), e);
+                    }
+                    tmp = new PathArrival(tmp, target, new String[0], tmp.getRemainingPath());
+                } else
+                    break;
+            }
+            tokens.restore();
+            return false;
+        }
+
     }
 
 }
