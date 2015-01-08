@@ -35,7 +35,6 @@ public class Group
     public static final int N_FULL_NAME = 40;
 
     private List<User> users;
-    private List<Permission> permissions;
 
     /**
      * 全称
@@ -57,17 +56,6 @@ public class Group
 
     public void setUsers(List<User> users) {
         this.users = users;
-    }
-
-    /**
-     * 权限
-     */
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
     }
 
 }

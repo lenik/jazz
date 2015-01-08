@@ -172,14 +172,17 @@ public abstract class CoObject
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(80);
+        Object id = getId();
+        if (id == null)
+            return "new";
         String codeName = getCodeName();
+        StringBuilder sb = new StringBuilder(80);
         if (codeName != null)
             sb.append(codeName);
         else
-            sb.append(getId());
+            sb.append(id);
         sb.append(" - ");
-        sb.append(getLabel());
+        sb.append(label);
         return sb.toString();
     }
 
