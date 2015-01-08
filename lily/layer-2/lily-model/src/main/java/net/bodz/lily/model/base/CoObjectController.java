@@ -6,6 +6,7 @@ import net.bodz.bas.fn.IEvaluable;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IQueryable;
@@ -42,14 +43,14 @@ public class CoObjectController
         String token = tokens.peek();
 
         switch (token) {
-        case "json":
-            createIndex();
+        case "index.html":
+            return PathArrival.shift(previous, createIndex(), tokens);
         }
 
         return null;
     }
 
-    CoObjectIndex createIndex() {
+    protected CoObjectIndex createIndex() {
         try {
             return indexCtor.newInstance(context);
         } catch (ReflectiveOperationException e) {

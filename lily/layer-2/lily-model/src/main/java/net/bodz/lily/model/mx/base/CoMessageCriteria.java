@@ -16,11 +16,11 @@ public class CoMessageCriteria
 
     public Integer opId;
     public Integer categoryId;
+    public Integer phaseId;
     public Integer tagId;
     public Collection<Integer> tagIds;
 
     public DateRange mailDateRange;
-    public Integer phaseId;
 
     public IntRange voteCountRange;
     public IntRange likerCountRange;
@@ -29,9 +29,9 @@ public class CoMessageCriteria
     public boolean noForm;
     public boolean noOp;
     public boolean noCategory;
+    public boolean noPhase;
     public boolean noTag;
     public boolean noMailDate;
-    public boolean noPhase;
 
     public Integer getOpId() {
         return opId;
@@ -47,6 +47,14 @@ public class CoMessageCriteria
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Integer getPhaseId() {
+        return phaseId;
+    }
+
+    public void setPhaseId(Integer phaseId) {
+        this.phaseId = phaseId;
     }
 
     public Integer getTagId() {
@@ -71,14 +79,6 @@ public class CoMessageCriteria
 
     public void setMailDateRange(DateRange mailDateRange) {
         this.mailDateRange = mailDateRange;
-    }
-
-    public Integer getPhaseId() {
-        return phaseId;
-    }
-
-    public void setPhaseId(Integer phaseId) {
-        this.phaseId = phaseId;
     }
 
     /**
@@ -160,6 +160,7 @@ public class CoMessageCriteria
         opId = map.getInt("op", opId);
         categoryId = map.getInt("cat", categoryId);
         phaseId = map.getInt("phase", phaseId);
+        tagId = map.getInt("tag", tagId);
         // String tagsStr = map.getString("tags");
         // if (tagsStr != null)
         // tags = new TreeSet<String>(Arrays.asList(tagsStr.split(",")));
@@ -171,9 +172,9 @@ public class CoMessageCriteria
         noForm = map.getBoolean("no-form");
         noOp = map.getBoolean("no-op");
         noCategory = map.getBoolean("no-cat");
+        noPhase = map.getBoolean("no-phase");
         noTag = map.getBoolean("no-tag");
         noMailDate = map.getBoolean("no-maildate");
-        noPhase = map.getBoolean("no-phase");
     }
 
 }
