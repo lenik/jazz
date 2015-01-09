@@ -107,6 +107,7 @@ public class CoMessage<Id>
      * @label.zh 正文
      * @placeholder 输入正文…
      */
+    @TextInput(multiLine = true, html = true)
     public String getText() {
         return text;
     }
