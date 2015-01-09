@@ -14,4 +14,8 @@ public @interface TextInput {
 
     SpaceNormalization space() default SpaceNormalization.TRIM;
 
+    boolean multiLine() default false;
+
+    boolean html() default false;
+
 }
