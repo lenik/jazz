@@ -16,12 +16,14 @@
             <result property="codeName" column="g_code" />
             <result property="label" column="g_label" />
             <result property="description" column="g_description" />
+            <result property="admin" column="g_admin" />
         </association>
         <collection property="groups" javaType="ArrayList" ofType="net.bodz.lily.model.base.security.Group">
             <id property="id" column="y_id" />
             <result property="codeName" column="y_code" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
+            <result property="admin" column="y_admin" />
         </collection>
     </resultMap>
 
@@ -31,10 +33,12 @@
             g.code "g_code",
             g.label "g_label",
             g.description "g_description",
+            g.admin "g_admin",
             y.id "y_id",
             y.code "y_code",
             y.label "y_label",
-            y.description "y_description"
+            y.description "y_description",
+            y.admin "y_admin"
         from "user" a
             left join "group" g on a.gid0=g.id
             left join group_user x on x."user"=a.id

@@ -64,4 +64,17 @@
         acl=#{acl},
     </sql>
 
+    <sql id="modefilt">
+        <if test="login != null &amp;&amp; !login.user.admin">
+            and (
+            uid=#{login.user.id}
+            or (mode::bit(9) &amp; b'000100000' != b'000000000') and gid in
+            <foreach collection="login.user.groupIds" item="item" open="(" close=")" separator=", ">
+                #{item}
+            </foreach>
+            or (mode::bit(9) &amp; b'000000100' != b'000000000')
+            )
+        </if>
+    </sql>
+    
 </mapper>

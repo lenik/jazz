@@ -34,7 +34,16 @@ public class Group
     public static final int N_LOGIN_NAME = 30;
     public static final int N_FULL_NAME = 40;
 
+    private boolean admin;
     private List<User> users;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
     /**
      * 全称

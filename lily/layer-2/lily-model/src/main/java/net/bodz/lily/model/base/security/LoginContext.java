@@ -8,10 +8,12 @@ import net.bodz.bas.t.preorder.PrefixMap;
 
 public class LoginContext {
 
+    // public static final String ATTRIBUTE_KEY = "loginContext";
     public static final String ATTRIBUTE_KEY = LoginContext.class.getName();
 
     public IVirtualHost virtualHost;
     public User user;
+
     public PrefixMap<String> permissions;
 
     public static LoginContext fromSession() {
