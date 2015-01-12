@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.c.java.nio.CommonOpenConfig;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fn.IFilter;
-import net.bodz.bas.i18n.II18nCtlConsts;
+import net.bodz.bas.i18n.II18nScrConsts;
 import net.bodz.bas.io.res.*;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.t.iterator.Iterables;
@@ -275,7 +275,7 @@ public abstract class AbstractFile
     public final IRandomResource getResource() {
         Charset charset = getPreferredCharset();
         if (charset == null)
-            charset = II18nCtlConsts.CHARSET.get();
+            charset = II18nScrConsts.CHARSET.get();
         return getResource(charset);
     }
 
@@ -301,7 +301,7 @@ public abstract class AbstractFile
     public final IStreamInputSource getInputSource() {
         Charset charset = getPreferredCharset();
         if (charset == null)
-            charset = II18nCtlConsts.CHARSET.get();
+            charset = II18nScrConsts.CHARSET.get();
         return getInputSource(charset);
     }
 
@@ -327,7 +327,7 @@ public abstract class AbstractFile
     public final IStreamOutputTarget getOutputTarget() {
         Charset charset = getPreferredCharset();
         if (charset == null)
-            charset = II18nCtlConsts.CHARSET.get();
+            charset = II18nScrConsts.CHARSET.get();
         // There no preferred-append-mode.
         return getOutputTarget(charset);
     }

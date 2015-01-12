@@ -10,7 +10,7 @@ import org.apache.tools.ant.types.Path;
 
 import net.bodz.bas.c.org.eclipse.JavaProject;
 import net.bodz.bas.c.org.eclipse.JavaProjectBaseDir;
-import net.bodz.bas.c.system.UserDirCtl;
+import net.bodz.bas.c.system.UserDirScr;
 import net.bodz.bas.err.ParseException;
 
 public class ProjectInfo {
@@ -32,7 +32,7 @@ public class ProjectInfo {
 
     public ProjectInfo(Project antProject)
             throws ParseException, IOException {
-        this(antProject, UserDirCtl.getInstance().get());
+        this(antProject, UserDirScr.getInstance().get());
     }
 
     public ProjectInfo(Project antProject, File searchStart)

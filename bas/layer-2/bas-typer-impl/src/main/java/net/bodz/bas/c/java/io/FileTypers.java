@@ -2,7 +2,7 @@ package net.bodz.bas.c.java.io;
 
 import java.io.File;
 
-import net.bodz.bas.c.system.UserDirCtl;
+import net.bodz.bas.c.system.UserDirScr;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.rtx.IOptions;
@@ -17,7 +17,7 @@ public class FileTypers
      */
     @ParameterType(File.class)
     public static final String textformContextDirectory = "textform.contextDirectory";
-    public static final File defaultTextformContextDirectory = UserDirCtl.getInstance().get();
+    public static final File defaultTextformContextDirectory = UserDirScr.getInstance().get();
 
     public FileTypers() {
         super(File.class);
