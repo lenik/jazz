@@ -5,6 +5,7 @@ import java.util.Set;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 
+import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.sea.AbstractTextParametric;
 import net.bodz.lily.model.sea.QVariantMap;
 
@@ -137,6 +138,11 @@ public class CoEntityCriteria
         ownerId = map.getInt("uid", ownerId);
         ownerGroupId = map.getInt("gid", ownerGroupId);
         acls = map.getInts("acls", acls);
+    }
+
+    public LoginContext getLogin() {
+        LoginContext loginContext = LoginContext.fromSession();
+        return loginContext;
     }
 
 }

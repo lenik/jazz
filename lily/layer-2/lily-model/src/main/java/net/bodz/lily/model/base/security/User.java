@@ -1,8 +1,14 @@
 package net.bodz.lily.model.base.security;
 
+import java.beans.Transient;
 import java.net.InetAddress;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+
+import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.repr.form.meta.TextInput;
 
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.model.base.IdType;
@@ -49,6 +55,7 @@ public class User
      * @label Login Name
      * @label.zh 用户名
      */
+    @TextInput(maxLength = N_LOGIN_NAME)
     public final String getLoginName() {
         return getCodeName();
     }
@@ -63,6 +70,7 @@ public class User
      * @label Full Name
      * @label.zh 真实姓名
      */
+    @TextInput(maxLength = N_FULL_NAME)
     public final String getFullName() {
         return getLabel();
     }
@@ -91,9 +99,21 @@ public class User
         this.groups = groups;
     }
 
+    @Derived
+    @Transient
+    public Set<Integer> getGroupIds() {
+        Set<Integer> gids = new HashSet<>();
+        if (primaryGroup != null)
+            gids.add(primaryGroup.getId());
+        for (Group g : groups)
+            gids.add(g.getId());
+        return gids;
+    }
+
     /**
      * E-mail
      */
+    @TextInput(maxLength = N_EMAIL)
     public String getEmail() {
         return email;
     }
@@ -122,6 +142,7 @@ public class User
         this.salt = salt;
     }
 
+    @TextInput(maxLength = N_PASSWORD)
     public String getPassword() {
         return password;
     }
@@ -152,6 +173,24 @@ public class User
 
     public void setLastLoginIP(InetAddress lastLoginIP) {
         this.lastLoginIP = lastLoginIP;
+    }
+
+    public boolean isAdmin() {
+        Integer id = getId();
+        if (id == null)
+            return false;
+        if (id == 0)
+            return true;
+
+        if (primaryGroup != null)
+            if (primaryGroup.isAdmin())
+                return true;
+
+        for (Group g : groups)
+            if (g.isAdmin())
+                return true;
+
+        return false;
     }
 
 }
