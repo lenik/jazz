@@ -1,3 +1,2 @@
 net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler
-net.bodz.bas.db.batis.MillisecondTypeHandler
 net.bodz.bas.repr.state.StateTypeHandler

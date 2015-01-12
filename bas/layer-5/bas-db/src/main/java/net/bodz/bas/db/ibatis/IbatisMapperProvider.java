@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -33,16 +33,16 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
-public class MybatisMapperProvider
+public class IbatisMapperProvider
         implements IMapperProvider {
 
-    static final Logger logger = LoggerFactory.getLogger(MybatisMapperProvider.class);
+    static final Logger logger = LoggerFactory.getLogger(IbatisMapperProvider.class);
 
     private Set<Class<?>> mapperClasses = new TreeSet<>(ClassNameComparator.getInstance());
     private DataSource dataSource;
     private SqlSessionFactory sqlSessionFactory;
 
-    public MybatisMapperProvider(DataSource dataSource) {
+    public IbatisMapperProvider(DataSource dataSource) {
         if (dataSource == null)
             throw new NullPointerException("dataSource");
         this.dataSource = dataSource;
@@ -71,12 +71,10 @@ public class MybatisMapperProvider
         TypeAliasRegistry typeAliasRegistry = config.getTypeAliasRegistry();
         TypeHandlerRegistry typeHandlerRegistry = config.getTypeHandlerRegistry();
         try {
-            for (Class<?> typeHandlerClass : TypeIndex.forClass(MybatisTypeHandler.class, false)) {
-                if (MybatisBaseTypeHandler.class.isAssignableFrom(typeHandlerClass))
-                    typeAliasRegistry.registerAlias(typeHandlerClass);
-                else
-                    typeHandlerRegistry.register(typeHandlerClass);
-            }
+            for (Class<?> typeHandlerClass : TypeIndex.forClass(TypeHandlerImpl.class, false))
+                typeHandlerRegistry.register(typeHandlerClass);
+            for (Class<?> aliasedClass : TypeIndex.forClass(Aliased.class))
+                typeAliasRegistry.registerAlias(aliasedClass);
         } catch (Exception e) {
             throw new IllegalUsageError(e.getMessage(), e);
         }
@@ -107,7 +105,9 @@ public class MybatisMapperProvider
             config.addMapper(mapperClass);
         }
 
-        Properties vars = config.getVariables();
+        for (IIbatisConfigurer configurer : ServiceLoader.load(IIbatisConfigurer.class))
+            configurer.configure(config);
+
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         return builder.build(config);
     }
