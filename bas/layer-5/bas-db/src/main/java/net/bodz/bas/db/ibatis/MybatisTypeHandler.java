@@ -1,4 +1,4 @@
-package net.bodz.bas.db.batis;
+package net.bodz.bas.db.ibatis;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 

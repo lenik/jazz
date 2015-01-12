@@ -1,4 +1,4 @@
-package net.bodz.bas.db.batis;
+package net.bodz.bas.db.ibatis;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -106,6 +107,7 @@ public class MybatisMapperProvider
             config.addMapper(mapperClass);
         }
 
+        Properties vars = config.getVariables();
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         return builder.build(config);
     }

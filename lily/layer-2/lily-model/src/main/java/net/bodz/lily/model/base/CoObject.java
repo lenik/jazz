@@ -8,8 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 
-import net.bodz.bas.db.batis.IMapperProvider;
-import net.bodz.bas.db.batis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IMapperProvider;
+import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.meta.HtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
