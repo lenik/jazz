@@ -1,4 +1,4 @@
-package net.bodz.bas.db.batis;
+package net.bodz.bas.db.ibatis;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import org.apache.ibatis.type.JdbcType;
 
-import net.bodz.bas.db.batis.MybatisTypeHandler;
+import net.bodz.bas.db.ibatis.MybatisTypeHandler;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StateGroup;
 

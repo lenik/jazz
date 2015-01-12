@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.JdbcType;
 import org.postgresql.util.PGobject;
 
-import net.bodz.bas.db.batis.MybatisTypeHandler;
+import net.bodz.bas.db.ibatis.MybatisTypeHandler;
 
 public class PgInetAddressTypeHandler
         extends MybatisTypeHandler<InetAddress> {
