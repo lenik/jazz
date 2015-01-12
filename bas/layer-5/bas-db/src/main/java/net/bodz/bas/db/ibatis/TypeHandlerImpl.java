@@ -5,7 +5,7 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import net.bodz.bas.meta.codegen.IndexedType;
 
 @IndexedType
-public abstract class MybatisTypeHandler<T>
+public abstract class TypeHandlerImpl<T>
         extends BaseTypeHandler<T> {
 
 }
