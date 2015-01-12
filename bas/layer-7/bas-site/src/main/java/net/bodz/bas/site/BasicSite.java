@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.bodz.bas.JazzBasProject;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.http.ctx.CurrentHttpService;
-import net.bodz.bas.i18n.LocaleCtl;
+import net.bodz.bas.i18n.LocaleScr;
 import net.bodz.bas.repr.content.AbstractXjdocContent;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
@@ -84,7 +84,7 @@ public abstract class BasicSite
 
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request != null) {
-            Locale locale = (Locale) request.getAttribute(LocaleCtl.LOCALE.getName());
+            Locale locale = (Locale) request.getAttribute(LocaleScr.LOCALE.getName());
             if (locale != null)
                 url += "/intl/" + locale.toLanguageTag().toLowerCase();
         }
@@ -172,7 +172,7 @@ public abstract class BasicSite
             if (lang != null) {
                 HttpServletRequest request = CurrentHttpService.getRequest();
                 Locale locale = Locale.forLanguageTag(lang); // non-null.
-                request.setAttribute(LocaleCtl.LOCALE.getName(), locale);
+                request.setAttribute(LocaleScr.LOCALE.getName(), locale);
                 return PathArrival.shift(2, previous, this, tokens);
             }
             break;

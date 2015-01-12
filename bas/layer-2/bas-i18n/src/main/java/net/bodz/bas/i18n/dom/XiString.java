@@ -4,7 +4,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.StringHtml;
 import net.bodz.bas.c.string.StringPart;
-import net.bodz.bas.i18n.LocaleCtl;
+import net.bodz.bas.i18n.LocaleScr;
 
 public class XiString
         extends XDomainNode<XiString, String>
@@ -45,7 +45,7 @@ public class XiString
      */
     @Override
     public String toString() {
-        String path = LocaleCtl.LOCALE.getPath();
+        String path = LocaleScr.LOCALE.getPath();
         path = path.toLowerCase();
         return getNearest(path);
     }

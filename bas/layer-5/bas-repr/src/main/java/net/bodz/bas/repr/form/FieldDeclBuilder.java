@@ -1,5 +1,6 @@
 package net.bodz.bas.repr.form;
 
+import java.beans.Transient;
 import java.text.DecimalFormat;
 
 import net.bodz.bas.c.type.TypeKind;
@@ -57,12 +58,13 @@ public class FieldDeclBuilder {
         if (aDetailLevel != null)
             fieldDecl.setDetailLevel(aDetailLevel.value());
 
-        Derived aDerived = annotations.getAnnotation(Derived.class);
-        if (aDerived != null)
+        if (annotations.getAnnotation(Derived.class) != null)
             fieldDecl.setEnabled(false);
 
-        Statistics aStatistics = annotations.getAnnotation(Statistics.class);
-        if (aStatistics != null)
+        if (annotations.getAnnotation(Transient.class) != null)
+            fieldDecl.setEnabled(false);
+
+        if (annotations.getAnnotation(Statistics.class) != null)
             fieldDecl.setEnabled(false);
 
         OfGroup aOfGroup = annotations.getAnnotation(OfGroup.class);
