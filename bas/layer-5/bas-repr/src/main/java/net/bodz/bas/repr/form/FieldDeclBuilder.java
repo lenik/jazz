@@ -90,7 +90,8 @@ public class FieldDeclBuilder {
             fieldDecl.inputName = inputName.isEmpty() ? null : inputName;
 
             fieldDecl.readOnly = aFormInput.readOnly();
-            fieldDecl.textWidth = aFormInput.textWidth();
+            if (aFormInput.textWidth() != 0)
+                fieldDecl.textWidth = aFormInput.textWidth();
 
             String s = aFormInput.inputMask();
             fieldDecl.inputMask = s.isEmpty() ? null : s;
@@ -103,7 +104,8 @@ public class FieldDeclBuilder {
 
         TextInput aTextInput = annotations.getAnnotation(TextInput.class);
         if (aTextInput != null) {
-            fieldDecl.maxLength = aTextInput.maxLength();
+            if (aTextInput.maxLength() != 0)
+                fieldDecl.maxLength = aTextInput.maxLength();
             fieldDecl.echoChar = aTextInput.echoChar();
             fieldDecl.spaceNormalization = aTextInput.space();
         }
@@ -136,6 +138,13 @@ public class FieldDeclBuilder {
             styleDecl.parseCss(css);
             fieldDecl.setStyle(styleDecl);
         }
+    }
+
+    int alt(int val, int zeroVal) {
+        if (val == 0)
+            return zeroVal;
+        else
+            return val;
     }
 
 }
