@@ -38,6 +38,15 @@ public abstract class AbstractForm_htm<T>
         }
 
         beforeForm(ctx, out, ref, options);
+        buildForm(ctx, out, ref, options);
+        afterForm(ctx, out, ref, options);
+
+        extras(ctx, out, ref, options);
+        return out;
+    }
+
+    protected IHtmlTag buildForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref, IOptions options)
+            throws ViewBuilderException, IOException {
 
         IFormDecl formDecl = IFormDecl.fn.forClass(ref.getValueType());
         IHtmlTag formTag = beginForm(ctx, out, ref, options);
@@ -73,7 +82,6 @@ public abstract class AbstractForm_htm<T>
         }
 
         endForm(ctx, formTag, ref, options);
-        out = afterForm(ctx, out, ref, options);
         return out;
     }
 
@@ -96,13 +104,13 @@ public abstract class AbstractForm_htm<T>
         return out;
     }
 
-    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HtmlFormTag form = out.form();
         return form;
     }
 
-    protected boolean overrideFieldGroup(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef,
+    protected boolean overrideFieldGroup(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> instanceRef,
             FieldDeclGroup group, IOptions options)
             throws ViewBuilderException, IOException {
         return false;
@@ -111,7 +119,7 @@ public abstract class AbstractForm_htm<T>
     protected abstract IHtmlTag beginCategory(IHtmlViewContext ctx, IHtmlTag out, FieldCategory category)
             throws ViewBuilderException, IOException;
 
-    protected List<IFieldDecl> overrideFieldSelection(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef,
+    protected List<IFieldDecl> overrideFieldSelection(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> instanceRef,
             FieldDeclGroup group, List<IFieldDecl> selection, IOptions options)
             throws ViewBuilderException, IOException {
         return selection;
@@ -120,7 +128,7 @@ public abstract class AbstractForm_htm<T>
     protected abstract IHtmlTag beginField(IHtmlViewContext ctx, IHtmlTag out, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
-    protected abstract void fieldBody(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> instanceRef, IFieldDecl fieldDecl,
+    protected abstract void fieldBody(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> instanceRef, IFieldDecl fieldDecl,
             IOptions options)
             throws ViewBuilderException, IOException;
 
@@ -129,11 +137,16 @@ public abstract class AbstractForm_htm<T>
 
     protected abstract void endCategory(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category);
 
-    protected void endForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    protected void endForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException, IOException {
     }
 
     protected IHtmlTag afterForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+            throws ViewBuilderException, IOException {
+        return out;
+    }
+
+    protected IHtmlTag extras(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
         return out;
     }
