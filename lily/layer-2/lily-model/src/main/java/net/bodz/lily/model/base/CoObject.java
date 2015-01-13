@@ -437,8 +437,10 @@ public abstract class CoObject
 
         String methodName = ctx.query(IMethodOfRequest.class).getMethodName();
 
-        boolean creation = getId() == null;
-        if (methodName != null)
+        boolean creation = false;
+        if (getId() == null)
+            creation = true;
+        else if (methodName != null)
             switch (methodName) {
             case MethodNames.CREATE:
                 creation = true;
