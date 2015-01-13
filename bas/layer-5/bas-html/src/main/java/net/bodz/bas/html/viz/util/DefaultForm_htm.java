@@ -37,7 +37,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException, IOException {
         if (embedded)
             return out;
@@ -65,7 +65,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected void fieldBody(IHtmlViewContext ctx, IHtmlTag tr, IUiRef<T> instanceRef, IFieldDecl fieldDecl,
+    protected void fieldBody(IHtmlViewContext ctx, IHtmlTag tr, IUiRef<?> instanceRef, IFieldDecl fieldDecl,
             IOptions options)
             throws ViewBuilderException, IOException {
         HtmlTdTag bodyTd = tr.td().class_("field-body");
