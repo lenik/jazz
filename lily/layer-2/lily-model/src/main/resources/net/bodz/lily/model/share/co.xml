@@ -10,6 +10,7 @@
         <result property="codeName" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <!-- result property="comment" column="comment" / -->
     </resultMap>
 
     <sql id="setU">
@@ -67,14 +68,14 @@
     <sql id="modefilt">
         <if test="login != null &amp;&amp; !login.user.admin">
             and (
-            uid=#{login.user.id}
-            or (mode::bit(9) &amp; b'000100000' != b'000000000') and gid in
+            a.uid=#{login.user.id}
+            or (a.mode::bit(9) &amp; b'000100000' != b'000000000') and a.gid in
             <foreach collection="login.user.groupIds" item="item" open="(" close=")" separator=", ">
                 #{item}
             </foreach>
-            or (mode::bit(9) &amp; b'000000100' != b'000000000')
+            or (a.mode::bit(9) &amp; b'000000100' != b'000000000')
             )
         </if>
     </sql>
-    
+
 </mapper>
