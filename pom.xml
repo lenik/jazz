@@ -14,6 +14,7 @@
         <module>mda</module>
         <module>swt</module>
     </modules>
+
     <name>Jazz Project</name>
     <url>http://bas.bodz.net/</url>
     <inceptionYear>2004</inceptionYear>
@@ -37,6 +38,7 @@
             <unsubscribe>unsubscribe@bsf.list.bodz.net</unsubscribe>
         </mailingList>
     </mailingLists>
+
     <scm>
         <connection>scm:git:ssh://git.bodz.net/repos/git/jazz.git</connection>
     </scm>

@@ -311,7 +311,7 @@ public abstract class CoObject
 
     /**
      * @label Weak Validation
-     * @labal.zh 弱校验
+     * @label.zh 弱校验
      */
     @OfGroup(StdGroup.Cache.class)
     @DetailLevel(DetailLevel.EXPERT2)
