@@ -28,6 +28,7 @@ import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.taglib.TagLibraryLoader;
 import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 import net.bodz.mda.xjdoc.util.ImportMap;
+import net.bodz.mda.xjdoc.util.QdoxUtils;
 import net.bodz.shared.mojo.AbstractResourceGeneratorMojo;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -159,7 +160,7 @@ public class ClassDocBuilderMojo
             // for (String importFqcn : jsource.getImports())
             // sourceFileImports.add(importFqcn);
 
-            for (JavaClass jclass : jsource.getClasses()) {
+            for (JavaClass jclass : QdoxUtils.getAllNestedClasses(jsource)) {
                 ClassDocBuilder builder = new ClassDocBuilder(taglibs);
                 // builder.setCreateClassImports(true);
                 ClassDoc classDoc = builder.buildClass(jclass);
@@ -196,7 +197,8 @@ public class ClassDocBuilderMojo
                 } catch (Exception e) {
                     throw new MojoExecutionException(e.getMessage(), e);
                 }
-            }
-        }
+            } // for class
+        } // for source
     }
+
 }
