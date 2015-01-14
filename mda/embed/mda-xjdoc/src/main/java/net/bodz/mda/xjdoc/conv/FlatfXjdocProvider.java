@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.FlatfInput;
 import net.bodz.bas.fmt.flatf.FlatfLoader;
 import net.bodz.bas.fmt.flatf.IFlatfInput;
@@ -50,51 +49,38 @@ public class FlatfXjdocProvider
             throw new NullPointerException("extension");
 
         String fqcn = clazz.getName();
-        String resourceName = fqcn.replace('.', '/') + "." + extension;
-
-        /**
-         * For Maven exec:java, the system class loader just includes plexus-classworlds, and
-         * context class loader should be used.
-         */
-        ClassLoader resourceLoader = Thread.currentThread().getContextClassLoader();
-        if (resourceLoader == null) {
-            resourceLoader = clazz.getClassLoader();
-            if (resourceLoader == null)
-                throw new NullPointerException("resourceLoader");
-        }
-
-        URL resource = resourceLoader.getResource(resourceName);
+        int lastDot = fqcn.lastIndexOf('.');
+        String base = lastDot == -1 ? fqcn : fqcn.substring(lastDot + 1);
+        URL resource = clazz.getResource(base + "." + extension);
         if (resource == null)
             return null;
 
         IStreamInputSource in = new URLResource(resource);
-        ClassDoc doc;
-        try {
-            doc = load(clazz.getName(), in);
-        } catch (Exception e) {
-            throw new XjdocLoaderException(e.getMessage(), e);
-        }
-        return doc;
+        return load(clazz.getName(), in);
     }
 
     public final ClassDoc load(String fqcn, IStreamInputSource inputSource)
-            throws IOException, ParseException {
+            throws XjdocLoaderException {
         if (fqcn == null)
             throw new NullPointerException("fqcn");
         if (inputSource == null)
             throw new NullPointerException("inputSource");
 
-        Reader reader = inputSource.newReader();
         try {
-            FlatfInput in = new FlatfInput(reader);
-            return load(fqcn, in);
-        } finally {
-            reader.close();
+            Reader reader = inputSource.newReader();
+            try {
+                FlatfInput in = new FlatfInput(reader);
+                return load(fqcn, in);
+            } finally {
+                reader.close();
+            }
+        } catch (IOException e) {
+            throw new XjdocLoaderException("Failed to read.", e);
         }
     }
 
     public ClassDoc load(String fqcn, IFlatfInput in)
-            throws ParseException, IOException {
+            throws XjdocLoaderException {
         if (fqcn == null)
             throw new NullPointerException("fqcn");
         if (in == null)
@@ -107,7 +93,11 @@ public class FlatfXjdocProvider
                 .addOption(ITagLibrary.class, getTagLibrary()) //
                 .addOption(ImportMap.class, importMap);
 
-        flatfLoader.load(in, classDoc, options);
+        try {
+            flatfLoader.load(in, classDoc, options);
+        } catch (Exception e) {
+            throw new XjdocLoaderException("Failed to load flatf resource for " + fqcn, e);
+        }
         return classDoc;
     }
 
