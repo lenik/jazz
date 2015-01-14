@@ -1,6 +1,8 @@
 package net.bodz.bas.io.res.tools;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.IByteIn;
@@ -10,6 +12,8 @@ import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.IStreamOutputTargetWrapper;
+import net.bodz.bas.io.res.builtin.InputStreamSource;
+import net.bodz.bas.io.res.builtin.ReaderSource;
 import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
 
 public class StreamWriting
@@ -164,6 +168,12 @@ public class StreamWriting
         }
     }
 
+    @Override
+    public void write(InputStream in)
+            throws IOException {
+        write(new InputStreamSource(in));
+    }
+
     /**
      * @seecopy {@link #write(IStreamInputSource, int)}
      */
@@ -222,6 +232,12 @@ public class StreamWriting
         } finally {
             in.close();
         }
+    }
+
+    @Override
+    public void writeChars(Reader in)
+            throws IOException {
+        write(new ReaderSource(in));
     }
 
     @Override

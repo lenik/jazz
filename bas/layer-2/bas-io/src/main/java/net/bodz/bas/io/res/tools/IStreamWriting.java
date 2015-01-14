@@ -1,6 +1,8 @@
 package net.bodz.bas.io.res.tools;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.res.IStreamInputSource;
@@ -38,10 +40,16 @@ public interface IStreamWriting
     void write(IStreamInputSource in)
             throws IOException;
 
+    void write(InputStream in)
+            throws IOException;
+
     void writeChars(IStreamInputSource in, int maxLength)
             throws IOException;
 
     void writeChars(IStreamInputSource in)
+            throws IOException;
+
+    void writeChars(Reader in)
             throws IOException;
 
     void writeString(String string)
