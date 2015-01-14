@@ -13,7 +13,9 @@
         <ffdir>src/main/resources</ffdir>
         <ffdir.test>src/test/resources</ffdir.test>
     </properties>
+
     <name>Jazz Parent</name>
+
     <profiles>
         <profile>
             <id>generate-xjdocs</id>
