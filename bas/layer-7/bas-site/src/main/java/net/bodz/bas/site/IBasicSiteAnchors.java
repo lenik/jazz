@@ -2,26 +2,27 @@ package net.bodz.bas.site;
 
 import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.http.ctx.WebAppAnchor;
+import net.bodz.bas.site.config.LocalResourceMappings;
 
 public interface IBasicSiteAnchors {
 
     IAnchor _webApp_ = new WebAppAnchor("/");
 
-    /** @see BasicSiteServerConfig#backgroundsDir */
+    /** @see LocalResourceMappings#backgroundsDir */
     IAnchor _backgrounds_ = _webApp_.join("backgrounds/");
 
-    /** @see BasicSiteServerConfig#fontsDir */
+    /** @see LocalResourceMappings#fontsDir */
     IAnchor _fonts_ = _webApp_.join("fonts/");
 
-    /** @see BasicSiteServerConfig#iconsDir */
+    /** @see LocalResourceMappings#iconsDir */
     IAnchor _icons_ = _webApp_.join("icons/");
 
-    /** @see BasicSiteServerConfig#javascriptDir */
+    /** @see LocalResourceMappings#javascriptDir */
     IAnchor _js_ = _webApp_.join("js/");
     IAnchor _jQueryUI_ = _webApp_.join("js/jquery-ui/");
     IAnchor _jQueryUIThemes_ = _webApp_.join("js/jquery-ui-themes/");
 
-    /** @see BasicSiteServerConfig#webjarsDir */
+    /** @see LocalResourceMappings#webjarsDir */
     IAnchor _webjars_ = _webApp_.join("webjars/");
 
 }
