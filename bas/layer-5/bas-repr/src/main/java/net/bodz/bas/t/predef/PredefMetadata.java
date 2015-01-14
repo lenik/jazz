@@ -95,10 +95,10 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         localKeyMap.put(key, value);
         localNameMap.put(name, value);
 
-        Class<? extends Predef<?, ?>> c = type;
+        Class<E> c = type;
         while (true) {
-            @SuppressWarnings("unchecked")//
-            PredefMetadata<? super E, K> metadata = (PredefMetadata<? super E, K>) forClass(c);
+            @SuppressWarnings("unchecked")
+            PredefMetadata<E, K> metadata = (PredefMetadata<E, K>) (Object) forClass(c);
 
             if (metadata.keyMap.containsKey(key))
                 throw new DuplicatedKeyException(metadata.keyMap, key, "more key");
@@ -107,7 +107,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
             metadata.keyMap.put(key, value);
             metadata.nameMap.put(name, value);
 
-            c = (Class<? extends Predef<?, ?>>) c.getSuperclass();
+            c = (Class<E>) c.getSuperclass();
             if (c == null)
                 break;
             if (Predef.class.equals(c))
@@ -121,8 +121,9 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         classLocalMap = new HashMap<>();
     }
 
-    public static <V extends Predef<?, K>, K extends Comparable<K>> PredefMetadata<V, K> forClass(Class<V> type) {
-        PredefMetadata<V, K> metadata = (PredefMetadata<V, K>) classLocalMap.get(type);
+    public static <E extends Predef<?, K>, K extends Comparable<K>> //
+    PredefMetadata<E, K> forClass(Class<E> type) {
+        PredefMetadata<E, K> metadata = (PredefMetadata<E, K>) classLocalMap.get(type);
         if (metadata == null)
             classLocalMap.put(type, metadata = new PredefMetadata<>(type));
         return metadata;
