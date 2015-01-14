@@ -66,7 +66,7 @@ public class BeanType
                 if (docs) {
                     propertyDoc = docLoader.getMethodDoc(beanClass, classDoc, getter, setter);
                     if (propertyDoc == null)
-                        propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter));
+                        propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter != null ? getter : setter));
                 }
 
                 BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, propertyDoc);
