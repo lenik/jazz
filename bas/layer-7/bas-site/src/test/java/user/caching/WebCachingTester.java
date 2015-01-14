@@ -1,13 +1,13 @@
 package user.caching;
 
-import net.bodz.uni.echo.config.EchoServerConfig;
+import net.bodz.bas.http.config.ServletContextConfig;
 import net.bodz.uni.echo.test.AbstractWebAppRunner;
 
 public class WebCachingTester
         extends AbstractWebAppRunner {
 
     @Override
-    protected EchoServerConfig createConfig() {
+    protected ServletContextConfig createConfig() {
         return new WebCachingConfig();
     }
 
