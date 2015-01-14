@@ -1,9 +1,10 @@
-package net.bodz.bas.site;
+package net.bodz.bas.site.config;
 
 import net.bodz.bas.html.artifact.IArtifact;
 import net.bodz.bas.html.artifact.MutableArtifactManager;
+import net.bodz.bas.site.IBasicSiteAnchors;
 
-public class BasicSiteArtifacts
+public class JQueryPlugins
         extends MutableArtifactManager
         implements IBasicSiteAnchors {
 
