@@ -19,6 +19,10 @@ public abstract class CoMomentInterval<Id>
     private Date beginDate;
     private Date endDate;
 
+    public CoMomentInterval() {
+        beginDate = getCreationDate();
+    }
+
     @Override
     public Class<Id> idType() {
         return IId.fn._getIdType(getClass());
