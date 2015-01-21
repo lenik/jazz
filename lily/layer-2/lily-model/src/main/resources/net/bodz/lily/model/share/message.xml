@@ -46,9 +46,9 @@
     <sql id="set1">
         <include refid="message.set1u" />
         <if test="subject != null">subject=#{subject},</if>
-        <if test="text != null">text=#{text},</if>
+        text=#{text},
         <if test="form != null">form=#{form.id},</if>
         args=#{formArgs},
     </sql>
-    
+
 </mapper>
