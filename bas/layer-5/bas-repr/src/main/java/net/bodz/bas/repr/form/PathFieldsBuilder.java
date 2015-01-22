@@ -2,7 +2,9 @@ package net.bodz.bas.repr.form;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.err.ParseException;
@@ -13,7 +15,7 @@ import net.bodz.bas.potato.element.IType;
 public class PathFieldsBuilder {
 
     FieldDeclBuilder fieldDeclBuilder;
-    List<PathField> pathFields = new ArrayList<>();
+    Map<String, PathField> pathFields = new LinkedHashMap<>();
 
     public PathFieldsBuilder(FieldDeclBuilder fieldDeclBuilder) {
         this.fieldDeclBuilder = fieldDeclBuilder;
@@ -37,7 +39,7 @@ public class PathFieldsBuilder {
                 throw new NoSuchPropertyException("Bad head: " + head);
 
             if (remaining == null)
-                pathFields.add(new PathField(head, Arrays.asList(fieldDecl)));
+                pathFields.put(head, new PathField(head, Arrays.asList(fieldDecl)));
             else {
                 Class<?> valueType = fieldDecl.getValueType();
                 IType type = PotatoTypes.getInstance().forClass(valueType);
@@ -58,11 +60,11 @@ public class PathFieldsBuilder {
                 fieldDecls.add(field);
             }
             PathField pathField = new PathField(pathPrefix + path, fieldDecls);
-            pathFields.add(pathField);
+            pathFields.put(pathField.getPath(), pathField);
         }
     }
 
-    public List<PathField> getFields() {
+    public Map<String, PathField> getFields() {
         return pathFields;
     }
 
