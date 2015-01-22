@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
@@ -54,7 +55,13 @@ public class FileURL {
 
         switch (url.getProtocol()) {
         case "file":
-            return new File(url.getPath());
+            URI uri;
+            try {
+                uri = url.toURI();
+            } catch (URISyntaxException e) {
+                throw new IllegalArgumentException(e.getMessage(), e);
+            }
+            return new File(uri);
 
         default:
             return fallback;
@@ -120,7 +127,7 @@ public class FileURL {
             throw new NullPointerException("url");
         switch (url.getProtocol()) {
         case "file":
-            File file = new File(url.getPath());
+            File file = FileURL.toFile(url, null);
             if (file.exists())
                 return file.length();
             else
@@ -135,6 +142,33 @@ public class FileURL {
             long size = zipEntry.getSize();
             zipFile.close();
             return size;
+
+        default:
+            return null;
+        }
+    }
+
+    public static Long lastModified(URL url, Long notExisted)
+            throws IOException {
+        if (url == null)
+            throw new NullPointerException("url");
+        switch (url.getProtocol()) {
+        case "file":
+            File file = FileURL.toFile(url, null);
+            if (file.exists())
+                return file.lastModified();
+            else
+                return notExisted;
+
+        case "jar":
+            Entry<ZipFile, ZipEntry> pair = openEntry(url);
+            if (pair == null)
+                return null;
+            ZipFile zipFile = pair.getKey();
+            ZipEntry zipEntry = pair.getValue();
+            long time = zipEntry.getTime();
+            zipFile.close();
+            return time;
 
         default:
             return null;
