@@ -5,23 +5,35 @@
 <mapper namespace="net.bodz.lily.model.base.schema.impl.TagDefMapper">
 
     <resultMap id="map1" type="net.bodz.lily.model.base.schema.TagDef" extends="co.mapUS">
+        <association property="schema" javaType="net.bodz.lily.model.base.schema.SchemaDef">
+            <id property="id" column="schema" />
+            <result property="label" column="schema_label" />
+        </association>
         <association property="tagSet" javaType="net.bodz.lily.model.base.schema.TagSetDef">
             <id property="id" column="tagv" />
-            <id property="label" column="tagv_label" />
+            <result property="label" column="tagv_label" />
         </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
-        select a.*, v.label tagv_label
+        select a.*,
+            v.schema "schema",
+            s.label schema_label,
+            v.label tagv_label
         from tag a
             left join tagv v on a.tagv=v.id
+            left join "schema" s on v."schema"=s.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
-        select a.*, v.label tagv_label
+        select a.*,
+            v.schema "schema",
+            s.label schema_label,
+            v.label tagv_label
         from tag a
             left join tagv v on a.tagv=v.id
+            left join "schema" s on v."schema"=s.id
         ]]>
     </sql>
 
@@ -32,6 +44,7 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
+            <if test="schemaId != null">and v.schema=#{schemaId}</if>
             <if test="tagSetId != null">and a.tagv=#{tagSetId}</if>
         </where>
     </select>
@@ -45,15 +58,22 @@
 
     <select id="insert" resultType="int">
         <![CDATA[
-        insert into tag(code, label, description)
-            values(#{codeName},#{label},#{description})
-            returning id
+        insert into tag(
+            code, label, description,
+            priority, flags, state,
+            tagv)
+        values(
+            #{codeName},#{label},#{description},
+            #{priority}, #{flags}, #{state},
+            #{tagSet.id})
+        returning id
     ]]></select>
 
     <update id="update">
         update tag
         <set>
             <include refid="co.setUS" />
+            tagv = #{tagSet.id},
         </set>
         <where>
             <if test="id != null">id=#{id}, </if>
@@ -67,5 +87,5 @@
     <select id="count" resultType="hashmap">
         select count(*) "total" from tag
     </select>
-    
+
 </mapper>
