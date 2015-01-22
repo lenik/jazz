@@ -2,19 +2,17 @@ package net.bodz.bas.http.servlet;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.net.URL;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.http.HttpServlet;
-import net.bodz.bas.std.rfc.http.ContentRange;
-import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.http.ResourceTransferer;
 import net.bodz.bas.t.iterator.Iterables;
 
 public class FileAccessorServlet
@@ -77,61 +75,11 @@ public class FileAccessorServlet
             return;
         }
 
-        resp.setHeader("Cache-Control", "max-age=" + maxAge);
+        URL url = file.toURI().toURL();
 
-        long lastModified = file.lastModified();
-        if (lastModified > 0) {
-            long ifModifiedSince = req.getDateHeader("If-Modified-Since");
-            if (ifModifiedSince > 0 && ifModifiedSince >= lastModified) {
-                resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-                return;
-            }
-            resp.setDateHeader("Last-Modified", lastModified);
-            resp.setDateHeader("Expires", lastModified + maxAge * 1000L);
-        }
-
-        // resp.setHeader("E-Tag", eTag);
-
-        ContentType contentType = ContentType.forPath(file.getName());
-        if (contentType != null)
-            resp.setContentType(contentType.getName());
-
-        long length = file.length();
-        if (length <= Integer.MAX_VALUE)
-            resp.setContentLength((int) length);
-        else
-            resp.setHeader("Content-Length", String.valueOf(length));
-
-        ContentRange contentRange = null;
-        String contentRangeHeader = req.getHeader("Content-Range");
-        if (contentRangeHeader != null) {
-            contentRange = ContentRange.parseAndSet(length, contentRangeHeader, resp);
-            if (contentRange == null)
-                return;
-        }
-
-        long start = 0;
-        long end = length;
-        if (contentRange != null)
-            end = contentRange.end;
-        long remaining = end - start;
-
-        ServletOutputStream out = resp.getOutputStream();
-        RandomAccessFile raf = new RandomAccessFile(path, "r");
-        raf.seek(start);
-
-        byte[] block = new byte[4096];
-        while (true) {
-            int cb = block.length;
-            if (remaining < cb)
-                cb = (int) remaining;
-            if ((cb = raf.read(block, 0, cb)) == -1)
-                break;
-            out.write(block, 0, cb);
-            remaining -= cb;
-        }
-        raf.close();
-        out.close();
+        ResourceTransferer transferer = new ResourceTransferer(req, resp);
+        transferer.setMaxAge(maxAge);
+        transferer.transfer(url);
     }
 
 }

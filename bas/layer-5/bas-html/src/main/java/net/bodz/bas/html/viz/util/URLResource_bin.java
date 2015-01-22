@@ -53,10 +53,12 @@ public class URLResource_bin
         HttpServletRequest req = ctx.getRequest();
         HttpServletResponse resp = ctx.getResponse();
         URLResource resource = ref.get();
+        URL url = resource.getURL();
 
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
         transferer.setMaxAge(maxAge);
-        transferer.transfer(resource);
+        transferer.transfer(url);
         return null;
     }
+
 }

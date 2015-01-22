@@ -13,7 +13,6 @@ import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.http.ResourceTransferer;
-import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.t.iterator.Iterables;
 
 public class ClassResourceAccessorServlet
@@ -74,7 +73,7 @@ public class ClassResourceAccessorServlet
 
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
         transferer.setMaxAge(maxAge);
-        transferer.transfer(new URLResource(url));
+        transferer.transfer(url);
     }
 
     protected ClassLoader getClassLoader() {
