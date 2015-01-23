@@ -60,4 +60,9 @@ public class MutableFormDecl
         map.put(name, fieldDecl);
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(source);
+    }
+
 }

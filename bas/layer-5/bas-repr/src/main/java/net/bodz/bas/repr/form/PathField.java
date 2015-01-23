@@ -8,11 +8,11 @@ public class PathField
         implements IPropertyAccessor {
 
     private final String path;
-    private final List<IFieldDecl> fieldDecls;
+    private final List<IFieldDecl> fieldVector;
 
-    public PathField(String path, List<IFieldDecl> fieldDecls) {
+    public PathField(String path, List<IFieldDecl> fieldVector) {
         this.path = path;
-        this.fieldDecls = fieldDecls;
+        this.fieldVector = fieldVector;
     }
 
     public String getPath() {
@@ -20,17 +20,17 @@ public class PathField
     }
 
     public IFieldDecl getFieldDecl() {
-        if (fieldDecls.isEmpty())
+        if (fieldVector.isEmpty())
             return null;
         else
-            return fieldDecls.get(fieldDecls.size() - 1);
+            return fieldVector.get(fieldVector.size() - 1);
     }
 
     @Override
     public Object getValue(Object instance)
             throws ReflectiveOperationException {
         Object obj = instance;
-        for (IFieldDecl fieldDecl : fieldDecls) {
+        for (IFieldDecl fieldDecl : fieldVector) {
             obj = fieldDecl.getAccessor().getValue(obj);
             if (obj == null)
                 return null;
@@ -41,14 +41,14 @@ public class PathField
     @Override
     public void setValue(Object instance, Object value)
             throws ReflectiveOperationException {
-        int max = fieldDecls.size() - 1;
+        int max = fieldVector.size() - 1;
         Object obj = instance;
         for (int i = 0; i < max; i++) {
-            obj = fieldDecls.get(i).getAccessor().getValue(obj);
+            obj = fieldVector.get(i).getAccessor().getValue(obj);
             if (obj == null)
                 return;
         }
-        IFieldDecl lastField = fieldDecls.get(max);
+        IFieldDecl lastField = fieldVector.get(max);
         lastField.getAccessor().setValue(obj, value);
     }
 
