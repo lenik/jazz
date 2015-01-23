@@ -145,7 +145,7 @@ public abstract class CoObject
      * @label.zh 注释
      * @placeholder 输入注释…
      */
-    @DetailLevel(DetailLevel.HIDDEN)
+    @DetailLevel(DetailLevel.EXPERT)
     @TextInput(maxLength = N_COMMENT)
     public String getComment() {
         return comment;
