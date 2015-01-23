@@ -77,4 +77,9 @@ public class MutableElement
         this.modifiers = modifiers;
     }
 
+    @Override
+    public String toString() {
+        return getName() + " - " + getLabel();
+    }
+
 }
