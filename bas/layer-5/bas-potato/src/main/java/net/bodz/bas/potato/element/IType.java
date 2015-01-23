@@ -78,7 +78,7 @@ public interface IType
     /**
      * Resolve the property path.
      */
-    List<IProperty> getPropertiesForPath(String pathProperty)
+    List<IProperty> getPropertyVector(String pathProperty)
             throws NoSuchPropertyException;
 
     /**
