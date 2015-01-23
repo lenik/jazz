@@ -139,12 +139,12 @@ public class ResourceTransferer {
         }
 
         long start = 0;
-        long end = length;
+        Long end = length;
         if (range != null) {
             start = range.start;
             end = range.end;
         }
-        long remaining = end - start;
+        long remaining = end == null ? -1 : (end - start);
         long transferred = 0;
 
         ServletOutputStream out = resp.getOutputStream();
