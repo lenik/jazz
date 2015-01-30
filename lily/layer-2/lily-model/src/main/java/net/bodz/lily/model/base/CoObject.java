@@ -16,6 +16,7 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.content.IContent;
 import net.bodz.bas.repr.form.NullConvertion;
 import net.bodz.bas.repr.form.meta.FormInput;
@@ -102,6 +103,7 @@ public abstract class CoObject
      * @label.zh 代码
      * @placeholder 输入代码/别名…
      */
+    @Priority(1)
     @TextInput(maxLength = N_CODE_NAME)
     public String getCodeName() {
         return codeName;
@@ -116,6 +118,7 @@ public abstract class CoObject
      * @label.zh 名称
      * @placeholder 输入简短的描述性名称…
      */
+    @Priority(20)
     @FormInput(nullconv = NullConvertion.NONE)
     @TextInput(maxLength = N_LABEL)
     public String getLabel() {
@@ -131,6 +134,7 @@ public abstract class CoObject
      * @label.zh 描述
      * @placeholder 输入概括性的描述信息…
      */
+    @Priority(21)
     @TextInput(maxLength = N_DESCRIPTION)
     public String getDescription() {
         return description;
@@ -145,6 +149,7 @@ public abstract class CoObject
      * @label.zh 注释
      * @placeholder 输入注释…
      */
+    @Priority(800)
     @DetailLevel(DetailLevel.EXPERT)
     @TextInput(maxLength = N_COMMENT)
     public String getComment() {
