@@ -1,5 +1,8 @@
 package net.bodz.bas.html.dom;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.bodz.bas.html.dom.tag.*;
 import net.bodz.bas.ui.css3.property.DirectionMode;
 import net.bodz.bas.xml.dom.AbstractXmlTag;
@@ -39,6 +42,23 @@ public abstract class AbstractHtmlTag<self_t extends IHtmlTag>
     @Override
     public self_t class_(String class_) {
         return attr("class", class_);
+    }
+
+    public self_t addClass(String... classes) {
+        Set<String> mark = new HashSet<String>();
+        StringBuilder sb = new StringBuilder();
+        String old = getAttributeMap().get("class");
+        if (old != null) {
+            mark.add(old);
+            sb.append(old);
+        }
+        for (String class_ : classes)
+            if (mark.add(class_)) {
+                if (sb.length() != 0)
+                    sb.append(" ");
+                sb.append(class_);
+            }
+        return attr("class", sb.toString());
     }
 
     @Override
@@ -84,6 +104,11 @@ public abstract class AbstractHtmlTag<self_t extends IHtmlTag>
     @Override
     public self_t tabindex(Integer tabindex) {
         return attr("tabindex", tabindex);
+    }
+
+    public self_t spanText(String spanClass, Object spanText, Object content) {
+        span().class_(spanClass).text(spanText);
+        return super.text(content);
     }
 
     @Override
