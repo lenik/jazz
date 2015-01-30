@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.req;
 
-public class DefaultResultOfRequest
+public class MutableResultOfRequest
         implements IResultOfRequest {
 
     private Object target;
