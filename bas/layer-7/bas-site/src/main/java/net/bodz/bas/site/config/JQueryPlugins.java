@@ -16,6 +16,7 @@ public class JQueryPlugins
     public static final String DATATABLES_COLVIS = "datatables.colVis";
     public static final String DATATABLES_RESPONSIVE = "datatables.responsive";
     public static final String DATATABLES_TABLETOOLS = "datatables.tableTools";
+    public static final String FLOT = "flot";
     public static final String FONT_AWESOME = "font-awesome";
     public static final String HANDSONTABLE = "handsontable";
     public static final String ICHECK = "icheck";
@@ -24,6 +25,7 @@ public class JQueryPlugins
     public static final String KNOB = "knob";
     public static final String MAGNIFIC_POPUP = "magnific-popup";
     public static final String PARSLEY = "parsley";
+    public static final String QTIP = "qtip";
     public static final String SELECTIZE = "selectize";
     public static final String WALLPAPER = "wallpaper";
     public static final String WYSIWYG_EDITOR = "wysiwyg-editor";
@@ -108,6 +110,12 @@ public class JQueryPlugins
         datatablesTableTools.addDependency(datatablesBootstrap);
     }
 
+    IArtifact flot = javascript(FLOT, "0.8.2", //
+            _js_.join("jquery-flot/jquery.flot.min.js"));
+    {
+        flot.addDependency(jQueryMin);
+    }
+
     IArtifact fontAwesome = css(FONT_AWESOME, "4.2.0", //
             _fonts_.join("font-awesome/css/font-awesome.min.css"));
     {
@@ -154,6 +162,15 @@ public class JQueryPlugins
                 _js_.join("jquery-parsley/src/parsley.css"));
         parsley.addDependency(jQueryMin);
         parsley.addDependency(css);
+    }
+
+    IArtifact qtip = javascript(QTIP, "2.2.1", //
+            _js_.join("jquery-qtip/jquery.qtip.min.js"));
+    {
+        IArtifact css = css(QTIP + ".css", "2.2.1", //
+                _js_.join("jquery-qtip/jquery.qtip.min.css"));
+        qtip.addDependency(jQueryMin);
+        qtip.addDependency(css);
     }
 
     IArtifact selectize = javascript(SELECTIZE, "0.11.2", //
@@ -209,7 +226,9 @@ public class JQueryPlugins
     }
     IArtifact allEffects = pseudo(ALL_EFFECTS);
     {
+        allEffects.addDependency(flot);
         allEffects.addDependency(magnificPopup);
+        allEffects.addDependency(qtip);
         allEffects.addDependency(wallpaper);
     }
 
