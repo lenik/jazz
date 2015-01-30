@@ -54,6 +54,18 @@ public class Nullables {
         return o.toString();
     }
 
+    public static final int UNKNOWN = 2;
+
+    public static int precompare(Object o1, Object o2) {
+        if (o1 == o2)
+            return 0;
+        if (o1 == null)
+            return -1;
+        if (o2 == null)
+            return 1;
+        return UNKNOWN;
+    }
+
     public static <T extends Comparable<? super T>> int compare(T c1, T c2) {
         if (c1 == c2)
             return 0;
