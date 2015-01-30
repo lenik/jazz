@@ -2,6 +2,8 @@ package net.bodz.bas.t.preorder;
 
 import java.util.Comparator;
 
+import net.bodz.bas.c.object.Nullables;
+
 public interface IPreorder<T>
         extends Comparator<T> {
 
@@ -16,7 +18,7 @@ public interface IPreorder<T>
     int LESS_THAN = -1;
     int EQUALS = 0;
     int GREATER_THAN = 1;
-    int UNKNOWN = Integer.MAX_VALUE;
+    int UNKNOWN = Nullables.UNKNOWN;
 
     /**
      * @param o1
