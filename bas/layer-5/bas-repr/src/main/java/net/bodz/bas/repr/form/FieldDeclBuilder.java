@@ -34,6 +34,7 @@ public class FieldDeclBuilder {
     void populate(MutableFieldDecl fieldDecl, IProperty property)
             throws ParseException {
         fieldDecl.setProperty(property);
+        fieldDecl.setReadOnly(!property.isWritable());
         fieldDecl.setValueType(property.getPropertyType());
 
         IMutableElement.fn.copy1(property, fieldDecl);
@@ -89,7 +90,7 @@ public class FieldDeclBuilder {
             fieldDecl.face = aFormInput.face();
             fieldDecl.inputName = inputName.isEmpty() ? null : inputName;
 
-            fieldDecl.readOnly = aFormInput.readOnly();
+            fieldDecl.readOnly &= aFormInput.readOnly();
             if (aFormInput.textWidth() != 0)
                 fieldDecl.textWidth = aFormInput.textWidth();
 

@@ -45,6 +45,13 @@ public @interface StdGroup {
     }
 
     /**
+     * @label Option
+     * @label.zh 选项
+     */
+    @interface Option {
+    }
+
+    /**
      * @label Preferences
      * @label.zh 首选项
      */
