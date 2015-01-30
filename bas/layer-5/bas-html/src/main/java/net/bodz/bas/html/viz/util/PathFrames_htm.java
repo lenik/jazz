@@ -95,6 +95,13 @@ public class PathFrames_htm
             super(arrival);
         }
 
+        @Override
+        public String toString() {
+            String tagName = out0.getTagName();
+            String id = out0.getAttributeMap().get("id");
+            return String.format("<%s:%s> | %s", tagName, id, getArrival());
+        }
+
     }
 
 }
