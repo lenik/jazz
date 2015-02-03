@@ -38,7 +38,7 @@ public interface IXmlTag
 
     IXmlTag text(Object content);
 
-    IXmlTag text(String format, Object... args);
+    IXmlTag textf(String format, Object... args);
 
     void print(String s);
 
