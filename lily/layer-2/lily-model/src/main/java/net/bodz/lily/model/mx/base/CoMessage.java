@@ -64,6 +64,10 @@ public class CoMessage<Id>
     private Integer readCount;
 
     public CoMessage() {
+    }
+
+    @Override
+    public void create() {
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session != null) {
             LoginContext loginContext = (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);

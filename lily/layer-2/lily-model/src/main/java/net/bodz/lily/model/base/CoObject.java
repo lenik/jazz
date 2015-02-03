@@ -83,6 +83,9 @@ public abstract class CoObject
     private int acl;
 
     public CoObject() {
+    }
+
+    public void create() {
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session != null) {
             LoginContext loginContext = (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);
