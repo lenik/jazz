@@ -112,7 +112,7 @@ public class NullXmlTag
     }
 
     @Override
-    public IXmlTag text(String format, Object... args) {
+    public IXmlTag textf(String format, Object... args) {
         return this;
     }
 

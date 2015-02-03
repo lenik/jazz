@@ -140,7 +140,7 @@ public abstract class AbstractXmlTag<self_t extends IXmlTag>
     }
 
     @Override
-    public final self_t text(String format, Object... args) {
+    public final self_t textf(String format, Object... args) {
         String text = String.format(format, args);
         return text(text);
     }
