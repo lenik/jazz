@@ -229,7 +229,10 @@ public abstract class CoObject
         this.creationDate = creationDate;
     }
 
+    @Priority(-100 + 0)
+    @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
+    @FormInput(readOnly = true)
     @Derived
     @Override
     public long getCreationTime() {
@@ -246,6 +249,7 @@ public abstract class CoObject
      * @label Last Modified Date
      * @label.zh 修改时间
      */
+    @Priority(-100 + 1)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
     public Date getLastModifiedDate() {
         return lastModifiedDate;
@@ -257,6 +261,7 @@ public abstract class CoObject
         this.lastModifiedDate = lastModified;
     }
 
+    @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Derived
     @Override

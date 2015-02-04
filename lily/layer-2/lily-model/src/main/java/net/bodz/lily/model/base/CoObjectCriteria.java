@@ -2,6 +2,9 @@ package net.bodz.lily.model.base;
 
 import java.util.Set;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 
@@ -12,7 +15,7 @@ import net.bodz.lily.model.sea.QVariantMap;
 /**
  * @see net.bodz.lily.model.base.CoObject
  */
-public class CoEntityCriteria
+public class CoObjectCriteria
         extends AbstractTextParametric {
 
     String codeName;
@@ -57,7 +60,7 @@ public class CoEntityCriteria
         return queryText;
     }
 
-    public CoEntityCriteria setQueryText(String queryText) {
+    public CoObjectCriteria setQueryText(String queryText) {
         this.queryText = queryText;
         return this;
     }
@@ -66,7 +69,7 @@ public class CoEntityCriteria
         return timeRange;
     }
 
-    public CoEntityCriteria setTimeRange(DateRange timeRange) {
+    public CoObjectCriteria setTimeRange(DateRange timeRange) {
         this.timeRange = timeRange;
         return this;
     }
@@ -75,7 +78,7 @@ public class CoEntityCriteria
         return priorities;
     }
 
-    public CoEntityCriteria setPriorities(Set<Integer> priorities) {
+    public CoObjectCriteria setPriorities(Set<Integer> priorities) {
         this.priorities = priorities;
         return this;
     }
@@ -84,7 +87,7 @@ public class CoEntityCriteria
         return flags;
     }
 
-    public CoEntityCriteria setFlags(Set<Integer> flags) {
+    public CoObjectCriteria setFlags(Set<Integer> flags) {
         this.flags = flags;
         return this;
     }
@@ -93,7 +96,7 @@ public class CoEntityCriteria
         return states;
     }
 
-    public CoEntityCriteria setStates(Set<Integer> states) {
+    public CoObjectCriteria setStates(Set<Integer> states) {
         this.states = states;
         return this;
     }
@@ -102,7 +105,7 @@ public class CoEntityCriteria
         return ownerId;
     }
 
-    public CoEntityCriteria setOwnerId(Integer ownerId) {
+    public CoObjectCriteria setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
         return this;
     }
@@ -111,7 +114,7 @@ public class CoEntityCriteria
         return ownerGroupId;
     }
 
-    public CoEntityCriteria setOwnerGroupId(Integer ownerGroupId) {
+    public CoObjectCriteria setOwnerGroupId(Integer ownerGroupId) {
         this.ownerGroupId = ownerGroupId;
         return this;
     }
@@ -120,11 +123,12 @@ public class CoEntityCriteria
         return acls;
     }
 
-    public CoEntityCriteria setAcls(Set<Integer> acls) {
+    public CoObjectCriteria setAcls(Set<Integer> acls) {
         this.acls = acls;
         return this;
     }
 
+    @Override
     protected void populate(QVariantMap<String> map)
             throws ParseException {
         codeName = map.getString("code", codeName);
@@ -140,6 +144,14 @@ public class CoEntityCriteria
         acls = map.getInts("acls", acls);
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * XXX mybatis global vars won't work.
+     */
     public LoginContext getLogin() {
         LoginContext loginContext = LoginContext.fromSession();
         return loginContext;
