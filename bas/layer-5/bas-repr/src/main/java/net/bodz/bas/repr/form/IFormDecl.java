@@ -5,6 +5,7 @@ import java.util.Collection;
 import net.bodz.bas.c.type.TypeExtras;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.Volatile;
 import net.bodz.bas.meta.stereo.IMetadata;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IType;
@@ -32,9 +33,10 @@ public interface IFormDecl
 
         public static IFormDecl forClass(Class<?> clazz) {
             IType type = PotatoTypes.getInstance().forClass(clazz);
+            boolean isVolatile = type.isAnnotationPresent(Volatile.class);
             TypeExtras extras = TypeExtras.of(clazz);
             IFormDecl formDecl = extras.getFeature(IFormDecl.class);
-            if (formDecl == null) {
+            if (formDecl == null || isVolatile) {
                 try {
                     formDecl = builder.build(type);
                 } catch (ParseException e) {
