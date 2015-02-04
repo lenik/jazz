@@ -5,7 +5,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.lily.model.sea.QVariantMap;
 
 public class CoNodeCriteria
-        extends CoEntityCriteria {
+        extends CoObjectCriteria {
 
     public Integer maxDepth;
 
