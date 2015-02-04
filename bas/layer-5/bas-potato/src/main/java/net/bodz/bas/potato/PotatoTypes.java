@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.bodz.bas.meta.decl.Volatile;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.element.MergedType;
 import net.bodz.bas.t.order.PriorityComparator;
@@ -23,11 +24,11 @@ public class PotatoTypes {
     private Map<Class<?>, IType> cache = new HashMap<>();
 
     public synchronized IType forClass(Class<?> clazz) {
+        boolean isVolatile = clazz.isAnnotationPresent(Volatile.class);
         IType type = cache.get(clazz);
-        if (type == null) {
+        if (type == null || isVolatile) {
             type = load(clazz);
-            // XXX disable for debug.
-            // cache.put(clazz, type);
+            cache.put(clazz, type);
         }
         return type;
     }
