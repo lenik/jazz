@@ -8,17 +8,17 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-import net.bodz.lily.model.base.schema.PhaseDef;
+import net.bodz.lily.model.base.schema.TagSetDef;
 
-public class PhaseDefVbo
-        extends AbstractDefinitionVbo<PhaseDef> {
+public class TagSetDef_htm
+        extends AbstractDefinition_htm<TagSetDef> {
 
-    public PhaseDefVbo() {
-        super(PhaseDef.class);
+    public TagSetDef_htm() {
+        super(TagSetDef.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<PhaseDef> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<TagSetDef> ref, IOptions options)
             throws ViewBuilderException, IOException {
         return out;
     }

@@ -5,11 +5,11 @@ import net.bodz.bas.site.IBasicSiteAnchors;
 
 import net.bodz.lily.model.base.schema.AbstractDefinition;
 
-public abstract class AbstractDefinitionVbo<T extends AbstractDefinition<?>>
+public abstract class AbstractDefinition_htm<T extends AbstractDefinition<?>>
         extends AbstractHtmlViewBuilder<T>
         implements IBasicSiteAnchors {
 
-    public AbstractDefinitionVbo(Class<?> valueClass, String... supportedFeatures) {
+    public AbstractDefinition_htm(Class<?> valueClass, String... supportedFeatures) {
         super(valueClass, supportedFeatures);
     }
 

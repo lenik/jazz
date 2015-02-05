@@ -10,7 +10,7 @@ import net.bodz.lily.model.sea.QVariantMap;
 public class TagDefCriteria
         extends AbstractDefinitionCriteria {
 
-    Integer tagSetId;
+    public Integer tagSetId;
 
     public static TagDefCriteria forSchema(int id) {
         TagDefCriteria criteria = new TagDefCriteria();

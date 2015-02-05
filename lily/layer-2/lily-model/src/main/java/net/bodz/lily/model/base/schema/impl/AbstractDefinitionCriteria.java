@@ -8,7 +8,7 @@ import net.bodz.lily.model.sea.QVariantMap;
 public class AbstractDefinitionCriteria
         extends CoNodeCriteria {
 
-    Integer schemaId;
+    public Integer schemaId;
 
     public Integer getSchemaId() {
         return schemaId;
