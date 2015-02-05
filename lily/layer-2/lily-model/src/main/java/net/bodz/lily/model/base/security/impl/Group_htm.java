@@ -12,11 +12,11 @@ import net.bodz.bas.ui.dom1.IUiRef;
 
 import net.bodz.lily.model.base.security.Group;
 
-public class GroupVbo
+public class Group_htm
         extends AbstractHtmlViewBuilder<Group>
         implements IBasicSiteAnchors {
     
-    public GroupVbo() {
+    public Group_htm() {
         super(Group.class);
     }
 

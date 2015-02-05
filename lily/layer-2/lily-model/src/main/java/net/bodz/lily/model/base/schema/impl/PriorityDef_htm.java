@@ -8,17 +8,17 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-import net.bodz.lily.model.base.schema.CategoryDef;
+import net.bodz.lily.model.base.schema.PriorityDef;
 
-public class CategoryDefVbo
-        extends AbstractDefinitionVbo<CategoryDef> {
+public class PriorityDef_htm
+        extends AbstractDefinition_htm<PriorityDef> {
 
-    public CategoryDefVbo() {
-        super(CategoryDef.class);
+    public PriorityDef_htm() {
+        super(PriorityDef.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<CategoryDef> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<PriorityDef> ref, IOptions options)
             throws ViewBuilderException, IOException {
         return out;
     }

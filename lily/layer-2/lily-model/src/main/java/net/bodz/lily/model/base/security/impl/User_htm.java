@@ -12,11 +12,11 @@ import net.bodz.bas.ui.dom1.IUiRef;
 
 import net.bodz.lily.model.base.security.User;
 
-public class UserVbo
+public class User_htm
         extends AbstractHtmlViewBuilder<User>
         implements IBasicSiteAnchors {
     
-    public UserVbo() {
+    public User_htm() {
         super(User.class);
     }
 

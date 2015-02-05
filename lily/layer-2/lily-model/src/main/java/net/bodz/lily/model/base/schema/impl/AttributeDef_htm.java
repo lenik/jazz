@@ -8,17 +8,17 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-import net.bodz.lily.model.base.schema.PriorityDef;
+import net.bodz.lily.model.base.schema.AttributeDef;
 
-public class PriorityDefVbo
-        extends AbstractDefinitionVbo<PriorityDef> {
+public class AttributeDef_htm
+        extends AbstractDefinition_htm<AttributeDef> {
 
-    public PriorityDefVbo() {
-        super(PriorityDef.class);
+    public AttributeDef_htm() {
+        super(AttributeDef.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<PriorityDef> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<AttributeDef> ref, IOptions options)
             throws ViewBuilderException, IOException {
         return out;
     }

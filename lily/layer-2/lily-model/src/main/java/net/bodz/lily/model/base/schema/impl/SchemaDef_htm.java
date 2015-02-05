@@ -8,17 +8,17 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-import net.bodz.lily.model.base.schema.TagDef;
+import net.bodz.lily.model.base.schema.SchemaDef;
 
-public class TagDefVbo
-        extends AbstractDefinitionVbo<TagDef> {
+public class SchemaDef_htm
+        extends AbstractDefinition_htm<SchemaDef> {
 
-    public TagDefVbo() {
-        super(TagDef.class);
+    public SchemaDef_htm() {
+        super(SchemaDef.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<TagDef> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<SchemaDef> ref, IOptions options)
             throws ViewBuilderException, IOException {
         return out;
     }
