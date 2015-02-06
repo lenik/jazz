@@ -22,6 +22,6 @@ public interface IMapperTemplate<T, C>
 
     boolean delete(int id);
 
-    Map<String, Long> count();
+    Map<String, Number> count(C criteria);
 
 }
