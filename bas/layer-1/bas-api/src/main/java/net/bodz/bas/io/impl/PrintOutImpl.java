@@ -24,6 +24,10 @@ public class PrintOutImpl
         this.baseImpl = baseImpl;
     }
 
+    public static IPrintOut from(IPrintOut printOut) {
+        return printOut;
+    }
+
     public static IPrintOut from(ICharOut charOut) {
         if (charOut instanceof IPrintOut)
             return (IPrintOut) charOut;
