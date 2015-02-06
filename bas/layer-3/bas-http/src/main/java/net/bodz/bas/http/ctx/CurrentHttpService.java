@@ -104,8 +104,10 @@ public class CurrentHttpService
     }
 
     public static HttpServletRequest getRequestOpt() {
-        ensureInstance();
-        return instance.requestRef.get();
+        if (instance == null)
+            return null;
+        else
+            return instance.requestRef.get();
     }
 
     public static HttpServletRequest getRequest() {
