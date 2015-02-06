@@ -105,8 +105,9 @@ public class User
         Set<Integer> gids = new HashSet<>();
         if (primaryGroup != null)
             gids.add(primaryGroup.getId());
-        for (Group g : groups)
-            gids.add(g.getId());
+        if (groups != null)
+            for (Group g : groups)
+                gids.add(g.getId());
         return gids;
     }
 

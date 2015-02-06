@@ -69,10 +69,12 @@
         <if test="login != null &amp;&amp; !login.user.admin">
             and (
             a.uid=#{login.user.id}
-            or (a.mode::bit(9) &amp; b'000100000' != b'000000000') and a.gid in
-            <foreach collection="login.user.groupIds" item="item" open="(" close=")" separator=", ">
-                #{item}
-            </foreach>
+            <if test="!login.user.groupIds.empty">
+                or (a.mode::bit(9) &amp; b'000100000' != b'000000000') and a.gid in
+                <foreach collection="login.user.groupIds" item="item" open="(" close=")" separator=", ">
+                    #{item}
+                </foreach>
+            </if>
             or (a.mode::bit(9) &amp; b'000000100' != b'000000000')
             )
         </if>
