@@ -17,8 +17,11 @@ public class LoginContext {
     public PrefixMap<String> permissions;
 
     public static LoginContext fromSession() {
-        HttpSession session = CurrentHttpService.getSession();
-        return fromSession(session);
+        HttpSession session = CurrentHttpService.getSessionOpt();
+        if (session == null)
+            return null;
+        else
+            return fromSession(session);
     }
 
     public static LoginContext fromSession(HttpSession session) {
