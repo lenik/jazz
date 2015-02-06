@@ -134,8 +134,8 @@ public abstract class AbstractViewBuilderFactory
 
     TypeNearby[] nearbies = {
             //
-            new TypeNearby(null, "Vbo", true), //
-            new TypeNearby("impl", "Vbo", true) };
+            new TypeNearby(null, null, "Vbo", true), //
+    };
 
     /**
      * @throws ReflectiveOperationException

@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class TypeNearby {
 
+    private ClassLoader classLoader;
     private String prefix;
     private String suffix;
     private boolean decodeIInterface;
@@ -13,17 +14,26 @@ public class TypeNearby {
     private Map<Class<?>, Class<?>> cache;
     private static Class<?> NONE = void.class;
 
-    public TypeNearby(String prefix, String suffix, boolean cacheEnabled) {
+    public TypeNearby(ClassLoader classLoader, String prefix, String suffix, boolean cacheEnabled) {
         if (suffix == null)
             throw new NullPointerException("suffix");
         if (suffix.isEmpty())
             throw new IllegalArgumentException("suffix is empty.");
+        this.classLoader = classLoader;
         this.prefix = prefix;
         this.suffix = suffix;
         this.cacheEnabled = cacheEnabled;
 
         if (cacheEnabled)
             cache = new HashMap<Class<?>, Class<?>>();
+    }
+
+    public ClassLoader getClassLoader() {
+        return classLoader;
+    }
+
+    public void setClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
     }
 
     public String getPrefix() {
@@ -50,6 +60,9 @@ public class TypeNearby {
         this.decodeIInterface = decodeIInterface;
     }
 
+    /**
+     * @return <code>null</code> if not found.
+     */
     public Class<?> find(Class<?> src) {
         if (src == null)
             throw new NullPointerException("src");
@@ -89,7 +102,10 @@ public class TypeNearby {
 
         Class<?> dst;
         try {
-            dst = Class.forName(dstName);
+            if (classLoader == null)
+                dst = Class.forName(dstName, true, src.getClassLoader());
+            else
+                dst = Class.forName(dstName, true, classLoader);
         } catch (ClassNotFoundException e) {
             dst = null;
         }

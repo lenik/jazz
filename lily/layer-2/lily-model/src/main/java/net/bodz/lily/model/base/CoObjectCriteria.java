@@ -5,6 +5,7 @@ import java.util.Set;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import net.bodz.bas.c.type.TypeNearby;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 
@@ -155,6 +156,22 @@ public class CoObjectCriteria
     public LoginContext getLogin() {
         LoginContext loginContext = LoginContext.fromSession();
         return loginContext;
+    }
+
+    static TypeNearby[] nearbies = {
+            // TODO cache-enable?
+            new TypeNearby(null, null, "Criteria", false), //
+            new TypeNearby(null, "impl.", "Criteria", false), //
+    };
+
+    public static Class<? extends CoObjectCriteria> findCriteriaClass(Class<?> objClass) {
+        Class<? extends CoObjectCriteria> criteriaClass;
+        for (TypeNearby nearby : nearbies) {
+            criteriaClass = (Class<? extends CoObjectCriteria>) nearby.find(objClass);
+            if (criteriaClass != null)
+                return criteriaClass;
+        }
+        return null;
     }
 
 }
