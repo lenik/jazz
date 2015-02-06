@@ -31,6 +31,10 @@ public class TreeOutImpl
         this.textIndention = textIndention;
     }
 
+    public static ITreeOut from(ITreeOut treeOut) {
+        return treeOut;
+    }
+
     public static ITreeOut from(IPrintOut printOut) {
         if (printOut instanceof ITreeOut)
             return (ITreeOut) printOut;
