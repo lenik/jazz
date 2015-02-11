@@ -11,6 +11,16 @@ public class NulliString
     }
 
     @Override
+    public NulliString clone() {
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return null;
+    }
+
+    @Override
     public String get(String path) {
         return null;
     }
@@ -116,11 +126,6 @@ public class NulliString
     @Override
     public String getTailPar() {
         return null;
-    }
-
-    @Override
-    public NulliString clone() {
-        return this;
     }
 
     public static final NulliString INSTANCE = new NulliString();
