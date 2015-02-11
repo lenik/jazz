@@ -35,7 +35,7 @@ public abstract class MultiTagStringParser
 
         switch (state) {
         case START:
-            if (ch == '"') {
+            if (ch == '\"') {
                 tagBoundary = true;
             } else if (Character.isSpaceChar(ch)) {
                 tagBoundary = true;

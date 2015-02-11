@@ -30,6 +30,9 @@ public class MultiLangStringParser
 
     @Override
     protected void acceptTaggedString(String tag, String string) {
+        String prev = istr.get(tag);
+        if (prev != null)
+            string = prev + string;
         istr.put(tag, string);
     }
 
