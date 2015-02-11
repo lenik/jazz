@@ -6,8 +6,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.dom.tag.HtmlDivTag;
+import net.bodz.bas.html.dom.tag.HtmlInputTag;
+import net.bodz.bas.html.dom.tag.HtmlLabelTag;
 import net.bodz.bas.html.dom.tag.HtmlOptionTag;
 import net.bodz.bas.html.dom.tag.HtmlSelectTag;
+import net.bodz.bas.html.meta.StyleRadio;
 import net.bodz.bas.html.util.FieldHtmlUtil;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
@@ -42,18 +46,52 @@ public class Predef_htm
             }
         }
 
-        HtmlSelectTag select = out.select();
-        Map<String, ?> nameMap = metadata.getNameMap();
-        for (Entry<String, ?> entry : nameMap.entrySet()) {
-            String key = entry.getKey();
-            Predef<?, ?> value = (Predef<?, ?>) entry.getValue();
-            HtmlOptionTag option = select.option().value(key).text(value.getLabel());
-            option.label(value.getName());
-            if (predef == value)
-                option.selected("selected");
+        int style = '-';
+        if (metadata.getType().isAnnotationPresent(StyleRadio.class))
+            style = 'r';
+
+        switch (style) {
+        case 'r': {
+            HtmlDivTag div = out.div().class_("btn-group");
+            div.attr("data-toggle", "buttons");
+            Map<String, ?> nameMap = metadata.getNameMap();
+            for (Entry<String, ?> entry : nameMap.entrySet()) {
+                String key = entry.getKey();
+                Predef<?, ?> value = (Predef<?, ?>) entry.getValue();
+
+                String class_ = "btn btn-xs btn-default";
+                if (predef == value)
+                    class_ += " active";
+
+                HtmlLabelTag labelTag = div.label().class_("btn");
+                labelTag.class_(class_);
+
+                HtmlInputTag radio = labelTag.input().type("radio");
+                if (predef == value)
+                    radio.checked("checked");
+
+                radio.value(key);
+                radio.text(value.getLabel());
+
+                FieldHtmlUtil.apply(radio, fieldDecl, options);
+            }
+            break;
         }
 
-        FieldHtmlUtil.apply(select, fieldDecl, options);
+        default: {
+            HtmlSelectTag select = out.select();
+            Map<String, ?> nameMap = metadata.getNameMap();
+            for (Entry<String, ?> entry : nameMap.entrySet()) {
+                String key = entry.getKey();
+                Predef<?, ?> value = (Predef<?, ?>) entry.getValue();
+                HtmlOptionTag option = select.option().value(key).text(value.getLabel());
+                option.label(value.getName());
+                if (predef == value)
+                    option.selected("selected");
+            }
+            FieldHtmlUtil.apply(select, fieldDecl, options);
+        }
+        } // switch style
         return out;
     }
 
