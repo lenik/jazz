@@ -90,7 +90,7 @@ public class FieldDeclBuilder {
             fieldDecl.face = aFormInput.face();
             fieldDecl.inputName = inputName.isEmpty() ? null : inputName;
 
-            fieldDecl.readOnly &= aFormInput.readOnly();
+            fieldDecl.readOnly |= aFormInput.readOnly();
             if (aFormInput.textWidth() != 0)
                 fieldDecl.textWidth = aFormInput.textWidth();
 
