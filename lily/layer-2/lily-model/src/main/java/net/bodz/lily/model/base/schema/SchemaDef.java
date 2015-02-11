@@ -4,6 +4,10 @@ import java.util.List;
 
 import net.bodz.bas.db.meta.TableName;
 
+/**
+ * @label Schema
+ * @label.zh.cn 方案
+ */
 @TableName("schema")
 public class SchemaDef
         extends AbstractDefinition<SchemaDef> {

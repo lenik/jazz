@@ -102,6 +102,12 @@ public abstract class CoObject
     public abstract Object getId();
 
     /**
+     * <p lang="en">
+     * An optional unique code name, which can be specified and alternated by user.
+     * 
+     * <p lang="zh">
+     * 类似于 id，代码不可重复。和 id 不同的是，代码是可以自行指定的，可以包含数字、字母，且可以更改。
+     * 
      * @label Code Name
      * @label.zh 代码
      * @placeholder 输入代码/别名…
@@ -117,12 +123,18 @@ public abstract class CoObject
     }
 
     /**
+     * <p lang="en">
+     * A short descriptive label.
+     * 
+     * <p lang="zh">
+     * 简短的描述性标签。这个标签将出现在打印的列表中，用于标题、抬头等用途。
+     * 
      * @label Label
      * @label.zh 名称
      * @placeholder 输入简短的描述性名称…
      */
-    @Priority(20)
     @FormInput(nullconv = NullConvertion.NONE)
+    @Priority(20)
     @TextInput(maxLength = N_LABEL)
     public String getLabel() {
         return label;
@@ -133,6 +145,12 @@ public abstract class CoObject
     }
 
     /**
+     * <p lang="en">
+     * A summary descriptive message.
+     * 
+     * <p lang="zh">
+     * 概括性的描述文本，以及必要的附加信息。
+     * 
      * @label Description
      * @label.zh 描述
      * @placeholder 输入概括性的描述信息…
@@ -152,8 +170,8 @@ public abstract class CoObject
      * @label.zh 注释
      * @placeholder 输入注释…
      */
-    @Priority(800)
     @DetailLevel(DetailLevel.EXPERT)
+    @Priority(800)
     @TextInput(maxLength = N_COMMENT)
     public String getComment() {
         return comment;
@@ -198,13 +216,19 @@ public abstract class CoObject
     /* _____________________________ */static section.iface __CONTENT__;
 
     /**
+     * <p lang="en">
+     * Describe the priority order. Important objects should have a higher priority.
+     * 
+     * <p lang="zh">
+     * 用于指定优先次序，通常重要的信息具有较高的优先级。
+     * 
      * @label Priority
      * @label.zh 优先级
      */
-    @HtmlViewBuilder(Priority_htm.class)
-    @OfGroup(StdGroup.Schedule.class)
     @FormInput(textWidth = 4)
+    @HtmlViewBuilder(Priority_htm.class)
     @NumericInput(min = -1000, max = 1000)
+    @OfGroup(StdGroup.Schedule.class)
     @Override
     public int getPriority() {
         return priority;
@@ -215,10 +239,14 @@ public abstract class CoObject
     }
 
     /**
+     * 信息的创建时间。
+     * 
      * @label Creation Date
      * @label.zh 创建时间
      */
+    @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
+    @Priority(-100 + 0)
     public Date getCreationDate() {
         return creationDate;
     }
@@ -229,11 +257,9 @@ public abstract class CoObject
         this.creationDate = creationDate;
     }
 
-    @Priority(-100 + 0)
+    @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
-    @FormInput(readOnly = true)
-    @Derived
     @Override
     public long getCreationTime() {
         return creationDate.getTime();
@@ -246,11 +272,14 @@ public abstract class CoObject
     }
 
     /**
+     * 信息最近一次的修改时间。
+     * 
      * @label Last Modified Date
      * @label.zh 修改时间
      */
-    @Priority(-100 + 1)
+    @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
+    @Priority(-100 + 1)
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -261,9 +290,9 @@ public abstract class CoObject
         this.lastModifiedDate = lastModified;
     }
 
+    @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
-    @Derived
     @Override
     public long getLastModified() {
         return lastModifiedDate.getTime();
@@ -273,8 +302,8 @@ public abstract class CoObject
      * @label Flags
      * @label.zh 标志位
      */
-    @OfGroup(StdGroup.Settings.class)
     @DetailLevel(DetailLevel.EXPERT)
+    @OfGroup(StdGroup.Settings.class)
     public int getFlags() {
         return flags;
     }
@@ -283,15 +312,15 @@ public abstract class CoObject
         this.flags = flags;
     }
 
-    @OfGroup(StdGroup.Cache.class)
     @DetailLevel(DetailLevel.HIDDEN)
+    @OfGroup(StdGroup.Cache.class)
     @Override
     public CacheControlMode getCacheControlMode() {
         return CacheControlMode.NO_CACHE;
     }
 
-    @OfGroup(StdGroup.Cache.class)
     @DetailLevel(DetailLevel.HIDDEN)
+    @OfGroup(StdGroup.Cache.class)
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
         return CacheRevalidationMode.WANTED;
@@ -326,8 +355,8 @@ public abstract class CoObject
      * @label Weak Validation
      * @label.zh 弱校验
      */
-    @OfGroup(StdGroup.Cache.class)
     @DetailLevel(DetailLevel.EXPERT2)
+    @OfGroup(StdGroup.Cache.class)
     @Override
     public boolean isWeakValidation() {
         return true;
@@ -340,8 +369,8 @@ public abstract class CoObject
      * @label State
      * @label.zh 状态
      */
-    @OfGroup(StdGroup.Status.class)
     @DetailLevel(DetailLevel.EXPERT)
+    @OfGroup(StdGroup.Status.class)
     public State getState() {
         return state;
     }
@@ -356,8 +385,8 @@ public abstract class CoObject
      * @label Version
      * @label.zh 版本
      */
-    @OfGroup(StdGroup.Version.class)
     @DetailLevel(DetailLevel.NORMAL)
+    @OfGroup(StdGroup.Version.class)
     public int getVersion() {
         return version;
     }
@@ -370,6 +399,9 @@ public abstract class CoObject
     /* _____________________________ */static section.iface __ACL__;
 
     /**
+     * <p lang="zh">
+     * 描述信息的所有者（持有者）。
+     * 
      * @label Owner
      * @label.zh 属主
      */
@@ -383,6 +415,9 @@ public abstract class CoObject
     }
 
     /**
+     * <p lang="zh">
+     * 描述信息所属的用户组。组内成员对该信息具有额外的控制权。
+     * 
      * @label Group
      * @label.zh 属组
      */
@@ -395,23 +430,48 @@ public abstract class CoObject
         this.ownerGroup = ownerGroup;
     }
 
-    @OfGroup(StdGroup.Security.class)
-    @DetailLevel(DetailLevel.HIDDEN)
     @Derived
+    @DetailLevel(DetailLevel.HIDDEN)
+    @OfGroup(StdGroup.Security.class)
     @Override
     public int getUserId() {
         return owner == null ? 0 : owner.getId();
     }
 
-    @OfGroup(StdGroup.Security.class)
-    @DetailLevel(DetailLevel.HIDDEN)
     @Derived
+    @DetailLevel(DetailLevel.HIDDEN)
+    @OfGroup(StdGroup.Security.class)
     @Override
     public int getGroupId() {
         return ownerGroup == null ? 0 : ownerGroup.getId();
     }
 
     /**
+     * <p lang="zh">
+     * 指定属主、属组和其它人对该信息的访问权限。
+     * 
+     * 已定义的访问权限有：
+     * <dl>
+     * <dt>公开
+     * <dd>所有人均可更改。
+     * <dt>协同发布
+     * <dd>属主和组内成员可以更改；其它人只能查看。
+     * <dt>发布
+     * <dd>属主可以更改；其它人只能查看。
+     * <dt>协同管理
+     * <dd>属主和组内成员可以更改；其它人不可见。
+     * <dt>共享（默认）
+     * <dd>属主可以更改；组内成员只能查看；其它人不可见。
+     * <dt>私有
+     * <dd>属主可以更改；其它人不可见。
+     * <dt>发布/锁定
+     * <dd>所有人只能查看。
+     * <dt>共享/锁定
+     * <dd>只有属主和组内成员可以查看。
+     * <dt>私有/锁定
+     * <dd>只有属主可以查看。
+     * </dl>
+     * 
      * @label Access Mode
      * @label.zh 访问模式
      */
@@ -427,11 +487,17 @@ public abstract class CoObject
     }
 
     /**
+     * <p lang="en>
+     * Access Control List (ACL) applied on this object.
+     * 
+     * <p lang="zh">
+     * 在该对象上应用的访问控制列表。
+     * 
      * @label ACL
      * @label.zh ACL
      */
-    @OfGroup(StdGroup.Security.class)
     @FormInput(nullconv = NullConvertion.ZERO)
+    @OfGroup(StdGroup.Security.class)
     @Override
     public int getAcl() {
         return acl;

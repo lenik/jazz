@@ -5,9 +5,8 @@ import java.util.List;
 import net.bodz.bas.db.meta.TableName;
 
 /**
- * Tag Set Definition
- * 
- * @label.zh 标签集定义
+ * @label Tag Set
+ * @label.zh 标签集
  */
 @TableName("tagv")
 public class TagSetDef
