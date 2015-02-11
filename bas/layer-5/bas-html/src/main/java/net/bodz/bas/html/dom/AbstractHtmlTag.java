@@ -8,6 +8,7 @@ import net.bodz.bas.ui.css3.property.DirectionMode;
 import net.bodz.bas.xml.dom.AbstractXmlTag;
 import net.bodz.bas.xml.dom.IXmlTag;
 
+@SuppressWarnings("unchecked")
 public abstract class AbstractHtmlTag<self_t extends IHtmlTag>
         extends AbstractXmlTag<self_t>
         implements IHtmlTag {
@@ -106,9 +107,37 @@ public abstract class AbstractHtmlTag<self_t extends IHtmlTag>
         return attr("tabindex", tabindex);
     }
 
-    public self_t spanText(String spanClass, Object spanText, Object content) {
-        span().class_(spanClass).text(spanText);
-        return super.text(content);
+    public self_t bText(Object bText) {
+        return bText(bText, null);
+    }
+
+    public self_t bText(Object bText, String bClass) {
+        HtmlBTag b = b();
+        if (bClass != null)
+            b.class_(bClass);
+        b.text(bText);
+        return (self_t) this;
+    }
+
+    public self_t iText(Object iText) {
+        return iText(iText, null);
+    }
+
+    public self_t iText(Object iText, String iClass) {
+        HtmlITag i = i();
+        if (iClass != null)
+            i.class_(iClass);
+        i.text(iText);
+        return (self_t) this;
+    }
+
+    public self_t aText(Object aText) {
+        return aText(aText, "#");
+    }
+
+    public self_t aText(Object aText, String aHref) {
+        a().href(aHref).text(aText);
+        return (self_t) this;
     }
 
     @Override
