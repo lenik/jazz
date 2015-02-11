@@ -105,8 +105,12 @@ public abstract class AbstractXjdocElement
      */
     @Override
     public synchronized iString getHelpDoc() {
-        if (helpDoc == null)
+        if (helpDoc == null) {
             helpDoc = getXjdoc().getText();
+            if (xjdoc.getTextTag(IElementDoc.LABEL) == null) {
+                helpDoc = helpDoc.tailPar();
+            }
+        }
         return helpDoc;
     }
 
