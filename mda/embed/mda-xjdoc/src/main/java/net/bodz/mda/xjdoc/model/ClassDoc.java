@@ -41,6 +41,10 @@ public class ClassDoc
         return classDoc;
     }
 
+    public String getName() {
+        return fqcn;
+    }
+
     @Override
     public ImportMap getImports() {
         return imports;
