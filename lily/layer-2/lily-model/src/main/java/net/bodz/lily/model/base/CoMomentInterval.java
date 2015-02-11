@@ -40,6 +40,11 @@ public abstract class CoMomentInterval<Id>
     }
 
     /**
+     * <p lang="zh">
+     * 事件的开始时间（具体的发生时间，或期待的发生时间）。
+     * <p>
+     * 当未指定时，表示尚未开始或开始于无限远以前。
+     * 
      * @label Begin Date
      * @label.zh 开始时间
      */
@@ -55,6 +60,11 @@ public abstract class CoMomentInterval<Id>
     }
 
     /**
+     * <p lang="zh">
+     * 事件的结束时间（具体的完成时间，或期待的完成时间）。
+     * <p>
+     * 当未指定时，表示尚未结束或结束于无限远以后。
+     * 
      * @label End Date
      * @label.zh 结束时间
      */

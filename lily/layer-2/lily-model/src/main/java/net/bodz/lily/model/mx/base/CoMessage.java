@@ -90,6 +90,9 @@ public class CoMessage<Id>
     }
 
     /**
+     * <p lang="zh">
+     * 信息的标题。
+     * 
      * @label Subject
      * @label.zh 标题
      * @placeholder 输入标题…
@@ -107,6 +110,9 @@ public class CoMessage<Id>
     }
 
     /**
+     * <p lang="zh">
+     * 信息的正文。
+     * 
      * @label Text
      * @label.zh 正文
      * @placeholder 输入正文…
@@ -130,6 +136,9 @@ public class CoMessage<Id>
     }
 
     /**
+     * <p lang="zh">
+     * 信息的类别。
+     * 
      * @label Category
      * @label.zh 类别
      */
@@ -156,8 +165,11 @@ public class CoMessage<Id>
     }
 
     /**
+     * <p lang="zh">
+     * 正文的形式。
+     * 
      * @label Form
-     * @label.zh 表单
+     * @label.zh 形式
      */
     @OfGroup(StdGroup.Metadata.class)
     public FormDef getForm() {
@@ -169,9 +181,12 @@ public class CoMessage<Id>
     }
 
     /**
+     * <p lang="zh">
+     * 形式的可选参数。
+     * 
      * @label Form Arguments
-     * @label.zh 表单参数
-     * @placeholder 输入表单参数
+     * @label.zh 形式参数
+     * @placeholder 输入形式参数
      */
     @OfGroup(StdGroup.Metadata.class)
     public String getFormArgs() {
@@ -183,6 +198,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 自定义属性。
+     * 
      * @label Attributes
      * @label.zh 属性
      */
@@ -196,6 +213,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 用于信息分类的标签列表。
+     * 
      * @label Tags
      * @label.zh 标签列表
      */
@@ -209,6 +228,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 消息的发送时间。
+     * 
      * @label Sent Time
      * @label.zh 发送时间
      */
@@ -223,6 +244,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 消息的接受时间。
+     * 
      * @label Received Time
      * @label.zh 接收时间
      */
@@ -237,6 +260,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 正投票的计数，说明多少人赞成、支持了这条信息。
+     * 
      * @label Vote Ups
      * @label.zh 赞
      */
@@ -250,6 +275,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 负投票的计数，说明多少人对这条信息表达了反对、扔鸡蛋的态度。
+     * 
      * @label Vote Downs
      * @label.zh 踩
      */
@@ -263,6 +290,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 有效投票的计数，和<code>正投票 - 负投票</code>相等。
+     * 
      * @label Vote Count
      * @label.zh 票数
      */
@@ -276,6 +305,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 参与投票的信息列表。
+     * 
      * @label Voters
      * @label.zh 投票人
      */
@@ -303,6 +334,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 说明这条信息被多少人收藏了。
+     * 
      * @label Liker Count
      * @label.zh 收藏数
      */
@@ -343,6 +376,8 @@ public class CoMessage<Id>
     }
 
     /**
+     * 这条信息被阅读的次数。
+     * 
      * @label Read Count
      * @label.zh 阅读数
      */

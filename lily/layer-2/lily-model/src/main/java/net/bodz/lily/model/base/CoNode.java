@@ -68,6 +68,14 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
         this.children = children;
     }
 
+    /**
+     * <p lang="zh">
+     * 子结点是否要求唯一性。
+     * 
+     * @label Child Unique
+     * @label.zh 唯一性
+     */
+    @OfGroup(StdGroup.Graph.class)
     protected boolean isChildUnique() {
         return false;
     }
@@ -101,6 +109,9 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     }
 
     /**
+     * <p lang="zh">
+     * 指出是否为最顶层的结点。
+     * 
      * @label Root
      * @label.zh 根结点
      */
@@ -115,6 +126,9 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     }
 
     /**
+     * <p lang="zh">
+     * 结点的序号。
+     * 
      * @label Index
      * @label.zh 序号
      */
@@ -132,6 +146,9 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     }
 
     /**
+     * <p lang="zh">
+     * 结点在树中的深度或层次。
+     * 
      * @label Depth
      * @label.zh 深度
      */
@@ -154,6 +171,13 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     void setDepth(int depth) {
     }
 
+    /**
+     * <p lang="zh">
+     * 子结点的最大（安全）深度。
+     * 
+     * @label Safe Depth
+     * @label.zh 安全深度
+     */
     @OfGroup(StdGroup.Graph.class)
     @DetailLevel(DetailLevel.HIDDEN)
     protected int getSafeDepth() {
@@ -161,6 +185,9 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     }
 
     /**
+     * <p lang="zh">
+     * 指出结点在并排结点中是否为首位。
+     * 
      * @label First
      * @label.zh 首位
      */
@@ -174,6 +201,9 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     }
 
     /**
+     * <p lang="zh">
+     * 指出结点在并排结点中是否为末位。
+     * 
      * @label Last
      * @label.zh 末位
      */
@@ -187,6 +217,9 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     }
 
     /**
+     * <p lang="zh">
+     * 结点所在路径的链表示。
+     * 
      * @label Node Chain
      * @label.zh 结点链
      */
@@ -203,6 +236,9 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     }
 
     /**
+     * <p lang="zh">
+     * 结点在生成树图案中的字符图案前缀。
+     * 
      * @label Graph Prefix
      * @label.zh 图前缀
      */
@@ -233,6 +269,9 @@ public abstract class CoNode<Self extends CoNode<Self, Id>, Id>
     }
 
     /**
+     * <p lang="zh">
+     * 指出的简短的标签名称。
+     * 
      * @label Node Label
      * @label.zh 结点标签
      */
