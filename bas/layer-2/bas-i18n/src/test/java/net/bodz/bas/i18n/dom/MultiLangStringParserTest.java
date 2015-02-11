@@ -26,4 +26,13 @@ public class MultiLangStringParserTest
         assertEquals("one\t1", root);
     }
 
+    @Test
+    public void testParseConcat()
+            throws ParseException {
+        MultiLangStringParser parser = new MultiLangStringParser();
+        iString istr = parser.parse("\"first\" \"second\"");
+        String root = istr.get("");
+        assertEquals("firstsecond", root);
+    }
+
 }
