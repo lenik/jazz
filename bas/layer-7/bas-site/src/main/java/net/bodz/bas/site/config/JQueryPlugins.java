@@ -9,19 +9,21 @@ public class JQueryPlugins
         implements IBasicSiteAnchors {
 
     public static final String BIGVIDEO = "bigvideo";
-    public static final String CHOSEN = "chosen";
     public static final String BOOTSTRAP3 = "bootstrap3";
+    public static final String CHOSEN = "chosen";
     public static final String DATATABLES = "datatables";
     public static final String DATATABLES_BOOTSTRAP = "datatables.bootstrap";
     public static final String DATATABLES_COLVIS = "datatables.colVis";
     public static final String DATATABLES_RESPONSIVE = "datatables.responsive";
     public static final String DATATABLES_TABLETOOLS = "datatables.tableTools";
+    public static final String FILE_UPLOAD = "file-upload";
     public static final String FLOT = "flot";
     public static final String FONT_AWESOME = "font-awesome";
     public static final String HANDSONTABLE = "handsontable";
     public static final String ICHECK = "icheck";
     public static final String JQUERY_MIN = "jquery-min";
     public static final String JQUERY_UI_MIN = "jquery-ui-min";
+    public static final String JQUERY_UI_WIDGET_MIN = "jquery-ui-widget-min";
     public static final String KNOB = "knob";
     public static final String MAGNIFIC_POPUP = "magnific-popup";
     public static final String PARSLEY = "parsley";
@@ -42,8 +44,11 @@ public class JQueryPlugins
             _js_.join("jquery/jquery.min.js"));
     IArtifact jQueryUiMin = javascript(JQUERY_UI_MIN, null, //
             _js_.join("jquery-ui/jquery-ui.min.js"));
+    IArtifact jQueryUiWidgetMin = javascript(JQUERY_UI_WIDGET_MIN, null, //
+            _js_.join("jquery-ui/ui/jquery.ui.widget.min.js"));
     {
         jQueryUiMin.addDependency(jQueryMin);
+        jQueryUiWidgetMin.addDependency(jQueryMin);
     }
 
     IArtifact bigvideo_js = javascript(BIGVIDEO, "1.1.3", //
@@ -108,6 +113,25 @@ public class JQueryPlugins
                 _js_.join("datatables/extensions/TableTools/css/dataTables.tableTools.css"));
         datatablesTableTools.addDependency(css);
         datatablesTableTools.addDependency(datatablesBootstrap);
+    }
+
+    IArtifact fileUpload = javascript(FILE_UPLOAD, "9.8.1", //
+            _js_.join("jquery-file-upload/js/jquery.fileupload.js"));
+    {
+        IArtifact iframeTransport = javascript(FILE_UPLOAD + "-iframe", "9.8.1", //
+                _js_.join("jquery-file-upload/js/jquery.iframe-transport.js"));
+
+        IArtifact css = css(FILE_UPLOAD + ".css", "9.8.1", //
+                _js_.join("jquery-file-upload/css/jquery.fileupload.css"));
+
+        fileUpload.addDependency(jQueryMin);
+        fileUpload.addDependency(jQueryUiWidgetMin);
+        fileUpload.addDependency(iframeTransport);
+
+        // IArtifact process = javascript(FILE_UPLOAD + "-process", "9.8.1", //
+        // _js_.join("jquery-file-upload/js/jquery.fileupload-process.js"));
+        // fileUpload.addDependency(process);
+        fileUpload.addDependency(css);
     }
 
     IArtifact flot = javascript(FLOT, "0.8.2", //
@@ -218,6 +242,7 @@ public class JQueryPlugins
     IArtifact allInputs = pseudo(ALL_INPUTS);
     {
         allInputs.addDependency(chosen);
+        allInputs.addDependency(fileUpload);
         allInputs.addDependency(icheck);
         allInputs.addDependency(knob);
         allInputs.addDependency(parsley);
