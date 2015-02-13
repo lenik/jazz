@@ -8,6 +8,12 @@
     <artifactId>bas-std</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>3.0.20100224</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-io</artifactId>
             <version>${project.version}</version>
