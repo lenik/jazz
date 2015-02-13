@@ -1,6 +1,9 @@
 package net.bodz.bas.std.rfc.mime;
 
+import java.io.File;
 import java.io.Serializable;
+
+import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
 
@@ -27,11 +30,18 @@ public class ContentType
 
     /**
      * The preferred extension name.
-     *
+     * 
      * @return The extension name, without the dot(.).
      */
     public String getPreferredExtension() {
         return preferredExtension;
+    }
+
+    public void applyTo(HttpServletResponse response, ContentType... excludes) {
+        for (ContentType exclude : excludes)
+            if (this == exclude)
+                return;
+        response.setContentType(name);
     }
 
     @Override
@@ -66,15 +76,27 @@ public class ContentType
         return name;
     }
 
-    public static ContentType forName(String name) {
-        return ContentTypes.nameMap.get(name);
+    public static final ContentType DEFAULT = ContentTypes.application_octet_stream;
+
+    public static ContentType forFile(File file) {
+        return forName(file.getName());
     }
 
     public static ContentType forPath(String path) {
         if (path == null)
             throw new NullPointerException("path");
         String extension = FilePath.getExtension(path);
-        return forExtension(extension);
+        if (extension != null) {
+            return forExtension(extension);
+        } else {
+            String name = FilePath.getBaseName(path);
+            return forName(name);
+        }
+    }
+
+    public static ContentType forName(String name) {
+        ContentType contentType = ContentTypes.nameMap.get(name);
+        return contentType == null ? DEFAULT : contentType;
     }
 
     /**
@@ -83,9 +105,10 @@ public class ContentType
      */
     public static ContentType forExtension(String extension) {
         if (extension == null)
-            return null;
+            throw new NullPointerException("extension");
         extension = extension.toLowerCase();
-        return ContentTypes.extensionMap.get(extension);
+        ContentType contentType = ContentTypes.extensionMap.get(extension);
+        return contentType == null ? DEFAULT : contentType;
     }
 
 }
