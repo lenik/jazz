@@ -4,10 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.NullConvertion;
@@ -24,7 +21,6 @@ import net.bodz.lily.model.base.schema.CategoryDef;
 import net.bodz.lily.model.base.schema.FormDef;
 import net.bodz.lily.model.base.schema.PhaseDef;
 import net.bodz.lily.model.base.schema.TagDef;
-import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.base.security.User;
 
 /**
@@ -68,13 +64,8 @@ public class CoMessage<Id>
 
     @Override
     public void create() {
-        HttpSession session = CurrentHttpService.getSessionOpt();
-        if (session != null) {
-            LoginContext loginContext = (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);
-            if (loginContext != null) {
-                op = loginContext.user;
-            }
-        }
+        super.create();
+        op = getOwner();
     }
 
     /**
