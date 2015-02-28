@@ -49,6 +49,10 @@ public class HtmlDoc
         return this;
     }
 
+    public IHtmlTag getElementById(String id) {
+        return tagMap.get(id);
+    }
+
     public IHtmlTagMap getTagMap() {
         return tagMap;
     }

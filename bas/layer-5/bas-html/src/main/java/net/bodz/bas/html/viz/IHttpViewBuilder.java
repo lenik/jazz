@@ -16,7 +16,7 @@ import net.bodz.bas.ui.dom1.IUiRef;
  * HTML view builder interface.
  */
 @IndexedType
-public interface IHtmlViewBuilder<T>
+public interface IHttpViewBuilder<T>
         extends IViewBuilder<T> {
 
     ContentType getContentType(HttpServletRequest request, T value);
@@ -33,12 +33,12 @@ public interface IHtmlViewBuilder<T>
 
     // boolean isDirectory();
 
-    void preview(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options);
+    void preview(IHttpViewContext ctx, IUiRef<T> ref, IOptions options);
 
-    IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
 }

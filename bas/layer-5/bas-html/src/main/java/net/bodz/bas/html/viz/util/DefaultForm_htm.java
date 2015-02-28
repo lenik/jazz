@@ -7,8 +7,8 @@ import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlTableTag;
 import net.bodz.bas.html.dom.tag.HtmlTdTag;
 import net.bodz.bas.html.dom.tag.HtmlTrTag;
-import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
-import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.IHttpViewBuilderFactory;
+import net.bodz.bas.html.viz.IHttpViewContext;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldCategory;
@@ -37,7 +37,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref, IOptions options)
+    protected IHtmlTag beginForm(IHttpViewContext ctx, IHtmlTag out, IUiRef<?> ref, IOptions options)
             throws ViewBuilderException, IOException {
         if (embedded)
             return out;
@@ -46,18 +46,18 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected IHtmlTag beginCategory(IHtmlViewContext ctx, IHtmlTag out, FieldCategory category)
+    protected IHtmlTag beginCategory(IHttpViewContext ctx, IHtmlTag out, FieldCategory category)
             throws ViewBuilderException {
         HtmlTableTag table = out.table().border("0").class_("field-category");
         return table;
     }
 
     @Override
-    protected void endCategory(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category) {
+    protected void endCategory(IHttpViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category) {
     }
 
     @Override
-    protected IHtmlTag beginField(IHtmlViewContext ctx, IHtmlTag table, IFieldDecl fieldDecl)
+    protected IHtmlTag beginField(IHttpViewContext ctx, IHtmlTag table, IFieldDecl fieldDecl)
             throws ViewBuilderException {
         HtmlTrTag tr = table.tr().class_("field-row");
         tr.td().class_("field-label").text(fieldDecl.getLabel());
@@ -65,7 +65,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected void fieldBody(IHtmlViewContext ctx, IHtmlTag tr, IUiRef<?> instanceRef, IFieldDecl fieldDecl,
+    protected void fieldBody(IHttpViewContext ctx, IHtmlTag tr, IUiRef<?> instanceRef, IFieldDecl fieldDecl,
             IOptions options)
             throws ViewBuilderException, IOException {
         HtmlTdTag bodyTd = tr.td().class_("field-body");
@@ -73,15 +73,15 @@ public class DefaultForm_htm<T>
         IProperty property = fieldDecl.getProperty();
         UiPropertyRef<Object> propertyRef = new UiPropertyRef<Object>(instanceRef, property);
 
-        IHtmlViewBuilderFactory factory = ctx.query(IHtmlViewBuilderFactory.class);
+        IHttpViewBuilderFactory factory = ctx.query(IHttpViewBuilderFactory.class);
         if (factory == null)
-            throw new IllegalConfigException(IHtmlViewBuilderFactory.class + " isn't set.");
+            throw new IllegalConfigException(IHttpViewBuilderFactory.class + " isn't set.");
         else
             factory.buildView(ctx, bodyTd, propertyRef);
     }
 
     @Override
-    protected void endField(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag fieldOut, IFieldDecl fieldDecl) {
+    protected void endField(IHttpViewContext ctx, IHtmlTag out, IHtmlTag fieldOut, IFieldDecl fieldDecl) {
     }
 
 }

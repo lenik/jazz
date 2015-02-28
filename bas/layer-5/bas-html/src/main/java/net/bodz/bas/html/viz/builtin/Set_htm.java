@@ -5,7 +5,7 @@ import java.util.Set;
 
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlDivTag;
-import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.IHttpViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -19,7 +19,7 @@ public class Set_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Set<?>> ref, IFieldDecl fieldDecl,
+    public IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, UiPropertyRef<Set<?>> ref, IFieldDecl fieldDecl,
             IOptions options)
             throws ViewBuilderException, IOException {
         Set<?> set = ref.get();

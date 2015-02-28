@@ -11,9 +11,9 @@ import javax.servlet.http.HttpSession;
 import net.bodz.bas.html.dom.HtmlDoc;
 import net.bodz.bas.html.dom.IHtmlTag;
 
-public class RootHtmlViewContext
-        extends AbstractHtmlViewContext
-        implements IHtmlViewContext {
+public class DefaultHttpViewContext
+        extends AbstractHttpViewContext
+        implements IHttpViewContext {
 
     private final HttpServletRequest request;
     private final HttpServletResponse response;
@@ -24,9 +24,9 @@ public class RootHtmlViewContext
     private HtmlDoc htmlDoc;
     private IHtmlTag outerTag;
 
-    private Map<Object, IHtmlViewBuilder<?>> viewBuilderCache;
+    private Map<Object, IHttpViewBuilder<?>> viewBuilderCache;
 
-    public RootHtmlViewContext(HttpServletRequest request, HttpServletResponse response) {
+    public DefaultHttpViewContext(HttpServletRequest request, HttpServletResponse response) {
         if (request == null)
             throw new NullPointerException("request");
         if (response == null)
@@ -44,12 +44,12 @@ public class RootHtmlViewContext
     }
 
     @Override
-    public IHtmlViewContext getRoot() {
+    public IHttpViewContext getRoot() {
         return this;
     }
 
     @Override
-    public IHtmlViewContext getParent() {
+    public IHttpViewContext getParent() {
         return null;
     }
 
@@ -111,13 +111,8 @@ public class RootHtmlViewContext
     }
 
     @Override
-    public IHtmlTag getTag(String id) {
-        return htmlDoc.getTagMap().get(id);
-    }
-
-    @Override
-    public <T> IHtmlViewBuilder<T> getViewBuilder(Object obj) {
-        IHtmlViewBuilder<T> viewBuilder = (IHtmlViewBuilder<T>) viewBuilderCache.get(obj);
+    public <T> IHttpViewBuilder<T> getViewBuilder(Object obj) {
+        IHttpViewBuilder<T> viewBuilder = (IHttpViewBuilder<T>) viewBuilderCache.get(obj);
         return viewBuilder;
     }
 

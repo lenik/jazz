@@ -5,21 +5,11 @@ import java.util.Map;
 import net.bodz.bas.html.artifact.IMutableArtifactDependent;
 
 public interface IHtmlHeadData
-        extends IMutableArtifactDependent {
+        extends IHttpHeadData, IMutableArtifactDependent {
 
     String getTitle();
 
     void setTitle(String title);
-
-    String HTTP_CONTENT_TYPE = "content-type";
-    String HTTP_DEFAULT_STYLE = "default-style";
-    String HTTP_REFRESH = "refresh";
-
-    Map<String, String> getHttpEquivMetaMap();
-
-    String getHttpEquivMeta(String httpEquiv);
-
-    void setHttpEquivMeta(String httpEquiv, String content);
 
     String META_APPLICATION_NAME = "application-name";
     String META_AUTHOR = "author";
@@ -27,7 +17,7 @@ public interface IHtmlHeadData
     /**
      * Meta descriptions can be any length, but search engines generally truncate snippets longer
      * than 160 characters. It is best to keep meta descriptions between 150 and 160 characters.
-     *
+     * 
      * Note that Google and other search engines bold keywords in the description when they match
      * search queries.
      */
@@ -61,7 +51,7 @@ public interface IHtmlHeadData
     /**
      * The Revisit Tag defines after how many days or months the search engine spider should revisit
      * your website.
-     *
+     * 
      * Example: <code>3 month</code>.
      */
     String META_REVISIT = "revisit-after";

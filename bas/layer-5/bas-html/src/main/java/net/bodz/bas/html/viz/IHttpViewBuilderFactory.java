@@ -5,13 +5,13 @@ import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 @IndexedType
-public interface IHtmlViewBuilderFactory
+public interface IHttpViewBuilderFactory
         extends IViewBuilderFactory {
 
     @Override
-    <T> IHtmlViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
+    <T> IHttpViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
 
     @Override
-    <T> IHtmlViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features);
+    <T> IHttpViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features);
 
 }

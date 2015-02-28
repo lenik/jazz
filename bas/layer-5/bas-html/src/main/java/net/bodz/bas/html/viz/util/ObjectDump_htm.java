@@ -6,8 +6,8 @@ import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlPreTag;
-import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.html.viz.IHttpViewContext;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.req.IMethodOfRequest;
@@ -16,14 +16,14 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class ObjectDump_htm
-        extends AbstractHtmlViewBuilder<Object> {
+        extends AbstractHttpViewBuilder<Object> {
 
     public ObjectDump_htm() {
         super(Object.class, "debug");
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Object> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<Object> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.html.viz.IHttpViewContext;
 import net.bodz.bas.potato.invoke.IInvocation;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -22,7 +22,7 @@ import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class Invocation_txt
-        extends AbstractHtmlViewBuilder<IInvocation> {
+        extends AbstractHttpViewBuilder<IInvocation> {
 
     public Invocation_txt() {
         super(IInvocation.class);
@@ -39,7 +39,7 @@ public class Invocation_txt
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<IInvocation> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag parent, IUiRef<IInvocation> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         PrintWriter out = resp.getWriter();

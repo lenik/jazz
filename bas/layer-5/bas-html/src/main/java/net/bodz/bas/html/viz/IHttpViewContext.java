@@ -11,13 +11,13 @@ import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.meta.decl.Shortcut;
 import net.bodz.bas.rtx.IQueryable;
 
-public interface IHtmlViewContext
+public interface IHttpViewContext
         extends IQueryable {
 
-    IHtmlViewContext getParent();
+    IHttpViewContext getParent();
 
     @Shortcut("parent/.../parent")
-    IHtmlViewContext getRoot();
+    IHttpViewContext getRoot();
 
     HttpServletRequest getRequest();
 
@@ -40,8 +40,6 @@ public interface IHtmlViewContext
     /** bufferred */
     HtmlDoc getHtmlDoc();
 
-    IHtmlTag getTag(String id);
-
-    <T> IHtmlViewBuilder<T> getViewBuilder(Object obj);
+    <T> IHttpViewBuilder<T> getViewBuilder(Object obj);
 
 }
