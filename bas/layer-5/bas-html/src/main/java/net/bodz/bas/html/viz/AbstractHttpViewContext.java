@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IQueryable;
 
-public abstract class AbstractHtmlViewContext
+public abstract class AbstractHttpViewContext
         extends AbstractQueryable
-        implements IHtmlViewContext {
+        implements IHttpViewContext {
 
     private IQueryable queryContext;
 
@@ -54,9 +54,9 @@ public abstract class AbstractHtmlViewContext
     }
 
     @Override
-    public IHtmlViewContext getRoot() {
-        IHtmlViewContext node = this;
-        IHtmlViewContext parent;
+    public IHttpViewContext getRoot() {
+        IHttpViewContext node = this;
+        IHttpViewContext parent;
         while ((parent = node.getParent()) != null)
             node = parent;
         return node;

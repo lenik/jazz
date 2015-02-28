@@ -23,11 +23,11 @@ import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.bas.ui.dom1.UiValue;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 
-public abstract class AbstractHtmlViewBuilder<T>
+public abstract class AbstractHttpViewBuilder<T>
         extends AbstractViewBuilder<T>
-        implements IHtmlViewBuilder<T> {
+        implements IHttpViewBuilder<T> {
 
-    public AbstractHtmlViewBuilder(Class<?> valueClass, String... supportedFeatures) {
+    public AbstractHttpViewBuilder(Class<?> valueClass, String... supportedFeatures) {
         super(valueClass, supportedFeatures);
     }
 
@@ -51,7 +51,7 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public void preview(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options) {
+    public void preview(IHttpViewContext ctx, IUiRef<T> ref, IOptions options) {
         IHtmlHeadData metaData = ctx.getHeadData();
 
         T value = ref.get();
@@ -75,7 +75,7 @@ public abstract class AbstractHtmlViewBuilder<T>
     @Override
     public final Object buildView(IQueryable _ctx, Object out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
-        IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
+        IHttpViewContext ctx = (IHttpViewContext) _ctx;
         try {
             return buildHtmlView(ctx, (IHtmlTag) out, ref, options);
         } catch (IOException e) {
@@ -84,12 +84,12 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    public final IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return buildHtmlView(ctx, out, ref, IOptions.NULL);
     }
 
-    protected static boolean enter(IHtmlViewContext ctx)
+    protected static boolean enter(IHttpViewContext ctx)
             throws IOException {
         String uri = ctx.getRequest().getRequestURI();
         if (uri.endsWith("/"))
@@ -108,7 +108,7 @@ public abstract class AbstractHtmlViewBuilder<T>
         return true;
     }
 
-    protected static void writeHeadMetas(IHtmlViewContext ctx, IHtmlTag head)
+    protected static void writeHeadMetas(IHttpViewContext ctx, IHtmlTag head)
             throws IOException {
         IHtmlHeadData metaData = ctx.getHeadData();
 
@@ -126,7 +126,7 @@ public abstract class AbstractHtmlViewBuilder<T>
             head.meta().name(entry.getKey()).content(entry.getValue());
     }
 
-    protected static void writeHeadImports(IHtmlViewContext ctx, IHtmlTag head)
+    protected static void writeHeadImports(IHttpViewContext ctx, IHtmlTag head)
             throws IOException {
         IArtifactManager artifactManager = ctx.query(IArtifactManager.class);
         IHtmlHeadData metaData = ctx.getHeadData();
@@ -142,19 +142,19 @@ public abstract class AbstractHtmlViewBuilder<T>
         }
     }
 
-    static IndexedHtmlViewBuilderFactory factory = IndexedHtmlViewBuilderFactory.getInstance();
+    static IndexedHttpViewBuilderFactory factory = IndexedHttpViewBuilderFactory.getInstance();
 
-    protected <_t> void embed(IHtmlViewContext ctx, IHtmlTag out, Object obj, String... features)
+    protected <_t> void embed(IHttpViewContext ctx, IHtmlTag out, Object obj, String... features)
             throws ViewBuilderException, IOException {
         UiValue<Object> entry = UiValue.wrap(obj);
         embed(ctx, out, entry, features);
     }
 
-    protected <_t> void embed(IHtmlViewContext ctx, IHtmlTag out, IUiRef<_t> ref, String... features)
+    protected <_t> void embed(IHttpViewContext ctx, IHtmlTag out, IUiRef<_t> ref, String... features)
             throws ViewBuilderException, IOException {
         Class<? extends _t> type = ref.getValueType();
 
-        IHtmlViewBuilder<_t> viewBuilder = factory.getViewBuilder(type, features);
+        IHttpViewBuilder<_t> viewBuilder = factory.getViewBuilder(type, features);
         if (viewBuilder == null)
             throw new ViewBuilderException("Can't build view for " + type);
 

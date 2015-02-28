@@ -10,7 +10,7 @@ import net.bodz.bas.html.dom.tag.HtmlDlTag;
 import net.bodz.bas.html.dom.tag.HtmlSelectTag;
 import net.bodz.bas.html.dom.tag.HtmlTableTag;
 import net.bodz.bas.html.dom.tag.HtmlTrTag;
-import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.IHttpViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -24,7 +24,7 @@ public class Map_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Map<?, ?>> ref,
+    public IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, UiPropertyRef<Map<?, ?>> ref,
             IFieldDecl fieldDecl, IOptions options)
             throws ViewBuilderException, IOException {
         Map<?, ?> map = ref.get();
