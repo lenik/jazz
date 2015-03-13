@@ -1,10 +1,10 @@
 package net.bodz.lily.model.mx.forum;
 
-import net.bodz.bas.db.meta.TableName;
+import javax.persistence.Table;
 
 import net.bodz.lily.model.base.CoCode;
 
-@TableName("topiccat")
+@Table(name = "topiccat")
 public class TopicCategory
         extends CoCode<TopicCategory> {
 

@@ -1,12 +1,12 @@
 package net.bodz.lily.model.base.schema;
 
-import net.bodz.bas.db.meta.TableName;
+import javax.persistence.Table;
 
 /**
  * @label Category
  * @label.zh.cn 类別
  */
-@TableName("cat")
+@Table(name = "cat")
 public class CategoryDef
         extends AbstractDefinition<CategoryDef> {
 

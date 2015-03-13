@@ -2,13 +2,13 @@ package net.bodz.lily.model.base.schema;
 
 import java.util.List;
 
-import net.bodz.bas.db.meta.TableName;
+import javax.persistence.Table;
 
 /**
  * @label Schema
  * @label.zh.cn 方案
  */
-@TableName("schema")
+@Table(name = "schema")
 public class SchemaDef
         extends AbstractDefinition<SchemaDef> {
 

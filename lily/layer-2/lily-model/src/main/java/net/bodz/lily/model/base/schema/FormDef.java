@@ -1,8 +1,8 @@
 package net.bodz.lily.model.base.schema;
 
-import net.bodz.bas.db.meta.TableName;
+import javax.persistence.Table;
 
-@TableName("form")
+@Table(name = "form")
 public class FormDef
         extends AbstractDefinition<FormDef> {
 
