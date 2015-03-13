@@ -2,8 +2,15 @@ package net.bodz.bas.site.vhost;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface IVirtualHostResolver {
+import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.t.order.IPriority;
 
-    IVirtualHost getVirtualHost(HttpServletRequest request);
+@IndexedType
+public interface IVirtualHostResolver
+        extends IPriority {
+
+    IVirtualHost get(String id);
+
+    IVirtualHost resolve(HttpServletRequest request);
 
 }
