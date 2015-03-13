@@ -79,7 +79,7 @@ public abstract class CoObject
 
     private User owner;
     private Group ownerGroup;
-    private int accessMode = M_COOP;
+    private int accessMode = M_PUBLIC;
     private int acl;
 
     public CoObject() {
