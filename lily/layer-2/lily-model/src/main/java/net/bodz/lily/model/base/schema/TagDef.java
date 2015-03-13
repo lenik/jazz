@@ -1,12 +1,12 @@
 package net.bodz.lily.model.base.schema;
 
-import net.bodz.bas.db.meta.TableName;
+import javax.persistence.Table;
 
 /**
  * @label Tag
  * @label.zh.cn 标签
  */
-@TableName("tag")
+@Table(name = "tag")
 public class TagDef
         extends AbstractDefinition<TagDef> {
 

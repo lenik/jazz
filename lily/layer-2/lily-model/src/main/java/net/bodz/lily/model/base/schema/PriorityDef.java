@@ -1,12 +1,12 @@
 package net.bodz.lily.model.base.schema;
 
-import net.bodz.bas.db.meta.TableName;
+import javax.persistence.Table;
 
 /**
  * @label Priority
  * @label.zh.cn 优先级
  */
-@TableName("priority")
+@Table(name = "priority")
 public class PriorityDef
         extends AbstractDefinition<PriorityDef> {
 

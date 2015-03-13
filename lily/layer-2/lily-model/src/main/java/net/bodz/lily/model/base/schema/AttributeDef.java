@@ -1,12 +1,12 @@
 package net.bodz.lily.model.base.schema;
 
-import net.bodz.bas.db.meta.TableName;
+import javax.persistence.Table;
 
 /**
  * @label Attrobite
  * @label.zh.cn 属性
  */
-@TableName("attr")
+@Table(name = "attr")
 public class AttributeDef
         extends AbstractDefinition<AttributeDef> {
 
