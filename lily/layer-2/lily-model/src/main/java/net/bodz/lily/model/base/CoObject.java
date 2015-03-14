@@ -43,7 +43,7 @@ import net.bodz.lily.model.base.security.impl.AccessMode_htm;
  */
 public abstract class CoObject
         // extends AbstractTextParametric
-        implements Serializable, IContent, IAccessControlled {
+        implements Serializable, IInstantiable, IContent, IAccessControlled {
 
     private static final long serialVersionUID = 1L;
 
@@ -85,7 +85,8 @@ public abstract class CoObject
     public CoObject() {
     }
 
-    public void create() {
+    @Override
+    public void instantiate() {
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session != null) {
             LoginContext loginContext = (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);

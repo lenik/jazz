@@ -65,8 +65,8 @@ public class CoMessage<Id>
     }
 
     @Override
-    public void create() {
-        super.create();
+    public void instantiate() {
+        super.instantiate();
         op = getOwner();
         tags = new ArrayList<>();
         attributes = new HashMap<>();
