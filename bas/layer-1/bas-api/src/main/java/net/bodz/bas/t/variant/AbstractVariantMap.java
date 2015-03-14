@@ -107,4 +107,16 @@ public abstract class AbstractVariantMap<K>
         return sv;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (K key : keySet()) {
+            sb.append(key);
+            sb.append(": ");
+            sb.append(getString(key));
+            sb.append('\n');
+        }
+        return super.toString();
+    }
+
 }
