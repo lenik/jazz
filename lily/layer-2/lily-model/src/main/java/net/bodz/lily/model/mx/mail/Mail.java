@@ -20,8 +20,8 @@ public class Mail
     boolean read;
 
     @Override
-    public void create() {
-        super.create();
+    public void instantiate() {
+        super.instantiate();
         recipients = new ArrayList<>();
         bcc = new ArrayList<>();
     }
