@@ -1,6 +1,8 @@
 package net.bodz.lily.model.mx.base;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +68,8 @@ public class CoMessage<Id>
     public void create() {
         super.create();
         op = getOwner();
+        tags = new ArrayList<>();
+        attributes = new HashMap<>();
     }
 
     /**

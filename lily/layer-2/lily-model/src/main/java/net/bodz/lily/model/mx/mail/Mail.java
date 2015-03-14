@@ -1,5 +1,6 @@
 package net.bodz.lily.model.mx.mail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.lily.model.base.IdType;
@@ -17,5 +18,12 @@ public class Mail
     List<User> bcc;
 
     boolean read;
+
+    @Override
+    public void create() {
+        super.create();
+        recipients = new ArrayList<>();
+        bcc = new ArrayList<>();
+    }
 
 }
