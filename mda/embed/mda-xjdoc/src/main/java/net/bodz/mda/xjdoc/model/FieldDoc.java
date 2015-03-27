@@ -23,9 +23,8 @@ public class FieldDoc
 
     public static FieldDoc n_a(IClassDoc classDoc, String name) {
         FieldDoc fieldDoc = new FieldDoc(classDoc, name);
-        fieldDoc.setTag(LABEL, NO_LABEL);
+        fieldDoc.setTag(LABEL, iString.fn.val(name));
         // fieldDoc.setDescription(iString.fn.val(name));
-        fieldDoc.setText(iString.fn.val(name));
         return fieldDoc;
     }
 
