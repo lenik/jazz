@@ -26,8 +26,7 @@ public class MethodDoc
 
     public static MethodDoc n_a(IClassDoc classDoc, MethodId methodId) {
         MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
-        methodDoc.setTag(LABEL, NO_LABEL);
-        methodDoc.setText(iString.fn.val(methodId));
+        methodDoc.setTag(LABEL, iString.fn.val(methodId));
         return methodDoc;
     }
 
