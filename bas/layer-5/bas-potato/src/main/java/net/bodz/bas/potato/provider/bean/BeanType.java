@@ -8,6 +8,8 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.ITypeProvider;
@@ -55,18 +57,20 @@ public class BeanType
         if ((infoset & ITypeProvider.PROPERTIES) != 0) {
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
-
                 Method getter = propertyDescriptor.getReadMethod();
                 Method setter = propertyDescriptor.getWriteMethod();
                 if (getter == null && setter == null)
                     // TODO This could be an indexed property. Not supported, yet.
                     continue;
 
+                String name = propertyDescriptor.getName();
                 MethodDoc propertyDoc = null;
                 if (docs) {
                     propertyDoc = docLoader.getMethodDoc(beanClass, classDoc, getter, setter);
-                    if (propertyDoc == null)
+                    if (propertyDoc == null) {
                         propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter != null ? getter : setter));
+                        propertyDoc.setTag(IElementDoc.LABEL, iString.fn.val(Strings.hyphenatize(name)));
+                    }
                 }
 
                 BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, propertyDoc);
