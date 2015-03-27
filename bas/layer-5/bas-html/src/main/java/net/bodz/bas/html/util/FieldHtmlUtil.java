@@ -31,6 +31,7 @@ public class FieldHtmlUtil {
 
     public static void apply(HtmlInputTag input, IFieldDecl fieldDecl, IOptions options, String nameSuffix) {
         String inputName = name(fieldDecl, options.<String> get(NAME_PREFIX), nameSuffix);
+        // input.id(inputName);
         input.name(inputName);
 
         String face = fieldDecl.getFace();
