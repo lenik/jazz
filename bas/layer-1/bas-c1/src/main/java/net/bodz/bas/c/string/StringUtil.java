@@ -1,6 +1,7 @@
 package net.bodz.bas.c.string;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
 
 import net.bodz.bas.c.java.util.regex.PatternProcessor;
 import net.bodz.bas.io.IPrintOut;
@@ -94,6 +95,23 @@ public class StringUtil {
         if (digits != 0)
             buf.write(by);
         return buf.toByteArray();
+    }
+
+    public static String enc1(String s) {
+        if (s == null || s.isEmpty())
+            return s;
+        String s1 = s.substring(0, 1);
+        String s2 = s.substring(1);
+        Calendar calendar = Calendar.getInstance();
+        int mo = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        StringBuffer sb = new StringBuffer();
+        sb.append(mo);
+        sb.append(day);
+        sb.append(s1);
+        sb.reverse();
+        sb.append(s2);
+        return sb.toString();
     }
 
 }
