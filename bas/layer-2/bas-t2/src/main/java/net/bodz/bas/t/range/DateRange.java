@@ -64,4 +64,12 @@ public class DateRange {
         this.end = end;
     }
 
+    public Date getMin() {
+        return start;
+    }
+
+    public Date getMax() {
+        return end;
+    }
+
 }
