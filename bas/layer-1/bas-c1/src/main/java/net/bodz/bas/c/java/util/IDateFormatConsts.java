@@ -21,7 +21,7 @@ public interface IDateFormatConsts {
      * <p>
      * The easier solution is possibly to use the data type converter in JAXB, since JAXB must be
      * able to parse ISO8601 date string according to the XML Schema specification.
-     *
+     * 
      * @see javax.xml.bind.DatatypeConverter#parseDateTime(String)
      */
     DateFormat ISO8601 = Dates.format("yyyy-MM-dd'T'HH:mm:ssXXX");
@@ -39,7 +39,7 @@ public interface IDateFormatConsts {
      * <p>
      * The easier solution is possibly to use the data type converter in JAXB, since JAXB must be
      * able to parse ISO8601 date string according to the XML Schema specification.
-     *
+     * 
      * @see javax.xml.bind.DatatypeConverter#parseDateTime(String)
      */
     DateFormat ISO8601_ms = Dates.format("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
@@ -66,6 +66,10 @@ public interface IDateFormatConsts {
 
     /** <code>1980-12-31</code> */
     DateFormat YYYY_MM_DD = Dates.format("yyyy-MM-dd");
+    /** <code>1980-12</code> */
+    DateFormat YYYY_MM = Dates.format("yyyy-MM");
+    /** <code>1980-1</code> */
+    DateFormat YYYY_M = Dates.format("yyyy-M");
     /** <code>80-12-31</code> */
     DateFormat YY_MM_DD = Dates.format("yy-MM-dd");
     /** <code>12/31/1980</code> */
