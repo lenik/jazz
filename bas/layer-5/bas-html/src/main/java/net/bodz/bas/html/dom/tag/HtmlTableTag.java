@@ -9,6 +9,11 @@ public class HtmlTableTag
         super(parent, tagName);
     }
 
+    public HtmlTableTag align(Object val) {
+        attr("align", val);
+        return this;
+    }
+
     public HtmlTableTag dataToggle(Object val) {
         attr("data-toggle", val);
         return this;

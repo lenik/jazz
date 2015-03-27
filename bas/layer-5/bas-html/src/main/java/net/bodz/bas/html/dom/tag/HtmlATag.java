@@ -9,4 +9,10 @@ public class HtmlATag
         super(parent, tagName);
     }
 
+    public HtmlATag href(String target, Object val) {
+        super.href(val);
+        target(target);
+        return this;
+    }
+
 }
