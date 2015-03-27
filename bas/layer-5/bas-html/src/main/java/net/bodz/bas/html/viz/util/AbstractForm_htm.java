@@ -110,6 +110,10 @@ public abstract class AbstractForm_htm<T>
         return form;
     }
 
+    /**
+     * @return Whether the processing of the field group is completed. Returns <code>true</code> to
+     *         override the default process.
+     */
     protected boolean overrideFieldGroup(IHttpViewContext ctx, IHtmlTag out, IUiRef<?> instanceRef,
             FieldDeclGroup group, IOptions options)
             throws ViewBuilderException, IOException {
