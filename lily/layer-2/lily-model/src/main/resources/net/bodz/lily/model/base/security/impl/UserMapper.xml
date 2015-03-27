@@ -54,7 +54,7 @@
         <include refid="select1" />
         <where>
             <if test="codeName != null">and a.code=#{codeName}</if>
-            <if test="password != null">and a.passwd=#{password}</if>
+            <if test="password != codeName1">and a.passwd=#{password}</if>
         </where>
     </select>
 
