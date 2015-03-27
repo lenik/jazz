@@ -7,7 +7,7 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The table element takes part in the table model. Tables have rows, columns, and cells given by their descendants. The rows and columns form a grid; a table's cells must completely cover that grid without overlap. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlTableTag<self_t extends IHtmlTag>
+public class _HtmlTableTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
     public _HtmlTableTag(IHtmlTag parent, String tagName) {
