@@ -3,6 +3,7 @@ package net.bodz.bas.potato.provider.reflect;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -22,6 +23,11 @@ public class ReflectType
             for (Field field : clazz.getFields()) {
 
                 if (field.isSynthetic())
+                    continue;
+
+                // TODO whether to incldue static fields?
+                int modifiers = field.getModifiers();
+                if (Modifier.isStatic(modifiers))
                     continue;
 
                 FieldDoc fieldDoc = null;
