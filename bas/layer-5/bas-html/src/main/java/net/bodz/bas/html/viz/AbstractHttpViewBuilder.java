@@ -11,6 +11,7 @@ import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.req.IViewOfRequest;
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -87,6 +88,14 @@ public abstract class AbstractHttpViewBuilder<T>
     public final IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return buildHtmlView(ctx, out, ref, IOptions.NULL);
+    }
+
+    protected static boolean enter(IHttpViewContext ctx, IUiRef<?> ref)
+            throws IOException {
+        Object obj = ref.get();
+        IPathArrival arrival = ctx.query(IPathArrival.class);
+        boolean arrivedHere = arrival.getPrevious(obj).getRemainingPath() == null;
+        return arrivedHere && enter(ctx);
     }
 
     protected static boolean enter(IHttpViewContext ctx)
