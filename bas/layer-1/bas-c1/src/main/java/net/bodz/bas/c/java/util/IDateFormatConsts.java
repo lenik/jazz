@@ -2,6 +2,9 @@ package net.bodz.bas.c.java.util;
 
 import java.text.DateFormat;
 
+import net.bodz.bas.meta.decl.ThreadUnsafe;
+
+@ThreadUnsafe
 public interface IDateFormatConsts {
 
     DateFormat SYS_DATE = DateFormat.getDateInstance();
