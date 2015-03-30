@@ -29,14 +29,16 @@ public class SqlDate_htm
             throws ViewBuilderException, IOException {
         Date value = ref.get();
 
-        HtmlInputTag input = out.input();
+        HtmlInputTag input = out.input().class_("noprint");
 
         FieldHtmlUtil.apply(input, fieldDecl, options);
 
         input.type("date");
         if (value != null) {
             // The RFC 3339/ISO 8601 "wire format": YYYY-MM-DD.
-            input.value(Dates.YYYY_MM_DD.format(value));
+            String str = Dates.YYYY_MM_DD.format(value);
+            input.value(str);
+            out.span().class_("print").text(str);
         }
 
         return out;

@@ -23,12 +23,17 @@ public class Boolean_htm
             IOptions options)
             throws ViewBuilderException, IOException {
 
-        HtmlInputTag input = out.input().type("checkbox");
+        HtmlInputTag input = out.input().type("checkbox").class_("noprint");
         FieldHtmlUtil.apply(input, fieldDecl, options);
 
         Boolean value = ref.get();
-        if (value != null && value)
-            input.checked("checked");
+        char sign = '☐';
+        if (value != null) {
+            if (value)
+                input.checked("checked");
+            sign = value ? '☑' : '☒';
+        }
+        out.span().class_("print").text(sign);
 
         return out;
     }

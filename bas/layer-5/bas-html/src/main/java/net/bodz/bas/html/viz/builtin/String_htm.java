@@ -13,14 +13,14 @@ public class String_htm
     }
 
     @Override
-    protected HtmlInputTag createInput(IHtmlTag out, UiPropertyRef<String> ref, IFieldDecl fieldDecl) {
+    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<String> ref, IFieldDecl fieldDecl) {
         HtmlInputTag input = out.input();
 
         char echoChar = fieldDecl.getEchoChar();
         if (echoChar == '\0')
-            input.type("text");
+            input.type("text").class_("noprint");
         else
-            input.type("password");
+            input.type("password").class_("noprint");
 
         return input;
     }

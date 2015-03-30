@@ -29,7 +29,7 @@ public class Date_htm
             throws ViewBuilderException, IOException {
         Date value = ref.get();
 
-        HtmlInputTag input = out.input();
+        HtmlInputTag input = out.input().class_("noprint");
 
         FieldHtmlUtil.apply(input, fieldDecl, options);
 
@@ -37,7 +37,9 @@ public class Date_htm
         // input.type("datetime"); // deprecated
         input.type("date");
         if (value != null) {
-            input.value(Dates.YYYY_MM_DD.format(value));
+            String str = Dates.YYYY_MM_DD.format(value);
+            input.value(str);
+            out.span().class_("print").text(str);
         }
 
         return out;

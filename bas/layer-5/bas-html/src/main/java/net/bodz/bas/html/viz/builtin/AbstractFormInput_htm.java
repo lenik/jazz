@@ -37,7 +37,8 @@ public abstract class AbstractFormInput_htm<T>
             throw new ViewBuilderException("Failed to build field-decl.", e);
         }
 
-        return buildHtmlView(ctx, out, propertyRef, fieldDecl, options);
+        buildHtmlView(ctx, out, propertyRef, fieldDecl, options);
+        return out;
     }
 
     public abstract IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref,

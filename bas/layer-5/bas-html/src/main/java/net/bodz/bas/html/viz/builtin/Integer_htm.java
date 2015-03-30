@@ -13,8 +13,8 @@ public class Integer_htm
     }
 
     @Override
-    protected HtmlInputTag createInput(IHtmlTag out, UiPropertyRef<Integer> ref, IFieldDecl fieldDecl) {
-        HtmlInputTag input = out.input().type("number");
+    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<Integer> ref, IFieldDecl fieldDecl) {
+        HtmlInputTag input = out.input().type("number").class_("noprint");
         input.min("" + Integer.MIN_VALUE);
         input.max("" + Integer.MAX_VALUE);
         // 4 294 967 296

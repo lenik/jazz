@@ -15,8 +15,8 @@ public class BigDecimal_htm
     }
 
     @Override
-    protected HtmlInputTag createInput(IHtmlTag out, UiPropertyRef<BigDecimal> ref, IFieldDecl fieldDecl) {
-        HtmlInputTag input = out.input().type("number");
+    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<BigDecimal> ref, IFieldDecl fieldDecl) {
+        HtmlInputTag input = out.input().type("number").class_("noprint");
         return input;
     }
 
