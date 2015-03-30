@@ -31,7 +31,7 @@ public class Locale_htm
         if (value == null)
             value = Locale.getDefault();
 
-        HtmlSelectTag select = out.select();
+        HtmlSelectTag select = out.select().class_("noprint");
         FieldHtmlUtil.apply(select, fieldDecl, options);
 
         for (Locale locale : Locale.getAvailableLocales()) {
@@ -43,6 +43,10 @@ public class Locale_htm
             if (selected)
                 option.selected("selected");
         }
+
+        String str = value.getLanguage() + " - " + value.getDisplayName();
+        out.span().class_("print").text(str);
+
         return out;
     }
 

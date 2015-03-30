@@ -13,8 +13,8 @@ public class Byte_htm
     }
 
     @Override
-    protected HtmlInputTag createInput(IHtmlTag out, UiPropertyRef<Byte> ref, IFieldDecl fieldDecl) {
-        HtmlInputTag input = out.input().type("number");
+    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<Byte> ref, IFieldDecl fieldDecl) {
+        HtmlInputTag input = out.input().type("number").class_("noprint");
         input.min("" + Byte.MIN_VALUE);
         input.max("" + Byte.MAX_VALUE);
         input.maxlength("3");

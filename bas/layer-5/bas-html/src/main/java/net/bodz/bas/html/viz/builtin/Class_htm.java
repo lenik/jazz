@@ -23,13 +23,15 @@ public class Class_htm
             IFieldDecl fieldDecl, IOptions options)
             throws ViewBuilderException, IOException {
 
-        HtmlInputTag input = out.input().type("text");
+        HtmlInputTag input = out.input().type("text").class_("noprint");
         FieldHtmlUtil.apply(input, fieldDecl, options);
 
         Class<?> value = ref.get();
+        String str = value.toString();
         if (value != null)
-            input.value(value.toString());
+            input.value(str);
 
+        out.span().class_("print").text(str);
         return out;
     }
 

@@ -31,7 +31,7 @@ public class TimeZone_htm
         if (value == null)
             value = TimeZone.getDefault();
 
-        HtmlSelectTag select = out.select();
+        HtmlSelectTag select = out.select().class_("noprint");
         FieldHtmlUtil.apply(select, fieldDecl, options);
 
         for (String id : TimeZone.getAvailableIDs()) {
@@ -44,6 +44,9 @@ public class TimeZone_htm
             if (selected)
                 option.selected("selected");
         }
+
+        String str = value.getID() + " - " + value.getDisplayName();
+        out.span().class_("print").text(str);
         return out;
     }
 

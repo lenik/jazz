@@ -13,8 +13,8 @@ public class Long_htm
     }
 
     @Override
-    protected HtmlInputTag createInput(IHtmlTag out, UiPropertyRef<Long> ref, IFieldDecl fieldDecl) {
-        HtmlInputTag input = out.input().type("number");
+    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<Long> ref, IFieldDecl fieldDecl) {
+        HtmlInputTag input = out.input().type("number").class_("noprint");
         input.min("" + Long.MIN_VALUE);
         input.max("" + Long.MAX_VALUE);
         // 18 446 744 073 709 551 616

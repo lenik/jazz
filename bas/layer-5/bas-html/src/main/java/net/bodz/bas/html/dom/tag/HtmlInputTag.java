@@ -9,4 +9,9 @@ public class HtmlInputTag
         super(parent, tagName);
     }
 
+    public HtmlLabelTag idLabel(String id) {
+        id(id);
+        return label().for_(id);
+    }
+
 }

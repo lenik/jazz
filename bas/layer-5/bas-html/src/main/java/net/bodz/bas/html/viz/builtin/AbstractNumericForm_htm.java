@@ -16,9 +16,9 @@ public abstract class AbstractNumericForm_htm<T extends Number>
     }
 
     @Override
-    protected IHtmlTag createInput(IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
+    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
-        HtmlInputTag input = out.input().type("number");
+        HtmlInputTag input = out.input().type("number").class_("noprint");
         return input;
     }
 

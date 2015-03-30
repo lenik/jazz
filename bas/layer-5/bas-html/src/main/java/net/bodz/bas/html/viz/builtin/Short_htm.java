@@ -13,8 +13,8 @@ public class Short_htm
     }
 
     @Override
-    protected HtmlInputTag createInput(IHtmlTag out, UiPropertyRef<Short> ref, IFieldDecl fieldDecl) {
-        HtmlInputTag input = out.input().type("number");
+    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<Short> ref, IFieldDecl fieldDecl) {
+        HtmlInputTag input = out.input().type("number").class_("noprint");
         input.min("" + Short.MIN_VALUE);
         input.max("" + Short.MAX_VALUE);
         input.maxlength("5");

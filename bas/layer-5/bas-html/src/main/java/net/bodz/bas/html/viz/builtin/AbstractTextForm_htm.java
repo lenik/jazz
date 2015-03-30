@@ -31,27 +31,29 @@ public abstract class AbstractTextForm_htm<T>
             throws ViewBuilderException, IOException {
         T value = ref.get();
 
-        IHtmlTag tag = createInput(out, ref, fieldDecl);
-
-        if (tag instanceof HtmlInputTag)
-            FieldHtmlUtil.apply((HtmlInputTag) tag, fieldDecl, options);
-        else if (tag instanceof HtmlTextareaTag)
-            FieldHtmlUtil.apply((HtmlTextareaTag) tag, fieldDecl, options);
-
         IFormatter<T> formatter = Typers.getTyper(ref.getValueType(), IFormatter.class);
         if (formatter == null)
             throw new IllegalUsageException("No formatter available for " + ref.getValueType());
 
-        if (value != null) {
-            String text = formatter.format(value/* ,options */);
-            if (text != null)
-                tag.attr("value", text);
+        String str = null;
+        if (value != null)
+            str = formatter.format(value/* ,options */);
+
+        IHtmlTag tag = createScreenInput(out, ref, fieldDecl);
+        if (tag != null) {
+            if (tag instanceof HtmlInputTag)
+                FieldHtmlUtil.apply((HtmlInputTag) tag, fieldDecl, options);
+            else if (tag instanceof HtmlTextareaTag)
+                FieldHtmlUtil.apply((HtmlTextareaTag) tag, fieldDecl, options);
+            if (str != null)
+                tag.attr("value", str);
         }
 
+        out.span().class_("print").text(str);
         return out;
     }
 
-    protected abstract IHtmlTag createInput(IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
+    protected abstract IHtmlTag createScreenInput(IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
 }
