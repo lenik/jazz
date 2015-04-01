@@ -14,6 +14,8 @@ import net.bodz.bas.c.type.TypeChain;
 import net.bodz.bas.c.type.TypeNearby;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.view.Feature;
 import net.bodz.bas.rtx.IOptions;
@@ -24,6 +26,8 @@ import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractViewBuilderFactory
         implements IViewBuilderFactory, II18nCapable {
+
+    static final Logger logger = LoggerFactory.getLogger(AbstractViewBuilderFactory.class);
 
     private TypePoMap<TaggedSet<IViewBuilder<?>>> typeMap = new TypePoMap<>();
 
@@ -92,9 +96,9 @@ public abstract class AbstractViewBuilderFactory
 
     <T> IViewBuilder<T> findViewBuilder(Class<? extends T> clazz, String... features) {
         for (Class<?> c : TypeChain.ancestors(clazz, Object.class)) {
-            TaggedSet<IViewBuilder<?>> set = typeMap.get(c);
+            TaggedSet<IViewBuilder<?>> tset = typeMap.get(c);
 
-            if (set == null) {
+            if (tset == null) {
                 // auto load...
                 try {
                     IViewBuilder<?> friendVbo = findNearbyVbo(c);
@@ -103,11 +107,11 @@ public abstract class AbstractViewBuilderFactory
                 } catch (ReflectiveOperationException e) {
                     throw new RuntimeException(e.getMessage(), e);
                 }
+                tset = getTaggedSet(c, false);
             }
 
-            set = getTaggedSet(c, false);
-            if (set != null) {
-                Collection<IViewBuilder<?>> selection = set.select(features);
+            if (tset != null) {
+                Collection<IViewBuilder<?>> selection = tset.select(features);
                 if (!selection.isEmpty()) {
                     IViewBuilder<T> first = (IViewBuilder<T>) selection.iterator().next();
                     return first;
@@ -120,21 +124,21 @@ public abstract class AbstractViewBuilderFactory
     protected synchronized TaggedSet<IViewBuilder<?>> getTaggedSet(Class<?> clazz, boolean autoCreate) {
         if (clazz == null)
             throw new NullPointerException("clazz");
-        TaggedSet<IViewBuilder<?>> set = typeMap.get(clazz);
-        if (set == null) {
+        TaggedSet<IViewBuilder<?>> tset = typeMap.get(clazz);
+        if (tset == null) {
             if (autoCreate) {
-                set = new QmiTaggedSet<>();
-                typeMap.put(clazz, set);
+                tset = new QmiTaggedSet<>();
+                typeMap.put(clazz, tset);
             } else {
                 // set = TaggedSet.fn.empty();
             }
         }
-        return set;
+        return tset;
     }
 
     TypeNearby[] nearbies = {
-            //
-            new TypeNearby(null, null, "Vbo", true), //
+    //
+    new TypeNearby(null, null, "Vbo", true), //
     };
 
     /**
@@ -157,7 +161,7 @@ public abstract class AbstractViewBuilderFactory
 
     protected void addViewBuilder(IViewBuilder<?> viewBuilder) {
         checkViewBuilder(viewBuilder);
-        addViewBuilder(viewBuilder, viewBuilder.getValueType(), getSupportedFeatures());
+        addViewBuilder(viewBuilder, viewBuilder.getValueType(), viewBuilder.getSupportedFeatures());
     }
 
     protected void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... features) {

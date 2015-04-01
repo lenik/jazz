@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import net.bodz.bas.html.viz.IHttpViewBuilder;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface HtmlViewBuilder {
+public @interface BuildViewWith {
 
     Class<? extends IHttpViewBuilder<?>>[] value();
 

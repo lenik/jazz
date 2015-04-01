@@ -52,4 +52,12 @@ public class FeaturedType
         return true;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(type);
+        sb.append(Arrays.asList(features));
+        return sb.toString();
+    }
+
 }

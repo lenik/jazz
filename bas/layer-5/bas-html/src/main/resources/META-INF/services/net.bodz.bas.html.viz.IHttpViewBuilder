@@ -10,7 +10,8 @@ net.bodz.bas.html.viz.builtin.List_htm
 net.bodz.bas.html.viz.builtin.Locale_htm
 net.bodz.bas.html.viz.builtin.Long_htm
 net.bodz.bas.html.viz.builtin.Map_htm
-net.bodz.bas.html.viz.builtin.Predef_htm
+net.bodz.bas.html.viz.builtin.PredefSelect_htm
+net.bodz.bas.html.viz.builtin.PredefRadio_htm
 net.bodz.bas.html.viz.builtin.Set_htm
 net.bodz.bas.html.viz.builtin.Short_htm
 net.bodz.bas.html.viz.builtin.SqlDate_htm

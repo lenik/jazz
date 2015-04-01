@@ -12,16 +12,20 @@ public abstract class AbstractViewBuilder<T>
     static final Logger logger = LoggerFactory.getLogger(AbstractViewBuilder.class);
 
     private Class<?> valueType;
-    private String[] supportedFeatures;
+    private String[] supportedFeatures = {};
 
-    public AbstractViewBuilder(Class<?> valueClass, String... supportedFeatures) {
+    public AbstractViewBuilder(Class<?> valueClass) {
         if (valueClass == null)
             throw new NullPointerException("valueClass");
-        if (supportedFeatures == null)
-            throw new NullPointerException("supportedFeatures");
         if (valueClass == getClass())
             throw new IllegalArgumentException("You should separate the view builder from the class.");
         this.valueType = valueClass;
+    }
+
+    public AbstractViewBuilder(Class<?> valueClass, String... supportedFeatures) {
+        this(valueClass);
+        if (supportedFeatures == null)
+            throw new NullPointerException("supportedFeatures");
         this.supportedFeatures = supportedFeatures;
     }
 
