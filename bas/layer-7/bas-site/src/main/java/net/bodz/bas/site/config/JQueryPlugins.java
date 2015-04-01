@@ -11,6 +11,7 @@ public class JQueryPlugins
     public static final String BIGVIDEO = "bigvideo";
     public static final String BOOTSTRAP3 = "bootstrap3";
     public static final String CHOSEN = "chosen";
+    public static final String CROPPER = "cropper";
     public static final String DATATABLES = "datatables";
     public static final String DATATABLES_BOOTSTRAP = "datatables.bootstrap";
     public static final String DATATABLES_COLVIS = "datatables.colVis";
@@ -18,6 +19,7 @@ public class JQueryPlugins
     public static final String DATATABLES_TABLETOOLS = "datatables.tableTools";
     public static final String FILE_UPLOAD = "file-upload";
     public static final String FLOT = "flot";
+    public static final String FOCUSPOINT = "focuspoint";
     public static final String FONT_AWESOME = "font-awesome";
     public static final String HANDSONTABLE = "handsontable";
     public static final String ICHECK = "icheck";
@@ -27,8 +29,11 @@ public class JQueryPlugins
     public static final String KNOB = "knob";
     public static final String MAGNIFIC_POPUP = "magnific-popup";
     public static final String PARSLEY = "parsley";
+    public static final String QRCODE = "qrcode";
     public static final String QTIP = "qtip";
     public static final String SELECTIZE = "selectize";
+    public static final String TAGSINPUT = "tagsinput";
+    public static final String TYPEAHEAD = "typeahead";
     public static final String WALLPAPER = "wallpaper";
     public static final String WYSIWYG_EDITOR = "wysiwyg-editor";
 
@@ -67,6 +72,15 @@ public class JQueryPlugins
                 _js_.join("jquery-chosen/chosen.css"));
         chosen.addDependency(jQueryMin);
         chosen.addDependency(css);
+    }
+
+    IArtifact cropper = javascript(CROPPER, "0.9.1", //
+            _js_.join("jquery-cropper/dist/cropper.min.js"));
+    {
+        IArtifact css = css(CROPPER + ".css", "0.9.1", //
+                _js_.join("jquery-cropper/dist/cropper.min.css"));
+        cropper.addDependency(jQueryMin);
+        cropper.addDependency(css);
     }
 
     IArtifact datatables = javascript(DATATABLES, "1.10.3", //
@@ -146,6 +160,15 @@ public class JQueryPlugins
         fontAwesome.addDependency(jQueryMin);
     }
 
+    IArtifact focuspoint = javascript(FOCUSPOINT, "1.1.1", //
+            _js_.join("jquery-focuspoint/js/jquery.focuspoint.min.js"));
+    {
+        IArtifact css = css(FOCUSPOINT + ".css", "1.1.1", //
+                _js_.join("jquery-focuspoint/css/focuspoint.css"));
+        focuspoint.addDependency(jQueryMin);
+        focuspoint.addDependency(css);
+    }
+
     IArtifact handsontable_js = javascript(HANDSONTABLE, "0.12.2", //
             _js_.join("jquery-handsontable/dist/handsontable.full.min.js"));
     {
@@ -188,6 +211,12 @@ public class JQueryPlugins
         parsley.addDependency(css);
     }
 
+    IArtifact qrcode = javascript(QRCODE, "0.11.0", //
+            _js_.join("jquery-qrcode/dist/jquery.qrcode.min.js"));
+    {
+        qrcode.addDependency(jQueryMin);
+    }
+
     IArtifact qtip = javascript(QTIP, "2.2.1", //
             _js_.join("jquery-qtip/jquery.qtip.min.js"));
     {
@@ -204,6 +233,22 @@ public class JQueryPlugins
                 _js_.join("jquery-selectize/dist/css/selectize.css"));
         selectize.addDependency(jQueryMin);
         selectize.addDependency(css);
+    }
+
+    IArtifact tagsinput = javascript(TAGSINPUT + "-base", "0.5.0", //
+            _js_.join("bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"));
+    {
+        IArtifact css = css(SELECTIZE + ".css", "0.5.0", //
+                _js_.join("bootstrap-tagsinput/dist/bootstrap-tagsinput.css"));
+        tagsinput.addDependency(jQueryMin);
+        tagsinput.addDependency(css);
+    }
+
+    IArtifact typeahead = javascript(TYPEAHEAD, "0.10.5", //
+            _js_.join("twitter-typeahead/dist/typeahead.bundle.min.js"));
+    {
+        typeahead.addDependency(jQueryMin);
+        tagsinput.addDependency(typeahead);
     }
 
     IArtifact wallpaper = javascript(WALLPAPER, "3.1.18", //
@@ -247,12 +292,17 @@ public class JQueryPlugins
         allInputs.addDependency(knob);
         allInputs.addDependency(parsley);
         allInputs.addDependency(selectize);
+        allInputs.addDependency(tagsinput);
+        allInputs.addDependency(typeahead);
         allInputs.addDependency(wysiwygEditor);
     }
     IArtifact allEffects = pseudo(ALL_EFFECTS);
     {
+        allEffects.addDependency(cropper);
         allEffects.addDependency(flot);
+        allEffects.addDependency(focuspoint);
         allEffects.addDependency(magnificPopup);
+        allEffects.addDependency(qrcode);
         allEffects.addDependency(qtip);
         allEffects.addDependency(wallpaper);
     }
