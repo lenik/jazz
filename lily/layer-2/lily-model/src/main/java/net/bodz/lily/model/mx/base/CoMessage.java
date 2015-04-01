@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.html.meta.ViewCriteria;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.ItemType;
+import net.bodz.bas.meta.lang.typer;
 import net.bodz.bas.repr.form.NullConvertion;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -213,7 +216,10 @@ public class CoMessage<Id>
      * @label Tags
      * @label.zh 标签列表
      */
+    @ViewCriteria("tagsinput")
+    @ItemType(TagDef.class)
     @OfGroup(StdGroup.Classification.class)
+    @typer.parser(TagsParser.class)
     public List<TagDef> getTags() {
         return tags;
     }

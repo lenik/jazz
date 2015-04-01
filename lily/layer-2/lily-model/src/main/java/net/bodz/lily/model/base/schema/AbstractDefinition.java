@@ -47,4 +47,17 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
         this.refCount = refCount;
     }
 
+    @Override
+    public String toString() {
+        String label = getLabel();
+        if (label != null)
+            return label;
+
+        String code = getCode();
+        if (code != null)
+            return code;
+
+        return getId().toString();
+    }
+
 }

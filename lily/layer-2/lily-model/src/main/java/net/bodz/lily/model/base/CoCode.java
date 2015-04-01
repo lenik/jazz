@@ -1,7 +1,11 @@
 package net.bodz.lily.model.base;
 
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.site.viz.input.Tagsinput;
 
+import net.bodz.lily.model.base.impl.CoCodeTagTyper;
+
+@Tagsinput(typer = CoCodeTagTyper.class)
 @IdType(Integer.class)
 public abstract class CoCode<self_t extends CoCode<self_t>>
         extends CoNode<self_t, Integer> {
