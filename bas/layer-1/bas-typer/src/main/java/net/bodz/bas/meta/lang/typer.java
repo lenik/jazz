@@ -51,6 +51,7 @@ public @interface typer {
     @Documented
     @Inherited
     @Retention(RetentionPolicy.RUNTIME)
+    @TyperOverrider(ITyperFamily.class)
     @interface family {
 
         Class<? extends ITyperFamily<?>> value();
@@ -67,6 +68,7 @@ public @interface typer {
     @Documented
     @Inherited
     @Retention(RetentionPolicy.RUNTIME)
+    @TyperOverrider(IParser.class)
     @interface parser {
 
         Class<? extends IParser<?>> value();
@@ -83,6 +85,7 @@ public @interface typer {
     @Documented
     @Inherited
     @Retention(RetentionPolicy.RUNTIME)
+    @TyperOverrider(IFormatter.class)
     @interface formatter {
 
         Class<? extends IFormatter<?>> value();
@@ -99,6 +102,7 @@ public @interface typer {
     @Documented
     @Inherited
     @Retention(RetentionPolicy.RUNTIME)
+    @TyperOverrider(IValidator.class)
     @interface validator {
 
         Class<? extends IValidator<?>> value();
