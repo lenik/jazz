@@ -9,4 +9,9 @@ public class HtmlButtonTag
         super(parent, tagName);
     }
 
+    public HtmlButtonTag dataToggle(Object val) {
+        attr("data-toggle", val);
+        return this;
+    }
+    
 }

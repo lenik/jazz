@@ -14,4 +14,15 @@ public class HtmlInputTag
         return label().for_(id);
     }
 
+    public HtmlInputTag capture(Object val) {
+        attr("capture", val);
+        return this;
+    }
+
+    public HtmlInputTag acceptCamera() {
+        accept("image/*;capture=camera");
+        capture("camera");
+        return this;
+    }
+
 }
