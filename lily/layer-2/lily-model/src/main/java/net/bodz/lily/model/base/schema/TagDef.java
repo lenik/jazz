@@ -31,9 +31,4 @@ public class TagDef
         (this.tagSet = new TagSetDef()).setId(tagSetId);
     }
 
-    @Override
-    public String toString() {
-        return getCode() + ":" + getLabel();
-    }
-
 }

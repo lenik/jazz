@@ -11,7 +11,7 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.meta.HtmlViewBuilder;
+import net.bodz.bas.html.meta.ViewCriteria;
 import net.bodz.bas.html.viz.IHttpViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -31,12 +31,10 @@ import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 
-import net.bodz.lily.model.base.impl.Priority_htm;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.model.base.security.impl.AccessMode_htm;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
@@ -226,8 +224,8 @@ public abstract class CoObject
      * @label Priority
      * @label.zh 优先级
      */
+    @ViewCriteria("Priority")
     @FormInput(textWidth = 4)
-    @HtmlViewBuilder(Priority_htm.class)
     @NumericInput(min = -1000, max = 1000)
     @OfGroup(StdGroup.Schedule.class)
     @Override
@@ -476,7 +474,7 @@ public abstract class CoObject
      * @label Access Mode
      * @label.zh 访问模式
      */
-    @HtmlViewBuilder(AccessMode_htm.class)
+    @ViewCriteria("AccessMode")
     @OfGroup(StdGroup.Security.class)
     @Override
     public int getAccessMode() {
