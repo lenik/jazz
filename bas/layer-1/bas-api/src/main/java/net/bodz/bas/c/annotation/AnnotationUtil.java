@@ -2,6 +2,9 @@ package net.bodz.bas.c.annotation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
+
+import net.bodz.bas.err.NotImplementedException;
 
 public class AnnotationUtil {
 
@@ -69,6 +72,17 @@ public class AnnotationUtil {
                 return annotationType.cast(_a);
         }
         return null;
+    }
+
+    public static <T> T getValue(Annotation a) {
+        try {
+            Method valueMethod = a.getClass().getMethod("value");
+            return (T) valueMethod.invoke(a);
+        } catch (NoSuchMethodException e) {
+            throw new NotImplementedException("Annotation has no value: " + a, e);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
 }
