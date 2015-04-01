@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
-public @interface View {
+public @interface ViewPath {
 
     /**
      * View path. Preferred path format: bar.subbar...base

@@ -22,6 +22,10 @@ public abstract class AbstractSwtViewBuilder<T>
         extends AbstractViewBuilder<T>
         implements ISwtViewBuilder<T>, II18nCapable {
 
+    public AbstractSwtViewBuilder(Class<?> valueClass) {
+        super(valueClass);
+    }
+
     public AbstractSwtViewBuilder(Class<?> valueClass, String... supportedFeatures) {
         super(valueClass, supportedFeatures);
     }

@@ -28,6 +28,10 @@ public abstract class AbstractHttpViewBuilder<T>
         extends AbstractViewBuilder<T>
         implements IHttpViewBuilder<T> {
 
+    public AbstractHttpViewBuilder(Class<?> valueClass) {
+        super(valueClass);
+    }
+
     public AbstractHttpViewBuilder(Class<?> valueClass, String... supportedFeatures) {
         super(valueClass, supportedFeatures);
     }
