@@ -1,6 +1,7 @@
 package net.bodz.bas.t.set;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 import net.bodz.bas.c.object.IdPool;
 import net.bodz.bas.c.object.NonNullPoolIdComparator;
@@ -81,8 +82,16 @@ public class QmiTaggedSet<V>
             throw new NullPointerException("tags");
 
         int n = tags.length;
-        if (n == 0)
-            return itemTagsMap.keySet();
+        if (n == 0) {
+            // TODO optim... workaround..
+            List<V> defaults = new ArrayList<>();
+            for (Entry<V, String[]> entry : itemTagsMap.entrySet()) {
+                String[] tv = entry.getValue();
+                if (tv.length == 0)
+                    defaults.add(entry.getKey());
+            }
+            return defaults;
+        }
 
         @SuppressWarnings("unchecked")
         Iterator<V>[] itv = new Iterator[n];
@@ -130,6 +139,31 @@ public class QmiTaggedSet<V>
     @Override
     public int size() {
         return itemTagsMap.size();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Item -> Tags:");
+        for (Entry<V, String[]> entry : itemTagsMap.entrySet()) {
+            V item = entry.getKey();
+            String[] tags = entry.getValue();
+            sb.append("  ");
+            sb.append(item);
+            sb.append(": ");
+            sb.append(Arrays.asList(tags));
+            sb.append('\n');
+        }
+
+        sb.append("Tag -> Items:");
+        for (Entry<String, TreeSet<V>> entry : rindex.entrySet()) {
+            sb.append("  ");
+            sb.append(entry.getKey());
+            sb.append(": ");
+            sb.append(entry.getValue());
+            sb.append('\n');
+        }
+        return sb.toString();
     }
 
 }
