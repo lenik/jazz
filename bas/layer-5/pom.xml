@@ -18,6 +18,7 @@
         <module>bas-flow</module>
         <module>bas-html</module>
         <module>bas-l10n</module>
+        <module>bas-ogl</module>
         <module>bas-potato</module>
         <module>bas-repr</module>
         <module>bas-ui</module>
