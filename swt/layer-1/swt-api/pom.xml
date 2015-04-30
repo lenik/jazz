@@ -23,7 +23,7 @@
     </dependencies>
     <name>SWT :: Layer 1 :: Swt</name>
     <properties>
-        <swt.version>3.8</swt.version>
+        <swt.version>4.3</swt.version>
     </properties>
     <profiles>
         <!-- os-family: dos mac netware os/2 tandem unix windows win9x z/os os/400 -->
