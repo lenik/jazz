@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The style element allows authors to embed style information in their documents. The style element is one of several inputs to the styling processing model. The element does not represent content for the user. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlStyleTag<self_t extends IHtmlTag>
+public class _HtmlStyleTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlStyleTag(IHtmlTag parent, String tagName) {
+    protected _HtmlStyleTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

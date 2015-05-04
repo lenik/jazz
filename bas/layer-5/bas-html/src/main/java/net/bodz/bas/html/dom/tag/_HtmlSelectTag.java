@@ -4,13 +4,13 @@ import net.bodz.bas.html.dom.AbstractHtmlTag;
 import net.bodz.bas.html.dom.IHtmlTag;
 
 /**
-  * -->The select element represents a control for selecting amongst a set of options. 
+  * <!--TOPIC:HTML-->The select element represents a control for selecting amongst a set of options. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlSelectTag<self_t extends IHtmlTag>
+public class _HtmlSelectTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlSelectTag(IHtmlTag parent, String tagName) {
+    protected _HtmlSelectTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

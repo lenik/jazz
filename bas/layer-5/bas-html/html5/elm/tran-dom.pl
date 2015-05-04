@@ -17,7 +17,7 @@ use Getopt::Long;
 sub _main; sub _version; sub _help;
 sub mkdir_p;
 
-my $opt_package = 'net.bodz.bas.dom.html.tag';
+my $opt_package = 'net.bodz.bas.html.dom.tag';
 my $opt_outdir;
 my $opt_wrapper = 0;
 
@@ -205,7 +205,7 @@ sub _main {
         print OUT "\n";
         if ($opt_wrapper) {
             my $impl = $Class0;
-            print OUT "import net.bodz.bas.dom.html.IHtmlTag;\n";
+            print OUT "import net.bodz.bas.html.dom.IHtmlTag;\n";
             print OUT "\n";
             print OUT "public class $Class\n";
             print OUT "        extends $Class0<$Class> {\n";
@@ -214,8 +214,8 @@ sub _main {
             print OUT "        super(parent, tagName);\n";
             print OUT "    }\n";
         } else {
-            print OUT "import net.bodz.bas.dom.html.AbstractHtmlTag;\n";
-            print OUT "import net.bodz.bas.dom.html.IHtmlTag;\n";
+            print OUT "import net.bodz.bas.html.dom.AbstractHtmlTag;\n";
+            print OUT "import net.bodz.bas.html.dom.IHtmlTag;\n";
             print OUT "\n";
 
             if (defined $doc) {
@@ -224,10 +224,10 @@ sub _main {
                 print OUT "  */\n";
             }
             print OUT "\@SuppressWarnings(\"unchecked\")\n" if scalar(@attrs);
-            print OUT "class $Class<self_t extends IHtmlTag>\n";
+            print OUT "public class $Class<self_t extends IHtmlTag>\n";
             print OUT "        extends AbstractHtmlTag<self_t> {\n";
             print OUT "\n";
-            print OUT "    public $Class(IHtmlTag parent, String tagName) {\n";
+            print OUT "    protected $Class(IHtmlTag parent, String tagName) {\n";
             print OUT "        super(parent, tagName);\n";
             print OUT "    }\n";
             
@@ -249,7 +249,7 @@ sub _main {
                     print OUT "      */\n";
                 }
 
-                print OUT "    public self_t $attr_(String val) {\n";
+                print OUT "    public self_t $attr_(Object val) {\n";
                 print OUT "        attr(\"$attrh\", val);\n";
                 print OUT "        return (self_t) this;\n";
                 print OUT "    }\n";

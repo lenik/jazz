@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The embed element supports dimension attributes. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlEmbedTag<self_t extends IHtmlTag>
+public class _HtmlEmbedTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlEmbedTag(IHtmlTag parent, String tagName) {
+    protected _HtmlEmbedTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+WGET="wget"
+
+docbase=http://www.w3.org/TR/html5
+
+sections=(
+        document-metadata
+        edits
+        embedded-content-0
+        forms
+        grouping-content
+        interactive-elements
+        links
+        scripting-1
+        sections
+        semantics
+        tabular-data
+        text-level-semantics
+    )
+
+for section in "${sections[@]}"; do
+    $WGET "$docbase/$section.html"
+done
+

@@ -6,10 +6,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
 /**
   * The dl element is inappropriate for marking up dialogue. Examples of how to mark up dialogue are shown below. 
   */
-class _HtmlDlTag<self_t extends IHtmlTag>
+public class _HtmlDlTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlDlTag(IHtmlTag parent, String tagName) {
+    protected _HtmlDlTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

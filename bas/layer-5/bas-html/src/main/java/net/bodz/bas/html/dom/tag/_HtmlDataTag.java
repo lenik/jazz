@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The data element represents its contents, along with a machine-readable form of those contents in the value attribute. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlDataTag<self_t extends IHtmlTag>
+public class _HtmlDataTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlDataTag(IHtmlTag parent, String tagName) {
+    protected _HtmlDataTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

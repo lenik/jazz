@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The html element in the following example declares that the document's language is English. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlHtmlTag<self_t extends IHtmlTag>
+public class _HtmlHtmlTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlHtmlTag(IHtmlTag parent, String tagName) {
+    protected _HtmlHtmlTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

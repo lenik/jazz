@@ -4,13 +4,13 @@ import net.bodz.bas.html.dom.AbstractHtmlTag;
 import net.bodz.bas.html.dom.IHtmlTag;
 
 /**
-  * The img element supports dimension attributes. 
+  * The figure element is used to group the Bar Chart image and data table. The figcaption element provides a caption for the grouped content. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlImgTag<self_t extends IHtmlTag>
+public class _HtmlImgTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlImgTag(IHtmlTag parent, String tagName) {
+    protected _HtmlImgTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

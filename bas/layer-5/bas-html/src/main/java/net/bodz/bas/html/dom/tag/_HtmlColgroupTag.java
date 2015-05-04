@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The colgroup element and its span attribute take part in the table model. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlColgroupTag<self_t extends IHtmlTag>
+public class _HtmlColgroupTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlColgroupTag(IHtmlTag parent, String tagName) {
+    protected _HtmlColgroupTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

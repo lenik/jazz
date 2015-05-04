@@ -225,10 +225,10 @@ sub _main {
                 print OUT "  */\n";
             }
             print OUT "\@SuppressWarnings(\"unchecked\")\n" if scalar(@attrs);
-            print OUT "class $Class<self_t extends IHtmlTagBuilder<?>>\n";
+            print OUT "public class $Class<self_t extends IHtmlTagBuilder<?>>\n";
             print OUT "        extends DecoratedHtmlTagBuilder<self_t> {\n";
             print OUT "\n";
-            print OUT "    public $Class(IXmlTagBuilder o) {\n";
+            print OUT "    protected $Class(IXmlTagBuilder o) {\n";
             print OUT "        super(o);\n";
             print OUT "    }\n";
             

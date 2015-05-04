@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * Constraint validation: The keygen element is barred from constraint validation. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlKeygenTag<self_t extends IHtmlTag>
+public class _HtmlKeygenTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlKeygenTag(IHtmlTag parent, String tagName) {
+    protected _HtmlKeygenTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The param element defines parameters for plugins invoked by object elements. It does not represent anything on its own. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlParamTag<self_t extends IHtmlTag>
+public class _HtmlParamTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlParamTag(IHtmlTag parent, String tagName) {
+    protected _HtmlParamTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

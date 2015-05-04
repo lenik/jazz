@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The meter element also does not represent a scalar value of arbitrary range — for example, it would be wrong to use this to report a weight, or height, unless there is a known maximum value. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlMeterTag<self_t extends IHtmlTag>
+public class _HtmlMeterTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlMeterTag(IHtmlTag parent, String tagName) {
+    protected _HtmlMeterTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

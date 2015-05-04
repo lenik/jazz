@@ -6,10 +6,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
 /**
   * <!--TOPIC:HTML-->The br element represents a line break. 
   */
-class _HtmlBrTag<self_t extends IHtmlTag>
+public class _HtmlBrTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlBrTag(IHtmlTag parent, String tagName) {
+    protected _HtmlBrTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

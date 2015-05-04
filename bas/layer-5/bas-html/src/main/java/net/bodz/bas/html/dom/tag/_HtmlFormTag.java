@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The form element represents a collection of form-associated elements, some of which can represent editable values that can be submitted to a server for processing. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlFormTag<self_t extends IHtmlTag>
+public class _HtmlFormTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlFormTag(IHtmlTag parent, String tagName) {
+    protected _HtmlFormTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

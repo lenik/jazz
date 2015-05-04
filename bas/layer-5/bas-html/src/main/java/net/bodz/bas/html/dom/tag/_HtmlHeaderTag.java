@@ -6,10 +6,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
 /**
   * The header element is not sectioning content; it doesn't introduce a new section. 
   */
-class _HtmlHeaderTag<self_t extends IHtmlTag>
+public class _HtmlHeaderTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlHeaderTag(IHtmlTag parent, String tagName) {
+    protected _HtmlHeaderTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

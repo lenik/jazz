@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The track element allows authors to specify explicit external timed text tracks for media elements. It does not represent anything on its own. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlTrackTag<self_t extends IHtmlTag>
+public class _HtmlTrackTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlTrackTag(IHtmlTag parent, String tagName) {
+    protected _HtmlTrackTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

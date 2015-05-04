@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The base element allows authors to specify the document base URL for the purposes of resolving relative URLs, and the name of the default browsing context for the purposes of following hyperlinks. The element does not represent any content beyond this information. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlBaseTag<self_t extends IHtmlTag>
+public class _HtmlBaseTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlBaseTag(IHtmlTag parent, String tagName) {
+    protected _HtmlBaseTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

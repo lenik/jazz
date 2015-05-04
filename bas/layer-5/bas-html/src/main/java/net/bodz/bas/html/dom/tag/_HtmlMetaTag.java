@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The meta element can represent document-level metadata with the name attribute, pragma directives with the http-equiv attribute, and the file's character encoding declaration when an HTML document is serialized to string form (e.g. for transmission over the network or for disk storage) with the charset attribute. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlMetaTag<self_t extends IHtmlTag>
+public class _HtmlMetaTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlMetaTag(IHtmlTag parent, String tagName) {
+    protected _HtmlMetaTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 
