@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The output element represents the result of a calculation or user action. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlOutputTag<self_t extends IHtmlTag>
+public class _HtmlOutputTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlOutputTag(IHtmlTag parent, String tagName) {
+    protected _HtmlOutputTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

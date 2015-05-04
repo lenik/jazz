@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The textarea element represents a multiline plain text edit control for the element's raw value. The contents of the control represent the control's default value. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlTextareaTag<self_t extends IHtmlTag>
+public class _HtmlTextareaTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlTextareaTag(IHtmlTag parent, String tagName) {
+    protected _HtmlTextareaTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

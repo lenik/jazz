@@ -6,10 +6,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
 /**
   * <!--TOPIC:HTML-->The wbr element represents a line break opportunity. 
   */
-class _HtmlWbrTag<self_t extends IHtmlTag>
+public class _HtmlWbrTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlWbrTag(IHtmlTag parent, String tagName) {
+    protected _HtmlWbrTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The ins element represents an addition to the document. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlInsTag<self_t extends IHtmlTag>
+public class _HtmlInsTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlInsTag(IHtmlTag parent, String tagName) {
+    protected _HtmlInsTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

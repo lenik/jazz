@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The tbody elements in this example identify the range of the row groups. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlThTag<self_t extends IHtmlTag>
+public class _HtmlThTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlThTag(IHtmlTag parent, String tagName) {
+    protected _HtmlThTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

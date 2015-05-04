@@ -10,7 +10,7 @@ import net.bodz.bas.html.dom.IHtmlTag;
 public class _HtmlTableTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlTableTag(IHtmlTag parent, String tagName) {
+    protected _HtmlTableTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

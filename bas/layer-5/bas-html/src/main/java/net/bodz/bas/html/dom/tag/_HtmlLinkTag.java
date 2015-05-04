@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The link element allows authors to link their document to other resources. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlLinkTag<self_t extends IHtmlTag>
+public class _HtmlLinkTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlLinkTag(IHtmlTag parent, String tagName) {
+    protected _HtmlLinkTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

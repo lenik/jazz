@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The video element supports dimension attributes. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlVideoTag<self_t extends IHtmlTag>
+public class _HtmlVideoTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlVideoTag(IHtmlTag parent, String tagName) {
+    protected _HtmlVideoTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The button element represents a button labeled by its contents. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlButtonTag<self_t extends IHtmlTag>
+public class _HtmlButtonTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlButtonTag(IHtmlTag parent, String tagName) {
+    protected _HtmlButtonTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

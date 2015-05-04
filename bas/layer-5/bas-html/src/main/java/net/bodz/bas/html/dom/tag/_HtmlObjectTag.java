@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The object element supports dimension attributes. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlObjectTag<self_t extends IHtmlTag>
+public class _HtmlObjectTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlObjectTag(IHtmlTag parent, String tagName) {
+    protected _HtmlObjectTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

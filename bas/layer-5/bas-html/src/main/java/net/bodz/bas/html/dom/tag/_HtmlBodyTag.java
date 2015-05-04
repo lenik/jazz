@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The body element exposes as event handler content attributes a number of the event handlers of the Window object. It also mirrors their event handler IDL attributes. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlBodyTag<self_t extends IHtmlTag>
+public class _HtmlBodyTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlBodyTag(IHtmlTag parent, String tagName) {
+    protected _HtmlBodyTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

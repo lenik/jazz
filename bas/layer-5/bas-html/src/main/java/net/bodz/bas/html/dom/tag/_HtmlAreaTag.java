@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!-- concept-uu -->The area element also supports the URLUtils interface. [URL] 
   */
 @SuppressWarnings("unchecked")
-class _HtmlAreaTag<self_t extends IHtmlTag>
+public class _HtmlAreaTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlAreaTag(IHtmlTag parent, String tagName) {
+    protected _HtmlAreaTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 
@@ -30,11 +30,8 @@ class _HtmlAreaTag<self_t extends IHtmlTag>
         return (self_t) this;
     }
 
-    /**
-      * The shape attribute is an enumerated attribute. The following table lists the keywords defined for this attribute. The states given in the first cell of the rows with keywords give the states to which those keywords map. Some of the keywords are non-conforming, as noted in the last column. 
-      */
-    public self_t shape(Object val) {
-        attr("shape", val);
+    public self_t download(Object val) {
+        attr("download", val);
         return (self_t) this;
     }
 
@@ -43,13 +40,8 @@ class _HtmlAreaTag<self_t extends IHtmlTag>
         return (self_t) this;
     }
 
-    public self_t target(Object val) {
-        attr("target", val);
-        return (self_t) this;
-    }
-
-    public self_t download(Object val) {
-        attr("download", val);
+    public self_t hreflang(Object val) {
+        attr("hreflang", val);
         return (self_t) this;
     }
 
@@ -58,8 +50,16 @@ class _HtmlAreaTag<self_t extends IHtmlTag>
         return (self_t) this;
     }
 
-    public self_t hreflang(Object val) {
-        attr("hreflang", val);
+    /**
+      * The shape attribute is an enumerated attribute. The following table lists the keywords defined for this attribute. The states given in the first cell of the rows with keywords give the states to which those keywords map. Some of the keywords are non-conforming, as noted in the last column. 
+      */
+    public self_t shape(Object val) {
+        attr("shape", val);
+        return (self_t) this;
+    }
+
+    public self_t target(Object val) {
+        attr("target", val);
         return (self_t) this;
     }
 

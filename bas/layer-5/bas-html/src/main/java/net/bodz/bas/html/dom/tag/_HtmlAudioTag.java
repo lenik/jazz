@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The audio element is a media element whose media data is ostensibly audio data. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlAudioTag<self_t extends IHtmlTag>
+public class _HtmlAudioTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlAudioTag(IHtmlTag parent, String tagName) {
+    protected _HtmlAudioTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

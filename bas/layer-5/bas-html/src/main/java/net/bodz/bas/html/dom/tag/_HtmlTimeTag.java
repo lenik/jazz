@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The time element can be used to encode dates, for example in microformats. The following shows a hypothetical way of encoding an event using a variant on hCalendar that uses the time element: 
   */
 @SuppressWarnings("unchecked")
-class _HtmlTimeTag<self_t extends IHtmlTag>
+public class _HtmlTimeTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlTimeTag(IHtmlTag parent, String tagName) {
+    protected _HtmlTimeTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

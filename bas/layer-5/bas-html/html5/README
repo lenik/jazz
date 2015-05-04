@@ -1,7 +1,8 @@
 How to generate the HTML model
 ==============================
 
-1. Download the document files from http://www.w3.org/TR/html5/:
+1. ./fetch to download the document files
+    (from http://www.w3.org/TR/html5/:)
     -rw-r--r-- 1 lenik 160772 Apr 15 15:18 document-metadata.html
     -rw-r--r-- 1 lenik  41856 Apr 15 15:15 edits.html
     -rw-r--r-- 1 lenik 867632 Apr 15 15:14 embedded-content-0.html
@@ -17,4 +18,8 @@ How to generate the HTML model
 
 2. Split elements by:
     $ ./split-elements.pl *.html
+
+3. Build the base types:
+    $ cd elm/
+    $ for f in *.htm; do ./tran-dom.pl $f; done
 

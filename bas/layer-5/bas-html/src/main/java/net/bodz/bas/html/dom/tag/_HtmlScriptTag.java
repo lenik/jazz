@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The script element allows authors to include dynamic script and data blocks in their documents. The element does not represent content for the user. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlScriptTag<self_t extends IHtmlTag>
+public class _HtmlScriptTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlScriptTag(IHtmlTag parent, String tagName) {
+    protected _HtmlScriptTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

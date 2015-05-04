@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The map element, in conjunction with an img element and any area element descendants, defines an image map. The element represents its children. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlMapTag<self_t extends IHtmlTag>
+public class _HtmlMapTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlMapTag(IHtmlTag parent, String tagName) {
+    protected _HtmlMapTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

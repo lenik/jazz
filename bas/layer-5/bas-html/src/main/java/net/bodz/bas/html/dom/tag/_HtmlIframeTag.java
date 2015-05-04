@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The iframe element must be empty in XML documents. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlIframeTag<self_t extends IHtmlTag>
+public class _HtmlIframeTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlIframeTag(IHtmlTag parent, String tagName) {
+    protected _HtmlIframeTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The q element must not be used in place of quotation marks that do not represent quotes; for example, it is inappropriate to use the q element for marking up sarcastic statements. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlQTag<self_t extends IHtmlTag>
+public class _HtmlQTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlQTag(IHtmlTag parent, String tagName) {
+    protected _HtmlQTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

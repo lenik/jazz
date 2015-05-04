@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The a element may be wrapped around entire paragraphs, lists, tables, and so forth, even entire sections, so long as there is no interactive content within (e.g. buttons or other links). This example shows how this can be used to make an entire advertising block into a link: 
   */
 @SuppressWarnings("unchecked")
-class _HtmlATag<self_t extends IHtmlTag>
+public class _HtmlATag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlATag(IHtmlTag parent, String tagName) {
+    protected _HtmlATag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

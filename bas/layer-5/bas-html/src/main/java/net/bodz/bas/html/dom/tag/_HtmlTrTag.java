@@ -6,10 +6,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
 /**
   * The tr element takes part in the table model. 
   */
-class _HtmlTrTag<self_t extends IHtmlTag>
+public class _HtmlTrTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlTrTag(IHtmlTag parent, String tagName) {
+    protected _HtmlTrTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

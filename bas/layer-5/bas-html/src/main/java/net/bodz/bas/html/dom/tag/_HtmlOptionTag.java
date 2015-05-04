@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The option element represents an option in a select element or as part of a list of suggestions in a datalist element. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlOptionTag<self_t extends IHtmlTag>
+public class _HtmlOptionTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlOptionTag(IHtmlTag parent, String tagName) {
+    protected _HtmlOptionTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

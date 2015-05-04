@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The div elements used in the code samples above and below are not intended to convey any semantic meaning and are used only to create a non-inline rendering of the grouped fieldset controls. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlFieldsetTag<self_t extends IHtmlTag>
+public class _HtmlFieldsetTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlFieldsetTag(IHtmlTag parent, String tagName) {
+    protected _HtmlFieldsetTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

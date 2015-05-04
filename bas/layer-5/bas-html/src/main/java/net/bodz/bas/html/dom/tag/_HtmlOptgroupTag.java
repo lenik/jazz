@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML--><!-- v2: make optgroups selectable if they have a value. -->The optgroup element represents a group of option elements with a common label. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlOptgroupTag<self_t extends IHtmlTag>
+public class _HtmlOptgroupTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlOptgroupTag(IHtmlTag parent, String tagName) {
+    protected _HtmlOptgroupTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

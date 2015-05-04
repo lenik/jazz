@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * The input element represents a button with no default behavior. A label for the button must be provided in the value attribute, though it may be the empty string. If the element has a value attribute, the button's label must be the value of that attribute; otherwise, it must be the empty string. The element is a button. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlInputTag<self_t extends IHtmlTag>
+public class _HtmlInputTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlInputTag(IHtmlTag parent, String tagName) {
+    protected _HtmlInputTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 

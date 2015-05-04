@@ -7,10 +7,10 @@ import net.bodz.bas.html.dom.IHtmlTag;
   * <!--TOPIC:HTML-->The ol element represents a list of items, where the items have been intentionally ordered, such that changing the order would change the meaning of the document. 
   */
 @SuppressWarnings("unchecked")
-class _HtmlOlTag<self_t extends IHtmlTag>
+public class _HtmlOlTag<self_t extends IHtmlTag>
         extends AbstractHtmlTag<self_t> {
 
-    public _HtmlOlTag(IHtmlTag parent, String tagName) {
+    protected _HtmlOlTag(IHtmlTag parent, String tagName) {
         super(parent, tagName);
     }
 
