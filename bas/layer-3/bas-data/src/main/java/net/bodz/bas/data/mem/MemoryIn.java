@@ -2,11 +2,14 @@ package net.bodz.bas.data.mem;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 
+import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 
-public class MemoryInputStream
-        extends InputStream {
+public class MemoryIn
+        extends InputStream
+        implements IByteIn {
 
     private final IMemory memory;
 
@@ -15,13 +18,13 @@ public class MemoryInputStream
 
     private int size;
 
-    public MemoryInputStream(IMemory memory, int start, int size) {
+    public MemoryIn(IMemory memory, int start, int size) {
         this.memory = memory;
         this.start = start;
         this.size = size;
     }
 
-    public MemoryInputStream(IMemory memory) {
+    public MemoryIn(IMemory memory) {
         this(memory, 0, -1);
     }
 
@@ -33,22 +36,21 @@ public class MemoryInputStream
         return size;
     }
 
-    private byte[] buf1 = { 0 };
-
     @ThreadUnsafe
     @Override
     public int read()
             throws IOException {
         if (size == 0)
             return -1;
+        int byt;
         try {
-            memory.read(start++, buf1);
+            byt = memory.read(start++);
         } catch (MemoryAccessException e) {
             throw new IOException(e);
         }
         if (size != -1)
             size--;
-        return buf1[0];
+        return byt;
     }
 
     @ThreadUnsafe
@@ -88,6 +90,17 @@ public class MemoryInputStream
             cb = (int) n;
         start += cb;
         return cb;
+    }
+
+    @Override
+    public int read(ByteBuffer buf)
+            throws IOException {
+        return fn.read(this, buf);
+    }
+
+    @Override
+    public boolean isClosed() {
+        return false;
     }
 
 }

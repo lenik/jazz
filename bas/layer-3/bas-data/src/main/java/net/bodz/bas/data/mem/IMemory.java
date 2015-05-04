@@ -5,7 +5,7 @@ package net.bodz.bas.data.mem;
  */
 public interface IMemory {
 
-    byte read(int addr)
+    int read(int addr)
             throws MemoryAccessException;
 
     void write(int addr, byte value)
