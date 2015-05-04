@@ -9,7 +9,7 @@ public class JavaSerializedType
     @Override
     public Object get(IMemory memory, int offset)
             throws MemoryAccessException {
-        try (MemoryInputStream min = new MemoryInputStream(memory, offset, -1);
+        try (MemoryIn min = new MemoryIn(memory, offset, -1);
                 ObjectInputStream in = new ObjectInputStream(min)) {
             return in.readObject();
         } catch (Exception e) {
@@ -20,7 +20,7 @@ public class JavaSerializedType
     @Override
     public void put(IMemory memory, int offset, Object value)
             throws MemoryAccessException {
-        try (MemoryOutputStream mout = new MemoryOutputStream(memory, offset, -1);
+        try (MemoryOut mout = new MemoryOut(memory, offset, -1);
                 ObjectOutputStream out = new ObjectOutputStream(mout)) {
             out.writeObject(value);
         } catch (Exception e) {

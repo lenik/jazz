@@ -2,11 +2,14 @@ package net.bodz.bas.data.mem;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
+import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 
-public class MemoryOutputStream
-        extends OutputStream {
+public class MemoryOut
+        extends OutputStream
+        implements IByteOut {
 
     private final IMemory memory;
 
@@ -15,13 +18,13 @@ public class MemoryOutputStream
 
     private int size;
 
-    public MemoryOutputStream(IMemory memory, int start, int size) {
+    public MemoryOut(IMemory memory, int start, int size) {
         this.memory = memory;
         this.start = start;
         this.size = size;
     }
 
-    public MemoryOutputStream(IMemory memory) {
+    public MemoryOut(IMemory memory) {
         this(memory, 0, -1);
     }
 
@@ -62,6 +65,22 @@ public class MemoryOutputStream
         } catch (MemoryAccessException e) {
             throw new IOException(e);
         }
+    }
+
+    @Override
+    public void write(ByteBuffer buf)
+            throws IOException {
+        fn.write(this, buf);
+    }
+
+    @Override
+    public void flush(boolean strict)
+            throws IOException {
+    }
+
+    @Override
+    public boolean isClosed() {
+        return false;
     }
 
 }

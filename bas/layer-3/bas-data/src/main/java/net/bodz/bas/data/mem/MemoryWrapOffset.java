@@ -31,7 +31,7 @@ public class MemoryWrapOffset
     }
 
     @Override
-    public byte read(int addr)
+    public int read(int addr)
             throws MemoryAccessException {
         return orig.read(addr + offset);
     }

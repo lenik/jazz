@@ -12,7 +12,8 @@ public class Int8
     @Override
     public Byte get(IMemory memory, int offset)
             throws MemoryAccessException {
-        return memory.read(offset);
+        int byt = memory.read(offset);
+        return (byte) byt;
     }
 
     @ThreadUnsafe

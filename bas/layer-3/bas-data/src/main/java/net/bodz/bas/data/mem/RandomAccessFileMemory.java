@@ -68,14 +68,14 @@ public class RandomAccessFileMemory
     }
 
     @Override
-    public byte read(int addr)
+    public int read(int addr)
             throws MemoryAccessException {
         try {
             file.seek(offset + addr);
             int b = file.read();
             if (b == -1)
                 throw new MemoryAccessException("end of file");
-            return (byte) b;
+            return b;
         } catch (IOException e) {
             throw new MemoryAccessException(e);
         }

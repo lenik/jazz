@@ -24,11 +24,11 @@ public class ArrayMemory
     }
 
     @Override
-    public byte read(int addr)
+    public int read(int addr)
             throws MemoryAccessException {
         if (addr >= end - start)
             throw new BadAddressException(addr, end - start);
-        return array[start + addr];
+        return array[start + addr] & 0xFF;
     }
 
     @Override
