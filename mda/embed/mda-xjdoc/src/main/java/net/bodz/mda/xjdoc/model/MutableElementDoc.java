@@ -243,7 +243,8 @@ public class MutableElementDoc
             try {
                 tagValue = tagType.parseEntry(cont, suffix, string, options);
             } catch (RuntimeException e) {
-                throw new RuntimeException("Failed to parse ff-entry: " + string);
+                throw new RuntimeException(String.format(//
+                        "Failed to parse ff-entry: %s (tt=%s)", string, tagType));
             }
 
             setTag(tagName, tagValue);
