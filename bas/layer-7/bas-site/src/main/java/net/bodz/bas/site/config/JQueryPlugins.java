@@ -148,10 +148,19 @@ public class JQueryPlugins
         fileUpload.addDependency(css);
     }
 
-    IArtifact flot = javascript(FLOT, "0.8.2", //
-            _js_.join("jquery-flot/jquery.flot.min.js"));
+    IArtifact flot = pseudo(FLOT);
     {
-        flot.addDependency(jQueryMin);
+        IArtifact core = javascript(FLOT + "_CORE", "0.8.2", //
+                _js_.join("jquery-flot/jquery.flot.min.js"));
+        IArtifact pie = javascript(FLOT + ".pie", "0.8.2", //
+                _js_.join("jquery-flot/jquery.flot.pie.min.js"));
+        IArtifact stack = javascript(FLOT + ".stack", "0.8.2", //
+                _js_.join("jquery-flot/jquery.flot.stack.min.js"));
+        core.addDependency(jQueryMin);
+        pie.addDependency(core);
+        stack.addDependency(core);
+        flot.addDependency(pie);
+        flot.addDependency(stack);
     }
 
     IArtifact fontAwesome = css(FONT_AWESOME, "4.2.0", //
