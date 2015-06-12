@@ -81,7 +81,7 @@ public class IbatisMapperProvider
 
         List<String> builtins = new ArrayList<>();
         for (String s : Arrays.asList("co", "mi", "message"))
-            builtins.add("com/tinylily/model/share/" + s + ".xml");
+            builtins.add("net/bodz/lily/model/share/" + s + ".xml");
 
         for (String resName : builtins) {
             getClass().getClassLoader().getResource(resName);

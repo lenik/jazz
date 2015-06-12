@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>lily-site</module>
+        <module>lily-skel</module>
     </modules>
     <name>Lily :: Layer 5</name>
 </project>
