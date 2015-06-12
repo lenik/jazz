@@ -7,9 +7,31 @@ public class TypePreorder
 
     @Override
     public int compare2(Class<?> o1, Class<?> o2) {
-        String name1 = o1.getName();
-        String name2 = o2.getName();
-        return name1.compareTo(name2);
+        if (o1.equals(o2))
+            return EQUALS;
+
+        Class<?>[] v1 = TypeChain.listSuperFirst(o1);
+        Class<?>[] v2 = TypeChain.listSuperFirst(o2);
+        int min = Math.min(v1.length, v2.length);
+        for (int i = 0; i < min; i++) {
+            Class<?> a = v1[i];
+            Class<?> b = v2[i];
+            if (a == b)
+                continue;
+
+            String an = a.getName();
+            String bn = b.getName();
+            int c = an.compareTo(bn);
+            if (c < 0)
+                return LESS_THAN;
+            if (c > 0)
+                return GREATER_THAN;
+        }
+
+        if (v1.length < min)
+            return LESS_THAN;
+        else
+            return GREATER_THAN;
     }
 
     /**
