@@ -143,8 +143,12 @@ public class QmiTaggedSet<V>
 
     @Override
     public String toString() {
+        return itemTagsMap.keySet().toString();
+    }
+
+    public String dump() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Item -> Tags:");
+        sb.append("Index:\n");
         for (Entry<V, String[]> entry : itemTagsMap.entrySet()) {
             V item = entry.getKey();
             String[] tags = entry.getValue();
@@ -155,7 +159,7 @@ public class QmiTaggedSet<V>
             sb.append('\n');
         }
 
-        sb.append("Tag -> Items:");
+        sb.append("Reversed Index:\n");
         for (Entry<String, TreeSet<V>> entry : rindex.entrySet()) {
             sb.append("  ");
             sb.append(entry.getKey());
