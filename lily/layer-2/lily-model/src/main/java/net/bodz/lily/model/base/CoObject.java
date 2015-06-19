@@ -10,6 +10,7 @@ import org.apache.ibatis.exceptions.PersistenceException;
 
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.meta.ViewCriteria;
 import net.bodz.bas.html.viz.IHttpViewContext;
@@ -30,7 +31,6 @@ import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
-
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.LoginContext;
@@ -41,7 +41,7 @@ import net.bodz.lily.model.base.security.User;
  */
 public abstract class CoObject
         // extends AbstractTextParametric
-        implements Serializable, IInstantiable, IContent, IAccessControlled {
+        implements Serializable, IInstantiable, IContent, IAccessControlled, ILazyLoading {
 
     private static final long serialVersionUID = 1L;
 
@@ -529,7 +529,17 @@ public abstract class CoObject
             }
 
         if (creation) {
-            return mapper.insert(this);
+            long longId = mapper.insert(this);
+
+            IdType aIdType = getClass().getAnnotation(IdType.class);
+            if (aIdType == null)
+                throw new IllegalUsageException("Unknown id type of " + getClass());
+            Class<?> idType = aIdType.value();
+
+            if (idType == Long.class)
+                return longId;
+            else
+                return (int) longId;
         } else {
             mapper.update(this);
             return getId();
