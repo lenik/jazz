@@ -5,7 +5,7 @@
 <mapper namespace="co">
 
     <!-- UI -->
-    <resultMap id="mapU" type="net.bodz.lily.model.base.CoEntity">
+    <resultMap id="mapU" type="net.bodz.lily.model.base.CoObject">
         <id property="id" column="id" />
         <result property="codeName" column="code" />
         <result property="label" column="label" />
@@ -21,7 +21,7 @@
     </sql>
 
     <!-- UI, States -->
-    <resultMap id="mapUS" type="net.bodz.lily.model.base.CoEntity" extends="mapU">
+    <resultMap id="mapUS" type="net.bodz.lily.model.base.CoObject" extends="mapU">
         <result property="priority" column="priority" />
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
@@ -42,7 +42,7 @@
     </sql>
 
     <!-- UI, States, ACL -->
-    <resultMap id="mapUSA" type="net.bodz.lily.model.base.CoEntity" extends="mapUS">
+    <resultMap id="mapUSA" type="net.bodz.lily.model.base.CoObject" extends="mapUS">
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
         <association property="owner" javaType="net.bodz.lily.model.base.security.User">
