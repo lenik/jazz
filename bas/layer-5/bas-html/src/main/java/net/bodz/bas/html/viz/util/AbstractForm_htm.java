@@ -59,9 +59,6 @@ public abstract class AbstractForm_htm<T>
             if (overrideFieldGroup(ctx, fgv, ref, group, options))
                 continue;
 
-            FieldCategory category = group.getCategory();
-            IHtmlTag catTag = beginCategory(ctx, fgv, category);
-
             // filter field[category] -> selection
             List<IFieldDecl> selection = new ArrayList<>();
             for (IFieldDecl fieldDecl : group)
@@ -70,13 +67,18 @@ public abstract class AbstractForm_htm<T>
             if (selection.isEmpty())
                 continue;
 
-            selection = overrideFieldSelection(ctx, catTag, ref, group, selection, options);
-            if (selection != null)
-                for (IFieldDecl fieldDecl : selection) {
-                    IHtmlTag fieldTag = beginField(ctx, catTag, fieldDecl);
-                    fieldBody(ctx, fieldTag, ref, fieldDecl, options);
-                    endField(ctx, catTag, fieldTag, fieldDecl);
-                }
+            selection = overrideFieldSelection(ref, group, selection, options);
+            if (selection == null || selection.isEmpty())
+                continue;
+
+            FieldCategory category = group.getCategory();
+            IHtmlTag catTag = beginCategory(ctx, fgv, category);
+
+            for (IFieldDecl fieldDecl : selection) {
+                IHtmlTag fieldTag = beginField(ctx, catTag, fieldDecl);
+                fieldBody(ctx, fieldTag, ref, fieldDecl, options);
+                endField(ctx, catTag, fieldTag, fieldDecl);
+            }
 
             endCategory(ctx, fgv, catTag, category);
         }
@@ -120,14 +122,14 @@ public abstract class AbstractForm_htm<T>
         return false;
     }
 
-    protected abstract IHtmlTag beginCategory(IHttpViewContext ctx, IHtmlTag out, FieldCategory category)
-            throws ViewBuilderException, IOException;
-
-    protected List<IFieldDecl> overrideFieldSelection(IHttpViewContext ctx, IHtmlTag out, IUiRef<?> instanceRef,
-            FieldDeclGroup group, List<IFieldDecl> selection, IOptions options)
+    protected List<IFieldDecl> overrideFieldSelection(IUiRef<?> instanceRef, FieldDeclGroup group,
+            List<IFieldDecl> selection, IOptions options)
             throws ViewBuilderException, IOException {
         return selection;
     }
+
+    protected abstract IHtmlTag beginCategory(IHttpViewContext ctx, IHtmlTag out, FieldCategory category)
+            throws ViewBuilderException, IOException;
 
     protected abstract IHtmlTag beginField(IHttpViewContext ctx, IHtmlTag out, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
