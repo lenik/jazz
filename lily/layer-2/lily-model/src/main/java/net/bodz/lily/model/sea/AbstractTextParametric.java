@@ -15,7 +15,6 @@ public abstract class AbstractTextParametric
         populate(qMap);
     }
 
-    @Override
     public final void populate(Map<String, String[]> parameterMap)
             throws ParseException {
         ParameterMapVariantMap variantMap = new ParameterMapVariantMap(parameterMap);
