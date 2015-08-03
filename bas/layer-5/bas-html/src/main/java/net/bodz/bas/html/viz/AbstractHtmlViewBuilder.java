@@ -10,10 +10,12 @@ import net.bodz.bas.html.artifact.IArtifact;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.req.IViewOfRequest;
-import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.IQueryable;
@@ -24,15 +26,15 @@ import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.bas.ui.dom1.UiValue;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 
-public abstract class AbstractHttpViewBuilder<T>
-        extends AbstractViewBuilder<T>
-        implements IHttpViewBuilder<T> {
+public abstract class AbstractHtmlViewBuilder<T>
+        extends AbstractHttpViewBuilder<T>
+        implements IHtmlViewBuilder<T> {
 
-    public AbstractHttpViewBuilder(Class<?> valueClass) {
+    public AbstractHtmlViewBuilder(Class<?> valueClass) {
         super(valueClass);
     }
 
-    public AbstractHttpViewBuilder(Class<?> valueClass, String... supportedFeatures) {
+    public AbstractHtmlViewBuilder(Class<?> valueClass, String... supportedFeatures) {
         super(valueClass, supportedFeatures);
     }
 
@@ -56,7 +58,12 @@ public abstract class AbstractHttpViewBuilder<T>
     }
 
     @Override
-    public void preview(IHttpViewContext ctx, IUiRef<T> ref, IOptions options) {
+    public final void preview(IHttpViewContext _ctx, IUiRef<T> ref, IOptions options) {
+        IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
+        preview(ctx, ref, options);
+    }
+
+    public void preview(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options) {
         IHtmlHeadData metaData = ctx.getHeadData();
 
         T value = ref.get();
@@ -80,7 +87,7 @@ public abstract class AbstractHttpViewBuilder<T>
     @Override
     public final Object buildView(IQueryable _ctx, Object out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
-        IHttpViewContext ctx = (IHttpViewContext) _ctx;
+        IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
         try {
             return buildHtmlView(ctx, (IHtmlTag) out, ref, options);
         } catch (IOException e) {
@@ -89,7 +96,19 @@ public abstract class AbstractHttpViewBuilder<T>
     }
 
     @Override
-    public final IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    public void buildHttpView(IHttpViewContext _ctx, IPrintOut _out, IUiRef<T> ref, IOptions options)
+            throws ViewBuilderException, IOException {
+        IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
+        IHtmlTag out = ctx.getOut();
+        try {
+            buildHtmlView(ctx, out, ref, options);
+        } catch (IOException e) {
+            throw new ViewBuilderException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public final IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return buildHtmlView(ctx, out, ref, IOptions.NULL);
     }
@@ -121,7 +140,7 @@ public abstract class AbstractHttpViewBuilder<T>
         return true;
     }
 
-    protected static void writeHeadMetas(IHttpViewContext ctx, IHtmlTag head)
+    protected static void writeHeadMetas(IHtmlViewContext ctx, IHtmlTag head)
             throws IOException {
         IHtmlHeadData metaData = ctx.getHeadData();
 
@@ -139,7 +158,7 @@ public abstract class AbstractHttpViewBuilder<T>
             head.meta().name(entry.getKey()).content(entry.getValue());
     }
 
-    protected static void writeHeadImports(IHttpViewContext ctx, IHtmlTag head)
+    protected static void writeHeadImports(IHtmlViewContext ctx, IHtmlTag head)
             throws IOException {
         IArtifactManager artifactManager = ctx.query(IArtifactManager.class);
         IHtmlHeadData metaData = ctx.getHeadData();
@@ -155,7 +174,7 @@ public abstract class AbstractHttpViewBuilder<T>
         }
     }
 
-    static IndexedHttpViewBuilderFactory factory = IndexedHttpViewBuilderFactory.getInstance();
+    static IHtmlViewBuilderFactory factory = IndexedHtmlViewBuilderFactory.getInstance();
 
     protected <_t> void embed(IHttpViewContext ctx, IHtmlTag out, Object obj, String... features)
             throws ViewBuilderException, IOException {
@@ -163,11 +182,11 @@ public abstract class AbstractHttpViewBuilder<T>
         embed(ctx, out, entry, features);
     }
 
-    protected <_t> void embed(IHttpViewContext ctx, IHtmlTag out, IUiRef<_t> ref, String... features)
+    protected <_t> void embed(IHtmlViewContext ctx, IHtmlTag out, IUiRef<_t> ref, String... features)
             throws ViewBuilderException, IOException {
         Class<? extends _t> type = ref.getValueType();
 
-        IHttpViewBuilder<_t> viewBuilder = factory.getViewBuilder(type, features);
+        IHtmlViewBuilder<_t> viewBuilder = factory.getViewBuilder(type, features);
         if (viewBuilder == null)
             throw new ViewBuilderException("Can't build view for " + type);
 

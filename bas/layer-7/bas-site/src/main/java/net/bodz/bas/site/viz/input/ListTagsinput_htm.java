@@ -9,7 +9,7 @@ import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlSelectTag;
 import net.bodz.bas.html.util.FieldHtmlUtil;
 import net.bodz.bas.html.viz.IHtmlHeadData;
-import net.bodz.bas.html.viz.IHttpViewContext;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.builtin.AbstractFormInput_htm;
 import net.bodz.bas.meta.decl.ItemType;
 import net.bodz.bas.potato.ref.UiPropertyRef;
@@ -29,13 +29,13 @@ public class ListTagsinput_htm
     }
 
     @Override
-    public void preview(IHttpViewContext ctx, IUiRef<List<?>> ref, IOptions options) {
+    public void preview(IHtmlViewContext ctx, IUiRef<List<?>> ref, IOptions options) {
         IHtmlHeadData headData = ctx.getHeadData();
         headData.addDependency(JQueryPlugins.TAGSINPUT, ArtifactType.SCRIPT);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl,
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl,
             IOptions options)
             throws ViewBuilderException, IOException {
         List<?> list = ref.get();

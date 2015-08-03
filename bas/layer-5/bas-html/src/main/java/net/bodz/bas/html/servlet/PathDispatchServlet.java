@@ -17,11 +17,12 @@ import net.bodz.bas.fn.EvalException;
 import net.bodz.bas.fn.IEvaluable;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
-import net.bodz.bas.html.viz.IHttpViewBuilder;
-import net.bodz.bas.html.viz.IHttpViewBuilderFactory;
-import net.bodz.bas.html.viz.IndexedHttpViewBuilderFactory;
-import net.bodz.bas.html.viz.DefaultHttpViewContext;
+import net.bodz.bas.html.viz.DefaultHtmlViewContext;
+import net.bodz.bas.html.viz.IHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
+import net.bodz.bas.html.viz.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.viz.util.PathFrames_htm;
+import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.adapter.WriterCharOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
@@ -57,13 +58,13 @@ public class PathDispatchServlet
     private int maxEvalDepth = 10;
 
     private PathDispatchService pathDispatchService;
-    private IHttpViewBuilderFactory viewBuilderFactory;
+    private IHtmlViewBuilderFactory viewBuilderFactory;
     private PathFrames_htm pathFramesVbo;
     private HttpSnapManager snapManager;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
-        viewBuilderFactory = IndexedHttpViewBuilderFactory.getInstance();
+        viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
         pathFramesVbo = new PathFrames_htm();
         snapManager = new HttpSnapManager();
     }
@@ -152,7 +153,7 @@ public class PathDispatchServlet
         req.setAttribute(IHttpViewBuilderFactory.class, viewBuilderFactory);
         req.setAttribute(IArtifactManager.class, IndexedArtifactManager.getInstance());
 
-        IHttpViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(target.getClass());
+        IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(target.getClass());
         if (viewBuilder == null)
             throw new IllegalUsageError("No available view builder");
 
@@ -166,15 +167,15 @@ public class PathDispatchServlet
             HttpCacheControl.apply(resp, (ICacheControl) target);
         }
 
-        DefaultHttpViewContext ctx = new DefaultHttpViewContext(req, resp);
         QueryableUnion union = new QueryableUnion();
         for (IPathArrival a : arrival.toList(false))
             if (a.getTarget() instanceof IQueryable)
                 union.add((IQueryable) a.getTarget());
-        if (!union.isEmpty()) {
             Collections.reverse(union);
+
+        DefaultHtmlViewContext ctx = new DefaultHtmlViewContext(req, resp);
+        if(!union.isEmpty())
             ctx.setQueryContext(union);
-        }
 
         switch (contentType.getName()) {
         case "text/html":

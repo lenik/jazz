@@ -32,7 +32,7 @@ public abstract class AbstractViewBuilderFactory
     private TypePoMap<TaggedSet<IViewBuilder<?>>> typeMap = new TypePoMap<>();
 
     private boolean initialized;
-    private Map<FeaturedType, Object> viewBuilderCache;
+    private Map<TaggedType, Object> viewBuilderCache;
     private static final Object NONE = new Object();
 
     public AbstractViewBuilderFactory() {
@@ -82,7 +82,7 @@ public abstract class AbstractViewBuilderFactory
         if (clazz.isPrimitive())
             clazz = (Class<? extends T>) Primitives.box(clazz);
 
-        FeaturedType key = new FeaturedType(clazz, features);
+        TaggedType key = new TaggedType(clazz, features);
         Object cache = viewBuilderCache.get(key);
         if (cache == null) {
             cache = findViewBuilder(clazz, features);
@@ -111,7 +111,7 @@ public abstract class AbstractViewBuilderFactory
             }
 
             if (tset != null) {
-                Collection<IViewBuilder<?>> selection = tset.select(features);
+                Collection<IViewBuilder<?>> selection = tset.selectForAll(features);
                 if (!selection.isEmpty()) {
                     IViewBuilder<T> first = (IViewBuilder<T>) selection.iterator().next();
                     return first;
