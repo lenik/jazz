@@ -9,8 +9,8 @@ public class QmiTaggedSetTest
     }
 
     @Override
-    protected TaggedSet<Object> createTaggedSet() {
-        return new QmiTaggedSet<>();
+    protected <T> TaggedSet<T> createTaggedSet() {
+        return new QmiTaggedSet<T>();
     }
 
 }
