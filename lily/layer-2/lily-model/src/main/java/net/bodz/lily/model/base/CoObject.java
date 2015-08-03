@@ -13,7 +13,7 @@ import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.meta.ViewCriteria;
-import net.bodz.bas.html.viz.IHttpViewContext;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -506,7 +506,7 @@ public abstract class CoObject
         this.acl = acl;
     }
 
-    public Object persist(IHttpViewContext ctx, IHtmlTag out)
+    public Object persist(IHtmlViewContext ctx, IHtmlTag out)
             throws PersistenceException, IOException {
         IMapperProvider provider = ctx.query(IMapperProvider.class);
         IMapperTemplate<CoObject, ?> mapper = provider.getMapperForObject(getClass());

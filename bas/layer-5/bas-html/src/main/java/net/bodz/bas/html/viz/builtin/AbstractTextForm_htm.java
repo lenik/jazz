@@ -7,7 +7,7 @@ import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
 import net.bodz.bas.html.dom.tag.HtmlTextareaTag;
 import net.bodz.bas.html.util.FieldHtmlUtil;
-import net.bodz.bas.html.viz.IHttpViewContext;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
@@ -26,7 +26,7 @@ public abstract class AbstractTextForm_htm<T>
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl,
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl,
             IOptions options)
             throws ViewBuilderException, IOException {
         T value = ref.get();

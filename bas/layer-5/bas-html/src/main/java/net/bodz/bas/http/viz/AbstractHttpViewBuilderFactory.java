@@ -1,4 +1,4 @@
-package net.bodz.bas.html.viz;
+package net.bodz.bas.http.viz;
 
 import net.bodz.bas.repr.viz.AbstractViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;
@@ -21,7 +21,7 @@ public abstract class AbstractHttpViewBuilderFactory
     @Override
     protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {
         if (!(viewBuilder instanceof IHttpViewBuilder<?>))
-            throw new IllegalArgumentException("Not for HTML view: " + viewBuilder);
+            throw new IllegalArgumentException("Not for HTTP view: " + viewBuilder);
     }
 
 }

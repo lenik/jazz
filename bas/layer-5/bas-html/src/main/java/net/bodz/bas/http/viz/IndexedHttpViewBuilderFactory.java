@@ -1,6 +1,7 @@
-package net.bodz.bas.html.viz;
+package net.bodz.bas.http.viz;
 
 import java.util.ServiceLoader;
+
 
 /**
  * @see IHttpViewBuilder The indexed type.

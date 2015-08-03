@@ -7,11 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.viz.AbstractHttpViewBuilder;
-import net.bodz.bas.html.viz.IHttpViewBuilder;
-import net.bodz.bas.html.viz.IHttpViewBuilderFactory;
-import net.bodz.bas.html.viz.IHttpViewContext;
-import net.bodz.bas.html.viz.IndexedHttpViewBuilderFactory;
+import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
+import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathArrivalEntry;
@@ -20,17 +20,17 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class PathFrames_htm
-        extends AbstractHttpViewBuilder<IPathArrival> {
+        extends AbstractHtmlViewBuilder<IPathArrival> {
 
-    IHttpViewBuilderFactory viewBuilderFactory;
+    IHtmlViewBuilderFactory viewBuilderFactory;
 
     public PathFrames_htm() {
         super(PathArrival.class);
-        viewBuilderFactory = IndexedHttpViewBuilderFactory.getInstance();
+        viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<IPathArrival> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<IPathArrival> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         IPathArrival arrival = ref.get();
@@ -44,7 +44,7 @@ public class PathFrames_htm
             Class<?> targetClass = target.getClass();
 
             String[] features = {};
-            IHttpViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(targetClass, features);
+            IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(targetClass, features);
             if (viewBuilder == null)
                 throw new ViewBuilderException("Can't build view for " + targetClass);
 
@@ -88,7 +88,7 @@ public class PathFrames_htm
 
         private static final long serialVersionUID = 1L;
 
-        IHttpViewBuilder<Object> viewBuilder;
+        IHtmlViewBuilder<Object> viewBuilder;
         IHtmlTag out0;
 
         public Frame(IPathArrival arrival) {

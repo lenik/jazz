@@ -3,6 +3,7 @@ package net.bodz.bas.html.viz;
 import java.util.Map;
 
 import net.bodz.bas.html.artifact.IMutableArtifactDependent;
+import net.bodz.bas.http.viz.IHttpHeadData;
 
 public interface IHtmlHeadData
         extends IHttpHeadData, IMutableArtifactDependent {

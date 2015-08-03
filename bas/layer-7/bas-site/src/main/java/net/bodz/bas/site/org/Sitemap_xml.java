@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.viz.AbstractHttpViewBuilder;
-import net.bodz.bas.html.viz.IHttpViewContext;
+import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
+import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
@@ -17,7 +17,7 @@ import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.bas.xml.dom.IXmlTag;
 
 public class Sitemap_xml
-        extends AbstractHttpViewBuilder<Sitemap>
+        extends AbstractHtmlViewBuilder<Sitemap>
         implements IDateFormatConsts {
 
     static final String SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9";
@@ -38,7 +38,7 @@ public class Sitemap_xml
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag parent, IUiRef<Sitemap> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<Sitemap> ref, IOptions options)
             throws ViewBuilderException, IOException {
         Sitemap sitemap = ref.get();
         IXmlTag out = parent;

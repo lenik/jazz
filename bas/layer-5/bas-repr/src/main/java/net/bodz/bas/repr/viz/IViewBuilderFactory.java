@@ -16,12 +16,14 @@ public interface IViewBuilderFactory {
     /**
      * @param features
      *            Required features.
+     * @return If multiple view builders matched, the preferred one is returned.
      */
     <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
 
     /**
      * @param features
      *            Required features.
+     * @return If multiple view builders matched, the preferred one is returned.
      */
     <T> IViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features);
 

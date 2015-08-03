@@ -1,10 +1,10 @@
-package net.bodz.bas.html.viz;
+package net.bodz.bas.http.viz;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -35,10 +35,10 @@ public interface IHttpViewBuilder<T>
 
     void preview(IHttpViewContext ctx, IUiRef<T> ref, IOptions options);
 
-    IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    void buildHttpView(IHttpViewContext ctx, IPrintOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    IHtmlTag buildHtmlView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    void buildHttpView(IHttpViewContext ctx, IPrintOut out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
 }
