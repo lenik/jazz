@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import net.bodz.bas.t.iterator.PrefetchedIterator;
+import net.bodz.bas.t.iterator.PrefetchSeed;
 
 public class PreorderTreeMap<K, V>
         extends TreeMap<K, V>
@@ -22,6 +23,11 @@ public class PreorderTreeMap<K, V>
         if (preorder == null)
             throw new NullPointerException("preorder");
         this.preorder = preorder;
+    }
+
+    @Override
+    public IPreorder<K> getPreorder() {
+        return preorder;
     }
 
     /**
@@ -161,12 +167,19 @@ public class PreorderTreeMap<K, V>
     public Iterable<Map.Entry<K, V>> joinEntries(final K key) {
         final Map.Entry<K, V> start = joinEntry_fast(key);
 
-        class Iter
-                extends PrefetchedIterator<Map.Entry<K, V>> {
+        class Seed
+                extends PrefetchSeed<Map.Entry<K, V>> {
             private Map.Entry<K, V> next;
 
-            public Iter(Map.Entry<K, V> next) {
+            public Seed(Map.Entry<K, V> next) {
                 this.next = next;
+            }
+
+            @Override
+            public Seed clone() {
+                Seed o = new Seed(next);
+                o.init(this);
+                return o;
             }
 
             @Override
@@ -181,12 +194,7 @@ public class PreorderTreeMap<K, V>
             }
         }
 
-        return new Iterable<Map.Entry<K, V>>() {
-            @Override
-            public Iterator<Map.Entry<K, V>> iterator() {
-                return new Iter(start);
-            }
-        };
+        return new Seed(start);
     }
 
     @Override

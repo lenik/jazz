@@ -2,7 +2,7 @@ package net.bodz.bas.c.string;
 
 import java.util.Iterator;
 
-import net.bodz.bas.t.iterator.PrefetchedIterator;
+import net.bodz.bas.t.iterator.PrefetchSeed;
 
 public class StringBreaks
         implements Iterable<String> {
@@ -29,7 +29,7 @@ public class StringBreaks
     }
 
     static class Breaker
-            extends PrefetchedIterator<String> {
+            extends PrefetchSeed<String> {
 
         private String s;
         private char delim;
@@ -44,6 +44,14 @@ public class StringBreaks
             this.s = s;
             this.delim = delim;
             this.includeDelim = includeDelim;
+        }
+
+        @Override
+        public Breaker clone() {
+            Breaker o = new Breaker(s, delim, includeDelim);
+            o.init(this);
+            o.start = start;
+            return o;
         }
 
         @Override

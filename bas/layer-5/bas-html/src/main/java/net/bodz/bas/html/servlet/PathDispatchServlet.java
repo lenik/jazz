@@ -18,11 +18,11 @@ import net.bodz.bas.fn.IEvaluable;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
 import net.bodz.bas.html.viz.DefaultHtmlViewContext;
-import net.bodz.bas.html.viz.IHtmlViewBuilder;
-import net.bodz.bas.html.viz.IHtmlViewBuilderFactory;
-import net.bodz.bas.html.viz.IndexedHtmlViewBuilderFactory;
 import net.bodz.bas.html.viz.util.PathFrames_htm;
+import net.bodz.bas.http.viz.ContentFamily;
+import net.bodz.bas.http.viz.IHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
+import net.bodz.bas.http.viz.IndexedHttpViewBuilderFactory;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.adapter.WriterCharOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
@@ -37,6 +37,7 @@ import net.bodz.bas.repr.path.TokenQueue;
 import net.bodz.bas.repr.req.HttpSnapManager;
 import net.bodz.bas.repr.req.IHttpRequestProcessor;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.repr.viz.ViewBuilderSet;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryableUnion;
 import net.bodz.bas.std.rfc.http.HttpCacheControl;
@@ -58,13 +59,13 @@ public class PathDispatchServlet
     private int maxEvalDepth = 10;
 
     private PathDispatchService pathDispatchService;
-    private IHtmlViewBuilderFactory viewBuilderFactory;
+    private IHttpViewBuilderFactory viewBuilderFactory;
     private PathFrames_htm pathFramesVbo;
     private HttpSnapManager snapManager;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
-        viewBuilderFactory = IndexedHtmlViewBuilderFactory.getInstance();
+        viewBuilderFactory = IndexedHttpViewBuilderFactory.getInstance();
         pathFramesVbo = new PathFrames_htm();
         snapManager = new HttpSnapManager();
     }
@@ -153,15 +154,20 @@ public class PathDispatchServlet
         req.setAttribute(IHttpViewBuilderFactory.class, viewBuilderFactory);
         req.setAttribute(IArtifactManager.class, IndexedArtifactManager.getInstance());
 
-        IHtmlViewBuilder<Object> viewBuilder = viewBuilderFactory.getViewBuilder(target.getClass());
+        ContentType contentType = ContentType.forPath(pathInfo);
+        ViewBuilderSet<Object> viewBuilders = viewBuilderFactory.getViewBuilders(target.getClass());
+        IHttpViewBuilder<Object> viewBuilder = ContentFamily.findFirstFor(viewBuilders, contentType);
         if (viewBuilder == null)
-            throw new IllegalUsageError("No available view builder");
+            throw new IllegalUsageError("No suitable view builder for " + target.getClass());
 
-        ContentType contentType = viewBuilder.getContentType(req, target);
+        contentType = viewBuilder.getContentType(req, target);
         resp.setContentType(contentType.getName());
 
         // Using UTF-8 by default.
-        resp.setCharacterEncoding("utf-8");
+
+        String encoding = viewBuilder.getEncoding();
+        if (encoding != null)
+            resp.setCharacterEncoding(encoding);
 
         if (target instanceof ICacheControl) {
             HttpCacheControl.apply(resp, (ICacheControl) target);
@@ -171,10 +177,10 @@ public class PathDispatchServlet
         for (IPathArrival a : arrival.toList(false))
             if (a.getTarget() instanceof IQueryable)
                 union.add((IQueryable) a.getTarget());
-            Collections.reverse(union);
+        Collections.reverse(union);
 
         DefaultHtmlViewContext ctx = new DefaultHtmlViewContext(req, resp);
-        if(!union.isEmpty())
+        if (!union.isEmpty())
             ctx.setQueryContext(union);
 
         switch (contentType.getName()) {
@@ -198,7 +204,7 @@ public class PathDispatchServlet
         default:
             resp.addHeader("X-Content-View", viewBuilder.getClass().getSimpleName());
             try {
-                viewBuilder.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiVar.wrap(target));
+                viewBuilder.buildHttpView(ctx, resp, UiVar.wrap(target));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build view: " + e.getMessage(), e);
             }

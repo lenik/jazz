@@ -1,11 +1,11 @@
 package net.bodz.bas.http.viz;
 
-import net.bodz.bas.repr.viz.AbstractViewBuilderFactory;
+import net.bodz.bas.repr.viz.AutoloadViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractHttpViewBuilderFactory
-        extends AbstractViewBuilderFactory
+        extends AutoloadViewBuilderFactory
         implements IHttpViewBuilderFactory {
 
     @Override
@@ -21,7 +21,7 @@ public abstract class AbstractHttpViewBuilderFactory
     @Override
     protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {
         if (!(viewBuilder instanceof IHttpViewBuilder<?>))
-            throw new IllegalArgumentException("Not for HTTP view: " + viewBuilder);
+            throw new IllegalArgumentException("Not an HTTP view builder: " + viewBuilder);
     }
 
 }

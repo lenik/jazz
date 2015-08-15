@@ -64,6 +64,7 @@ public class SiteGraphNode
         return parent;
     }
 
+    // @DetailLevel(DetailLevel.HIDDEN)
     public SiteGraphNode getRoot() {
         return parent == null ? this : parent.getRoot();
     }

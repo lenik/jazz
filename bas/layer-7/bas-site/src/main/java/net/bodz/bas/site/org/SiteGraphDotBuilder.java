@@ -7,12 +7,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
-import net.bodz.bas.c.object.IdentityHashSet;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.fmt.textmap.TextMapParser;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.t.set.MarkSet;
 
 public class SiteGraphDotBuilder
         extends HashMap<String, Object> {
@@ -38,7 +38,7 @@ public class SiteGraphDotBuilder
         out.println(graphAttrs);
         out.enter();
 
-        Set<SiteGraphNode> markSet = new IdentityHashSet<>();
+        Set<SiteGraphNode> markSet = new MarkSet<>();
         buildNodes(markSet, root);
 
         out.println();

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -73,13 +74,21 @@ public class DefaultViewOfRequest
         this.viewName = viewName;
 
         // TODO Multiple content-types?
-        // Content-type by browser.
-        String acceptContentType = request.getHeader("Accept-Content-Type");
-        if (acceptContentType != null) {
-            ContentType contentType = ContentType.forName(acceptContentType);
-            if (contentType != null)
-                setContentType(contentType);
+        ContentType contentType = null;
+        if (contentType == null) {
+            String accept = request.getHeader("Accept-Content-Type");
+            if (accept == null)
+                accept = request.getParameter("contentType:");
+            if (accept != null)
+                contentType = ContentType.forName(accept);
         }
+        if (contentType == null) {
+            String extension = FilePath.getExtension(request.getRequestURI());
+            if (extension != null)
+                contentType = ContentType.forExtension(extension);
+        }
+        if (contentType != null)
+            setContentType(contentType);
 
         request.setAttribute(IViewOfRequest.ATTRIBUTE_KEY, this);
         return true;

@@ -3,6 +3,7 @@ package net.bodz.bas.c.primitive;
 import java.math.BigInteger;
 
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.err.OverflowError;
 
 public class IntMath {
 
@@ -248,6 +249,18 @@ public class IntMath {
             result = result.multiply(bigI);
         }
         return result;
+    }
+
+    public static int toInt(long n) {
+        if (n < Integer.MIN_VALUE || n > Integer.MAX_VALUE)
+            throw new OverflowError("long2int: 0x" + Long.toHexString(n));
+        return (int) n;
+    }
+
+    public static float toFloat(double d) {
+        if (d < Float.MIN_VALUE || d > Float.MAX_VALUE)
+            throw new OverflowError("double2float: 0x" + Double.toHexString(d));
+        return (float) d;
     }
 
 }

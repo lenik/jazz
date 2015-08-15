@@ -11,7 +11,6 @@ import java.security.KeyStore.CallbackHandlerProtection;
 import java.security.Provider.Service;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.security.auth.callback.CallbackHandler;
@@ -25,7 +24,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.t.iterator.PrefetchedIterator;
+import net.bodz.bas.t.iterator.PrefetchSeed;
 
 public class CertSelector
         implements II18nCapable {
@@ -181,10 +180,18 @@ public class CertSelector
     }
 
     public Iterable<Provider> getStoreTypeProviders() {
-        class Iter
-                extends PrefetchedIterator<Provider> {
-            Provider[] all = Security.getProviders();
+        final Provider[] all = Security.getProviders();
+        class Seed
+                extends PrefetchSeed<Provider> {
             int i = 0;
+
+            @Override
+            public Seed clone() {
+                Seed o = new Seed();
+                o.init(this);
+                o.i = i;
+                return o;
+            }
 
             @Override
             protected Provider fetch() {
@@ -205,12 +212,7 @@ public class CertSelector
                 return end();
             }
         }
-        return new Iterable<Provider>() {
-            @Override
-            public Iterator<Provider> iterator() {
-                return new Iter();
-            }
-        };
+        return new Seed();
     }
 
     @SuppressWarnings("restriction")

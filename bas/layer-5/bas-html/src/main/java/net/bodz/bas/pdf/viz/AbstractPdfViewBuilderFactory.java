@@ -1,11 +1,11 @@
 package net.bodz.bas.pdf.viz;
 
-import net.bodz.bas.repr.viz.AbstractViewBuilderFactory;
+import net.bodz.bas.repr.viz.AutoloadViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractPdfViewBuilderFactory
-        extends AbstractViewBuilderFactory
+        extends AutoloadViewBuilderFactory
         implements IPdfViewBuilderFactory {
 
     @Override

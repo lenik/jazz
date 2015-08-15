@@ -24,6 +24,8 @@ import net.bodz.bas.ui.dom1.IUiRef;
 public abstract class AbstractForm_htm<T>
         extends AbstractHtmlViewBuilder<T> {
 
+    static final String ATTRIBUTE_MARKSET = ".markSet";
+
     public AbstractForm_htm(Class<?> valueClass, String... supportedFeatures) {
         super(valueClass, supportedFeatures);
     }
@@ -54,6 +56,11 @@ public abstract class AbstractForm_htm<T>
         HtmlDivTag fgv = formTag.div().class_("field-groups");
         Collection<FieldDeclGroup> groups = formDecl
                 .getFieldGroups(FieldDeclFilters.maxDetailLevel(DetailLevel.DETAIL));
+
+//        MarkSet<Object> markSet = ctx.getAttribute(ATTRIBUTE_MARKSET);
+//        if (markSet == null)
+//            ctx.setAttribute(ATTRIBUTE_MARKSET, markSet = new MarkSet<>());
+//        markSet.add(ref);
 
         for (FieldDeclGroup group : groups) {
             if (overrideFieldGroup(ctx, fgv, ref, group, options))

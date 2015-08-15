@@ -1,6 +1,11 @@
 package net.bodz.swt.viz;
 
-import net.bodz.bas.repr.viz.AbstractViewBuilderFactory;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import net.bodz.bas.c.type.TypeNearby;
+import net.bodz.bas.repr.viz.AutoloadViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.swt.viz.form.vbo.BooleanVbo;
@@ -10,8 +15,14 @@ import net.bodz.swt.viz.form.vbo.FileVbo;
 import net.bodz.swt.viz.form.vbo.StringVbo;
 
 public abstract class AbstractSwtViewBuilderFactory
-        extends AbstractViewBuilderFactory
+        extends AutoloadViewBuilderFactory
         implements ISwtViewBuilderFactory {
+
+    private List<TypeNearby> typeNearbies = new ArrayList<TypeNearby>();
+
+    public AbstractSwtViewBuilderFactory() {
+        typeNearbies.add(new TypeNearby(null, null, "Vbo", true));
+    }
 
     @Override
     protected void initialize() {
@@ -23,6 +34,11 @@ public abstract class AbstractSwtViewBuilderFactory
 
         addViewBuilder(new DateVbo());
         addViewBuilder(new FileVbo());
+    }
+
+    @Override
+    protected Collection<TypeNearby> getAutoloadSpecs() {
+        return typeNearbies;
     }
 
     @Override

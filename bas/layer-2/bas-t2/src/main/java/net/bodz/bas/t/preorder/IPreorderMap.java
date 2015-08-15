@@ -9,6 +9,11 @@ import java.util.Set;
 public interface IPreorderMap<K, V>
         extends Map<K, V> {
 
+    IPreorder<K> getPreorder();
+
+    /**
+     * @return <code>null</code> entry if no meet.
+     */
     Entry<K, V> meetEntry(K key);
 
     K meetKey(K key);

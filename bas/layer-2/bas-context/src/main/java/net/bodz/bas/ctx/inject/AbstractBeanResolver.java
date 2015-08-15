@@ -2,10 +2,10 @@ package net.bodz.bas.ctx.inject;
 
 import java.util.Map;
 
-import net.bodz.bas.c.java.util.AbstractMap2;
+import net.bodz.bas.c.java.util.AbstractRoMap;
 
 public abstract class AbstractBeanResolver
-        extends AbstractMap2<String, Object>
+        extends AbstractRoMap<String, Object>
         implements IBeanResolver {
 
     @Override
