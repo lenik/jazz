@@ -9,12 +9,12 @@ import java.util.Set;
 
 import net.bodz.bas.t.range.IntRange;
 
-public class ListMap<V>
+public class ListAsMap<V>
         implements Map<Integer, V> {
 
     private final List<V> list;
 
-    public ListMap(List<V> list) {
+    public ListAsMap(List<V> list) {
         if (list == null)
             throw new NullPointerException("list");
         this.list = list;

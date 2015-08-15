@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.builtin.FileResource;
@@ -25,7 +24,7 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class SiteGraph_svg
-        extends AbstractHtmlViewBuilder<SiteGraphNode> {
+        extends AbstractHttpViewBuilder<SiteGraphNode> {
 
     public SiteGraph_svg() {
         super(SiteGraphNode.class);
@@ -37,10 +36,10 @@ public class SiteGraph_svg
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<SiteGraphNode> ref, IOptions options)
+    public void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<SiteGraphNode> ref,
+            IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
-        HttpServletResponse resp = ctx.getResponse();
 
         BCharOut dotBuf = new BCharOut();
         SiteGraphDotBuilder dotBuilder = new SiteGraphDotBuilder(TreeOutImpl.from(dotBuf));
@@ -78,8 +77,6 @@ public class SiteGraph_svg
         } finally {
             tempDotFile.delete();
         }
-
-        return null;
     }
 
 }

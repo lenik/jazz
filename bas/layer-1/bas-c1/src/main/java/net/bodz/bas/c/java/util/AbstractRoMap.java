@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.bodz.bas.err.ReadOnlyException;
 
-public abstract class AbstractMap2<K, V>
+public abstract class AbstractRoMap<K, V>
         implements Map<K, V> {
 
     @Override

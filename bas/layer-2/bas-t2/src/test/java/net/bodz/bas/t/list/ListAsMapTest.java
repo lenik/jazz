@@ -9,9 +9,9 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.t.map.ListMap;
+import net.bodz.bas.t.map.ListAsMap;
 
-public class ListMapTest
+public class ListAsMapTest
         extends Assert {
 
     @Test
@@ -20,7 +20,7 @@ public class ListMapTest
         list.add("a");
         list.add("b");
         list.add("c");
-        Map<Integer, String> map = new ListMap<String>(list);
+        Map<Integer, String> map = new ListAsMap<String>(list);
         assertEquals("a", map.get(0));
         assertEquals("b", map.get(1));
         assertEquals("c", map.get(2));

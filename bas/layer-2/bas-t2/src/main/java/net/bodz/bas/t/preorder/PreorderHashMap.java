@@ -28,8 +28,15 @@ public class PreorderHashMap<K, V>
     }
 
     @Override
+    public IPreorder<K> getPreorder() {
+        return preorder;
+    }
+
+    @Override
     public Map.Entry<K, V> meetEntry(K key) {
         K meetKey = meetKey(key);
+        if (meetKey == null)
+            return null;
         V meetValue = get(meetKey);
         return new Pair<K, V>(meetKey, meetValue);
     }
@@ -109,4 +116,5 @@ public class PreorderHashMap<K, V>
             list.add(val);
         return list;
     }
+
 }

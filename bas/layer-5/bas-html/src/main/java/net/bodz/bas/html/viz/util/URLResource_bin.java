@@ -7,10 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ResourceTransferer;
+import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -20,7 +19,7 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class URLResource_bin
-        extends AbstractHtmlViewBuilder<URLResource> {
+        extends AbstractHttpViewBuilder<URLResource> {
 
     /**
      * 1 hour by default.
@@ -43,22 +42,15 @@ public class URLResource_bin
     }
 
     @Override
-    public boolean isOrigin(URLResource value) {
-        return true;
-    }
-
-    @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<URLResource> ref, IOptions options)
+    public void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<URLResource> ref, IOptions options)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
-        HttpServletResponse resp = ctx.getResponse();
         URLResource resource = ref.get();
         URL url = resource.getURL();
 
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
         transferer.setMaxAge(maxAge);
         transferer.transfer(url);
-        return null;
     }
 
 }

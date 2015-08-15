@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.html.artifact.ArtifactType;
 import net.bodz.bas.html.artifact.IArtifact;
@@ -11,9 +12,11 @@ import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.http.viz.HttpViewBuilderFamily;
+import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.http.viz.IHttpViewContext;
+import net.bodz.bas.http.viz.IndexedHttpViewBuilderFactory;
 import net.bodz.bas.i18n.dom1.IElement;
-import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.req.IViewOfRequest;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -39,6 +42,11 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
+    public HttpViewBuilderFamily getFamily() {
+        return HttpViewBuilderFamily.HTML;
+    }
+
+    @Override
     public ContentType getContentType(HttpServletRequest request, T value) {
         IViewOfRequest view = (IViewOfRequest) request.getAttribute(IViewOfRequest.class.getName());
         if (view != null)
@@ -48,12 +56,12 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public boolean isOrigin(T value) {
-        return false;
+    public String getEncoding() {
+        return "utf-8";
     }
 
     @Override
-    public boolean isFrame() {
+    public boolean isOrigin(T value) {
         return false;
     }
 
@@ -96,7 +104,7 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public void buildHttpView(IHttpViewContext _ctx, IPrintOut _out, IUiRef<T> ref, IOptions options)
+    public void buildHttpView(IHttpViewContext _ctx, HttpServletResponse resp, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
         IHtmlTag out = ctx.getOut();
@@ -174,9 +182,9 @@ public abstract class AbstractHtmlViewBuilder<T>
         }
     }
 
-    static IHtmlViewBuilderFactory factory = IndexedHtmlViewBuilderFactory.getInstance();
+    static IHttpViewBuilderFactory factory = IndexedHttpViewBuilderFactory.getInstance();
 
-    protected <_t> void embed(IHttpViewContext ctx, IHtmlTag out, Object obj, String... features)
+    protected <_t> void embed(IHtmlViewContext ctx, IHtmlTag out, Object obj, String... features)
             throws ViewBuilderException, IOException {
         UiValue<Object> entry = UiValue.wrap(obj);
         embed(ctx, out, entry, features);
@@ -186,7 +194,7 @@ public abstract class AbstractHtmlViewBuilder<T>
             throws ViewBuilderException, IOException {
         Class<? extends _t> type = ref.getValueType();
 
-        IHtmlViewBuilder<_t> viewBuilder = factory.getViewBuilder(type, features);
+        IHtmlViewBuilder<_t> viewBuilder = factory.getViewBuilders(type, features).findFirst(IHtmlViewBuilder.class);
         if (viewBuilder == null)
             throw new ViewBuilderException("Can't build view for " + type);
 

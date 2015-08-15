@@ -36,17 +36,25 @@ public class PropertyRefEntry<T>
         return (Class<? extends T>) property.getPropertyType();
     }
 
+    static int callDepth = 0;
+
     @Override
     public T get() {
         if (!property.isReadable())
             throw new IllegalUsageException("Property isn't readable: " + property);
 
-        Object instance = instanceRef.get();
+        if (callDepth > 10)
+            throw new StackOverflowError();
+
+        callDepth++;
         try {
+            Object instance = instanceRef.get();
             T value = (T) property.getValue(instance);
             return value;
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            callDepth--;
         }
     }
 

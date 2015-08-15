@@ -3,16 +3,10 @@ package net.bodz.bas.repr.viz;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.c.primitive.Primitives;
-import net.bodz.bas.c.type.SingletonUtil;
-import net.bodz.bas.c.type.TypeChain;
-import net.bodz.bas.c.type.TypeNearby;
-import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -20,8 +14,6 @@ import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.view.Feature;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.IQueryable;
-import net.bodz.bas.t.set.QmiTaggedSet;
-import net.bodz.bas.t.set.TaggedSet;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractViewBuilderFactory
@@ -29,24 +21,57 @@ public abstract class AbstractViewBuilderFactory
 
     static final Logger logger = LoggerFactory.getLogger(AbstractViewBuilderFactory.class);
 
-    private TypePoMap<TaggedSet<IViewBuilder<?>>> typeMap = new TypePoMap<>();
-
     private boolean initialized;
+
     private Map<TaggedType, Object> viewBuilderCache;
-    private static final Object NONE = new Object();
 
     public AbstractViewBuilderFactory() {
         viewBuilderCache = new HashMap<>();
     }
 
-    protected abstract void initialize();
-
-    @Override
-    public String[] getSupportedFeatures() {
-        return IEmptyConsts.emptyStringArray;
+    protected void lazyInit() {
+        if (!initialized)
+            synchronized (this) {
+                if (!initialized) {
+                    initialize();
+                    initialized = true;
+                }
+            }
     }
 
-    protected/* final */<T> IViewBuilder<T> getViewBuilder(IRefEntry<? extends T> entry) {
+    protected abstract void initialize();
+
+    protected abstract <T> ViewBuilderSet<T> findViewBuilders(Class<? extends T> clazz, String... features);
+
+    @Override
+    public <T> ViewBuilderSet<T> getViewBuilders(IUiRef<? extends T> ref, String... features) {
+        Class<? extends T> valueType = ref.getValueType();
+        return getViewBuilders(valueType, features);
+    }
+
+    @Override
+    public <T> ViewBuilderSet<T> getViewBuilders(Class<? extends T> clazz, String... features) {
+        if (clazz == null)
+            throw new NullPointerException("clazz");
+
+        lazyInit();
+
+        if (clazz.isPrimitive())
+            clazz = (Class<? extends T>) Primitives.box(clazz);
+
+        TaggedType key = new TaggedType(clazz, features);
+        Object cache = viewBuilderCache.get(key);
+        if (cache == null) {
+            ViewBuilderSet<T> list = findViewBuilders(clazz, features);
+            viewBuilderCache.put(key, cache = list);
+        }
+
+        @SuppressWarnings("unchecked")
+        ViewBuilderSet<T> list = (ViewBuilderSet<T>) cache;
+        return list;
+    }
+
+    protected <T> IViewBuilder<T> getViewBuilder(IRefEntry<? extends T> entry) {
         if (entry == null)
             throw new NullPointerException("entry");
         Class<? extends T> valueType = entry.getValueType();
@@ -61,114 +86,22 @@ public abstract class AbstractViewBuilderFactory
 
     @Override
     public <T> IViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features) {
-        Class<? extends T> valueType = ref.getValueType();
-        return getViewBuilder(valueType, features);
+        ViewBuilderSet<T> set = getViewBuilders(ref, features);
+        return set.isEmpty() ? null : set.getAny();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> clazz, String... features) {
-        if (clazz == null)
-            throw new NullPointerException("clazz");
-
-        if (!initialized)
-            synchronized (this) {
-                if (!initialized) {
-                    initialize();
-                    initialized = true;
-                }
-            }
-
-        if (clazz.isPrimitive())
-            clazz = (Class<? extends T>) Primitives.box(clazz);
-
-        TaggedType key = new TaggedType(clazz, features);
-        Object cache = viewBuilderCache.get(key);
-        if (cache == null) {
-            cache = findViewBuilder(clazz, features);
-            viewBuilderCache.put(key, cache != null ? cache : NONE);
-        }
-        if (cache == NONE)
-            return null;
-        else
-            return (IViewBuilder<T>) cache;
+    public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
+        ViewBuilderSet<T> set = getViewBuilders(type, features);
+        return set.isEmpty() ? null : set.getAny();
     }
 
-    <T> IViewBuilder<T> findViewBuilder(Class<? extends T> clazz, String... features) {
-        for (Class<?> c : TypeChain.ancestors(clazz, Object.class)) {
-            TaggedSet<IViewBuilder<?>> tset = typeMap.get(c);
-
-            if (tset == null) {
-                // auto load...
-                try {
-                    IViewBuilder<?> friendVbo = findNearbyVbo(c);
-                    if (friendVbo != null)
-                        addViewBuilder(friendVbo);
-                } catch (ReflectiveOperationException e) {
-                    throw new RuntimeException(e.getMessage(), e);
-                }
-                tset = getTaggedSet(c, false);
-            }
-
-            if (tset != null) {
-                Collection<IViewBuilder<?>> selection = tset.selectForAll(features);
-                if (!selection.isEmpty()) {
-                    IViewBuilder<T> first = (IViewBuilder<T>) selection.iterator().next();
-                    return first;
-                }
-            }
-        }
-        return null;
-    }
-
-    protected synchronized TaggedSet<IViewBuilder<?>> getTaggedSet(Class<?> clazz, boolean autoCreate) {
-        if (clazz == null)
-            throw new NullPointerException("clazz");
-        TaggedSet<IViewBuilder<?>> tset = typeMap.get(clazz);
-        if (tset == null) {
-            if (autoCreate) {
-                tset = new QmiTaggedSet<>();
-                typeMap.put(clazz, tset);
-            } else {
-                // set = TaggedSet.fn.empty();
-            }
-        }
-        return tset;
-    }
-
-    TypeNearby[] nearbies = {
-    //
-    new TypeNearby(null, null, "Vbo", true), //
-    };
-
-    /**
-     * @throws ReflectiveOperationException
-     * @throws LinkageError
-     */
-    IViewBuilder<?> findNearbyVbo(Class<?> clazz)
-            throws ReflectiveOperationException {
-        for (TypeNearby nearby : nearbies) {
-            Class<?> vboClass = nearby.find(clazz);
-            if (vboClass != null) {
-                IViewBuilder<?> vbo;
-                // vbo = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);
-                vbo = (IViewBuilder<?>) SingletonUtil.instantiateCached(vboClass);
-                return vbo;
-            }
-        }
-        return null;
-    }
-
-    protected void addViewBuilder(IViewBuilder<?> viewBuilder) {
+    protected final void addViewBuilder(IViewBuilder<?> viewBuilder) {
         checkViewBuilder(viewBuilder);
         addViewBuilder(viewBuilder, viewBuilder.getValueType(), viewBuilder.getSupportedFeatures());
     }
 
-    protected void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... features) {
-        checkViewBuilder(viewBuilder);
-        TaggedSet<IViewBuilder<?>> set = getTaggedSet(clazz, true);
-        set.add(viewBuilder, features);
-    }
+    protected abstract void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... features);
 
     protected void addViewBuilder(IViewBuilder<?> viewBuilder, Type type, Annotation[] annotation, String... features) {
         checkViewBuilder(viewBuilder);
@@ -191,7 +124,7 @@ public abstract class AbstractViewBuilderFactory
     }
 
     @Override
-    public Object buildView(IQueryable ctx, Object parent, IUiRef<?> ref)
+    public final Object buildView(IQueryable ctx, Object parent, IUiRef<?> ref)
             throws ViewBuilderException {
         return buildView(ctx, parent, ref, IOptions.NULL);
     }

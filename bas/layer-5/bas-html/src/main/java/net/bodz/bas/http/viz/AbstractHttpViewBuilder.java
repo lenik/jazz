@@ -2,7 +2,8 @@ package net.bodz.bas.http.viz;
 
 import java.io.IOException;
 
-import net.bodz.bas.io.IPrintOut;
+import javax.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -22,12 +23,35 @@ public abstract class AbstractHttpViewBuilder<T>
     }
 
     @Override
+    public HttpViewBuilderFamily getFamily() {
+        return HttpViewBuilderFamily.GENERAL;
+    }
+
+    @Override
+    public String getEncoding() {
+        return null;
+    }
+
+    @Override
+    public boolean isOrigin(T value) {
+        return true;
+    }
+
+    @Override
+    public boolean isFrame() {
+        return false;
+    }
+
+    @Override
+    public void preview(IHttpViewContext ctx, IUiRef<T> ref, IOptions options) {
+    }
+
+    @Override
     public Object buildView(IQueryable _ctx, Object _out, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException {
         IHttpViewContext ctx = (IHttpViewContext) _ctx;
-        IPrintOut out = (IPrintOut) _out;
         try {
-            buildHttpView(ctx, out, ref, options);
+            buildHttpView(ctx, ctx.getResponse(), ref, options);
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
@@ -35,9 +59,9 @@ public abstract class AbstractHttpViewBuilder<T>
     }
 
     @Override
-    public void buildHttpView(IHttpViewContext ctx, IPrintOut out, IUiRef<T> ref)
+    public void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
-        buildHttpView(ctx, out, ref, IOptions.NULL);
+        buildHttpView(ctx, resp, ref, IOptions.NULL);
     }
 
 }

@@ -9,9 +9,20 @@ import net.bodz.bas.ui.dom1.IUiRef;
 public interface IViewBuilderFactory {
 
     /**
-     * @return Non-<code>null</code> array of supported feature names.
+     * @param features
+     *            Required features.
+     * @return Non-<code>null</code>. If multiple view builders matched, the preferred one is
+     *         returned.
      */
-    String[] getSupportedFeatures();
+    <T> ViewBuilderSet<T> getViewBuilders(Class<? extends T> type, String... features);
+
+    /**
+     * @param features
+     *            Required features.
+     * @return Non-<code>null</code>. If multiple view builders matched, the preferred one is
+     *         returned.
+     */
+    <T> ViewBuilderSet<T> getViewBuilders(IUiRef<? extends T> ref, String... features);
 
     /**
      * @param features

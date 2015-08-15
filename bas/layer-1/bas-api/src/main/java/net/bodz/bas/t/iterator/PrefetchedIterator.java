@@ -12,9 +12,14 @@ public abstract class PrefetchedIterator<T>
     private static final int HASNEXT = 1;
     private static final int CACHED = 2;
     private static final int END = -1;
-    private int _state = UNKNOWN;
 
+    private int _state = UNKNOWN;
     private T cache;
+
+    protected void init(PrefetchedIterator<T> o) {
+        this._state = o._state;
+        this.cache = o.cache;
+    }
 
     @Override
     public final boolean hasNext() {
