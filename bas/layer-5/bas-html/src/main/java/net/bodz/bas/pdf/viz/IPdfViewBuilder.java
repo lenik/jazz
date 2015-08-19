@@ -2,7 +2,8 @@ package net.bodz.bas.pdf.viz;
 
 import java.io.IOException;
 
-import net.bodz.bas.html.dom.IHtmlTag;
+import javax.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.http.viz.IHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -12,10 +13,10 @@ import net.bodz.bas.ui.dom1.IUiRef;
 public interface IPdfViewBuilder<T>
         extends IHttpViewBuilder<T> {
 
-    IHtmlTag buildPdfView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    void buildPdfView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    IHtmlTag buildPdfView(IHttpViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    void buildPdfView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref, IOptions options)
             throws ViewBuilderException, IOException;
 
 }
