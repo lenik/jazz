@@ -54,7 +54,7 @@ public class Processes {
         return runtime.exec(shprefix + command, envp, dir);
     }
 
-    public static Process shellExec(String[] cmdarray)
+    public static Process shellExec(String... cmdarray)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
         cmdarray = (String[]) ArrayUtils.addAll(shvec, cmdarray);
