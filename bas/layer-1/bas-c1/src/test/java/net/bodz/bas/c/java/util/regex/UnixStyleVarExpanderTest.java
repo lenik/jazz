@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class UnixStyleVarProcessorTest
+public class UnixStyleVarExpanderTest
         extends Assert {
 
     @Test
