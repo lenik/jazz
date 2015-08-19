@@ -10,15 +10,23 @@ public class FileTree {
     public static int delete(File file, DeleteOption... options) {
         int count = 0;
 
-        if (DeleteOptions.isDeleteTree(options)) {
-            // TODO delete tree.
+        if (file.isDirectory()) {
+            if (DeleteOptions.isDeleteTree(options))
+                for (File child : file.listFiles())
+                    count += delete(child, options);
         }
 
         if (file.delete())
             count++;
 
         if (DeleteOptions.isRemoveEmptyParents(options)) {
-            // TODO remove empty parents.
+            while (true) {
+                file = file.getParentFile();
+                if (file == null)
+                    break;
+                if (!file.delete())
+                    break;
+            }
         }
 
         return count;
