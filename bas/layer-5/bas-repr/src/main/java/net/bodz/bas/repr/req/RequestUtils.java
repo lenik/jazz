@@ -47,11 +47,15 @@ public class RequestUtils {
 
         int port = req.getServerPort();
         if (req.isSecure()) {
-            if (port != 443)
-                sb.append(port);
+            if (port == 443)
+                port = 0;
         } else {
-            if (port != 80)
-                sb.append(port);
+            if (port == 80)
+                port = 0;
+        }
+        if (port != 0) {
+            sb.append(':');
+            sb.append(port);
         }
 
         sb.append("/");
