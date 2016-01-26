@@ -1,0 +1,2 @@
+--\import lily.store.art
+--\mixin lily.type.DOC art
