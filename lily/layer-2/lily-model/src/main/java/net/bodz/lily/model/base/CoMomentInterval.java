@@ -1,7 +1,8 @@
 package net.bodz.lily.model.base;
 
 import java.io.IOException;
-import java.util.Date;
+
+import org.joda.time.DateTime;
 
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -16,8 +17,8 @@ public abstract class CoMomentInterval<Id>
     private static final long serialVersionUID = 1L;
 
     private Id id;
-    private Date beginDate;
-    private Date endDate;
+    private DateTime beginDate;
+    private DateTime endDate;
 
     public CoMomentInterval() {
         beginDate = getCreationDate();
@@ -50,12 +51,12 @@ public abstract class CoMomentInterval<Id>
      */
     @OfGroup(StdGroup.Schedule.class)
     @Override
-    public Date getBeginDate() {
+    public DateTime getBeginDate() {
         return beginDate;
     }
 
     @Override
-    public void setBeginDate(Date beginTime) {
+    public void setBeginDate(DateTime beginTime) {
         this.beginDate = beginTime;
     }
 
@@ -70,12 +71,12 @@ public abstract class CoMomentInterval<Id>
      */
     @OfGroup(StdGroup.Schedule.class)
     @Override
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
 
     @Override
-    public void setEndDate(Date endTime) {
+    public void setEndDate(DateTime endTime) {
         this.endDate = endTime;
     }
 

@@ -1,15 +1,15 @@
 package net.bodz.lily.model.base;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public interface IMomentInterval {
 
-    Date getBeginDate();
+    DateTime getBeginDate();
 
-    void setBeginDate(Date beginDate);
+    void setBeginDate(DateTime beginDate);
 
-    Date getEndDate();
+    DateTime getEndDate();
 
-    void setEndDate(Date endDate);
+    void setEndDate(DateTime endDate);
 
 }

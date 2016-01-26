@@ -2,11 +2,11 @@ package net.bodz.lily.model.base;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.exceptions.PersistenceException;
+import org.joda.time.DateTime;
 
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
@@ -31,6 +31,7 @@ import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
+import net.bodz.bas.t.variant.IMutableVariantMap;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.LoginContext;
@@ -69,16 +70,18 @@ public abstract class CoObject
     private String image;
 
     private int priority;
-    private Date creationDate = new Date();
-    private Date lastModifiedDate = creationDate;
+    private DateTime creationDate = new DateTime();
+    private DateTime lastModifiedDate = creationDate;
     private int flags = 0;
-    private State state = StdStates.START;
+    private State state = StdStates.INIT;
     private int version;
 
-    private User owner;
+    private User ownerUser;
     private Group ownerGroup;
     private int accessMode = M_PUBLIC;
     private int acl;
+
+    private IMutableVariantMap<String> properties;
 
     public CoObject() {
     }
@@ -89,7 +92,7 @@ public abstract class CoObject
         if (session != null) {
             LoginContext loginContext = (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);
             if (loginContext != null) {
-                owner = loginContext.user;
+                ownerUser = loginContext.user;
                 ownerGroup = loginContext.user.getPrimaryGroup();
             }
         }
@@ -184,6 +187,7 @@ public abstract class CoObject
      * @label Image
      * @label.zh 图像
      * @placeholder 输入图像的名称…
+     * @deprecated See #
      */
     @OfGroup(StdGroup.Visual.class)
     @TextInput(maxLength = N_IMAGE)
@@ -191,6 +195,9 @@ public abstract class CoObject
         return image;
     }
 
+    /**
+     * @deprecated
+     */
     public void setImage(String image) {
         this.image = image;
     }
@@ -246,11 +253,11 @@ public abstract class CoObject
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Priority(-100 + 0)
-    public Date getCreationDate() {
+    public DateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(DateTime creationDate) {
         if (creationDate == null)
             throw new NullPointerException("creationDate");
         this.creationDate = creationDate;
@@ -261,11 +268,11 @@ public abstract class CoObject
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Override
     public long getCreationTime() {
-        return creationDate.getTime();
+        return creationDate.getMillis();
     }
 
     public void touch() {
-        lastModifiedDate = new Date();
+        lastModifiedDate = new DateTime();
         if (creationDate == null)
             creationDate = lastModifiedDate;
     }
@@ -279,11 +286,11 @@ public abstract class CoObject
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
     @Priority(-100 + 1)
-    public Date getLastModifiedDate() {
+    public DateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModified) {
+    public void setLastModifiedDate(DateTime lastModified) {
         if (lastModified == null)
             throw new NullPointerException("lastModified");
         this.lastModifiedDate = lastModified;
@@ -294,7 +301,7 @@ public abstract class CoObject
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Override
     public long getLastModified() {
-        return lastModifiedDate.getTime();
+        return lastModifiedDate.getMillis();
     }
 
     /**
@@ -401,23 +408,23 @@ public abstract class CoObject
      * <p lang="zh">
      * 描述信息的所有者（持有者）。
      * 
-     * @label Owner
+     * @label Owner User
      * @label.zh 属主
      */
     @OfGroup(StdGroup.Security.class)
-    public User getOwner() {
-        return owner;
+    public User getOwnerUser() {
+        return ownerUser;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwnerUser(User ownerUser) {
+        this.ownerUser = ownerUser;
     }
 
     /**
      * <p lang="zh">
      * 描述信息所属的用户组。组内成员对该信息具有额外的控制权。
      * 
-     * @label Group
+     * @label Owner Group
      * @label.zh 属组
      */
     @OfGroup(StdGroup.Security.class)
@@ -434,7 +441,7 @@ public abstract class CoObject
     @OfGroup(StdGroup.Security.class)
     @Override
     public int getUserId() {
-        return owner == null ? 0 : owner.getId();
+        return ownerUser == null ? 0 : ownerUser.getId();
     }
 
     @Derived
@@ -504,6 +511,15 @@ public abstract class CoObject
 
     public void setAcl(int acl) {
         this.acl = acl;
+    }
+
+    public IMutableVariantMap<String> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(IMutableVariantMap<String> properties) {
+        // MutableVariantMap.fromMap(properties);
+        this.properties = properties;
     }
 
     public Object persist(IHtmlViewContext ctx, IHtmlTag out)
