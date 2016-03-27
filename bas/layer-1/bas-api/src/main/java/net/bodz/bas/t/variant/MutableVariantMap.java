@@ -26,6 +26,13 @@ public class MutableVariantMap<K>
         this.map = map;
     }
 
+    public static <K> IMutableVariantMap<K> fromMap(Map<K, Object> map) {
+        if (map instanceof IMutableVariantMap)
+            return (IMutableVariantMap<K>) map;
+        else
+            return new MutableVariantMap<K>(map);
+    }
+
     @Override
     public Map<K, Object> getWrapped() {
         return map;
