@@ -13,6 +13,7 @@
         <module>bas</module>
         <module>mda</module>
         <module>swt</module>
+        <module>lily</module>
     </modules>
 
     <name>Jazz Project</name>
