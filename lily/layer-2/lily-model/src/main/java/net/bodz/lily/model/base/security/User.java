@@ -9,13 +9,14 @@ import java.util.Set;
 
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.TextInput;
-
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.model.base.IdType;
 
 /**
  * <p lang="zh-cn">
- * 使用本系统的用户，在登录系统时需要输入密码。和“联系人”不同，用户不具有联系信息。
+ * 使用本系统的用户，在登录系统时需要输入密码。
+ * 
+ * 和“联系人”不同，用户不具有联系信息。
  * 
  * @label User (Account)
  * @label.zh 用户（帐户）
@@ -48,6 +49,9 @@ public class User
     private int salt = RANDOM.nextInt();
     private String password;
 
+    private List<UserId> ids;
+
+    private InetAddress registerIP;
     private long lastLoginTime;
     private InetAddress lastLoginIP; // =Inet4Address.getByAddress();
 
@@ -150,6 +154,26 @@ public class User
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<UserId> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<UserId> ids) {
+        this.ids = ids;
+    }
+
+    /**
+     * @label Register IP
+     * @label.zh 注册IP
+     */
+    public InetAddress getRegisterIP() {
+        return registerIP;
+    }
+
+    public void setRegisterIP(InetAddress registerIP) {
+        this.registerIP = registerIP;
     }
 
     /**

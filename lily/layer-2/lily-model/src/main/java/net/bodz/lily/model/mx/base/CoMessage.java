@@ -70,7 +70,7 @@ public class CoMessage<Id>
     @Override
     public void instantiate() {
         super.instantiate();
-        op = getOwner();
+        op = getOwnerUser();
         tags = new ArrayList<>();
         attributes = new HashMap<>();
     }
