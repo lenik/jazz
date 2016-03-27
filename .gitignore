@@ -87,6 +87,7 @@ POTFILES
 RELEASE-NOTES
 Rules-quot
 aclocal.m4
+all.sql
 autom4te.cache/
 compile
 config.guess
