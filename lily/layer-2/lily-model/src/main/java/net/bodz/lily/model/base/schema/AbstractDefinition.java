@@ -1,7 +1,6 @@
 package net.bodz.lily.model.base.schema;
 
 import net.bodz.bas.meta.cache.Statistics;
-
 import net.bodz.lily.model.base.CoCode;
 
 public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_t>>
