@@ -1,5 +1,6 @@
 package net.bodz.bas.repr.form.meta;
 
+@GroupDef
 public @interface StdGroup {
 
     /**
