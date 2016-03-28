@@ -56,7 +56,7 @@
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "total" from schema
+        select count(*) "rows" from schema
     </select>
     
 </mapper>

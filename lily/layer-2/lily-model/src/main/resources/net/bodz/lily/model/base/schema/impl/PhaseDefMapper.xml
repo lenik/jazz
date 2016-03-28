@@ -65,7 +65,7 @@
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "total" from phase
+        select count(*) "rows" from phase
     </select>
     
 </mapper>

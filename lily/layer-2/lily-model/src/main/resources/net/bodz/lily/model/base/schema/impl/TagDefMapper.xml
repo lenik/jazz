@@ -85,7 +85,7 @@
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "total" from tag
+        select count(*) "rows" from tag
     </select>
 
 </mapper>

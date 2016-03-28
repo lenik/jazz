@@ -39,12 +39,12 @@
             cqty real;
             ctotal real;
         begin
-            for v in select count(*) "count", sum(qty) "qty", sum(total) "total"
+            for v in select count(*) "rows", sum(qty) "qty_sum", sum(total) "total_sum"
                 from tentry where odr=new.odr
             loop
-                c := v."count";
-                cqty := v.qty;
-                ctotal := v.total;
+                c := v."rows";
+                cqty := v.qty_sum;
+                ctotal := v.total_sum;
             end loop;
 
             update todr set

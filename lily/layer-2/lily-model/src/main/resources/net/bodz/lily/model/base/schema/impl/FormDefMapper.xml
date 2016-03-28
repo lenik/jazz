@@ -65,7 +65,7 @@
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "total" from form
+        select count(*) "rows" from form
     </select>
     
 </mapper>
