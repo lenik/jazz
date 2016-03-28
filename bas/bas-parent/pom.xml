@@ -145,7 +145,7 @@ Dependency Management-->
             <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
-                <version>3.2.3</version>
+                <version>3.3.1</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
