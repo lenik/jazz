@@ -5,12 +5,12 @@ import java.util.List;
 import javax.persistence.Table;
 
 /**
- * @label Tag Set
- * @label.zh 标签集
+ * @label Tag Group
+ * @label.zh 标签组
  */
 @Table(name = "tagv")
-public class TagSetDef
-        extends AbstractDefinition<TagSetDef> {
+public class TagGroupDef
+        extends AbstractDefinition<TagGroupDef> {
 
     private static final long serialVersionUID = 1L;
 

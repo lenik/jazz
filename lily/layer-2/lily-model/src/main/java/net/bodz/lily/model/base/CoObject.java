@@ -31,7 +31,6 @@ import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
-import net.bodz.bas.t.variant.IMutableVariantMap;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.LoginContext;
@@ -80,8 +79,6 @@ public abstract class CoObject
     private Group ownerGroup;
     private int accessMode = M_PUBLIC;
     private int acl;
-
-    private IMutableVariantMap<String> properties;
 
     public CoObject() {
     }
@@ -511,15 +508,6 @@ public abstract class CoObject
 
     public void setAcl(int acl) {
         this.acl = acl;
-    }
-
-    public IMutableVariantMap<String> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(IMutableVariantMap<String> properties) {
-        // MutableVariantMap.fromMap(properties);
-        this.properties = properties;
     }
 
     public Object persist(IHtmlViewContext ctx, IHtmlTag out)

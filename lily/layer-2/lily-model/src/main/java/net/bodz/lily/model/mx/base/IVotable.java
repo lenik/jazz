@@ -10,6 +10,6 @@ public interface IVotable {
 
     int getVoteCount();
 
-    Collection<Voter> getVoters();
+    Collection<VoteRecord> getVoteRecords();
 
 }

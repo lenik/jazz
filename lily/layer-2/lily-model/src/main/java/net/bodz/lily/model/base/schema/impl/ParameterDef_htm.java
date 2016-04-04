@@ -8,17 +8,17 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-import net.bodz.lily.model.base.schema.TagSetDef;
+import net.bodz.lily.model.base.schema.ParameterDef;
 
-public class TagSetDef_htm
-        extends AbstractDefinition_htm<TagSetDef> {
+public class ParameterDef_htm
+        extends AbstractDefinition_htm<ParameterDef> {
 
-    public TagSetDef_htm() {
-        super(TagSetDef.class);
+    public ParameterDef_htm() {
+        super(ParameterDef.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<TagSetDef> ref, IOptions options)
+    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<ParameterDef> ref, IOptions options)
             throws ViewBuilderException, IOException {
         return out;
     }

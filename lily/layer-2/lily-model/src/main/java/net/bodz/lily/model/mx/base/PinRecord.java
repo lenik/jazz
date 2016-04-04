@@ -1,13 +1,14 @@
 package net.bodz.lily.model.mx.base;
 
 import net.bodz.bas.c.java.util.Dates;
-
 import net.bodz.lily.model.base.security.User;
 
-public class Liker {
+public class PinRecord
+        extends UserClickRecord {
 
-    User user;
-    long time;
+    private static final long serialVersionUID = 1L;
+
+    private User user;
 
     public User getUser() {
         return user;
@@ -15,14 +16,6 @@ public class Liker {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
     }
 
     @Override

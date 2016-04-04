@@ -1,14 +1,15 @@
 package net.bodz.lily.model.mx.base;
 
 import net.bodz.bas.c.java.util.Dates;
-
 import net.bodz.lily.model.base.security.User;
 
-public class Voter {
+public class VoteRecord
+        extends UserClickRecord {
 
-    User user;
-    int value;
-    long time;
+    private static final long serialVersionUID = 1L;
+
+    private User user;
+    private int value;
 
     public User getUser() {
         return user;
@@ -24,14 +25,6 @@ public class Voter {
 
     public void setValue(int value) {
         this.value = value;
-    }
-
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
     }
 
     @Override

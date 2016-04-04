@@ -1,7 +1,6 @@
 package net.bodz.lily.model.base.schema.impl;
 
 import net.bodz.bas.err.ParseException;
-
 import net.bodz.lily.model.sea.QVariantMap;
 
 /**
@@ -10,7 +9,7 @@ import net.bodz.lily.model.sea.QVariantMap;
 public class TagDefCriteria
         extends AbstractDefinitionCriteria {
 
-    public Integer tagSetId;
+    public Integer tagGroupId;
 
     public static TagDefCriteria forSchema(int id) {
         TagDefCriteria criteria = new TagDefCriteria();
@@ -18,9 +17,9 @@ public class TagDefCriteria
         return criteria;
     }
 
-    public static TagDefCriteria forTagSet(int tagSetId) {
+    public static TagDefCriteria forTagGroup(int tagGroupId) {
         TagDefCriteria criteria = new TagDefCriteria();
-        criteria.tagSetId = tagSetId;
+        criteria.tagGroupId = tagGroupId;
         return criteria;
     }
 
@@ -28,7 +27,7 @@ public class TagDefCriteria
     protected void populate(QVariantMap<String> map)
             throws ParseException {
         super.populate(map);
-        tagSetId = map.getInt("tagv", tagSetId);
+        tagGroupId = map.getInt("tagv", tagGroupId);
     }
 
 }
