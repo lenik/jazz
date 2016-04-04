@@ -5,6 +5,6 @@ import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.lily.model.base.schema.TagGroupDef;
 
 public interface TagGroupDefMapper
-        extends IMapperTemplate<TagGroupDef, TagGroupDefCriteria> {
+        extends IMapperTemplate<TagGroupDef, TagGroupDefMask> {
 
 }

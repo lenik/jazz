@@ -6,11 +6,11 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.range.IntRange;
 
-import net.bodz.lily.model.base.CoMomentIntervalCriteria;
+import net.bodz.lily.model.base.CoMomentIntervalMask;
 import net.bodz.lily.model.sea.QVariantMap;
 
-public class CoMessageCriteria
-        extends CoMomentIntervalCriteria {
+public class CoMessageMask
+        extends CoMomentIntervalMask {
 
     public Integer formId;
 

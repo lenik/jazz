@@ -5,6 +5,6 @@ import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.lily.model.base.schema.FormDef;
 
 public interface FormDefMapper
-        extends IMapperTemplate<FormDef, FormDefCriteria> {
+        extends IMapperTemplate<FormDef, FormDefMask> {
 
 }

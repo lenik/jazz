@@ -5,8 +5,8 @@ import net.bodz.bas.t.range.DateRange;
 
 import net.bodz.lily.model.sea.QVariantMap;
 
-public class CoMomentIntervalCriteria
-        extends CoObjectCriteria {
+public class CoMomentIntervalMask
+        extends CoObjectMask {
 
     public DateRange dateRange;
     public Integer year; // = Calendar.getInstance().get(Calendar.YEAR);

@@ -2,11 +2,11 @@ package net.bodz.lily.model.base.schema.impl;
 
 import net.bodz.bas.err.ParseException;
 
-import net.bodz.lily.model.base.CoNodeCriteria;
+import net.bodz.lily.model.base.CoNodeMask;
 import net.bodz.lily.model.sea.QVariantMap;
 
-public class AbstractDefinitionCriteria
-        extends CoNodeCriteria {
+public class AbstractDefinitionMask
+        extends CoNodeMask {
 
     public Integer schemaId;
 
