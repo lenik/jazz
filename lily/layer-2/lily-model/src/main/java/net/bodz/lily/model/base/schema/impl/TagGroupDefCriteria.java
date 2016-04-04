@@ -5,9 +5,9 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.lily.model.sea.QVariantMap;
 
 /**
- * @see net.bodz.lily.model.base.schema.TagSetDef
+ * @see net.bodz.lily.model.base.schema.TagGroupDef
  */
-public class TagSetDefCriteria
+public class TagGroupDefCriteria
         extends AbstractDefinitionCriteria {
 
     Boolean ortho;
@@ -16,7 +16,7 @@ public class TagSetDefCriteria
         return ortho;
     }
 
-    public TagSetDefCriteria setOrtho(Boolean ortho) {
+    public TagGroupDefCriteria setOrtho(Boolean ortho) {
         this.ortho = ortho;
         return this;
     }
@@ -28,8 +28,8 @@ public class TagSetDefCriteria
         ortho = map.getBoolean("ortho", ortho);
     }
 
-    public static TagSetDefCriteria forSchema(int id) {
-        TagSetDefCriteria criteria = new TagSetDefCriteria();
+    public static TagGroupDefCriteria forSchema(int id) {
+        TagGroupDefCriteria criteria = new TagGroupDefCriteria();
         criteria.schemaId = id;
         return criteria;
     }

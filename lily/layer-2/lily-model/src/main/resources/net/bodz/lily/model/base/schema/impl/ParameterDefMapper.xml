@@ -2,9 +2,9 @@
 <!DOCTYPE mapper 
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.lily.model.base.schema.impl.AttributeDefMapper">
+<mapper namespace="net.bodz.lily.model.base.schema.impl.ParameterDefMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.model.base.schema.AttributeDef" extends="co.mapUS">
+    <resultMap id="map1" type="net.bodz.lily.model.base.schema.ParameterDef" extends="co.mapUS">
         <association property="schema" javaType="net.bodz.lily.model.base.schema.SchemaDef">
             <id property="id" column="schema" />
             <id property="label" column="schema_label" />
@@ -13,14 +13,14 @@
 
     <sql id="select1"><![CDATA[
         select a.*, s.label schema_label
-        from att a
+        from parm a
             left join schema s on a.schema=s.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select a.*, s.label schema_label
-        from att a
+        from parm a
             left join schema s on a.schema=s.id
         ]]>
     </sql>
@@ -45,13 +45,13 @@
 
     <select id="insert" resultType="int">
         <![CDATA[
-        insert into att(code, label, description)
+        insert into parm(code, label, description)
             values(#{codeName},#{label},#{description})
             returning id
     ]]></select>
 
     <update id="update">
-        update att
+        update parm
         <set>
             <include refid="co.setUS" />
         </set>
@@ -61,11 +61,11 @@
     </update>
 
     <delete id="delete">
-        delete from att where id=#{id}
+        delete from parm where id=#{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from att
+        select count(*) "rows" from parm
     </select>
     
 </mapper>

@@ -6,10 +6,10 @@ import java.util.Collection;
  * @label Likable
  * @label.zh 收藏
  */
-public interface ILikable {
+public interface IPinnable {
 
-    int getLikerCount();
+    int getPinCount();
 
-    Collection<Liker> getLikers();
+    Collection<PinRecord> getPinRecords();
 
 }

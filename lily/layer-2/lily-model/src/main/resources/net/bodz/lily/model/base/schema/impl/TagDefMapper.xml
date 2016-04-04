@@ -9,7 +9,7 @@
             <id property="id" column="schema" />
             <result property="label" column="schema_label" />
         </association>
-        <association property="tagSet" javaType="net.bodz.lily.model.base.schema.TagSetDef">
+        <association property="tagSet" javaType="net.bodz.lily.model.base.schema.TagGroupDef">
             <id property="id" column="tagv" />
             <result property="label" column="tagv_label" />
         </association>

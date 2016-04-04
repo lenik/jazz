@@ -5,6 +5,6 @@ net.bodz.lily.model.base.schema.impl.PhaseDefMapper
 net.bodz.lily.model.base.schema.impl.PriorityDefMapper
 net.bodz.lily.model.base.schema.impl.SchemaDefMapper
 net.bodz.lily.model.base.schema.impl.TagDefMapper
-net.bodz.lily.model.base.schema.impl.TagSetDefMapper
+net.bodz.lily.model.base.schema.impl.TagGroupDefMapper
 net.bodz.lily.model.base.security.impl.GroupMapper
 net.bodz.lily.model.base.security.impl.UserMapper

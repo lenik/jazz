@@ -12,23 +12,23 @@ public class TagDef
 
     private static final long serialVersionUID = 1L;
 
-    private TagSetDef tagSet;
+    private TagGroupDef tagGroup;
 
     /**
-     * Tag Set
+     * Tag Group
      * 
-     * @label.zh 标签集
+     * @label.zh 标签组
      */
-    public TagSetDef getTagSet() {
-        return tagSet;
+    public TagGroupDef getTagGroup() {
+        return tagGroup;
     }
 
-    public void setTagSet(TagSetDef tagSet) {
-        this.tagSet = tagSet;
+    public void setTagGroup(TagGroupDef tagGroup) {
+        this.tagGroup = tagGroup;
     }
 
-    public void setTagSetId(int tagSetId) {
-        (this.tagSet = new TagSetDef()).setId(tagSetId);
+    public void setTagGroupId(int tagGroupId) {
+        (this.tagGroup = new TagGroupDef()).setId(tagGroupId);
     }
 
 }

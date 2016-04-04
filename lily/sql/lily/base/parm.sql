@@ -1,9 +1,9 @@
 --\import lily.base.schema
 
-    create sequence att_seq start with 10000;
+    create sequence parm_seq start with 10000;
 
-    create table att(
-        id          int primary key default nextval('att_seq'),
+    create table parm(
+        id          int primary key default nextval('parm_seq'),
 --\mixin lily.mixin.Code
 --\mixin lily.mixin.LabelExVer
 

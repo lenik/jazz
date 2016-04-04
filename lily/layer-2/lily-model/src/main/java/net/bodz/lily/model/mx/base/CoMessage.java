@@ -1,10 +1,6 @@
 package net.bodz.lily.model.mx.base;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.html.meta.ViewCriteria;
@@ -18,15 +14,16 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.t.order.IPriority;
-
 import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.model.base.IId;
-import net.bodz.lily.model.base.schema.AttributeDef;
 import net.bodz.lily.model.base.schema.CategoryDef;
-import net.bodz.lily.model.base.schema.FormDef;
 import net.bodz.lily.model.base.schema.PhaseDef;
 import net.bodz.lily.model.base.schema.TagDef;
 import net.bodz.lily.model.base.security.User;
+import net.bodz.lily.model.mixin.ClickInfo;
+import net.bodz.lily.model.mixin.ParameterMap;
+import net.bodz.lily.model.mixin.TagSet;
+import net.bodz.lily.model.mixin.UseForm;
 
 /**
  * @label Message
@@ -34,7 +31,7 @@ import net.bodz.lily.model.base.security.User;
  */
 public class CoMessage<Id>
         extends CoMomentInterval<Id>
-        implements IPriority, IVotable, ILikable, IId<Id> {
+        implements IPriority, IId<Id> {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,27 +39,16 @@ public class CoMessage<Id>
 
     private User op;
     private CategoryDef category;
+    private PhaseDef phase;
     private String subject;
     private String text;
-    private FormDef form;
-    private String formArgs;
-    private List<TagDef> tags;
-    private Map<AttributeDef, String> attributes;
+    private UseForm form;
+    private ParameterMap parameters;
+    private TagSet tags;
+    private ClickInfo clickInfo;
 
     private Date sentTime;
     private Date receivedTime;
-    private PhaseDef phase;
-
-    private Integer voteUps;
-    private Integer voteDowns;
-    private List<Voter> voters;
-    private Voter iVoter;
-
-    private int likerCount;
-    private List<Liker> likers;
-    private Liker iLiker;
-
-    private Integer readCount;
 
     public CoMessage() {
     }
@@ -71,8 +57,7 @@ public class CoMessage<Id>
     public void instantiate() {
         super.instantiate();
         op = getOwnerUser();
-        tags = new ArrayList<>();
-        attributes = new HashMap<>();
+        tags = new TagSet();
     }
 
     /**
@@ -85,6 +70,35 @@ public class CoMessage<Id>
 
     public void setOp(User op) {
         this.op = op;
+    }
+
+    /**
+     * <p lang="zh">
+     * 信息的类别。
+     * 
+     * @label Category
+     * @label.zh 类别
+     */
+    @OfGroup(StdGroup.Classification.class)
+    public CategoryDef getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryDef category) {
+        this.category = category;
+    }
+
+    /**
+     * @label Phase
+     * @label.zh 阶段
+     */
+    @OfGroup(StdGroup.Status.class)
+    public PhaseDef getPhase() {
+        return phase;
+    }
+
+    public void setPhase(PhaseDef phase) {
+        this.phase = phase;
     }
 
     /**
@@ -133,81 +147,30 @@ public class CoMessage<Id>
         return Strings.ellipsis(getText(), 50);
     }
 
-    /**
-     * <p lang="zh">
-     * 信息的类别。
-     * 
-     * @label Category
-     * @label.zh 类别
-     */
-    @OfGroup(StdGroup.Classification.class)
-    public CategoryDef getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryDef category) {
-        this.category = category;
-    }
-
-    /**
-     * @label Phase
-     * @label.zh 阶段
-     */
-    @OfGroup(StdGroup.Status.class)
-    public PhaseDef getPhase() {
-        return phase;
-    }
-
-    public void setPhase(PhaseDef phase) {
-        this.phase = phase;
-    }
-
-    /**
-     * <p lang="zh">
-     * 正文的形式。
-     * 
-     * @label Form
-     * @label.zh 形式
-     */
-    @OfGroup(StdGroup.Metadata.class)
-    public FormDef getForm() {
+    public UseForm getForm() {
+        if (form == null)
+            synchronized (this) {
+                if (form == null)
+                    form = new UseForm();
+            }
         return form;
     }
 
-    public void setForm(FormDef form) {
-        this.form = form;
+    public ParameterMap getParameters() {
+        return parameters;
     }
 
-    /**
-     * <p lang="zh">
-     * 形式的可选参数。
-     * 
-     * @label Form Arguments
-     * @label.zh 形式参数
-     * @placeholder 输入形式参数
-     */
-    @OfGroup(StdGroup.Metadata.class)
-    public String getFormArgs() {
-        return formArgs;
+    public void setParameters(ParameterMap parameters) {
+        this.parameters = parameters;
     }
 
-    public void setFormArgs(String formArgs) {
-        this.formArgs = formArgs;
-    }
-
-    /**
-     * 自定义属性。
-     * 
-     * @label Attributes
-     * @label.zh 属性
-     */
-    @OfGroup(StdGroup.Content.class)
-    public Map<AttributeDef, String> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Map<AttributeDef, String> attributes) {
-        this.attributes = attributes;
+    public ClickInfo getClickInfo() {
+        if (clickInfo == null)
+            synchronized (this) {
+                if (clickInfo == null)
+                    clickInfo = new ClickInfo();
+            }
+        return clickInfo;
     }
 
     /**
@@ -220,11 +183,11 @@ public class CoMessage<Id>
     @ItemType(TagDef.class)
     @OfGroup(StdGroup.Classification.class)
     @typer.parser(TagsParser.class)
-    public List<TagDef> getTags() {
+    public TagSet getTags() {
         return tags;
     }
 
-    public void setTags(List<TagDef> tags) {
+    public void setTags(TagSet tags) {
         this.tags = tags;
     }
 
@@ -258,137 +221,6 @@ public class CoMessage<Id>
 
     public void setReceivedTime(Date receivedTime) {
         this.receivedTime = receivedTime;
-    }
-
-    /**
-     * 正投票的计数，说明多少人赞成、支持了这条信息。
-     * 
-     * @label Vote Ups
-     * @label.zh 赞
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    public Integer getVoteUps() {
-        return voteUps;
-    }
-
-    public void setVoteUps(Integer voteUps) {
-        this.voteUps = voteUps;
-    }
-
-    /**
-     * 负投票的计数，说明多少人对这条信息表达了反对、扔鸡蛋的态度。
-     * 
-     * @label Vote Downs
-     * @label.zh 踩
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    public Integer getVoteDowns() {
-        return voteDowns;
-    }
-
-    public void setVoteDowns(Integer voteDowns) {
-        this.voteDowns = voteDowns;
-    }
-
-    /**
-     * 有效投票的计数，和<code>正投票 - 负投票</code>相等。
-     * 
-     * @label Vote Count
-     * @label.zh 票数
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    @Derived
-    @Override
-    public int getVoteCount() {
-        int nUp = voteUps == null ? 0 : voteUps;
-        int nDown = voteDowns == null ? 0 : voteDowns;
-        return nUp - nDown;
-    }
-
-    /**
-     * 参与投票的信息列表。
-     * 
-     * @label Voters
-     * @label.zh 投票人
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    @Override
-    public List<Voter> getVoters() {
-        return voters;
-    }
-
-    public void setVoters(List<Voter> voters) {
-        this.voters = voters;
-    }
-
-    /**
-     * @label I Voter
-     * @label.zh 我的投票
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    public Voter getiVoter() {
-        return iVoter;
-    }
-
-    public void setiVoter(Voter iVoter) {
-        this.iVoter = iVoter;
-    }
-
-    /**
-     * 说明这条信息被多少人收藏了。
-     * 
-     * @label Liker Count
-     * @label.zh 收藏数
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    public int getLikerCount() {
-        return likerCount;
-    }
-
-    public void setLikerCount(int likerCount) {
-        this.likerCount = likerCount;
-    }
-
-    /**
-     * @label Likers
-     * @label.zh 收藏人
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    @Override
-    public List<Liker> getLikers() {
-        return likers;
-    }
-
-    public void setLikers(List<Liker> likers) {
-        this.likers = likers;
-    }
-
-    /**
-     * @label I Liker
-     * @label.zh 我的收藏
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    public Liker getiLiker() {
-        return iLiker;
-    }
-
-    public void setiLiker(Liker iLiker) {
-        this.iLiker = iLiker;
-    }
-
-    /**
-     * 这条信息被阅读的次数。
-     * 
-     * @label Read Count
-     * @label.zh 阅读数
-     */
-    @OfGroup(StdGroup.Ranking.class)
-    public Integer getReadCount() {
-        return readCount;
-    }
-
-    public void setReadCount(Integer readCount) {
-        this.readCount = readCount;
     }
 
     @Override

@@ -1,9 +1,9 @@
 --\import lily.store.art
 --\import lily.store.art_fav
 --\import lily.store.art_like
+--\import lily.store.art_parm
 --\import lily.store.artcat
 --\import lily.store.artdoc
---\import lily.store.artp
 --\import lily.store.artroomopt
 --\import lily.store.room
 --\import lily.store.todr
