@@ -5,6 +5,6 @@ import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.lily.model.base.security.Group;
 
 public interface GroupMapper
-        extends IMapperTemplate<Group, GroupCriteria> {
+        extends IMapperTemplate<Group, GroupMask> {
 
 }

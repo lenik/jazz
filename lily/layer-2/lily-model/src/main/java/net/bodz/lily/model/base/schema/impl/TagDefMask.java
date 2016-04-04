@@ -6,21 +6,21 @@ import net.bodz.lily.model.sea.QVariantMap;
 /**
  * @see net.bodz.lily.model.base.schema.TagDef
  */
-public class TagDefCriteria
-        extends AbstractDefinitionCriteria {
+public class TagDefMask
+        extends AbstractDefinitionMask {
 
     public Integer tagGroupId;
 
-    public static TagDefCriteria forSchema(int id) {
-        TagDefCriteria criteria = new TagDefCriteria();
-        criteria.schemaId = id;
-        return criteria;
+    public static TagDefMask forSchema(int id) {
+        TagDefMask mask = new TagDefMask();
+        mask.schemaId = id;
+        return mask;
     }
 
-    public static TagDefCriteria forTagGroup(int tagGroupId) {
-        TagDefCriteria criteria = new TagDefCriteria();
-        criteria.tagGroupId = tagGroupId;
-        return criteria;
+    public static TagDefMask forTagGroup(int tagGroupId) {
+        TagDefMask mask = new TagDefMask();
+        mask.tagGroupId = tagGroupId;
+        return mask;
     }
 
     @Override

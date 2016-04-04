@@ -16,7 +16,7 @@ import net.bodz.lily.model.sea.QVariantMap;
 /**
  * @see net.bodz.lily.model.base.CoObject
  */
-public class CoObjectCriteria
+public class CoObjectMask
         extends AbstractTextParametric {
 
     String codeName;
@@ -61,7 +61,7 @@ public class CoObjectCriteria
         return queryText;
     }
 
-    public CoObjectCriteria setQueryText(String queryText) {
+    public CoObjectMask setQueryText(String queryText) {
         this.queryText = queryText;
         return this;
     }
@@ -70,7 +70,7 @@ public class CoObjectCriteria
         return timeRange;
     }
 
-    public CoObjectCriteria setTimeRange(DateRange timeRange) {
+    public CoObjectMask setTimeRange(DateRange timeRange) {
         this.timeRange = timeRange;
         return this;
     }
@@ -79,7 +79,7 @@ public class CoObjectCriteria
         return priorities;
     }
 
-    public CoObjectCriteria setPriorities(Set<Integer> priorities) {
+    public CoObjectMask setPriorities(Set<Integer> priorities) {
         this.priorities = priorities;
         return this;
     }
@@ -88,7 +88,7 @@ public class CoObjectCriteria
         return flags;
     }
 
-    public CoObjectCriteria setFlags(Set<Integer> flags) {
+    public CoObjectMask setFlags(Set<Integer> flags) {
         this.flags = flags;
         return this;
     }
@@ -97,7 +97,7 @@ public class CoObjectCriteria
         return states;
     }
 
-    public CoObjectCriteria setStates(Set<Integer> states) {
+    public CoObjectMask setStates(Set<Integer> states) {
         this.states = states;
         return this;
     }
@@ -106,7 +106,7 @@ public class CoObjectCriteria
         return ownerId;
     }
 
-    public CoObjectCriteria setOwnerId(Integer ownerId) {
+    public CoObjectMask setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
         return this;
     }
@@ -115,7 +115,7 @@ public class CoObjectCriteria
         return ownerGroupId;
     }
 
-    public CoObjectCriteria setOwnerGroupId(Integer ownerGroupId) {
+    public CoObjectMask setOwnerGroupId(Integer ownerGroupId) {
         this.ownerGroupId = ownerGroupId;
         return this;
     }
@@ -124,7 +124,7 @@ public class CoObjectCriteria
         return acls;
     }
 
-    public CoObjectCriteria setAcls(Set<Integer> acls) {
+    public CoObjectMask setAcls(Set<Integer> acls) {
         this.acls = acls;
         return this;
     }
@@ -160,16 +160,16 @@ public class CoObjectCriteria
 
     static TypeNearby[] nearbies = {
             // TODO cache-enable?
-            new TypeNearby(null, null, "Criteria", false), //
-            new TypeNearby(null, "impl.", "Criteria", false), //
+            new TypeNearby(null, null, "Mask", false), //
+            new TypeNearby(null, "impl.", "Mask", false), //
     };
 
-    public static Class<? extends CoObjectCriteria> findCriteriaClass(Class<?> objClass) {
-        Class<? extends CoObjectCriteria> criteriaClass;
+    public static Class<? extends CoObjectMask> findMaskClass(Class<?> objClass) {
+        Class<? extends CoObjectMask> maskClass;
         for (TypeNearby nearby : nearbies) {
-            criteriaClass = (Class<? extends CoObjectCriteria>) nearby.find(objClass);
-            if (criteriaClass != null)
-                return criteriaClass;
+            maskClass = (Class<? extends CoObjectMask>) nearby.find(objClass);
+            if (maskClass != null)
+                return maskClass;
         }
         return null;
     }
