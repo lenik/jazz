@@ -12,7 +12,7 @@
             references "$1"(id) on update cascade on delete cascade,
 
         tag         int not null
-            references tag(id) on update cascade
+            references _tag(id) on update cascade
 
         -- constraint uk_obj_tag unique(obj, tag)
     );
@@ -21,8 +21,8 @@
         select
             a.*,
             o.${2=label} obj_${2=label},
-            tag.label tag_label
+            _tag.label tag_label
         from $1_tag a
-            left join "$1" o on a.obj=o.id
-            left join tag on a.tag=tag.id
+            left join "$1" o on a.obj = o.id
+            left join _tag   on a.tag = _tag.id
             ;

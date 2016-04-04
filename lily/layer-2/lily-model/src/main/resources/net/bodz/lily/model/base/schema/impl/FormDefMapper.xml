@@ -13,14 +13,14 @@
 
     <sql id="select1"><![CDATA[
         select a.*, s.label schema_label
-        from form a
+        from _form a
             left join schema s on a.schema=s.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select a.*, s.label schema_label
-        from form a
+        from _form a
             left join schema s on a.schema=s.id
         ]]>
     </sql>
@@ -45,13 +45,13 @@
 
     <select id="insert" resultType="int">
         <![CDATA[
-        insert into form(code, label, description)
+        insert into _form(code, label, description)
             values(#{codeName},#{label},#{description})
             returning id
     ]]></select>
 
     <update id="update">
-        update form
+        update _form
         <set>
             <include refid="co.setUS" />
         </set>
@@ -61,11 +61,11 @@
     </update>
 
     <delete id="delete">
-        delete from form where id=#{id}
+        delete from _form where id=#{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from form
+        select count(*) "rows" from _form
     </select>
     
 </mapper>

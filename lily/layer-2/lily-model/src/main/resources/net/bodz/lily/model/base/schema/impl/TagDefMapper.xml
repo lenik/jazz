@@ -9,7 +9,7 @@
             <id property="id" column="schema" />
             <result property="label" column="schema_label" />
         </association>
-        <association property="tagSet" javaType="net.bodz.lily.model.base.schema.TagGroupDef">
+        <association property="tagGroup" javaType="net.bodz.lily.model.base.schema.TagGroupDef">
             <id property="id" column="tagv" />
             <result property="label" column="tagv_label" />
         </association>
@@ -20,8 +20,8 @@
             v.schema "schema",
             s.label schema_label,
             v.label tagv_label
-        from tag a
-            left join tagv v on a.tagv=v.id
+        from _tag a
+            left join _tagv v on a.tagv=v.id
             left join "schema" s on v."schema"=s.id
         ]]>
     </sql>
@@ -31,8 +31,8 @@
             v.schema "schema",
             s.label schema_label,
             v.label tagv_label
-        from tag a
-            left join tagv v on a.tagv=v.id
+        from _tag a
+            left join _tagv v on a.tagv=v.id
             left join "schema" s on v."schema"=s.id
         ]]>
     </sql>
@@ -45,7 +45,7 @@
         <include refid="select1" />
         <where>
             <if test="schemaId != null">and v.schema=#{schemaId}</if>
-            <if test="tagSetId != null">and a.tagv=#{tagSetId}</if>
+            <if test="tagGroupId != null">and a.tagv=#{tagGroupId}</if>
         </where>
     </select>
 
@@ -58,22 +58,22 @@
 
     <select id="insert" resultType="int">
         <![CDATA[
-        insert into tag(
+        insert into _tag(
             code, label, description,
             priority, flags, state,
             tagv)
         values(
             #{codeName},#{label},#{description},
             #{priority}, #{flags}, #{state},
-            #{tagSet.id})
+            #{tagGroup.id})
         returning id
     ]]></select>
 
     <update id="update">
-        update tag
+        update _tag
         <set>
             <include refid="co.setUS" />
-            tagv = #{tagSet.id},
+            tagv = #{tagGroup.id},
         </set>
         <where>
             <if test="id != null">id=#{id}, </if>
@@ -81,11 +81,11 @@
     </update>
 
     <delete id="delete">
-        delete from tag where id=#{id}
+        delete from _tag where id=#{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from tag
+        select count(*) "rows" from _tag
     </select>
 
 </mapper>
