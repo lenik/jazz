@@ -10,7 +10,7 @@
             references "$1"(id) on update cascade on delete cascade,
 
         parm        int not null
-            references parm(id) on update cascade,
+            references _parm(id) on update cascade,
 
         ival        int,
         sval        varchar(200)
@@ -23,9 +23,9 @@
         select
             a.*,
             o.${2=label} obj_${2=label},
-            parm.label parm_label
+            _parm.label parm_label
         from $1_parm a
-            left join "$1" o on a.obj=o.id
-            left join parm on a.parm=parm.id
+            left join "$1" o on a.obj = o.id
+            left join _parm  on a.parm = _parm.id
             ;
 

@@ -22,6 +22,6 @@
             u.id        user_id,
             u.label     user_label
         from $1_like a
-            left join "$1" o on a.obj=o.id
-            left join "user" u on a."user"=u.id
+            left join "$1" o    on a.obj = o.id
+            left join "user" u  on a."user" = u.id
             ;

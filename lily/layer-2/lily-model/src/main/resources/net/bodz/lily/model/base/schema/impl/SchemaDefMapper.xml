@@ -8,12 +8,12 @@
     </resultMap>
 
     <sql id="select1"><![CDATA[
-        select a.* from schema a
+        select a.* from _schema a
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
-        select a.*, from schema a
+        select a.*, from _schema a
         ]]>
     </sql>
 
@@ -36,13 +36,13 @@
 
     <select id="insert" resultType="int">
         <![CDATA[
-        insert into schema(code, label, description)
+        insert into _schema(code, label, description)
             values(#{codeName},#{label},#{description})
             returning id
     ]]></select>
 
     <update id="update">
-        update schema
+        update _schema
         <set>
             <include refid="co.setUS" />
         </set>
@@ -52,11 +52,11 @@
     </update>
 
     <delete id="delete">
-        delete from schema where id=#{id}
+        delete from _schema where id=#{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from schema
+        select count(*) "rows" from _schema
     </select>
     
 </mapper>

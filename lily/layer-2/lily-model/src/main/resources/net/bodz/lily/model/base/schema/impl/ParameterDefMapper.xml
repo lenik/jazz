@@ -13,15 +13,15 @@
 
     <sql id="select1"><![CDATA[
         select a.*, s.label schema_label
-        from parm a
-            left join schema s on a.schema=s.id
+        from _parm a
+            left join _schema s on a.schema=s.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select a.*, s.label schema_label
-        from parm a
-            left join schema s on a.schema=s.id
+        from _parm a
+            left join _schema s on a.schema=s.id
         ]]>
     </sql>
 
@@ -45,13 +45,13 @@
 
     <select id="insert" resultType="int">
         <![CDATA[
-        insert into parm(code, label, description)
+        insert into _parm(code, label, description)
             values(#{codeName},#{label},#{description})
             returning id
     ]]></select>
 
     <update id="update">
-        update parm
+        update _parm
         <set>
             <include refid="co.setUS" />
         </set>
@@ -61,11 +61,11 @@
     </update>
 
     <delete id="delete">
-        delete from parm where id=#{id}
+        delete from _parm where id=#{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from parm
+        select count(*) "rows" from _parm
     </select>
     
 </mapper>

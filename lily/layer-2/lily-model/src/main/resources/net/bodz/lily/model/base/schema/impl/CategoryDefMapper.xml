@@ -14,14 +14,14 @@
     <sql id="select1"><![CDATA[
         select a.*, s.label schema_label
         from cat a
-            left join schema s on a.schema=s.id
+            left join _schema s on a.schema=s.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select a.*, s.label schema_label
         from cat a
-            left join schema s on a.schema=s.id
+            left join _schema s on a.schema=s.id
         ]]>
     </sql>
 
@@ -45,13 +45,13 @@
 
     <select id="insert" resultType="int">
         <![CDATA[
-        insert into cat(code, label, description)
+        insert into _cat(code, label, description)
             values(#{codeName},#{label},#{description})
             returning id
     ]]></select>
 
     <update id="update">
-        update cat
+        update _cat
         <set>
             <include refid="co.setUS" />
         </set>
@@ -61,11 +61,11 @@
     </update>
 
     <delete id="delete">
-        delete from cat where id=#{id}
+        delete from _cat where id=#{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from cat
+        select count(*) "rows" from _cat
     </select>
     
 </mapper>
