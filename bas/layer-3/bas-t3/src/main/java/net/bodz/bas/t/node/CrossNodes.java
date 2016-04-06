@@ -1,11 +1,13 @@
 package net.bodz.bas.t.node;
 
-import net.bodz.bas.err.CheckFailure;
+import net.bodz.bas.err.DeadLoopException;
 
 public class CrossNodes {
 
-    public static boolean checkCircular(ICrossNode start)
-            throws CheckFailure {
+    /**
+     * @throws DeadLoopException
+     */
+    public static boolean checkDeadLoop(ICrossNode start) {
         return true;
     }
 
