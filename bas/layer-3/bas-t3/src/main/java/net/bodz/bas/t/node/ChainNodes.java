@@ -5,7 +5,7 @@ import static net.bodz.bas.t.node.NodeConfig.checkIntegrityOnChange;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.err.CheckFailure;
+import net.bodz.bas.err.DeadLoopException;
 import net.bodz.bas.meta.decl.Pure;
 
 public class ChainNodes {
@@ -137,14 +137,13 @@ public class ChainNodes {
     }
 
     @Pure
-    public static boolean checkCircular(IChainNode start)
-            throws CheckFailure {
+    public static boolean checkCircular(IChainNode start) {
         if (start == null)
             return true;
         Set<IChainNode> set = new HashSet<IChainNode>();
         for (IChainNode node : ChainIteration.siblings(start)) {
             if (set.contains(node))
-                throw new CheckFailure("circular loop");
+                throw new DeadLoopException();
             set.add(node);
         }
         return true;
