@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.c.system.UserDirScr;
+import net.bodz.bas.ctx.sys.UserDirScr;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 

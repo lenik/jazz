@@ -1,9 +1,9 @@
-package net.bodz.bas.ctx.consts;
+package net.bodz.bas.ctx.sys;
 
 import java.util.Locale;
 
 public class DefaultLocaleRef
-        extends SystemConstant<Locale> {
+        extends SystemConstantRef<Locale> {
 
     @Override
     public Class<? extends Locale> getValueType() {

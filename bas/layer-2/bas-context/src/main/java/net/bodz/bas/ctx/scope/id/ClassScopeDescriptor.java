@@ -1,24 +1,24 @@
-package net.bodz.bas.ctx.scope;
+package net.bodz.bas.ctx.scope.id;
 
-public class ClassScopeToken
-        extends MutableScopeToken {
+public class ClassScopeDescriptor
+        extends MutableScopeDescriptor {
 
     /**
      * @throws NullPointerException
      *             If <code>clazz</code> is <code>null</code>.
      */
-    ClassScopeToken(Class<?> clazz) {
+    public ClassScopeDescriptor(Class<?> clazz) {
         super(clazz.getName(), clazz);
     }
 
     @Override
-    protected IScopeToken getInternalParent(Object identity) {
+    protected IScopeDescriptor getInternalParent(Object identity) {
         Class<?> clazz = (Class<?>) identity;
         Class<?> superclass = clazz.getSuperclass();
         if (superclass == null)
             return null;
         else
-            return new ClassScopeToken(superclass);
+            return new ClassScopeDescriptor(superclass);
     }
 
 }

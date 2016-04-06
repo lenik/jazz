@@ -1,7 +1,7 @@
-package net.bodz.bas.ctx.scope;
+package net.bodz.bas.ctx.scope.id;
 
-public class ThreadGroupScopeToken
-        extends MutableScopeToken {
+public class ThreadGroupScopeDescriptor
+        extends MutableScopeDescriptor {
 
     private final ThreadGroup threadGroup;
 
@@ -9,23 +9,23 @@ public class ThreadGroupScopeToken
      * @param threadGroup
      *            Specify <code>null</code> to refer to top-level {@link ThreadGroup}.
      */
-    public ThreadGroupScopeToken(ThreadGroup threadGroup) {
+    public ThreadGroupScopeDescriptor(ThreadGroup threadGroup) {
         super(threadGroup.getName(), threadGroup);
         this.threadGroup = threadGroup;
     }
 
     @Override
-    public IScopeToken getParent() {
+    public IScopeDescriptor getParent() {
         if (threadGroup == null)
             return null;
         ThreadGroup parent = threadGroup.getParent();
         if (parent != null)
-            return new ThreadGroupScopeToken(parent);
+            return new ThreadGroupScopeDescriptor(parent);
         return null;
     }
 
-    public static ThreadGroupScopeToken getInstance(ThreadGroup threadGroup) {
-        return new ThreadGroupScopeToken(threadGroup);
+    public static ThreadGroupScopeDescriptor getInstance(ThreadGroup threadGroup) {
+        return new ThreadGroupScopeDescriptor(threadGroup);
     }
 
 }

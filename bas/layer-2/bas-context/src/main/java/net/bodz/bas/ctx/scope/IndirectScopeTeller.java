@@ -1,5 +1,7 @@
 package net.bodz.bas.ctx.scope;
 
+import net.bodz.bas.ctx.scope.id.CurrentThreadScopeTeller;
+import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 import net.bodz.bas.t.ref.Var;
 
 public class IndirectScopeTeller
@@ -13,7 +15,7 @@ public class IndirectScopeTeller
     }
 
     @Override
-    public IScopeToken tell() {
+    public IScopeDescriptor tell() {
         IScopeTeller teller = get();
         return teller.tell();
     }

@@ -1,18 +1,18 @@
-package net.bodz.bas.ctx.scope;
+package net.bodz.bas.ctx.scope.id;
 
-public class MutableScopeToken
-        extends AbstractScopeToken {
+public class MutableScopeDescriptor
+        extends AbstractScopeDescriptor {
 
     private String name;
     private Object identity;
-    private IScopeToken parent;
+    private IScopeDescriptor parent;
     private boolean transparent;
 
-    public MutableScopeToken(String name, Object identity) {
+    public MutableScopeDescriptor(String name, Object identity) {
         this(name, identity, null);
     }
 
-    public MutableScopeToken(String name, Object identity, IScopeToken root) {
+    public MutableScopeDescriptor(String name, Object identity, IScopeDescriptor root) {
         if (identity == null)
             throw new NullPointerException("identity");
         this.name = name;
@@ -37,19 +37,19 @@ public class MutableScopeToken
     }
 
     @Override
-    public IScopeToken getParent() {
-        IScopeToken internalParent = getInternalParent(identity);
+    public IScopeDescriptor getParent() {
+        IScopeDescriptor internalParent = getInternalParent(identity);
         if (internalParent != null)
             return internalParent;
         else
             return parent;
     }
 
-    public void setParent(IScopeToken parent) {
+    public void setParent(IScopeDescriptor parent) {
         this.parent = parent;
     }
 
-    protected IScopeToken getInternalParent(Object identity) {
+    protected IScopeDescriptor getInternalParent(Object identity) {
         return null;
     }
 
@@ -71,10 +71,10 @@ public class MutableScopeToken
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
-        if (!(obj instanceof IScopeToken))
+        if (!(obj instanceof IScopeDescriptor))
             return false;
 
-        IScopeToken o = (IScopeToken) obj;
+        IScopeDescriptor o = (IScopeDescriptor) obj;
         return identity.equals(o.getIdentity());
     }
 

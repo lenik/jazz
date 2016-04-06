@@ -2,10 +2,10 @@ package net.bodz.bas.http.ctx;
 
 import javax.servlet.ServletContext;
 
-import net.bodz.bas.ctx.scope.MutableScopeToken;
+import net.bodz.bas.ctx.scope.id.MutableScopeDescriptor;
 
 public class ServletContextScopeToken
-        extends MutableScopeToken {
+        extends MutableScopeDescriptor {
 
     public ServletContextScopeToken(ServletContext serviceContext) {
         super(serviceContext.getServletContextName(), serviceContext);

@@ -1,9 +1,9 @@
-package net.bodz.bas.ctx.consts;
+package net.bodz.bas.ctx.sys;
 
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.t.ref.Ref;
 
-public abstract class SystemConstant<T>
+public abstract class SystemConstantRef<T>
         implements Ref<T> {
 
     @Override

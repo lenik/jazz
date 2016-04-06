@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.io.FileData;
-import net.bodz.bas.c.system.UserDirScr;
+import net.bodz.bas.ctx.sys.UserDirScr;
 
 public class WildcardsExpanderTest
         extends Assert {

@@ -3,10 +3,10 @@ package net.bodz.bas.vfs.context;
 import java.io.File;
 
 import net.bodz.bas.c.system.SystemInfo;
-import net.bodz.bas.c.system.UserDirScr;
-import net.bodz.bas.ctx.scope.Scopes;
-import net.bodz.bas.ctx.scope.IScopeToken;
 import net.bodz.bas.ctx.scope.ScopedRef;
+import net.bodz.bas.ctx.scope.Scopes;
+import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
+import net.bodz.bas.ctx.sys.UserDirScr;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
@@ -52,7 +52,7 @@ public class WorkingDirScr
         return child;
     }
 
-    public IFile join(IScopeToken context, String name) {
+    public IFile join(IScopeDescriptor context, String name) {
         if (name == null)
             throw new NullPointerException("name");
         IFile cwd = get(context);
@@ -63,7 +63,7 @@ public class WorkingDirScr
      * @throws IllegalArgumentException
      *             If <code>dir</code> isn't a {@link IFile#isDirectory() directory}.
      */
-    public void chdir(IScopeToken context, IFile dir) {
+    public void chdir(IScopeDescriptor context, IFile dir) {
         if (dir == null)
             throw new NullPointerException("dir");
         if (!dir.getAttributes().isDirectory())
@@ -83,7 +83,7 @@ public class WorkingDirScr
      * @throws FileResolveException
      *             If it's failed to resolve the special path.
      */
-    public void chdir(IScopeToken context, String spec) {
+    public void chdir(IScopeDescriptor context, String spec) {
         if (spec == null)
             throw new NullPointerException("spec");
         IFile cwd = get(context);
