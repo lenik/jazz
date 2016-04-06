@@ -2,15 +2,15 @@ package net.bodz.bas.http.ctx;
 
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.ctx.inject.AbstractScope;
-import net.bodz.bas.ctx.scope.IScopeToken;
+import net.bodz.bas.ctx.scope.AbstractScope;
+import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 
 public class CurrentSessionScope
         extends AbstractScope {
 
     @Override
-    public IScopeToken tell() {
-        IScopeToken parent = IScopeToken.DEFAULT;
+    public IScopeDescriptor tell() {
+        IScopeDescriptor parent = IScopeDescriptor.DEFAULT;
 
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session != null) {

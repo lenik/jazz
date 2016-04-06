@@ -1,20 +1,20 @@
-package net.bodz.bas.ctx.scope;
+package net.bodz.bas.ctx.scope.id;
 
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.t.preorder.PackageNamePreorder;
 
-public class PackageScopeToken
-        extends PreorderScopeToken<String> {
+public class PackageScopeDescriptor
+        extends PreorderScopeDescriptor<String> {
 
-    public PackageScopeToken(String packageName) {
+    public PackageScopeDescriptor(String packageName) {
         super(PackageNamePreorder.getInstance(), packageName);
     }
 
-    public static PackageScopeToken forName(String packageName) {
-        return new PackageScopeToken(packageName);
+    public static PackageScopeDescriptor forName(String packageName) {
+        return new PackageScopeDescriptor(packageName);
     }
 
-    public static PackageScopeToken forClass(Class<?> clazz) {
+    public static PackageScopeDescriptor forClass(Class<?> clazz) {
         return forName(clazz.getPackage().getName());
     }
 
@@ -33,14 +33,14 @@ public class PackageScopeToken
         return parentPackageName;
     }
 
-    public static PackageScopeToken forCaller() {
+    public static PackageScopeDescriptor forCaller() {
         Class<?> callerClass = Caller.getCallerClass(1);
-        return new PackageScopeToken(getPackageName(callerClass));
+        return new PackageScopeDescriptor(getPackageName(callerClass));
     }
 
-    public static PackageScopeToken forCallerParent() {
+    public static PackageScopeDescriptor forCallerParent() {
         Class<?> callerClass = Caller.getCallerClass(1);
-        return new PackageScopeToken(getParentPackageName(callerClass));
+        return new PackageScopeDescriptor(getParentPackageName(callerClass));
     }
 
 }

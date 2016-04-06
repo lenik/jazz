@@ -2,7 +2,7 @@ package net.bodz.bas.c.java.io;
 
 import java.io.File;
 
-import net.bodz.bas.c.system.UserDirScr;
+import net.bodz.bas.ctx.sys.UserDirScr;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.rtx.IOptions;

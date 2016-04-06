@@ -1,9 +1,9 @@
-package net.bodz.bas.ctx.scope;
+package net.bodz.bas.ctx.scope.id;
 
 import net.bodz.bas.t.preorder.IPreorder;
 
-public class PreorderScopeToken<T>
-        extends MutableScopeToken {
+public class PreorderScopeDescriptor<T>
+        extends MutableScopeDescriptor {
 
     private final IPreorder<T> preorder;
 
@@ -11,7 +11,7 @@ public class PreorderScopeToken<T>
      * @throws NullPointerException
      *             If <code>preorder</code> is <code>null</code>.
      */
-    public PreorderScopeToken(IPreorder<T> preorder, T node) {
+    public PreorderScopeDescriptor(IPreorder<T> preorder, T node) {
         super(String.valueOf(node), node);
         if (preorder == null)
             throw new NullPointerException("preorder");
@@ -19,14 +19,14 @@ public class PreorderScopeToken<T>
     }
 
     @Override
-    protected IScopeToken getInternalParent(Object identity) {
+    protected IScopeDescriptor getInternalParent(Object identity) {
         @SuppressWarnings("unchecked")
         T node = (T) identity;
         T preceding = preorder.getPreceding(node);
         if (preceding == null)
             return null;
         else
-            return new PreorderScopeToken<T>(preorder, preceding);
+            return new PreorderScopeDescriptor<T>(preorder, preceding);
     }
 
 }

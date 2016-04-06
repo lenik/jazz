@@ -1,9 +1,9 @@
-package net.bodz.bas.ctx.scope;
+package net.bodz.bas.ctx.scope.id;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.ctx.inject.AbstractScope;
+import net.bodz.bas.ctx.scope.AbstractScope;
 
 public class CurrentThreadScopeTeller
         extends AbstractScope {
@@ -15,8 +15,8 @@ public class CurrentThreadScopeTeller
     }
 
     @Override
-    public IScopeToken tell() {
-        return new ThreadScopeToken(Thread.currentThread());
+    public IScopeDescriptor tell() {
+        return new ThreadScopeDescriptor(Thread.currentThread());
     }
 
     protected synchronized Map<String, Object> getMap() {

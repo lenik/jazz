@@ -1,10 +1,12 @@
-package net.bodz.bas.c.system;
+package net.bodz.bas.ctx.sys;
 
 import java.io.File;
 
-import net.bodz.bas.ctx.scope.Scopes;
-import net.bodz.bas.ctx.scope.IScopeToken;
+import net.bodz.bas.c.system.SystemInfo;
+import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.ctx.scope.ScopedRef;
+import net.bodz.bas.ctx.scope.Scopes;
+import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 
 public class UserDirScr
         extends ScopedRef<File> {
@@ -45,7 +47,7 @@ public class UserDirScr
         return new File(cwd, name);
     }
 
-    public File join(IScopeToken scope, String name) {
+    public File join(IScopeDescriptor scope, String name) {
         if (name == null)
             throw new NullPointerException("name");
         File cwd = get(scope);
@@ -56,7 +58,7 @@ public class UserDirScr
      * @throws IllegalArgumentException
      *             If <code>dir</code> isn't a {@link File#isDirectory() directory}.
      */
-    public void chdir(IScopeToken scope, File dir) {
+    public void chdir(IScopeDescriptor scope, File dir) {
         if (dir == null)
             throw new NullPointerException("dir");
         if (!dir.isDirectory())
@@ -70,7 +72,7 @@ public class UserDirScr
      * @throws IllegalArgumentException
      *             If target <code>path</code> isn't a {@link File#isDirectory() directory}.
      */
-    public void chdir(IScopeToken scope, String path) {
+    public void chdir(IScopeDescriptor scope, String path) {
         if (path == null)
             throw new NullPointerException("path");
         File cwd = get(scope);

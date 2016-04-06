@@ -3,6 +3,8 @@ package net.bodz.bas.ctx.scope;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
+import net.bodz.bas.err.DeadLoopException;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
 @ExcludedFromIndex
@@ -24,7 +26,7 @@ public class ScopedRef<T>
     static IScopeTeller DEFAULT_TELLER = new IndirectScopeTeller();
 
     private Class<T> valueType;
-    private Map<IScopeToken, T> map = new HashMap<IScopeToken, T>();
+    private Map<IScopeDescriptor, T> map = new HashMap<IScopeDescriptor, T>();
     private IScopeTeller teller = DEFAULT_TELLER;
 
     public ScopedRef(Class<T> valueType) {
@@ -34,7 +36,7 @@ public class ScopedRef<T>
     }
 
     @Override
-    public IScopeToken getCurrentScope() {
+    public IScopeDescriptor getCurrentScope() {
         return teller.tell();
     }
 
@@ -76,7 +78,7 @@ public class ScopedRef<T>
     }
 
     @Override
-    public T get(IScopeToken scope) {
+    public T get(IScopeDescriptor scope) {
         String varName = getName();
 
         int depth = 0;
@@ -89,16 +91,20 @@ public class ScopedRef<T>
                 return value;
 
             if (++depth > maxDepth)
-                throw new ContextOverflowException("Context too deep");
+                throw new DeadLoopException("invalid scope hierarchy, depth overflow");
             scope = scope.getParent();
         }
         // getOrCreate()?
         return getDefaultValue();
     }
 
+    /**
+     * @throws DeadLoopException
+     *             If transparent depth overflow.
+     */
     @Override
-    public void set(IScopeToken scope, T value) {
-        IScopeToken concreteContext = scope;
+    public void set(IScopeDescriptor scope, T value) {
+        IScopeDescriptor concreteContext = scope;
         int depth = 0;
         while (concreteContext.isTransparent()) {
             concreteContext = concreteContext.getParent();
@@ -106,14 +112,14 @@ public class ScopedRef<T>
                 // throw new IllegalUsageException("No concrete scope, transient to death.");
                 break;
             if (++depth > maxTransientDepth)
-                throw new ContextOverflowException("Transient too deep");
+                throw new DeadLoopException("transparent depth overflow");
         }
 
         map.put(concreteContext, value);
     }
 
     @Override
-    public void remove(IScopeToken scope) {
+    public void remove(IScopeDescriptor scope) {
     }
 
 }

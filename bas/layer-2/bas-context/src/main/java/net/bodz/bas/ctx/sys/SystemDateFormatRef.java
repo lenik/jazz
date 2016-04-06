@@ -1,9 +1,9 @@
-package net.bodz.bas.ctx.consts;
+package net.bodz.bas.ctx.sys;
 
 import java.text.DateFormat;
 
 public class SystemDateFormatRef
-        extends SystemConstant<DateFormat> {
+        extends SystemConstantRef<DateFormat> {
 
     @Override
     public Class<? extends DateFormat> getValueType() {

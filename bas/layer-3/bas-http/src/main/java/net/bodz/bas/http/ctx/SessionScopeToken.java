@@ -3,18 +3,18 @@ package net.bodz.bas.http.ctx;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.ctx.scope.IScopeToken;
-import net.bodz.bas.ctx.scope.MutableScopeToken;
+import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
+import net.bodz.bas.ctx.scope.id.MutableScopeDescriptor;
 
 public class SessionScopeToken
-        extends MutableScopeToken {
+        extends MutableScopeDescriptor {
 
     public SessionScopeToken(HttpSession session) {
         super(session.getId(), session);
     }
 
     @Override
-    protected IScopeToken getInternalParent(Object identity) {
+    protected IScopeDescriptor getInternalParent(Object identity) {
         HttpSession session = (HttpSession) identity;
         ServletContext servletContext = session.getServletContext();
         return new ServletContextScopeToken(servletContext);

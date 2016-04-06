@@ -5,8 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.ctx.inject.AbstractScope;
-import net.bodz.bas.ctx.scope.IScopeToken;
+import net.bodz.bas.ctx.scope.AbstractScope;
+import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.meta.decl.Priority;
 
@@ -21,8 +21,8 @@ public class CurrentRequestScope
     }
 
     @Override
-    public IScopeToken tell() {
-        IScopeToken parent = IScopeToken.DEFAULT;
+    public IScopeDescriptor tell() {
+        IScopeDescriptor parent = IScopeDescriptor.DEFAULT;
 
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request != null) {

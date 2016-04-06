@@ -1,7 +1,7 @@
-package net.bodz.bas.ctx.consts;
+package net.bodz.bas.ctx.sys;
 
 public class CurrentThreadRef
-        extends SystemConstant<Thread> {
+        extends SystemConstantRef<Thread> {
 
     @Override
     public Class<? extends Thread> getValueType() {
