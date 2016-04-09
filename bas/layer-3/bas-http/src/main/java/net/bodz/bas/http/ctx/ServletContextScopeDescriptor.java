@@ -4,10 +4,10 @@ import javax.servlet.ServletContext;
 
 import net.bodz.bas.ctx.scope.id.MutableScopeDescriptor;
 
-public class ServletContextScopeToken
+public class ServletContextScopeDescriptor
         extends MutableScopeDescriptor {
 
-    public ServletContextScopeToken(ServletContext serviceContext) {
+    public ServletContextScopeDescriptor(ServletContext serviceContext) {
         super(serviceContext.getServletContextName(), serviceContext);
     }
 

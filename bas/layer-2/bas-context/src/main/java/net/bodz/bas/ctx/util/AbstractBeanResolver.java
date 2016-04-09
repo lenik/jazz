@@ -1,4 +1,4 @@
-package net.bodz.bas.ctx.scope;
+package net.bodz.bas.ctx.util;
 
 import java.util.Map;
 

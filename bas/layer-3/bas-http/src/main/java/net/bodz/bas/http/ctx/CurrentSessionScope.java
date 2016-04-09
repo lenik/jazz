@@ -14,7 +14,7 @@ public class CurrentSessionScope
 
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session != null) {
-            SessionScopeToken token = new SessionScopeToken(session);
+            SessionScopeDescriptor token = new SessionScopeDescriptor(session);
             token.setParent(parent);
             parent = token;
         }

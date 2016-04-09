@@ -1,26 +1,33 @@
-package net.bodz.bas.ctx.scope.fast;
+package net.bodz.bas.ctx.util;
 
 import java.util.*;
+import java.util.Map.Entry;
 
+import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.collection.TransformedCollection;
 import org.apache.commons.collections15.set.TransformedSet;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.StackUnderflowException;
+import net.bodz.bas.t.pojo.Pair;
 
-public class FastScopeMap<K, V>
-        extends AbstractMap<K, V> {
+public abstract class AbstractFramedMap<K, V>
+        extends AbstractMap<K, V>
+        implements IFramedMap<K, V> {
 
-    private Map<K, VarNode> initmap;
-    private Stack<FastScopeFrame> stack;
+    private final Map<K, VarNode> initmap;
+    private final Stack<VarFrame> stack;
     private boolean removeLocalOnly = false;
 
-    public FastScopeMap() {
-        this(true);
+    public AbstractFramedMap() {
+        this(null);
     }
 
-    public FastScopeMap(boolean order) {
-        if (order)
+    public AbstractFramedMap(Boolean order) {
+        if (order == null)
+            initmap = new LinkedHashMap<>();
+        else if (order)
             initmap = new TreeMap<>();
         else
             initmap = new HashMap<>();
@@ -28,15 +35,17 @@ public class FastScopeMap<K, V>
         enter();
     }
 
+    @Override
     public synchronized void enter() {
-        FastScopeFrame frame = new FastScopeFrame();
+        VarFrame frame = new VarFrame();
         stack.push(frame);
     }
 
+    @Override
     public synchronized void leave() {
         if (stack.size() <= 1)
             throw new StackUnderflowException();
-        FastScopeFrame frame = stack.pop();
+        VarFrame frame = stack.pop();
         VarNode head = frame.head;
         while (head != null) {
             head.remove();
@@ -46,6 +55,11 @@ public class FastScopeMap<K, V>
             }
             head = head.nextVar;
         }
+    }
+
+    @Override
+    public int getDepth() {
+        return stack.size() - 1;
     }
 
     synchronized VarNode init(K key) {
@@ -98,19 +112,47 @@ public class FastScopeMap<K, V>
     }
 
     @Override
-    public V put(K key, V value) {
-        return define(key, value, false);
+    public <T extends V> T _get(K key) {
+        VarNode init = initmap.get(key);
+        if (init == null)
+            throw new NoSuchKeyException(String.valueOf(key));
+
+        VarNode head = init.next;
+        assert head != null : "null head";
+
+        @SuppressWarnings("unchecked")
+        T val = (T) head.data;
+        return val;
     }
 
+    @Override
+    public <T extends V> T _get(K key, T defaultValue) {
+        VarNode init = initmap.get(key);
+        if (init == null)
+            return defaultValue;
+
+        VarNode head = init.next;
+        assert head != null : "null head";
+
+        @SuppressWarnings("unchecked")
+        T val = (T) head.data;
+        return val;
+    }
+
+    @Override
+    public abstract V put(K key, V value);
+
+    @Override
     public V define(K key, V value) {
         return define(key, value, true);
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public synchronized V define(K key, V value, boolean createLocal) {
         VarNode init = init(key);
         VarNode head = init.next;
-        FastScopeFrame frame = stack.peek();
+        VarFrame frame = stack.peek();
 
         boolean create = head == null;
         if (createLocal && head.frame != frame)
@@ -132,7 +174,7 @@ public class FastScopeMap<K, V>
     }
 
     @Override
-    public V remove(Object key) {
+    public synchronized V remove(Object key) {
         VarNode init = initmap.get(key);
         if (init == null)
             return null;
@@ -162,7 +204,7 @@ public class FastScopeMap<K, V>
     }
 
     @Override
-    public void clear() {
+    public synchronized void clear() {
         initmap.clear();
         while (stack.size() > 1)
             stack.pop();
@@ -181,6 +223,88 @@ public class FastScopeMap<K, V>
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         return TransformedSet.decorate(initmap.entrySet(), new VarNode.ToVEntry<K, V>());
+    }
+
+}
+
+class VarFrame {
+
+    VarNode head;
+    VarNode tail;
+
+    public VarNode alloc(Object data) {
+        VarNode node = new VarNode(data);
+        node.frame = this;
+
+        if (tail != null) {
+            tail.nextVar = node;
+            node.prevVar = tail;
+        }
+
+        tail = node;
+        return node;
+    }
+
+}
+
+class VarNode {
+
+    VarNode prev;
+    VarNode next;
+
+    VarFrame frame;
+    VarNode prevVar;
+    VarNode nextVar;
+
+    Object data;
+
+    public VarNode(Object data) {
+        this.data = data;
+    }
+
+    public VarNode insert(Object data) {
+        VarNode newPrev = frame.alloc(data);
+        if (prev != null) {
+            prev.next = newPrev;
+            newPrev.prev = prev;
+        }
+        newPrev.next = this;
+        this.prev = newPrev;
+        return newPrev;
+    }
+
+    public void remove() {
+        if (prev != null)
+            prev.next = next;
+        if (next != null)
+            next.prev = prev;
+    }
+
+    public void detach() {
+        prev = next = null;
+        prevVar = nextVar = null;
+    }
+
+    public static class ToV<T>
+            implements Transformer<VarNode, T> {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public T transform(VarNode input) {
+            return (T) input.data;
+        }
+
+    }
+
+    public static class ToVEntry<K, T>
+            implements Transformer<Entry<K, VarNode>, Entry<K, T>> {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public Entry<K, T> transform(Entry<K, VarNode> input) {
+            Pair<K, T> pair = new Pair<K, T>(input.getKey(), (T) input.getValue().data);
+            return pair;
+        }
     }
 
 }
