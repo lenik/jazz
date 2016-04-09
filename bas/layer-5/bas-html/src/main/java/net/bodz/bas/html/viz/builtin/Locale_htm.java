@@ -12,7 +12,6 @@ import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 
 public class Locale_htm
         extends AbstractFormInput_htm<Locale> {
@@ -24,15 +23,14 @@ public class Locale_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Locale> ref, IFieldDecl fieldDecl,
-            IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Locale> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Locale value = ref.get();
         if (value == null)
             value = Locale.getDefault();
 
         HtmlSelectTag select = out.select().class_("noprint");
-        FieldHtmlUtil.apply(select, fieldDecl, options);
+        FieldHtmlUtil.apply(select, fieldDecl);
 
         for (Locale locale : Locale.getAvailableLocales()) {
             boolean selected = locale.equals(value);
@@ -46,8 +44,6 @@ public class Locale_htm
 
         String str = value.getLanguage() + " - " + value.getDisplayName();
         out.span().class_("print").text(str);
-
-        return out;
     }
 
 }

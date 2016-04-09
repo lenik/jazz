@@ -15,33 +15,33 @@ import net.bodz.bas.meta.decl.ItemType;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.site.config.JQueryPlugins;
 import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.bas.viz.Face;
 
+@Face("tagsinput")
 public class ListTagsinput_htm
         extends AbstractFormInput_htm<List<?>> {
 
     boolean objects = false;
 
     public ListTagsinput_htm() {
-        super(List.class, "tagsinput");
+        super(List.class);
     }
 
     @Override
-    public void preview(IHtmlViewContext ctx, IUiRef<List<?>> ref, IOptions options) {
+    public void preview(IHtmlViewContext ctx, IUiRef<List<?>> ref) {
         IHtmlHeadData headData = ctx.getHeadData();
         headData.addDependency(JQueryPlugins.TAGSINPUT, ArtifactType.SCRIPT);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl,
-            IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         List<?> list = ref.get();
         if (list == null) {
             out.span().text("n/a");
-            return out;
+            return;
         }
 
         ITagTyper<Object> tagTyper = ITagTyper.DEFAULT;
@@ -83,8 +83,7 @@ public class ListTagsinput_htm
                 select.option().value(text).text(text);
         }
 
-        FieldHtmlUtil.apply(select, fieldDecl, options, null);
-        return out;
+        FieldHtmlUtil.apply(select, fieldDecl);
     }
 
 }

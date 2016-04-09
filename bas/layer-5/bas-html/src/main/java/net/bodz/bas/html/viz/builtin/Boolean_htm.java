@@ -9,7 +9,6 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 
 public class Boolean_htm
         extends AbstractFormInput_htm<Boolean> {
@@ -19,12 +18,11 @@ public class Boolean_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Boolean> ref, IFieldDecl fieldDecl,
-            IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Boolean> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
 
         HtmlInputTag input = out.input().type("checkbox").class_("noprint");
-        FieldHtmlUtil.apply(input, fieldDecl, options);
+        FieldHtmlUtil.apply(input, fieldDecl);
 
         Boolean value = ref.get();
         char sign = '☐';
@@ -34,8 +32,6 @@ public class Boolean_htm
             sign = value ? '☑' : '☒';
         }
         out.span().class_("print").text(sign);
-
-        return out;
     }
 
 }

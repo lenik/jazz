@@ -9,7 +9,6 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 
 public class Class_htm
         extends AbstractFormInput_htm<Class<?>> {
@@ -19,12 +18,11 @@ public class Class_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Class<?>> ref,
-            IFieldDecl fieldDecl, IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Class<?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
 
         HtmlInputTag input = out.input().type("text").class_("noprint");
-        FieldHtmlUtil.apply(input, fieldDecl, options);
+        FieldHtmlUtil.apply(input, fieldDecl);
 
         Class<?> value = ref.get();
         String str = value.toString();
@@ -32,7 +30,6 @@ public class Class_htm
             input.value(str);
 
         out.span().class_("print").text(str);
-        return out;
     }
 
 }

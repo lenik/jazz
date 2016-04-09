@@ -16,7 +16,6 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.ViewBuilderSet;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class PathFrames_htm
@@ -29,7 +28,7 @@ public class PathFrames_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<IPathArrival> ref, IOptions options)
+    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<IPathArrival> ref)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         IPathArrival arrival = ref.get();
@@ -60,12 +59,10 @@ public class PathFrames_htm
                 a = a.getPrevious();
         }
 
-        IOptions viewOptions = IOptions.NULL;
-
         int size = frames.size();
         for (int i = size - 1; i >= 0; i--) {
             PathHtmlFrame frame = frames.get(i);
-            frame.viewBuilder.preview(ctx, frame, viewOptions);
+            frame.viewBuilder.preview(ctx, frame);
         }
 
         int builtFrames = 0;
@@ -73,7 +70,9 @@ public class PathFrames_htm
             PathHtmlFrame frame = frames.get(size - 1 - builtFrames);
             resp.addHeader("X-Page-Frame", frame.viewBuilder.getClass().getSimpleName());
             frame.outer = out;
-            out = frame.viewBuilder.buildHtmlView(ctx, out, frame, viewOptions);
+            frame.viewBuilder.buildHtmlViewStart(ctx, out, frame);
+            // XXX TODO
+            frame.viewBuilder.buildHtmlViewEnd(ctx, out, frame);
             if (out == null)
                 break;
             else
@@ -82,4 +81,5 @@ public class PathFrames_htm
 
         return out;
     }
+
 }

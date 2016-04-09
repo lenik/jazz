@@ -12,7 +12,6 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.IRefEntry;
 import net.bodz.bas.repr.view.Feature;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dom1.IUiRef;
 
@@ -41,16 +40,16 @@ public abstract class AbstractViewBuilderFactory
 
     protected abstract void initialize();
 
-    protected abstract <T> ViewBuilderSet<T> findViewBuilders(Class<? extends T> clazz, String... features);
+    protected abstract <T> ViewBuilderSet<T> findViewBuilders(Class<? extends T> clazz, String... tags);
 
     @Override
-    public <T> ViewBuilderSet<T> getViewBuilders(IUiRef<? extends T> ref, String... features) {
+    public <T> ViewBuilderSet<T> getViewBuilders(IUiRef<? extends T> ref, String... tags) {
         Class<? extends T> valueType = ref.getValueType();
-        return getViewBuilders(valueType, features);
+        return getViewBuilders(valueType, tags);
     }
 
     @Override
-    public <T> ViewBuilderSet<T> getViewBuilders(Class<? extends T> clazz, String... features) {
+    public <T> ViewBuilderSet<T> getViewBuilders(Class<? extends T> clazz, String... tags) {
         if (clazz == null)
             throw new NullPointerException("clazz");
 
@@ -59,10 +58,10 @@ public abstract class AbstractViewBuilderFactory
         if (clazz.isPrimitive())
             clazz = (Class<? extends T>) Primitives.box(clazz);
 
-        TaggedType key = new TaggedType(clazz, features);
+        TaggedType key = new TaggedType(clazz, tags);
         Object cache = viewBuilderCache.get(key);
         if (cache == null) {
-            ViewBuilderSet<T> list = findViewBuilders(clazz, features);
+            ViewBuilderSet<T> list = findViewBuilders(clazz, tags);
             viewBuilderCache.put(key, cache = list);
         }
 
@@ -76,34 +75,34 @@ public abstract class AbstractViewBuilderFactory
             throw new NullPointerException("entry");
         Class<? extends T> valueType = entry.getValueType();
 
-        String[] features = {};
+        String[] tags = {};
         Feature _feature = entry.getAnnotation(Feature.class);
         if (_feature != null)
-            features = _feature.value();
+            tags = _feature.value();
 
-        return getViewBuilder(valueType, features);
+        return getViewBuilder(valueType, tags);
     }
 
     @Override
-    public <T> IViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features) {
-        ViewBuilderSet<T> set = getViewBuilders(ref, features);
+    public <T> IViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... tags) {
+        ViewBuilderSet<T> set = getViewBuilders(ref, tags);
         return set.isEmpty() ? null : set.getAny();
     }
 
     @Override
-    public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
-        ViewBuilderSet<T> set = getViewBuilders(type, features);
+    public <T> IViewBuilder<T> getViewBuilder(Class<? extends T> type, String... tags) {
+        ViewBuilderSet<T> set = getViewBuilders(type, tags);
         return set.isEmpty() ? null : set.getAny();
     }
 
     protected final void addViewBuilder(IViewBuilder<?> viewBuilder) {
         checkViewBuilder(viewBuilder);
-        addViewBuilder(viewBuilder, viewBuilder.getValueType(), viewBuilder.getSupportedFeatures());
+        addViewBuilder(viewBuilder, viewBuilder.getValueType(), tags);
     }
 
-    protected abstract void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... features);
+    protected abstract void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... tags);
 
-    protected void addViewBuilder(IViewBuilder<?> viewBuilder, Type type, Annotation[] annotation, String... features) {
+    protected void addViewBuilder(IViewBuilder<?> viewBuilder, Type type, Annotation[] annotation, String... tags) {
         checkViewBuilder(viewBuilder);
         Class<?> rawType;
         // if (type.getClass() == Class.class)
@@ -115,7 +114,7 @@ public abstract class AbstractViewBuilderFactory
         } else
             throw new IllegalArgumentException("Unsupported type: " + type);
 
-        addViewBuilder(viewBuilder, rawType, features);
+        addViewBuilder(viewBuilder, rawType, tags);
     }
 
     protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {
@@ -123,19 +122,14 @@ public abstract class AbstractViewBuilderFactory
             throw new NullPointerException("viewBuilder");
     }
 
-    @Override
-    public final Object buildView(IQueryable ctx, Object parent, IUiRef<?> ref)
-            throws ViewBuilderException {
-        return buildView(ctx, parent, ref, IOptions.NULL);
-    }
-
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public Object buildView(IQueryable ctx, Object parent, IUiRef<?> ref, IOptions options)
+    public Object buildView(IQueryable ctx, Object parent, IUiRef<?> ref)
             throws ViewBuilderException {
         Class<?> valueType = ref.getValueType();
         IViewBuilder viewBuilder = getViewBuilder(valueType);
-        Object view = viewBuilder.buildView(ctx, parent, ref, options);
+        Object view = viewBuilder.buildViewStart(ctx, parent, ref);
+        view = viewBuilder.buildViewEnd(ctx, view, ref);
         return view;
     }
 

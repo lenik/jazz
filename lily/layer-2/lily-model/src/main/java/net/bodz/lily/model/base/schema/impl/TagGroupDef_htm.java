@@ -5,9 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
-
 import net.bodz.lily.model.base.schema.TagGroupDef;
 
 public class TagGroupDef_htm
@@ -18,9 +16,8 @@ public class TagGroupDef_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<TagGroupDef> ref, IOptions options)
+    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<TagGroupDef> ref)
             throws ViewBuilderException, IOException {
-        return out;
     }
 
 }

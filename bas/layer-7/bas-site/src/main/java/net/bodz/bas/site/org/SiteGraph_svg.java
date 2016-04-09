@@ -18,7 +18,6 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -36,8 +35,7 @@ public class SiteGraph_svg
     }
 
     @Override
-    public void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<SiteGraphNode> ref,
-            IOptions options)
+    public void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<SiteGraphNode> ref)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
 

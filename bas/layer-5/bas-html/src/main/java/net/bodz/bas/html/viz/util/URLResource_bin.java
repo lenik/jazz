@@ -13,7 +13,6 @@ import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -42,7 +41,7 @@ public class URLResource_bin
     }
 
     @Override
-    public void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<URLResource> ref, IOptions options)
+    public void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<URLResource> ref)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
         URLResource resource = ref.get();

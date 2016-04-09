@@ -26,12 +26,8 @@ public abstract class AbstractSwtViewBuilder<T>
         super(valueClass);
     }
 
-    public AbstractSwtViewBuilder(Class<?> valueClass, String... supportedFeatures) {
-        super(valueClass, supportedFeatures);
-    }
-
     @Override
-    public final Object buildView(IQueryable ctx, Object _parent, IUiRef<T> ref, IOptions options)
+    public final Object buildViewStart(IQueryable ctx, Object _parent, IUiRef<T> ref)
             throws ViewBuilderException {
         Composite parent = null;
         if (_parent != null) {
@@ -45,7 +41,7 @@ public abstract class AbstractSwtViewBuilder<T>
 
         int styleInt = options.getInt("swt.styleInt", SWT.NONE);
 
-        return buildSwtView(ctx, parent, swtRef, styleInt, options);
+        return buildSwtView(ctx, parent, swtRef, styleInt);
     }
 
     @Override

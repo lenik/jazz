@@ -13,7 +13,6 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.predef.Predef;
 import net.bodz.bas.t.predef.PredefMetadata;
 
@@ -25,8 +24,7 @@ public class PredefSelect_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Predef<?, ?>> ref,
-            IFieldDecl fieldDecl, IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Predef<?, ?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Predef<?, ?> predef = ref.get();
         PredefMetadata<?, ?> metadata;
@@ -53,8 +51,7 @@ public class PredefSelect_htm
                 option.selected("selected");
         }
 
-        FieldHtmlUtil.apply(select, fieldDecl, options);
-        return out;
+        FieldHtmlUtil.apply(select, fieldDecl);
     }
 
 }

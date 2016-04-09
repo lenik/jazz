@@ -17,10 +17,6 @@ public abstract class AbstractPdfViewBuilder<T>
         super(valueClass);
     }
 
-    public AbstractPdfViewBuilder(Class<?> valueClass, String... supportedFeatures) {
-        super(valueClass, supportedFeatures);
-    }
-
     @Override
     public HttpViewBuilderFamily getFamily() {
         return HttpViewBuilderFamily.PDF;

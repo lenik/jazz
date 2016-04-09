@@ -14,7 +14,6 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 
 public class Map_htm
         extends AbstractFormInput_htm<Map<?, ?>> {
@@ -24,13 +23,12 @@ public class Map_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Map<?, ?>> ref,
-            IFieldDecl fieldDecl, IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Map<?, ?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Map<?, ?> map = ref.get();
         if (map == null) {
             out.span().text("n/a");
-            return out;
+            return;
         }
 
         String face = fieldDecl.getFace();
@@ -88,7 +86,6 @@ public class Map_htm
         default:
             throw new ViewBuilderException("Unsupported map face: " + fieldDecl.getFace());
         }
-
-        return out;
     }
+
 }

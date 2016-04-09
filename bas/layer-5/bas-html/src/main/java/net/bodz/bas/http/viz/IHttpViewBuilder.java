@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.ui.dom1.IUiRef;
 
@@ -37,12 +36,12 @@ public interface IHttpViewBuilder<T>
 
     // boolean isDirectory();
 
-    void preview(IHttpViewContext ctx, IUiRef<T> ref, IOptions options);
+    void preview(IHttpViewContext ctx, IUiRef<T> ref);
 
-    void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
+    void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref, IOptions options)
+    void buildHttpViewEnd(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
 }

@@ -12,7 +12,6 @@ import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 
@@ -26,8 +25,7 @@ public abstract class AbstractTextForm_htm<T>
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl,
-            IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         T value = ref.get();
 
@@ -42,15 +40,14 @@ public abstract class AbstractTextForm_htm<T>
         IHtmlTag tag = createScreenInput(out, ref, fieldDecl);
         if (tag != null) {
             if (tag instanceof HtmlInputTag)
-                FieldHtmlUtil.apply((HtmlInputTag) tag, fieldDecl, options);
+                FieldHtmlUtil.apply((HtmlInputTag) tag, fieldDecl);
             else if (tag instanceof HtmlTextareaTag)
-                FieldHtmlUtil.apply((HtmlTextareaTag) tag, fieldDecl, options);
+                FieldHtmlUtil.apply((HtmlTextareaTag) tag, fieldDecl);
             if (str != null)
                 tag.attr("value", str);
         }
 
         out.span().class_("print").text(str);
-        return out;
     }
 
     protected abstract IHtmlTag createScreenInput(IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)

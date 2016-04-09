@@ -2,7 +2,7 @@ package net.bodz.lily.model.res.people;
 
 import java.sql.Date;
 
-import net.bodz.bas.html.meta.ViewCriteria;
+import net.bodz.bas.html.meta.Radio;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -57,7 +57,7 @@ public class Person
      * 
      * @TODO view builder criteria.
      */
-    @ViewCriteria("radio")
+    @Radio
     @OfGroup(StdGroup.Classification.class)
     public Gender getGender() {
         return gender;

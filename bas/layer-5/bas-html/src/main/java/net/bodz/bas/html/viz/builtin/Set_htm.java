@@ -9,7 +9,6 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 
 public class Set_htm
         extends AbstractFormInput_htm<Set<?>> {
@@ -19,13 +18,12 @@ public class Set_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Set<?>> ref, IFieldDecl fieldDecl,
-            IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Set<?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Set<?> set = ref.get();
         if (set == null) {
             out.span().text("n/a");
-            return out;
+            return;
         }
 
         String face = fieldDecl.getFace();
@@ -51,8 +49,6 @@ public class Set_htm
         default:
             throw new ViewBuilderException("Unsupported set face: " + fieldDecl.getFace());
         }
-
-        return out;
     }
 
 }

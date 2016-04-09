@@ -13,7 +13,6 @@ import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.potato.invoke.IInvocation;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.typer.Typers;
@@ -38,7 +37,7 @@ public class Invocation_txt
     }
 
     @Override
-    public void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IInvocation> ref, IOptions options)
+    public void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IInvocation> ref)
             throws ViewBuilderException, IOException {
         PrintWriter out = resp.getWriter();
         IInvocation invocation = ref.get();

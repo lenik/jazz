@@ -14,7 +14,6 @@ import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldCategory;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class DefaultForm_htm<T>
@@ -37,7 +36,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref, IOptions options)
+    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref)
             throws ViewBuilderException, IOException {
         if (embedded)
             return out;
@@ -65,8 +64,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected void fieldBody(IHtmlViewContext ctx, IHtmlTag tr, IUiRef<?> instanceRef, IFieldDecl fieldDecl,
-            IOptions options)
+    protected void fieldBody(IHtmlViewContext ctx, IHtmlTag tr, IUiRef<?> instanceRef, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         HtmlTdTag bodyTd = tr.td().class_("field-body");
 

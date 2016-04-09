@@ -10,7 +10,6 @@ import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -38,7 +37,7 @@ public class Sitemap_xml
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<Sitemap> ref, IOptions options)
+    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<Sitemap> ref)
             throws ViewBuilderException, IOException {
         Sitemap sitemap = ref.get();
         IXmlTag out = parent;
@@ -61,7 +60,6 @@ public class Sitemap_xml
             tag.insert("changefreq").text(entry.getChangeFreq());
             tag.insert("priority").text(entry.getPriority());
         }
-        return parent;
     }
 
 }

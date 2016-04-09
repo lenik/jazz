@@ -53,13 +53,4 @@ public abstract class AbstractHttpViewContext
         return super.query(specificationId);
     }
 
-    @Override
-    public IHttpViewContext getRoot() {
-        IHttpViewContext node = this;
-        IHttpViewContext parent;
-        while ((parent = node.getParent()) != null)
-            node = parent;
-        return node;
-    }
-
 }

@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.repr.viz.AbstractViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dom1.IUiRef;
 
@@ -16,10 +15,6 @@ public abstract class AbstractHttpViewBuilder<T>
 
     public AbstractHttpViewBuilder(Class<?> valueClass) {
         super(valueClass);
-    }
-
-    public AbstractHttpViewBuilder(Class<?> valueClass, String... supportedFeatures) {
-        super(valueClass, supportedFeatures);
     }
 
     @Override
@@ -43,25 +38,25 @@ public abstract class AbstractHttpViewBuilder<T>
     }
 
     @Override
-    public void preview(IHttpViewContext ctx, IUiRef<T> ref, IOptions options) {
+    public void preview(IHttpViewContext ctx, IUiRef<T> ref) {
     }
 
     @Override
-    public Object buildView(IQueryable _ctx, Object _out, IUiRef<T> ref, IOptions options)
+    public Object buildViewStart(IQueryable _ctx, Object parent, IUiRef<T> ref)
             throws ViewBuilderException {
         IHttpViewContext ctx = (IHttpViewContext) _ctx;
+        HttpServletResponse resp = ctx.getResponse();
         try {
-            buildHttpView(ctx, ctx.getResponse(), ref, options);
+            buildHttpViewStart(ctx, resp, ref);
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
-        return null;
+        return parent;
     }
 
     @Override
-    public void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
+    public void buildHttpViewEnd(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
-        buildHttpView(ctx, resp, ref, IOptions.NULL);
     }
 
 }
