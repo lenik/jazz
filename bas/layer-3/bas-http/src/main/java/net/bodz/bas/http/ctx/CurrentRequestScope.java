@@ -26,7 +26,7 @@ public class CurrentRequestScope
 
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request != null) {
-            RequestScopeToken token = new RequestScopeToken(request);
+            RequestScopeDescriptor token = new RequestScopeDescriptor(request);
             token.setParent(parent);
             parent = token;
         }

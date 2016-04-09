@@ -7,7 +7,7 @@ import net.bodz.bas.t.ref.Ref;
 @IndexedType
 public interface IScopedRef<T>
         extends Ref<T> {
-
+    
     IScopeDescriptor getCurrentScope();
 
     String getName();
@@ -25,27 +25,26 @@ public interface IScopedRef<T>
      * Set value in the given scope, or the nearest ancestor scope if it's transient.
      * 
      * @param scope
-     *            The scope to be affected, all transient scopes in the scope chain are
-     *            skipped.
+     *            The scope to be affected, all transient scopes in the scope chain are skipped.
      */
     void set(IScopeDescriptor scope, T value);
 
     void remove(IScopeDescriptor scope);
 
     /**
-     * Shortcut for: <code>get(getCurrentContext())</code>.
+     * @see #getCurrentScope()
      */
     @Override
     T get();
 
     /**
-     * Shortcut for: <code>set(getCurrentContext(), value)</code>.
+     * @see #getCurrentScope()
      */
     @Override
     void set(T value);
 
     /**
-     * Shortcut for: <code>remove(getCurrentContext())</code>.
+     * @see #getCurrentScope()
      */
     @Override
     void remove();

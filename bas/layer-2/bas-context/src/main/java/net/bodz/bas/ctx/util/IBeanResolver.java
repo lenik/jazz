@@ -1,4 +1,4 @@
-package net.bodz.bas.ctx.scope;
+package net.bodz.bas.ctx.util;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.t.order.IPriority;

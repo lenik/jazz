@@ -6,10 +6,10 @@ import javax.servlet.http.HttpSession;
 import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 import net.bodz.bas.ctx.scope.id.MutableScopeDescriptor;
 
-public class SessionScopeToken
+public class SessionScopeDescriptor
         extends MutableScopeDescriptor {
 
-    public SessionScopeToken(HttpSession session) {
+    public SessionScopeDescriptor(HttpSession session) {
         super(session.getId(), session);
     }
 
@@ -17,7 +17,7 @@ public class SessionScopeToken
     protected IScopeDescriptor getInternalParent(Object identity) {
         HttpSession session = (HttpSession) identity;
         ServletContext servletContext = session.getServletContext();
-        return new ServletContextScopeToken(servletContext);
+        return new ServletContextScopeDescriptor(servletContext);
     }
 
     public HttpSession getSession() {
