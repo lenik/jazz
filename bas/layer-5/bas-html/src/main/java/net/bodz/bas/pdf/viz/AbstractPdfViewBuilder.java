@@ -9,7 +9,6 @@ import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -17,10 +16,6 @@ import net.bodz.bas.ui.dom1.IUiRef;
 public abstract class AbstractPdfViewBuilder<T>
         extends AbstractHttpViewBuilder<T>
         implements IPdfViewBuilder<T> {
-
-    public AbstractPdfViewBuilder(Class<?> valueClass, String... supportedFeatures) {
-        super(valueClass, supportedFeatures);
-    }
 
     public AbstractPdfViewBuilder(Class<?> valueClass) {
         super(valueClass);
@@ -37,15 +32,9 @@ public abstract class AbstractPdfViewBuilder<T>
     }
 
     @Override
-    public void buildHttpView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref, IOptions options)
+    public final void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
-        buildPdfView(ctx, resp, ref, options);
-    }
-
-    @Override
-    public final void buildPdfView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
-            throws ViewBuilderException, IOException {
-        buildPdfView(ctx, resp, ref, IOptions.NULL);
+        buildPdfView(ctx, resp, ref);
     }
 
 }

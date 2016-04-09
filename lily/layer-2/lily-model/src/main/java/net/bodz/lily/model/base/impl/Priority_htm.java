@@ -10,19 +10,20 @@ import net.bodz.bas.html.dom.tag.HtmlSelectTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.bas.viz.Face;
 
+@Face("priority")
 public class Priority_htm
         extends AbstractHtmlViewBuilder<Integer> {
 
     public Priority_htm() {
-        super(Integer.class, "Priority");
+        super(Integer.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Integer> ref, IOptions options)
+    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Integer> ref)
             throws ViewBuilderException, IOException {
         // ctx.query(PriorityMapper.class);
         List<Pair<Integer, String>> predefs = new ArrayList<>();
@@ -49,7 +50,6 @@ public class Priority_htm
             nearest.selected("selected");
 
         // FieldHtmlUtil.apply(input, fieldDecl, options);
-        return out;
     }
 
 }

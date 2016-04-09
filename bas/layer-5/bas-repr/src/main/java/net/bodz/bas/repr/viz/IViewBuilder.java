@@ -1,12 +1,13 @@
 package net.bodz.bas.repr.viz;
 
-import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.IAttributed;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.ui.dom1.IUiRef;
 
+// @LocalScope
 public interface IViewBuilder<T>
-        extends IPriority {
+        extends IPriority, IAttributed {
 
     /**
      * Get the value type.
@@ -18,22 +19,17 @@ public interface IViewBuilder<T>
     Class<?> getValueType();
 
     /**
-     * Get supported features.
-     * 
-     * @return Non-<code>null</code> array of supported feature names.
+     * @return The intermediate widget/control handle.
      */
-    String[] getSupportedFeatures();
-
-    /**
-     * @return The built widget/control handle.
-     */
-    Object buildView(IQueryable ctx, Object parent, IUiRef<T> ref)
+    Object buildViewStart(IQueryable ctx, Object parent, IUiRef<T> ref)
             throws ViewBuilderException;
 
     /**
-     * @return The built widget/control handle.
+     * @param o
+     *            The intermediate widget/control handle.
+     * @return The build widget/control handle.
      */
-    Object buildView(IQueryable ctx, Object parent, IUiRef<T> ref, IOptions options)
+    Object buildViewEnd(IQueryable ctx, Object o, IUiRef<T> ref)
             throws ViewBuilderException;
 
 }

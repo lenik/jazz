@@ -12,7 +12,6 @@ import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 
 public class TimeZone_htm
         extends AbstractFormInput_htm<TimeZone> {
@@ -24,15 +23,14 @@ public class TimeZone_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<TimeZone> ref,
-            IFieldDecl fieldDecl, IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<TimeZone> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         TimeZone value = ref.get();
         if (value == null)
             value = TimeZone.getDefault();
 
         HtmlSelectTag select = out.select().class_("noprint");
-        FieldHtmlUtil.apply(select, fieldDecl, options);
+        FieldHtmlUtil.apply(select, fieldDecl);
 
         for (String id : TimeZone.getAvailableIDs()) {
             TimeZone timeZone = TimeZone.getTimeZone(id);
@@ -47,7 +45,6 @@ public class TimeZone_htm
 
         String str = value.getID() + " - " + value.getDisplayName();
         out.span().class_("print").text(str);
-        return out;
     }
 
 }

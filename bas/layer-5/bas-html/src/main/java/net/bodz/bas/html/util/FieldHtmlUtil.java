@@ -5,13 +5,10 @@ import net.bodz.bas.html.dom.tag.HtmlSelectTag;
 import net.bodz.bas.html.dom.tag.HtmlTextareaTag;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.repr.form.IFieldDecl;
-import net.bodz.bas.rtx.IOptions;
 
 public class FieldHtmlUtil {
 
-    public static final String NAME_PREFIX = "prefix";
-
-    static String name(IFieldDecl fieldDecl, String prefix, String suffix) {
+    static String _name(IFieldDecl fieldDecl, String prefix, String suffix) {
         String inputName = fieldDecl.getInputName();
         if (inputName == null)
             inputName = fieldDecl.getName();
@@ -25,12 +22,12 @@ public class FieldHtmlUtil {
         return inputName;
     }
 
-    public static void apply(HtmlInputTag input, IFieldDecl fieldDecl, IOptions options) {
-        apply(input, fieldDecl, options, null);
+    public static void apply(HtmlInputTag input, IFieldDecl fieldDecl) {
+        apply(input, fieldDecl, null, null);
     }
 
-    public static void apply(HtmlInputTag input, IFieldDecl fieldDecl, IOptions options, String nameSuffix) {
-        String inputName = name(fieldDecl, options.<String> get(NAME_PREFIX), nameSuffix);
+    public static void apply(HtmlInputTag input, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
+        String inputName = _name(fieldDecl, namePrefix, nameSuffix);
         // input.id(inputName);
         input.name(inputName);
 
@@ -78,12 +75,12 @@ public class FieldHtmlUtil {
             input.placeholder(placeholder.toString());
     }
 
-    public static void apply(HtmlTextareaTag textarea, IFieldDecl fieldDecl, IOptions options) {
-        apply(textarea, fieldDecl, options, null);
+    public static void apply(HtmlTextareaTag textarea, IFieldDecl fieldDecl) {
+        apply(textarea, fieldDecl, null, null);
     }
 
-    public static void apply(HtmlTextareaTag textarea, IFieldDecl fieldDecl, IOptions options, String nameSuffix) {
-        String inputName = name(fieldDecl, options.<String> get(NAME_PREFIX), nameSuffix);
+    public static void apply(HtmlTextareaTag textarea, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
+        String inputName = _name(fieldDecl, namePrefix, nameSuffix);
         textarea.name(inputName);
 
         if (fieldDecl.isReadOnly())
@@ -106,12 +103,12 @@ public class FieldHtmlUtil {
             textarea.placeholder(placeholder.toString());
     }
 
-    public static void apply(HtmlSelectTag select, IFieldDecl fieldDecl, IOptions options) {
-        apply(select, fieldDecl, options, null);
+    public static void apply(HtmlSelectTag select, IFieldDecl fieldDecl) {
+        apply(select, fieldDecl, null, null);
     }
 
-    public static void apply(HtmlSelectTag select, IFieldDecl fieldDecl, IOptions options, String nameSuffix) {
-        String inputName = name(fieldDecl, options.<String> get(NAME_PREFIX), nameSuffix);
+    public static void apply(HtmlSelectTag select, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
+        String inputName = _name(fieldDecl, namePrefix, nameSuffix);
         select.name(inputName);
 
         if (fieldDecl.isReadOnly())

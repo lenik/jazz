@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.bodz.bas.ctx.util.IFramedMap;
+import net.bodz.bas.ctx.util.StrictFramedMap;
 
 public class DefaultHttpViewContext
         extends AbstractHttpViewContext
@@ -14,8 +16,10 @@ public class DefaultHttpViewContext
 
     private final HttpServletRequest request;
     private final HttpServletResponse response;
+    private boolean stopped;
 
-    private Map<String, Object> attributes;
+    private final Map<String, Object> attributes;
+    private final IFramedMap<String, Object> varMap;
 
     public DefaultHttpViewContext(HttpServletRequest request, HttpServletResponse response) {
         if (request == null)
@@ -26,16 +30,7 @@ public class DefaultHttpViewContext
         this.response = response;
 
         attributes = new HashMap<String, Object>();
-    }
-
-    @Override
-    public IHttpViewContext getRoot() {
-        return this;
-    }
-
-    @Override
-    public IHttpViewContext getParent() {
-        return null;
+        varMap = new StrictFramedMap<>();
     }
 
     @Override
@@ -57,6 +52,16 @@ public class DefaultHttpViewContext
     }
 
     @Override
+    public void stop() {
+        this.stopped = true;
+    }
+
+    @Override
+    public boolean isStopped() {
+        return stopped;
+    }
+
+    @Override
     public Map<String, Object> getAttributeMap() {
         return attributes;
     }
@@ -71,6 +76,21 @@ public class DefaultHttpViewContext
         if (name == null)
             throw new NullPointerException("name");
         attributes.put(name, value);
+    }
+
+    @Override
+    public IFramedMap<String, Object> getVariableMap() {
+        return varMap;
+    }
+
+    @Override
+    public <T> T getVariable(String name) {
+        return varMap._get(name, null);
+    }
+
+    @Override
+    public void setVariable(String name, Object value) {
+        varMap.put(name, value);
     }
 
 }

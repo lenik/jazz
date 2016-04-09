@@ -12,18 +12,19 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.req.IMethodOfRequest;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.bas.viz.Face;
 
+@Face("debug")
 public class ObjectDump_htm
         extends AbstractHtmlViewBuilder<Object> {
 
     public ObjectDump_htm() {
-        super(Object.class, "debug");
+        super(Object.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Object> ref, IOptions options)
+    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Object> ref)
             throws ViewBuilderException, IOException {
         HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 

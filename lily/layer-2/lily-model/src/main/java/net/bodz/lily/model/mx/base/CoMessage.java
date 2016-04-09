@@ -3,7 +3,6 @@ package net.bodz.lily.model.mx.base;
 import java.util.Date;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.html.meta.ViewCriteria;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.ItemType;
@@ -14,6 +13,7 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.t.order.IPriority;
+import net.bodz.bas.viz.Face;
 import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.model.base.IId;
 import net.bodz.lily.model.base.schema.CategoryDef;
@@ -179,7 +179,7 @@ public class CoMessage<Id>
      * @label Tags
      * @label.zh 标签列表
      */
-    @ViewCriteria("tagsinput")
+    @Face("tagsinput")
     @ItemType(TagDef.class)
     @OfGroup(StdGroup.Classification.class)
     @typer.parser(TagsParser.class)

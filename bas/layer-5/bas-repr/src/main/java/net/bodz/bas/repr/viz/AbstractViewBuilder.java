@@ -2,7 +2,6 @@ package net.bodz.bas.repr.viz;
 
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dom1.IUiRef;
 
@@ -12,7 +11,6 @@ public abstract class AbstractViewBuilder<T>
     static final Logger logger = LoggerFactory.getLogger(AbstractViewBuilder.class);
 
     private Class<?> valueType;
-    private String[] supportedFeatures = {};
 
     public AbstractViewBuilder(Class<?> valueClass) {
         if (valueClass == null)
@@ -22,16 +20,18 @@ public abstract class AbstractViewBuilder<T>
         this.valueType = valueClass;
     }
 
-    public AbstractViewBuilder(Class<?> valueClass, String... supportedFeatures) {
-        this(valueClass);
-        if (supportedFeatures == null)
-            throw new NullPointerException("supportedFeatures");
-        this.supportedFeatures = supportedFeatures;
-    }
-
     @Override
     public int getPriority() {
         return 0;
+    }
+
+    @Override
+    public <_T> _T getAttribute(String name) {
+        return null;
+    }
+
+    @Override
+    public void setAttribute(String name, Object value) {
     }
 
     @Override
@@ -40,14 +40,9 @@ public abstract class AbstractViewBuilder<T>
     }
 
     @Override
-    public String[] getSupportedFeatures() {
-        return supportedFeatures;
-    }
-
-    @Override
-    public final Object buildView(IQueryable ctx, Object parent, IUiRef<T> ref)
+    public Object buildViewEnd(IQueryable ctx, Object o, IUiRef<T> ref)
             throws ViewBuilderException {
-        return buildView(ctx, parent, ref, IOptions.NULL);
+        return o;
     }
 
 }

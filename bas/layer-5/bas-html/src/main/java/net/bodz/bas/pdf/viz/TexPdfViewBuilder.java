@@ -9,26 +9,21 @@ import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.tex.dom.TexCompiler;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class TexPdfViewBuilder<T>
         extends AbstractPdfViewBuilder<T> {
 
-    public TexPdfViewBuilder(Class<?> valueClass, String... supportedFeatures) {
-        super(valueClass, supportedFeatures);
-    }
-
     public TexPdfViewBuilder(Class<?> valueClass) {
         super(valueClass);
     }
 
     @Override
-    public void buildPdfView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref, IOptions options)
+    public void buildPdfView(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         BCharOut texBuf = new BCharOut();
-        buildTex(ctx, texBuf, ref, options);
+        buildTex(ctx, texBuf, ref);
         String tex = texBuf.toString();
 
         TexCompiler compiler = new TexCompiler("tex2pdf");
@@ -42,7 +37,7 @@ public abstract class TexPdfViewBuilder<T>
         }
     }
 
-    public abstract void buildTex(IHttpViewContext ctx, IPrintOut out, IUiRef<T> ref, IOptions options)
+    public abstract void buildTex(IHttpViewContext ctx, IPrintOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
 }

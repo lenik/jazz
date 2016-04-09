@@ -10,7 +10,6 @@ import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractFormInput_htm<T>
@@ -18,12 +17,12 @@ public abstract class AbstractFormInput_htm<T>
 
     private static FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
 
-    public AbstractFormInput_htm(Class<?> valueClass, String... supportedFeatures) {
-        super(valueClass, supportedFeatures);
+    public AbstractFormInput_htm(Class<?> valueClass) {
+        super(valueClass);
     }
 
     @Override
-    public final IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref, IOptions options)
+    public final void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
 
         if (!(ref instanceof UiPropertyRef))
@@ -37,12 +36,11 @@ public abstract class AbstractFormInput_htm<T>
             throw new ViewBuilderException("Failed to build field-decl.", e);
         }
 
-        buildHtmlView(ctx, out, propertyRef, fieldDecl, options);
-        return out;
+        buildHtmlView(ctx, out, propertyRef, fieldDecl);
     }
 
-    public abstract IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref,
-            IFieldDecl fieldDecl, IOptions options)
+    public abstract void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref,
+            IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
 }

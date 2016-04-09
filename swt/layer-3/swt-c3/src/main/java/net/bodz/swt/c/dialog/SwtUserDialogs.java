@@ -200,7 +200,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), getOptions());
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail));
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -220,8 +220,6 @@ public class SwtUserDialogs
         class ConfirmDialog
                 extends _Dialog {
 
-            IOptions options = getOptions();
-
             public ConfirmDialog(Shell parent, int style, String title) {
                 super(parent, style, title);
             }
@@ -235,7 +233,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail));
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -256,8 +254,6 @@ public class SwtUserDialogs
         class AskDialog
                 extends _Dialog {
 
-            IOptions options = getOptions();
-
             public AskDialog(Shell parent, int style, String title) {
                 super(parent, style, title);
             }
@@ -271,7 +267,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail));
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -335,9 +331,8 @@ public class SwtUserDialogs
             @Override
             protected void createDetail(Composite parent)
                     throws SWTException, CreateException {
-                IOptions options = getOptions();
                 try {
-                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail));
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -369,14 +364,12 @@ public class SwtUserDialogs
     private static int FLATMAX = 3;
 
     static class PreRenderred {
-        private final IOptions options;
         private final IViewBuilderFactory viz;
         private final StackComposite stack;
         private final Control[] controls;
         private int next;
 
-        public PreRenderred(IOptions options, Composite parent, IViewBuilderFactory style, int size) {
-            this.options = options;
+        public PreRenderred(Composite parent, IViewBuilderFactory style, int size) {
             this.stack = new StackComposite(parent, SWT.BORDER);
             this.viz = style;
             this.controls = new Control[size];
@@ -384,7 +377,7 @@ public class SwtUserDialogs
 
         public int render(Object value)
                 throws ViewBuilderException, SWTException {
-            Control control = (Control) viz.buildView(null, stack, UiValue.wrap(value), options);
+            Control control = (Control) viz.buildView(null, stack, UiValue.wrap(value));
             controls[next] = control;
             return next++;
         }
@@ -412,8 +405,6 @@ public class SwtUserDialogs
     public <K> K choice(String title, final Object detail, final Map<K, ?> candidates, final K initial) {
         class ChoiceDialog
                 extends _Dialog {
-
-            IOptions options = getOptions();
 
             class SetResultByData
                     extends SelectionAdapter {
@@ -448,7 +439,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail));
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -474,7 +465,7 @@ public class SwtUserDialogs
                     radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
-                        viewBuilderFactory.buildView(null, parent, UiValue.wrap(value), options);
+                        viewBuilderFactory.buildView(null, parent, UiValue.wrap(value));
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -493,8 +484,7 @@ public class SwtUserDialogs
                 int size = candidates.size();
                 final Object[] keys = new Object[size];
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(options, parent, viewBuilderFactory,
-                        size) : null;
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(parent, viewBuilderFactory, size) : null;
                 try {
                     int index = 0;
                     for (Entry<?, ?> entry : candidates.entrySet()) {
@@ -548,7 +538,6 @@ public class SwtUserDialogs
 
         class ChoicesDialog
                 extends _Dialog {
-            IOptions options = getOptions();
             Func0<Set<K>> selection;
 
             public ChoicesDialog(Shell parent, int style, String title) {
@@ -570,7 +559,7 @@ public class SwtUserDialogs
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail), options);
+                    viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail));
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -609,7 +598,7 @@ public class SwtUserDialogs
                     button.setSelection(selected);
                     keyButtons[index++] = new KeyButton(key, button);
                     try {
-                        viewBuilderFactory.buildView(null, parent, UiValue.wrap(value), options);
+                        viewBuilderFactory.buildView(null, parent, UiValue.wrap(value));
                     } catch (ViewBuilderException e) {
                         throw new CreateException(e);
                     }
@@ -645,8 +634,7 @@ public class SwtUserDialogs
 
                 final int size = candidates.size();
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(options, parent, viewBuilderFactory,
-                        size) : null;
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(parent, viewBuilderFactory, size) : null;
                 final _K[] keys = new _K[size];
                 int index = 0;
                 for (Entry<K, ?> entry : candidates.entrySet())

@@ -12,7 +12,6 @@ import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 
 public class Date_htm
         extends AbstractFormInput_htm<Date> {
@@ -24,14 +23,13 @@ public class Date_htm
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Date> ref, IFieldDecl fieldDecl,
-            IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Date> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Date value = ref.get();
 
         HtmlInputTag input = out.input().class_("noprint");
 
-        FieldHtmlUtil.apply(input, fieldDecl, options);
+        FieldHtmlUtil.apply(input, fieldDecl);
 
         // When not supported, the browser defaults to the text input type.
         // input.type("datetime"); // deprecated
@@ -41,8 +39,6 @@ public class Date_htm
             input.value(str);
             out.span().class_("print").text(str);
         }
-
-        return out;
     }
 
 }

@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractParser;
-
 import net.bodz.lily.model.base.schema.TagDef;
 
 public class TagsParser

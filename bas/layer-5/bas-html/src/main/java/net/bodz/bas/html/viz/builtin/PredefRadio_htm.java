@@ -9,25 +9,25 @@ import net.bodz.bas.html.dom.IHtmlTag;
 import net.bodz.bas.html.dom.tag.HtmlDivTag;
 import net.bodz.bas.html.dom.tag.HtmlInputTag;
 import net.bodz.bas.html.dom.tag.HtmlLabelTag;
+import net.bodz.bas.html.meta.Radio;
 import net.bodz.bas.html.util.FieldHtmlUtil;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.predef.Predef;
 import net.bodz.bas.t.predef.PredefMetadata;
 
+@Radio
 public class PredefRadio_htm
         extends AbstractFormInput_htm<Predef<?, ?>> {
 
     public PredefRadio_htm() {
-        super(Predef.class, "radio");
+        super(Predef.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Predef<?, ?>> ref,
-            IFieldDecl fieldDecl, IOptions options)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Predef<?, ?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Predef<?, ?> predef = ref.get();
         PredefMetadata<?, ?> metadata;
@@ -64,9 +64,8 @@ public class PredefRadio_htm
             radio.value(key);
             radio.text(value.getLabel());
 
-            FieldHtmlUtil.apply(radio, fieldDecl, options);
+            FieldHtmlUtil.apply(radio, fieldDecl);
         }
-        return out;
     }
 
 }

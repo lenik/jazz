@@ -9,9 +9,9 @@ public interface ISwtViewBuilderFactory
         extends IViewBuilderFactory {
 
     @Override
-    <T> ISwtViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
+    <T> ISwtViewBuilder<T> getViewBuilder(Class<? extends T> type, String... tags);
 
     @Override
-    <T> ISwtViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features);
+    <T> ISwtViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... tags);
 
 }

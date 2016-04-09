@@ -8,18 +8,19 @@ import net.bodz.bas.html.dom.tag.HtmlSelectTag;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.bas.viz.Face;
 
+@Face("AccessMode")
 public class AccessMode_htm
         extends AbstractHtmlViewBuilder<Integer> {
 
     public AccessMode_htm() {
-        super(Integer.class, "AccessMode");
+        super(Integer.class);
     }
 
     @Override
-    public IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Integer> ref, IOptions options)
+    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Integer> ref)
             throws ViewBuilderException, IOException {
         Integer val = ref.get();
         if (val == null)
@@ -33,8 +34,6 @@ public class AccessMode_htm
             if (n == key)
                 option.selected("selected");
         }
-
-        return select;
     }
 
 }

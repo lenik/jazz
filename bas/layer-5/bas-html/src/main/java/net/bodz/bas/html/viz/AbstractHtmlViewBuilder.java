@@ -20,7 +20,6 @@ import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.req.IViewOfRequest;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
@@ -35,10 +34,6 @@ public abstract class AbstractHtmlViewBuilder<T>
 
     public AbstractHtmlViewBuilder(Class<?> valueClass) {
         super(valueClass);
-    }
-
-    public AbstractHtmlViewBuilder(Class<?> valueClass, String... supportedFeatures) {
-        super(valueClass, supportedFeatures);
     }
 
     @Override
@@ -66,12 +61,12 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final void preview(IHttpViewContext _ctx, IUiRef<T> ref, IOptions options) {
+    public final void preview(IHttpViewContext _ctx, IUiRef<T> ref) {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
-        preview(ctx, ref, options);
+        preview(ctx, ref);
     }
 
-    public void preview(IHtmlViewContext ctx, IUiRef<T> ref, IOptions options) {
+    public void preview(IHtmlViewContext ctx, IUiRef<T> ref) {
         IHtmlHeadData metaData = ctx.getHeadData();
 
         T value = ref.get();
@@ -93,32 +88,33 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final Object buildView(IQueryable _ctx, Object out, IUiRef<T> ref, IOptions options)
+    public final Object buildViewStart(IQueryable _ctx, Object out, IUiRef<T> ref)
             throws ViewBuilderException {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
         try {
-            return buildHtmlView(ctx, (IHtmlTag) out, ref, options);
+            buildHtmlViewStart(ctx, (IHtmlTag) out, ref);
+            return out;
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
     }
 
     @Override
-    public void buildHttpView(IHttpViewContext _ctx, HttpServletResponse resp, IUiRef<T> ref, IOptions options)
+    public void buildHttpViewStart(IHttpViewContext _ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
         IHtmlTag out = ctx.getOut();
         try {
-            buildHtmlView(ctx, out, ref, options);
+            buildHtmlViewStart(ctx, out, ref);
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
     }
 
     @Override
-    public final IHtmlTag buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    public void buildHtmlViewEnd(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
-        return buildHtmlView(ctx, out, ref, IOptions.NULL);
+        return;
     }
 
     protected static boolean enter(IHttpViewContext ctx, IUiRef<?> ref)
@@ -145,6 +141,7 @@ public abstract class AbstractHtmlViewBuilder<T>
         }
 
         ctx.getResponse().sendRedirect(url.toString());
+        ctx.stop();
         return true;
     }
 
@@ -198,7 +195,7 @@ public abstract class AbstractHtmlViewBuilder<T>
         if (viewBuilder == null)
             throw new ViewBuilderException("Can't build view for " + type);
 
-        viewBuilder.buildHtmlView(ctx, out, ref);
+        viewBuilder.buildHtmlViewStart(ctx, out, ref);
     }
 
     protected IHtmlTag createTag(IHtmlTag out, String tagName, IUiElementStyleDeclaration style)

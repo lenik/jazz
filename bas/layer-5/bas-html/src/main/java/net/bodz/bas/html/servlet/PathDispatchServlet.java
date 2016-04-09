@@ -187,7 +187,7 @@ public class PathDispatchServlet
         case "text/html":
         case "text/xhtml":
             try {
-                pathFramesVbo.buildHtmlView(ctx, ctx.getHtmlDoc().getRoot(), UiVar.wrap(arrival));
+                pathFramesVbo.buildHtmlViewStart(ctx, ctx.getHtmlDoc().getRoot(), UiVar.wrap(arrival));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
@@ -204,7 +204,7 @@ public class PathDispatchServlet
         default:
             resp.addHeader("X-Content-View", viewBuilder.getClass().getSimpleName());
             try {
-                viewBuilder.buildHttpView(ctx, resp, UiVar.wrap(target));
+                viewBuilder.buildHttpViewStart(ctx, resp, UiVar.wrap(target));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build view: " + e.getMessage(), e);
             }
