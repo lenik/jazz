@@ -8,8 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.action.IAction;
-import net.bodz.bas.c.action.IProgressMonitor;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.ParseException;
@@ -31,6 +29,8 @@ import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.bas.t.tree.ITreeNode;
 import net.bodz.bas.t.tree.MapTreeNode;
+import net.bodz.bas.ui.model.action.IAction;
+import net.bodz.bas.ui.model.action.IProgressMonitor;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -185,6 +185,11 @@ public abstract class AbstractSisComponent
 
     @Override
     public int getModifiers() {
+        return 0;
+    }
+
+    @Override
+    public int getPriority() {
         return 0;
     }
 

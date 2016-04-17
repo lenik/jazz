@@ -3,7 +3,7 @@ package net.bodz.pkg.sisi.page;
 import org.eclipse.swt.SWT;
 import org.junit.Test;
 
-import net.bodz.bas.c.action.IProgressMonitor;
+import net.bodz.bas.ui.model.action.IProgressMonitor;
 import net.bodz.pkg.sis.ConsoleProgressMonitor;
 import net.bodz.pkg.sis.TestSisProject;
 import net.bodz.pkg.sis.test.TestConfig;

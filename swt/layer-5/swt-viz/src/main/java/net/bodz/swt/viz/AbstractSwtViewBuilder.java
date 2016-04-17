@@ -39,7 +39,7 @@ public abstract class AbstractSwtViewBuilder<T>
         // TODO wrap...
         ISwtUiRef<T> swtRef = (ISwtUiRef<T>) ref;
 
-        int styleInt = options.getInt("swt.styleInt", SWT.NONE);
+        int styleInt = getAttribute("swt.styleInt", SWT.NONE);
 
         return buildSwtView(ctx, parent, swtRef, styleInt);
     }

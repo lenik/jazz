@@ -1,4 +1,4 @@
-package net.bodz.bas.c.event;
+package net.bodz.bas.ui.event;
 
 import java.util.EventListener;
 

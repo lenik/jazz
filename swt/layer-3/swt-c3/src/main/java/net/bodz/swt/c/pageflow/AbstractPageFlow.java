@@ -6,11 +6,11 @@ import java.util.List;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-import net.bodz.bas.c.event.IQuietHint;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.repr.req.MutableRequest;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.ui.err.UiValidationException;
+import net.bodz.bas.ui.event.IQuietHint;
 import net.bodz.swt.c.control.ControlAdapters;
 
 public abstract class AbstractPageFlow

@@ -1,4 +1,4 @@
-package net.bodz.bas.c.action;
+package net.bodz.bas.ui.model.action;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.OutOfDomainException;
@@ -6,10 +6,13 @@ import net.bodz.bas.err.OutOfDomainException;
 public abstract class AbstractActionHistory
         implements IActionHistory {
 
-    protected abstract IReversable get(int position);
+    IActionContext actionContext;
+
+    protected abstract IAction get(int position);
 
     @Override
-    public void moveTo(int p) {
+    public synchronized boolean moveTo(int p)
+            throws PlaybackException, RollbackException {
         int size = size();
         if (p < 0)
             throw new OutOfDomainException("position", p, 0);
@@ -18,13 +21,17 @@ public abstract class AbstractActionHistory
 
         int current = getPosition();
         if (current == p)
-            return;
-        Object largest = null;
-        if (p < current) {
-            for (int i = p; i < current; i++) {
+            return true;
 
-            }
-        }
+        while (p < current)
+            if (!redo())
+                return false;
+
+        while (p > current)
+            if (!undo())
+                return false;
+
+        return true;
     }
 
     @Override
@@ -38,21 +45,39 @@ public abstract class AbstractActionHistory
     }
 
     @Override
-    public void undo()
-            throws PlaybackException {
+    public synchronized boolean undo()
+            throws RollbackException {
         int p = getPosition();
         if (p <= 0)
             throw new IllegalUsageException("Can\'t undo more");
-        moveTo(p - 1);
+
+        IAction action = get(p);
+        if (!action.canRollback())
+            return false;
+
+        action.rollback(actionContext);
+        p--;
+        return true;
     }
 
     @Override
-    public void redo()
+    public synchronized boolean redo()
             throws PlaybackException {
         int p = getPosition();
         if (p >= size())
             throw new IllegalUsageException("Can\'t redo more");
-        moveTo(p + 1);
+
+        IAction action = get(p);
+        if (!action.canPlay())
+            return false;
+
+        try {
+            action.play(actionContext);
+        } catch (Exception e) {
+            throw new PlaybackException(e.getMessage(), e);
+        }
+        p++;
+        return true;
     }
 
     protected boolean isChildScope(Object parentScope, Object childScope) {

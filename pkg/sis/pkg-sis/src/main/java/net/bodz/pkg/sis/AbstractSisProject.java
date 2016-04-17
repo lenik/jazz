@@ -3,7 +3,6 @@ package net.bodz.pkg.sis;
 import java.io.IOException;
 import java.util.*;
 
-import net.bodz.bas.c.action.IProgressMonitor;
 import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
@@ -22,6 +21,7 @@ import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.std.misc.Licenses;
 import net.bodz.bas.t.iterator.RecIterator;
+import net.bodz.bas.ui.model.action.IProgressMonitor;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 

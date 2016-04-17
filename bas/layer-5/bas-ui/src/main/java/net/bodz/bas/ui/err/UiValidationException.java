@@ -1,7 +1,7 @@
 package net.bodz.bas.ui.err;
 
-import net.bodz.bas.c.event.IQuietHint;
 import net.bodz.bas.typer.std.ValidationException;
+import net.bodz.bas.ui.event.IQuietHint;
 
 public class UiValidationException
         extends ValidationException

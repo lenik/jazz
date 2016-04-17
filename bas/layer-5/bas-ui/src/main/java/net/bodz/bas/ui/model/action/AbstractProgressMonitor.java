@@ -1,4 +1,4 @@
-package net.bodz.bas.c.action;
+package net.bodz.bas.ui.model.action;
 
 import net.bodz.bas.log.AbstractLogger2;
 import net.bodz.bas.log.ILogger;

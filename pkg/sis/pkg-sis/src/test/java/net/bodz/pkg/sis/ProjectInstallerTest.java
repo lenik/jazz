@@ -3,10 +3,10 @@ package net.bodz.pkg.sis;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.action.JobConfig;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.ui.model.action.ActionPlayerConfig;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.zip.ZipVfsDevice;
 import net.bodz.bas.vfs.impl.zip.ZipVfsDriver;
@@ -18,7 +18,7 @@ public class ProjectInstallerTest
     static final Logger logger = LoggerFactory.getLogger(ProjectInstallerTest.class);
 
     static {
-        JobConfig.slowdown = 10;
+        ActionPlayerConfig.slowdown = 10;
     }
 
     @Test

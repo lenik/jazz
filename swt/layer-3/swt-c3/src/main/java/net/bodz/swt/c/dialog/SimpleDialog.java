@@ -21,12 +21,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import net.bodz.bas.c.event.IValidationListener;
-import net.bodz.bas.c.event.ValidationEvent;
 import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.typer.std.ValidationException;
+import net.bodz.bas.ui.event.IValidationListener;
+import net.bodz.bas.ui.event.ValidationEvent;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.control.Controls;

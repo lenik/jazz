@@ -19,7 +19,6 @@ import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.ar.IArchiveEntry;
 import net.bodz.bas.ar.zip.ZipUnarchiver;
-import net.bodz.bas.c.action.IProgressMonitor;
 import net.bodz.bas.c.java.io.FileDirs;
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.FileRelation;
@@ -34,6 +33,7 @@ import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.log.ILogger;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dialog.IUserDialogs;
+import net.bodz.bas.ui.model.action.IProgressMonitor;
 import net.bodz.pkg.sis.AbstractSisComponent;
 import net.bodz.pkg.sis.ISisArchive;
 import net.bodz.pkg.sis.ISisComponent;
