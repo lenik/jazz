@@ -1,6 +1,5 @@
 package net.bodz.bas.io;
 
-import java.io.Flushable;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.CharBuffer;
@@ -8,7 +7,7 @@ import java.nio.CharBuffer;
 import net.bodz.bas.io.impl.NullCharOut;
 
 public interface ICharOut
-        extends ISimpleCharOut, Flushable, ICloseable {
+        extends ISimpleCharOut, IFlushable, ICloseable {
 
     /**
      * @throws NullPointerException
@@ -50,21 +49,6 @@ public interface ICharOut
      *             If <code>charBuffer</code> is <code>null</code>.
      */
     void write(CharBuffer charBuffer)
-            throws IOException;
-
-    /**
-     * @param strict
-     *            <code>true</code> means the call will return only after all buffered contents have
-     *            been written, <code>false</code> means the caller has finished its output.
-     */
-    void flush(boolean strict)
-            throws IOException;
-
-    /**
-     * The same to {@link #flush(boolean)} with <code>strict</code> set to <code>true</code>.
-     */
-    @Override
-    void flush()
             throws IOException;
 
     Writer toWriter();

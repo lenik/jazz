@@ -1,11 +1,10 @@
 package net.bodz.bas.io;
 
-import java.io.Flushable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public interface IByteOut
-        extends ISimpleByteOut, Flushable, ICloseable {
+        extends ISimpleByteOut, IFlushable, ICloseable {
 
     /**
      * @throws NullPointerException
@@ -28,21 +27,6 @@ public interface IByteOut
      *             If <code>buffer</code> is <code>null</code>.
      */
     void write(ByteBuffer buf)
-            throws IOException;
-
-    /**
-     * @param strict
-     *            <code>true</code> means the call will return only after all buffered contents have
-     *            been written, <code>false</code> means the caller has finished its output.
-     */
-    void flush(boolean strict)
-            throws IOException;
-
-    /**
-     * The same to {@link #flush(boolean)} with <code>strict</code> set to <code>true</code>.
-     */
-    @Override
-    void flush()
             throws IOException;
 
     IByteOut NULL = IDataOut.NULL_LE;
