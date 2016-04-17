@@ -104,7 +104,7 @@ public class TypeCollector<T> {
     }
 
     protected void createExtensionFiles() {
-        IndexedType indexing = baseClass.getAnnotation(IndexedType.class);
+        IndexedType aIndexedType = baseClass.getAnnotation(IndexedType.class);
 
         logger.info("For " + baseClass.getCanonicalName());
 
@@ -120,7 +120,7 @@ public class TypeCollector<T> {
             else
                 info = "    Subclass: " + extensionName;
 
-            if (indexing == null) {
+            if (aIndexedType == null) {
                 // Not indexed-type, skipped
                 info += " -N";
                 continue;
@@ -128,7 +128,7 @@ public class TypeCollector<T> {
 
             int modifier = extension.getModifiers();
             if (Modifier.isAbstract(modifier))
-                if (indexing.includeAbstract())
+                if (aIndexedType.includeAbstract())
                     // Included abstract class
                     info += " +a";
                 else {
@@ -137,7 +137,7 @@ public class TypeCollector<T> {
                 }
 
             if (!Modifier.isPublic(modifier))
-                if (indexing.includeNonPublic())
+                if (aIndexedType.includeNonPublic())
                     // Included non-public class
                     info += " -";
                 else {
@@ -146,7 +146,7 @@ public class TypeCollector<T> {
                 }
 
             if (extension.isAnnotation())
-                if (indexing.includeAnnotation())
+                if (aIndexedType.includeAnnotation())
                     // Included annotation class
                     info += " +@";
                 else {
@@ -173,7 +173,7 @@ public class TypeCollector<T> {
             logger.info(info);
             info = null;
 
-            String publishDir = indexing.publishDir();
+            String publishDir = aIndexedType.publishDir();
             if (!publishDir.isEmpty()) {
                 if (!publishDir.endsWith("/"))
                     publishDir += "/";
@@ -181,14 +181,14 @@ public class TypeCollector<T> {
                 File sfile = new File(resDir, publishDir + baseClass.getName());
                 List<String> lines = fileContentMap.getOrLoad(sfile);
 
-                if (indexing.obsoleted()) {
+                if (aIndexedType.obsoleted()) {
                     // lines.add("# " + extension.getName());
                 } else {
                     lines.add(extension.getName());
                 }
             } // publishDir
 
-            Class<? extends IEtcFilesInstaller> etcFilesClass = indexing.etcFiles();
+            Class<? extends IEtcFilesInstaller> etcFilesClass = aIndexedType.etcFiles();
             if (etcFilesClass != null && !Modifier.isAbstract(etcFilesClass.getModifiers())) {
                 IEtcFilesInstaller etcFiles = CachedInstantiator.getInstance().instantiate(etcFilesClass);
 
