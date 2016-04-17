@@ -2,8 +2,8 @@ package net.bodz.lily.model.base.impl;
 
 import java.io.IOException;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlUlTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlUl;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -19,13 +19,14 @@ public class CoNodeChain_htm<T extends CoNode<T, ?>>
     }
 
     @Override
-    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<CoNodeChain<T>> ref)
+    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<CoNodeChain<T>> ref)
             throws ViewBuilderException, IOException {
         CoNodeChain<T> chain = ref.get();
-        HtmlUlTag ul = out.ul().class_("node-chain");
+        HtmlUl ul = out.ul().class_("node-chain");
         for (T node : chain) {
             ul.li().text(node.getNodeLabel());
         }
+        return out;
     }
 
 }

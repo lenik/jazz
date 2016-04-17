@@ -3,10 +3,10 @@ package net.bodz.bas.html.viz.builtin;
 import java.io.IOException;
 import java.util.TimeZone;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlOptionTag;
-import net.bodz.bas.html.dom.tag.HtmlSelectTag;
-import net.bodz.bas.html.util.FieldHtmlUtil;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlOption;
+import net.bodz.bas.html.io.tag.HtmlSelect;
+import net.bodz.bas.html.util.FieldDeclToHtml;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
@@ -23,19 +23,19 @@ public class TimeZone_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<TimeZone> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<TimeZone> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         TimeZone value = ref.get();
         if (value == null)
             value = TimeZone.getDefault();
 
-        HtmlSelectTag select = out.select().class_("noprint");
-        FieldHtmlUtil.apply(select, fieldDecl);
+        HtmlSelect select = out.select().class_("noprint");
+        FieldDeclToHtml.apply(select, fieldDecl);
 
         for (String id : TimeZone.getAvailableIDs()) {
             TimeZone timeZone = TimeZone.getTimeZone(id);
             boolean selected = timeZone.equals(value);
-            HtmlOptionTag option = select.option();
+            HtmlOption option = select.option();
             option.value(timeZone.getID());
             option.text(timeZone.getDisplayName() + " +" + timeZone.getRawOffset() / 60000);
             option.label(timeZone.getID());

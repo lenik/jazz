@@ -10,7 +10,9 @@ import net.bodz.bas.html.artifact.ArtifactType;
 import net.bodz.bas.html.artifact.IArtifact;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.MutableWebArtifact;
-import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.io.HtmlDoc;
+import net.bodz.bas.html.io.HtmlOutputFormat;
+import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.HttpViewBuilderFamily;
 import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
@@ -61,7 +63,7 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final void preview(IHttpViewContext _ctx, IUiRef<T> ref) {
+    public final void precompile(IHttpViewContext _ctx, IUiRef<T> ref) {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
         preview(ctx, ref);
     }
@@ -92,7 +94,7 @@ public abstract class AbstractHtmlViewBuilder<T>
             throws ViewBuilderException {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
         try {
-            buildHtmlViewStart(ctx, (IHtmlTag) out, ref);
+            buildHtmlViewStart(ctx, (IHtmlOut) out, ref);
             return out;
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
@@ -100,32 +102,39 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public void buildHttpViewStart(IHttpViewContext _ctx, HttpServletResponse resp, IUiRef<T> ref)
+    public final IHtmlOut buildHttpViewStart(IHttpViewContext _ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
-        IHtmlTag out = ctx.getOut();
+
+        HtmlDoc doc = new HtmlDoc(resp.getWriter(), HtmlOutputFormat.DEFAULT);
         try {
-            buildHtmlViewStart(ctx, out, ref);
+            return buildHtmlViewStart(ctx, doc, ref);
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
     }
 
     @Override
-    public void buildHtmlViewEnd(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    public final void buildHttpViewEnd(IHttpViewContext ctx, HttpServletResponse resp, Object o, IUiRef<T> ref)
+            throws ViewBuilderException, IOException {
+        // TODO
+    }
+
+    @Override
+    public void buildHtmlViewEnd(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut body, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return;
     }
 
-    protected static boolean enter(IHttpViewContext ctx, IUiRef<?> ref)
+    protected static boolean addSlash(IHttpViewContext ctx, IUiRef<?> ref)
             throws IOException {
         Object obj = ref.get();
         IPathArrival arrival = ctx.query(IPathArrival.class);
         boolean arrivedHere = arrival.getPrevious(obj).getRemainingPath() == null;
-        return arrivedHere && enter(ctx);
+        return arrivedHere && addSlash(ctx);
     }
 
-    protected static boolean enter(IHttpViewContext ctx)
+    protected static boolean addSlash(IHttpViewContext ctx)
             throws IOException {
         String uri = ctx.getRequest().getRequestURI();
         if (uri.endsWith("/"))
@@ -145,7 +154,7 @@ public abstract class AbstractHtmlViewBuilder<T>
         return true;
     }
 
-    protected static void writeHeadMetas(IHtmlViewContext ctx, IHtmlTag head)
+    protected static void writeHeadMetas(IHtmlViewContext ctx, IHtmlOut head)
             throws IOException {
         IHtmlHeadData metaData = ctx.getHeadData();
 
@@ -163,7 +172,7 @@ public abstract class AbstractHtmlViewBuilder<T>
             head.meta().name(entry.getKey()).content(entry.getValue());
     }
 
-    protected static void writeHeadImports(IHtmlViewContext ctx, IHtmlTag head)
+    protected static void writeHeadImports(IHtmlViewContext ctx, IHtmlOut head)
             throws IOException {
         IArtifactManager artifactManager = ctx.query(IArtifactManager.class);
         IHtmlHeadData metaData = ctx.getHeadData();
@@ -181,13 +190,13 @@ public abstract class AbstractHtmlViewBuilder<T>
 
     static IHttpViewBuilderFactory factory = IndexedHttpViewBuilderFactory.getInstance();
 
-    protected <_t> void embed(IHtmlViewContext ctx, IHtmlTag out, Object obj, String... features)
+    protected <_t> void embed(IHtmlViewContext ctx, IHtmlOut out, Object obj, String... features)
             throws ViewBuilderException, IOException {
         UiValue<Object> entry = UiValue.wrap(obj);
         embed(ctx, out, entry, features);
     }
 
-    protected <_t> void embed(IHtmlViewContext ctx, IHtmlTag out, IUiRef<_t> ref, String... features)
+    protected <_t> void embed(IHtmlViewContext ctx, IHtmlOut out, IUiRef<_t> ref, String... features)
             throws ViewBuilderException, IOException {
         Class<? extends _t> type = ref.getValueType();
 
@@ -198,9 +207,9 @@ public abstract class AbstractHtmlViewBuilder<T>
         viewBuilder.buildHtmlViewStart(ctx, out, ref);
     }
 
-    protected IHtmlTag createTag(IHtmlTag out, String tagName, IUiElementStyleDeclaration style)
+    protected IHtmlOut createTag(IHtmlOut out, String tagName, IUiElementStyleDeclaration style)
             throws IOException {
-        IHtmlTag tag = out.insert(tagName);
+        IHtmlOut tag = out.begin(tagName);
 
         Border border = style.getBorder();
         if (border != null) {

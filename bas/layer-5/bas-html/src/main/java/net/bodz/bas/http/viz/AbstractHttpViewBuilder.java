@@ -38,7 +38,7 @@ public abstract class AbstractHttpViewBuilder<T>
     }
 
     @Override
-    public void preview(IHttpViewContext ctx, IUiRef<T> ref) {
+    public void precompile(IHttpViewContext ctx, IUiRef<T> ref) {
     }
 
     @Override
@@ -55,7 +55,7 @@ public abstract class AbstractHttpViewBuilder<T>
     }
 
     @Override
-    public void buildHttpViewEnd(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
+    public void buildHttpViewEnd(IHttpViewContext ctx, HttpServletResponse resp, Object o, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
     }
 

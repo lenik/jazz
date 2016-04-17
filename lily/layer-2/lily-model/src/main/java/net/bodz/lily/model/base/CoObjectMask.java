@@ -8,7 +8,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import net.bodz.bas.c.type.TypeNearby;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
-
 import net.bodz.lily.model.base.security.LoginContext;
 import net.bodz.lily.model.sea.AbstractTextParametric;
 import net.bodz.lily.model.sea.QVariantMap;

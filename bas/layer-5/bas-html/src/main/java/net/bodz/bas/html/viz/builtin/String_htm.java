@@ -1,7 +1,7 @@
 package net.bodz.bas.html.viz.builtin;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlInputTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 
@@ -13,8 +13,8 @@ public class String_htm
     }
 
     @Override
-    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<String> ref, IFieldDecl fieldDecl) {
-        HtmlInputTag input = out.input();
+    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<String> ref, IFieldDecl fieldDecl) {
+        HtmlInput input = out.input();
 
         char echoChar = fieldDecl.getEchoChar();
         if (echoChar == '\0')

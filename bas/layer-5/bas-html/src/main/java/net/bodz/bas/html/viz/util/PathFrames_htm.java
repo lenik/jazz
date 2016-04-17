@@ -6,7 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -28,7 +29,7 @@ public class PathFrames_htm
     }
 
     @Override
-    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<IPathArrival> ref)
+    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<IPathArrival> ref)
             throws ViewBuilderException, IOException {
         HttpServletResponse resp = ctx.getResponse();
         IPathArrival arrival = ref.get();
@@ -36,13 +37,12 @@ public class PathFrames_htm
         // From inside to outside.
         List<PathHtmlFrame> frames = new ArrayList<PathHtmlFrame>();
 
-        IPathArrival a = arrival;
-        while (a != null) {
+        for (IPathArrival a : arrival.toList().rightToLeft()) {
             Object target = a.getTarget();
             Class<?> targetClass = target.getClass();
 
-            String[] features = {};
-            ViewBuilderSet<Object> viewBuilders = viewBuilderFactory.getViewBuilders(targetClass, features);
+            String[] initialTags = {};
+            ViewBuilderSet<Object> viewBuilders = viewBuilderFactory.getViewBuilders(targetClass, initialTags);
             IHtmlViewBuilder<Object> viewBuilder = viewBuilders.findFirst(IHtmlViewBuilder.class);
             if (viewBuilder == null)
                 throw new ViewBuilderException("Can't build html view for " + targetClass);
@@ -55,28 +55,25 @@ public class PathFrames_htm
 
             if (viewBuilder.isOrigin(target))
                 break;
-            else
-                a = a.getPrevious();
+        }
+        Collections.reverse(frames);
+
+        for (PathHtmlFrame frame : frames) {
+            frame.viewBuilder.precompile(ctx, frame);
         }
 
-        int size = frames.size();
-        for (int i = size - 1; i >= 0; i--) {
-            PathHtmlFrame frame = frames.get(i);
-            frame.viewBuilder.preview(ctx, frame);
-        }
-
-        int builtFrames = 0;
-        while (builtFrames < size) {
-            PathHtmlFrame frame = frames.get(size - 1 - builtFrames);
+        for (PathHtmlFrame frame : frames) {
             resp.addHeader("X-Page-Frame", frame.viewBuilder.getClass().getSimpleName());
-            frame.outer = out;
-            frame.viewBuilder.buildHtmlViewStart(ctx, out, frame);
-            // XXX TODO
-            frame.viewBuilder.buildHtmlViewEnd(ctx, out, frame);
-            if (out == null)
+            frame.out = out;
+            IHtmlOut body = frame.viewBuilder.buildHtmlViewStart(ctx, out, frame);
+            frame.body = body;
+            if (body == null)
                 break;
-            else
-                builtFrames++;
+        }
+
+        Collections.reverse(frames);
+        for (PathHtmlFrame frame : frames) {
+            frame.viewBuilder.buildHtmlViewEnd(ctx, frame.out, frame.body, frame);
         }
 
         return out;

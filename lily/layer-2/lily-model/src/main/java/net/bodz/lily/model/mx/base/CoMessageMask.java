@@ -5,7 +5,6 @@ import java.util.Collection;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.range.IntRange;
-
 import net.bodz.lily.model.base.CoMomentIntervalMask;
 import net.bodz.lily.model.sea.QVariantMap;
 

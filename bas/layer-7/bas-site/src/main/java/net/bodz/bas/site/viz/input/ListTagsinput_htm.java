@@ -5,19 +5,19 @@ import java.util.List;
 
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.html.artifact.ArtifactType;
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlSelectTag;
-import net.bodz.bas.html.util.FieldHtmlUtil;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlSelect;
+import net.bodz.bas.html.util.FieldDeclToHtml;
 import net.bodz.bas.html.viz.IHtmlHeadData;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.builtin.AbstractFormInput_htm;
 import net.bodz.bas.meta.decl.ItemType;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.site.config.JQueryPlugins;
 import net.bodz.bas.ui.dom1.IUiRef;
-import net.bodz.bas.viz.Face;
 
 @Face("tagsinput")
 public class ListTagsinput_htm
@@ -36,7 +36,7 @@ public class ListTagsinput_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         List<?> list = ref.get();
         if (list == null) {
@@ -63,7 +63,7 @@ public class ListTagsinput_htm
             tagTyper = (ITagTyper<Object>) SingletonUtil.instantiateCached(typerClass);
         }
 
-        HtmlSelectTag select = out.select();
+        HtmlSelect select = out.select();
         select.multiple("multiple");
 
         if (objects) {
@@ -83,7 +83,7 @@ public class ListTagsinput_htm
                 select.option().value(text).text(text);
         }
 
-        FieldHtmlUtil.apply(select, fieldDecl);
+        FieldDeclToHtml.apply(select, fieldDecl);
     }
 
 }

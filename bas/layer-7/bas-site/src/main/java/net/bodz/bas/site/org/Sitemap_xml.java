@@ -6,14 +6,14 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.java.util.IDateFormatConsts;
-import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.io.xml.IXmlOut;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
-import net.bodz.bas.xml.dom.IXmlTag;
 
 public class Sitemap_xml
         extends AbstractHtmlViewBuilder<Sitemap>
@@ -37,29 +37,29 @@ public class Sitemap_xml
     }
 
     @Override
-    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag parent, IUiRef<Sitemap> ref)
+    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<Sitemap> ref)
             throws ViewBuilderException, IOException {
         Sitemap sitemap = ref.get();
-        IXmlTag out = parent;
 
-        out.pi("xml").xml("1.0", "utf-8");
-        out = out.insert("urlset")//
+        out.pi("xml", "version=1.0 encoding=utf-8");
+        out = out.begin("urlset")//
                 .attr("xmlns", SITEMAP_NS) //
                 .attr("xmlns:xhtml", XHTML_NS);
 
         for (SitemapEntry entry : sitemap) {
-            IXmlTag tag = out.insert("url");
-            tag.insert("loc").text(entry.getUrl());
+            IXmlOut tag = out.begin("url");
+            tag.begin("loc").text(entry.getUrl());
 
             for (Entry<String, String> alternate : entry.getAlternates().entrySet())
-                tag.insert("xhtml:link") //
+                tag.begin("xhtml:link") //
                         .attr("rel", "alternate") //
                         .attr("hreflang", alternate.getKey()) //
                         .attr("href", alternate.getValue());
-            tag.insert("lastmod").text(ISO8601.format(entry.getLastModified()));
-            tag.insert("changefreq").text(entry.getChangeFreq());
-            tag.insert("priority").text(entry.getPriority());
+            tag.begin("lastmod").text(ISO8601.format(entry.getLastModified()));
+            tag.begin("changefreq").text(entry.getChangeFreq());
+            tag.begin("priority").text(entry.getPriority());
         }
+        return out;
     }
 
 }

@@ -11,7 +11,6 @@ use cmt::log(2);
     $LOGNAME    = 'tran'; # $0 =~ /([^\/\\.]+)(?:\.\w+)*$/;
 use cmt::vcs('parse_id');
     my %RCSID   = parse_id('$Id: - @VERSION@ @DATE@ @TIME@ - $');
-use File::Path('make_path');
 use Getopt::Long;
     Getopt::Long::Configure('gnu_getopt');
 
@@ -190,9 +189,15 @@ sub _main {
 
     for my $name (@names) {
         my $Name = ucfirst $name;
-        my $Class0 = "_Html${Name}Builder";
-        my $Class = $opt_wrapper ? "Html${Name}Builder" : $Class0;
-        my $fqcn = "$opt_package.$Class";
+        my $Class0 = "_Html${Name}";
+        my $Class1 = "Html${Name}";
+        my $fqcn0 = "$opt_package.gen.$Class0";
+        my $fqcn1 = "$opt_package.$Class1";
+        
+        my $Class = $opt_wrapper ? $Class1 : $Class0;
+        my $fqcn = $opt_wrapper ? $fqcn1 : $fqcn0;
+        my $pkg = $fqcn;
+            $pkg =~ s/\.\w+$//;
 
         my $file = $fqcn;
             $file =~ s/\./\//g;
@@ -202,22 +207,22 @@ sub _main {
         mkdir_p $file;
         open(OUT, ">$file") or die "Can't write to file $file: $!";
 
-        print OUT "package $opt_package;\n";
+        print OUT "package $pkg;\n";
         print OUT "\n";
         if ($opt_wrapper) {
             my $impl = $Class0;
-            print OUT "import net.bodz.bas.io.xml.IXmlTagBuilder;\n";
+            print OUT "import net.bodz.bas.io.html.HtmlDoc;\n";
+            print OUT "import $fqcn0;\n";
             print OUT "\n";
             print OUT "public class $Class\n";
             print OUT "        extends $Class0<$Class> {\n";
             print OUT "\n";
-            print OUT "    public $Class(IXmlTagBuilder o) {\n";
-            print OUT "        super(o);\n";
+            print OUT "    public $Class(HtmlDoc doc) {\n";
+            print OUT "        super(doc);\n";
             print OUT "    }\n";
         } else {
-            print OUT "import net.bodz.bas.io.html.DecoratedHtmlTagBuilder;\n";
-            print OUT "import net.bodz.bas.io.html.IHtmlTagBuilder;\n";
-            print OUT "import net.bodz.bas.io.xml.IXmlTagBuilder;\n";
+            print OUT "import net.bodz.bas.io.html.HtmlDoc;\n";
+            print OUT "import net.bodz.bas.io.html.RecHtmlOut;\n";
             print OUT "\n";
 
             if (defined $doc) {
@@ -225,12 +230,11 @@ sub _main {
                 print OUT "  * $doc\n";
                 print OUT "  */\n";
             }
-            print OUT "\@SuppressWarnings(\"unchecked\")\n" if scalar(@attrs);
-            print OUT "public class $Class<self_t extends IHtmlTagBuilder<?>>\n";
-            print OUT "        extends DecoratedHtmlTagBuilder<self_t> {\n";
+            print OUT "public class $Class<self_t extends RecHtmlOut<self_t>>\n";
+            print OUT "        extends RecHtmlOut<self_t> {\n";
             print OUT "\n";
-            print OUT "    protected $Class(IXmlTagBuilder o) {\n";
-            print OUT "        super(o);\n";
+            print OUT "    public $Class(HtmlDoc doc) {\n";
+            print OUT "        super(doc);\n";
             print OUT "    }\n";
             
             for my $attrh (@attrs) {
@@ -251,9 +255,8 @@ sub _main {
                     print OUT "      */\n";
                 }
 
-                print OUT "    public self_t $attr_(String val) {\n";
-                print OUT "        attr(\"$attrh\", val);\n";
-                print OUT "        return (self_t) this;\n";
+                print OUT "    public self_t $attr_(Object val) {\n";
+                print OUT "        return attr(\"$attrh\", val);\n";
                 print OUT "    }\n";
             } #for attrs
         }
@@ -291,7 +294,7 @@ sub mkdir_p() {
         $dir =~ s/\/[^\/]*$//;
 
     if (! -d $dir) {
-        make_path($dir) or die "Can't create directory $dir: $!";
+        mkdir($dir) or die "Can't create directory $dir: $!";
     }
 }
 
@@ -307,7 +310,7 @@ The initial version.
 
 =cut
 sub _version {
-    print "[$LOGNAME] Translate HTML element to program model \n";
+    print "[$LOGNAME] Translate HTML element to program model\n";
     print "Written by Lenik,  Version 0.$RCSID{rev},  Last updated at $RCSID{date}\n";
 }
 

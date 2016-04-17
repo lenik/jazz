@@ -5,12 +5,12 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlDivTag;
-import net.bodz.bas.html.dom.tag.HtmlInputTag;
-import net.bodz.bas.html.dom.tag.HtmlLabelTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlDiv;
+import net.bodz.bas.html.io.tag.HtmlInput;
+import net.bodz.bas.html.io.tag.HtmlLabel;
 import net.bodz.bas.html.meta.Radio;
-import net.bodz.bas.html.util.FieldHtmlUtil;
+import net.bodz.bas.html.util.FieldDeclToHtml;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
@@ -27,7 +27,7 @@ public class PredefRadio_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Predef<?, ?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<Predef<?, ?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Predef<?, ?> predef = ref.get();
         PredefMetadata<?, ?> metadata;
@@ -43,7 +43,7 @@ public class PredefRadio_htm
             }
         }
 
-        HtmlDivTag div = out.div().class_("btn-group");
+        HtmlDiv div = out.div().class_("btn-group");
         div.attr("data-toggle", "buttons");
         Map<String, ?> nameMap = metadata.getNameMap();
         for (Entry<String, ?> entry : nameMap.entrySet()) {
@@ -54,17 +54,17 @@ public class PredefRadio_htm
             if (predef == value)
                 class_ += " active";
 
-            HtmlLabelTag labelTag = div.label().class_("btn");
+            HtmlLabel labelTag = div.label().class_("btn");
             labelTag.class_(class_);
 
-            HtmlInputTag radio = labelTag.input().type("radio");
+            HtmlInput radio = labelTag.input().type("radio");
             if (predef == value)
                 radio.checked("checked");
 
             radio.value(key);
             radio.text(value.getLabel());
 
-            FieldHtmlUtil.apply(radio, fieldDecl);
+            FieldDeclToHtml.apply(radio, fieldDecl);
         }
     }
 

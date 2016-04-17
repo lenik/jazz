@@ -27,6 +27,11 @@
             <artifactId>bas-log</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-c3</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 5 :: Gui</name>
 </project>

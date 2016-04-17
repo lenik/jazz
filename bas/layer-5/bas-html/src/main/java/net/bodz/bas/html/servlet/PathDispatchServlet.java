@@ -1,8 +1,6 @@
 package net.bodz.bas.html.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Collections;
 import java.util.ServiceLoader;
 
 import javax.servlet.ServletConfig;
@@ -17,6 +15,8 @@ import net.bodz.bas.fn.EvalException;
 import net.bodz.bas.fn.IEvaluable;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
+import net.bodz.bas.html.io.HtmlDoc;
+import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.viz.DefaultHtmlViewContext;
 import net.bodz.bas.html.viz.util.PathFrames_htm;
 import net.bodz.bas.http.viz.ContentFamily;
@@ -24,7 +24,7 @@ import net.bodz.bas.http.viz.IHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.http.viz.IndexedHttpViewBuilderFactory;
 import net.bodz.bas.io.ITreeOut;
-import net.bodz.bas.io.adapter.WriterCharOut;
+import net.bodz.bas.io.adapter.WriterPrintOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -44,7 +44,6 @@ import net.bodz.bas.std.rfc.http.HttpCacheControl;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.ui.dom1.UiVar;
-import net.bodz.bas.xml.dom.XmlFormatter;
 
 public class PathDispatchServlet
         extends DumpServlet {
@@ -174,10 +173,9 @@ public class PathDispatchServlet
         }
 
         QueryableUnion union = new QueryableUnion();
-        for (IPathArrival a : arrival.toList(false))
+        for (IPathArrival a : arrival.toList())
             if (a.getTarget() instanceof IQueryable)
                 union.add((IQueryable) a.getTarget());
-        Collections.reverse(union);
 
         DefaultHtmlViewContext ctx = new DefaultHtmlViewContext(req, resp);
         if (!union.isEmpty())
@@ -186,19 +184,19 @@ public class PathDispatchServlet
         switch (contentType.getName()) {
         case "text/html":
         case "text/xhtml":
+            HtmlOutputFormat outputFormat = new HtmlOutputFormat();
+
+            WriterPrintOut printOut = new WriterPrintOut(resp.getWriter());
+            ITreeOut treeOut = TreeOutImpl.from(printOut);
+            HtmlDoc doc = new HtmlDoc(treeOut, outputFormat);
+
             try {
-                pathFramesVbo.buildHtmlViewStart(ctx, ctx.getHtmlDoc().getRoot(), UiVar.wrap(arrival));
+                pathFramesVbo.buildHtmlViewStart(ctx, doc, UiVar.wrap(arrival));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
 
-            PrintWriter writer = resp.getWriter();
-            WriterCharOut charOut = new WriterCharOut(writer);
-            ITreeOut treeOut = TreeOutImpl.from(charOut);
-
-            XmlFormatter formatter = new XmlFormatter(treeOut);
-            formatter.setSelfClosing(false); // HTML5
-            formatter.format(ctx.getHtmlDoc());
+            doc.close();
             break;
 
         default:

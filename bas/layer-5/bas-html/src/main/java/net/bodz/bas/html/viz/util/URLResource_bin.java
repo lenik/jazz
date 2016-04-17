@@ -41,7 +41,7 @@ public class URLResource_bin
     }
 
     @Override
-    public void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<URLResource> ref)
+    public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<URLResource> ref)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
         URLResource resource = ref.get();
@@ -50,6 +50,8 @@ public class URLResource_bin
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
         transferer.setMaxAge(maxAge);
         transferer.transfer(url);
+
+        return null;
     }
 
 }

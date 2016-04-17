@@ -2,7 +2,7 @@ package net.bodz.bas.html.dom;
 
 import org.junit.Assert;
 
-import net.bodz.bas.html.dom.tag.HtmlFormTag;
+import net.bodz.bas.html.dom.tag.MutableForm;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.xml.dom.XmlFormatter;
 
@@ -10,7 +10,7 @@ public class HtmlTagTest
         extends Assert {
 
     public static void main(String[] args) {
-        HtmlDoc doc = new HtmlDoc();
+        MutableHtmlDoc doc = new MutableHtmlDoc();
         IHtmlTag out = doc;
         out.insert("ver").text("Text");
         out = out.html();
@@ -18,7 +18,7 @@ public class HtmlTagTest
             out.h1().style("color: red").text("Title");
             out.insert("div").id("div1").text("Welcome");
 
-            HtmlFormTag form = out.form();
+            MutableForm form = out.form();
             {
                 form.println("a <simple> form");
                 form.input().id("button1").text("Click me!");

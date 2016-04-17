@@ -56,7 +56,7 @@ public class XmlFormatter {
                 Collection<? extends IXmlNode> children = tag.getChildren();
 
                 // no child element and no child text.
-                boolean closeable = children.isEmpty() && (selfClosing || tag.isVoid());
+                boolean closeable = children.isEmpty() && (selfClosing || tag.isTerm());
 
                 if (!pseudo) {
                     StringBuilder stbuf = new StringBuilder();

@@ -32,9 +32,10 @@ public abstract class AbstractPdfViewBuilder<T>
     }
 
     @Override
-    public final void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
+    public final Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         buildPdfView(ctx, resp, ref);
+        return null;
     }
 
 }

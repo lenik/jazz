@@ -1,10 +1,12 @@
 package net.bodz.bas.repr.viz;
 
+import net.bodz.bas.inject.LocalScope;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dom1.IUiRef;
 
+@LocalScope
 public abstract class AbstractViewBuilder<T>
         implements IViewBuilder<T> {
 
@@ -30,6 +32,10 @@ public abstract class AbstractViewBuilder<T>
         return null;
     }
 
+    public <_T> _T getAttribute(String name, _T defaultValue) {
+        return defaultValue;
+    }
+
     @Override
     public void setAttribute(String name, Object value) {
     }
@@ -40,7 +46,7 @@ public abstract class AbstractViewBuilder<T>
     }
 
     @Override
-    public Object buildViewEnd(IQueryable ctx, Object o, IUiRef<T> ref)
+    public Object buildViewEnd(IQueryable ctx, Object parent, Object o, IUiRef<T> ref)
             throws ViewBuilderException {
         return o;
     }

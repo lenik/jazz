@@ -14,7 +14,12 @@ public interface IXmlTag
 
     Map<String, String> getAttributeMap();
 
-    boolean isVoid();
+    /**
+     * A term tag like <code>&lt;br&gt;</code> and <code>&lt;hr&gt;</code> have no child node.
+     * 
+     * A non-term tag have child nodes.
+     */
+    boolean isTerm();
 
     IXmlTag _name(String tagName);
 
@@ -22,6 +27,9 @@ public interface IXmlTag
 
     IXmlTag attr(String name, Object value);
 
+    /**
+     * Move the cursor to the specified position.
+     */
     void at(int position);
 
     boolean remove(IXmlNode child);

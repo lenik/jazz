@@ -3,7 +3,7 @@ package net.bodz.bas.html.viz.builtin;
 import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
@@ -22,7 +22,7 @@ public abstract class AbstractFormInput_htm<T>
     }
 
     @Override
-    public final void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    public final IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
 
         if (!(ref instanceof UiPropertyRef))
@@ -37,10 +37,11 @@ public abstract class AbstractFormInput_htm<T>
         }
 
         buildHtmlView(ctx, out, propertyRef, fieldDecl);
+
+        return out;
     }
 
-    public abstract void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref,
-            IFieldDecl fieldDecl)
+    public abstract void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
 }
