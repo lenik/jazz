@@ -30,16 +30,22 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
+import net.bodz.bas.ui.css3.property.VisibilityMode;
 import net.bodz.bas.ui.dialog.AbstractUserDialogs;
 import net.bodz.bas.ui.dialog.IDirectiveCommand;
 import net.bodz.bas.ui.dom1.UiValue;
+import net.bodz.bas.ui.model.action.IAction;
+import net.bodz.bas.ui.model.cmd.ICommand;
+import net.bodz.bas.ui.style.IImageData;
+import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
+import net.bodz.bas.ui.style.ImageUsage;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.ui.model.ICommand;
 import net.bodz.swt.ui.model.ICommandGroup;
+import net.bodz.swt.ui.style.SwtImageMapper;
 
 public class SwtUserDialogs
         extends AbstractUserDialogs {
@@ -126,20 +132,26 @@ public class SwtUserDialogs
         class RC
                 implements ICommandGroup {
             @Override
-            public void addAction(final ICommand action) {
-                if (action == null)
+            public void addCommand(ICommand command) {
+                if (command == null)
                     throw new NullPointerException("action");
                 Composite userBar = getUserBar();
                 if (userBar == null)
                     throw new IllegalStateException("no user bar");
                 final Button button = new Button(userBar, SWT.NONE);
-                button.setEnabled(action.isEnabled());
-                button.setVisible(action.isVisible());
-                String text = action.getText();
-                String doc = action.getDoc();
-                Image image = action.getImage();
+
+                IUiElementStyleDeclaration style = command.getStyle();
+                button.setEnabled(style.getEnabled() != Boolean.FALSE);
+                button.setVisible(style.getVisibility() != VisibilityMode.hidden);
+
+                String text = command.getLabel().toString();
+                String doc = command.getDescription().toString();
+
+                IImageData imageData = style.getImage(ImageUsage.NORMAL);
+                Image image = SwtImageMapper.convert(button.getDisplay(), imageData);
+
                 if (text == null) {
-                    ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(action.getClass());
+                    ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(command.getClass());
                     if (classDoc != null)
                         text = classDoc.to(ArtifactDoc.class).getLabel().toString();
                 }
@@ -148,12 +160,20 @@ public class SwtUserDialogs
                     button.setToolTipText(doc);
                 if (image != null)
                     button.setImage(image);
-                button.addSelectionListener(new SelectionAdapter() {
-                    @Override
-                    public void widgetSelected(SelectionEvent e) {
-                        action.execute();
-                    }
-                });
+
+                final IAction action = command.getAction();
+                if (action != null)
+                    button.addSelectionListener(new SelectionAdapter() {
+                        @Override
+                        public void widgetSelected(SelectionEvent e) {
+                            try {
+                                // TODO action context.
+                                action.play(null);
+                            } catch (Exception ex) {
+                                alert("Failed to execute the command: " + ex.getMessage(), ex);
+                            }
+                        }
+                    });
             }
         }
 

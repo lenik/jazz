@@ -8,13 +8,13 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 import net.bodz.bas.ant.logger.TaskLogger;
-import net.bodz.bas.c.action.IProgressMonitor;
 import net.bodz.bas.err.ExceptionBuffer;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.ui.dialog.ConsoleDialogs;
 import net.bodz.bas.ui.dialog.IUserDialogs;
+import net.bodz.bas.ui.model.action.IProgressMonitor;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.bas.vfs.impl.zip.ZipVfsDevice;

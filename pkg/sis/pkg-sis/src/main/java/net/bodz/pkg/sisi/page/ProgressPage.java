@@ -15,14 +15,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
 
-import net.bodz.bas.c.action.AbstractProgressMonitor;
-import net.bodz.bas.c.action.IProgressMonitor;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.ui.dialog.DirectiveCommands;
 import net.bodz.bas.ui.dialog.IUserDialogs;
+import net.bodz.bas.ui.model.action.AbstractProgressMonitor;
+import net.bodz.bas.ui.model.action.IProgressMonitor;
 import net.bodz.pkg.sis.ISisProject;
 import net.bodz.swt.c.composite.DetailSwitchEvent;
 import net.bodz.swt.c.composite.DetailSwitchListener;

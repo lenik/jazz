@@ -26,6 +26,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.req.IMethodOfRequest;
 import net.bodz.bas.repr.req.MethodNames;
+import net.bodz.bas.repr.state.IStated;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -41,7 +42,7 @@ import net.bodz.lily.model.base.security.User;
  */
 public abstract class CoObject
         // extends AbstractTextParametric
-        implements Serializable, IInstantiable, IContent, IAccessControlled, ILazyLoading {
+        implements Serializable, IInstantiable, IContent, IAccessControlled, ILazyLoading, IStated {
 
     private static final long serialVersionUID = 1L;
 
@@ -365,7 +366,7 @@ public abstract class CoObject
         return true;
     }
 
-    /** ⇱ Implementation Of {@link IStateful}. */
+    /** ⇱ Implementation Of {@link IStated}. */
     /* _____________________________ */static section.iface __STATE__;
 
     /**
@@ -374,6 +375,7 @@ public abstract class CoObject
      */
     @DetailLevel(DetailLevel.EXPERT)
     @OfGroup(StdGroup.Status.class)
+    @Override
     public State getState() {
         return state;
     }

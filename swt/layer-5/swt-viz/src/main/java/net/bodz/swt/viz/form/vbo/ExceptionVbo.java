@@ -10,14 +10,12 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Widget;
 
-import net.bodz.bas.c.event.EventHandler;
 import net.bodz.bas.c.java.awt.DesktopApps;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.ExpectedException;
@@ -25,12 +23,13 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dialog.IUserDialogs;
+import net.bodz.bas.ui.event.EventHandler;
+import net.bodz.bas.ui.model.action.IActionContext;
+import net.bodz.bas.ui.model.cmd.UiActionCommand;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.control.Controls;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.ui.model.AbstractCommand;
-import net.bodz.swt.ui.model.ICommand;
 import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtUiRef;
@@ -153,52 +152,78 @@ public class ExceptionVbo
 
         if (showTools) {
             final String errorText = errbuf.toString();
-            Image copyImage = SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif");
-            ICommand copyAction = new AbstractCommand(copyImage, tr._("&Copy"),
-                    tr._("Copy exception text to clipboard")) {
+
+            /**
+             * Copy exception text to clipboard
+             * 
+             * @image /icons/full/etool16/copy_edit.gif
+             * @label &Copy
+             */
+            class CopyAction
+                    extends UiActionCommand {
+
                 @Override
-                public void execute() {
+                public Object play(IActionContext context)
+                        throws Exception {
                     Clipboard clipboard = new Clipboard(display);
                     clipboard.clearContents();
                     Object[] data = { errorText };
                     Transfer[] dataTypes = { TextTransfer.getInstance() };
                     clipboard.setContents(data, dataTypes);
                     clipboard.dispose();
+                    return null;
                 }
-            };
+            }
 
-            final Image mailImage = SWTResources.getImageRes("/icons/full/obj16/text_edit.gif");
             final String mailSubject = tr._("Error Report");
-            ICommand mailAction = new AbstractCommand(mailImage, //
-                    tr._("&Report"), tr._("Send error report to the responsib")) {
+
+            /**
+             * Send error report to the responsib.
+             * 
+             * @image /icons/full/obj16/text_edit.gif
+             * @label &Report
+             */
+            class MailAction
+                    extends UiActionCommand {
+
                 @Override
-                public void execute() {
+                public Object play(IActionContext context)
+                        throws Exception {
                     try {
                         DesktopApps.openMailer(mailAddress, mailSubject, errorText);
                     } catch (IOException e) {
                         IUserDialogs dialogs = rc.getUserDialogs(parent);
                         dialogs.alert(tr._("Can\'t send mail"), e);
                     }
+                    return null;
                 }
-            };
+            }
+            ;
 
-            rc.addAction(copyAction);
-            rc.addAction(mailAction);
+            rc.addAction(new CopyAction());
+            rc.addAction(new MailAction());
         }
 
         if (showDebug) {
-            final Image debugImage = SWTResources.getImageRes("/icons/full/eview16/debug_view.gif");
-            ICommand debugAction = new AbstractCommand(debugImage, //
-                    tr._("&Debug"), tr._("Go into the source where the exception happens. ")) {
+            /**
+             * Go into the source where the exception happens.
+             * 
+             * @image /icons/full/eview16/debug_view.gif
+             * @label &Debug
+             */
+            class DebugAction
+                    extends UiActionCommand {
+
                 @Override
-                public void execute() {
+                public Object play(IActionContext context)
+                        throws Exception {
                     throw new ExpectedException("debug", throwable);
                 }
-            };
-            rc.addAction(debugAction);
+
+            }
+            rc.addAction(new DebugAction());
         }
 
         return comp;
     }
-
 }

@@ -6,12 +6,12 @@ import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import net.bodz.bas.c.action.IProgressMonitor;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.log.ILogger;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.ui.dialog.IUserDialogs;
+import net.bodz.bas.ui.model.action.IProgressMonitor;
 import net.bodz.pkg.sis.AbstractSisComponent;
 import net.bodz.pkg.sis.ISisComponent;
 

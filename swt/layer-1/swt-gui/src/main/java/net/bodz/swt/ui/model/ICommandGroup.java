@@ -1,7 +1,9 @@
 package net.bodz.swt.ui.model;
 
+import net.bodz.bas.ui.model.cmd.ICommand;
+
 public interface ICommandGroup {
 
-    void addAction(ICommand command);
+    void addCommand(ICommand command);
 
 }
