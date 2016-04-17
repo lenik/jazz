@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractMethod;
 import net.bodz.bas.potato.element.IParameter;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -16,6 +17,7 @@ public class ReflectMethod
 
     private final int modifiers;
     private final int detailLevel;
+    private final int priority;
 
     /**
      * @throws NullPointerException
@@ -35,6 +37,9 @@ public class ReflectMethod
             this.detailLevel = aDetailLevel.value();
         else
             this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
+
+        Priority aPriority = method.getAnnotation(Priority.class);
+        priority = aPriority == null ? 0 : aPriority.value();
     }
 
     @Override
@@ -74,6 +79,11 @@ public class ReflectMethod
     @Override
     public int getDetailLevel() {
         return detailLevel;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */

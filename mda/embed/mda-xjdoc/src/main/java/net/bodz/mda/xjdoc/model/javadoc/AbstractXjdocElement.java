@@ -128,4 +128,9 @@ public abstract class AbstractXjdocElement
         return 0;
     }
 
+    @Override
+    public int getPriority() {
+        return 0;
+    }
+
 }

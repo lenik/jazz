@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
 import net.bodz.mda.xjdoc.model.IClassDoc;
@@ -19,6 +20,7 @@ public abstract class AbstractReflectType
 
     private final int modifiers;
     private final int detailLevel;
+    private final int priority;
 
     /**
      * @param infoset
@@ -41,6 +43,9 @@ public abstract class AbstractReflectType
             this.detailLevel = aDetailLevel.value();
         else
             this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
+
+        Priority aPriority = clazz.getAnnotation(Priority.class);
+        priority = aPriority == null ? 0 : aPriority.value();
 
         propertyMap = new MutablePropertyMap(false);
         methodMap = new MutableMethodMap(false);
@@ -110,6 +115,11 @@ public abstract class AbstractReflectType
     @Override
     public int getDetailLevel() {
         return detailLevel;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
 }

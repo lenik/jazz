@@ -4,11 +4,13 @@ import java.lang.reflect.Modifier;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.t.order.IPriority;
 
 /**
  * TODO Refactor to IUIDescribed.ui: IUIDescriptor
  */
-public interface IElement {
+public interface IElement
+        extends IPriority {
 
     /**
      * The unique name of the potato element.

@@ -20,6 +20,7 @@ public class SemiMutableElement
     private iString helpDoc;
     private int detailLevel = DetailLevel.NORMAL;
     private int modifiers;
+    private int priority;
 
     @Override
     public String getName() {
@@ -73,6 +74,15 @@ public class SemiMutableElement
 
     protected void setModifiers(int modifiers) {
         this.modifiers = modifiers;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
+    }
+
+    protected void setPriority(int priority) {
+        this.priority = priority;
     }
 
 }

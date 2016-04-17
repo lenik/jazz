@@ -17,6 +17,9 @@ public interface IMutableElement
 
     void setModifiers(int modifiers);
 
+    // IMutablePriority
+    void setPriority(int priority);
+
     class fn {
 
         public static void copy1(IElement src, IMutableElement dst) {
@@ -26,6 +29,7 @@ public interface IMutableElement
             dst.setHelpDoc(src.getHelpDoc());
             dst.setDetailLevel(src.getDetailLevel());
             dst.setModifiers(src.getModifiers());
+            dst.setPriority(src.getPriority());
         }
 
     }
