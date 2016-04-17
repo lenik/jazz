@@ -301,224 +301,224 @@ public interface IHtmlTag
     // HTML Tags
     IHtmlTag insert(String tagName);
 
-    HtmlATag a();
+    MutableA a();
 
-    HtmlAbbrTag abbr();
+    MutableAbbr abbr();
 
-    HtmlAddressTag address();
+    MutableAddress address();
 
-    HtmlAreaTag area();
+    MutableArea area();
 
-    HtmlArticleTag article();
+    MutableArticle article();
 
-    HtmlAsideTag aside();
+    MutableAside aside();
 
-    HtmlAudioTag audio();
+    MutableAudio audio();
 
-    HtmlBTag b();
+    MutableB b();
 
-    HtmlBaseTag base();
+    MutableBase base();
 
-    HtmlBdiTag bdi();
+    MutableBdi bdi();
 
-    HtmlBdoTag bdo();
+    MutableBdo bdo();
 
-    HtmlBlockquoteTag blockquote();
+    MutableBlockquote blockquote();
 
-    HtmlBodyTag body();
+    MutableBody body();
 
-    HtmlBrTag br();
+    MutableBr br();
 
-    HtmlButtonTag button();
+    MutableButton button();
 
-    HtmlCanvasTag canvas();
+    MutableCanvas canvas();
 
-    HtmlCaptionTag caption();
+    MutableCaption caption();
 
-    HtmlCiteTag cite();
+    MutableCite cite();
 
-    HtmlCodeTag code();
+    MutableCode code();
 
-    HtmlColTag col();
+    MutableCol col();
 
-    HtmlColgroupTag colgroup();
+    MutableColgroup colgroup();
 
-    HtmlDataTag data();
+    MutableData data();
 
-    HtmlDatalistTag datalist();
+    MutableDatalist datalist();
 
-    HtmlDdTag dd();
+    MutableDd dd();
 
-    HtmlDelTag del();
+    MutableDel del();
 
-    HtmlDetailsTag details();
+    MutableDetails details();
 
-    HtmlDfnTag dfn();
+    MutableDfn dfn();
 
-    HtmlDialogTag dialog();
+    MutableDialog dialog();
 
-    HtmlDivTag div();
+    MutableDiv div();
 
-    HtmlDlTag dl();
+    MutableDl dl();
 
-    HtmlDtTag dt();
+    MutableDt dt();
 
-    HtmlEmTag em();
+    MutableEm em();
 
-    HtmlEmbedTag embed();
+    MutableEmbed embed();
 
-    HtmlFieldsetTag fieldset();
+    MutableFieldset fieldset();
 
-    HtmlFigcaptionTag figcaption();
+    MutableFigcaption figcaption();
 
-    HtmlFigureTag figure();
+    MutableFigure figure();
 
-    HtmlFooterTag footer();
+    MutableFooter footer();
 
-    HtmlFormTag form();
+    MutableForm form();
 
-    HtmlH1Tag h1();
+    MutableH1 h1();
 
-    HtmlH2Tag h2();
+    MutableH2 h2();
 
-    HtmlH3Tag h3();
+    MutableH3 h3();
 
-    HtmlH4Tag h4();
+    MutableH4 h4();
 
-    HtmlH5Tag h5();
+    MutableH5 h5();
 
-    HtmlH6Tag h6();
+    MutableH6 h6();
 
-    HtmlHeadTag head();
+    MutableHead head();
 
-    HtmlHeaderTag header();
+    MutableHeader header();
 
-    HtmlHrTag hr();
+    MutableHr hr();
 
-    HtmlHtmlTag html();
+    MutableHtml html();
 
-    HtmlITag i();
+    MutableI i();
 
-    HtmlIframeTag iframe();
+    MutableIframe iframe();
 
-    HtmlImgTag img();
+    MutableImg img();
 
-    HtmlInputTag input();
+    MutableInput input();
 
-    HtmlInsTag ins();
+    MutableIns ins();
 
-    HtmlKbdTag kbd();
+    MutableKbd kbd();
 
-    HtmlKeygenTag keygen();
+    MutableKeygen keygen();
 
-    HtmlLabelTag label();
+    MutableLabel label();
 
-    HtmlLegendTag legend();
+    MutableLegend legend();
 
-    HtmlLiTag li();
+    MutableLi li();
 
-    HtmlLinkTag link();
+    MutableLink link();
 
-    HtmlMainTag main();
+    MutableMain main();
 
-    HtmlMapTag map();
+    MutableMap map();
 
-    HtmlMarkTag mark();
+    MutableMark mark();
 
-    HtmlMetaTag meta();
+    MutableMeta meta();
 
-    HtmlMeterTag meter();
+    MutableMeter meter();
 
-    HtmlNavTag nav();
+    MutableNav nav();
 
-    HtmlNoscriptTag noscript();
+    MutableNoscript noscript();
 
-    HtmlObjectTag object();
+    MutableObject object();
 
-    HtmlOlTag ol();
+    MutableOl ol();
 
-    HtmlOptgroupTag optgroup();
+    MutableOptgroup optgroup();
 
-    HtmlOptionTag option();
+    MutableOption option();
 
-    HtmlOutputTag output();
+    MutableOutput output();
 
-    HtmlPTag p();
+    MutableP p();
 
-    HtmlParamTag param();
+    MutableParam param();
 
-    HtmlPreTag pre();
+    MutablePre pre();
 
-    HtmlProgressTag progress();
+    MutableProgress progress();
 
-    HtmlQTag q();
+    MutableQ q();
 
-    HtmlRbTag rb();
+    MutableRb rb();
 
-    HtmlRpTag rp();
+    MutableRp rp();
 
-    HtmlRtTag rt();
+    MutableRt rt();
 
-    HtmlRtcTag rtc();
+    MutableRtc rtc();
 
-    HtmlRubyTag ruby();
+    MutableRuby ruby();
 
-    HtmlSTag s();
+    MutableS s();
 
-    HtmlSampTag samp();
+    MutableSamp samp();
 
-    HtmlScriptTag script();
+    MutableScript script();
 
-    HtmlSectionTag section();
+    MutableSection section();
 
-    HtmlSelectTag select();
+    MutableSelect select();
 
-    HtmlSmallTag small();
+    MutableSmall small();
 
-    HtmlSourceTag source();
+    MutableSource source();
 
-    HtmlSpanTag span();
+    MutableSpan span();
 
-    HtmlStrongTag strong();
+    MutableStrong strong();
 
-    HtmlStyleTag style();
+    MutableStyle style();
 
-    HtmlSubandsupTag subandsup();
+    MutableSubandsup subandsup();
 
-    HtmlSummaryTag summary();
+    MutableSummary summary();
 
-    HtmlTableTag table();
+    MutableTable table();
 
-    HtmlTbodyTag tbody();
+    MutableTbody tbody();
 
-    HtmlTdTag td();
+    MutableTd td();
 
-    HtmlTemplateTag template();
+    MutableTemplate template();
 
-    HtmlTextareaTag textarea();
+    MutableTextarea textarea();
 
-    HtmlTfootTag tfoot();
+    MutableTfoot tfoot();
 
-    HtmlThTag th();
+    MutableTh th();
 
-    HtmlTheadTag thead();
+    MutableThead thead();
 
-    HtmlTimeTag time();
+    MutableTime time();
 
-    HtmlTitleTag title();
+    MutableTitle title();
 
-    HtmlTrTag tr();
+    MutableTr tr();
 
-    HtmlTrackTag track();
+    MutableTrack track();
 
-    HtmlUTag u();
+    MutableU u();
 
-    HtmlUlTag ul();
+    MutableUl ul();
 
-    HtmlVarTag var();
+    MutableVar var();
 
-    HtmlVideoTag video();
+    MutableVideo video();
 
-    HtmlWbrTag wbr();
+    MutableWbr wbr();
 
 }
