@@ -8,7 +8,7 @@ import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codegen.CopyAndPaste;
 import net.bodz.bas.rtx.IOptions;
 
 /**
@@ -54,7 +54,7 @@ public class LocaleSpecI18nStringTagType
         }
     }
 
-    @GeneratedByCopyPaste(I18nStringTagType.class)
+    @CopyAndPaste(I18nStringTagType.class)
     @Override
     public iString parseEntry(Object cont, String suffix, String string, IOptions options)
             throws ParseException {
@@ -62,7 +62,7 @@ public class LocaleSpecI18nStringTagType
         return text;
     }
 
-    @GeneratedByCopyPaste(I18nStringTagType.class)
+    @CopyAndPaste(I18nStringTagType.class)
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, IOptions options)
             throws IOException {

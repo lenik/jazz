@@ -17,7 +17,7 @@ import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamInputSourceWrapper;
-import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codegen.CopyAndPaste;
 import net.bodz.bas.t.iterator.immed.AbstractMitorx;
 import net.bodz.bas.t.iterator.immed.Mitors;
 import net.bodz.bas.t.iterator.immed.Mitorx;
@@ -118,7 +118,7 @@ public class StreamReading
     /**
      * @seecopy {@link #read()}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     @Override
     public char[] readChars()
             throws IOException, OutOfMemoryError {
@@ -142,7 +142,7 @@ public class StreamReading
     /**
      * @seecopy {@link #read(int)}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     @Override
     public char[] readChars(int maxCharsToRead)
             throws IOException {
@@ -171,7 +171,7 @@ public class StreamReading
     /**
      * @seecopy {@link #read()}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     @Override
     public String readString()
             throws IOException, OutOfMemoryError {
@@ -284,7 +284,7 @@ public class StreamReading
     /**
      * @seecopy {@link #blocks(boolean)}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     public Mitorx<char[], IOException> charBlocks(final boolean allowOverlap)
             throws IOException {
         final char[] block = new char[blockSize];
@@ -334,7 +334,7 @@ public class StreamReading
     /**
      * @seecopy {@link #blocks()}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     @Override
     public Iterable<char[]> charBlocks() {
         return new Iterable<char[]>() {
@@ -356,7 +356,7 @@ public class StreamReading
     /**
      * @seecopy {@link #readBlocks(int)}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     @Override
     public List<char[]> readCharBlocks(int maxBlocks)
             throws IOException {

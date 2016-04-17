@@ -14,7 +14,7 @@ import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.IStreamOutputTargetWrapper;
 import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.builtin.ReaderSource;
-import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codegen.CopyAndPaste;
 
 public class StreamWriting
         implements IStreamWriting {
@@ -177,7 +177,7 @@ public class StreamWriting
     /**
      * @seecopy {@link #write(IStreamInputSource, int)}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     @Override
     public void writeChars(IStreamInputSource source, int maxLength)
             throws IOException {
@@ -209,7 +209,7 @@ public class StreamWriting
     /**
      * @seecopy {@link #write(IStreamInputSource)}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     @Override
     public void writeChars(IStreamInputSource source)
             throws IOException {

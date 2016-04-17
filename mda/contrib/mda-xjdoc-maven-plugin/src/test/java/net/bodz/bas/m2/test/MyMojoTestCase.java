@@ -5,7 +5,7 @@ import java.io.File;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 import net.bodz.bas.c.type.ClassResource;
-import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codegen.CopyAndPaste;
 
 public abstract class MyMojoTestCase
         extends AbstractMojoTestCase {
@@ -13,7 +13,7 @@ public abstract class MyMojoTestCase
     /**
      * @see net.bodz.bas.c.m2.MavenProjectOrigin
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     protected static File getResourceDir(Class<?> clazz) {
         File classFile = ClassResource.getClassBytesFile(clazz);
 

@@ -8,7 +8,7 @@ import net.bodz.bas.flow.unit.GenericUnit_z1;
 import net.bodz.bas.io.res.builtin.ReaderSource;
 import net.bodz.bas.io.res.tools.IStreamReading;
 import net.bodz.bas.io.res.tools.StreamReading;
-import net.bodz.bas.meta.codegen.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codegen.CopyAndPaste;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
 public class ReaderSourceUnit
@@ -47,7 +47,7 @@ public class ReaderSourceUnit
     /**
      * @seecopy {@link InputStreamSourceUnit#pump(int)}
      */
-    @GeneratedByCopyPaste
+    @CopyAndPaste
     @Override
     public boolean pump(int timeout)
             throws IOException, InterruptedException {
