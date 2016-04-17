@@ -1,12 +1,12 @@
 package net.bodz.bas.html.util;
 
-import net.bodz.bas.html.dom.tag.HtmlInputTag;
-import net.bodz.bas.html.dom.tag.HtmlSelectTag;
-import net.bodz.bas.html.dom.tag.HtmlTextareaTag;
+import net.bodz.bas.html.io.tag.HtmlInput;
+import net.bodz.bas.html.io.tag.HtmlSelect;
+import net.bodz.bas.html.io.tag.HtmlTextarea;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.repr.form.IFieldDecl;
 
-public class FieldHtmlUtil {
+public class FieldDeclToHtml {
 
     static String _name(IFieldDecl fieldDecl, String prefix, String suffix) {
         String inputName = fieldDecl.getInputName();
@@ -22,11 +22,11 @@ public class FieldHtmlUtil {
         return inputName;
     }
 
-    public static void apply(HtmlInputTag input, IFieldDecl fieldDecl) {
+    public static void apply(HtmlInput input, IFieldDecl fieldDecl) {
         apply(input, fieldDecl, null, null);
     }
 
-    public static void apply(HtmlInputTag input, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
+    public static void apply(HtmlInput input, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
         String inputName = _name(fieldDecl, namePrefix, nameSuffix);
         // input.id(inputName);
         input.name(inputName);
@@ -75,11 +75,11 @@ public class FieldHtmlUtil {
             input.placeholder(placeholder.toString());
     }
 
-    public static void apply(HtmlTextareaTag textarea, IFieldDecl fieldDecl) {
+    public static void apply(HtmlTextarea textarea, IFieldDecl fieldDecl) {
         apply(textarea, fieldDecl, null, null);
     }
 
-    public static void apply(HtmlTextareaTag textarea, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
+    public static void apply(HtmlTextarea textarea, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
         String inputName = _name(fieldDecl, namePrefix, nameSuffix);
         textarea.name(inputName);
 
@@ -103,11 +103,11 @@ public class FieldHtmlUtil {
             textarea.placeholder(placeholder.toString());
     }
 
-    public static void apply(HtmlSelectTag select, IFieldDecl fieldDecl) {
+    public static void apply(HtmlSelect select, IFieldDecl fieldDecl) {
         apply(select, fieldDecl, null, null);
     }
 
-    public static void apply(HtmlSelectTag select, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
+    public static void apply(HtmlSelect select, IFieldDecl fieldDecl, String namePrefix, String nameSuffix) {
         String inputName = _name(fieldDecl, namePrefix, nameSuffix);
         select.name(inputName);
 

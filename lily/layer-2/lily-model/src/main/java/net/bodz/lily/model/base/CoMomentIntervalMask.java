@@ -2,7 +2,6 @@ package net.bodz.lily.model.base;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
-
 import net.bodz.lily.model.sea.QVariantMap;
 
 public class CoMomentIntervalMask

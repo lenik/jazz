@@ -1,7 +1,6 @@
 package net.bodz.lily.model.base.impl;
 
 import net.bodz.bas.site.viz.input.ITagTyper;
-
 import net.bodz.lily.model.base.CoCode;
 
 public class CoCodeTagTyper

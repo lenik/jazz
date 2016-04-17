@@ -2,14 +2,14 @@ package net.bodz.lily.model.base.security.impl;
 
 import java.io.IOException;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlOptionTag;
-import net.bodz.bas.html.dom.tag.HtmlSelectTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlOption;
+import net.bodz.bas.html.io.tag.HtmlSelect;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.ui.dom1.IUiRef;
-import net.bodz.bas.viz.Face;
 
 @Face("AccessMode")
 public class AccessMode_htm
@@ -20,20 +20,21 @@ public class AccessMode_htm
     }
 
     @Override
-    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Integer> ref)
+    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<Integer> ref)
             throws ViewBuilderException, IOException {
         Integer val = ref.get();
         if (val == null)
             throw new NullPointerException("val");
         int n = val;
 
-        HtmlSelectTag select = out.select();
+        HtmlSelect select = out.select();
         for (AccessMode mode : AccessMode.METADATA.getValues()) {
             int key = mode.getKey();
-            HtmlOptionTag option = select.option().value(key).text(mode.getLabel());
+            HtmlOption option = select.option().value(key).text(mode.getLabel());
             if (n == key)
                 option.selected("selected");
         }
+        return out;
     }
 
 }

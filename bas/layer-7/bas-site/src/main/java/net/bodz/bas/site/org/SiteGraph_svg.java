@@ -35,7 +35,7 @@ public class SiteGraph_svg
     }
 
     @Override
-    public void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<SiteGraphNode> ref)
+    public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<SiteGraphNode> ref)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = ctx.getRequest();
 
@@ -75,6 +75,8 @@ public class SiteGraph_svg
         } finally {
             tempDotFile.delete();
         }
+
+        return null;
     }
 
 }

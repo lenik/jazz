@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlDivTag;
-import net.bodz.bas.html.dom.tag.HtmlDlTag;
-import net.bodz.bas.html.dom.tag.HtmlSelectTag;
-import net.bodz.bas.html.dom.tag.HtmlTableTag;
-import net.bodz.bas.html.dom.tag.HtmlTrTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlDiv;
+import net.bodz.bas.html.io.tag.HtmlDl;
+import net.bodz.bas.html.io.tag.HtmlSelect;
+import net.bodz.bas.html.io.tag.HtmlTable;
+import net.bodz.bas.html.io.tag.HtmlTr;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
@@ -23,7 +23,7 @@ public class Map_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Map<?, ?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<Map<?, ?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Map<?, ?> map = ref.get();
         if (map == null) {
@@ -37,18 +37,18 @@ public class Map_htm
 
         switch (face) {
         case "table":
-            HtmlTableTag table = out.table().border("0");
+            HtmlTable table = out.table().border("0");
             for (Entry<?, ?> entry : map.entrySet()) {
                 Object key = entry.getKey();
                 Object value = entry.getValue();
-                HtmlTrTag tr = table.tr();
+                HtmlTr tr = table.tr();
                 tr.td().text(key);
                 tr.td().text(value);
             }
             break;
 
         case "div":
-            HtmlDivTag div = out.div();
+            HtmlDiv div = out.div();
             for (Entry<?, ?> entry : map.entrySet()) {
                 div.span().text(entry.getValue());
             }
@@ -56,7 +56,7 @@ public class Map_htm
 
         case "ul":
         case "ol":
-            IHtmlTag xl = "ul".equals(face) ? out.ul() : out.ol();
+            IHtmlOut xl = "ul".equals(face) ? out.ul() : out.ol();
             for (Entry<?, ?> entry : map.entrySet()) {
                 Object key = entry.getKey();
                 Object value = entry.getValue();
@@ -65,7 +65,7 @@ public class Map_htm
             break;
 
         case "dl":
-            HtmlDlTag dl = out.dl();
+            HtmlDl dl = out.dl();
             for (Entry<?, ?> entry : map.entrySet()) {
                 Object key = entry.getKey();
                 Object value = entry.getValue();
@@ -75,7 +75,7 @@ public class Map_htm
             break;
 
         case "select":
-            HtmlSelectTag select = out.select();
+            HtmlSelect select = out.select();
             for (Entry<?, ?> entry : map.entrySet()) {
                 Object key = entry.getKey();
                 Object value = entry.getValue();

@@ -37,7 +37,7 @@ public class Invocation_txt
     }
 
     @Override
-    public void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IInvocation> ref)
+    public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IInvocation> ref)
             throws ViewBuilderException, IOException {
         PrintWriter out = resp.getWriter();
         IInvocation invocation = ref.get();
@@ -86,6 +86,8 @@ public class Invocation_txt
             // resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
+
+        return null;
     }
 
 }

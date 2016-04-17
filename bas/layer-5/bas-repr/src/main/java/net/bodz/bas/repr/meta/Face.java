@@ -1,14 +1,17 @@
-package net.bodz.bas.html.meta;
+package net.bodz.bas.repr.meta;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.inject.Named;
 import javax.inject.Qualifier;
 
-@Named("radio")
+/**
+ * Generic view tag.
+ */
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Radio {
+public @interface Face {
+
+    String[] value();
 
 }

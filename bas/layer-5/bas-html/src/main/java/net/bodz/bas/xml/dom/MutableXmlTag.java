@@ -10,7 +10,7 @@ import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 @SuppressWarnings("unchecked")
 @ThreadUnsafe
-public abstract class AbstractXmlTag<self_t extends IXmlTag>
+public class MutableXmlTag<self_t extends IXmlTag>
         extends AbstractXmlNode<self_t>
         implements IXmlTag {
 
@@ -19,14 +19,14 @@ public abstract class AbstractXmlTag<self_t extends IXmlTag>
     private List<IXmlNode> children;
     private int insertPoint;
 
-    protected AbstractXmlTag(IXmlTag parent) {
+    protected MutableXmlTag(IXmlTag parent) {
         super(parent);
         attributes = new LinkedHashMap<String, String>();
         children = new ArrayList<IXmlNode>();
 
     }
 
-    public AbstractXmlTag(IXmlTag parent, String tagName) {
+    public MutableXmlTag(IXmlTag parent, String tagName) {
         this(parent);
         this.tagName = tagName;
     }
@@ -56,7 +56,7 @@ public abstract class AbstractXmlTag<self_t extends IXmlTag>
     }
 
     @Override
-    public boolean isVoid() {
+    public boolean isTerm() {
         return false;
     }
 

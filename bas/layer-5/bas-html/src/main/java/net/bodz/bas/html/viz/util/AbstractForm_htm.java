@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlDivTag;
-import net.bodz.bas.html.dom.tag.HtmlFormTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlDiv;
+import net.bodz.bas.html.io.tag.HtmlForm;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -30,12 +30,12 @@ public abstract class AbstractForm_htm<T>
     }
 
     @Override
-    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         Object o = ref.get();
         if (o == null) {
             nullInstance(out, ref);
-            return;
+            return out;
         }
 
         beforeForm(ctx, out, ref);
@@ -43,16 +43,16 @@ public abstract class AbstractForm_htm<T>
         afterForm(ctx, out, ref);
 
         extras(ctx, out, ref);
-        return;
+        return out;
     }
 
-    protected IHtmlTag buildForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref)
+    protected IHtmlOut buildForm(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> ref)
             throws ViewBuilderException, IOException {
 
         IFormDecl formDecl = IFormDecl.fn.forClass(ref.getValueType());
-        IHtmlTag formTag = beginForm(ctx, out, ref);
+        IHtmlOut formTag = beginForm(ctx, out, ref);
 
-        HtmlDivTag fgv = formTag.div().class_("field-groups");
+        HtmlDiv fgvOut = formTag.div().class_("field-groups");
         Collection<FieldDeclGroup> groups = formDecl
                 .getFieldGroups(FieldDeclFilters.maxDetailLevel(DetailLevel.DETAIL));
 
@@ -62,7 +62,7 @@ public abstract class AbstractForm_htm<T>
 // markSet.add(ref);
 
         for (FieldDeclGroup group : groups) {
-            if (overrideFieldGroup(ctx, fgv, ref, group))
+            if (overrideFieldGroup(ctx, fgvOut, ref, group))
                 continue;
 
             // filter field[category] -> selection
@@ -78,15 +78,15 @@ public abstract class AbstractForm_htm<T>
                 continue;
 
             FieldCategory category = group.getCategory();
-            IHtmlTag catTag = beginCategory(ctx, fgv, category);
+            IHtmlOut catTag = beginCategory(ctx, fgvOut, category);
 
             for (IFieldDecl fieldDecl : selection) {
-                IHtmlTag fieldTag = beginField(ctx, catTag, fieldDecl);
+                IHtmlOut fieldTag = beginField(ctx, catTag, fieldDecl);
                 fieldBody(ctx, fieldTag, ref, fieldDecl);
                 endField(ctx, catTag, fieldTag, fieldDecl);
             }
 
-            endCategory(ctx, fgv, catTag, category);
+            endCategory(ctx, fgvOut, catTag, category);
         }
 
         endForm(ctx, formTag, ref);
@@ -104,17 +104,17 @@ public abstract class AbstractForm_htm<T>
         return true;
     }
 
-    protected abstract void nullInstance(IHtmlTag out, IUiRef<T> ref)
+    protected abstract void nullInstance(IHtmlOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    protected IHtmlTag beforeForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    protected IHtmlOut beforeForm(IHtmlViewContext ctx, IHtmlOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return out;
     }
 
-    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref)
+    protected IHtmlOut beginForm(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> ref)
             throws ViewBuilderException, IOException {
-        HtmlFormTag form = out.form();
+        HtmlForm form = out.form();
         return form;
     }
 
@@ -122,7 +122,7 @@ public abstract class AbstractForm_htm<T>
      * @return Whether the processing of the field group is completed. Returns <code>true</code> to
      *         override the default process.
      */
-    protected boolean overrideFieldGroup(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> instanceRef, FieldDeclGroup group)
+    protected boolean overrideFieldGroup(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> instanceRef, FieldDeclGroup group)
             throws ViewBuilderException, IOException {
         return false;
     }
@@ -133,30 +133,30 @@ public abstract class AbstractForm_htm<T>
         return selection;
     }
 
-    protected abstract IHtmlTag beginCategory(IHtmlViewContext ctx, IHtmlTag out, FieldCategory category)
+    protected abstract IHtmlOut beginCategory(IHtmlViewContext ctx, IHtmlOut out, FieldCategory category)
             throws ViewBuilderException, IOException;
 
-    protected abstract IHtmlTag beginField(IHtmlViewContext ctx, IHtmlTag out, IFieldDecl fieldDecl)
+    protected abstract IHtmlOut beginField(IHtmlViewContext ctx, IHtmlOut out, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
-    protected abstract void fieldBody(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> instanceRef, IFieldDecl fieldDecl)
+    protected abstract void fieldBody(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> instanceRef, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
-    protected abstract void endField(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag fieldOut, IFieldDecl fieldDecl)
+    protected abstract void endField(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut fieldOut, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
-    protected abstract void endCategory(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category);
+    protected abstract void endCategory(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut catOut, FieldCategory category);
 
-    protected void endForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref)
+    protected void endForm(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> ref)
             throws ViewBuilderException, IOException {
     }
 
-    protected IHtmlTag afterForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    protected IHtmlOut afterForm(IHtmlViewContext ctx, IHtmlOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return out;
     }
 
-    protected IHtmlTag extras(IHtmlViewContext ctx, IHtmlTag out, IUiRef<T> ref)
+    protected IHtmlOut extras(IHtmlViewContext ctx, IHtmlOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return out;
     }

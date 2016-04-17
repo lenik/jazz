@@ -2,6 +2,7 @@ package net.bodz.bas.repr.viz;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.c.type.TypeChain;
@@ -84,10 +85,11 @@ public abstract class AutoloadViewBuilderFactory
     }
 
     @Override
-    protected void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... features) {
+    protected void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, List<String> tags) {
         checkViewBuilder(viewBuilder);
         TaggedSet<IViewBuilder<?>> set = getTaggedSet(clazz, true);
-        set.add(viewBuilder, features);
+        for (String tag : tags)
+            set.add(viewBuilder, tag);
     }
 
 }

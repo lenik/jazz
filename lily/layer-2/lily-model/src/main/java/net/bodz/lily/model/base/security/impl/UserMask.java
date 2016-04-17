@@ -2,7 +2,6 @@ package net.bodz.lily.model.base.security.impl;
 
 import net.bodz.bas.c.string.StringUtil;
 import net.bodz.bas.err.ParseException;
-
 import net.bodz.lily.model.base.CoObjectMask;
 import net.bodz.lily.model.sea.QVariantMap;
 

@@ -53,7 +53,7 @@ public class NullXmlTag
     }
 
     @Override
-    public boolean isVoid() {
+    public boolean isTerm() {
         return false;
     }
 

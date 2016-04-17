@@ -189,9 +189,15 @@ sub _main {
 
     for my $name (@names) {
         my $Name = ucfirst $name;
-        my $Class0 = "_Html${Name}Tag";
-        my $Class = $opt_wrapper ? "Html${Name}Tag" : $Class0;
-        my $fqcn = "$opt_package.$Class";
+        my $Class0 = "_Mutable${Name}";
+        my $Class1 = "Mutable${Name}";
+        my $fqcn0 = "$opt_package.gen.$Class0";
+        my $fqcn1 = "$opt_package.$Class1";
+        
+        my $Class = $opt_wrapper ? $Class1 : $Class0;
+        my $fqcn = $opt_wrapper ? $fqcn1 : $fqcn0;
+        my $pkg = $fqcn;
+            $pkg =~ s/\.\w+$//;
 
         my $file = $fqcn;
             $file =~ s/\./\//g;
@@ -201,11 +207,12 @@ sub _main {
         mkdir_p $file;
         open(OUT, ">$file") or die "Can't write to file $file: $!";
 
-        print OUT "package $opt_package;\n";
+        print OUT "package $pkg;\n";
         print OUT "\n";
         if ($opt_wrapper) {
             my $impl = $Class0;
             print OUT "import net.bodz.bas.html.dom.IHtmlTag;\n";
+            print OUT "import $fqcn0;\n";
             print OUT "\n";
             print OUT "public class $Class\n";
             print OUT "        extends $Class0<$Class> {\n";
@@ -214,8 +221,8 @@ sub _main {
             print OUT "        super(parent, tagName);\n";
             print OUT "    }\n";
         } else {
-            print OUT "import net.bodz.bas.html.dom.AbstractHtmlTag;\n";
             print OUT "import net.bodz.bas.html.dom.IHtmlTag;\n";
+            print OUT "import net.bodz.bas.html.dom.MutableHtmlTag;\n";
             print OUT "\n";
 
             if (defined $doc) {
@@ -225,9 +232,9 @@ sub _main {
             }
             print OUT "\@SuppressWarnings(\"unchecked\")\n" if scalar(@attrs);
             print OUT "public class $Class<self_t extends IHtmlTag>\n";
-            print OUT "        extends AbstractHtmlTag<self_t> {\n";
+            print OUT "        extends MutableHtmlTag<self_t> {\n";
             print OUT "\n";
-            print OUT "    protected $Class(IHtmlTag parent, String tagName) {\n";
+            print OUT "    public $Class(IHtmlTag parent, String tagName) {\n";
             print OUT "        super(parent, tagName);\n";
             print OUT "    }\n";
             
@@ -305,7 +312,7 @@ The initial version.
 
 =cut
 sub _version {
-    print "[$LOGNAME] Translate HTML element to program model \n";
+    print "[$LOGNAME] Translate HTML element to program model\n";
     print "Written by Lenik,  Version 0.$RCSID{rev},  Last updated at $RCSID{date}\n";
 }
 

@@ -6,7 +6,7 @@ public class HtmlBrTagTest
         extends Assert {
 
     public static void main(String[] args) {
-        HtmlBrTag btag = new HtmlBrTag(null, "br");
+        MutableBr btag = new MutableBr(null, "br");
         System.out.println(btag);
     }
 

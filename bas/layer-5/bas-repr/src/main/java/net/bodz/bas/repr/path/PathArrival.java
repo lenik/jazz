@@ -136,10 +136,8 @@ public class PathArrival
     }
 
     @Override
-    public List<IPathArrival> toList(boolean mergeTransients) {
-        if (mergeTransients)
-            return merge(toList(false));
-        List<IPathArrival> list = new ArrayList<IPathArrival>();
+    public PathArrivalList toList() {
+        PathArrivalList list = new PathArrivalList();
         IPathArrival a = this;
         while (a != null) {
             list.add(a);
@@ -149,8 +147,8 @@ public class PathArrival
         return list;
     }
 
-    static List<IPathArrival> merge(List<IPathArrival> list) {
-        List<IPathArrival> result = new ArrayList<>(list.size());
+    static PathArrivalList merge(PathArrivalList list) {
+        PathArrivalList result = new PathArrivalList(list.size());
         PathArrival last = null;
         for (IPathArrival a : list) {
             PathArrival m = new PathArrival(a);

@@ -1,7 +1,7 @@
 package net.bodz.bas.html.viz.builtin;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlInputTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 
@@ -13,8 +13,8 @@ public class Short_htm
     }
 
     @Override
-    protected HtmlInputTag createScreenInput(IHtmlTag out, UiPropertyRef<Short> ref, IFieldDecl fieldDecl) {
-        HtmlInputTag input = out.input().type("number").class_("noprint");
+    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<Short> ref, IFieldDecl fieldDecl) {
+        HtmlInput input = out.input().type("number").class_("noprint");
         input.min("" + Short.MIN_VALUE);
         input.max("" + Short.MAX_VALUE);
         input.maxlength("5");

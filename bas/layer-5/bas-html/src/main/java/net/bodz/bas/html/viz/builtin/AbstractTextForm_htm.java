@@ -3,10 +3,10 @@ package net.bodz.bas.html.viz.builtin;
 import java.io.IOException;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlInputTag;
-import net.bodz.bas.html.dom.tag.HtmlTextareaTag;
-import net.bodz.bas.html.util.FieldHtmlUtil;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlInput;
+import net.bodz.bas.html.io.tag.HtmlTextarea;
+import net.bodz.bas.html.util.FieldDeclToHtml;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
@@ -25,7 +25,7 @@ public abstract class AbstractTextForm_htm<T>
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         T value = ref.get();
 
@@ -37,12 +37,12 @@ public abstract class AbstractTextForm_htm<T>
         if (value != null)
             str = formatter.format(value/* ,options */);
 
-        IHtmlTag tag = createScreenInput(out, ref, fieldDecl);
+        IHtmlOut tag = createScreenInput(out, ref, fieldDecl);
         if (tag != null) {
-            if (tag instanceof HtmlInputTag)
-                FieldHtmlUtil.apply((HtmlInputTag) tag, fieldDecl);
-            else if (tag instanceof HtmlTextareaTag)
-                FieldHtmlUtil.apply((HtmlTextareaTag) tag, fieldDecl);
+            if (tag instanceof HtmlInput)
+                FieldDeclToHtml.apply((HtmlInput) tag, fieldDecl);
+            else if (tag instanceof HtmlTextarea)
+                FieldDeclToHtml.apply((HtmlTextarea) tag, fieldDecl);
             if (str != null)
                 tag.attr("value", str);
         }
@@ -50,7 +50,7 @@ public abstract class AbstractTextForm_htm<T>
         out.span().class_("print").text(str);
     }
 
-    protected abstract IHtmlTag createScreenInput(IHtmlTag out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
+    protected abstract IHtmlOut createScreenInput(IHtmlOut out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException;
 
 }

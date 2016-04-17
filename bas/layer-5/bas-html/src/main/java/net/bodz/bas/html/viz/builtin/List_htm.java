@@ -3,9 +3,9 @@ package net.bodz.bas.html.viz.builtin;
 import java.io.IOException;
 import java.util.List;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlDivTag;
-import net.bodz.bas.html.dom.tag.HtmlSelectTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlDiv;
+import net.bodz.bas.html.io.tag.HtmlSelect;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
@@ -19,7 +19,7 @@ public class List_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         List<?> list = ref.get();
         if (list == null) {
@@ -33,7 +33,7 @@ public class List_htm
 
         switch (face) {
         case "div":
-            HtmlDivTag div = out.div();
+            HtmlDiv div = out.div();
             for (Object item : list) {
                 div.span().text(item);
             }
@@ -41,14 +41,14 @@ public class List_htm
 
         case "ul":
         case "ol":
-            IHtmlTag xl = "ul".equals(face) ? out.ul() : out.ol();
+            IHtmlOut xl = "ul".equals(face) ? out.ul() : out.ol();
             for (Object item : list) {
                 xl.li().text(item);
             }
             break;
 
         case "select":
-            HtmlSelectTag select = out.select();
+            HtmlSelect select = out.select();
             int n = list.size();
             for (int i = 0; i < n; i++) {
                 Object item = list.get(i);

@@ -36,12 +36,19 @@ public interface IHttpViewBuilder<T>
 
     // boolean isDirectory();
 
-    void preview(IHttpViewContext ctx, IUiRef<T> ref);
+    void precompile(IHttpViewContext ctx, IUiRef<T> ref);
 
-    void buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
+    /**
+     * @return The intermediate widget/control handle.
+     */
+    Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
-    void buildHttpViewEnd(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
+    /**
+     * @param o
+     *            The intermediate widget/control handle.
+     */
+    void buildHttpViewEnd(IHttpViewContext ctx, HttpServletResponse resp, Object o, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
 }

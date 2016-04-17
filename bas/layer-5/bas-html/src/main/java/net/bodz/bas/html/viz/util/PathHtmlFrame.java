@@ -1,6 +1,6 @@
 package net.bodz.bas.html.viz.util;
 
-import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewBuilder;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.PathArrivalEntry;
@@ -11,7 +11,8 @@ public class PathHtmlFrame
     private static final long serialVersionUID = 1L;
 
     IHtmlViewBuilder<Object> viewBuilder;
-    IHtmlTag outer;
+    IHtmlOut out;
+    IHtmlOut body;
 
     public PathHtmlFrame(IPathArrival arrival) {
         super(arrival);
@@ -19,9 +20,9 @@ public class PathHtmlFrame
 
     @Override
     public String toString() {
-        String tagName = outer.getTagName();
-        String id = outer.getAttributeMap().get("id");
-        return String.format("<%s:%s> | %s", tagName, id, getArrival());
+        String tagName = out.getTagName();
+        // String id = outer.getAttributeMap().get("id");
+        return String.format("<%s> | %s", tagName/* , id */, getArrival());
     }
 
 }

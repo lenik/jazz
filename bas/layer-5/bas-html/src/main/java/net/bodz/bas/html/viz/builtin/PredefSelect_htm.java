@@ -5,10 +5,10 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlOptionTag;
-import net.bodz.bas.html.dom.tag.HtmlSelectTag;
-import net.bodz.bas.html.util.FieldHtmlUtil;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlOption;
+import net.bodz.bas.html.io.tag.HtmlSelect;
+import net.bodz.bas.html.util.FieldDeclToHtml;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
@@ -24,7 +24,7 @@ public class PredefSelect_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlTag out, UiPropertyRef<Predef<?, ?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<Predef<?, ?>> ref, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
         Predef<?, ?> predef = ref.get();
         PredefMetadata<?, ?> metadata;
@@ -40,18 +40,18 @@ public class PredefSelect_htm
             }
         }
 
-        HtmlSelectTag select = out.select();
+        HtmlSelect select = out.select();
         Map<String, ?> nameMap = metadata.getNameMap();
         for (Entry<String, ?> entry : nameMap.entrySet()) {
             String key = entry.getKey();
             Predef<?, ?> value = (Predef<?, ?>) entry.getValue();
-            HtmlOptionTag option = select.option().value(key).text(value.getLabel());
+            HtmlOption option = select.option().value(key).text(value.getLabel());
             option.label(value.getName());
             if (predef == value)
                 option.selected("selected");
         }
 
-        FieldHtmlUtil.apply(select, fieldDecl);
+        FieldDeclToHtml.apply(select, fieldDecl);
     }
 
 }

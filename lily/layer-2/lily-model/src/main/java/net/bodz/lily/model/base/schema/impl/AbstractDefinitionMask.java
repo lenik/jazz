@@ -1,7 +1,6 @@
 package net.bodz.lily.model.base.schema.impl;
 
 import net.bodz.bas.err.ParseException;
-
 import net.bodz.lily.model.base.CoNodeMask;
 import net.bodz.lily.model.sea.QVariantMap;
 

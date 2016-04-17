@@ -1,7 +1,6 @@
 package net.bodz.lily.model.base.security;
 
 import net.bodz.bas.repr.form.meta.TextInput;
-
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.model.base.IdType;
 

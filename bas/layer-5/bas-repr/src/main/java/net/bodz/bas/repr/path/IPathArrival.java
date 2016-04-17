@@ -1,7 +1,5 @@
 package net.bodz.bas.repr.path;
 
-import java.util.List;
-
 import net.bodz.bas.meta.decl.Shortcut;
 
 public interface IPathArrival {
@@ -55,6 +53,11 @@ public interface IPathArrival {
     @Shortcut
     Object getLastNonNullTarget();
 
-    List<IPathArrival> toList(boolean mergeTransients);
+    /**
+     * @see PathArrivalList#leftToRight()
+     * @see PathArrivalList#rightToLeft()
+     * @see PathArrivalList#mergeTransients()
+     */
+    PathArrivalList toList();
 
 }

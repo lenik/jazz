@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlOptionTag;
-import net.bodz.bas.html.dom.tag.HtmlSelectTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlOption;
+import net.bodz.bas.html.io.tag.HtmlSelect;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.ui.dom1.IUiRef;
-import net.bodz.bas.viz.Face;
 
 @Face("priority")
 public class Priority_htm
@@ -23,7 +23,7 @@ public class Priority_htm
     }
 
     @Override
-    public void buildHtmlViewStart(IHtmlViewContext ctx, IHtmlTag out, IUiRef<Integer> ref)
+    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<Integer> ref)
             throws ViewBuilderException, IOException {
         // ctx.query(PriorityMapper.class);
         List<Pair<Integer, String>> predefs = new ArrayList<>();
@@ -33,14 +33,14 @@ public class Priority_htm
         predefs.add(Pair.of(5, "普通"));
         predefs.add(Pair.of(10, "低"));
 
-        HtmlSelectTag select = out.select();
+        HtmlSelect select = out.select();
         int priority = ref.get();
-        HtmlOptionTag nearest = null;
+        HtmlOption nearest = null;
         int nearestN = 0;
 
         for (Pair<Integer, String> predef : predefs) {
             Integer n = predef.getKey();
-            HtmlOptionTag option = select.option().value(n).text(predef.getValue());
+            HtmlOption option = select.option().value(n).text(predef.getValue());
             if (nearest == null || (n <= priority && n > nearestN)) {
                 nearest = option;
                 nearestN = n;
@@ -50,6 +50,7 @@ public class Priority_htm
             nearest.selected("selected");
 
         // FieldHtmlUtil.apply(input, fieldDecl, options);
+        return out;
     }
 
 }

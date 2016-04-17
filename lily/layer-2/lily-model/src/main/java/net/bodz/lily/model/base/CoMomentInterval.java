@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.joda.time.DateTime;
 
-import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -81,7 +81,7 @@ public abstract class CoMomentInterval<Id>
     }
 
     @Override
-    public Id persist(IHtmlViewContext ctx, IHtmlTag out)
+    public Id persist(IHtmlViewContext ctx, IHtmlOut out)
             throws IOException {
         Id id = (Id) super.persist(ctx, out);
         setId(id);

@@ -11,7 +11,7 @@ import org.joda.time.DateTime;
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.html.dom.IHtmlTag;
+import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -24,6 +24,7 @@ import net.bodz.bas.repr.form.meta.NumericInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.req.IMethodOfRequest;
 import net.bodz.bas.repr.req.MethodNames;
 import net.bodz.bas.repr.state.IStated;
@@ -31,7 +32,6 @@ import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
-import net.bodz.bas.viz.Face;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.LoginContext;
@@ -512,7 +512,7 @@ public abstract class CoObject
         this.acl = acl;
     }
 
-    public Object persist(IHtmlViewContext ctx, IHtmlTag out)
+    public Object persist(IHtmlViewContext ctx, IHtmlOut out)
             throws PersistenceException, IOException {
         IMapperProvider provider = ctx.query(IMapperProvider.class);
         IMapperTemplate<CoObject, ?> mapper = provider.getMapperForObject(getClass());

@@ -3,10 +3,10 @@ package net.bodz.bas.html.viz.util;
 import java.io.IOException;
 
 import net.bodz.bas.err.IllegalConfigException;
-import net.bodz.bas.html.dom.IHtmlTag;
-import net.bodz.bas.html.dom.tag.HtmlTableTag;
-import net.bodz.bas.html.dom.tag.HtmlTdTag;
-import net.bodz.bas.html.dom.tag.HtmlTrTag;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlTable;
+import net.bodz.bas.html.io.tag.HtmlTd;
+import net.bodz.bas.html.io.tag.HtmlTr;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.potato.element.IProperty;
@@ -31,12 +31,12 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected void nullInstance(IHtmlTag out, IUiRef<T> ref) {
+    protected void nullInstance(IHtmlOut out, IUiRef<T> ref) {
         out.text("just null.");
     }
 
     @Override
-    protected IHtmlTag beginForm(IHtmlViewContext ctx, IHtmlTag out, IUiRef<?> ref)
+    protected IHtmlOut beginForm(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> ref)
             throws ViewBuilderException, IOException {
         if (embedded)
             return out;
@@ -45,28 +45,28 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected IHtmlTag beginCategory(IHtmlViewContext ctx, IHtmlTag out, FieldCategory category)
+    protected IHtmlOut beginCategory(IHtmlViewContext ctx, IHtmlOut out, FieldCategory category)
             throws ViewBuilderException {
-        HtmlTableTag table = out.table().border("0").class_("field-category");
+        HtmlTable table = out.table().border("0").class_("field-category");
         return table;
     }
 
     @Override
-    protected void endCategory(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag catOut, FieldCategory category) {
+    protected void endCategory(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut catOut, FieldCategory category) {
     }
 
     @Override
-    protected IHtmlTag beginField(IHtmlViewContext ctx, IHtmlTag table, IFieldDecl fieldDecl)
+    protected IHtmlOut beginField(IHtmlViewContext ctx, IHtmlOut table, IFieldDecl fieldDecl)
             throws ViewBuilderException {
-        HtmlTrTag tr = table.tr().class_("field-row");
+        HtmlTr tr = table.tr().class_("field-row");
         tr.td().class_("field-label").text(fieldDecl.getLabel());
         return tr;
     }
 
     @Override
-    protected void fieldBody(IHtmlViewContext ctx, IHtmlTag tr, IUiRef<?> instanceRef, IFieldDecl fieldDecl)
+    protected void fieldBody(IHtmlViewContext ctx, IHtmlOut tr, IUiRef<?> instanceRef, IFieldDecl fieldDecl)
             throws ViewBuilderException, IOException {
-        HtmlTdTag bodyTd = tr.td().class_("field-body");
+        HtmlTd bodyTd = tr.td().class_("field-body");
 
         IProperty property = fieldDecl.getProperty();
         UiPropertyRef<Object> propertyRef = new UiPropertyRef<Object>(instanceRef, property);
@@ -79,7 +79,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected void endField(IHtmlViewContext ctx, IHtmlTag out, IHtmlTag fieldOut, IFieldDecl fieldDecl) {
+    protected void endField(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut fieldOut, IFieldDecl fieldDecl) {
     }
 
 }

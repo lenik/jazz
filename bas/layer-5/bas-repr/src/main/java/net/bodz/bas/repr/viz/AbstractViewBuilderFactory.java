@@ -3,7 +3,9 @@ package net.bodz.bas.repr.viz;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.primitive.Primitives;
@@ -11,6 +13,7 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.IRefEntry;
+import net.bodz.bas.repr.meta.FaceQualifiers;
 import net.bodz.bas.repr.view.Feature;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -97,10 +100,17 @@ public abstract class AbstractViewBuilderFactory
 
     protected final void addViewBuilder(IViewBuilder<?> viewBuilder) {
         checkViewBuilder(viewBuilder);
+
+        List<String> tags = FaceQualifiers.getQualifierNames(viewBuilder.getClass());
+
         addViewBuilder(viewBuilder, viewBuilder.getValueType(), tags);
     }
 
-    protected abstract void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... tags);
+    protected final void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, String... tags) {
+        addViewBuilder(viewBuilder, clazz, Arrays.asList(tags));
+    }
+
+    protected abstract void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, List<String> tags);
 
     protected void addViewBuilder(IViewBuilder<?> viewBuilder, Type type, Annotation[] annotation, String... tags) {
         checkViewBuilder(viewBuilder);
@@ -129,7 +139,7 @@ public abstract class AbstractViewBuilderFactory
         Class<?> valueType = ref.getValueType();
         IViewBuilder viewBuilder = getViewBuilder(valueType);
         Object view = viewBuilder.buildViewStart(ctx, parent, ref);
-        view = viewBuilder.buildViewEnd(ctx, view, ref);
+        viewBuilder.buildViewEnd(ctx, parent, view, ref);
         return view;
     }
 
