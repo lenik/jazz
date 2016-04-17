@@ -79,7 +79,7 @@ public interface IPrintOut
     void printf(String format, Object... args);
 
     @Override
-    void flush(boolean strict);
+    void flush(boolean sync);
 
     @Override
     void flush();
