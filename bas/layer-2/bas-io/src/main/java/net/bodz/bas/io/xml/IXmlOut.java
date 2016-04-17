@@ -2,78 +2,66 @@ package net.bodz.bas.io.xml;
 
 import java.util.Map;
 
-import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.ICloseable;
+import net.bodz.bas.io.IFlushable;
 
 public interface IXmlOut
-        extends ITreeOut {
+        extends IFlushable, ICloseable {
 
-    void _xml_pi(String version, String encoding);
+    String getTagName();
 
-    void processInstruction(String target, String data);
-
-    void comment(String str);
-
-    IXmlTagBuilder tag(String name);
-
-    IXmlTagBuilder tag(String name, String text);
-
-    IXmlTagBuilder tag(String name, Map<String, ?> attributes, String text);
+    IXmlOut getParent();
 
     /**
      * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
      * <p>
      * A tag name stack is used to remember names from previous calls.
-     *
+     * 
      * @param name
      *            The tag name, non-<code>null</code>.
+     * @return Child out node.
      */
-    IXmlTagBuilder start(String name);
+    IXmlOut begin(String name);
 
     /**
-     * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
-     * <p>
-     * A tag name stack is used to remember names from previous calls.
-     *
-     * @param name
-     *            The tag name, non-<code>null</code>.
-     * @param attributes
-     *            Attributes for the tag, can be <code>null</code> if none.
+     * @return parent out node.
      */
-    IXmlTagBuilder start(String name, Map<String, ?> attributes);
+    IXmlOut end();
 
-    /**
-     * Write the end part of the tag pair, for example, <code>&lt;/tag&gt;</code>.
-     * <p>
-     * The last tag name is used.
-     *
-     * @throws IllegalStateException
-     *             If no more tag to end.
-     */
-    void end();
+    IXmlOut attrs(Map<String, ?> attributes);
 
-    void endAll();
+    IXmlOut attr(String name, String value);
 
-    /**
-     * Write the left angle and the name of the begin tag, for example, <code>&lt;tag</code>.
-     * <p>
-     * A tag name stack is used.
-     */
-    void startTagBegin(String name);
+    IXmlOut attr(String name, Object value);
 
-    void attribute(String name, Object value);
+    IXmlOut id(String id);
 
-    /**
-     * Write the right angle of the start tag. ie., <code>&gt;</code>.
-     */
-    void startTagEnd(boolean empty);
+// IXmlOut text();
 
-    void text(String str);
+    IXmlOut text(String str);
 
-    void textln(String str);
+    IXmlOut text(Object str);
 
-    void cdata(String cdata);
+    IXmlOut textln(String str);
+
+    IXmlOut textln(Object str);
+
+    IXmlOut cdata(String cdata);
+
+    IXmlOut pi(String target, String data);
+
+    IXmlOut comment(String str);
 
     void verbatim(String str);
+
+    @Override
+    void flush(boolean sync);
+
+    @Override
+    void flush();
+
+    @Override
+    void close();
 
     IXmlOut NULL = new NullXmlOut();
 

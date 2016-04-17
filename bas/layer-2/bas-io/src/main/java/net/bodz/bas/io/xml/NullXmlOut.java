@@ -2,84 +2,103 @@ package net.bodz.bas.io.xml;
 
 import java.util.Map;
 
-import net.bodz.bas.io.impl.NullTreeOut;
-
 public class NullXmlOut
-        extends NullTreeOut
         implements IXmlOut {
 
     @Override
-    public void _xml_pi(String version, String encoding) {
+    public String getTagName() {
+        return null;
     }
 
     @Override
-    public void processInstruction(String target, String data) {
-    }
-
-
-    @Override
-    public void comment(String str) {
+    public IXmlOut getParent() {
+        return null;
     }
 
     @Override
-    public IXmlTagBuilder tag(String name) {
-        return IXmlTagBuilder.NULL;
+    public IXmlOut begin(String name) {
+        return this;
     }
 
     @Override
-    public IXmlTagBuilder tag(String name, String text) {
-        return IXmlTagBuilder.NULL;
+    public IXmlOut end() {
+        return this;
     }
 
     @Override
-    public IXmlTagBuilder tag(String name, Map<String, ?> attributes, String text) {
-        return IXmlTagBuilder.NULL;
+    public IXmlOut attrs(Map<String, ?> attributes) {
+        return this;
     }
 
     @Override
-    public IXmlTagBuilder start(String name) {
-        return IXmlTagBuilder.NULL;
+    public IXmlOut attr(String name, String value) {
+        return this;
     }
 
     @Override
-    public IXmlTagBuilder start(String name, Map<String, ?> attributes) {
-        return IXmlTagBuilder.NULL;
+    public IXmlOut attr(String name, Object value) {
+        return this;
     }
 
     @Override
-    public void end() {
+    public IXmlOut id(String id) {
+        return this;
     }
 
     @Override
-    public void endAll() {
+    public IXmlOut text(String str) {
+        return this;
     }
 
     @Override
-    public void startTagBegin(String name) {
+    public IXmlOut text(Object str) {
+        return null;
     }
 
     @Override
-    public void attribute(String name, Object value) {
+    public IXmlOut textln(String str) {
+        return this;
     }
 
     @Override
-    public void startTagEnd(boolean empty) {
+    public IXmlOut textln(Object str) {
+        return null;
     }
 
     @Override
-    public void text(String str) {
+    public IXmlOut cdata(String cdata) {
+        return this;
     }
 
     @Override
-    public void textln(String str) {
+    public IXmlOut pi(String target, String data) {
+        return this;
     }
 
     @Override
-    public void cdata(String cdata) {
+    public IXmlOut comment(String str) {
+        return this;
     }
 
     @Override
     public void verbatim(String str) {
+    }
+
+    @Override
+    public void flush(boolean sync) {
+    }
+
+    @Override
+    public void flush() {
+    }
+
+    @Override
+    public void close() {
+    }
+
+    @Override
+    public boolean isClosed() {
+        return false;
     }
 
 }

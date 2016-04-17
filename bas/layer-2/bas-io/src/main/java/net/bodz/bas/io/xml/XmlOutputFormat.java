@@ -1,98 +1,46 @@
 package net.bodz.bas.io.xml;
 
+import net.bodz.bas.fn.legacy.Pred1;
+
 public class XmlOutputFormat {
 
-    private boolean xmlDeclaration = true;
-    private boolean xhtmlMode = false;
-    private String encoding = "utf-8";
-    private boolean omitEncoding = false;
+    public boolean xmlDeclaration = true;
+    public String encoding = "utf-8";
+    public boolean omitEncoding = false;
 
-    private boolean emptyElement = false;
-    private int indentSize = 2;
-    private String lineSeparator = "\n";
-    private char quoteChar = '\"';
+    public int indentSize = 2;
+    public String lineSeparator = "\n";
+    public char quoteChar = '\"';
 
-    private boolean stripComment = false;
-    private boolean preserveSpace = false;
+    public boolean stripComment = false;
+    public boolean preserveSpace = false;
 
-    public boolean isXmlDeclaration() {
-        return xmlDeclaration;
+    /**
+     * <ul>
+     * <li><code>true</code> for <code>&lt;foo /&gt;</code>.
+     * <li><code>false</code> for <code>&lt;foo&gt;&lt;/foo&gt;</code>
+     * </ul>
+     */
+    public boolean shortEmptyElement = false;
+
+    public boolean newLineAfterComment = true;
+    public boolean newLineAfterPI = true;
+    public boolean newLineAfterVerbatim = false;
+
+    public boolean attributeBuffer = true;
+    public Boolean sortAttributeNames = false;
+
+    XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute();
+    XmlStringEncoder textEncoder = XmlStringEncoder.forText();
+
+    Pred1<IXmlOut> shouldBreakLine;
+
+    public String encodeAttr(String str) {
+        return attribEncoder.encode(str);
     }
 
-    public void setXmlDeclaration(boolean xmlDeclaration) {
-        this.xmlDeclaration = xmlDeclaration;
-    }
-
-    public boolean isXhtmlMode() {
-        return xhtmlMode;
-    }
-
-    public void setXhtmlMode(boolean xhtmlMode) {
-        this.xhtmlMode = xhtmlMode;
-    }
-
-    public String getEncoding() {
-        return encoding;
-    }
-
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
-    }
-
-    public boolean isOmitEncoding() {
-        return omitEncoding;
-    }
-
-    public void setOmitEncoding(boolean omitEncoding) {
-        this.omitEncoding = omitEncoding;
-    }
-
-    public boolean isEmptyElement() {
-        return emptyElement;
-    }
-
-    public void setEmptyElement(boolean emptyElement) {
-        this.emptyElement = emptyElement;
-    }
-
-    public char getQuoteChar() {
-        return quoteChar;
-    }
-
-    public void setQuoteChar(char quoteChar) {
-        this.quoteChar = quoteChar;
-    }
-
-    public int getIndentSize() {
-        return indentSize;
-    }
-
-    public void setIndentSize(int indentSize) {
-        this.indentSize = indentSize;
-    }
-
-    public String getLineSeparator() {
-        return lineSeparator;
-    }
-
-    public void setLineSeparator(String lineSeparator) {
-        this.lineSeparator = lineSeparator;
-    }
-
-    public boolean isStripComment() {
-        return stripComment;
-    }
-
-    public void setStripComment(boolean stripComment) {
-        this.stripComment = stripComment;
-    }
-
-    public boolean isPreserveSpace() {
-        return preserveSpace;
-    }
-
-    public void setPreserveSpace(boolean preserveSpace) {
-        this.preserveSpace = preserveSpace;
+    public String encodeText(String str) {
+        return textEncoder.encode(str);
     }
 
     public static final XmlOutputFormat DEFAULT;
