@@ -1,9 +1,9 @@
 package net.bodz.bas.typer.std;
 
-public interface IMutableAttributes
-        extends IAttributes {
+import net.bodz.bas.rtx.IAttributed;
 
-    void setAttribute(String name, Object value);
+public interface IMutableAttributes
+        extends IAttributes, IAttributed {
 
     void removeAttribute(String name);
 
