@@ -10,17 +10,17 @@ public interface IMapperTemplate<T, C>
 
     List<T> filter(C criteria);
 
-    T select(long id);
+    T select(Object id);
 
-    T selectPrev(long id);
+    T selectPrev(Object id);
 
-    T selectNext(long id);
+    T selectNext(Object id);
 
     long insert(T obj);
 
     void update(T obj);
 
-    boolean delete(int id);
+    boolean delete(Object id);
 
     Map<String, Number> count(C criteria);
 
