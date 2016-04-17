@@ -237,4 +237,9 @@ public class MutableOptionGroup
         super.setModifiers(modifiers);
     }
 
+    @Override
+    public void setPriority(int priority) {
+        super.setPriority(priority);
+    }
+
 }

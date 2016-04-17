@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
@@ -17,6 +18,7 @@ public class BeanProperty
     // private final Method xetter;
     private final int detailLevel;
     private final int modifiers;
+    private final int priority;
 
     private Boolean propertyChangeSource;
 
@@ -43,6 +45,9 @@ public class BeanProperty
             this.detailLevel = aDetailLevel.value();
         else
             this.detailLevel = FeatureDescriptorUtil.getDetailLevel(propertyDescriptor);
+
+        Priority aPriority = xetter.getAnnotation(Priority.class);
+        priority = aPriority == null ? 0 : aPriority.value();
     }
 
     static Method xetter(PropertyDescriptor propertyDescriptor) {
@@ -151,6 +156,11 @@ public class BeanProperty
     @Override
     public int getDetailLevel() {
         return detailLevel;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */

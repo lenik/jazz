@@ -12,6 +12,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
@@ -34,6 +35,7 @@ public class BeanType
 
     private final int modifiers;
     private final int detailLevel;
+    private final int priority;
 
     public BeanType(BeanInfo beanInfo, int infoset, ClassDoc classDoc, IXjdocProvider docLoader) {
         super(beanInfo.getBeanDescriptor().getBeanClass(), //
@@ -51,6 +53,9 @@ public class BeanType
             this.detailLevel = aDetailLevel.value();
         else
             this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
+
+        Priority aPriority = beanClass.getAnnotation(Priority.class);
+        priority = aPriority == null ? 0 : aPriority.value();
 
         boolean docs = (infoset & ITypeProvider.DOCS) != 0;
 
@@ -177,6 +182,11 @@ public class BeanType
     @Override
     public int getDetailLevel() {
         return detailLevel;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
 }

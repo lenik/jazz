@@ -16,6 +16,7 @@ public class MutableElement
     private iString helpDoc;
     private int detailLevel;
     private int modifiers;
+    private int priority;
 
     @Override
     public String getName() {
@@ -75,6 +76,15 @@ public class MutableElement
     @Override
     public void setModifiers(int modifiers) {
         this.modifiers = modifiers;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.bodz.bas.potato.provider.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractConstructor;
 import net.bodz.bas.potato.element.IConstructor;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -13,7 +14,8 @@ public class ReflectConstructor
     private final Constructor<?> ctor;
 
     private final int modifiers;
-    private final int verboseLevel;
+    private final int detailLevel;
+    private final int priority;
 
     /**
      * @throws NullPointerException
@@ -25,7 +27,10 @@ public class ReflectConstructor
 
         int _modifiers = ctor.getModifiers();
         this.modifiers = _modifiers;
-        this.verboseLevel = ReflectModifiers.toDetailLevel(_modifiers);
+        this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
+
+        Priority aPriority = ctor.getAnnotation(Priority.class);
+        priority = aPriority == null ? 0 : aPriority.value();
     }
 
     /** ⇱ Implementation Of {@link IConstructor}. */
@@ -52,7 +57,12 @@ public class ReflectConstructor
 
     @Override
     public int getDetailLevel() {
-        return verboseLevel;
+        return detailLevel;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */

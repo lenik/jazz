@@ -43,4 +43,9 @@ public abstract class DecoratedElement
         return getWrapped().getModifiers();
     }
 
+    @Override
+    public int getPriority() {
+        return getWrapped().getPriority();
+    }
+
 }

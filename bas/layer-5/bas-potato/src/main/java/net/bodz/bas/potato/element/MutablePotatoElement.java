@@ -20,6 +20,7 @@ public class MutablePotatoElement
     private String name;
     private int detailLevel = DetailLevel.NORMAL;
     private int modifiers;
+    private int priority;
 
     private IElementDoc xjdoc;
     private iString labelOverride = new XiString();
@@ -107,6 +108,11 @@ public class MutablePotatoElement
         return modifiers;
     }
 
+    @Override
+    public int getPriority() {
+        return priority;
+    }
+
     /** ⇱ Implementation Of {@link IMutableElement}. */
     /* _____________________________ */static section.iface __MUTABLE__;
 
@@ -137,6 +143,10 @@ public class MutablePotatoElement
     @Override
     public void setModifiers(int modifiers) {
         this.modifiers = modifiers;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     /** ⇱ Implementation Of {@link IXjdocElement}. */

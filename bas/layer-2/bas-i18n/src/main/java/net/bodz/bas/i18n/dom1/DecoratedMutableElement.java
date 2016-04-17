@@ -38,8 +38,18 @@ public class DecoratedMutableElement
     }
 
     @Override
+    public int getDetailLevel() {
+        return getWrapped().getDetailLevel();
+    }
+
+    @Override
     public void setDetailLevel(int userLevel) {
         getWrapped().setDetailLevel(userLevel);
+    }
+
+    @Override
+    public int getModifiers() {
+        return getWrapped().getModifiers();
     }
 
     @Override
@@ -48,13 +58,13 @@ public class DecoratedMutableElement
     }
 
     @Override
-    public int getDetailLevel() {
-        return getWrapped().getDetailLevel();
+    public int getPriority() {
+        return getWrapped().getPriority();
     }
 
     @Override
-    public int getModifiers() {
-        return getWrapped().getModifiers();
+    public void setPriority(int priority) {
+        getWrapped().setPriority(priority);
     }
 
 }

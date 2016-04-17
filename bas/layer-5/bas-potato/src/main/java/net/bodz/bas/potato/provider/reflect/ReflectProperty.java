@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
@@ -18,6 +19,7 @@ public class ReflectProperty
 
     private final int modifiers;
     private final int detailLevel;
+    private final int priority;
 
     private PropertyChangeSourceMode propertyChangeSourceMode;
 
@@ -33,6 +35,9 @@ public class ReflectProperty
             this.detailLevel = aDetailLevel.value();
         else
             this.detailLevel = ReflectModifiers.toDetailLevel(_modifiers);
+
+        Priority aPriority = field.getAnnotation(Priority.class);
+        priority = aPriority == null ? 0 : aPriority.value();
     }
 
     /** ⇱ Implementation Of {@link IProperty}. */
@@ -149,6 +154,11 @@ public class ReflectProperty
     @Override
     public int getDetailLevel() {
         return detailLevel;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */

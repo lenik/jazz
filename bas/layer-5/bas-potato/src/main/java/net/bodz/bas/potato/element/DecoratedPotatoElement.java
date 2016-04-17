@@ -87,6 +87,11 @@ public class DecoratedPotatoElement
         return getWrapped().getModifiers();
     }
 
+    @Override
+    public int getPriority() {
+        return getWrapped().getPriority();
+    }
+
     /** ⇱ Implementation Of {@link IXjdocElement}. */
     /* _____________________________ */static section.iface __XJDOC__;
 
