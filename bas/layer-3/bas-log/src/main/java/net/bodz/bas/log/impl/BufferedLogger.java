@@ -9,9 +9,10 @@ import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.PrintStreamPrintOut;
 import net.bodz.bas.jvm.stack.StackTrace;
 import net.bodz.bas.log.AbstractLogSink;
-import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.LogRecord;
+import net.bodz.bas.log.SinkBasedLogger;
 
 public class BufferedLogger
         extends SinkBasedLogger {
@@ -163,28 +164,6 @@ public class BufferedLogger
     public void _trace(int delta, Throwable e, Object message) {
         LogRecord item = new LogRecord(LogLevel.TRACE, delta, message, e);
         records.add(item);
-    }
-
-}
-
-class LogRecord {
-
-    LogLevel level;
-    int delta;
-    Object message;
-    Throwable exception;
-
-    public LogRecord(LogLevel level, int delta, Object message) {
-        this.level = level;
-        this.delta = delta;
-        this.message = message;
-    }
-
-    public LogRecord(LogLevel level, int delta, Object message, Throwable exception) {
-        this.level = level;
-        this.delta = delta;
-        this.message = message;
-        this.exception = exception;
     }
 
 }
