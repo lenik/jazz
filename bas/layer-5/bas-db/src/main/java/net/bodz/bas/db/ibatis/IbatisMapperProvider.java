@@ -71,7 +71,7 @@ public class IbatisMapperProvider
         TypeAliasRegistry typeAliasRegistry = config.getTypeAliasRegistry();
         TypeHandlerRegistry typeHandlerRegistry = config.getTypeHandlerRegistry();
         try {
-            for (Class<?> typeHandlerClass : TypeIndex.forClass(TypeHandlerImpl.class, false))
+            for (Class<?> typeHandlerClass : TypeIndex.forClass(TypeHandler.class, false))
                 typeHandlerRegistry.register(typeHandlerClass);
             for (Class<?> aliasedClass : TypeIndex.forClass(Aliased.class))
                 typeAliasRegistry.registerAlias(aliasedClass);
