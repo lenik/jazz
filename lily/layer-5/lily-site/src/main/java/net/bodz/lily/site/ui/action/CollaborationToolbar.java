@@ -1,6 +1,6 @@
-package net.bodz.lily.site.ui.cmd;
+package net.bodz.lily.site.ui.action;
 
-import net.bodz.bas.ui.model.cmd.UiToolbarDecl;
+import net.bodz.bas.ui.model.action.UiToolbarDecl;
 
 /**
  *  transfer/send

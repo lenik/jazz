@@ -1,4 +1,4 @@
-package net.bodz.bas.ui.model.cmd;
+package net.bodz.bas.ui.model.action;
 
 public enum LocationType {
 
