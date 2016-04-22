@@ -37,17 +37,10 @@ public interface IByteOut
                 throws IOException {
             if (buf == null)
                 throw new NullPointerException("buf");
-            byte[] array = buf.array();
             int offset = buf.arrayOffset();
             int pos = buf.position();
-            int limit = buf.limit();
-            out.write(array, offset + pos, limit - pos);
-
-            // TODO:
-            // int remaining = buf.remaining();
-            // byte[] copy = new byte[remaining];
-            // buf.get(copy, 0, remaining);
-            // out.write(copy, 0, remaining);
+            out.write(buf.array(), offset + pos, buf.remaining());
+            buf.position(buf.limit());
         }
 
         public static void dump(IByteOut out, IByteIn byteIn)
