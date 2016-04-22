@@ -21,7 +21,7 @@ public class TokenQueueTest
         assertEquals("d", queue.getRemainingPath());
 
         queue.shift();
-        assertEquals("", queue.getRemainingPath());
+        assertNull(queue.getRemainingPath());
 
         assertTrue(queue.isEmpty());
     }

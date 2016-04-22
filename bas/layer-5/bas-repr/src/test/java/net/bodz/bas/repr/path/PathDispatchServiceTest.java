@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import net.bodz.bas.repr.path.builtin.*;
@@ -46,6 +47,7 @@ public class PathDispatchServiceTest
         }
     }
 
+    @Ignore
     @Test
     public void testMixed()
             throws PathDispatchException {

@@ -27,7 +27,7 @@ public class PictureTest
         picture.setBackground(picBg);
 
         Image image = SWTResources.//
-                getImage(new File("/usr/share/pixmaps/faces/sunset.jpg"));
+                getImage(new File("/usr/share/pixmaps/squeak.png"));
         // getImageRes("icons/full/obj16/ant.gif");
         picture.setImage(image);
     }

@@ -131,8 +131,8 @@ public class HelpPageFormatter {
                 }
                 offset = line.length();
 
-                String description = option.getDescription().toString();
-                if (offset >= descriptionColumn && !description.isEmpty()) {
+                String description = Nullables.toString(option.getDescription());
+                if (offset >= descriptionColumn && !Nullables.isEmpty(description)) {
                     line.append('\n');
                     offset = 0;
                 }
