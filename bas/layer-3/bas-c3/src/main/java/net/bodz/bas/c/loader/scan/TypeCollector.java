@@ -219,7 +219,7 @@ public class TypeCollector<T> {
     protected Collection<Class<?>> listFilteredDerivations(Class<?> base) {
         List<Class<?>> list = new ArrayList<Class<?>>();
 
-        for (Class<?> derivation : scanner.getDerivations(base)) {
+        for (Class<?> derivation : scanner.getDerivations(base, -1)) {
             if (derivation.isAnonymousClass() || derivation.isLocalClass() || derivation.isMemberClass())
                 continue;
 
