@@ -50,9 +50,9 @@ public class BufCharOut
     }
 
     @Override
-    public void write(CharSequence chars, int off, int len)
+    public void write(CharSequence chars, int start, int end)
             throws IOException {
-        buffer.append(chars, off, off + len);
+        buffer.append(chars, start, end);
     }
 
     @Override

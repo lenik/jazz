@@ -52,9 +52,9 @@ public class PrintOutImpl
     }
 
     @Override
-    public void write(CharSequence chars, int off, int len)
+    public void write(CharSequence chars, int start, int end)
             throws IOException {
-        baseImpl.write(chars, off, len);
+        baseImpl.write(chars, start, end);
     }
 
     @Override
