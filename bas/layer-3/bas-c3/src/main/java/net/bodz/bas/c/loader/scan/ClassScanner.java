@@ -16,6 +16,7 @@ import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.meta.MetaAnnotation;
 
 public class ClassScanner
         extends ResourceScanner {
@@ -23,13 +24,16 @@ public class ClassScanner
     static final Logger logger = LoggerFactory.getLogger(ClassScanner.class);
 
     public static final int SUBCLASSES = 1;
-    public static final int ANNOTATED_CLASSES = 2;
+    public static final int IMPLS = 2;
+    public static final int ANNOTATED_CLASSES = 4;
 
-    Set<Class<?>> analyzedClasses = new HashSet<Class<?>>();
-    Set<Class<?>> rootClasses = new HashSet<Class<?>>();
-    Map<Class<?>, Set<Class<?>>> subclassesMap = new HashMap<Class<?>, Set<Class<?>>>();
-    Map<Class<?>, Set<Class<?>>> annotatedClassesMap = new HashMap<Class<?>, Set<Class<?>>>();
-    Map<String, Set<Class<?>>> featureMap = new HashMap<String, Set<Class<?>>>();
+    private Set<Class<?>> analyzedClasses = new HashSet<>();
+    private Set<Class<?>> rootClasses = new HashSet<>();
+    private Map<Class<?>, Set<Class<?>>> subclassesMap = new HashMap<>();
+    private Map<Class<?>, Set<Class<?>>> implsMap = new HashMap<>();
+    private Map<Class<?>, Set<Class<?>>> annotatedClassesMap = new HashMap<>();
+
+    // private Map<String, Set<Class<?>>> featureMap = new HashMap<>();
 
     public ClassScanner() {
         super(ClassOrDirFileFilter.INSTANCE);
@@ -37,6 +41,8 @@ public class ClassScanner
 
     /**
      * Get all classes whose parent class is the specified class.
+     * 
+     * Only direct subclass is included.
      * 
      * @param parentClass
      *            The parent class.
@@ -50,6 +56,15 @@ public class ClassScanner
             subclassesMap.put(parentClass, subclasses);
         }
         return subclasses;
+    }
+
+    public synchronized Set<Class<?>> getImpls(Class<?> parentClass) {
+        Set<Class<?>> impls = implsMap.get(parentClass);
+        if (impls == null) {
+            impls = new HashSet<Class<?>>();
+            implsMap.put(parentClass, impls);
+        }
+        return impls;
     }
 
     /**
@@ -70,13 +85,6 @@ public class ClassScanner
         return annotatedClasses;
     }
 
-    /**
-     * Get all classes
-     */
-    public Set<Class<?>> getDerivations(Class<?> base) {
-        return getDerivations(base, -1);
-    }
-
     public Set<Class<?>> getDerivations(Class<?> base, int selection) {
         Set<Class<?>> derivations = new HashSet<Class<?>>();
         findDerivations(derivations, base, selection);
@@ -84,29 +92,43 @@ public class ClassScanner
     }
 
     void findDerivations(Set<Class<?>> markSet, Class<?> base, int selection) {
-        if (markSet.add(base)) {
-            if ((selection & SUBCLASSES) != 0) {
-                // assert !clazz.isAnnotation();
-                for (Class<?> subclass : getSubclasses(base))
-                    findDerivations(markSet, subclass, selection);
+        if (!markSet.add(base))
+            return;
+
+        if ((selection & SUBCLASSES) != 0) {
+            // assert !base.isAnnotation();
+            for (Class<?> subclass : getSubclasses(base))
+                findDerivations(markSet, subclass, selection);
+        }
+
+        if ((selection & IMPLS) != 0) {
+            // assert base.isInterface();
+            for (Class<?> impl : getImpls(base))
+                findDerivations(markSet, impl, selection);
+        }
+
+        if ((selection & ANNOTATED_CLASSES) != 0) {
+            Set<Class<?>> annotatedSet = annotatedClassesMap.get(base);
+            if (annotatedSet == null)
+                return;
+
+            if (!base.isAnnotation() && !Collections.isEmpty(annotatedSet))
+                throw new IllegalUsageException(String.format(//
+                        "A non-annotation %s is used to annotate on: ", base, annotatedSet));
+
+            int sel = selection;
+            boolean inheritedAnnotation = base.isAnnotationPresent(Inherited.class);
+            if (!inheritedAnnotation) {
+                sel &= ~SUBCLASSES;
+                sel &= ~IMPLS;
             }
-            if ((selection & ANNOTATED_CLASSES) != 0) {
-                Set<Class<?>> annotatedSet = annotatedClassesMap.get(base);
-                if (annotatedSet == null)
-                    return;
 
-                if (!base.isAnnotation() && !Collections.isEmpty(annotatedSet))
-                    throw new IllegalUsageException(String.format(//
-                            "A non-annotation %s is used to annotate on: ", base, annotatedSet));
+            boolean isMeta = base.isAnnotationPresent(MetaAnnotation.class);
+            if (!isMeta)
+                sel &= ~ANNOTATED_CLASSES;
 
-                int sel = selection;
-                boolean inheritedAnnotation = base.isAnnotationPresent(Inherited.class);
-                if (!inheritedAnnotation)
-                    sel &= ~SUBCLASSES;
-
-                for (Class<?> annotatedClass : getAnnotatedClasses(base))
-                    findDerivations(markSet, annotatedClass, sel);
-            }
+            for (Class<?> annotatedClass : getAnnotatedClasses(base))
+                findDerivations(markSet, annotatedClass, sel);
         }
     }
 
@@ -116,41 +138,64 @@ public class ClassScanner
      * @retu Modification counter.
      */
     public synchronized int analyze(Class<?> clazz) {
-        return _analyze(clazz);
+        if (!analyzedClasses.add(clazz))
+            return 0;
+        return parseClass(clazz);
     }
 
-    private int _analyze(Class<?> clazz) {
+    private int parseClass(Class<?> clazz) {
         int counter = 0;
-        if (analyzedClasses.add(clazz)) {
-            Class<?> superclass = clazz.getSuperclass();
-            if (superclass != null) {
-                Set<Class<?>> subclasses = getSubclasses(superclass);
-                if (subclasses.add(clazz))
-                    counter++;
-                counter += _analyze(superclass);
-            } else
-                rootClasses.add(clazz);
 
-            for (Class<?> iface : clazz.getInterfaces()) {
-                Set<Class<?>> subclasses = getSubclasses(iface);
-                if (subclasses.add(clazz))
-                    counter++;
-                counter += _analyze(iface); // iface is also parsed in full-scan.
-            }
+        Class<?> superclass = clazz.getSuperclass();
+        if (superclass != null) {
+            counter += parseSuperclass(clazz, superclass);
+        } else
+            rootClasses.add(clazz);
 
-            Annotation[] annotations;
-            annotations = clazz.getAnnotations();
-            // annotations = clazz.getDeclaredAnnotations();
-            for (Annotation annotation : annotations) {
-                Class<? extends Annotation> annotationType = annotation.annotationType();
-                Set<Class<?>> annotatedSet = getAnnotatedClasses(annotationType);
-                if (annotatedSet.add(clazz))
-                    counter++;
-                // @A @interface B, and @B class C, then @A class C.
-                // annotationType is also analyzed in full-scan.
-                // counter += _analyze(annotationType);
-            }
-        }
+        for (Class<?> iface : clazz.getInterfaces())
+            counter += parseImpls(clazz, iface);
+
+        // clazz.getDeclaredAnnotations()
+        for (Annotation annotation : clazz.getAnnotations())
+            counter += parseAnnotation(clazz, annotation);
+
+        return counter;
+    }
+
+    int parseSuperclass(Class<?> clazz, Class<?> superclass) {
+        int counter = 0;
+        Set<Class<?>> subclasses = getSubclasses(superclass);
+        if (subclasses.add(clazz))
+            counter++;
+        counter += parseClass(superclass);
+        return counter;
+    }
+
+    int parseImpls(Class<?> clazz, Class<?> iface) {
+        int counter = 0;
+        Set<Class<?>> impls = getImpls(iface);
+        if (impls.add(clazz))
+            counter++;
+
+        for (Class<?> sup : iface.getInterfaces())
+            counter += parseImpls(clazz, sup);
+
+        counter += parseClass(iface); // iface is also parsed in full-scan.
+        return counter;
+    }
+
+    int parseAnnotation(Class<?> clazz, Annotation annotation) {
+        int counter = 0;
+        Class<? extends Annotation> annotationType = annotation.annotationType();
+        Set<Class<?>> annotatedSet = getAnnotatedClasses(annotationType);
+        if (annotatedSet.add(clazz))
+            counter++;
+
+        // option:
+        // @A @interface B, and @B class C, then @A class C.
+
+        // annotationType is also analyzed in full-scan.
+        // counter += parseClass(annotationType);
         return counter;
     }
 
@@ -214,7 +259,7 @@ public class ClassScanner
         scanTypes(packageName, new ITypeCallback() {
             @Override
             public boolean type(Class<?> clazz) {
-                int addCount = _analyze(clazz);
+                int addCount = parseClass(clazz);
                 return addCount > 0;
             }
         });
@@ -283,7 +328,15 @@ public class ClassScanner
                 Set<Class<?>> subclasses = subclassesMap.get(clazz);
                 if (subclasses != null)
                     for (Class<?> subclass : subclasses) {
-                        dump("-", prefix, subclass);
+                        dump("<-- ", prefix, subclass);
+                    }
+            }
+
+            if ((selection & IMPLS) != 0) {
+                Set<Class<?>> impls = implsMap.get(clazz);
+                if (impls != null)
+                    for (Class<?> impl : impls) {
+                        dump("o-- ", prefix, impl);
                     }
             }
 
@@ -291,7 +344,7 @@ public class ClassScanner
                 Set<Class<?>> annotatedClasses = annotatedClassesMap.get(clazz);
                 if (annotatedClasses != null)
                     for (Class<?> annotatedClass : annotatedClasses)
-                        dump("#", prefix, annotatedClass);
+                        dump("@-- ", prefix, annotatedClass);
             }
         }
 
