@@ -1,7 +1,18 @@
 package net.bodz.mda.xjdoc.model.artifact;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import net.bodz.mda.xjdoc.Xjdocs;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 
 /**
  * Example class for the artifact tag library.
@@ -14,9 +25,29 @@ import org.junit.Test;
 public class ArtifactTagLibraryTest
         extends Assert {
 
+    ClassDoc doc;
+
+    @Before
+    public void load() {
+        doc = Xjdocs.getDefaultProvider().getClassDoc(getClass());
+    }
+
     @Test
-    public void test() {
-        fail("Not yet implemented");
+    public void testGetLangs() {
+        String[] langs = (String[]) doc.getTag("lang");
+        Set<String> set = new TreeSet<>(Arrays.asList(langs));
+        assertEquals(2, set.size());
+        assertTrue(set.contains("zh"));
+        assertTrue(set.contains("en"));
+    }
+
+    @Test
+    public void testGetSite()
+            throws MalformedURLException {
+        Map<String, URL> site = (Map<String, URL>) doc.getTag("site");
+        URL def = (URL) site.get(null);
+        URL example = new URL("http://www.example.com");
+        assertEquals(example, def);
     }
 
 }

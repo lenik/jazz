@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import net.bodz.bas.typer.Typers;
@@ -10,6 +11,7 @@ import user.bean.AddressBean;
 public class MutablePropertyMapTest
         extends Assert {
 
+    @Ignore
     @Test
     public void testGetPropertyMap() {
         IPropertyMap propertyMap = Typers.getTyper(AddressBean.class, IPropertyMap.class);

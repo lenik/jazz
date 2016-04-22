@@ -43,7 +43,7 @@ public class PathFieldMap
                 builder.fromPropertyPaths(formDecl, "priority", "creationDate", "lastModifiedDate", "flags", "state");
                 break;
             case 'a':
-                builder.fromPropertyPaths(formDecl, "accessMode", "owner", "ownerGroup");
+                builder.fromPropertyPaths(formDecl, "accessMode", "ownerUser", "ownerGroup");
                 break;
             case '*':
                 builder.fromPropertyPaths(formDecl, pathProperties);
