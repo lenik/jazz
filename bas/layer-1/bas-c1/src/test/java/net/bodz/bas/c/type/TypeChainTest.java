@@ -47,7 +47,7 @@ public class TypeChainTest
     public void testAncestors()
             throws Exception {
         List<?> list = Iterables.toList(TypeChain.ancestors(TreeOutImpl.class, Object.class));
-        assertEquals(14, list.size());
+        assertEquals(15, list.size());
 
         Set<?> set = Iterables.toSet(list);
         assertEquals(list.size(), set.size());

@@ -5,7 +5,7 @@ import java.util.Set;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import net.bodz.bas.c.type.TypeNearby;
+import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.lily.model.base.security.LoginContext;
@@ -157,16 +157,16 @@ public class CoObjectMask
         return loginContext;
     }
 
-    static TypeNearby[] nearbies = {
+    static NameConventionTypeMapper[] maskTmaps = {
             // TODO cache-enable?
-            new TypeNearby(null, null, "Mask", false), //
-            new TypeNearby(null, "impl.", "Mask", false), //
+            new NameConventionTypeMapper(null, null, "Mask", false), //
+            new NameConventionTypeMapper(null, "impl.", "Mask", false), //
     };
 
     public static Class<? extends CoObjectMask> findMaskClass(Class<?> objClass) {
         Class<? extends CoObjectMask> maskClass;
-        for (TypeNearby nearby : nearbies) {
-            maskClass = (Class<? extends CoObjectMask>) nearby.find(objClass);
+        for (NameConventionTypeMapper tmap : maskTmaps) {
+            maskClass = (Class<? extends CoObjectMask>) tmap.map(objClass);
             if (maskClass != null)
                 return maskClass;
         }

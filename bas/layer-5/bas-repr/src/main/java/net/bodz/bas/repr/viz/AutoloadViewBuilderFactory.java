@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.bodz.bas.c.type.ITypeMapper;
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.c.type.TypeChain;
-import net.bodz.bas.c.type.TypeNearby;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -66,14 +66,14 @@ public abstract class AutoloadViewBuilderFactory
         return tset;
     }
 
-    protected Collection<TypeNearby> getAutoloadSpecs() {
+    protected Collection<ITypeMapper> getTypeMappers() {
         return Collections.emptySet();
     }
 
     IViewBuilder<?> autoload(Class<?> clazz)
             throws ReflectiveOperationException {
-        for (TypeNearby nearby : getAutoloadSpecs()) {
-            Class<?> vboClass = nearby.find(clazz);
+        for (ITypeMapper tmap : getTypeMappers()) {
+            Class<?> vboClass = tmap.map(clazz);
             if (vboClass != null) {
                 IViewBuilder<?> vbo;
                 // vbo = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);

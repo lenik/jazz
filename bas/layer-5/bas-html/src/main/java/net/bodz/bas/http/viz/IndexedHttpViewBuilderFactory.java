@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import net.bodz.bas.c.type.TypeNearby;
+import net.bodz.bas.c.type.ITypeMapper;
+import net.bodz.bas.c.type.NameConventionTypeMapper;
 
 /**
  * @see IHttpViewBuilder The indexed type.
@@ -13,10 +14,10 @@ import net.bodz.bas.c.type.TypeNearby;
 public class IndexedHttpViewBuilderFactory
         extends AbstractHttpViewBuilderFactory {
 
-    private List<TypeNearby> typeNearbies = new ArrayList<TypeNearby>();
+    private List<ITypeMapper> htmTmaps = new ArrayList<>();
 
     public IndexedHttpViewBuilderFactory() {
-        typeNearbies.add(new TypeNearby(null, null, "_htm", true));
+        htmTmaps.add(new NameConventionTypeMapper(null, null, "_htm", true));
     }
 
     @Override
@@ -26,8 +27,8 @@ public class IndexedHttpViewBuilderFactory
     }
 
     @Override
-    protected Collection<TypeNearby> getAutoloadSpecs() {
-        return typeNearbies;
+    protected Collection<ITypeMapper> getTypeMappers() {
+        return htmTmaps;
     }
 
     private static IndexedHttpViewBuilderFactory instance = new IndexedHttpViewBuilderFactory();
