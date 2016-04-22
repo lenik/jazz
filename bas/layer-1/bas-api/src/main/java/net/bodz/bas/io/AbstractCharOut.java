@@ -36,9 +36,9 @@ public abstract class AbstractCharOut
     }
 
     @Override
-    public void write(CharSequence chars, int off, int len)
+    public void write(CharSequence chars, int start, int end)
             throws IOException {
-        CharBuffer buf = CharBuffer.wrap(chars, off, off + len);
+        CharBuffer buf = CharBuffer.wrap(chars, start, end);
         write(buf);
     }
 
