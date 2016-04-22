@@ -1,0 +1,10 @@
+net.bodz.bas.ctx.sys.UserDirVars
+net.bodz.bas.i18n.CharsetVars
+net.bodz.bas.i18n.CurrencyFormatVars
+net.bodz.bas.i18n.DateFormatVars
+net.bodz.bas.i18n.DateTimeFormatVars
+net.bodz.bas.i18n.IntegerFormatVars
+net.bodz.bas.i18n.LocaleVars
+net.bodz.bas.i18n.NumberFormatVars
+net.bodz.bas.i18n.PercentFormatVars
+net.bodz.bas.i18n.TimeFormatVars

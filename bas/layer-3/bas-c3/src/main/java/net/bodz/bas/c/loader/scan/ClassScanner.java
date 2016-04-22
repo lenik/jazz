@@ -216,7 +216,7 @@ public class ClassScanner
             try {
                 clazz = Class.forName(fqcn, false, getClassLoader());
             } catch (ClassNotFoundException | NoClassDefFoundError e) {
-                logger.error("Failed to resolve class: " + fqcn, e);
+                logger.error("Failed to resolve class: " + fqcn);
                 return false;
             }
             return typeCallback.type(clazz);

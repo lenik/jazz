@@ -1,2 +1,3 @@
 net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler
+net.bodz.bas.db.ibatis.SetTypeHandler
 net.bodz.bas.repr.state.StateTypeHandler

@@ -1,6 +1,6 @@
-net.bodz.lily.model.base.schema.impl.AttributeDefMapper
 net.bodz.lily.model.base.schema.impl.CategoryDefMapper
 net.bodz.lily.model.base.schema.impl.FormDefMapper
+net.bodz.lily.model.base.schema.impl.ParameterDefMapper
 net.bodz.lily.model.base.schema.impl.PhaseDefMapper
 net.bodz.lily.model.base.schema.impl.PriorityDefMapper
 net.bodz.lily.model.base.schema.impl.SchemaDefMapper

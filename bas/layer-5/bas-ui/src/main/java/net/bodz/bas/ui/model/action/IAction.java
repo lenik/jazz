@@ -4,12 +4,14 @@ import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.inject.LocalScope;
+import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.ui.dom1.IUiElement;
 import net.bodz.bas.ui.dom1.NullUiElement;
 
 /**
  * Local scope by default.
  */
+@IndexedType
 @LocalScope
 public interface IAction
         extends IUiElement, ILocationSpec {

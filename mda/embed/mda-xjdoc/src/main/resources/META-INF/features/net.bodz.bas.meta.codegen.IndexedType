@@ -1,2 +1,2 @@
-net.bodz.mda.xjdoc.IClassDocLoader
+net.bodz.mda.xjdoc.IXjdocProvider
 net.bodz.mda.xjdoc.taglib.ITagLibrary
