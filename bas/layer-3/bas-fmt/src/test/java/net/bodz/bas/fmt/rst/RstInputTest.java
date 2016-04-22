@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.type.ClassResource;
-import net.bodz.bas.fmt.rst.IRstInput;
-import net.bodz.bas.fmt.rst.RstInput;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.io.res.tools.StreamReading;
 
@@ -20,8 +18,10 @@ public class RstInputTest
 
     public RstInputTest()
             throws IOException {
-        URL script1 = ClassResource.getDataURL(RstInputTest.class, "rst");
-        script = new URLResource(script1).to(StreamReading.class).readString();
+        URL rstData = ClassResource.getDataURL(RstInputTest.class, "rst");
+        if (rstData == null)
+            throw new NullPointerException("no .rst file.");
+        script = new URLResource(rstData).to(StreamReading.class).readString();
     }
 
     @Test
