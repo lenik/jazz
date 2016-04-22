@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CoderResult;
 
 import net.bodz.bas.io.AbstractByteOut;
 import net.bodz.bas.io.IByteOut;
@@ -49,19 +50,8 @@ public class DecodedByteOut
     @Override
     public void write(int byt)
             throws IOException {
-        // byteBuffer: ****|______________| charBuffer: ****|________|
         byteBuffer.put((byte) byt);
-        // byteBuffer: ****B|_____________| charBuffer: ****|________|
-        byteBuffer.flip();
-        // byteBuffer: |****B|_____________ charBuffer: ****|________|
-        decoder.decode(byteBuffer, charBuffer, false);
-        // byteBuffer: ***|*B|_____________ charBuffer: ****###|_____|
-        byteBuffer.compact();
-        // byteBuffer: *B|________________| charBuffer: ****###|_____|
-        charOut.write(charBuffer);
-        // (no change)
-        charBuffer.clear();
-        // byteBuffer: |*B|________________| charBuffer: |____________|
+        conv(false);
         __chunks++;
     }
 
@@ -69,41 +59,41 @@ public class DecodedByteOut
     public void write(byte[] bytes, int off, int len)
             throws IOException {
         while (len > 0) {
-
             if (!byteBuffer.hasRemaining()) {
                 // Decode buffer is too small.
                 // Needs to read more bytes to decode the next char.
                 throw new BufferUnderflowException();
             }
             int chunk = Math.min(len, byteBuffer.remaining());
-            // byteBuffer: ****|______________| charBuffer: ****|________|
             byteBuffer.put(bytes, off, chunk);
             off += chunk;
             len -= chunk;
-            // byteBuffer: ****B|_____________| charBuffer: ****|________|
-            byteBuffer.flip();
-            // byteBuffer: |****B|_____________ charBuffer: ****|________|
-            decoder.decode(byteBuffer, charBuffer, false);
-            // byteBuffer: ***|*B|_____________ charBuffer: ****###|_____|
-            byteBuffer.compact();
-            // byteBuffer: *B|________________| charBuffer: ****###|_____|
-            charOut.write(charBuffer);
-            charBuffer.clear();
-            // byteBuffer: |*B|________________| charBuffer: |____________|
+            conv(false);
             __chunks++;
         }
     }
 
     @Override
-    public void close()
+    public void flush(boolean strict)
+            throws IOException {
+        conv(true);
+    }
+
+    void conv(boolean force)
             throws IOException {
         byteBuffer.flip();
-        decoder.decode(byteBuffer, charBuffer, true);
-        // byteBuffer.compact();
-        byteBuffer.clear();
+        CoderResult result = decoder.decode(byteBuffer, charBuffer, force);
+        byteBuffer.compact();
+
+        if (result.isError()) {
+            byte errorByte = byteBuffer.get();
+            char errorChar = (char) (errorByte & 0xff);
+            charOut.write(errorChar);
+        }
+
+        charBuffer.flip();
         charOut.write(charBuffer);
         charBuffer.clear();
-        super.close();
     }
 
 }

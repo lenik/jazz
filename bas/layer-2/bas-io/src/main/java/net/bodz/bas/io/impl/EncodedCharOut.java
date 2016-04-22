@@ -51,22 +51,7 @@ public class EncodedCharOut
             throws IOException {
         // charBuffer: ****|______________| byteBuffer: ****|________|
         charBuffer.put((char) ch);
-        // charBuffer: ****C|_____________| byteBuffer: ****|________|
-        charBuffer.flip();
-        // charBuffer: |****C|_____________ byteBuffer: ****|________|
-        CoderResult result = encoder.encode(charBuffer, byteBuffer, false);
-        if (result.isError()) {
-            char errorChar = charBuffer.get();
-            errorChar = '?';
-            byteBuffer.put((byte) errorChar);
-        }
-        // charBuffer: ***|*C|_____________ byteBuffer: ****###|_____|
-        charBuffer.compact();
-        // charBuffer: *C|________________| byteBuffer: ****###|_____|
-        byteOut.write(byteBuffer);
-        // (no change)
-        byteBuffer.clear();
-        // charBuffer: |*C|________________| byteBuffer: |____________|
+        conv(false);
         __chunks++;
     }
 
@@ -75,39 +60,36 @@ public class EncodedCharOut
             throws IOException {
         while (len > 0) {
             int chunk = Math.min(len, charBuffer.remaining());
-            // charBuffer: ****|______________| byteBuffer: ****|________|
             charBuffer.put(chars, off, chunk);
             off += chunk;
             len -= chunk;
-            // charBuffer: ****C|_____________| byteBuffer: ****|________|
-            charBuffer.flip();
-            // charBuffer: |****C|_____________ byteBuffer: ****|________|
-            CoderResult result = encoder.encode(charBuffer, byteBuffer, false);
-            if (result.isError()) {
-                char errorChar = charBuffer.get();
-                errorChar = '?';
-                byteBuffer.put((byte) errorChar);
-            }
-            // charBuffer: ***|*C|_____________ byteBuffer: ****###|_____|
-            charBuffer.compact();
-            // charBuffer: *C|________________| byteBuffer: ****###|_____|
-            byteOut.write(byteBuffer);
-            byteBuffer.clear();
-            // charBuffer: |*C|________________| byteBuffer: |____________|
+            conv(false);
             __chunks++;
         }
     }
 
     @Override
-    public void close()
+    public void flush(boolean strict)
+            throws IOException {
+        conv(true);
+    }
+
+    private void conv(boolean force)
             throws IOException {
         charBuffer.flip();
-        encoder.encode(charBuffer, byteBuffer, true);
-        // charBuffer.compact();
-        charBuffer.clear();
+        CoderResult result = encoder.encode(charBuffer, byteBuffer, false);
+        charBuffer.compact();
+
+        if (result.isError()) {
+            int pos = charBuffer.position();
+            char errorChar = charBuffer.get(pos);
+            errorChar = '?';
+            charBuffer.put(pos, errorChar);
+        }
+
+        byteBuffer.flip();
         byteOut.write(byteBuffer);
         byteBuffer.clear();
-        super.close();
     }
 
 }
