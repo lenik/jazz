@@ -6,23 +6,23 @@ import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.ctx.scope.ScopedRef;
 import net.bodz.bas.ctx.scope.Scopes;
 import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
-import net.bodz.bas.ctx.sys.UserDirScr;
+import net.bodz.bas.ctx.sys.UserDirVars;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.bas.vfs.path.BadPathException;
 
-public class WorkingDirScr
+public class WorkingDirVars
         extends ScopedRef<IFile> {
 
-    public WorkingDirScr() {
+    public WorkingDirVars() {
         super(IFile.class);
     }
 
     @Override
     public IFile getDefaultValue() {
-        File systemWorkDir = UserDirScr.getInstance().get();
+        File systemWorkDir = UserDirVars.getInstance().get();
         return new PojfFile(systemWorkDir);
     }
 
@@ -124,9 +124,9 @@ public class WorkingDirScr
         chdir(Scopes.from(classContext), path);
     }
 
-    private static final WorkingDirScr instance = new WorkingDirScr();
+    private static final WorkingDirVars instance = new WorkingDirVars();
 
-    public static WorkingDirScr getInstance() {
+    public static WorkingDirVars getInstance() {
         return instance;
     }
 

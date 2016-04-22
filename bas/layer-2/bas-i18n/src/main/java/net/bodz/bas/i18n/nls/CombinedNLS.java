@@ -2,7 +2,7 @@ package net.bodz.bas.i18n.nls;
 
 import java.util.Locale;
 
-import net.bodz.bas.i18n.LocaleScr;
+import net.bodz.bas.i18n.LocaleVars;
 
 public final class CombinedNLS
         extends AbstractNLS {
@@ -10,7 +10,7 @@ public final class CombinedNLS
     private final NLS[] children;
 
     public CombinedNLS(NLS parent, NLS... children) {
-        this(LocaleScr.LOCALE.get(), parent, children);
+        this(LocaleVars.LOCALE.get(), parent, children);
     }
 
     public CombinedNLS(Locale preferredLocale, NLS parent, NLS... children) {

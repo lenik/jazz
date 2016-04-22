@@ -8,10 +8,10 @@ import net.bodz.bas.ctx.scope.ScopedRef;
 import net.bodz.bas.ctx.scope.Scopes;
 import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 
-public class UserDirScr
+public class UserDirVars
         extends ScopedRef<File> {
 
-    public UserDirScr() {
+    public UserDirVars() {
         super(File.class);
     }
 
@@ -111,9 +111,9 @@ public class UserDirScr
         chdir(Scopes.from(classContext), path);
     }
 
-    private static final UserDirScr instance = new UserDirScr();
+    private static final UserDirVars instance = new UserDirVars();
 
-    public static UserDirScr getInstance() {
+    public static UserDirVars getInstance() {
         return instance;
     }
 

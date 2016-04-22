@@ -3,10 +3,10 @@ package net.bodz.bas.i18n;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class NumberFormatScr
+public class NumberFormatVars
         extends I18nScopedRef<NumberFormat> {
 
-    public NumberFormatScr() {
+    public NumberFormatVars() {
         super(NumberFormat.class);
     }
 

@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.ctx.sys.UserDirScr;
+import net.bodz.bas.ctx.sys.UserDirVars;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -58,7 +58,7 @@ public interface IFileSystem {
      * USING WITH CAUTION: Context path should not be cached.
      * 
      * @return non-<code>null</code> context path, whose alignment should be absolute.
-     * @see UserDirScr
+     * @see UserDirVars
      */
     IPath getContextPath();
 
