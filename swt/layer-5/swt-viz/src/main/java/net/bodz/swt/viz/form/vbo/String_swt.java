@@ -26,10 +26,10 @@ import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.util.SwtControlStyler;
 import net.bodz.swt.viz.util.SwtStyleInts;
 
-public class StringVbo
+public class String_swt
         extends AbstractSwtViewBuilder<String> {
 
-    public StringVbo() {
+    public String_swt() {
         super(String.class);
     }
 

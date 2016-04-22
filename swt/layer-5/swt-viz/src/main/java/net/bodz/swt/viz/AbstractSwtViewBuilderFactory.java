@@ -4,41 +4,42 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.bodz.bas.c.type.TypeNearby;
+import net.bodz.bas.c.type.ITypeMapper;
+import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.repr.viz.AutoloadViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.ui.dom1.IUiRef;
-import net.bodz.swt.viz.form.vbo.BooleanVbo;
-import net.bodz.swt.viz.form.vbo.DateVbo;
-import net.bodz.swt.viz.form.vbo.ExceptionVbo;
-import net.bodz.swt.viz.form.vbo.FileVbo;
-import net.bodz.swt.viz.form.vbo.StringVbo;
+import net.bodz.swt.viz.form.vbo.Boolean_swt;
+import net.bodz.swt.viz.form.vbo.Date_swt;
+import net.bodz.swt.viz.form.vbo.Exception_swt;
+import net.bodz.swt.viz.form.vbo.File_swt;
+import net.bodz.swt.viz.form.vbo.String_swt;
 
 public abstract class AbstractSwtViewBuilderFactory
         extends AutoloadViewBuilderFactory
         implements ISwtViewBuilderFactory {
 
-    private List<TypeNearby> typeNearbies = new ArrayList<TypeNearby>();
+    private List<ITypeMapper> swtTmaps = new ArrayList<>();
 
     public AbstractSwtViewBuilderFactory() {
-        typeNearbies.add(new TypeNearby(null, null, "Vbo", true));
+        swtTmaps.add(new NameConventionTypeMapper(null, null, "_swt", true));
     }
 
     @Override
     protected void initialize() {
-        addViewBuilder(new BooleanVbo());
+        addViewBuilder(new Boolean_swt());
 
-        // TODO addViewBuilder(new TextFormedVbo(), Number.class);
-        addViewBuilder(new StringVbo());
-        addViewBuilder(new ExceptionVbo());
+         // TODO addViewBuilder(new TextFormedVbo(), Number.class);
+        addViewBuilder(new String_swt());
+        addViewBuilder(new Exception_swt());
 
-        addViewBuilder(new DateVbo());
-        addViewBuilder(new FileVbo());
+        addViewBuilder(new Date_swt());
+        addViewBuilder(new File_swt());
     }
 
     @Override
-    protected Collection<TypeNearby> getAutoloadSpecs() {
-        return typeNearbies;
+    protected Collection<ITypeMapper> getTypeMappers() {
+        return swtTmaps;
     }
 
     @Override

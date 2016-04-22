@@ -26,10 +26,10 @@ import net.bodz.swt.viz.ISwtUiRef;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.util.SwtControlStyler;
 
-public class BooleanVbo
+public class Boolean_swt
         extends AbstractSwtViewBuilder<Boolean> {
 
-    public BooleanVbo() {
+    public Boolean_swt() {
         super(Boolean.class);
     }
 
