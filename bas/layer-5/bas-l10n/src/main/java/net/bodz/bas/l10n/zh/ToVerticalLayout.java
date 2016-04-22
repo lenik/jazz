@@ -61,7 +61,7 @@ public class ToVerticalLayout {
                 buf.append("\n");
                 continue;
             }
-            paragraph = ConvertCharacterWidth.toFullWidth(paragraph);
+            paragraph = CharWidthConverter.NORMAL.toFullWidth(paragraph);
             // src = src.replace("\n", "　　");
             // src = "　　" + src;
 

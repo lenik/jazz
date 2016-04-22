@@ -1,6 +1,5 @@
 package net.bodz.bas.l10n.zh;
 
-import java.io.Flushable;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,36 +16,49 @@ import net.bodz.bas.io.StringCharIn;
 /**
  * @see <a href="http://www.unicode.org/charts/PDF/UFF00.pdf">Halfwidth and Fullwidth Forms</a>
  */
-public class ConvertCharacterWidth {
+public class CharWidthConverter {
 
-    static final Set<Character> f2hSpaceBeforeSet;
-    static final Set<Character> f2hSpaceAfterSet;
+    static final Set<Integer> f2hSpaceBeforeSet;
+    static final Set<Integer> f2hSpaceAfterSet;
     static {
-        f2hSpaceBeforeSet = new HashSet<Character>();
-        f2hSpaceAfterSet = new HashSet<Character>();
+        f2hSpaceBeforeSet = new HashSet<>();
+        f2hSpaceAfterSet = new HashSet<>();
 
         String both = "＆＊＋－／＜＝＞＾｜～";
         String before = "“‘（［｛";
         String after = "　”’）］｝！，．：；？";
         for (int i = 0; i < both.length(); i++) {
-            char ch = both.charAt(i);
+            int ch = both.charAt(i);
             f2hSpaceBeforeSet.add(ch);
             f2hSpaceAfterSet.add(ch);
         }
         for (int i = 0; i < before.length(); i++)
-            f2hSpaceBeforeSet.add(before.charAt(i));
+            f2hSpaceBeforeSet.add((int) before.charAt(i));
         for (int i = 0; i < after.length(); i++)
-            f2hSpaceAfterSet.add(after.charAt(i));
+            f2hSpaceAfterSet.add((int) after.charAt(i));
     }
 
-    public static void toHalfWidth(ISimpleCharIn in, ISimpleCharOut out)
+    boolean insertPadSpaces;
+    boolean removePadSpaces;
+
+    public String toHalfWidth(String s) {
+        BCharOut buf = new BCharOut(s.length());
+        try {
+            toHalfWidth(new StringCharIn(s), buf);
+        } catch (IOException e) {
+            throw new UnexpectedException(e);
+        }
+        return buf.toString();
+    }
+
+    public void toHalfWidth(ISimpleCharIn in, ICharOut out)
             throws IOException {
         // 0xFF00~0xFF5E: full width ASCII chars
         int ch;
         while ((ch = in.read()) != -1) {
             String convstr = null;
-            boolean spaceBefore = f2hSpaceBeforeSet.contains(ch);
-            boolean spaceAfter = f2hSpaceAfterSet.contains(ch);
+            boolean spaceBefore = insertPadSpaces && f2hSpaceBeforeSet.contains(ch);
+            boolean spaceAfter = insertPadSpaces && f2hSpaceAfterSet.contains(ch);
 
             if (ch >= 0xFF00 && ch <= 0xFF5E)
                 ch -= 0xFEE0;
@@ -65,75 +77,28 @@ public class ConvertCharacterWidth {
 
             if (spaceBefore)
                 out.write(' ');
+
             if (convstr != null)
-                for (int i = 0; i < convstr.length(); i++)
-                    out.write(convstr.charAt(i));
+                out.write(convstr);
             else
                 out.write(ch);
+
             if (spaceAfter)
                 out.write(' ');
         }
     }
 
-    public static String toHalfWidth(String s) {
+    public String toFullWidth(String s) {
         BCharOut buf = new BCharOut(s.length());
         try {
-            toHalfWidth(new StringCharIn(s), buf);
+            toFullWidth(new StringCharIn(s), buf);
         } catch (IOException e) {
             throw new UnexpectedException(e);
         }
         return buf.toString();
     }
 
-    static class UndoableCharOut
-            implements ISimpleCharOut, Flushable {
-
-        private final ISimpleCharOut out;
-        private int preWrite = -1;
-
-        public UndoableCharOut(ISimpleCharOut out) {
-            if (out == null)
-                throw new NullPointerException("out");
-            this.out = out;
-        }
-
-        @Override
-        public void write(int ch)
-                throws IOException {
-            if (preWrite != -1)
-                out.write(preWrite);
-            preWrite = ch;
-        }
-
-        public int lookback() {
-            return preWrite;
-        }
-
-        public int lookback(int depth) {
-            if (depth != 1)
-                throw new UnsupportedOperationException("only 1 char to look back is supported");
-            return preWrite;
-        }
-
-        /**
-         * @return <code>false</code> If nothing to undo.
-         */
-        public boolean undo() {
-            if (preWrite == -1)
-                return false;
-            preWrite = -1;
-            return true;
-        }
-
-        public void flush()
-                throws IOException {
-            if (preWrite != -1)
-                out.write(preWrite);
-        }
-
-    }
-
-    public static void toFullWidth(ISimpleCharIn in, ISimpleCharOut out)
+    public void toFullWidth(ISimpleCharIn in, ISimpleCharOut out)
             throws IOException {
         // 0x21~0x7e: half width ASCII chars
         UndoableCharOut _out = new UndoableCharOut(out);
@@ -163,34 +128,19 @@ public class ConvertCharacterWidth {
                 }
             }
 
-            if (isConverted) {
-                if (f2hSpaceBeforeSet.contains((char) ch)) {
+            if (removePadSpaces && isConverted) {
+                if (f2hSpaceBeforeSet.contains(ch)) {
                     if (lastCh == ' ')
                         _out.undo();
                 }
-                removeNextSpace = f2hSpaceAfterSet.contains((char) ch);
+                removeNextSpace = f2hSpaceAfterSet.contains(ch);
             }
             _out.write(lastCh = ch);
         }
         _out.flush();
     }
 
-    public static String toFullWidth(String s) {
-        BCharOut buf = new BCharOut(s.length());
-        try {
-            toFullWidth(new StringCharIn(s), buf);
-        } catch (IOException e) {
-            throw new UnexpectedException(e);
-        }
-        return buf.toString();
-    }
-
-    public static void switchWidth(ICharIn in, ICharOut out)
-            throws IOException {
-        throw new NotImplementedException();
-    }
-
-    public static String switchWidth(String s) {
+    public String switchWidth(String s) {
         BCharOut buf = new BCharOut(s.length());
         try {
             switchWidth(new StringCharIn(s), buf);
@@ -200,6 +150,22 @@ public class ConvertCharacterWidth {
         return buf.toString();
     }
 
+    public void switchWidth(ICharIn in, ICharOut out)
+            throws IOException {
+        throw new NotImplementedException();
+    }
+
     // public static void listWidthStop()
+
+    static final CharWidthConverter NORMAL;
+    static final CharWidthConverter COMPACT;
+    static {
+        NORMAL = new CharWidthConverter();
+        NORMAL.insertPadSpaces = true;
+        NORMAL.removePadSpaces = true;
+        COMPACT = new CharWidthConverter();
+        COMPACT.insertPadSpaces = false;
+        COMPACT.removePadSpaces = true;
+    }
 
 }
