@@ -3,7 +3,8 @@ package net.bodz.bas.c.type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TypeNearby {
+public class NameConventionTypeMapper
+        implements ITypeMapper {
 
     private ClassLoader classLoader;
     private String prefix;
@@ -14,7 +15,7 @@ public class TypeNearby {
     private Map<Class<?>, Class<?>> cache;
     private static Class<?> NONE = void.class;
 
-    public TypeNearby(ClassLoader classLoader, String prefix, String suffix, boolean cacheEnabled) {
+    public NameConventionTypeMapper(ClassLoader classLoader, String prefix, String suffix, boolean cacheEnabled) {
         if (suffix == null)
             throw new NullPointerException("suffix");
         if (suffix.isEmpty())
@@ -60,10 +61,8 @@ public class TypeNearby {
         this.decodeIInterface = decodeIInterface;
     }
 
-    /**
-     * @return <code>null</code> if not found.
-     */
-    public Class<?> find(Class<?> src) {
+    @Override
+    public Class<?> map(Class<?> src) {
         if (src == null)
             throw new NullPointerException("src");
 

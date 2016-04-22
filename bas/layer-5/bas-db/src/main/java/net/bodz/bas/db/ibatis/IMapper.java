@@ -1,6 +1,7 @@
 package net.bodz.bas.db.ibatis;
 
-import net.bodz.bas.c.type.TypeNearby;
+import net.bodz.bas.c.type.ITypeMapper;
+import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.meta.codegen.IndexedType;
 
 @IndexedType(includeAbstract = true)
@@ -8,16 +9,16 @@ public interface IMapper {
 
     class fn {
 
-        static TypeNearby[] nearbies = {
+        static ITypeMapper[] mapperTmaps = {
                 // TODO cache-enable?
-                new TypeNearby(null, null, "Mapper", false), //
-                new TypeNearby(null, "impl.", "Mapper", false), //
+                new NameConventionTypeMapper(null, null, "Mapper", false), //
+                new NameConventionTypeMapper(null, "impl.", "Mapper", false), //
         };
 
         public static Class<? extends IMapper> getMapperClass(Class<?> objClass) {
             Class<? extends IMapper> mapperClass;
-            for (TypeNearby nearby : nearbies) {
-                mapperClass = (Class<? extends IMapper>) nearby.find(objClass);
+            for (ITypeMapper tmap : mapperTmaps) {
+                mapperClass = (Class<? extends IMapper>) tmap.map(objClass);
                 if (mapperClass != null)
                     return mapperClass;
             }
