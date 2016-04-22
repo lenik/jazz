@@ -59,6 +59,8 @@ public interface IElement
      */
     int getModifiers();
 
+    NullElement NULL = NullElement.INSTANCE;
+
     class fn {
 
         public static final String labelName(IElement element) {
