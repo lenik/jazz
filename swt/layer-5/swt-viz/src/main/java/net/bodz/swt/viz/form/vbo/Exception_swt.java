@@ -25,7 +25,7 @@ import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.bas.ui.event.EventHandler;
 import net.bodz.bas.ui.model.action.IActionContext;
-import net.bodz.bas.ui.model.cmd.UiActionCommand;
+import net.bodz.bas.ui.model.action.UiAction;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.FixSizeComposite;
 import net.bodz.swt.c.control.Controls;
@@ -35,7 +35,7 @@ import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtUiRef;
 import net.bodz.swt.viz.SwtRenderContext;
 
-public class ExceptionVbo
+public class Exception_swt
         extends AbstractSwtViewBuilder<Throwable> {
 
     static final String expandedIcon = "/icons/full/obj16/remove_correction.gif";
@@ -47,7 +47,7 @@ public class ExceptionVbo
     static boolean showTools = true;
     static boolean showDebug = SystemProperties.isDevelopMode();
 
-    public ExceptionVbo() {
+    public Exception_swt() {
         super(Throwable.class);
     }
 
@@ -160,10 +160,10 @@ public class ExceptionVbo
              * @label &Copy
              */
             class CopyAction
-                    extends UiActionCommand {
+                    extends UiAction {
 
                 @Override
-                public Object play(IActionContext context)
+                public Object run(Object obj, IActionContext context)
                         throws Exception {
                     Clipboard clipboard = new Clipboard(display);
                     clipboard.clearContents();
@@ -184,10 +184,10 @@ public class ExceptionVbo
              * @label &Report
              */
             class MailAction
-                    extends UiActionCommand {
+                    extends UiAction {
 
                 @Override
-                public Object play(IActionContext context)
+                public Object run(Object obj, IActionContext context)
                         throws Exception {
                     try {
                         DesktopApps.openMailer(mailAddress, mailSubject, errorText);
@@ -212,10 +212,10 @@ public class ExceptionVbo
              * @label &Debug
              */
             class DebugAction
-                    extends UiActionCommand {
+                    extends UiAction {
 
                 @Override
-                public Object play(IActionContext context)
+                public Object run(Object obj, IActionContext context)
                         throws Exception {
                     throw new ExpectedException("debug", throwable);
                 }

@@ -32,10 +32,10 @@ import net.bodz.swt.viz.ISwtUiRef;
 import net.bodz.swt.viz.SwtRenderContext;
 import net.bodz.swt.viz.util.SwtControlStyler;
 
-public class FileVbo
+public class File_swt
         extends AbstractSwtViewBuilder<File> {
 
-    public FileVbo() {
+    public File_swt() {
         super(File.class);
     }
 

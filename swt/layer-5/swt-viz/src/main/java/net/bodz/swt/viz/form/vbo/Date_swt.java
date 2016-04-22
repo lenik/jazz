@@ -25,10 +25,10 @@ import net.bodz.swt.viz.AbstractSwtViewBuilder;
 import net.bodz.swt.viz.ISwtControlStyleDeclaration;
 import net.bodz.swt.viz.ISwtUiRef;
 
-public class DateVbo
+public class Date_swt
         extends AbstractSwtViewBuilder<Date> {
 
-    public DateVbo() {
+    public Date_swt() {
         super(Date.class);
     }
 
