@@ -20,6 +20,7 @@ public abstract class DumpServlet
         try {
             serviceImpl(req, resp);
         } catch (Throwable e) {
+            resp.addHeader("X-Servlet", DumpServlet.class.getName());
             e.printStackTrace(System.err);
             try {
                 OutputStream os = resp.getOutputStream();
