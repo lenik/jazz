@@ -1,6 +1,4 @@
-package net.bodz.bas.ui.model.cmd;
-
-import net.bodz.bas.meta.codegen.IndexedType;
+package net.bodz.bas.ui.model.action;
 
 /**
  * Can be
@@ -10,7 +8,6 @@ import net.bodz.bas.meta.codegen.IndexedType;
  * <li>toolbars for specific view.
  * </ul>
  */
-@IndexedType
 public abstract class UiToolbarDecl
         extends UiLocationDecl {
 

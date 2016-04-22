@@ -35,7 +35,7 @@ import net.bodz.bas.ui.dialog.AbstractUserDialogs;
 import net.bodz.bas.ui.dialog.IDirectiveCommand;
 import net.bodz.bas.ui.dom1.UiValue;
 import net.bodz.bas.ui.model.action.IAction;
-import net.bodz.bas.ui.model.cmd.ICommand;
+import net.bodz.bas.ui.model.action.IActionContext;
 import net.bodz.bas.ui.style.IImageData;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 import net.bodz.bas.ui.style.ImageUsage;
@@ -44,7 +44,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.ui.model.ICommandGroup;
+import net.bodz.swt.ui.model.IActionGroup;
 import net.bodz.swt.ui.style.SwtImageMapper;
 
 public class SwtUserDialogs
@@ -130,28 +130,28 @@ public class SwtUserDialogs
             extends SimpleDialog {
 
         class RC
-                implements ICommandGroup {
+                implements IActionGroup {
             @Override
-            public void addCommand(ICommand command) {
-                if (command == null)
+            public void addAction(final IAction action) {
+                if (action == null)
                     throw new NullPointerException("action");
                 Composite userBar = getUserBar();
                 if (userBar == null)
                     throw new IllegalStateException("no user bar");
                 final Button button = new Button(userBar, SWT.NONE);
 
-                IUiElementStyleDeclaration style = command.getStyle();
+                IUiElementStyleDeclaration style = action.getStyle();
                 button.setEnabled(style.getEnabled() != Boolean.FALSE);
                 button.setVisible(style.getVisibility() != VisibilityMode.hidden);
 
-                String text = command.getLabel().toString();
-                String doc = command.getDescription().toString();
+                String text = action.getLabel().toString();
+                String doc = action.getDescription().toString();
 
                 IImageData imageData = style.getImage(ImageUsage.NORMAL);
                 Image image = SwtImageMapper.convert(button.getDisplay(), imageData);
 
                 if (text == null) {
-                    ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(command.getClass());
+                    ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(action.getClass());
                     if (classDoc != null)
                         text = classDoc.to(ArtifactDoc.class).getLabel().toString();
                 }
@@ -161,19 +161,17 @@ public class SwtUserDialogs
                 if (image != null)
                     button.setImage(image);
 
-                final IAction action = command.getAction();
-                if (action != null)
-                    button.addSelectionListener(new SelectionAdapter() {
-                        @Override
-                        public void widgetSelected(SelectionEvent e) {
-                            try {
-                                // TODO action context.
-                                action.play(null);
-                            } catch (Exception ex) {
-                                alert("Failed to execute the command: " + ex.getMessage(), ex);
-                            }
+                button.addSelectionListener(new SelectionAdapter() {
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        try {
+                            IActionContext context = null; // TODO action context
+                            action.run(null, context);
+                        } catch (Exception ex) {
+                            alert("Failed to execute the command: " + ex.getMessage(), ex);
                         }
-                    });
+                    }
+                });
             }
         }
 
@@ -183,7 +181,7 @@ public class SwtUserDialogs
 
         public IOptions getOptions() {
             return new Options() //
-                    .addOption(ICommandGroup.class, new RC());
+                    .addOption(IActionGroup.class, new RC());
         }
 
         @Override

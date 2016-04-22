@@ -1,12 +1,12 @@
 package net.bodz.bas.http.ui.cmd;
 
-import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.ui.model.action.IAction;
+import net.bodz.bas.ui.model.action.RollbackException;
 
 /**
  * @see net.bodz.bas.ui.model.action.IAction
- * @see net.bodz.bas.ui.model.cmd.ICommand
  */
 public interface IServletAction
         extends IAction {
@@ -18,13 +18,24 @@ public interface IServletAction
      */
     boolean isAsync();
 
-    Map<String, String> getScriptMap();
+    Set<String> getScriptIds();
 
     /**
      * @param fn
      *            <code>onclick</code>, <code>onsuccess</code>, etc.
      * @return event handler script.
      */
-    String getScript(String fn);
+    String getScript(String scriptId, Object obj);
+
+    /**
+     * @return <code>true</code> for script-only actions.
+     */
+    boolean isScriptOnly();
+
+    Object run(Object obj, IServletActionContext context)
+            throws Exception;
+
+    void rollback(Object obj, IServletActionContext context)
+            throws RollbackException;
 
 }

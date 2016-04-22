@@ -4,17 +4,17 @@ public abstract class AbstractAction
         implements IAction {
 
     @Override
-    public boolean canPlay() {
+    public boolean canRun(Object obj) {
         return true;
     }
 
     @Override
-    public boolean canRollback() {
+    public boolean canRollback(Object obj) {
         return false;
     }
 
     @Override
-    public void rollback(IActionContext context)
+    public void rollback(Object obj, IActionContext context)
             throws RollbackException {
     }
 

@@ -1,4 +1,4 @@
-package net.bodz.bas.ui.model.cmd;
+package net.bodz.bas.ui.model.action;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

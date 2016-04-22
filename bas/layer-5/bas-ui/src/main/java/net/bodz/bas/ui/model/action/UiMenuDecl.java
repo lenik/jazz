@@ -1,6 +1,4 @@
-package net.bodz.bas.ui.model.cmd;
-
-import net.bodz.bas.meta.codegen.IndexedType;
+package net.bodz.bas.ui.model.action;
 
 /**
  * Can be
@@ -10,13 +8,20 @@ import net.bodz.bas.meta.codegen.IndexedType;
  * <li>context-menu
  * </ul>
  */
-@IndexedType
 public abstract class UiMenuDecl
         extends UiLocationDecl {
 
     @Override
     public LocationType getLocationType() {
         return LocationType.MENU;
+    }
+
+    public boolean isMenubar() {
+        return false;
+    }
+
+    public boolean isPreferredVertical() {
+        return false;
     }
 
 }

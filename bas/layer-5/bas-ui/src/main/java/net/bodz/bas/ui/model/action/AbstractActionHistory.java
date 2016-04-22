@@ -8,6 +8,10 @@ public abstract class AbstractActionHistory
 
     IActionContext actionContext;
 
+    protected Object getObject() {
+        return null;
+    }
+
     protected abstract IAction get(int position);
 
     @Override
@@ -47,36 +51,40 @@ public abstract class AbstractActionHistory
     @Override
     public synchronized boolean undo()
             throws RollbackException {
-        int p = getPosition();
-        if (p <= 0)
+        int pos = getPosition();
+        if (pos <= 0)
             throw new IllegalUsageException("Can\'t undo more");
 
-        IAction action = get(p);
-        if (!action.canRollback())
+        IAction action = get(pos);
+        Object obj = getObject();
+
+        if (!action.canRollback(obj))
             return false;
 
-        action.rollback(actionContext);
-        p--;
+        action.rollback(obj, actionContext);
+        pos--;
         return true;
     }
 
     @Override
     public synchronized boolean redo()
             throws PlaybackException {
-        int p = getPosition();
-        if (p >= size())
+        int pos = getPosition();
+        if (pos >= size())
             throw new IllegalUsageException("Can\'t redo more");
 
-        IAction action = get(p);
-        if (!action.canPlay())
+        IAction action = get(pos);
+        Object obj = getObject();
+
+        if (!action.canRun(obj))
             return false;
 
         try {
-            action.play(actionContext);
+            action.run(obj, actionContext);
         } catch (Exception e) {
             throw new PlaybackException(e.getMessage(), e);
         }
-        p++;
+        pos++;
         return true;
     }
 

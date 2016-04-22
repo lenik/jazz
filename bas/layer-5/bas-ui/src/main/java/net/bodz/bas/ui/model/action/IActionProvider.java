@@ -1,14 +1,14 @@
-package net.bodz.bas.ui.model.cmd;
+package net.bodz.bas.ui.model.action;
 
 import java.util.List;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 
 @IndexedType
-public interface ICommandProvider {
+public interface IActionProvider {
 
     Class<?> getTargetClass();
 
-    List<ICommand> getCommands(Object object);
+    List<IAction> getActions(Object obj);
 
 }

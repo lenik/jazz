@@ -1,15 +1,18 @@
-package net.bodz.bas.site.ui.builtin;
+package net.bodz.lily.site.ui.action;
 
 import net.bodz.bas.ui.model.action.Location;
 import net.bodz.bas.ui.model.action.UiMenuDecl;
 import net.bodz.bas.ui.model.action.builtin.MainMenubar;
 
 /**
- * @image
- * @label BAS
+        Open
+        Delete
+        Verify
+        -
+        Share...
  */
 @Location(MainMenubar.class)
-public class BasSiteMenu
+public class SelectionMenu
         extends UiMenuDecl {
 
 }

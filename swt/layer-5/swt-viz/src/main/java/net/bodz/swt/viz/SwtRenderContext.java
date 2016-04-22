@@ -3,7 +3,7 @@ package net.bodz.swt.viz;
 import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.ui.dialog.IUserDialogs;
-import net.bodz.bas.ui.model.cmd.ICommand;
+import net.bodz.bas.ui.model.action.IAction;
 import net.bodz.swt.c.dialog.SwtUserDialogs;
 
 public class SwtRenderContext {
@@ -12,7 +12,7 @@ public class SwtRenderContext {
         return new SwtUserDialogs(active.getShell());
     }
 
-    public void addAction(ICommand action) {
+    public void addAction(IAction action) {
     }
 
 }
