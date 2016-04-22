@@ -10,13 +10,15 @@ net.bodz.bas.html.viz.builtin.List_htm
 net.bodz.bas.html.viz.builtin.Locale_htm
 net.bodz.bas.html.viz.builtin.Long_htm
 net.bodz.bas.html.viz.builtin.Map_htm
-net.bodz.bas.html.viz.builtin.PredefSelect_htm
 net.bodz.bas.html.viz.builtin.PredefRadio_htm
+net.bodz.bas.html.viz.builtin.PredefSelect_htm
 net.bodz.bas.html.viz.builtin.Set_htm
 net.bodz.bas.html.viz.builtin.Short_htm
 net.bodz.bas.html.viz.builtin.SqlDate_htm
 net.bodz.bas.html.viz.builtin.String_htm
 net.bodz.bas.html.viz.builtin.TimeZone_htm
 net.bodz.bas.html.viz.util.DefaultForm_htm
+net.bodz.bas.html.viz.util.Invocation_txt
+net.bodz.bas.html.viz.util.ObjectDump_htm
 net.bodz.bas.html.viz.util.PathFrames_htm
 net.bodz.bas.html.viz.util.URLResource_bin

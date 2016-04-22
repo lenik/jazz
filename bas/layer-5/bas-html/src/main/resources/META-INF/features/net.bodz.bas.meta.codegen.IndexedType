@@ -1,3 +1,3 @@
 net.bodz.bas.html.artifact.IArtifactProvider
-net.bodz.bas.html.IHtmlViewBuilder
-net.bodz.bas.html.IHtmlViewBuilderFactory
+net.bodz.bas.http.viz.IHttpViewBuilder
+net.bodz.bas.pdf.viz.IPdfViewBuilderFactory
