@@ -10,7 +10,7 @@ import java.util.Set;
 import org.apache.ibatis.type.JdbcType;
 
 public class SetTypeHandler
-        extends TypeHandlerImpl<Set<Object>>
+        extends TypeHandler<Set<Object>>
         implements Aliased {
 
     @Override

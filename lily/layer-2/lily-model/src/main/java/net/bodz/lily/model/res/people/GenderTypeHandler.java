@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 import org.apache.ibatis.type.JdbcType;
 
-import net.bodz.bas.db.ibatis.TypeHandlerImpl;
+import net.bodz.bas.db.ibatis.TypeHandler;
 
 public class GenderTypeHandler
-        extends TypeHandlerImpl<Gender> {
+        extends TypeHandler<Gender> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Gender parameter, JdbcType jdbcType)

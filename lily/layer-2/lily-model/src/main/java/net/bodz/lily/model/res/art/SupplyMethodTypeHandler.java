@@ -8,10 +8,10 @@ import java.sql.Types;
 
 import org.apache.ibatis.type.JdbcType;
 
-import net.bodz.bas.db.ibatis.TypeHandlerImpl;
+import net.bodz.bas.db.ibatis.TypeHandler;
 
 public class SupplyMethodTypeHandler
-        extends TypeHandlerImpl<SupplyMethod> {
+        extends TypeHandler<SupplyMethod> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, SupplyMethod parameter, JdbcType jdbcType)
