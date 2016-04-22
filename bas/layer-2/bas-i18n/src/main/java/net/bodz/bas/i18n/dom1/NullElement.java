@@ -1,16 +1,18 @@
 package net.bodz.bas.i18n.dom1;
 
-import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.meta.bean.DetailLevel;
 
-public abstract class AbstractElement
+public class NullElement
         implements IElement {
 
     @Override
+    public int getPriority() {
+        return 0;
+    }
+
+    @Override
     public String getName() {
-        String id = ObjectInfo.getSimpleId(this);
-        return id;
+        return "null";
     }
 
     @Override
@@ -30,7 +32,7 @@ public abstract class AbstractElement
 
     @Override
     public int getDetailLevel() {
-        return DetailLevel.NORMAL;
+        return 0;
     }
 
     @Override
@@ -38,14 +40,6 @@ public abstract class AbstractElement
         return 0;
     }
 
-    @Override
-    public int getPriority() {
-        return 0;
-    }
-
-    @Override
-    public String toString() {
-        return getName();
-    }
+    public static final NullElement INSTANCE = new NullElement();
 
 }
