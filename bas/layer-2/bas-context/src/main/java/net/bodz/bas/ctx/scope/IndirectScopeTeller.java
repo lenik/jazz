@@ -2,10 +2,10 @@ package net.bodz.bas.ctx.scope;
 
 import net.bodz.bas.ctx.scope.id.CurrentThreadScopeTeller;
 import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
-import net.bodz.bas.t.ref.Var;
+import net.bodz.bas.t.ref.SimpleVar;
 
 public class IndirectScopeTeller
-        extends Var<IScopeTeller>
+        extends SimpleVar<IScopeTeller>
         implements IScopeTeller {
 
     private static final long serialVersionUID = 1L;
