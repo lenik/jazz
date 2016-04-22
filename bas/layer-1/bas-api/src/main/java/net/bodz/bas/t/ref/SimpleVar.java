@@ -1,6 +1,6 @@
 package net.bodz.bas.t.ref;
 
-public class Var<T>
+public class SimpleVar<T>
         extends AbstractRef<T> {
 
     private static final long serialVersionUID = 1L;
@@ -9,16 +9,16 @@ public class Var<T>
     private T value;
 
     @SuppressWarnings("unchecked")
-    public Var(Class<?> valueType) {
+    public SimpleVar(Class<?> valueType) {
         this.valueType = (Class<? extends T>) valueType;
     }
 
-    public Var(Class<?> valueType, T init) {
+    public SimpleVar(Class<?> valueType, T init) {
         this(valueType);
         this.value = init;
     }
 
-    public Var(T init) {
+    public SimpleVar(T init) {
         this(init.getClass());
         this.value = init;
     }
@@ -39,9 +39,9 @@ public class Var<T>
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Var<?>))
+        if (!(obj instanceof SimpleVar<?>))
             return false;
-        Var<?> o = (Var<?>) obj;
+        SimpleVar<?> o = (SimpleVar<?>) obj;
         return value == o.value;
     }
 
