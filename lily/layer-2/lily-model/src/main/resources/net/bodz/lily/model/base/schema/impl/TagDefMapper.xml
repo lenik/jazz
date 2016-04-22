@@ -22,7 +22,7 @@
             v.label tagv_label
         from _tag a
             left join _tagv v on a.tagv=v.id
-            left join "schema" s on v."schema"=s.id
+            left join _schema s on v."schema"=s.id
         ]]>
     </sql>
 
@@ -33,7 +33,7 @@
             v.label tagv_label
         from _tag a
             left join _tagv v on a.tagv=v.id
-            left join "schema" s on v."schema"=s.id
+            left join _schema s on v."schema"=s.id
         ]]>
     </sql>
 
@@ -44,7 +44,7 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
-            <if test="schemaId != null">and v.schema=#{schemaId}</if>
+            <if test="schemaId != null">and v."schema"=#{schemaId}</if>
             <if test="tagGroupId != null">and a.tagv=#{tagGroupId}</if>
         </where>
     </select>
