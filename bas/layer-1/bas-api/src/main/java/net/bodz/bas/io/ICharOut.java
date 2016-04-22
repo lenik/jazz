@@ -41,7 +41,7 @@ public interface ICharOut
      * @throws NullPointerException
      *             If <code>chars</code> is <code>null</code>.
      */
-    void write(CharSequence chars, int off, int len)
+    void write(CharSequence chars, int start, int end)
             throws IOException;
 
     /**
@@ -61,10 +61,11 @@ public interface ICharOut
                 throws IOException {
             if (buf == null)
                 throw new NullPointerException("buf");
-            char[] array = buf.array();
             int offset = buf.arrayOffset();
-            int length = buf.position();
-            out.write(array, offset, length);
+            int pos = buf.position();
+            int len = buf.remaining();
+            out.write(buf.array(), offset + pos, len);
+            buf.position(buf.limit());
         }
 
         public static void dump(ICharOut out, ICharIn charIn)
