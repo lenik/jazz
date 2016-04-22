@@ -91,8 +91,11 @@ public abstract class AbstractXjdocElement
      */
     @Override
     public synchronized iString getDescription() {
-        if (description == null)
+        if (description == null) {
             description = getXjdoc().getTextTag(IElementDoc.DESCRIPTION);
+            if (description == null)
+                description = getXjdoc().getText().headPar();
+        }
         return description;
     }
 
@@ -107,9 +110,6 @@ public abstract class AbstractXjdocElement
     public synchronized iString getHelpDoc() {
         if (helpDoc == null) {
             helpDoc = getXjdoc().getText();
-            if (xjdoc.getTextTag(IElementDoc.LABEL) == null) {
-                helpDoc = helpDoc.tailPar();
-            }
         }
         return helpDoc;
     }
