@@ -2,13 +2,13 @@ package net.bodz.bas.i18n;
 
 import java.text.DateFormat;
 
-public class DateTimeFormatScr
+public class DateTimeFormatVars
         extends I18nScopedRef<DateFormat> {
 
     private int dateStyle = DateFormat.DEFAULT;
     private int timeStyle = DateFormat.DEFAULT;
 
-    public DateTimeFormatScr() {
+    public DateTimeFormatVars() {
         super(DateFormat.class);
     }
 

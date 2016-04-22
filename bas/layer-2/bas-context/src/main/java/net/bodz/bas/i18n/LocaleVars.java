@@ -2,10 +2,10 @@ package net.bodz.bas.i18n;
 
 import java.util.Locale;
 
-public class LocaleScr
+public class LocaleVars
         extends I18nScopedRef<Locale> {
 
-    public LocaleScr() {
+    public LocaleVars() {
         super(Locale.class);
     }
 

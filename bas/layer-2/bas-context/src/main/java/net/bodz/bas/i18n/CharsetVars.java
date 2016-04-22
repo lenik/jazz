@@ -7,10 +7,10 @@ import java.nio.charset.UnsupportedCharsetException;
 import net.bodz.bas.ctx.scope.ScopedRef;
 import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 
-public class CharsetScr
+public class CharsetVars
         extends ScopedRef<Charset> {
 
-    public CharsetScr() {
+    public CharsetVars() {
         super(Charset.class);
     }
 

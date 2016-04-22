@@ -3,17 +3,16 @@ package net.bodz.bas.ctx.scope;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.ctx.scope.ScopedRef;
 import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 import net.bodz.bas.ctx.scope.id.PackageScopeDescriptor;
 
 public class PackageScopedRefTest
         extends Assert {
 
-    static class AddressScr
+    static class AddressVars
             extends ScopedRef<String> {
 
-        public AddressScr() {
+        public AddressVars() {
             super(String.class);
         }
 
@@ -31,18 +30,18 @@ public class PackageScopedRefTest
     /**
      * for JUnit test, the static-modifier is off.
      */
-    AddressScr addressScr = new AddressScr();
+    AddressVars addressVars = new AddressVars();
 
     class Inner {
 
         public String getAddress() {
             PackageScopeDescriptor callerId = PackageScopeDescriptor.forCaller();
-            return addressScr.get(callerId);
+            return addressVars.get(callerId);
         }
 
         public void addMoreAddr(String s) {
             PackageScopeDescriptor callerId = PackageScopeDescriptor.forCaller();
-            addressScr.addMoreAddr(callerId, s);
+            addressVars.addMoreAddr(callerId, s);
         }
 
     }
@@ -51,7 +50,7 @@ public class PackageScopedRefTest
     public void testSetInnerKeepOuter()
             throws Exception {
         PackageScopeDescriptor scope = PackageScopeDescriptor.forCaller();
-        String outerAddr = addressScr.get(scope);
+        String outerAddr = addressVars.get(scope);
         assertNull(outerAddr);
 
         Inner inner = new Inner();
@@ -62,7 +61,7 @@ public class PackageScopedRefTest
         inner.addMoreAddr("b");
         assertEquals("ab", inner.getAddress());
 
-        outerAddr = addressScr.get(scope);
+        outerAddr = addressVars.get(scope);
         assertNull(outerAddr);
     }
 
@@ -70,14 +69,14 @@ public class PackageScopedRefTest
     public void testSetOuterChangeInner()
             throws Exception {
         PackageScopeDescriptor scope = PackageScopeDescriptor.forCaller();
-        String outerAddr = addressScr.get(scope);
+        String outerAddr = addressVars.get(scope);
         assertNull(outerAddr);
 
         Inner inner = new Inner();
         assertNull(inner.getAddress());
 
-        addressScr.set(scope, "x");
-        assertEquals("x", addressScr.get(scope));
+        addressVars.set(scope, "x");
+        assertEquals("x", addressVars.get(scope));
         // assertNull(inner.getAddress());
         assertEquals("x", inner.getAddress());
     }

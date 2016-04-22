@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.order.PriorityComparator;
-import net.bodz.bas.vfs.context.VFSColos;
+import net.bodz.bas.vfs.context.IVfsVars;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -125,14 +125,14 @@ public class DefaultFileSystem
 
     @Override
     public synchronized IPath getContextPath() {
-        IFile contextFile = VFSColos.workdir.get();
+        IFile contextFile = IVfsVars.workdir.get();
         return contextFile.getPath();
     }
 
     @Override
     public void setContextPath(IPath contextPath) {
         IFile contextFile = resolve(contextPath);
-        VFSColos.workdir.set(contextFile);
+        IVfsVars.workdir.set(contextFile);
     }
 
 }

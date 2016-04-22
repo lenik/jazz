@@ -27,7 +27,7 @@ import net.bodz.bas.ant.util.ValueConstruct;
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypePoSet;
-import net.bodz.bas.ctx.sys.UserDirScr;
+import net.bodz.bas.ctx.sys.UserDirVars;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
@@ -207,7 +207,7 @@ public class PropertyBeanTask
         final Project project = getProject();
         File baseDir = project.getBaseDir();
         if (baseDir != null)
-            UserDirScr.getInstance().chdir(baseDir);
+            UserDirVars.getInstance().chdir(baseDir);
 
         try {
             Class<?>[] tryProjectTypes = { Project.class };

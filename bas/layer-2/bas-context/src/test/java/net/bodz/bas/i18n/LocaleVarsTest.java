@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 
-public class LocaleScrTest
+public class LocaleVarsTest
         extends Assert {
 
     @Test

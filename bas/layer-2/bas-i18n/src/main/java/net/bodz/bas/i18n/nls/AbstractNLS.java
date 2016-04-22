@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.i18n.LocaleScr;
+import net.bodz.bas.i18n.LocaleVars;
 import net.bodz.bas.t.variant.AbstractVariantMap;
 
 public abstract class AbstractNLS
@@ -18,14 +18,14 @@ public abstract class AbstractNLS
     private String name;
 
     public AbstractNLS() {
-        this(null, LocaleScr.LOCALE.get());
+        this(null, LocaleVars.LOCALE.get());
     }
 
     /**
      * This constructor doesn't call {@link #reload(Locale)}.
      */
     public AbstractNLS(NLS parent) {
-        this(parent, LocaleScr.LOCALE.get());
+        this(parent, LocaleVars.LOCALE.get());
     }
 
     /**

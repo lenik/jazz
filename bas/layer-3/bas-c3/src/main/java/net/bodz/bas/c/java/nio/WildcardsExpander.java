@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.ctx.sys.UserDirScr;
+import net.bodz.bas.ctx.sys.UserDirVars;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.iterator.Iterators;
@@ -52,7 +52,7 @@ public class WildcardsExpander
         if (slash == -1) {
             bareName = true;
             // knownDir = ".";
-            knownDir = UserDirScr.getInstance().get().toString();
+            knownDir = UserDirVars.getInstance().get().toString();
             expr = knownDir + "/" + expr;
         } else {
             knownDir = expr.substring(0, slash);

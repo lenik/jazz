@@ -9,16 +9,16 @@ import net.bodz.bas.sugar.IConstants;
 public interface II18nScrConsts
         extends IConstants {
 
-    LocaleScr LOCALE = new LocaleScr();
-    CharsetScr CHARSET = new CharsetScr();
+    LocaleVars LOCALE = new LocaleVars();
+    CharsetVars CHARSET = new CharsetVars();
 
-    ScopedRef<DateFormat> DATE_FORMAT = new DateFormatScr();
-    ScopedRef<DateFormat> TIME_FORMAT = new TimeFormatScr();
-    ScopedRef<DateFormat> DATETIME_FORMAT = new DateTimeFormatScr();
+    ScopedRef<DateFormat> DATE_FORMAT = new DateFormatVars();
+    ScopedRef<DateFormat> TIME_FORMAT = new TimeFormatVars();
+    ScopedRef<DateFormat> DATETIME_FORMAT = new DateTimeFormatVars();
 
-    ScopedRef<NumberFormat> CURRENTY_FORMAT = new CurrencyFormatScr();
-    ScopedRef<NumberFormat> INTEGER_FORMAT = new IntegerFormatScr();
-    ScopedRef<NumberFormat> PERCENT_FORMAT = new PercentFormatScr();
-    ScopedRef<NumberFormat> NUMBER_FORMAT = new NumberFormatScr();
+    ScopedRef<NumberFormat> CURRENTY_FORMAT = new CurrencyFormatVars();
+    ScopedRef<NumberFormat> INTEGER_FORMAT = new IntegerFormatVars();
+    ScopedRef<NumberFormat> PERCENT_FORMAT = new PercentFormatVars();
+    ScopedRef<NumberFormat> NUMBER_FORMAT = new NumberFormatVars();
 
 }

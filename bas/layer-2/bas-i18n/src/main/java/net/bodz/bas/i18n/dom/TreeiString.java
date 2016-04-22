@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.string.StringHtml;
 import net.bodz.bas.c.string.StringPart;
-import net.bodz.bas.i18n.LocaleScr;
+import net.bodz.bas.i18n.LocaleVars;
 
 public class TreeiString
         extends TreeMap<String, String>
@@ -48,7 +48,7 @@ public class TreeiString
      */
     @Override
     public String toString() {
-        String path = LocaleScr.LOCALE.getPath();
+        String path = LocaleVars.LOCALE.getPath();
         String leaf = get(path);
         return leaf;
     }
