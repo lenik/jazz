@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.i18n.dom1.ElementComparator;
+
 public class FieldDeclGroup
         extends ArrayList<IFieldDecl> {
 
@@ -50,7 +52,7 @@ public class FieldDeclGroup
     }
 
     public void sort() {
-        Collections.sort(this, FieldDeclComparator.INSTANCE);
+        Collections.sort(this, ElementComparator.LOCALE);
     }
 
 }
