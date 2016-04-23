@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.fmt.records.MultiTextMaps;
 import net.bodz.bas.fmt.records.MultiTextMaps.PartMap;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.t.iterator.immed.Mitorx;
@@ -40,7 +39,7 @@ public class MultiTextMapsTest
     @Test
     public void test1()
             throws IOException {
-        IStreamInputSource source = ClassResource.getData(getClass(), "1");
+        IStreamInputSource source = ClassResource.getData(getClass(), "1.txm");
         MultiTextMaps maps = new MultiTextMaps(source);
 
         for (Map<String, String> pm : maps) {

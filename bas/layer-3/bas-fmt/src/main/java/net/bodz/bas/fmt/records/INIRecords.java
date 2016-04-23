@@ -28,6 +28,29 @@ public class INIRecords
         this(new FileResource(file, encoding), false);
     }
 
+    /**
+     * Prefix keys with the current section name, and automatically add "<i>section</i>.exist"
+     * entries.
+     */
+    public boolean isFlatten() {
+        return flatten;
+    }
+
+    public void setFlatten(boolean flatten) {
+        this.flatten = flatten;
+    }
+
+    /**
+     * The character used to separate the section name and the key name.
+     */
+    public String getDelimiter() {
+        return delim;
+    }
+
+    public void setDelimiter(String delimiter) {
+        this.delim = delimiter;
+    }
+
     @Override
     protected Class<? extends String> getKeyClass() {
         return String.class;
