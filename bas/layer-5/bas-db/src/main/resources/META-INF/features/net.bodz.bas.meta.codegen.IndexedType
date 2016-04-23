@@ -1,5 +1,5 @@
 net.bodz.bas.db.ibatis.Aliased
 net.bodz.bas.db.ibatis.IIbatisConfigurer
 net.bodz.bas.db.ibatis.IMapper
-net.bodz.bas.db.ibatis.TypeHandlerImpl
+net.bodz.bas.db.ibatis.TypeHandler
 net.bodz.bas.dbi.IRepositoryProvider
