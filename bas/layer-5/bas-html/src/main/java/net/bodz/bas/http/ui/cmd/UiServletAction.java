@@ -23,10 +23,12 @@ public abstract class UiServletAction
 
     private List<Class<?>> locations;
     private Map<String, String> scripts;
+    private Map<String, String> attributes;
 
     public UiServletAction() {
         locations = new ArrayList<Class<?>>();
         scripts = new HashMap<>();
+        attributes = new HashMap<>();
 
         Location aLocation = getClass().getAnnotation(Location.class);
         if (aLocation != null)
@@ -35,15 +37,16 @@ public abstract class UiServletAction
 
         for (Entry<String, ?> entry : getXjdoc().getTagMap().entrySet()) {
             String key = entry.getKey();
-            if (!key.startsWith("cmd."))
-                continue;
-            key = key.substring(4);
-
-            Object val = entry.getValue();
-            @SuppressWarnings("unchecked")
-            List<String> v = (List<String>) val;
-
-            scripts.put(key, StringArray.join("; ", v));
+            if (key.startsWith("cmd.")) {
+                key = key.substring(4);
+                List<?> array = (List<?>) entry.getValue();
+                scripts.put(key, StringArray.join("; ", array));
+            }
+            if (key.startsWith("attr.")) {
+                key = key.substring(5);
+                Object array = entry.getValue();
+                attributes.put(key, StringArray.join(" ", array));
+            }
         }
     }
 
@@ -121,6 +124,11 @@ public abstract class UiServletAction
 
     protected void addScript(String scriptId, String script) {
         scripts.put(scriptId, script);
+    }
+
+    @Override
+    public Map<String, String> getAttributeMap() {
+        return attributes;
     }
 
 }
