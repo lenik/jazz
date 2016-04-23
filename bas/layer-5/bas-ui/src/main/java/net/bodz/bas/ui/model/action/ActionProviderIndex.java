@@ -17,7 +17,7 @@ public class ActionProviderIndex {
 
         for (IActionProvider provider : ServiceLoader.load(IActionProvider.class)) {
             Class<?> targetClass = provider.getTargetClass();
-            if (targetClass == void.class) {
+            if (targetClass == null) {
                 generalActionProviders.add(provider);
                 continue;
             }
