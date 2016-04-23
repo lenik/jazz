@@ -2,7 +2,7 @@ package net.bodz.bas.html.dom.tag;
 
 import org.junit.Assert;
 
-public class HtmlBrTagTest
+public class MutableBrTest
         extends Assert {
 
     public static void main(String[] args) {

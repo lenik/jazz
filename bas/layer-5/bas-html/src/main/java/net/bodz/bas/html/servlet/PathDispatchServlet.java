@@ -17,6 +17,8 @@ import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
+import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlHtml;
 import net.bodz.bas.html.viz.DefaultHtmlViewContext;
 import net.bodz.bas.html.viz.util.PathFrames_htm;
 import net.bodz.bas.http.viz.ContentFamily;
@@ -189,14 +191,16 @@ public class PathDispatchServlet
             WriterPrintOut printOut = new WriterPrintOut(resp.getWriter());
             ITreeOut treeOut = TreeOutImpl.from(printOut);
             HtmlDoc doc = new HtmlDoc(treeOut, outputFormat);
+            RecHtmlOut htmlOut = doc.newHtmlOut();
+            HtmlHtml html = htmlOut.html();
 
             try {
-                pathFramesVbo.buildHtmlViewStart(ctx, doc, UiVar.wrap(arrival));
+                pathFramesVbo.buildHtmlViewStart(ctx, html, UiVar.wrap(arrival));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
 
-            doc.close();
+            html.close();
             break;
 
         default:

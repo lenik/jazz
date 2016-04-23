@@ -6,7 +6,7 @@ import net.bodz.bas.html.dom.tag.MutableForm;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.xml.dom.XmlFormatter;
 
-public class HtmlTagTest
+public class MutableHtmlTest
         extends Assert {
 
     public static void main(String[] args) {
