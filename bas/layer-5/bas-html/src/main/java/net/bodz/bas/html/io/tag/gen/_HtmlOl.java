@@ -1,14 +1,14 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML-->The ol element represents a list of items, where the items have been
  * intentionally ordered, such that changing the order would change the meaning of the document.
  */
-public class _HtmlOl<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlOl<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlOl(HtmlDoc doc) {
         super(doc);

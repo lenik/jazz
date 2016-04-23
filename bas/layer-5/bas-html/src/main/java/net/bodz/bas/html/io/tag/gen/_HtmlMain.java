@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The main element is not suitable for use to identify the main content areas of sub sections of a
@@ -9,8 +9,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * section at all, and just leave it as implicit, but an author could use a grouping content or
  * sectioning content element as appropriate.
  */
-public class _HtmlMain<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlMain<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlMain(HtmlDoc doc) {
         super(doc);

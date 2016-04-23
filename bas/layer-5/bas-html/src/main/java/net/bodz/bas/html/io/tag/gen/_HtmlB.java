@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The b element should be used as a last resort when no other element is more appropriate. In
@@ -9,8 +9,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * importance should be denoted with the strong element, and text marked or highlighted should use
  * the mark element.
  */
-public class _HtmlB<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlB<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlB(HtmlDoc doc) {
         super(doc);

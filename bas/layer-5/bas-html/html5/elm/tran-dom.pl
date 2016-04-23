@@ -203,6 +203,17 @@ sub _main {
             $file =~ s/\./\//g;
             $file = "$opt_outdir/$file.java";
 
+        # FOR IHtmlOut
+        # print "    $Class $name();\n";
+        
+        # FOR NullHtmlOut
+        # print "    public $Class $name() { return new $Class(IXmlTagBuilder.NULL); }\n";
+        
+        # FOR AbstractHtmlOut
+        # print "    public $Class $name() { return new $Class(tag(\"$name\")); }\n";
+
+        # next;
+
         _log1 "Write to file $file";
         mkdir_p $file;
         open(OUT, ">$file") or die "Can't write to file $file: $!";
@@ -264,15 +275,6 @@ sub _main {
         }
 
         print OUT "\n}\n";
-
-        # FOR IHtmlOut
-        # print "    $Class $name();\n";
-        
-        # FOR NullHtmlOut
-        # print "    public $Class $name() { return new $Class(IXmlTagBuilder.NULL); }\n";
-        
-        # FOR AbstractHtmlOut
-        # print "    public $Class $name() { return new $Class(tag(\"$name\")); }\n";
     } #for names
 
 } #main

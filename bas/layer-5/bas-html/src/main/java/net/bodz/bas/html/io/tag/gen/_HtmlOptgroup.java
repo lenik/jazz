@@ -1,14 +1,14 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML--><!-- v2: make optgroups selectable if they have a value. -->The optgroup element
  * represents a group of option elements with a common label.
  */
-public class _HtmlOptgroup<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlOptgroup<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlOptgroup(HtmlDoc doc) {
         super(doc);

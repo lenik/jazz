@@ -1,14 +1,14 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML-->The data element represents its contents, along with a machine-readable form of
  * those contents in the value attribute.
  */
-public class _HtmlData<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlData<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlData(HtmlDoc doc) {
         super(doc);

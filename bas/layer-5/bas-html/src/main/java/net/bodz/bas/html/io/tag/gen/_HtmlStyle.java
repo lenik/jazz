@@ -1,15 +1,15 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML-->The style element allows authors to embed style information in their documents.
  * The style element is one of several inputs to the styling processing model. The element does not
  * represent content for the user.
  */
-public class _HtmlStyle<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlStyle<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlStyle(HtmlDoc doc) {
         super(doc);

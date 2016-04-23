@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The ruby, rb, rtc, and rt elements can be used for a variety of kinds of annotations, including
@@ -10,8 +10,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * Layout. [JLREQ] The rp element can be used as fallback content when ruby rendering is not
  * supported.
  */
-public class _HtmlRuby<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlRuby<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlRuby(HtmlDoc doc) {
         super(doc);

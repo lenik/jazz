@@ -1,15 +1,15 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The progress element is the wrong element to use for something that is just a gauge, as opposed
  * to task progress. For instance, indicating disk space usage using progress would be
  * inappropriate. Instead, the meter element is available for such use cases.
  */
-public class _HtmlProgress<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlProgress<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlProgress(HtmlDoc doc) {
         super(doc);

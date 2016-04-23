@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * Not all groups of links on a page need to be in a nav element — the element is primarily intended
@@ -10,8 +10,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * page, and a copyright page. The footer element alone is sufficient for such cases; while a nav
  * element can be used in such cases, it is usually unnecessary.
  */
-public class _HtmlNav<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlNav<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlNav(HtmlDoc doc) {
         super(doc);

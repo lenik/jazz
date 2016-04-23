@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The input element represents a button with no default behavior. A label for the button must be
@@ -9,8 +9,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * attribute, the button's label must be the value of that attribute; otherwise, it must be the
  * empty string. The element is a button.
  */
-public class _HtmlInput<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlInput<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlInput(HtmlDoc doc) {
         super(doc);

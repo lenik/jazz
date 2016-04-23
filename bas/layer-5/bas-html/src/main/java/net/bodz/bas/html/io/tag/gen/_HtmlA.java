@@ -1,15 +1,15 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The a element may be wrapped around entire paragraphs, lists, tables, and so forth, even entire
  * sections, so long as there is no interactive content within (e.g. buttons or other links). This
  * example shows how this can be used to make an entire advertising block into a link:
  */
-public class _HtmlA<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlA<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlA(HtmlDoc doc) {
         super(doc);

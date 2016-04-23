@@ -1,14 +1,14 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The meter element also does not represent a scalar value of arbitrary range — for example, it
  * would be wrong to use this to report a weight, or height, unless there is a known maximum value.
  */
-public class _HtmlMeter<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlMeter<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlMeter(HtmlDoc doc) {
         super(doc);

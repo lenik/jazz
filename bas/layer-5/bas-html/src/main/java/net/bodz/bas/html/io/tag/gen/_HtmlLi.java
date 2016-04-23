@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * An li element's end tag may be omitted if the li element is immediately followed by another li
@@ -14,8 +14,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * parent element's list, as defined for those elements. Otherwise, the list item has no defined
  * list-related relationship to any other li element.
  */
-public class _HtmlLi<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlLi<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlLi(HtmlDoc doc) {
         super(doc);

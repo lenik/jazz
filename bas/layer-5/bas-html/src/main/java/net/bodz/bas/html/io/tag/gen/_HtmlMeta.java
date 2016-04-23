@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The meta element can represent document-level metadata with the name attribute, pragma directives
@@ -9,8 +9,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * document is serialized to string form (e.g. for transmission over the network or for disk
  * storage) with the charset attribute.
  */
-public class _HtmlMeta<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlMeta<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlMeta(HtmlDoc doc) {
         super(doc);
