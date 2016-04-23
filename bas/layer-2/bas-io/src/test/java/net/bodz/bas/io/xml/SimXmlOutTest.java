@@ -16,7 +16,7 @@ public class SimXmlOutTest
         format.shortEmptyElement = true;
         format.sortAttributeNames = true;
 
-        IXmlOut out = new XmlDoc(treeOut, format);
+        IXmlOut out = new XmlDoc(treeOut, format).newXmlOut();
         out.begin("ver").text("1.0").end();
         IXmlOut html = out.begin("html");
         {
