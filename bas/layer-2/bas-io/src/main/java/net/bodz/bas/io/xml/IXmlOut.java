@@ -54,6 +54,8 @@ public interface IXmlOut
 
     void verbatim(String str);
 
+    void indent(int level);
+
     @Override
     void flush(boolean sync);
 
