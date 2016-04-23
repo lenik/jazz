@@ -6,25 +6,25 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class UiLocationTreeBuilder {
+public class UiActionTreeBuilder {
 
-    Map<Class<?>, UiLocationNode> nodes;
-    Set<UiLocationNode> roots;
+    Map<Class<?>, UiActionNode> nodes;
+    Set<UiActionNode> roots;
 
-    public UiLocationTreeBuilder() {
+    public UiActionTreeBuilder() {
         nodes = new HashMap<>();
-        roots = new TreeSet<>(UiLocationNodeComparator.INSTANCE);
+        roots = new TreeSet<>(UiActionNodeComparator.INSTANCE);
     }
 
-    public Map<Class<?>, UiLocationNode> getNodes() {
+    public Map<Class<?>, UiActionNode> getNodes() {
         return nodes;
     }
 
-    public UiLocationNode getNode(Class<?> locationClass) {
+    public UiActionNode getNode(Class<?> locationClass) {
         return nodes.get(locationClass);
     }
 
-    public Set<UiLocationNode> getRoots() {
+    public Set<UiActionNode> getRoots() {
         return roots;
     }
 
@@ -52,22 +52,22 @@ public class UiLocationTreeBuilder {
 
     void addAction(IAction action) {
         for (Class<?> locationClass : action.getLocations()) {
-            UiLocationNode node = loadNode(locationClass);
-            node.addAction(action);
+            UiActionNode parentNode = loadNode(locationClass);
+            new UiActionNode(parentNode, action);
         }
     }
 
-    UiLocationNode loadNode(Class<?> c) {
-        UiLocationNode node = nodes.get(c);
+    UiActionNode loadNode(Class<?> c) {
+        UiActionNode node = nodes.get(c);
         if (node == null) {
             UiLocationDecl decl = UiLocationIndex.get(c);
 
             UiLocationDecl parentDecl = decl.getParent();
             if (parentDecl != null) {
-                UiLocationNode parentNode = loadNode(parentDecl.getClass());
-                node = new UiLocationNode(decl, parentNode);
+                UiActionNode parentNode = loadNode(parentDecl.getClass());
+                node = new UiActionNode(parentNode, decl);
             } else {
-                node = new UiLocationNode(decl);
+                node = new UiActionNode(decl);
                 roots.add(node);
             }
             nodes.put(c, node);
