@@ -1,4 +1,4 @@
-package net.bodz.bas.site.ui.builtin;
+package net.bodz.bas.site.ui.action;
 
 import net.bodz.bas.http.ui.cmd.UiScriptAction;
 import net.bodz.bas.ui.model.action.Location;
