@@ -103,28 +103,37 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public final IHtmlOut buildHttpViewStart(IHttpViewContext _ctx, HttpServletResponse resp, IUiRef<T> ref)
+    public final Object buildHttpViewStart(IHttpViewContext _ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
 
         HtmlDoc doc = new HtmlDoc(resp.getWriter(), HtmlOutputFormat.DEFAULT);
+        IHtmlOut html = doc.newHtmlOut();
         try {
-            return buildHtmlViewStart(ctx, doc, ref);
+            IHtmlOut body = buildHtmlViewStart(ctx, html, ref);
+            buildHtmlViewEnd(ctx, html, body, ref);
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
+        html.close();
+        return null;
     }
 
     @Override
     public final void buildHttpViewEnd(IHttpViewContext ctx, HttpServletResponse resp, Object o, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
-        // TODO
     }
 
     @Override
     public void buildHtmlViewEnd(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut body, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         return;
+    }
+
+    public final void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, IUiRef<T> ref)
+            throws ViewBuilderException, IOException {
+        IHtmlOut body = buildHtmlViewStart(ctx, out, ref);
+        buildHtmlViewEnd(ctx, out, body, ref);
     }
 
     protected static boolean addSlash(IHttpViewContext ctx, IUiRef<?> ref)
