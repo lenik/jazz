@@ -11,7 +11,7 @@ import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
 /**
- * Preferred file extension: *.text.mmf
+ * Preferred file extension: *.txm
  */
 public class MultiTextMaps
         extends AbstractMultiMapsFormat<String, String> {

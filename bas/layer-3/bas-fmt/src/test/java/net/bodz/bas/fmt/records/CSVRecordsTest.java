@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.fmt.records.CSVRecords;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
@@ -16,7 +15,7 @@ public class CSVRecordsTest
     @Test
     public void test1()
             throws IOException {
-        URLResource classData = ClassResource.getData(getClass(), "1");
+        URLResource classData = ClassResource.getData(getClass(), "1.csv");
         CSVRecords csv = new CSVRecords(classData);
         Mitorx<? extends String[], IOException> it = csv.iterator(true);
         String[] head = it._next();
