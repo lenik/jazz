@@ -1,15 +1,15 @@
 package net.bodz.bas.ui.model.action;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.i18n.dom1.ElementComparator;
+import net.bodz.bas.io.ITreeOut;
 
 public class UiLocationNode {
 
     private UiLocationNode parent;
-    private List<UiLocationNode> items;
+    private Set<UiLocationNode> children;
 
     private UiLocationDecl decl;
     private Set<IAction> actions;
@@ -21,18 +21,27 @@ public class UiLocationNode {
     public UiLocationNode(UiLocationDecl decl, UiLocationNode parent) {
         this.decl = decl;
         this.actions = new TreeSet<>(ElementComparator.LOCALE);
+
+        this.parent = parent;
+        this.children = new TreeSet<>(UiLocationNodeComparator.INSTANCE);
+        if (parent != null)
+            parent.addChild(this);
     }
 
     public UiLocationNode getParent() {
         return parent;
     }
 
-    public List<UiLocationNode> getItems() {
-        return items;
+    public Set<UiLocationNode> getChildren() {
+        return children;
+    }
+
+    public void addChild(UiLocationNode child) {
+        children.add(child);
     }
 
     public boolean isEmpty() {
-        return items.isEmpty();
+        return children.isEmpty();
     }
 
     public UiLocationDecl getDecl() {
@@ -47,4 +56,13 @@ public class UiLocationNode {
         actions.add(action);
     }
 
+    public void dump(ITreeOut out) {
+        out.println(decl);
+        out.enter();
+        for (IAction action : actions)
+            out.println("Action: " + action);
+        for (UiLocationNode child : children)
+            child.dump(out);
+        out.leave();
+    }
 }

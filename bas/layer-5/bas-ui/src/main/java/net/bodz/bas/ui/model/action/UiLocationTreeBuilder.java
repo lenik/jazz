@@ -29,23 +29,25 @@ public class UiLocationTreeBuilder {
     }
 
     public void buildTree(Object obj) {
-        Class<?> objClass = obj.getClass();
+        Class<?> objClass = obj == null ? null : obj.getClass();
 
         for (IAction action : ActionIndex.generalActions)
             addAction(action);
 
-        for (List<IAction> list : ActionIndex.clsActions.join(objClass))
-            for (IAction action : list)
-                addAction(action);
+        if (objClass != null)
+            for (List<IAction> list : ActionIndex.clsActions.join(objClass))
+                for (IAction action : list)
+                    addAction(action);
 
         for (IActionProvider provider : ActionProviderIndex.generalActionProviders)
             for (IAction action : provider.getActions(objClass))
                 addAction(action);
 
-        for (List<IActionProvider> list : ActionProviderIndex.clsActionProviders.join(objClass))
-            for (IActionProvider provider : list)
-                for (IAction action : provider.getActions(objClass))
-                    addAction(action);
+        if (objClass != null)
+            for (List<IActionProvider> list : ActionProviderIndex.clsActionProviders.join(objClass))
+                for (IActionProvider provider : list)
+                    for (IAction action : provider.getActions(objClass))
+                        addAction(action);
     }
 
     void addAction(IAction action) {

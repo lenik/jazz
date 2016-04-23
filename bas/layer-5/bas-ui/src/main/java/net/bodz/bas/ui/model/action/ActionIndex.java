@@ -17,7 +17,7 @@ public class ActionIndex {
 
         for (IAction action : ServiceLoader.load(IAction.class)) {
             Class<?> targetClass = action.getTargetClass();
-            if (targetClass == void.class) {
+            if (targetClass == null) {
                 generalActions.add(action);
                 continue;
             }
