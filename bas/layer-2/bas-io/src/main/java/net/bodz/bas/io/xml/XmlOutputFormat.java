@@ -23,6 +23,9 @@ public class XmlOutputFormat {
      */
     public boolean shortEmptyElement = false;
 
+    public boolean newLineAfterStartTag = false;
+    public boolean newLineBeforeEndTag = false;
+
     public boolean newLineAfterComment = true;
     public boolean newLineAfterPI = true;
     public boolean newLineAfterVerbatim = false;
