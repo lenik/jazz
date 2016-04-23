@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML-->The title element represents the document's title or name. Authors should use
@@ -10,8 +10,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * its first heading, since the first heading does not have to stand alone when taken out of
  * context.
  */
-public class _HtmlTitle<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlTitle<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlTitle(HtmlDoc doc) {
         super(doc);

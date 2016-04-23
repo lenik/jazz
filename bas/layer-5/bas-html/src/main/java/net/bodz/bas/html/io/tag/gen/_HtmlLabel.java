@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The label element's exact default presentation and behavior, in particular what its activation
@@ -9,8 +9,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * behavior of a label element for events targeted at interactive content descendants of a label
  * element, and any descendants of those interactive content descendants, must be to do nothing.
  */
-public class _HtmlLabel<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlLabel<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlLabel(HtmlDoc doc) {
         super(doc);

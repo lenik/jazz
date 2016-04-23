@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML-->The article element represents a complete, or self-contained, composition in a
@@ -10,8 +10,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * blog entry, a user-submitted comment, an interactive widget or gadget, or any other independent
  * item of content.
  */
-public class _HtmlArticle<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlArticle<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlArticle(HtmlDoc doc) {
         super(doc);

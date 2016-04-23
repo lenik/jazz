@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML-->The i element represents a span of text in an alternate voice or mood, or
@@ -9,8 +9,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * as a taxonomic designation, a technical term, an idiomatic phrase from another language,
  * transliteration, a thought, or a ship name in Western texts.
  */
-public class _HtmlI<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlI<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlI(HtmlDoc doc) {
         super(doc);

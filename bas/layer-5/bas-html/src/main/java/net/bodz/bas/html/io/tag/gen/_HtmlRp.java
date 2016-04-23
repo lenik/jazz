@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * An rp element's end tag may be omitted if the rp element is immediately followed by an rb, rt,
@@ -12,8 +12,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * shown by user agents that don't support ruby annotations. One widespread convention is to provide
  * parentheses around the ruby text component of a ruby annotation.
  */
-public class _HtmlRp<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlRp<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlRp(HtmlDoc doc) {
         super(doc);

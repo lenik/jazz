@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML-->The base element allows authors to specify the document base URL for the
@@ -9,8 +9,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * purposes of following hyperlinks. The element does not represent any content beyond this
  * information.
  */
-public class _HtmlBase<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlBase<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlBase(HtmlDoc doc) {
         super(doc);

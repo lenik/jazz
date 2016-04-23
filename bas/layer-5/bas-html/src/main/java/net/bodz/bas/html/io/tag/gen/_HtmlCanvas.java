@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The canvas element has two attributes to control the size of the element's bitmap: width and
@@ -10,8 +10,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * attribute is missing, or if parsing its value returns an error, then the default value must be
  * used instead. The width attribute defaults to 300, and the height attribute defaults to 150.
  */
-public class _HtmlCanvas<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlCanvas<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlCanvas(HtmlDoc doc) {
         super(doc);

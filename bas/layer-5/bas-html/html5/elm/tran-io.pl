@@ -203,6 +203,18 @@ sub _main {
             $file =~ s/\./\//g;
             $file = "$opt_outdir/$file.java";
 
+
+        # FOR IHtmlOut
+        # print "    $Class $name();\n";
+        
+        # FOR NullHtmlOut
+        # print "    public $Class $name() { return new $Class(IXmlTagBuilder.NULL); }\n";
+        
+        # FOR RecHtmlOut
+        print "    public $Class $name() { return begin(\"$name\", new $Class(doc)); }\n";
+        #
+        next;
+
         _log1 "Write to file $file";
         mkdir_p $file;
         open(OUT, ">$file") or die "Can't write to file $file: $!";
@@ -222,7 +234,7 @@ sub _main {
             print OUT "    }\n";
         } else {
             print OUT "import net.bodz.bas.io.html.HtmlDoc;\n";
-            print OUT "import net.bodz.bas.io.html.RecHtmlOut;\n";
+            print OUT "import net.bodz.bas.io.html.AbstractRecHtmlOut;\n";
             print OUT "\n";
 
             if (defined $doc) {
@@ -230,8 +242,8 @@ sub _main {
                 print OUT "  * $doc\n";
                 print OUT "  */\n";
             }
-            print OUT "public class $Class<self_t extends RecHtmlOut<self_t>>\n";
-            print OUT "        extends RecHtmlOut<self_t> {\n";
+            print OUT "public class $Class<self_t extends AbstractRecHtmlOut<self_t>>\n";
+            print OUT "        extends AbstractRecHtmlOut<self_t> {\n";
             print OUT "\n";
             print OUT "    public $Class(HtmlDoc doc) {\n";
             print OUT "        super(doc);\n";
@@ -262,15 +274,6 @@ sub _main {
         }
 
         print OUT "\n}\n";
-
-        # FOR IHtmlOut
-        # print "    $Class $name();\n";
-        
-        # FOR NullHtmlOut
-        # print "    public $Class $name() { return new $Class(IXmlTagBuilder.NULL); }\n";
-        
-        # FOR AbstractHtmlOut
-        # print "    public $Class $name() { return new $Class(tag(\"$name\")); }\n";
     } #for names
 
 } #main

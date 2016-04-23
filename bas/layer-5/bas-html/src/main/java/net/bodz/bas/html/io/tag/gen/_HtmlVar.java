@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML-->The var element represents a variable. This could be an actual variable in a
@@ -9,8 +9,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * identifying a physical quantity, a function parameter, or just be a term used as a placeholder in
  * prose.
  */
-public class _HtmlVar<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlVar<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlVar(HtmlDoc doc) {
         super(doc);

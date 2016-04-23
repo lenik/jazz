@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * An rb element's end tag may be omitted if the rb element is immediately followed by an rb, rt,
@@ -12,8 +12,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * ruby annotation. When it is the child of a ruby element, it doesn't represent anything itself,
  * but its parent ruby element uses it as part of determining what it represents.
  */
-public class _HtmlRb<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlRb<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlRb(HtmlDoc doc) {
         super(doc);

@@ -1,15 +1,15 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * The table element takes part in the table model. Tables have rows, columns, and cells given by
  * their descendants. The rows and columns form a grid; a table's cells must completely cover that
  * grid without overlap.
  */
-public class _HtmlTable<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlTable<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlTable(HtmlDoc doc) {
         super(doc);

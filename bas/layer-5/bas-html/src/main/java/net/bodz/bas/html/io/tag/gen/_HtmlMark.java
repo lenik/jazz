@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
 import net.bodz.bas.html.io.HtmlDoc;
-import net.bodz.bas.html.io.RecHtmlOut;
+import net.bodz.bas.html.io.AbstractRecHtmlOut;
 
 /**
  * <!--TOPIC:HTML--><!-- v2: attribute that means "highlight this on the scrollbar" -->The mark
@@ -14,8 +14,8 @@ import net.bodz.bas.html.io.RecHtmlOut;
  * the document that has been highlighted due to its likely relevance to the user's current
  * activity.
  */
-public class _HtmlMark<self_t extends RecHtmlOut<self_t>>
-        extends RecHtmlOut<self_t> {
+public class _HtmlMark<self_t extends AbstractRecHtmlOut<self_t>>
+        extends AbstractRecHtmlOut<self_t> {
 
     public _HtmlMark(HtmlDoc doc) {
         super(doc);
