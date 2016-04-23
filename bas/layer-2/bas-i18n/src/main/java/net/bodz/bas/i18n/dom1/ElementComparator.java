@@ -70,11 +70,9 @@ public class ElementComparator
                 break;
 
             case LABEL:
-                iString label1 = o1.getLabel();
-                iString label2 = o2.getLabel();
-                String lab1 = label1 == null ? null : label1.toString();
-                String lab2 = label2 == null ? null : label2.toString();
-                cmp = Nullables.compare(lab1, lab2);
+                String label1 = Nullables.toString(o1.getLabel());
+                String label2 = Nullables.toString(o2.getLabel());
+                cmp = Nullables.compare(label1, label2);
                 if (cmp != 0)
                     return cmp;
                 break;

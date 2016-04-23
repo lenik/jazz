@@ -2,6 +2,7 @@ package net.bodz.mda.xjdoc.model.javadoc;
 
 import java.io.IOException;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LazyLoadException;
@@ -131,6 +132,15 @@ public abstract class AbstractXjdocElement
     @Override
     public int getPriority() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        String name = getName();
+        String label = Nullables.toString(getLabel());
+        if (label == null)
+            return name;
+        return label + " (" + name + ")";
     }
 
 }

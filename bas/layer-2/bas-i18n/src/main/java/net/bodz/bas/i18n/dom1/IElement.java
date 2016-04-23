@@ -2,6 +2,7 @@ package net.bodz.bas.i18n.dom1;
 
 import java.lang.reflect.Modifier;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.t.order.IPriority;
@@ -71,12 +72,10 @@ public interface IElement
             if (element == null)
                 return null;
 
-            iString label = element.getLabel();
+            String label = Nullables.toString(element.getLabel());
             if (label != null) {
-                String labelStr = label.toString();
-                if (labelStr != null)
-                    if (allowEmpty || !labelStr.isEmpty())
-                        return labelStr;
+                if (allowEmpty || !label.isEmpty())
+                    return label;
             }
 
             return element.getName();
@@ -93,12 +92,9 @@ public interface IElement
             if (element == null)
                 return null;
 
-            iString description = element.getDescription();
-            if (description != null) {
-                String descriptionStr = description.toString();
-                if (descriptionStr != null)
-                    return descriptionStr;
-            }
+            String description = Nullables.toString(element.getDescription());
+            if (description != null)
+                return description;
 
             return nullStr;
         }
