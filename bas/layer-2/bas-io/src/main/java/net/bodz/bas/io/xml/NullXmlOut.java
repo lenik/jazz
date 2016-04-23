@@ -85,6 +85,10 @@ public class NullXmlOut
     }
 
     @Override
+    public void indent(int level) {
+    }
+
+    @Override
     public void flush(boolean sync) {
     }
 

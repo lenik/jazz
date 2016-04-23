@@ -246,6 +246,18 @@ public class RecXmlOut<self_t extends RecXmlOut<self_t>>
     }
 
     @Override
+    public void indent(int level) {
+        while (level > 0) {
+            treeOut.enter();
+            level--;
+        }
+        while (level < 0) {
+            treeOut.leave();
+            level++;
+        }
+    }
+
+    @Override
     public boolean isClosed() {
         return treeOut.isClosed();
     }
