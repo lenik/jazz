@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.ctx.util.IFramedMap;
 import net.bodz.bas.ctx.util.StrictFramedMap;
+import net.bodz.bas.http.model.IHttpHeadData;
 
 public class DefaultHttpViewContext
         extends AbstractHttpViewContext
@@ -20,6 +21,8 @@ public class DefaultHttpViewContext
 
     private final Map<String, Object> attributes;
     private final IFramedMap<String, Object> varMap;
+
+    private IHttpHeadData headData;
 
     public DefaultHttpViewContext(HttpServletRequest request, HttpServletResponse response) {
         if (request == null)
@@ -91,6 +94,11 @@ public class DefaultHttpViewContext
     @Override
     public void setVariable(String name, Object value) {
         varMap.put(name, value);
+    }
+
+    @Override
+    public IHttpHeadData getHeadData() {
+        return headData;
     }
 
 }

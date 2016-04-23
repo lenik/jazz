@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.html.dom.HtmlHeadData;
+import net.bodz.bas.html.dom.IHtmlHeadData;
 import net.bodz.bas.http.viz.DefaultHttpViewContext;
 
 public class DefaultHtmlViewContext

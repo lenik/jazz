@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.ctx.util.IFramedMap;
+import net.bodz.bas.http.model.IHttpHeadData;
 import net.bodz.bas.rtx.IQueryable;
 
 public interface IHttpViewContext
@@ -33,5 +34,7 @@ public interface IHttpViewContext
     <T> T getVariable(String name);
 
     void setVariable(String name, Object value);
+
+    IHttpHeadData getHeadData();
 
 }

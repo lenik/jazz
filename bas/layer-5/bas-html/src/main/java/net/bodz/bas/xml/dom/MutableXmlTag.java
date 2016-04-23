@@ -23,7 +23,6 @@ public class MutableXmlTag<self_t extends IXmlTag>
         super(parent);
         attributes = new LinkedHashMap<String, String>();
         children = new ArrayList<IXmlNode>();
-
     }
 
     public MutableXmlTag(IXmlTag parent, String tagName) {

@@ -1,4 +1,4 @@
-package net.bodz.bas.http.viz;
+package net.bodz.bas.http.model;
 
 import java.util.Map;
 
