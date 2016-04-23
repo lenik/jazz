@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.ui.dom1.UiObject;
 import net.bodz.bas.ui.model.action.IActionContext;
@@ -33,12 +34,16 @@ public abstract class UiServletAction
                 locations.add(c);
 
         for (Entry<String, ?> entry : getXjdoc().getTagMap().entrySet()) {
-            String k = entry.getKey();
-            String v = (String) entry.getValue();
-            if (!k.startsWith("cmd."))
+            String key = entry.getKey();
+            if (!key.startsWith("cmd."))
                 continue;
-            k = k.substring(4);
-            scripts.put(k, v);
+            key = key.substring(4);
+
+            Object val = entry.getValue();
+            @SuppressWarnings("unchecked")
+            List<String> v = (List<String>) val;
+
+            scripts.put(key, StringArray.join("; ", v));
         }
     }
 
