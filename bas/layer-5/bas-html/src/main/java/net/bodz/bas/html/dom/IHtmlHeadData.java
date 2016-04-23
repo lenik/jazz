@@ -1,9 +1,14 @@
-package net.bodz.bas.html.viz;
+package net.bodz.bas.html.dom;
 
+import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.html.artifact.IMutableArtifactDependent;
-import net.bodz.bas.http.viz.IHttpHeadData;
+import net.bodz.bas.html.dom.tag.MutableHead;
+import net.bodz.bas.html.dom.tag.MutableLink;
+import net.bodz.bas.html.dom.tag.MutableScript;
+import net.bodz.bas.html.dom.tag.MutableStyle;
+import net.bodz.bas.http.model.IHttpHeadData;
 
 public interface IHtmlHeadData
         extends IHttpHeadData, IMutableArtifactDependent {
@@ -64,5 +69,31 @@ public interface IHtmlHeadData
     String getMeta(String name);
 
     void setMeta(String name, String content);
+
+    /**
+     * You can merge the optional head into your real head.
+     */
+    MutableHead getOptHead();
+
+    /**
+     * The links should be placed after html artifacts.
+     */
+    List<MutableLink> getLinks();
+
+    void addLink(MutableLink link);
+
+    /**
+     * The scripts should be placed after html artifacts.
+     */
+    List<MutableScript> getScripts();
+
+    void addScript(MutableScript script);
+
+    /**
+     * The styles should be placed after html artifacts.
+     */
+    List<MutableStyle> getStyles();
+
+    void addStyle(MutableStyle style);
 
 }

@@ -5,10 +5,10 @@ import java.util.List;
 
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.html.artifact.ArtifactType;
+import net.bodz.bas.html.dom.IHtmlHeadData;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlSelect;
 import net.bodz.bas.html.util.FieldDeclToHtml;
-import net.bodz.bas.html.viz.IHtmlHeadData;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.builtin.AbstractFormInput_htm;
 import net.bodz.bas.meta.decl.ItemType;
@@ -30,7 +30,7 @@ public class ListTagsinput_htm
     }
 
     @Override
-    public void preview(IHtmlViewContext ctx, IUiRef<List<?>> ref) {
+    public void precompile(IHtmlViewContext ctx, IUiRef<List<?>> ref) {
         IHtmlHeadData headData = ctx.getHeadData();
         headData.addDependency(JQueryPlugins.TAGSINPUT, ArtifactType.SCRIPT);
     }

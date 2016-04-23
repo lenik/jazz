@@ -10,6 +10,7 @@ import net.bodz.bas.html.artifact.ArtifactType;
 import net.bodz.bas.html.artifact.IArtifact;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.MutableWebArtifact;
+import net.bodz.bas.html.dom.IHtmlHeadData;
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
@@ -65,10 +66,10 @@ public abstract class AbstractHtmlViewBuilder<T>
     @Override
     public final void precompile(IHttpViewContext _ctx, IUiRef<T> ref) {
         IHtmlViewContext ctx = (IHtmlViewContext) _ctx;
-        preview(ctx, ref);
+        precompile(ctx, ref);
     }
 
-    public void preview(IHtmlViewContext ctx, IUiRef<T> ref) {
+    public void precompile(IHtmlViewContext ctx, IUiRef<T> ref) {
         IHtmlHeadData metaData = ctx.getHeadData();
 
         T value = ref.get();
