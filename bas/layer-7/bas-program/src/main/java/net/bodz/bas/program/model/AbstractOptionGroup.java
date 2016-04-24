@@ -245,8 +245,12 @@ public abstract class AbstractOptionGroup
                         return true;
                     }
 
-                    // The remaining chars are used as opt arg..
-                    optArgs.add(packed);
+                    if (!packed.isEmpty()) {
+                        // The remaining chars are used as opt arg..
+                        optArgs.add(packed);
+                    }
+
+                    // The next args (if exist) are used as opt arg.
                     state = SHIFT_ARGS;
                     continue;
 
