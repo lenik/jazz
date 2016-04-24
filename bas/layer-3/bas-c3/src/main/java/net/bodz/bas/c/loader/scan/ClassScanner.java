@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -233,7 +235,8 @@ public class ClassScanner
             throws IOException {
         setFilter(ClassOrDirFileFilter.INSTANCE);
         String packageDir = packageName.replace('.', '/');
-        for (String resourceName : scanResources(packageDir).keySet()) {
+        Map<String, List<URL>> resources = scanResources(packageDir);
+        for (String resourceName : resources.keySet()) {
             assert resourceName.endsWith(".class");
             String rawName = resourceName.substring(0, resourceName.length() - 6);
             String fqcn = rawName.replace('/', '.');
