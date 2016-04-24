@@ -220,8 +220,22 @@ public class TypeCollector<T> {
         List<Class<?>> list = new ArrayList<Class<?>>();
 
         for (Class<?> derivation : scanner.getDerivations(base, -1)) {
-            if (derivation.isAnonymousClass() || derivation.isLocalClass() || derivation.isMemberClass())
+            if (derivation.isAnonymousClass())
                 continue;
+
+            /*
+             * Defined inside a code block, only visible inside that code block
+             */
+            if (derivation.isLocalClass())
+                continue;
+
+            if (derivation.isMemberClass())
+                /*
+                 * A class defined as non-static inside another class. Instances are dependent on an
+                 * instance of the enclosing class.
+                 */
+                if (!Modifier.isStatic(derivation.getModifiers()))
+                    continue;
 
             if (derivation.isAnnotationPresent(ExcludedFromIndex.class))
                 continue;
