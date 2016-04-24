@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableCite<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableCite(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableCite(IHtmlTag parent) {
+        super(parent, "cite");
     }
 
 }

@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableEm<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableEm(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableEm(IHtmlTag parent) {
+        super(parent, "em");
     }
 
 }

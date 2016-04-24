@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableButton;
 public class MutableButton
         extends _MutableButton<MutableButton> {
 
-    public MutableButton(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableButton(IHtmlTag parent) {
+        super(parent);
     }
 
     public MutableButton dataToggle(Object val) {

@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableStrong<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableStrong(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableStrong(IHtmlTag parent) {
+        super(parent, "strong");
     }
 
 }

@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableBody<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableBody(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableBody(IHtmlTag parent) {
+        super(parent, "body");
     }
 
     public self_t onafterprint(Object val) {

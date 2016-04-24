@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableSource<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableSource(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableSource(IHtmlTag parent) {
+        super(parent, "source");
     }
 
     /**

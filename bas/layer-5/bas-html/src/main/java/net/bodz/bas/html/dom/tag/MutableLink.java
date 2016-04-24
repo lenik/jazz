@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableLink;
 public class MutableLink
         extends _MutableLink<MutableLink> {
 
-    public MutableLink(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableLink(IHtmlTag parent) {
+        super(parent);
     }
 
     public MutableLink css(String href) {

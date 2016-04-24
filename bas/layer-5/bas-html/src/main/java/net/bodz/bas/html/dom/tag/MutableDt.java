@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableDt;
 public class MutableDt
         extends _MutableDt<MutableDt> {
 
-    public MutableDt(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableDt(IHtmlTag parent) {
+        super(parent);
     }
 
 }

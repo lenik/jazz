@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableH6<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableH6(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableH6(IHtmlTag parent) {
+        super(parent, "h6");
     }
 
 }

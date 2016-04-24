@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableMap;
 public class MutableMap
         extends _MutableMap<MutableMap> {
 
-    public MutableMap(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableMap(IHtmlTag parent) {
+        super(parent);
     }
 
 }

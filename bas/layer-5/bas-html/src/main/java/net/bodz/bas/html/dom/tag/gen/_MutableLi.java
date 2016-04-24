@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableLi<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableLi(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableLi(IHtmlTag parent) {
+        super(parent, "li");
     }
 
 }

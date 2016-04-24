@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableBody;
 public class MutableBody
         extends _MutableBody<MutableBody> {
 
-    public MutableBody(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableBody(IHtmlTag parent) {
+        super(parent);
     }
 
 }

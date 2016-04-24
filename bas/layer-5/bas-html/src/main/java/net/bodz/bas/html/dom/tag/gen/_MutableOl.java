@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableOl<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableOl(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableOl(IHtmlTag parent) {
+        super(parent, "ol");
     }
 
     /**

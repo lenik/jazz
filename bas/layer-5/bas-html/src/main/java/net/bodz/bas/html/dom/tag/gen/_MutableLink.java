@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableLink<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableLink(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableLink(IHtmlTag parent) {
+        super(parent, "link");
     }
 
     public self_t href(Object val) {

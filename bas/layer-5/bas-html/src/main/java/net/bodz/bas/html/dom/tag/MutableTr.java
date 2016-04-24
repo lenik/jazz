@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableTr;
 public class MutableTr
         extends _MutableTr<MutableTr> {
 
-    public MutableTr(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableTr(IHtmlTag parent) {
+        super(parent);
     }
 
     public MutableTr valign(Object val) {

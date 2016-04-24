@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableBdo;
 public class MutableBdo
         extends _MutableBdo<MutableBdo> {
 
-    public MutableBdo(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableBdo(IHtmlTag parent) {
+        super(parent);
     }
 
 }

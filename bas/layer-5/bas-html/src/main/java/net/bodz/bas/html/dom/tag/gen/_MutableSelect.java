@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableSelect<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableSelect(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableSelect(IHtmlTag parent) {
+        super(parent, "select");
     }
 
     public self_t autofocus(Object val) {

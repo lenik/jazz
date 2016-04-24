@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableEmbed<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableEmbed(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableEmbed(IHtmlTag parent) {
+        super(parent, "embed");
     }
 
     /**

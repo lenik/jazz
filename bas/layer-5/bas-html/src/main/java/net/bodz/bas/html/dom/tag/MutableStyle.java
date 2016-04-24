@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableStyle;
 public class MutableStyle
         extends _MutableStyle<MutableStyle> {
 
-    public MutableStyle(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableStyle(IHtmlTag parent) {
+        super(parent);
     }
 
 }

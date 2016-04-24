@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableAudio<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableAudio(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableAudio(IHtmlTag parent) {
+        super(parent, "audio");
     }
 
     public self_t src(Object val) {

@@ -206,11 +206,11 @@ sub _main {
         # FOR IHtmlOut
         # print "    $Class $name();\n";
         
-        # FOR NullHtmlOut
+        # FOR NullHtmlTag
         # print "    public $Class $name() { return new $Class(IXmlTagBuilder.NULL); }\n";
         
-        # FOR AbstractHtmlOut
-        # print "    public $Class $name() { return new $Class(tag(\"$name\")); }\n";
+        # FOR MutableHtmlTag
+        # print "    public $Class $name() { return new $Class(this); }\n";
 
         # next;
 
@@ -228,8 +228,8 @@ sub _main {
             print OUT "public class $Class\n";
             print OUT "        extends $Class0<$Class> {\n";
             print OUT "\n";
-            print OUT "    public $Class(IHtmlTag parent, String tagName) {\n";
-            print OUT "        super(parent, tagName);\n";
+            print OUT "    public $Class(IHtmlTag parent) {\n";
+            print OUT "        super(parent);\n";
             print OUT "    }\n";
         } else {
             print OUT "import net.bodz.bas.html.dom.IHtmlTag;\n";
@@ -245,8 +245,8 @@ sub _main {
             print OUT "public class $Class<self_t extends IHtmlTag>\n";
             print OUT "        extends MutableHtmlTag<self_t> {\n";
             print OUT "\n";
-            print OUT "    public $Class(IHtmlTag parent, String tagName) {\n";
-            print OUT "        super(parent, tagName);\n";
+            print OUT "    public $Class(IHtmlTag parent) {\n";
+            print OUT "        super(parent, \"$name\");\n";
             print OUT "    }\n";
             
             for my $attrh (@attrs) {

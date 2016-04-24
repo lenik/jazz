@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableCanvas;
 public class MutableCanvas
         extends _MutableCanvas<MutableCanvas> {
 
-    public MutableCanvas(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableCanvas(IHtmlTag parent) {
+        super(parent);
     }
 
 }

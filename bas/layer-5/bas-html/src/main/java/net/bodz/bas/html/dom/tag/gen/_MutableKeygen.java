@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableKeygen<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableKeygen(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableKeygen(IHtmlTag parent) {
+        super(parent, "keygen");
     }
 
     public self_t autofocus(Object val) {

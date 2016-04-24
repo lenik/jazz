@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableOptgroup<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableOptgroup(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableOptgroup(IHtmlTag parent) {
+        super(parent, "optgroup");
     }
 
     /**

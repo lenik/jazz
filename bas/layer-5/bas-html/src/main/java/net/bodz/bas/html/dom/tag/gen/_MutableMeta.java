@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableMeta<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableMeta(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableMeta(IHtmlTag parent) {
+        super(parent, "meta");
     }
 
     public self_t name(Object val) {

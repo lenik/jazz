@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableTh;
 public class MutableTh
         extends _MutableTh<MutableTh> {
 
-    public MutableTh(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableTh(IHtmlTag parent) {
+        super(parent);
     }
 
     /**

@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableFieldset;
 public class MutableFieldset
         extends _MutableFieldset<MutableFieldset> {
 
-    public MutableFieldset(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableFieldset(IHtmlTag parent) {
+        super(parent);
     }
 
 }

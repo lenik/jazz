@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableCode;
 public class MutableCode
         extends _MutableCode<MutableCode> {
 
-    public MutableCode(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableCode(IHtmlTag parent) {
+        super(parent);
     }
 
 }

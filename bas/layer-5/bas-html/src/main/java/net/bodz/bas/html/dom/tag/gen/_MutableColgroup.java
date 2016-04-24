@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableColgroup<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableColgroup(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableColgroup(IHtmlTag parent) {
+        super(parent, "colgroup");
     }
 
     public self_t span(Object val) {

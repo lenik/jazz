@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableKbd<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableKbd(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableKbd(IHtmlTag parent) {
+        super(parent, "kbd");
     }
 
 }

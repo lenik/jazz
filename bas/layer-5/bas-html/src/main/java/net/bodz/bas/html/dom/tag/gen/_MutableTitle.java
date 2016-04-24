@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableTitle<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableTitle(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableTitle(IHtmlTag parent) {
+        super(parent, "title");
     }
 
 }

@@ -14,7 +14,7 @@ public class MutableHtmlDoc
     }
 
     public MutableHtmlDoc(HtmlDocType docType) {
-        super(null, "html");
+        super(null);
 
         if (docType == null)
             throw new NullPointerException("docType");

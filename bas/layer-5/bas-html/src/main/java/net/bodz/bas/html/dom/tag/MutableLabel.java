@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableLabel;
 public class MutableLabel
         extends _MutableLabel<MutableLabel> {
 
-    public MutableLabel(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableLabel(IHtmlTag parent) {
+        super(parent);
     }
 
 }

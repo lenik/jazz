@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableBdi;
 public class MutableBdi
         extends _MutableBdi<MutableBdi> {
 
-    public MutableBdi(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableBdi(IHtmlTag parent) {
+        super(parent);
     }
 
 }

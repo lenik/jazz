@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableVideo<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableVideo(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableVideo(IHtmlTag parent) {
+        super(parent, "video");
     }
 
     public self_t src(Object val) {

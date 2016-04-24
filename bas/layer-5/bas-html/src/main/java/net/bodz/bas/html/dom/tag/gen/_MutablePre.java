@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutablePre<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutablePre(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutablePre(IHtmlTag parent) {
+        super(parent, "pre");
     }
 
 }

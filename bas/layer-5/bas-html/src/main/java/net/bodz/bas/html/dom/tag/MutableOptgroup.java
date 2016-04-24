@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableOptgroup;
 public class MutableOptgroup
         extends _MutableOptgroup<MutableOptgroup> {
 
-    public MutableOptgroup(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableOptgroup(IHtmlTag parent) {
+        super(parent);
     }
 
 }

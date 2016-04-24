@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableKbd;
 public class MutableKbd
         extends _MutableKbd<MutableKbd> {
 
-    public MutableKbd(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableKbd(IHtmlTag parent) {
+        super(parent);
     }
 
 }

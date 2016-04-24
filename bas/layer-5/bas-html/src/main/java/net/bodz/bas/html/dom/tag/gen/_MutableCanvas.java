@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableCanvas<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableCanvas(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableCanvas(IHtmlTag parent) {
+        super(parent, "canvas");
     }
 
     /**

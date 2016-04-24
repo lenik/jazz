@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableCaption;
 public class MutableCaption
         extends _MutableCaption<MutableCaption> {
 
-    public MutableCaption(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableCaption(IHtmlTag parent) {
+        super(parent);
     }
 
 }

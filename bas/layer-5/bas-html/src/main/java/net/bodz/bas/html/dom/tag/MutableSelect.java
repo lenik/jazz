@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableSelect;
 public class MutableSelect
         extends _MutableSelect<MutableSelect> {
 
-    public MutableSelect(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableSelect(IHtmlTag parent) {
+        super(parent);
     }
 
 }

@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableDel;
 public class MutableDel
         extends _MutableDel<MutableDel> {
 
-    public MutableDel(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableDel(IHtmlTag parent) {
+        super(parent);
     }
 
 }

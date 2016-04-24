@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableMark<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableMark(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableMark(IHtmlTag parent) {
+        super(parent, "mark");
     }
 
 }

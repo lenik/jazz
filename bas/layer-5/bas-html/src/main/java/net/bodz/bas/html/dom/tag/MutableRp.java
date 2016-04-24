@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableRp;
 public class MutableRp
         extends _MutableRp<MutableRp> {
 
-    public MutableRp(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableRp(IHtmlTag parent) {
+        super(parent);
     }
 
 }

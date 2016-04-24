@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableSource;
 public class MutableSource
         extends _MutableSource<MutableSource> {
 
-    public MutableSource(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableSource(IHtmlTag parent) {
+        super(parent);
     }
 
 }

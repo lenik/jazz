@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableIns;
 public class MutableIns
         extends _MutableIns<MutableIns> {
 
-    public MutableIns(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableIns(IHtmlTag parent) {
+        super(parent);
     }
 
 }

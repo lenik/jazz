@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableH5;
 public class MutableH5
         extends _MutableH5<MutableH5> {
 
-    public MutableH5(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableH5(IHtmlTag parent) {
+        super(parent);
     }
 
 }

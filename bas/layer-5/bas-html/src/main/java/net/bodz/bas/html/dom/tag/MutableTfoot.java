@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableTfoot;
 public class MutableTfoot
         extends _MutableTfoot<MutableTfoot> {
 
-    public MutableTfoot(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableTfoot(IHtmlTag parent) {
+        super(parent);
     }
 
 }

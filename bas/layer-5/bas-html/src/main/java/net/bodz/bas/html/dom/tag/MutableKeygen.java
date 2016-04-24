@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableKeygen;
 public class MutableKeygen
         extends _MutableKeygen<MutableKeygen> {
 
-    public MutableKeygen(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableKeygen(IHtmlTag parent) {
+        super(parent);
     }
 
 }

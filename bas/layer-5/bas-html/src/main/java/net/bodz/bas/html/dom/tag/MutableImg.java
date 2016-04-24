@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableImg;
 public class MutableImg
         extends _MutableImg<MutableImg> {
 
-    public MutableImg(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableImg(IHtmlTag parent) {
+        super(parent);
     }
 
 }

@@ -28,7 +28,7 @@ public class HtmlHeadData
         metaMap = new TreeMap<>();
         httpEquivMetaMap = new TreeMap<>();
 
-        optHead = new MutableHead(null, "head");
+        optHead = new MutableHead(null);
         links = new ArrayList<>();
         scripts = new ArrayList<>();
         styles = new ArrayList<>();

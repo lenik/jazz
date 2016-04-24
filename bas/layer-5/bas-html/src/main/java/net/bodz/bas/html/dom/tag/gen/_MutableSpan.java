@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableSpan<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableSpan(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableSpan(IHtmlTag parent) {
+        super(parent, "span");
     }
 
 }
