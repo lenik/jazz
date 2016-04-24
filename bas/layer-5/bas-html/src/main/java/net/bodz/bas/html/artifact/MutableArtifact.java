@@ -94,6 +94,11 @@ public class MutableArtifact
     }
 
     @Override
+    public final MutableArtifactDependency addDependency(String name) {
+        return dependent.addDependency(name);
+    }
+
+    @Override
     public final MutableArtifactDependency addDependency(String name, ArtifactType type) {
         return dependent.addDependency(name, type);
     }
@@ -106,8 +111,9 @@ public class MutableArtifact
     }
 
     @Override
-    public final MutableArtifactDependency addDependency(IArtifact artifact) {
-        return dependent.addDependency(artifact);
+    public final MutableArtifact addDependency(IArtifact artifact) {
+        dependent.addDependency(artifact);
+        return this;
     }
 
     @Override

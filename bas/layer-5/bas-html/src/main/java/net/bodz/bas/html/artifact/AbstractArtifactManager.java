@@ -3,6 +3,8 @@ package net.bodz.bas.html.artifact;
 import java.util.*;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.err.UnsupportedFeatureException;
 import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.VersionRange;
@@ -52,13 +54,6 @@ public abstract class AbstractArtifactManager
         return buf.toString();
     }
 
-    protected IArtifact pseudo(String name) {
-        MutableWebArtifact artifact = new MutableWebArtifact(name, "x", null, null);
-        artifact.setType(ArtifactType.PSEUDO);
-        addArtifact(artifact);
-        return artifact;
-    }
-
     protected IArtifact javascript(String name, String versionStr, IAnchor anchor) {
         MutableWebArtifact artifact = MutableWebArtifact.javascript(name, versionStr, anchor);
         addArtifact(artifact);
@@ -71,6 +66,43 @@ public abstract class AbstractArtifactManager
         return artifact;
     }
 
+    protected IArtifact group(String name) {
+        MutableWebArtifact artifact = new MutableWebArtifact(name, "x", null, null);
+        artifact.setType(ArtifactType.GROUP);
+        addArtifact(artifact);
+        return artifact;
+    }
+
+    protected IArtifact group(String name, IAnchor start, String... fragmentFiles) {
+        IArtifact group = group(name);
+
+        IArtifact last = null;
+        for (String file : fragmentFiles) {
+            if (file.startsWith("#"))
+                continue;
+            IAnchor a = start.join(file);
+            String version = "x";
+            String base = FilePath.getBaseName(file);
+            String ext = FilePath.getExtension(file, true);
+            String fragmentName = name + "/" + base;
+            IArtifact fragment;
+            switch (ext) {
+            case ".js":
+                fragment = javascript(fragmentName, version, a);
+                break;
+            case ".css":
+                fragment = css(fragmentName, version, a);
+                break;
+            default:
+                throw new UnsupportedFeatureException("Extension: " + ext);
+            }
+            if (last != null)
+                fragment.addDependency(last);
+            last = fragment;
+        }
+        group.addDependency(last);
+        return group;
+    }
 }
 
 class Scanner {
