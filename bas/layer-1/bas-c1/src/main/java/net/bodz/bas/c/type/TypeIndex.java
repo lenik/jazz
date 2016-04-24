@@ -18,20 +18,11 @@ public class TypeIndex {
 
     static final Logger logger = Logger.getLogger(TypeIndex.class.getName());
 
-    boolean includeAbstract;
     ClassLoader defaultClassLoader;
     boolean initialize = true;
 
     public TypeIndex() {
         defaultClassLoader = ClassLoader.getSystemClassLoader();
-    }
-
-    public boolean isIncludeAbstract() {
-        return includeAbstract;
-    }
-
-    public void setIncludeAbstract(boolean includeAbstract) {
-        this.includeAbstract = includeAbstract;
     }
 
     public ClassLoader getDefaultClassLoader() {
@@ -59,7 +50,7 @@ public class TypeIndex {
      * @throws ClassNotFoundException
      * @throws ExceptionInInitializerError
      */
-    public <T> Iterable<Class<? extends T>> list(Class<T> baseType)
+    public <T> Iterable<Class<? extends T>> list(Class<T> baseType, boolean includeAbstract)
             throws IOException, ClassNotFoundException {
 
         String prefix = baseType.isAnnotation() ? PublishDir.features : PublishDir.services;
@@ -112,28 +103,25 @@ public class TypeIndex {
         return classes;
     }
 
-    public static <T> Iterable<Class<? extends T>> forClass(Class<T> baseType)
-            throws ClassNotFoundException, IOException {
-        boolean includeAbstract = false;
-        IndexedType indexing = baseType.getAnnotation(IndexedType.class);
-        if (indexing != null)
-            includeAbstract = indexing.includeAbstract();
-        return forClass(baseType, includeAbstract);
+    static final TypeIndex sclTypeIndex = new TypeIndex();
+
+    public static TypeIndex getSclTypeIndex() {
+        return sclTypeIndex;
     }
 
-    public static <T> Iterable<Class<? extends T>> forClass(Class<T> baseType, boolean includeAbstract)
-            throws IOException, ClassNotFoundException {
-        TypeIndex index = new TypeIndex();
-        index.setIncludeAbstract(includeAbstract);
-        return index.list(baseType);
+    public <T> Iterable<Class<? extends T>> listIndexed(Class<T> baseType)
+            throws ClassNotFoundException, IOException {
+        IndexedType indexing = baseType.getAnnotation(IndexedType.class);
+        boolean includeAbstract = false;
+        if (indexing != null)
+            includeAbstract = indexing.includeAbstract();
+        return list(baseType, includeAbstract);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static Iterable<Class<?>> forClassWithAnnotation(Class<? extends Annotation> annotationType)
+    public Iterable<Class<?>> listAnnodated(Class<? extends Annotation> annotationType)
             throws IOException, ClassNotFoundException {
-        TypeIndex index = new TypeIndex();
-        index.setIncludeAbstract(true);
-        Iterable list = index.list(annotationType);
+        Iterable list = this.list(annotationType, true);
         return list;
     }
 

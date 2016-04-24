@@ -68,12 +68,14 @@ public class IbatisMapperProvider
         Configuration config = new Configuration();
         config.setEnvironment(buildEnvironment());
 
+        TypeIndex typeIndex = TypeIndex.getSclTypeIndex();
+
         TypeAliasRegistry typeAliasRegistry = config.getTypeAliasRegistry();
         TypeHandlerRegistry typeHandlerRegistry = config.getTypeHandlerRegistry();
         try {
-            for (Class<?> typeHandlerClass : TypeIndex.forClass(TypeHandler.class, false))
+            for (Class<?> typeHandlerClass : typeIndex.list(TypeHandler.class, false))
                 typeHandlerRegistry.register(typeHandlerClass);
-            for (Class<?> aliasedClass : TypeIndex.forClass(Aliased.class))
+            for (Class<?> aliasedClass : typeIndex.listIndexed(Aliased.class))
                 typeAliasRegistry.registerAlias(aliasedClass);
         } catch (Exception e) {
             throw new IllegalUsageError(e.getMessage(), e);

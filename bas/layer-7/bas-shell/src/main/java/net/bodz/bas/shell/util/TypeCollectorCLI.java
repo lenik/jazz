@@ -54,6 +54,12 @@ public class TypeCollectorCLI
 
     // List<String> excludedPackages;
 
+    TypeIndex typeIndex;
+
+    public TypeCollectorCLI() {
+        typeIndex = TypeIndex.getSclTypeIndex();
+    }
+
     @Override
     protected void mainImpl(String... args)
             throws Exception {
@@ -64,14 +70,14 @@ public class TypeCollectorCLI
         }
 
         if (baseTypes.isEmpty())
-            for (Class<?> type : TypeIndex.forClassWithAnnotation(IndexedType.class))
+            for (Class<?> type : typeIndex.listAnnodated(IndexedType.class))
                 baseTypes.add(type);
 
         for (Class<?> baseType : baseTypes) {
             logger.info("Base-Type: ", baseType);
 
             if (listOnly) {
-                for (Class<?> extension : TypeIndex.forClass(baseType))
+                for (Class<?> extension : typeIndex.listIndexed(baseType))
                     logger.info("    Extension: ", extension);
                 continue;
             }
