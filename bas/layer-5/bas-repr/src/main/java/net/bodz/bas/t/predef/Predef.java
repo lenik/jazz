@@ -5,11 +5,11 @@ import java.io.Serializable;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.codegen.PublishDir;
-import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
 
 @IndexedType(publishDir = PublishDir.features)
 public abstract class Predef<self_t extends Predef<self_t, K>, K extends Comparable<K>>
-        extends AbstractXjdocElement
+        extends XjdocObject
         implements Serializable, Comparable<self_t> {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +35,8 @@ public abstract class Predef<self_t extends Predef<self_t, K>, K extends Compara
             metadata = PredefMetadata.forClass(type);
         }
 
-        @SuppressWarnings("unchecked") self_t self = (self_t) this;
+        @SuppressWarnings("unchecked")
+        self_t self = (self_t) this;
         metadata.addValue(self);
         this.metadata = metadata;
     }

@@ -21,10 +21,10 @@ import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.mda.xjdoc.model.IElementDoc;
-import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.ExternXjdocElement;
 
 public abstract class AbstractOption
-        extends AbstractXjdocElement
+        extends ExternXjdocElement
         implements IOption, IMutablePriority {
 
     String id;
@@ -53,6 +53,8 @@ public abstract class AbstractOption
     }
 
     public AbstractOption(String id, String longName, Type _type, IElementDoc doc) {
+        super(doc);
+
         this.id = id;
         this.longName = Strings.hyphenatize(longName);
 
@@ -114,10 +116,6 @@ public abstract class AbstractOption
         }
 
         defaultValue = TrueValues.getTrueValue(valueType);
-
-        if (doc == null)
-            throw new NullPointerException("doc");
-        setXjdoc(doc);
     }
 
     @Override
