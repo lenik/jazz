@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableDel<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableDel(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableDel(IHtmlTag parent) {
+        super(parent, "del");
     }
 
     public self_t cite(Object val) {

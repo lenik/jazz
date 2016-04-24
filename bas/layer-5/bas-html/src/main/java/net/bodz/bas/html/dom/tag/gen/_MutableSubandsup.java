@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableSubandsup<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableSubandsup(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableSubandsup(IHtmlTag parent) {
+        super(parent, "subandsup");
     }
 
 }

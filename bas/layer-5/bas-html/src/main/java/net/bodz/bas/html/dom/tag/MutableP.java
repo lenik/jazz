@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableP;
 public class MutableP
         extends _MutableP<MutableP> {
 
-    public MutableP(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableP(IHtmlTag parent) {
+        super(parent);
     }
 
 }

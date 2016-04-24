@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableAbbr<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableAbbr(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableAbbr(IHtmlTag parent) {
+        super(parent, "abbr");
     }
 
 }

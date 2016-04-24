@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableColgroup;
 public class MutableColgroup
         extends _MutableColgroup<MutableColgroup> {
 
-    public MutableColgroup(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableColgroup(IHtmlTag parent) {
+        super(parent);
     }
 
 }

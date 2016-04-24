@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableAddress<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableAddress(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableAddress(IHtmlTag parent) {
+        super(parent, "address");
     }
 
 }

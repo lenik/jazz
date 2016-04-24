@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableAbbr;
 public class MutableAbbr
         extends _MutableAbbr<MutableAbbr> {
 
-    public MutableAbbr(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableAbbr(IHtmlTag parent) {
+        super(parent);
     }
 
 }

@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableImg<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableImg(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableImg(IHtmlTag parent) {
+        super(parent, "img");
     }
 
     /**

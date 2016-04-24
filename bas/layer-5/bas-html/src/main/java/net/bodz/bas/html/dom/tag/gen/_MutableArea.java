@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableArea<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableArea(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableArea(IHtmlTag parent) {
+        super(parent, "area");
     }
 
     /**

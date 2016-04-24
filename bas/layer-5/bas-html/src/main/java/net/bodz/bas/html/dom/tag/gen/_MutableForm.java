@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableForm<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableForm(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableForm(IHtmlTag parent) {
+        super(parent, "form");
     }
 
     public self_t acceptCharset(Object val) {

@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableTextarea;
 public class MutableTextarea
         extends _MutableTextarea<MutableTextarea> {
 
-    public MutableTextarea(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableTextarea(IHtmlTag parent) {
+        super(parent);
     }
 
 }

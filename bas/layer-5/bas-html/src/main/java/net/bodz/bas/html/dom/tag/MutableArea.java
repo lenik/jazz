@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableArea;
 public class MutableArea
         extends _MutableArea<MutableArea> {
 
-    public MutableArea(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableArea(IHtmlTag parent) {
+        super(parent);
     }
 
 }

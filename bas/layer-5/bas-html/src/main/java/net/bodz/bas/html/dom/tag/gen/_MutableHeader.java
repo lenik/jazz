@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableHeader<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableHeader(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableHeader(IHtmlTag parent) {
+        super(parent, "header");
     }
 
 }

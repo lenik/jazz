@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableInput<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableInput(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableInput(IHtmlTag parent) {
+        super(parent, "input");
     }
 
     /**

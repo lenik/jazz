@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableSpan;
 public class MutableSpan
         extends _MutableSpan<MutableSpan> {
 
-    public MutableSpan(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableSpan(IHtmlTag parent) {
+        super(parent);
     }
 
 }

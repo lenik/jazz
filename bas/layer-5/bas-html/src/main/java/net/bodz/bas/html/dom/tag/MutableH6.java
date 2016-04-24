@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableH6;
 public class MutableH6
         extends _MutableH6<MutableH6> {
 
-    public MutableH6(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableH6(IHtmlTag parent) {
+        super(parent);
     }
 
 }

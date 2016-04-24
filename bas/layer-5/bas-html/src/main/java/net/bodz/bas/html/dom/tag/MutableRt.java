@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableRt;
 public class MutableRt
         extends _MutableRt<MutableRt> {
 
-    public MutableRt(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableRt(IHtmlTag parent) {
+        super(parent);
     }
 
 }

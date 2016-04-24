@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableQ<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableQ(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableQ(IHtmlTag parent) {
+        super(parent, "q");
     }
 
     public self_t cite(Object val) {

@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableBlockquote<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableBlockquote(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableBlockquote(IHtmlTag parent) {
+        super(parent, "blockquote");
     }
 
     public self_t cite(Object val) {

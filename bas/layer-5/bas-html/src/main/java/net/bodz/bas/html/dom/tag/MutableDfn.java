@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableDfn;
 public class MutableDfn
         extends _MutableDfn<MutableDfn> {
 
-    public MutableDfn(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableDfn(IHtmlTag parent) {
+        super(parent);
     }
 
 }

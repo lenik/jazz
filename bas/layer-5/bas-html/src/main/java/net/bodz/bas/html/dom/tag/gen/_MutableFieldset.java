@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableFieldset<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableFieldset(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableFieldset(IHtmlTag parent) {
+        super(parent, "fieldset");
     }
 
     /**

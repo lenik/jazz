@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableWbr<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableWbr(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableWbr(IHtmlTag parent) {
+        super(parent, "wbr");
     }
 
 }

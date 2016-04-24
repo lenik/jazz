@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableLi;
 public class MutableLi
         extends _MutableLi<MutableLi> {
 
-    public MutableLi(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableLi(IHtmlTag parent) {
+        super(parent);
     }
 
 }

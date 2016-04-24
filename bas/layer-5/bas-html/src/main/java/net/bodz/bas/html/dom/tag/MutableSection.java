@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableSection;
 public class MutableSection
         extends _MutableSection<MutableSection> {
 
-    public MutableSection(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableSection(IHtmlTag parent) {
+        super(parent);
     }
 
 }

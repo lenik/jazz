@@ -445,443 +445,446 @@ public class MutableHtmlTag<self_t extends IHtmlTag>
     }
 
     public MutableA a() {
-        return new MutableA(this, "a");
+        return new MutableA(this);
     }
 
     public MutableAbbr abbr() {
-        return new MutableAbbr(this, "abbr");
+        return new MutableAbbr(this);
     }
 
     public MutableAddress address() {
-        return new MutableAddress(this, "address");
+        return new MutableAddress(this);
     }
 
     public MutableArea area() {
-        return new MutableArea(this, "area");
+        return new MutableArea(this);
     }
 
     public MutableArticle article() {
-        return new MutableArticle(this, "article");
+        return new MutableArticle(this);
     }
 
     public MutableAside aside() {
-        return new MutableAside(this, "aside");
+        return new MutableAside(this);
     }
 
     public MutableAudio audio() {
-        return new MutableAudio(this, "audio");
+        return new MutableAudio(this);
     }
 
     public MutableB b() {
-        return new MutableB(this, "b");
+        return new MutableB(this);
     }
 
     public MutableBase base() {
-        return new MutableBase(this, "base");
+        return new MutableBase(this);
     }
 
     public MutableBdi bdi() {
-        return new MutableBdi(this, "bdi");
+        return new MutableBdi(this);
     }
 
     public MutableBdo bdo() {
-        return new MutableBdo(this, "bdo");
+        return new MutableBdo(this);
     }
 
     public MutableBlockquote blockquote() {
-        return new MutableBlockquote(this, "blockquote");
+        return new MutableBlockquote(this);
     }
 
     public MutableBody body() {
-        return new MutableBody(this, "body");
+        return new MutableBody(this);
     }
 
     public MutableBr br() {
-        return new MutableBr(this, "br");
+        return new MutableBr(this);
     }
 
     public MutableButton button() {
-        return new MutableButton(this, "button");
+        return new MutableButton(this);
     }
 
     public MutableCanvas canvas() {
-        return new MutableCanvas(this, "canvas");
+        return new MutableCanvas(this);
     }
 
     public MutableCaption caption() {
-        return new MutableCaption(this, "caption");
+        return new MutableCaption(this);
     }
 
     public MutableCite cite() {
-        return new MutableCite(this, "cite");
+        return new MutableCite(this);
     }
 
     public MutableCode code() {
-        return new MutableCode(this, "code");
+        return new MutableCode(this);
     }
 
     public MutableCol col() {
-        return new MutableCol(this, "col");
+        return new MutableCol(this);
     }
 
     public MutableColgroup colgroup() {
-        return new MutableColgroup(this, "colgroup");
+        return new MutableColgroup(this);
     }
 
     public MutableData data() {
-        return new MutableData(this, "data");
+        return new MutableData(this);
     }
 
     public MutableDatalist datalist() {
-        return new MutableDatalist(this, "datalist");
+        return new MutableDatalist(this);
     }
 
     public MutableDd dd() {
-        return new MutableDd(this, "dd");
+        return new MutableDd(this);
     }
 
     public MutableDel del() {
-        return new MutableDel(this, "del");
-    }
-
-    public MutableDetails details() {
-        return new MutableDetails(this, "details");
+        return new MutableDel(this);
     }
 
     public MutableDfn dfn() {
-        return new MutableDfn(this, "dfn");
-    }
-
-    public MutableDialog dialog() {
-        return new MutableDialog(this, "dialog");
+        return new MutableDfn(this);
     }
 
     public MutableDiv div() {
-        return new MutableDiv(this, "div");
+        return new MutableDiv(this);
     }
 
     public MutableDl dl() {
-        return new MutableDl(this, "dl");
+        return new MutableDl(this);
     }
 
     public MutableDt dt() {
-        return new MutableDt(this, "dt");
+        return new MutableDt(this);
     }
 
     public MutableEm em() {
-        return new MutableEm(this, "em");
+        return new MutableEm(this);
     }
 
     public MutableEmbed embed() {
-        return new MutableEmbed(this, "embed");
+        return new MutableEmbed(this);
     }
 
     public MutableFieldset fieldset() {
-        return new MutableFieldset(this, "fieldset");
+        return new MutableFieldset(this);
     }
 
     public MutableFigcaption figcaption() {
-        return new MutableFigcaption(this, "figcaption");
+        return new MutableFigcaption(this);
     }
 
     public MutableFigure figure() {
-        return new MutableFigure(this, "figure");
+        return new MutableFigure(this);
     }
 
     public MutableFooter footer() {
-        return new MutableFooter(this, "footer");
+        return new MutableFooter(this);
     }
 
     public MutableForm form() {
-        return new MutableForm(this, "form");
+        return new MutableForm(this);
     }
 
     public MutableH1 h1() {
-        return new MutableH1(this, "h1");
+        return new MutableH1(this);
     }
 
     public MutableH2 h2() {
-        return new MutableH2(this, "h2");
+        return new MutableH2(this);
     }
 
     public MutableH3 h3() {
-        return new MutableH3(this, "h3");
+        return new MutableH3(this);
     }
 
     public MutableH4 h4() {
-        return new MutableH4(this, "h4");
+        return new MutableH4(this);
     }
 
     public MutableH5 h5() {
-        return new MutableH5(this, "h5");
+        return new MutableH5(this);
     }
 
     public MutableH6 h6() {
-        return new MutableH6(this, "h6");
+        return new MutableH6(this);
     }
 
     public MutableHead head() {
-        return new MutableHead(this, "head");
+        return new MutableHead(this);
     }
 
     public MutableHeader header() {
-        return new MutableHeader(this, "header");
+        return new MutableHeader(this);
     }
 
     public MutableHr hr() {
-        return new MutableHr(this, "hr");
+        return new MutableHr(this);
     }
 
     public MutableHtml html() {
-        return new MutableHtml(this, "html");
+        return new MutableHtml(this);
     }
 
     public MutableI i() {
-        return new MutableI(this, "i");
+        return new MutableI(this);
     }
 
     public MutableIframe iframe() {
-        return new MutableIframe(this, "iframe");
+        return new MutableIframe(this);
     }
 
     public MutableImg img() {
-        return new MutableImg(this, "img");
+        return new MutableImg(this);
     }
 
     public MutableInput input() {
-        return new MutableInput(this, "input");
+        return new MutableInput(this);
     }
 
     public MutableIns ins() {
-        return new MutableIns(this, "ins");
+        return new MutableIns(this);
     }
 
     public MutableKbd kbd() {
-        return new MutableKbd(this, "kbd");
+        return new MutableKbd(this);
     }
 
     public MutableKeygen keygen() {
-        return new MutableKeygen(this, "keygen");
+        return new MutableKeygen(this);
     }
 
     public MutableLabel label() {
-        return new MutableLabel(this, "label");
+        return new MutableLabel(this);
     }
 
     public MutableLegend legend() {
-        return new MutableLegend(this, "legend");
+        return new MutableLegend(this);
     }
 
     public MutableLi li() {
-        return new MutableLi(this, "li");
+        return new MutableLi(this);
     }
 
     public MutableLink link() {
-        return new MutableLink(this, "link");
+        return new MutableLink(this);
     }
 
     public MutableMain main() {
-        return new MutableMain(this, "main");
+        return new MutableMain(this);
     }
 
     public MutableMap map() {
-        return new MutableMap(this, "map");
+        return new MutableMap(this);
     }
 
     public MutableMark mark() {
-        return new MutableMark(this, "mark");
+        return new MutableMark(this);
     }
 
     public MutableMeta meta() {
-        return new MutableMeta(this, "meta");
+        return new MutableMeta(this);
     }
 
     public MutableMeter meter() {
-        return new MutableMeter(this, "meter");
+        return new MutableMeter(this);
     }
 
     public MutableNav nav() {
-        return new MutableNav(this, "nav");
+        return new MutableNav(this);
     }
 
     public MutableNoscript noscript() {
-        return new MutableNoscript(this, "noscript");
+        return new MutableNoscript(this);
     }
 
     public MutableObject object() {
-        return new MutableObject(this, "object");
+        return new MutableObject(this);
     }
 
     public MutableOl ol() {
-        return new MutableOl(this, "ol");
+        return new MutableOl(this);
     }
 
     public MutableOptgroup optgroup() {
-        return new MutableOptgroup(this, "optgroup");
+        return new MutableOptgroup(this);
     }
 
     public MutableOption option() {
-        return new MutableOption(this, "option");
+        return new MutableOption(this);
     }
 
     public MutableOutput output() {
-        return new MutableOutput(this, "output");
+        return new MutableOutput(this);
     }
 
     public MutableP p() {
-        return new MutableP(this, "p");
+        return new MutableP(this);
     }
 
     public MutableParam param() {
-        return new MutableParam(this, "param");
+        return new MutableParam(this);
     }
 
     public MutablePre pre() {
-        return new MutablePre(this, "pre");
+        return new MutablePre(this);
     }
 
     public MutableProgress progress() {
-        return new MutableProgress(this, "progress");
+        return new MutableProgress(this);
     }
 
     public MutableQ q() {
-        return new MutableQ(this, "q");
+        return new MutableQ(this);
     }
 
     public MutableRb rb() {
-        return new MutableRb(this, "rb");
+        return new MutableRb(this);
     }
 
     public MutableRp rp() {
-        return new MutableRp(this, "rp");
+        return new MutableRp(this);
     }
 
     public MutableRt rt() {
-        return new MutableRt(this, "rt");
+        return new MutableRt(this);
     }
 
     public MutableRtc rtc() {
-        return new MutableRtc(this, "rtc");
+        return new MutableRtc(this);
     }
 
     public MutableRuby ruby() {
-        return new MutableRuby(this, "ruby");
+        return new MutableRuby(this);
     }
 
     public MutableS s() {
-        return new MutableS(this, "s");
+        return new MutableS(this);
     }
 
     public MutableSamp samp() {
-        return new MutableSamp(this, "samp");
+        return new MutableSamp(this);
     }
 
     public MutableScript script() {
-        return new MutableScript(this, "script");
+        return new MutableScript(this);
     }
 
     public MutableSection section() {
-        return new MutableSection(this, "section");
+        return new MutableSection(this);
     }
 
     public MutableSelect select() {
-        return new MutableSelect(this, "select");
+        return new MutableSelect(this);
     }
 
     public MutableSmall small() {
-        return new MutableSmall(this, "small");
+        return new MutableSmall(this);
     }
 
     public MutableSource source() {
-        return new MutableSource(this, "source");
+        return new MutableSource(this);
     }
 
     public MutableSpan span() {
-        return new MutableSpan(this, "span");
+        return new MutableSpan(this);
     }
 
     public MutableStrong strong() {
-        return new MutableStrong(this, "strong");
+        return new MutableStrong(this);
     }
 
     public MutableStyle style() {
-        return new MutableStyle(this, "style");
+        return new MutableStyle(this);
     }
 
     public MutableSubandsup subandsup() {
-        return new MutableSubandsup(this, "subandsup");
-    }
-
-    public MutableSummary summary() {
-        return new MutableSummary(this, "summary");
+        return new MutableSubandsup(this);
     }
 
     public MutableTable table() {
-        return new MutableTable(this, "table");
+        return new MutableTable(this);
     }
 
     public MutableTbody tbody() {
-        return new MutableTbody(this, "tbody");
+        return new MutableTbody(this);
     }
 
     public MutableTd td() {
-        return new MutableTd(this, "td");
+        return new MutableTd(this);
     }
 
     public MutableTemplate template() {
-        return new MutableTemplate(this, "template");
+        return new MutableTemplate(this);
     }
 
     public MutableTextarea textarea() {
-        return new MutableTextarea(this, "textarea");
+        return new MutableTextarea(this);
     }
 
     public MutableTfoot tfoot() {
-        return new MutableTfoot(this, "tfoot");
+        return new MutableTfoot(this);
     }
 
     public MutableTh th() {
-        return new MutableTh(this, "th");
+        return new MutableTh(this);
     }
 
     public MutableThead thead() {
-        return new MutableThead(this, "thead");
+        return new MutableThead(this);
     }
 
     public MutableTime time() {
-        return new MutableTime(this, "time");
+        return new MutableTime(this);
     }
 
     public MutableTitle title() {
-        return new MutableTitle(this, "title");
+        return new MutableTitle(this);
     }
 
     public MutableTr tr() {
-        return new MutableTr(this, "tr");
+        return new MutableTr(this);
     }
 
     public MutableTrack track() {
-        return new MutableTrack(this, "track");
+        return new MutableTrack(this);
     }
 
     public MutableU u() {
-        return new MutableU(this, "u");
+        return new MutableU(this);
     }
 
     public MutableUl ul() {
-        return new MutableUl(this, "ul");
+        return new MutableUl(this);
     }
 
     public MutableVar var() {
-        return new MutableVar(this, "var");
+        return new MutableVar(this);
     }
 
     public MutableVideo video() {
-        return new MutableVideo(this, "video");
+        return new MutableVideo(this);
     }
 
     public MutableWbr wbr() {
-        return new MutableWbr(this, "wbr");
+        return new MutableWbr(this);
+    }
+
+    @Override
+    public MutableDetails details() {
+        return new MutableDetails(this);
+    }
+
+    @Override
+    public MutableDialog dialog() {
+        return new MutableDialog(this);
+    }
+
+    @Override
+    public MutableSummary summary() {
+        return new MutableSummary(this);
     }
 
 }

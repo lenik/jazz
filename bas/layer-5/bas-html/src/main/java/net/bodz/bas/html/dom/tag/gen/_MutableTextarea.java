@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableTextarea<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableTextarea(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableTextarea(IHtmlTag parent) {
+        super(parent, "textarea");
     }
 
     public self_t autocomplete(Object val) {

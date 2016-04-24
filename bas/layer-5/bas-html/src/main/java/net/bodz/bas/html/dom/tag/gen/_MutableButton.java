@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableButton<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableButton(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableButton(IHtmlTag parent) {
+        super(parent, "button");
     }
 
     public self_t autofocus(Object val) {

@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableSmall;
 public class MutableSmall
         extends _MutableSmall<MutableSmall> {
 
-    public MutableSmall(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableSmall(IHtmlTag parent) {
+        super(parent);
     }
 
 }

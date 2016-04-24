@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableOption;
 public class MutableOption
         extends _MutableOption<MutableOption> {
 
-    public MutableOption(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableOption(IHtmlTag parent) {
+        super(parent);
     }
 
 }

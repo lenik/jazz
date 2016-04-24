@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableMeter<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableMeter(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableMeter(IHtmlTag parent) {
+        super(parent, "meter");
     }
 
     /**

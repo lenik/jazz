@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableA;
 public class MutableA
         extends _MutableA<MutableA> {
 
-    public MutableA(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableA(IHtmlTag parent) {
+        super(parent);
     }
 
     public MutableA href(String target, Object val) {

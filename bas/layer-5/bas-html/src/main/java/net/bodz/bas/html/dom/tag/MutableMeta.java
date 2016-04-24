@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableMeta;
 public class MutableMeta
         extends _MutableMeta<MutableMeta> {
 
-    public MutableMeta(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableMeta(IHtmlTag parent) {
+        super(parent);
     }
 
 }

@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableRtc;
 public class MutableRtc
         extends _MutableRtc<MutableRtc> {
 
-    public MutableRtc(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableRtc(IHtmlTag parent) {
+        super(parent);
     }
 
 }

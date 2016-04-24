@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableHeader;
 public class MutableHeader
         extends _MutableHeader<MutableHeader> {
 
-    public MutableHeader(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableHeader(IHtmlTag parent) {
+        super(parent);
     }
 
 }

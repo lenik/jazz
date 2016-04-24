@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableUl<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableUl(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableUl(IHtmlTag parent) {
+        super(parent, "ul");
     }
 
 }

@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableUl;
 public class MutableUl
         extends _MutableUl<MutableUl> {
 
-    public MutableUl(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableUl(IHtmlTag parent) {
+        super(parent);
     }
 
 }

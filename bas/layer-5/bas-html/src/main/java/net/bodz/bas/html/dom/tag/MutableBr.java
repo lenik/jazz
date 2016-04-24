@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableBr;
 public class MutableBr
         extends _MutableBr<MutableBr> {
 
-    public MutableBr(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableBr(IHtmlTag parent) {
+        super(parent);
     }
 
     @Override

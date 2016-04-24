@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableForm;
 public class MutableForm
         extends _MutableForm<MutableForm> {
 
-    public MutableForm(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableForm(IHtmlTag parent) {
+        super(parent);
     }
 
 }

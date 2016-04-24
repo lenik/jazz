@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableAside<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableAside(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableAside(IHtmlTag parent) {
+        super(parent, "aside");
     }
 
 }

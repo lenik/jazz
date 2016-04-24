@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableInput;
 public class MutableInput
         extends _MutableInput<MutableInput> {
 
-    public MutableInput(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableInput(IHtmlTag parent) {
+        super(parent);
     }
 
     public MutableLabel idLabel(String id) {

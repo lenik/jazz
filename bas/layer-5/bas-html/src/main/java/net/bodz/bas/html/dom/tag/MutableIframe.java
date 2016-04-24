@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableIframe;
 public class MutableIframe
         extends _MutableIframe<MutableIframe> {
 
-    public MutableIframe(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableIframe(IHtmlTag parent) {
+        super(parent);
     }
 
 }

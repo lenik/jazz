@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableDiv;
 public class MutableDiv
         extends _MutableDiv<MutableDiv> {
 
-    public MutableDiv(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableDiv(IHtmlTag parent) {
+        super(parent);
     }
 
     public MutableDiv align(Object val) {

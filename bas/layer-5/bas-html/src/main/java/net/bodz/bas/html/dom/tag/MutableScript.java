@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableScript;
 public class MutableScript
         extends _MutableScript<MutableScript> {
 
-    public MutableScript(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableScript(IHtmlTag parent) {
+        super(parent);
         text("");
     }
 

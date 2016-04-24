@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableTd;
 public class MutableTd
         extends _MutableTd<MutableTd> {
 
-    public MutableTd(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableTd(IHtmlTag parent) {
+        super(parent);
     }
 
     public MutableTd align(Object val) {

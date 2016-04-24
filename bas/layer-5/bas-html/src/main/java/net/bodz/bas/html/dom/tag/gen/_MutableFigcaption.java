@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableFigcaption<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableFigcaption(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableFigcaption(IHtmlTag parent) {
+        super(parent, "figcaption");
     }
 
 }

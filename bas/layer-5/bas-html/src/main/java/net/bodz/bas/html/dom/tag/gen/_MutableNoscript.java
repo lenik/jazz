@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableNoscript<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableNoscript(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableNoscript(IHtmlTag parent) {
+        super(parent, "noscript");
     }
 
 }

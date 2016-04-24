@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableWbr;
 public class MutableWbr
         extends _MutableWbr<MutableWbr> {
 
-    public MutableWbr(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableWbr(IHtmlTag parent) {
+        super(parent);
     }
 
 }

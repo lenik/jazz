@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableArticle;
 public class MutableArticle
         extends _MutableArticle<MutableArticle> {
 
-    public MutableArticle(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableArticle(IHtmlTag parent) {
+        super(parent);
     }
 
 }

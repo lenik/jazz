@@ -10,8 +10,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableHtml<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableHtml(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableHtml(IHtmlTag parent) {
+        super(parent, "html");
     }
 
     /**

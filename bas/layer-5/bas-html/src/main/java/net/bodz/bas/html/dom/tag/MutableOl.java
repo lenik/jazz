@@ -6,8 +6,8 @@ import net.bodz.bas.html.dom.tag.gen._MutableOl;
 public class MutableOl
         extends _MutableOl<MutableOl> {
 
-    public MutableOl(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public MutableOl(IHtmlTag parent) {
+        super(parent);
     }
 
 }

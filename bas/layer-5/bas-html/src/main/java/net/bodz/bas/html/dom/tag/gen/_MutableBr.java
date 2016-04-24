@@ -9,8 +9,8 @@ import net.bodz.bas.html.dom.MutableHtmlTag;
 public class _MutableBr<self_t extends IHtmlTag>
         extends MutableHtmlTag<self_t> {
 
-    public _MutableBr(IHtmlTag parent, String tagName) {
-        super(parent, tagName);
+    public _MutableBr(IHtmlTag parent) {
+        super(parent, "br");
     }
 
 }
