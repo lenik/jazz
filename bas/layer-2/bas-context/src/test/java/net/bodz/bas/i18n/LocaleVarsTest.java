@@ -13,10 +13,10 @@ public class LocaleVarsTest
 
     @Test
     public void testCharset() {
-        Charset defaultCharset = II18nScrConsts.CHARSET.get(IScopeDescriptor.DEFAULT);
+        Charset defaultCharset = II18nVarConsts.CHARSET.get(IScopeDescriptor.DEFAULT);
         assertEquals(Charset.defaultCharset(), defaultCharset);
 
-        Locale defaultLocale = II18nScrConsts.LOCALE.get(IScopeDescriptor.DEFAULT);
+        Locale defaultLocale = II18nVarConsts.LOCALE.get(IScopeDescriptor.DEFAULT);
         assertEquals(Locale.getDefault(), defaultLocale);
     }
 
