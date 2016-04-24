@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 import net.bodz.bas.ctx.scope.ScopedRef;
 import net.bodz.bas.sugar.IConstants;
 
-public interface II18nScrConsts
+public interface II18nVarConsts
         extends IConstants {
 
     LocaleVars LOCALE = new LocaleVars();

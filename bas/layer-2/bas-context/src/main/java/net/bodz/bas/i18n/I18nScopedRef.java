@@ -6,7 +6,7 @@ import net.bodz.bas.ctx.scope.ScopedRef;
 
 public abstract class I18nScopedRef<T>
         extends ScopedRef<T>
-        implements II18nScrConsts {
+        implements II18nVarConsts {
 
     public I18nScopedRef(Class<T> valueType) {
         super(valueType);
