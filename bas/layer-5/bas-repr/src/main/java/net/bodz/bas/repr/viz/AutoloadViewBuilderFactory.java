@@ -10,7 +10,7 @@ import net.bodz.bas.c.type.TypeChain;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.t.set.QmiTaggedSet;
+import net.bodz.bas.t.set.FullSearchTaggedSet;
 import net.bodz.bas.t.set.TaggedSet;
 
 public abstract class AutoloadViewBuilderFactory
@@ -57,7 +57,8 @@ public abstract class AutoloadViewBuilderFactory
         TaggedSet<IViewBuilder<?>> tset = typeMap.get(clazz);
         if (tset == null) {
             if (autoCreate) {
-                tset = new QmiTaggedSet<>();
+                // tset = new QmiTaggedSet<>();
+                tset = new FullSearchTaggedSet<>();
                 typeMap.put(clazz, tset);
             } else {
                 // set = TaggedSet.fn.empty();
@@ -88,8 +89,7 @@ public abstract class AutoloadViewBuilderFactory
     protected void addViewBuilder(IViewBuilder<?> viewBuilder, Class<?> clazz, List<String> tags) {
         checkViewBuilder(viewBuilder);
         TaggedSet<IViewBuilder<?>> set = getTaggedSet(clazz, true);
-        for (String tag : tags)
-            set.add(viewBuilder, tag);
+        set.add(viewBuilder, tags);
     }
 
 }

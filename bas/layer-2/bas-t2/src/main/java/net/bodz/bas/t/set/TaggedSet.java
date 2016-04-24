@@ -32,6 +32,8 @@ public interface TaggedSet<V> {
      */
     void add(V item, String... tags);
 
+    void add(V item, Iterable<String> tags);
+
     /**
      * @return Non-<code>null</code> tag set.
      */
