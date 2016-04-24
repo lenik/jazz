@@ -48,6 +48,11 @@ public class MutableArtifactDependent
     /* _____________________________ */static section.iface __MUTABLE__;
 
     @Override
+    public MutableArtifactDependency addDependency(String name) {
+        return addDependency(name, ArtifactType.GROUP);
+    }
+
+    @Override
     public final MutableArtifactDependency addDependency(String name, ArtifactType type) {
         if (name == null)
             throw new NullPointerException("name");
@@ -79,16 +84,17 @@ public class MutableArtifactDependent
     }
 
     @Override
-    public MutableArtifactDependency addDependency(IArtifact artifact) {
+    public MutableArtifactDependent addDependency(IArtifact artifact) {
         String name = artifact.getName();
         ArtifactType type = artifact.getType();
         IVersion version = artifact.getVersion();
         if (version == null)
-            return addDependency(name, type);
+            addDependency(name, type);
         else {
             String versionStr = version.toString();
-            return addDependency(name, type, versionStr, versionStr);
+            addDependency(name, type, versionStr, versionStr);
         }
+        return this;
     }
 
     @Override

@@ -26,4 +26,7 @@ public interface IArtifact
 
     IAnchor getAnchor();
 
+    @Override
+    IArtifact addDependency(IArtifact artifact);
+
 }
