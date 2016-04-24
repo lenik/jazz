@@ -23,7 +23,7 @@ public abstract class AbstractTaggedSet<V>
         add(item, Arrays.asList(tags));
     }
 
-    public abstract void add(V item, Collection<String> tags);
+    public abstract void add(V item, Iterable<String> tags);
 
     @Override
     public void removeWithAllTags(String... tags) {

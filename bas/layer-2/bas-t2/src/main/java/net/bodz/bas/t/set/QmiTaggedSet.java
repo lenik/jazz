@@ -54,7 +54,7 @@ public class QmiTaggedSet<V>
     }
 
     @Override
-    public synchronized void add(V item, Collection<String> tags) {
+    public synchronized void add(V item, Iterable<String> tags) {
         if (item == null)
             throw new NullPointerException("item");
         if (tags == null)
