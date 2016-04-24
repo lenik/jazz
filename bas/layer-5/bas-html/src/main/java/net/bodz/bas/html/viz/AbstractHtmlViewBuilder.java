@@ -1,26 +1,21 @@
 package net.bodz.bas.html.viz;
 
 import java.io.IOException;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.bodz.bas.html.artifact.ArtifactType;
-import net.bodz.bas.html.artifact.IArtifact;
-import net.bodz.bas.html.artifact.IArtifactManager;
-import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.html.dom.IHtmlHeadData;
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.viz.fn.RedirectFn;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.HttpViewBuilderFamily;
 import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.http.viz.IndexedHttpViewBuilderFactory;
 import net.bodz.bas.i18n.dom1.IElement;
-import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.req.IViewOfRequest;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IQueryable;
@@ -136,68 +131,6 @@ public abstract class AbstractHtmlViewBuilder<T>
         buildHtmlViewEnd(ctx, out, body, ref);
     }
 
-    protected static boolean addSlash(IHttpViewContext ctx, IUiRef<?> ref)
-            throws IOException {
-        Object obj = ref.get();
-        IPathArrival arrival = ctx.query(IPathArrival.class);
-        boolean arrivedHere = arrival.getPrevious(obj).getRemainingPath() == null;
-        return arrivedHere && addSlash(ctx);
-    }
-
-    protected static boolean addSlash(IHttpViewContext ctx)
-            throws IOException {
-        String uri = ctx.getRequest().getRequestURI();
-        if (uri.endsWith("/"))
-            return false;
-
-        StringBuffer url = ctx.getRequest().getRequestURL();
-        url.append('/');
-
-        String queryString = ctx.getRequest().getQueryString();
-        if (queryString != null) {
-            url.append('?');
-            url.append(queryString);
-        }
-
-        ctx.getResponse().sendRedirect(url.toString());
-        ctx.stop();
-        return true;
-    }
-
-    protected static void writeHeadMetas(IHtmlViewContext ctx, IHtmlOut head)
-            throws IOException {
-        IHtmlHeadData metaData = ctx.getHeadData();
-
-        String title = metaData.getTitle().trim();
-        if (title != null)
-            head.title().text(title);
-
-        head.meta().httpEquiv(IHtmlHeadData.HTTP_CONTENT_TYPE).content(ctx.getResponse().getContentType());
-        head.meta().name(IHtmlHeadData.META_GENERATOR).content("Jazz BAS Repr/HTML 2.0");
-
-        for (Entry<String, String> entry : metaData.getHttpEquivMetaMap().entrySet())
-            head.meta().httpEquiv(entry.getKey()).content(entry.getValue());
-
-        for (Entry<String, String> entry : metaData.getMetaMap().entrySet())
-            head.meta().name(entry.getKey()).content(entry.getValue());
-    }
-
-    protected static void writeHeadImports(IHtmlViewContext ctx, IHtmlOut head)
-            throws IOException {
-        IArtifactManager artifactManager = ctx.query(IArtifactManager.class);
-        IHtmlHeadData metaData = ctx.getHeadData();
-
-        for (IArtifact artifact : artifactManager.getClosure(metaData, ArtifactType.STYLESHEET, null)) {
-            MutableWebArtifact wa = (MutableWebArtifact) artifact;
-            head.link().css(wa.getAnchor().toString());
-        }
-
-        for (IArtifact artifact : artifactManager.getClosure(metaData, ArtifactType.SCRIPT, null)) {
-            MutableWebArtifact wa = (MutableWebArtifact) artifact;
-            head.script().javascriptSrc(wa.getAnchor().toString());
-        }
-    }
-
     static IHttpViewBuilderFactory factory = IndexedHttpViewBuilderFactory.getInstance();
 
     protected <_t> void embed(IHtmlViewContext ctx, IHtmlOut out, Object obj, String... features)
@@ -233,6 +166,18 @@ public abstract class AbstractHtmlViewBuilder<T>
         }
 
         return tag;
+    }
+
+    protected static interface fn {
+
+        class head
+                extends HeadFn {
+        }
+
+        class redirect
+                extends RedirectFn {
+        }
+
     }
 
 }
