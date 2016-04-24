@@ -13,6 +13,9 @@ public interface IElementDoc
     String LABEL = "label";
     String DESCRIPTION = "description";
 
+    /**
+     * @return <code>null</code> if not applicable.
+     */
     ITagLibrary getTagLibrary();
 
     /**
@@ -83,8 +86,14 @@ public interface IElementDoc
      */
     Map<String, Object> getTagMap();
 
+    /**
+     * @return <code>null</code> if the tag isn't used.
+     */
     Object getFirstTag(String tagName);
 
+    /**
+     * @return Non-<code>null</code> collection.
+     */
     Collection<?> getAllTag(String tagName);
 
     /**
@@ -92,8 +101,10 @@ public interface IElementDoc
      * 
      * The tag value type may be scalar, collection, map, or other user type.
      * 
-     * @return <code>null</code> if the tag isn't defined.
+     * @return <code>null</code> if the tag isn't used.
      */
     iString getTextTag(String tagName);
+
+    NullElementDoc NULL = new NullElementDoc();
 
 }

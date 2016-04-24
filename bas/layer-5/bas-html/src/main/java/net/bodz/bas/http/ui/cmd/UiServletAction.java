@@ -1,6 +1,5 @@
 package net.bodz.bas.http.ui.cmd;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,13 +8,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.ui.dom1.UiObject;
 import net.bodz.bas.ui.model.action.IActionContext;
 import net.bodz.bas.ui.model.action.Location;
 import net.bodz.bas.ui.model.action.RollbackException;
-import net.bodz.mda.xjdoc.XjdocLoaderException;
-import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class UiServletAction
         extends UiObject
@@ -48,12 +44,6 @@ public abstract class UiServletAction
                 attributes.put(key, StringArray.join(" ", array));
             }
         }
-    }
-
-    @Override
-    protected IElementDoc loadXjdoc()
-            throws XjdocLoaderException, ParseException, IOException {
-        return super.loadXjdoc();
     }
 
     @Override

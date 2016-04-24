@@ -6,24 +6,67 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractXjdocElement
         // extends AbstractElement
         implements IXjdocElement {
 
-    private transient IElementDoc xjdoc;
-    private transient boolean xjdocLoaded;
-
-    private transient iString label;
-    private transient iString description;
-    private transient iString helpDoc;
+    transient XjdocCache _cache;
 
     public AbstractXjdocElement() {
+    }
+
+    private XjdocCache _fillCache() {
+        if (_cache == null)
+            synchronized (this) {
+                if (_cache == null) {
+                    _cache = new XjdocCache();
+                    _load(_cache);
+                }
+            }
+        return _cache;
+    }
+
+    void _load(XjdocCache cache) {
+        IElementDoc xjdoc = cache.xjdoc;
+        if (xjdoc == null) {
+            try {
+                xjdoc = loadXjdoc();
+            } catch (Exception e) {
+                throw new LazyLoadException(e.getMessage(), e);
+            }
+            if (xjdoc == null)
+                // xjdoc = IElementDoc.NULL;
+                throw new IllegalUsageException("xjdoc isn't available.");
+
+            _cache.xjdoc = xjdoc;
+            XjdocModifier.process(xjdoc);
+        }
+
+        // New version: Use @label only.
+        iString label = xjdoc.getTextTag(IElementDoc.LABEL);
+        // if (label == null) label = xjdoc.getText().headPar();
+
+        iString description = xjdoc.getTextTag(IElementDoc.DESCRIPTION);
+        if (description == null)
+            description = getXjdoc().getText().headPar();
+
+        cache.label = label;
+        cache.description = description;
+        cache.helpDoc = xjdoc.getText();
+
+        Priority aPriority = getClass().getAnnotation(Priority.class);
+        if (aPriority != null)
+            cache.priority = aPriority.value();
+
+        DetailLevel aDetailLevel = getClass().getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null)
+            cache.detailLevel = aDetailLevel.value();
     }
 
     /**
@@ -33,37 +76,19 @@ public abstract class AbstractXjdocElement
      */
     @Override
     public IElementDoc getXjdoc() {
-        if (xjdoc == null) {
-            synchronized (this) {
-                if (!xjdocLoaded) {
-                    try {
-                        xjdoc = loadXjdoc();
-                        XjdocModifier.process(xjdoc);
-                    } catch (Exception e) {
-                        throw new LazyLoadException(e.getMessage(), e);
-                    }
-                    xjdocLoaded = true;
-                }
-            }
-            if (xjdoc == null)
-                throw new IllegalUsageException("xjdoc isn't available.");
-        }
-        return xjdoc;
+        return _fillCache().xjdoc;
     }
 
     @Override
     public void setXjdoc(IElementDoc xjdoc) {
-        this.xjdoc = xjdoc;
-        this.xjdocLoaded = xjdoc != null;
+        if (_cache == null)
+            _cache = new XjdocCache();
+        _cache.xjdoc = xjdoc;
+        _load(_cache);
     }
 
-    protected IElementDoc loadXjdoc()
-            throws ParseException, IOException {
-        if (xjdoc != null)
-            throw new IllegalStateException("already loaded.");
-        else
-            throw new NotImplementedException();
-    }
+    protected abstract IElementDoc loadXjdoc()
+            throws ParseException, IOException;
 
     @Override
     public String getName() {
@@ -73,35 +98,23 @@ public abstract class AbstractXjdocElement
 
     @Override
     public iString getLabel() {
-        if (label == null) {
-            IElementDoc xjdoc = getXjdoc();
-            label = xjdoc.getTextTag(IElementDoc.LABEL);
-
-            if (label == null)
-                label = xjdoc.getText().headPar();
-        }
-        return label;
+        return _fillCache().label;
     }
 
     protected void setLabel(iString label) {
-        this.label = label;
+        _fillCache().label = label;
     }
 
     /**
      * The default description is the header line of the text.
      */
     @Override
-    public synchronized iString getDescription() {
-        if (description == null) {
-            description = getXjdoc().getTextTag(IElementDoc.DESCRIPTION);
-            if (description == null)
-                description = getXjdoc().getText().headPar();
-        }
-        return description;
+    public iString getDescription() {
+        return _fillCache().description;
     }
 
     protected void setDescription(iString description) {
-        this.description = description;
+        _fillCache().description = description;
     }
 
     /**
@@ -109,19 +122,16 @@ public abstract class AbstractXjdocElement
      */
     @Override
     public synchronized iString getHelpDoc() {
-        if (helpDoc == null) {
-            helpDoc = getXjdoc().getText();
-        }
-        return helpDoc;
+        return _fillCache().helpDoc;
     }
 
     protected void setHelpDoc(iString helpDoc) {
-        this.helpDoc = helpDoc;
+        _fillCache().helpDoc = helpDoc;
     }
 
     @Override
     public int getDetailLevel() {
-        return DetailLevel.NORMAL;
+        return _fillCache().detailLevel;
     }
 
     @Override
@@ -131,16 +141,26 @@ public abstract class AbstractXjdocElement
 
     @Override
     public int getPriority() {
-        return 0;
+        return _fillCache().priority;
     }
 
     @Override
     public String toString() {
         String name = getName();
         String label = Nullables.toString(getLabel());
-        if (label == null)
-            return name;
-        return label + " (" + name + ")";
+        StringBuilder sb = new StringBuilder();
+        if (label != null) {
+            sb.append(label);
+            sb.append(" (");
+        }
+
+        sb.append(name);
+        // sb.append(": " + getPriority());
+
+        if (label != null) {
+            sb.append(')');
+        }
+        return sb.toString();
     }
 
 }

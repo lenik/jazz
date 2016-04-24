@@ -10,11 +10,11 @@ import net.bodz.bas.meta.lang.typer;
 import net.bodz.bas.potato.util.TyperOverriders;
 import net.bodz.bas.typer.std.ITyperFamily;
 import net.bodz.mda.xjdoc.model.IElementDoc;
-import net.bodz.mda.xjdoc.model.javadoc.AbstractXjdocElement;
+import net.bodz.mda.xjdoc.model.javadoc.ExternXjdocElement;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public abstract class AbstractPotatoElement
-        extends AbstractXjdocElement
+        extends ExternXjdocElement
         implements IPotatoElement {
 
     private String name;
@@ -27,12 +27,9 @@ public abstract class AbstractPotatoElement
      *            May be <code>null</code>.
      */
     public AbstractPotatoElement(Class<?> declaringType, String name, IElementDoc doc) {
+        super(doc);
         this.name = name;
         this.declaringClass = declaringType;
-
-        if (doc == null)
-            throw new NullPointerException("doc");
-        setXjdoc(doc);
     }
 
     @Override
