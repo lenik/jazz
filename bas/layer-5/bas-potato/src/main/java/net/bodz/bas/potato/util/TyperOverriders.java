@@ -27,7 +27,9 @@ public class TyperOverriders {
 
     static void load()
             throws ClassNotFoundException, IOException {
-        for (Class<? extends Annotation> annotationClass : TypeIndex.forClass(TyperOverrider.class, true)) {
+        TypeIndex typeIndex = TypeIndex.getSclTypeIndex();
+
+        for (Class<? extends Annotation> annotationClass : typeIndex.list(TyperOverrider.class, true)) {
             TyperOverrider aOverrider = annotationClass.getAnnotation(TyperOverrider.class);
             Class<?> typerClass = aOverrider.value();
             map.put(typerClass, annotationClass);
