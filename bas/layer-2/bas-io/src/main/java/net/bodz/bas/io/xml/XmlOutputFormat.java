@@ -27,6 +27,7 @@ public class XmlOutputFormat {
     public boolean newLineBeforeEndTag = false;
 
     public boolean newLineAfterComment = true;
+    public boolean newLineAfterDtd = true;
     public boolean newLineAfterPI = true;
     public boolean newLineAfterVerbatim = false;
 

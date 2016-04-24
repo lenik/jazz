@@ -12,6 +12,10 @@ public interface IXmlOut
 
     IXmlOut getParent();
 
+    IXmlOut dtd(String tag, String data);
+
+    IXmlOut pi(String target, String data);
+
     /**
      * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
      * <p>
@@ -47,8 +51,6 @@ public interface IXmlOut
     IXmlOut textln(Object str);
 
     IXmlOut cdata(String cdata);
-
-    IXmlOut pi(String target, String data);
 
     IXmlOut comment(String str);
 

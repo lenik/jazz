@@ -9,6 +9,7 @@ import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.html.dom.IHtmlHeadData;
 import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.xml.dom.XmlCopy;
 
 public class HeadFn {
 
@@ -16,6 +17,9 @@ public class HeadFn {
             throws IOException {
         writeMetas(ctx, head);
         writeImports(ctx, head);
+
+        IHtmlHeadData headData = ctx.getHeadData();
+        XmlCopy.copy(headData.getOptHead(), head, true);
     }
 
     public static void writeMetas(IHtmlViewContext ctx, IHtmlOut head)

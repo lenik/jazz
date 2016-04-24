@@ -16,6 +16,16 @@ public class NullXmlOut
     }
 
     @Override
+    public IXmlOut dtd(String tag, String data) {
+        return this;
+    }
+
+    @Override
+    public IXmlOut pi(String target, String data) {
+        return this;
+    }
+
+    @Override
     public IXmlOut begin(String name) {
         return this;
     }
@@ -67,11 +77,6 @@ public class NullXmlOut
 
     @Override
     public IXmlOut cdata(String cdata) {
-        return this;
-    }
-
-    @Override
-    public IXmlOut pi(String target, String data) {
         return this;
     }
 

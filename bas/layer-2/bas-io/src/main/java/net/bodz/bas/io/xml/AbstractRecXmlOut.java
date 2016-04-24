@@ -56,6 +56,24 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
     }
 
     @Override
+    public self_t dtd(String tag, String data) {
+        text();
+        treeOut.print("<!" + tag + ' ' + data + ">");
+        if (doc.getOutputFormat().newLineAfterDtd)
+            treeOut.println();
+        return (self_t) this;
+    }
+
+    @Override
+    public self_t pi(String target, String data) {
+        text();
+        treeOut.print("<?" + target + ' ' + data + "?>");
+        if (doc.getOutputFormat().newLineAfterPI)
+            treeOut.println();
+        return (self_t) this;
+    }
+
+    @Override
     public abstract node_t begin(String name);
 
     protected <T extends node_t> T begin(String name, T node) {
@@ -219,15 +237,6 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
 
             start = end;
         }
-        return (self_t) this;
-    }
-
-    @Override
-    public self_t pi(String target, String data) {
-        text();
-        treeOut.print("<?" + target + ' ' + data + "?>");
-        if (doc.getOutputFormat().newLineAfterPI)
-            treeOut.println();
         return (self_t) this;
     }
 
