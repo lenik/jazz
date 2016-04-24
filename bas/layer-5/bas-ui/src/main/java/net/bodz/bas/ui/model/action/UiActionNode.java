@@ -21,12 +21,13 @@ public class UiActionNode {
     }
 
     public UiActionNode(UiActionNode parent, IUiElement element) {
+        // Must init element first, to make correct order.
+        this.element = element;
+
         this.parent = parent;
         this.children = new TreeSet<>(UiActionNodeComparator.INSTANCE);
         if (parent != null)
             parent.addChild(this);
-
-        this.element = element;
     }
 
     public boolean isRoot() {
@@ -68,6 +69,11 @@ public class UiActionNode {
         return context;
     }
 
+    @Override
+    public String toString() {
+        return "(" + element + ")";
+    }
+
     public void dump(ITreeOut out) {
         Class<?> c = element.getClass();
         while (!c.getSimpleName().startsWith("Ui"))
@@ -81,4 +87,5 @@ public class UiActionNode {
             out.leave();
         }
     }
+
 }

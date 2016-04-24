@@ -28,7 +28,7 @@ public class UiActionTreeBuilder {
         return roots;
     }
 
-    public void buildTree(Object obj) {
+    public Set<UiActionNode> buildTree(Object obj) {
         Class<?> objClass = obj == null ? null : obj.getClass();
 
         for (IAction action : ActionIndex.generalActions)
@@ -48,23 +48,27 @@ public class UiActionTreeBuilder {
                 for (IActionProvider provider : list)
                     for (IAction action : provider.getActions(objClass))
                         addAction(action);
+
+        return getRoots();
     }
 
     void addAction(IAction action) {
         for (Class<?> locationClass : action.getLocations()) {
-            UiActionNode parentNode = loadNode(locationClass);
+            UiActionNode parentNode = loadLocationNode(locationClass);
             new UiActionNode(parentNode, action);
         }
     }
 
-    UiActionNode loadNode(Class<?> c) {
+    UiActionNode loadLocationNode(Class<?> c) {
         UiActionNode node = nodes.get(c);
         if (node == null) {
             UiLocationDecl decl = UiLocationIndex.get(c);
+            if (decl == null)
+                throw new IllegalArgumentException("UiLocationDecl isn't defined for " + c);
 
             UiLocationDecl parentDecl = decl.getParent();
             if (parentDecl != null) {
-                UiActionNode parentNode = loadNode(parentDecl.getClass());
+                UiActionNode parentNode = loadLocationNode(parentDecl.getClass());
                 node = new UiActionNode(parentNode, decl);
             } else {
                 node = new UiActionNode(decl);
