@@ -1,4 +1,4 @@
-package net.bodz.bas.repr.state;
+package net.bodz.bas.db.ibatis.type;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

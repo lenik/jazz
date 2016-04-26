@@ -75,7 +75,7 @@ public class IbatisMapperProvider
         try {
             for (Class<?> typeHandlerClass : typeIndex.list(TypeHandler.class, false))
                 typeHandlerRegistry.register(typeHandlerClass);
-            for (Class<?> aliasedClass : typeIndex.listIndexed(Aliased.class))
+            for (Class<?> aliasedClass : typeIndex.listIndexed(AliasedType.class))
                 typeAliasRegistry.registerAlias(aliasedClass);
         } catch (Exception e) {
             throw new IllegalUsageError(e.getMessage(), e);

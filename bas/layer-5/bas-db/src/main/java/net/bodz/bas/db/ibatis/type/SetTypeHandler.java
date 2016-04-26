@@ -1,4 +1,4 @@
-package net.bodz.bas.db.ibatis;
+package net.bodz.bas.db.ibatis.type;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -9,9 +9,12 @@ import java.util.Set;
 
 import org.apache.ibatis.type.JdbcType;
 
+import net.bodz.bas.db.ibatis.AliasedType;
+import net.bodz.bas.db.ibatis.TypeHandler;
+
+@AliasedType
 public class SetTypeHandler
-        extends TypeHandler<Set<Object>>
-        implements Aliased {
+        extends TypeHandler<Set<Object>> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Set<Object> parameter, JdbcType jdbcType)
