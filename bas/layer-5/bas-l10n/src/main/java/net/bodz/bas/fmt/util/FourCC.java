@@ -1,4 +1,4 @@
-package net.bodz.bas.l10n.zh.conv;
+package net.bodz.bas.fmt.util;
 
 public class FourCC {
 

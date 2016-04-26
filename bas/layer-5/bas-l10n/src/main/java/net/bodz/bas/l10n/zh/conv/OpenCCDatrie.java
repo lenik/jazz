@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.junit.Assert;
 
+import net.bodz.bas.fmt.util.FourCC;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.res.builtin.FileResource;
 

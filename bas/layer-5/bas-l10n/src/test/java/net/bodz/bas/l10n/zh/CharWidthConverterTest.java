@@ -66,4 +66,18 @@ public class CharWidthConverterTest
         d.o("你好（＃＄％）", "你好(#$%)");
     }
 
+    public static void main(String[] args) {
+        StringBuilder half = new StringBuilder();
+        StringBuilder full = new StringBuilder();
+        for (char ch = 0x21; ch <= 0x7E; ch++) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(ch);
+            String fullChar = CharWidthConverter.NORMAL.toFullWidth(sb.toString());
+            half.append(ch);
+            full.append(fullChar);
+        }
+        System.out.println(half);
+        System.out.println(full);
+    }
+
 }
