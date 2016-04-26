@@ -12,10 +12,10 @@ public class BoneCPDataSourceProvider
     private BoneCPDataSource dataSource;
 
     public BoneCPDataSourceProvider(IQueryable queryable) {
-        this(queryable.query(DataSourceArguments.class));
+        this(queryable.query(ConnectOptions.class));
     }
 
-    public BoneCPDataSourceProvider(DataSourceArguments args) {
+    public BoneCPDataSourceProvider(ConnectOptions args) {
         if (args == null)
             throw new NullPointerException("args");
         dataSource = new BoneCPDataSource();

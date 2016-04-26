@@ -8,18 +8,18 @@ import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.t.predef.Predef;
 import net.bodz.bas.t.predef.PredefMetadata;
 
-public class DataSourceType
-        extends Predef<DataSourceType, String> {
+public class DatabaseType
+        extends Predef<DatabaseType, String> {
 
     private static final long serialVersionUID = 1L;
 
-    public static final PredefMetadata<DataSourceType, String> METADATA = PredefMetadata.forClass(DataSourceType.class);
+    public static final PredefMetadata<DatabaseType, String> METADATA = PredefMetadata.forClass(DatabaseType.class);
 
     private final String hibernateDialect;
     private final String driverClass;
     private final String urlFormat;
 
-    private DataSourceType(String name, String hibernateDialect, String driverClass, String urlFormat) {
+    private DatabaseType(String name, String hibernateDialect, String driverClass, String urlFormat) {
         super(name, name, METADATA);
         this.hibernateDialect = hibernateDialect;
         this.driverClass = driverClass;
@@ -52,7 +52,7 @@ public class DataSourceType
     /**
      * H2 Embedded Database
      */
-    public static final DataSourceType H2 = new DataSourceType("h2", //
+    public static final DatabaseType H2 = new DatabaseType("h2", //
             "org.hibernate.dialect.H2Dialect", //
             "org.h2.Driver", //
             "jdbc:h2://${rootDir}/${database};DB_CLOSE_ON_EXIT=FALSE");
@@ -60,7 +60,7 @@ public class DataSourceType
     /**
      * HSQL Embedded Database
      */
-    public static final DataSourceType HSQL = new DataSourceType("hsql",//
+    public static final DatabaseType HSQL = new DatabaseType("hsql",//
             "org.hibernate.dialect.HSQLDialect", //
             "org.hsql.Driver", //
             "jdbc:hsql://${rootDir}/${database}");
@@ -68,7 +68,7 @@ public class DataSourceType
     /**
      * PostgreSQL RDBMS
      */
-    public static final DataSourceType PostgreSQL = new DataSourceType("postgresql", //
+    public static final DatabaseType PostgreSQL = new DatabaseType("postgresql", //
             "org.hibernate.dialect.PostgreSQLDialect", //
             "org.postgresql.Driver", //
             "jdbc:postgresql://${server}/${database}");
@@ -76,7 +76,7 @@ public class DataSourceType
     /**
      * Oracle Enterprise Database
      */
-    public static final DataSourceType Oracle = new DataSourceType("oracle",//
+    public static final DatabaseType Oracle = new DatabaseType("oracle",//
             "org.hibernate.dialect.OracleDialect", //
             "com.oracle.jdbc.Driver", //
             "jdbc:oracle://${server}/${database}");
@@ -84,7 +84,7 @@ public class DataSourceType
     /**
      * MySQL RDBMS
      */
-    public static final DataSourceType MySQL = new DataSourceType("mysql",//
+    public static final DatabaseType MySQL = new DatabaseType("mysql",//
             "org.hibernate.dialect.MySQLDialect", //
             "org.mysql.Driver", //
             "jdbc:mysql://${server}/${database}");
