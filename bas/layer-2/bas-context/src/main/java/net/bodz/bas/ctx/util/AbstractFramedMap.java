@@ -155,8 +155,9 @@ public abstract class AbstractFramedMap<K, V>
         VarFrame frame = stack.peek();
 
         boolean create = head == null;
-        if (createLocal && head.frame != frame)
-            create = true;
+        if (head != null)
+            if (createLocal && head.frame != frame)
+                create = true;
 
         V old = null;
         if (create) {
@@ -249,8 +250,8 @@ class VarFrame {
 
 class VarNode {
 
-    VarNode prev;
-    VarNode next;
+    VarNode prev; // var in child scope
+    VarNode next; // var in parent scope
 
     VarFrame frame;
     VarNode prevVar;
