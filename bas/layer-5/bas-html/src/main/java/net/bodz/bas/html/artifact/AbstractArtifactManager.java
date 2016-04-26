@@ -6,11 +6,15 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.err.UnsupportedFeatureException;
 import net.bodz.bas.http.ctx.IAnchor;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.VersionRange;
 
 public abstract class AbstractArtifactManager
         implements IArtifactManager {
+
+    static final Logger logger = LoggerFactory.getLogger(AbstractArtifactManager.class);
 
     @Override
     public IArtifact getArtifact(IArtifactDependency dependency) {
@@ -38,7 +42,7 @@ public abstract class AbstractArtifactManager
 
     @Override
     public Set<IArtifact> getClosure(IArtifactDependent dependent, ArtifactType type, Boolean optional) {
-        return new Scanner(this, type, optional).scan(dependent);
+        return new Scanner(this, type, optional).listAndSort(dependent);
     }
 
     @Override
@@ -107,6 +111,8 @@ public abstract class AbstractArtifactManager
 
 class Scanner {
 
+    static final Logger logger = LoggerFactory.getLogger(Scanner.class);
+
     static class Item {
         IArtifact artifact;
         int depth;
@@ -121,7 +127,8 @@ class Scanner {
         public int compare(Item o1, Item o2) {
             int cmp = o1.depth - o2.depth;
             if (cmp != 0)
-                return cmp;
+                return -cmp; // order by depth descending
+
             cmp = o1.priority - o2.priority;
             if (cmp != 0)
                 return cmp;
@@ -145,8 +152,9 @@ class Scanner {
         this.optional = optional;
     }
 
-    public Set<IArtifact> scan(IArtifactDependent dependent) {
-        _scan(dependent, 0);
+    public Set<IArtifact> listAndSort(IArtifactDependent dependent) {
+        Stack<IArtifactDependent> stack = new Stack<>();
+        scan(dependent, stack);
 
         List<Item> list = new ArrayList<>(closure.size());
         for (Item item : closure.values())
@@ -162,15 +170,25 @@ class Scanner {
         return artifacts;
     }
 
-    void _scan(IArtifactDependent dependent, int depth) {
+    void scan(IArtifactDependent dependent, Stack<IArtifactDependent> stack) {
+        int depth = stack.size();
+        if (stack.contains(dependent)) {
+            logger.error("Detected dependency dead loop. n=" + stack.size());
+            for (IArtifactDependent a : stack)
+                logger.error("    item: " + a);
+            logger.error("    error: " + dependent);
+            return;
+        }
+        stack.push(dependent);
+
         for (IArtifactDependency dependency : dependent.getDependencies()) {
             if (optional != null && optional.booleanValue() != dependency.isOptional())
                 continue;
 
+            int priority = dependency.getPriority();
             IArtifact artifact = artifactManager.getArtifact(dependency);
             if (artifact == null)
                 throw new NoSuchElementException(dependency.toString());
-            int priority = dependency.getPriority();
 
             Item item = closure.get(artifact);
             if (item == null) {
@@ -181,14 +199,14 @@ class Scanner {
                 item.seq = seq++;
                 closure.put(artifact, item);
             } else {
-                if (depth < item.depth)
-                    item.depth = depth;
-                if (priority < item.priority)
-                    item.priority = priority;
+                item.depth = Math.max(item.depth, depth);
+                item.priority = Math.min(item.priority, priority);
             }
 
-            _scan(artifact, depth - 1);
+            scan(artifact, stack);
         }
+
+        stack.pop();
     }
 
 }

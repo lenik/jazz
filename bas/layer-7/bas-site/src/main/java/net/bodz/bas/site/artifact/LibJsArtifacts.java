@@ -23,7 +23,7 @@ public class LibJsArtifacts
             _js_.join("jquery-ui/ui/jquery.ui.widget.min.js"));
     {
         jQueryUiMin.addDependency(jQueryMin);
-        jQueryUiWidgetMin.addDependency(jQueryMin);
+        jQueryUiWidgetMin.addDependency(jQueryUiMin);
     }
 
     IArtifact bigvideo_js = group("bigvideo", _js_.join("jquery-bigvideo/"), //
