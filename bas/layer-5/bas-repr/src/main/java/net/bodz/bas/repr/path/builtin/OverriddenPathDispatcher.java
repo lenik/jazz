@@ -9,9 +9,11 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class OverriddenPathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_OVERRIDEN;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_OVERRIDEN;
+        return PRIORITY;
     }
 
     @Override

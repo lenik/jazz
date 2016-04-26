@@ -11,9 +11,11 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class ListPathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_LIST;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_LIST;
+        return PRIORITY;
     }
 
     @Override
@@ -26,9 +28,9 @@ public class ListPathDispatcher
         if (!(obj instanceof List<?>))
             return null;
 
-        String mayConsume = tokens.peek();
-        if (mayConsume == null)
-            return previous;
+        String head = tokens.peek();
+        if (head == null)
+            return null;
 
         Integer index = tokens.shiftInt();
         if (index == null)
@@ -39,7 +41,7 @@ public class ListPathDispatcher
             throw new PathDispatchException("Index out of range: " + index);
 
         Object result = list.get(index);
-        return new PathArrival(previous, result, mayConsume, tokens.getRemainingPath());
+        return new PathArrival(previous, result, head, tokens.getRemainingPath());
     }
 
 }

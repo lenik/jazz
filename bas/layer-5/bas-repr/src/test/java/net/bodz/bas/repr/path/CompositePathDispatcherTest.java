@@ -6,10 +6,9 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.fn.Constant;
-import net.bodz.bas.fn.IEvaluable;
 import net.bodz.bas.repr.path.builtin.FieldPathDispatcher;
 import net.bodz.bas.repr.path.builtin.MapPathDispatcher;
+import net.bodz.bas.repr.path.builtin.NoPathRefDispatcher;
 import net.bodz.bas.repr.path.builtin.OverriddenPathDispatcher;
 
 public class CompositePathDispatcherTest
@@ -23,7 +22,7 @@ public class CompositePathDispatcherTest
         cpd.addDispatcher(new FieldPathDispatcher());
         cpd.addDispatcher(new MapPathDispatcher());
         cpd.addDispatcher(new OverriddenPathDispatcher());
-        cpd.setMaxRefDepth(3);
+        cpd.addDispatcher(new NoPathRefDispatcher());
     }
 
     @Test
@@ -55,13 +54,13 @@ public class CompositePathDispatcherTest
     }
 
     public static class Foo
-            implements IPathDispatchable, IEvaluable<Object> {
+            implements IPathDispatchable, INoPathRef {
 
         public String cat = "Cat";
         private Map<String, String> map1 = new HashMap<>();
         private Map<String, String> map2 = new HashMap<>();
 
-        public Constant<?> buz = Constant.of(Constant.of(map2));
+        public INoPathRef buz = NprWrapper.wrap(NprWrapper.wrap(map2));
 
         public Foo() {
             map1.put("name", "Tom");
@@ -71,7 +70,11 @@ public class CompositePathDispatcherTest
         @Override
         public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
                 throws PathDispatchException {
-            switch (tokens.peek()) {
+            String token = tokens.peek();
+            if (token == null)
+                return null;
+
+            switch (token) {
             case "bar":
                 return PathArrival.shift(previous, "Bar", tokens);
             }
@@ -79,7 +82,7 @@ public class CompositePathDispatcherTest
         }
 
         @Override
-        public Object eval() {
+        public Object getTarget() {
             return map1;
         }
 

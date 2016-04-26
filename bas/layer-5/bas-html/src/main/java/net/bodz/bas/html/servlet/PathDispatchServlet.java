@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fn.EvalException;
-import net.bodz.bas.fn.IEvaluable;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
 import net.bodz.bas.html.io.HtmlDoc;
@@ -32,7 +30,6 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
-import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.PathDispatchService;
 import net.bodz.bas.repr.path.TokenQueue;
@@ -54,10 +51,8 @@ public class PathDispatchServlet
     private static final Logger logger = LoggerFactory.getLogger(PathDispatchServlet.class);
 
     public static final String ROOT_CLASS = "rootClass";
-    public static final String MAX_EVAL_DEPTH = "maxEvalDepth";
 
     private Object rootObject;
-    private int maxEvalDepth = 10;
 
     private PathDispatchService pathDispatchService;
     private IHttpViewBuilderFactory viewBuilderFactory;
@@ -82,10 +77,6 @@ public class PathDispatchServlet
         } catch (Exception e) {
             throw new ServletException(e.getMessage(), e);
         }
-
-        String maxRefDepthStr = config.getInitParameter(MAX_EVAL_DEPTH);
-        if (maxRefDepthStr != null)
-            maxEvalDepth = Integer.parseInt(maxRefDepthStr);
     }
 
     @Override
@@ -117,20 +108,6 @@ public class PathDispatchServlet
             arrival = pathDispatchService.dispatch(start, tokenQueue);
         } catch (PathDispatchException e) {
             throw new ServletException(e.getMessage(), e);
-        }
-
-        for (int i = 0; i < maxEvalDepth; i++) {
-            Object target = arrival.getTarget();
-            if (target instanceof IEvaluable<?>) {
-                IEvaluable<?> ref = (IEvaluable<?>) target;
-                try {
-                    target = ref.eval();
-                } catch (EvalException e) {
-                    throw new ServletException(e.getMessage(), e);
-                }
-                arrival = new PathArrival(arrival, target, new String[0], arrival.getRemainingPath());
-            } else
-                break;
         }
 
         req.setAttribute(ITokenQueue.class, tokenQueue);
@@ -195,7 +172,7 @@ public class PathDispatchServlet
             HtmlHtml html = htmlOut.html();
 
             try {
-                pathFramesVbo.buildHtmlViewStart(ctx, html, UiVar.wrap(arrival));
+                pathFramesVbo.buildHtmlView(ctx, html, UiVar.wrap(arrival));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }

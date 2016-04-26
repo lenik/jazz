@@ -13,9 +13,11 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class InvocationPathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_INVOCATION;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_INVOCATION;
+        return PRIORITY;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class InvocationPathDispatcher
 
         String methodName = tokens.peek();
         if (methodName == null)
-            return previous;
+            return null;
 
         IType type = PotatoTypes.getInstance().forClass(obj.getClass());
         IMethod method = type.getOverloadedMethod(methodName);

@@ -20,9 +20,11 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class PropertyPathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_PROPERTY;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_PROPERTY;
+        return PRIORITY;
     }
 
     @Override
@@ -34,7 +36,7 @@ public class PropertyPathDispatcher
 
         String propertyName = tokens.peek();
         if (propertyName == null)
-            return previous;
+            return null;
 
         Map<String, PropertyDescriptor> propertyMap = clsPropertyMap.getOrLoad(obj.getClass());
 

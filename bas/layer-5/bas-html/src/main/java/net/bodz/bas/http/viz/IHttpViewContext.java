@@ -19,7 +19,7 @@ public interface IHttpViewContext
 
     HttpSession getSession();
 
-    void stop();
+    <T> T stop();
 
     boolean isStopped();
 

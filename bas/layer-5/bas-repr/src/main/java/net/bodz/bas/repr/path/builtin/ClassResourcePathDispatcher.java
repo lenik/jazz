@@ -12,9 +12,11 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class ClassResourcePathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_CLASS_RESOURCE;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_CLASS_RESOURCE;
+        return PRIORITY;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class ClassResourcePathDispatcher
 
         String remaining = tokens.getRemainingPath();
         if (remaining == null || remaining.isEmpty()) // XXX can it be empty?
-            return previous;
+            return null;
 
         // the file name must have extension.
         if (!remaining.contains("."))

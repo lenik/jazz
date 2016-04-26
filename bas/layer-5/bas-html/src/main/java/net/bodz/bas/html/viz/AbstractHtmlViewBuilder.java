@@ -106,7 +106,8 @@ public abstract class AbstractHtmlViewBuilder<T>
         IHtmlOut html = doc.newHtmlOut();
         try {
             IHtmlOut body = buildHtmlViewStart(ctx, html, ref);
-            buildHtmlViewEnd(ctx, html, body, ref);
+            if (body != null)
+                buildHtmlViewEnd(ctx, html, body, ref);
         } catch (IOException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
