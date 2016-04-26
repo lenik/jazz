@@ -13,14 +13,14 @@
 
     <sql id="select1"><![CDATA[
         select a.*, s.label schema_label
-        from cat a
+        from _cat a
             left join _schema s on a.schema=s.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select a.*, s.label schema_label
-        from cat a
+        from _cat a
             left join _schema s on a.schema=s.id
         ]]>
     </sql>

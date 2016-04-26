@@ -10,9 +10,9 @@
         <result property="subject" column="subject" />
         <result property="text" column="text" />
         <result property="formArgs" column="args" />
-        <result property="voteUps" column="nvote" />
-        <result property="likerCount" column="nlike" />
-        <result property="readCount" column="nread" />
+        <result property="clickInfo.voteUps" column="nvote" />
+        <result property="clickInfo.pinCount" column="nlike" />
+        <result property="clickInfo.readCount" column="nread" />
     </resultMap>
 
     <resultMap id="map2" type="net.bodz.lily.model.mx.base.CoMessage" extends="map1">
