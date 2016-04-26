@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.text.trie.TokenTrie;
 import net.bodz.bas.text.trie.TokenTrie.Node;
 
+@ExcludedFromIndex
 public class MutableVirtualHostResolver
         extends AbstractVirtualHostResolver {
 

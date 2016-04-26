@@ -10,9 +10,9 @@ import java.util.TreeMap;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.rst.AbstractElementHandler;
 import net.bodz.bas.fmt.rst.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IElementHandler;
-import net.bodz.bas.fmt.rst.IRstElement;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.i18n.dom1.MutableElement;
@@ -164,30 +164,13 @@ public class MutableVirtualHost
     }
 
     class EH
-            implements IElementHandler {
+            extends AbstractElementHandler {
 
         @Override
         public boolean attribute(String name, String data)
                 throws ParseException, ElementHandlerException {
             attributes.put(name, data);
             return true;
-        }
-
-        @Override
-        public IElementHandler beginChild(String name, String[] args)
-                throws ParseException, ElementHandlerException {
-            return null;
-        }
-
-        @Override
-        public boolean endChild(IRstElement element)
-                throws ElementHandlerException {
-            return false;
-        }
-
-        @Override
-        public void complete(IRstElement element)
-                throws ElementHandlerException {
         }
 
     }
