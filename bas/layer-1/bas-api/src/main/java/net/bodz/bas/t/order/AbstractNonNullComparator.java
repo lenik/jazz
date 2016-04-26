@@ -47,9 +47,15 @@ public abstract class AbstractNonNullComparator<T>
 
     protected static final int compareIdentity(Object o1, Object o2) {
         assert o1 != o2;
+
         int id1 = System.identityHashCode(o1);
         int id2 = System.identityHashCode(o2);
-        return id1 - id2;
+        int cmp = id1 - id2;
+        if (cmp != 0)
+            return cmp;
+
+        // return o1.equals(o2) ? 0 : -1;
+        return -1;
     }
 
 }
