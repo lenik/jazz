@@ -6,7 +6,7 @@ import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IbatisMapperProvider;
 import net.bodz.bas.db.jdbc.BoneCPDataSourceProvider;
-import net.bodz.bas.db.jdbc.DataSourceArguments;
+import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.db.jdbc.IDataSourceProvider;
 
 public class TestEnv {
@@ -14,7 +14,7 @@ public class TestEnv {
     static IMapperProvider mapperProvider;
 
     static {
-        DataSourceArguments dsargs = new DataSourceArguments();
+        ConnectOptions dsargs = new ConnectOptions();
         dsargs.setPort(1063);
         dsargs.setDatabase("zjhf_db");
         dsargs.setUserName("postgres");
