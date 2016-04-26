@@ -1,18 +1,19 @@
 package net.bodz.bas.html.io.mod.table;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.html.io.AbstractRecHtmlOut;
 import net.bodz.bas.html.io.HtmlDoc;
+import net.bodz.bas.html.io.tag.HtmlDiv;
+import net.bodz.bas.html.io.tag.HtmlTable;
 
-public class HtmlForModTable
-        extends AbstractRecHtmlOut<HtmlForModTable> {
+public class ModDiv
+        extends HtmlDiv {
 
-    List<ModTable> tables = new ArrayList<>();
+    List<ModTable> tables;
 
-    public HtmlForModTable(HtmlDoc doc) {
+    public ModDiv(HtmlDoc doc, List<ModTable> tables) {
         super(doc);
+        this.tables = tables;
     }
 
     @Override
@@ -21,14 +22,10 @@ public class HtmlForModTable
     };
 
     @Override
-    public ModTable table() {
+    public HtmlTable table() {
         ModTable table = begin("table", new ModTable(doc));
         tables.add(table);
         return table;
-    }
-
-    public List<ModTable> getTables() {
-        return tables;
     }
 
 }

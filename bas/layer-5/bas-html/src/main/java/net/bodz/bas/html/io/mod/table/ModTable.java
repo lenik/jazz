@@ -27,17 +27,17 @@ public class ModTable
 
     @Override
     public HtmlThead thead() {
-        return new ModThead(doc, headRow);
+        return begin("thead", new ModThead(doc, headRow));
     }
 
     @Override
     public HtmlTfoot tfoot() {
-        return new ModTfoot(doc, footRow);
+        return begin("tfoot", new ModTfoot(doc, footRow));
     }
 
     @Override
     public ModTbody tbody() {
-        return new ModTbody(doc, rows);
+        return begin("tbody", new ModTbody(doc, rows));
     }
 
     public DataRow getHeadRow() {
