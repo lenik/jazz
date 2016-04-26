@@ -8,8 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import net.bodz.bas.c.string.StringPart;
-
 public class FilePath {
 
     private static char fileSeparator;
@@ -65,7 +63,7 @@ public class FilePath {
 
     /**
      * This function return a relative path used for href: it treats trailing slash carefully.
-     *
+     * 
      * @param path
      *            Should be in canonical form
      * @param ref
@@ -188,12 +186,16 @@ public class FilePath {
     }
 
     public static String getBaseName(String path) {
-        return StringPart.afterLast(path, '/');
+        int lastSlash = path.lastIndexOf('/');
+        if (lastSlash == -1)
+            return path;
+        else
+            return path.substring(lastSlash + 1);
     }
 
     /**
      * Get the extension name from the given path string.
-     *
+     * 
      * @param path
      *            The path string, can't be <code>null</code>.
      * @param includeDot
@@ -307,7 +309,7 @@ public class FilePath {
 
     /**
      * Find program using system default PATHEXT (win32 only).
-     *
+     * 
      * @return <code>null</code> if couldn't find name.
      */
     public static File which(String name, File... paths) {
