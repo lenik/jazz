@@ -37,6 +37,9 @@ public abstract class CoObjectIndex
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws PathDispatchException {
         String token = tokens.peek();
+        if (token == null)
+            return null;
+
         IPathArrival ans = null;
         Object obj = null;
 
