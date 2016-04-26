@@ -21,7 +21,7 @@ public class ModTbody
     public ModTr tr() {
         DataRow row = new DataRow();
         rows.add(row);
-        return new ModTr(doc, row);
+        return begin("tr", new ModTr(doc, row));
     }
 
 }

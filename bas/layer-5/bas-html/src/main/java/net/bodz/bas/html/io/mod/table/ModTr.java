@@ -17,14 +17,14 @@ public class ModTr
     public ModTh th() {
         StringBuilder sb = new StringBuilder();
         row.add(sb);
-        return new ModTh(doc, sb);
+        return begin("th", new ModTh(doc, sb));
     }
 
     @Override
     public ModTd td() {
         StringBuilder sb = new StringBuilder();
         row.add(sb);
-        return new ModTd(doc, sb);
+        return begin("td", new ModTd(doc, sb));
     }
 
 }
