@@ -17,9 +17,11 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class FieldPathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_FIELD;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_FIELD;
+        return PRIORITY;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class FieldPathDispatcher
 
         String fieldName = tokens.peek();
         if (fieldName == null)
-            return previous;
+            return null;
 
         Map<String, Field> fieldMap = clsFieldMap.getOrLoad(obj.getClass());
 

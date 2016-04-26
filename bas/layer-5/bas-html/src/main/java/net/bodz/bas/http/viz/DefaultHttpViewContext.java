@@ -55,8 +55,9 @@ public class DefaultHttpViewContext
     }
 
     @Override
-    public void stop() {
+    public <T> T stop() {
         this.stopped = true;
+        return null;
     }
 
     @Override

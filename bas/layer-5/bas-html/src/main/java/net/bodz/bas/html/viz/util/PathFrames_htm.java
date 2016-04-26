@@ -67,6 +67,8 @@ public class PathFrames_htm
             frame.out = out;
             IHtmlOut body = frame.viewBuilder.buildHtmlViewStart(ctx, out, frame);
             frame.body = body;
+            if (ctx.isStopped())
+                return null;
             if (body == null)
                 break;
         }

@@ -10,9 +10,11 @@ import net.bodz.bas.t.tree.ITreeNode;
 public class TreeNodePathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_TREE_NODE;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_TREE_NODE;
+        return PRIORITY;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class TreeNodePathDispatcher
 
         String key = tokens.peek();
         if (key == null)
-            return previous;
+            return null;
 
         ITreeNode<?> node = (ITreeNode<?>) obj;
 

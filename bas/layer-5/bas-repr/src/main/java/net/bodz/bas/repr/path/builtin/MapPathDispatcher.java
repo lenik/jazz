@@ -11,9 +11,11 @@ import net.bodz.bas.repr.path.PathDispatchException;
 public class MapPathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_MAP;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_MAP;
+        return PRIORITY;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class MapPathDispatcher
 
         String key = tokens.peek();
         if (key == null)
-            return previous;
+            return null;
 
         Map<?, ?> map = (Map<?, ?>) obj;
         if (!map.containsKey(key))

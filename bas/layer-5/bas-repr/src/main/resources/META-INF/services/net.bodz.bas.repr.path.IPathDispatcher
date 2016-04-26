@@ -4,6 +4,7 @@ net.bodz.bas.repr.path.builtin.InvocationPathDispatcher
 net.bodz.bas.repr.path.builtin.ListPathDispatcher
 net.bodz.bas.repr.path.builtin.MapPathDispatcher
 net.bodz.bas.repr.path.builtin.MethodPathDispatcher
+net.bodz.bas.repr.path.builtin.NoPathRefDispatcher
 net.bodz.bas.repr.path.builtin.OverriddenPathDispatcher
 net.bodz.bas.repr.path.builtin.PropertyPathDispatcher
 net.bodz.bas.repr.path.builtin.TreeNodePathDispatcher

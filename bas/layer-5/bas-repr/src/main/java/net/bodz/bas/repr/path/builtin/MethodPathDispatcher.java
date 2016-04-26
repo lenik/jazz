@@ -20,15 +20,17 @@ import net.bodz.bas.repr.path.PathDispatchException;
 
 /**
  * Using method signature as the name.
- *
+ * 
  * The colon(":") is required to separate parameter types from the method signature.
  */
 public class MethodPathDispatcher
         extends AbstractPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_METHOD;
+
     @Override
     public int getPriority() {
-        return BuiltinPathDispatcherPriorities.PRIORITY_METHOD;
+        return PRIORITY;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class MethodPathDispatcher
 
         String methodName = tokens.peek();
         if (methodName == null)
-            return previous;
+            return null;
 
         // colon(:) must be present.
         int colon = methodName.indexOf(':');
