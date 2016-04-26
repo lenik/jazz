@@ -191,8 +191,13 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
     public self_t text(String str) {
         text();
 
-        String encoded = doc.getOutputFormat().encodeText(str);
-        treeOut.print(encoded);
+        if (str == null)
+            str = doc.getOutputFormat().nullText;
+
+        if (str != null) {
+            String encoded = doc.getOutputFormat().encodeText(str);
+            treeOut.print(encoded);
+        }
 
         return (self_t) this;
     }

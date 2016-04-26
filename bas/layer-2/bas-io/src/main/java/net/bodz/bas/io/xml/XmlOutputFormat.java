@@ -11,6 +11,7 @@ public class XmlOutputFormat {
     public int indentSize = 2;
     public String lineSeparator = "\n";
     public char quoteChar = '\"';
+    public String nullText = "(null)";
 
     public boolean stripComment = false;
     public boolean preserveSpace = false;
