@@ -1,4 +1,4 @@
-package net.bodz.bas.db.ibatis;
+package net.bodz.bas.db.ibatis.type;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -6,12 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
+import net.bodz.bas.db.ibatis.AliasedType;
+import net.bodz.bas.db.ibatis.TypeHandler;
+import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+
+@AliasedType
+@ExcludedFromIndex
 public class MillisecondTypeHandler
-        extends BaseTypeHandler<Long>
-        implements Aliased {
+        extends TypeHandler<Long> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Long parameter, JdbcType jdbcType)
