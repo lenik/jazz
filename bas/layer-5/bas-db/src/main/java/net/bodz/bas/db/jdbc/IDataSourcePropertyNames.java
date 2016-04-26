@@ -1,7 +1,5 @@
 package net.bodz.bas.db.jdbc;
 
-import section.pseudo;
-
 public interface IDataSourcePropertyNames {
 
     /** ⇱ FOR commons-dbcp, tomcat-jdbc-pool. */
@@ -214,7 +212,7 @@ public interface IDataSourcePropertyNames {
     String maxOpenPreparedStatements = "maxOpenPreparedStatements";
 
     /** ⇱ Tomcat JDBC Enhanced Attributes */
-    /* _____________________________ */section.part __TOMCAT__ = pseudo._void_;
+    /* _____________________________ */section.part __TOMCAT__ = section.pseudo._void_;
 
     /**
      * (String) A custom query to be run when a connection is first created. The default value is
@@ -389,7 +387,7 @@ public interface IDataSourcePropertyNames {
      * 
      * @see com.jolbox.bonecp.BoneCPConfig
      */
-    /* _____________________________ */section.part __BONECP__ = pseudo._void_;
+    /* _____________________________ */section.part __BONECP__ = section.pseudo._void_;
 
     /**
      * The JDBC connection string URL.

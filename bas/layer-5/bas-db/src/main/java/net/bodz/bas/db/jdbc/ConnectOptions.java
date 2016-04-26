@@ -3,14 +3,14 @@ package net.bodz.bas.db.jdbc;
 import java.io.File;
 import java.io.Serializable;
 
-public class DataSourceArguments
+public class ConnectOptions
         implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String ATTRIBUTE_KEY = DataSourceArguments.class.getName();
+    public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
 
-    DataSourceType type = DataSourceType.PostgreSQL;
+    DatabaseType type = DatabaseType.PostgreSQL;
     String hostName = "localhost";
     int port;
     File rootDir;
@@ -18,11 +18,10 @@ public class DataSourceArguments
     String userName;
     String password;
 
-    public DataSourceArguments() {
-    }
+    // Properties info;
 
-    public DataSourceArguments clone() {
-        DataSourceArguments o = new DataSourceArguments();
+    public ConnectOptions clone() {
+        ConnectOptions o = new ConnectOptions();
         o.type = type;
         o.hostName = hostName;
         o.port = port;
@@ -33,11 +32,11 @@ public class DataSourceArguments
         return o;
     }
 
-    public DataSourceType getType() {
+    public DatabaseType getType() {
         return type;
     }
 
-    public void setType(DataSourceType type) {
+    public void setType(DatabaseType type) {
         if (type == null)
             throw new NullPointerException("type");
         this.type = type;
@@ -83,6 +82,9 @@ public class DataSourceArguments
         this.port = port;
     }
 
+    /**
+     * some databases like H2, HSQL use directory instead of database name.
+     */
     public File getRootDir() {
         return rootDir;
     }
