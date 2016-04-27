@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
+import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.artifact.IArtifactManager;
@@ -71,17 +72,27 @@ public class PathDispatchServlet
             throws ServletException {
         super.init(config);
         String rootClassName = config.getInitParameter(ROOT_CLASS);
-        try {
-            Class<?> rootClass = Class.forName(rootClassName);
-            rootObject = rootClass.newInstance();
-        } catch (Exception e) {
-            throw new ServletException(e.getMessage(), e);
-        }
+        if (rootClassName != null)
+            try {
+                Class<?> rootClass = Class.forName(rootClassName);
+                rootObject = rootClass.newInstance();
+            } catch (Exception e) {
+                throw new ServletException(e.getMessage(), e);
+            }
+    }
+
+    public void setRootObject(Object rootObject) {
+        if (rootObject == null)
+            throw new NullPointerException("rootObject");
+        this.rootObject = rootObject;
     }
 
     @Override
     protected void serviceImpl(HttpServletRequest _req, HttpServletResponse resp)
             throws ServletException, IOException {
+        if (rootObject == null)
+            throw new IllegalConfigException("rootObject isn't set.");
+
         resp.setHeader("X-Powered-By", "Jazz BAS Repr/Html Server 2.0");
 
         HttpServletReqEx req = HttpServletReqEx.of(_req);
