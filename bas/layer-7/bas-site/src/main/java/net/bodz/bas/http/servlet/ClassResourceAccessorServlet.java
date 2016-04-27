@@ -1,9 +1,9 @@
 package net.bodz.bas.http.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,49 +11,36 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.err.IllegalConfigException;
-import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.http.ResourceTransferer;
-import net.bodz.bas.t.iterator.Iterables;
 
 public class ClassResourceAccessorServlet
-        extends HttpServlet {
+        extends AbstractFileAccessServlet {
 
     private static final long serialVersionUID = 1L;
 
     public static final String ATTRIBUTE_PATH = "start-path";
-    public static final String ATTRIBUTE_MAX_AGE = "max-age";
 
     /**
      * The prefix, should start with '/', but without trailing slash.
      */
     private String startPath;
 
-    /**
-     * 1 day by default.
-     */
-    private int maxAge = 86400;
-
     @Override
     public void init()
             throws ServletException {
-        ServletConfig config = getServletConfig();
-
-        for (String name : Iterables.otp(config.getInitParameterNames())) {
-            String param = config.getInitParameter(name);
-            switch (name) {
-            case ATTRIBUTE_PATH:
-                startPath = param;
-                break;
-
-            case ATTRIBUTE_MAX_AGE:
-                maxAge = Integer.parseInt(param);
-                break;
-            }
-        }
-
+        super.init();
         if (startPath == null)
             throw new IllegalConfigException(ATTRIBUTE_PATH + " isn't set.");
-        startPath = FilePath.removeTrailingSlashes(startPath);
+    }
+
+    @Override
+    protected void setParameter(String name, String value) {
+        super.setParameter(name, value);
+        switch (name) {
+        case ATTRIBUTE_PATH:
+            startPath = FilePath.removeTrailingSlashes(value);
+            break;
+        }
     }
 
     @Override
@@ -72,13 +59,18 @@ public class ClassResourceAccessorServlet
         }
 
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
-        transferer.setMaxAge(maxAge);
+        transferer.setMaxAge(getMaxAge());
         transferer.transfer(url);
     }
 
     protected ClassLoader getClassLoader() {
         ClassLoader classLoader = ClassLoaders.getRuntimeClassLoader();
         return classLoader;
+    }
+
+    @Override
+    protected File getLocalRoot(HttpServletRequest req) {
+        return null;
     }
 
 }
