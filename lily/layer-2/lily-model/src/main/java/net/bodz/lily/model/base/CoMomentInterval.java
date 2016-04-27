@@ -4,12 +4,14 @@ import java.io.IOException;
 
 import org.joda.time.DateTime;
 
+import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 
+@IncludeMapperXml
 public abstract class CoMomentInterval<Id>
         extends CoObject
         implements IMomentInterval, IId<Id> {

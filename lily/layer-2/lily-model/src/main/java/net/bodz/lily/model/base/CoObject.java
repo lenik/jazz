@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -40,6 +41,7 @@ import net.bodz.lily.model.base.security.User;
 /**
  * Co/Con: Concrete, also Content, Controlled
  */
+@IncludeMapperXml
 public abstract class CoObject
         implements Serializable, IInstantiable, IContent, IAccessControlled, ILazyLoading, IStated {
 

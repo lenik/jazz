@@ -3,6 +3,7 @@ package net.bodz.lily.model.mx.base;
 import java.util.Date;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.ItemType;
@@ -29,7 +30,8 @@ import net.bodz.lily.model.mixin.UseForm;
  * @label Message
  * @label.zh 消息
  */
-public class CoMessage<Id>
+@IncludeMapperXml
+public abstract class CoMessage<Id>
         extends CoMomentInterval<Id>
         implements IPriority, IId<Id> {
 
