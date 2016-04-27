@@ -1,8 +1,5 @@
 package net.bodz.bas.http.ctx;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.ctx.scope.AbstractScope;
@@ -14,42 +11,18 @@ import net.bodz.bas.meta.decl.Priority;
 public class CurrentRequestScope
         extends AbstractScope {
 
-    private Map<String, String[]> fallbackParameterMap;
-
-    public CurrentRequestScope() {
-        fallbackParameterMap = new HashMap<String, String[]>();
-    }
-
     @Override
     public IScopeDescriptor tell() {
-        IScopeDescriptor parent = IScopeDescriptor.DEFAULT;
+        IScopeDescriptor current = IScopeDescriptor.DEFAULT;
 
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request != null) {
-            RequestScopeDescriptor token = new RequestScopeDescriptor(request);
-            token.setParent(parent);
-            parent = token;
+            RequestScopeDescriptor descriptor = new RequestScopeDescriptor(request);
+            descriptor.setParent(current);
+            current = descriptor;
         }
 
-        return parent;
-    }
-
-    protected Map<String, String[]> getParameterMap() {
-        HttpServletRequest request = CurrentHttpService.getRequestOpt();
-        if (request != null)
-            return request.getParameterMap();
-        else
-            return fallbackParameterMap;
-    }
-
-    @Override
-    public boolean contains(String name) {
-        return getParameterMap().containsKey(name);
-    }
-
-    @Override
-    public Object resolve(String name) {
-        return getParameterMap().get(name);
+        return current;
     }
 
     /**

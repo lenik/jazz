@@ -1,5 +1,8 @@
 package net.bodz.bas.ctx.scope.id;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MutableScopeDescriptor
         extends AbstractScopeDescriptor {
 
@@ -7,6 +10,7 @@ public class MutableScopeDescriptor
     private Object identity;
     private IScopeDescriptor parent;
     private boolean transparent;
+    private Map<String, Object> vars;
 
     public MutableScopeDescriptor(String name, Object identity) {
         this(name, identity, null);
@@ -18,6 +22,7 @@ public class MutableScopeDescriptor
         this.name = name;
         this.identity = identity;
         this.parent = root;
+        this.vars = new HashMap<>();
     }
 
     @Override
@@ -60,6 +65,21 @@ public class MutableScopeDescriptor
 
     public void setTransparent(boolean transparent) {
         this.transparent = transparent;
+    }
+
+    @Override
+    public boolean contains(String name) {
+        return vars.containsKey(name);
+    }
+
+    @Override
+    public Object get(String name) {
+        return vars.get(name);
+    }
+
+    @Override
+    public void set(String name, Object value) {
+        vars.put(name, value);
     }
 
     @Override

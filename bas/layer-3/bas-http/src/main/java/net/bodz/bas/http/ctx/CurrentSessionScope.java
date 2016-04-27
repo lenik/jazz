@@ -10,27 +10,16 @@ public class CurrentSessionScope
 
     @Override
     public IScopeDescriptor tell() {
-        IScopeDescriptor parent = IScopeDescriptor.DEFAULT;
+        IScopeDescriptor current = IScopeDescriptor.DEFAULT;
 
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session != null) {
-            SessionScopeDescriptor token = new SessionScopeDescriptor(session);
-            token.setParent(parent);
-            parent = token;
+            SessionScopeDescriptor descriptor = new SessionScopeDescriptor(session);
+            descriptor.setParent(current);
+            current = descriptor;
         }
 
-        return parent;
-    }
-
-    @Override
-    public boolean contains(String name) {
-        HttpSession session = CurrentHttpService.getSessionOpt();
-        return session.getAttribute(name) != null;
-    }
-
-    @Override
-    public Object resolve(String name) {
-        return null;
+        return current;
     }
 
 }
