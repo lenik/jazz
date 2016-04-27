@@ -100,9 +100,4 @@
         </if>
     </sql>
 
-    <sql id="pagination">
-        <if test="pageOffset != null">offset #{pageOffset}</if>
-        <if test="pageLimit != null">limit #{pageOffset}</if>
-    </sql>
-
 </mapper>
