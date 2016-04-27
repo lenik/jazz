@@ -11,7 +11,7 @@ import net.bodz.bas.meta.codegen.PublishDir;
  * Specify extra mapper XML files to be included.
  */
 @Documented
-@IndexedType(publishDir = PublishDir.features)
+@IndexedType(includeAbstract = true, publishDir = PublishDir.features)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IncludeMapperXml {
 

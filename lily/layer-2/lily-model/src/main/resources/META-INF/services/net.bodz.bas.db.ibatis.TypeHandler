@@ -1,2 +1,2 @@
-net.bodz.lily.model.res.art.SupplyMethodTypeHandler
-net.bodz.lily.model.res.people.GenderTypeHandler
+net.bodz.lily.model.contact.GenderTypeHandler
+net.bodz.lily.model.store.SupplyMethodTypeHandler
