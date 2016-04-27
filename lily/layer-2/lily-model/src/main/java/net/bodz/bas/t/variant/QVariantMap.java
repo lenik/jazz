@@ -1,4 +1,4 @@
-package net.bodz.lily.model.sea;
+package net.bodz.bas.t.variant;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,8 +24,12 @@ public class QVariantMap<K>
 
     private static final long serialVersionUID = 1L;
 
-    public QVariantMap(IVariantMap<K> _orig) {
+    QVariantMap(IVariantMap<K> _orig) {
         super(_orig);
+    }
+
+    public static <K> QVariantMap<K> from(IVariantMap<K> _orig) {
+        return new QVariantMap<K>(_orig);
     }
 
     /**

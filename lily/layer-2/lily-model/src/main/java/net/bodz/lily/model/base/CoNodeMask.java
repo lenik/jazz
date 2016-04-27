@@ -1,7 +1,7 @@
 package net.bodz.lily.model.base;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.lily.model.sea.QVariantMap;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public class CoNodeMask
         extends CoObjectMask {
@@ -17,9 +17,9 @@ public class CoNodeMask
     }
 
     @Override
-    protected void populate(QVariantMap<String> map)
+    public void readObject(IVariantMap<String> map)
             throws ParseException {
-        super.populate(map);
+        super.readObject(map);
         maxDepth = map.getInt("maxdepth", maxDepth);
     }
 

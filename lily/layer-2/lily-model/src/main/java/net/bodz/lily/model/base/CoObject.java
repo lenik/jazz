@@ -41,7 +41,6 @@ import net.bodz.lily.model.base.security.User;
  * Co/Con: Concrete, also Content, Controlled
  */
 public abstract class CoObject
-        // extends AbstractTextParametric
         implements Serializable, IInstantiable, IContent, IAccessControlled, ILazyLoading, IStated {
 
     private static final long serialVersionUID = 1L;
