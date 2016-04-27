@@ -72,12 +72,20 @@ public class DataContext
     }
 
     public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass) {
-        mapper_t mapper = getMapperProvider().getMapper(mapperClass);
+        return getMapper(mapperClass, true);
+    }
+
+    public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass, boolean autoCommit) {
+        mapper_t mapper = getMapperProvider().getMapper(mapperClass, autoCommit);
         return mapper;
     }
 
-    @SuppressWarnings("unchecked")
     public <T, C> IMapperTemplate<T, C> getMapperFor(Class<T> entityClass) {
+        return getMapperFor(entityClass, true);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T, C> IMapperTemplate<T, C> getMapperFor(Class<T> entityClass, boolean autoCommit) {
         Class<? extends IMapper> mapperClass = IMapper.fn.getMapperClass(entityClass);
         if (mapperClass == null)
             throw new IllegalArgumentException("unmapped entity: " + entityClass);

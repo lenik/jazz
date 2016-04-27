@@ -1,13 +1,8 @@
 package net.bodz.bas.db.ibatis;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -15,9 +10,9 @@ import java.util.TreeSet;
 
 import javax.sql.DataSource;
 
-import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -34,7 +29,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
 public class IbatisMapperProvider
-        implements IMapperProvider {
+        extends AbstractMapperProvider {
 
     static final Logger logger = LoggerFactory.getLogger(IbatisMapperProvider.class);
 
@@ -66,7 +61,16 @@ public class IbatisMapperProvider
 
     SqlSessionFactory buildSqlSessionFactory() {
         Configuration config = new Configuration();
+
+        List<IIbatisConfigurer> configurers = new ArrayList<>();
+        for (IIbatisConfigurer configurer : ServiceLoader.load(IIbatisConfigurer.class))
+            configurers.add(configurer);
+
         config.setEnvironment(buildEnvironment());
+
+        for (IIbatisConfigurer configurer : configurers)
+            if (configurer.getPriority() <= IIbatisConfigurer.PRIORITY_HIGH)
+                configurer.configure(config);
 
         TypeIndex typeIndex = TypeIndex.getSclTypeIndex();
 
@@ -81,34 +85,19 @@ public class IbatisMapperProvider
             throw new IllegalUsageError(e.getMessage(), e);
         }
 
-        List<String> builtins = new ArrayList<>();
-        for (String s : Arrays.asList("co", "mi", "message"))
-            builtins.add("net/bodz/lily/model/share/" + s + ".xml");
-
-        for (String resName : builtins) {
-            getClass().getClassLoader().getResource(resName);
-            URL url = getClass().getClassLoader().getResource(resName);
-            if (url == null) {
-                System.err.println("Bad resource: " + resName);
-                continue;
-            }
-            try {
-                InputStream in = url.openStream();
-                XMLMapperBuilder xmb = new XMLMapperBuilder(in, config, resName, config.getSqlFragments());
-                xmb.parse();
-                in.close();
-            } catch (IOException e) {
-                throw new Error(e);
-            }
-        }
+        for (IIbatisConfigurer configurer : configurers)
+            if (configurer.getPriority() > IIbatisConfigurer.PRIORITY_HIGH
+                    && configurer.getPriority() <= IIbatisConfigurer.PRIORITY_MEDIUM)
+                configurer.configure(config);
 
         for (Class<?> mapperClass : mapperClasses) {
             logger.log("Add Mapper: ", mapperClass);
             config.addMapper(mapperClass);
         }
 
-        for (IIbatisConfigurer configurer : ServiceLoader.load(IIbatisConfigurer.class))
-            configurer.configure(config);
+        for (IIbatisConfigurer configurer : configurers)
+            if (configurer.getPriority() >= IIbatisConfigurer.PRIORITY_LOW)
+                configurer.configure(config);
 
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         return builder.build(config);
@@ -128,10 +117,16 @@ public class IbatisMapperProvider
     /* _____________________________ */static section.iface __PROVIDER__;
 
     @Override
-    public <T extends IMapper> T getMapper(Class<T> mapperClass) {
+    public <T extends IMapper> T getMapper(Class<T> mapperClass, boolean autoCommit) {
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
         if (sqlSessionFactory.getConfiguration().hasMapper(mapperClass)) {
-            TxMapperProxy handler = new TxMapperProxy(mapperClass);
+            InvocationHandler handler;
+            if (autoCommit)
+                handler = new PrivateSessionMapperProxy(sqlSessionFactory, mapperClass);
+            else {
+                SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
+                handler = new SharedSessionMapperProxy(session, mapperClass);
+            }
             Object proxy = Proxy.newProxyInstance(mapperClass.getClassLoader(), //
                     new Class<?>[] { mapperClass }, handler);
             return mapperClass.cast(proxy);
@@ -139,36 +134,10 @@ public class IbatisMapperProvider
         return null;
     }
 
-    class TxMapperProxy
-            implements InvocationHandler {
-
-        Class<?> mapperClass;
-
-        public TxMapperProxy(Class<?> mapperClass) {
-            this.mapperClass = mapperClass;
-        }
-
-        @Override
-        public Object invoke(Object obj, Method method, Object[] args)
-                throws Throwable {
-            Object result;
-            SqlSession session = getSqlSessionFactory().openSession();
-            try {
-                Object proxy = session.getMapper(mapperClass);
-                result = method.invoke(proxy, args);
-                session.commit();
-            } finally {
-                session.close();
-            }
-            return result;
-        }
-
-    }
-
     @Override
-    public <M extends IMapper> M getMapperForObject(Class<?> objClass) {
+    public <M extends IMapper> M getMapperForObject(Class<?> objClass, boolean autoCommit) {
         Class<M> mapperClass = (Class<M>) IMapper.fn.getMapperClass(objClass);
-        return getMapper(mapperClass);
+        return getMapper(mapperClass, autoCommit);
     }
 
 }
