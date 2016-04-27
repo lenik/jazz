@@ -1,4 +1,4 @@
-package net.bodz.lily.model.sea;
+package net.bodz.bas.t.variant;
 
 import java.util.Map;
 import java.util.Set;

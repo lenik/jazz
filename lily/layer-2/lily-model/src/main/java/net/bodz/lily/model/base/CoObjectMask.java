@@ -8,15 +8,16 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
+import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.QVariantMap;
 import net.bodz.lily.model.base.security.LoginContext;
-import net.bodz.lily.model.sea.AbstractTextParametric;
-import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * @see net.bodz.lily.model.base.CoObject
  */
 public class CoObjectMask
-        extends AbstractTextParametric {
+        implements IVarMapSerializable {
 
     String codeName;
     String label;
@@ -129,8 +130,10 @@ public class CoObjectMask
     }
 
     @Override
-    protected void populate(QVariantMap<String> map)
+    public void readObject(IVariantMap<String> _map)
             throws ParseException {
+        // TODO Use reflection to read.
+        QVariantMap<String> map = QVariantMap.from(_map);
         codeName = map.getString("code", codeName);
         label = map.getString("label", label);
         description = map.getString("description", description);
@@ -142,6 +145,11 @@ public class CoObjectMask
         ownerId = map.getInt("uid", ownerId);
         ownerGroupId = map.getInt("gid", ownerGroupId);
         acls = map.getInts("acls", acls);
+    }
+
+    @Override
+    public void writeObject(IVariantMap<String> map) {
+        // TODO Use reflection to write.
     }
 
     @Override

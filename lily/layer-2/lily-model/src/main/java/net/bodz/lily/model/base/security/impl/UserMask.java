@@ -2,8 +2,8 @@ package net.bodz.lily.model.base.security.impl;
 
 import net.bodz.bas.c.string.StringUtil;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoObjectMask;
-import net.bodz.lily.model.sea.QVariantMap;
 
 /**
  * @see net.bodz.lily.model.base.security.User
@@ -29,9 +29,9 @@ public class UserMask
     }
 
     @Override
-    protected void populate(QVariantMap<String> map)
+    public void readObject(IVariantMap<String> map)
             throws ParseException {
-        super.populate(map);
+        super.readObject(map);
         password = map.getString("passwd", password);
     }
 

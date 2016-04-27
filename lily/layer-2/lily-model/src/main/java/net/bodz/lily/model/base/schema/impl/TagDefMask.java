@@ -1,7 +1,7 @@
 package net.bodz.lily.model.base.schema.impl;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.lily.model.sea.QVariantMap;
+import net.bodz.bas.t.variant.IVariantMap;
 
 /**
  * @see net.bodz.lily.model.base.schema.TagDef
@@ -24,9 +24,9 @@ public class TagDefMask
     }
 
     @Override
-    protected void populate(QVariantMap<String> map)
+    public void readObject(IVariantMap<String> map)
             throws ParseException {
-        super.populate(map);
+        super.readObject(map);
         tagGroupId = map.getInt("tagv", tagGroupId);
     }
 

@@ -5,8 +5,9 @@ import java.util.Collection;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.range.IntRange;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.QVariantMap;
 import net.bodz.lily.model.base.CoMomentIntervalMask;
-import net.bodz.lily.model.sea.QVariantMap;
 
 public class CoMessageMask
         extends CoMomentIntervalMask {
@@ -151,9 +152,10 @@ public class CoMessageMask
     }
 
     @Override
-    protected void populate(QVariantMap<String> map)
+    public void readObject(IVariantMap<String> _map)
             throws ParseException {
-        super.populate(map);
+        super.readObject(_map);
+        QVariantMap<String> map = QVariantMap.from(_map);
         formId = map.getInt("form", formId);
 
         opId = map.getInt("op", opId);
