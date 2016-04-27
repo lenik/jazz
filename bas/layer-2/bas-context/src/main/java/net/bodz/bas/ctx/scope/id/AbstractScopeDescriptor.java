@@ -14,18 +14,4 @@ public abstract class AbstractScopeDescriptor
         return node;
     }
 
-    @Override
-    public boolean contains(String name) {
-        return false;
-    }
-
-    @Override
-    public Object get(String name) {
-        return null;
-    }
-
-    @Override
-    public void set(String name, Object value) {
-    }
-
 }

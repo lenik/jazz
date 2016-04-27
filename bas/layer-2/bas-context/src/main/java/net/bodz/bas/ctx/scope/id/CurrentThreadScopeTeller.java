@@ -26,14 +26,4 @@ public class CurrentThreadScopeTeller
         return map;
     }
 
-    @Override
-    public boolean contains(String name) {
-        return getMap().containsKey(name);
-    }
-
-    @Override
-    public Object resolve(String name) {
-        return getMap().get(name);
-    }
-
 }
