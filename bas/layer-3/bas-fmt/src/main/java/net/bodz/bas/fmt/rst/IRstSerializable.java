@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import net.bodz.bas.io.BTreeOut;
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.meta.source.SerializableForm;
 
+@SerializableForm
 public interface IRstSerializable {
 
     void writeObject(IRstOutput out)
