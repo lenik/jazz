@@ -19,6 +19,9 @@ import net.bodz.lily.model.base.security.LoginContext;
 public class CoObjectMask
         implements IVarMapSerializable {
 
+    Long pageOffset;
+    Long pageLimit;
+
     String codeName;
     String label;
     String description;
@@ -32,6 +35,22 @@ public class CoObjectMask
     Integer ownerId;
     Integer ownerGroupId;
     Set<Integer> acls;
+
+    public Long getPageOffset() {
+        return pageOffset;
+    }
+
+    public void setPageOffset(Long pageOffset) {
+        this.pageOffset = pageOffset;
+    }
+
+    public Long getPageLimit() {
+        return pageLimit;
+    }
+
+    public void setPageLimit(Long pageLimit) {
+        this.pageLimit = pageLimit;
+    }
 
     public String getCodeName() {
         return codeName;
