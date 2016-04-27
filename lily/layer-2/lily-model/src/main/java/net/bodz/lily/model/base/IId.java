@@ -26,6 +26,20 @@ public interface IId<Id> {
             return getIdType(c);
         }
 
+        @SuppressWarnings("unchecked")
+        public static <Id> Id cast(Class<Id> idType, Object id) {
+            if (id == null)
+                return null;
+            Object casted = null;
+            if (idType == String.class)
+                casted = id.toString();
+            else if (idType == Integer.class)
+                casted = ((Number) id).intValue();
+            else if (idType == Long.class)
+                casted = ((Number) id).longValue();
+            return (Id) casted;
+        }
+
     }
 
 }
