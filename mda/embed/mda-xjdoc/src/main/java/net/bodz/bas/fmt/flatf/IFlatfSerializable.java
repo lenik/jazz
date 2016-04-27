@@ -2,8 +2,10 @@ package net.bodz.bas.fmt.flatf;
 
 import java.io.IOException;
 
+import net.bodz.bas.meta.source.SerializableForm;
 import net.bodz.bas.rtx.IOptions;
 
+@SerializableForm
 public interface IFlatfSerializable {
 
     void writeObject(IFlatfOutput out, IOptions options)

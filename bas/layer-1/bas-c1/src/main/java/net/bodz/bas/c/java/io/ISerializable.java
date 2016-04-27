@@ -6,6 +6,9 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
+import net.bodz.bas.meta.source.SerializableForm;
+
+@SerializableForm
 public interface ISerializable
         extends Serializable {
 
