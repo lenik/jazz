@@ -2,7 +2,10 @@ package net.bodz.lily.model.base;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPred;
+import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.html.viz.HtmlViewOptions;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.decl.ObjectType;
@@ -13,19 +16,19 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.std.rfc.mime.ContentTypes;
 
 @IndexedType
 public abstract class CoObjectIndex
         implements IPathDispatchable {
 
     private Class<?> objectType;
-    IQueryable context;
+    private HtmlViewOptions viewOptions = new HtmlViewOptions();
+    private boolean pathEnd;
 
-    public CoObjectIndex(IQueryable context) {
-        if (context == null)
-            throw new NullPointerException("context");
-        this.context = context;
+    private DataContext dataContext;
+
+    public CoObjectIndex() {
         this.objectType = getClass().getAnnotation(ObjectType.class).value();
     }
 
@@ -33,42 +36,65 @@ public abstract class CoObjectIndex
         return objectType;
     }
 
+    public HtmlViewOptions getViewOptions() {
+        return viewOptions;
+    }
+
+    public DataContext getDataContext() {
+        if (dataContext == null)
+            throw new IllegalStateException("DataContext isn't set.");
+        return dataContext;
+    }
+
+    public void setDataContext(DataContext dataContext) {
+        this.dataContext = dataContext;
+    }
+
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws PathDispatchException {
         String token = tokens.peek();
-        if (token == null)
+        if (token == null || pathEnd)
             return null;
-
-        IPathArrival ans = null;
-        Object obj = null;
 
         switch (token) {
         case "new":
             try {
-                obj = Instantiables._instantiate(getObjectType());
+                Object obj = Instantiables._instantiate(getObjectType());
+                return PathArrival.shift(previous, obj, tokens);
             } catch (Exception e) {
                 throw new PathDispatchException(e.getMessage(), e);
             }
-            ans = PathArrival.shift(previous, obj, tokens);
-            break;
 
-        default:
-            String name = FilePath.stripExtension(token);
-            if (StringPred.isDecimal(name)) {
-                Long id = Long.parseLong(name);
-                IMapperTemplate<?, ?> mapper = findMapper(getObjectType());
-                if (mapper == null)
-                    throw new NullPointerException("mapperTemplate");
-                obj = mapper.select(id);
-                if (obj != null)
-                    ans = PathArrival.shift(previous, obj, tokens);
-            }
+        case "index.html":
+            return PathArrival.shift(previous, this, tokens);
+
+        case "data.json":
+            viewOptions.setContentType(ContentTypes.text_javascript);
+            viewOptions.setOrigin(true);
+            return PathArrival.shift(previous, this, tokens);
+
+        case "iframe.html":
+            viewOptions.setOrigin(true);
+            return PathArrival.shift(previous, this, tokens);
         }
-        return ans;
-    }
 
-    protected abstract IMapperTemplate<?, ?> findMapper(Class<?> clazz);
+        String name = FilePath.stripExtension(token);
+        if (StringPred.isDecimal(name)) {
+            Long id = Long.parseLong(name);
+
+            Class<?> entityClass = getObjectType();
+            IMapperTemplate<?, Object> mapper = getDataContext().getMapperFor(entityClass);
+            if (mapper == null)
+                throw new IllegalUsageException("No mapper for " + entityClass);
+
+            Object obj = mapper.select(id);
+            if (obj != null)
+                return PathArrival.shift(previous, obj, tokens);
+        }
+
+        return null;
+    }
 
     @Override
     public String toString() {
