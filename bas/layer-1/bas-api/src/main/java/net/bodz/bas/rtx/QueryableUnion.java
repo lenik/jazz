@@ -9,21 +9,10 @@ public class QueryableUnion
     private static final long serialVersionUID = 1L;
 
     @Override
-    public Object query(Object specification)
+    public Object query(String... args)
             throws QueryException {
         for (IQueryable q : this) {
-            Object impl = q.query(specification);
-            if (impl != null)
-                return impl;
-        }
-        return null;
-    }
-
-    @Override
-    public Object query(String specificationId)
-            throws QueryException {
-        for (IQueryable q : this) {
-            Object impl = q.query(specificationId);
+            Object impl = q.query(args);
             if (impl != null)
                 return impl;
         }

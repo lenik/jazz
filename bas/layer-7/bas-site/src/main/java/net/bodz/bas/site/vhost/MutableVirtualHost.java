@@ -110,16 +110,6 @@ public class MutableVirtualHost
     /* _____________________________ */static section.iface __QUERY__;
 
     @Override
-    public Object query(Object specification)
-            throws QueryException {
-        if (specification instanceof Class<?>)
-            return query((Class<?>) specification);
-        if (specification instanceof String)
-            return query((String) specification);
-        return null;
-    }
-
-    @Override
     public <spec_t> spec_t query(Class<spec_t> specificationType)
             throws QueryException {
         Object val = getAttribute(specificationType.getName());
@@ -129,7 +119,7 @@ public class MutableVirtualHost
     }
 
     @Override
-    public Object query(String specificationId)
+    public Object query(String... args)
             throws QueryException {
         return null;
     }

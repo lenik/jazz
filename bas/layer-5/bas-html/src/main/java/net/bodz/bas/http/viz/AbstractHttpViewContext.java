@@ -37,20 +37,23 @@ public abstract class AbstractHttpViewContext
     }
 
     @Override
-    public Object query(String specificationId) {
+    public Object query(String... args) {
         HttpServletRequest request = getRequest();
 
-        Object requestAttribute = request.getAttribute(specificationId);
-        if (requestAttribute != null)
-            return requestAttribute;
+        if (args.length == 1) {
+            String name = args[0];
+            Object requestAttribute = request.getAttribute(name);
+            if (requestAttribute != null)
+                return requestAttribute;
+        }
 
         if (queryContext != null) {
-            Object impl = queryContext.query(specificationId);
+            Object impl = queryContext.query(args);
             if (impl != null)
                 return impl;
         }
 
-        return super.query(specificationId);
+        return super.query(args);
     }
 
 }
