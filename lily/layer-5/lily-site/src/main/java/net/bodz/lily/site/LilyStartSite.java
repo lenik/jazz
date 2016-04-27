@@ -6,17 +6,10 @@ import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
 
-import net.bodz.lily.model.mx.forum.Forum;
-import net.bodz.lily.model.mx.track.IssueTracker;
-
 public abstract class LilyStartSite
         extends BasicSite {
 
-    Forum forum;
-    IssueTracker tracker;
-
     public LilyStartSite() {
-        
     }
 
     @Override
