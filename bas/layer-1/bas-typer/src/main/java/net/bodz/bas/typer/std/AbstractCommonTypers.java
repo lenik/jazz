@@ -61,7 +61,7 @@ public abstract class AbstractCommonTypers<T>
         Object impl = queryInt(index);
 
         if (impl == null)
-            impl = _queryInt(index);
+            impl = queryIntDefaultImpl(index);
 
         return specificationType.cast(impl);
     }
@@ -69,14 +69,14 @@ public abstract class AbstractCommonTypers<T>
     /**
      * The indexed query is faster.
      */
-    protected Object _queryInt(int typerIndex) {
+    protected Object queryIntDefaultImpl(int typerIndex) {
         switch (typerIndex) {
         case IBasicTyperFamily.typerIndex:
             return this;
 
         case ITextForm.typerIndex:
-            Object parser = query(IParser.typerIndex);
-            Object formatter = query(IFormatter.typerIndex);
+            Object parser = queryInt(IParser.typerIndex);
+            Object formatter = queryInt(IFormatter.typerIndex);
             if (parser == formatter && parser != null)
                 return parser;
             break;

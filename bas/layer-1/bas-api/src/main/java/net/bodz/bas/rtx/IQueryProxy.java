@@ -3,36 +3,6 @@ package net.bodz.bas.rtx;
 public interface IQueryProxy {
 
     /**
-     * If specification is String, this function should return the same result as
-     * {@link #query(Object, String)}.
-     * 
-     * @param obj
-     *            The object under query.
-     * @param specification
-     *            Non-<code>null</code> specification variable in any type.
-     * @return <code>null</code> If no available implementation exists.
-     * @throws NullPointerException
-     *             If <code>specificationType</code> is <code>null</code>.
-     * @throws QueryException
-     *             If query is failed.
-     */
-    Object query(Object obj, Object specification)
-            throws QueryException;
-
-    /**
-     * @param obj
-     *            The object under query.
-     * @return <code>null</code> If no available implementation exists for the
-     *         <code>specificationId</code>.
-     * @throws NullPointerException
-     *             If <code>specificationId</code> is <code>null</code>.
-     * @throws QueryException
-     *             If query is failed.
-     */
-    Object query(Object obj, String specificationId)
-            throws QueryException;
-
-    /**
      * @param obj
      *            The object under query.
      * @param specificationType
@@ -52,6 +22,19 @@ public interface IQueryProxy {
      *             If query is failed.
      */
     <T> T query(Object obj, Class<T> specificationType)
+            throws QueryException;
+
+    /**
+     * @param obj
+     *            The object under query.
+     * @return <code>null</code> If no available implementation exists for the
+     *         <code>specificationId</code>.
+     * @throws NullPointerException
+     *             If <code>specificationId</code> is <code>null</code>.
+     * @throws QueryException
+     *             If query is failed.
+     */
+    Object query(Object obj, String... args)
             throws QueryException;
 
 }

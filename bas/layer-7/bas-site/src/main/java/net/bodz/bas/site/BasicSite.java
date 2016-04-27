@@ -123,26 +123,18 @@ public abstract class BasicSite
     /* _____________________________ */static section.iface __QUERYABLE__;
 
     @Override
-    public Object query(Object specification)
-            throws QueryException {
-        if (queryContext != null)
-            return queryContext.query(specification);
-        return null;
-    }
-
-    @Override
-    public Object query(String specificationId)
-            throws QueryException {
-        if (queryContext != null)
-            return queryContext.query(specificationId);
-        return null;
-    }
-
-    @Override
     public <spec_t> spec_t query(Class<spec_t> specificationType)
             throws QueryException {
         if (queryContext != null)
             return queryContext.query(specificationType);
+        return null;
+    }
+
+    @Override
+    public Object query(String... args)
+            throws QueryException {
+        if (queryContext != null)
+            return queryContext.query(args);
         return null;
     }
 

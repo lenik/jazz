@@ -63,21 +63,15 @@ public abstract class DecoratedUiRef<T>
     /* _____________________________ */static section.iface __QUERYABLE__;
 
     @Override
-    public Object query(Object specification)
-            throws QueryException {
-        return getWrapped().query(specification);
-    }
-
-    @Override
-    public Object query(String specificationId)
-            throws QueryException {
-        return getWrapped().query(specificationId);
-    }
-
-    @Override
     public <spec_t> spec_t query(Class<spec_t> specificationType)
             throws QueryException {
         return getWrapped().query(specificationType);
+    }
+
+    @Override
+    public Object query(String... args)
+            throws QueryException {
+        return getWrapped().query(args);
     }
 
     /** ⇱ Implementation Of {@link IAnnotated}. */

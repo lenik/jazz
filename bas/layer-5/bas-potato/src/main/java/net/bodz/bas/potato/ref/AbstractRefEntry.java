@@ -76,22 +76,6 @@ public abstract class AbstractRefEntry<T>
     /* _____________________________ */static section.iface __QUERY__;
 
     @Override
-    public Object query(Object specification)
-            throws QueryException {
-        if (specification instanceof Class<?>)
-            return query((Class<?>) specification);
-        if (specification instanceof String)
-            return query((String) specification);
-        return null;
-    }
-
-    @Override
-    public Object query(String specificationId)
-            throws QueryException {
-        return null;
-    }
-
-    @Override
     public <spec_t> spec_t query(Class<spec_t> specificationType)
             throws QueryException {
         Class<?> valueType = getValueType();
@@ -101,6 +85,12 @@ public abstract class AbstractRefEntry<T>
         if (typer != null)
             return typer;
 
+        return null;
+    }
+
+    @Override
+    public Object query(String... args)
+            throws QueryException {
         return null;
     }
 
