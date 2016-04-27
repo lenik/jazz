@@ -16,9 +16,14 @@ public class VirtualHostManager
 
     private static final long serialVersionUID = 1L;
 
-    public void loadAll() {
-        for (IVirtualHostResolver impl : ServiceLoader.load(IVirtualHostResolver.class))
-            this.add(impl);
+    public VirtualHostManager() {
+        reload();
+    }
+
+    public void reload() {
+        clear();
+        for (IVirtualHostResolver resolver : ServiceLoader.load(IVirtualHostResolver.class))
+            add(resolver);
         sort();
     }
 
