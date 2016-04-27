@@ -1,3 +1,4 @@
 net.bodz.bas.db.ibatis.type.DateTimeTypeHandler
+net.bodz.bas.db.ibatis.type.MapTypeHandler
 net.bodz.bas.db.ibatis.type.MillisecondTypeHandler
 net.bodz.bas.db.ibatis.type.SetTypeHandler
