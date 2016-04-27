@@ -20,6 +20,26 @@
         <if test="comment != null">comment = #{comment},</if>
     </sql>
 
+    <!-- States -->
+    <resultMap id="mapS" type="net.bodz.lily.model.base.CoObject">
+        <result property="priority" column="priority" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="version" column="version" />
+    </resultMap>
+
+    <sql id="setS">
+        priority = #{priority},
+        <if test="lastModifiedDate == null">lastmod = #{lastModifiedDate},</if>
+        <if test="lastModifiedDate != null">lastmod = now(),</if>
+        flags = #{flags},
+        state = #{state},
+        <!-- <if test="version != null">version = #{version},</if> -->
+        version = version + 1,
+    </sql>
+
     <!-- UI, States -->
     <resultMap id="mapUS" type="net.bodz.lily.model.base.CoObject" extends="mapU">
         <result property="priority" column="priority" />
