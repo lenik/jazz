@@ -1,10 +1,10 @@
 package net.bodz.bas.repr.path;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.object.ITreeDump;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.object.TreeDumps;
@@ -45,12 +45,15 @@ public class PathArrival
     }
 
     public static PathArrival shift(IPathArrival parent, Object target, ITokenQueue tokens) {
-        String token = tokens.shift();
-        return new PathArrival(parent, target, token, tokens.getRemainingPath());
+        return shift(1, parent, target, tokens);
     }
 
     public static PathArrival shift(int n, IPathArrival parent, Object target, ITokenQueue tokens) {
         String[] array = tokens.shift(n);
+        if (parent != null && parent.getTarget() == target) {
+            String[] cat = Arrays.append(parent.getConsumedTokens(), array);
+            return new PathArrival(parent.getPrevious(), target, cat, tokens.getRemainingPath());
+        }
         return new PathArrival(parent, target, array, tokens.getRemainingPath());
     }
 
@@ -149,16 +152,21 @@ public class PathArrival
 
     static PathArrivalList merge(PathArrivalList list) {
         PathArrivalList result = new PathArrivalList(list.size());
-        PathArrival last = null;
+        PathArrival prev = null;
         for (IPathArrival a : list) {
-            PathArrival m = new PathArrival(a);
-            if (m.parent != null && m.consumedTokens.length == 0)
-                if (last == null)
-                    throw new IllegalArgumentException("Dangling transient path arrival.");
+            PathArrival mutable = new PathArrival(a);
+            if (mutable.consumedTokens.length == 0) {
+                // Transient: prev -> ... -> mutable.parent -> mutable.
+                if (prev == null || mutable.parent == null)
+                    throw new IllegalArgumentException("Transient path arrival from null.");
+                prev.target = mutable.target;
+            } else {
+                // Same target: prev -> ... -> mutable.target.
+                if (prev != null && prev.target == mutable.target)
+                    prev.target = mutable.target;
                 else
-                    last.target = m.target;
-            else
-                result.add(last = m);
+                    result.add(prev = mutable);
+            }
         }
         return result;
     }

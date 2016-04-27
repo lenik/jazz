@@ -41,7 +41,7 @@ public class ListPathDispatcher
             throw new PathDispatchException("Index out of range: " + index);
 
         Object result = list.get(index);
-        return new PathArrival(previous, result, head, tokens.getRemainingPath());
+        return PathArrival.shift(previous, result, tokens);
     }
 
 }
