@@ -33,14 +33,9 @@ public abstract class UiServletAction
 
         for (Entry<String, ?> entry : getXjdoc().getTagMap().entrySet()) {
             String key = entry.getKey();
-            if (key.startsWith("cmd.")) {
-                key = key.substring(4);
-                List<?> array = (List<?>) entry.getValue();
-                scripts.put(key, StringArray.join("; ", array));
-            }
             if (key.startsWith("attr.")) {
                 key = key.substring(5);
-                Object array = entry.getValue();
+                List<?> array = (List<?>) entry.getValue();
                 attributes.put(key, StringArray.join(" ", array));
             }
         }
