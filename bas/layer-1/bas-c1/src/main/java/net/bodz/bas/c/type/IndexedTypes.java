@@ -87,9 +87,10 @@ public class IndexedTypes {
                         throw e;
                     }
 
-                    if (!serviceBaseType.isAssignableFrom(serviceClass))
-                        throw new IllegalUsageException(String.format("Invalid service class %s for %s.", //
-                                className, serviceBaseType.getName()));
+                    if (!serviceBaseType.isAnnotation())
+                        if (!serviceBaseType.isAssignableFrom(serviceClass))
+                            throw new IllegalUsageException(String.format("Invalid service class %s for %s.", //
+                                    className, serviceBaseType.getName()));
 
                     if (Modifier.isAbstract(serviceClass.getModifiers()))
                         if (!includeAbstract)
