@@ -17,7 +17,8 @@ public class IndexedHttpViewBuilderFactory
     private List<ITypeMapper> htmTmaps = new ArrayList<>();
 
     public IndexedHttpViewBuilderFactory() {
-        htmTmaps.add(new NameConventionTypeMapper(null, null, "_htm", true));
+        htmTmaps.add(new NameConventionTypeMapper(null, "_htm", true));
+        htmTmaps.add(new NameConventionTypeMapper(null, 1, ".htm", "_htm", true));
     }
 
     @Override

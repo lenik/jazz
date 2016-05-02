@@ -11,8 +11,9 @@ public interface IMapper {
 
         static ITypeMapper[] mapperTmaps = {
                 // TODO cache-enable?
-                new NameConventionTypeMapper(null, null, "Mapper", false), //
-                new NameConventionTypeMapper(null, "impl.", "Mapper", false), //
+                new NameConventionTypeMapper(null, "Mapper", false), //
+                new NameConventionTypeMapper("impl.", "Mapper", false), //
+                new NameConventionTypeMapper(null, 1, "db.", "Mapper", false), //
         };
 
         public static Class<? extends IMapper> getMapperClass(Class<?> objClass) {

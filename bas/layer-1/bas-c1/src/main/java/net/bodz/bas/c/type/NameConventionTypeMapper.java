@@ -7,20 +7,27 @@ public class NameConventionTypeMapper
         implements ITypeMapper {
 
     private ClassLoader classLoader;
-    private String prefix;
-    private String suffix;
+    private final int parents;
+    private final String prefix;
+    private final String suffix;
     private boolean decodeIInterface;
     private boolean cacheEnabled;
 
     private Map<Class<?>, Class<?>> cache;
     private static Class<?> NONE = void.class;
 
-    public NameConventionTypeMapper(ClassLoader classLoader, String prefix, String suffix, boolean cacheEnabled) {
+    public NameConventionTypeMapper(String prefix, String suffix, boolean cacheEnabled) {
+        this(null, 0, prefix, suffix, cacheEnabled);
+    }
+
+    public NameConventionTypeMapper(ClassLoader classLoader, int parents, String prefix, String suffix,
+            boolean cacheEnabled) {
         if (suffix == null)
             throw new NullPointerException("suffix");
         if (suffix.isEmpty())
             throw new IllegalArgumentException("suffix is empty.");
         this.classLoader = classLoader;
+        this.parents = parents;
         this.prefix = prefix;
         this.suffix = suffix;
         this.cacheEnabled = cacheEnabled;
@@ -37,20 +44,16 @@ public class NameConventionTypeMapper
         this.classLoader = classLoader;
     }
 
+    public int getParents() {
+        return parents;
+    }
+
     public String getPrefix() {
         return prefix;
     }
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
     public String getSuffix() {
         return suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
     }
 
     public boolean isDecodeIInterface() {
@@ -83,17 +86,23 @@ public class NameConventionTypeMapper
         }
 
         String dstName;
-        if (prefix == null) {
-            String fqcn = src.getName();
-            dstName = fqcn + suffix;
-        } else {
+        {
             Package pkg = src.getPackage();
+            String pkgName = pkg == null ? null : pkg.getName();
+            if (pkgName != null) {
+                if (pkgName.isEmpty())
+                    pkgName = null;
+                else
+                    pkgName = getParentName(pkgName, parents);
+            }
+
             StringBuilder sb = new StringBuilder();
-            if (pkg != null) {
-                sb.append(pkg.getName());
+            if (pkgName != null) {
+                sb.append(pkgName);
                 sb.append('.');
             }
-            sb.append(prefix);
+            if (prefix != null)
+                sb.append(prefix);
             sb.append(base);
             sb.append(suffix);
             dstName = sb.toString();
@@ -113,6 +122,17 @@ public class NameConventionTypeMapper
             cache.put(src, dst != null ? dst : NONE);
 
         return dst;
+    }
+
+    static String getParentName(String pkgName, int n) {
+        for (int i = 0; i < n; i++) {
+            int lastDot = pkgName.lastIndexOf('.');
+            if (lastDot != -1)
+                pkgName = pkgName.substring(0, lastDot);
+            else
+                return null;
+        }
+        return pkgName;
     }
 
     @Override
