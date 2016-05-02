@@ -9,9 +9,10 @@
     <artifactId>bas-fmt</artifactId>
     <dependencies>
         <dependency>
-            <groupId>net.bodz.mda</groupId>
-            <artifactId>mda-xjdoc</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-c3</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -24,10 +25,13 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-c3</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
+            <groupId>net.bodz.mda</groupId>
+            <artifactId>mda-xjdoc</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 3 :: Fmt</name>
