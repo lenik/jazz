@@ -8,7 +8,7 @@ import java.util.List;
 import javax.inject.Named;
 import javax.inject.Qualifier;
 
-import net.bodz.bas.inject.Qualifiers;
+import net.bodz.bas.c.javax.inject.Qualifiers;
 
 public class FaceQualifiers
         extends Qualifiers {
