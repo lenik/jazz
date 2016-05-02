@@ -5,7 +5,7 @@ public abstract class AbstractActionProvider
 
     @Override
     public Class<?> getTargetClass() {
-        return void.class;
+        return null;
     }
 
 }

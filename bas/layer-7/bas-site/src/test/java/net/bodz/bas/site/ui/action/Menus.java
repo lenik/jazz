@@ -2,7 +2,7 @@ package net.bodz.bas.site.ui.action;
 
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
-import net.bodz.bas.html.io.tag.HtmlDiv;
+import net.bodz.bas.html.io.RecHtmlOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
@@ -19,7 +19,9 @@ public class Menus {
         builder.buildTree(null);
 
         ITreeOut _out = TreeOutImpl.from(Stdio.cout);
-        HtmlDoc doc = new HtmlDoc(_out, HtmlOutputFormat.DEFAULT);
+        HtmlOutputFormat outputFormat = new HtmlOutputFormat();
+        outputFormat.newLineAfterStartTag = true;
+        HtmlDoc doc = new HtmlDoc(_out, outputFormat);
 
         for (UiActionNode root : builder.getRoots()) {
             _out.println("root:");
@@ -28,9 +30,11 @@ public class Menus {
             _out.leave();
 
             UiActionNode_htm htm = new UiActionNode_htm();
-            HtmlDiv out = new HtmlDiv(doc);
+            RecHtmlOut out = doc.newHtmlOut();
             htm.buildHtmlView(null, out, UiVar.wrap(root));
+            out.flush();
         }
+
     }
 
 }

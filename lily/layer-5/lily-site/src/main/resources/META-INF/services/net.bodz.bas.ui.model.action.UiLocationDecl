@@ -1,4 +1,5 @@
 net.bodz.lily.site.ui.action.CollaborationToolbar
+net.bodz.lily.site.ui.action.LilySiteMenu
 net.bodz.lily.site.ui.action.NavigationToolbar
 net.bodz.lily.site.ui.action.ObjectToolbar
 net.bodz.lily.site.ui.action.SearchToolbar
