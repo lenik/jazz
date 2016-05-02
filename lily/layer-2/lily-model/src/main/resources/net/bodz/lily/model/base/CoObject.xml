@@ -86,12 +86,12 @@
     </sql>
 
     <sql id="modefilt">
-        <if test="login != null &amp;&amp; !login.user.admin">
+        <if test="m.login != null &amp;&amp; !m.login.user.admin">
             and (
-            a.uid=#{login.user.id}
-            <if test="!login.user.groupIds.empty">
+            a.uid=#{m.login.user.id}
+            <if test="!m.login.user.groupIds.empty">
                 or (a.mode::bit(9) &amp; b'000100000' != b'000000000') and a.gid in
-                <foreach collection="login.user.groupIds" item="item" open="(" close=")" separator=", ">
+                <foreach collection="m.login.user.groupIds" item="item" open="(" close=")" separator=", ">
                     #{item}
                 </foreach>
             </if>

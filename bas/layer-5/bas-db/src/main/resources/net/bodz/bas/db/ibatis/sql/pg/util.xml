@@ -4,9 +4,9 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pg.util">
 
-    <sql id="pagination">
-        <if test="pageOffset != null">offset #{pageOffset}</if>
-        <if test="pageLimit != null">limit #{pageOffset}</if>
+    <sql id="selectOptions">
+        <if test="opt != null and opt.page.offset != null">offset #{opt.page.offset}</if>
+        <if test="opt != null and opt.page.limit != null">limit #{opt.page.limit}</if>
     </sql>
 
 </mapper>
