@@ -20,6 +20,15 @@ public abstract class AbstractRecHtmlOut<self_t extends AbstractRecHtmlOut<self_
         return begin(name, new RecHtmlOut(doc));
     }
 
+    @Override
+    protected <T extends AbstractRecHtmlOut<?>> T begin(String name, T node) {
+        node.pretag(this);
+        return super.begin(name, node);
+    }
+
+    protected void pretag(IHtmlOut parent) {
+    }
+
     // ________________________________________________________________________
     // ⇱ Part: Common Attributes
     //
@@ -833,6 +842,20 @@ public abstract class AbstractRecHtmlOut<self_t extends AbstractRecHtmlOut<self_
     // ________________________________________________________________________
     // ⇱ Part: Shortcuts
     //
+
+    public self_t class_(String... classes) {
+        StringBuilder sb = new StringBuilder();
+        for (String c : classes) {
+            if (c != null && !c.isEmpty()) {
+                if (sb.length() != 0)
+                    sb.append(' ');
+                sb.append(c);
+            }
+        }
+        String s = sb.toString();
+        // if (!s.isEmpty())
+        return class_(s);
+    }
 
     public self_t bText(Object bText) {
         return bText(bText, null);
