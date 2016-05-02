@@ -2,6 +2,7 @@ package net.bodz.lily.model.base;
 
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.site.viz.input.Tagsinput;
+import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.impl.CoCodeTagTyper;
 
 @Tagsinput(typer = CoCodeTagTyper.class)

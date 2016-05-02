@@ -1,6 +1,6 @@
 package net.bodz.lily.model.mx.base;
 
-import net.bodz.lily.model.base.IdType;
+import net.bodz.lily.entity.IdType;
 
 @IdType(Long.class)
 public abstract class MessageFromProvider

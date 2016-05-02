@@ -10,6 +10,8 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
+import net.bodz.lily.entity.IId;
+import net.bodz.lily.entity.IMomentInterval;
 
 @IncludeMapperXml
 public abstract class CoMomentInterval<Id>

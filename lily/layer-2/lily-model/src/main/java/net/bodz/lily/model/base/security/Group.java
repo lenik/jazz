@@ -2,8 +2,8 @@ package net.bodz.lily.model.base.security;
 
 import java.util.List;
 
+import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.IdType;
 
 /**
  * <p lang="zh-cn">

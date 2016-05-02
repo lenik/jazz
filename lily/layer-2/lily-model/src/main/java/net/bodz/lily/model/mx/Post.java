@@ -1,6 +1,6 @@
 package net.bodz.lily.model.mx;
 
-import net.bodz.lily.model.base.IdType;
+import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.mx.base.CoMessage;
 
 @IdType(Long.class)

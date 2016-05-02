@@ -1,4 +1,4 @@
-package net.bodz.lily.model.base;
+package net.bodz.lily.entity;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

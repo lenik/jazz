@@ -1,8 +1,8 @@
 package net.bodz.lily.model.contact;
 
 import net.bodz.bas.repr.form.validate.NotNull;
+import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.IdType;
 
 /**
  * 职位关联
