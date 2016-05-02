@@ -1,4 +1,4 @@
-package net.bodz.bas.inject;
+package net.bodz.bas.c.javax.inject;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
