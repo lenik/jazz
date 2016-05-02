@@ -16,9 +16,6 @@ public class MutableFormDecl
     public MutableFormDecl(Object source, SortOrder sortOrder) {
         this.source = source;
         switch (sortOrder) {
-        case NONE:
-            map = new HashMap<>();
-            break;
         case NO_SORT:
             map = new LinkedHashMap<>();
             break;
@@ -26,6 +23,10 @@ public class MutableFormDecl
             map = new TreeMap<>(DefaultComparator.getInstance());
         case DESCENDING:
             map = new TreeMap<>(DefaultDescendingComparator.getInstance());
+        case NONE:
+        default:
+            map = new HashMap<>();
+            break;
         }
     }
 

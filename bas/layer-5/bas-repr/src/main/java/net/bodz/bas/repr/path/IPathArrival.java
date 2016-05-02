@@ -4,6 +4,8 @@ import net.bodz.bas.meta.decl.Shortcut;
 
 public interface IPathArrival {
 
+    String ATTRIBUTE_KEY = IPathArrival.class.getName();
+
     /**
      * Get the previous arrival node.
      * 
