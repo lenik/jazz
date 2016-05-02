@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.codegen.PublishDir;
 
 /**
  * Similar to {@link java.util.ServiceLoader} but won't instantiate.
@@ -27,13 +29,13 @@ public class IndexedTypes {
     public static <T> Iterable<Class<? extends T>> list(Class<T> serviceBaseType, boolean includeAbstract) {
         // TODO Or using Context class loader?...
         ClassLoader classLoader = serviceBaseType.getClassLoader();
-        return list(SERVICES, serviceBaseType, includeAbstract, classLoader);
+        return list(serviceBaseType, includeAbstract, classLoader);
     }
 
-    public static <T> Iterable<Class<? extends T>> list(String dirName, Class<T> serviceBaseType,
-            boolean includeAbstract, ClassLoader classLoader) {
+    public static <T> Iterable<Class<? extends T>> list(Class<T> serviceBaseType, boolean includeAbstract,
+            ClassLoader classLoader) {
         try {
-            return _list(dirName, serviceBaseType, includeAbstract, classLoader);
+            return _list(null, serviceBaseType, includeAbstract, classLoader);
         } catch (Exception e) {
             throw new IllegalUsageException("Error occurred when listing indexed types: " + e.getMessage(), e);
         }
@@ -42,6 +44,16 @@ public class IndexedTypes {
     static <T> Iterable<Class<? extends T>> _list(String dirName, Class<T> serviceBaseType, boolean includeAbstract,
             ClassLoader classLoader)
             throws IOException, ClassNotFoundException {
+
+        if (dirName == null) {
+            IndexedType aIndexedType = serviceBaseType.getAnnotation(IndexedType.class);
+            if (aIndexedType != null) {
+                dirName = aIndexedType.publishDir();
+            } else {
+                // throw new IllegalArgumentException("Not indexed type: " + serviceBaseType);
+                dirName = PublishDir.services;
+            }
+        }
 
         String resourceName = dirName + "/" + serviceBaseType.getName();
         Enumeration<URL> resources = classLoader.getResources(resourceName);
