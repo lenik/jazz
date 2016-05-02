@@ -298,7 +298,7 @@ public interface IPath
     /**
      * Get the default string representation of this path.
      * 
-     * This should be the same as the {@link PathFormats#DEFAULT default}
+     * This should be the same as the {@link PathFormats#STATIC default}
      * {@link #format(PathFormat) format}.
      * 
      * @return Default string representation of this path.

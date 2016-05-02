@@ -368,7 +368,7 @@ public abstract class AbstractPath
     }
 
     /**
-     * Returns the path string in {@link PathFormats#DEFAULT default} format.
+     * Returns the path string in {@link PathFormats#STATIC default} format.
      */
     @Override
     public String toString() {
