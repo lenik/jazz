@@ -1,4 +1,4 @@
-package net.bodz.lily.model.base;
+package net.bodz.lily.repr;
 
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.GroupDef;

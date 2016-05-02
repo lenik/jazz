@@ -3,7 +3,7 @@ package net.bodz.lily.model.mx;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.lily.model.base.IdType;
+import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.mx.base.CoMessage;
 

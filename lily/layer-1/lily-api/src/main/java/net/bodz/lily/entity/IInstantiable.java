@@ -1,4 +1,4 @@
-package net.bodz.lily.model.base;
+package net.bodz.lily.entity;
 
 public interface IInstantiable {
 

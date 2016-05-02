@@ -14,7 +14,7 @@ import net.bodz.bas.t.range.IntRange;
 import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.variant.DecoratedVariantMap;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.base.IId;
+import net.bodz.lily.entity.IId;
 
 /**
  * "Quick/Easy"-VariantMap.

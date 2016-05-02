@@ -11,9 +11,9 @@ import net.bodz.bas.repr.form.meta.NumericInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.EntGroup;
-import net.bodz.lily.model.base.IdType;
+import net.bodz.lily.repr.EntGroup;
 
 /**
  * 物品

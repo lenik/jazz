@@ -1,4 +1,4 @@
-package net.bodz.lily.model.base;
+package net.bodz.lily.entity;
 
 import net.bodz.bas.c.type.TypeParam;
 
