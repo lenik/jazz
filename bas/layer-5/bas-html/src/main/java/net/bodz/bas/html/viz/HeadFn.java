@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 import net.bodz.bas.html.artifact.ArtifactType;
 import net.bodz.bas.html.artifact.IArtifact;
 import net.bodz.bas.html.artifact.IArtifactManager;
-import net.bodz.bas.html.artifact.MutableWebArtifact;
 import net.bodz.bas.html.dom.IHtmlHeadData;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.xml.dom.XmlCopy;
@@ -46,13 +45,11 @@ public class HeadFn {
         IHtmlHeadData headData = ctx.getHeadData();
 
         for (IArtifact artifact : artifactManager.getClosure(headData, ArtifactType.STYLESHEET, null)) {
-            MutableWebArtifact wa = (MutableWebArtifact) artifact;
-            head.link().css(wa.getAnchor().toString());
+            head.link().css(artifact.getAnchor().toString());
         }
 
         for (IArtifact artifact : artifactManager.getClosure(headData, ArtifactType.SCRIPT, null)) {
-            MutableWebArtifact wa = (MutableWebArtifact) artifact;
-            head.script().javascriptSrc(wa.getAnchor().toString());
+            head.script().javascriptSrc(artifact.getAnchor().toString());
         }
     }
 

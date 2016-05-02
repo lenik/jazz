@@ -18,6 +18,14 @@ public class PathHtmlFrame
         super(arrival);
     }
 
+    public IHtmlViewBuilder<Object> getViewBuilder() {
+        return viewBuilder;
+    }
+
+    public void setViewBuilder(IHtmlViewBuilder<Object> viewBuilder) {
+        this.viewBuilder = viewBuilder;
+    }
+
     @Override
     public String toString() {
         String tagName = out.getTagName();
