@@ -1,16 +1,17 @@
 package net.bodz.bas.html.viz.util;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.servlet.DumpServlet;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.builtin.Throwable_htm;
 import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.http.viz.IndexedHttpViewBuilderFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -18,11 +19,14 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.ViewBuilderSet;
 import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.bas.ui.dom1.UiVar;
 
 public class PathFrames_htm
         extends AbstractHtmlViewBuilder<IPathArrival> {
 
     IHttpViewBuilderFactory viewBuilderFactory = new IndexedHttpViewBuilderFactory();
+
+    boolean showExceptionInHtml = true;
 
     public PathFrames_htm() {
         super(PathArrival.class);
@@ -31,11 +35,12 @@ public class PathFrames_htm
     @Override
     public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<IPathArrival> ref)
             throws ViewBuilderException, IOException {
+        HttpServletRequest req = ctx.getRequest();
         HttpServletResponse resp = ctx.getResponse();
         IPathArrival arrival = ref.get();
 
         // From inside to outside.
-        List<PathHtmlFrame> frames = new ArrayList<PathHtmlFrame>();
+        PathHtmlFrames frames = new PathHtmlFrames();
 
         for (IPathArrival a : arrival.toList().rightToLeft()) {
             Object target = a.getTarget();
@@ -58,6 +63,8 @@ public class PathFrames_htm
         }
         Collections.reverse(frames);
 
+        ctx.setAttribute(PathHtmlFrames.ATTRIBUTE_KEY, frames);
+
         for (PathHtmlFrame frame : frames) {
             frame.viewBuilder.precompile(ctx, frame);
         }
@@ -65,12 +72,25 @@ public class PathFrames_htm
         for (PathHtmlFrame frame : frames) {
             resp.addHeader("X-Page-Frame", frame.viewBuilder.getClass().getSimpleName());
             frame.out = out;
-            IHtmlOut body = frame.viewBuilder.buildHtmlViewStart(ctx, out, frame);
+
+            IHtmlOut body;
+            try {
+                body = frame.viewBuilder.buildHtmlViewStart(ctx, out, frame);
+            } catch (Exception e) {
+                if (showExceptionInHtml) {
+                    Throwable_htm vb = new Throwable_htm();
+                    vb.buildHtmlView(ctx, out, UiVar.<Throwable> wrap(e));
+                }
+                req.setAttribute(DumpServlet.EXCEPTION_HANDLED, true);
+                throw e;
+            }
+
             frame.body = body;
             if (ctx.isStopped())
                 return null;
             if (body == null)
                 break;
+            out = body;
         }
 
         Collections.reverse(frames);

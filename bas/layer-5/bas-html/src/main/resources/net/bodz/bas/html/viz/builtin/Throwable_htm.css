@@ -1,0 +1,37 @@
+.exception {
+  color: #c9ba9c;
+  background-color: #364563;
+  font-family: Century Schoolbook L, Sans, Tahoma, Arial;
+  cursor: pointer;
+  box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.6);
+  margin: 1em;
+  padding: 1em;
+  border-radius: 8px;
+  border: solid 1px gray; }
+  .exception header {
+    font-size: 130%;
+    border-bottom: dashed 1px #c9ba9c; }
+  .exception ul.stack-trace {
+    margin: 0 0 0 2em;
+    padding: 0;
+    list-style-type: none; }
+    .exception ul.stack-trace li {
+      white-space: normal; }
+      .exception ul.stack-trace li:hover {
+        color: white;
+        background-color: #9cabc9; }
+      .exception ul.stack-trace li:before {
+        content: "at "; }
+      .exception ul.stack-trace li .method:before {
+        content: "."; }
+      .exception ul.stack-trace li .loc {
+        color: gray;
+        font-style: italic; }
+      .exception ul.stack-trace li.p-bodz {
+        color: #c99cab; }
+      .exception ul.stack-trace li.p-eclipse {
+        color: #abc99c; }
+      .exception ul.stack-trace li.p-java {
+        color: #999999; }
+
+/*# sourceMappingURL=Throwable_htm.css.map */
