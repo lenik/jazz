@@ -1,0 +1,65 @@
+$bg: hsl(220, 30%, 30%);
+$fg: invert($bg);
+$step: 20;
+
+.exception {
+    color: $fg;
+    background-color: $bg;
+    font-family: Century Schoolbook L, Sans, Tahoma, Arial;
+    cursor: pointer;
+
+    box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, .6);
+
+    margin: 1em;
+    padding: 1em;
+    
+    //@include border-radius(10px);
+    border-radius: 8px;
+    border: solid 1px hsl(0, 0%, 50%);
+    
+    header {
+        font-size: 130%;
+        border-bottom: dashed 1px $fg;
+    }
+    
+    ul.stack-trace {
+        margin: 0 0 0 2em;
+        padding: 0;
+        list-style-type: none;
+
+        li {
+            white-space: normal;
+            
+            &:hover {
+                color: lighten($fg, $step * 2);
+                background-color: lighten($bg, $step * 2);
+            }
+            
+            &:before {
+                content: "at ";
+            }
+            
+            .method:before {
+                content: ".";
+            }
+            
+            .loc {
+                color: gray;
+                font-style: italic;
+            }
+            
+            &.p-bodz {
+                color: adjust-hue($fg, -60deg);
+            }
+            
+            &.p-eclipse {
+                color: adjust-hue($fg, 60deg);
+            }
+            
+            &.p-java {
+                color: darken(desaturate($fg, 30%), $step / 2);
+            }
+            
+        }
+    }
+}

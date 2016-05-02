@@ -14,6 +14,8 @@ public abstract class DumpServlet
 
     private static final long serialVersionUID = 1L;
 
+    public static final String EXCEPTION_HANDLED = "exception-handled";
+
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
@@ -22,14 +24,17 @@ public abstract class DumpServlet
         } catch (Throwable e) {
             resp.addHeader("X-Servlet", DumpServlet.class.getName());
             e.printStackTrace(System.err);
-            try {
-                OutputStream os = resp.getOutputStream();
-                PrintStream ps = new PrintStream(os);
-                e.printStackTrace(ps);
-            } catch (IllegalStateException ise) {
-                PrintWriter pw = resp.getWriter();
-                e.printStackTrace(pw);
-            }
+            if (req.getAttribute(EXCEPTION_HANDLED) == null)
+                try {
+                    OutputStream os = resp.getOutputStream();
+                    PrintStream ps = new PrintStream(os);
+                    ps.println("Exception Dump: ");
+                    e.printStackTrace(ps);
+                } catch (IllegalStateException ise) {
+                    PrintWriter pw = resp.getWriter();
+                    pw.println("Exception Dump: ");
+                    e.printStackTrace(pw);
+                }
         }
     }
 
