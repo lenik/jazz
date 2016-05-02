@@ -1,6 +1,7 @@
 package net.bodz.bas.repr.viz;
 
-import net.bodz.bas.inject.LocalScope;
+import net.bodz.bas.c.type.TypeParam;
+import net.bodz.bas.ctx.scope.LocalScope;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.rtx.IQueryable;
@@ -13,6 +14,10 @@ public abstract class AbstractViewBuilder<T>
     static final Logger logger = LoggerFactory.getLogger(AbstractViewBuilder.class);
 
     private Class<?> valueType;
+
+    public AbstractViewBuilder() {
+        valueType = TypeParam.infer1(getClass(), AbstractViewBuilder.class, 0);
+    }
 
     public AbstractViewBuilder(Class<?> valueClass) {
         if (valueClass == null)
