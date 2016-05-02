@@ -22,14 +22,15 @@ public abstract class AbstractSwtViewBuilderFactory
     private List<ITypeMapper> swtTmaps = new ArrayList<>();
 
     public AbstractSwtViewBuilderFactory() {
-        swtTmaps.add(new NameConventionTypeMapper(null, null, "_swt", true));
+        swtTmaps.add(new NameConventionTypeMapper(null, "_swt", true));
+        swtTmaps.add(new NameConventionTypeMapper(null, 1, ".swt", "_swt", true));
     }
 
     @Override
     protected void initialize() {
         addViewBuilder(new Boolean_swt());
 
-         // TODO addViewBuilder(new TextFormedVbo(), Number.class);
+        // TODO addViewBuilder(new TextFormedVbo(), Number.class);
         addViewBuilder(new String_swt());
         addViewBuilder(new Exception_swt());
 

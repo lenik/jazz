@@ -186,8 +186,9 @@ public class CoObjectMask
 
     static NameConventionTypeMapper[] maskTmaps = {
             // TODO cache-enable?
-            new NameConventionTypeMapper(null, null, "Mask", false), //
-            new NameConventionTypeMapper(null, "impl.", "Mask", false), //
+            new NameConventionTypeMapper(null, "Mask", false), //
+            new NameConventionTypeMapper("impl.", "Mask", false), //
+            new NameConventionTypeMapper(null, 1, "db.", "Mask", false), //
     };
 
     public static Class<? extends CoObjectMask> findMaskClass(Class<?> objClass) {
