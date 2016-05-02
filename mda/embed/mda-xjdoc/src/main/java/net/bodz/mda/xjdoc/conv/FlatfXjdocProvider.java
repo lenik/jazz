@@ -33,7 +33,7 @@ public class FlatfXjdocProvider
      * @return <code>null</code> if no classdoc resource available.
      */
     @Override
-    public ClassDoc getClassDoc(Class<?> clazz)
+    public ClassDoc loadClassDoc(Class<?> clazz)
             throws XjdocLoaderException {
         return load(clazz, DEFAULT_EXTENSION);
     }

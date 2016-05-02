@@ -27,6 +27,9 @@ public interface IXjdocProvider
     ClassDoc getOrCreateClassDoc(Class<?> clazz)
             throws XjdocLoaderException;
 
+    ClassDoc loadClassDoc(Class<?> clazz)
+            throws XjdocLoaderException;
+
     MethodDoc getMethodDoc(Class<?> clazz, ClassDoc classDoc, Method... methods)
             throws XjdocLoaderException;
 

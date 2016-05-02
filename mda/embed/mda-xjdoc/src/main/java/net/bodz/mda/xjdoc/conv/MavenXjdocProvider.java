@@ -16,7 +16,7 @@ public class MavenXjdocProvider
         extends AbstractXjdocProvider {
 
     @Override
-    public ClassDoc getClassDoc(Class<?> clazz)
+    public ClassDoc loadClassDoc(Class<?> clazz)
             throws XjdocLoaderException {
         MavenPomDir pomDir = MavenPomDir.fromClass(clazz);
         if (pomDir == null) // Not in a maven project.

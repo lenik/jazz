@@ -33,6 +33,12 @@ public abstract class AbstractXjdocProvider
     }
 
     @Override
+    public ClassDoc getClassDoc(Class<?> clazz)
+            throws XjdocLoaderException {
+        return loadClassDoc(clazz);
+    }
+
+    @Override
     public ClassDoc getOrCreateClassDoc(Class<?> clazz)
             throws XjdocLoaderException {
         ClassDoc classDoc = getClassDoc(clazz);
