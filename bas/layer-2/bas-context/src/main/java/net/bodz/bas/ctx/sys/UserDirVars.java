@@ -4,9 +4,9 @@ import java.io.File;
 
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.c.system.SystemProperties;
+import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.ctx.scope.ScopedRef;
 import net.bodz.bas.ctx.scope.Scopes;
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 
 public class UserDirVars
         extends ScopedRef<File> {
@@ -47,7 +47,7 @@ public class UserDirVars
         return new File(cwd, name);
     }
 
-    public File join(IScopeDescriptor scope, String name) {
+    public File join(IScopeInstance scope, String name) {
         if (name == null)
             throw new NullPointerException("name");
         File cwd = get(scope);
@@ -58,7 +58,7 @@ public class UserDirVars
      * @throws IllegalArgumentException
      *             If <code>dir</code> isn't a {@link File#isDirectory() directory}.
      */
-    public void chdir(IScopeDescriptor scope, File dir) {
+    public void chdir(IScopeInstance scope, File dir) {
         if (dir == null)
             throw new NullPointerException("dir");
         if (!dir.isDirectory())
@@ -72,7 +72,7 @@ public class UserDirVars
      * @throws IllegalArgumentException
      *             If target <code>path</code> isn't a {@link File#isDirectory() directory}.
      */
-    public void chdir(IScopeDescriptor scope, String path) {
+    public void chdir(IScopeInstance scope, String path) {
         if (path == null)
             throw new NullPointerException("path");
         File cwd = get(scope);

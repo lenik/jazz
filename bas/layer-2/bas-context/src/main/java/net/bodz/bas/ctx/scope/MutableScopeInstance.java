@@ -1,28 +1,26 @@
-package net.bodz.bas.ctx.scope.id;
+package net.bodz.bas.ctx.scope;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class MutableScopeDescriptor
-        extends AbstractScopeDescriptor {
+
+public abstract class MutableScopeInstance
+        extends AbstractScopeInstance {
 
     private String name;
     private Object identity;
-    private IScopeDescriptor parent;
+    private IScopeInstance parent;
     private boolean transparent;
-    private Map<String, Object> vars;
 
-    public MutableScopeDescriptor(String name, Object identity) {
+    public MutableScopeInstance(String name, Object identity) {
         this(name, identity, null);
     }
 
-    public MutableScopeDescriptor(String name, Object identity, IScopeDescriptor root) {
+    public MutableScopeInstance(String name, Object identity, IScopeInstance parent) {
         if (identity == null)
             throw new NullPointerException("identity");
         this.name = name;
         this.identity = identity;
-        this.parent = root;
-        this.vars = new HashMap<>();
+        this.parent = parent;
     }
 
     @Override
@@ -42,19 +40,19 @@ public class MutableScopeDescriptor
     }
 
     @Override
-    public IScopeDescriptor getParent() {
-        IScopeDescriptor internalParent = getInternalParent(identity);
+    public IScopeInstance getParent() {
+        IScopeInstance internalParent = getInternalParent(identity);
         if (internalParent != null)
             return internalParent;
         else
             return parent;
     }
 
-    public void setParent(IScopeDescriptor parent) {
+    public void setParent(IScopeInstance parent) {
         this.parent = parent;
     }
 
-    protected IScopeDescriptor getInternalParent(Object identity) {
+    protected IScopeInstance getInternalParent(Object identity) {
         return null;
     }
 
@@ -67,19 +65,26 @@ public class MutableScopeDescriptor
         this.transparent = transparent;
     }
 
+    protected abstract Map<String, Object> getVarMap();
+
     @Override
     public boolean contains(String name) {
-        return vars.containsKey(name);
+        return getVarMap().containsKey(name);
     }
 
     @Override
     public Object get(String name) {
-        return vars.get(name);
+        return getVarMap().get(name);
     }
 
     @Override
     public void set(String name, Object value) {
-        vars.put(name, value);
+        getVarMap().put(name, value);
+    }
+
+    @Override
+    public void remove(String name) {
+        getVarMap().remove(name);
     }
 
     @Override
@@ -91,10 +96,10 @@ public class MutableScopeDescriptor
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
-        if (!(obj instanceof IScopeDescriptor))
+        if (!(obj instanceof IScopeInstance))
             return false;
 
-        IScopeDescriptor o = (IScopeDescriptor) obj;
+        IScopeInstance o = (IScopeInstance) obj;
         return identity.equals(o.getIdentity());
     }
 

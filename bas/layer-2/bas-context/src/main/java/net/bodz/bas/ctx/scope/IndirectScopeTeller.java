@@ -1,7 +1,5 @@
 package net.bodz.bas.ctx.scope;
 
-import net.bodz.bas.ctx.scope.id.CurrentThreadScopeTeller;
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 import net.bodz.bas.t.ref.SimpleVar;
 
 public class IndirectScopeTeller
@@ -11,11 +9,11 @@ public class IndirectScopeTeller
     private static final long serialVersionUID = 1L;
 
     public IndirectScopeTeller() {
-        super(IScopeTeller.class, new CurrentThreadScopeTeller());
+        super(IScopeTeller.class, new ThreadScopeTeller());
     }
 
     @Override
-    public IScopeDescriptor tell() {
+    public IScopeInstance tell() {
         IScopeTeller teller = get();
         return teller.tell();
     }

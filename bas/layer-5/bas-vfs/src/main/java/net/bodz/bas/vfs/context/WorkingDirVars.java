@@ -3,9 +3,9 @@ package net.bodz.bas.vfs.context;
 import java.io.File;
 
 import net.bodz.bas.c.system.SystemInfo;
+import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.ctx.scope.ScopedRef;
 import net.bodz.bas.ctx.scope.Scopes;
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 import net.bodz.bas.ctx.sys.UserDirVars;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
@@ -52,10 +52,10 @@ public class WorkingDirVars
         return child;
     }
 
-    public IFile join(IScopeDescriptor context, String name) {
+    public IFile join(IScopeInstance scope, String name) {
         if (name == null)
             throw new NullPointerException("name");
-        IFile cwd = get(context);
+        IFile cwd = get(scope);
         return join(cwd, name);
     }
 
@@ -63,12 +63,12 @@ public class WorkingDirVars
      * @throws IllegalArgumentException
      *             If <code>dir</code> isn't a {@link IFile#isDirectory() directory}.
      */
-    public void chdir(IScopeDescriptor context, IFile dir) {
+    public void chdir(IScopeInstance scope, IFile dir) {
         if (dir == null)
             throw new NullPointerException("dir");
         if (!dir.getAttributes().isDirectory())
             throw new IllegalArgumentException("Not a directory: " + dir);
-        set(context, dir);
+        set(scope, dir);
     }
 
     /**
@@ -83,17 +83,17 @@ public class WorkingDirVars
      * @throws FileResolveException
      *             If it's failed to resolve the special path.
      */
-    public void chdir(IScopeDescriptor context, String spec) {
+    public void chdir(IScopeInstance scope, String spec) {
         if (spec == null)
             throw new NullPointerException("spec");
-        IFile cwd = get(context);
+        IFile cwd = get(scope);
 
         if (isRelativePath(spec))
             cwd = cwd.resolve(spec);
         else
             cwd = VFS.resolve(spec);
 
-        chdir(context, cwd);
+        chdir(scope, cwd);
     }
 
     // Shortcuts for default context.
@@ -112,16 +112,16 @@ public class WorkingDirVars
 
     // Shortcuts for class context
 
-    public IFile join(Class<?> classContext, String name) {
-        return join(Scopes.from(classContext), name);
+    public IFile join(Class<?> scopeFromClass, String name) {
+        return join(Scopes.from(scopeFromClass), name);
     }
 
-    public void chdir(Class<?> classContext, IFile dir) {
-        chdir(Scopes.from(classContext), dir);
+    public void chdir(Class<?> scopeFromClass, IFile dir) {
+        chdir(Scopes.from(scopeFromClass), dir);
     }
 
-    public void chdir(Class<?> classContext, String path) {
-        chdir(Scopes.from(classContext), path);
+    public void chdir(Class<?> scopeFromClass, String path) {
+        chdir(Scopes.from(scopeFromClass), path);
     }
 
     private static final WorkingDirVars instance = new WorkingDirVars();

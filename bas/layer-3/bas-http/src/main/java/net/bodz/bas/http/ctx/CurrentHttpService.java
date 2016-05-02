@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
@@ -133,6 +134,17 @@ public class CurrentHttpService
 
     public static HttpSession getSession() {
         return getRequest().getSession();
+    }
+
+    public static ServletContext getServletContextOpt() {
+        HttpServletRequest request = getRequestOpt();
+        if (request == null)
+            return null;
+        return request.getServletContext();
+    }
+
+    public static ServletContext getServletContext() {
+        return getRequest().getServletContext();
     }
 
     public static synchronized void escape(Runnable runnable) {

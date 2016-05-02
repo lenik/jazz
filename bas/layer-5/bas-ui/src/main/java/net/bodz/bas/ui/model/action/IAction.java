@@ -3,7 +3,7 @@ package net.bodz.bas.ui.model.action;
 import java.util.Collections;
 import java.util.List;
 
-import net.bodz.bas.inject.LocalScope;
+import net.bodz.bas.ctx.scope.LocalScope;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.ui.dom1.IUiElement;
 import net.bodz.bas.ui.dom1.NullUiElement;

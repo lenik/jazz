@@ -1,4 +1,4 @@
-package net.bodz.bas.inject;
+package net.bodz.bas.ctx.scope;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Inherited;
@@ -10,7 +10,9 @@ import javax.inject.Scope;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
+@_Scope
 @Scope
+@ScopeTeller(LocalScopeTeller.class)
 public @interface LocalScope {
 
 }

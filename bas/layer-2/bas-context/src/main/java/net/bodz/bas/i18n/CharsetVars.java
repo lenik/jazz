@@ -4,8 +4,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
 
+import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.ctx.scope.ScopedRef;
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 
 public class CharsetVars
         extends ScopedRef<Charset> {
@@ -22,9 +22,9 @@ public class CharsetVars
     /**
      * @throws NullPointerException
      *             If <code>scope</code> is <code>null</code>.
-     * @see #get(IScopeDescriptor)
+     * @see #get(IScopeInstance)
      */
-    public String getCharsetName(IScopeDescriptor scope) {
+    public String getCharsetName(IScopeInstance scope) {
         Charset charset = get(scope);
         if (charset == null)
             throw new NullPointerException("charset");
@@ -39,9 +39,9 @@ public class CharsetVars
      * @throws UnsupportedCharsetException
      *             - If no support for the named charset is available in this instance of the Java
      *             virtual machine
-     * @see #set(IScopeDescriptor, Charset)
+     * @see #set(IScopeInstance, Charset)
      */
-    public void setCharsetName(IScopeDescriptor scope, String charsetName) {
+    public void setCharsetName(IScopeInstance scope, String charsetName) {
         if (scope == null)
             throw new NullPointerException("scope");
         if (charsetName == null)

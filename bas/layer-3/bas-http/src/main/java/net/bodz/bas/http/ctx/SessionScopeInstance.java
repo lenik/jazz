@@ -1,27 +1,34 @@
 package net.bodz.bas.http.ctx;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
-import net.bodz.bas.ctx.scope.id.MutableScopeDescriptor;
+import net.bodz.bas.ctx.scope.IScopeInstance;
+import net.bodz.bas.ctx.scope.MutableScopeInstance;
 
-public class SessionScopeDescriptor
-        extends MutableScopeDescriptor {
+public class SessionScopeInstance
+        extends MutableScopeInstance {
 
-    public SessionScopeDescriptor(HttpSession session) {
+    public SessionScopeInstance(HttpSession session) {
         super(session.getId(), session);
     }
 
     @Override
-    protected IScopeDescriptor getInternalParent(Object identity) {
+    protected IScopeInstance getInternalParent(Object identity) {
         HttpSession session = (HttpSession) identity;
         ServletContext servletContext = session.getServletContext();
-        return new ServletContextScopeDescriptor(servletContext);
+        return new ServletContextScopeInstance(servletContext);
     }
 
     public HttpSession getSession() {
         return (HttpSession) getIdentity();
+    }
+
+    @Override
+    protected Map<String, Object> getVarMap() {
+        return null;
     }
 
     @Override
@@ -37,6 +44,11 @@ public class SessionScopeDescriptor
     @Override
     public void set(String name, Object value) {
         getSession().setAttribute(name, value);
+    }
+
+    @Override
+    public void remove(String name) {
+        getSession().removeAttribute(name);
     }
 
 }

@@ -1,4 +1,6 @@
-package net.bodz.bas.ctx.scope.id;
+package net.bodz.bas.ctx.scope;
+
+import net.bodz.bas.ctx.scope.impl.ObjScopeInstance;
 
 /**
  * The scope abstraction.
@@ -8,7 +10,7 @@ package net.bodz.bas.ctx.scope.id;
  * A scope identity is used to distinguish one scope from another, and describes the scope hierachy
  * by inheritance and transient.
  */
-public interface IScopeDescriptor {
+public interface IScopeInstance {
 
     /**
      * A descriptive scope name.
@@ -29,9 +31,9 @@ public interface IScopeDescriptor {
      * 
      * @return Parent scope, <code>null</code> if this is a root scope.
      */
-    IScopeDescriptor getParent();
+    IScopeInstance getParent();
 
-    IScopeDescriptor getRoot();
+    IScopeInstance getRoot();
 
     /**
      * Transparent scope is kind of "read-only". By affecting a transparent scope, indeed, the
@@ -58,6 +60,8 @@ public interface IScopeDescriptor {
      */
     void set(String name, Object value);
 
-    MutableScopeDescriptor DEFAULT = new MutableScopeDescriptor("default", new Object());
+    void remove(String name);
+
+    ObjScopeInstance STATIC = new ObjScopeInstance("static", new Object());
 
 }

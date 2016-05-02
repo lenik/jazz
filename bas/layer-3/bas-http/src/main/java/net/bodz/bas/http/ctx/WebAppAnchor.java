@@ -33,7 +33,7 @@ public class WebAppAnchor
         if (absolutePath == null) {
             synchronized (this) {
                 if (absolutePath == null) {
-                    ServletContext servletContext = CurrentServletContext.getServletContext();
+                    ServletContext servletContext = CurrentHttpService.getServletContext();
 
                     // empty or "/foo".
                     String contextPath = servletContext.getContextPath();
