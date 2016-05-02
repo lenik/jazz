@@ -15,7 +15,7 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
         implements IXmlOut {
 
     protected final XmlDoc doc;
-    private final ITreeOut treeOut;
+    protected final ITreeOut treeOut;
 
     node_t parent;
     String tagName;
@@ -23,7 +23,7 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
 
     private node_t pending;
 
-    public static final int ATTRIBUTES = 0;
+    public static final int START_TAG = 0;
     public static final int TEXT = 1;
     public static final int END = 2;
     int state = TEXT;
@@ -86,17 +86,24 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
         pending = node;
         pending.parent = (node_t) this;
         pending.tagName = name;
-        pending.state = ATTRIBUTES;
+        pending.state = START_TAG;
         return node;
     }
 
+    protected void startTagClose() {
+        treeOut.print(">");
+        treeOut.enter();
+        if (doc.getOutputFormat().newLineAfterStartTag)
+            treeOut.println();
+    }
+
     @Override
-    public final node_t end() {
+    public node_t end() {
         if (tagName == null)
             return null; // not applicable on document node.
 
         if (state != END) {
-            if (state == ATTRIBUTES && doc.getOutputFormat().shortEmptyElement)
+            if (state == START_TAG && doc.getOutputFormat().shortEmptyElement)
                 treeOut.println(" />");
             else {
                 text();
@@ -132,7 +139,7 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
 
     @Override
     public self_t attr(String name, String value) {
-        if (state != ATTRIBUTES)
+        if (state != START_TAG)
             throw new IllegalStateException("Attribute isn't allowed here.");
 
         checkName(name);
@@ -166,23 +173,21 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
     self_t text() {
         // if (state == END) ;
         // just like calling parent.text().
-        if (state == ATTRIBUTES) {
+        if (state == START_TAG) {
             if (doc.getOutputFormat().attributeBuffer) {
                 for (Entry<String, String> entry : attributes.entrySet())
                     writeAttr(entry.getKey(), entry.getValue());
             }
 
-            treeOut.print(">");
-            treeOut.enter();
-
-            if (doc.getOutputFormat().newLineAfterStartTag)
-                treeOut.println();
+            startTagClose();
 
             state = TEXT;
         }
+
         if (pending != null) {
-            pending.end();
+            node_t node = pending;
             pending = null;
+            node.end();
         }
         return (self_t) this;
     }
