@@ -4,13 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Flush;
+import org.apache.ibatis.annotations.Param;
 
-public interface IMapperTemplate<T, C>
+import net.bodz.bas.db.ibatis.sql.SelectOptions;
+
+public interface IMapperTemplate<T, M>
         extends IMapper {
 
     List<T> all();
 
-    List<T> filter(C criteria);
+    List<T> all(@Param("opt") SelectOptions opt);
+
+    List<T> filter(@Param("m") M mask);
+
+    List<T> filter(@Param("m") M mask, @Param("opt") SelectOptions opt);
 
     T select(Object id);
 
@@ -28,7 +35,7 @@ public interface IMapperTemplate<T, C>
 
     boolean delete(Object id);
 
-    Map<String, Number> count(C criteria);
+    Map<String, Number> count(M mask);
 
     @Commit
     @Flush
