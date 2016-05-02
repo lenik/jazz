@@ -15,6 +15,7 @@ import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.site.artifact.LibJsArtifacts;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 @Face("tagsinput")
@@ -30,7 +31,7 @@ public class ListTagsinput_htm
     @Override
     public void precompile(IHtmlViewContext ctx, IUiRef<List<?>> ref) {
         IHtmlHeadData headData = ctx.getHeadData();
-        headData.addDependency("tagsinput");
+        headData.addDependency(LibJsArtifacts.tagsinput);
     }
 
     @Override

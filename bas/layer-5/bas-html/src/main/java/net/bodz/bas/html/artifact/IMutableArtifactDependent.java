@@ -12,7 +12,7 @@ public interface IMutableArtifactDependent
     MutableArtifactDependency addDependency(String name, ArtifactType type, String minVersionStr, String maxVersionStr)
             throws ConflictedVersionException;
 
-    IMutableArtifactDependent addDependency(IArtifact artifact);
+    MutableArtifactDependency addDependency(IArtifact artifact);
 
     void addDependency(IArtifactDependency dependency)
             throws ConflictedVersionException;

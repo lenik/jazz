@@ -1,16 +1,19 @@
 package net.bodz.bas.html.artifact;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import net.bodz.bas.err.ConflictedVersionException;
 import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.meta.build.IVersion;
+import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
-public class MutableArtifact
-        extends AbstractArtifact
-        implements Serializable {
+public class Artifact
+        extends AbstractQueryable
+        implements Serializable, IMutableArtifact {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,16 +21,20 @@ public class MutableArtifact
     private IVersion version;
     private ArtifactType type;
     private ContentType contentType;
+    private IAnchor anchor;
+    private IArtifact parent;
+    private List<IArtifact> children = new ArrayList<>();
+
     private MutableArtifactDependent dependent = new MutableArtifactDependent();
 
-    public MutableArtifact() {
+    public Artifact(String name) {
+        this(name, null);
     }
 
-    public MutableArtifact(String name, String versionStr, ContentType contentType) {
+    public Artifact(String name, String versionStr) {
         this.name = name;
         if (versionStr != null)
             this.version = IVersion.fn.parse(versionStr);
-        this.contentType = contentType;
     }
 
     @Override
@@ -50,7 +57,7 @@ public class MutableArtifact
         this.version = version;
     }
 
-    public final void SetVersion(String versionStr) {
+    public final void setVersionFromString(String versionStr) {
         IVersion version = IVersion.fn.parse(versionStr);
         setVersion(version);
     }
@@ -77,7 +84,48 @@ public class MutableArtifact
 
     @Override
     public IAnchor getAnchor() {
-        return null;
+        return anchor;
+    }
+
+    public void setAnchor(IAnchor anchor) {
+        this.anchor = anchor;
+    }
+
+    @Override
+    public IArtifact getParent() {
+        return parent;
+    }
+
+    public void setParent(IArtifact parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public List<IArtifact> getChildren() {
+        return children;
+    }
+
+    public void addChild(IArtifact artifact) {
+        children.add(artifact);
+    }
+
+    public void removeChild(IArtifact artifact) {
+        children.remove(artifact);
+    }
+
+    @Override
+    public void accept(IArtifactVisitor visitor) {
+        visitor.begin(this);
+
+        for (IArtifactDependency dependency : getDependencies())
+            visitor.dependency(dependency);
+
+        for (IArtifact child : children) {
+            child.accept(visitor);
+            visitor.artifact(child);
+        }
+
+        visitor.end(this);
     }
 
     /** ⇱ Implementation Of {@link IArtifactDependent}. */
@@ -111,9 +159,8 @@ public class MutableArtifact
     }
 
     @Override
-    public final MutableArtifact addDependency(IArtifact artifact) {
-        dependent.addDependency(artifact);
-        return this;
+    public MutableArtifactDependency addDependency(IArtifact artifact) {
+        return dependent.addDependency(artifact);
     }
 
     @Override
@@ -125,6 +172,21 @@ public class MutableArtifact
     @Override
     public final void removeDependency(String name) {
         dependent.removeDependency(name);
+    }
+
+    public Artifact dependsOn(IArtifact artifact) {
+        addDependency(artifact);
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buf = new StringBuilder();
+        buf.append(getName());
+        buf.append(" (");
+        buf.append(getContentType());
+        buf.append(")");
+        return buf.toString();
     }
 
 }

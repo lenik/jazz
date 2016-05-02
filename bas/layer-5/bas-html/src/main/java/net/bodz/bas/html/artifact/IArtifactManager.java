@@ -7,6 +7,8 @@ import net.bodz.bas.meta.build.IVersion;
 public interface IArtifactManager
         extends IArtifactProvider {
 
+    String ATTRIBUTE_KEY = IArtifactManager.class.getName();
+
     void addArtifact(IArtifact artifact);
 
     void removeArtifact(String name);
