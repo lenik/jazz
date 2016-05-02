@@ -3,8 +3,7 @@ package net.bodz.bas.ctx.scope;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
-import net.bodz.bas.ctx.scope.id.PackageScopeDescriptor;
+import net.bodz.bas.ctx.scope.impl.PackageScopeInstance;
 
 public class PackageScopedRefTest
         extends Assert {
@@ -16,7 +15,7 @@ public class PackageScopedRefTest
             super(String.class);
         }
 
-        public void addMoreAddr(IScopeDescriptor scope, String moreAddr) {
+        public void addMoreAddr(IScopeInstance scope, String moreAddr) {
             String val = get(scope);
             if (val == null)
                 val = moreAddr;
@@ -35,12 +34,12 @@ public class PackageScopedRefTest
     class Inner {
 
         public String getAddress() {
-            PackageScopeDescriptor callerId = PackageScopeDescriptor.forCaller();
+            PackageScopeInstance callerId = PackageScopeInstance.forCaller();
             return addressVars.get(callerId);
         }
 
         public void addMoreAddr(String s) {
-            PackageScopeDescriptor callerId = PackageScopeDescriptor.forCaller();
+            PackageScopeInstance callerId = PackageScopeInstance.forCaller();
             addressVars.addMoreAddr(callerId, s);
         }
 
@@ -49,7 +48,7 @@ public class PackageScopedRefTest
     @Test
     public void testSetInnerKeepOuter()
             throws Exception {
-        PackageScopeDescriptor scope = PackageScopeDescriptor.forCaller();
+        PackageScopeInstance scope = PackageScopeInstance.forCaller();
         String outerAddr = addressVars.get(scope);
         assertNull(outerAddr);
 
@@ -68,7 +67,7 @@ public class PackageScopedRefTest
     @Test
     public void testSetOuterChangeInner()
             throws Exception {
-        PackageScopeDescriptor scope = PackageScopeDescriptor.forCaller();
+        PackageScopeInstance scope = PackageScopeInstance.forCaller();
         String outerAddr = addressVars.get(scope);
         assertNull(outerAddr);
 

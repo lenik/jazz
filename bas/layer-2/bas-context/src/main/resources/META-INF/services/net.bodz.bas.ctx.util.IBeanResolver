@@ -1,1 +1,3 @@
-net.bodz.bas.ctx.scope.id.CurrentThreadScopeTeller
+net.bodz.bas.ctx.scope.StaticScopeTeller
+net.bodz.bas.ctx.scope.ThreadGroupScopeTeller
+net.bodz.bas.ctx.scope.ThreadScopeTeller

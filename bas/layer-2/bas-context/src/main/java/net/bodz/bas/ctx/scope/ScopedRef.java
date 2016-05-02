@@ -3,10 +3,12 @@ package net.bodz.bas.ctx.scope;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 import net.bodz.bas.err.DeadLoopException;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
+/**
+ * Focused on the scope-tree.
+ */
 @ExcludedFromIndex
 public class ScopedRef<T>
         implements IScopedRef<T> {
@@ -26,7 +28,7 @@ public class ScopedRef<T>
     static IScopeTeller DEFAULT_TELLER = new IndirectScopeTeller();
 
     private Class<T> valueType;
-    private Map<IScopeDescriptor, T> map = new HashMap<IScopeDescriptor, T>();
+    private Map<IScopeInstance, T> map = new HashMap<IScopeInstance, T>();
     private IScopeTeller teller = DEFAULT_TELLER;
 
     public ScopedRef(Class<T> valueType) {
@@ -36,7 +38,7 @@ public class ScopedRef<T>
     }
 
     @Override
-    public IScopeDescriptor getCurrentScope() {
+    public IScopeInstance getCurrentScope() {
         return teller.tell();
     }
 
@@ -78,7 +80,7 @@ public class ScopedRef<T>
     }
 
     @Override
-    public T get(IScopeDescriptor scope) {
+    public T get(IScopeInstance scope) {
         String varName = getName();
 
         int depth = 0;
@@ -103,8 +105,8 @@ public class ScopedRef<T>
      *             If transparent depth overflow.
      */
     @Override
-    public void set(IScopeDescriptor scope, T value) {
-        IScopeDescriptor concreteContext = scope;
+    public void set(IScopeInstance scope, T value) {
+        IScopeInstance concreteContext = scope;
         int depth = 0;
         while (concreteContext.isTransparent()) {
             concreteContext = concreteContext.getParent();
@@ -119,7 +121,7 @@ public class ScopedRef<T>
     }
 
     @Override
-    public void remove(IScopeDescriptor scope) {
+    public void remove(IScopeInstance scope) {
     }
 
 }

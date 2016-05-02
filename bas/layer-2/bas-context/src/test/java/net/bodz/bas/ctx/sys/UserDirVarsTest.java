@@ -5,9 +5,9 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.ctx.scope.Scopes;
-import net.bodz.bas.ctx.scope.id.ClassScopeDescriptor;
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
+import net.bodz.bas.ctx.scope.impl.ClassScopeInstance;
 import net.bodz.bas.ctx.sys.UserDirVars;
 
 public class UserDirVarsTest
@@ -16,7 +16,7 @@ public class UserDirVarsTest
     @Test
     public void testCwd()
             throws Exception {
-        File defaultWorkdir = UserDirVars.getInstance().get(IScopeDescriptor.DEFAULT);
+        File defaultWorkdir = UserDirVars.getInstance().get(IScopeInstance.STATIC);
         assert defaultWorkdir != null;
         String userDir = System.getProperty("user.dir");
         assertEquals(userDir, defaultWorkdir.getPath());
@@ -28,12 +28,12 @@ public class UserDirVarsTest
 
         class Inner {
             File getcwd() {
-                ClassScopeDescriptor innerContext = Scopes.caller();
+                ClassScopeInstance innerContext = Scopes.caller();
                 return UserDirVars.getInstance().get(innerContext);
             }
 
             void chdir(File dir) {
-                ClassScopeDescriptor innerContext = Scopes.caller();
+                ClassScopeInstance innerContext = Scopes.caller();
                 UserDirVars.getInstance().chdir(innerContext, dir);
             }
         }
@@ -43,7 +43,7 @@ public class UserDirVarsTest
         File innercwd = inner.getcwd();
         assertEquals(userDir, innercwd);
 
-        ClassScopeDescriptor outerContext = Scopes.caller();
+        ClassScopeInstance outerContext = Scopes.caller();
         File outercwd = UserDirVars.getInstance().get(outerContext);
         assertEquals(userDir, innercwd);
 

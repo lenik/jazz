@@ -1,15 +1,22 @@
 package net.bodz.bas.site.vhost;
 
-import net.bodz.bas.ctx.scope.id.MutableScopeDescriptor;
+import java.util.Map;
 
-public class VirtualHostScopeDescriptor
-        extends MutableScopeDescriptor {
+import net.bodz.bas.ctx.scope.MutableScopeInstance;
+
+public class VirtualHostScopeInstance
+        extends MutableScopeInstance {
 
     private IVirtualHost vhost;
 
-    public VirtualHostScopeDescriptor(IVirtualHost vhost) {
+    public VirtualHostScopeInstance(IVirtualHost vhost) {
         super(vhost.getName(), vhost);
         this.vhost = vhost;
+    }
+
+    @Override
+    protected Map<String, Object> getVarMap() {
+        return null;
     }
 
     @Override
@@ -25,6 +32,11 @@ public class VirtualHostScopeDescriptor
     @Override
     public void set(String name, Object value) {
         vhost.setAttribute(name, value);
+    }
+
+    @Override
+    public void remove(String name) {
+        vhost.removeAttribute(name);
     }
 
 }

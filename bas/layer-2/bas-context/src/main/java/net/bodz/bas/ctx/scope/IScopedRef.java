@@ -1,6 +1,5 @@
 package net.bodz.bas.ctx.scope;
 
-import net.bodz.bas.ctx.scope.id.IScopeDescriptor;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.t.ref.Ref;
 
@@ -8,7 +7,7 @@ import net.bodz.bas.t.ref.Ref;
 public interface IScopedRef<T>
         extends Ref<T> {
     
-    IScopeDescriptor getCurrentScope();
+    IScopeInstance getCurrentScope();
 
     String getName();
 
@@ -19,7 +18,7 @@ public interface IScopedRef<T>
      *            Non-<code>null</code> scope.
      * @return {@link #getDefault() default} value if the value isn't defined in the scope chain.
      */
-    T get(IScopeDescriptor scope);
+    T get(IScopeInstance scope);
 
     /**
      * Set value in the given scope, or the nearest ancestor scope if it's transient.
@@ -27,9 +26,9 @@ public interface IScopedRef<T>
      * @param scope
      *            The scope to be affected, all transient scopes in the scope chain are skipped.
      */
-    void set(IScopeDescriptor scope, T value);
+    void set(IScopeInstance scope, T value);
 
-    void remove(IScopeDescriptor scope);
+    void remove(IScopeInstance scope);
 
     /**
      * @see #getCurrentScope()
