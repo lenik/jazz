@@ -38,16 +38,23 @@ public class UnionXjdocProvider
             throw new NullPointerException("clazz");
 
         ClassDoc classDoc = cache.get(clazz);
-        if (classDoc == null) {
-            for (IXjdocProvider loader : loaders) {
-                classDoc = loader.getClassDoc(clazz);
-                if (classDoc != null) {
-                    cache.put(clazz, classDoc);
-                    break;
-                }
+        if (classDoc == null)
+            classDoc = loadClassDoc(clazz);
+
+        return classDoc;
+    }
+
+    @Override
+    public ClassDoc loadClassDoc(Class<?> clazz)
+            throws XjdocLoaderException {
+        for (IXjdocProvider loader : loaders) {
+            ClassDoc classDoc = loader.getClassDoc(clazz);
+            if (classDoc != null) {
+                cache.put(clazz, classDoc);
+                return classDoc;
             }
         }
-        return classDoc;
+        return null;
     }
 
     private static UnionXjdocProvider instance = new UnionXjdocProvider();
