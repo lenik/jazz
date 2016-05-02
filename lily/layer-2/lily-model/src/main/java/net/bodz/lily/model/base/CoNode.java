@@ -68,6 +68,10 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         this.children = children;
     }
 
+    public boolean hasChild() {
+        return children != null && !children.isEmpty();
+    }
+
     /**
      * <p lang="zh">
      * 子结点是否要求唯一性。
@@ -80,7 +84,26 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         return false;
     }
 
-    public boolean addChild(self_t child) {
+    public void detach() {
+        if (parent == null)
+            return;
+
+        @SuppressWarnings("unchecked")
+        self_t self = (self_t) this;
+        parent.removeChild(self);
+        parent = null;
+    }
+
+    public boolean attach(self_t parent) {
+        detach();
+        this.parent = parent;
+
+        @SuppressWarnings("unchecked")
+        self_t self = (self_t) this;
+        return parent.addChild(self);
+    }
+
+    boolean addChild(self_t child) {
         if (child == null)
             throw new NullPointerException("child");
 
@@ -91,11 +114,10 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
                 return false;
 
         children.add(child);
-        child.setParent(self());
         return true;
     }
 
-    public boolean removeChild(self_t child) {
+    boolean removeChild(self_t child) {
         if (child == null)
             throw new NullPointerException("child");
 
@@ -104,7 +126,6 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         if (!children.remove(child))
             return false;
 
-        child.setParent(null);
         return true;
     }
 
@@ -197,7 +218,13 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         if (parent == null)
             return true;
         else
-            return getIndex() == 0;
+            return parent.isFirst(this);
+    }
+
+    public boolean isFirst(Object child) {
+        if (children == null || children.isEmpty())
+            return false;
+        return children.get(0) == child;
     }
 
     /**
@@ -212,19 +239,35 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     public boolean isLast() {
         if (parent == null)
             return true;
-        else
-            return getIndex() == parent.size() - 1;
+        return parent.isLast(this);
+    }
+
+    public boolean isLast(Object child) {
+        if (children == null || children.isEmpty())
+            return false;
+        return children.get(children.size() - 1) == child;
     }
 
     /**
      * <p lang="zh">
-     * 结点所在路径的链表示。
+     * 结点所在完整路径。
      * 
-     * @label Node Chain
-     * @label.zh 结点链
+     * @label Node Path
+     * @label.zh 结点路径
      */
     @OfGroup(StdGroup.Graph.class)
-    public CoNodeChain<self_t> getChain() {
+    public String getNodePath() {
+        StringBuilder sb = new StringBuilder();
+        int d = 0;
+        for (self_t node : toList()) {
+            if (d++ != 0)
+                sb.append("/");
+            sb.append(node.getNodeLabel());
+        }
+        return sb.toString();
+    }
+
+    public CoNodeChain<self_t> toList() {
         CoNodeChain<self_t> chain = new CoNodeChain<self_t>();
         self_t node = self();
         while (node != null) {
@@ -278,16 +321,23 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     @OfGroup(StdGroup.Graph.class)
     @Derived
     public String getNodeLabel() {
-        // return naturalId().toString();
-        String str = getCodeName();
-        if (str == null)
-            str = "(no code)";
+        StringBuilder sb = new StringBuilder();
+        String codeName = getCodeName();
+        if (codeName != null) {
+            sb.append(codeName);
+            sb.append(":");
+        }
 
         String label = getLabel();
-        if (label != null)
-            str += " 【" + label + "】";
+        if (label != null) {
+            sb.append('"');
+            sb.append(label);
+            sb.append('"');
+        }
 
-        return str;
+        if (sb.length() == 0)
+            sb.append("(n/a)");
+        return sb.toString();
     }
 
     /**
@@ -340,10 +390,14 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     public void accept(ICoNodeVisitor<? super self_t> visitor) {
         @SuppressWarnings("unchecked")
         self_t self = (self_t) this;
-        visitor.node(self);
+        boolean included = visitor.begin(self);
 
-        for (self_t child : getChildren())
-            child.accept(visitor);
+        if (included) {
+            for (self_t child : getChildren())
+                child.accept(visitor);
+
+            visitor.end(self);
+        }
     }
 
     void dump(ICharOut out)
