@@ -7,6 +7,8 @@ import net.bodz.bas.ui.dom1.IUiRef;
 public interface IHttpViewBuilderFactory
         extends IViewBuilderFactory {
 
+    String ATTRIBUTE_KEY = IHttpViewBuilderFactory.class.getName();
+
     @Override
     <T> IHttpViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features);
 

@@ -17,7 +17,6 @@ import net.bodz.bas.html.artifact.IndexedArtifactManager;
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.RecHtmlOut;
-import net.bodz.bas.html.io.tag.HtmlHtml;
 import net.bodz.bas.html.viz.DefaultHtmlViewContext;
 import net.bodz.bas.html.viz.util.PathFrames_htm;
 import net.bodz.bas.http.viz.ContentFamily;
@@ -30,7 +29,6 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
-import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.PathDispatchService;
 import net.bodz.bas.repr.path.TokenQueue;
@@ -57,13 +55,13 @@ public class PathDispatchServlet
 
     private PathDispatchService pathDispatchService;
     private IHttpViewBuilderFactory viewBuilderFactory;
-    private PathFrames_htm pathFramesVbo;
+    private PathFrames_htm pathFrames_htm;
     private HttpSnapManager snapManager;
 
     public PathDispatchServlet() {
         pathDispatchService = PathDispatchService.getInstance();
         viewBuilderFactory = IndexedHttpViewBuilderFactory.getInstance();
-        pathFramesVbo = new PathFrames_htm();
+        pathFrames_htm = new PathFrames_htm();
         snapManager = new HttpSnapManager();
     }
 
@@ -121,8 +119,8 @@ public class PathDispatchServlet
             throw new ServletException(e.getMessage(), e);
         }
 
-        req.setAttribute(ITokenQueue.class, tokenQueue);
-        req.setAttribute(IPathArrival.class, arrival);
+        // req.setAttribute(ITokenQueue.class, tokenQueue);
+        req.setAttribute(IPathArrival.ATTRIBUTE_KEY, arrival);
 
         if (arrival == null)
             throw new ServletException("Dispatch failed: " + tokenQueue);
@@ -140,8 +138,8 @@ public class PathDispatchServlet
             return;
         }
 
-        req.setAttribute(IHttpViewBuilderFactory.class, viewBuilderFactory);
-        req.setAttribute(IArtifactManager.class, IndexedArtifactManager.getInstance());
+        req.setAttribute(IHttpViewBuilderFactory.ATTRIBUTE_KEY, viewBuilderFactory);
+        req.setAttribute(IArtifactManager.ATTRIBUTE_KEY, IndexedArtifactManager.getInstance());
 
         ContentType contentType = ContentType.forPath(pathInfo);
         ViewBuilderSet<Object> viewBuilders = viewBuilderFactory.getViewBuilders(target.getClass());
@@ -180,15 +178,14 @@ public class PathDispatchServlet
             ITreeOut treeOut = TreeOutImpl.from(printOut);
             HtmlDoc doc = new HtmlDoc(treeOut, outputFormat);
             RecHtmlOut htmlOut = doc.newHtmlOut();
-            HtmlHtml html = htmlOut.html();
 
             try {
-                pathFramesVbo.buildHtmlView(ctx, html, UiVar.wrap(arrival));
+                pathFrames_htm.buildHtmlView(ctx, htmlOut, UiVar.wrap(arrival));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
 
-            html.close();
+            htmlOut.close();
             break;
 
         default:

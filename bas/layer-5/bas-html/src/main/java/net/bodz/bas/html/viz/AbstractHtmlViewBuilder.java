@@ -30,6 +30,10 @@ public abstract class AbstractHtmlViewBuilder<T>
         extends AbstractHttpViewBuilder<T>
         implements IHtmlViewBuilder<T> {
 
+    public AbstractHtmlViewBuilder() {
+        super();
+    }
+
     public AbstractHtmlViewBuilder(Class<?> valueClass) {
         super(valueClass);
     }
