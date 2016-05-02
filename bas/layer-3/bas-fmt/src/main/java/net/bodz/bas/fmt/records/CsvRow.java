@@ -3,11 +3,22 @@ package net.bodz.bas.fmt.records;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import org.json.JSONObject;
+import org.json.JSONWriter;
+
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class CsvRow
-        extends ArrayList<String> {
+        extends ArrayList<String>
+        implements IJsonSerializable {
 
     private static final long serialVersionUID = 1L;
+    static final Logger logger = LoggerFactory.getLogger(CsvRow.class);
 
     private Map<String, Integer> fieldNames;
     private boolean strict = false;
@@ -77,16 +88,84 @@ public class CsvRow
         String value = get(fieldIndex);
         if (value == null)
             return null;
-        else
-            return Integer.parseInt(value);
+        if (value.isEmpty())
+            return null;
+        return Integer.parseInt(value);
     }
 
     public Long getLong(int fieldIndex) {
         String value = get(fieldIndex);
         if (value == null)
             return null;
+        if (value.isEmpty())
+            return null;
+        return Long.parseLong(value);
+    }
+
+    public Double getDouble(int fieldIndex) {
+        String value = get(fieldIndex);
+        if (value == null)
+            return null;
+        if (value.isEmpty())
+            return null;
+        return Double.parseDouble(value);
+    }
+
+    @Override
+    public String set(int fieldIndex, String str) {
+        if (fieldIndex >= 0 && fieldIndex < size())
+            return super.set(fieldIndex, str);
+        if (strict)
+            throw new IndexOutOfBoundsException("fieldIndex=" + fieldIndex);
         else
-            return Long.parseLong(value);
+            // jut ignore the value.
+            return null;
+    }
+
+    @Override
+    public void readObject(JSONObject json)
+            throws ParseException {
+        if (fieldNames == null) {
+            int index = 0;
+            for (Object key : json.keySet()) {
+                String field = (String) key;
+                Object value = json.get(field);
+                set(index, (String) value);
+                index++;
+            }
+        } else {
+            for (Object key : json.keySet()) {
+                String field = (String) key;
+                Integer index = fieldNames.get(field);
+                if (index == null) {
+                    logger.warn("Invalid field name: " + key);
+                    continue;
+                }
+                Object value = json.get(field);
+                set(index, (String) value);
+            }
+        }
+    }
+
+    @Override
+    public void writeObject(JSONWriter out) {
+        if (fieldNames == null) {
+            out.array();
+            int n = size();
+            for (int i = 0; i < n; i++)
+                out.value(get(i));
+            out.endArray();
+        } else {
+            out.object();
+            for (Entry<String, Integer> entry : fieldNames.entrySet()) {
+                String field = entry.getKey();
+                int index = entry.getValue();
+                String value = get(index);
+                out.key(field);
+                out.value(value);
+            }
+            out.endObject();
+        }
     }
 
 }
