@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.bodz.bas.db.jdbc.ConnectOptions;
+import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -24,7 +25,7 @@ public abstract class AbstractDataContexts<K>
         if (context == null) {
             ConnectOptions opts = getConnectOptions(key);
             if (opts == null)
-                return null;
+                throw new IllegalConfigException("No connection configured for " + key);
             context = new DataContext(opts);
             contexts.put(key, context);
         }
