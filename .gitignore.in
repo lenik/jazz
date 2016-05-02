@@ -26,6 +26,7 @@
 *.bz2                                   # source tarballs
 *.cb                                    # cooltex
 *.changes                               # cooldeb
+*.css.map                               # scss
 *.deb                                   # cooldeb
 *.debhelper                             # cooldeb
 *.dsc                                   # cooldeb
@@ -74,6 +75,7 @@
 .libs/                                  # libtool tmp build dir
 .m2*                                    # Maven
 .project                                # Eclipse project file
+.sass-cache/                            # scss
 .settings                               # Eclipse project settings
 /.pomdirs                               # coolmaven
 ABOUT-NLS                               # gettextize

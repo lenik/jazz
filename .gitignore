@@ -26,6 +26,7 @@
 *.bz2
 *.cb
 *.changes
+*.css.map
 *.deb
 *.debhelper
 *.dsc
@@ -74,6 +75,7 @@
 .libs/
 .m2*
 .project
+.sass-cache/
 .settings
 /.pomdirs
 ABOUT-NLS
