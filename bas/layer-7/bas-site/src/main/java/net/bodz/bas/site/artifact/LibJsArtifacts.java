@@ -1,173 +1,177 @@
 package net.bodz.bas.site.artifact;
 
-import net.bodz.bas.html.artifact.IArtifact;
-import net.bodz.bas.html.artifact.MutableArtifactManager;
+import net.bodz.bas.html.artifact.ArtifactBuilder;
+import net.bodz.bas.html.artifact.Group;
+import net.bodz.bas.html.artifact.StaticArtifactProvider;
 import net.bodz.bas.site.IBasicSiteAnchors;
 
 public class LibJsArtifacts
-        extends MutableArtifactManager
+        extends StaticArtifactProvider
         implements IBasicSiteAnchors {
 
-    public static final String JQUERY_MIN = "jquery-min";
-    public static final String JQUERY_UI_MIN = "jquery-ui-min";
-    public static final String JQUERY_UI_WIDGET_MIN = "jquery-ui-widget-min";
+    static final ArtifactBuilder fn = new ArtifactBuilder();
 
-    IArtifact bootstrap3_js = group("bootstrap3", _js_.join("twitter-bootstrap3/"), //
-            "css/bootstrap.min.css", "js/bootstrap.min.js");
-
-    IArtifact jQueryMin = javascript(JQUERY_MIN, null, //
-            _js_.join("jquery/jquery.min.js"));
-    IArtifact jQueryUiMin = javascript(JQUERY_UI_MIN, null, //
-            _js_.join("jquery-ui/jquery-ui.min.js"));
-    IArtifact jQueryUiWidgetMin = javascript(JQUERY_UI_WIDGET_MIN, null, //
-            _js_.join("jquery-ui/ui/jquery.ui.widget.min.js"));
-    {
-        jQueryUiMin.addDependency(jQueryMin);
-        jQueryUiWidgetMin.addDependency(jQueryUiMin);
+    public LibJsArtifacts() {
+        super(fn.getContainer());
     }
 
-    IArtifact bigvideo_js = group("bigvideo", _js_.join("jquery-bigvideo/"), //
+    public static Group bootstrap3_js = fn.group("bootstrap3", _js_.join("twitter-bootstrap3/"), //
+            "css/bootstrap.min.css", "js/bootstrap.min.js");
+
+    public static Group jQuery = fn.group("jquery", _js_.join("jquery/"), //
+            "jquery.min.js");
+
+    public static Group jQueryUi = fn.group("jquery-ui", _js_.join("jquery-ui/"), //
+            "jquery-ui.min.js", //
+            "css/smoothness/jquery-ui.min.css")//
+            .dependsOn(jQuery);
+
+    public static Group jQueryUiWidget = fn.group("jquery-ui.widget", _js_.join("jquery-ui/"), //
+            "ui/jquery.ui.widget.min.js")//
+            .dependsOn(jQueryUi);
+
+    public static Group bigvideo_js = fn.group("jquery-bigvideo", _js_.join("jquery-bigvideo/"), //
             "css/bigvideo.css", "lib/bigvideo.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact chosen = group("chosen", _js_.join("jquery-chosen/"), //
+    public static Group chosen = fn.group("jquery-chosen", _js_.join("jquery-chosen/"), //
             "chosen.css", "chosen.jquery.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact cropper = group("cropper", _js_.join("jquery-cropper/dist/"),//
+    public static Group cropper = fn.group("jquery-cropper", _js_.join("jquery-cropper/dist/"),//
             "cropper.min.css", "cropper.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact datatables = group("datatables", _js_.join("datatables/media/"),//
+    public static Group datatables = fn.group("datatables", _js_.join("datatables/media/"),//
             "css/jquery.dataTables.min.css", "js/jquery.dataTables.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact datatablesBootstrap = group("datatables.bootstrap",
-            _js_.join("datatables/examples/resources/bootstrap/3/"), //
-            "dataTables.bootstrap.css", "dataTables.bootstrap.js")//
-            .addDependency(datatables)//
-            .addDependency(bootstrap3_js);
+    public static Group datatablesBootstrap = fn
+            .group("datatables.bootstrap", _js_.join("datatables/examples/resources/bootstrap/3/"), //
+                    "dataTables.bootstrap.css", "dataTables.bootstrap.js")//
+            .dependsOn(datatables)//
+            .dependsOn(bootstrap3_js);
 
-    IArtifact datatablesColVis = group("datatables.colVis", _js_.join("datatables/extensions/ColVis/"),
+    public static Group datatablesColVis = fn.group("datatables.colVis", _js_.join("datatables/extensions/ColVis/"),
             "css/dataTables.colVis.css", "js/dataTables.colVis.js")//
-            .addDependency(datatablesBootstrap);
+            .dependsOn(datatablesBootstrap);
 
-    IArtifact datatablesResponsive = group("datatables.responsive", _js_.join("datatables/extensions/Responsive/"),
-            "css/dataTables.responsive.css", "js/dataTables.responsive.js")//
-            .addDependency(datatablesBootstrap);
+    public static Group datatablesResponsive = fn.group("datatables.responsive",
+            _js_.join("datatables/extensions/Responsive/"), "css/dataTables.responsive.css",
+            "js/dataTables.responsive.js")//
+            .dependsOn(datatablesBootstrap);
 
-    IArtifact datatablesTableTools = group("datatables.tableTools", _js_.join("datatables/extensions/TableTools/"),
-            "css/dataTables.tableTools.css", "js/dataTables.tableTools.js")//
-            .addDependency(datatablesBootstrap);
+    public static Group datatablesTableTools = fn.group("datatables.tableTools",
+            _js_.join("datatables/extensions/TableTools/"), "css/dataTables.tableTools.css",
+            "js/dataTables.tableTools.js")//
+            .dependsOn(datatablesBootstrap);
 
-    IArtifact fileUpload = group("file-upload", _js_.join("jquery-file-upload/"), //
+    public static Group fileUpload = fn.group("jquery-file-upload", _js_.join("jquery-file-upload/"), //
             "css/jquery.fileupload.css", //
             "js/jquery.fileupload.js", //
             "js/jquery.iframe-transport.js", //
             // "js/jquery.fileupload-process.js", //
             "#")//
-            .addDependency(jQueryMin)//
-            .addDependency(jQueryUiWidgetMin);
+            .dependsOn(jQuery)//
+            .dependsOn(jQueryUiWidget);
 
-    IArtifact flot = group("flot", _js_.join("jquery-flot/"), //
+    public static Group flot = fn.group("jquery-flot", _js_.join("jquery-flot/"), //
             "jquery.flot.min.js", //
             "jquery.flot.pie.min.js", //
+            "jquery.flot.resize.min.js", //
             "jquery.flot.stack.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact focuspoint = group("focuspoint", _js_.join("jquery-focuspoint/"), //
+    public static Group focuspoint = fn.group("jquery-focuspoint", _js_.join("jquery-focuspoint/"), //
             "css/focuspoint.css", "js/jquery.focuspoint.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact handsontable_js = group("handsontable", _js_.join("jquery-handsontable/dist/"), //
+    public static Group handsontable_js = fn.group("jquery-handsontable", _js_.join("jquery-handsontable/dist/"), //
             "handsontable.full.min.css", "handsontable.full.min.js") //
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact icheck = group("icheck", _js_.join("jquery-icheck/"), //
+    public static Group icheck = fn.group("jquery-icheck", _js_.join("jquery-icheck/"), //
             "skins/all.css", "icheck.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact knob = group("knob", _js_.join("jquery-knob/dist/"), //
+    public static Group knob = fn.group("jquery-knob", _js_.join("jquery-knob/dist/"), //
             "jquery.knob.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact magnificPopup = group("magnific-popup", _js_.join("jquery-magnific-popup/dist/"), //
+    public static Group magnificPopup = fn.group("jquery-magnific-popup", _js_.join("jquery-magnific-popup/dist/"), //
             "magnific-popup.css", "jquery.magnific-popup.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact parsley = group("parsley", _js_.join("jquery-parsley/"),//
+    public static Group parsley = fn.group("jquery-parsley", _js_.join("jquery-parsley/"),//
             "src/parsley.css", "dist/parsley.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact qrcode = group("qrcode", _js_.join("jquery-qrcode/dist/"), //
+    public static Group qrcode = fn.group("jquery-qrcode", _js_.join("jquery-qrcode/dist/"), //
             "jquery.qrcode.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact qtip = group("qtip", _js_.join("jquery-qtip/"), //
+    public static Group qtip = fn.group("jquery-qtip", _js_.join("jquery-qtip/"), //
             "jquery.qtip.min.css", "jquery.qtip.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact selectize = group("selectize", _js_.join("jquery-selectize/dist/"), //
+    public static Group selectize = fn.group("jquery-selectize", _js_.join("jquery-selectize/dist/"), //
             "css/selectize.css", "js/standalone/selectize.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact tagsinput = group("tagsinput", _js_.join("bootstrap-tagsinput/dist/"), //
+    public static Group tagsinput = fn.group("jquery-tagsinput", _js_.join("bootstrap-tagsinput/dist/"), //
             "bootstrap-tagsinput.css", "bootstrap-tagsinput.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact typeahead = group("typeahead", _js_.join("twitter-typeahead/dist/"), //
+    public static Group typeahead = fn.group("jquery-typeahead", _js_.join("twitter-typeahead/dist/"), //
             "typeahead.bundle.min.js")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact wallpaper = group("wallpaper", _js_.join("jquery-wallpaper/"), //
+    public static Group wallpaper = fn.group("jquery-wallpaper", _js_.join("jquery-wallpaper/"), //
             "jquery.fs.wallpaper.min.js", "jquery.fs.wallpaper.css")//
-            .addDependency(jQueryMin);
+            .dependsOn(jQuery);
 
-    IArtifact wysiwygEditor = group("wysiwyg-editor", _js_.join("jquery-wysiwyg-editor/"), //
+    public static Group wysiwygEditor = fn.group("jquery-wysiwyg-editor", _js_.join("jquery-wysiwyg-editor/"), //
             "css/froala_editor.min.css", //
             "css/froala_style.min.css", //
             "js/froala_editor.min.js", //
             "#")//
-            .addDependency(jQueryMin)//
-    // .addDependency(LibFontsArtifacts.fontAwesome)
+            .dependsOn(jQuery)//
+    // .dependsOn(LibFontsArtifacts.fontAwesome)
     ;
 
     {
-        tagsinput.addDependency(typeahead);
+        tagsinput.dependsOn(typeahead);
     }
 
-    public static final String ALL_DATA = "all-data";
-    public static final String ALL_INPUTS = "all-inputs";
-    public static final String ALL_EFFECTS = "all-effects";
-    IArtifact allData = group(ALL_DATA);
+    public static Group allData = fn.group("jquery-all-data");
     {
-        allData.addDependency(datatables);
-        // allData.addDependency(datatablesBootstrap);
-        allData.addDependency(datatablesColVis);
-        // allData.addDependency(datatablesResponsive);
-        allData.addDependency(datatablesTableTools);
+        allData.dependsOn(datatables);
+        // allData.dependsOn(datatablesBootstrap);
+        allData.dependsOn(datatablesColVis);
+        // allData.dependsOn(datatablesResponsive);
+        allData.dependsOn(datatablesTableTools);
     }
-    IArtifact allInputs = group(ALL_INPUTS);
+    public static Group allInputs = fn.group("jquery-all-inputs");
     {
-        allInputs.addDependency(chosen);
-        allInputs.addDependency(fileUpload);
-        allInputs.addDependency(icheck);
-        allInputs.addDependency(knob);
-        allInputs.addDependency(parsley);
-        allInputs.addDependency(selectize);
-        allInputs.addDependency(tagsinput);
-        allInputs.addDependency(typeahead);
-        allInputs.addDependency(wysiwygEditor);
+        allInputs.dependsOn(chosen);
+        allInputs.dependsOn(fileUpload);
+        allInputs.dependsOn(icheck);
+        allInputs.dependsOn(knob);
+        allInputs.dependsOn(parsley);
+        allInputs.dependsOn(selectize);
+        allInputs.dependsOn(tagsinput);
+        allInputs.dependsOn(typeahead);
+        allInputs.dependsOn(wysiwygEditor);
     }
-    IArtifact allEffects = group(ALL_EFFECTS);
+    public static Group allEffects = fn.group("jquery-all-effects");
     {
-        allEffects.addDependency(cropper);
-        allEffects.addDependency(flot);
-        allEffects.addDependency(focuspoint);
-        allEffects.addDependency(magnificPopup);
-        allEffects.addDependency(qrcode);
-        allEffects.addDependency(qtip);
-        allEffects.addDependency(wallpaper);
+        allEffects.dependsOn(cropper);
+        allEffects.dependsOn(flot);
+        allEffects.dependsOn(focuspoint);
+        allEffects.dependsOn(magnificPopup);
+        allEffects.dependsOn(qrcode);
+        allEffects.dependsOn(qtip);
+        allEffects.dependsOn(wallpaper);
     }
 
 }

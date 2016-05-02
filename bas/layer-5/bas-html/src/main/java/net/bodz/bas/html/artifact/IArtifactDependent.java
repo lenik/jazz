@@ -8,4 +8,6 @@ public interface IArtifactDependent {
 
     Collection<? extends IArtifactDependency> getDependencies(ArtifactType type);
 
+    void accept(IArtifactVisitor visitor);
+
 }

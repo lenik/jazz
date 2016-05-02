@@ -84,17 +84,16 @@ public class MutableArtifactDependent
     }
 
     @Override
-    public MutableArtifactDependent addDependency(IArtifact artifact) {
+    public MutableArtifactDependency addDependency(IArtifact artifact) {
         String name = artifact.getName();
         ArtifactType type = artifact.getType();
         IVersion version = artifact.getVersion();
         if (version == null)
-            addDependency(name, type);
+            return addDependency(name, type);
         else {
             String versionStr = version.toString();
-            addDependency(name, type, versionStr, versionStr);
+            return addDependency(name, type, versionStr, versionStr);
         }
-        return this;
     }
 
     @Override
@@ -128,6 +127,16 @@ public class MutableArtifactDependent
         nameMap.remove(name);
         for (Map<String, MutableArtifactDependency> tNameMap : typeMap.values())
             tNameMap.remove(name);
+    }
+
+    @Override
+    public void accept(IArtifactVisitor visitor) {
+        visitor.begin(this);
+
+        for (IArtifactDependency dependency : getDependencies())
+            visitor.dependency(dependency);
+
+        visitor.end(this);
     }
 
     @Override
