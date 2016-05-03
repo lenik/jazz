@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.object.ITreeDump;
-import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.object.TreeDumps;
 import net.bodz.bas.c.string.StringArray;
 
@@ -16,6 +15,7 @@ public class PathArrival
     private IPathArrival parent;
     private String[] consumedTokens = new String[0];
     private Object target;
+    private boolean multiple;
     private String remainingPath;
 
     public PathArrival(Object startTarget, String remainingPath) {
@@ -40,6 +40,7 @@ public class PathArrival
     public PathArrival(IPathArrival o) {
         this.parent = o.getPrevious();
         this.target = o.getTarget();
+        this.multiple = o.isMultiple();
         this.consumedTokens = o.getConsumedTokens();
         this.remainingPath = o.getRemainingPath();
     }
@@ -128,6 +129,15 @@ public class PathArrival
     }
 
     @Override
+    public boolean isMultiple() {
+        return multiple;
+    }
+
+    public void setMultiple(boolean multiple) {
+        this.multiple = multiple;
+    }
+
+    @Override
     public Object getLastNonNullTarget() {
         if (target != null)
             return target;
@@ -176,8 +186,10 @@ public class PathArrival
         final int prime = 31;
         int result = 1;
         result = prime * result + Arrays.hashCode(consumedTokens);
-        result = prime * result + ((parent == null) ? 0 : parent.hashCode());
-        result = prime * result + ((target == null) ? 0 : target.hashCode());
+        if (parent != null)
+            result = prime * result + System.identityHashCode(parent);
+        if (target != null)
+            result = prime * result + System.identityHashCode(target);
         return result;
     }
 
@@ -190,9 +202,9 @@ public class PathArrival
         PathArrival other = (PathArrival) obj;
         if (!Arrays.equals(consumedTokens, other.consumedTokens))
             return false;
-        if (!Nullables.equals(parent, other.parent))
+        if (parent != other.parent)
             return false;
-        if (!Nullables.equals(target, other.target))
+        if (target != other.target)
             return false;
         return true;
     }

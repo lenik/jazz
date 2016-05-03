@@ -10,7 +10,7 @@ import net.bodz.bas.meta.decl.ThreadUnsafe;
 @ThreadUnsafe
 public class TokenQueue
         // extends AbstractHttpRequestProcessor
-        implements ITokenQueue, Serializable {
+        implements ITokenQueue, Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,9 +18,6 @@ public class TokenQueue
     private final boolean entered;
     private int index;
     private boolean stopped;
-
-    private int savedIndex;
-    private boolean savedStopped;
 
     public TokenQueue(String[] tokens, boolean entered) {
         if (tokens == null)
@@ -59,6 +56,14 @@ public class TokenQueue
         }
 
         this.tokens = tokens.toArray(new String[0]);
+    }
+
+    @Override
+    public TokenQueue clone() {
+        TokenQueue o = new TokenQueue(tokens, entered);
+        o.index = index;
+        o.stopped = stopped;
+        return o;
     }
 
     @Override
@@ -188,18 +193,6 @@ public class TokenQueue
     @Override
     public void stop() {
         this.stopped = true;
-    }
-
-    @Override
-    public void save() {
-        savedIndex = index;
-        savedStopped = stopped;
-    }
-
-    @Override
-    public void restore() {
-        index = savedIndex;
-        stopped = savedStopped;
     }
 
     @Override

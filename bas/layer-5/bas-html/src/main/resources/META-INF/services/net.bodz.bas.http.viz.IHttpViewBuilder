@@ -1,3 +1,4 @@
+net.bodz.bas.html.viz.PathArrivalFrames_htm
 net.bodz.bas.html.viz.builtin.BigDecimal_htm
 net.bodz.bas.html.viz.builtin.Boolean_htm
 net.bodz.bas.html.viz.builtin.Byte_htm
@@ -21,5 +22,4 @@ net.bodz.bas.html.viz.builtin.TimeZone_htm
 net.bodz.bas.html.viz.util.DefaultForm_htm
 net.bodz.bas.html.viz.util.Invocation_txt
 net.bodz.bas.html.viz.util.ObjectDump_htm
-net.bodz.bas.html.viz.util.PathFrames_htm
 net.bodz.bas.html.viz.util.URLResource_bin

@@ -47,6 +47,8 @@ public interface IPathArrival {
      */
     Object getTarget();
 
+    boolean isMultiple();
+
     /**
      * Get the last non-<code>null</code> target in the arrival chain.
      * 

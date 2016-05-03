@@ -11,14 +11,14 @@ import net.bodz.bas.repr.path.builtin.MapPathDispatcher;
 import net.bodz.bas.repr.path.builtin.NoPathRefDispatcher;
 import net.bodz.bas.repr.path.builtin.OverriddenPathDispatcher;
 
-public class CompositePathDispatcherTest
+public class PathDispatchersTest
         extends Assert {
 
-    CompositePathDispatcher cpd;
+    PathDispatchers cpd;
     Foo foo = new Foo();
 
-    public CompositePathDispatcherTest() {
-        cpd = new CompositePathDispatcher();
+    public PathDispatchersTest() {
+        cpd = new PathDispatchers();
         cpd.addDispatcher(new FieldPathDispatcher());
         cpd.addDispatcher(new MapPathDispatcher());
         cpd.addDispatcher(new OverriddenPathDispatcher());

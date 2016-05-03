@@ -98,6 +98,11 @@ public class DefaultHttpViewContext
     }
 
     @Override
+    public Object removeVariable(String name) {
+        return varMap.remove(name);
+    }
+
+    @Override
     public IHttpHeadData getHeadData() {
         return headData;
     }

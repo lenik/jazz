@@ -1,7 +1,6 @@
 package net.bodz.bas.html.servlet;
 
 import java.io.IOException;
-import java.util.ServiceLoader;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.artifact.IndexedArtifactManager;
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.RecHtmlOut;
 import net.bodz.bas.html.viz.DefaultHtmlViewContext;
-import net.bodz.bas.html.viz.util.PathFrames_htm;
+import net.bodz.bas.html.viz.PathArrivalFrames;
+import net.bodz.bas.html.viz.PathArrivalFrames_htm;
 import net.bodz.bas.http.viz.ContentFamily;
 import net.bodz.bas.http.viz.IHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
@@ -30,7 +29,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.repr.path.PathDispatchService;
+import net.bodz.bas.repr.path.PathDispatchIndex;
 import net.bodz.bas.repr.path.TokenQueue;
 import net.bodz.bas.repr.req.HttpSnapManager;
 import net.bodz.bas.repr.req.IHttpRequestProcessor;
@@ -53,15 +52,15 @@ public class PathDispatchServlet
 
     private Object rootObject;
 
-    private PathDispatchService pathDispatchService;
+    private PathDispatchIndex pathDispatchIndex;
     private IHttpViewBuilderFactory viewBuilderFactory;
-    private PathFrames_htm pathFrames_htm;
+    private PathArrivalFrames_htm pathArrivalFrames_htm;
     private HttpSnapManager snapManager;
 
     public PathDispatchServlet() {
-        pathDispatchService = PathDispatchService.getInstance();
+        pathDispatchIndex = PathDispatchIndex.getInstance();
         viewBuilderFactory = IndexedHttpViewBuilderFactory.getInstance();
-        pathFrames_htm = new PathFrames_htm();
+        pathArrivalFrames_htm = new PathArrivalFrames_htm();
         snapManager = new HttpSnapManager();
     }
 
@@ -96,15 +95,8 @@ public class PathDispatchServlet
         HttpServletReqEx req = HttpServletReqEx.of(_req);
         req.setAttribute(HttpSnapManager.ATTRIBUTE_KEY, snapManager);
 
-        for (IHttpRequestProcessor proc : ServiceLoader.load(IHttpRequestProcessor.class))
-            try {
-                if (!proc.apply(req, resp)) {
-                    // invalid request.
-                    return;
-                }
-            } catch (ParseException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
+        if (!IHttpRequestProcessor.fn.applyAll(req, resp))
+            return;
 
         String pathInfo = req.getPathInfo();
         if (pathInfo.startsWith("/"))
@@ -114,16 +106,16 @@ public class PathDispatchServlet
         Object start = rootObject;
         IPathArrival arrival;
         try {
-            arrival = pathDispatchService.dispatch(start, tokenQueue);
+            arrival = pathDispatchIndex.dispatch(start, tokenQueue);
+            // List<IPathArrival> arrivals = pathDispatchIndex.dispatchMultiple(start, tokenQueue);
+            // arrival = arrivals.isEmpty() ? null : arrivals.get(0);
         } catch (PathDispatchException e) {
             throw new ServletException(e.getMessage(), e);
         }
-
-        // req.setAttribute(ITokenQueue.class, tokenQueue);
-        req.setAttribute(IPathArrival.ATTRIBUTE_KEY, arrival);
-
         if (arrival == null)
             throw new ServletException("Dispatch failed: " + tokenQueue);
+        // req.setAttribute(ITokenQueue.class, tokenQueue);
+        req.setAttribute(IPathArrival.ATTRIBUTE_KEY, arrival);
 
         Object target = arrival.getTarget();
         if (target == null) {
@@ -180,7 +172,10 @@ public class PathDispatchServlet
             RecHtmlOut htmlOut = doc.newHtmlOut();
 
             try {
-                pathFrames_htm.buildHtmlView(ctx, htmlOut, UiVar.wrap(arrival));
+                PathArrivalFrames frames = PathArrivalFrames.convert(viewBuilderFactory, arrival);
+                frames.enterAll(ctx);
+                pathArrivalFrames_htm.buildHtmlView(ctx, htmlOut, UiVar.wrap(frames));
+                frames.leaveAll(ctx);
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build html view: " + e.getMessage(), e);
             }
@@ -197,5 +192,4 @@ public class PathDispatchServlet
             }
         }
     }
-
 }
