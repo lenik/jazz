@@ -46,6 +46,11 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
     }
 
     @Override
+    public XmlDoc getDoc() {
+        return doc;
+    }
+
+    @Override
     public String getTagName() {
         return tagName;
     }
@@ -210,6 +215,12 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
     @Override
     public self_t text(Object str) {
         return text(str == null ? null : str.toString());
+    }
+
+    @Override
+    public self_t textf(String fmt, Object... args) {
+        String s = String.format(fmt, args);
+        return text(s);
     }
 
     @Override

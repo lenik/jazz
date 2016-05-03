@@ -8,6 +8,8 @@ import net.bodz.bas.io.IFlushable;
 public interface IXmlOut
         extends IFlushable, ICloseable {
 
+    XmlDoc getDoc();
+
     String getTagName();
 
     IXmlOut getParent();
@@ -45,6 +47,8 @@ public interface IXmlOut
     IXmlOut text(String str);
 
     IXmlOut text(Object str);
+
+    IXmlOut textf(String fmt, Object... args);
 
     IXmlOut textln(String str);
 
