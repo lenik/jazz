@@ -5,15 +5,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// @Documented
+import net.bodz.bas.meta.meta.MetaAnnotation;
+
+@MetaAnnotation
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface ExcludedFromIndex {
-
-    /**
-     * Exclude recursively. By default, only the type annotated with {@link ExcludedFromIndex} is
-     * exclude.
-     */
-    boolean recursive() default false;
 
 }

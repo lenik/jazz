@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 import net.bodz.bas.c.type.TypePoMap;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
+@IndexedTypeLoader(IAction.class)
 public class ActionIndex {
 
     public static TypePoMap<List<IAction>> clsActions;

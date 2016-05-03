@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
+
+@IndexedTypeLoader(IJazzModule.class)
 public abstract class AbstractJazzProject
         implements IJazzProject {
 

@@ -27,6 +27,7 @@ import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.meta.codegen.IEtcFilesEditor;
 import net.bodz.bas.meta.codegen.IEtcFilesInstaller;
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
 @IndexedType
 public class TypeCollector<T> {
@@ -238,6 +239,8 @@ public class TypeCollector<T> {
                     continue;
 
             if (derivation.isAnnotationPresent(ExcludedFromIndex.class))
+                continue;
+            if (derivation.isAnnotationPresent(IndexedTypeLoader.class))
                 continue;
 
             list.add(derivation);

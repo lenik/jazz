@@ -7,10 +7,12 @@ import java.util.ServiceLoader;
 
 import net.bodz.bas.c.type.ITypeMapper;
 import net.bodz.bas.c.type.NameConventionTypeMapper;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
 /**
  * @see IHttpViewBuilder The indexed type.
  */
+@IndexedTypeLoader(IHttpViewBuilder.class)
 public class IndexedHttpViewBuilderFactory
         extends AbstractHttpViewBuilderFactory {
 

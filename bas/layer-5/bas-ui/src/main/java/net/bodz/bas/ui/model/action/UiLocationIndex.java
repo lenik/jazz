@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
+
+@IndexedTypeLoader(UiLocationDecl.class)
 public class UiLocationIndex {
 
     static Map<Class<?>, UiLocationDecl> map;

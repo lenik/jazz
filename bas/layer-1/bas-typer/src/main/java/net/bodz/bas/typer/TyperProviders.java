@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.TreeSet;
 
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.typer.spi.ITyperProvider;
 
+@IndexedTypeLoader(ITyperProvider.class)
 public class TyperProviders {
 
     private static final TreeSet<ITyperProvider> sortedSet;

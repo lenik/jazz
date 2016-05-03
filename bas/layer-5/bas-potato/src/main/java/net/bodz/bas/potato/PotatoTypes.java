@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.meta.decl.Volatile;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.element.MergedType;
@@ -17,6 +18,7 @@ import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
+@IndexedTypeLoader(ITypeProvider.class)
 public class PotatoTypes {
 
     static final Logger logger = LoggerFactory.getLogger(PotatoTypes.class);
