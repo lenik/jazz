@@ -27,7 +27,9 @@ import net.bodz.bas.c.type.TypeIndex;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
+@IndexedTypeLoader
 public class IbatisMapperProvider
         extends AbstractMapperProvider {
 
@@ -116,28 +118,43 @@ public class IbatisMapperProvider
     /** ⇱ Implementation Of {@link IMapperProvider}. */
     /* _____________________________ */static section.iface __PROVIDER__;
 
-    @Override
-    public <T extends IMapper> T getMapper(Class<T> mapperClass, boolean autoCommit) {
+    public <M extends IMapper> boolean hasMapper(Class<M> mapperClass) {
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
-        if (sqlSessionFactory.getConfiguration().hasMapper(mapperClass)) {
-            InvocationHandler handler;
-            if (autoCommit)
-                handler = new PrivateSessionMapperProxy(sqlSessionFactory, mapperClass);
-            else {
-                SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
-                handler = new SharedSessionMapperProxy(session, mapperClass);
-            }
-            Object proxy = Proxy.newProxyInstance(mapperClass.getClassLoader(), //
-                    new Class<?>[] { mapperClass }, handler);
-            return mapperClass.cast(proxy);
-        }
-        return null;
+        return sqlSessionFactory.getConfiguration().hasMapper(mapperClass);
     }
 
     @Override
-    public <M extends IMapper> M getMapperForObject(Class<?> objClass, boolean autoCommit) {
-        Class<M> mapperClass = (Class<M>) IMapper.fn.getMapperClass(objClass);
-        return getMapper(mapperClass, autoCommit);
+    public <M extends IMapper> M getMapper(Class<M> mapperClass, boolean batch) {
+        if (!hasMapper(mapperClass))
+            return null;
+        SqlSession session = null;
+        if (batch)
+            session = getSqlSessionFactory().openSession(ExecutorType.BATCH, false);
+        return getMapper(mapperClass, session);
+    }
+
+    @Override
+    public <T extends IMapper> T getMapper(Class<T> mapperClass, SqlSession session) {
+        if (!hasMapper(mapperClass))
+            return null;
+        return createMapper(mapperClass, session);
+    }
+
+    <T extends IMapper> T createMapper(Class<T> mapperClass, SqlSession session) {
+        SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+        if (!sqlSessionFactory.getConfiguration().hasMapper(mapperClass))
+            return null;
+
+        InvocationHandler handler;
+        if (session != null) {
+            handler = new SharedSessionMapperProxy(session, mapperClass);
+        } else {
+            handler = new PrivateSessionMapperProxy(sqlSessionFactory, mapperClass);
+        }
+
+        Object proxy = Proxy.newProxyInstance(mapperClass.getClassLoader(), //
+                new Class<?>[] { mapperClass }, handler);
+        return mapperClass.cast(proxy);
     }
 
 }

@@ -9,6 +9,7 @@ import java.util.Set;
 import net.bodz.bas.c.object.IdentityHashSet;
 import net.bodz.bas.db.cache.AbstractCache;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.log.Logger;
@@ -42,8 +43,10 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     }
 
     protected IMapperTemplate<T, ?> getMapper() {
-        if (mapper == null)
-            mapper = dataContext.getMapperFor(objectClass);
+        if (mapper == null) {
+            Class<IMapperTemplate<T, ?>> mapperClass = IMapper.fn.getMapperClass(objectClass);
+            mapper = dataContext.getMapper(mapperClass);
+        }
         return mapper;
     }
 

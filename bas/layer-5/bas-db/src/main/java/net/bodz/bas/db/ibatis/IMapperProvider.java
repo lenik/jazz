@@ -11,10 +11,12 @@ public interface IMapperProvider {
      */
     <M extends IMapper> M getMapper(Class<M> mapperClass);
 
-    <M extends IMapper> M getMapper(Class<M> mapperClass, boolean autoCommit);
+    <M extends IMapper> M getMapper(Class<M> mapperClass, boolean batch);
 
-    <M extends IMapper> M getMapperForObject(Class<?> objClass);
+    <M extends IMapper> M getMapper(Class<M> mapperClass, SqlSession session);
 
-    <M extends IMapper> M getMapperForObject(Class<?> objClass, boolean autoCommit);
+    class fn {
+
+    }
 
 }
