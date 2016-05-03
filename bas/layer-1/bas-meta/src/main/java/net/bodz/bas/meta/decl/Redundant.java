@@ -1,11 +1,11 @@
 package net.bodz.bas.meta.decl;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
+
+import net.bodz.bas.meta.meta.MetaAnnotation;
 
 @Documented
-@Target(ElementType.ANNOTATION_TYPE)
+@MetaAnnotation
 public @interface Redundant {
 
     int rank() default 0;
