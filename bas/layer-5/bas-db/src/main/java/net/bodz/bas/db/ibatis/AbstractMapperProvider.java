@@ -8,9 +8,4 @@ public abstract class AbstractMapperProvider
         return getMapper(mapperClass, true);
     }
 
-    @Override
-    public <M extends IMapper> M getMapperForObject(Class<?> objClass) {
-        return getMapperForObject(objClass, true);
-    }
-
 }

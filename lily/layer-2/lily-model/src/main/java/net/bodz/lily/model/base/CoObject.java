@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.joda.time.DateTime;
 
+import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
@@ -519,7 +520,8 @@ public abstract class CoObject
     public Object persist(IHtmlViewContext ctx, IHtmlOut out)
             throws PersistenceException, IOException {
         IMapperProvider provider = ctx.query(IMapperProvider.class);
-        IMapperTemplate<CoObject, ?> mapper = provider.getMapperForObject(getClass());
+        Class<IMapperTemplate<CoObject, ?>> mapperClass = IMapper.fn.getMapperClass(getClass());
+        IMapperTemplate<CoObject, ?> mapper = provider.getMapper(mapperClass);
         if (mapper == null)
             throw new PersistenceException("No mapper for " + getClass());
 

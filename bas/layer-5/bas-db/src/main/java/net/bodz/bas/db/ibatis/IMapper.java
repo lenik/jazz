@@ -16,12 +16,20 @@ public interface IMapper {
                 new NameConventionTypeMapper(null, 1, "db.", "Mapper", false), //
         };
 
-        public static Class<? extends IMapper> getMapperClass(Class<?> objClass) {
+        public static <M extends IMapper> Class<M> requireMapperClass(Class<?> objClass) {
+            Class<M> mapperClass = getMapperClass(objClass);
+            if (mapperClass == null)
+                throw new IllegalArgumentException("unmapped entity: " + objClass);
+            return mapperClass;
+        }
+
+        @SuppressWarnings("unchecked")
+        public static <M extends IMapper> Class<M> getMapperClass(Class<?> objClass) {
             Class<? extends IMapper> mapperClass;
             for (ITypeMapper tmap : mapperTmaps) {
                 mapperClass = (Class<? extends IMapper>) tmap.map(objClass);
                 if (mapperClass != null)
-                    return mapperClass;
+                    return (Class<M>) mapperClass;
             }
             return null;
         }

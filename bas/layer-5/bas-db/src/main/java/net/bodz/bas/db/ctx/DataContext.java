@@ -2,14 +2,20 @@ package net.bodz.bas.db.ctx;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.TransactionIsolationLevel;
+
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.IbatisMapperProvider;
 import net.bodz.bas.db.jdbc.BoneCPDataSourceProvider;
 import net.bodz.bas.db.jdbc.ConnectOptions;
@@ -19,13 +25,13 @@ import net.bodz.bas.rtx.IAttributed;
 
 public class DataContext
         extends AbstractQueryable
-        implements Closeable, IAttributed {
+        implements Closeable, IAttributed, SqlSessionFactory {
 
     public static final String ATTRIBUTE_KEY = DataContext.class.getName();
 
     private IDataSourceProvider dataSourceProvider;
     private DataSource dataSource;
-    private IMapperProvider mapperProvider;
+    private IbatisMapperProvider mapperProvider;
     private Map<String, Object> attributes;
 
     public DataContext(ConnectOptions opts) {
@@ -72,25 +78,15 @@ public class DataContext
     }
 
     public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass) {
-        return getMapper(mapperClass, true);
+        return getMapper(mapperClass, false);
     }
 
-    public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass, boolean autoCommit) {
-        mapper_t mapper = getMapperProvider().getMapper(mapperClass, autoCommit);
-        return mapper;
+    public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass, boolean batch) {
+        return getMapperProvider().getMapper(mapperClass, batch);
     }
 
-    public <T, C> IMapperTemplate<T, C> getMapperFor(Class<T> entityClass) {
-        return getMapperFor(entityClass, true);
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T, C> IMapperTemplate<T, C> getMapperFor(Class<T> entityClass, boolean autoCommit) {
-        Class<? extends IMapper> mapperClass = IMapper.fn.getMapperClass(entityClass);
-        if (mapperClass == null)
-            throw new IllegalArgumentException("unmapped entity: " + entityClass);
-        IMapper mapper = getMapper(mapperClass);
-        return (IMapperTemplate<T, C>) mapper;
+    public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass, SqlSession session) {
+        return getMapperProvider().getMapper(mapperClass, session);
     }
 
     @Override
@@ -100,6 +96,9 @@ public class DataContext
             // shutdown connection pool if possible.
             ((Closeable) dataSource).close();
     }
+
+    /** ⇱ Implementation Of {@link IAttributed}. */
+    /* _____________________________ */static section.iface __ATTRS__;
 
     @Override
     public <T> T getAttribute(String name) {
@@ -117,6 +116,58 @@ public class DataContext
     @Override
     public void setAttribute(String name, Object value) {
         attributes.put(name, value);
+    }
+
+    /** ⇱ Implementation Of {@link SqlSessionFactory}. */
+/* _____________________________ */static section.iface __SESSION_FACTORY__;
+
+    public SqlSessionFactory getSessionFactory() {
+        return mapperProvider.getSqlSessionFactory();
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        return getSessionFactory().getConfiguration();
+    }
+
+    @Override
+    public SqlSession openSession() {
+        return getSessionFactory().openSession();
+    }
+
+    @Override
+    public SqlSession openSession(boolean autoCommit) {
+        return getSessionFactory().openSession(autoCommit);
+    }
+
+    @Override
+    public SqlSession openSession(Connection connection) {
+        return getSessionFactory().openSession(connection);
+    }
+
+    @Override
+    public SqlSession openSession(TransactionIsolationLevel level) {
+        return getSessionFactory().openSession(level);
+    }
+
+    @Override
+    public SqlSession openSession(ExecutorType execType) {
+        return getSessionFactory().openSession(execType);
+    }
+
+    @Override
+    public SqlSession openSession(ExecutorType execType, boolean autoCommit) {
+        return getSessionFactory().openSession(execType, autoCommit);
+    }
+
+    @Override
+    public SqlSession openSession(ExecutorType execType, TransactionIsolationLevel level) {
+        return getSessionFactory().openSession(execType, level);
+    }
+
+    @Override
+    public SqlSession openSession(ExecutorType execType, Connection connection) {
+        return getSessionFactory().openSession(execType, connection);
     }
 
 }
