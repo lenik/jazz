@@ -10,6 +10,9 @@ public interface IHtmlOut
         extends IXmlOut {
 
     @Override
+    HtmlDoc getDoc();
+
+    @Override
     IHtmlOut begin(String name);
 
     @Override
