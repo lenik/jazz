@@ -4,21 +4,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import net.bodz.bas.html.io.IHtmlOut;
-import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
-import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.IAnchor;
+import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class UploadResult_json
-        extends AbstractHtmlViewBuilder<UploadResult> {
+        extends AbstractHttpViewBuilder<UploadResult> {
 
     public UploadResult_json() {
         super(UploadResult.class);
@@ -30,7 +30,7 @@ public class UploadResult_json
     }
 
     @Override
-    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut parent, IUiRef<UploadResult> ref)
+    public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<UploadResult> ref)
             throws ViewBuilderException, IOException {
         UploadResult result = ref.get();
         IFilePathMapping mapping = ctx.query(IFilePathMapping.class);
@@ -51,7 +51,7 @@ public class UploadResult_json
         JSONObject obj = new JSONObject();
         obj.put("files", filesArray);
 
-        PrintWriter out = ctx.getResponse().getWriter();
+        PrintWriter out = resp.getWriter();
         String json = obj.toString();
         out.println(json);
 
