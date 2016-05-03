@@ -1,25 +1,25 @@
 package net.bodz.bas.html.viz.builtin;
 
-import java.io.IOException;
-
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlHeader;
 import net.bodz.bas.html.io.tag.HtmlLi;
 import net.bodz.bas.html.io.tag.HtmlSpan;
 import net.bodz.bas.html.io.tag.HtmlUl;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.io.res.builtin.URLResource;
-import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.preorder.PackageMap;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-/**
- * @style .exception { color: red; }
- */
 public class Throwable_htm
         extends AbstractHtmlViewBuilder<Throwable> {
 
+    static final Logger logger = LoggerFactory.getLogger(Throwable_htm.class);
+
+    String title;
     PackageMap<String> pkgStyleMap;
 
     public Throwable_htm() {
@@ -30,19 +30,34 @@ public class Throwable_htm
         pkgStyleMap.put("javax", "p-java");
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
-    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<Throwable> ref)
-            throws ViewBuilderException, IOException {
-
+    public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<Throwable> ref) {
         URLResource css = ClassResource.getData(Throwable_htm.class, "css");
-        String style = css.read().readString();
-
-        out.style().text(style);
+        String style;
+        try {
+            style = css.read().readString();
+            out.style().text(style);
+        } catch (Exception e) {
+            logger.error("Can't read class resource " + css, e);
+        }
 
         Throwable e = ref.get();
 
         out = out.div().class_("exception");
-        out.header().text("Exception: " + e.toString());
+        HtmlHeader hdr = out.header();
+        if (title != null) {
+            hdr.h1().text(title);
+            hdr.hr();
+        }
+        hdr.text("Exception: " + e.toString());
 
         StackTraceElement[] stackTrace = e.getStackTrace();
         HtmlUl ul = out.ul().class_("stack-trace");
