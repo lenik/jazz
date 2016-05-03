@@ -4,9 +4,13 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
+import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.viz.HtmlViewOptions;
+import net.bodz.bas.html.viz.IHtmlViewContext;
+import net.bodz.bas.html.viz.IPathArrivalFrameAware;
+import net.bodz.bas.html.viz.PathArrivalFrame;
 import net.bodz.bas.http.ctx.RequestScope;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.codegen.IndexedType;
@@ -24,7 +28,7 @@ import net.bodz.lily.entity.Instantiables;
 @RequestScope
 @IndexedType
 public abstract class CoObjectIndex
-        implements IPathDispatchable, IDataContextAware {
+        implements IPathDispatchable, IPathArrivalFrameAware, IDataContextAware {
 
     private Class<?> objectType;
     private HtmlViewOptions viewOptions = new HtmlViewOptions();
@@ -72,7 +76,7 @@ public abstract class CoObjectIndex
         case "new":
             try {
                 Object obj = Instantiables._instantiate(getObjectType());
-                return PathArrival.shift(previous, obj, tokens);
+                return PathArrival.shift(previous, access(obj), tokens);
             } catch (Exception e) {
                 throw new PathDispatchException(e.getMessage(), e);
             }
@@ -102,10 +106,24 @@ public abstract class CoObjectIndex
 
             Object obj = mapper.select(id);
             if (obj != null)
-                return PathArrival.shift(previous, obj, tokens);
+                return PathArrival.shift(previous, access(obj), tokens);
         }
 
         return null;
+    }
+
+    protected Object access(Object obj) {
+        return obj;
+    }
+
+    @Override
+    public void enter(IHtmlViewContext ctx, PathArrivalFrame frame) {
+        ctx.setVariable("index", this);
+    }
+
+    @Override
+    public void leave(IHtmlViewContext ctx, PathArrivalFrame frame) {
+        ctx.setVariable("index", null);
     }
 
     @Override
