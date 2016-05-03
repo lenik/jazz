@@ -14,4 +14,8 @@ public interface IJsonSerializable {
 
     void writeObject(JSONWriter out);
 
+    class fn
+            extends Jsons {
+    }
+
 }
