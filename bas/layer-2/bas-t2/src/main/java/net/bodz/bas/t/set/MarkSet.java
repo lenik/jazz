@@ -1,6 +1,6 @@
 package net.bodz.bas.t.set;
 
-import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.c.object.IdentityHashSet;
 
@@ -17,7 +17,7 @@ public class MarkSet<T>
         super(expectedMaxSize);
     }
 
-    public MarkSet(Map<? extends T, ?> m) {
+    public MarkSet(Set<? extends T> m) {
         super(m);
     }
 

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -28,8 +27,9 @@ public class IdentityHashSet<T>
         ihm = new IdentityHashMap<T, Object>(expectedMaxSize);
     }
 
-    public IdentityHashSet(Map<? extends T, ?> m) {
-        ihm = new IdentityHashMap<T, Object>(m);
+    public IdentityHashSet(Set<? extends T> m) {
+        ihm = new IdentityHashMap<T, Object>();
+        addAll(m);
     }
 
     @Override
