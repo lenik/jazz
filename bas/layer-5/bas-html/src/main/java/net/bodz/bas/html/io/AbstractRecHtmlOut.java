@@ -16,6 +16,11 @@ public abstract class AbstractRecHtmlOut<self_t extends AbstractRecHtmlOut<self_
     }
 
     @Override
+    public HtmlDoc getDoc() {
+        return doc;
+    }
+
+    @Override
     public RecHtmlOut begin(String name) {
         return begin(name, new RecHtmlOut(doc));
     }
