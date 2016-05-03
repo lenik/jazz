@@ -6,7 +6,7 @@ import java.nio.CharBuffer;
 
 public abstract class AbstractCharOut
         extends Writer
-        implements ICharOut, Appendable {
+        implements ICharOut {
 
     private boolean closed;
 
@@ -83,6 +83,29 @@ public abstract class AbstractCharOut
     @Override
     public boolean isClosed() {
         return closed;
+    }
+
+    /** ⇱ Implementation Of {@link Appendable}. */
+    /* _____________________________ */static section.iface __APPENDABLE__;
+
+    @Override
+    public AbstractCharOut append(CharSequence csq)
+            throws IOException {
+        write(csq, 0, csq.length());
+        return this;
+    }
+
+    @Override
+    public AbstractCharOut append(CharSequence csq, int start, int end)
+            throws IOException {
+        write(csq, start, end);
+        return this;
+    }
+
+    public AbstractCharOut append(String s)
+            throws IOException {
+        write(s);
+        return this;
     }
 
 }
