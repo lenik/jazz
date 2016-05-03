@@ -5,8 +5,10 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Redundant;
 
+@DetailLevel(DetailLevel.HIDDEN)
 @Documented
 @Inherited
 @Redundant

@@ -4,6 +4,8 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import net.bodz.bas.meta.meta.MetaAnnotation;
+
 /**
  * The detail level controls whether this element is displayed. When user specifies a display detail
  * level, then only elements with detail level smaller then the the display detail level is
@@ -38,6 +40,7 @@ import java.lang.annotation.RetentionPolicy;
  * </table>
  */
 @Inherited
+@MetaAnnotation
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DetailLevel {
 
