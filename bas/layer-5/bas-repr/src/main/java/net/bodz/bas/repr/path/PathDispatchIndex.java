@@ -2,7 +2,7 @@ package net.bodz.bas.repr.path;
 
 import java.util.ServiceLoader;
 
-import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
 /**
  * The dispatcher facade. This is also a {@link IPathDispatcher}, though it needn't be.
@@ -10,18 +10,18 @@ import net.bodz.bas.meta.codegen.ExcludedFromIndex;
  * This facade is commonly used by HttpServlet or Filter, which accepts the initial URL prefix, and
  * pass down the rest of the tokens.
  */
-@ExcludedFromIndex
-public class PathDispatchService
-        extends CompositePathDispatcher {
+@IndexedTypeLoader(IPathDispatcher.class)
+public class PathDispatchIndex
+        extends PathDispatchers {
 
-    public PathDispatchService() {
+    public PathDispatchIndex() {
         for (IPathDispatcher dispatcher : ServiceLoader.load(IPathDispatcher.class))
             addDispatcher(dispatcher);
     }
 
-    private static final PathDispatchService instance = new PathDispatchService();
+    private static final PathDispatchIndex instance = new PathDispatchIndex();
 
-    public static PathDispatchService getInstance() {
+    public static PathDispatchIndex getInstance() {
         return instance;
     }
 

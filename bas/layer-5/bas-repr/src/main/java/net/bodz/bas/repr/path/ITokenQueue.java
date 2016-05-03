@@ -9,6 +9,8 @@ package net.bodz.bas.repr.path;
 public interface ITokenQueue
         extends Cloneable {
 
+    ITokenQueue clone();
+
     /**
      * Get the available count of remaining tokens.
      * 
@@ -136,9 +138,5 @@ public interface ITokenQueue
     boolean isStopped();
 
     void stop();
-
-    void save();
-
-    void restore();
 
 }

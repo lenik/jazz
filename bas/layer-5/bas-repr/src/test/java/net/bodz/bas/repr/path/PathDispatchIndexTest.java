@@ -9,13 +9,13 @@ import org.junit.Test;
 
 import net.bodz.bas.repr.path.builtin.*;
 
-public class PathDispatchServiceTest
+public class PathDispatchIndexTest
         extends Assert {
 
     @Test
     public void testLoadProviders() {
         Set<Class<?>> dispatcherClasses = new HashSet<Class<?>>();
-        for (IPathDispatcher dispatcher : PathDispatchService.getInstance().getDispatchers()) {
+        for (IPathDispatcher dispatcher : PathDispatchIndex.getInstance().getDispatchers()) {
             // System.out.println(dispatcher);
             dispatcherClasses.add(dispatcher.getClass());
         }
@@ -52,7 +52,7 @@ public class PathDispatchServiceTest
     public void testMixed()
             throws PathDispatchException {
         Home home = new Home();
-        PathDispatchService service = PathDispatchService.getInstance();
+        PathDispatchIndex service = PathDispatchIndex.getInstance();
         assertEquals("coridor", service.dispatchTest(home, "address"));
         assertEquals("Punjab", service.dispatchTest(home, "city"));
         assertEquals("very long", service.dispatchTest(home, "road"));

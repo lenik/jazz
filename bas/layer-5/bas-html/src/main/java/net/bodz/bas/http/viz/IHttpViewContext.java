@@ -35,6 +35,8 @@ public interface IHttpViewContext
 
     void setVariable(String name, Object value);
 
+    Object removeVariable(String name);
+
     IHttpHeadData getHeadData();
 
 }
