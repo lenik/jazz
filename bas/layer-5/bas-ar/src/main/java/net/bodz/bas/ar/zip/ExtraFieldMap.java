@@ -11,7 +11,9 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.BByteIOS;
 import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.data.DataInImplLE;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
+@IndexedTypeLoader(ExtraField.class)
 public class ExtraFieldMap
         extends LinkedHashMap<Class<?>, ExtraField> {
 

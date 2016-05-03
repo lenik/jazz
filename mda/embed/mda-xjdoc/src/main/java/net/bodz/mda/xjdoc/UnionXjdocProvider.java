@@ -6,11 +6,11 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.WeakHashMap;
 
-import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
-@ExcludedFromIndex
+@IndexedTypeLoader(IXjdocProvider.class)
 public class UnionXjdocProvider
         extends AbstractXjdocProvider {
 

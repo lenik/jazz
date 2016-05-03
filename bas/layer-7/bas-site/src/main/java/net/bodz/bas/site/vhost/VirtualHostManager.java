@@ -6,10 +6,10 @@ import java.util.ServiceLoader;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.t.order.PriorityComparator;
 
-@ExcludedFromIndex
+@IndexedTypeLoader(IVirtualHostResolver.class)
 public class VirtualHostManager
         extends ArrayList<IVirtualHostResolver>
         implements IVirtualHostResolver {

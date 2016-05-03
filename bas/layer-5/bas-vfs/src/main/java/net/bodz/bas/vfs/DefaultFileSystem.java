@@ -5,12 +5,14 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.TreeSet;
 
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.vfs.context.IVfsVars;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
+@IndexedTypeLoader(IVfsDriverProvider.class)
 public class DefaultFileSystem
         implements IFileSystem {
 

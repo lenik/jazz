@@ -3,9 +3,9 @@ package net.bodz.bas.html.artifact;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
-@ExcludedFromIndex
+@IndexedTypeLoader(IArtifactProvider.class)
 public class IndexedArtifactManager
         extends MutableArtifactManager {
 
