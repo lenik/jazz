@@ -6,6 +6,11 @@ public class NullXmlOut
         implements IXmlOut {
 
     @Override
+    public XmlDoc getDoc() {
+        return null;
+    }
+
+    @Override
     public String getTagName() {
         return null;
     }
@@ -62,7 +67,12 @@ public class NullXmlOut
 
     @Override
     public IXmlOut text(Object str) {
-        return null;
+        return this;
+    }
+
+    @Override
+    public IXmlOut textf(String fmt, Object... args) {
+        return this;
     }
 
     @Override
@@ -72,7 +82,7 @@ public class NullXmlOut
 
     @Override
     public IXmlOut textln(Object str) {
-        return null;
+        return this;
     }
 
     @Override
