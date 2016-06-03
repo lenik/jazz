@@ -28,7 +28,7 @@ public abstract class AbstractHttpViewBuilder<T>
 
     @Override
     public String getEncoding() {
-        return null;
+        return "utf-8";
     }
 
     @Override
