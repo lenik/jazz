@@ -39,7 +39,7 @@ import net.bodz.lily.entity.ILazyLoading;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
-import net.bodz.lily.model.base.security.LoginContext;
+import net.bodz.lily.model.base.security.LoginData;
 import net.bodz.lily.model.base.security.User;
 
 /**
@@ -91,12 +91,16 @@ public abstract class CoObject
 
     @Override
     public void instantiate() {
+        fillLoginData();
+    }
+
+    public void fillLoginData() {
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session != null) {
-            LoginContext loginContext = (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);
-            if (loginContext != null) {
-                ownerUser = loginContext.user;
-                ownerGroup = loginContext.user.getPrimaryGroup();
+            LoginData loginData = LoginData.fromSession(session);
+            if (loginData != null) {
+                ownerUser = loginData.user;
+                ownerGroup = loginData.user.getPrimaryGroup();
             }
         }
     }
