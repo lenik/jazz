@@ -21,6 +21,7 @@
         <module>bas-ogl</module>
         <module>bas-potato</module>
         <module>bas-repr</module>
+        <module>bas-search</module>
         <module>bas-ui</module>
         <module>bas-vfs</module>
     </modules>
