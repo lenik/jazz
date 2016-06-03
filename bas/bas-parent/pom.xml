@@ -138,6 +138,81 @@ Dependency Management-->
                 <version>4.01</version>
             </dependency>
             <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-core</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-join</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-queryparser</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-misc</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-highlighter</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-sandbox</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-spatial3d</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-backward-codecs</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-spatial-extras</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-grouping</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-analyzers-common</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-memory</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-queries</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-spatial</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-suggest</artifactId>
+              <version>6.0.0</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-dbcp</artifactId>
                 <version>7.0.55</version><!-- 8.0.11 -->
@@ -161,6 +236,11 @@ Dependency Management-->
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>9.4.1208.jre7</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -197,11 +277,6 @@ Dependency Management-->
                         <artifactId>bootstrap</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>9.1-901.jdbc4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
