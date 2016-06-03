@@ -10,6 +10,7 @@ import java.util.TreeSet;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
@@ -94,7 +95,12 @@ public class IbatisMapperProvider
 
         for (Class<?> mapperClass : mapperClasses) {
             logger.log("Add Mapper: ", mapperClass);
-            config.addMapper(mapperClass);
+            try {
+                config.addMapper(mapperClass);
+            } catch (BuilderException e) {
+                logger.error("Failed to add mapper: " + mapperClass, e);
+                throw e;
+            }
         }
 
         for (IIbatisConfigurer configurer : configurers)
