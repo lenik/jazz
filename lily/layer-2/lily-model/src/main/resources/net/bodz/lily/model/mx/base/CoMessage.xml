@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="message">
 
-    <resultMap id="map1" type="net.bodz.lily.model.mx.base.CoMessage" extends="co.mapUSA">
+    <resultMap id="MAP_ALL" type="net.bodz.lily.model.mx.base.CoMessage" extends="co.MAP_ALL">
         <result property="beginDate" column="t0" />
         <result property="endDate" column="t1" />
         <result property="subject" column="subject" />
@@ -13,9 +13,7 @@
         <result property="clickInfo.voteUps" column="nvote" />
         <result property="clickInfo.pinCount" column="nlike" />
         <result property="clickInfo.readCount" column="nread" />
-    </resultMap>
 
-    <resultMap id="map2" type="net.bodz.lily.model.mx.base.CoMessage" extends="map1">
         <association property="op" javaType="net.bodz.lily.model.base.security.User">
             <id property="id" column="op" />
             <result property="label" column="op_label" />

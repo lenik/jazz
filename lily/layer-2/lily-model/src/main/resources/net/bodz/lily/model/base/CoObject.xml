@@ -4,65 +4,32 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co">
 
-    <!-- UI -->
-    <resultMap id="mapU" type="net.bodz.lily.model.base.CoObject">
+    <!-- Acess-control, State, Ui, Versioning -->
+
+    <resultMap id="MAP_K" type="net.bodz.lily.model.base.CoObject">
         <id property="id" column="id" />
+    </resultMap>
+    
+    <resultMap id="MAP_U" type="net.bodz.lily.model.base.CoObject" extends="MAP_K">
         <result property="codeName" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <!-- result property="comment" column="comment" / -->
     </resultMap>
-
-    <sql id="setU">
-        <if test="codeName != null">code = #{codeName},</if>
-        <if test="label != null">label = #{label},</if>
-        <if test="description != null">description = #{description},</if>
-        <if test="comment != null">comment = #{comment},</if>
-    </sql>
-
-    <!-- States -->
-    <resultMap id="mapS" type="net.bodz.lily.model.base.CoObject">
-        <result property="priority" column="priority" />
+    
+    <resultMap id="MAP_UV" type="net.bodz.lily.model.base.CoObject" extends="MAP_U">
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
-        <result property="flags" column="flags" />
-        <result property="state" column="state" />
         <result property="version" column="version" />
     </resultMap>
-
-    <sql id="setS">
-        priority = #{priority},
-        <if test="lastModifiedDate == null">lastmod = #{lastModifiedDate},</if>
-        <if test="lastModifiedDate != null">lastmod = now(),</if>
-        flags = #{flags},
-        state = #{state},
-        <!-- <if test="version != null">version = #{version},</if> -->
-        version = version + 1,
-    </sql>
-
-    <!-- UI, States -->
-    <resultMap id="mapUS" type="net.bodz.lily.model.base.CoObject" extends="mapU">
+    
+    <resultMap id="MAP_UVX" type="net.bodz.lily.model.base.CoObject" extends="MAP_UV">
         <result property="priority" column="priority" />
-        <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
-        <result property="version" column="version" />
     </resultMap>
 
-    <sql id="setUS">
-        <include refid="co.setU" />
-        priority = #{priority},
-        <if test="lastModifiedDate == null">lastmod = #{lastModifiedDate},</if>
-        <if test="lastModifiedDate != null">lastmod = now(),</if>
-        flags = #{flags},
-        state = #{state},
-        <!-- <if test="version != null">version = #{version},</if> -->
-        version = version + 1,
-    </sql>
-
-    <!-- UI, States, ACL -->
-    <resultMap id="mapUSA" type="net.bodz.lily.model.base.CoObject" extends="mapUS">
+    <resultMap id="MAP_ALL" type="net.bodz.lily.model.base.CoObject" extends="MAP_UVX">
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
         <association property="ownerUser" javaType="net.bodz.lily.model.base.security.User">
@@ -76,6 +43,40 @@
             <result property="label" column="gid_label" />
         </association>
     </resultMap>
+    
+    <sql id="setU">
+        <if test="codeName != null">code = #{codeName},</if>
+        <if test="label != null">label = #{label},</if>
+        <if test="description != null">description = #{description},</if>
+        <if test="comment != null">comment = #{comment},</if>
+    </sql>
+
+    <sql id="setV">
+        <if test="lastModifiedDate == null">lastmod = #{lastModifiedDate},</if>
+        <if test="lastModifiedDate != null">lastmod = now(),</if>
+        <!-- <if test="version != null">version = #{version},</if> -->
+        version = version + 1,
+    </sql>
+
+    <sql id="setS">
+        <include refid="co.setV" />
+        priority = #{priority},
+        flags = #{flags},
+        state = #{state},
+    </sql>
+
+    <sql id="setUS">
+        <include refid="co.setU" />
+        priority = #{priority},
+        <if test="lastModifiedDate == null">lastmod = #{lastModifiedDate},</if>
+        <if test="lastModifiedDate != null">lastmod = now(),</if>
+        flags = #{flags},
+        state = #{state},
+        <!-- <if test="version != null">version = #{version},</if> -->
+        version = version + 1,
+    </sql>
+
+    <!-- UI, States, ACL -->
 
     <sql id="setUSA">
         <include refid="co.setUS" />

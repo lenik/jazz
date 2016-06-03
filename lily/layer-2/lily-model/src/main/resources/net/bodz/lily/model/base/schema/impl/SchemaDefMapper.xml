@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.model.base.schema.impl.SchemaDefMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.model.base.schema.SchemaDef" extends="co.mapUS">
+    <resultMap id="map1" type="net.bodz.lily.model.base.schema.SchemaDef" extends="co.MAP_ALL">
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -34,12 +34,12 @@
         </where>
     </select>
 
-    <select id="insert" resultType="int">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         <![CDATA[
         insert into _schema(code, label, description)
             values(#{codeName},#{label},#{description})
             returning id
-    ]]></select>
+    ]]></insert>
 
     <update id="update">
         update _schema

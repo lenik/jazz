@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.model.contact.impl.PersonRoleMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.model.contact.PersonRole" extends="co.mapUS">
+    <resultMap id="map1" type="net.bodz.lily.model.contact.PersonRole" extends="co.MAP_ALL">
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -52,13 +52,13 @@
         </where>
     </select>
 
-    <select id="insert" resultType="long"><![CDATA[
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into personRole(
             code, label, description
         ) values(
             #{codeName},#{label},#{description}
         ) returning id
-    ]]></select>
+    ]]></insert>
 
     <update id="update">
         update personRole
