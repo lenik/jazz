@@ -11,6 +11,7 @@ import net.bodz.bas.db.cache.AbstractCache;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -187,6 +188,15 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
         super._purge();
         codeNameMap = new HashMap<>();
         labelMap = new HashMap<>();
+    }
+
+    protected T create() {
+        try {
+            return objectClass.newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new CreateException(String.format(//
+                    "Can't instantiate %s: %s", objectClass, e.getMessage()), e);
+        }
     }
 
 }
