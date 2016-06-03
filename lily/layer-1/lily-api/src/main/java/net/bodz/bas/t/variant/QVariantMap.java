@@ -54,44 +54,6 @@ public class QVariantMap<K>
             return s;
     }
 
-    public Integer getInt(K key, Integer defaultValue) {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
-            return defaultValue;
-        int val = getInt(key);
-        return val;
-    }
-
-    public Long getLong(K key, Long defaultValue) {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
-            return defaultValue;
-        long val = getLong(key);
-        return val;
-    }
-
-    public Boolean getBoolean(K key, Boolean defaultValue) {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
-            return defaultValue;
-        switch (s) {
-        case "true":
-        case "yes":
-        case "on":
-        case "1":
-            return true;
-        }
-        return false;
-    }
-
-    public <T extends Enum<T>> T getEnum(Class<T> enumType, K key, T defaultValue) {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
-            return defaultValue;
-        T value = Enum.valueOf(enumType, s);
-        return value;
-    }
-
     public <T extends Predef<T, Km>, Km extends Comparable<Km>> T getPredef(Class<T> type, K key, T defaultValue) {
         String s = getString(key);
         if (s == null || s.isEmpty())

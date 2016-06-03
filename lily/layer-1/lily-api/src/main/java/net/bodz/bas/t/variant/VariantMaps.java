@@ -3,6 +3,7 @@ package net.bodz.bas.t.variant;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class VariantMaps {
 
@@ -16,6 +17,10 @@ public class VariantMaps {
     public static IVariantMap<String> fromRequest(HttpServletRequest request) {
         Map<String, String[]> map = request.getParameterMap();
         return fromParameterMap(map);
+    }
+
+    public static IVariantMap<String> fromSession(HttpSession session) {
+        return new SessionVars(session);
     }
 
     public static IVariantMap<String> fromParameterMap(Map<String, String[]> map) {
