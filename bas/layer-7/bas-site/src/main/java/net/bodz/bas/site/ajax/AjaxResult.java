@@ -11,10 +11,9 @@ import org.json.JSONWriter;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.html.io.HtmlDoc;
+import net.bodz.bas.html.io.BHtmlOut;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
-import net.bodz.bas.html.io.RecHtmlOut;
 import net.bodz.bas.io.BCharOut;
 
 public class AjaxResult
@@ -58,6 +57,10 @@ public class AjaxResult
         return message(AjaxMessage.MSGBOX);
     }
 
+    public AjaxMessage msgbox(String title) {
+        return msgbox().title(title);
+    }
+
     public AjaxMessage notice() {
         return message(AjaxMessage.NOTICE);
     }
@@ -73,10 +76,8 @@ public class AjaxResult
     public IHtmlOut update(String id) {
         IHtmlOut out = updatehtmls.get(id);
         if (out == null) {
-            BCharOut buf = new BCharOut();
-            HtmlDoc doc = new HtmlDoc(buf, htmlOutputFormat);
-            out = new RecHtmlOut(doc);
-            updates.put(id, buf);
+            BHtmlOut bout = new BHtmlOut(htmlOutputFormat);
+            updates.put(id, bout.getBuffer());
             updatehtmls.put(id, out);
         }
         return out;
