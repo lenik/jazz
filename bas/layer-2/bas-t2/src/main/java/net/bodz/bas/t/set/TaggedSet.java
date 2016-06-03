@@ -3,10 +3,7 @@ package net.bodz.bas.t.set;
 import java.util.Collection;
 import java.util.Set;
 
-/**
- * @see Lucene
- */
-public interface TaggedSet<V> {
+public interface TaggedSet<K> {
 
     /**
      * @return　Number　of items. (Not tags)
@@ -15,12 +12,12 @@ public interface TaggedSet<V> {
 
     boolean isEmpty();
 
-    boolean contains(Object item);
+    boolean containsKey(Object key);
 
     /**
      * Remove a single item.
      */
-    boolean remove(V item);
+    boolean remove(K key);
 
     /**
      * Add an item and tag it with the specific tags.
@@ -30,18 +27,18 @@ public interface TaggedSet<V> {
      * @param tags
      *            Can be empty.
      */
-    void add(V item, String... tags);
+    void add(K key, String... tags);
 
-    void add(V item, Iterable<String> tags);
+    void add(K key, Iterable<String> tags);
 
     /**
      * @return Non-<code>null</code> tag set.
      */
-    Set<String> getTags(Object item);
+    Set<String> getTags(Object key);
 
-    void addTag(V item, String tag);
+    void addTag(K key, String tag);
 
-    void removeTag(V item, String tag);
+    void removeTag(K key, String tag);
 
     /**
      * Remove all items which contains all the tags.
@@ -53,7 +50,7 @@ public interface TaggedSet<V> {
      */
     void removeWithAnyTag(String... tags);
 
-    Collection<V> select(String tag);
+    Collection<K> select(String tag);
 
     /**
      * Find items with all required tags.
@@ -61,7 +58,7 @@ public interface TaggedSet<V> {
      * @param tags
      *            If empty, only items without tag is selected.
      */
-    Collection<V> selectForAll(String... tags);
+    Collection<K> selectForAll(String... tags);
 
     /**
      * Find items with any required tag.
@@ -69,6 +66,6 @@ public interface TaggedSet<V> {
      * @param tags
      *            Can't be empty.
      */
-    Collection<V> selectForAny(String... tags);
+    Collection<K> selectForAny(String... tags);
 
 }

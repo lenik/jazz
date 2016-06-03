@@ -13,28 +13,28 @@ public abstract class AbstractTaggedSet<V>
     }
 
     @Override
-    public boolean contains(Object item) {
-        Set<String> tags = getTags(item);
+    public boolean containsKey(Object key) {
+        Set<String> tags = getTags(key);
         return !tags.isEmpty();
     }
 
     @Override
-    public void add(V item, String... tags) {
-        add(item, Arrays.asList(tags));
+    public void add(V key, String... tags) {
+        add(key, Arrays.asList(tags));
     }
 
-    public abstract void add(V item, Iterable<String> tags);
+    public abstract void add(V key, Iterable<String> tags);
 
     @Override
     public void removeWithAllTags(String... tags) {
-        for (V item : selectForAll(tags))
-            remove(item);
+        for (V key : selectForAll(tags))
+            remove(key);
     }
 
     @Override
     public void removeWithAnyTag(String... tags) {
-        for (V item : selectForAny(tags))
-            remove(item);
+        for (V key : selectForAny(tags))
+            remove(key);
     }
 
     @Override
