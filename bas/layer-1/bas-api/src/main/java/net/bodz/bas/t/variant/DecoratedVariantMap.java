@@ -93,12 +93,22 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
+    public Byte getByte(K key, Byte defaultValue) {
+        return getWrapped().getByte(key, defaultValue);
+    }
+
+    @Override
     public short getShort(K key) {
         return getWrapped().getShort(key);
     }
 
     @Override
     public short getShort(K key, short defaultValue) {
+        return getWrapped().getShort(key, defaultValue);
+    }
+
+    @Override
+    public Short getShort(K key, Short defaultValue) {
         return getWrapped().getShort(key, defaultValue);
     }
 
@@ -113,12 +123,22 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
+    public Integer getInt(K key, Integer defaultValue) {
+        return getWrapped().getInt(key, defaultValue);
+    }
+
+    @Override
     public long getLong(K key) {
         return getWrapped().getLong(key);
     }
 
     @Override
     public long getLong(K key, long defaultValue) {
+        return getWrapped().getLong(key, defaultValue);
+    }
+
+    @Override
+    public Long getLong(K key, Long defaultValue) {
         return getWrapped().getLong(key, defaultValue);
     }
 
@@ -133,12 +153,22 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
+    public Float getFloat(K key, Float defaultValue) {
+        return getWrapped().getFloat(key, defaultValue);
+    }
+
+    @Override
     public double getDouble(K key) {
         return getWrapped().getDouble(key);
     }
 
     @Override
     public double getDouble(K key, double defaultValue) {
+        return getWrapped().getDouble(key, defaultValue);
+    }
+
+    @Override
+    public Double getDouble(K key, Double defaultValue) {
         return getWrapped().getDouble(key, defaultValue);
     }
 
@@ -153,12 +183,22 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
+    public Boolean getBoolean(K key, Boolean defaultValue) {
+        return getWrapped().getBoolean(key, defaultValue);
+    }
+
+    @Override
     public char getChar(K key) {
         return getWrapped().getChar(key);
     }
 
     @Override
     public char getChar(K key, char defaultValue) {
+        return getWrapped().getChar(key, defaultValue);
+    }
+
+    @Override
+    public Character getChar(K key, Character defaultValue) {
         return getWrapped().getChar(key, defaultValue);
     }
 

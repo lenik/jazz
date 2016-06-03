@@ -47,33 +47,49 @@ public interface IVariantMap<K>
 
     byte getByte(K key, byte defaultValue);
 
+    Byte getByte(K key, Byte defaultValue);
+
     short getShort(K key);
 
     short getShort(K key, short defaultValue);
+
+    Short getShort(K key, Short defaultValue);
 
     int getInt(K key);
 
     int getInt(K key, int defaultValue);
 
+    Integer getInt(K key, Integer defaultValue);
+
     long getLong(K key);
 
     long getLong(K key, long defaultValue);
+
+    Long getLong(K key, Long defaultValue);
 
     float getFloat(K key);
 
     float getFloat(K key, float defaultValue);
 
+    Float getFloat(K key, Float defaultValue);
+
     double getDouble(K key);
 
     double getDouble(K key, double defaultValue);
+
+    Double getDouble(K key, Double defaultValue);
 
     boolean getBoolean(K key);
 
     boolean getBoolean(K key, boolean defaultValue);
 
+    Boolean getBoolean(K key, Boolean defaultValue);
+
     char getChar(K key);
 
     char getChar(K key, char defaultValue);
+
+    Character getChar(K key, Character defaultValue);
 
     BigInteger getBigInteger(K key);
 

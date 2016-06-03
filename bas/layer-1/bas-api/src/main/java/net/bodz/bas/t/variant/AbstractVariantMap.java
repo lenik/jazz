@@ -59,7 +59,7 @@ public abstract class AbstractVariantMap<K>
     @Override
     public String getString(K key) {
         Object value = getScalar(key);
-        return Nullables.toString(value);
+        return value == null ? null : value.toString();
     }
 
     @Override
@@ -68,6 +68,14 @@ public abstract class AbstractVariantMap<K>
         if (value == null)
             return containsKey(key) ? null : defaultString;
         return value.toString();
+    }
+
+    public <T extends Enum<T>> T getEnum(Class<T> enumType, K key, T defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        T value = Enum.valueOf(enumType, s);
+        return value;
     }
 
     @Override
@@ -117,6 +125,84 @@ public abstract class AbstractVariantMap<K>
             sb.append('\n');
         }
         return super.toString();
+    }
+
+    @Override
+    public Byte getByte(K key, Byte defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        byte val = getByte(key);
+        return val;
+    }
+
+    @Override
+    public Short getShort(K key, Short defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        short val = getShort(key);
+        return val;
+    }
+
+    @Override
+    public Integer getInt(K key, Integer defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        int val = getInt(key);
+        return val;
+    }
+
+    @Override
+    public Long getLong(K key, Long defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        long val = getLong(key);
+        return val;
+    }
+
+    @Override
+    public Float getFloat(K key, Float defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        float val = getFloat(key);
+        return val;
+    }
+
+    @Override
+    public Double getDouble(K key, Double defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        double val = getDouble(key);
+        return val;
+    }
+
+    @Override
+    public Boolean getBoolean(K key, Boolean defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        switch (s) {
+        case "true":
+        case "yes":
+        case "on":
+        case "1":
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Character getChar(K key, Character defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        char val = getChar(key);
+        return val;
     }
 
 }
