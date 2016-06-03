@@ -41,7 +41,7 @@ public abstract class AbstractContent
 
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
-        return CacheRevalidationMode.WANTED;
+        return CacheRevalidationMode.DEFAULT;
     }
 
     @Override

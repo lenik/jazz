@@ -52,7 +52,7 @@ public class Sitemap
 
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
-        return CacheRevalidationMode.WANTED;
+        return CacheRevalidationMode.MUST_REVALIDATE;
     }
 
     @Override

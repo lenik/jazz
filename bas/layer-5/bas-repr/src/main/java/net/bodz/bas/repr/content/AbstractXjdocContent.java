@@ -27,7 +27,7 @@ public abstract class AbstractXjdocContent
 
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
-        return CacheRevalidationMode.WANTED;
+        return CacheRevalidationMode.OPTIONAL;
     }
 
     @Override
