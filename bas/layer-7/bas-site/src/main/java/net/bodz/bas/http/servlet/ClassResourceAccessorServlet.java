@@ -12,6 +12,7 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.http.ResourceTransferer;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 
 public class ClassResourceAccessorServlet
         extends AbstractFileAccessServlet {
@@ -34,7 +35,8 @@ public class ClassResourceAccessorServlet
     }
 
     @Override
-    protected void setParameter(String name, String value) {
+    protected void setParameter(String name, String value)
+            throws ServletException {
         super.setParameter(name, value);
         switch (name) {
         case ATTRIBUTE_PATH:
@@ -59,8 +61,8 @@ public class ClassResourceAccessorServlet
         }
 
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
-        transferer.setMaxAge(getMaxAge());
-        transferer.transfer(url);
+        ICacheControl cacheControl = getCacheControl(req, url);
+        transferer.transfer(url, cacheControl);
     }
 
     protected ClassLoader getClassLoader() {
@@ -71,6 +73,11 @@ public class ClassResourceAccessorServlet
     @Override
     protected File getLocalRoot(HttpServletRequest req) {
         return null;
+    }
+
+    @Override
+    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
+        return super.getCacheControl(req, url);
     }
 
 }

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.http.ResourceTransferer;
+import net.bodz.bas.repr.content.MutableContent;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.iterator.Iterables;
 
 public abstract class AbstractFileAccessServlet
@@ -36,7 +38,8 @@ public abstract class AbstractFileAccessServlet
         }
     }
 
-    protected void setParameter(String name, String value) {
+    protected void setParameter(String name, String value)
+            throws ServletException {
         switch (name) {
         case ATTRIBUTE_MAX_AGE:
             maxAge = Integer.parseInt(value);
@@ -68,19 +71,24 @@ public abstract class AbstractFileAccessServlet
         }
 
         URL url = file.toURI().toURL();
-
+        ICacheControl cacheControl = getCacheControl(req, url);
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
-        transferer.setMaxAge(maxAge);
-        transferer.transfer(url);
+        transferer.transfer(url, cacheControl);
     }
 
     protected abstract File getLocalRoot(HttpServletRequest req);
 
-    public int getMaxAge() {
+    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
+        MutableContent content = new MutableContent();
+        content.setMaxAge(maxAge);
+        return content;
+    }
+
+    public final int getMaxAge() {
         return maxAge;
     }
 
-    public void setMaxAge(int maxAge) {
+    public final void setMaxAge(int maxAge) {
         this.maxAge = maxAge;
     }
 

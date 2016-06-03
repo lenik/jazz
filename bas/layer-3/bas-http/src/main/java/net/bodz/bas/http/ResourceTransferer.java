@@ -14,6 +14,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.std.rfc.http.ContentDisposition;
 import net.bodz.bas.std.rfc.http.ContentRange;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class ResourceTransferer {
@@ -22,22 +23,13 @@ public class ResourceTransferer {
 
     private HttpServletRequest req;
     private HttpServletResponse resp;
-    private int maxAge = 86400;
 
     public ResourceTransferer(HttpServletRequest req, HttpServletResponse resp) {
         this.req = req;
         this.resp = resp;
     }
 
-    public int getMaxAge() {
-        return maxAge;
-    }
-
-    public void setMaxAge(int maxAge) {
-        this.maxAge = maxAge;
-    }
-
-    public void transfer(URL url)
+    public void transfer(URL url, ICacheControl cacheControl)
             throws IOException {
         String filename = null;
         String description = null;
@@ -50,10 +42,10 @@ public class ResourceTransferer {
                     filename = file.getName();
             }
 
-        transfer(url, filename, description);
+        transfer(url, filename, description, cacheControl);
     }
 
-    public void transfer(URL url, String filename, String description)
+    public void transfer(URL url, String filename, String description, ICacheControl cacheControl)
             throws IOException {
         // if (!resource.canRead()) {
         // resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
@@ -86,7 +78,11 @@ public class ResourceTransferer {
             }
         }
 
+        int maxAge = cacheControl.getMaxAge();
         resp.setHeader("Cache-Control", "max-age=" + maxAge);
+        // resp.setHeader("Cache-Control", "must-revalidate");
+        // resp.setHeader("Cache-Control", "no-cache");
+        // resp.setHeader("Cache-Control", "no-store");
 
         Long lastModified = FileURL.lastModified(url, null);
         if (lastModified != null) {

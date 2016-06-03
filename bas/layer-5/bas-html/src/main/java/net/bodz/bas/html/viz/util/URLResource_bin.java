@@ -12,7 +12,9 @@ import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.repr.content.MutableContent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -48,10 +50,15 @@ public class URLResource_bin
         URL url = resource.getURL();
 
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
-        transferer.setMaxAge(maxAge);
-        transferer.transfer(url);
-
+        ICacheControl cacheControl = getCacheControl(req, url);
+        transferer.transfer(url, cacheControl);
         return null;
+    }
+
+    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
+        MutableContent content = new MutableContent();
+        content.setMaxAge(maxAge);
+        return content;
     }
 
 }
