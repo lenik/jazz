@@ -9,6 +9,6 @@ import net.bodz.lily.model.contact.Person;
  */
 @ObjectType(Person.class)
 public class PersonIndex
-        extends CoObjectIndex {
+        extends CoObjectIndex<Person> {
 
 }

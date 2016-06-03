@@ -11,7 +11,6 @@ import net.bodz.bas.html.viz.HtmlViewOptions;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
-import net.bodz.bas.http.ctx.RequestScope;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.decl.ObjectType;
@@ -22,22 +21,41 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.site.vhost.VirtualHostScope;
+import net.bodz.bas.std.rfc.http.AbstractCacheControl;
+import net.bodz.bas.std.rfc.http.CacheControlMode;
+import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.lily.entity.Instantiables;
+import net.bodz.lily.model.base.security.AccessControl;
 
-@RequestScope
+@AccessControl
 @IndexedType
-public abstract class CoObjectIndex
-        implements IPathDispatchable, IPathArrivalFrameAware, IDataContextAware {
+@VirtualHostScope
+public abstract class CoObjectIndex<T extends CoObject>
+        extends AbstractCacheControl
+        implements IPathDispatchable, IPathArrivalFrameAware, ICacheControl, IDataContextAware {
 
-    private Class<?> objectType;
+    private Class<T> objectType;
     private HtmlViewOptions viewOptions = new HtmlViewOptions();
     private boolean pathEnd;
 
     protected DataContext dataContext;
 
     public CoObjectIndex() {
-        this.objectType = getClass().getAnnotation(ObjectType.class).value();
+        this.objectType = (Class<T>) getClass().getAnnotation(ObjectType.class).value();
+        // this.objectType = TypeParam.infer1(getClass(), CoObjectIndex.class, 0);
+    }
+
+    @Override
+    public CacheControlMode getCacheControlMode() {
+        return CacheControlMode.AUTO;
+    }
+
+    @Override
+    public CacheRevalidationMode getCacheRevalidationMode() {
+        return CacheRevalidationMode.MUST_REVALIDATE;
     }
 
     public Class<?> getObjectType() {
@@ -76,7 +94,7 @@ public abstract class CoObjectIndex
         case "new":
             try {
                 Object obj = Instantiables._instantiate(getObjectType());
-                return PathArrival.shift(previous, access(obj), tokens);
+                return PathArrival.shift(previous, _access(obj), tokens);
             } catch (Exception e) {
                 throw new PathDispatchException(e.getMessage(), e);
             }
@@ -106,10 +124,17 @@ public abstract class CoObjectIndex
 
             Object obj = mapper.select(id);
             if (obj != null)
-                return PathArrival.shift(previous, access(obj), tokens);
+                return PathArrival.shift(previous, _access(obj), tokens);
         }
 
         return null;
+    }
+
+    Object _access(Object obj) {
+        Object accessor = access(obj);
+        if (accessor instanceof IDataContextAware)
+            ((IDataContextAware) accessor).setDataContext(dataContext);
+        return accessor;
     }
 
     protected Object access(Object obj) {
