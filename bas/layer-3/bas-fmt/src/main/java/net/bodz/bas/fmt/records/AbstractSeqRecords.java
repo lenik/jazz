@@ -31,13 +31,12 @@ public abstract class AbstractSeqRecords<T>
         List<T> list = new ArrayList<>();
         long index = 0;
         for (T item : this) {
-            long pos = index - offset;
+            long pos = index++ - offset;
             if (pos < 0)
                 continue;
             if (pos >= limit && limit != -1)
                 break;
             list.add(item);
-            index++;
         }
         return list;
     }
