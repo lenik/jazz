@@ -1,0 +1,21 @@
+# \import mytext.index
+
+PUT /mytext/doc/_mappings
+{
+    "_timestamp": {
+        "enabled": "true"
+    },
+    "properties" : {
+        "file" : {
+            "type" : "attachment",
+            "fields" : {
+                "name" : {"store" : "yes"},
+                "title" : {"store" : "yes"},
+                "date" : {"store" : "yes"},
+                "content" : {"store" : "yes"}
+            }
+        }
+    }
+}
+
+
