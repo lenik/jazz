@@ -3,7 +3,9 @@ package net.bodz.lily.model.base;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.ICharOut;
@@ -385,6 +387,24 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
             tv.add(t);
         }
         return tv;
+    }
+
+    public Set<self_t> closure() {
+        final Set<self_t> closure = new LinkedHashSet<>();
+        accept(new ICoNodeVisitor<self_t>() {
+
+            @Override
+            public boolean begin(self_t node) {
+                closure.add(node);
+                return true;
+            }
+
+            @Override
+            public void end(self_t node) {
+            }
+
+        });
+        return closure;
     }
 
     public void accept(ICoNodeVisitor<? super self_t> visitor) {
