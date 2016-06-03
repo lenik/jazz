@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.l10n.en.English;
 import net.bodz.bas.log.Logger;
@@ -152,7 +153,7 @@ public abstract class AbstractCache<K, T> {
 
         boolean added = keyMap.containsKey(key);
 
-        if (key != key2 || obj != obj2) {
+        if (!Nullables.equals(key, key2) || obj != obj2) {
             if (added) {
                 unwireAndRemove(key, obj);
                 added = false;
