@@ -68,6 +68,10 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    public Byte getByte(K key, Byte defaultValue) {
+        return defaultValue;
+    }
+
     @Override
     public short getShort(K key) {
         return 0;
@@ -75,6 +79,11 @@ public class NullVariantMap<K>
 
     @Override
     public short getShort(K key, short defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public Short getShort(K key, Short defaultValue) {
         return defaultValue;
     }
 
@@ -88,6 +97,10 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    public Integer getInt(K key, Integer defaultValue) {
+        return defaultValue;
+    }
+
     @Override
     public long getLong(K key) {
         return 0;
@@ -95,6 +108,10 @@ public class NullVariantMap<K>
 
     @Override
     public long getLong(K key, long defaultValue) {
+        return defaultValue;
+    }
+
+    public Long getLong(K key, Long defaultValue) {
         return defaultValue;
     }
 
@@ -108,6 +125,10 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    public Float getFloat(K key, Float defaultValue) {
+        return defaultValue;
+    }
+
     @Override
     public double getDouble(K key) {
         return 0;
@@ -115,6 +136,10 @@ public class NullVariantMap<K>
 
     @Override
     public double getDouble(K key, double defaultValue) {
+        return defaultValue;
+    }
+
+    public Double getDouble(K key, Double defaultValue) {
         return defaultValue;
     }
 
@@ -128,6 +153,10 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    public Boolean getBoolean(K key, Boolean defaultValue) {
+        return defaultValue;
+    }
+
     @Override
     public char getChar(K key) {
         return 0;
@@ -135,6 +164,10 @@ public class NullVariantMap<K>
 
     @Override
     public char getChar(K key, char defaultValue) {
+        return defaultValue;
+    }
+
+    public Character getChar(K key, Character defaultValue) {
         return defaultValue;
     }
 
