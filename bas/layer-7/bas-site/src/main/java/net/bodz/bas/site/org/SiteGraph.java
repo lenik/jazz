@@ -17,7 +17,7 @@ public class SiteGraph
 
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
-        return CacheRevalidationMode.WANTED;
+        return CacheRevalidationMode.DEFAULT;
     }
 
     @Override

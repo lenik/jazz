@@ -332,7 +332,7 @@ public abstract class CoObject
     @OfGroup(StdGroup.Cache.class)
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
-        return CacheRevalidationMode.WANTED;
+        return CacheRevalidationMode.MUST_REVALIDATE;
     }
 
     /**
