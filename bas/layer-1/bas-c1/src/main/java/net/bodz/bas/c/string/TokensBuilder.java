@@ -18,10 +18,17 @@ public class TokensBuilder
         this.tokenSeparator = separator;
     }
 
-    public void appendToken(String token) {
+    public TokensBuilder appendToken(String token) {
         if (length() != 0)
             append(tokenSeparator);
         append(token);
+        return this;
+    }
+
+    public TokensBuilder appendToken(String token, boolean includeNull) {
+        if (includeNull || token != null)
+            appendToken(token);
+        return this;
     }
 
 }
