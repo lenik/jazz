@@ -64,4 +64,13 @@ public interface IScopeInstance {
 
     ObjScopeInstance STATIC = new ObjScopeInstance("static", new Object());
 
+    class fn {
+
+        public static IScopeInstance echo(Object obj) {
+            Class<?> objClass = obj.getClass();
+            IScopeTeller teller = ScopeTeller.fn.fromScopedObject(objClass);
+            return teller.tell();
+        }
+    }
+
 }

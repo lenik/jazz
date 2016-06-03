@@ -7,6 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
+/**
+ * Aka. prototype scope.
+ */
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)

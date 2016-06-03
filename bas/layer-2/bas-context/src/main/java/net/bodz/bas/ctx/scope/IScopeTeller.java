@@ -1,6 +1,5 @@
 package net.bodz.bas.ctx.scope;
 
-
 public interface IScopeTeller {
 
     /**
