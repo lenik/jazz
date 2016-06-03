@@ -409,6 +409,11 @@ public abstract class CoObject
         this.version = version;
     }
 
+    @Derived
+    public boolean isNew() {
+        return getId() == null;
+    }
+
     /** ⇱ Implementation Of {@link IAccessControlled}. */
     /* _____________________________ */static section.iface __ACL__;
 
