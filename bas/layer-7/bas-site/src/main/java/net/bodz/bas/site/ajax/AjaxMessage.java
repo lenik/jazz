@@ -24,6 +24,10 @@ public class AjaxMessage
     public static final String LOG = "log";
 
     String type = MSGBOX;
+    String title;
+    String width;
+    String height;
+
     String level;
     String css;
     IHtmlOut htmlOut;
@@ -88,6 +92,33 @@ public class AjaxMessage
         return this;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public AjaxMessage title(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public String getWidth() {
+        return width;
+    }
+
+    public AjaxMessage width(Object width) {
+        this.width = width == null ? null : width.toString();
+        return this;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public AjaxMessage height(Object height) {
+        this.height = height == null ? null : height.toString();
+        return this;
+    }
+
     public boolean isHtml() {
         return htmlOut != null;
     }
@@ -103,6 +134,9 @@ public class AjaxMessage
 
     public AjaxMessage errorHtml(String message, Throwable e) {
         error();
+        width("80%");
+        height("75%");
+        title(message);
         Throwable_htm vb = new Throwable_htm();
         vb.setTitle(message);
         vb.buildHtmlViewStart(null, html(), UiVar.wrap(e));
@@ -123,15 +157,25 @@ public class AjaxMessage
             out.key("type");
             out.value(type);
         }
-
         if (level != null) {
             out.key("level");
             out.value(level);
         }
-
         if (css != null) {
-            out.key("className");
+            out.key("css");
             out.value(css);
+        }
+        if (title != null) {
+            out.key("title");
+            out.value(title);
+        }
+        if (width != null) {
+            out.key("width");
+            out.value(width);
+        }
+        if (height != null) {
+            out.key("height");
+            out.value(height);
         }
 
         if (htmlOut != null) {
