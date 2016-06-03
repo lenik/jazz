@@ -71,10 +71,16 @@ public class StringEscape {
     /**
      * @see org.apache.commons.lang.StringEscapeUtils#escapeSql(String)
      */
-    public static String escapeSql(String s) {
+    public static String doubleQ(String s) {
         if (s == null)
             return null;
         return s.replace("\'", "\'\'");
+    }
+
+    public static String doubleQQ(String s) {
+        if (s == null)
+            return null;
+        return s.replace("\"", "\"\"");
     }
 
     public static String unescapeJava(String s)

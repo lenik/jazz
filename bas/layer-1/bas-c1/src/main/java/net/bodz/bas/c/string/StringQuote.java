@@ -28,9 +28,14 @@ public class StringQuote {
         return qq(java);
     }
 
-    public static String qSQLEscaped(String s) {
-        String java = StringEscape.escapeSql(s);
-        return q(java);
+    public static String qDoubleQ(String s) {
+        String dblq = StringEscape.doubleQ(s);
+        return q(dblq);
+    }
+
+    public static String qqDoubleQQ(String s) {
+        String dblqq = StringEscape.doubleQQ(s);
+        return qq(dblqq);
     }
 
 }
