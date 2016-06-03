@@ -53,11 +53,6 @@ public abstract class AbstractHtmlViewBuilder<T>
     }
 
     @Override
-    public String getEncoding() {
-        return "utf-8";
-    }
-
-    @Override
     public boolean isOrigin(T value) {
         return false;
     }
