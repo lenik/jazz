@@ -19,23 +19,23 @@ public interface IMapperTemplate<T, M>
 
     List<T> filter(@Param("m") M mask, @Param("opt") SelectOptions opt);
 
-    T select(Object id);
+    T select(@Param("id") Object id);
 
-    T selectByCodeName(String codeName);
+    T selectByCodeName(@Param("code") String codeName);
 
     T selectPrev(Object id);
 
     T selectNext(Object id);
 
-    void _insert(T obj);
-
     long insert(T obj);
 
-    void update(T obj);
+    void insertWithId(T obj);
 
-    boolean delete(Object id);
+    long update(T obj);
 
-    Map<String, Number> count(M mask);
+    boolean delete(@Param("id") Object id);
+
+    Map<String, Number> count(@Param("m") M mask);
 
     @Commit
     @Flush
