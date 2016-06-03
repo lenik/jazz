@@ -41,4 +41,35 @@ public abstract class AbstractCoNodeCache<node_t extends CoNode<node_t, K>, K>
         rootMap = new LinkedHashMap<>();
     }
 
+    @Override
+    protected void _wire(node_t obj) {
+        node_t parent = obj.getParent();
+        K parentId = parent == null ? null : parent.getId();
+        node_t cachedParent = parentId == null ? null : getCached(parentId);
+        if (parent != cachedParent) {
+            obj.attach(cachedParent);
+        }
+    }
+
+    @Override
+    protected void _unwire(node_t obj) {
+        node_t parent = obj.getParent();
+        K parentId = parent == null ? null : parent.getId();
+        node_t cachedParent = parentId == null ? null : getCached(parentId);
+        if (parent == cachedParent) {
+            node_t parentHolder = create();
+            parentHolder.setId(parentId);
+            obj.setParent(parentHolder);
+        }
+    }
+
+    public node_t createPseudoRoot() {
+        node_t pseudoRoot = create();
+        for (node_t root : getOrLoadRootMap().values()) {
+            // don't attach here. avoid concurrent problems.
+            pseudoRoot.getChildren().add(root);
+        }
+        return pseudoRoot;
+    }
+
 }
