@@ -22,7 +22,7 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 
 public class ServletDiag {
 
-    static <E extends Comparable<E>> List<E> sort(Enumeration<E> enm) {
+    public static <E extends Comparable<E>> List<E> sort(Enumeration<E> enm) {
         List<E> list = Collections.toList(enm);
         Collections.sort(list);
         return list;

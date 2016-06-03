@@ -1,12 +1,14 @@
 package net.bodz.bas.http.servlet;
 
 import java.io.File;
+import java.net.URL;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.err.IllegalConfigException;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 
 public class StaticFileAccessServlet
         extends AbstractFileAccessServlet {
@@ -21,11 +23,6 @@ public class StaticFileAccessServlet
      */
     private File start;
 
-    /**
-     * 1 day by default.
-     */
-    private int maxAge = 86400;
-
     @Override
     public void init()
             throws ServletException {
@@ -36,7 +33,8 @@ public class StaticFileAccessServlet
     }
 
     @Override
-    protected void setParameter(String name, String value) {
+    protected void setParameter(String name, String value)
+            throws ServletException {
         super.setParameter(name, value);
         switch (name) {
         case ATTRIBUTE_PATH:
@@ -46,17 +44,14 @@ public class StaticFileAccessServlet
         }
     }
 
-    public int getMaxAge() {
-        return maxAge;
-    }
-
-    public void setMaxAge(int maxAge) {
-        this.maxAge = maxAge;
-    }
-
     @Override
     protected File getLocalRoot(HttpServletRequest req) {
         return start;
+    }
+
+    @Override
+    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
+        return super.getCacheControl(req, url);
     }
 
 }

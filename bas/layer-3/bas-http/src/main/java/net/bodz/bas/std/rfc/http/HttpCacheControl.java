@@ -56,16 +56,7 @@ public class HttpCacheControl
         if (cachable)
             buf.appendToken("max-age=" + cacheControl.getMaxAge());
 
-        switch (cacheControl.getCacheRevalidationMode()) {
-        case REQUIRED:
-            buf.appendToken("must-validate");
-            break;
-        case WANTED:
-            buf.appendToken("proxy-validate");
-            break;
-        case OPTIONAL:
-        default:
-        }
+        buf.appendToken(cacheControl.getCacheRevalidationMode().getHttpEquivContent(), false);
 
         response.setHeader(CACHE_CONTROL, buf.toString());
         if (cachable) {
