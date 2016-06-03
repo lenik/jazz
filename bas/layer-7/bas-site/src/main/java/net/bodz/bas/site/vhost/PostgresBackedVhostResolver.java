@@ -43,7 +43,7 @@ public abstract class PostgresBackedVhostResolver
     }
 
     public IVirtualHost findAndAdd(HttpServletRequest request) {
-        String vhostName = getVhostName(request);
+        String vhostName = getHostName(request, false);
         IVirtualHost vhost = get(vhostName);
         if (vhost != null)
             return vhost;
@@ -62,17 +62,6 @@ public abstract class PostgresBackedVhostResolver
 
         add(newVhost);
         return newVhost;
-    }
-
-    protected String getVhostName(HttpServletRequest request) {
-        // TODO request.getHeader("X-Forward-...");
-        String hostName = request.getServerName();
-
-        int dot = hostName.indexOf('.');
-        String prefix = dot == -1 ? hostName : hostName.substring(0, dot);
-
-        String vhostName = prefix.toLowerCase();
-        return vhostName;
     }
 
     protected String getDatabaseName(String vhostId) {
