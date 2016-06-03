@@ -80,6 +80,19 @@ public class Iterators {
         return set;
     }
 
+    public static <T> Set<T> toSet(Enumeration<T> enm) {
+        return toSet(enm, defaultAppxSize);
+    }
+
+    public static <T> Set<T> toSet(Enumeration<T> enm, int appxSize) {
+        Set<T> set = new HashSet<T>(appxSize);
+        while (enm.hasMoreElements()) {
+            T o = enm.nextElement();
+            set.add(o);
+        }
+        return set;
+    }
+
     public static <T> List<T> toList(Iterator<T> iterator) {
         return toList(iterator, defaultAppxSize);
     }
@@ -88,6 +101,19 @@ public class Iterators {
         List<T> list = new ArrayList<T>(appxSize);
         while (iterator.hasNext()) {
             T o = iterator.next();
+            list.add(o);
+        }
+        return list;
+    }
+
+    public static <T> List<T> toList(Enumeration<T> enm) {
+        return toList(enm, defaultAppxSize);
+    }
+
+    public static <T> List<T> toList(Enumeration<T> enm, int appxSize) {
+        List<T> list = new ArrayList<T>(appxSize);
+        while (enm.hasMoreElements()) {
+            T o = enm.nextElement();
             list.add(o);
         }
         return list;
