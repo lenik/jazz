@@ -13,163 +13,163 @@ import net.bodz.bas.c.object.NonNullPoolIdComparator;
  * <li>The order is defined by the pool.
  * </ol>
  */
-public class QmiTaggedSet<V>
-        extends AbstractTaggedSet<V> {
+public class QmiTaggedSet<K>
+        extends AbstractTaggedSet<K> {
 
     private IdPool pool = IdPool.getInstance();
     private Comparator<Object> cmp = new NonNullPoolIdComparator(pool);
 
-    private Map<V, Set<String>> itemTagsMap;
-    private Map<String, TreeSet<V>> tagItemsMap;
+    private Map<K, Set<String>> keyTagsMap;
+    private Map<String, TreeSet<K>> tagKeysMap;
 
     public QmiTaggedSet() {
-        itemTagsMap = new IdentityHashMap<>();
-        tagItemsMap = new HashMap<>();
+        keyTagsMap = new IdentityHashMap<>();
+        tagKeysMap = new HashMap<>();
     }
 
     @Override
     public int size() {
-        return itemTagsMap.size();
+        return keyTagsMap.size();
     }
 
     @Override
-    public boolean contains(Object item) {
-        return itemTagsMap.containsKey(item);
+    public boolean containsKey(Object key) {
+        return keyTagsMap.containsKey(key);
     }
 
     @Override
-    public synchronized boolean remove(V item) {
-        if (item == null)
-            throw new NullPointerException("item");
+    public synchronized boolean remove(K key) {
+        if (key == null)
+            throw new NullPointerException("key");
 
-        Set<String> tags = itemTagsMap.remove(item);
+        Set<String> tags = keyTagsMap.remove(key);
         if (tags == null)
             return false;
 
         for (String tag : tags) {
-            Set<V> itemsWithTheTag = whoseTag(tag);
-            itemsWithTheTag.remove(item);
+            Set<K> itemsWithTheTag = whoseTag(tag);
+            itemsWithTheTag.remove(key);
         }
         return true;
     }
 
     @Override
-    public synchronized void add(V item, Iterable<String> tags) {
-        if (item == null)
-            throw new NullPointerException("item");
+    public synchronized void add(K key, Iterable<String> tags) {
+        if (key == null)
+            throw new NullPointerException("key");
         if (tags == null)
             throw new NullPointerException("tags");
 
-        Set<String> union = getOrCreateTags(item);
+        Set<String> union = getOrCreateTags(key);
         for (String tag : tags) {
             union.add(tag);
-            Set<V> rindex = getOrCreateItems(tag);
-            rindex.add(item);
+            Set<K> rindex = getOrCreateKeys(tag);
+            rindex.add(key);
         }
     }
 
     @Override
-    public Set<String> getTags(Object item) {
-        Set<String> tags = itemTagsMap.get(item);
+    public Set<String> getTags(Object key) {
+        Set<String> tags = keyTagsMap.get(key);
         return Collections.unmodifiableSet(tags);
     }
 
     @Override
-    public synchronized void addTag(V item, String tag) {
-        if (item == null)
-            throw new NullPointerException("item");
+    public synchronized void addTag(K key, String tag) {
+        if (key == null)
+            throw new NullPointerException("key");
         if (tag == null)
             throw new NullPointerException("tag");
-        Set<String> tags = getOrCreateTags(item);
+        Set<String> tags = getOrCreateTags(key);
         if (tags.add(tag)) {
-            Set<V> rindex = getOrCreateItems(tag);
-            rindex.add(item);
+            Set<K> rindex = getOrCreateKeys(tag);
+            rindex.add(key);
         }
     }
 
     @Override
-    public synchronized void removeTag(V item, String tag) {
-        if (item == null)
-            throw new NullPointerException("item");
+    public synchronized void removeTag(K key, String tag) {
+        if (key == null)
+            throw new NullPointerException("key");
         if (tag == null)
             throw new NullPointerException("tag");
-        Set<String> tags = getOrCreateTags(item);
+        Set<String> tags = getOrCreateTags(key);
         tags.remove(tag);
-        Set<V> rindex = getOrCreateItems(tag);
-        rindex.remove(item);
+        Set<K> rindex = getOrCreateKeys(tag);
+        rindex.remove(key);
     }
 
-    private Set<V> getOrCreateItems(String tag) {
-        TreeSet<V> items = tagItemsMap.get(tag);
-        if (items == null) {
-            items = new TreeSet<V>(cmp);
-            tagItemsMap.put(tag, items);
+    private Set<K> getOrCreateKeys(String tag) {
+        TreeSet<K> keys = tagKeysMap.get(tag);
+        if (keys == null) {
+            keys = new TreeSet<K>(cmp);
+            tagKeysMap.put(tag, keys);
         }
-        return items;
+        return keys;
     }
 
-    private Set<String> getOrCreateTags(V item) {
-        Set<String> tags = itemTagsMap.get(item);
+    private Set<String> getOrCreateTags(K key) {
+        Set<String> tags = keyTagsMap.get(key);
         if (tags == null) {
             tags = new HashSet<String>();
-            itemTagsMap.put(item, tags);
+            keyTagsMap.put(key, tags);
         }
         return tags;
     }
 
-    protected synchronized Set<V> whoseTag(String tag) {
-        TreeSet<V> items = tagItemsMap.get(tag);
-        if (items == null)
+    protected synchronized Set<K> whoseTag(String tag) {
+        TreeSet<K> keys = tagKeysMap.get(tag);
+        if (keys == null)
             return Collections.emptySet();
         else
-            return Collections.unmodifiableSet(items);
+            return Collections.unmodifiableSet(keys);
     }
 
-    public Collection<V> selectItemsWithoutTag() {
+    public Collection<K> notTagged() {
         // TODO optim... workaround..
-        List<V> itemsWithoutTag = new ArrayList<>();
-        for (Entry<V, Set<String>> entry : itemTagsMap.entrySet()) {
+        List<K> list = new ArrayList<>();
+        for (Entry<K, Set<String>> entry : keyTagsMap.entrySet()) {
             Set<String> tags = entry.getValue();
             if (tags.isEmpty())
-                itemsWithoutTag.add(entry.getKey());
+                list.add(entry.getKey());
         }
-        return itemsWithoutTag;
+        return list;
     }
 
     @Override
-    public Collection<V> selectForAll(String... tags) {
+    public Collection<K> selectForAll(String... tags) {
         if (tags == null)
             throw new NullPointerException("tags");
 
         int n = tags.length;
         if (n == 0)
-            return selectItemsWithoutTag();
+            return notTagged();
 
         @SuppressWarnings("unchecked")
-        Iterator<V>[] itv = new Iterator[n];
+        Iterator<K>[] itv = new Iterator[n];
         for (int i = 0; i < n; i++) {
-            Set<V> itemsWithTheTag = whoseTag(tags[i]);
+            Set<K> itemsWithTheTag = whoseTag(tags[i]);
             itv[i] = itemsWithTheTag.iterator();
         }
 
-        List<V> results = new ArrayList<V>();
+        List<K> results = new ArrayList<K>();
 
         int max = -1;
         int idDups = 1;
 
         L: while (true) {
-            for (Iterator<V> itemsForSpecificTag : itv) {
+            for (Iterator<K> itemsForSpecificTag : itv) {
                 if (!itemsForSpecificTag.hasNext())
                     break L;
 
-                V item = itemsForSpecificTag.next();
-                int id = pool.getId(item);
+                K key = itemsForSpecificTag.next();
+                int id = pool.getId(key);
 
                 while (id < max) {
                     if (!itemsForSpecificTag.hasNext())
                         break L;
-                    item = itemsForSpecificTag.next();
-                    id = pool.getId(item);
+                    key = itemsForSpecificTag.next();
+                    id = pool.getId(key);
                 }
 
                 if (id == max)
@@ -178,7 +178,7 @@ public class QmiTaggedSet<V>
                     idDups = 1;
 
                 if (idDups == n)
-                    results.add(item);
+                    results.add(key);
 
                 if (id > max)
                     max = id;
@@ -189,30 +189,30 @@ public class QmiTaggedSet<V>
     }
 
     @Override
-    public Collection<V> selectForAny(String... tags) {
+    public Collection<K> selectForAny(String... tags) {
         return null;
     }
 
     @Override
     public String toString() {
-        return itemTagsMap.keySet().toString();
+        return keyTagsMap.keySet().toString();
     }
 
     public String dump() {
         StringBuilder sb = new StringBuilder();
         sb.append("Index:\n");
-        for (Entry<V, Set<String>> entry : itemTagsMap.entrySet()) {
-            V item = entry.getKey();
+        for (Entry<K, Set<String>> entry : keyTagsMap.entrySet()) {
+            K key = entry.getKey();
             Set<String> union = entry.getValue();
             sb.append("  ");
-            sb.append(item);
+            sb.append(key);
             sb.append(": ");
             sb.append(union);
             sb.append('\n');
         }
 
         sb.append("Reversed Index:\n");
-        for (Entry<String, TreeSet<V>> entry : tagItemsMap.entrySet()) {
+        for (Entry<String, TreeSet<K>> entry : tagKeysMap.entrySet()) {
             sb.append("  ");
             sb.append(entry.getKey());
             sb.append(": ");
