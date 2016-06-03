@@ -11,7 +11,7 @@ import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.QVariantMap;
-import net.bodz.lily.model.base.security.LoginContext;
+import net.bodz.lily.model.base.security.LoginData;
 
 /**
  * @see net.bodz.lily.model.base.CoObject
@@ -179,9 +179,9 @@ public class CoObjectMask
     /**
      * XXX mybatis global vars won't work.
      */
-    public LoginContext getLogin() {
-        LoginContext loginContext = LoginContext.fromSession();
-        return loginContext;
+    public LoginData getLogin() {
+        LoginData loginData = LoginData.fromSession();
+        return loginData;
     }
 
     static NameConventionTypeMapper[] maskTmaps = {

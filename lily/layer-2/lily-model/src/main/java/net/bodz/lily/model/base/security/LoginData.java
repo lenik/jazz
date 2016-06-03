@@ -6,17 +6,16 @@ import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.t.preorder.PrefixMap;
 
-public class LoginContext {
+public class LoginData {
 
-    // public static final String ATTRIBUTE_KEY = "loginContext";
-    public static final String ATTRIBUTE_KEY = LoginContext.class.getName();
+    public static final String ATTRIBUTE_KEY = LoginData.class.getName();
 
     public IVirtualHost virtualHost;
     public User user;
 
     public PrefixMap<String> permissions;
 
-    public static LoginContext fromSession() {
+    public static LoginData fromSession() {
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session == null)
             return null;
@@ -24,8 +23,8 @@ public class LoginContext {
             return fromSession(session);
     }
 
-    public static LoginContext fromSession(HttpSession session) {
-        return (LoginContext) session.getAttribute(LoginContext.ATTRIBUTE_KEY);
+    public static LoginData fromSession(HttpSession session) {
+        return (LoginData) session.getAttribute(LoginData.ATTRIBUTE_KEY);
     }
 
 }
