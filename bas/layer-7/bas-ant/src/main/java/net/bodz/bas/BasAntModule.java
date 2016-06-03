@@ -2,6 +2,6 @@ package net.bodz.bas;
 
 public class BasAntModule
         extends AbstractBasModule
-        implements IBasAntHashConstants {
+        implements IBasAntHashConsts {
 
 }
