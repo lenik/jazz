@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mi">
 
-    <resultMap id="map1" type="net.bodz.lily.model.base.CoMomentInterval" extends="co.mapUSA">
+    <resultMap id="map1" type="net.bodz.lily.model.base.CoMomentInterval" extends="co.MAP_ALL">
         <result property="beginDate" column="t0" />
         <result property="endDate" column="t1" />
     </resultMap>

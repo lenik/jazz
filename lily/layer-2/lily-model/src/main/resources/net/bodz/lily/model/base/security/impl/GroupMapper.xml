@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.model.base.security.impl.GroupMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.model.base.security.Group" extends="co.mapUS">
+    <resultMap id="map1" type="net.bodz.lily.model.base.security.Group" extends="co.MAP_ALL">
         <collection property="users" javaType="ArrayList" ofType="net.bodz.lily.model.base.security.User">
             <id property="id" column="y_id" />
             <result property="codeName" column="y_code" />
@@ -33,7 +33,7 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
-            <if test="codeName != null">and a.code=#{codeName}</if>
+            <if test="m.codeName != null">and a.code=#{m.codeName}</if>
         </where>
     </select>
 
@@ -44,12 +44,12 @@
         </where>
     </select>
 
-    <select id="insert" resultType="int">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         <![CDATA[
         insert into "group"(code, label, description)
         values(#{codeName},#{label},#{description})
         returning id
-    ]]></select>
+    ]]></insert>
 
     <update id="update">
         update "group"
