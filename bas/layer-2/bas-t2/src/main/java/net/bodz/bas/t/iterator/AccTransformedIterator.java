@@ -4,13 +4,16 @@ import java.util.Iterator;
 
 import org.apache.commons.collections15.Transformer;
 
-public class TransformedIterator<S, T>
+/**
+ * Apache Commons-Collections transformer transformed iterator.
+ */
+public class AccTransformedIterator<S, T>
         implements Iterator<T> {
 
     private final Iterator<S> iterator;
     private final Transformer<S, T> transformer;
 
-    public TransformedIterator(Iterator<S> iterator, Transformer<S, T> transformer) {
+    public AccTransformedIterator(Iterator<S> iterator, Transformer<S, T> transformer) {
         if (iterator == null)
             throw new NullPointerException("iterator");
         if (transformer == null)
