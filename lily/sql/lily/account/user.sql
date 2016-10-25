@@ -21,6 +21,7 @@
 
 --\import lily.account.userid
 --\import lily.account.userof
+--\import lily.account.usersec
 
     insert into "group"(id, name, label) values(0, 'root', 'Root');
     insert into "user"(id, gid0, name, label) values(0, 0, 'root', 'Root');
@@ -30,4 +31,6 @@
         -- by default it should be the creator.
     alter table "group" add admin int not null default 0
             references "user"(id) on update cascade;
+
+    insert into usersec("user", passwd) values(0, 'root');
 
