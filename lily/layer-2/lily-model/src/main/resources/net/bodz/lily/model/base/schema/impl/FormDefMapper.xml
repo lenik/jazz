@@ -43,8 +43,7 @@
         </where>
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        <![CDATA[
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into _form(code, label, description)
             values(#{codeName},#{label},#{description})
             returning id

@@ -44,8 +44,7 @@
         </where>
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        <![CDATA[
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into "group"(code, label, description)
         values(#{codeName},#{label},#{description})
         returning id
