@@ -11,7 +11,7 @@ public class DesignResourceMappings
 
     @Override
     public void servlets(ServletContextConfig config) {
-        imgLink = localLink("/img", "/mnt/istore/projects/design/img", 100).install(config);
+        imgLink = localLink("/d-img", "/mnt/istore/projects/design/img", 100).install(config);
     }
 
 }
