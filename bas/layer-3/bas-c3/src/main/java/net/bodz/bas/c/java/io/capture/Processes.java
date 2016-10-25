@@ -10,8 +10,12 @@ import java.nio.charset.Charset;
 import org.apache.commons.lang.ArrayUtils;
 
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class Processes {
+
+    static final Logger logger = LoggerFactory.getLogger(Processes.class);
 
     public static Process exec(String... cmdarray)
             throws IOException {
@@ -98,6 +102,7 @@ public class Processes {
             @Override
             public void recvIn(byte[] buf, int off, int len)
                     throws IOException {
+                // logger.trace("recv: " + new String(buf, off, len, "l1"));
                 if (outSink != null)
                     outSink.write(buf, off, len);
             }
@@ -105,6 +110,7 @@ public class Processes {
             @Override
             public void recvErr(byte[] buf, int off, int len)
                     throws IOException {
+                // logger.trace("err: " + new String(buf, off, len, "l1"));
                 if (errSink != null)
                     errSink.write(buf, off, len);
             }

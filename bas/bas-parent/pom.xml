@@ -138,6 +138,11 @@ Dependency Management-->
                 <version>4.01</version>
             </dependency>
             <dependency>
+              <groupId>org.apache.httpcomponents</groupId>
+              <artifactId>httpclient</artifactId>
+              <version>4.5.2</version>
+            </dependency>
+            <dependency>
               <groupId>org.apache.lucene</groupId>
               <artifactId>lucene-core</artifactId>
               <version>6.0.0</version>
