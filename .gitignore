@@ -78,6 +78,8 @@
 .sass-cache/
 .settings
 /.pomdirs
+/features.list
+/services.list
 ABOUT-NLS
 COPYING
 ChangeLog
