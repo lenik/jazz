@@ -102,6 +102,9 @@ public abstract class AbstractViewBuilderFactory
         checkViewBuilder(viewBuilder);
 
         List<String> tags = FaceQualifiers.getQualifierNames(viewBuilder.getClass());
+        if (tags.isEmpty())
+            // TODO
+            tags = Arrays.asList("");
 
         addViewBuilder(viewBuilder, viewBuilder.getValueType(), tags);
     }
