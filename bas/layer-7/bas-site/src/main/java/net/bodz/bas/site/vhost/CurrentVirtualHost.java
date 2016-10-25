@@ -4,8 +4,26 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.IllegalRequestException;
 import net.bodz.bas.http.ctx.CurrentHttpService;
+import net.bodz.bas.log.diag.CompositeDiagContext;
+import net.bodz.bas.log.diag.IContextsCdcConfigurer;
+import net.bodz.bas.log.diag.IDiagContextTeller;
 
-public class CurrentVirtualHost {
+public class CurrentVirtualHost
+        implements IContextsCdcConfigurer, IDiagContextTeller {
+
+    @Override
+    public void configure(CompositeDiagContext contexts) {
+        contexts.add(this);
+    }
+
+    @Override
+    public String getDiagContextName() {
+        IVirtualHost vhost = getVirtualHostOpt();
+        if (vhost == null)
+            return null;
+        else
+            return "vh=" + vhost.getName();
+    }
 
     public static IVirtualHost getVirtualHostOpt() {
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
