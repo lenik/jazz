@@ -167,9 +167,12 @@ public class PathArrival
             PathArrival mutable = new PathArrival(a);
             if (mutable.consumedTokens.length == 0) {
                 // Transient: prev -> ... -> mutable.parent -> mutable.
-                if (prev == null || mutable.parent == null)
-                    throw new IllegalArgumentException("Transient path arrival from null.");
-                prev.target = mutable.target;
+                if (prev != null)
+                    prev.target = mutable.target;
+                else {
+                    if (mutable.parent == null)
+                        ; // "Transient path arrival from null."
+                }
             } else {
                 // Same target: prev -> ... -> mutable.target.
                 if (prev != null && prev.target == mutable.target)
