@@ -90,8 +90,7 @@
         </where>
     </select>
     
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        <![CDATA[
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into "user"(name, label, description, gid0, email, salt, passwd)
         values(#{codeName},#{label},#{description},
             #{primaryGroup.id}, #{email}, #{salt}, #{password})
