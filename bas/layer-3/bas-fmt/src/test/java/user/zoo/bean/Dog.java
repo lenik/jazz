@@ -1,9 +1,9 @@
-package user.zoo;
+package user.zoo.bean;
 
 public class Dog
         extends Animal {
 
-    public int barkVolume;
+    private int barkVolume;
 
     public Dog() {
         super();
@@ -11,6 +11,14 @@ public class Dog
 
     public Dog(String name, boolean male, int color, int age, int barkVolume) {
         super(name, male, color, age);
+        this.barkVolume = barkVolume;
+    }
+
+    public int getBarkVolume() {
+        return barkVolume;
+    }
+
+    public void setBarkVolume(int barkVolume) {
         this.barkVolume = barkVolume;
     }
 

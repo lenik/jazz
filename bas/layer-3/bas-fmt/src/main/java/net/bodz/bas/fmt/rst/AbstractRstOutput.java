@@ -3,10 +3,11 @@ package net.bodz.bas.fmt.rst;
 import java.io.IOException;
 
 import net.bodz.bas.c.string.StringQuote;
-import net.bodz.bas.err.NotImplementedException;
 
 public abstract class AbstractRstOutput
         implements IRstOutput {
+
+    private String separator = " ";
 
     @Override
     public void element(String name, IRstSerializable child, String... args)
@@ -109,7 +110,7 @@ public abstract class AbstractRstOutput
         StringBuilder sb = new StringBuilder(len * 4);
         for (int i = 0; i < len; i++) {
             if (i != 0)
-                sb.append(' ');
+                sb.append(separator);
             sb.append(buf[off++]);
         }
         _attribute(name, sb.toString());
@@ -127,7 +128,7 @@ public abstract class AbstractRstOutput
         StringBuilder sb = new StringBuilder(len * 7); // -32768
         for (int i = 0; i < len; i++) {
             if (i != 0)
-                sb.append(' ');
+                sb.append(separator);
             sb.append(buf[off++]);
         }
         _attribute(name, sb.toString());
@@ -145,7 +146,7 @@ public abstract class AbstractRstOutput
         StringBuilder sb = new StringBuilder(len * 12); // -2147483648
         for (int i = 0; i < len; i++) {
             if (i != 0)
-                sb.append(' ');
+                sb.append(separator);
             sb.append(buf[off++]);
         }
         _attribute(name, sb.toString());
@@ -163,7 +164,7 @@ public abstract class AbstractRstOutput
         StringBuilder sb = new StringBuilder(len * 20); // -9223372036854775808
         for (int i = 0; i < len; i++) {
             if (i != 0)
-                sb.append(' ');
+                sb.append(separator);
             sb.append(buf[off++]);
         }
         _attribute(name, sb.toString());
@@ -181,7 +182,7 @@ public abstract class AbstractRstOutput
         StringBuilder sb = new StringBuilder(len * 16);
         for (int i = 0; i < len; i++) {
             if (i != 0)
-                sb.append(' ');
+                sb.append(separator);
             sb.append(buf[off++]);
         }
         _attribute(name, sb.toString());
@@ -199,7 +200,7 @@ public abstract class AbstractRstOutput
         StringBuilder sb = new StringBuilder(len * 30);
         for (int i = 0; i < len; i++) {
             if (i != 0)
-                sb.append(' ');
+                sb.append(separator);
             sb.append(buf[off++]);
         }
         _attribute(name, sb.toString());
@@ -217,7 +218,7 @@ public abstract class AbstractRstOutput
         StringBuilder sb = new StringBuilder(len * 6);
         for (int i = 0; i < len; i++) {
             if (i != 0)
-                sb.append(' ');
+                sb.append(separator);
             sb.append(buf[off++]);
         }
         _attribute(name, sb.toString());
@@ -244,7 +245,18 @@ public abstract class AbstractRstOutput
     @Override
     public final void attribute(String name, String[] buf, int off, int len)
             throws IOException {
-        throw new NotImplementedException();
+        int totalLength = 0;
+        for (int i = 0; i < len; i++)
+            totalLength += (buf[i] == null ? 4 : buf[i].length()) + 1;
+
+        StringBuilder sb = new StringBuilder(totalLength);
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                sb.append(separator);
+            String qq = StringQuote.qqJavaEscaped(buf[off++]);
+            sb.append(qq);
+        }
+        _attribute(name, sb.toString());
     }
 
 }
