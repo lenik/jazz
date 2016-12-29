@@ -1,12 +1,15 @@
 package net.bodz.bas.fmt.rst;
 
+import java.beans.Transient;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
+import net.bodz.bas.c.enm.Enums;
 import net.bodz.bas.c.type.TypeEnum;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.Final;
 
 public class ReflectElementHandler
         implements IElementHandler {
@@ -55,69 +58,78 @@ public class ReflectElementHandler
     }
 
     @Override
-    public boolean attribute(String name, String data)
+    public boolean attribute(String attributeName, String attributeData)
             throws ParseException, ElementHandlerException {
-        Field field = _getField(name);
+        Field field = _getField(attributeName);
         if (field == null)
             return false;
 
-        boolean _final = Modifier.isFinal(field.getModifiers());
-        Class<?> type = field.getType();
-        TypeEnum typeEnum = TypeEnum.fromClass(type);
+        boolean isFinalField = Modifier.isFinal(field.getModifiers()) //
+                || field.isAnnotationPresent(Final.class);
+        ;
+        boolean isTransientField = Modifier.isTransient(field.getModifiers()) //
+        // || field.isAnnotationPresent(Transient.class)
+        ;
+        if (isTransientField)
+            // skipped: don't parse transient fields.
+            return false; // not handled, of cause.
+
+        Class<?> fieldType = field.getType();
+        TypeEnum typeEnum = TypeEnum.forClass(fieldType);
         if (typeEnum == null)
-            throw new ElementHandlerException("field type isn't supported: " + type);
+            throw new ElementHandlerException("field type isn't supported: " + fieldType);
 
         Object value = null;
         int arrayLen = 0;
-        if (_final) {
+        if (isFinalField) {
             try {
                 value = field.get(obj);
             } catch (Exception e) {
-                throw new ElementHandlerException("failed to get field " + name, e);
+                throw new ElementHandlerException("failed to get field " + attributeName, e);
             }
-            if (type.isArray())
+            if (fieldType.isArray())
                 arrayLen = Array.getLength(value);
         }
 
         switch (typeEnum) {
         case BYTE:
-            value = codec.parseByte(name, data);
+            value = codec.parseByte(attributeName, attributeData);
             break;
 
         case SHORT:
-            value = codec.parseShort(name, data);
+            value = codec.parseShort(attributeName, attributeData);
             break;
 
         case INT:
-            value = codec.parseInt(name, data);
+            value = codec.parseInt(attributeName, attributeData);
             break;
 
         case LONG:
-            value = codec.parseLong(name, data);
+            value = codec.parseLong(attributeName, attributeData);
             break;
 
         case FLOAT:
-            value = codec.parseFloat(name, data);
+            value = codec.parseFloat(attributeName, attributeData);
             break;
 
         case DOUBLE:
-            value = codec.parseDouble(name, data);
+            value = codec.parseDouble(attributeName, attributeData);
             break;
 
         case BOOL:
-            value = codec.parseBool(name, data);
+            value = codec.parseBool(attributeName, attributeData);
             break;
 
         case CHAR:
-            value = codec.parseChar(name, data);
+            value = codec.parseChar(attributeName, attributeData);
             break;
 
         case STRING:
-            value = codec.parseString(name, data);
+            value = codec.parseString(attributeName, attributeData);
             break;
 
         case CLASS:
-            String typeName = codec.parseString(name, data);
+            String typeName = codec.parseString(attributeName, attributeData);
             try {
                 value = Class.forName(typeName);
             } catch (ClassNotFoundException e) {
@@ -125,99 +137,103 @@ public class ReflectElementHandler
             }
             break;
 
+        case ENUM:
+            value = Enums.getEnum(fieldType, attributeData);
+            break;
+
         case BYTE_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 byte[] v = (byte[]) value;
-                int n = codec.parseBytes(name, data, v, 0, arrayLen);
+                int n = codec.parseBytes(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, (byte) 0);
             } else {
-                value = codec.parseBytes(name, data);
+                value = codec.parseBytes(attributeName, attributeData);
             }
             break;
 
         case SHORT_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 short[] v = (short[]) value;
-                int n = codec.parseShorts(name, data, v, 0, arrayLen);
+                int n = codec.parseShorts(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, (short) 0);
             } else {
-                value = codec.parseShorts(name, data);
+                value = codec.parseShorts(attributeName, attributeData);
             }
             break;
 
         case INT_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 int[] v = (int[]) value;
-                int n = codec.parseInts(name, data, v, 0, arrayLen);
+                int n = codec.parseInts(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, (int) 0);
             } else {
-                value = codec.parseInts(name, data);
+                value = codec.parseInts(attributeName, attributeData);
             }
             break;
 
         case LONG_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 long[] v = (long[]) value;
-                int n = codec.parseLongs(name, data, v, 0, arrayLen);
+                int n = codec.parseLongs(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, 0L);
             } else {
-                value = codec.parseLongs(name, data);
+                value = codec.parseLongs(attributeName, attributeData);
             }
             break;
 
         case FLOAT_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 float[] v = (float[]) value;
-                int n = codec.parseFloats(name, data, v, 0, arrayLen);
+                int n = codec.parseFloats(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, 0.0f);
             } else {
-                value = codec.parseFloats(name, data);
+                value = codec.parseFloats(attributeName, attributeData);
             }
             break;
 
         case DOUBLE_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 double[] v = (double[]) value;
-                int n = codec.parseDoubles(name, data, v, 0, arrayLen);
+                int n = codec.parseDoubles(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, Double.NaN);
             } else {
-                value = codec.parseDoubles(name, data);
+                value = codec.parseDoubles(attributeName, attributeData);
             }
             break;
 
         case BOOL_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 boolean[] v = (boolean[]) value;
-                int n = codec.parseBools(name, data, v, 0, arrayLen);
+                int n = codec.parseBools(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, false);
             } else {
-                value = codec.parseBools(name, data);
+                value = codec.parseBools(attributeName, attributeData);
             }
             break;
 
         case CHAR_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 char[] v = (char[]) value;
-                int n = codec.parseChars(name, data, v, 0, arrayLen);
+                int n = codec.parseChars(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, '\0');
             } else {
-                value = codec.parseChars(name, data);
+                value = codec.parseChars(attributeName, attributeData);
             }
             break;
 
         case STRING_ARRAY:
-            if (_final) {
+            if (isFinalField) {
                 String[] v = (String[]) value;
-                int n = codec.parseStrings(name, data, v, 0, arrayLen);
+                int n = codec.parseStrings(attributeName, attributeData, v, 0, arrayLen);
                 Arrays.fill(v, n, arrayLen, null);
             } else {
-                value = codec.parseStrings(name, data);
+                value = codec.parseStrings(attributeName, attributeData);
             }
             break;
 
         case CLASS_ARRAY:
-            String[] typeNames = codec.parseStrings(name, data);
-            if (_final) {
+            String[] typeNames = codec.parseStrings(attributeName, attributeData);
+            if (isFinalField) {
                 Class<?>[] v = (Class<?>[]) value;
                 int n = Math.min(typeNames.length, v.length);
                 for (int i = 0; i < n; i++) {
@@ -239,16 +255,28 @@ public class ReflectElementHandler
             }
             break;
 
+//        case ENUM_ARRAY:
+//            if (isFinalField) {
+//                Enum<?>[] v = (Enum<?>[]) value;
+//                int n = codec.parseEnums(fieldType, attributeName, attributeData);
+//                Arrays.fill(v, n, arrayLen, '\0');
+//            } else {
+//                value = codec.parseEnums(attributeName, attributeData);
+//            }
+//            break;
+
         case OBJECT:
+            throw new ElementHandlerException("Don't know how to parse: " + fieldType);
+
         default:
-            throw new ElementHandlerException("field type isn't supported: " + type);
+            throw new ElementHandlerException("field type isn't supported: " + fieldType);
         }
 
-        if (!_final)
+        if (!isFinalField)
             try {
                 field.set(obj, value);
             } catch (Exception e) {
-                throw new ElementHandlerException("failed to set the value of field " + name, e);
+                throw new ElementHandlerException("failed to set the value of field " + attributeName, e);
             }
         return false;
     }
@@ -260,13 +288,15 @@ public class ReflectElementHandler
         if (field == null)
             return null; // throw new ElementHandlerException("element is undefined: " + name);
 
-        boolean _final = Modifier.isFinal(field.getModifiers());
+        boolean isFinalField = Modifier.isFinal(field.getModifiers()) //
+                || field.isAnnotationPresent(Final.class);
+
         Class<?> type = field.getType();
         if (!IRstSerializable.class.isAssignableFrom(type))
             throw new ElementHandlerException("field isn't structf-serializable: " + name);
 
         IRstSerializable value = null;
-        if (_final) {
+        if (isFinalField) {
             try {
                 value = (IRstSerializable) field.get(obj);
             } catch (ReflectiveOperationException e) {

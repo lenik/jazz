@@ -47,6 +47,9 @@ public interface IRstOutput {
 
     void attribute(String name, char value)
             throws IOException;
+    
+    void attribute(String name, Enum<?> value)
+            throws IOException;
 
     void attribute(String name, String value)
             throws IOException;

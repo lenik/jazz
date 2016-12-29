@@ -1,5 +1,6 @@
 package net.bodz.bas.fmt.rst;
 
+import net.bodz.bas.c.enm.Enums;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.StringNum;
@@ -62,6 +63,12 @@ public class DataCodec
     public String parseString(String data)
             throws ParseException {
         return parseString(null, data);
+    }
+
+    @Override
+    public <T extends Enum<T>> T parseEnum(Class<T> type, String data)
+            throws ParseException {
+        return parseEnum(null, type, data);
     }
 
     @Override
@@ -271,6 +278,16 @@ public class DataCodec
         return str;
     }
 
+// @Override
+    public <T extends Enum<T>> T parseEnum(String field, Class<T> clazz, String data)
+            throws ParseException {
+        if (clazz == null)
+            throw new NullPointerException("clazz");
+        if (data == null || data.isEmpty())
+            return null;
+        return Enums.getEnum(clazz, data);
+    }
+
     @Override
     public byte[] parseBytes(String field, String data)
             throws ParseException {
@@ -466,6 +483,18 @@ public class DataCodec
 
     @Override
     public int parseStrings(String field, String data, String[] buf, int off, int maxLen)
+            throws ParseException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public <T extends Enum<T>> T parseEnums(Class<?> enmType, String field, String data)
+            throws ParseException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public int[] parseEnums(Class<?> enmType, String field, String data, String[] buf, int off, int maxLen)
             throws ParseException {
         throw new NotImplementedException();
     }

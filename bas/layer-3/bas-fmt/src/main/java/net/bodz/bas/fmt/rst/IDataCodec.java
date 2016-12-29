@@ -31,6 +31,9 @@ public interface IDataCodec {
     String parseString(String data)
             throws ParseException;
 
+    <T extends Enum<T>> T parseEnum(Class<T> type, String data)
+            throws ParseException;
+
     byte[] parseBytes(String data)
             throws ParseException;
 
@@ -112,6 +115,9 @@ public interface IDataCodec {
     String parseString(String field, String data)
             throws ParseException;
 
+    <T extends Enum<T>> T parseEnum(String field, Class<T> clazz, String data)
+            throws ParseException;
+
     byte[] parseBytes(String field, String data)
             throws ParseException;
 
@@ -164,6 +170,12 @@ public interface IDataCodec {
             throws ParseException;
 
     int parseStrings(String field, String data, String[] buf, int off, int maxLen)
+            throws ParseException;
+
+    <T extends Enum<T>> T parseEnums(Class<?> enmType, String field, String data)
+            throws ParseException;
+
+    int[] parseEnums(Class<?> enmType, String field, String data, String[] buf, int off, int maxLen)
             throws ParseException;
 
 }
