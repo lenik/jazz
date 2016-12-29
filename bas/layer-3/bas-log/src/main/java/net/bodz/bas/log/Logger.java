@@ -249,4 +249,6 @@ public interface Logger
      */
     ILogSink getProgressSink(int delta);
 
+    NullLogger NULL = new NullLogger();
+
 }
