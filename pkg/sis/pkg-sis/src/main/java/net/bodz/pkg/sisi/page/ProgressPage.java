@@ -282,7 +282,7 @@ class ProgressPage
         @Override
         public boolean worked(int amount) {
             accWork += amount;
-            pageContainer.getDisplay().asyncExec(new Runnable() {
+            parent.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     setProgress((double) accWork / totalWork);
@@ -326,7 +326,7 @@ class ProgressPage
         @Override
         public void _warn(int delta, Throwable e, Object message) {
             final String text = String.valueOf(message);
-            pageContainer.getDisplay().asyncExec(new Runnable() {
+            parent.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     // add to log list.
@@ -337,7 +337,7 @@ class ProgressPage
         @Override
         public void _info(int delta, Throwable e, Object message) {
             final String text = String.valueOf(message);
-            pageContainer.getDisplay().asyncExec(new Runnable() {
+            parent.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     // add to log list.
@@ -348,7 +348,7 @@ class ProgressPage
         @Override
         public void _status(int delta, Throwable e, Object message) {
             final String text = String.valueOf(message);
-            pageContainer.getDisplay().asyncExec(new Runnable() {
+            parent.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     setText(text);
@@ -359,7 +359,7 @@ class ProgressPage
         @Override
         public void _debug(int delta, Throwable e, Object message) {
             final String text = String.valueOf(message);
-            pageContainer.getDisplay().asyncExec(new Runnable() {
+            parent.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     // add to log list.
@@ -371,7 +371,7 @@ class ProgressPage
 
     public void setImage(Image image) {
         imageLabel.setImage(image);
-        pageHolder.layout();
+        parent.layout();
     }
 
     public void setText(String s) {
@@ -409,7 +409,7 @@ class ProgressPage
     }
 
     private void copyLogs() {
-        Display display = pageContainer.getDisplay();
+        Display display = parent.getDisplay();
         Clipboard clipboard = new Clipboard(display);
 
         String s = null;

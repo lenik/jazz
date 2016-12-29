@@ -30,7 +30,7 @@ public abstract class AbstractPage
     ClassDoc classDoc;
 
     protected PageContainer pageContainer;
-    protected Composite pageHolder;
+    protected Composite parent;
 
     private boolean sticked;
     private List<PageMethod> methods;
@@ -64,13 +64,14 @@ public abstract class AbstractPage
     }
 
     @Override
-    public Control createUI(PageContainer pageContainer)
+    public synchronized Control createUI(PageContainer pageContainer)
             throws PageException {
-        Composite pageHolder = new Composite(pageContainer, SWT.NONE);
-        this.pageContainer = pageContainer;
-        this.pageHolder = pageHolder;
-        createContents(pageHolder);
-        return pageHolder;
+        if (parent == null) {
+            parent = new Composite(pageContainer, SWT.NONE);
+            this.pageContainer = pageContainer;
+            createContents(parent);
+        }
+        return parent;
     }
 
     protected void createContents(Composite holder)
@@ -133,18 +134,18 @@ public abstract class AbstractPage
         return Collections.unmodifiableList(methods);
     }
 
-    protected void setMethods(Collection<PageMethod> methods) {
+    public void setMethods(Collection<PageMethod> methods) {
         assert methods != null : "null methods";
         List<PageMethod> old = this.methods;
         this.methods = new ArrayList<PageMethod>(methods);
         propertyChangeSupport.firePropertyChange(PROP_METHODS, old, methods);
     }
 
-    protected void setMethods(PageMethod... methods) {
+    public void setMethods(PageMethod... methods) {
         setMethods(Arrays.asList(methods));
     }
 
-    protected void addMethod(PageMethod method) {
+    public void addMethod(PageMethod method) {
         assert method != null : "null method";
         List<PageMethod> old = this.methods;
         if (methods == null)
@@ -153,7 +154,7 @@ public abstract class AbstractPage
         propertyChangeSupport.firePropertyChange(PROP_METHODS, old, methods);
     }
 
-    protected void removeMethod(PageMethod method) {
+    public void removeMethod(PageMethod method) {
         if (methods.remove(method))
             propertyChangeSupport.firePropertyChange(PROP_METHODS, methods, methods);
     }

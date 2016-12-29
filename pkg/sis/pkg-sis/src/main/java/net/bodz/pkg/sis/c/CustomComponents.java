@@ -231,7 +231,7 @@ class CustomComponentsPage
 
         List<ISisComponent> missingList = project.getMissingDependencies(selection);
         if (!missingList.isEmpty()) {
-            SelectComponentsDialog dialog = new SelectComponentsDialog(pageContainer.getShell(), SWT.NONE,
+            SelectComponentsDialog dialog = new SelectComponentsDialog(parent.getShell(), SWT.NONE,
                     tr._("Check missing components"),
                     tr._("The following missing components are required due to dependancy:"), missingList);
 
