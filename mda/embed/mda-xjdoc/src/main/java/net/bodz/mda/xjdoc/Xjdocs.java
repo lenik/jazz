@@ -6,8 +6,14 @@ import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 
 public class Xjdocs {
 
+    static IXjdocProvider defaultProvider = UnionXjdocProvider.getInstance();
+
     public static IXjdocProvider getDefaultProvider() {
-        return UnionXjdocProvider.getInstance();
+        return defaultProvider;
+    }
+
+    public static void setDefaultProvider(IXjdocProvider defaultProvider) {
+        Xjdocs.defaultProvider = defaultProvider;
     }
 
     public static ITagLibrary getDefaultTagLibrary() {
