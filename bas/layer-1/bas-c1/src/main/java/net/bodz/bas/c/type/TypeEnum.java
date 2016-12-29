@@ -29,6 +29,8 @@ public enum TypeEnum {
 
     // iSTRING(iString.class),
 
+    ENUM(Enum.class),
+
     CLASS(Class.class),
 
     INT_ARRAY(int[].class),
@@ -51,35 +53,42 @@ public enum TypeEnum {
 
     // iSTRING_ARRAY(iString[].class),
 
+    // TODO The array type of sub-enums, don't have a `super`-class.
+    ENUM_ARRAY(Enum[].class),
+
     CLASS_ARRAY(Class[].class),
 
     ;
 
-    private final Class<?> type;
+    private final Class<?> baseType;
 
-    private TypeEnum(Class<?> type) {
-        this.type = type;
-        TypeEnumMap.map.put(type, this);
+    private TypeEnum(Class<?> baseType) {
+        this.baseType = baseType;
+        Preload.typeMap.put(baseType, this);
 
-        if (type.isPrimitive()) {
-            Class<?> boxedType = Primitives.box(type);
-            TypeEnumMap.map.put(boxedType, this);
+        if (baseType.isPrimitive()) {
+            Class<?> boxedType = Primitives.box(baseType);
+            Preload.typeMap.put(boxedType, this);
         }
     }
 
-    public Class<?> getType() {
-        return type;
+    public Class<?> getBaseType() {
+        return baseType;
     }
 
-    public static TypeEnum fromClass(Class<?> clazz) {
-        // Class<?> unboxed = Primitives.unbox(clazz);
-        return TypeEnumMap.map.get(clazz);
+    public static TypeEnum forClass(Class<?> clazz) {
+        while (clazz != null) {
+            TypeEnum te = Preload.typeMap.get(clazz);
+            if (te != null)
+                return te;
+            else
+                clazz = clazz.getSuperclass();
+        }
+        return null;
     }
 
-}
-
-class TypeEnumMap {
-
-    static Map<Class<?>, TypeEnum> map = new HashMap<Class<?>, TypeEnum>();
+    static class Preload {
+        static Map<Class<?>, TypeEnum> typeMap = new HashMap<Class<?>, TypeEnum>();
+    }
 
 }
