@@ -63,9 +63,9 @@ public class TokensTagType
         StringBuilder sb = new StringBuilder(array.length * 32);
         for (int index = 0; index < array.length; index++) {
             if (index != 0) {
+                sb.append(separator);
                 if (normalizeSpace)
                     sb.append(' ');
-                sb.append(separator);
             }
             sb.append(array[index]);
         }
