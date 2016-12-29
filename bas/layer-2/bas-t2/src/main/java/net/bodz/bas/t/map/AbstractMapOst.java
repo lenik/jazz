@@ -24,7 +24,7 @@ public abstract class AbstractMapOst<K, V>
     protected abstract Map<K, V> create2();
 
     @Override
-    public boolean containsKey(K key1, K key2) {
+    public boolean containsKey2(K key1, K key2) {
         Map<K, V> map2 = get(key1);
         if (map2 == null)
             return false;
@@ -33,7 +33,7 @@ public abstract class AbstractMapOst<K, V>
     }
 
     @Override
-    public Map<K, V> getOrCreate(K key1) {
+    public Map<K, V> getOrCreate2(K key1) {
         Map<K, V> map2 = get(key1);
         if (map2 == null) {
             map2 = create2();
@@ -43,7 +43,7 @@ public abstract class AbstractMapOst<K, V>
     }
 
     @Override
-    public V get(K key1, K key2) {
+    public V get2(K key1, K key2) {
         Map<K, V> map2 = get(key1);
         if (map2 == null)
             return null;
@@ -52,13 +52,13 @@ public abstract class AbstractMapOst<K, V>
     }
 
     @Override
-    public V put(K key1, K key2, V value) {
-        Map<K, V> map2 = getOrCreate(key1);
+    public V put2(K key1, K key2, V value) {
+        Map<K, V> map2 = getOrCreate2(key1);
         return map2.put(key2, value);
     }
 
     @Override
-    public V remove(K key1, K key2) {
+    public V remove2(K key1, K key2) {
         Map<K, V> map2 = get(key1);
         if (map2 == null)
             return null;
