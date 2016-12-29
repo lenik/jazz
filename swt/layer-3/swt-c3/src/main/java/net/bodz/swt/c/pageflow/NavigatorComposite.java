@@ -214,6 +214,8 @@ public class NavigatorComposite
 
         setupEvents();
 
+        loadAllPages();
+
         PathEntries initPath = book.getFirst();
         if (initPath != null)
             pageFlow.go(initPath);
@@ -349,8 +351,7 @@ public class NavigatorComposite
 
     RefreshAdapter refresh = new RefreshAdapter();
 
-    public void loadAllPages()
-            throws PageException {
+    public void loadAllPages() {
         for (IPage page : book.getAllPages())
             page.createUI(pageContainer);
     }

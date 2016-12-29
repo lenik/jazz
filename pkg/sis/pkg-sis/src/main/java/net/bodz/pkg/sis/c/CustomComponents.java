@@ -83,8 +83,7 @@ class CustomComponentsPage
     }
 
     @Override
-    protected void createContents(Composite holder)
-            throws PageException {
+    protected void createContents(Composite holder) {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.marginWidth = 0;
         gridLayout.marginHeight = 0;
