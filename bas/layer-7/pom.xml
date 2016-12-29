@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-ant</module>
+        <module>bas-httpd</module>
         <module>bas-netserv</module>
         <module>bas-program</module>
         <module>bas-shell</module>
