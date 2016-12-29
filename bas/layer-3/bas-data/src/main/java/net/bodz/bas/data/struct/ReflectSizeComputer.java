@@ -54,7 +54,7 @@ public class ReflectSizeComputer {
                 }
             }
 
-            TypeEnum typeEnum = TypeEnum.fromClass(type);
+            TypeEnum typeEnum = TypeEnum.forClass(type);
             if (typeEnum == null)
                 continue;
 
