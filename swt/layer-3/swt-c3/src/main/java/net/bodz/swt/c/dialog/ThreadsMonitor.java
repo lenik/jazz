@@ -200,6 +200,8 @@ public class ThreadsMonitor
 
     void trace() {
         Thread thread = getSelection();
+        if (thread == null) // no thread was selected.
+            return;
         StackTraceElement[] stackTrace = thread.getStackTrace();
         // StringBuffer buf = new StringBuffer(stackTrace.length * 50);
         userDialogs.alert(tr._("Stack trace of ") + thread, stackTrace);
