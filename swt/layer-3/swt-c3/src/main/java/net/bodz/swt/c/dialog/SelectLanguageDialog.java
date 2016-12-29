@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
@@ -17,6 +18,10 @@ import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 
+/**
+ * @label Select Locale Language
+ * @label.zh.cn 选择区域语言
+ */
 public class SelectLanguageDialog
         extends SimpleDialog {
 
@@ -24,7 +29,7 @@ public class SelectLanguageDialog
     private Combo combo;
 
     public SelectLanguageDialog(Shell parent, int style, Class<?> declType) {
-        super(parent, style, "Select Locale");
+        super(parent, style);
 
         langNames = new ArrayList<String>();
 
@@ -32,7 +37,8 @@ public class SelectLanguageDialog
             ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(declType);
             if (classDoc != null) {
                 ArtifactDoc typeDoc = classDoc.to(ArtifactDoc.class);
-                for (String lang : typeDoc.getUsedLangs())
+                Set<String> usedLangs = typeDoc.getUsedLangs();
+                for (String lang : usedLangs)
                     if (lang != null)
                         langNames.add(lang);
             }
@@ -40,8 +46,10 @@ public class SelectLanguageDialog
             declType = declType.getSuperclass();
         }
 
-        if (langNames.isEmpty())
-            langNames.add("zh-CN"); // TODO default language list: C, en-us.
+        if (langNames.isEmpty()) {
+            // String defaultLocale = Locale.getDefault().toString();
+            langNames.add("en");
+        }
     }
 
     @Override
@@ -76,6 +84,9 @@ public class SelectLanguageDialog
         }
 
         if (langNames.size() == 1)
+            combo.select(0);
+
+        if (combo.getSelectionIndex() == -1)
             combo.select(0);
     }
 
