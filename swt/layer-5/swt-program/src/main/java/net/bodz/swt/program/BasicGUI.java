@@ -110,27 +110,27 @@ public abstract class BasicGUI
         super._exit();
     }
 
-    private static Set<String> ignoredThreads;
+    private static Set<String> ignoredThreadNames;
     static {
-        ignoredThreads = new HashSet<String>();
-        ignoredThreads.add("ReaderThread"); // JUnit thread
+        ignoredThreadNames = new HashSet<String>();
+        ignoredThreadNames.add("ReaderThread"); // JUnit thread
     }
 
     protected void checkHangOns() {
         int activeThreads = Thread.activeCount();
         Thread[] threads = new Thread[activeThreads];
         int n = Thread.enumerate(threads);
-        int fg = 0;
+        int fgThreads = 0;
         for (int i = 0; i < n; i++) {
-            Thread t = threads[i];
-            if (t.isDaemon())
+            Thread thread = threads[i];
+            if (thread.isDaemon())
                 continue;
-            String label = t.getName();
-            if (ignoredThreads.contains(label))
+            String threadName = thread.getName();
+            if (ignoredThreadNames.contains(threadName))
                 continue;
-            fg++;
+            fgThreads++;
         }
-        if (fg >= 2) {
+        if (fgThreads >= 2) {
             ThreadsMonitor monitor = new ThreadsMonitor(null, SWT.NONE);
             // monitor.setText("There stills running threads");
             monitor.open();
