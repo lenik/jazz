@@ -63,6 +63,11 @@ public class SimpleBook
         return map.get(path);
     }
 
+    @Override
+    public Collection<IPage> getAllPages() {
+        return map.values();
+    }
+
     public Set<PathEntries> getPaths() {
         return map.keySet();
     }

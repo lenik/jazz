@@ -349,6 +349,12 @@ public class NavigatorComposite
 
     RefreshAdapter refresh = new RefreshAdapter();
 
+    public void loadAllPages()
+            throws PageException {
+        for (IPage page : book.getAllPages())
+            page.createUI(pageContainer);
+    }
+
     void showPage(final PathEntries path)
             throws PageException {
         pageContainer.go(path); // Ex.
