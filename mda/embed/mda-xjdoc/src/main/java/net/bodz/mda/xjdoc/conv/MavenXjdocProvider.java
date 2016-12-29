@@ -46,4 +46,10 @@ public class MavenXjdocProvider
         return classDoc;
     }
 
+    static MavenXjdocProvider instance = new MavenXjdocProvider();
+
+    public static MavenXjdocProvider getInstance() {
+        return instance;
+    }
+
 }
