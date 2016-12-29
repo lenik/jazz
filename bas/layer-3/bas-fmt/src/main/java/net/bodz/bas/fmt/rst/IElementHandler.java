@@ -1,5 +1,6 @@
 package net.bodz.bas.fmt.rst;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import net.bodz.bas.c.enm.Enums;
@@ -46,15 +47,25 @@ public interface IElementHandler {
 
         Class<?> valueType;
         Object prevalue;
+
         TypeEnum typeEnum;
         boolean isFinal;
         int arrayLen;
 
-        public Parser(Class<?> valueType, Object prevalue, boolean isFinal, int arrayLen) {
+        public Parser(Class<?> valueType, Object prevalue)
+                throws ElementHandlerException {
             this.valueType = valueType;
+
+            this.typeEnum = TypeEnum.forClass(valueType);
+            if (typeEnum == null)
+                throw new ElementHandlerException("Type isn't supported: " + valueType);
+
             this.prevalue = prevalue;
-            this.isFinal = isFinal;
-            this.arrayLen = arrayLen;
+            this.isFinal = prevalue != null;
+
+            arrayLen = 0;
+            if (valueType.isArray())
+                arrayLen = Array.getLength(prevalue);
         }
 
         public Object parse(String name, String data)

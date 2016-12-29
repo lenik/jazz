@@ -1,15 +1,14 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.rst.bean;
 
 import java.io.IOException;
 
 import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.fmt.rst.reflect.ReflectElementHandler;
-import net.bodz.bas.fmt.rst.reflect.ReflectRstDumper;
+import net.bodz.bas.fmt.rst.*;
 import net.bodz.bas.io.BCharOut;
 
-public abstract class RstObject
+public abstract class RstBeanObject
         implements IRstSerializable, IElementHandler, IRstFormat {
 
     /** ⇱ Implementation Of {@link IRstSerializable}. */
@@ -18,7 +17,7 @@ public abstract class RstObject
     @Override
     public void writeObject(IRstOutput out)
             throws IOException {
-        ReflectRstDumper.getInstance().dump(out, this);
+        BeanRstDumper.getInstance().dump(out, this);
     }
 
     @Override
@@ -32,13 +31,13 @@ public abstract class RstObject
     @Override
     public boolean attribute(String name, String data)
             throws ParseException, ElementHandlerException {
-        return new ReflectElementHandler(this).attribute(name, data);
+        return new BeanElementHandler(this).attribute(name, data);
     }
 
     @Override
     public IElementHandler beginChild(String name, String[] args)
             throws ParseException, ElementHandlerException {
-        return new ReflectElementHandler(this).beginChild(name, args);
+        return new BeanElementHandler(this).beginChild(name, args);
     }
 
     @Override
@@ -61,7 +60,7 @@ public abstract class RstObject
     }
 
     @Override
-    public boolean writeEntryOverride(IRstOutput out, String field)
+    public boolean writeEntryOverride(IRstOutput out, String name)
             throws IOException {
         return false;
     }
