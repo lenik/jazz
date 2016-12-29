@@ -15,7 +15,8 @@ import net.bodz.bas.fmt.rst.reflect.ReflectElementHandler;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.l10n.en.English;
 
-public abstract class AbstractRstDumper {
+public abstract class AbstractRstDumper
+        implements IRstDumper {
 
     protected final Set<Class<?>> stopClasses = new HashSet<>();
     {
@@ -24,6 +25,7 @@ public abstract class AbstractRstDumper {
         stopClasses.add(BeanElementHandler.class);
     }
 
+    @Override
     public String dump(Object obj) {
         BCharOut buf = new BCharOut();
         IRstOutput out = RstOutputImpl.from(buf);
@@ -35,6 +37,7 @@ public abstract class AbstractRstDumper {
         return buf.toString();
     }
 
+    @Override
     public void dump(IRstOutput out, Object obj)
             throws IOException {
         _dump(out, obj, obj.getClass());
