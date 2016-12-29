@@ -41,6 +41,11 @@ public class ArtifactDoc
             if (domain != null)
                 langs.add(domain);
 
+        String[] langTags = (String[]) getTag("lang");
+        if (langTags != null)
+            for (String langTag : langTags)
+                langs.add(langTag);
+
         return langs;
     }
 
