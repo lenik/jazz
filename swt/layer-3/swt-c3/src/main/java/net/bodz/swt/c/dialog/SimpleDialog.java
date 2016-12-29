@@ -21,12 +21,19 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.typer.std.ValidationException;
 import net.bodz.bas.ui.event.IValidationListener;
 import net.bodz.bas.ui.event.ValidationEvent;
+import net.bodz.mda.xjdoc.IXjdocProvider;
+import net.bodz.mda.xjdoc.Xjdocs;
+import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
+import net.bodz.mda.xjdoc.model.javadoc.XjdocCache;
 import net.bodz.swt.c.composite.EmptyComposite;
 import net.bodz.swt.c.composite.Switcher;
 import net.bodz.swt.c.control.Controls;
@@ -51,8 +58,8 @@ public abstract class SimpleDialog
     private Composite body;
     private Switcher errorBar;
     private Label errorLabel;
-    private Composite userBar;
-    private Composite basicBar;
+    private Composite userButtonBar;
+    private Composite basicButtonBar;
 
     private SwtUserDialogs dialogs;
 
@@ -80,10 +87,23 @@ public abstract class SimpleDialog
         super(parent == null ? new Shell() : parent, style);
         this.parent = parent;
 
-        setTitle(title);
-        if (title != null)
+        if (title == null) {
+            ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(getClass());
+            if (classDoc != null) {
+                ArtifactDoc doc = new ArtifactDoc(classDoc);
+                iString label = doc.getLabel();
+                title = Nullables.toString(label);
+            }
+        }
+        if (title != null) {
+            setTitle(title);
             setText(title);
+        }
 
+        init();
+    }
+
+    void init() {
         icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif");
         image = icon;
         dialogs = new SwtUserDialogs(parent, SWT.APPLICATION_MODAL);
@@ -197,7 +217,7 @@ public abstract class SimpleDialog
     }
 
     public Composite getUserBar() {
-        return userBar;
+        return userButtonBar;
     }
 
     private static final Object EVALUATE = new Object();
@@ -278,13 +298,13 @@ public abstract class SimpleDialog
         bottomGrid.marginWidth = 0;
         bottomBar.setLayout(bottomGrid);
 
-        userBar = new Composite(bottomBar, _diagstyle);
-        basicBar = new Composite(bottomBar, _diagstyle);
+        userButtonBar = new Composite(bottomBar, _diagstyle);
+        basicButtonBar = new Composite(bottomBar, _diagstyle);
 
         final GridData userData = new GridData(SWT.FILL, SWT.CENTER, true, false);
         final GridData basicData = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
-        userBar.setLayoutData(userData);
-        basicBar.setLayoutData(basicData);
+        userButtonBar.setLayoutData(userData);
+        basicButtonBar.setLayoutData(basicData);
 
         final RowLayout userLayout = new RowLayout(SWT.HORIZONTAL);
         userLayout.wrap = false;
@@ -293,7 +313,7 @@ public abstract class SimpleDialog
         userLayout.marginTop = 0;
         userLayout.marginBottom = 0;
         userLayout.pack = true; // pack user buttons.
-        userBar.setLayout(userLayout);
+        userButtonBar.setLayout(userLayout);
 
         final RowLayout basicLayout = new RowLayout(SWT.HORIZONTAL);
         basicLayout.wrap = false;
@@ -302,7 +322,7 @@ public abstract class SimpleDialog
         basicLayout.marginTop = 0;
         basicLayout.marginBottom = 0;
         basicLayout.pack = false; // don't pack basic buttons
-        basicBar.setLayout(basicLayout);
+        basicButtonBar.setLayout(basicLayout);
 
         if (detailBar != null)
             try {
@@ -310,20 +330,23 @@ public abstract class SimpleDialog
             } catch (CreateException ex) {
                 createException(detailBar, ex);
             }
+
         try {
             createBody(body);
         } catch (CreateException ex) {
             createException(body, ex);
         }
+
         try {
-            createUserButtons(userBar);
+            createUserButtons(userButtonBar);
         } catch (CreateException ex) {
-            createException(userBar, ex);
+            createException(userButtonBar, ex);
         }
+
         try {
-            createButtons(basicBar);
+            createButtons(basicButtonBar);
         } catch (CreateException ex) {
-            createException(basicBar, ex);
+            createException(basicButtonBar, ex);
         }
     }
 
@@ -344,6 +367,7 @@ public abstract class SimpleDialog
         imageLabel.setImage(getImage());
         final GridData imageData = new GridData(GridData.BEGINNING, GridData.BEGINNING);
         imageLabel.setLayoutData(imageData);
+
         detailBar = new Composite(topBar, _diagstyle);
         GridData detailData = new GridData(GridData.FILL, GridData.FILL, true, true);
         detailBar.setLayoutData(detailData);

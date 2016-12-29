@@ -54,7 +54,7 @@ import net.bodz.swt.c.resources.SWTResources;
 
 /**
  * @style width: 320px; height: 240px;
- *
+ * 
  * @lang en, zh-cn
  * @site.web http://www.bodz.net/products/BasicGUI
  */
@@ -71,15 +71,6 @@ public abstract class BasicGUI
      * @option -Xh
      */
     private int shellHeight = SWT.DEFAULT;
-
-    {
-// TODO Set PreferredSize by CSS.
-// PreferredSize _size = getClass().getAnnotation(PreferredSize.class);
-// if (_size != null) {
-// shellWidth = _size.width();
-// shellHeight = _size.height();
-// }
-    }
 
     protected Shell shell;
     private DynamicControl viewArea;
@@ -323,9 +314,6 @@ public abstract class BasicGUI
 
     protected Control createToolBar(Composite parent)
             throws UiException {
-        boolean TODO = true;
-        if (TODO)
-            return null;
         ToolBar toolBar = new ToolBar(parent, SWT.FLAT | SWT.RIGHT);
         return toolBar;
     }
