@@ -20,8 +20,7 @@ public interface IPage {
      *         {@link #service(ServiceContext)} must returns non-<code>null</code> path for
      *         redirection.
      */
-    Control createUI(PageContainer pageContainer)
-            throws PageException;
+    Control createUI(PageContainer pageContainer);
 
     /**
      * Be called only once for any instance.

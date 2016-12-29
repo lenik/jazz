@@ -18,8 +18,7 @@ public class PageTestAppTest {
             }
 
             @Override
-            protected void createContents(Composite holder)
-                    throws PageException {
+            protected void createContents(Composite holder) {
                 holder.setLayout(new FillLayout());
                 Label label = new Label(holder, SWT.NONE);
                 label.setText("Test Page");

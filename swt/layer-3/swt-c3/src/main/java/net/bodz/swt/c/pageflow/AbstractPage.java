@@ -65,7 +65,8 @@ public abstract class AbstractPage
 
     @Override
     public synchronized Control createUI(PageContainer pageContainer)
-            throws PageException {
+// throws PageException
+    {
         if (parent == null) {
             parent = new Composite(pageContainer, SWT.NONE);
             this.pageContainer = pageContainer;
@@ -74,9 +75,7 @@ public abstract class AbstractPage
         return parent;
     }
 
-    protected void createContents(Composite holder)
-            throws PageException {
-    }
+    protected abstract void createContents(Composite holder);
 
     @Override
     public PathEntries service(ServiceContext context)

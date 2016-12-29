@@ -64,8 +64,7 @@ public class PageTester
         }
 
         @Override
-        protected void createContents(Composite holder)
-                throws PageException {
+        protected void createContents(Composite holder) {
             holder.setLayout(new GridLayout(1, false));
             prevLabel = new Label(holder, SWT.NONE);
             prevLabel.setText(tr._("Where do you come from?"));

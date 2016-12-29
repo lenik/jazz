@@ -60,8 +60,7 @@ class WelcomeLogoPage
     }
 
     @Override
-    protected void createContents(Composite holder)
-            throws PageException {
+    protected void createContents(Composite holder) {
         holder.setLayout(new GridLayout());
 
         final Picture logoPicture = new Picture(holder, SWT.NONE, true);

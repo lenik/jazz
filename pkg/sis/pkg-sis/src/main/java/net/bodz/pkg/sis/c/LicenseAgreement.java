@@ -58,8 +58,7 @@ class LicenseAgreementPage
     }
 
     @Override
-    protected void createContents(Composite holder)
-            throws PageException {
+    protected void createContents(Composite holder) {
         holder.setLayout(new BorderLayout(0, 0));
 
         final Composite composite = new Composite(holder, SWT.NONE);
