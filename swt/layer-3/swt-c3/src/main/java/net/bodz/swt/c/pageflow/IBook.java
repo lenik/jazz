@@ -18,6 +18,8 @@ public interface IBook {
      */
     IPage getPage(PathEntries path);
 
+    Collection<IPage> getAllPages();
+
     Collection<PageMethod> getMethods();
 
     NLS getDict();

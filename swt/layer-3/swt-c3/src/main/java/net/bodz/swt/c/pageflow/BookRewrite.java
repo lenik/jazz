@@ -51,6 +51,11 @@ public class BookRewrite
     }
 
     @Override
+    public Collection<IPage> getAllPages() {
+        return next.getAllPages();
+    }
+
+    @Override
     public Collection<PageMethod> getMethods() {
         return next.getMethods();
     }
