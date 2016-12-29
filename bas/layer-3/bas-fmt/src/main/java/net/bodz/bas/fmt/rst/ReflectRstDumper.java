@@ -96,7 +96,7 @@ public class ReflectRstDumper {
                     continue;
                 }
 
-                TypeEnum typeEnum = TypeEnum.fromClass(type);
+                TypeEnum typeEnum = TypeEnum.forClass(type);
                 if (typeEnum == null) // skip unknown type.
                     continue;
 
@@ -179,6 +179,10 @@ public class ReflectRstDumper {
 
                 case CLASS_ARRAY:
                     out.attribute(name, TypeArray.of((Class<?>[]) value).getNames());
+                    break;
+
+                case ENUM:
+                    out.attribute(name, ((Enum<?>) value).name());
                     break;
 
                 case OBJECT:

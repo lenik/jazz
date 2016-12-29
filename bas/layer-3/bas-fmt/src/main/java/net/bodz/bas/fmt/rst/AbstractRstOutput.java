@@ -86,6 +86,12 @@ public abstract class AbstractRstOutput
     }
 
     @Override
+    public void attribute(String name, Enum<?> value)
+            throws IOException {
+        _attribute(name, value.name());
+    }
+
+    @Override
     public void attribute(String name, String value)
             throws IOException {
         _attribute(name, StringQuote.qqJavaEscaped(value));
