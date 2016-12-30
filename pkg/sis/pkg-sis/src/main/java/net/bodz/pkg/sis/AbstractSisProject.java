@@ -297,7 +297,7 @@ public class AbstractSisProject
 
         try {
             saveProjectRst();
-            monitor.worked(1);
+            monitor.addProgress(1);
         } catch (Exception e) {
             ILogger logger = options.get(ILogger.class);
             logger.error("Failed to save project.rst.", e);
@@ -311,7 +311,7 @@ public class AbstractSisProject
     public void install(IProgressMonitor monitor, IOptions options) {
         try {
             loadProjectRst();
-            monitor.worked(1);
+            monitor.addProgress(1);
         } catch (Exception e) {
             ILogger logger = options.get(ILogger.class);
             logger.error("Failed to load project.rst.", e);
@@ -327,7 +327,7 @@ public class AbstractSisProject
     public void remove(IProgressMonitor monitor, IOptions options) {
         try {
             loadProjectRst();
-            monitor.worked(1);
+            monitor.addProgress(1);
         } catch (Exception e) {
             ILogger logger = options.get(ILogger.class);
             logger.error("Failed to load project.rst.", e);

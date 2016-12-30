@@ -7,20 +7,27 @@ public interface IProgressMonitor {
 
     int UNKNOWN = -1;
 
-    void enter(String taskName, int amountOfParentWork, int totalWork, long estimatedDuration);
+    /**
+     * @param parentDiv
+     *            Amount of progress in the parent job.
+     */
+    void enter(String taskName, int parentDiv, int totalProgress, long estimatedDuration);
 
     void leave();
 
-    // void setTotalWork(int totalWork);
+    int getTotalProgress();
 
-    /**
-     * @return cancel state.
-     */
-    boolean worked(int amount);
+    void setTotalProgress(int totalProgress);
 
-    boolean isCanceled();
+    int getProgress();
 
-    void setCanceled(boolean canceled);
+    void addProgress(int delta);
+
+    void setProgress(int progress);
+
+    void addCancelListener(ICancelListener cancelListener);
+
+    void removeCancelListener(ICancelListener cancelListener);
 
     ILogger getLogger();
 
@@ -40,17 +47,33 @@ class NullProgressMonitor
     }
 
     @Override
-    public boolean worked(int amount) {
-        return false;
+    public int getTotalProgress() {
+        return 1;
     }
 
     @Override
-    public boolean isCanceled() {
-        return false;
+    public void setTotalProgress(int totalProrgress) {
     }
 
     @Override
-    public void setCanceled(boolean canceled) {
+    public int getProgress() {
+        return 0;
+    }
+
+    @Override
+    public void addProgress(int delta) {
+    }
+
+    @Override
+    public void setProgress(int progress) {
+    }
+
+    @Override
+    public void addCancelListener(ICancelListener cancelListener) {
+    }
+
+    @Override
+    public void removeCancelListener(ICancelListener cancelListener) {
     }
 
     @Override
