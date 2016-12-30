@@ -22,7 +22,6 @@ import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.ui.dialog.DirectiveCommands;
 import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.bas.ui.model.action.AbstractProgressMonitor;
-import net.bodz.bas.ui.model.action.IProgressMonitor;
 import net.bodz.pkg.sis.ISisProject;
 import net.bodz.swt.c.composite.DetailSwitchEvent;
 import net.bodz.swt.c.composite.DetailSwitchListener;
@@ -43,7 +42,7 @@ class ProgressPage
 
     private final ISisProject project;
 
-    IProgressMonitor monitor;
+    Monitor monitor;
     IUserDialogs dialogs;
 
     private int state = BLOCK;
@@ -160,9 +159,8 @@ class ProgressPage
                     @Override
                     public void widgetSelected(SelectionEvent e) {
                         boolean selection = cancelItem.getSelection();
-                        monitor.setCanceled(selection);
-                        selection = monitor.isCanceled();
-                        cancelItem.setSelection(selection);
+                        if (selection)
+                            monitor.cancel();
                     }
                 });
             }
@@ -265,8 +263,8 @@ class ProgressPage
 
         private final IUserDialogs userDialogs;
 
-        int totalWork;
-        int accWork;
+        int totalProgress;
+        int progress;
 
         public Monitor(IUserDialogs userDialogs) {
             if (userDialogs == null)
@@ -275,24 +273,22 @@ class ProgressPage
         }
 
         @Override
-        public void enter(String taskName, int amountOfParentWork, int totalWork, long estimatedDuration) {
-            this.totalWork = totalWork;
-        }
-
-        @Override
-        public boolean worked(int amount) {
-            accWork += amount;
-            parent.getDisplay().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    setProgress((double) accWork / totalWork);
-                }
-            });
-            return isCanceled();
+        public void enter(String taskName, int parentDiv, int totalProgress, long estimatedDuration) {
+            this.totalProgress = totalProgress;
         }
 
         @Override
         public void leave() {
+        }
+
+        @Override
+        protected void updateProgress() {
+            parent.getDisplay().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    ProgressPage.this.setProgress((double) progress / totalProgress);
+                }
+            });
         }
 
         @Override
@@ -314,7 +310,7 @@ class ProgressPage
             case 1: // ignore
                 return false;
             case 2: // cancel
-                setCanceled(true);
+                cancel();
                 return false;
             case 3: // debug
             default:

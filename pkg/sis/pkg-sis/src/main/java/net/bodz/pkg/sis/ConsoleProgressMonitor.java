@@ -24,11 +24,9 @@ public class ConsoleProgressMonitor
     }
 
     @Override
-    public boolean worked(int amount) {
-        // double progress = 100 * e.getProgress();
-        // String mesg = String.format(tr._("Progress %.2f%%"), progress);
-        logger.mesg("Progress: " + amount);
-        return isCanceled();
+    protected void updateProgress() {
+        double percent = 100 * getProgress() / getTotalProgress();
+        logger.mesgf("Progress %.2f%%", percent);
     }
 
     @Override
@@ -42,7 +40,7 @@ public class ConsoleProgressMonitor
             return false;
         case 2: // Cancel
         default:
-            setCanceled(true);
+            cancel();
             return false;
         }
     }

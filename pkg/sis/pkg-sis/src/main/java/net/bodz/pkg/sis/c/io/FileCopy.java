@@ -148,8 +148,7 @@ public class FileCopy
             if (!retry) {
                 file = iterator.next();
 
-                if (!monitor.worked(1))
-                    break;
+                monitor.addProgress(1);
             }
             retry = false;
 
@@ -261,8 +260,7 @@ public class FileCopy
         int index = 0;
         try {
             for (String name : fileList) {
-                if (!monitor.worked(1))
-                    break;
+                monitor.addProgress(1);
 
                 IArchiveEntry entry;
                 try {
