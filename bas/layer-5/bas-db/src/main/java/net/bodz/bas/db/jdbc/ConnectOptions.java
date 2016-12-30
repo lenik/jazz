@@ -11,6 +11,7 @@ public class ConnectOptions
     public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
 
     DatabaseType type = DatabaseType.PostgreSQL;
+    String url;
     String hostName = "localhost";
     int port;
     File rootDir;
@@ -40,6 +41,17 @@ public class ConnectOptions
         if (type == null)
             throw new NullPointerException("type");
         this.type = type;
+    }
+
+    /**
+     * Connection URL override.
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getServer() {
