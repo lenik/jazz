@@ -3,6 +3,7 @@ package net.bodz.bas.db.ctx;
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,8 @@ import net.bodz.bas.db.ibatis.IbatisMapperProvider;
 import net.bodz.bas.db.jdbc.BoneCPDataSourceProvider;
 import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.db.jdbc.IDataSourceProvider;
+import net.bodz.bas.db.jdbc.util.ISqlExecutor;
+import net.bodz.bas.db.jdbc.util.SharedSqlExecutor;
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IAttributed;
 
@@ -71,6 +74,17 @@ public class DataContext
 
     public DataSource getDataSource() {
         return dataSource;
+    }
+
+    public Connection getConnection()
+            throws SQLException {
+        return dataSource.getConnection();
+    }
+
+    public ISqlExecutor getSqlExecutor()
+            throws SQLException {
+        Connection connection = dataSource.getConnection();
+        return new SharedSqlExecutor(connection);
     }
 
     public IMapperProvider getMapperProvider() {
