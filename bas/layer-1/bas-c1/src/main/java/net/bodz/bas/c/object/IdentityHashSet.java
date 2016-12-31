@@ -8,6 +8,9 @@ import java.util.Set;
 
 /**
  * Compare two objects by == operator, rather than using {@link Object#equals(Object)}.
+ * 
+ * @see net.bodz.bas.t.set.FramedMarks
+ * @see net.bodz.bas.t.set.StackSet
  */
 public class IdentityHashSet<T>
         extends AbstractSet<T>

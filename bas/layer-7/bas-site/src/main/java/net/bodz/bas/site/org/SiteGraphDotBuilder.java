@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
 import net.bodz.bas.c.string.StringQuote;
@@ -12,7 +11,8 @@ import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.fmt.textmap.TextMapParser;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.res.builtin.URLResource;
-import net.bodz.bas.t.set.MarkSet;
+import net.bodz.bas.t.set.IMarks;
+import net.bodz.bas.t.set.Marks;
 
 public class SiteGraphDotBuilder
         extends HashMap<String, Object> {
@@ -38,7 +38,7 @@ public class SiteGraphDotBuilder
         out.println(graphAttrs);
         out.enter();
 
-        Set<SiteGraphNode> markSet = new MarkSet<>();
+        Marks markSet = new Marks();
         buildNodes(markSet, root);
 
         out.println();
@@ -49,8 +49,8 @@ public class SiteGraphDotBuilder
         out.println("}");
     }
 
-    void buildNodes(Set<SiteGraphNode> markSet, SiteGraphNode node) {
-        if (!markSet.add(node))
+    void buildNodes(IMarks marks, SiteGraphNode node) {
+        if (!marks.add(node))
             return;
 
         StringBuilder sb = new StringBuilder();
@@ -77,11 +77,11 @@ public class SiteGraphDotBuilder
         out.println(sb);
 
         for (SiteGraphRelation relation : node.getRelations())
-            buildNodes(markSet, relation.getDst());
+            buildNodes(marks, relation.getDst());
     }
 
-    void buildEdges(Set<SiteGraphNode> markSet, SiteGraphNode node) {
-        if (!markSet.add(node))
+    void buildEdges(IMarks marks, SiteGraphNode node) {
+        if (!marks.add(node))
             return;
 
         String srcId = node.getId();
@@ -112,7 +112,7 @@ public class SiteGraphDotBuilder
         }
 
         for (SiteGraphRelation relation : node.getRelations())
-            buildEdges(markSet, relation.getDst());
+            buildEdges(marks, relation.getDst());
     }
 
     static String graphAttrsTemplate;
