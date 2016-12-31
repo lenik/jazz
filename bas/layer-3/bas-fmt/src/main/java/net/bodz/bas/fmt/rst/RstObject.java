@@ -5,33 +5,36 @@ import java.io.IOException;
 import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.fmt.rst.bean.BeanElementHandler;
-import net.bodz.bas.fmt.rst.bean.BeanRst;
-import net.bodz.bas.fmt.rst.bean.BeanRstDumper;
-import net.bodz.bas.fmt.rst.reflect.ReflectElementHandler;
-import net.bodz.bas.fmt.rst.reflect.ReflectRstDumper;
+import net.bodz.bas.fmt.rst.obj.BeanElementHandler;
+import net.bodz.bas.fmt.rst.obj.BeanRstDumper;
+import net.bodz.bas.fmt.rst.obj.ReflectElementHandler;
+import net.bodz.bas.fmt.rst.obj.ReflectRstDumper;
+import net.bodz.bas.fmt.rst.obj.RstSource;
 import net.bodz.bas.io.BCharOut;
 
 public abstract class RstObject
         implements IRstSerializable, IElementHandler, IRstFormat {
 
-    private transient IRstDumper _dumper;
+    private transient boolean beanMode;
     private transient IElementHandler _handler;
 
     public RstObject() {
-        _init(getClass().isAnnotationPresent(BeanRst.class));
+        _init(getClass().getAnnotation(RstSource.class));
     }
 
     public RstObject(boolean beanMode) {
         _init(beanMode);
     }
 
+    private void _init(RstSource a) {
+        _init(a == null ? false : a.bean());
+    }
+
     private void _init(boolean beanMode) {
+        this.beanMode = beanMode;
         if (beanMode) {
-            _dumper = BeanRstDumper.getInstance();
             _handler = new BeanElementHandler(this);
         } else {
-            _dumper = ReflectRstDumper.getInstance();
             _handler = new ReflectElementHandler(this);
         }
     }
@@ -42,7 +45,10 @@ public abstract class RstObject
     @Override
     public void writeObject(IRstOutput out)
             throws IOException {
-        _dumper.dump(out, this);
+        if (beanMode)
+            new BeanRstDumper(out).dump(this);
+        else
+            new ReflectRstDumper(out).dump(this);
     }
 
     @Override

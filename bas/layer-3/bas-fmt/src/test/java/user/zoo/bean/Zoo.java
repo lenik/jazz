@@ -6,10 +6,12 @@ import java.util.List;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.rst.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IElementHandler;
-import net.bodz.bas.fmt.rst.bean.RstBeanObject;
+import net.bodz.bas.fmt.rst.RstObject;
+import net.bodz.bas.fmt.rst.obj.RstSource;
 
+@RstSource(bean = true)
 public class Zoo
-        extends RstBeanObject {
+        extends RstObject {
 
     private String owner;
     private int createdYear;

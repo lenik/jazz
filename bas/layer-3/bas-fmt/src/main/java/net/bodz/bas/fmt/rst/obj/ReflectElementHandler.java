@@ -1,4 +1,4 @@
-package net.bodz.bas.fmt.rst.reflect;
+package net.bodz.bas.fmt.rst.obj;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

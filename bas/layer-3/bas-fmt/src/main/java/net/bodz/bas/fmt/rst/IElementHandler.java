@@ -6,6 +6,8 @@ import java.util.Arrays;
 import net.bodz.bas.c.enm.Enums;
 import net.bodz.bas.c.type.TypeEnum;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IParser;
 
 /**
  * @see RstElement
@@ -247,7 +249,11 @@ public interface IElementHandler {
             // break;
 
             case OBJECT:
-                throw new ElementHandlerException("Don't know how to parse: " + valueType);
+                IParser<Object> parser = Typers.getTyper(valueType, IParser.class);
+                if (parser == null)
+                    throw new ElementHandlerException("Don't know how to parse: " + valueType);
+                value = parser.parse(data);
+                break;
 
             default:
                 throw new ElementHandlerException("field type isn't supported: " + valueType);

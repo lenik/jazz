@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import net.bodz.bas.c.java.io.DbgInputStream;
 import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.fmt.rst.RstObject;
+import net.bodz.bas.fmt.rst.RstOutputImpl;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.RafIn;
@@ -97,7 +97,7 @@ public class ZipUnarchiverTest
             for (ExtraField extraField : entry.extraFields.values()) {
                 out.println("Field " + extraField.getClass().getSimpleName() + ": ");
                 out.enter();
-                RstObject.fn.dump(extraField, out);
+                extraField.writeObject(RstOutputImpl.from(out));
                 out.leave();
             }
             out.leave();
@@ -127,7 +127,7 @@ public class ZipUnarchiverTest
             for (ExtraField extraField : entry.extraFields.values()) {
                 out.println("Field " + extraField.getClass().getSimpleName() + ": ");
                 out.enter();
-                RstObject.fn.dump(extraField, out);
+                extraField.writeObject(RstOutputImpl.from(out));
                 out.leave();
             }
             out.leave();

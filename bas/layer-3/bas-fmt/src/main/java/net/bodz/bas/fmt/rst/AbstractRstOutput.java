@@ -3,11 +3,18 @@ package net.bodz.bas.fmt.rst;
 import java.io.IOException;
 
 import net.bodz.bas.c.string.StringQuote;
+import net.bodz.bas.t.set.FramedMarks;
 
 public abstract class AbstractRstOutput
         implements IRstOutput {
 
     private String separator = " ";
+    private FramedMarks marks = new FramedMarks();
+
+    @Override
+    public FramedMarks getMarks() {
+        return marks;
+    }
 
     @Override
     public void element(String name, IRstSerializable child, String... args)
@@ -83,7 +90,7 @@ public abstract class AbstractRstOutput
     @Override
     public final void attribute(String name, char value)
             throws IOException {
-        _attribute(name, StringQuote.qqJavaEscaped(Character.toString(value)));
+        _attribute(name, StringQuote.qqJavaString(Character.toString(value)));
     }
 
     @Override
@@ -95,7 +102,7 @@ public abstract class AbstractRstOutput
     @Override
     public void attribute(String name, String value)
             throws IOException {
-        _attribute(name, StringQuote.qqJavaEscaped(value));
+        _attribute(name, StringQuote.qqJavaString(value));
     }
 
     @Override
@@ -253,7 +260,7 @@ public abstract class AbstractRstOutput
         for (int i = 0; i < len; i++) {
             if (i != 0)
                 sb.append(separator);
-            String qq = StringQuote.qqJavaEscaped(buf[off++]);
+            String qq = StringQuote.qqJavaString(buf[off++]);
             sb.append(qq);
         }
         _attribute(name, sb.toString());

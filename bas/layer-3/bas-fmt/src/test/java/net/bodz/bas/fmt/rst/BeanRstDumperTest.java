@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.bodz.bas.fmt.rst.reflect.ReflectRstDumper;
+import net.bodz.bas.fmt.rst.obj.BeanRstDumper;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.res.builtin.StringSource;
 
@@ -15,7 +15,6 @@ import user.zoo.bean.Zoo;
 public class BeanRstDumperTest
         extends Assert {
 
-    ReflectRstDumper dumper = ReflectRstDumper.getInstance();
     Zoo zoo = new Zoo();
 
     @Before
@@ -31,7 +30,7 @@ public class BeanRstDumperTest
     @Test
     public void test1()
             throws Exception {
-        String rst = dumper.dump(zoo);
+        String rst = RstFn.toString(zoo);
         System.out.println(rst);
 
         Zoo zoo2 = new Zoo();
@@ -40,7 +39,7 @@ public class BeanRstDumperTest
         loader.load(new StringSource(rst), zoo2);
 
         IRstOutput out = RstOutputImpl.from(Stdio.cout);
-        dumper.dump(out, zoo2);
+        new BeanRstDumper(out).dump(zoo2);
     }
 
 }

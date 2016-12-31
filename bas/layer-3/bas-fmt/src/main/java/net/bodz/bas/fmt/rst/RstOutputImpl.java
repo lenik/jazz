@@ -58,4 +58,8 @@ public class RstOutputImpl
         out.println(name + ": " + data);
     }
 
+    public void flush() {
+        out.flush();
+    }
+
 }
