@@ -5,7 +5,7 @@ public class SqlFormats {
     /**
      * @version MySQL 5.7
      */
-    public static final ISqlFormat MySQL = new SimpleSqlFormat(
+    public static final ISqlFormat MYSQL = new SimpleSqlFormat(
             '`',
             '`', //
             "ACCESSIBLE", "ACCOUNT", "ACTION", "ADD", "AFTER", "AGAINST", "AGGREGATE", "ALGORITHM", "ALL", "ALTER",
@@ -82,7 +82,7 @@ public class SqlFormats {
             "VIRTUAL", "WAIT", "WARNINGS", "WEEK", "WEIGHT_STRING", "WHEN", "WHERE", "WHILE", "WITH", "WITHOUT",
             "WORK", "WRAPPER", "WRITE", "X509", "XA", "XID", "XML", "XOR", "YEAR", "YEAR_MONTH", "ZEROFILL");
 
-    public static final ISqlFormat Oracle = new SimpleSqlFormat(
+    public static final ISqlFormat ORACLE = new SimpleSqlFormat(
             '"',
             '"', //
             "ACCESS", "ACCOUNT", "ACTIVATE", "ADD", "ADMIN", "ADVISE", "AFTER", "ALL", "ALLOCATE", "ALL_ROWS", "ALTER",
@@ -142,7 +142,7 @@ public class SqlFormats {
     /**
      * @version PostgreSQL 9.6.1
      */
-    public static final ISqlFormat PostgreSQL = new SimpleSqlFormat(
+    public static final ISqlFormat POSTGRESQL = new SimpleSqlFormat(
             '"',
             '"', //
             "A", "ABORT", "ABS", "ABSENT", "ABSOLUTE", "ACCESS", "ACCORDING", "ACTION", "ADA", "ADD", "ADMIN", "AFTER",
@@ -257,6 +257,6 @@ public class SqlFormats {
             "UNIQUE", "UNPIVOT", "UPDATE", "UPDATETEXT", "USE", "USER", "VALUES", "VARYING", "VIEW", "WAITFOR", "WHEN",
             "WHERE", "WHILE", "WITH", "WITHIN", "WRITETEXT");
 
-    public static final ISqlFormat DEFAULT = MySQL;
+    public static final ISqlFormat DEFAULT = MYSQL;
 
 }
