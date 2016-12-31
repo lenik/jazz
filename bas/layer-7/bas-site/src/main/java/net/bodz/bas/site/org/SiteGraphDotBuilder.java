@@ -58,7 +58,7 @@ public class SiteGraphDotBuilder
 
         Map<String, Object> attrs = new HashMap<>();
         String label = node.getName(); // getLabel().toString();
-        attrs.put("label", StringQuote.qqJavaEscaped(label));
+        attrs.put("label", StringQuote.qqJavaString(label));
         attrs.put("fontsize", 30 - node.getLevel() * 5);
         attrs.put("shape", node.isLeaf() ? "note" : "box3d");
         attrs.put("href", StringQuote.qq(node.getHref()));

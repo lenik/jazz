@@ -55,7 +55,7 @@ public abstract class AbstractCss3Properties
         if (str.startsWith("\'") && str.endsWith("\'")) {
             str = str.substring(1, str.length() - 1);
             try {
-                str = StringEscape.unescapeJava(str);
+                str = StringEscape.parseQuotedJavaString(str);
             } catch (ParseException e) {
                 throw new IllegalArgumentException("Failed to parse char literal: " + str, e);
             }

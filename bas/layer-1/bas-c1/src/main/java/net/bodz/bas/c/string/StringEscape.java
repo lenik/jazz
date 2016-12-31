@@ -83,7 +83,7 @@ public class StringEscape {
         return s.replace("\"", "\"\"");
     }
 
-    public static String unescapeJava(String s)
+    public static String parseQuotedJavaString(String s)
             throws ParseException {
         SimpleJavaStringDFA parser = new SimpleJavaStringDFA();
         String string = (String) parser.parse(s);
