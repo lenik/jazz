@@ -9,9 +9,9 @@ public class StringEscapeTest
         extends Assert {
 
     @Test
-    public void testUnescapeJava_uchars()
+    public void testParseQuotedJavaString_uchars()
             throws ParseException {
-        String str = StringEscape.unescapeJava("\"one\\t\u0031\"");
+        String str = StringEscape.parseQuotedJavaString("\"one\\t\u0031\"");
         assertEquals("one\t1", str);
     }
 

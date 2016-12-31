@@ -36,7 +36,7 @@ public class StringTagType
             throws ParseException {
         if (string.startsWith("\"") && string.endsWith("\"")) {
             String quotedString = string;
-            String unescaped = StringEscape.unescapeJava(quotedString);
+            String unescaped = StringEscape.parseQuotedJavaString(quotedString);
             return unescaped;
         } else
             return string;

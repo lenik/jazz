@@ -18,12 +18,16 @@ public class StringQuote {
         return qq(s == null ? null : s.toString());
     }
 
-    public static String qJavaEscaped(String s) {
+    public static String qJavaString(String s) {
+        if (s == null)
+            return null;
         String java = StringEscape.escapeJava(s);
         return q(java);
     }
 
-    public static String qqJavaEscaped(String s) {
+    public static String qqJavaString(String s) {
+        if (s == null)
+            return "null";
         String java = StringEscape.escapeJava(s);
         return qq(java);
     }
