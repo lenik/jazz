@@ -32,6 +32,7 @@ public class DataContext
 
     public static final String ATTRIBUTE_KEY = DataContext.class.getName();
 
+    private ConnectOptions options;
     private IDataSourceProvider dataSourceProvider;
     private DataSource dataSource;
     private IbatisMapperProvider mapperProvider;
@@ -40,6 +41,7 @@ public class DataContext
     public DataContext(ConnectOptions opts) {
         if (opts == null)
             throw new NullPointerException("opts");
+        this.options = opts;
 
         dataSourceProvider = new BoneCPDataSourceProvider(opts);
 
@@ -66,6 +68,10 @@ public class DataContext
             return mapper;
         }
         return super.query(specificationClass);
+    }
+
+    public ConnectOptions getOptions() {
+        return options;
     }
 
     public IDataSourceProvider getDataSourceProvider() {
