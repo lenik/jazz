@@ -61,7 +61,7 @@ public class DatabaseType
     /**
      * H2 Embedded Database
      */
-    public static final DatabaseType H2 = new DatabaseType("h2", //
+    public static final DatabaseType H2 = new DatabaseType("H2", //
             "org.hibernate.dialect.H2Dialect", //
             "org.h2.Driver", //
             "jdbc:h2://${rootDir}/${database};DB_CLOSE_ON_EXIT=FALSE", //
@@ -70,7 +70,7 @@ public class DatabaseType
     /**
      * HSQL Embedded Database
      */
-    public static final DatabaseType HSQL = new DatabaseType("hsql",//
+    public static final DatabaseType HSQL = new DatabaseType("HSQL",//
             "org.hibernate.dialect.HSQLDialect", //
             "org.hsql.Driver", //
             "jdbc:hsql://${rootDir}/${database}", //
@@ -79,28 +79,28 @@ public class DatabaseType
     /**
      * PostgreSQL RDBMS
      */
-    public static final DatabaseType PostgreSQL = new DatabaseType("postgresql", //
+    public static final DatabaseType POSTGRESQL = new DatabaseType("POSTGRESQL", //
             "org.hibernate.dialect.PostgreSQLDialect", //
             "org.postgresql.Driver", //
             "jdbc:postgresql://${server}/${database}", //
-            SqlFormats.PostgreSQL);
+            SqlFormats.POSTGRESQL);
 
     /**
      * Oracle Enterprise Database
      */
-    public static final DatabaseType Oracle = new DatabaseType("oracle",//
+    public static final DatabaseType ORACLE = new DatabaseType("ORACLE",//
             "org.hibernate.dialect.OracleDialect", //
-            "com.oracle.jdbc.Driver", //
+            "oracle.jdbc.driver.OracleDriver", //
             "jdbc:oracle://${server}/${database}", //
-            SqlFormats.Oracle);
+            SqlFormats.ORACLE);
 
     /**
      * MySQL RDBMS
      */
-    public static final DatabaseType MySQL = new DatabaseType("mysql",//
+    public static final DatabaseType MYSQL = new DatabaseType("MYSQL",//
             "org.hibernate.dialect.MySQLDialect", //
             "org.mysql.Driver", //
             "jdbc:mysql://${server}/${database}", //
-            SqlFormats.MySQL);
+            SqlFormats.MYSQL);
 
 }

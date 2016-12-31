@@ -1,7 +1,10 @@
 package net.bodz.bas.db.jdbc;
 
+import java.beans.Transient;
 import java.io.File;
 import java.io.Serializable;
+
+import net.bodz.bas.t.predef.PredefMetadata;
 
 public class ConnectOptions
         implements Serializable, Cloneable {
@@ -10,7 +13,7 @@ public class ConnectOptions
 
     public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
 
-    DatabaseType type = DatabaseType.PostgreSQL;
+    DatabaseType type = DatabaseType.POSTGRESQL;
     String url;
     String hostName = "localhost";
     int port;
@@ -43,6 +46,13 @@ public class ConnectOptions
         this.type = type;
     }
 
+    public void setType(String typeStr) {
+        DatabaseType type = PredefMetadata.forClass(DatabaseType.class).ofName(typeStr);
+        if (type == null)
+            throw new IllegalArgumentException("Bad type string: " + typeStr);
+        setType(type);
+    }
+
     /**
      * Connection URL override.
      */
@@ -54,6 +64,7 @@ public class ConnectOptions
         this.url = url;
     }
 
+    @Transient
     public String getServer() {
         if (port == 0)
             return hostName;
@@ -129,8 +140,11 @@ public class ConnectOptions
         this.password = password;
     }
 
+    @Transient
     public String getConnectionUrl() {
-        String url = type.getConnectionUrl(this);
+        String url = this.url;
+        if (url == null)
+            url = type.getConnectionUrl(this);
         return url;
     }
 
