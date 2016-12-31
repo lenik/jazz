@@ -1,9 +1,11 @@
 package user.zoo.bean;
 
-import net.bodz.bas.fmt.rst.bean.RstBeanObject;
+import net.bodz.bas.fmt.rst.RstObject;
+import net.bodz.bas.fmt.rst.obj.RstSource;
 
+@RstSource(bean = true)
 public class Animal
-        extends RstBeanObject {
+        extends RstObject {
 
     private String name;
     private boolean male;
@@ -14,6 +16,7 @@ public class Animal
     }
 
     public Animal(String name, boolean male, int color, int age) {
+        this();
         this.name = name;
         this.male = male;
         this.color = color;

@@ -263,13 +263,16 @@ public class DataCodec
     public String parseString(String field, String data)
             throws ParseException {
 
-        // if (!data.startsWith("\"") || !data.endsWith("\""))
-        // throw new ParseException(field, "expect string delimitor: " + data);
-        // data = data.substring(1, data.length() - 1);
+        if (data == null)
+            return null;
+        switch (data) {
+        case "null":
+            return null;
+        }
 
         String str;
         try {
-            str = StringEscape.unescapeJava(data);
+            str = StringEscape.parseQuotedJavaString(data);
         } catch (ParseException e) {
             throw new ParseException(field, "invalid string: " + data, e);
         }

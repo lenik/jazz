@@ -4,9 +4,7 @@ import java.io.IOException;
 
 public interface IRstDumper {
 
-    public String dump(Object obj);
-
-    void dump(IRstOutput out, Object obj)
+    void dump(Object obj)
             throws IOException;
 
 }

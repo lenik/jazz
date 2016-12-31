@@ -1,4 +1,4 @@
-package net.bodz.bas.fmt.rst.bean;
+package net.bodz.bas.fmt.rst.obj;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

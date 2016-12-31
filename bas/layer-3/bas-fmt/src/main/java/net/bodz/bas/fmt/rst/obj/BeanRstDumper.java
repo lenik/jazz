@@ -1,4 +1,4 @@
-package net.bodz.bas.fmt.rst.bean;
+package net.bodz.bas.fmt.rst.obj;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -16,13 +16,14 @@ import net.bodz.bas.fmt.rst.IRstOutput;
 public class BeanRstDumper
         extends AbstractRstDumper {
 
+    public BeanRstDumper(IRstOutput out) {
+        super(out);
+    }
+
     @Override
-    protected void _dump(IRstOutput out, Object obj, Class<?> clazz)
+    protected void formatObject(Class<?> clazz, Object obj)
             throws IOException {
-        Class<?> superclass = clazz.getSuperclass();
-        if (superclass != null)
-            if (!stopClasses.contains(superclass))
-                _dump(out, obj, superclass);
+        marks.add(obj);
 
         IRstFormat formatOverride = null;
         if (obj instanceof IRstFormat)
@@ -35,11 +36,15 @@ public class BeanRstDumper
             throw new RuntimeException(e.getMessage(), e);
         }
 
+        marks.enter();
         for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
             String name = property.getName();
             Class<?> type = property.getPropertyType();
             Method getter = property.getReadMethod();
             Method setter = property.getWriteMethod();
+
+            if (getter == null)
+                throw new NullPointerException("getter");
 
             if (setter == null && type.isPrimitive())
                 continue; // TODO more
@@ -60,14 +65,9 @@ public class BeanRstDumper
             }
 
             Type gtype = getter.getGenericReturnType();
-            encode(out, name, type, gtype, value);
+            formatCollectionMember(name, type, gtype, value);
         } // for field
-    }
-
-    private static BeanRstDumper instance = new BeanRstDumper();
-
-    public static BeanRstDumper getInstance() {
-        return instance;
+        marks.leave();
     }
 
 }

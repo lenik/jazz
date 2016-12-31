@@ -9,69 +9,69 @@ import java.util.Set;
 import net.bodz.bas.c.type.TypeArray;
 import net.bodz.bas.c.type.TypeEnum;
 import net.bodz.bas.c.type.TypeParam;
-import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.fmt.rst.bean.BeanElementHandler;
-import net.bodz.bas.fmt.rst.reflect.ReflectElementHandler;
-import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.fmt.rst.obj.BeanElementHandler;
+import net.bodz.bas.fmt.rst.obj.ReflectElementHandler;
 import net.bodz.bas.l10n.en.English;
+import net.bodz.bas.t.set.FramedMarks;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IFormatter;
 
 public abstract class AbstractRstDumper
         implements IRstDumper {
 
-    protected final Set<Class<?>> stopClasses = new HashSet<>();
-    {
-        stopClasses.add(Object.class);
-        stopClasses.add(ReflectElementHandler.class);
-        stopClasses.add(BeanElementHandler.class);
+    protected final IRstOutput out;
+    protected final FramedMarks marks;
+
+    public AbstractRstDumper(IRstOutput out) {
+        if (out == null)
+            throw new NullPointerException("out");
+        this.out = out;
+        this.marks = out.getMarks();
     }
 
     @Override
-    public String dump(Object obj) {
-        BCharOut buf = new BCharOut();
-        IRstOutput out = RstOutputImpl.from(buf);
-        try {
-            dump(out, obj);
-        } catch (IOException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
-        return buf.toString();
-    }
-
-    @Override
-    public void dump(IRstOutput out, Object obj)
+    public final void dump(Object obj)
             throws IOException {
-        _dump(out, obj, obj.getClass());
+        formatObject(obj.getClass(), obj);
     }
 
-    protected abstract void _dump(IRstOutput out, Object obj, Class<?> clazz)
+    protected abstract void formatObject(Class<?> clazz, Object obj)
             throws IOException;
 
-    protected void encode(IRstOutput out, String name, Class<?> type, Type gtype, Object value)
+    protected void formatCollectionMember(String name, Class<?> type, Type gtype, Object value)
             throws IOException {
         if (value == null)
             return;
 
         if (value instanceof Collection<?>) {
-            String name1 = English.singularOf(name);
-            Class<?> type1 = TypeParam.infer1(gtype, Collection.class, 0);
+            String itemName = English.singularOf(name);
+            Class<?> itemType = TypeParam.infer1(gtype, Collection.class, 0);
             for (Object item : (Collection<?>) value)
-                encode(out, name1, type1, item);
+                formatMember(itemName, itemType, item);
         } else {
-            encode(out, name, type, value);
+            formatMember(name, type, value);
         }
     }
 
-    protected void encode(IRstOutput out, String name, Class<?> type, Object value)
+    protected void formatMember(String name, Class<?> type, Object value)
             throws IOException {
         if (value instanceof IRstSerializable) {
-            IRstSerializable object = (IRstSerializable) value;
+            IRstSerializable obj = (IRstSerializable) value;
+            if (!marks.add(obj))
+                return;
+
             String args[] = {};
-            if (object instanceof IRstFormat)
-                args = ((IRstFormat) object).getRstElementArguments();
+            if (obj instanceof IRstFormat)
+                args = ((IRstFormat) obj).getRstElementArguments();
 
             out.beginElement(name, args);
-            object.writeObject(out);
-            out.endElement();
+            marks.enter();
+            try {
+                obj.writeObject(out);
+            } finally {
+                marks.leave();
+                out.endElement();
+            }
             return;
         }
 
@@ -79,8 +79,10 @@ public abstract class AbstractRstDumper
         if (typeEnum == null) // skip unknown type.
             return;
 
-        if (value == null)
+        if (value == null) {
+            // out._attribute(name,"null");
             return; // TODO null keyword?
+        }
 
         switch (typeEnum) {
         case BYTE:
@@ -164,13 +166,26 @@ public abstract class AbstractRstDumper
             break;
 
         case ENUM:
-            out.attribute(name, ((Enum<?>) value).name());
+            out.attribute(name, ((Enum<?>) value));
             break;
 
         case OBJECT:
         default:
-            out.attribute(name, value.toString());
+            IFormatter<Object> formatter = Typers.getTyper(type, IFormatter.class);
+            if (formatter != null) {
+                String str = formatter.format(value);
+                out._attribute(name, str);
+            } else {
+                // not supported, skipped.
+            }
         }
+    }
+
+    protected static final Set<Class<?>> stopClasses = new HashSet<>();
+    {
+        stopClasses.add(Object.class);
+        stopClasses.add(ReflectElementHandler.class);
+        stopClasses.add(BeanElementHandler.class);
     }
 
 }

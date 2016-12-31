@@ -2,9 +2,13 @@ package net.bodz.bas.fmt.rst;
 
 import java.io.IOException;
 
+import net.bodz.bas.t.set.FramedMarks;
+
 public interface IRstOutput {
 
     IDataCodec codec = new DataCodec();
+
+    FramedMarks getMarks();
 
     void element(String name, IRstSerializable child, String... args)
             throws IOException;
@@ -47,7 +51,7 @@ public interface IRstOutput {
 
     void attribute(String name, char value)
             throws IOException;
-    
+
     void attribute(String name, Enum<?> value)
             throws IOException;
 

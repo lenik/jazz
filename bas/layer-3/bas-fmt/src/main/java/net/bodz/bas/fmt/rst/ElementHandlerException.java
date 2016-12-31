@@ -1,9 +1,7 @@
 package net.bodz.bas.fmt.rst;
 
-import net.bodz.bas.err.ProcessException;
-
 public class ElementHandlerException
-        extends ProcessException {
+        extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

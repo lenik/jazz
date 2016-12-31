@@ -1,4 +1,4 @@
-package net.bodz.bas.fmt.rst.reflect;
+package net.bodz.bas.fmt.rst.obj;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -11,13 +11,17 @@ import net.bodz.bas.fmt.rst.IRstOutput;
 public class ReflectRstDumper
         extends AbstractRstDumper {
 
+    public ReflectRstDumper(IRstOutput out) {
+        super(out);
+    }
+
     @Override
-    protected void _dump(IRstOutput out, Object obj, Class<?> clazz)
+    protected void formatObject(Class<?> clazz, Object obj)
             throws IOException {
         Class<?> superclass = clazz.getSuperclass();
         if (superclass != null)
             if (!stopClasses.contains(superclass))
-                _dump(out, obj, superclass);
+                formatObject(superclass, obj);
 
         IRstFormat formatOverride = null;
         if (obj instanceof IRstFormat)
@@ -42,14 +46,8 @@ public class ReflectRstDumper
                 throw new RuntimeException(e.getMessage(), e);
             }
 
-            encode(out, name, field.getType(), field.getGenericType(), value);
+            formatCollectionMember(name, field.getType(), field.getGenericType(), value);
         } // for field
-    }
-
-    private static ReflectRstDumper instance = new ReflectRstDumper();
-
-    public static ReflectRstDumper getInstance() {
-        return instance;
     }
 
 }
