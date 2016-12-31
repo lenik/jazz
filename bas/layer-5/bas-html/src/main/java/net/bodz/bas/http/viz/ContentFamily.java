@@ -10,13 +10,21 @@ public class ContentFamily {
 
     public static <T> IHttpViewBuilder<T> findFirstFor(ViewBuilderSet<T> viewBuilderList, ContentType contentType) {
         if (contentType == ContentTypes.text_html //
-                || contentType == ContentTypes.text_xhtml)
-            return viewBuilderList.findFirst(IHtmlViewBuilder.class);
+                || contentType == ContentTypes.text_xhtml) {
+            IHtmlViewBuilder<T> builder = viewBuilderList.findFirst(IHtmlViewBuilder.class);
+            if (builder != null)
+                return builder;
+        }
 
-        if (contentType == ContentTypes.application_pdf)
-            return viewBuilderList.findFirst(IPdfViewBuilder.class);
+        if (contentType == ContentTypes.application_pdf) {
+            IPdfViewBuilder<T> builder = viewBuilderList.findFirst(IPdfViewBuilder.class);
+            if (builder != null)
+                return builder;
+        }
 
-        return viewBuilderList.findFirst(IHttpViewBuilder.class);
+        // matching content-type?
+        IHttpViewBuilder<T> builder = viewBuilderList.findFirst(IHttpViewBuilder.class);
+        return builder;
     }
 
 }
