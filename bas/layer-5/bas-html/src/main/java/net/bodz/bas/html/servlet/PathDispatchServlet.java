@@ -16,6 +16,7 @@ import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.RecHtmlOut;
 import net.bodz.bas.html.viz.DefaultHtmlViewContext;
+import net.bodz.bas.html.viz.IHtmlViewBuilder;
 import net.bodz.bas.html.viz.PathArrivalFrames;
 import net.bodz.bas.html.viz.PathArrivalFrames_htm;
 import net.bodz.bas.http.viz.ContentFamily;
@@ -159,9 +160,15 @@ public class PathDispatchServlet
         if (!union.isEmpty())
             ctx.setQueryContext(union);
 
+        boolean isHtml = false;
         switch (contentType.getName()) {
         case "text/html":
         case "text/xhtml":
+            if (viewBuilder instanceof IHtmlViewBuilder<?>)
+                isHtml = true;
+        }
+
+        if (isHtml) {
             HtmlOutputFormat outputFormat = new HtmlOutputFormat();
 
             WriterPrintOut printOut = new WriterPrintOut(resp.getWriter());
@@ -179,15 +186,16 @@ public class PathDispatchServlet
             }
 
             htmlOut.close();
-            break;
+        }
 
-        default:
+        else {
             resp.addHeader("X-Content-View", viewBuilder.getClass().getSimpleName());
             try {
                 viewBuilder.buildHttpViewStart(ctx, resp, UiVar.wrap(target));
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build view: " + e.getMessage(), e);
             }
-        }
+        } // if is-html.
     }
+
 }
