@@ -1,7 +1,7 @@
 package net.bodz.bas.log.impl;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.bodz.bas.io.BCharOut;
@@ -17,15 +17,25 @@ import net.bodz.bas.log.SinkBasedLogger;
 public class BufferedLogger
         extends SinkBasedLogger {
 
+    static final int defaultMaxRecordCount = 10000;
+
     String prefix;
-    List<LogRecord> records = new ArrayList<LogRecord>();
+
+    int maxRecordCount;
+    LinkedList<LogRecord> records;
 
     public BufferedLogger() {
-        this("");
+        this("", defaultMaxRecordCount);
     }
 
     public BufferedLogger(String prefix) {
+        this(prefix, defaultMaxRecordCount);
+    }
+
+    public BufferedLogger(String prefix, int maxRecordCount) {
         this.prefix = prefix;
+        this.maxRecordCount = maxRecordCount;
+        this.records = new LinkedList<LogRecord>();
     }
 
     public String getPrefix() {
@@ -40,6 +50,16 @@ public class BufferedLogger
 
     public List<LogRecord> getRecords() {
         return records;
+    }
+
+    public int getMaxRecordCount() {
+        return maxRecordCount;
+    }
+
+    synchronized void addRecord(LogRecord record) {
+        while (records.size() >= maxRecordCount)
+            records.removeFirst();
+        records.addLast(record);
     }
 
     @Override
@@ -111,13 +131,13 @@ public class BufferedLogger
         @Override
         public void logMessage(Object message) {
             LogRecord item = new LogRecord(level, delta, message);
-            records.add(item);
+            addRecord(item);
         }
 
         @Override
         public void logException(Object message, Throwable exception) {
             LogRecord item = new LogRecord(level, delta, message, exception);
-            records.add(item);
+            addRecord(item);
         }
 
     }
@@ -125,45 +145,45 @@ public class BufferedLogger
     @Override
     public boolean _fatal(int delta, Throwable e, Object message) {
         LogRecord item = new LogRecord(LogLevel.FATAL, delta, message, e);
-        records.add(item);
+        addRecord(item);
         return false;
     }
 
     @Override
     public boolean _error(int delta, Throwable e, Object message) {
         LogRecord item = new LogRecord(LogLevel.ERROR, delta, message, e);
-        records.add(item);
+        addRecord(item);
         return false;
     }
 
     @Override
     public void _warn(int delta, Throwable e, Object message) {
         LogRecord item = new LogRecord(LogLevel.WARN, delta, message, e);
-        records.add(item);
+        addRecord(item);
     }
 
     @Override
     public void _info(int delta, Throwable e, Object message) {
         LogRecord item = new LogRecord(LogLevel.INFO, delta, message, e);
-        records.add(item);
+        addRecord(item);
     }
 
     @Override
     public void _log(int delta, Throwable e, Object message) {
         LogRecord item = new LogRecord(LogLevel.LOG, delta, message, e);
-        records.add(item);
+        addRecord(item);
     }
 
     @Override
     public void _debug(int delta, Throwable e, Object message) {
         LogRecord item = new LogRecord(LogLevel.DEBUG, delta, message, e);
-        records.add(item);
+        addRecord(item);
     }
 
     @Override
     public void _trace(int delta, Throwable e, Object message) {
         LogRecord item = new LogRecord(LogLevel.TRACE, delta, message, e);
-        records.add(item);
+        addRecord(item);
     }
 
 }
