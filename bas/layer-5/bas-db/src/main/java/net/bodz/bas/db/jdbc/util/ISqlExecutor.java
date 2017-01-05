@@ -51,4 +51,8 @@ public interface ISqlExecutor
     IVariant cell(String sql, int row, String columnName)
             throws SQLException;
 
+    @Override
+    void close()
+            throws SQLException;;
+
 }
