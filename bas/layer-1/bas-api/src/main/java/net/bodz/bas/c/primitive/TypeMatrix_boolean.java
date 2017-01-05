@@ -22,10 +22,21 @@ public class TypeMatrix_boolean {
             throws TypeConvertException {
         if (str == null)
             return false;
-        try {
-            return Boolean.parseBoolean(str);
-        } catch (NumberFormatException e) {
-            throw new TypeConvertException(e);
+        str = str.trim().toLowerCase();
+        switch (str) {
+        case "true":
+        case "on":
+        case "1":
+            return true;
+
+        case "false":
+        case "off":
+        case "0":
+        case "":
+            return false;
+
+        default:
+            return false;
         }
     }
 
