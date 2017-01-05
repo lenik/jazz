@@ -210,10 +210,30 @@ public class Nullables {
             return string.isEmpty();
     }
 
+    public static boolean isNotEmpty(String string) {
+        return !isEmpty(string);
+    }
+
+    public static String emptyToNull(String string) {
+        return isEmpty(string) ? null : string;
+    }
+
+    public static String trimToNull(String string) {
+        if (string != null) {
+            string = string.trim();
+            return string.isEmpty() ? null : string;
+        }
+        return null;
+    }
+
     public static boolean isEmpty(Collection<?> collection) {
         if (collection == null)
             return true;
         return collection.isEmpty();
+    }
+
+    public static boolean isNotEmpty(Collection<?> collection) {
+        return !isEmpty(collection);
     }
 
     public static boolean isEmpty(Map<?, ?> map) {
@@ -221,6 +241,10 @@ public class Nullables {
             return true;
         else
             return map.isEmpty();
+    }
+
+    public static boolean isNotEmpty(Map<?, ?> map) {
+        return !isEmpty(map);
     }
 
     public static int size(Collection<?> collection) {
