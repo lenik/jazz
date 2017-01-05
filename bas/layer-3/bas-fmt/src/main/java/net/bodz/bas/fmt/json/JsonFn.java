@@ -25,4 +25,24 @@ public class JsonFn {
         return obj;
     }
 
+    public static void entry(JSONWriter out, String key, boolean value) {
+        out.key(key);
+        out.value(value);
+    }
+
+    public static void entry(JSONWriter out, String key, double value) {
+        out.key(key);
+        out.value(value);
+    }
+
+    public static void entry(JSONWriter out, String key, long value) {
+        out.key(key);
+        out.value(value);
+    }
+
+    public static void entry(JSONWriter out, String key, Object value) {
+        out.key(key);
+        out.value(value);
+    }
+
 }

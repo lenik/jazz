@@ -13,22 +13,29 @@ import org.json.JSONWriter;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.AbstractJsonDumper;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class BeanJsonDumper
         extends AbstractJsonDumper {
+
+    static final Logger logger = LoggerFactory.getLogger(BeanJsonDumper.class);
 
     public BeanJsonDumper(JSONWriter out) {
         super(out);
     }
 
     @Override
-    protected void formatObject(Class<?> type, Object obj)
-            throws ReflectiveOperationException, IOException {
+    protected void formatObjectMembers(Class<?> type, Object obj, int depth)
+            throws IOException {
         BeanInfo beanInfo;
         try {
             beanInfo = Introspector.getBeanInfo(type);
         } catch (IntrospectionException e) {
-            throw new ReflectiveOperationException(e.getMessage(), e);
+            logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
+            out.key("error");
+            formatException(e);
+            return;
         }
 
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
@@ -39,15 +46,30 @@ public class BeanJsonDumper
             if (getter.isAnnotationPresent(Transient.class))
                 continue;
 
-            String name = propertyDescriptor.getName();
-            Object value = getter.invoke(obj);
+            if (stopClasses.contains(getter.getDeclaringClass()))
+                continue;
 
-            if (value == null) {
-                out.key(name);
-                out.value(null);
-            } else if (marks.push(value)) {
-                out.key(name);
-                _formatRaw(value);
+            String propertyName = propertyDescriptor.getName();
+            Object propertyValue;
+            try {
+                propertyValue = getter.invoke(obj);
+            } catch (ReflectiveOperationException e) {
+                logger.error(e, "Failed to invoke getter: " + e.getMessage());
+                out.key(propertyName);
+                formatException(e);
+                continue;
+            }
+
+            if (propertyValue == null) {
+                if (includeNull) {
+                    out.key(propertyName);
+                    out.value(null);
+                }
+            }
+
+            else if (marks.push(propertyValue)) {
+                out.key(propertyName);
+                __formatRaw(propertyValue, depth + 1);
                 marks.pop();
             }
         }
