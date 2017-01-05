@@ -4,6 +4,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.beans.Transient;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -46,11 +47,18 @@ public class BeanRstDumper
             if (getter == null)
                 throw new NullPointerException("getter");
 
-            if (setter == null && type.isPrimitive())
+            if (setter == null && type.isPrimitive()) // read-only
                 continue; // TODO more
+
+            Class<?> declaringClass = getter.getDeclaringClass();
+            if (stopClasses.contains(declaringClass))
+                continue;
 
             int modifiers = getter.getModifiers();
             if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers))
+                continue;
+
+            if (getter.isAnnotationPresent(Transient.class))
                 continue;
 
             if (formatOverride != null)

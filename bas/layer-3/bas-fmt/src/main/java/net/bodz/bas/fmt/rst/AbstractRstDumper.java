@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.c.type.TypeArray;
@@ -48,6 +50,22 @@ public abstract class AbstractRstDumper
             Class<?> itemType = TypeParam.infer1(gtype, Collection.class, 0);
             for (Object item : (Collection<?>) value)
                 formatMember(itemName, itemType, item);
+
+        } else if (value instanceof Map<?, ?>) {
+            out.beginElement(name);
+            for (Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
+                String key = entry.getKey().toString();
+                Object val = entry.getValue();
+                if (val == null) {
+                    // out._attribute(key, "null");
+                    continue;
+                }
+
+                Class<?> klass = val.getClass();
+                formatCollectionMember(key, klass, klass, val);
+            }
+            out.endElement();
+
         } else {
             formatMember(name, type, value);
         }
