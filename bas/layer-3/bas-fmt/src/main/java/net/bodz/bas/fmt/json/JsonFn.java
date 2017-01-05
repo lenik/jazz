@@ -7,14 +7,18 @@ import org.json.JSONObject;
 import org.json.JSONWriter;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.UnexpectedException;
 
 public class JsonFn {
 
-    public static String toJson(IJsonSerializable obj)
-            throws IOException {
+    public static String toJson(IJsonSerializable obj) {
         StringWriter buf = new StringWriter();
         JSONWriter writer = new JSONWriter(buf);
-        obj.writeObject(writer);
+        try {
+            obj.writeObject(writer);
+        } catch (IOException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
         return buf.toString();
     }
 
