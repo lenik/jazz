@@ -3,7 +3,9 @@ package net.bodz.bas.db.jdbc;
 import java.beans.Transient;
 import java.io.File;
 import java.io.Serializable;
+import java.util.Properties;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.t.predef.PredefMetadata;
 
 public class ConnectOptions
@@ -13,17 +15,21 @@ public class ConnectOptions
 
     public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
 
-    DatabaseType type = DatabaseType.POSTGRESQL;
-    String url;
-    String hostName = "localhost";
-    int port;
-    File rootDir;
-    String database;
-    String userName;
-    String password;
+    private DatabaseType type = DatabaseType.POSTGRESQL;
+    private String url;
+    private String hostName = "localhost";
+    private int port;
+    private File rootDir;
+    private String database;
+    private String userName;
+    private String password;
+    private Properties info;
 
-    // Properties info;
+    public ConnectOptions() {
+        info = new Properties();
+    }
 
+    @Override
     public ConnectOptions clone() {
         ConnectOptions o = new ConnectOptions();
         o.type = type;
@@ -146,6 +152,36 @@ public class ConnectOptions
         if (url == null)
             url = type.getConnectionUrl(this);
         return url;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((database == null) ? 0 : database.hashCode());
+        result = prime * result + ((hostName == null) ? 0 : hostName.hashCode());
+        result = prime * result + ((info == null) ? 0 : info.hashCode());
+        result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + port;
+        result = prime * result + ((rootDir == null) ? 0 : rootDir.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((url == null) ? 0 : url.hashCode());
+        result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ConnectOptions o = (ConnectOptions) obj;
+        if (Nullables.notEquals(database, o.database))
+            return false;
+        return true;
     }
 
 }
