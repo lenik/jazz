@@ -25,9 +25,13 @@ public interface IProgressMonitor {
 
     void setProgress(int progress);
 
-    void addCancelListener(ICancelListener cancelListener);
+    void addProgressChangeListener(IProgressChangeListener listener);
 
-    void removeCancelListener(ICancelListener cancelListener);
+    void removeProgressChangeListener(IProgressChangeListener listener);
+
+    void addCancelListener(ICancelListener listener);
+
+    void removeCancelListener(ICancelListener listener);
 
     ILogger getLogger();
 
@@ -66,6 +70,14 @@ class NullProgressMonitor
 
     @Override
     public void setProgress(int progress) {
+    }
+
+    @Override
+    public void addProgressChangeListener(IProgressChangeListener listener) {
+    }
+
+    @Override
+    public void removeProgressChangeListener(IProgressChangeListener listener) {
     }
 
     @Override

@@ -3,16 +3,18 @@ package net.bodz.bas.ui.model.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.log.AbstractLogger2;
+import net.bodz.bas.log.AbstractLinearLogger;
 import net.bodz.bas.log.ILogger;
 
 public abstract class AbstractProgressMonitor
-        extends AbstractLogger2
+        extends AbstractLinearLogger
         implements IProgressMonitor {
 
     private int totalProgress;
     private int progress;
+
     private List<ICancelListener> cancelListeners = new ArrayList<>();
+    private List<IProgressChangeListener> progressChangeListeners = new ArrayList<>();
 
     @Override
     public int getTotalProgress() {
@@ -21,8 +23,10 @@ public abstract class AbstractProgressMonitor
 
     @Override
     public void setTotalProgress(int totalProgress) {
-        this.totalProgress = totalProgress;
-        updateProgress();
+        if (this.totalProgress != totalProgress) {
+            this.totalProgress = totalProgress;
+            progressChange();
+        }
     }
 
     @Override
@@ -32,17 +36,40 @@ public abstract class AbstractProgressMonitor
 
     @Override
     public void addProgress(int delta) {
-        this.progress += delta;
-        updateProgress();
+        if (delta != 0) {
+            this.progress += delta;
+            progressChange();
+        }
     }
 
     @Override
     public void setProgress(int progress) {
-        this.progress = progress;
-        updateProgress();
+        if (this.progress != progress) {
+            this.progress = progress;
+            progressChange();
+        }
     }
 
-    protected void updateProgress() {
+    void progressChange() {
+        for (IProgressChangeListener listener : progressChangeListeners)
+            listener.progressChange(totalProgress, progress);
+    }
+
+    public void cancel() {
+        for (ICancelListener listener : cancelListeners)
+            listener.cancel();
+    }
+
+    @Override
+    public void addProgressChangeListener(IProgressChangeListener progressChangeListener) {
+        if (progressChangeListener == null)
+            throw new NullPointerException("progressChangeListener");
+        progressChangeListeners.add(progressChangeListener);
+    }
+
+    @Override
+    public void removeProgressChangeListener(IProgressChangeListener progressChangeListener) {
+        progressChangeListeners.remove(progressChangeListener);
     }
 
     @Override
@@ -55,11 +82,6 @@ public abstract class AbstractProgressMonitor
     @Override
     public void removeCancelListener(ICancelListener cancelListener) {
         cancelListeners.remove(cancelListener);
-    }
-
-    public void cancel() {
-        for (ICancelListener listener : cancelListeners)
-            listener.cancel();
     }
 
     @Override
