@@ -189,9 +189,12 @@ public class PathDispatchServlet
         }
 
         else {
+            UiVar<Object> ref = UiVar.wrap(target);
+
             resp.addHeader("X-Content-View", viewBuilder.getClass().getSimpleName());
+            viewBuilder.precompile(ctx, ref);
             try {
-                viewBuilder.buildHttpViewStart(ctx, resp, UiVar.wrap(target));
+                viewBuilder.buildHttpViewStart(ctx, resp, ref);
             } catch (ViewBuilderException e) {
                 throw new ServletException("Build view: " + e.getMessage(), e);
             }

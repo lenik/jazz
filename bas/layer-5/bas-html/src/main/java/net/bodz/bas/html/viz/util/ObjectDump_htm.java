@@ -28,7 +28,7 @@ public class ObjectDump_htm
             throws ViewBuilderException, IOException {
         HttpServletReqEx req = HttpServletReqEx.of(ctx.getRequest());
 
-        IMethodOfRequest qmethod = req.getAttribute(IMethodOfRequest.class);
+        IMethodOfRequest methodOfRequest = req.getAttribute(IMethodOfRequest.class);
 
         Object obj = ref.get();
 
@@ -51,12 +51,20 @@ public class ObjectDump_htm
         out.textln("Context-Path: " + req.getContextPath());
         out.textln("Path-Info: " + req.getPathInfo());
 
-        ITokenQueue tq = req.getAttribute(ITokenQueue.class);
+        ITokenQueue tokenQueue = req.getAttribute(ITokenQueue.class);
         IPathArrival arrival = req.getAttribute(IPathArrival.class);
         out.textln("Arrival: " + arrival);
-        out.textln("Remaining-Path: " + tq.getRemainingPath());
-        out.textln("Method: " + qmethod.getMethodName());
-        
+
+        if (tokenQueue == null)
+            out.textln("No token queue.");
+        else
+            out.textln("Remaining-Path: " + tokenQueue.getRemainingPath());
+
+        if (methodOfRequest == null)
+            out.textln("No method of request.");
+        else
+            out.textln("Method: " + methodOfRequest.getMethodName());
+
         return out;
     }
 
