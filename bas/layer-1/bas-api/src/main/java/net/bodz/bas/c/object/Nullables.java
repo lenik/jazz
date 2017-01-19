@@ -25,6 +25,12 @@ public class Nullables {
         return a.equals(b);
     }
 
+    public static boolean notEquals(Object a, Object b) {
+        if (a == null || b == null)
+            return a != b;
+        return !a.equals(b);
+    }
+
     /**
      * @return <code>true</code> if both a and b are <code>null</code>, or <code>a.equals(b)</code>
      */
