@@ -14,7 +14,7 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 public class XjdocObject
         extends AbstractXjdocElement {
 
-    static final Logger logger = LoggerFactory.getLogger(XjdocObject.class);
+    private static final Logger _logger = LoggerFactory.getLogger(XjdocObject.class);
 
     @Override
     protected IElementDoc loadXjdoc()
@@ -23,7 +23,7 @@ public class XjdocObject
         ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(clazz);
 
         if (classDoc == null) {
-            logger.warn("No class doc available for " + clazz);
+            _logger.warn("No class doc available for " + clazz);
             classDoc = new ClassDoc(Xjdocs.getDefaultTagLibrary(), clazz.getName());
         }
 
