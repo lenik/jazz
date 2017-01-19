@@ -2,7 +2,7 @@ package net.bodz.bas.log;
 
 import net.bodz.bas.log.impl.ConsoleLogger;
 
-public abstract class AbstractLogger2
+public abstract class AbstractLinearLogger
         extends AbstractLogger {
 
     static final ConsoleLogger consoleLogger = ConsoleLogger.getInstance();
@@ -19,7 +19,7 @@ public abstract class AbstractLogger2
 
     @Override
     public boolean _fatal(int delta, Throwable e, Object message) {
-        return _error(delta, e, message);
+        return _error(delta - 1, e, message);
     }
 
     @Override
