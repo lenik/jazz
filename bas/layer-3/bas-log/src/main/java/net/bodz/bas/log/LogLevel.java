@@ -1,6 +1,7 @@
 package net.bodz.bas.log;
 
-public class LogLevel {
+public class LogLevel
+        implements Comparable<LogLevel> {
 
     public static final int stdGroup = 0;
     public static final int logGroup = 1;
@@ -101,6 +102,26 @@ public class LogLevel {
             return label;
         else
             return intern;
+    }
+
+    @Override
+    public int compareTo(LogLevel o) {
+        if (o == null)
+            return 1;
+        if (o == this)
+            return 0;
+
+        int cmp;
+
+        cmp = group - o.group;
+        if (cmp != 0)
+            return cmp;
+
+        cmp = priority - o.priority;
+        if (cmp != 0)
+            return cmp;
+
+        return -1;
     }
 
 }
