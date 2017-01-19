@@ -22,6 +22,9 @@ public class BufferedLogger
     String prefix;
 
     int maxRecordCount;
+
+    // BlockingQueue<E>
+    // ConcurrentLinkedQueue<E>
     LinkedList<LogRecord> records;
 
     public BufferedLogger() {
@@ -57,6 +60,8 @@ public class BufferedLogger
     }
 
     synchronized void addRecord(LogRecord record) {
+        if (record.level.compareTo(getLevel()) > 0)
+            return;
         while (records.size() >= maxRecordCount)
             records.removeFirst();
         records.addLast(record);
@@ -74,6 +79,7 @@ public class BufferedLogger
         records.clear();
     }
 
+    @SuppressWarnings("resource")
     public void dump(PrintStream info, PrintStream err) {
         PrintStreamPrintOut infoOut = new PrintStreamPrintOut(info);
         PrintStreamPrintOut errOut;
@@ -87,22 +93,20 @@ public class BufferedLogger
     }
 
     public void dump(IPrintOut info, IPrintOut err) {
-        synchronized (records) {
-            for (LogRecord record : records) {
-                int priority = record.level.getPriority() + record.delta;
-                IPrintOut out = priority < 0 ? err : info;
+        for (LogRecord record : records) {
+            int priority = record.level.getPriority() + record.delta;
+            IPrintOut out = priority < 0 ? err : info;
 
-                out.print(prefix);
+            out.print(prefix);
 
-                String levelName = record.level.getLabel();
-                out.print("[" + levelName + "] ");
+            String levelName = record.level.getLabel();
+            out.print("[" + levelName + "] ");
 
-                out.println(record.message);
+            out.println(record.message);
 
-                if (record.exception != null) {
-                    String stackTrace = StackTrace.get(record.exception);
-                    err.print(stackTrace);
-                }
+            if (record.exception != null) {
+                String stackTrace = StackTrace.get(record.exception);
+                err.print(stackTrace);
             }
         }
     }
