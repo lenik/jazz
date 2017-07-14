@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
@@ -43,6 +44,9 @@ public class Invocation_txt
         IInvocation invocation = ref.get();
 
         ITokenQueue tokenQueue = ctx.query(ITokenQueue.class);
+        if (tokenQueue == null)
+            throw new IllegalUsageException("Token queue is null: " + ctx.getRequest().getRequestURL());
+
         String[] args = tokenQueue.shiftAll();
         int max = invocation.getParameterCount();
         if (args.length > max)

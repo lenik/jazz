@@ -29,6 +29,7 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.PathDispatchIndex;
 import net.bodz.bas.repr.path.TokenQueue;
@@ -115,7 +116,8 @@ public class PathDispatchServlet
         }
         if (arrival == null)
             throw new ServletException("Dispatch failed: " + tokenQueue);
-        // req.setAttribute(ITokenQueue.class, tokenQueue);
+
+        req.setAttribute(ITokenQueue.class, tokenQueue);
         req.setAttribute(IPathArrival.ATTRIBUTE_KEY, arrival);
 
         Object target = arrival.getTarget();
