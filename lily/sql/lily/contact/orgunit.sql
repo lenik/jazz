@@ -1,5 +1,5 @@
 --\import lily.contact.org
---\import lily.contact.zone
+--\import lily.geo.zone
 
     create sequence orgunit_seq start with 1000;
 
@@ -7,7 +7,7 @@
         id          int primary key default nextval('orgunit_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Contact
+--\mixin lily.mixin.Contact ""
 --\mixin lily.mixin.Props
 
         org         int not null

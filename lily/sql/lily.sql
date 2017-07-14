@@ -1,14 +1,21 @@
--------- Base --------
+-------- Lily :: Base --------
 --\import lily.base
 
--------- Account --------
+-------- Lily :: Account --------
 --\import lily.account
 
--------- Contact --------
+-------- Lily :: Contact --------
 --\import lily.contact
 
--------- Utilities --------
+-------- Lily :: Utilities --------
 --\import lily.util
 
--------- Gaming --------
+-------- Lily :: Internet --------
+--\import lily.inet
+
+-------- Lily :: Geography --
+--\import lily.geo
+
+-------- Lily :: Gaming --------
 --\import lily.gaming
+

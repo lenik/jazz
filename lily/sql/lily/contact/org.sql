@@ -1,20 +1,20 @@
 --\import lily.account
---\import lily.contact.zone
+--\import lily.geo.zone
 
     create sequence org_seq start with 1000;
     create table org(
         id          int primary key default nextval('org_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Contact
+--\mixin lily.mixin.Contact ""
 --\mixin lily.mixin.Props
 
-        level       int,
         birthday    date,
         locale      varchar(10),
         timezone    varchar(40),
         
     -- props:
+        -- contacts: alternative contacts
         -- role.sameTrade?
         -- role.shipper?
         nrole       int not null default 0,
