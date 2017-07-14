@@ -13,15 +13,15 @@ public interface IBasicSiteAnchors {
     IAnchor _backgrounds_ = _webApp_.join("backgrounds/");
 
     /** @see LocalResourceMappings#fontsDir */
-    IAnchor _fonts_ = _webApp_.join("fonts/");
+    IAnchor _fonts_ = _webApp_.join("libfont/");
 
     /** @see LocalResourceMappings#iconsDir */
     IAnchor _icons_ = _webApp_.join("icons/");
 
     /** @see LocalResourceMappings#javascriptDir */
-    IAnchor _js_ = _webApp_.join("js/");
-    IAnchor _jQueryUI_ = _webApp_.join("js/jquery-ui/");
-    IAnchor _jQueryUIThemes_ = _webApp_.join("js/jquery-ui-themes/");
+    IAnchor _js_ = _webApp_.join("libjs/");
+    IAnchor _jQueryUI_ = _webApp_.join("libjs/jquery-ui/");
+    IAnchor _jQueryUIThemes_ = _webApp_.join("libjs/jquery-ui-themes/");
 
     /** @see LocalResourceMappings#webjarsDir */
     IAnchor _webjars_ = _webApp_.join("webjars/");
