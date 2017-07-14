@@ -3,8 +3,6 @@ package net.bodz.bas.fmt.json;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Modifier;
-import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -27,31 +25,62 @@ public abstract class AbstractJsonDumper
     protected boolean includeNull = false;
     protected boolean includeFalse = false;
 
+    protected Set<String> includes = new HashSet<>();
+    protected Set<String> excludes = new HashSet<>();
+
     public AbstractJsonDumper(JSONWriter out) {
         this.out = out;
         this.marks = new StackSet<>();
     }
 
+    public Set<String> getIncludes() {
+        return includes;
+    }
+
+    public Set<String> getExcludes() {
+        return excludes;
+    }
+
+    public void include(String pattern) {
+        includes.add(pattern);
+    }
+
+    public void exclude(String pattern) {
+        excludes.add(pattern);
+    }
+
     @Override
     public void dump(Object obj)
             throws IOException {
-        formatRaw(obj, 0);
+        formatRaw_once(obj, 0, "");
     }
 
-    protected void formatRaw(Object obj, int depth)
+    protected boolean isIncluded(String name) {
+        if (includes.contains(name))
+            return true;
+        if (excludes.contains(name))
+            return false;
+        // Default included if no includes defined.
+        return includes.isEmpty();
+    }
+
+    protected void formatRaw_once(Object obj, int depth, String prefix)
             throws IOException {
         if (obj == null) {
             out.value(null);
             return;
         }
 
+        if (!isIncluded(prefix))
+            return;
+
         if (marks.push(obj)) {
-            __formatRaw(obj, depth);
+            __formatRaw_nonnull(obj, depth, prefix);
             marks.pop();
         }
     }
 
-    protected void __formatRaw(Object obj, int depth)
+    protected void __formatRaw_nonnull(Object obj, int depth, String prefix)
             throws IOException {
         Class<?> type = obj.getClass();
 
@@ -60,7 +89,8 @@ public abstract class AbstractJsonDumper
             try {
                 int length = Array.getLength(obj);
                 for (int i = 0; i < length; i++) {
-                    formatRaw(Array.get(obj, i), depth + 1);
+                    formatRaw_once(Array.get(obj, i), depth + 1, //
+                            prefix == null ? null : (prefix + "[" + i + "]"));
                 }
             } finally {
                 out.endArray();
@@ -70,9 +100,13 @@ public abstract class AbstractJsonDumper
 
         if (obj instanceof Collection<?>) {
             out.array();
+            int i = 0;
             try {
-                for (Object item : (Collection<?>) obj)
-                    formatRaw(item, depth + 1);
+                for (Object item : (Collection<?>) obj) {
+                    formatRaw_once(item, depth + 1, //
+                            prefix == null ? null : (prefix + "[" + i + "]"));
+                    i++;
+                }
             } finally {
                 out.endArray();
             }
@@ -92,8 +126,11 @@ public abstract class AbstractJsonDumper
                         if (!includeNull)
                             continue;
 
-                    out.key(key.toString());
-                    formatRaw(value, depth + 1);
+                    String qname = prefix == null ? null : (prefix + "{" + key + "}");
+                    if (isIncluded(qname)) {
+                        out.key(key.toString());
+                        formatRaw_once(value, depth + 1, qname);
+                    }
                 }
             } finally {
                 out.endObject();
@@ -101,7 +138,7 @@ public abstract class AbstractJsonDumper
             return;
         }
 
-        if (copyTypes.contains(obj.getClass())) {
+        if (ReflectOptions.copyTypes.contains(obj.getClass())) {
             out.value(obj);
             return;
         }
@@ -133,7 +170,7 @@ public abstract class AbstractJsonDumper
 
         out.object();
         try {
-            formatObjectMembers(type, obj, depth);
+            formatObjectMembers(type, obj, depth, prefix);
         } catch (IOException e) {
             throw e;
         } catch (Exception e) {
@@ -143,7 +180,7 @@ public abstract class AbstractJsonDumper
         }
     }
 
-    protected abstract void formatObjectMembers(Class<?> type, Object obj, int depth)
+    protected abstract void formatObjectMembers(Class<?> type, Object obj, int depth, String prefix)
             throws ReflectiveOperationException, IOException;
 
     protected void formatException(Throwable e) {
@@ -160,17 +197,6 @@ public abstract class AbstractJsonDumper
         }
 
         out.endObject();
-    }
-
-    protected static final Set<Class<?>> stopClasses = new HashSet<>();
-    protected static final Set<Class<?>> copyTypes = new HashSet<>();
-    {
-        stopClasses.add(Object.class);
-
-        Class<?>[] types1 = { byte.class, short.class, int.class, long.class, float.class, double.class, boolean.class,
-                Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, Boolean.class,
-                BigDecimal.class, };
-        copyTypes.addAll(Arrays.asList(types1));
     }
 
 }

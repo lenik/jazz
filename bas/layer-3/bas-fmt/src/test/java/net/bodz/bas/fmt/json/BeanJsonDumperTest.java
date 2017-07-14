@@ -1,9 +1,14 @@
 package net.bodz.bas.fmt.json;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
+import org.json.JSONWriter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 
 import user.zoo.bean.Cat;
@@ -28,8 +33,18 @@ public class BeanJsonDumperTest
     @Test
     public void test1()
             throws Exception {
-        String json = BeanJsonDumper.toString(zoo);
-        System.out.println(json);
+        StringWriter buf = new StringWriter();
+        JSONWriter out = new JSONWriter(buf);
+        BeanJsonDumper dumper = new BeanJsonDumper(out);
+        dumper.exclude("cats[0].color");
+        dumper.exclude("cats[1]");
+        dumper.exclude("owner");
+        try {
+            dumper.dump(zoo);
+        } catch (IOException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
+        System.out.println(buf);
     }
 
 }
