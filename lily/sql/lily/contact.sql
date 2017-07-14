@@ -1,4 +1,4 @@
---\import lily.contact.zone
+--\import lily.geo.zone
 --\import lily.contact.org
 --\import lily.contact.orgunit
 --\import lily.contact.person

@@ -1,4 +1,4 @@
---\import lily.base.schema
+--\import lily.base._schema
 
     create sequence badge_seq start with 10000;
 
