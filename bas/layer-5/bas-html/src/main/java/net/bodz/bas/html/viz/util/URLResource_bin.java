@@ -1,5 +1,6 @@
 package net.bodz.bas.html.viz.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.http.ResourceTransferer;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
@@ -58,6 +60,12 @@ public class URLResource_bin
     public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
         MutableContent content = new MutableContent();
         content.setMaxAge(maxAge);
+        if ("file".equals(url.getProtocol())) {
+            File file = FileURL.toFile(url, null);
+            long lastModified = file.lastModified();
+            content.setCreationDate(lastModified);
+            content.setLastModified(lastModified);
+        }
         return content;
     }
 
