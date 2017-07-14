@@ -16,7 +16,6 @@ public class StaticFileAccessServlet
     private static final long serialVersionUID = 1L;
 
     public static final String ATTRIBUTE_PATH = "start-path";
-    public static final String ATTRIBUTE_MAX_AGE = "max-age";
 
     /**
      * The target path, without traling slash.
