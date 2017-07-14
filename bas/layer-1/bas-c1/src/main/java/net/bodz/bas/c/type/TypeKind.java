@@ -97,11 +97,14 @@ public class TypeKind {
         typeIdMap.put(Double.class, TypeId.DOUBLE);
         typeIdMap.put(Boolean.class, TypeId.BOOLEAN);
 
-        typeIdMap.put(Class.class, TypeId.STRING);
+        typeIdMap.put(Class.class, TypeId.CLASS);
         typeIdMap.put(StringBuffer.class, TypeId.STRING_BUFFER);
         typeIdMap.put(System.class, TypeId.SYSTEM);
         typeIdMap.put(Error.class, TypeId.ERROR);
         typeIdMap.put(Throwable.class, TypeId.THROWABLE);
+
+        typeIdMap.put(BigInteger.class, TypeId.BIG_INTEGER);
+        typeIdMap.put(BigDecimal.class, TypeId.BIG_DECIMAL);
 
         typeIdMap.put(RuntimeException.class, TypeId.RUNTIME_EXCEPTION);
         typeIdMap.put(Exception.class, TypeId.EXCEPTION);

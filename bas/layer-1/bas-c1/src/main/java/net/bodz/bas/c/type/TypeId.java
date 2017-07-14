@@ -45,6 +45,9 @@ public interface TypeId {
     int OVERRIDE = 47;
     int SUPPRESS_WARNINGS = 49;
 
+    int BIG_INTEGER = 50;
+    int BIG_DECIMAL = 51;
+
     int DATE = 1000;
     int SQL_DATE = 1001;
     int CALENDAR = 1002;
