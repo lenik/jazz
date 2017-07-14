@@ -13,6 +13,7 @@ import org.json.JSONWriter;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.AbstractJsonDumper;
+import net.bodz.bas.fmt.json.ReflectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class BeanJsonDumper
     }
 
     @Override
-    protected void formatObjectMembers(Class<?> type, Object obj, int depth)
+    protected void formatObjectMembers(Class<?> type, Object obj, int depth, String prefix)
             throws IOException {
         BeanInfo beanInfo;
         try {
@@ -46,10 +47,15 @@ public class BeanJsonDumper
             if (getter.isAnnotationPresent(Transient.class))
                 continue;
 
-            if (stopClasses.contains(getter.getDeclaringClass()))
+            if (ReflectOptions.stopClasses.contains(getter.getDeclaringClass()))
                 continue;
 
             String propertyName = propertyDescriptor.getName();
+            String qname = prefix == null ? null : //
+                    (prefix.isEmpty() ? propertyName : (prefix + "." + propertyName));
+            if (!isIncluded(qname))
+                continue;
+
             Object propertyValue;
             try {
                 propertyValue = getter.invoke(obj);
@@ -69,7 +75,7 @@ public class BeanJsonDumper
 
             else if (marks.push(propertyValue)) {
                 out.key(propertyName);
-                __formatRaw(propertyValue, depth + 1);
+                __formatRaw_nonnull(propertyValue, depth + 1, qname);
                 marks.pop();
             }
         }
