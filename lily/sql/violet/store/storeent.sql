@@ -1,5 +1,5 @@
 --\import violet.store.art
---\import violet.store.room
+--\import violet.store.region
 --\import violet.store.storeodr
 
     create sequence storeent_seq start with 1000;
@@ -15,8 +15,8 @@
         art         int not null
             references art(id) on update cascade,
 
-        room        int not null
-            references room(id) on update cascade,
+        region        int not null
+            references region(id) on update cascade,
 
 --\mixin violet.store._batch
 

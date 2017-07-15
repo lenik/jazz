@@ -1,9 +1,9 @@
 --\import violet.store.artcat
 --\import violet.store.art
 
-    create sequence room_seq start with 1000;
-    create table room(
-        id          int primary key default nextval('room_seq'),
+    create sequence region_seq start with 1000;
+    create table region(
+        id          int primary key default nextval('region_seq'),
         code        varchar(10),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
@@ -11,17 +11,17 @@
 
         -- null proto for system type
         proto       int
-            references room(id) on update cascade on delete set null,
+            references region(id) on update cascade on delete set null,
 
         parent      int
-            references room(id) on update cascade on delete cascade,
+            references region(id) on update cascade on delete cascade,
 
         depth       int not null default -1, -- || ancestors ||
 
-        -- to estimate the scale of the room tree.
+        -- to estimate the scale of the region tree.
         height      int not null default -1, -- || longest descendant ||
 
-        -- the artifact used as the room body.
+        -- the artifact used as the region body.
         body        int
             references art(id) on update cascade,
 
@@ -42,13 +42,13 @@
         dz          int not null default 0
     );
 
-    create index room_depth         on room(depth);
-    create index room_label         on room(label);
-    create index room_lastmod       on room(lastmod desc);
-    create index room_priority      on room(priority);
-    create index room_state         on room(state);
-    create index room_uid_acl       on room(uid, acl);
+    create index region_depth         on region(depth);
+    create index region_label         on region(label);
+    create index region_lastmod       on region(lastmod desc);
+    create index region_priority      on region(priority);
+    create index region_state         on region(state);
+    create index region_uid_acl       on region(uid, acl);
 
     -- Predefined prototypes.
-    insert into room(id, label) values(1, 'Abstract');
-    insert into room(id, label) values(2, 'Template');
+    insert into region(id, label) values(1, 'Abstract');
+    insert into region(id, label) values(2, 'Template');
