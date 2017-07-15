@@ -4,8 +4,8 @@
         select a.*,
             storeodr.subject "odr_subject",
             art.label "art_label",
-            room.label "room_label"
+            region.label "region_label"
         from storeent a
             left join storeodr on a.odr=storeodr.id
             left join art on a.art=art.id
-            left join room on a.room=room.id;
+            left join region on a.region=region.id;
