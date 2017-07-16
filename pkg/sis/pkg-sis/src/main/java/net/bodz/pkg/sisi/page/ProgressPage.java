@@ -282,16 +282,6 @@ class ProgressPage
         }
 
         @Override
-        protected void updateProgress() {
-            parent.getDisplay().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    ProgressPage.this.setProgress((double) progress / totalProgress);
-                }
-            });
-        }
-
-        @Override
         public boolean _fatal(int delta, Throwable ex, Object message) {
             userDialogs.alert(tr._("Failed to install: ") + ex.getMessage(), ex);
             return false;
