@@ -4,6 +4,7 @@ net.bodz.bas.html.viz.builtin.Boolean_htm
 net.bodz.bas.html.viz.builtin.Byte_htm
 net.bodz.bas.html.viz.builtin.Class_htm
 net.bodz.bas.html.viz.builtin.Date_htm
+net.bodz.bas.html.viz.builtin.DateTime_htm
 net.bodz.bas.html.viz.builtin.Double_htm
 net.bodz.bas.html.viz.builtin.Float_htm
 net.bodz.bas.html.viz.builtin.Integer_htm
