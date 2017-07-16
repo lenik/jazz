@@ -36,7 +36,7 @@ public class PathArrivalFrame
 
     @Override
     public String toString() {
-        String tagName = out.getTagName();
+        String tagName = out == null ? null : out.getTagName();
         // String id = outer.getAttributeMap().get("id");
         return String.format("<%s> | %s", tagName/* , id */, getArrival());
     }

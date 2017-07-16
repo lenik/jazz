@@ -58,13 +58,13 @@ public class PredefRadio_htm
             labelTag.class_(class_);
 
             HtmlInput radio = labelTag.input().type("radio");
+            FieldDeclToHtml.apply(radio, fieldDecl);
+
             if (predef == value)
                 radio.checked("checked");
 
             radio.value(key);
             radio.text(value.getLabel());
-
-            FieldDeclToHtml.apply(radio, fieldDecl);
         }
     }
 

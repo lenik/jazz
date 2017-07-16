@@ -41,17 +41,19 @@ public class PredefSelect_htm
         }
 
         HtmlSelect select = out.select();
+        FieldDeclToHtml.apply(select, fieldDecl);
+
         Map<String, ?> nameMap = metadata.getNameMap();
         for (Entry<String, ?> entry : nameMap.entrySet()) {
             String key = entry.getKey();
             Predef<?, ?> value = (Predef<?, ?>) entry.getValue();
-            HtmlOption option = select.option().value(key).text(value.getLabel());
+            HtmlOption option = select.option();
             option.label(value.getName());
+            option.value(key);
             if (predef == value)
                 option.selected("selected");
+            option.text(value.getLabel());
         }
-
-        FieldDeclToHtml.apply(select, fieldDecl);
     }
 
 }

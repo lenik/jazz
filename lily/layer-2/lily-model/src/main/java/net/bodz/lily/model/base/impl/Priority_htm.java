@@ -24,6 +24,9 @@ public class Priority_htm
     @Override
     public IHtmlOut buildHtmlViewStart(IHtmlViewContext ctx, IHtmlOut out, IUiRef<Integer> ref)
             throws ViewBuilderException, IOException {
+        if (ref == null)
+            throw new NullPointerException("ref");
+
         // ctx.query(PriorityMapper.class);
         TreeMap<Integer, String> predefs = new TreeMap<>();
         predefs.put(-10, "紧急");
@@ -35,8 +38,8 @@ public class Priority_htm
         HtmlSelect select = out.select();
         // FieldHtmlUtil.apply(select, fieldDecl, options);
 
-        int priority = ref.get();
-        Integer floor = predefs.floorKey(priority);
+        Integer priority = ref.get();
+        Integer floor = priority == null ? null : predefs.floorKey(priority);
         int selectedKey = floor == null ? -10 : floor;
 
         for (Entry<Integer, String> predef : predefs.entrySet()) {
