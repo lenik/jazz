@@ -20,12 +20,15 @@ public class MappedFileAccessServlet
     private IFilePathMapping mapping;
 
     @Override
-    protected void setParameter(String name, String value)
+    protected void setInitParameter(String name, String value)
             throws ServletException {
-        super.setParameter(name, value);
+        super.setInitParameter(name, value);
         switch (name) {
         case ATTRIBUTE_MAPPING_CLASS:
             try {
+// ClassLoader cl = getClass().getClassLoader();
+// URLClassLoaders.dump(cl,Stdio.cout);
+// Class<?> mappingClass = Class.forName(value, true, ClassLoaders.getRuntimeClassLoader());
                 Class<?> mappingClass = Class.forName(value);
                 mapping = (IFilePathMapping) mappingClass.newInstance();
             } catch (ReflectiveOperationException e) {
@@ -36,9 +39,8 @@ public class MappedFileAccessServlet
     }
 
     @Override
-    public void init()
+    public void _init()
             throws ServletException {
-        super.init();
         if (mapping == null)
             throw new IllegalConfigException(ATTRIBUTE_MAPPING_CLASS + " isn't set.");
     }
