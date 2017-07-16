@@ -20,6 +20,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
     private static final long serialVersionUID = 1L;
 
+    private int refCount;
     private self_t parent;
     private List<self_t> children = new ArrayList<self_t>();
 
@@ -31,6 +32,20 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         this.parent = parent;
         if (parent != null)
             parent.addChild(self());
+    }
+
+    /**
+     * Reference Count
+     * 
+     * @label.zh 引用统计
+     */
+    @OfGroup(StdGroup.Statistics.class)
+    public int getRefCount() {
+        return refCount;
+    }
+
+    public void setRefCount(int refCount) {
+        this.refCount = refCount;
     }
 
     @SuppressWarnings("unchecked")

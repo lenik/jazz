@@ -1,6 +1,7 @@
 --\import lily.account
 --\import lily.util.uom
 --\import violet.store.artcat
+--\import violet.store.uom
 
     create sequence art_seq start with 1000;
     create table art(
@@ -20,10 +21,8 @@
 
         model       varchar(100),
 
-    -- props:
-        -- qty.property (aka. uomprop)
-        -- qty.digits
-        uom         varchar(10),
+        uom         int
+            references uom(id) on update cascade,
 
 --\mixin lily.mixin.Props
         -- color

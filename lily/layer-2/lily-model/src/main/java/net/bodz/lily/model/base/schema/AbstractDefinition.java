@@ -1,6 +1,5 @@
 package net.bodz.lily.model.base.schema;
 
-import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.lily.model.base.CoCode;
 
 public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_t>>
@@ -9,7 +8,6 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
     private static final long serialVersionUID = 1L;
 
     private SchemaDef schema;
-    private long refCount;
 
     public AbstractDefinition() {
         super();
@@ -30,20 +28,6 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
 
     public final void setSchema(SchemaDef schema) {
         this.schema = schema;
-    }
-
-    /**
-     * Reference Count
-     * 
-     * @label.zh 引用统计
-     */
-    @Statistics
-    public final long getRefCount() {
-        return refCount;
-    }
-
-    public void setRefCount(long refCount) {
-        this.refCount = refCount;
     }
 
     @Override

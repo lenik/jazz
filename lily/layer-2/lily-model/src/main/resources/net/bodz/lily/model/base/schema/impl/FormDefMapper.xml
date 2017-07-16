@@ -14,14 +14,14 @@
     <sql id="select1"><![CDATA[
         select a.*, s.label schema_label
         from _form a
-            left join schema s on a.schema=s.id
+            left join _schema s on a.schema=s.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select a.*, s.label schema_label
         from _form a
-            left join schema s on a.schema=s.id
+            left join _schema s on a.schema=s.id
         ]]>
     </sql>
 
@@ -32,7 +32,7 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
-            <if test="schemaId != null">and a.schema=#{schemaId}</if>
+            <if test="m.schemaId != null">and a.schema=#{m.schemaId}</if>
         </where>
     </select>
 
