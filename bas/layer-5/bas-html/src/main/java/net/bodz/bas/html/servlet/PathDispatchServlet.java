@@ -76,7 +76,7 @@ public class PathDispatchServlet
                 Class<?> rootClass = Class.forName(rootClassName);
                 rootObject = rootClass.newInstance();
             } catch (Exception e) {
-                throw new ServletException(e.getMessage(), e);
+                throw new ServletException("Failed to instantiate root object: " + e.getMessage(), e);
             }
     }
 

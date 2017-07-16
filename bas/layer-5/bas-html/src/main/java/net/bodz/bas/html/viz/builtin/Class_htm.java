@@ -25,7 +25,7 @@ public class Class_htm
         FieldDeclToHtml.apply(input, fieldDecl);
 
         Class<?> value = ref.get();
-        String str = value.toString();
+        String str = value == null ? null : value.toString();
         if (value != null)
             input.value(str);
 

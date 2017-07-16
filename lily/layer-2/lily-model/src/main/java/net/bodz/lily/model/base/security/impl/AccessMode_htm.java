@@ -30,9 +30,10 @@ public class AccessMode_htm
         HtmlSelect select = out.select();
         for (AccessMode mode : AccessMode.METADATA.getValues()) {
             int key = mode.getKey();
-            HtmlOption option = select.option().value(key).text(mode.getLabel());
+            HtmlOption option = select.option().value(key);
             if (n == key)
                 option.selected("selected");
+            option.text(mode.getLabel());
         }
         return out;
     }
