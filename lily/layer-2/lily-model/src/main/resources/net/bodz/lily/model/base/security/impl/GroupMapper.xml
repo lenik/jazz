@@ -7,7 +7,7 @@
     <resultMap id="map1" type="net.bodz.lily.model.base.security.Group" extends="co.MAP_ALL">
         <collection property="users" javaType="ArrayList" ofType="net.bodz.lily.model.base.security.User">
             <id property="id" column="y_id" />
-            <result property="codeName" column="y_code" />
+            <result property="codeName" column="y_name" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
         </collection>
@@ -21,7 +21,7 @@
             y.label "y_label",
             y.description "y_description"
         from "group" a
-            left join group_user x on x."group"=a.id
+            left join userof x on x."group"=a.id
             left join "user" y on y.id=x."user" 
         ]]>
     </sql>

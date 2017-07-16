@@ -44,8 +44,8 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
-            <if test="schemaId != null">and v."schema"=#{schemaId}</if>
-            <if test="tagGroupId != null">and a.tagv=#{tagGroupId}</if>
+            <if test="m.schemaId != null">and v."schema"=#{m.schemaId}</if>
+            <if test="m.tagGroupId != null">and a.tagv=#{m.tagGroupId}</if>
         </where>
     </select>
 

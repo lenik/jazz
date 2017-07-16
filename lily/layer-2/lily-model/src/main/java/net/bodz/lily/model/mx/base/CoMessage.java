@@ -1,6 +1,8 @@
 package net.bodz.lily.model.mx.base;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
@@ -191,6 +193,19 @@ public abstract class CoMessage<Id>
 
     public void setTags(TagSet tags) {
         this.tags = tags;
+    }
+
+    public List<TagDef> getTagList() {
+        if (tags == null)
+            return null;
+        else
+            return new ArrayList<>(tags);
+    }
+
+    public void setTagList(List<TagDef> tags) {
+        this.tags = new TagSet();
+        for (TagDef tag : tags)
+            this.tags.add(tag);
     }
 
     /**
