@@ -27,17 +27,16 @@ public class ClassResourceAccessorServlet
     private String startPath;
 
     @Override
-    public void init()
+    public void _init()
             throws ServletException {
-        super.init();
         if (startPath == null)
             throw new IllegalConfigException(ATTRIBUTE_PATH + " isn't set.");
     }
 
     @Override
-    protected void setParameter(String name, String value)
+    protected void setInitParameter(String name, String value)
             throws ServletException {
-        super.setParameter(name, value);
+        super.setInitParameter(name, value);
         switch (name) {
         case ATTRIBUTE_PATH:
             startPath = FilePath.removeTrailingSlashes(value);

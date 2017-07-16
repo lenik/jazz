@@ -28,17 +28,23 @@ public abstract class AbstractFileAccessServlet
     private int maxAge = 86400;
 
     @Override
-    public void init()
+    public final void init()
             throws ServletException {
         ServletConfig config = getServletConfig();
 
         for (String name : Iterables.otp(config.getInitParameterNames())) {
             String param = config.getInitParameter(name);
-            setParameter(name, param);
+            setInitParameter(name, param);
         }
+
+        _init();
     }
 
-    protected void setParameter(String name, String value)
+    protected void _init()
+            throws ServletException {
+    }
+
+    protected void setInitParameter(String name, String value)
             throws ServletException {
         switch (name) {
         case ATTRIBUTE_MAX_AGE:

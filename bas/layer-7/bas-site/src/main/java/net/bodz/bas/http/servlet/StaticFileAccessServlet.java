@@ -23,18 +23,16 @@ public class StaticFileAccessServlet
     private File start;
 
     @Override
-    public void init()
+    public void _init()
             throws ServletException {
-        super.init();
-
         if (start == null)
             throw new IllegalConfigException(ATTRIBUTE_PATH + " isn't set.");
     }
 
     @Override
-    protected void setParameter(String name, String value)
+    protected void setInitParameter(String name, String value)
             throws ServletException {
-        super.setParameter(name, value);
+        super.setInitParameter(name, value);
         switch (name) {
         case ATTRIBUTE_PATH:
             value = FilePath.removeTrailingSlashes(value);
