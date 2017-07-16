@@ -141,6 +141,10 @@ public abstract class AbstractViewBuilderFactory
             throws ViewBuilderException {
         Class<?> valueType = ref.getValueType();
         IViewBuilder viewBuilder = getViewBuilder(valueType);
+        if (viewBuilder == null) {
+            // logger.warn("No view builder for " + valueType);
+            return parent;
+        }
         Object view = viewBuilder.buildViewStart(ctx, parent, ref);
         viewBuilder.buildViewEnd(ctx, parent, view, ref);
         return view;

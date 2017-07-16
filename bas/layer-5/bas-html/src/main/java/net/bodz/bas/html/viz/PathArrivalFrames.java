@@ -55,7 +55,8 @@ public class PathArrivalFrames
             ViewBuilderSet<Object> viewBuilders = viewBuilderFactory.getViewBuilders(targetClass, initialTags);
             IHtmlViewBuilder<Object> viewBuilder = viewBuilders.findFirst(IHtmlViewBuilder.class);
             if (viewBuilder == null)
-                throw new ViewBuilderException("Can't build html view for " + targetClass);
+                // throw new ViewBuilderException("Can't build html view for " + targetClass);
+                continue;
 
             if (frames.isEmpty() || viewBuilder.isFrame()) {
                 PathArrivalFrame frame = new PathArrivalFrame(a);
