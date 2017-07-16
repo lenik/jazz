@@ -1,4 +1,4 @@
-package net.bodz.lily.model.store;
+package net.bodz.violet.store;
 
 import java.util.Random;
 import java.util.StringTokenizer;

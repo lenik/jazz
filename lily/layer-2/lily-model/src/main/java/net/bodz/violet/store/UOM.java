@@ -1,4 +1,4 @@
-package net.bodz.lily.model.store;
+package net.bodz.violet.store;
 
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.model.base.CoCode;

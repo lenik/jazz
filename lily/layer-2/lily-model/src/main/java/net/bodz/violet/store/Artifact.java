@@ -1,4 +1,4 @@
-package net.bodz.lily.model.store;
+package net.bodz.violet.store;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import net.bodz.lily.repr.EntGroup;
  * 物品
  */
 @IdType(Integer.class)
-//@SchemaPref(Schemas.ARTIFACT)
+// @SchemaPref(Schemas.ARTIFACT)
 @Table(name = "art")
 public class Artifact
         extends CoEntity<Integer> {
@@ -29,7 +29,7 @@ public class Artifact
     public static final int N_SKU_CODE = 30;
     public static final int N_BAR_CODE = 30;
     public static final int N_UOM_PROPERTY = 20;
-    public static final int N_SPEC = 100;
+    public static final int N_MODEL_NAME = 100;
     public static final int N_COLOR = 20;
     public static final int N_CAUTION = 100;
 
@@ -42,7 +42,7 @@ public class Artifact
     private Map<UOM, Double> convMap = new HashMap<UOM, Double>();
     private int decimalDigits = 2;
 
-    private String spec;
+    private String modelName;
     private String color;
     private String caution;
 
@@ -51,7 +51,6 @@ public class Artifact
     private double weight;
     private double netWeight;
 
-    private SupplyMethod supplyMethod = SupplyMethod.BUY;
     private int supplyDelay; // in days
 
     /**
@@ -161,13 +160,13 @@ public class Artifact
      * @placeholder 输入规格/型号…
      */
     @OfGroup(StdGroup.Identity.class)
-    @TextInput(maxLength = N_SPEC)
-    public String getSpec() {
-        return spec;
+    @TextInput(maxLength = N_MODEL_NAME)
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setSpec(String spec) {
-        this.spec = spec;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
     /**
@@ -272,22 +271,6 @@ public class Artifact
 
     public void setNetWeight(double netWeight) {
         this.netWeight = netWeight;
-    }
-
-    /**
-     * 说明物料的供应来源，是自行生产得来的或从外部采购得来的。
-     * 
-     * @label 供应方法
-     */
-    @OfGroup(StdGroup.Classification.class)
-    public SupplyMethod getSupplyMethod() {
-        return supplyMethod;
-    }
-
-    public void setSupplyMethod(SupplyMethod supplyMethod) {
-        if (supplyMethod == null)
-            throw new NullPointerException("supplyMethod");
-        this.supplyMethod = supplyMethod;
     }
 
     /**
