@@ -6,4 +6,16 @@ public interface IDataContextAware {
 
     void setDataContext(DataContext dataContext);
 
+    class fn {
+
+        public static <T> T apply(DataContext dc, T o) {
+            if (o instanceof IDataContextAware) {
+                IDataContextAware dca = (IDataContextAware) o;
+                dca.setDataContext(dc);
+            }
+            return o;
+        }
+
+    }
+
 }
