@@ -9,9 +9,11 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.ui.dom1.IUiRef;
 
+@Face("input")
 public abstract class AbstractFormInput_htm<T>
         extends AbstractHtmlViewBuilder<T> {
 

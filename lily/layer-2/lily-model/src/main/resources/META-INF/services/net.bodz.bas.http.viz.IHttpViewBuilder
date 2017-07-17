@@ -1,12 +1,4 @@
 net.bodz.lily.model.base.impl.CoNodeChain_htm
 net.bodz.lily.model.base.impl.Priority_htm
-net.bodz.lily.model.base.schema.impl.CategoryDef_htm
-net.bodz.lily.model.base.schema.impl.ParameterDef_htm
-net.bodz.lily.model.base.schema.impl.PhaseDef_htm
-net.bodz.lily.model.base.schema.impl.PriorityDef_htm
-net.bodz.lily.model.base.schema.impl.SchemaDef_htm
-net.bodz.lily.model.base.schema.impl.TagDef_htm
-net.bodz.lily.model.base.schema.impl.TagGroupDef_htm
 net.bodz.lily.model.base.security.impl.AccessMode_htm
-net.bodz.lily.model.base.security.impl.Group_htm
-net.bodz.lily.model.base.security.impl.User_htm
+net.bodz.lily.util.ajax.TableData_json

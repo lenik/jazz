@@ -1,7 +1,6 @@
 --\import lily.account
 --\import lily.util.uom
 --\import violet.store.artcat
---\import violet.store.uom
 
     create sequence art_seq start with 1000;
     create table art(

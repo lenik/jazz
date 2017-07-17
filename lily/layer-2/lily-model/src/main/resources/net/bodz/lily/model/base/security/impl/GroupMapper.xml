@@ -17,7 +17,7 @@
         select
             a.*,
             y.id "y_id",
-            y.code "y_code",
+            y.name "y_name",
             y.label "y_label",
             y.description "y_description"
         from "group" a
@@ -33,7 +33,7 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
-            <if test="m.codeName != null">and a.code=#{m.codeName}</if>
+            <if test="m.codeName != null">and a.name=#{m.codeName}</if>
         </where>
     </select>
 
@@ -45,7 +45,7 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into "group"(code, label, description)
+        insert into "group"(name, label, description)
         values(#{codeName},#{label},#{description})
         returning id
     ]]></insert>
