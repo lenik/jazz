@@ -5,6 +5,8 @@
 <mapper namespace="net.bodz.lily.model.base.security.impl.GroupMapper">
 
     <resultMap id="map1" type="net.bodz.lily.model.base.security.Group" extends="co.MAP_ALL">
+        <result property="codeName" column="name" />
+        <result property="admin" column="admin" />
         <collection property="users" javaType="ArrayList" ofType="net.bodz.lily.model.base.security.User">
             <id property="id" column="y_id" />
             <result property="codeName" column="y_name" />
@@ -47,13 +49,16 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into "group"(name, label, description)
         values(#{codeName},#{label},#{description})
-        returning id
+        returning id; --
     ]]></insert>
 
     <update id="update">
         update "group"
         <set>
-            <include refid="co.setU" />
+            <if test="codeName != null">name = #{codeName},</if>
+            <if test="label != null">label = #{label},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="comment != null">comment = #{comment},</if>
         </set>
         where id=#{id}
     </update>

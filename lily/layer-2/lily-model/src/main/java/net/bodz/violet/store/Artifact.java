@@ -1,16 +1,20 @@
 package net.bodz.violet.store;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.NumericInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.repr.EntGroup;
@@ -34,15 +38,18 @@ public class Artifact
     public static final int N_CAUTION = 100;
 
     private ArtifactCategory category;
+    private Set<ArtifactTag> tags = new HashSet<>();
+
     private String skuCode;
     private String barCode;
+    private String modelName;
+    private int finish;
 
     private UOM uom = new UOM(UOMs.PIECE);
     private String uomProperty = "数量";
     private Map<UOM, Double> convMap = new HashMap<UOM, Double>();
     private int decimalDigits = 2;
 
-    private String modelName;
     private String color;
     private String caution;
 
@@ -63,6 +70,19 @@ public class Artifact
 
     public void setCategory(ArtifactCategory category) {
         this.category = category;
+    }
+
+    /**
+     * 标签集
+     */
+    public Set<ArtifactTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<ArtifactTag> tags) {
+        if (tags == null)
+            throw new NullPointerException("tags");
+        this.tags = tags;
     }
 
     /**
@@ -94,6 +114,14 @@ public class Artifact
 
     public void setBarCode(String barCode) {
         this.barCode = barCode;
+    }
+
+    public int getFinish() {
+        return finish;
+    }
+
+    public void setFinish(int finish) {
+        this.finish = finish;
     }
 
     /**
@@ -285,6 +313,25 @@ public class Artifact
 
     public void setSupplyDelay(int supplyDelay) {
         this.supplyDelay = supplyDelay;
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws ParseException {
+        super.readObject(map);
+
+        skuCode = map.getString("skuCode", skuCode);
+        barCode = map.getString("skuCode", barCode);
+        modelName = map.getString("modelName", modelName);
+        finish = map.getInt("finish", finish);
+
+        // uom
+        uomProperty = map.getString("uomProperty", uomProperty);
+        // convMap
+        decimalDigits = map.getInt("decimalDigits", decimalDigits);
+
+        color = map.getString("color", color);
+        caution = map.getString("caution", caution);
     }
 
 }

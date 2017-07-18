@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         extends CoEntity<Id> {
@@ -448,6 +450,18 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     public void dump()
             throws IOException {
         dump(Stdio.cout);
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws ParseException {
+        super.readObject(map);
+
+        // refCount = map.getInt("refCount", refCount);
+        IVariantMap<String> parent = (IVariantMap<String>) map.get("parent");
+        if (parent != null) {
+            // Object parentId = parent.get("id");
+        }
     }
 
 }
