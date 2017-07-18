@@ -64,7 +64,8 @@ public interface iString
             if (s == null)
                 return true;
             String str = s.toString();
-            // if (str == null) return true;
+            if (str == null)
+                return true;
             if (str.trim().isEmpty())
                 return true;
             return false;
