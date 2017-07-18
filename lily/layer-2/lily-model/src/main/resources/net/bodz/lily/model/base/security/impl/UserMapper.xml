@@ -92,16 +92,18 @@
     </select>
     
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into "user"(name, label, description, gid0, email, salt, passwd)
-        values(#{codeName},#{label},#{description},
-            #{primaryGroup.id}, #{email}, #{salt}, #{password})
-        returning id
+        insert into "user"(name, label, description, gid0)
+        values(#{codeName},#{label},#{description}, #{primaryGroup.id})
+        returning id; --
     ]]></insert>
 
     <update id="update">
         update "user"
         <set>
-            <include refid="co.setU" />
+            <if test="codeName != null">name = #{codeName},</if>
+            <if test="label != null">label = #{label},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="comment != null">comment = #{comment},</if>
         </set>
         where id=#{id}
     </update>

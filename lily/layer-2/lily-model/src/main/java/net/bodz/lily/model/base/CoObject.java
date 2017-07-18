@@ -13,6 +13,8 @@ import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
@@ -34,6 +36,8 @@ import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
+import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IInstantiable;
 import net.bodz.lily.entity.ILazyLoading;
 import net.bodz.lily.entity.IdType;
@@ -47,7 +51,7 @@ import net.bodz.lily.model.base.security.User;
  */
 @IncludeMapperXml
 public abstract class CoObject
-        implements Serializable, IInstantiable, IContent, IAccessControlled, ILazyLoading, IStated {
+        implements IAccessControlled, ILazyLoading, IContent, IInstantiable, IStated, IVarMapSerializable, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -524,6 +528,49 @@ public abstract class CoObject
 
     public void setAcl(int acl) {
         this.acl = acl;
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws ParseException {
+        codeName = map.getString("codeName", codeName);
+        label = map.getString("label", label);
+        description = map.getString("description", description);
+        comment = map.getString("comment", comment);
+        image = map.getString("image", image);
+
+        priority = map.getInt("priority", priority);
+        // creationDate =map.getDateTime("creationDate",creationDate);
+        // lastModifiedDate =map.getDateTime("lastModifiedDate",lastModifiedDate);
+        flags = map.getInt("flags", flags);
+        // state= map.getEnum("state", state);
+        // version = map.getInt("version", version);
+
+        IVariantMap<String> user = (IVariantMap<String>) map.get("ownerUser");
+        if (user != null) {
+            Integer uid = user.getInt("id", ownerUser == null ? null : ownerUser.getId());
+            if (uid != null) {
+                ownerUser = new User();
+                ownerUser.setId(uid);
+            }
+        }
+
+        IVariantMap<String> group = (IVariantMap<String>) map.get("ownerGroup");
+        if (group != null) {
+            Integer gid = group.getInt("id", ownerGroup == null ? null : ownerGroup.getId());
+            if (gid != null) {
+                ownerGroup = new Group();
+                ownerGroup.setId(gid);
+            }
+        }
+
+        accessMode = map.getInt("accessMode", accessMode);
+        acl = map.getInt("acl", acl);
+    }
+
+    @Override
+    public void writeObject(IVariantMap<String> map) {
+        throw new NotImplementedException();
     }
 
     public Object persist(IHtmlViewContext ctx, IHtmlOut out)

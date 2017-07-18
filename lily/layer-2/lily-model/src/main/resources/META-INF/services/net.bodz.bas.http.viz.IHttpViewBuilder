@@ -2,3 +2,4 @@ net.bodz.lily.model.base.impl.CoNodeChain_htm
 net.bodz.lily.model.base.impl.Priority_htm
 net.bodz.lily.model.base.security.impl.AccessMode_htm
 net.bodz.lily.util.ajax.TableData_json
+net.bodz.lily.util.ajax.JsonWrapper_json

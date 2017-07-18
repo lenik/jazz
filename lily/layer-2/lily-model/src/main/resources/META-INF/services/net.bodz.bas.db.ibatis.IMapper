@@ -13,3 +13,6 @@ net.bodz.lily.model.contact.impl.OrgUnitMapper
 net.bodz.lily.model.contact.impl.OrganizationMapper
 net.bodz.lily.model.contact.impl.PersonMapper
 net.bodz.lily.model.contact.impl.PersonRoleMapper
+net.bodz.violet.store.impl.ArtifactMapper
+net.bodz.violet.store.impl.ArtifactCategoryMapper
+net.bodz.violet.store.impl.ArtifactTagMapper
