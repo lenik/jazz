@@ -1,4 +1,3 @@
 net.bodz.lily.model.base.security.OAuthType
 net.bodz.lily.model.base.security.impl.AccessMode
 net.bodz.lily.model.contact.Gender
-net.bodz.lily.model.store.SupplyMethod
