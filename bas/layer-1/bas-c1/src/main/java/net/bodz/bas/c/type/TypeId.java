@@ -50,7 +50,8 @@ public interface TypeId {
 
     int DATE = 1000;
     int SQL_DATE = 1001;
-    int CALENDAR = 1002;
+    int JODA_DATETIME = 1002;
+    int CALENDAR = 1010;
 
     int Z_PREDEF = 2000;
 }

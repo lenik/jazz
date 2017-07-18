@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 
+import org.joda.time.DateTime;
+
 public class TypeKind {
 
     /**
@@ -116,6 +118,7 @@ public class TypeKind {
         typeIdMap.put(SuppressWarnings.class, TypeId.SUPPRESS_WARNINGS);
         typeIdMap.put(Date.class, TypeId.DATE);
         typeIdMap.put(java.sql.Date.class, TypeId.SQL_DATE);
+        typeIdMap.put(DateTime.class, TypeId.JODA_DATETIME);
         typeIdMap.put(Calendar.class, TypeId.CALENDAR);
     }
 
