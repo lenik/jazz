@@ -18,7 +18,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
 public class BeanJsonDumper
-        extends AbstractJsonDumper {
+        extends AbstractJsonDumper<BeanJsonDumper> {
 
     static final Logger logger = LoggerFactory.getLogger(BeanJsonDumper.class);
 

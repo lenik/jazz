@@ -16,7 +16,8 @@ import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
 
-public abstract class AbstractJsonDumper
+@SuppressWarnings("unchecked")
+public abstract class AbstractJsonDumper<self_t>
         implements IJsonDumper {
 
     protected JSONWriter out;
@@ -27,6 +28,8 @@ public abstract class AbstractJsonDumper
 
     protected Set<String> includes = new HashSet<>();
     protected Set<String> excludes = new HashSet<>();
+
+    protected int maxDepth;
 
     public AbstractJsonDumper(JSONWriter out) {
         this.out = out;
@@ -41,12 +44,19 @@ public abstract class AbstractJsonDumper
         return excludes;
     }
 
-    public void include(String pattern) {
+    public self_t include(String pattern) {
         includes.add(pattern);
+        return (self_t) this;
     }
 
-    public void exclude(String pattern) {
+    public self_t exclude(String pattern) {
         excludes.add(pattern);
+        return (self_t) this;
+    }
+
+    public self_t depth(int maxDepth) {
+        this.maxDepth = maxDepth;
+        return (self_t) this;
     }
 
     @Override
@@ -165,6 +175,11 @@ public abstract class AbstractJsonDumper
         if ((modifiers & Modifier.PUBLIC) == 0) {
             // don't try to dump members from private types.
             formatException(new IllegalAccessException());
+            return;
+        }
+
+        if (maxDepth > 0 && depth >= maxDepth) {
+            out.value(obj);
             return;
         }
 
