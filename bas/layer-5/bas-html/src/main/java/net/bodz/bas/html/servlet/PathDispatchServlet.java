@@ -93,6 +93,10 @@ public class PathDispatchServlet
             throw new IllegalConfigException("rootObject isn't set.");
 
         resp.setHeader("X-Powered-By", "Jazz BAS Repr/Html Server 2.0");
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        if ("OPTIONS".equals(_req.getMethod()))
+            return;
 
         HttpServletReqEx req = HttpServletReqEx.of(_req);
         req.setAttribute(HttpSnapManager.ATTRIBUTE_KEY, snapManager);
