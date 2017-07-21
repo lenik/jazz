@@ -1,6 +1,8 @@
 package net.bodz.bas.repr.path.builtin;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
@@ -13,6 +15,9 @@ public class ClassResourcePathDispatcher
         extends AbstractPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_CLASS_RESOURCE;
+
+    boolean mimeTypeFromExtension = true;
+    boolean mimeTypeFromMagic = false;
 
     @Override
     public int getPriority() {
@@ -27,23 +32,31 @@ public class ClassResourcePathDispatcher
             throw new PathDispatchException("null target.");
 
         String remaining = tokens.getRemainingPath();
-        if (remaining == null || remaining.isEmpty()) // XXX can it be empty?
-            return null;
-
-        // the file name must have extension.
-        if (!remaining.contains("."))
-            return null;
+        List<String> checkList = new ArrayList<>();
+        if (remaining == null || remaining.isEmpty()) {
+            checkList.add("index.html");
+        } else if (tokens.isEntered()) {
+            checkList.add(remaining + "/index.html");
+        } else {
+            // the file name must have extension for mime-type.
+            if (!remaining.contains("."))
+                return null;
+            checkList.add(remaining);
+        }
 
         Class<?> clazz = obj.getClass();
         URL url = null;
-        while (clazz != null) {
+        L: while (clazz != null && !shouldStop(clazz)) {
             String packageName = clazz.getPackage().getName();
             if (packageName.startsWith("java."))
                 break;
 
-            url = clazz.getResource(remaining);
-            if (url != null)
-                break;
+            for (String chk : checkList) {
+                url = clazz.getResource(chk);
+                if (url != null)
+                    break L;
+            }
+
             clazz = clazz.getSuperclass();
         }
         if (url == null)
@@ -51,6 +64,13 @@ public class ClassResourcePathDispatcher
 
         URLResource resource = new URLResource(url);
         return new PathArrival(previous, resource, tokens.shiftAll(), "");
+    }
+
+    protected boolean shouldStop(Class<?> clazz) {
+        String fqcn = clazz.getName();
+        if (fqcn.startsWith("java."))
+            return true;
+        return false;
     }
 
 }
