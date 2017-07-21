@@ -8,5 +8,5 @@
     create or replace view v_region_n as select
         (select count(*) from region) total,
         (select count(*) from region where art is not null) used,
-        (select count(*) from region where art is not null and state=1) locked;
+        (select count(*) from region where art is not null and state=1) "locked";
 

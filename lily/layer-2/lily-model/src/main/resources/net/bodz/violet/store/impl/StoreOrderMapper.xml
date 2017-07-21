@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.store.impl.StoreOrderMapper">
+
+    <resultMap id="map1" type="net.bodz.violet.store.StoreOrder" extends="message.MAP_ALL">
+        <result property="itemCount" column="size" />
+        <result property="quantity" column="qty" />
+        <result property="total" column="total" />
+        <association property="plan" javaType="net.bodz.violet.plan.Plan">
+            <id property="id" column="plan" />
+            <result property="subject" column="plan_subject" />
+        </association>
+        <association property="category" javaType="net.bodz.violet.store.StoreCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
+        <association property="phase" javaType="net.bodz.violet.store.StorePhase">
+            <id property="id" column="phase" />
+            <result property="label" column="phase_label" />
+        </association>
+        <association property="org" javaType="net.bodz.lily.model.contact.Organization">
+            <id property="id" column="org" />
+            <result property="label" column="org_label" />
+        </association>
+        <association property="orgUnit" javaType="net.bodz.lily.model.contact.OrgUnit">
+            <id property="id" column="ou" />
+            <result property="label" column="ou_label" />
+        </association>
+        <association property="person" javaType="net.bodz.lily.model.contact.Person">
+            <id property="id" column="person" />
+            <result property="label" column="person_label" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            u.label "uid_label",
+            g.label "gid_label",
+            op.label "op_label",
+            cat.label "cat_label",
+            phase.label "phase_label",
+            plan.subject "plan_subject",
+            org.label "org_label",
+            ou.label "ou_label",
+            person.label "person_label"
+        from storeodr a
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
+            left join "user" op on a.op=op.id
+            left join storecat cat on a.cat=cat.id
+            left join storephase phase on a.phase=phase.id
+            left join plan on a.plan=plan.id
+            left join org on a.org=org.id
+            left join orgunit ou on a.ou=ou.id
+            left join person on a.person=person.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            u.label "uid_label",
+            g.label "gid_label",
+            op.label "op_label",
+            cat.label "cat_label",
+            phase.label "phase_label",
+            plan.subject "plan_subject",
+            org.label "org_label",
+            ou.label "ou_label",
+            person.label "person_label"
+        from storeodr a
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
+            left join "user" op on a.op=op.id
+            left join storecat cat on a.cat=cat.id
+            left join storephase phase on a.phase=phase.id
+            left join plan on a.plan=plan.id
+            left join org on a.org=org.id
+            left join orgunit ou on a.ou=ou.id
+            left join person on a.person=person.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+        <if test="m.timeRange != null">and a.lastmod between #{m.timeRange.min, jdbcType=DATE} and #{m.timeRange.max, jdbcType=DATE}</if>
+        <!-- moment-interval -->
+        <if test="m.dateRange != null">and a.t0 between #{m.dateRange.min, jdbcType=DATE} and #{m.dateRange.max, jdbcType=DATE}</if>
+        <if test="m.year != null">and extract(year from a.t0)=#{m.year}</if>
+        <if test="m.noDate">and a.t0 is null</if>
+        <if test="m.noYear">and a.t0 is null</if>
+        <!-- message -->
+        <if test="m.opId != null">and a.op=#{m.opId}</if>
+        <if test="m.voteCountRange != null">and a.nvote between #{m.voteCountRange.min} and #{m.voteCountRange.max}</if>
+        <if test="m.likerCountRange != null">and a.nlike between #{m.likerCountRange.min} and #{m.likerCountRange.max}</if>
+        <if test="m.readCountRange != null">and a.nread between #{m.readCountRange.min} and #{m.readCountRange.max}</if>
+        <if test="m.noOp">and a.op is null</if>
+        <if test="m.noCategory">and a.cat is null</if>
+        <if test="m.noPhase">and a.phase is null</if>
+
+        <if test="m.planId != null">and a.plan=#{m.planId}</if>
+        <if test="m.orgId != null">and a.org=#{m.orgId}</if>
+        <if test="m.orgUnitId != null">and a.ou=#{m.orgUnitId}</if>
+        <if test="m.personId != null">and a.person=#{m.personId}</if>
+        <if test="m.tagId != null">and x.tag=#{m.tagId}</if>
+        <if test="m.noTag">and x.tag is null</if>
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="co.modefilt" />
+        </where>
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id=#{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into storeodr(
+            priority, flags, state, uid, gid, mode, acl,
+            t0, t1,
+            op, subject, text, form, args, cat, phase,
+            prev, topic, org, ou, person,
+            qty, total
+        ) values(
+            #{priority}, #{flags}, #{state}, #{owner.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{beginDate}, #{endDate},
+            #{op.id}, #{subject}, #{text}, #{form.id}, #{formArgs}, #{category.id}, #{phase.id},
+            #{previous.id}, #{topic.id}, #{org.id}, #{orgUnit.id}, #{person.id},
+            #{quantity}, #{total}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update storeodr
+        <set>
+            <include refid="message.set1" />
+            <if test="previous != null">prev = #{previous.id},</if>
+            <if test="plan != null">plan = #{plan.id},</if>
+            <if test="org != null">org = #{org.id},</if>
+            <if test="orgUnit != null">ou = #{orgUnit.id},</if>
+            <if test="person != null">person = #{person.id},</if>
+            qty = #{quantity},
+            total = #{total},
+        </set>
+        <where>
+            <if test="id != null">id = #{id}</if>
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from storeodr where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select
+        (select count(*) from storeodr a
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+        ) "total",
+        
+        (select count(*) from storeodr a
+        <where>
+            phase>1201
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+        ) "running";
+    </select>
+
+    <select id="histoByYear" resultType="net.bodz.lily.model.util.F_YearCount"><![CDATA[
+        select
+            extract(year from t0)::int "year", 
+            count(*) "count"
+        from storeodr
+        group by extract(year from t0)::int
+    ]]></select>
+
+</mapper>

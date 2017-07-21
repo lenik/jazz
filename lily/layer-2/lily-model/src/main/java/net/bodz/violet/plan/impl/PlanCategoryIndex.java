@@ -5,7 +5,7 @@ import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.plan.PlanCategory;
 
 /**
- * Region Category
+ * Plan Category
  */
 @ObjectType(PlanCategory.class)
 public class PlanCategoryIndex

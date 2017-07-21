@@ -5,9 +5,9 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoNodeMask;
 
 /**
- * @see net.bodz.violet.store.ArtifactCategory
+ * @see net.bodz.violet.store.ArtifactParameter
  */
-public class ArtifactTagMask
+public class ArtifactParameterMask
         extends CoNodeMask {
 
     @Override
@@ -16,8 +16,8 @@ public class ArtifactTagMask
         super.readObject(map);
     }
 
-    public static ArtifactTagMask below(int maxDepth) {
-        ArtifactTagMask mask = new ArtifactTagMask();
+    public static ArtifactParameterMask below(int maxDepth) {
+        ArtifactParameterMask mask = new ArtifactParameterMask();
         mask.maxDepth = 1;
         return mask;
     }
