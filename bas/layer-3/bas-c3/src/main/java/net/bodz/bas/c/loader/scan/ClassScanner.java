@@ -37,8 +37,8 @@ public class ClassScanner
 
     // private Map<String, Set<Class<?>>> featureMap = new HashMap<>();
 
-    public ClassScanner() {
-        super(ClassOrDirFileFilter.INSTANCE);
+    public ClassScanner(ClassLoader classLoader) {
+        super(classLoader, ClassOrDirFileFilter.INSTANCE);
     }
 
     /**
@@ -359,6 +359,8 @@ public class ClassScanner
         }
     }
 
-    public static ClassScanner SCL = new ClassScanner();
+    public static ClassScanner getInstance(ClassLoader classLoader) {
+        return new ClassScanner(classLoader);
+    }
 
 }

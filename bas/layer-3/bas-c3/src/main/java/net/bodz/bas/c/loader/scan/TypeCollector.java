@@ -16,7 +16,6 @@ import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.java.util.LazyTreeMap;
 import net.bodz.bas.c.java.util.NewArrayList;
-import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.CachedInstantiator;
@@ -47,26 +46,28 @@ public class TypeCollector<T> {
             new NewArrayList<File, String>());
     boolean deleteEmptyFiles = true;
 
-    protected TypeCollector() {
-        this(null);
+    protected TypeCollector(ClassLoader classLoader) {
+        this(classLoader, null);
     }
 
-    public TypeCollector(Class<?> baseClass) {
-        URLClassLoader loader;
+    public TypeCollector(ClassLoader classLoader, Class<?> baseClass) {
+        URLClassLoader ucl;
 
-        loader = (URLClassLoader) ClassLoaders.getRuntimeClassLoader();
+        ucl = (URLClassLoader) classLoader;
         // URL[] callerClasspath = new URL[] { ClassResource.getRootURL(getClass()), };
         // loader = new URLClassLoader(callerClasspath);
 
-        List<File> localURLs = URLClassLoaders.getLocalURLs(loader);
+        System.out.println("UCL for " + baseClass);
+        List<File> localURLs = URLClassLoaders.getLocalURLs(ucl);
+        // for (File u : localURLs) System.out.println("-- " + u);
+
         String url0 = localURLs.get(0).toString();
-        if (url0.contains("/test-classes/")) {
+        if (url0.contains("/test-classes")) {
             logger.info("Detect test mode, create test class loader.");
-            loader = MavenTestClassLoader.createMavenTestClassLoader(loader);
+            ucl = MavenTestClassLoader.createMavenTestClassLoader(ucl);
         }
 
-        scanner = createClassScanner();
-        scanner.setClassLoader(loader);
+        scanner = createClassScanner(classLoader);
 
         if (baseClass != null)
             this.baseClass = baseClass;
@@ -74,8 +75,8 @@ public class TypeCollector<T> {
             this.baseClass = TypeParam.infer1(getClass(), TypeCollector.class, 0);
     }
 
-    protected ClassScanner createClassScanner() {
-        return new ClassScanner();
+    protected ClassScanner createClassScanner(ClassLoader classLoader) {
+        return ClassScanner.getInstance(classLoader);
     }
 
     public boolean isShowPaths() {

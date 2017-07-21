@@ -22,6 +22,7 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeAliasRegistry;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 
+import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.type.ClassNameComparator;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.c.type.TypeIndex;
@@ -75,7 +76,7 @@ public class IbatisMapperProvider
             if (configurer.getPriority() <= IIbatisConfigurer.PRIORITY_HIGH)
                 configurer.configure(config);
 
-        TypeIndex typeIndex = TypeIndex.getSclTypeIndex();
+        TypeIndex typeIndex = TypeIndex.getInstance(ClassLoaders.getRuntimeClassLoader());
 
         TypeAliasRegistry typeAliasRegistry = config.getTypeAliasRegistry();
         TypeHandlerRegistry typeHandlerRegistry = config.getTypeHandlerRegistry();

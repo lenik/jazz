@@ -27,7 +27,9 @@ public class TyperOverriders {
 
     static void load()
             throws ClassNotFoundException, IOException {
-        TypeIndex typeIndex = TypeIndex.getSclTypeIndex();
+        // TODO ClassLoaders.getRuntimeClassLoader?
+        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+        TypeIndex typeIndex = TypeIndex.getInstance(classLoader);
 
         for (Class<? extends Annotation> annotationClass : typeIndex.list(TyperOverrider.class, true)) {
             TyperOverrider aOverrider = annotationClass.getAnnotation(TyperOverrider.class);
