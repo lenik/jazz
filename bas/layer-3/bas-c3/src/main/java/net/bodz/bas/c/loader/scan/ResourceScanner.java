@@ -9,16 +9,14 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import net.bodz.bas.c.loader.ClassLoaders;
-
 public class ResourceScanner {
 
     private ClassLoader classLoader;
     private IFileOrEntryFilter filter;
 
-    public ResourceScanner(IFileOrEntryFilter filter) {
+    public ResourceScanner(ClassLoader classLoader, IFileOrEntryFilter filter) {
+        this.classLoader = classLoader;
         setFilter(filter);
-        classLoader = ClassLoaders.getRuntimeClassLoader();
     }
 
     public ClassLoader getClassLoader() {

@@ -18,27 +18,15 @@ public class TypeIndex {
 
     static final Logger logger = Logger.getLogger(TypeIndex.class.getName());
 
-    ClassLoader defaultClassLoader;
+    ClassLoader classLoader;
     boolean initialize = true;
 
-    public TypeIndex() {
-        defaultClassLoader = ClassLoader.getSystemClassLoader();
+    private TypeIndex(ClassLoader classLoader) {
+        this.classLoader = classLoader;
     }
 
-    public ClassLoader getDefaultClassLoader() {
-        return defaultClassLoader;
-    }
-
-    public void setDefaultClassLoader(ClassLoader defaultClassLoader) {
-        this.defaultClassLoader = defaultClassLoader;
-    }
-
-    protected ClassLoader getResourceClassLoader() {
-        return defaultClassLoader;
-    }
-
-    protected ClassLoader getClassLoader(Class<?> baseType, String fqcn) {
-        return defaultClassLoader;
+    public ClassLoader getClassLoader() {
+        return classLoader;
     }
 
     /**
@@ -55,7 +43,7 @@ public class TypeIndex {
 
         String prefix = baseType.isAnnotation() ? PublishDir.features : PublishDir.services;
         String resourceName = prefix + "/" + baseType.getName();
-        Enumeration<URL> resources = getResourceClassLoader().getResources(resourceName);
+        Enumeration<URL> resources = classLoader.getResources(resourceName);
 
         Set<Class<? extends T>> classes = new LinkedHashSet<Class<? extends T>>();
 
@@ -71,13 +59,7 @@ public class TypeIndex {
                 if (fqcn.startsWith("#"))
                     continue;
 
-                /*
-                 * Optimize: Maybe another class loader different to the resource discoverer should
-                 * be used.
-                 */
                 Class<?> extClass;
-                ClassLoader classLoader = getClassLoader(baseType, fqcn);
-
                 try {
                     extClass = Class.forName(fqcn, true, classLoader);
                 } catch (ClassNotFoundException e) {
@@ -103,12 +85,6 @@ public class TypeIndex {
         return classes;
     }
 
-    static final TypeIndex sclTypeIndex = new TypeIndex();
-
-    public static TypeIndex getSclTypeIndex() {
-        return sclTypeIndex;
-    }
-
     public <T> Iterable<Class<? extends T>> listIndexed(Class<T> baseType)
             throws ClassNotFoundException, IOException {
         IndexedType indexing = baseType.getAnnotation(IndexedType.class);
@@ -123,6 +99,12 @@ public class TypeIndex {
             throws IOException, ClassNotFoundException {
         Iterable list = this.list(annotationType, true);
         return list;
+    }
+
+    // static final TypeIndex systemTypeIndex = new TypeIndex(ClassLoader.getSystemClassLoader());
+
+    public static TypeIndex getInstance(ClassLoader classLoader) {
+        return new TypeIndex(classLoader);
     }
 
 }
