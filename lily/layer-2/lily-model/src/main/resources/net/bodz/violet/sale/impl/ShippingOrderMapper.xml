@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.sale.impl.ShippingOrderMapper">
+
+    <resultMap id="map1" type="net.bodz.violet.sale.ShippingOrder" extends="message.MAP_ALL">
+        <result property="itemCount" column="size" />
+        <result property="quantity" column="qty" />
+        <result property="total" column="total" />
+        <association property="salesOrder" javaType="net.bodz.violet.sale.SalesOrder">
+            <id property="id" column="saleodr" />
+            <result property="subject" column="saleodr_subject" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            saleodr.subject "saleodr_subject",
+            u.label "uid_label",
+            g.label "gid_label",
+            op.label "op_label"
+        from shipodr a
+            left join saleodr on a.saleodr=saleodr.id
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
+            left join "user" op on a.op=op.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            saleodr.subject "saleodr_subject",
+            u.label "uid_label",
+            g.label "gid_label",
+            op.label "op_label"
+        from shipodr a
+            left join saleodr on a.saleodr=saleodr.id
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
+            left join "user" op on a.op=op.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+        <if test="m.timeRange != null">and a.lastmod between #{m.timeRange.min, jdbcType=DATE} and #{m.timeRange.max, jdbcType=DATE}</if>
+        <!-- moment-interval -->
+        <if test="m.dateRange != null">and a.t0 between #{m.dateRange.min, jdbcType=DATE} and #{m.dateRange.max, jdbcType=DATE}</if>
+        <if test="m.year != null">and extract(year from a.t0)=#{m.year}</if>
+        <if test="m.noDate">and a.t0 is null</if>
+        <if test="m.noYear">and a.t0 is null</if>
+        <!-- message -->
+        <if test="m.opId != null">and a.op=#{m.opId}</if>
+        <if test="m.voteCountRange != null">and a.nvote between #{m.voteCountRange.min} and #{m.voteCountRange.max}</if>
+        <if test="m.likerCountRange != null">and a.nlike between #{m.likerCountRange.min} and #{m.likerCountRange.max}</if>
+        <if test="m.readCountRange != null">and a.nread between #{m.readCountRange.min} and #{m.readCountRange.max}</if>
+        <if test="m.noOp">and a.op is null</if>
+        <if test="m.noCategory">and a.cat is null</if>
+        <if test="m.noPhase">and a.phase is null</if>
+        <if test="m.tagId != null">and x.tag=#{m.tagId}</if>
+        <if test="m.noTag">and x.tag is null</if>
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="co.modefilt" />
+        </where>
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id=#{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into shipodr(
+            priority, flags, state, uid, gid, mode, acl,
+            t0, t1,
+            op, subject, text, form, args, cat, phase,
+            prev, topic, org, ou, person,
+            qty, total
+        ) values(
+            #{priority}, #{flags}, #{state}, #{owner.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{beginDate}, #{endDate},
+            #{op.id}, #{subject}, #{text}, #{form.id}, #{formArgs}, #{category.id}, #{phase.id},
+            #{previous.id}, #{topic.id}, #{org.id}, #{orgUnit.id}, #{person.id},
+            #{quantity}, #{total}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update shipodr
+        <set>
+            <include refid="message.set1" />
+            <if test="previous != null">prev = #{previous.id},</if>
+            <if test="plan != null">plan = #{plan.id},</if>
+            <if test="org != null">org = #{org.id},</if>
+            <if test="orgUnit != null">ou = #{orgUnit.id},</if>
+            <if test="person != null">person = #{person.id},</if>
+            qty = #{quantity},
+            total = #{total},
+        </set>
+        <where>
+            <if test="id != null">id = #{id}</if>
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from shipodr where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select
+        (select count(*) from shipodr a
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+        ) "total",
+        
+        (select count(*) from shipodr a
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+        ) "running";
+    </select>
+
+    <select id="histoByYear" resultType="net.bodz.lily.model.util.F_YearCount"><![CDATA[
+        select
+            extract(year from t0)::int "year", 
+            count(*) "count"
+        from shipodr
+        group by extract(year from t0)::int
+    ]]></select>
+
+</mapper>
