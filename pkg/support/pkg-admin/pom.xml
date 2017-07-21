@@ -9,11 +9,6 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.pkg</groupId>
-            <artifactId>pkg-pack</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.pkg</groupId>
             <artifactId>pkg-obfuz</artifactId>
             <version>${project.version}</version>
         </dependency>

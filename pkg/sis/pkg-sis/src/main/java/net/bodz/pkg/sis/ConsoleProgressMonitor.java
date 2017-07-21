@@ -24,12 +24,6 @@ public class ConsoleProgressMonitor
     }
 
     @Override
-    protected void updateProgress() {
-        double percent = 100 * getProgress() / getTotalProgress();
-        logger.mesgf("Progress %.2f%%", percent);
-    }
-
-    @Override
     public boolean _error(int delta, Throwable e, Object message) {
         // logger.warn(message, e);
         int choice = dialogs.choice("Continue?", Arrays.asList("Retry", "Ignore", "Cancel"));
