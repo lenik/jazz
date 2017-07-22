@@ -27,6 +27,7 @@ import net.bodz.bas.c.type.ClassNameComparator;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.c.type.TypeIndex;
 import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.LoadException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
@@ -142,12 +143,17 @@ public class IbatisMapperProvider
 
     @Override
     public <T extends IMapper> T getMapper(Class<T> mapperClass, SqlSession session) {
-        if (!hasMapper(mapperClass))
-            return null;
-        return createMapper(mapperClass, session);
+        try {
+            if (!hasMapper(mapperClass))
+                return null;
+        } catch (Exception e) {
+            throw new LoadException(//
+                    String.format("Failed to load mapper for %s: %s", mapperClass, e.getMessage()), e);
+        }
+        return instantiateMapper(mapperClass, session);
     }
 
-    <T extends IMapper> T createMapper(Class<T> mapperClass, SqlSession session) {
+    <T extends IMapper> T instantiateMapper(Class<T> mapperClass, SqlSession session) {
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
         if (!sqlSessionFactory.getConfiguration().hasMapper(mapperClass))
             return null;

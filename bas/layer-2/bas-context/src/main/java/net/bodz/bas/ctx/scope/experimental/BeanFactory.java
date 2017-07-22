@@ -1,8 +1,9 @@
 package net.bodz.bas.ctx.scope.experimental;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.ctx.scope.ScopedTypeInfo;
 import net.bodz.bas.ctx.scope.IScopeInstance;
+import net.bodz.bas.ctx.scope.ScopedTypeInfo;
+import net.bodz.bas.err.LoadException;
 import net.bodz.bas.rtx.AbstractQueryable;
 
 public class BeanFactory
@@ -28,12 +29,17 @@ public class BeanFactory
         return (T) scopeInstance.get(name);
     }
 
-    public <T> T getOrLoad(String name, Class<T> objectType) {
+    public <T> T getOrLoad(String name, Class<T> objectType)
+            throws LoadException {
         ScopedTypeInfo<T> info = new ScopedTypeInfo<T>(objectType);
         IScopeInstance scopeInstance = info.scopeTeller.tell();
         T obj = (T) scopeInstance.get(name);
         if (obj == null) {
-            obj = info.instantiate();
+            try {
+                obj = info.instantiate();
+            } catch (ReflectiveOperationException e) {
+                throw new LoadException(e.getMessage(), e);
+            }
             scopeInstance.set(name, obj);
         }
         return obj;

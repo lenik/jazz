@@ -1,7 +1,7 @@
-package net.bodz.bas.fmt.json;
+package net.bodz.bas.err;
 
 public class LoadException
-        extends Exception {
+        extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

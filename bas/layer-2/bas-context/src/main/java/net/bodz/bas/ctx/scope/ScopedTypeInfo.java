@@ -41,21 +41,19 @@ public class ScopedTypeInfo<T> {
             }
     }
 
-    public T instantiate() {
+    public T instantiate()
+            throws ReflectiveOperationException {
         IScopeInstance scopeInstance = scopeTeller.tell();
         return _instantiate(scopeInstance);
     }
 
-    public T _instantiate(IScopeInstance scopeInstance) {
-        try {
-            if (ctorWithProvider != null)
-                return ctorWithProvider.newInstance(BeanFactory.getInstance());
-            if (ctorWithScopeId != null)
-                return ctorWithScopeId.newInstance(scopeInstance.getIdentity());
-            return objectType.newInstance();
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+    public T _instantiate(IScopeInstance scopeInstance)
+            throws ReflectiveOperationException {
+        if (ctorWithProvider != null)
+            return ctorWithProvider.newInstance(BeanFactory.getInstance());
+        if (ctorWithScopeId != null)
+            return ctorWithScopeId.newInstance(scopeInstance.getIdentity());
+        return objectType.newInstance();
     }
 
 }

@@ -1,5 +1,6 @@
 package net.bodz.bas.ctx.scope;
 
+import net.bodz.bas.err.LoadException;
 import net.bodz.bas.t.ref.Ref;
 
 /**
@@ -41,10 +42,16 @@ public class ScopedAutoloadRef<T>
         return (T) scopeInstance.get(name);
     }
 
-    public T getOrLoad() {
+    /**
+     * @throws LoadException
+     */
+    public T getOrLoad()
+            throws LoadException {
         IScopeInstance scopeInstance = info.scopeTeller.tell();
-        if (scopeInstance == null)
-            throw new OutOfScopeException();
+        if (scopeInstance == null) {
+            String id = info.scopeTeller.tellId();
+            throw new OutOfScopeException("scope: " + id);
+        }
         T obj = (T) scopeInstance.get(name);
         if (obj == null) {
             obj = _load();
@@ -53,8 +60,16 @@ public class ScopedAutoloadRef<T>
         return obj;
     }
 
-    protected T _load() {
-        return info.instantiate();
+    /**
+     * @throws LoadException
+     */
+    protected T _load()
+            throws LoadException {
+        try {
+            return info.instantiate();
+        } catch (ReflectiveOperationException e) {
+            throw new LoadException(e.getMessage(), e);
+        }
     }
 
     @Override
