@@ -8,4 +8,9 @@ public class ThreadScopeTeller
         return new ThreadScopeInstance(Thread.currentThread());
     }
 
+    @Override
+    public String tellId() {
+        return Thread.currentThread().getName();
+    }
+
 }

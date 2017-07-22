@@ -8,4 +8,9 @@ public class StaticScopeTeller
         return IScopeInstance.STATIC;
     }
 
+    @Override
+    public String tellId() {
+        return "<static>";
+    }
+
 }

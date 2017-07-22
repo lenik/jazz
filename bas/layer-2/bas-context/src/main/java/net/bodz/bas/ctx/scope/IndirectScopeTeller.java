@@ -18,4 +18,10 @@ public class IndirectScopeTeller
         return teller.tell();
     }
 
+    @Override
+    public String tellId() {
+        IScopeTeller teller = get();
+        return teller.tellId();
+    }
+
 }

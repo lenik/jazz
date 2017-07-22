@@ -8,6 +8,11 @@ public class LocalScopeTeller
         return new LocalScopeInstance();
     }
 
+    @Override
+    public String tellId() {
+        return "<local>";
+    }
+
     public static LocalScopeTeller INSTANCE = new LocalScopeTeller();
 
 }

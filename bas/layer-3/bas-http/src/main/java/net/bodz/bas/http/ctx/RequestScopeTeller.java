@@ -11,18 +11,30 @@ import net.bodz.bas.meta.decl.Priority;
 public class RequestScopeTeller
         extends AbstractScopeTeller {
 
+    boolean fallbackToDefaultParent = false;
+    IScopeInstance defaultParent = IScopeInstance.STATIC;
+
     @Override
     public IScopeInstance tell() {
-        IScopeInstance current = IScopeInstance.STATIC;
+        IScopeInstance current = fallbackToDefaultParent ? defaultParent : null;
 
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request != null) {
             RequestScopeInstance descriptor = new RequestScopeInstance(request);
-            descriptor.setParent(current);
+            descriptor.setParent(defaultParent);
             current = descriptor;
         }
 
         return current;
+    }
+
+    @Override
+    public String tellId() {
+        HttpServletRequest request = CurrentHttpService.getRequestOpt();
+        if (request == null)
+            return null;
+        else
+            return request.getRequestURI();
     }
 
     /**

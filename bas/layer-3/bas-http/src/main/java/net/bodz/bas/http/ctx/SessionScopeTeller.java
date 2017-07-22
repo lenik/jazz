@@ -16,4 +16,13 @@ public class SessionScopeTeller
         return new SessionScopeInstance(session);
     }
 
+    @Override
+    public String tellId() {
+        HttpSession session = CurrentHttpService.getSessionOpt();
+        if (session == null)
+            return null;
+        else
+            return session.getId();
+    }
+
 }
