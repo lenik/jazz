@@ -209,4 +209,9 @@ public abstract class AbstractTmVariant
         }
     }
 
+    // @Override
+    public <T> T cast(Class<T> type) {
+        return null;
+    }
+
 }

@@ -1,4 +1,5 @@
 ff2tm = main net.bodz.bas.shell.util.Xjdoc2TextMap
 fixbatbb = main net.bodz.bas.shell.win32.Fix_BatBB
+tcoll = main net.bodz.bas.shell.util.TypeCollectorApp
 tcoll = main net.bodz.bas.shell.util.TypeCollectorCLI
 xjdmp = main net.bodz.bas.shell.util.XjdocDumper
