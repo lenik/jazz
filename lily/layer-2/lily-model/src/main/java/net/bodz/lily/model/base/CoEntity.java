@@ -43,19 +43,21 @@ public class CoEntity<Id>
         super.readObject(map);
 
         Object id = map.get("id");
-        MutableVariant idVar = MutableVariant.wrap(id);
-        switch (TypeKind.getTypeId(idType())) {
-        case TypeId.INTEGER:
-            id = (Id) (Integer) idVar.getInt();
-            break;
-        case TypeId.LONG:
-            id = (Id) (Long) idVar.getLong();
-            break;
-        case TypeId.STRING:
-            id = (Id) (String) idVar.getString();
-            break;
-        default:
-            throw new NotImplementedException();
+        if (id != null) {
+            MutableVariant idVar = MutableVariant.wrap(id);
+            switch (TypeKind.getTypeId(idType())) {
+            case TypeId.INTEGER:
+                id = (Id) (Integer) idVar.getInt();
+                break;
+            case TypeId.LONG:
+                id = (Id) (Long) idVar.getLong();
+                break;
+            case TypeId.STRING:
+                id = (Id) (String) idVar.getString();
+                break;
+            default:
+                throw new NotImplementedException();
+            }
         }
     }
 

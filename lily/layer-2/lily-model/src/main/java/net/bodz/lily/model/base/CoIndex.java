@@ -149,7 +149,11 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
             String columns = q.getString("columns");
             if (columns == null)
                 throw new PathDispatchException("Expected request parameter columns.");
-            tableData.parseColumnList(columns);
+            try {
+                tableData.parseColumnsString(columns);
+            } catch (Exception e) {
+                throw new PathDispatchException("Invalid columns specified: \"" + columns + "\"", e);
+            }
 
             String formats = q.getString("formats");
             if (formats != null)

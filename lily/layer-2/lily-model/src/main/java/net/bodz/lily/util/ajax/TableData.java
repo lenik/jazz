@@ -9,14 +9,20 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
+import net.bodz.bas.c.reflect.NoSuchPropertyException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.PotatoTypes;
-import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.repr.form.FormDeclBuilder;
+import net.bodz.bas.repr.form.MutableFormDecl;
+import net.bodz.bas.repr.form.PathField;
+import net.bodz.bas.repr.form.PathFieldList;
 
 public class TableData {
 
     Class<?> objectType;
-    Map<String, IProperty> colmap = new LinkedHashMap<>();
+    Map<String, IPropertyAccessor> colmap = new LinkedHashMap<>();
     Map<String, String> formats = new HashMap<>();
     List<?> list;
 
@@ -29,19 +35,24 @@ public class TableData {
         return cols;
     }
 
-    public void setColumnList(List<String> columns) {
+    public void parseColumnList(List<String> columns)
+            throws ParseException, NoSuchPropertyException {
         colmap.clear();
-        IType type = PotatoTypes.getInstance().forClass(objectType);
-        for (String col : columns) {
-            IProperty property = type.getProperty(col);
-            if (property == null)
-                throw new IllegalArgumentException("No such column: " + col);
 
-            colmap.put(col, property);
+        IType type = PotatoTypes.getInstance().forClass(objectType);
+        MutableFormDecl formDecl = new FormDeclBuilder().build(type);
+        PathFieldList list = new PathFieldList();
+
+        for (String col : columns) {
+            list.parseAndAdd(formDecl, col);
         }
+
+        for (PathField pathField : list)
+            colmap.put(pathField.getPath(), pathField);
     }
 
-    public void parseColumnList(String columns) {
+    public void parseColumnsString(String columns)
+            throws NoSuchPropertyException, ParseException {
         List<String> columnList = new ArrayList<>();
         for (String col : columns.split(",")) {
             col = col.trim();
@@ -49,7 +60,7 @@ public class TableData {
                 continue;
             columnList.add(col);
         }
-        setColumnList(columnList);
+        parseColumnList(columnList);
     }
 
     public Map<String, String> getFormats() {
@@ -90,7 +101,7 @@ public class TableData {
             throws ReflectiveOperationException {
         List<Object> row = new ArrayList<>(columns.size());
         for (String col : columns) {
-            IProperty property = colmap.get(col);
+            IPropertyAccessor property = colmap.get(col);
             if (property == null)
                 throw new IllegalArgumentException("Invalid column name: " + col);
 
