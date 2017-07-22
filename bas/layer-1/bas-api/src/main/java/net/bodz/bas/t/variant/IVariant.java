@@ -104,4 +104,6 @@ public interface IVariant {
 
     Date getDate(Date defaultValue);
 
+    // <T> T cast(Class<T> type);
+
 }
