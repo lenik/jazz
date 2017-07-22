@@ -17,6 +17,12 @@
         <!-- result property="comment" column="comment" / -->
     </resultMap>
     
+    <resultMap id="MAP_V" type="net.bodz.lily.model.base.CoObject" extends="MAP_K">
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+    </resultMap>
+    
     <resultMap id="MAP_UV" type="net.bodz.lily.model.base.CoObject" extends="MAP_U">
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
@@ -101,4 +107,15 @@
         </if>
     </sql>
 
+    <sql id="filter-version">
+        <if test="m.timeRange != null">and a.lastmod between #{m.timeRange.min, jdbcType=DATE} and #{m.timeRange.max, jdbcType=DATE}</if>
+    </sql>
+    
+    <sql id="filter-mi">
+        <if test="m.dateRange != null">and a.t0 between #{m.dateRange.min, jdbcType=DATE} and #{m.dateRange.max, jdbcType=DATE}</if>
+        <if test="m.year != null">and extract(year from a.t0)=#{m.year}</if>
+        <if test="m.noDate">and a.t0 is null</if>
+        <if test="m.noYear">and a.t0 is null</if>
+    </sql>
+    
 </mapper>
