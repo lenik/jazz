@@ -12,6 +12,7 @@ public interface IProperty
      * 
      * @return Type of the property, never <code>null</code>.
      */
+    @Override
     Class<?> getPropertyType();
 
     boolean isReadable();

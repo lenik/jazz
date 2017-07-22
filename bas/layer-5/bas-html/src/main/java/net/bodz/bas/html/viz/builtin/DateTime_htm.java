@@ -9,14 +9,11 @@ import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.html.util.FieldDeclToHtml;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public class DateTime_htm
         extends AbstractFormInput_htm<DateTime> {
-
-    static FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
 
     public DateTime_htm() {
         super(DateTime.class);

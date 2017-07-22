@@ -12,7 +12,6 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class FormDeclBuilder {
 
-    FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
     SortOrder sortOrder = SortOrder.NONE;
 
     int modifierMask = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE | Modifier.STATIC;
@@ -22,16 +21,6 @@ public class FormDeclBuilder {
     int maxDetailLevel = DetailLevel.EXPERT2;
     Set<String> excludes = new HashSet<String>();
     boolean xjdocRequired;
-
-    public FieldDeclBuilder getFormFieldBuilder() {
-        return fieldDeclBuilder;
-    }
-
-    public void setFormFieldBuilder(FieldDeclBuilder fieldDeclBuilder) {
-        if (fieldDeclBuilder == null)
-            throw new NullPointerException("fieldDeclBuilder");
-        this.fieldDeclBuilder = fieldDeclBuilder;
-    }
 
     public int getModifierMask() {
         return modifierMask;
@@ -77,7 +66,7 @@ public class FormDeclBuilder {
             if (!filter(property))
                 continue;
 
-            IFieldDecl fieldDecl = fieldDeclBuilder.build(property);
+            IFieldDecl fieldDecl = new MutableFieldDecl().populate(property);
             result.addFieldDecl(property.getName(), fieldDecl);
         }
         return result;

@@ -27,6 +27,14 @@ public class PathField
     }
 
     @Override
+    public Class<?> getPropertyType() {
+        if (fieldVector.isEmpty())
+            return null; // void.class;
+        else
+            return fieldVector.get(fieldVector.size() - 1).getValueType();
+    }
+
+    @Override
     public Object getValue(Object instance)
             throws ReflectiveOperationException {
         Object obj = instance;

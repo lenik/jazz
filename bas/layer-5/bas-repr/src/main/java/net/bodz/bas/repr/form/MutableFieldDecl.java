@@ -1,14 +1,31 @@
 package net.bodz.bas.repr.form;
 
+import java.beans.Transient;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.List;
 
+import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom1.IMutableElement;
+import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.cache.Statistics;
+import net.bodz.bas.meta.decl.Priority;
+import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IPropertyAccessor;
+import net.bodz.bas.repr.form.meta.FormInput;
+import net.bodz.bas.repr.form.meta.IndexColumn;
+import net.bodz.bas.repr.form.meta.ListInput;
+import net.bodz.bas.repr.form.meta.NumericInput;
+import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.ui.dom1.MutableUiElement;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class MutableFieldDecl
         extends MutableUiElement
@@ -295,6 +312,113 @@ public class MutableFieldDecl
     @Override
     public Collection<IValidator<Object>> getValidators() {
         return validators;
+    }
+
+    @Override
+    public void populate(IElementDoc doc)
+            throws ParseException {
+        super.populate(doc);
+        this.placeholder = (iString) doc.getTag("placeholder");
+    }
+
+    public void populate(IAnnotated annotations) {
+        Priority aPriority = annotations.getAnnotation(Priority.class);
+        if (aPriority != null)
+            this.setPriority(aPriority.value());
+
+        DetailLevel aDetailLevel = annotations.getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null)
+            this.setDetailLevel(aDetailLevel.value());
+
+        if (annotations.getAnnotation(Derived.class) != null)
+            this.setEnabled(false);
+
+        if (annotations.getAnnotation(Transient.class) != null)
+            this.setEnabled(false);
+
+        if (annotations.getAnnotation(Statistics.class) != null)
+            this.setEnabled(false);
+
+        OfGroup aOfGroup = annotations.getAnnotation(OfGroup.class);
+        if (aOfGroup != null) {
+            Class<?>[] ofGroups = aOfGroup.value();
+            if (ofGroups.length >= 1) {
+                FieldCategory category = FieldCategory.fromTagClass(ofGroups[0]);
+                this.setCategory(category);
+            }
+        }
+
+        IndexColumn aIndexColumn = annotations.getAnnotation(IndexColumn.class);
+        if (aIndexColumn != null) {
+            int maxLength = aIndexColumn.maxLength();
+            this.columnMaxLength = maxLength == -1 ? null : maxLength;
+            this.columnVisibility = aIndexColumn.display() ? aIndexColumn.visible() ? true : false : false;
+        }
+
+        FormInput aFormInput = annotations.getAnnotation(FormInput.class);
+        if (aFormInput != null) {
+            String inputName = aFormInput.name();
+            this.face = aFormInput.face();
+            this.inputName = inputName.isEmpty() ? null : inputName;
+
+            this.readOnly |= aFormInput.readOnly();
+            if (aFormInput.textWidth() != 0)
+                this.textWidth = aFormInput.textWidth();
+
+            String s = aFormInput.inputMask();
+            this.inputMask = s.isEmpty() ? null : s;
+
+            s = aFormInput.placeholder();
+            this.placeholder = iString.fn.val(s.isEmpty() ? null : s);
+
+            this.nullConvertion = aFormInput.nullconv();
+        }
+
+        TextInput aTextInput = annotations.getAnnotation(TextInput.class);
+        if (aTextInput != null) {
+            if (aTextInput.maxLength() != 0)
+                this.maxLength = aTextInput.maxLength();
+            this.echoChar = aTextInput.echoChar();
+            this.spaceNormalization = aTextInput.space();
+        }
+
+        NumericInput aNumericInput = annotations.getAnnotation(NumericInput.class);
+        if (aNumericInput != null) {
+            double min = aNumericInput.min();
+            double max = aNumericInput.max();
+            double step = aNumericInput.step();
+            String pattern = aNumericInput.numberFormat();
+            this.minValue = min == Double.MIN_VALUE ? null : min;
+            this.maxValue = max == Double.MAX_VALUE ? null : max;
+            this.stepValue = step == Double.NaN ? null : step;
+            this.numberFormat = pattern.isEmpty() ? null : new DecimalFormat(pattern);
+        }
+
+        ListInput aListInput = annotations.getAnnotation(ListInput.class);
+        if (aListInput != null) {
+            this.itemSortOrder = aListInput.sort();
+        }
+    }
+
+    public MutableFieldDecl populate(IProperty property)
+            throws ParseException {
+        this.setProperty(property);
+        this.setReadOnly(!property.isWritable());
+        this.setValueType(property.getPropertyType());
+
+        IMutableElement.fn.copy1(property, this);
+
+        Class<?> propertyType = property.getPropertyType();
+        if (TypeKind.isNumeric(propertyType))
+            this.setStyleClass("numeric");
+
+        this.populate((IAnnotated) property);
+
+        IElementDoc xjdoc = property.getXjdoc();
+        if (xjdoc != null)
+            this.populate(xjdoc);
+
+        return this;
     }
 
 }
