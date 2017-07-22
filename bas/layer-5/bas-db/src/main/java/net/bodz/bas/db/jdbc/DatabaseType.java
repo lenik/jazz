@@ -15,7 +15,7 @@ public class DatabaseType
 
     private static final long serialVersionUID = 1L;
 
-    public static final PredefMetadata<DatabaseType, String> METADATA = PredefMetadata.forClass(DatabaseType.class);
+    public static final PredefMetadata<DatabaseType, String> meta = PredefMetadata.forClass(DatabaseType.class);
 
     private final String hibernateDialect;
     private final String driverClass;
@@ -24,7 +24,7 @@ public class DatabaseType
 
     private DatabaseType(String name, String hibernateDialect, String driverClass, String urlFormat,
             ISqlFormat sqlFormat) {
-        super(name, name, METADATA);
+        super(name, name, meta);
         this.hibernateDialect = hibernateDialect;
         this.driverClass = driverClass;
         this.urlFormat = urlFormat;

@@ -12,10 +12,10 @@ public class Gender
 
     private static final long serialVersionUID = 1L;
 
-    public static final PredefMetadata<Gender, Character> METADATA = PredefMetadata.forClass(Gender.class);
+    public static final PredefMetadata<Gender, Character> meta = PredefMetadata.forClass(Gender.class);
 
     private Gender(char val, String name) {
-        super(val, name, METADATA);
+        super(val, name, meta);
     }
 
     public static final char K_UNKNOWN = '-';
