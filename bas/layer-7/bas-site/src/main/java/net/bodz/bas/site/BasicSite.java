@@ -1,7 +1,6 @@
 package net.bodz.bas.site;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -33,7 +32,7 @@ public abstract class BasicSite
 
     private IQueryable queryContext;
     private Map<String, IJazzModule> modules = new TreeMap<>();
-    protected final Map<String, Object> pathMap;
+    protected final PathMap pathMap;
 
     public BasicSite() {
         for (IJazzModule module : JazzBasProject.getInstance().getModules()) {
@@ -41,7 +40,7 @@ public abstract class BasicSite
             name = Strings.hyphenatize(name);
             modules.put(name, module);
         }
-        pathMap = new HashMap<>();
+        pathMap = new PathMap();
     }
 
     public IQueryable getQueryContext() {
