@@ -8,10 +8,10 @@ public class OAuthType
 
     private static final long serialVersionUID = 1L;
 
-    public static final PredefMetadata<OAuthType, String> METADATA = PredefMetadata.forClass(OAuthType.class);
+    public static final PredefMetadata<OAuthType, String> meta = PredefMetadata.forClass(OAuthType.class);
 
     public OAuthType(String key, String name) {
-        super(key, name, METADATA);
+        super(key, name, meta);
     }
 
     public static final String K_QQ = "QQ";

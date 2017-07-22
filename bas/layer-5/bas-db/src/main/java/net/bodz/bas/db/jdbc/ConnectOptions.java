@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.Properties;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.t.predef.PredefMetadata;
 
 public class ConnectOptions
         implements Serializable, Cloneable {
@@ -53,7 +52,7 @@ public class ConnectOptions
     }
 
     public void setType(String typeStr) {
-        DatabaseType type = PredefMetadata.forClass(DatabaseType.class).ofName(typeStr);
+        DatabaseType type = DatabaseType.meta.ofName(typeStr);
         if (type == null)
             throw new IllegalArgumentException("Bad type string: " + typeStr);
         setType(type);

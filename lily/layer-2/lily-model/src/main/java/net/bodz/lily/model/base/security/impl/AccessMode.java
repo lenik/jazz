@@ -9,10 +9,10 @@ public class AccessMode
 
     private static final long serialVersionUID = 1L;
 
-    public static final PredefMetadata<AccessMode, Integer> METADATA = PredefMetadata.forClass(AccessMode.class);
+    public static final PredefMetadata<AccessMode, Integer> meta = PredefMetadata.forClass(AccessMode.class);
 
     AccessMode(int key, String name) {
-        super(key, name, METADATA);
+        super(key, name, meta);
     }
 
     /**

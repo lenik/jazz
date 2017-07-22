@@ -25,7 +25,7 @@ public class GenderTypeHandler
         if (s == null)
             return Gender.UNKNOWN;
         else
-            return Gender.METADATA.ofKey(s.charAt(0));
+            return Gender.meta.ofKey(s.charAt(0));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class GenderTypeHandler
         if (s == null)
             return Gender.UNKNOWN;
         else
-            return Gender.METADATA.ofKey(s.charAt(0));
+            return Gender.meta.ofKey(s.charAt(0));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class GenderTypeHandler
         if (s == null)
             return Gender.UNKNOWN;
         else
-            return Gender.METADATA.ofKey(s.charAt(0));
+            return Gender.meta.ofKey(s.charAt(0));
     }
 
 }

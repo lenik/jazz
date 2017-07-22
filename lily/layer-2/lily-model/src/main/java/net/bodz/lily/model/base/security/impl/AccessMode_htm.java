@@ -28,7 +28,7 @@ public class AccessMode_htm
         int n = val;
 
         HtmlSelect select = out.select();
-        for (AccessMode mode : AccessMode.METADATA.getValues()) {
+        for (AccessMode mode : AccessMode.meta.getValues()) {
             int key = mode.getKey();
             HtmlOption option = select.option().value(key);
             if (n == key)
