@@ -2,6 +2,7 @@ package net.bodz.bas.httpd;
 
 import net.bodz.bas.http.config.ServletContextConfig;
 import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.bas.site.vhost.VirtualHostManager;
 import net.bodz.uni.echo.server.EchoServer;
 
 /**
@@ -36,6 +37,10 @@ public abstract class BasHttpd
     @Override
     protected void mainImpl(String... args)
             throws Exception {
+        initSystemGlobals();
+
+        initVirtualHosts(VirtualHostManager.getInstance());
+
         ServletContextConfig config = createConfig();
         configure(config);
 
@@ -46,6 +51,14 @@ public abstract class BasHttpd
 
         EchoServer server = new EchoServer(config);
         server.start();
+    }
+
+    protected void initSystemGlobals()
+            throws Exception {
+    }
+
+    protected void initVirtualHosts(VirtualHostManager manager)
+            throws Exception {
     }
 
     protected ServletContextConfig createConfig() {
