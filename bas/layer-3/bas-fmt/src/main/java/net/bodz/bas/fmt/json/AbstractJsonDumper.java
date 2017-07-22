@@ -36,6 +36,22 @@ public abstract class AbstractJsonDumper<self_t>
         this.marks = new StackSet<>();
     }
 
+    public boolean isIncludeNull() {
+        return includeNull;
+    }
+
+    public void setIncludeNull(boolean includeNull) {
+        this.includeNull = includeNull;
+    }
+
+    public boolean isIncludeFalse() {
+        return includeFalse;
+    }
+
+    public void setIncludeFalse(boolean includeFalse) {
+        this.includeFalse = includeFalse;
+    }
+
     public Set<String> getIncludes() {
         return includes;
     }

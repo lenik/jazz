@@ -28,6 +28,8 @@ public class JsonWrapper_json
         }
 
         BeanJsonDumper dumper = new BeanJsonDumper(out);
+        dumper.setIncludeNull(w.includeNull);
+        dumper.setIncludeFalse(w.includeFalse);
         dumper.depth(w.maxDepth);
         dumper.dump(w.obj);
 
