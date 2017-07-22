@@ -1,4 +1,4 @@
-net.bodz.bas.shell.util.TypeCollectorCLI
+net.bodz.bas.shell.util.TypeCollectorApp
 net.bodz.bas.shell.util.Xjdoc2TextMap
 net.bodz.bas.shell.util.XjdocDumper
 net.bodz.bas.shell.win32.Fix_BatBB
