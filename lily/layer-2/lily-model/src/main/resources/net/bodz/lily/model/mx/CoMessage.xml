@@ -49,4 +49,20 @@
         args=#{formArgs},
     </sql>
 
+    <sql id="filter-op">
+        <if test="m.opId != null">and a.op=#{m.opId}</if>
+        <if test="m.noOp">and a.op is null</if>
+    </sql>
+    
+    <sql id="filter-clickInfo">
+        <if test="m.voteCountRange != null">and a.nvote between #{m.voteCountRange.min} and #{m.voteCountRange.max}</if>
+        <if test="m.likerCountRange != null">and a.nlike between #{m.likerCountRange.min} and #{m.likerCountRange.max}</if>
+        <if test="m.readCountRange != null">and a.nread between #{m.readCountRange.min} and #{m.readCountRange.max}</if>
+    </sql>
+    
+    <sql id="filter-tag">
+        <if test="m.tagId != null">and x.tag=#{m.tagId}</if>
+        <if test="m.noTag">and x.tag is null</if>
+    </sql>
+
 </mapper>
