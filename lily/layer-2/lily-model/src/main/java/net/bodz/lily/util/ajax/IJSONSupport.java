@@ -10,6 +10,8 @@ public interface IJSONSupport {
         public static Object toVar(Object jsonObj) {
             if (jsonObj == null)
                 return null;
+            if (jsonObj == JSONObject.NULL)
+                return null;
             if (jsonObj instanceof JSONArray) {
                 JSONArray jsv = (JSONArray) jsonObj;
                 return new JsonArrayList(jsv);

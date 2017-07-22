@@ -113,7 +113,6 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
             return null;
 
         Object target = null;
-        boolean toJson = false;
 
         switch (token) {
         case "delete":
@@ -213,12 +212,11 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
 
         case "new":
             try {
-                target = create();
-                toJson = true;
-                break;
+                target = JsonWrapper.wrap(create(), "data").params(q).withNull().withFalse();
             } catch (Exception e) {
                 throw new PathDispatchException(e.getMessage(), e);
             }
+            break;
 
         default:
             String fileName = FilePath.stripExtension(token);
@@ -226,25 +224,13 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
                 Long id = Long.parseLong(fileName);
                 IMapperTemplate<T, M> mapper = requireMapper();
                 target = mapper.select(id);
-                toJson = true;
-                break;
+                target = JsonWrapper.wrap(target, "data").params(q).withNull().withFalse();
             }
+            break;
         }
 
-        if (target != null) {
-            if (toJson) {
-                JsonWrapper wrap = JsonWrapper.wrap(target, "data");
-                wrap.depth(q.getInt("depth", 0));
-
-                String formats = q.getString("formats");
-                if (formats != null)
-                    wrap.parseFormats(formats);
-
-                target = wrap;
-            }
-
+        if (target != null)
             return PathArrival.shift(previous, target, tokens);
-        }
         return null;
     }
 
