@@ -4,22 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.*;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.java.util.Collections;
-import net.bodz.bas.c.java.util.LazyTreeMap;
-import net.bodz.bas.c.java.util.NewArrayList;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.CachedInstantiator;
 import net.bodz.bas.c.type.TypeParam;
+import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
@@ -42,8 +37,7 @@ public class TypeCollector<T> {
 
     boolean showPaths;
     List<Class<?>> extensions;
-    LazyTreeMap<File, List<String>> fileContentMap = new LazyTreeMap<File, List<String>>(
-            new NewArrayList<File, String>());
+    TreeMap<File, List<String>> fileContentMap = new TreeMap<File, List<String>>();
     boolean deleteEmptyFiles = true;
 
     protected TypeCollector(ClassLoader classLoader) {
@@ -57,8 +51,8 @@ public class TypeCollector<T> {
         // URL[] callerClasspath = new URL[] { ClassResource.getRootURL(getClass()), };
         // loader = new URLClassLoader(callerClasspath);
 
-        System.out.println("UCL for " + baseClass);
         List<File> localURLs = URLClassLoaders.getLocalURLs(ucl);
+        // System.out.println("UCL for " + baseClass);
         // for (File u : localURLs) System.out.println("-- " + u);
 
         String url0 = localURLs.get(0).toString();
@@ -181,7 +175,21 @@ public class TypeCollector<T> {
                     publishDir += "/";
 
                 File sfile = new File(resDir, publishDir + baseClass.getName());
-                List<String> lines = fileContentMap.getOrLoad(sfile);
+                boolean loaded = fileContentMap.containsKey(sfile);
+                List<String> lines = loadFile(sfile);
+
+                // only update included packages.
+                if (!loaded) {
+                    Iterator<String> iterator = lines.iterator();
+                    while (iterator.hasNext()) {
+                        String line = iterator.next();
+                        for (String pkg : includePackages)
+                            if (line.startsWith(pkg)) {
+                                iterator.remove();
+                                break;
+                            }
+                    }
+                }
 
                 if (aIndexedType.obsoleted()) {
                     // lines.add("# " + extension.getName());
@@ -198,14 +206,14 @@ public class TypeCollector<T> {
                     @Override
                     public void clear(String path) {
                         File file = new File(resDir, path);
-                        List<String> lines = fileContentMap.getOrLoad(file);
+                        List<String> lines = loadFile(file);
                         lines.clear();
                     }
 
                     @Override
                     public void addLine(String path, String s) {
                         File file = new File(resDir, path);
-                        List<String> lines = fileContentMap.getOrLoad(file);
+                        List<String> lines = loadFile(file);
                         lines.add(s);
                     }
                 };
@@ -249,9 +257,22 @@ public class TypeCollector<T> {
         return list;
     }
 
+    protected List<String> loadFile(File file) {
+        List<String> list = fileContentMap.get(file);
+        if (list == null) {
+            list = new ArrayList<>();
+            if (file.exists())
+                for (String line : new FileResource(file).to(StreamReading.class).lines()) {
+                    list.add(line.trim());
+                }
+            fileContentMap.put(file, list);
+        }
+        return list;
+    }
+
     protected void saveFiles(Map<File, List<String>> fileContentMap)
             throws IOException {
-        for (Entry<File, List<String>> entry : fileContentMap.entrySet()) {
+        for (Map.Entry<File, List<String>> entry : fileContentMap.entrySet()) {
             File file = entry.getKey();
 
             List<String> lines = entry.getValue();
