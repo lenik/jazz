@@ -9,14 +9,11 @@ import net.bodz.bas.html.io.tag.HtmlSelect;
 import net.bodz.bas.html.util.FieldDeclToHtml;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public class Locale_htm
         extends AbstractFormInput_htm<Locale> {
-
-    static FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
 
     public Locale_htm() {
         super(Locale.class);

@@ -11,7 +11,6 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.typer.Typers;
@@ -21,8 +20,6 @@ public abstract class AbstractTextForm_htm<T>
         extends AbstractFormInput_htm<T> {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractTextForm_htm.class);
-
-    static FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
 
     public AbstractTextForm_htm(Class<T> valueClass) {
         super(valueClass);

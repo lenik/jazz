@@ -7,8 +7,8 @@ import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.FieldDeclBuilder;
 import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.MutableFieldDecl;
 import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -16,8 +16,6 @@ import net.bodz.bas.ui.dom1.IUiRef;
 @Face("input")
 public abstract class AbstractFormInput_htm<T>
         extends AbstractHtmlViewBuilder<T> {
-
-    private static FieldDeclBuilder fieldDeclBuilder = new FieldDeclBuilder();
 
     public AbstractFormInput_htm(Class<?> valueClass) {
         super(valueClass);
@@ -33,7 +31,7 @@ public abstract class AbstractFormInput_htm<T>
         UiPropertyRef<T> propertyRef = (UiPropertyRef<T>) ref;
         IFieldDecl fieldDecl = null;
         try {
-            fieldDecl = fieldDeclBuilder.build(propertyRef.getProperty());
+            fieldDecl = new MutableFieldDecl().populate(propertyRef.getProperty());
         } catch (ParseException e) {
             throw new ViewBuilderException("Failed to build field-decl.", e);
         }

@@ -2,6 +2,8 @@ package net.bodz.bas.potato.element;
 
 public interface IPropertyAccessor {
 
+    Class<?> getPropertyType();
+
     /**
      * Get the property value from a particular instance.
      * 

@@ -10,50 +10,16 @@ public class PathFieldMap
 
     private static final long serialVersionUID = 1L;
 
-    private IFormDecl formDecl;
-    private FieldDeclBuilder formFieldBuilder = new FieldDeclBuilder();
-
-    public PathFieldMap(IFormDecl formDecl) {
+    public void parseAndAdd(IFormDecl formDecl, String... pathProperties)
+            throws NoSuchPropertyException, ParseException {
         if (formDecl == null)
             throw new NullPointerException("formDecl");
-        this.formDecl = formDecl;
-    }
 
-    public FieldDeclBuilder getFormFieldBuilder() {
-        return formFieldBuilder;
-    }
+        PathFieldList pathFieldList = new PathFieldList();
 
-    public void setFormFieldBuilder(FieldDeclBuilder formFieldBuilder) {
-        this.formFieldBuilder = formFieldBuilder;
-    }
+        pathFieldList.parseAndAdd(formDecl, pathProperties);
 
-    public void parse(String spec, String... pathProperties)
-            throws NoSuchPropertyException, ParseException {
-        PathFieldsBuilder builder = new PathFieldsBuilder(formFieldBuilder);
-
-        for (char c : spec.toCharArray()) {
-            switch (c) {
-            case 'n': // TODO
-                builder.fromPropertyPaths(formDecl, "index");
-                break;
-            case 'i':
-                builder.fromPropertyPaths(formDecl, "id");
-                break;
-            case 's':
-                builder.fromPropertyPaths(formDecl, "priority", "creationDate", "lastModifiedDate", "flags", "state");
-                break;
-            case 'a':
-                builder.fromPropertyPaths(formDecl, "accessMode", "ownerUser", "ownerGroup");
-                break;
-            case '*':
-                builder.fromPropertyPaths(formDecl, pathProperties);
-                break;
-            default:
-                throw new IllegalArgumentException("Bad column group specifier: " + c);
-            }
-        }
-
-        for (PathField pathField : builder.getFields())
+        for (PathField pathField : pathFieldList)
             put(pathField.getPath(), pathField);
     }
 
