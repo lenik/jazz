@@ -13,4 +13,14 @@ public class ThreadGroupScopeTeller
             return new ThreadGroupScopeInstance(threadGroup);
     }
 
+    @Override
+    public String tellId() {
+        Thread thread = Thread.currentThread();
+        ThreadGroup threadGroup = thread.getThreadGroup();
+        if (threadGroup == null)
+            return null;
+        else
+            return threadGroup.getName();
+    }
+
 }

@@ -1,6 +1,6 @@
 package net.bodz.bas.http.ctx;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 
 import net.bodz.bas.ctx.scope.AbstractScopeTeller;
 import net.bodz.bas.ctx.scope.IScopeInstance;
@@ -10,10 +10,20 @@ public class ServletContextScopeTeller
 
     @Override
     public IScopeInstance tell() {
-        HttpServletRequest request = CurrentHttpService.getRequestOpt();
-        if (request == null)
+        ServletContext context = CurrentHttpService.getServletContextOpt();
+        if (context == null)
             return null;
-        return new ServletContextScopeInstance(request.getServletContext());
+        else
+            return new ServletContextScopeInstance(context);
+    }
+
+    @Override
+    public String tellId() {
+        ServletContext context = CurrentHttpService.getServletContextOpt();
+        if (context == null)
+            return null;
+        else
+            return context.getContextPath();
     }
 
 }

@@ -7,6 +7,8 @@ public interface IScopeTeller {
      */
     IScopeInstance tell();
 
+    String tellId();
+
     StaticScopeTeller STATIC = new StaticScopeTeller();
 
 }
