@@ -45,8 +45,8 @@ public abstract class CoMessage<Id>
     }
 
     @Override
-    public void instantiate() {
-        super.instantiate();
+    public void reinit() {
+        super.reinit();
         op = getOwnerUser();
     }
 

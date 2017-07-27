@@ -1,8 +1,5 @@
 package net.bodz.violet.sale;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
@@ -13,6 +10,7 @@ import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.entity.SizedList;
 import net.bodz.lily.model.contact.Organization;
 import net.bodz.lily.model.contact.Person;
 import net.bodz.lily.model.mx.CoMessage;
@@ -36,22 +34,20 @@ public class SalesOrder
     private Organization org;
     private Person person;
 
-    private List<SalesOrderItem> items;
-    private int itemCount = SIZE_UNKNOWN;
+    private SizedList<SalesOrderItem> items;
     private double quantity;
     private double total;
 
     // make-tasks
     // material-plans (locks)
 
-    private List<ShippingOrder> deliveries;
-    private int deliveryCount = SIZE_UNKNOWN;
+    private SizedList<ShippingOrder> deliveries;
 
     @Override
-    public void instantiate() {
-        super.instantiate();
+    public void reinit() {
+        super.reinit();
         setAccessMode(M_COOP);
-        items = new ArrayList<>();
+        items = new SizedList<>();
     }
 
     /**
@@ -156,48 +152,24 @@ public class SalesOrder
      * 明细列表
      */
     @DetailLevel(DetailLevel.EXTEND)
-    public List<SalesOrderItem> getItems() {
+    public SizedList<SalesOrderItem> getItems() {
         return items;
     }
 
-    public void setItems(List<SalesOrderItem> items) {
+    public void setItems(SizedList<SalesOrderItem> items) {
         this.items = items;
-    }
-
-    /**
-     * 明细条数
-     */
-    @DetailLevel(DetailLevel.EXTEND)
-    public int getItemCount() {
-        return SizeFn.getSize(items, itemCount);
-    }
-
-    public void setItemCount(int itemCount) {
-        this.itemCount = itemCount;
     }
 
     /**
      * 送货跟踪
      */
     @DetailLevel(DetailLevel.EXTEND)
-    public List<ShippingOrder> getDeliveries() {
+    public SizedList<ShippingOrder> getDeliveries() {
         return deliveries;
     }
 
-    public void setDeliveries(List<ShippingOrder> deliveries) {
+    public void setDeliveries(SizedList<ShippingOrder> deliveries) {
         this.deliveries = deliveries;
-    }
-
-    /**
-     * 送货单数（张）
-     */
-    @DetailLevel(DetailLevel.EXTEND)
-    public int getDeliveryCount() {
-        return SizeFn.getSize(deliveries, deliveryCount);
-    }
-
-    public void setDeliveryCount(int deliveryCount) {
-        this.deliveryCount = deliveryCount;
     }
 
 }

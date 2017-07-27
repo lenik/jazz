@@ -38,8 +38,7 @@ import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.IInstantiable;
-import net.bodz.lily.entity.ILazyLoading;
+import net.bodz.lily.entity.IReinitializable;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
@@ -51,7 +50,7 @@ import net.bodz.lily.model.base.security.User;
  */
 @IncludeMapperXml
 public abstract class CoObject
-        implements IAccessControlled, ILazyLoading, IContent, IInstantiable, IStated, IVarMapSerializable, Serializable {
+        implements IAccessControlled, IContent, IReinitializable, IStated, IVarMapSerializable, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -73,28 +72,36 @@ public abstract class CoObject
     public static final int M_PUBLIC_COOP = 0664;
 
     private String codeName;
+
+    // U, U1 = label, description
     private String label;
     private String description;
+
+    // U2
     private String comment;
     private String image;
 
+    // F
+    private int flags = 0;
     private int priority;
+    private State state = StdStates.INIT;
+
+    // V = creation, lastmod, version
     private DateTime creationDate = new DateTime();
     private DateTime lastModifiedDate = creationDate;
-    private int flags = 0;
-    private State state = StdStates.INIT;
     private int version;
 
+    // A = uid, gid, mode, acl
     private User ownerUser;
     private Group ownerGroup;
-    private int accessMode = M_PUBLIC;
     private int acl;
+    private int accessMode = M_PUBLIC;
 
     public CoObject() {
     }
 
     @Override
-    public void instantiate() {
+    public void reinit() {
         fillLoginData();
     }
 
