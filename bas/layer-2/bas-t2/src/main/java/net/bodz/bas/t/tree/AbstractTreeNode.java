@@ -1,5 +1,6 @@
 package net.bodz.bas.t.tree;
 
+import java.beans.Transient;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import net.bodz.bas.t.iterator.RecIterator;
 public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
         implements ITreeNode<node_t> {
 
+    @Transient
     @Override
     public boolean isMutable() {
         return false;
@@ -31,6 +33,7 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
         return null;
     }
 
+    @Transient
     @Override
     public boolean isEmpty() {
         return size() == 0;
@@ -60,7 +63,8 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
         String key = path.substring(0, slash);
         path = path.substring(slash + 1);
 
-        @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
         node_t next;
 
         if (".".equals(key))
@@ -84,7 +88,8 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
         if (path == null)
             throw new NullPointerException("path");
 
-        @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
 
         if (path.isEmpty())
             return _this;
@@ -125,7 +130,8 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
 
     @Override
     public Iterable<? extends node_t> descendants() {
-        @SuppressWarnings("unchecked") final node_t start = (node_t) this;
+        @SuppressWarnings("unchecked")
+        final node_t start = (node_t) this;
         return new Iterable<node_t>() {
             @Override
             public Iterator<node_t> iterator() {
