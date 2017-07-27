@@ -1,5 +1,6 @@
 package net.bodz.bas.t.tree;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,11 +22,13 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
         attach(parent);
     }
 
+    @Transient
     @Override
     public boolean isMutable() {
         return true;
     }
 
+    @Transient
     @Override
     public node_t getParent() {
         return parent;

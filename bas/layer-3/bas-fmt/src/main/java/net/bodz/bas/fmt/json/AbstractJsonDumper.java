@@ -11,6 +11,8 @@ import java.util.Set;
 
 import org.json.JSONWriter;
 
+import net.bodz.bas.c.type.TypeId;
+import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.t.set.StackSet;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
@@ -176,14 +178,33 @@ public abstract class AbstractJsonDumper<self_t>
                 return;
             }
 
-        IParser<?> parser = Typers.getTyper(type, IParser.class);
-        if (parser != null) {
-            IFormatter<Object> formatter = Typers.getTyper(type, IFormatter.class);
-            if (formatter != null) {
-                String form = formatter.format(obj);
-                if (form != null || includeNull)
-                    out.value(form);
-                return;
+        switch (TypeKind.getTypeId(type)) {
+        case TypeId.BYTE:
+        case TypeId.SHORT:
+        case TypeId.INTEGER:
+        case TypeId.LONG:
+            out.value(((Number) obj).longValue());
+            return;
+
+        case TypeId.FLOAT:
+        case TypeId.DOUBLE:
+            out.value(((Number) obj).doubleValue());
+            return;
+
+        case TypeId.BOOLEAN:
+            out.value(((Boolean) obj).booleanValue());
+            return;
+
+        default:
+            IParser<?> parser = Typers.getTyper(type, IParser.class);
+            if (parser != null) {
+                IFormatter<Object> formatter = Typers.getTyper(type, IFormatter.class);
+                if (formatter != null) {
+                    String form = formatter.format(obj);
+                    if (form != null || includeNull)
+                        out.value(form);
+                    return;
+                }
             }
         }
 

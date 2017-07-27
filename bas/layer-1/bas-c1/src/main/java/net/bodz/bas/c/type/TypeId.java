@@ -2,6 +2,8 @@ package net.bodz.bas.c.type;
 
 /**
  * Keep the id compatible with eclipse jdt TypeIds.
+ * 
+ * @see TypeKind#getTypeId(Class)
  */
 public interface TypeId {
 
