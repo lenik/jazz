@@ -1,8 +1,5 @@
 package net.bodz.violet.store;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Table;
 
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -10,6 +7,7 @@ import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.entity.SizedList;
 import net.bodz.lily.model.contact.OrgUnit;
 import net.bodz.lily.model.contact.Organization;
 import net.bodz.lily.model.contact.Person;
@@ -36,8 +34,7 @@ public class StoreOrder
     private OrgUnit orgUnit;
     private Person person;
 
-    private List<StoreEntry> entries = new ArrayList<>();
-    private int entryCount = SIZE_UNKNOWN;
+    private SizedList<StoreEntry> entries = new SizedList<>();
     private double quantity;
     private double total;
 
@@ -45,8 +42,8 @@ public class StoreOrder
     }
 
     @Override
-    public void instantiate() {
-        super.instantiate();
+    public void reinit() {
+        super.reinit();
         setAccessMode(M_SHARED);
 
         StoreCategory TK_I = new StoreCategory();
@@ -138,24 +135,12 @@ public class StoreOrder
      * 明细
      */
     @DetailLevel(DetailLevel.EXTEND)
-    public List<StoreEntry> getEntries() {
+    public SizedList<StoreEntry> getEntries() {
         return entries;
     }
 
-    public void setEntries(List<StoreEntry> entries) {
+    public void setEntries(SizedList<StoreEntry> entries) {
         this.entries = entries;
-    }
-
-    /**
-     * 明细条数
-     */
-    @DetailLevel(DetailLevel.EXTEND)
-    public int getEntryCount() {
-        return SizeFn.getSize(entries, entryCount);
-    }
-
-    public void setEntryCount(int entryCount) {
-        this.entryCount = entryCount;
     }
 
     /**

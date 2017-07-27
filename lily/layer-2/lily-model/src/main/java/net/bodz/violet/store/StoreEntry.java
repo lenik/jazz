@@ -29,7 +29,7 @@ public class StoreEntry
     double price;
 
     @Override
-    public void instantiate() {
+    public void reinit() {
         setAccessMode(M_SHARED);
     }
 

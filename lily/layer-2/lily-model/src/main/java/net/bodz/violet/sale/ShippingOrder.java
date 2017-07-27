@@ -1,6 +1,5 @@
 package net.bodz.violet.sale;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Table;
@@ -16,6 +15,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.entity.SizedList;
 import net.bodz.lily.meta.LilyGroups;
 import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.contact.Contact;
@@ -48,8 +48,7 @@ public class ShippingOrder
     // Take-Out stock job
     // Account-Ticket
 
-    private List<ShippingOrderItem> items = new ArrayList<>();
-    private int itemCount = SIZE_UNKNOWN;
+    private SizedList<ShippingOrderItem> items = new SizedList<>();
     private double quantity;
     private double total;
 
@@ -190,18 +189,6 @@ public class ShippingOrder
     }
 
     /**
-     * 明细条数
-     */
-    @DetailLevel(DetailLevel.EXTEND)
-    public int getItemCount() {
-        return SizeFn.getSize(items, itemCount);
-    }
-
-    public void setItemCount(int itemCount) {
-        this.itemCount = itemCount;
-    }
-
-    /**
      * 总数量
      */
     @OfGroup(StdGroup.Statistics.class)
@@ -231,11 +218,11 @@ public class ShippingOrder
      * 明细列表
      */
     @DetailLevel(DetailLevel.EXTEND)
-    public List<ShippingOrderItem> getItems() {
+    public SizedList<ShippingOrderItem> getItems() {
         return items;
     }
 
-    public void setItems(List<ShippingOrderItem> items) {
+    public void setItems(SizedList<ShippingOrderItem> items) {
         this.items = items;
     }
 

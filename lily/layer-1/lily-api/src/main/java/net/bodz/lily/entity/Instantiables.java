@@ -6,18 +6,18 @@ public class Instantiables {
             throws InstantiationException, IllegalAccessException {
         T instance;
         instance = clazz.newInstance();
-        if (instance instanceof IInstantiable) {
-            IInstantiable instantiable = (IInstantiable) instance;
-            instantiable.instantiate();
+        if (instance instanceof IReinitializable) {
+            IReinitializable instantiable = (IReinitializable) instance;
+            instantiable.reinit();
         }
         return instance;
     }
 
-    public static <T extends IInstantiable> T instantiate(Class<T> clazz)
+    public static <T extends IReinitializable> T instantiate(Class<T> clazz)
             throws InstantiationException, IllegalAccessException {
         T instance;
         instance = clazz.newInstance();
-        instance.instantiate();
+        instance.reinit();
         return instance;
     }
 

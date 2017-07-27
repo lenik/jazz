@@ -19,8 +19,8 @@ public class Mail
     boolean read;
 
     @Override
-    public void instantiate() {
-        super.instantiate();
+    public void reinit() {
+        super.reinit();
         recipients = new ArrayList<>();
         bcc = new ArrayList<>();
     }
