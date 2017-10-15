@@ -213,9 +213,10 @@ public class User
             if (primaryGroup.isAdmin())
                 return true;
 
-        for (Group g : groups)
-            if (g.isAdmin())
-                return true;
+        if (groups != null)
+            for (Group g : groups)
+                if (g.isAdmin())
+                    return true;
 
         return false;
     }

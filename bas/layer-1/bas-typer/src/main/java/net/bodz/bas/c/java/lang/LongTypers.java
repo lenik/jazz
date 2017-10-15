@@ -43,4 +43,6 @@ public class LongTypers
         return prng.nextLong();
     }
 
+    public static final LongTypers INSTANCE = new LongTypers();
+
 }

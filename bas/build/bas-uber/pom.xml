@@ -245,4 +245,26 @@
         </dependency>
     </dependencies>
     <name>BAS :: Build :: Uber</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>net.bodz.bas:*</include>
+                                    <include>net.bodz.mda:*</include>
+                                    <include>net.bodz.uni:*</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

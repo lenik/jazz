@@ -8,6 +8,7 @@ import java.util.Map;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.meta.cache.Derived;
 
 public class StateGroup {
 
@@ -35,9 +36,9 @@ public class StateGroup {
         String qName = state.getQName();
 
         if (idMap.containsKey(id))
-            throw new DuplicatedKeyException("id: " + id);
+            throw new DuplicatedKeyException(String.format("state qName(%s) has dup id: %s", qName, id));
         if (qNameMap.containsKey(state.getName()))
-            throw new DuplicatedKeyException("qName: " + qName);
+            throw new DuplicatedKeyException(String.format("state id(%s) has dup qname: %s", id, qName));
 
         idMap.put(id, state);
         qNameMap.put(qName, state);
@@ -52,6 +53,8 @@ public class StateGroup {
     protected void addStateFields(Field... fields) {
         for (Field field : fields) {
             if (!Modifier.isPublic(field.getModifiers()))
+                continue;
+            if (field.isAnnotationPresent(Derived.class))
                 continue;
             if (!State.class.isAssignableFrom(field.getType()))
                 continue;
