@@ -8,14 +8,14 @@ public abstract class AbstractResourceGeneratorMojo
     /**
      * The directory to find source files, like JavaCC grammar files, or .java sources.
      * 
-     * @parameter expression="${sourceDirectory}" default-value="${basedir}/src/main/java"
+     * @parameter property="sourceDirectory" default-value="${basedir}/src/main/java"
      */
     private File sourceDirectory;
 
     /**
      * The directory to save generated files.
      * 
-     * @parameter expression="${outputDirectory}"
+     * @parameter property="outputDirectory"
      *            default-value="${project.build.directory}/generated-resources"
      */
     private File outputDirectory;

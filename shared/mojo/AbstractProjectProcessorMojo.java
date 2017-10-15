@@ -19,7 +19,7 @@ public abstract class AbstractProjectProcessorMojo
      * The Java version for which to generate source code. Default value is <code>1.5</code> for
      * plugin version 2.6+ and <code>1.4</code> in older versions.
      * 
-     * @parameter expression="${jdkVersion}"
+     * @parameter property="jdkVersion"
      * @since 2.4
      */
     private String jdkVersion;

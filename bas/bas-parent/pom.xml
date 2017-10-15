@@ -341,6 +341,40 @@ Build Settings-->
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                            <configuration>
+                                <createSourcesJar>true</createSourcesJar>
+                                <transformers combine.children="append">
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ComponentsXmlResourceTransformer"/>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.PluginXmlResourceTransformer"/>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                        <resource>META-INF/programs</resource>
+                                    </transformer>
+                                    <transformer implementation="org.kordamp.shade.resources.ServicesResourceTransformer">
+                                        <path>META-INF/features</path>
+                                    </transformer>
+                                </transformers>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.kordamp.shade</groupId>
+                            <artifactId>maven-shade-ext-transformers</artifactId>
+                            <version>1.0.3</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
                 
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
@@ -396,6 +430,9 @@ Build Settings-->
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <forceCreation>true</forceCreation>
+                </configuration>
             </plugin>
         </plugins>
         <resources>

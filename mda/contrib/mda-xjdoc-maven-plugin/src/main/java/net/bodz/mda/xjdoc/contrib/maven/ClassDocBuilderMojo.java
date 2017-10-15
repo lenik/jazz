@@ -57,14 +57,14 @@ public class ClassDocBuilderMojo
     /**
      * The extension name used to generate classdoc resource files.
      *
-     * @parameter expression="${classdoc.extension}"
+     * @parameter property="classdoc.extension"
      */
     String extension = "ff";
 
     /**
      * Add template attributes for missing elements.
      *
-     * @parameter expression="${classdoc.missingDoc}"
+     * @parameter property="classdoc.missingDoc"
      */
     iString missingDoc;
 
@@ -77,7 +77,7 @@ public class ClassDocBuilderMojo
      * <li>javadoc: {@link JavadocTagLibrary}
      * </ul>
      *
-     * @parameter expression="${classdoc.taglibs}" default-value="*"
+     * @parameter property="classdoc.taglibs" default-value="*"
      */
     String taglibNames = "*";
 

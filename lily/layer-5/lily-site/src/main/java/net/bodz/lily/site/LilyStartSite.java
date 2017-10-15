@@ -8,20 +8,16 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
-import net.bodz.bas.site.vhost.IVirtualHost;
-import net.bodz.bas.site.vhost.VhostDataContexts;
 
 public abstract class LilyStartSite
         extends BasicSite {
 
     static final Logger logger = LoggerFactory.getLogger(LilyStartSite.class);
 
-    IVirtualHost vhost;
     DataContext dataContext;
 
-    public LilyStartSite(IVirtualHost vhost) {
-        this.vhost = vhost;
-        this.dataContext = VhostDataContexts.getInstance().get(vhost);
+    public LilyStartSite(DataContext dataContext) {
+        this.dataContext = dataContext;
         setQueryContext(dataContext);
 
         setupServices();
