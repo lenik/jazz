@@ -1,5 +1,6 @@
 package net.bodz.lily.model.base;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -31,6 +32,7 @@ public class CoObjectMask
 
     Set<Integer> priorities;
     Set<Integer> flags;
+    Integer state;
     Set<Integer> states;
     Integer ownerId;
     Integer ownerGroupId;
@@ -112,12 +114,22 @@ public class CoObjectMask
         return this;
     }
 
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     public Set<Integer> getStates() {
         return states;
     }
 
-    public CoObjectMask setStates(Set<Integer> states) {
-        this.states = states;
+    public CoObjectMask setStates(int... states) {
+        this.states = new HashSet<>();
+        for (int state : states)
+            this.states.add(state);
         return this;
     }
 

@@ -110,8 +110,8 @@ public abstract class CoObject
         if (session != null) {
             LoginData loginData = LoginData.fromSession(session);
             if (loginData != null) {
-                ownerUser = loginData.user;
-                ownerGroup = loginData.user.getPrimaryGroup();
+                ownerUser = loginData.getUser();
+                ownerGroup = ownerUser.getPrimaryGroup();
             }
         }
     }

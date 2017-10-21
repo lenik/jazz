@@ -10,6 +10,8 @@ import net.bodz.lily.model.base.security.User;
 public interface UserMapper
         extends IMapperTemplate<User, UserMask> {
 
-    List<User> findForLogin(@Param("m") UserMask mask);
+    List<User> findForLogin(//
+            @Param("code") String name, //
+            @Param("password") String password);
 
 }

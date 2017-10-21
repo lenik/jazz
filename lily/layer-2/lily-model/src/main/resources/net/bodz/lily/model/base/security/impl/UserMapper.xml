@@ -30,23 +30,25 @@
             <result property="admin" column="y_admin" />
         </collection>
     </resultMap>
-    
+
     <sql id="select1"><![CDATA[
         select
             a.*,
+            s.passwd,
             g.name "g_name",
             g.label "g_label",
             g.description "g_description",
             g.admin "g_admin"
         from "user" a
-            left join "group" g on a.gid0=g.id
             left join usersec s on a.id=s."user"
+            left join "group" g on a.gid0=g.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
+            s.passwd,
             g.name "g_name",
             g.label "g_label",
             g.description "g_description",
@@ -57,12 +59,13 @@
             y.description "y_description",
             y.admin "y_admin"
         from "user" a
+            left join usersec s on a.id=s."user"
             left join "group" g on a.gid0=g.id
             left join userof x on x."user"=a.id
             left join "group" y on y.id=x."group" 
         ]]>
     </sql>
-    
+
     <select id="all" resultMap="map1">
         <include refid="select1" />
     </select>
@@ -82,15 +85,21 @@
         </where>
     </select>
 
-    <select id="findForLogin" resultMap="map2">
-        <include refid="select2" />
-        left join usersec s on a.id = s."user" 
+    <select id="selectByCodeName" parameterType="String" resultMap="map2">
+        <include refid="select1" />
         <where>
-            <if test="m.codeName != null">and a.name=#{m.codeName}</if>
-            <if test="m.password != null">and s.passwd=#{m.password}</if>
+            <if test="_parameter != null">a.name=#{code}</if>
         </where>
     </select>
-    
+
+    <select id="findForLogin" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <if test="code != null">and a.name=#{code}</if>
+            <if test="password != null">and s.passwd=#{password}</if>
+        </where>
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into "user"(name, label, description, gid0)
         values(#{codeName},#{label},#{description}, #{primaryGroup.id})
