@@ -1,5 +1,6 @@
 package net.bodz.bas.site.ajax;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -89,7 +90,8 @@ public class AjaxResult
     }
 
     @Override
-    public void writeObject(JSONWriter out) {
+    public void writeObject(JSONWriter out)
+            throws IOException {
         out.object();
         out.key("success");
         out.value(success);
@@ -110,7 +112,12 @@ public class AjaxResult
                 if (value == null)
                     continue;
                 out.key(entry.getKey());
-                out.value(value);
+                if (value instanceof IJsonSerializable) {
+                    IJsonSerializable child = (IJsonSerializable) value;
+                    child.writeObject(out);
+                } else {
+                    out.value(value);
+                }
             }
             out.endObject();
         }
