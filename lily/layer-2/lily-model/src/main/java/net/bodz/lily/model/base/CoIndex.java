@@ -203,14 +203,7 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
                 } catch (ParseException e) {
                     throw new PathDispatchException("Failed to apply json: " + e.getMessage(), e);
                 }
-                IMapperTemplate<T, M> mapper = requireMapper();
-                if (create) {
-                    long id = mapper.insert(obj);
-                    result.message("Inserted id: " + id);
-                } else {
-                    long rows = mapper.update(obj);
-                    result.message("Rows updated: " + rows);
-                }
+                save(create, obj, result);
             }
             break;
 
@@ -279,6 +272,17 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         IMapperTemplate<T, M> mapper = requireMapper();
         T instance = mapper.select(id);
         return instance;
+    }
+
+    protected void save(boolean create, T obj, AjaxResult result) {
+        IMapperTemplate<T, M> mapper = requireMapper();
+        if (create) {
+            long id = mapper.insert(obj);
+            result.message("Inserted id: " + id);
+        } else {
+            long rows = mapper.update(obj);
+            result.message("Rows updated: " + rows);
+        }
     }
 
     protected List<T> buildDataList(IVariantMap<String> q, M mask) {
