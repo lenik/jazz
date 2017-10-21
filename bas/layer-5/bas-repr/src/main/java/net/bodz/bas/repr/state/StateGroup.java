@@ -58,6 +58,8 @@ public class StateGroup {
                 continue;
             if (!State.class.isAssignableFrom(field.getType()))
                 continue;
+            if (field.isAnnotationPresent(Derived.class))
+                continue;
             try {
                 State state = (State) field.get(this);
                 addState(state);
