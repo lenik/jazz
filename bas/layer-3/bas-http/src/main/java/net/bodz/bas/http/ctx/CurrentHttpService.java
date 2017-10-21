@@ -3,7 +3,6 @@ package net.bodz.bas.http.ctx;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -66,11 +65,6 @@ public class CurrentHttpService
     /* _____________________________ */static section.iface __HTTP_FILTER__;
 
     @Override
-    public void init(FilterConfig filterConfig)
-            throws ServletException {
-    }
-
-    @Override
     public String getPreferredMapping() {
         return "/*";
     }
@@ -78,19 +72,12 @@ public class CurrentHttpService
     @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        if (response instanceof HttpServletResponse) {
-            HttpServletResponse resp = response;
-            CurrentHttpService.setResponse(resp);
-        }
+        responseRef.set(response);
         try {
             chain.doFilter(request, response);
         } finally {
-            CurrentHttpService.setResponse(null);
+            responseRef.set(null);
         }
-    }
-
-    @Override
-    public void destroy() {
     }
 
     // ________________________________________________________________________
@@ -154,28 +141,6 @@ public class CurrentHttpService
         } finally {
             setRequest(request);
         }
-    }
-
-    @Deprecated
-    public static HttpServletResponse getResponseOpt() {
-        ensureInstance();
-        return instance.responseRef.get();
-    }
-
-    @Deprecated
-    public static HttpServletResponse getResponse() {
-        HttpServletResponse response = getResponseOpt();
-
-        if (response == null)
-            throw new IllegalStateException("Response isn't set.");
-
-        return instance.responseRef.get();
-    }
-
-    @Deprecated
-    public static void setResponse(HttpServletResponse response) {
-        ensureInstance();
-        instance.responseRef.set(response);
     }
 
 }
