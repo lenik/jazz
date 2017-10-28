@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.*;
 
 import org.joda.time.DateTime;
+import org.joda.time.MutableDateTime;
 
 public class TypeKind {
 
@@ -100,6 +101,7 @@ public class TypeKind {
         typeIdMap.put(Boolean.class, TypeId.BOOLEAN);
 
         typeIdMap.put(Class.class, TypeId.CLASS);
+        typeIdMap.put(String.class, TypeId.STRING);
         typeIdMap.put(StringBuffer.class, TypeId.STRING_BUFFER);
         typeIdMap.put(System.class, TypeId.SYSTEM);
         typeIdMap.put(Error.class, TypeId.ERROR);
@@ -119,6 +121,7 @@ public class TypeKind {
         typeIdMap.put(Date.class, TypeId.DATE);
         typeIdMap.put(java.sql.Date.class, TypeId.SQL_DATE);
         typeIdMap.put(DateTime.class, TypeId.JODA_DATETIME);
+        typeIdMap.put(MutableDateTime.class, TypeId.JODA_DATETIME);
         typeIdMap.put(Calendar.class, TypeId.CALENDAR);
     }
 
