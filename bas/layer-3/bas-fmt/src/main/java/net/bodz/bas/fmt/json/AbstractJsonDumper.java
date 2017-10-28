@@ -3,12 +3,14 @@ package net.bodz.bas.fmt.json;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Modifier;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
+import javax.xml.bind.DatatypeConverter;
+
+import org.joda.time.base.AbstractDateTime;
+import org.joda.time.format.ISODateTimeFormat;
+import org.json.JSONException;
 import org.json.JSONWriter;
 
 import net.bodz.bas.c.type.TypeId;
@@ -99,12 +101,16 @@ public abstract class AbstractJsonDumper<self_t>
             return;
         }
 
-        if (!isIncluded(prefix))
+        if (!isIncluded(prefix)) {
+            out.value("<excluded>");
             return;
+        }
 
         if (marks.push(obj)) {
             __formatRaw_nonnull(obj, depth, prefix);
             marks.pop();
+        } else {
+            out.value("<dup>");
         }
     }
 
@@ -187,12 +193,52 @@ public abstract class AbstractJsonDumper<self_t>
             return;
 
         case TypeId.FLOAT:
+            float fval = ((Number) obj).floatValue();
+            if (Float.isInfinite(fval))
+                out.value("Infinity");
+            else if (Float.isNaN(fval))
+                out.value("NaN");
+            else
+                out.value(fval);
+            return;
+
         case TypeId.DOUBLE:
-            out.value(((Number) obj).doubleValue());
+            double dval = ((Number) obj).doubleValue();
+            if (Double.isInfinite(dval))
+                out.value("Infinity");
+            else if (Double.isNaN(dval))
+                out.value("NaN");
+            else
+                try {
+                    out.value(dval);
+                } catch (JSONException e) {
+                    throw e;
+                }
+
             return;
 
         case TypeId.BOOLEAN:
             out.value(((Boolean) obj).booleanValue());
+            return;
+
+        case TypeId.STRING:
+        case TypeId.STRING_BUFFER:
+        case TypeId.STRING_BUILDER:
+            out.value(obj.toString());
+            return;
+
+        case TypeId.DATE:
+            Date date = (Date) obj;
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            String dateStr = DatatypeConverter.printDateTime(cal);
+            out.value(dateStr);
+            return;
+
+        case TypeId.JODA_DATETIME:
+            AbstractDateTime jodaDateTime = (AbstractDateTime) obj;
+            String jodaDateStr = ISODateTimeFormat.dateTime().print(jodaDateTime);
+            out.value(jodaDateStr);
             return;
 
         default:
@@ -220,15 +266,26 @@ public abstract class AbstractJsonDumper<self_t>
             return;
         }
 
-        out.object();
+        try {
+            out.object();
+        } catch (JSONException e) {
+            throw e;
+        }
+
         try {
             formatObjectMembers(type, obj, depth, prefix);
         } catch (IOException e) {
             throw e;
+        } catch (JSONException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         } finally {
-            out.endObject();
+            try {
+                out.endObject();
+            } catch (JSONException e) {
+                 throw e;
+            }
         }
     }
 
