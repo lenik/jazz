@@ -37,8 +37,11 @@ public abstract class PostgresBackedVhostResolver
     @Override
     public synchronized IVirtualHost resolve(HttpServletRequest request) {
         IVirtualHost vhost = super.resolve(request);
-        if (vhost == null)
+        if (vhost == null) {
             vhost = findAndAdd(request);
+            if (vhost == null)
+                vhost = getDefault();
+        }
         return vhost;
     }
 
@@ -52,15 +55,20 @@ public abstract class PostgresBackedVhostResolver
         if (!checkDatabaseExists(databaseName))
             return null;
 
+        MutableVirtualHost newVhost = create(vhostName, databaseName);
+        newVhost.addHostSpecifier(request.getServerName());
+        add(newVhost);
+        return newVhost;
+    }
+
+    public MutableVirtualHost create(String vhostName, String databaseName) {
         MutableVirtualHost newVhost = new MutableVirtualHost();
         newVhost.setName(vhostName);
-        newVhost.addHostSpecifier(request.getServerName());
+        newVhost.addHostSpecifier(vhostName + ".xxx");
 
         ConnectOptions opts = connectOptionsTemplate.clone();
         opts.setDatabase(databaseName);
         newVhost.setAttribute(ConnectOptions.ATTRIBUTE_KEY, opts);
-
-        add(newVhost);
         return newVhost;
     }
 
