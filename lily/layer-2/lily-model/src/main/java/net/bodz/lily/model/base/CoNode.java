@@ -458,9 +458,20 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         super.readObject(map);
 
         // refCount = map.getInt("refCount", refCount);
-        IVariantMap<String> parent = (IVariantMap<String>) map.get("parent");
-        if (parent != null) {
-            // Object parentId = parent.get("id");
+        IVariantMap<String> par = (IVariantMap<String>) map.get("parent");
+        if (par != null) {
+            Object _parentId = par.get("id");
+            Class<Id> idType = this.idType();
+            Id parentId = idType.cast(_parentId);
+            self_t parent = getParent();
+            if (parent == null)
+                try {
+                    parent = (self_t) getClass().newInstance();
+                    setParent(parent);
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            parent.setId(parentId);
         }
     }
 
