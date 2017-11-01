@@ -24,7 +24,7 @@
         height      int not null default -1, -- || longest descendant ||
 
         -- the region body is made up as the specific artifact.
-        art         int
+        material    int
             references art(id) on update cascade,
 
         -- reserved for this artifact category.

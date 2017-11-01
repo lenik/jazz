@@ -1,6 +1,7 @@
 --\import lily.account
 --\import lily.util.uom
 --\import violet.store.artcat
+--\import violet.store.artphase
 
     create sequence art_seq start with 1000;
     create table art(
@@ -17,6 +18,9 @@
 
         cat         int
             references artcat(id) on update cascade,
+
+        phase       int
+            references artphase(id) on update cascade,
 
         model       varchar(100),
 

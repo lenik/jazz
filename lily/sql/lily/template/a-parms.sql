@@ -6,7 +6,7 @@
         id          int primary key default nextval('$1_parm_seq'),
 --\mixin lily.mixin.Ver
 
-        "$1"        int not null
+        "$1"        ${2=int} not null
             references "$1"(id) on update cascade on delete cascade,
 
         parm        int not null
@@ -23,7 +23,7 @@
     create or replace view v_$1_parm as
         select
             a.*,
-            o.${2=label} obj_${2=label},
+            o.${3=label} obj_${3=label},
             parm.label parm_label
         from $1_parm a
             left join "$1" o on a."$1" = o.id

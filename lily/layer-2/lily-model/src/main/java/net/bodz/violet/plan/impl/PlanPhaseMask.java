@@ -2,13 +2,13 @@ package net.bodz.violet.plan.impl;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.base.CoNodeMask;
+import net.bodz.lily.model.base.CoCodeMask;
 
 /**
  * @see net.bodz.violet.plan.PlanPhase
  */
 public class PlanPhaseMask
-        extends CoNodeMask {
+        extends CoCodeMask {
 
     @Override
     public void readObject(IVariantMap<String> _map)

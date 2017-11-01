@@ -1,4 +1,5 @@
 --\import violet.plan.diary
+--\import violet.plan.diarya
 --\import violet.plan.plan
 --\import violet.plan.plog
 --\import violet.plan.v_diary

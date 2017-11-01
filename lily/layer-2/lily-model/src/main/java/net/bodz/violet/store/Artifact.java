@@ -38,6 +38,7 @@ public class Artifact
     public static final int N_CAUTION = 100;
 
     private ArtifactCategory category;
+    private ArtifactPhase phase;
     private Set<ArtifactTag> tags = new HashSet<>();
 
     private String skuCode;
@@ -70,6 +71,17 @@ public class Artifact
 
     public void setCategory(ArtifactCategory category) {
         this.category = category;
+    }
+
+    /**
+     * 成熟度
+     */
+    public ArtifactPhase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(ArtifactPhase phase) {
+        this.phase = phase;
     }
 
     /**
@@ -116,6 +128,11 @@ public class Artifact
         this.barCode = barCode;
     }
 
+    /**
+     * 完成形态度量
+     * 
+     * @see ArtifactPhase
+     */
     public int getFinish() {
         return finish;
     }
@@ -332,6 +349,20 @@ public class Artifact
 
         color = map.getString("color", color);
         caution = map.getString("caution", caution);
+
+        Integer categoryId = map.getInt("category.id", category == null ? null : category.getId());
+        if (categoryId != null) {
+            if (category == null)
+                category = new ArtifactCategory();
+            category.setId(categoryId);
+        }
+
+        Integer phaseId = map.getInt("phase.id", phase == null ? null : phase.getId());
+        if (phaseId != null) {
+            if (phase == null)
+                phase = new ArtifactPhase();
+            phase.setId(phaseId);
+        }
     }
 
 }
