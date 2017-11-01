@@ -8,11 +8,14 @@ import net.bodz.bas.t.variant.QVariantMap;
 public class CoMomentIntervalMask
         extends CoObjectMask {
 
-    public DateRange dateRange;
-    public Integer year; // = Calendar.getInstance().get(Calendar.YEAR);
+    private DateRange dateRange;
+    private Integer year; // = Calendar.getInstance().get(Calendar.YEAR);
 
-    public boolean noDate;
-    public boolean noYear;
+    private boolean noDate;
+    private boolean noYear;
+
+    private Boolean started;
+    private Boolean ended;
 
     /**
      * @label Date Range
@@ -54,6 +57,22 @@ public class CoMomentIntervalMask
         this.noYear = noYear;
     }
 
+    public Boolean getStarted() {
+        return started;
+    }
+
+    public void setStarted(Boolean started) {
+        this.started = started;
+    }
+
+    public Boolean getEnded() {
+        return ended;
+    }
+
+    public void setEnded(Boolean ended) {
+        this.ended = ended;
+    }
+
     @Override
     public void readObject(IVariantMap<String> _map)
             throws ParseException {
@@ -63,6 +82,8 @@ public class CoMomentIntervalMask
         year = map.getInt("year", year);
         noDate = map.getBoolean("no-date");
         noYear = map.getBoolean("no-year");
+        started = map.getBoolean("started", started);
+        ended = map.getBoolean("ended", ended);
     }
 
 }

@@ -9,16 +9,22 @@
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
         </association>
+        <association property="parent" javaType="net.bodz.violet.store.Region">
+            <id property="id" column="parent" />
+            <result property="label" column="parent_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
             cat.label "cat_label",
+            parent.label "parent_label",
             u.label "uid_label",
             g.label "gid_label"
         from region a
             left join regioncat cat on a.cat = cat.id
+            left join region parent on a.parent = parent.id
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
         ]]>
@@ -28,10 +34,12 @@
         select
             a.*,
             cat.label "cat_label",
+            parent.label "parent_label",
             u.label "uid_label",
             g.label "gid_label"
         from region a
             left join regioncat cat on a.cat = cat.id
+            left join region parent on a.parent = parent.id
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
         ]]>
@@ -60,8 +68,8 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into region(code, label, description, cat)
-            values(#{codeName},#{label},#{description}, #{category.id})
+        insert into region(code, label, description, cat, parent)
+            values(#{codeName},#{label},#{description}, #{category.id}, #{parent.id})
             returning id; --
     ]]></insert>
 
@@ -70,6 +78,7 @@
         <set>
             <include refid="co.setU" />
             <if test="category != null">cat=#{category.id}, </if>
+            <if test="parent != null">parent=#{parent.id}, </if>
         </set>
         <where>
             <if test="id != null">id=#{id}</if>

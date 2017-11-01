@@ -5,7 +5,7 @@
 
     create sequence issue_seq start with 1000;
     create table issue(
-        id          int primary key default nextval('issue_seq'),
+        id          bigint primary key default nextval('issue_seq'),
 
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
@@ -39,7 +39,7 @@
     create table issue_party(
         id          bigint primary key default nextval('issue_party_seq'),
 
-        issue       int not null
+        issue       bigint not null
             references issue(id) on update cascade on delete set null,
 
         person      int
@@ -52,8 +52,8 @@
     );
 
 --\mixin lily.template.a-tag issue
---\mixin lily.template.a-tags issue subject
+--\mixin lily.template.a-tags issue bigint subject
 --\mixin lily.template.a-parm issue
---\mixin lily.template.a-parms issue subject
---\mixin lily.template.a-votes issue
-
+--\mixin lily.template.a-parms issue bigint subject
+--\mixin lily.template.a-favs issue bigint subject
+--\mixin lily.template.a-votes issue bigint subject

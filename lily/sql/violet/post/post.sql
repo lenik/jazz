@@ -1,11 +1,10 @@
 --\import lily.inc.msg
 --\mixin lily.template.a-cat post
---\mixin lily.template.a-tag post
 
     create sequence post_seq start with 1000;
 
     create table post(
-        id          int primary key default nextval('post_seq'),
+        id          bigint primary key default nextval('post_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Mi
@@ -36,3 +35,11 @@
     create index post_t0t1           on post(t0, t1);
     create index post_t1             on post(t1);
     create index post_uid_acl        on post(uid, acl);
+
+--\mixin lily.template.a-tag post
+--\mixin lily.template.a-tags post bigint subject
+--\mixin lily.template.a-parm post
+--\mixin lily.template.a-parms post bigint subject
+--\mixin lily.template.a-backrefs post bigint subject
+--\mixin lily.template.a-favs post bigint subject
+--\mixin lily.template.a-votes post bigint subject

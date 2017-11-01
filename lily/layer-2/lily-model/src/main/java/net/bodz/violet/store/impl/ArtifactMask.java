@@ -9,6 +9,7 @@ public class ArtifactMask
         extends CoObjectMask {
 
     public Integer categoryId;
+    public Integer phaseId;
     public String skuCode_;
     public String barCode_;
 
@@ -16,6 +17,7 @@ public class ArtifactMask
     public String modelName;
 
     public boolean noCategory;
+    public boolean noPhase;
 
     public Integer getCategoryId() {
         return categoryId;
@@ -31,6 +33,22 @@ public class ArtifactMask
 
     public void setNoCategory(boolean noCategory) {
         this.noCategory = noCategory;
+    }
+
+    public Integer getPhaseId() {
+        return phaseId;
+    }
+
+    public void setPhaseId(Integer phaseId) {
+        this.phaseId = phaseId;
+    }
+
+    public boolean isNoPhase() {
+        return noPhase;
+    }
+
+    public void setNoPhase(boolean noPhase) {
+        this.noPhase = noPhase;
     }
 
     public String getSkuCodePrefix() {
@@ -72,6 +90,9 @@ public class ArtifactMask
 
         QVariantMap<String> map = QVariantMap.from(_map);
         categoryId = map.getInt("cat", categoryId);
+        phaseId = map.getInt("cat", phaseId);
+        noCategory = map.getBoolean("noCategory", noCategory);
+        noPhase = map.getBoolean("noPhase", noPhase);
         skuCode_ = map.getString("sku", skuCode_);
         barCode_ = map.getString("bar", barCode_);
         uomId = map.getInt("uom", uomId);

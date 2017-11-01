@@ -1,6 +1,8 @@
 package net.bodz.lily.model.base;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,124 +108,38 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
             throws PathDispatchException {
         HttpServletRequest req = CurrentHttpService.getRequest();
         IVariantMap<String> q = VariantMaps.fromRequest(req);
-        AjaxResult result = new AjaxResult();
 
         String token = tokens.peek();
         if (token == null)
             return null;
 
         Object target = null;
-
-        switch (token) {
-        case "delete":
-            target = result;
-            {
-                String ids = q.getString("id");
-                if (ids == null) {
-                    result.msgbox("Id isn't specified.");
-                } else {
-                    IMapperTemplate<T, M> mapper = requireMapper();
-                    StringBuilder fails = new StringBuilder();
-                    result.setSuccess(true);
-                    for (String idStr : ids.split(",")) {
-                        try {
-                            long id = Long.parseLong(idStr);
-                            if (!mapper.delete(id))
-                                fails.append(idStr + ",");
-                        } catch (NumberFormatException e) {
-                            fails.append(idStr + ",");
-                        }
-                    }
-                    if (fails.length() > 0) {
-                        fails.setLength(fails.length() - 1);
-                        result.setSuccess(false);
-                        result.msgbox("Not deleted: " + fails);
-                    }
-                }
-            }
-            break;
-
-        case "__data__":
-            TableData tableData = new TableData(objectType);
-
-            String columns = q.getString("columns");
-            if (columns == null)
-                throw new PathDispatchException("Expected request parameter columns.");
-            try {
-                tableData.parseColumnsString(columns);
-            } catch (Exception e) {
-                throw new PathDispatchException("Invalid columns specified: \"" + columns + "\"", e);
-            }
-
-            String formats = q.getString("formats");
-            if (formats != null)
-                tableData.parseFormats(formats);
-
-            try {
-                M mask = maskType.newInstance();
-                mask.readObject(q);
-                List<T> list = buildDataList(q, mask);
-                tableData.setList(list);
-
-                target = tableData;
-            } catch (ReflectiveOperationException e) {
-                throw new PathDispatchException("Error instantiate mask of " + maskType, e);
-            } catch (ParseException e) {
-                throw new PathDispatchException("Error decode mask of " + maskType, e);
-            }
-            break;
-
-        case "save":
-            target = result;
-            JSONObject root;
-            {
+        try {
+            switch (token) {
+            case "__data__":
+                target = listHandler(q);
+                break;
+            case "delete":
+                target = deleteHandler(q);
+                break;
+            case "new":
+                target = newHandler(q);
+                break;
+            case "save":
                 try {
                     BufferedReader reader = req.getReader();
-                    String json = new ReaderSource(reader).to(StreamReading.class).readString();
-                    root = new JSONObject(json);
-                } catch (Exception e) {
-                    throw new PathDispatchException("Failed to parse json: " + e.getMessage(), e);
+                    target = saveHandler(q, reader);
+                } catch (IOException e) {
+                    throw new PathDispatchException("Failed to read request payload: " + e.getMessage(), e);
                 }
-
-                T obj;
-                boolean create = root.isNull("id");
-                if (create) {
-                    try {
-                        obj = create();
-                    } catch (ReflectiveOperationException e) {
-                        throw new PathDispatchException("Failed to instantiate: " + e.getMessage(), e);
-                    }
-                } else {
-                    long id = root.getLong("id");
-                    obj = load(id);
-                }
-
-                try {
-                    obj.readObject(new JsonVarMap(root));
-                } catch (ParseException e) {
-                    throw new PathDispatchException("Failed to apply json: " + e.getMessage(), e);
-                }
-                save(create, obj, result);
+                break;
+            default:
+                String fileName = FilePath.stripExtension(token);
+                if (StringPred.isDecimal(fileName))
+                    target = loadHandler(fileName, q);
             }
-            break;
-
-        case "new":
-            try {
-                target = JsonWrapper.wrap(create(), "data").params(q).withNull().withFalse();
-            } catch (Exception e) {
-                throw new PathDispatchException(e.getMessage(), e);
-            }
-            break;
-
-        default:
-            String fileName = FilePath.stripExtension(token);
-            if (StringPred.isDecimal(fileName)) {
-                Long id = Long.parseLong(fileName);
-                IMapperTemplate<T, M> mapper = requireMapper();
-                target = mapper.select(id);
-                target = JsonWrapper.wrap(target, "data").params(q).withNull().withFalse();
-            }
-            break;
+        } catch (RequestHandlerException e) {
+            throw new PathDispatchException("Failed to handle request: " + e.getMessage(), e);
         }
 
         if (target != null)
@@ -252,6 +168,116 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         return label + "/";
     }
 
+    protected Object listHandler(IVariantMap<String> q)
+            throws RequestHandlerException {
+        TableData tableData = new TableData(objectType);
+
+        String columns = q.getString("columns");
+        if (columns == null)
+            throw new RequestHandlerException("Expected request parameter columns.");
+        try {
+            tableData.parseColumnsString(columns);
+        } catch (Exception e) {
+            throw new RequestHandlerException("Invalid columns specified: \"" + columns + "\"", e);
+        }
+
+        String formats = q.getString("formats");
+        if (formats != null)
+            tableData.parseFormats(formats);
+
+        try {
+            M mask = maskType.newInstance();
+            mask.readObject(q);
+            List<T> list = buildDataList(q, mask);
+            tableData.setList(list);
+        } catch (ReflectiveOperationException e) {
+            throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
+        } catch (ParseException e) {
+            throw new RequestHandlerException("Error decode mask of " + maskType, e);
+        }
+        return tableData;
+    }
+
+    protected Object newHandler(IVariantMap<String> q)
+            throws RequestHandlerException {
+        try {
+            T obj = create();
+            JsonWrapper wrapper = JsonWrapper.wrap(obj, "data").params(q).withNull().withFalse();
+            return wrapper;
+        } catch (Exception e) {
+            throw new RequestHandlerException(e.getMessage(), e);
+        }
+    }
+
+    protected Object loadHandler(String _id, IVariantMap<String> q) {
+        Long id = Long.parseLong(_id);
+        IMapperTemplate<T, M> mapper = requireMapper();
+        Object obj = mapper.select(id);
+        JsonWrapper wrapper = JsonWrapper.wrap(obj, "data").params(q).withNull().withFalse();
+        return wrapper;
+    }
+
+    protected Object saveHandler(IVariantMap<String> q, Reader jsonPayload)
+            throws RequestHandlerException {
+        AjaxResult result = new AjaxResult();
+        JSONObject root;
+        try {
+            String json = new ReaderSource(jsonPayload).to(StreamReading.class).readString();
+            root = new JSONObject(json);
+        } catch (Exception e) {
+            throw new RequestHandlerException("Failed to parse json: " + e.getMessage(), e);
+        }
+
+        T obj;
+        boolean create = root.isNull("id");
+        if (create) {
+            try {
+                obj = create();
+            } catch (ReflectiveOperationException e) {
+                throw new RequestHandlerException("Failed to instantiate: " + e.getMessage(), e);
+            }
+        } else {
+            long id = root.getLong("id");
+            obj = load(id);
+        }
+
+        try {
+            obj.readObject(new JsonVarMap(root));
+        } catch (ParseException e) {
+            throw new RequestHandlerException("Failed to apply json: " + e.getMessage(), e);
+        }
+        save(create, obj, result);
+        return result;
+    }
+
+    protected Object deleteHandler(IVariantMap<String> q)
+            throws RequestHandlerException {
+        AjaxResult result = new AjaxResult();
+        String ids = q.getString("id");
+        if (ids == null) {
+            result.msgbox("Id isn't specified.");
+        } else {
+            IMapperTemplate<T, M> mapper = requireMapper();
+            StringBuilder fails = new StringBuilder();
+            result.setSuccess(true);
+            for (String idStr : ids.split(",")) {
+                try {
+                    long id = Long.parseLong(idStr);
+                    if (!mapper.delete(id))
+                        fails.append(idStr + ",");
+                } catch (NumberFormatException e) {
+                    fails.append(idStr + ",");
+                }
+            }
+            if (fails.length() > 0) {
+                fails.setLength(fails.length() - 1);
+                result.setSuccess(false);
+                result.msgbox("Not deleted: " + fails);
+            }
+        }
+        return result;
+    }
+
     protected IMapperTemplate<T, M> requireMapper() {
         Class<T> entityClass = getObjectType();
         Class<IMapperTemplate<T, M>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
@@ -259,7 +285,6 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         if (mapper == null)
             throw new IllegalUsageException("No mapper for " + entityClass);
         return mapper;
-
     }
 
     protected T create()

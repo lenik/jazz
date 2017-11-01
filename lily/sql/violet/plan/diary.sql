@@ -5,7 +5,7 @@
 
     create sequence diary_seq start with 1000;
     create table diary(
-        id          int primary key default nextval('diary_seq'),
+        id          bigint primary key default nextval('diary_seq'),
 
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
@@ -34,7 +34,7 @@
     create table diary_party(
         id          bigint primary key default nextval('diary_party_seq'),
 
-        diary       int not null
+        diary       bigint not null
             references diary(id) on update cascade on delete set null,
 
         person      int
@@ -46,3 +46,8 @@
         description varchar(60)
     );
 
+--\mixin lily.template.a-tag diary
+--\mixin lily.template.a-tags diary bigint subject
+--\mixin lily.template.a-parm diary
+--\mixin lily.template.a-parms diary bigint subject
+--\mixin lily.template.a-votes diary bigint subject

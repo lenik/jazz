@@ -11,8 +11,23 @@
 
     <sql id="set1">
         <include refid="co.setUSA" />
-        <if test="beginDate != null">t0=#{beginDate},</if>
-        <if test="endDate != null">t1=#{endDate},</if>
+        <if test="beginDate != null">t0 = #{beginDate}, </if>
+        <if test="endDate != null">t1 = #{endDate}, </if>
+    </sql>
+    
+    <sql id="filterSql">
+        <if test="m.dateRange != null">
+            <if test="m.dateRange.start != null">and t0 >= #{m.dateRange.start}</if>
+            <if test="m.dateRange.end != null">
+                <if test="m.dateRange.inclusiveEnd">and t1 &lt;= #{m.dateRange.end}</if>
+                <if test="! m.dateRange.inclusiveEnd">and t1 &lt; #{m.dateRange.end}</if>
+            </if>
+        </if>
+        <if test="m.year != null">and extract(year from t0) = #{m.year}</if>
+        <if test="m.started == true">and t0 is not null</if>
+        <if test="m.started == false">and t0 is null</if>
+        <if test="m.ended == true">and t1 is not null</if>
+        <if test="m.ended == false">and t1 is null</if>
     </sql>
 
 </mapper>

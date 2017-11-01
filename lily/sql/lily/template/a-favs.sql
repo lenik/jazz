@@ -5,7 +5,7 @@
     create table $1_fav(
         id          bigint primary key default nextval('$1_fav_seq'),
 
-        "$1"         int not null
+        "$1"         ${2=int} not null
             references "$1"(id) on update cascade on delete cascade,
 
         "user"      int not null

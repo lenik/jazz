@@ -4,7 +4,7 @@
 
     create sequence plog_seq;
     create table plog(
-        id          int primary key default nextval('plog_seq'),
+        id          bigint primary key default nextval('plog_seq'),
 
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
@@ -14,7 +14,7 @@
 
         nvote       int not null default 0,
 
-        plan       int not null
+        plan       bigint not null
             references plan(id) on update cascade on delete set null,
 
         parent      int
@@ -34,7 +34,7 @@
     create sequence plog_party_seq;
     create table plog_party(
         id          int primary key default nextval('plog_party_seq'),
-        plog       int not null
+        plog       bigint not null
             references plog(id) on update cascade on delete cascade,
 
         person      int
@@ -47,8 +47,7 @@
     );
 
 --\mixin lily.template.a-tag plog
---\mixin lily.template.a-tags plog subject
+--\mixin lily.template.a-tags plog bigint subject
 --\mixin lily.template.a-parm plog
---\mixin lily.template.a-parms plog subject
---\mixin lily.template.a-votes plog
-
+--\mixin lily.template.a-parms plog bigint subject
+--\mixin lily.template.a-votes plog bigint subject

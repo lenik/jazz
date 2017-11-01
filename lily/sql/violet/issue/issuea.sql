@@ -4,7 +4,7 @@
 
     create sequence issuea_seq;
     create table issuea(
-        id          int primary key default nextval('issuea_seq'),
+        id          bigint primary key default nextval('issuea_seq'),
 
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
@@ -14,10 +14,10 @@
 
         nvote       int not null default 0,
 
-        issue       int not null
+        issue       bigint not null
             references issue(id) on update cascade on delete set null,
 
-        parent      int
+        parent      bigint
             references issuea(id) on update cascade on delete set null,
 
         changes     text[]
@@ -30,5 +30,4 @@
     create index issuea_t1           on issuea(t1);
     create index issuea_uid_acl      on issuea(uid, acl);
 
---\mixin lily.template.a-votes issuea
-
+--\mixin lily.template.a-votes issuea bigint subject

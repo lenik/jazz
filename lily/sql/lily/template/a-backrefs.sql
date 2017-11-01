@@ -8,7 +8,7 @@
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
 
-        "$1"        int not null
+        "$1"        ${2=int} not null
             references "$1"(id) on update cascade on delete cascade,
 
         site        int not null
@@ -22,7 +22,7 @@
     create or replace view v_$1_backref as
         select
             a.*,
-            o.${2=label} obj_${2=label},
+            o.${3=label} obj_${3=label},
             u.label user_label,
             s.label site_label
         from $1_backref a

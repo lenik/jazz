@@ -10,7 +10,7 @@
         -- mime.encoding
         -- digest.sha1
 
-        "$1"        int not null
+        "$1"        ${2=int} not null
             references "$1"(id) on update cascade on delete cascade,
 
         -- where the file data is stored.
@@ -33,7 +33,7 @@
     create or replace view v_$1_file as
         select
             a.*,
-            o.${2=label} obj_${2=label}
+            o.${3=label} obj_${3=label}
         from $1_file a
             left join "$1" o on a."$1"=o.id
             ;

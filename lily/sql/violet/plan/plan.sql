@@ -5,7 +5,7 @@
 
     create sequence plan_seq start with 1000;
     create table plan(
-        id          int primary key default nextval('plan_seq'),
+        id          bigint primary key default nextval('plan_seq'),
 
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
@@ -39,7 +39,7 @@
     create table plan_party(
         id          bigint primary key default nextval('plan_party_seq'),
 
-        plan       int not null
+        plan       bigint not null
             references plan(id) on update cascade on delete set null,
 
         person      int
@@ -52,8 +52,8 @@
     );
 
 --\mixin lily.template.a-tag plan
---\mixin lily.template.a-tags plan subject
+--\mixin lily.template.a-tags plan bigint subject
 --\mixin lily.template.a-parm plan
---\mixin lily.template.a-parms plan subject
---\mixin lily.template.a-votes plan
-
+--\mixin lily.template.a-parms plan bigint subject
+--\mixin lily.template.a-favs plan bigint subject
+--\mixin lily.template.a-votes plan bigint subject

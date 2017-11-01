@@ -11,7 +11,7 @@
 --\mixin lily.mixin.Mi
 --\mixin lily.mixin.Msg
 
-        "$1"        int not null
+        "$1"        ${2=int} not null
             references "$1"(id) on update cascade on delete cascade
     );
 
