@@ -15,6 +15,8 @@ public class DateTimeTypeHandler
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, DateTime parameter, JdbcType jdbcType)
             throws SQLException {
+        if (jdbcType == null)
+            jdbcType = JdbcType.TIMESTAMP;
         switch (jdbcType) {
         case DATE:
             Date date = new java.sql.Date(parameter.getMillis());
@@ -29,6 +31,7 @@ public class DateTimeTypeHandler
         case TIMESTAMP:
             Timestamp timestamp = new Timestamp(parameter.getMillis());
             ps.setTimestamp(i, timestamp);
+            break;
 
         default:
             throw new SQLException("Invalid jdbcType to set with datetime: " + jdbcType);
