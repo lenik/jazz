@@ -34,7 +34,7 @@ public class StoreOrder
     private OrgUnit orgUnit;
     private Person person;
 
-    private SizedList<StoreEntry> entries = new SizedList<>();
+    private SizedList<StoreItem> entries = new SizedList<>();
     private double quantity;
     private double total;
 
@@ -135,11 +135,11 @@ public class StoreOrder
      * 明细
      */
     @DetailLevel(DetailLevel.EXTEND)
-    public SizedList<StoreEntry> getEntries() {
+    public SizedList<StoreItem> getEntries() {
         return entries;
     }
 
-    public void setEntries(SizedList<StoreEntry> entries) {
+    public void setEntries(SizedList<StoreItem> entries) {
         this.entries = entries;
     }
 
@@ -172,9 +172,9 @@ public class StoreOrder
     public synchronized void update() {
         quantity = 0;
         total = 0;
-        for (StoreEntry entry : entries) {
-            quantity += entry.getQuantity();
-            total += entry.getTotal();
+        for (StoreItem item : entries) {
+            quantity += item.getQuantity();
+            total += item.getTotal();
         }
 
     }

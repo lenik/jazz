@@ -1,5 +1,5 @@
 --\import violet.plan.plan
---\import violet.sale.saleodr
+--\import violet.shop.saleodr
 
     create or replace view v_plan_n as select
         (select count(*) from plan) "total",

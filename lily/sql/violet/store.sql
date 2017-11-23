@@ -8,12 +8,12 @@
 --\import violet.store.art_tag
 --\import violet.store.region
 --\import violet.store.storeodr
---\import violet.store.storeent
+--\import violet.store.storeitem
 --\import violet.store.storeini
 --\import violet.store.v_art
 --\import violet.store.v_artcat
 --\import violet.store.v_region
 --\import violet.store.v_region_ls
 --\import violet.store.v_storeodr
---\import violet.store.v_storeent
+--\import violet.store.v_storeitem
 --\import violet.store.v_storeini

@@ -9,9 +9,8 @@
 -------- Violet :: Store --------
 --\import violet.store
 
--------- Violet :: Sales --------
---\import violet.sale
+-------- Violet :: Shop & Sales --------
+--\import violet.shop
 
 -------- Violet :: Shipping --------
 --\import violet.ship
-

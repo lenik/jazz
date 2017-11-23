@@ -2,9 +2,9 @@
 <!DOCTYPE mapper 
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.violet.plan.impl.PlanLogTagMapper">
+<mapper namespace="net.bodz.violet.plan.impl.PlanDoTagMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.PlanLogTag" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.PlanDoTag" extends="co.MAP_UVX">
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -12,7 +12,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from plogtag a
+        from plandotag a
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
         ]]>
@@ -23,7 +23,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from plogtag a
+        from plandotag a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,7 +53,7 @@
     </select>
 
     <insert id="_insert"><![CDATA[
-        insert into plogtag(
+        insert into plandotag(
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
@@ -61,7 +61,7 @@
     ]]></insert>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into plogtag(
+        insert into plandotag(
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
@@ -69,7 +69,7 @@
     ]]></insert>
 
     <update id="update">
-        update plogtag
+        update plandotag
         <set>
             <include refid="co.setUS" />
         </set>
@@ -79,11 +79,11 @@
     </update>
 
     <delete id="delete">
-        delete from plogtag where id = #{id}
+        delete from plandotag where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from plogtag
+        select count(*) "rows" from plandotag
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

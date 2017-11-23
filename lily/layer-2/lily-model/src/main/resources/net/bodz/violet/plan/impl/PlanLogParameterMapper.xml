@@ -2,9 +2,9 @@
 <!DOCTYPE mapper 
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.violet.plan.impl.PlanLogParameterMapper">
+<mapper namespace="net.bodz.violet.plan.impl.PlanDoParameterMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.PlanLogParameter" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.PlanDoParameter" extends="co.MAP_UVX">
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -12,7 +12,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from plogparm a
+        from plandoparm a
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
         ]]>
@@ -23,7 +23,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from plogparm a
+        from plandoparm a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,7 +53,7 @@
     </select>
 
     <insert id="_insert"><![CDATA[
-        insert into plogparm(
+        insert into plandoparm(
             code, label, description
         ) values(
             #{codeName},#{label},#{description}
@@ -61,7 +61,7 @@
     ]]></insert>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into plogparm(
+        insert into plandoparm(
             code, label, description
         ) values(
             #{codeName},#{label},#{description}
@@ -69,7 +69,7 @@
     ]]></insert>
 
     <update id="update">
-        update plogparm
+        update plandoparm
         <set>
             <include refid="co.setUS" />
         </set>
@@ -79,11 +79,11 @@
     </update>
 
     <delete id="delete">
-        delete from plogparm where id = #{id}
+        delete from plandoparm where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from plogparm
+        select count(*) "rows" from plandoparm
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
