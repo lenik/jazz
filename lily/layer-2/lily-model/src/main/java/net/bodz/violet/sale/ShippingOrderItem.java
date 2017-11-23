@@ -14,7 +14,7 @@ import net.bodz.violet.store.Artifact;
  * 送货单项目
  */
 @IdType(Long.class)
-@Table(name = "shipent")
+@Table(name = "shipitem")
 public class ShippingOrderItem
         extends CoMomentInterval<Long> {
 

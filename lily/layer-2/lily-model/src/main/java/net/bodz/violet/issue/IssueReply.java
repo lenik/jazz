@@ -6,7 +6,7 @@ import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.mx.CoMessage;
 
 @IdType(Long.class)
-@Table(name = "issuea")
+@Table(name = "issuelog")
 public class IssueReply
         extends CoMessage<Long> {
 
