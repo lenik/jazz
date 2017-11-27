@@ -39,7 +39,7 @@ public class TableData {
             throws ParseException, NoSuchPropertyException {
         colmap.clear();
 
-        IType type = PotatoTypes.getInstance().forClass(objectType);
+        IType type = PotatoTypes.getInstance().loadType(objectType);
         MutableFormDecl formDecl = new FormDeclBuilder().build(type);
         PathFieldList list = new PathFieldList();
 

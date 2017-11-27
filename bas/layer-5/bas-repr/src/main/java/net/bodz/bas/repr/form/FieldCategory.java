@@ -52,7 +52,7 @@ public class FieldCategory
         FieldCategory category = registry.get(clazz);
         if (category == null) {
             category = new FieldCategory(clazz);
-            IType type = PotatoTypes.getInstance().forClass(clazz);
+            IType type = PotatoTypes.getInstance().loadType(clazz);
 
             IMutableElement.fn.copy1(type, category);
             category.setName(type.getType().getSimpleName());

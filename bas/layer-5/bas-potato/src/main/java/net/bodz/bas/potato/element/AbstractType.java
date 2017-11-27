@@ -72,7 +72,7 @@ public abstract class AbstractType
 
             if (type == null) {
                 Class<?> propertyType = lastProperty.getPropertyType();
-                type = PotatoTypes.getInstance().forClass(propertyType);
+                type = PotatoTypes.getInstance().loadType(propertyType);
             }
 
             lastProperty = type.getProperty(token);

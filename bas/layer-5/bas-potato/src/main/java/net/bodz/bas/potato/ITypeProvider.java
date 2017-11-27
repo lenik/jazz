@@ -14,6 +14,10 @@ public interface ITypeProvider
     int EVENTS = 0x8_0000;
     int DOCS = 0x10_0000;
 
+    IType loadType(Class<?> clazz);
+
+    IType loadType(Class<?> clazz, Object obj);
+
     IType loadType(Class<?> clazz, Object obj, int infoset);
 
 }

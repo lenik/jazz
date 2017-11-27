@@ -8,7 +8,7 @@ import net.bodz.bas.potato.PotatoTypes;
 public class OverloadedMethodTest
         extends Assert {
 
-    static IType type = PotatoTypes.getInstance().forClass(OverloadedMethodTest.class);
+    static IType type = PotatoTypes.getInstance().loadType(OverloadedMethodTest.class);
 
     public String foo(int a, int b) {
         return "int,ini";

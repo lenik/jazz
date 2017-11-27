@@ -23,7 +23,7 @@ public class VarEntry<T>
     }
 
     public VarEntry(Class<? extends T> valueType, T initialValue) {
-        this(PotatoTypes.getInstance().forClass(valueType), valueType, initialValue);
+        this(PotatoTypes.getInstance().loadType(valueType), valueType, initialValue);
     }
 
     public VarEntry(IElement element, Class<? extends T> valueType, T initialValue) {

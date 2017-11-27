@@ -62,7 +62,7 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
 
     public synchronized void importProperties(int mask, int selection) {
         Class<?> objType = objRef.getValueType();
-        IType type = PotatoTypes.getInstance().forClass(objType);
+        IType type = PotatoTypes.getInstance().loadType(objType);
         for (IProperty property : type.getProperties()) {
             int modifiers = property.getModifiers();
             if ((modifiers & mask) == selection) {
