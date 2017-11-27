@@ -7,14 +7,12 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.NumericInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.repr.EntGroup;
@@ -330,39 +328,6 @@ public class Artifact
 
     public void setSupplyDelay(int supplyDelay) {
         this.supplyDelay = supplyDelay;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-
-        skuCode = map.getString("skuCode", skuCode);
-        barCode = map.getString("skuCode", barCode);
-        modelName = map.getString("modelName", modelName);
-        finish = map.getInt("finish", finish);
-
-        // uom
-        uomProperty = map.getString("uomProperty", uomProperty);
-        // convMap
-        decimalDigits = map.getInt("decimalDigits", decimalDigits);
-
-        color = map.getString("color", color);
-        caution = map.getString("caution", caution);
-
-        Integer categoryId = map.getInt("category.id", category == null ? null : category.getId());
-        if (categoryId != null) {
-            if (category == null)
-                category = new ArtifactCategory();
-            category.setId(categoryId);
-        }
-
-        Integer phaseId = map.getInt("phase.id", phase == null ? null : phase.getId());
-        if (phaseId != null) {
-            if (phase == null)
-                phase = new ArtifactPhase();
-            phase.setId(phaseId);
-        }
     }
 
 }

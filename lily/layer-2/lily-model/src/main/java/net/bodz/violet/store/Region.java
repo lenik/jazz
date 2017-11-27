@@ -4,8 +4,6 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoNode;
 import net.bodz.lily.model.contact.Organization;
@@ -135,47 +133,6 @@ public class Region
 
     public void setOrg(Organization org) {
         this.org = org;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-
-        IVariantMap<String> asArt = (IVariantMap<String>) map.get("asArtifact");
-        if (asArt != null) {
-            Integer id = asArt.getInt("id", asArtifact == null ? null : asArtifact.getId());
-            if (id != null) {
-                asArtifact = new Artifact();
-                asArtifact.setId(id);
-            } else
-                asArtifact = null;
-        }
-
-        IVariantMap<String> forArtCat = (IVariantMap<String>) map.get("forArtifactCategory");
-        if (forArtCat != null) {
-            Integer id = forArtCat.getInt("id", forArtifactCategory == null ? null : forArtifactCategory.getId());
-            if (id != null) {
-                forArtifactCategory = new ArtifactCategory();
-                forArtifactCategory.setId(id);
-            } else
-                forArtifactCategory = null;
-        }
-
-        IVariantMap<String> cat = (IVariantMap<String>) map.get("category");
-        if (cat != null) {
-            Integer id = cat.getInt("id", category == null ? null : category.getId());
-            if (id != null) {
-                category = new RegionCategory();
-                category.setId(id);
-            } else
-                category = null;
-        }
-
-        // private Dim3d position = new Dim3d();
-        // private Dim3d bbox = new Dim3d();
-        // private Person person;
-        // private Organization org;
     }
 
 }

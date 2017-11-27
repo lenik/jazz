@@ -1,7 +1,5 @@
 package net.bodz.violet.store.impl;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoCodeMask;
 
 /**
@@ -9,11 +7,5 @@ import net.bodz.lily.model.base.CoCodeMask;
  */
 public class ArtifactPhaseMask
         extends CoCodeMask {
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-    }
 
 }

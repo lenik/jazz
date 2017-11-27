@@ -29,13 +29,16 @@ net.bodz.violet.plan.impl.PlanDoVoteIndex
 net.bodz.violet.plan.impl.PlanParameterIndex
 net.bodz.violet.plan.impl.PlanPartyIndex
 net.bodz.violet.plan.impl.PlanVoteIndex
-net.bodz.violet.sale.impl.SalesOrderIndex
-net.bodz.violet.sale.impl.SalesOrderItemIndex
-net.bodz.violet.sale.impl.ShippingOrderIndex
-net.bodz.violet.sale.impl.ShippingOrderItemIndex
+net.bodz.violet.shop.impl.SalesOrderIndex
+net.bodz.violet.shop.impl.SalesOrderItemIndex
+net.bodz.violet.shop.impl.ShopCategoryIndex
+net.bodz.violet.shop.impl.ShopIndex
+net.bodz.violet.shop.impl.ShopItemCategoryIndex
+net.bodz.violet.shop.impl.ShopItemIndex
+net.bodz.violet.shop.impl.ShopTagIndex
 net.bodz.violet.store.impl.ArtifactCategoryIndex
-net.bodz.violet.store.impl.ArtifactPhaseIndex
 net.bodz.violet.store.impl.ArtifactIndex
+net.bodz.violet.store.impl.ArtifactPhaseIndex
 net.bodz.violet.store.impl.ArtifactTagIndex
 net.bodz.violet.store.impl.RegionCategoryIndex
 net.bodz.violet.store.impl.RegionIndex
@@ -43,3 +46,5 @@ net.bodz.violet.store.impl.StoreCategoryIndex
 net.bodz.violet.store.impl.StoreOrderIndex
 net.bodz.violet.store.impl.StorePhaseIndex
 net.bodz.violet.store.impl.UOMIndex
+net.bodz.violet.tran.impl.TransportOrderIndex
+net.bodz.violet.tran.impl.TransportOrderItemIndex

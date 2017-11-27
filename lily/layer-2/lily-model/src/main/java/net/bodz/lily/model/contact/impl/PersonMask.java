@@ -1,7 +1,5 @@
 package net.bodz.lily.model.contact.impl;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoObjectMask;
 
 /**
@@ -9,11 +7,5 @@ import net.bodz.lily.model.base.CoObjectMask;
  */
 public class PersonMask
         extends CoObjectMask {
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-    }
 
 }

@@ -5,13 +5,11 @@ import java.io.IOException;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.IMomentInterval;
 
@@ -92,17 +90,6 @@ public abstract class CoMomentInterval<Id>
         Id id = (Id) super.persist(ctx, out);
         setId(id);
         return id;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-
-        // id = map.getLong("id", id);
-        // TODO
-        // beginDate = map.getDateTime("beginDate", beginDate);
-        // endDate = map.getDateTime("endDate", endDate);
     }
 
 }

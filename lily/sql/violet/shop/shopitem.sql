@@ -4,7 +4,7 @@
 -- Re-orderred category tree.
 --\mixin lily.template.a-cat shopitem
 
--- storeitem sum => shopitem
+-- storeodrl sum => shopitem
     create sequence shopitem_seq start with 1000;
     create table shopitem(
         id          bigint primary key default nextval('shopitem_seq'),
@@ -29,7 +29,7 @@
 
         price       numeric(20,2) not null default 0,
         
-        -- reduncay. initial := sum(storeitem.qty)
+        -- reduncay. initial := sum(storeodrl.qty)
         qty         numeric(20,2) not null
     );
 

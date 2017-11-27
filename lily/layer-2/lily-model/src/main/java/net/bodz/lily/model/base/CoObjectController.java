@@ -30,7 +30,7 @@ public abstract class CoObjectController<T extends CoObject>
     protected T obj;
 
     public CoObjectController(T obj) {
-        this.controllerType = PotatoTypes.getInstance().forClass(getClass());
+        this.controllerType = PotatoTypes.getInstance().loadType(getClass());
         this.request = CurrentHttpService.getRequestOpt();
         this.params = VariantMaps.fromRequestOpt(request);
         this.obj = obj;

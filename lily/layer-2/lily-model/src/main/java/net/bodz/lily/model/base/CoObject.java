@@ -13,8 +13,8 @@ import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
@@ -38,6 +38,7 @@ import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.entity.IReinitializable;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.security.Group;
@@ -102,18 +103,7 @@ public abstract class CoObject
 
     @Override
     public void reinit() {
-        fillLoginData();
-    }
-
-    public void fillLoginData() {
-        HttpSession session = CurrentHttpService.getSessionOpt();
-        if (session != null) {
-            LoginData loginData = LoginData.fromSession(session);
-            if (loginData != null) {
-                ownerUser = loginData.getUser();
-                ownerGroup = ownerUser.getPrimaryGroup();
-            }
-        }
+        fn.fillLoginData(this);
     }
 
     /**
@@ -539,40 +529,9 @@ public abstract class CoObject
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        codeName = map.getString("codeName", codeName);
-        label = map.getString("label", label);
-        description = map.getString("description", description);
-        comment = map.getString("comment", comment);
-        image = map.getString("image", image);
-
-        priority = map.getInt("priority", priority);
-        // creationDate =map.getDateTime("creationDate",creationDate);
-        // lastModifiedDate =map.getDateTime("lastModifiedDate",lastModifiedDate);
-        flags = map.getInt("flags", flags);
-        // state= map.getEnum("state", state);
-        // version = map.getInt("version", version);
-
-        IVariantMap<String> user = (IVariantMap<String>) map.get("ownerUser");
-        if (user != null) {
-            Integer uid = user.getInt("id", ownerUser == null ? null : ownerUser.getId());
-            if (uid != null) {
-                ownerUser = new User();
-                ownerUser.setId(uid);
-            }
-        }
-
-        IVariantMap<String> group = (IVariantMap<String>) map.get("ownerGroup");
-        if (group != null) {
-            Integer gid = group.getInt("id", ownerGroup == null ? null : ownerGroup.getId());
-            if (gid != null) {
-                ownerGroup = new Group();
-                ownerGroup.setId(gid);
-            }
-        }
-
-        accessMode = map.getInt("accessMode", accessMode);
-        acl = map.getInt("acl", acl);
+            throws LoaderException {
+        VarMapLoader loader = new VarMapLoader();
+        loader.load(getClass(), this, map);
     }
 
     @Override
@@ -619,6 +578,22 @@ public abstract class CoObject
             mapper.update(this);
             return getId();
         }
+    }
+
+    protected static class fn {
+
+        public static void fillLoginData(CoObject obj) {
+            HttpSession session = CurrentHttpService.getSessionOpt();
+            if (session != null) {
+                LoginData loginData = LoginData.fromSession(session);
+                if (loginData != null) {
+                    User user = loginData.getUser();
+                    obj.setOwnerUser(user);
+                    obj.setOwnerGroup(user.getPrimaryGroup());
+                }
+            }
+        }
+
     }
 
 }

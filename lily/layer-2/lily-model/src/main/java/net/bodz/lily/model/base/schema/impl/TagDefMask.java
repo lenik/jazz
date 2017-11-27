@@ -1,8 +1,5 @@
 package net.bodz.lily.model.base.schema.impl;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVariantMap;
-
 /**
  * @see net.bodz.lily.model.base.schema.TagDef
  */
@@ -21,13 +18,6 @@ public class TagDefMask
         TagDefMask mask = new TagDefMask();
         mask.tagGroupId = tagGroupId;
         return mask;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-        tagGroupId = map.getInt("tagv", tagGroupId);
     }
 
 }

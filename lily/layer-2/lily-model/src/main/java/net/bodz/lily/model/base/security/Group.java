@@ -2,8 +2,6 @@ package net.bodz.lily.model.base.security;
 
 import java.util.List;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 
@@ -67,13 +65,6 @@ public class Group
 
     public void setUsers(List<User> users) {
         this.users = users;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-        admin = map.getBoolean("admin", admin);
     }
 
 }

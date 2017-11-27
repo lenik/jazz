@@ -21,7 +21,7 @@
             u.label "uid_label",
             g.label "gid_label",
             op.label "op_label"
-        from shipodr a
+        from tranodr a
             left join saleodr on a.saleodr=saleodr.id
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
@@ -36,7 +36,7 @@
             u.label "uid_label",
             g.label "gid_label",
             op.label "op_label"
-        from shipodr a
+        from tranodr a
             left join saleodr on a.saleodr=saleodr.id
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
@@ -87,7 +87,7 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into shipodr(
+        insert into tranodr(
             priority, flags, state, uid, gid, mode, acl,
             t0, t1,
             op, subject, text, form, args, cat, phase,
@@ -103,7 +103,7 @@
     ]]></insert>
 
     <update id="update">
-        update shipodr
+        update tranodr
         <set>
             <include refid="message.set1" />
             <if test="previous != null">prev = #{previous.id},</if>
@@ -120,12 +120,12 @@
     </update>
 
     <delete id="delete">
-        delete from shipodr where id = #{id}
+        delete from tranodr where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
         select
-        (select count(*) from shipodr a
+        (select count(*) from tranodr a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
@@ -133,7 +133,7 @@
         </where>
         ) "total",
         
-        (select count(*) from shipodr a
+        (select count(*) from tranodr a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
@@ -146,7 +146,7 @@
         select
             extract(year from t0)::int "year", 
             count(*) "count"
-        from shipodr
+        from tranodr
         group by extract(year from t0)::int
     ]]></select>
 

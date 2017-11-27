@@ -2,11 +2,8 @@ package net.bodz.lily.model.mx;
 
 import java.util.Collection;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.range.IntRange;
-import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.bas.t.variant.QVariantMap;
 import net.bodz.lily.model.base.CoMomentIntervalMask;
 
 public class CoMessageMask
@@ -149,33 +146,6 @@ public class CoMessageMask
 
     public void setNoPhase(boolean noPhase) {
         this.noPhase = noPhase;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> _map)
-            throws ParseException {
-        super.readObject(_map);
-        QVariantMap<String> map = QVariantMap.from(_map);
-        formId = map.getInt("form", formId);
-
-        opId = map.getInt("op", opId);
-        categoryId = map.getInt("cat", categoryId);
-        phaseId = map.getInt("phase", phaseId);
-        tagId = map.getInt("tag", tagId);
-        // String tagsStr = map.getString("tags");
-        // if (tagsStr != null)
-        // tags = new TreeSet<String>(Arrays.asList(tagsStr.split(",")));
-
-        voteCountRange = map.getIntRange("votes", voteCountRange);
-        likerCountRange = map.getIntRange("likes", likerCountRange);
-        readCountRange = map.getIntRange("reads", readCountRange);
-
-        noForm = map.getBoolean("no-form");
-        noOp = map.getBoolean("no-op");
-        noCategory = map.getBoolean("no-cat");
-        noPhase = map.getBoolean("no-phase");
-        noTag = map.getBoolean("no-tag");
-        noMailDate = map.getBoolean("no-maildate");
     }
 
 }

@@ -1,8 +1,5 @@
 package net.bodz.lily.model.base.schema.impl;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVariantMap;
-
 /**
  * @see net.bodz.lily.model.base.schema.TagGroupDef
  */
@@ -18,13 +15,6 @@ public class TagGroupDefMask
     public TagGroupDefMask setOrtho(Boolean ortho) {
         this.ortho = ortho;
         return this;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-        ortho = map.getBoolean("ortho", ortho);
     }
 
     public static TagGroupDefMask forSchema(int id) {
