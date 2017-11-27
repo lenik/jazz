@@ -3,7 +3,7 @@ package net.bodz.bas.t.variant;
 import java.lang.reflect.Array;
 
 public abstract class AbstractVariantMap<K>
-        extends AbstractTmVariantMap<K> {
+        extends AutoConvVariantMap<K> {
 
     @Override
     public String format(K formatKey, Object... args) {

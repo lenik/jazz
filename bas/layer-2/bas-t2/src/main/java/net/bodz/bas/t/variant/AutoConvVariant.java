@@ -4,17 +4,17 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
-import net.bodz.bas.c.primitive.*;
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.t.variant.conv.*;
 
 // @GeneratedBy(cg.VariantMapGenerator.class)
-public abstract class AbstractTmVariant
+public abstract class AutoConvVariant
         implements IVariant {
 
     @Override
     public byte getByte() {
         Object value = getScalar();
-        return TypeMatrix_byte.fromObject(value);
+        return ByteVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -23,7 +23,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_byte.fromObject(value);
+            return ByteVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -32,7 +32,7 @@ public abstract class AbstractTmVariant
     @Override
     public short getShort() {
         Object value = getScalar();
-        return TypeMatrix_short.fromObject(value);
+        return ShortVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -41,7 +41,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_short.fromObject(value);
+            return ShortVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -50,7 +50,7 @@ public abstract class AbstractTmVariant
     @Override
     public int getInt() {
         Object value = getScalar();
-        return TypeMatrix_int.fromObject(value);
+        return IntegerVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -59,7 +59,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_int.fromObject(value);
+            return IntegerVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -68,7 +68,7 @@ public abstract class AbstractTmVariant
     @Override
     public long getLong() {
         Object value = getScalar();
-        return TypeMatrix_long.fromObject(value);
+        return LongVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -77,7 +77,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_long.fromObject(value);
+            return LongVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -86,7 +86,7 @@ public abstract class AbstractTmVariant
     @Override
     public float getFloat() {
         Object value = getScalar();
-        return TypeMatrix_float.fromObject(value);
+        return FloatVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -95,7 +95,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_float.fromObject(value);
+            return FloatVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -104,7 +104,7 @@ public abstract class AbstractTmVariant
     @Override
     public double getDouble() {
         Object value = getScalar();
-        return TypeMatrix_double.fromObject(value);
+        return DoubleVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -113,7 +113,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_double.fromObject(value);
+            return DoubleVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -122,7 +122,7 @@ public abstract class AbstractTmVariant
     @Override
     public boolean getBoolean() {
         Object value = getScalar();
-        return TypeMatrix_boolean.fromObject(value);
+        return BooleanVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -131,7 +131,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_boolean.fromObject(value);
+            return BooleanVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -140,7 +140,7 @@ public abstract class AbstractTmVariant
     @Override
     public char getChar() {
         Object value = getScalar();
-        return TypeMatrix_char.fromObject(value);
+        return CharacterVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -149,7 +149,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_char.fromObject(value);
+            return CharacterVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -158,7 +158,7 @@ public abstract class AbstractTmVariant
     @Override
     public BigInteger getBigInteger() {
         Object value = getScalar();
-        return TypeMatrix_BigInteger.fromObject(value);
+        return BigIntegerVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -167,7 +167,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_BigInteger.fromObject(value);
+            return BigIntegerVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -176,7 +176,7 @@ public abstract class AbstractTmVariant
     @Override
     public BigDecimal getBigDecimal() {
         Object value = getScalar();
-        return TypeMatrix_BigDecimal.fromObject(value);
+        return BigDecimalVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -185,7 +185,7 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_BigDecimal.fromObject(value);
+            return BigDecimalVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -194,7 +194,7 @@ public abstract class AbstractTmVariant
     @Override
     public Date getDate() {
         Object value = getScalar();
-        return TypeMatrix_Date.fromObject(value);
+        return DateVarConverter.instance.fromObject(value);
     }
 
     @Override
@@ -203,15 +203,10 @@ public abstract class AbstractTmVariant
         if (value == null)
             return defaultValue;
         try {
-            return TypeMatrix_Date.fromObject(value);
+            return DateVarConverter.instance.fromObject(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
-    }
-
-    // @Override
-    public <T> T cast(Class<T> type) {
-        return null;
     }
 
 }

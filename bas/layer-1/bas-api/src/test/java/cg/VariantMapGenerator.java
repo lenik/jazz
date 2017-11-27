@@ -1,5 +1,6 @@
 package cg;
 
+
 /**
  * @see net.bodz.bas.t.variant.AbstractTmVariantMap
  */
@@ -27,21 +28,21 @@ public class VariantMapGenerator {
             System.out.printf("" + //
                     "    @Override\n" + // tTt
                     "    public %s get%s(String key) {\n" + // tT
-                    "        Object value = getObject(key); \n" + //
-                    "        return TypeMatrix_%s.fromObject(value); \n" + // t
-                    "    }\n", type, Type, type);
+                    "        Object value = getScalar(key); \n" + //
+                    "        return %sVarConverter.instance.fromObject(value); \n" + // t
+                    "    }\n", type, Type, Type);
             System.out.printf("" + //
                     "    @Override\n" + // tTt
                     "    public %s get%s(String key, %s defaultValue) {\n" + // tTt
-                    "        Object value = getObject(key); \n" + //
+                    "        Object value = getScalar(key); \n" + //
                     "        if (value == null && !containsKey(key))\n" + //
                     "            return defaultValue; \n" + //
                     "        try {\n" + //
-                    "            return TypeMatrix_%s.fromObject(value); \n" + // t
+                    "            return %sVarConverter.instance.fromObject(value); \n" + // t
                     "        } catch (TypeConvertException e) {\n" + //
                     "            return defaultValue; \n" + //
                     "        }\n" + //
-                    "    }\n\n", type, Type, type, type);
+                    "    }\n\n", type, Type, type, Type);
         }
     }
 
