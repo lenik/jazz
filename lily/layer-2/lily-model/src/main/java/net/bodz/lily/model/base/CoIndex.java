@@ -17,7 +17,7 @@ import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
@@ -159,7 +159,7 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     @Override
     public String toString() {
-        IType type = PotatoTypes.getInstance().forClass(getClass());
+        IType type = PotatoTypes.getInstance().loadType(getClass());
         iString label = type.getLabel();
         if (label == null) {
             // logger.warn("Index title (label) isn't specified on " + getClass());
@@ -192,7 +192,7 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
             tableData.setList(list);
         } catch (ReflectiveOperationException e) {
             throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
-        } catch (ParseException e) {
+        } catch (LoaderException e) {
             throw new RequestHandlerException("Error decode mask of " + maskType, e);
         }
         return tableData;
@@ -243,7 +243,7 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
 
         try {
             obj.readObject(new JsonVarMap(root));
-        } catch (ParseException e) {
+        } catch (LoaderException e) {
             throw new RequestHandlerException("Failed to apply json: " + e.getMessage(), e);
         }
         save(create, obj, result);

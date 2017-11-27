@@ -1,8 +1,5 @@
 package net.bodz.violet.store.impl;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.bas.t.variant.QVariantMap;
 import net.bodz.lily.model.base.CoObjectMask;
 
 public class ArtifactMask
@@ -81,22 +78,6 @@ public class ArtifactMask
 
     public void setModelName(String modelName) {
         this.modelName = modelName;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> _map)
-            throws ParseException {
-        super.readObject(_map);
-
-        QVariantMap<String> map = QVariantMap.from(_map);
-        categoryId = map.getInt("cat", categoryId);
-        phaseId = map.getInt("cat", phaseId);
-        noCategory = map.getBoolean("noCategory", noCategory);
-        noPhase = map.getBoolean("noPhase", noPhase);
-        skuCode_ = map.getString("sku", skuCode_);
-        barCode_ = map.getString("bar", barCode_);
-        uomId = map.getInt("uom", uomId);
-        modelName = map.getString("spec", modelName);
     }
 
 }

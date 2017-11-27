@@ -8,7 +8,9 @@
         
         shopitem       bigint not null
             references shopitem(id) on update cascade,
-            
+        
+        -- price snapshot
+        price       numeric(20,2) not null,
         qty         numeric(20,2) not null
     );
 

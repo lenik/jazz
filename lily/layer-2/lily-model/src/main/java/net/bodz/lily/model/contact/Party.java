@@ -9,7 +9,6 @@ import java.util.TimeZone;
 import java.util.TreeSet;
 
 import net.bodz.bas.c.java.util.TimeZones;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
@@ -17,7 +16,6 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.t.order.PriorityUtils;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 
@@ -273,16 +271,6 @@ public abstract class Party
         if (isSupplier())
             sb.append("供");
         return sb.toString();
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-
-        IVariantMap<String> contact = (IVariantMap<String>) map.get("contact");
-        if (contact != null)
-            getContact().readObject(contact);
     }
 
 }

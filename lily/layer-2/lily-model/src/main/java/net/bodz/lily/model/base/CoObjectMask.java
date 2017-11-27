@@ -7,11 +7,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import net.bodz.bas.c.type.NameConventionTypeMapper;
-import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.bas.t.variant.QVariantMap;
+import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.model.base.security.LoginData;
 
 /**
@@ -161,21 +161,15 @@ public class CoObjectMask
     }
 
     @Override
-    public void readObject(IVariantMap<String> _map)
-            throws ParseException {
-        // TODO Use reflection to read.
-        QVariantMap<String> map = QVariantMap.from(_map);
+    public void readObject(IVariantMap<String> map)
+            throws LoaderException {
+        VarMapLoader loader = new VarMapLoader();
+        loader.load(getClass(), this, map);
+
         codeName = map.getString("code", codeName);
-        label = map.getString("label", label);
-        description = map.getString("description", description);
         queryText = map.getString("q", queryText);
-        timeRange = map.getDateRange("times", timeRange);
-        priorities = map.getInts("priorities", priorities);
-        flags = map.getInts("flags", flags);
-        states = map.getInts("states", states);
         ownerId = map.getInt("uid", ownerId);
         ownerGroupId = map.getInt("gid", ownerGroupId);
-        acls = map.getInts("acls", acls);
     }
 
     @Override

@@ -153,7 +153,7 @@ public abstract class CoObjectIndex<T extends CoObject>
 
     @Override
     public String toString() {
-        IType type = PotatoTypes.getInstance().forClass(getClass());
+        IType type = PotatoTypes.getInstance().loadType(getClass());
         iString label = type.getLabel();
         if (label == null)
             throw new IllegalUsageException("Index title (label) isn't specified on " + getClass());

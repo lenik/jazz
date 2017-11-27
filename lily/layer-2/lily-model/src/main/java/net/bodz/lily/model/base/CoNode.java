@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -454,7 +454,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws ParseException {
+            throws LoaderException {
         super.readObject(map);
 
         // refCount = map.getInt("refCount", refCount);

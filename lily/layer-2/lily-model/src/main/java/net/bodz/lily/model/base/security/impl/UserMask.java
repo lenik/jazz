@@ -1,8 +1,6 @@
 package net.bodz.lily.model.base.security.impl;
 
 import net.bodz.bas.c.string.StringUtil;
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoObjectMask;
 
 /**
@@ -26,13 +24,6 @@ public class UserMask
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-        password = map.getString("passwd", password);
     }
 
 }

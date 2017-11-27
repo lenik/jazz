@@ -1,9 +1,6 @@
 package net.bodz.lily.model.base;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateRange;
-import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.bas.t.variant.QVariantMap;
 
 public class CoMomentIntervalMask
         extends CoObjectMask {
@@ -71,19 +68,6 @@ public class CoMomentIntervalMask
 
     public void setEnded(Boolean ended) {
         this.ended = ended;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> _map)
-            throws ParseException {
-        super.readObject(_map);
-        QVariantMap<String> map = QVariantMap.from(_map);
-        dateRange = map.getDateRange("dates", dateRange);
-        year = map.getInt("year", year);
-        noDate = map.getBoolean("no-date");
-        noYear = map.getBoolean("no-year");
-        started = map.getBoolean("started", started);
-        ended = map.getBoolean("ended", ended);
     }
 
 }

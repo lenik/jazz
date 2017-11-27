@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 
@@ -219,22 +217,6 @@ public class User
                     return true;
 
         return false;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-
-        // primaryGroup, groups;
-        email = map.getString("email", email);
-        emailValidated = map.getBoolean("emailValidated", emailValidated);
-        salt = map.getInt("salt", salt);
-        password = map.getString("password", password);
-        // ids
-        // registerIP;
-        // lastLoginTime;
-        // lastLoginIP;
     }
 
 }

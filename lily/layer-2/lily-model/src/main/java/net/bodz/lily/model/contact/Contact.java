@@ -3,14 +3,12 @@ package net.bodz.lily.model.contact;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.geo.Region;
 import net.bodz.bas.i18n.geo.Regions;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.repr.EntGroup;
@@ -427,25 +425,6 @@ public class Contact
             sb.append("\nQQ: " + qq);
 
         return sb.toString();
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws ParseException {
-        super.readObject(map);
-
-        rename = map.getString("rename", rename);
-        usage = map.getString("usage", usage);
-        country = map.getString("country", country);
-        address1 = map.getString("address1", address1);
-        address2 = map.getString("address2", address2);
-        postalCode = map.getString("postalCode", postalCode);
-        tel = map.getString("tel", tel);
-        mobile = map.getString("mobile", mobile);
-        fax = map.getString("fax", fax);
-        email = map.getString("email", email);
-        web = map.getString("web", web);
-        qq = map.getString("qq", qq);
     }
 
 }
