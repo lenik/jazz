@@ -32,7 +32,7 @@ public interface IFormDecl
         static FormDeclBuilder builder = new FormDeclBuilder();
 
         public static IFormDecl forClass(Class<?> clazz) {
-            IType type = PotatoTypes.getInstance().forClass(clazz);
+            IType type = PotatoTypes.getInstance().loadType(clazz);
             boolean isVolatile = type.isAnnotationPresent(Volatile.class);
             TypeExtras extras = TypeExtras.of(clazz);
             IFormDecl formDecl = extras.getFeature(IFormDecl.class);

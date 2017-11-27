@@ -30,7 +30,7 @@ public class PathFieldListTest
 
     public static void main(String[] args)
             throws Exception {
-        IType bookType = PotatoTypes.getInstance().forClass(Book.class);
+        IType bookType = PotatoTypes.getInstance().loadType(Book.class);
 
         PathFieldList fields = new PathFieldList();
         MutableFormDecl formDecl = new FormDeclBuilder().build(bookType);

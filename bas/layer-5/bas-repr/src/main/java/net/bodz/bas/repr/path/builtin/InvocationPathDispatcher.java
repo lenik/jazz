@@ -31,7 +31,7 @@ public class InvocationPathDispatcher
         if (methodName == null)
             return null;
 
-        IType type = PotatoTypes.getInstance().forClass(obj.getClass());
+        IType type = PotatoTypes.getInstance().loadType(obj.getClass());
         IMethod method = type.getOverloadedMethod(methodName);
         if (method == null)
             return null;

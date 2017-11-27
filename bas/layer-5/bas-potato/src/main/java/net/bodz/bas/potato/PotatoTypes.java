@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.meta.decl.Volatile;
 import net.bodz.bas.potato.element.IType;
@@ -19,13 +20,15 @@ import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
 @IndexedTypeLoader(ITypeProvider.class)
-public class PotatoTypes {
-
+@ExcludedFromIndex
+public class PotatoTypes
+        extends AbstractTypeProvider {
     static final Logger logger = LoggerFactory.getLogger(PotatoTypes.class);
 
     private Map<Class<?>, IType> cache = new HashMap<>();
 
-    public synchronized IType forClass(Class<?> clazz) {
+    @Override
+    public synchronized IType loadType(Class<?> clazz, Object obj, int infoset) {
         boolean isVolatile = clazz.isAnnotationPresent(Volatile.class);
         IType type = cache.get(clazz);
         if (type == null || isVolatile) {
@@ -65,7 +68,7 @@ public class PotatoTypes {
 
     static PotatoTypes instance = new PotatoTypes();
 
-    public static PotatoTypes getInstance() {
+    public static ITypeProvider getInstance() {
         return instance;
     }
 

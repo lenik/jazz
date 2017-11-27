@@ -71,8 +71,8 @@ public class PotatoTyperProvider
         return null;
     }
 
-    public IType getType(Class<?> objType) {
-        return PotatoTypes.getInstance().forClass(objType);
+    private IType getType(Class<?> objType) {
+        return PotatoTypes.getInstance().loadType(objType);
     }
 
 }

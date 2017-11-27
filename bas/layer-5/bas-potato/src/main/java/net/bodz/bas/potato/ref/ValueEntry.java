@@ -24,7 +24,7 @@ public class ValueEntry<T>
     }
 
     public ValueEntry(Class<? extends T> valueType, T value) {
-        this(PotatoTypes.getInstance().forClass(valueType), valueType, value);
+        this(PotatoTypes.getInstance().loadType(valueType), valueType, value);
     }
 
     public ValueEntry(IElement element, Class<? extends T> valueType, T value) {

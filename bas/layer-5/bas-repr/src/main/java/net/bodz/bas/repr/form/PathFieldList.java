@@ -36,7 +36,7 @@ public class PathFieldList
                 this.add(new PathField(head, Arrays.asList(fieldDecl)));
             else {
                 Class<?> valueType = fieldDecl.getValueType();
-                IType type = PotatoTypes.getInstance().forClass(valueType);
+                IType type = PotatoTypes.getInstance().loadType(valueType);
                 parseAndAdd(path.substring(0, dot + 1), fieldDecl, type, remaining);
             }
         }
