@@ -1,7 +1,9 @@
 package net.bodz.bas.c.type;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.OutOfDomainException;
 
 /**
@@ -9,8 +11,24 @@ import net.bodz.bas.err.OutOfDomainException;
  */
 public class SingletonUtil {
 
+    public static <T> T getInstanceField(Class<T> clazz)
+            throws LoadException {
+        if (clazz == null)
+            return null;
+        if (clazz == void.class)
+            return null;
+
+        try {
+            Field field = clazz.getField("INSTANCE");
+            Object instance = field.get(null);
+            return clazz.cast(instance);
+        } catch (Exception e) {
+            throw new LoadException("Failed to get instance field: " + e.getMessage(), e);
+        }
+    }
+
     public static <T> T callGetInstance(Class<T> clazz, Object... args)
-            throws ReflectiveOperationException {
+            throws LoadException {
         if (clazz == null)
             return null;
         if (clazz == void.class)
@@ -20,9 +38,13 @@ public class SingletonUtil {
             throw new OutOfDomainException("clazz", clazz, "interface");
 
         Class<?>[] argTypes = TypeArray.getClasses(null /* fallback */, args);
-        Method method = clazz.getMethod("getInstance", argTypes);
-        Object instance = method.invoke(null, args);
-        return clazz.cast(instance);
+        try {
+            Method method = clazz.getMethod("getInstance", argTypes);
+            Object instance = method.invoke(null, args);
+            return clazz.cast(instance);
+        } catch (ReflectiveOperationException e) {
+            throw new LoadException("Failed to get instance: " + e.getMessage(), e);
+        }
     }
 
     public static <T> T instantiateCached(Class<T> clazz) {
