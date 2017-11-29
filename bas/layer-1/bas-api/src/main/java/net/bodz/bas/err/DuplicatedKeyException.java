@@ -12,7 +12,7 @@ public class DuplicatedKeyException
     }
 
     public DuplicatedKeyException(Map<?, ?> map, Object key, String hint) {
-        super(String.format("%s is already used, the old value is %s.", //
+        super(String.format("%s %s is already used, the old value is %s.", //
                 hint, key, map.get(key)));
     }
 
