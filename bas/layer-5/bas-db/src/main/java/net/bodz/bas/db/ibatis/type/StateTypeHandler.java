@@ -9,52 +9,51 @@ import org.apache.ibatis.type.JdbcType;
 
 import net.bodz.bas.db.ibatis.TypeHandler;
 import net.bodz.bas.repr.state.State;
-import net.bodz.bas.repr.state.StateGroup;
+import net.bodz.bas.repr.state.StateGroups;
 
 public class StateTypeHandler
         extends TypeHandler<State> {
 
-    private StateGroup states = StateGroup.INDEXED;
-    private int nullStateId = 0;
+    private int nullStateKey = 0;
 
     public int getNullStateId() {
-        return nullStateId;
+        return nullStateKey;
     }
 
-    public void setNullStateId(int nullStateId) {
-        this.nullStateId = nullStateId;
+    public void setNullStateId(int nullStateKey) {
+        this.nullStateKey = nullStateKey;
     }
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, State parameter, JdbcType jdbcType)
             throws SQLException {
-        int id;
+        int key;
         if (parameter == null)
-            id = nullStateId;
+            key = nullStateKey;
         else
-            id = parameter.getId();
-        ps.setInt(i, id);
+            key = parameter.getKey();
+        ps.setInt(i, key);
     }
 
     @Override
     public State getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
-        int id = rs.getInt(columnName);
-        return states.getState(id);
+        int key = rs.getInt(columnName);
+        return StateGroups.getState(key);
     }
 
     @Override
     public State getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
-        int id = rs.getInt(columnIndex);
-        return states.getState(id);
+        int key = rs.getInt(columnIndex);
+        return StateGroups.getState(key);
     }
 
     @Override
     public State getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
-        int id = cs.getInt(columnIndex);
-        return states.getState(id);
+        int key = cs.getInt(columnIndex);
+        return StateGroups.getState(key);
     }
 
 }

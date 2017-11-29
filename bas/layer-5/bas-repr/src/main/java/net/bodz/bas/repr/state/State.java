@@ -1,51 +1,37 @@
 package net.bodz.bas.repr.state;
 
-import java.util.zip.CRC32;
+import java.io.Serializable;
 
-import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
 
 public class State
-        extends XjdocObject {
+        // extends Predef<State, Integer>
+        extends XjdocObject
+        implements Serializable, Comparable<State> {
 
-    private final int id;
-    private final Class<?> declaringClass;
+    private static final long serialVersionUID = 1L;
+
+    private final int key;
     private final String name;
+    private final Class<?> declaringClass;
     private final StateType type;
 
-    public State(int id, Class<?> declaringClass, String name, StateType type) {
-        if (declaringClass == null)
-            throw new NullPointerException("declaringClass");
+    State(int key, String name, StateType type, Class<?> declaringClass) {
         if (name == null)
             throw new NullPointerException("name");
-        if (type == null)
-            throw new NullPointerException("type");
-        this.id = id;
-        this.declaringClass = declaringClass;
+        this.key = key;
         this.name = name;
-        this.type = type;
-    }
 
-    public State(Class<?> declaringClass, String name, StateType type) {
         if (declaringClass == null)
             throw new NullPointerException("declaringClass");
-        if (name == null)
-            throw new NullPointerException("name");
         if (type == null)
             throw new NullPointerException("type");
-
-        this.declaringClass = declaringClass;
-        this.name = name;
         this.type = type;
-
-        CRC32 crc32 = new CRC32();
-        byte[] bytes = getQName().getBytes(Charsets.UTF8);
-        crc32.update(bytes);
-        this.id = (int) crc32.getValue();
+        this.declaringClass = declaringClass;
     }
 
-    public int getId() {
-        return id;
+    public int getKey() {
+        return key;
     }
 
     @Override
@@ -68,6 +54,16 @@ public class State
     @Override
     public String toString() {
         return getName();
+    }
+
+    @Override
+    public int compareTo(State o) {
+        if (o == null)
+            return 1;
+        if (o == this)
+            return 0;
+        int cmp = key - o.getKey();
+        return cmp;
     }
 
 }

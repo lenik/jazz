@@ -1,5 +1,5 @@
 net.bodz.bas.repr.path.IPathDispatcher
 net.bodz.bas.repr.req.IHttpRequestProcessor
-net.bodz.bas.repr.state.IStateConsts
+net.bodz.bas.repr.state.StateGroup
 net.bodz.bas.repr.viz.IViewBuilderFactory
 net.bodz.bas.t.predef.Predef

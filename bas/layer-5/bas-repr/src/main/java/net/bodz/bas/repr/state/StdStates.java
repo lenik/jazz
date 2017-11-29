@@ -1,7 +1,8 @@
 package net.bodz.bas.repr.state;
 
+@Start(0)
 public class StdStates
-        implements IStateConsts {
+        extends StateGroup {
 
     public static final int ID_INIT = 0;
     public static final int ID_OK = 1;
@@ -10,10 +11,16 @@ public class StdStates
     public static final int ID_ERROR = -1;
     public static final int ID_EPSILON = -2;
 
-    public static final State INIT = new State(ID_INIT, StdStates.class, "init", StateType.NONTERM);
-    public static final State OK = new State(ID_OK, StdStates.class, "ok", StateType.ACCEPTED);
-    public static final State WAIT = new State(ID_WAIT, StdStates.class, "wait", StateType.ACCEPTED);
-    public static final State ERROR = new State(ID_ERROR, StdStates.class, "error", StateType.ERROR);
-    public static final State EPSILON = new State(ID_EPSILON, StdStates.class, "epsilon", StateType.NONTERM);
+    public static final StdStates INSTANCE = new StdStates();
+
+    protected static StateBuilder state(int id) {
+        return StateGroup.state(id, StdStates.INSTANCE).declaring(StdStates.class);
+    }
+
+    public static final State INIT = state(ID_INIT).name("init").type(StateType.NONTERM).build();
+    public static final State OK = state(ID_OK).name("ok").build();
+    public static final State WAIT = state(ID_WAIT).name("wait").build();
+    public static final State ERROR = state(ID_ERROR).name("error").type(StateType.ERROR).build();
+    public static final State EPSILON = state(ID_EPSILON).name("epsilon").type(StateType.NONTERM).build();
 
 }
