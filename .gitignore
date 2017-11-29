@@ -103,6 +103,7 @@ config.status
 config.sub
 configure
 depcomp
+dependency-reduced-pom.xml
 install-sh
 itree.tex
 libauto
