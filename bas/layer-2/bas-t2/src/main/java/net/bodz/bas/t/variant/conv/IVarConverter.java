@@ -2,13 +2,23 @@ package net.bodz.bas.t.variant.conv;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.Date;
+
+import org.joda.time.DateTime;
 
 import net.bodz.bas.err.TypeConvertException;
 
 public interface IVarConverter<T> {
 
-    T fromObject(Object in)
+    boolean canConvertFrom(Class<?> type);
+
+    boolean canConvertTo(Class<?> type);
+
+    T from(Object obj)
+            throws TypeConvertException;
+
+    T from(Class<?> type, Object obj)
             throws TypeConvertException;
 
     T fromString(String in)
@@ -44,10 +54,12 @@ public interface IVarConverter<T> {
 
     BigDecimal toBigDecimal(T value);
 
+    Calendar toCalendar(T value);
+
     Date toDate(T value);
 
-// java.sql.Date toSqlDate(T value);
+    java.sql.Date toSqlDate(T value);
 
-// DateTime toDateTime(T value);
+    DateTime toDateTime(T value);
 
 }

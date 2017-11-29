@@ -17,7 +17,7 @@ public class VariantMapGenerator {
         System.out.println("Interface Declaration: ");
         for (String type : types) {
             String Type = type.substring(0, 1).toUpperCase() + type.substring(1);
-            System.out.printf("    %s get%s(String key);\n", type, Type);
+            System.out.printf("    %s get%s(String key);\n", Type, Type);
             System.out.printf("    %s get%s(String key, %s defaultValue);\n", type, Type, type);
         }
 
@@ -29,8 +29,11 @@ public class VariantMapGenerator {
                     "    @Override\n" + // tTt
                     "    public %s get%s(String key) {\n" + // tT
                     "        Object value = getScalar(key); \n" + //
-                    "        return %sVarConverter.instance.fromObject(value); \n" + // t
-                    "    }\n", type, Type, Type);
+                    "        if (value == null)\n" + //
+                    "            return null; \n" + //
+                    "        else\n" + //
+                    "            return %sVarConverter.instance.from(value); \n" + // t
+                    "    }\n", Type, Type, Type);
             System.out.printf("" + //
                     "    @Override\n" + // tTt
                     "    public %s get%s(String key, %s defaultValue) {\n" + // tTt
@@ -38,7 +41,7 @@ public class VariantMapGenerator {
                     "        if (value == null && !containsKey(key))\n" + //
                     "            return defaultValue; \n" + //
                     "        try {\n" + //
-                    "            return %sVarConverter.instance.fromObject(value); \n" + // t
+                    "            return %sVarConverter.instance.from(value); \n" + // t
                     "        } catch (TypeConvertException e) {\n" + //
                     "            return defaultValue; \n" + //
                     "        }\n" + //

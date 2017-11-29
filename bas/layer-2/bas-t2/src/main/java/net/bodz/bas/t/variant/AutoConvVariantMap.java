@@ -12,9 +12,12 @@ public abstract class AutoConvVariantMap<K>
         implements IVariantMap<K> {
 
     @Override
-    public byte getByte(K key) {
+    public Byte getByte(K key) {
         Object value = getScalar(key);
-        return ByteVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return ByteVarConverter.instance.from(value);
     }
 
     @Override
@@ -23,16 +26,19 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return ByteVarConverter.instance.fromObject(value);
+            return ByteVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
     }
 
     @Override
-    public short getShort(K key) {
+    public Short getShort(K key) {
         Object value = getScalar(key);
-        return ShortVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return ShortVarConverter.instance.from(value);
     }
 
     @Override
@@ -41,16 +47,19 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return ShortVarConverter.instance.fromObject(value);
+            return ShortVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
     }
 
     @Override
-    public int getInt(K key) {
+    public Integer getInt(K key) {
         Object value = getScalar(key);
-        return IntegerVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return IntegerVarConverter.instance.from(value);
     }
 
     @Override
@@ -59,16 +68,19 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return IntegerVarConverter.instance.fromObject(value);
+            return IntegerVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
     }
 
     @Override
-    public long getLong(K key) {
+    public Long getLong(K key) {
         Object value = getScalar(key);
-        return LongVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return LongVarConverter.instance.from(value);
     }
 
     @Override
@@ -77,16 +89,19 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return LongVarConverter.instance.fromObject(value);
+            return LongVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
     }
 
     @Override
-    public float getFloat(K key) {
+    public Float getFloat(K key) {
         Object value = getScalar(key);
-        return FloatVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return FloatVarConverter.instance.from(value);
     }
 
     @Override
@@ -95,16 +110,19 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return FloatVarConverter.instance.fromObject(value);
+            return FloatVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
     }
 
     @Override
-    public double getDouble(K key) {
+    public Double getDouble(K key) {
         Object value = getScalar(key);
-        return DoubleVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return DoubleVarConverter.instance.from(value);
     }
 
     @Override
@@ -113,16 +131,19 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return DoubleVarConverter.instance.fromObject(value);
+            return DoubleVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
     }
 
     @Override
-    public boolean getBoolean(K key) {
+    public Boolean getBoolean(K key) {
         Object value = getScalar(key);
-        return BooleanVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return BooleanVarConverter.instance.from(value);
     }
 
     @Override
@@ -131,16 +152,19 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return BooleanVarConverter.instance.fromObject(value);
+            return BooleanVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
     }
 
     @Override
-    public char getChar(K key) {
+    public Character getChar(K key) {
         Object value = getScalar(key);
-        return CharacterVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return CharacterVarConverter.instance.from(value);
     }
 
     @Override
@@ -149,7 +173,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return CharacterVarConverter.instance.fromObject(value);
+            return CharacterVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -158,7 +182,10 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public BigInteger getBigInteger(K key) {
         Object value = getScalar(key);
-        return BigIntegerVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return BigIntegerVarConverter.instance.from(value);
     }
 
     @Override
@@ -167,7 +194,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return BigIntegerVarConverter.instance.fromObject(value);
+            return BigIntegerVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -176,7 +203,10 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public BigDecimal getBigDecimal(K key) {
         Object value = getScalar(key);
-        return BigDecimalVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return BigDecimalVarConverter.instance.from(value);
     }
 
     @Override
@@ -185,7 +215,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return BigDecimalVarConverter.instance.fromObject(value);
+            return BigDecimalVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -194,7 +224,10 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public Date getDate(K key) {
         Object value = getScalar(key);
-        return DateVarConverter.instance.fromObject(value);
+        if (value == null)
+            return null;
+        else
+            return DateVarConverter.instance.from(value);
     }
 
     @Override
@@ -203,7 +236,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return DateVarConverter.instance.fromObject(value);
+            return DateVarConverter.instance.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }

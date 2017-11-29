@@ -28,8 +28,8 @@ public class DateVarConverter
     public String toString(Date value) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(value);
-        String s = DatatypeConverter.printDateTime(calendar);
-        return s;
+        String iso8601 = DatatypeConverter.printDateTime(calendar);
+        return iso8601;
     }
 
     @Override

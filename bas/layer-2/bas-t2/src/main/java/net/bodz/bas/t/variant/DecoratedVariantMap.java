@@ -83,7 +83,7 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public byte getByte(K key) {
+    public Byte getByte(K key) {
         return getWrapped().getByte(key);
     }
 
@@ -98,7 +98,7 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public short getShort(K key) {
+    public Short getShort(K key) {
         return getWrapped().getShort(key);
     }
 
@@ -113,7 +113,7 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public int getInt(K key) {
+    public Integer getInt(K key) {
         return getWrapped().getInt(key);
     }
 
@@ -128,7 +128,7 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public long getLong(K key) {
+    public Long getLong(K key) {
         return getWrapped().getLong(key);
     }
 
@@ -143,7 +143,7 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public float getFloat(K key) {
+    public Float getFloat(K key) {
         return getWrapped().getFloat(key);
     }
 
@@ -158,7 +158,7 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public double getDouble(K key) {
+    public Double getDouble(K key) {
         return getWrapped().getDouble(key);
     }
 
@@ -173,7 +173,7 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public boolean getBoolean(K key) {
+    public Boolean getBoolean(K key) {
         return getWrapped().getBoolean(key);
     }
 
@@ -188,7 +188,7 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public char getChar(K key) {
+    public Character getChar(K key) {
         return getWrapped().getChar(key);
     }
 

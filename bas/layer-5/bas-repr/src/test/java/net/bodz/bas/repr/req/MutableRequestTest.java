@@ -15,7 +15,7 @@ public class MutableRequestTest
         assertEquals("mid", req.getAnchor());
         assertEquals(new PathEntries("def"), req.getPath());
         assertEquals("lenik", req.getString("name"));
-        assertEquals(13, req.getInt("age"));
+        assertEquals((Integer) 13, req.getInt("age"));
     }
 
 }

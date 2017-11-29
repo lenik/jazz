@@ -41,51 +41,51 @@ public interface IVariantMap<K>
 
     String[] getStringArray(K key, String[] defaultValue);
 
-    // see {@link VariantLookupMapGenerator}
+    // see {@link VariantMapGenerator}
 
-    byte getByte(K key);
+    Byte getByte(K key);
 
     byte getByte(K key, byte defaultValue);
 
     Byte getByte(K key, Byte defaultValue);
 
-    short getShort(K key);
+    Short getShort(K key);
 
     short getShort(K key, short defaultValue);
 
     Short getShort(K key, Short defaultValue);
 
-    int getInt(K key);
+    Integer getInt(K key);
 
     int getInt(K key, int defaultValue);
 
     Integer getInt(K key, Integer defaultValue);
 
-    long getLong(K key);
+    Long getLong(K key);
 
     long getLong(K key, long defaultValue);
 
     Long getLong(K key, Long defaultValue);
 
-    float getFloat(K key);
+    Float getFloat(K key);
 
     float getFloat(K key, float defaultValue);
 
     Float getFloat(K key, Float defaultValue);
 
-    double getDouble(K key);
+    Double getDouble(K key);
 
     double getDouble(K key, double defaultValue);
 
     Double getDouble(K key, Double defaultValue);
 
-    boolean getBoolean(K key);
+    Boolean getBoolean(K key);
 
     boolean getBoolean(K key, boolean defaultValue);
 
     Boolean getBoolean(K key, Boolean defaultValue);
 
-    char getChar(K key);
+    Character getChar(K key);
 
     char getChar(K key, char defaultValue);
 
