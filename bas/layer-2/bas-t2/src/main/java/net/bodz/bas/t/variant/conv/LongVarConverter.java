@@ -5,6 +5,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class LongVarConverter
         extends AbstractVarConverter<Long> {
 
+    public LongVarConverter() {
+        super(Long.class);
+    }
+
     @Override
     public Long fromString(String in)
             throws TypeConvertException {

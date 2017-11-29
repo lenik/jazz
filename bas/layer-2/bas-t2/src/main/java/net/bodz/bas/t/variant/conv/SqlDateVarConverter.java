@@ -10,10 +10,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class SqlDateVarConverter
         extends AbstractVarConverter<java.sql.Date> {
 
-    DateFormat dateFormat;
+    DateFormat dateFormat = Dates.YYYY_MM_DD;
 
     public SqlDateVarConverter() {
-        dateFormat = Dates.YYYY_MM_DD;
+        super(java.sql.Date.class);
     }
 
     @Override

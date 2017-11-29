@@ -11,6 +11,7 @@ public class DateVarConverter
         extends AbstractVarConverter<Date> {
 
     public DateVarConverter() {
+        super(Date.class);
     }
 
     @Override

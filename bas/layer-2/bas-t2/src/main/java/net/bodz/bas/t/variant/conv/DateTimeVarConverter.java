@@ -13,6 +13,7 @@ public class DateTimeVarConverter
         extends AbstractVarConverter<DateTime> {
 
     public DateTimeVarConverter() {
+        super(DateTime.class);
     }
 
     @Override

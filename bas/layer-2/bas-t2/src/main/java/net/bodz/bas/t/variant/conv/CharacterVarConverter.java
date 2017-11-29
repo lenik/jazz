@@ -5,6 +5,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class CharacterVarConverter
         extends AbstractVarConverter<Character> {
 
+    public CharacterVarConverter() {
+        super(Character.class);
+    }
+
     @Override
     public Character fromString(String in)
             throws TypeConvertException {

@@ -10,6 +10,7 @@ public class CalendarVarConverter
         extends AbstractVarConverter<Calendar> {
 
     public CalendarVarConverter() {
+        super(Calendar.class);
     }
 
     @Override

@@ -5,6 +5,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class ByteVarConverter
         extends AbstractVarConverter<Byte> {
 
+    public ByteVarConverter() {
+        super(Byte.class);
+    }
+
     @Override
     public Byte fromString(String in)
             throws TypeConvertException {

@@ -6,7 +6,9 @@ import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections15.Transformer;
 import org.joda.time.DateTime;
@@ -17,10 +19,14 @@ import net.bodz.bas.err.TypeConvertException;
 public abstract class AbstractVarConverter<T>
         implements IVarConverter<T> {
 
+    final Class<T> type;
     final Map<Class<?>, Transformer<Object, T>> frommap = new HashMap<>();
     final Map<Class<?>, Transformer<T, ?>> tomap = new HashMap<>();
+    final Set<IVarConverterExtension<T>> extensions;
 
-    public AbstractVarConverter() {
+    public AbstractVarConverter(Class<T> type) {
+        this.type = type;
+
         frommap.put(String.class, new Transformer<Object, T>() {
             public T transform(Object input) {
                 return fromString((String) input);
@@ -128,16 +134,56 @@ public abstract class AbstractVarConverter<T>
                 return toDateTime(input);
             }
         });
+
+        extensions = VarConverters.getExtensions(type);
+        Iterator<IVarConverterExtension<T>> it = extensions.iterator();
+        while (it.hasNext()) {
+            IVarConverterExtension<T> ext = it.next();
+
+            Map<Class<?>, Transformer<Object, T>> fm = ext.getFromMap();
+            for (Class<?> t : fm.keySet())
+                if (!frommap.containsKey(t))
+                    frommap.put(t, fm.get(t));
+
+            Map<Class<?>, Transformer<T, Object>> tm = ext.getToMap();
+            for (Class<?> t : tm.keySet())
+                if (!tomap.containsKey(t))
+                    tomap.put(t, tm.get(t));
+        }
+    }
+
+    @Override
+    public int getPriority() {
+        return 0;
+    }
+
+    @Override
+    public Class<T> getType() {
+        return type;
     }
 
     @Override
     public boolean canConvertFrom(Class<?> type) {
-        return frommap.containsKey(type);
+        if (frommap.containsKey(type))
+            return true;
+
+        for (IVarConverterExtension<T> ext : extensions)
+            if (ext.canConvertFrom(type))
+                return true;
+
+        return false;
     }
 
     @Override
     public boolean canConvertTo(Class<?> type) {
-        return tomap.containsKey(type);
+        if (tomap.containsKey(type))
+            return true;
+
+        for (IVarConverterExtension<T> ext : extensions)
+            if (ext.canConvertTo(type))
+                return true;
+
+        return false;
     }
 
     @Override
@@ -153,12 +199,16 @@ public abstract class AbstractVarConverter<T>
         Transformer<Object, T> fn = frommap.get(type);
         if (fn != null)
             return fn.transform(obj);
-        else
-            return fromImpl(type, obj);
+
+        for (IVarConverterExtension<T> ext : extensions)
+            if (ext.canConvertFrom(type))
+                return ext.convertFrom(type, obj);
+
+        return fromImpl(type, obj);
     }
 
     protected T fromImpl(Class<?> type, Object in) {
-        throw new TypeConvertException("Can't convert from this type: " + in.getClass());
+        throw new IllegalArgumentException("Can't convert from this type: " + type);
     }
 
     @Override
@@ -169,12 +219,17 @@ public abstract class AbstractVarConverter<T>
         Transformer<T, ?> fn = tomap.get(boxed);
         if (fn != null)
             return (U) fn.transform(value);
-        else
-            return toImpl(value, type);
+
+        for (IVarConverterExtension<T> ext : extensions)
+            if (ext.canConvertTo(type))
+                return ext.convertTo(value, type);
+
+        return toImpl(value, type);
     }
 
-    protected <U> U toImpl(T value, Class<U> type) {
-        throw new TypeConvertException("Can't convert to this type: " + type);
+    protected <U> U toImpl(T value, Class<U> type)
+            throws TypeConvertException {
+        throw new IllegalArgumentException("Can't convert to this type: " + type);
     }
 
     @Override

@@ -5,6 +5,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class DoubleVarConverter
         extends AbstractVarConverter<Double> {
 
+    public DoubleVarConverter() {
+        super(Double.class);
+    }
+
     @Override
     public Double fromString(String in)
             throws TypeConvertException {
