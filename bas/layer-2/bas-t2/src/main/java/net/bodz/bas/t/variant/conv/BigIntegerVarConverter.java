@@ -68,6 +68,6 @@ public class BigIntegerVarConverter
         return new BigDecimal(value);
     }
 
-    public static final BigIntegerVarConverter instance = new BigIntegerVarConverter();
+    public static final BigIntegerVarConverter INSTANCE = new BigIntegerVarConverter();
 
 }

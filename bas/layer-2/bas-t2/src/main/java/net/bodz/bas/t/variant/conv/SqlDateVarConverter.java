@@ -42,6 +42,6 @@ public class SqlDateVarConverter
         return true;
     }
 
-    public static final SqlDateVarConverter instance = new SqlDateVarConverter();
+    public static final SqlDateVarConverter INSTANCE = new SqlDateVarConverter();
 
 }

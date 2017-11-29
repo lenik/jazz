@@ -19,14 +19,14 @@ public class VarConverters {
 
     static void load() {
         for (Class<?> converterClass : IndexedTypes.list(IVarConverter.class, false)) {
-            IVarConverter<?> instance = (IVarConverter<?>) SingletonUtil.getInstanceField(converterClass);
-            Class<?> type = instance.getType();
+            IVarConverter<?> INSTANCE = (IVarConverter<?>) SingletonUtil.getInstanceField(converterClass);
+            Class<?> type = INSTANCE.getType();
             IVarConverter<?> prev = map.get(type);
             if (prev != null) {
-                if (prev.getPriority() < instance.getPriority())
+                if (prev.getPriority() < INSTANCE.getPriority())
                     continue;
             }
-            map.put(type, instance);
+            map.put(type, INSTANCE);
         }
     }
 
