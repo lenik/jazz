@@ -59,11 +59,7 @@ public abstract class AbstractPotatoElement
 
         Class<? extends ITyperFamily<?>> typerFamilyClass = _typerFamilyClass.value();
         ITyperFamily<?> typerFamily;
-        try {
-            typerFamily = SingletonUtil.callGetInstance(typerFamilyClass);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        typerFamily = SingletonUtil.callGetInstance(typerFamilyClass);
 
         T typer = typerFamily.query(typerClass);
         return typer;
