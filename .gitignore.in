@@ -103,6 +103,7 @@ config.status
 config.sub
 configure                               # configure.ac
 depcomp
+dependency-reduced-pom.xml              # maven
 install-sh                              # autoreconf -i
 itree.tex                               # makelook
 libauto                                 # coolauto
