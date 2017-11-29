@@ -1,85 +1,85 @@
 package net.bodz.bas.repr.state;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
+import java.util.TreeMap;
 
-import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
-import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.codegen.PublishDir;
+import net.bodz.bas.t.order.DefaultComparator;
 
-public class StateGroup {
+@IndexedType(publishDir = PublishDir.features)
+public abstract class StateGroup {
 
-    private Map<Integer, State> idMap;
-    private Map<String, State> qNameMap;
+    private String name;
+    private int nextId;
+
+    private Map<Integer, State> keyMap = new TreeMap<>(DefaultComparator.getInstance());
+    private Map<String, State> nameMap = new TreeMap<>(DefaultComparator.getInstance());
 
     public StateGroup() {
-        idMap = new HashMap<>();
-        qNameMap = new HashMap<>();
+        this(null, null);
     }
 
-    public State getState(int id) {
-        return idMap.get(id);
-    }
-
-    public State getState(String qName) {
-        return qNameMap.get(qName);
-    }
-
-    public State addState(State state) {
-        if (state == null)
-            throw new NullPointerException("state");
-
-        Integer id = state.getId();
-        String qName = state.getQName();
-
-        if (idMap.containsKey(id))
-            throw new DuplicatedKeyException(String.format("state qName(%s) has dup id: %s", qName, id));
-        if (qNameMap.containsKey(state.getName()))
-            throw new DuplicatedKeyException(String.format("state id(%s) has dup qname: %s", id, qName));
-
-        idMap.put(id, state);
-        qNameMap.put(qName, state);
-        return state;
-    }
-
-    public State addState(Class<?> declaringClass, String name, StateType type) {
-        State state = new State(declaringClass, name, type);
-        return addState(state);
-    }
-
-    protected void addStateFields(Field... fields) {
-        for (Field field : fields) {
-            if (!Modifier.isPublic(field.getModifiers()))
-                continue;
-            if (field.isAnnotationPresent(Derived.class))
-                continue;
-            if (!State.class.isAssignableFrom(field.getType()))
-                continue;
-            if (field.isAnnotationPresent(Derived.class))
-                continue;
-            try {
-                State state = (State) field.get(this);
-                addState(state);
-            } catch (ReflectiveOperationException e) {
-                throw new UnexpectedException(e.getMessage(), e);
-            }
+    public StateGroup(String name, Integer start) {
+        if (name == null)
+            name = getClass().getSimpleName();
+        this.name = name;
+        if (start == null) {
+            Start aStart = getClass().getAnnotation(Start.class);
+            if (aStart == null)
+                throw new IllegalUsageException("Require start integer.");
+            start = aStart.value();
         }
+        this.nextId = start;
     }
 
-    @Override
-    public String toString() {
-        return qNameMap.keySet().toString();
+    public String getName() {
+        return name;
     }
 
-    public static final StateGroup INDEXED;
-    static {
-        INDEXED = new StateGroup();
-        for (Class<?> clazz : IndexedTypes.list(IStateConsts.class, true)) {
-            INDEXED.addStateFields(clazz.getDeclaredFields());
-        }
+    public Map<Integer, State> getKeyMap() {
+        return Collections.unmodifiableMap(keyMap);
+    }
+
+    public Map<String, State> getNameMap() {
+        return Collections.unmodifiableMap(nameMap);
+    }
+
+    public Collection<State> getValues() {
+        return Collections.unmodifiableCollection(keyMap.values());
+    }
+
+    public State ofKey(int key) {
+        return keyMap.get(key);
+    }
+
+    public State ofName(String name) {
+        return nameMap.get(name);
+    }
+
+    public void addValue(State value) {
+        if (value == null)
+            throw new NullPointerException("value");
+
+        int key = value.getKey();
+        String name = value.getName();
+
+        if (keyMap.containsKey(key))
+            throw new DuplicatedKeyException(keyMap, key, "State key");
+        if (nameMap.containsKey(name))
+            throw new DuplicatedKeyException(nameMap, key, "State name");
+        keyMap.put(key, value);
+        nameMap.put(name, value);
+    }
+
+    protected static StateBuilder state(int id, StateGroup group) {
+        if (id == 0)
+            id = group.nextId++;
+        return new StateBuilder().id(id).group(group);
     }
 
 }

@@ -13,7 +13,8 @@ import net.bodz.bas.t.order.DefaultComparator;
 public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         implements IMetadata {
 
-    private final Class<E> type;
+    private final Class<E> itemClass;
+    private final Class<?> stopClass;
     private final int level;
 
     private Map<K, E> localKeyMap = new TreeMap<>(DefaultComparator.getInstance());
@@ -22,25 +23,32 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
     private Map<K, E> keyMap = new TreeMap<>(DefaultComparator.getInstance());
     private Map<String, E> nameMap = new TreeMap<>(DefaultComparator.getInstance());
 
-    public PredefMetadata(Class<E> clazz) {
-        if (clazz == null)
-            throw new NullPointerException("clazz");
+    PredefMetadata(Class<E> itemClass) {
+        this(itemClass, Predef.class);
+    }
+
+    PredefMetadata(Class<E> itemClass, Class<?> stopClass) {
+        if (itemClass == null)
+            throw new NullPointerException("itemClass");
+        if (stopClass == null)
+            throw new NullPointerException("stopClass");
+        this.itemClass = itemClass;
+        this.stopClass = stopClass;
 
         int level = -1;
-        Class<?> c = clazz;
-        while (!c.equals(Predef.class)) {
+        Class<?> c = itemClass;
+        while (!c.equals(stopClass)) {
             c = c.getSuperclass();
             if (c == null)
-                throw new IllegalArgumentException("Not a subclass of Symbol: " + clazz);
+                throw new IllegalArgumentException("Not a subclass of Symbol: " + itemClass);
             level++;
         }
 
-        this.type = clazz;
         this.level = level;
     }
 
-    public Class<E> getType() {
-        return type;
+    public Class<E> getItemClass() {
+        return itemClass;
     }
 
     public int getLevel() {
@@ -82,8 +90,8 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
     public void addValue(E value) {
         if (value == null)
             throw new NullPointerException("value");
-        if (!value.getClass().equals(type))
-            throw new IllegalArgumentException("Value is not a " + type.getName());
+        if (!value.getClass().equals(itemClass))
+            throw new IllegalArgumentException("Value is not a " + itemClass.getName());
 
         K key = value.getKey();
         String name = value.getName();
@@ -95,7 +103,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         localKeyMap.put(key, value);
         localNameMap.put(name, value);
 
-        Class<E> c = type;
+        Class<E> c = itemClass;
         while (true) {
             @SuppressWarnings("unchecked")
             PredefMetadata<E, K> metadata = (PredefMetadata<E, K>) (Object) forClass(c);
@@ -103,14 +111,14 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
             if (metadata.keyMap.containsKey(key))
                 throw new DuplicatedKeyException(metadata.keyMap, key, "more key");
             if (metadata.nameMap.containsKey(name))
-                throw new DuplicatedKeyException(metadata.keyMap, name, "more name");
+                throw new DuplicatedKeyException(metadata.nameMap, name, "more name");
             metadata.keyMap.put(key, value);
             metadata.nameMap.put(name, value);
 
             c = (Class<E>) c.getSuperclass();
             if (c == null)
                 break;
-            if (Predef.class.equals(c))
+            if (stopClass.equals(c))
                 break;
         }
 
