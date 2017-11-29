@@ -44,7 +44,7 @@ public class DiskId
             throws SystemException {
         try {
             WMISystemInfo info = WMISystemInfo.getInstance();
-            int count = info.getInt("disk.count");
+            int count = info.getInt("disk.count", 0);
             return count;
         } catch (WMIException e) {
             throw new SystemException(e.getMessage(), e);
