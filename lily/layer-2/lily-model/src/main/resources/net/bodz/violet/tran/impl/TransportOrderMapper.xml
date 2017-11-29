@@ -2,13 +2,13 @@
 <!DOCTYPE mapper 
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.violet.sale.impl.ShippingOrderMapper">
+<mapper namespace="net.bodz.violet.tran.impl.TransportOrderMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.sale.ShippingOrder" extends="message.MAP_ALL">
+    <resultMap id="map1" type="net.bodz.violet.tran.TransportOrder" extends="message.MAP_ALL">
         <result property="itemCount" column="size" />
         <result property="quantity" column="qty" />
         <result property="total" column="total" />
-        <association property="salesOrder" javaType="net.bodz.violet.sale.SalesOrder">
+        <association property="salesOrder" javaType="net.bodz.violet.shop.SalesOrder">
             <id property="id" column="saleodr" />
             <result property="subject" column="saleodr_subject" />
         </association>
