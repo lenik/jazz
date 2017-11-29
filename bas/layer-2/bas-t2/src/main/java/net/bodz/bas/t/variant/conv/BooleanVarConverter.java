@@ -45,6 +45,6 @@ public class BooleanVarConverter
         return value;
     }
 
-    public static final BooleanVarConverter instance = new BooleanVarConverter();
+    public static final BooleanVarConverter INSTANCE = new BooleanVarConverter();
 
 }

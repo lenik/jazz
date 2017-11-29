@@ -55,6 +55,6 @@ public class FloatVarConverter
         return value.intValue() != 0;
     }
 
-    public static final FloatVarConverter instance = new FloatVarConverter();
+    public static final FloatVarConverter INSTANCE = new FloatVarConverter();
 
 }

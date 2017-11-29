@@ -56,6 +56,6 @@ public class IntegerVarConverter
         return value.intValue() != 0;
     }
 
-    public static final IntegerVarConverter instance = new IntegerVarConverter();
+    public static final IntegerVarConverter INSTANCE = new IntegerVarConverter();
 
 }

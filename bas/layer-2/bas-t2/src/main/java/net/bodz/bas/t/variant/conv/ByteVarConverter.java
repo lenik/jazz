@@ -64,6 +64,6 @@ public class ByteVarConverter
         return value.intValue() != 0;
     }
 
-    public static final ByteVarConverter instance = new ByteVarConverter();
+    public static final ByteVarConverter INSTANCE = new ByteVarConverter();
 
 }

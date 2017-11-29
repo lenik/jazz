@@ -14,7 +14,7 @@ public abstract class AutoConvVariant
     @Override
     public byte getByte() {
         Object value = getScalar();
-        return ByteVarConverter.instance.from(value);
+        return ByteVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -23,7 +23,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return ByteVarConverter.instance.from(value);
+            return ByteVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -32,7 +32,7 @@ public abstract class AutoConvVariant
     @Override
     public short getShort() {
         Object value = getScalar();
-        return ShortVarConverter.instance.from(value);
+        return ShortVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -41,7 +41,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return ShortVarConverter.instance.from(value);
+            return ShortVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -50,7 +50,7 @@ public abstract class AutoConvVariant
     @Override
     public int getInt() {
         Object value = getScalar();
-        return IntegerVarConverter.instance.from(value);
+        return IntegerVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -59,7 +59,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return IntegerVarConverter.instance.from(value);
+            return IntegerVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -68,7 +68,7 @@ public abstract class AutoConvVariant
     @Override
     public long getLong() {
         Object value = getScalar();
-        return LongVarConverter.instance.from(value);
+        return LongVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -77,7 +77,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return LongVarConverter.instance.from(value);
+            return LongVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -86,7 +86,7 @@ public abstract class AutoConvVariant
     @Override
     public float getFloat() {
         Object value = getScalar();
-        return FloatVarConverter.instance.from(value);
+        return FloatVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -95,7 +95,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return FloatVarConverter.instance.from(value);
+            return FloatVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -104,7 +104,7 @@ public abstract class AutoConvVariant
     @Override
     public double getDouble() {
         Object value = getScalar();
-        return DoubleVarConverter.instance.from(value);
+        return DoubleVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -113,7 +113,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return DoubleVarConverter.instance.from(value);
+            return DoubleVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -122,7 +122,7 @@ public abstract class AutoConvVariant
     @Override
     public boolean getBoolean() {
         Object value = getScalar();
-        return BooleanVarConverter.instance.from(value);
+        return BooleanVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -131,7 +131,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return BooleanVarConverter.instance.from(value);
+            return BooleanVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -140,7 +140,7 @@ public abstract class AutoConvVariant
     @Override
     public char getChar() {
         Object value = getScalar();
-        return CharacterVarConverter.instance.from(value);
+        return CharacterVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -149,7 +149,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return CharacterVarConverter.instance.from(value);
+            return CharacterVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -158,7 +158,7 @@ public abstract class AutoConvVariant
     @Override
     public BigInteger getBigInteger() {
         Object value = getScalar();
-        return BigIntegerVarConverter.instance.from(value);
+        return BigIntegerVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -167,7 +167,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return BigIntegerVarConverter.instance.from(value);
+            return BigIntegerVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -176,7 +176,7 @@ public abstract class AutoConvVariant
     @Override
     public BigDecimal getBigDecimal() {
         Object value = getScalar();
-        return BigDecimalVarConverter.instance.from(value);
+        return BigDecimalVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -185,7 +185,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return BigDecimalVarConverter.instance.from(value);
+            return BigDecimalVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -194,7 +194,7 @@ public abstract class AutoConvVariant
     @Override
     public Date getDate() {
         Object value = getScalar();
-        return DateVarConverter.instance.from(value);
+        return DateVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -203,7 +203,7 @@ public abstract class AutoConvVariant
         if (value == null)
             return defaultValue;
         try {
-            return DateVarConverter.instance.from(value);
+            return DateVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }

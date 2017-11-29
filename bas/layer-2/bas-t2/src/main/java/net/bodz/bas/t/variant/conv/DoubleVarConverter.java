@@ -55,6 +55,6 @@ public class DoubleVarConverter
         return value.intValue() != 0;
     }
 
-    public static final DoubleVarConverter instance = new DoubleVarConverter();
+    public static final DoubleVarConverter INSTANCE = new DoubleVarConverter();
 
 }

@@ -310,22 +310,22 @@ public abstract class AbstractVarConverter<T>
     }
 
     public Calendar toCalendar(T value) {
-        return CalendarVarConverter.instance.from(value);
+        return CalendarVarConverter.INSTANCE.from(value);
     }
 
     @Override
     public Date toDate(T value) {
-        return DateVarConverter.instance.from(value);
+        return DateVarConverter.INSTANCE.from(value);
     }
 
     @Override
     public java.sql.Date toSqlDate(T value) {
-        return SqlDateVarConverter.instance.from(value);
+        return SqlDateVarConverter.INSTANCE.from(value);
     }
 
     @Override
     public DateTime toDateTime(T value) {
-        return DateTimeVarConverter.instance.from(value);
+        return DateTimeVarConverter.INSTANCE.from(value);
     }
 
 }

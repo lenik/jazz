@@ -8,7 +8,7 @@ import org.junit.Assert;
 public class DateVarConverterTest
         extends Assert {
 
-    static DateVarConverter converter = DateVarConverter.instance;
+    static DateVarConverter converter = DateVarConverter.INSTANCE;
 
     public static void main(String[] args)
             throws ParseException {

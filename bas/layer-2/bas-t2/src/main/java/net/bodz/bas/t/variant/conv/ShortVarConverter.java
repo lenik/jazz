@@ -56,6 +56,6 @@ public class ShortVarConverter
         return value.intValue() != 0;
     }
 
-    public static final ShortVarConverter instance = new ShortVarConverter();
+    public static final ShortVarConverter INSTANCE = new ShortVarConverter();
 
 }

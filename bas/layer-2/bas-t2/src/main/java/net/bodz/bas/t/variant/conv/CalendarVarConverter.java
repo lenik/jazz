@@ -38,6 +38,6 @@ public class CalendarVarConverter
         return true;
     }
 
-    public static final CalendarVarConverter instance = new CalendarVarConverter();
+    public static final CalendarVarConverter INSTANCE = new CalendarVarConverter();
 
 }

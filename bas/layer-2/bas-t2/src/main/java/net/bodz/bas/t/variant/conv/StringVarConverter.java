@@ -76,6 +76,6 @@ public class StringVarConverter
         return BooleanVarConverter._fromString(in);
     }
 
-    public static final StringVarConverter instance = new StringVarConverter();
+    public static final StringVarConverter INSTANCE = new StringVarConverter();
 
 }

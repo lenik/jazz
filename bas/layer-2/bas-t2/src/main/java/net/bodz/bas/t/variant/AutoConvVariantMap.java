@@ -17,7 +17,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return ByteVarConverter.instance.from(value);
+            return ByteVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -26,7 +26,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return ByteVarConverter.instance.from(value);
+            return ByteVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -38,7 +38,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return ShortVarConverter.instance.from(value);
+            return ShortVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -47,7 +47,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return ShortVarConverter.instance.from(value);
+            return ShortVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -59,7 +59,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return IntegerVarConverter.instance.from(value);
+            return IntegerVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -68,7 +68,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return IntegerVarConverter.instance.from(value);
+            return IntegerVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -80,7 +80,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return LongVarConverter.instance.from(value);
+            return LongVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -89,7 +89,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return LongVarConverter.instance.from(value);
+            return LongVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -101,7 +101,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return FloatVarConverter.instance.from(value);
+            return FloatVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -110,7 +110,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return FloatVarConverter.instance.from(value);
+            return FloatVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -122,7 +122,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return DoubleVarConverter.instance.from(value);
+            return DoubleVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -131,7 +131,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return DoubleVarConverter.instance.from(value);
+            return DoubleVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -143,7 +143,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return BooleanVarConverter.instance.from(value);
+            return BooleanVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -152,7 +152,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return BooleanVarConverter.instance.from(value);
+            return BooleanVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -164,7 +164,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return CharacterVarConverter.instance.from(value);
+            return CharacterVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -173,7 +173,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return CharacterVarConverter.instance.from(value);
+            return CharacterVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -185,7 +185,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return BigIntegerVarConverter.instance.from(value);
+            return BigIntegerVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -194,7 +194,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return BigIntegerVarConverter.instance.from(value);
+            return BigIntegerVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -206,7 +206,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return BigDecimalVarConverter.instance.from(value);
+            return BigDecimalVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -215,7 +215,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return BigDecimalVarConverter.instance.from(value);
+            return BigDecimalVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
@@ -227,7 +227,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null)
             return null;
         else
-            return DateVarConverter.instance.from(value);
+            return DateVarConverter.INSTANCE.from(value);
     }
 
     @Override
@@ -236,7 +236,7 @@ public abstract class AutoConvVariantMap<K>
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
-            return DateVarConverter.instance.from(value);
+            return DateVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }

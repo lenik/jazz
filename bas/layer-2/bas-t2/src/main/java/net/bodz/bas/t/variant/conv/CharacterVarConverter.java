@@ -64,6 +64,6 @@ public class CharacterVarConverter
         return value.charValue();
     }
 
-    public static final CharacterVarConverter instance = new CharacterVarConverter();
+    public static final CharacterVarConverter INSTANCE = new CharacterVarConverter();
 
 }

@@ -43,6 +43,6 @@ public class DateVarConverter
         return true;
     }
 
-    public static final DateVarConverter instance = new DateVarConverter();
+    public static final DateVarConverter INSTANCE = new DateVarConverter();
 
 }

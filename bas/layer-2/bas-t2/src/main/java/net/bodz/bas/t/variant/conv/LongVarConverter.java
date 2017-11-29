@@ -56,6 +56,6 @@ public class LongVarConverter
         return value.intValue() != 0;
     }
 
-    public static final LongVarConverter instance = new LongVarConverter();
+    public static final LongVarConverter INSTANCE = new LongVarConverter();
 
 }
