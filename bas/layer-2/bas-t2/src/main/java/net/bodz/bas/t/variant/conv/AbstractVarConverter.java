@@ -135,7 +135,7 @@ public abstract class AbstractVarConverter<T>
             }
         });
 
-        extensions = VarConverters.getExtensions(type);
+        extensions = VarConverterExtensions.getExtensions(type);
         Iterator<IVarConverterExtension<T>> it = extensions.iterator();
         while (it.hasNext()) {
             IVarConverterExtension<T> ext = it.next();
