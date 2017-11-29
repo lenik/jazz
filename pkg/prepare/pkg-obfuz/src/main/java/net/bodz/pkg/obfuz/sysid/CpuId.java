@@ -46,7 +46,7 @@ public class CpuId
             throws SystemException {
         try {
             WMISystemInfo info = WMISystemInfo.getInstance();
-            int count = info.getInt("cpu.count");
+            int count = info.getInt("cpu.count", 0);
             return count;
         } catch (WMIException e) {
             throw new SystemException(e.getMessage(), e);

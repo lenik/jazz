@@ -263,9 +263,9 @@ public class TransportOrder
             if (key.startsWith("qty-")) {
                 String sidStr = key.substring(4);
                 long sid = Long.parseLong(sidStr);
-                double qty = map.getDouble(key);
+                double qty = map.getDouble(key, 0);
                 String priceKey = "price-" + sid;
-                double price = map.getDouble(priceKey);
+                double price = map.getDouble(priceKey, 0);
 
                 TransportOrderItem item = new TransportOrderItem();
                 item.setDelivery(this);

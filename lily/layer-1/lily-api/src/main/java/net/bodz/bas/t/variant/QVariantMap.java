@@ -12,8 +12,6 @@ import net.bodz.bas.t.range.DoubleRange;
 import net.bodz.bas.t.range.FloatRange;
 import net.bodz.bas.t.range.IntRange;
 import net.bodz.bas.t.range.LongRange;
-import net.bodz.bas.t.variant.DecoratedVariantMap;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 
 /**
@@ -120,7 +118,7 @@ public class QVariantMap<K>
     public <T extends IId<Integer>> T getIntIdRef(K key, T skel) {
         String s = getString(key);
         if (s != null && !s.isEmpty()) {
-            int id = getInt(key);
+            Integer id = getInt(key);
             skel.setId(id);
         }
         return skel;
@@ -129,7 +127,7 @@ public class QVariantMap<K>
     public <T extends IId<Long>> T getLongIdRef(K key, T skel) {
         String s = getString(key);
         if (s != null && !s.isEmpty()) {
-            long id = getLong(key);
+            Long id = getLong(key);
             skel.setId(id);
         }
         return skel;
