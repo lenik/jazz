@@ -3,15 +3,14 @@ package net.bodz.bas.t.variant.conv;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DateFormat;
-import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections15.Transformer;
+import org.joda.time.DateTime;
 
-import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.err.TypeConvertException;
 
@@ -105,27 +104,60 @@ public abstract class AbstractVarConverter<T>
                 return toBigDecimal(input);
             }
         });
+        tomap.put(Calendar.class, new Transformer<T, Calendar>() {
+            @Override
+            public Calendar transform(T input) {
+                return toCalendar(input);
+            }
+        });
         tomap.put(Date.class, new Transformer<T, Date>() {
             @Override
             public Date transform(T input) {
                 return toDate(input);
             }
         });
+        tomap.put(java.sql.Date.class, new Transformer<T, java.sql.Date>() {
+            @Override
+            public java.sql.Date transform(T input) {
+                return toSqlDate(input);
+            }
+        });
+        tomap.put(DateTime.class, new Transformer<T, DateTime>() {
+            @Override
+            public DateTime transform(T input) {
+                return toDateTime(input);
+            }
+        });
     }
 
     @Override
-    public final T fromObject(Object in)
-            throws TypeConvertException {
-        if (in == null)
-            throw new NullPointerException("in");
-        Transformer<Object, T> fn = frommap.get(in.getClass());
-        if (fn != null)
-            return fn.transform(in);
-        else
-            return fromObjectImpl(in);
+    public boolean canConvertFrom(Class<?> type) {
+        return frommap.containsKey(type);
     }
 
-    protected T fromObjectImpl(Object in) {
+    @Override
+    public boolean canConvertTo(Class<?> type) {
+        return tomap.containsKey(type);
+    }
+
+    @Override
+    public final T from(Object obj) {
+        return from(obj.getClass(), obj);
+    }
+
+    @Override
+    public final T from(Class<?> type, Object obj)
+            throws TypeConvertException {
+        if (obj == null)
+            throw new NullPointerException("in");
+        Transformer<Object, T> fn = frommap.get(type);
+        if (fn != null)
+            return fn.transform(obj);
+        else
+            return fromImpl(type, obj);
+    }
+
+    protected T fromImpl(Class<?> type, Object in) {
         throw new TypeConvertException("Can't convert from this type: " + in.getClass());
     }
 
@@ -222,17 +254,23 @@ public abstract class AbstractVarConverter<T>
         return BigDecimal.valueOf(fval);
     }
 
-    private static DateFormat dateFormat = Dates.ISO8601_ms;
+    public Calendar toCalendar(T value) {
+        return CalendarVarConverter.instance.from(value);
+    }
 
+    @Override
     public Date toDate(T value) {
-        String s = toString(value);
-        if (s == null)
-            return null;
-        try {
-            return dateFormat.parse(s);
-        } catch (ParseException e) {
-            throw new TypeConvertException(e.getMessage(), e);
-        }
+        return DateVarConverter.instance.from(value);
+    }
+
+    @Override
+    public java.sql.Date toSqlDate(T value) {
+        return SqlDateVarConverter.instance.from(value);
+    }
+
+    @Override
+    public DateTime toDateTime(T value) {
+        return DateTimeVarConverter.instance.from(value);
     }
 
 }

@@ -59,7 +59,7 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public byte getByte(K key) {
+    public Byte getByte(K key) {
         return 0;
     }
 
@@ -73,7 +73,7 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public short getShort(K key) {
+    public Short getShort(K key) {
         return 0;
     }
 
@@ -88,7 +88,7 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public int getInt(K key) {
+    public Integer getInt(K key) {
         return 0;
     }
 
@@ -102,8 +102,8 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public long getLong(K key) {
-        return 0;
+    public Long getLong(K key) {
+        return 0L;
     }
 
     @Override
@@ -116,8 +116,8 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public float getFloat(K key) {
-        return 0;
+    public Float getFloat(K key) {
+        return Float.NaN;
     }
 
     @Override
@@ -130,8 +130,8 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public double getDouble(K key) {
-        return 0;
+    public Double getDouble(K key) {
+        return Double.NaN;
     }
 
     @Override
@@ -144,7 +144,7 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public boolean getBoolean(K key) {
+    public Boolean getBoolean(K key) {
         return false;
     }
 
@@ -158,7 +158,7 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public char getChar(K key) {
+    public Character getChar(K key) {
         return 0;
     }
 

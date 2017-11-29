@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
+import net.bodz.bas.c.primitive.Primitives;
+
 public class VarConverters {
 
     static Map<Class<?>, IVarConverter<?>> map = new HashMap<>();
@@ -41,7 +43,9 @@ public class VarConverters {
         map.put(DateTime.class, DateTimeVarConverter.instance);
     }
 
-    public static <T> IVarConverter<T> getConverter(Class<T> type) {
+    public static <T> IVarConverter<T> getConverter(Class<?> type) {
+        if (type.isPrimitive())
+            type = Primitives.box(type);
         IVarConverter<T> converter = (IVarConverter<T>) map.get(type);
         return converter;
     }
