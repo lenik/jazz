@@ -5,6 +5,15 @@ import net.bodz.bas.err.TypeConvertException;
 public class StringVarConverter
         extends AbstractVarConverter<String> {
 
+    public StringVarConverter() {
+        super(String.class);
+    }
+
+    @Override
+    public boolean canConvertFrom(Class<?> type) {
+        return super.canConvertFrom(type);
+    }
+
     @Override
     public String fromString(String in)
             throws TypeConvertException {

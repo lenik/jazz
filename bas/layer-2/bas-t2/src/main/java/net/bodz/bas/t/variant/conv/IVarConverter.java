@@ -8,8 +8,14 @@ import java.util.Date;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.t.order.IPriority;
 
-public interface IVarConverter<T> {
+@IndexedType
+public interface IVarConverter<T>
+        extends IPriority {
+
+    Class<T> getType();
 
     boolean canConvertFrom(Class<?> type);
 

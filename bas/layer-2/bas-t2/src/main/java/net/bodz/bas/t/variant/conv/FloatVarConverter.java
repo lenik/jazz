@@ -1,9 +1,13 @@
- package net.bodz.bas.t.variant.conv;
+package net.bodz.bas.t.variant.conv;
 
 import net.bodz.bas.err.TypeConvertException;
 
 public class FloatVarConverter
         extends AbstractVarConverter<Float> {
+
+    public FloatVarConverter() {
+        super(Float.class);
+    }
 
     @Override
     public Float fromString(String in)

@@ -1,0 +1,15 @@
+net.bodz.bas.t.variant.conv.BigDecimalVarConverter
+net.bodz.bas.t.variant.conv.BigIntegerVarConverter
+net.bodz.bas.t.variant.conv.BooleanVarConverter
+net.bodz.bas.t.variant.conv.ByteVarConverter
+net.bodz.bas.t.variant.conv.CalendarVarConverter
+net.bodz.bas.t.variant.conv.CharacterVarConverter
+net.bodz.bas.t.variant.conv.DateTimeVarConverter
+net.bodz.bas.t.variant.conv.DateVarConverter
+net.bodz.bas.t.variant.conv.DoubleVarConverter
+net.bodz.bas.t.variant.conv.FloatVarConverter
+net.bodz.bas.t.variant.conv.IntegerVarConverter
+net.bodz.bas.t.variant.conv.LongVarConverter
+net.bodz.bas.t.variant.conv.ShortVarConverter
+net.bodz.bas.t.variant.conv.SqlDateVarConverter
+net.bodz.bas.t.variant.conv.StringVarConverter

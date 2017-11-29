@@ -5,6 +5,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class IntegerVarConverter
         extends AbstractVarConverter<Integer> {
 
+    public IntegerVarConverter() {
+        super(Integer.class);
+    }
+
     @Override
     public Integer fromString(String in)
             throws TypeConvertException {

@@ -8,6 +8,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class BigDecimalVarConverter
         extends AbstractVarConverter<BigDecimal> {
 
+    public BigDecimalVarConverter() {
+        super(BigDecimal.class);
+    }
+
     @Override
     public BigDecimal fromString(String in)
             throws TypeConvertException {

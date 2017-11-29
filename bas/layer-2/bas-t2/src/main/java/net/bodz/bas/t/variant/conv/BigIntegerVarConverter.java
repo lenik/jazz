@@ -8,6 +8,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class BigIntegerVarConverter
         extends AbstractVarConverter<BigInteger> {
 
+    public BigIntegerVarConverter() {
+        super(BigInteger.class);
+    }
+
     @Override
     public BigInteger fromString(String in)
             throws TypeConvertException {

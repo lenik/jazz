@@ -5,6 +5,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class BooleanVarConverter
         extends AbstractVarConverter<Boolean> {
 
+    public BooleanVarConverter() {
+        super(Boolean.class);
+    }
+
     @Override
     public Boolean fromString(String in) {
         return _fromString(in);

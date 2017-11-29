@@ -5,6 +5,10 @@ import net.bodz.bas.err.TypeConvertException;
 public class ShortVarConverter
         extends AbstractVarConverter<Short> {
 
+    public ShortVarConverter() {
+        super(Short.class);
+    }
+
     @Override
     public Short fromString(String in)
             throws TypeConvertException {
