@@ -15,8 +15,8 @@ import net.bodz.bas.t.order.IPriority;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.model.mixin.UserClickInfo;
 import net.bodz.lily.model.mixin.UseForm;
+import net.bodz.lily.model.mixin.UserClickInfo;
 
 /**
  * @label Message

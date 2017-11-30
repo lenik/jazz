@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.store.impl.ArtifactPriceMapper">
+
+    <resultMap id="map1" type="net.bodz.violet.store.ArtifactPrice" extends="co.MAP_UVX">
+        <result property="buyPrice" column="buy" />
+        <result property="sellPrice" column="sell" />
+        <association property="artifact" javaType="net.bodz.violet.store.Artifact">
+            <id property="id" column="art" />
+            <result property="label" column="artifact_label" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            art.label "art_label",
+            u.label "uid_label",
+            g.label "gid_label"
+        from artprice a
+            left join art on a.art = art.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            art.label "art_label",
+            u.label "uid_label",
+            g.label "gid_label"
+        from artprice a
+            left join art on a.art = art.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into artprice(
+            art, buy, sell
+        ) values(
+            #{artifact.id}, #{buyPrice}, #{sellPrice}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update artprice
+        <set>
+            <include refid="co.setS" />
+            art = #{artifact.id},
+            buy = #{buyPrice},
+            sell = #{sellPrice},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from artprice where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from artprice
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

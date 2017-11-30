@@ -30,6 +30,7 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.model.base.security.AccessControl;
 
+@Deprecated
 @AccessControl
 @IndexedType
 @VirtualHostScope

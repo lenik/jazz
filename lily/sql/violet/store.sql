@@ -6,6 +6,7 @@
 --\import violet.store.art_parm
 --\import violet.store.art_region
 --\import violet.store.art_tag
+--\import violet.store.artprice
 --\import violet.store.region
 --\import violet.store.storeodr
 --\import violet.store.storeodrl

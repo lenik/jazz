@@ -7,7 +7,6 @@ import org.junit.Assert;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
-
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.base.security.impl.UserMapper;

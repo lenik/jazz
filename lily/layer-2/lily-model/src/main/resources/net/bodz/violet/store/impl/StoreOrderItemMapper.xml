@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.store.impl.StoreOrderItemMapper">
+
+    <resultMap id="map1" type="net.bodz.violet.store.StoreOrderItem" extends="co.MAP_UVX">
+        <result property="beginDate" column="t0" />
+        <result property="endDate" column="t1" />
+    
+        <result property="serial" column="serial" />
+        <result property="expire" column="serial" />
+        <result property="quantity" column="qty" />
+        <result property="price" column="price" />
+        <result property="total" column="total" />
+        <result property="comment" column="comment" />
+        
+        <!-- result property="batchStruct" column="batch" / -->
+        
+        <association property="order" javaType="net.bodz.violet.store.StorePhase">
+            <id property="id" column="odr" />
+            <result property="subject" column="odr_subject" />
+        </association>
+        <association property="artifact" javaType="net.bodz.violet.store.Artifact">
+            <id property="id" column="art" />
+            <result property="label" column="artifact_label" />
+        </association>
+        <association property="region" javaType="net.bodz.violet.store.Region">
+            <id property="id" column="region" />
+            <result property="label" column="region_label" />
+            <result property="fullPath" column="region_path" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            u.label "uid_label",
+            g.label "gid_label"
+        from storeodrl a
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            u.label "uid_label",
+            g.label "gid_label"
+        from storeodrl a
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="_insert"><![CDATA[
+        insert into storeodrl(
+            code, label, description
+        ) values(
+            #{codeName}, #{label}, #{description}
+        )
+    ]]></insert>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into storeodrl(
+            code, label, description
+        ) values(
+            #{codeName}, #{label}, #{description}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update storeodrl
+        <set>
+            <include refid="co.setUS" />
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from storeodrl where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from storeodrl
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>
