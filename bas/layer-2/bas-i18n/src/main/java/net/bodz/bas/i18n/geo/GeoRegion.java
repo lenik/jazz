@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Region {
+public class GeoRegion {
 
     private final String code;
     private final String localeName;
@@ -12,10 +12,10 @@ public class Region {
     private String enName;
     private String zhName;
 
-    private final Region parent;
-    private final List<Region> children = new ArrayList<Region>();;
+    private final GeoRegion parent;
+    private final List<GeoRegion> children = new ArrayList<GeoRegion>();;
 
-    public Region(String code, String localeName, Region parent) {
+    public GeoRegion(String code, String localeName, GeoRegion parent) {
         this.code = code;
         this.localeName = localeName;
         this.parent = parent;
@@ -23,9 +23,9 @@ public class Region {
             parent.children.add(this);
     }
 
-    public List<Region> bottomUp() {
-        List<Region> list = new ArrayList<>();
-        Region node = this;
+    public List<GeoRegion> bottomUp() {
+        List<GeoRegion> list = new ArrayList<>();
+        GeoRegion node = this;
         while (node != null) {
             list.add(node);
             node = node.getParent();
@@ -33,8 +33,8 @@ public class Region {
         return list;
     }
 
-    public List<Region> topDown() {
-        List<Region> list = bottomUp();
+    public List<GeoRegion> topDown() {
+        List<GeoRegion> list = bottomUp();
         Collections.reverse(list);
         return list;
     }
@@ -45,7 +45,7 @@ public class Region {
 
     public String joinId() {
         StringBuilder sb = new StringBuilder(16);
-        for (Region r : topDown())
+        for (GeoRegion r : topDown())
             sb.append(r.code);
         return sb.toString();
     }
@@ -70,11 +70,11 @@ public class Region {
         this.zhName = zhName;
     }
 
-    public Region getParent() {
+    public GeoRegion getParent() {
         return parent;
     }
 
-    public List<Region> getChildren() {
+    public List<GeoRegion> getChildren() {
         return children;
     }
 
@@ -85,7 +85,7 @@ public class Region {
 
     public String toString(String delimit) {
         StringBuilder sb = new StringBuilder();
-        Region r = this;
+        GeoRegion r = this;
         while (true) {
             sb.append(r.enName);
             r = r.parent;

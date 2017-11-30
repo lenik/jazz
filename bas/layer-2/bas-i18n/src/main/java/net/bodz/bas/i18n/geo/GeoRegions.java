@@ -12,16 +12,16 @@ import java.util.Map;
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.ParseException;
 
-public class Regions {
+public class GeoRegions {
 
-    private static final Region china = new Region("", "中国", null);
-    private static final Map<String, Region> chinaIndex = new HashMap<String, Region>();
+    private static final GeoRegion china = new GeoRegion("", "中国", null);
+    private static final Map<String, GeoRegion> chinaIndex = new HashMap<String, GeoRegion>();
 
-    public static Region getChina() {
+    public static GeoRegion getChina() {
         return china;
     }
 
-    public static Region getChinaRegion(String id) {
+    public static GeoRegion getChinaRegion(String id) {
         return chinaIndex.get(id);
     }
 
@@ -35,7 +35,7 @@ public class Regions {
 
     private static void loadChinaRegions()
             throws IOException, ParseException {
-        URL csv = Regions.class.getResource("china-2013.csv");
+        URL csv = GeoRegions.class.getResource("china-2013.csv");
         InputStream in = csv.openStream();
 
         try {
@@ -57,7 +57,7 @@ public class Regions {
 
                 String id = line.substring(0, colon);
                 String zhName = line.substring(colon + 1);
-                Region parent;
+                GeoRegion parent;
                 String code;
 
                 // AABBCCDDD
@@ -86,7 +86,7 @@ public class Regions {
                     throw new ParseException("Bad ID: " + id);
                 }
 
-                Region region = new Region(code, zhName, parent);
+                GeoRegion region = new GeoRegion(code, zhName, parent);
                 region.setZhName(zhName);
                 chinaIndex.put(id, region);
             }
