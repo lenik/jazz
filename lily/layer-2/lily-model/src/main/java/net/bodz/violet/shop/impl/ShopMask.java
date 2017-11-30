@@ -8,4 +8,14 @@ import net.bodz.lily.model.base.CoObjectMask;
 public class ShopMask
         extends CoObjectMask {
 
+    String hydm;
+
+    public String getHydm() {
+        return hydm;
+    }
+
+    public void setHydm(String hydm) {
+        this.hydm = hydm;
+    }
+
 }

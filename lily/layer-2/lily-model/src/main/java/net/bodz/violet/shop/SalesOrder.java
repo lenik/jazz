@@ -24,10 +24,10 @@ import net.bodz.violet.tran.TransportOrder;
  * 
  * owner: 制单
  */
-@IdType(Integer.class)
+@IdType(Long.class)
 @Table(name = "saleodr")
 public class SalesOrder
-        extends CoMessage<Integer> {
+        extends CoMessage<Long> {
 
     private static final long serialVersionUID = 1L;
 

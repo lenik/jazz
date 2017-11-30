@@ -22,6 +22,8 @@ public class Region
     public static final int ID_AbstractRoot = 1;
     public static final int ID_TemplateRoot = 2;
 
+    private String fullPath;
+
     private Artifact asArtifact;
     private ArtifactCategory forArtifactCategory;
     private Artifact forArtifact;
@@ -32,6 +34,17 @@ public class Region
     private Dim3d bbox = new Dim3d();
     private Person person;
     private Organization org;
+
+    /**
+     * redundant.
+     */
+    public String getFullPath() {
+        return fullPath;
+    }
+
+    public void setFullPath(String fullPath) {
+        this.fullPath = fullPath;
+    }
 
     public Artifact getAsArtifact() {
         return asArtifact;

@@ -31,7 +31,8 @@
         org         int
             references org(id) on update cascade,
 
-        ou          int,
+        ou          int
+            references orgunit(id) on update cascade,
 
         person      int
             references person(id) on update cascade,

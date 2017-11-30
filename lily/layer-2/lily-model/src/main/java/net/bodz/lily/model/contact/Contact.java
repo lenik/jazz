@@ -3,8 +3,8 @@ package net.bodz.lily.model.contact;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.i18n.geo.Region;
-import net.bodz.bas.i18n.geo.Regions;
+import net.bodz.bas.i18n.geo.GeoRegion;
+import net.bodz.bas.i18n.geo.GeoRegions;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -46,7 +46,7 @@ public class Contact
     private String rename;
     private String usage;
 
-    private Region region;
+    private GeoRegion region;
     private String country = "cn";
     private String r1;
     private String r2;
@@ -135,11 +135,11 @@ public class Contact
      */
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(EntGroup.Position.class)
-    public Region getRegion() {
+    public GeoRegion getRegion() {
         return region;
     }
 
-    public void setRegion(Region region) {
+    public void setRegion(GeoRegion region) {
         this.region = region;
     }
 
@@ -151,7 +151,7 @@ public class Contact
     }
 
     public void setRegionId(String id) {
-        this.region = Regions.getChinaRegion(id);
+        this.region = GeoRegions.getChinaRegion(id);
     }
 
     /**

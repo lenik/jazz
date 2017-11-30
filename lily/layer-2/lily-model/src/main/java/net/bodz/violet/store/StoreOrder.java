@@ -17,11 +17,11 @@ import net.bodz.violet.plan.Plan;
 /**
  * 库存作业
  */
-@IdType(Integer.class)
+@IdType(Long.class)
 // @SchemaPref(Schemas.STOCK)
 @Table(name = "storeodr")
 public class StoreOrder
-        extends CoMessage<Integer> {
+        extends CoMessage<Long> {
 
     private static final long serialVersionUID = 1L;
 

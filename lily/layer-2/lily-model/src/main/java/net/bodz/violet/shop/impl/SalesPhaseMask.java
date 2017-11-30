@@ -3,9 +3,9 @@ package net.bodz.violet.shop.impl;
 import net.bodz.lily.model.base.CoCodeMask;
 
 /**
- * @see net.bodz.violet.shop.ShopItemCategory
+ * @see net.bodz.violet.shop.SalesPhase
  */
-public class ShopItemCategoryMask
+public class SalesPhaseMask
         extends CoCodeMask {
 
 }
