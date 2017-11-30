@@ -5,6 +5,15 @@
 <mapper namespace="net.bodz.violet.shop.impl.ShopMapper">
 
     <resultMap id="map1" type="net.bodz.violet.shop.Shop" extends="co.MAP_UVX">
+        <result property="hydm" column="hydm" />
+    </resultMap>
+    
+    <resultMap id="map2" type="net.bodz.violet.shop.Shop" extends="map1">
+        <collection property="items" javaType="net.bodz.lily.entity.SizedList" ofType="net.bodz.violet.shop.ShopItem">
+            <id property="id" column="y_id" />
+            <result property="label" column="y_label" />
+            <result property="description" column="y_description" />
+        </collection>
     </resultMap>
 
     <sql id="select1"><![CDATA[

@@ -5,6 +5,7 @@
 <mapper namespace="net.bodz.violet.store.impl.RegionMapper">
 
     <resultMap id="map1" type="net.bodz.violet.store.Region" extends="co.MAP_UVX">
+        <result property="fullPath" column="path" />
         <association property="category" javaType="net.bodz.violet.store.RegionCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
@@ -68,17 +69,22 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into region(code, label, description, cat, parent)
-            values(#{codeName},#{label},#{description}, #{category.id}, #{parent.id})
-            returning id; --
+        insert into region(
+            code, label, description, parent, cat,
+            path
+        ) values(
+            #{codeName},#{label},#{description}, #{parent.id}, #{category.id},
+            #{fullPath}
+        ) returning id; --
     ]]></insert>
 
     <update id="update">
         update region
         <set>
-            <include refid="co.setU" />
-            <if test="category != null">cat=#{category.id}, </if>
+            <include refid="co.setUS" />
             <if test="parent != null">parent=#{parent.id}, </if>
+            <if test="category != null">cat=#{category.id}, </if>
+            path=#{fullPath},
         </set>
         <where>
             <if test="id != null">id=#{id}</if>

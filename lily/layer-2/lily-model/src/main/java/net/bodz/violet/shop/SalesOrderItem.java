@@ -30,6 +30,7 @@ public class SalesOrderItem
     public static final int N_FOOTNOTE = 200;
 
     SalesOrder order;
+    ShopItem shopItem;
     Artifact artifact;
 
     boolean resale;
@@ -51,6 +52,17 @@ public class SalesOrderItem
 
     public void setOrder(SalesOrder order) {
         this.order = order;
+    }
+
+    /**
+     * 上架跟踪
+     */
+    public ShopItem getShopItem() {
+        return shopItem;
+    }
+
+    public void setShopItem(ShopItem shopItem) {
+        this.shopItem = shopItem;
     }
 
     /**
