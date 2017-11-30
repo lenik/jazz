@@ -6,20 +6,20 @@ import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
 
-public class RegionsTest
+public class GeoRegionsTest
         extends Assert {
 
-    static void dump(ITreeOut out, Region r) {
+    static void dump(ITreeOut out, GeoRegion r) {
         out.println(r.joinId() + " - " + r.getLocaleName());
         out.enter();
-        for (Region child : r.getChildren())
+        for (GeoRegion child : r.getChildren())
             dump(out, child);
         out.leave();
     }
 
     public static void main(String[] args) {
         ITreeOut out = TreeOutImpl.from(Stdio.cout);
-        dump(out, Regions.getChina());
+        dump(out, GeoRegions.getChina());
     }
 
 }
