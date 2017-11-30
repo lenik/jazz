@@ -7,6 +7,7 @@ public class SalesOrderItemMask
         extends CoObjectMask {
 
     Long orderId;
+    Long shopItemId;
     Integer artifactId;
 
     Boolean resale;
@@ -24,6 +25,14 @@ public class SalesOrderItemMask
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public Long getShopItemId() {
+        return shopItemId;
+    }
+
+    public void setShopItemId(Long shopItemId) {
+        this.shopItemId = shopItemId;
     }
 
     public Integer getArtifactId() {

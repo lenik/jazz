@@ -4,6 +4,7 @@ import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
+import net.bodz.violet.store.Artifact;
 
 /**
  * 购物车项
@@ -28,6 +29,10 @@ public class CartItem
 
     public void setShopItem(ShopItem shopItem) {
         this.shopItem = shopItem;
+    }
+
+    public Artifact getArtifact() {
+        return shopItem.getArtifact();
     }
 
     /**

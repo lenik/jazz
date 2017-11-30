@@ -30,6 +30,7 @@ net.bodz.violet.plan.impl.PlanParameterIndex
 net.bodz.violet.plan.impl.PlanPartyIndex
 net.bodz.violet.plan.impl.PlanVoteIndex
 net.bodz.violet.shop.impl.CartIndex
+net.bodz.violet.shop.impl.CartItemIndex
 net.bodz.violet.shop.impl.SalesCategoryIndex
 net.bodz.violet.shop.impl.SalesOrderIndex
 net.bodz.violet.shop.impl.SalesOrderItemIndex
@@ -47,6 +48,7 @@ net.bodz.violet.store.impl.ArtifactTagIndex
 net.bodz.violet.store.impl.RegionCategoryIndex
 net.bodz.violet.store.impl.RegionIndex
 net.bodz.violet.store.impl.StoreCategoryIndex
+net.bodz.violet.store.impl.StoreItemIndex
 net.bodz.violet.store.impl.StoreOrderIndex
 net.bodz.violet.store.impl.StoreOrderItemIndex
 net.bodz.violet.store.impl.StorePhaseIndex

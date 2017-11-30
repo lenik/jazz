@@ -5,27 +5,53 @@
 <mapper namespace="net.bodz.violet.shop.impl.ShopItemMapper">
 
     <resultMap id="map1" type="net.bodz.violet.shop.ShopItem" extends="co.MAP_UVX">
+        <result property="quantity" column="qty" />
+        <result property="price" column="price" />
+        <association property="shop" javaType="net.bodz.violet.shop.Shop">
+            <id property="id" column="shop" />
+            <result property="label" column="shop_label" />
+        </association>
+        <association property="category" javaType="net.bodz.violet.shop.ShopItemCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
+        <association property="artifact" javaType="net.bodz.violet.store.Artifact">
+            <id property="id" column="art" />
+            <result property="label" column="art_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            shop.label "shop_label",
+            cat.label "cat_label",
+            art.label "art_label",
             u.label "uid_label",
             g.label "gid_label"
-        from shopItem a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+        from shopitem a
+            left join shop on a.shop = shop.id
+            left join shopitemcat cat on a.cat = cat.id
+            left join art on a.art = art.id
+            left join "user" u on shop.uid = u.id
+            left join "group" g on shop.gid = g.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
+            shop.label "shop_label",
+            cat.label "cat_label",
+            art.label "art_label",
             u.label "uid_label",
             g.label "gid_label"
-        from shopItem a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+        from shopitem a
+            left join shop on a.shop = shop.id
+            left join shopitemcat cat on a.cat = cat.id
+            left join art on a.art = art.id
+            left join "user" u on shop.uid = u.id
+            left join "group" g on shop.gid = g.id
         ]]>
     </sql>
 
@@ -52,26 +78,25 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into shopItem(
-            code, label, description
-        ) values(
-            #{codeName}, #{label}, #{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into shopItem(
-            code, label, description
+        insert into shopitem(
+            label, description,
+            shop, cat, art, price, qty
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{label}, #{description},
+            #{shop.id}, #{category.id}, #{artifact.id}, #{price}, #{quantity}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
-        update shopItem
+        update shopitem
         <set>
             <include refid="co.setUS" />
+            shop = #{shop.id},
+            cat = #{category.id},
+            art = #{artifact.id},
+            price = #{price},
+            qty = #{quantity},
         </set>
         <where>
             id = #{id}
@@ -79,11 +104,11 @@
     </update>
 
     <delete id="delete">
-        delete from shopItem where id = #{id}
+        delete from shopitem where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from shopItem
+        select count(*) "rows" from shopitem
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

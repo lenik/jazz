@@ -11,6 +11,8 @@
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Props
 
+        path        varchar(200) not null default '?',
+
         -- null proto for system type
         -- otherwise referres to the template region.
         proto       int
