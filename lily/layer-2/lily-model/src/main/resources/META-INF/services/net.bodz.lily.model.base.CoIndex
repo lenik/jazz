@@ -45,6 +45,7 @@ net.bodz.violet.store.impl.ArtifactIndex
 net.bodz.violet.store.impl.ArtifactPhaseIndex
 net.bodz.violet.store.impl.ArtifactPriceIndex
 net.bodz.violet.store.impl.ArtifactTagIndex
+net.bodz.violet.store.impl.OffStoreItemIndex
 net.bodz.violet.store.impl.RegionCategoryIndex
 net.bodz.violet.store.impl.RegionIndex
 net.bodz.violet.store.impl.StoreCategoryIndex

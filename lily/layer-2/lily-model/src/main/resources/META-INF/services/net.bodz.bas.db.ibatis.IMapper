@@ -53,6 +53,7 @@ net.bodz.violet.store.impl.ArtifactParameterMapper
 net.bodz.violet.store.impl.ArtifactPhaseMapper
 net.bodz.violet.store.impl.ArtifactPriceMapper
 net.bodz.violet.store.impl.ArtifactTagMapper
+net.bodz.violet.store.impl.OffStoreItemMapper
 net.bodz.violet.store.impl.RegionCategoryMapper
 net.bodz.violet.store.impl.RegionMapper
 net.bodz.violet.store.impl.StoreCategoryMapper

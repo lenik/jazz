@@ -11,7 +11,7 @@
         
         <association property="artifact" javaType="net.bodz.violet.store.Artifact">
             <id property="id" column="art" />
-            <result property="label" column="artifact_label" />
+            <result property="label" column="art_label" />
         </association>
         <association property="region" javaType="net.bodz.violet.store.Region">
             <id property="id" column="region" />
