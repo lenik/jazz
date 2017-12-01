@@ -136,6 +136,7 @@ public class VarMapLoader {
                 break;
             }
 
+            // Load collections.
             try {
                 lval = property.getValue(obj);
             } catch (ReflectiveOperationException e) {
@@ -144,8 +145,19 @@ public class VarMapLoader {
 
             if (rval instanceof ILookupMap) {
                 ILookupMap<String, ?> rmap = ILookupMap.class.cast(rval);
+                if (lval == null) {
+                    if (!autoCreate) {
+                        logger.warn("Skipped to load nested map on null property.");
+                        return;
+                    }
+                    try {
+                        lval = ltype.newInstance();
+                    } catch (ReflectiveOperationException e) {
+                        throw new LoaderException("Failed to auto create: " + e.getMessage(), e);
+                    }
+                }
                 load(ltype, lval, rmap);
-                return;
+                break;
             }
 
             if (rval instanceof List<?>) {
