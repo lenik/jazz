@@ -19,3 +19,9 @@
         qty         numeric(20,2) not null
     );
 
+    create index storel_lastmod     on storel(lastmod desc);
+    create index storel_priority    on storel(priority);
+    create index storel_state       on storel(state);
+    create index storel_uid_acl     on storel(uid, acl);
+  --create index storel_uom         on storel(uom);
+

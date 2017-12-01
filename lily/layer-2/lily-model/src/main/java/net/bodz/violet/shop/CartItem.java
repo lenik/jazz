@@ -32,7 +32,10 @@ public class CartItem
     }
 
     public Artifact getArtifact() {
-        return shopItem.getArtifact();
+        if (shopItem == null)
+            return null;
+        else
+            return shopItem.getArtifact();
     }
 
     /**
