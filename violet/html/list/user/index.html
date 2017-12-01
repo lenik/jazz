@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>选择…</title>
+        
+        <link rel="stylesheet" type="text/css" href="../../libfont/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="../../libjs/jquery-ui/themes/base/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="../../skel/skel.css">
+        <link rel="stylesheet" type="text/css" href="../../site.css">
+        <link rel="stylesheet" type="text/css" href="../list.css">
+        
+        <script type="text/javascript" src="../../libjs/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="../../libjs/jquery-ui/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../../libjs/vuejs/vue.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="../../libjs/datatables/media/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="../../libjs/datatables/examples/resources/bootstrap/3/dataTables.bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="../../libjs/datatables/extensions/ColVis/css/dataTables.colVis.css">
+        <link rel="stylesheet" type="text/css" href="../../libjs/datatables/extensions/TableTools/css/dataTables.tableTools.css">
+        <script type="text/javascript" src="../../libjs/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="../../libjs/datatables/examples/resources/bootstrap/3/dataTables.bootstrap.js"></script>
+        <script type="text/javascript" src="../../libjs/datatables/extensions/ColVis/js/dataTables.colVis.js"></script>
+        <script type="text/javascript" src="../../libjs/datatables/extensions/TableTools/js/dataTables.tableTools.js"></script>
+                
+        <script type="text/javascript" src="../../libjs/lenik/dev-local.js"></script>
+        <script type="text/javascript" src="../../libjs/lenik/http-request.js"></script>
+        <script type="text/javascript" src="../../libjs/lenik/dom-util.js"></script>
+        <script type="text/javascript" src="../../libjs/lenik/ajax-form.js"></script>
+
+        <script type="text/javascript" src="../../skel/async.js"></script>
+        <script type="text/javascript" src="../list-model.js"></script>
+        <script type="text/javascript" src="../../skel/skel.js"></script>
+        <script type="text/javascript" src="../../skel/site-supp.js"></script>
+        <script type="text/javascript" src="../../site.js"></script>
+        <script type="text/javascript" src="../list.js"></script>
+    </head>
+<body>
+    
+        <div class="view-col flex-column fill">
+            <nav id="view-nav">
+                <a href='list' :class="{ selected: view=='list' }"><i class="fa fa-list"></i>
+                    列表 </a>
+                <a href='filter' :class="{ selected: view=='filter' }"><i class="fa fa-filter"></i>
+                    过滤</a>
+            </nav>
+
+            <div id="views" class="stack">
+<!------------------------------- BEGIN OF VIEWS ---------------------------->
+<div k="list" :class="{selected: view=='list'}"><div class="list-cmds flex-column">
+    <div class="list">
+        <table :class="css.dataTable" data-href="../../User"><thead>
+            <th data-field="id" class="id">id</th>
+            <th data-field="codeName">登录名</th>
+            <th data-field="fullName">全名</th>
+            <th data-field="creationDate" data-format="yyyy-MM-dd">注册时间</th>
+        </thead><tbody>
+        </tbody></table>
+    </div>
+    <div class="cmds">
+        <ul>
+            <li class=""><a href="reload"><i class="fa fa-refresh"></i> 刷新</a></li>
+            <li class=""><a href="select"><i class="fa fa-check"></i> 选择</a></li>
+            <li class=""><a href="close"><i class="fa fa-close"></i> 关闭</a></li>
+        </ul>
+     </div>
+</div></div>
+
+<div k="filter" :class="{selected: view=='filter'}">
+Filter
+</div>
+<!--+++++++++++++++++++++++++++++ END OF VIEWS ++++++++++++++++++++++++++-->
+            </div>
+        </div>
+    
+    <div class="dialogs">
+        <div id="waitbox" class="modal">
+            <div class="flex-row">
+                <div class="content">
+                    <i class="fa fa-circle-o-notch fa-spin"></i>
+                    <span class="text">Wait...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
