@@ -11,42 +11,6 @@ public interface IDateFormatConsts {
     DateFormat SYS_TIME = DateFormat.getTimeInstance();
     DateFormat SYS_DATETIME = DateFormat.getDateTimeInstance();
 
-    /**
-     * <code>2010-01-01T12:00:00+01:00</code>
-     * <p>
-     * Be aware, the time zone formats available to SimpleDateFormat (Java 6 and earlier) are not
-     * ISO 8601 compliant. SimpleDateFormat understands time zone strings like "GMT+01:00" or
-     * "+0100", the latter according to RFC # 822.
-     * <p>
-     * Even if Java 7 added support for time zone descriptors according to ISO 8601,
-     * SimpleDateFormat is still not able to properly parse a complete date string, as it has no
-     * support for optional parts.
-     * <p>
-     * The easier solution is possibly to use the data type converter in JAXB, since JAXB must be
-     * able to parse ISO8601 date string according to the XML Schema specification.
-     * 
-     * @see javax.xml.bind.DatatypeConverter#parseDateTime(String)
-     */
-    DateFormat ISO8601 = Dates.format("yyyy-MM-dd'T'HH:mm:ssXXX");
-
-    /**
-     * <code>2001-07-04T12:08:56.235-07:00</code>
-     * <p>
-     * Be aware, the time zone formats available to SimpleDateFormat (Java 6 and earlier) are not
-     * ISO 8601 compliant. SimpleDateFormat understands time zone strings like "GMT+01:00" or
-     * "+0100", the latter according to RFC # 822.
-     * <p>
-     * Even if Java 7 added support for time zone descriptors according to ISO 8601,
-     * SimpleDateFormat is still not able to properly parse a complete date string, as it has no
-     * support for optional parts.
-     * <p>
-     * The easier solution is possibly to use the data type converter in JAXB, since JAXB must be
-     * able to parse ISO8601 date string according to the XML Schema specification.
-     * 
-     * @see javax.xml.bind.DatatypeConverter#parseDateTime(String)
-     */
-    DateFormat ISO8601_ms = Dates.format("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-
     DateFormat RFC1123 = Dates.format("EEE, dd MMM yyyy HH:mm:ss zzz");
 
     /**

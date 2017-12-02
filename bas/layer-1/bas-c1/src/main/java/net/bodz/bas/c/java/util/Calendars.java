@@ -1,10 +1,29 @@
 package net.bodz.bas.c.java.util;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 public class Calendars {
+
+    public static Calendar parseIso8601(String s) {
+        return javax.xml.bind.DatatypeConverter.parseDateTime(s);
+    }
+
+    public static String formatIso8601(Date date) {
+        return formatIso8601(date.getTime());
+    }
+
+    public static String formatIso8601(long time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return formatIso8601(calendar);
+    }
+
+    public static String formatIso8601(Calendar calendar) {
+        return javax.xml.bind.DatatypeConverter.printDateTime(calendar);
+    }
 
     public static Calendar parseTimestampTZ(String s) {
         return parseTimeTZ(s, 1000);
