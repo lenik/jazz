@@ -1,20 +1,25 @@
 package net.bodz.bas.log;
 
+import org.joda.time.DateTime;
+
 public class LogEntry
         implements ILogEntry {
 
+    private final DateTime time;
     private final Object source;
     private final Object messageObject;
     private final Throwable exception;
 
-    public LogEntry(Object source, Object messageObject) {
-        this(source, messageObject, null);
-    }
-
-    public LogEntry(Object source, Object messageObject, Throwable exception) {
+    public LogEntry(DateTime time, Object source, Object messageObject, Throwable exception) {
+        this.time = time;
         this.source = source;
         this.messageObject = messageObject;
         this.exception = exception;
+    }
+
+    @Override
+    public DateTime getTime() {
+        return time;
     }
 
     @Override
