@@ -6,6 +6,10 @@
         code        varchar(20) unique, -- not null?
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
+        
+        image       varchar(200),
+        imagealt    varchar(80),
+
 --\mixin lily.mixin.Props
     -- bonus
 
