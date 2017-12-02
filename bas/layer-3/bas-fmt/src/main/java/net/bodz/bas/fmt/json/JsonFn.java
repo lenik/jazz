@@ -54,6 +54,14 @@ public class JsonFn {
     }
 
     public static String toJson(IJsonSerializable obj) {
+        return toJson(obj, false);
+    }
+
+    /**
+     * @param compact
+     *            Format json in compact single line form.
+     */
+    public static String toJson(IJsonSerializable obj, boolean compact) {
         StringWriter buf = new StringWriter();
         JSONWriter writer = new JSONWriter(buf);
         try {
