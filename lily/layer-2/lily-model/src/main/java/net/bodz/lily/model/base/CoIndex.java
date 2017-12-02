@@ -1,8 +1,5 @@
 package net.bodz.lily.model.base;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +14,13 @@ import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.io.res.builtin.ReaderSource;
-import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedType;
@@ -37,6 +33,7 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.ajax.AjaxResult;
+import net.bodz.bas.site.ajax.HttpPayload;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -126,18 +123,16 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
                 target = newHandler(q);
                 break;
             case "save":
-                try {
-                    BufferedReader reader = req.getReader();
-                    target = saveHandler(q, reader);
-                } catch (IOException e) {
-                    throw new PathDispatchException("Failed to read request payload: " + e.getMessage(), e);
-                }
+                JSONObject json = HttpPayload.getJsonPayload(req);
+                target = saveHandler(q, json);
                 break;
             default:
                 String fileName = FilePath.stripExtension(token);
                 if (StringPred.isDecimal(fileName))
                     target = loadHandler(fileName, q);
             }
+        } catch (LoadException e) {
+            throw new PathDispatchException("Failed to read request payload: " + e.getMessage(), e);
         } catch (RequestHandlerException e) {
             throw new PathDispatchException("Failed to handle request: " + e.getMessage(), e);
         }
@@ -217,19 +212,12 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         return wrapper;
     }
 
-    protected Object saveHandler(IVariantMap<String> q, Reader jsonPayload)
+    protected Object saveHandler(IVariantMap<String> q, JSONObject json)
             throws RequestHandlerException {
         AjaxResult result = new AjaxResult();
-        JSONObject root;
-        try {
-            String json = new ReaderSource(jsonPayload).to(StreamReading.class).readString();
-            root = new JSONObject(json);
-        } catch (Exception e) {
-            throw new RequestHandlerException("Failed to parse json: " + e.getMessage(), e);
-        }
 
         T obj;
-        boolean create = root.isNull("id");
+        boolean create = json.isNull("id");
         if (create) {
             try {
                 obj = create();
@@ -237,12 +225,12 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
                 throw new RequestHandlerException("Failed to instantiate: " + e.getMessage(), e);
             }
         } else {
-            long id = root.getLong("id");
+            long id = json.getLong("id");
             obj = load(id);
         }
 
         try {
-            obj.readObject(new JsonVarMap(root));
+            obj.readObject(new JsonVarMap(json));
         } catch (LoaderException e) {
             throw new RequestHandlerException("Failed to apply json: " + e.getMessage(), e);
         }
