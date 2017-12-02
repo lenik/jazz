@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.bodz.bas.c.java.util.Calendars;
 import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
@@ -55,7 +56,7 @@ public class Sitemap_xml
                         .attr("rel", "alternate") //
                         .attr("hreflang", alternate.getKey()) //
                         .attr("href", alternate.getValue());
-            tag.begin("lastmod").text(ISO8601.format(entry.getLastModified()));
+            tag.begin("lastmod").text(Calendars.formatIso8601(entry.getLastModified()));
             tag.begin("changefreq").text(entry.getChangeFreq());
             tag.begin("priority").text(entry.getPriority());
         }
