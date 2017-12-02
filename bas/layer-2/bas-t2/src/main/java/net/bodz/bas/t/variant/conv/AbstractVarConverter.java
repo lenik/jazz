@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections15.Transformer;
+import org.apache.commons.collections15.functors.NOPTransformer;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.c.primitive.Primitives;
@@ -27,6 +28,12 @@ public abstract class AbstractVarConverter<T>
     public AbstractVarConverter(Class<T> type) {
         this.type = type;
 
+        frommap.put(type, new Transformer<Object, T>() {
+            @Override
+            public T transform(Object input) {
+                return AbstractVarConverter.this.type.cast(input);
+            }
+        });
         frommap.put(String.class, new Transformer<Object, T>() {
             public T transform(Object input) {
                 return fromString((String) input);
@@ -68,6 +75,7 @@ public abstract class AbstractVarConverter<T>
             }
         });
 
+        tomap.put(type, NOPTransformer.<T> getInstance());
         tomap.put(Float.class, new Transformer<T, Float>() {
             @Override
             public Float transform(T input) {
@@ -196,6 +204,9 @@ public abstract class AbstractVarConverter<T>
             throws TypeConvertException {
         if (obj == null)
             throw new NullPointerException("in");
+        if (this.type == type)
+            return this.type.cast(obj);
+
         Transformer<Object, T> fn = frommap.get(type);
         if (fn != null)
             return fn.transform(obj);
@@ -208,13 +219,17 @@ public abstract class AbstractVarConverter<T>
     }
 
     protected T fromImpl(Class<?> type, Object in) {
-        throw new IllegalArgumentException("Can't convert from this type: " + type);
+        throw new IllegalArgumentException(String.format(//
+                "Can't convert to %s from %s. ", getType(), type));
     }
 
     @Override
     public <U> U to(T value, Class<U> type) {
         if (type == null)
             throw new NullPointerException("type");
+        if (this.type == type)
+            return type.cast(value);
+
         Class<?> boxed = Primitives.box(type);
         Transformer<T, ?> fn = tomap.get(boxed);
         if (fn != null)
