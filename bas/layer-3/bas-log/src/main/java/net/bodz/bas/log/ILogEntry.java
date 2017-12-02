@@ -1,6 +1,10 @@
 package net.bodz.bas.log;
 
+import org.joda.time.DateTime;
+
 public interface ILogEntry {
+
+    DateTime getTime();
 
     /**
      * The object on which the Event initially occurred.
