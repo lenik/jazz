@@ -9,7 +9,7 @@ public class MutableRequestTest
         extends Assert {
 
     @Test
-    public void test1() {
+    public void testParseURL() {
         MutableRequest req = new MutableRequest(null, "abc://def?name=lenik&age=13#mid");
         assertEquals("abc", req.getProtocol());
         assertEquals("mid", req.getAnchor());
