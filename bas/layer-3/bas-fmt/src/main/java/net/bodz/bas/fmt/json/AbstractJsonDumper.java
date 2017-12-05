@@ -214,7 +214,6 @@ public abstract class AbstractJsonDumper<self_t>
                 } catch (JSONException e) {
                     throw e;
                 }
-
             return;
 
         case TypeId.BOOLEAN:
@@ -241,6 +240,7 @@ public abstract class AbstractJsonDumper<self_t>
             out.value(jodaDateStr);
             return;
 
+//            TODO Scalar
         default:
             IParser<?> parser = Typers.getTyper(type, IParser.class);
             if (parser != null) {

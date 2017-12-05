@@ -1,11 +1,16 @@
 package net.bodz.bas.site.ajax;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import net.bodz.bas.err.LoadException;
+import net.bodz.bas.io.res.builtin.ReaderSource;
+import net.bodz.bas.io.res.tools.StreamReading;
 
 public class HttpPayload {
 
@@ -25,13 +30,12 @@ public class HttpPayload {
                 if (altParam != null)
                     json = req.getParameter(altParam);
                 if (json == null)
-                    return null;
-// try {
-// BufferedReader reader = req.getReader();
-// json = new ReaderSource(reader).to(StreamReading.class).readString();
-// } catch (IOException e) {
-// throw new LoadException("Failed to read request payload: " + e.getMessage(), e);
-// }
+                    try {
+                        BufferedReader reader = req.getReader();
+                        json = new ReaderSource(reader).to(StreamReading.class).readString();
+                    } catch (IOException e) {
+                        throw new LoadException("Failed to read request payload: " + e.getMessage(), e);
+                    }
                 jsonObj = new JSONObject(json);
                 req.setAttribute(JSON_ATTRIBUTE_NAME, jsonObj);
                 return jsonObj;

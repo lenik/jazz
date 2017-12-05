@@ -43,6 +43,9 @@ public abstract class AbstractJsonViewBuilder<T>
 
     @Override
     public void precompile(IHttpViewContext ctx, IUiRef<T> ref) {
+//         Somewhere to configure?
+//        HttpServletResponse response = ctx.getResponse();
+//        response.addHeader("Access-Control-Allow-Origin", "*");
     }
 
     @Override
