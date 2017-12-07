@@ -22,7 +22,7 @@ public class LocalResourceMappings
         fontsDir = localLink("/libfont", "/usr/share/fonts", 365).install(config);
         fontsFontAwesomeDir = localLink("/libfont/font-awesome", "/usr/share/fonts-font-awesome", 365).install(config);
         iconsDir = localLink("/icons", "/usr/share/icons", 365).install(config);
-        javascriptDir = localLink("/libjs", "/usr/share/javascript", 365).install(config);
+        javascriptDir = localLink("/libjs-alt", "/usr/share/javascript", 365).install(config);
         webjarsDir = resourceLink("/webjars", "META-INF/resources/webjars", 365);
     }
 

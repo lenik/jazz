@@ -19,9 +19,9 @@ public interface IBasicSiteAnchors {
     IAnchor _icons_ = _webApp_.join("icons/");
 
     /** @see LocalResourceMappings#javascriptDir */
-    IAnchor _js_ = _webApp_.join("libjs/");
-    IAnchor _jQueryUI_ = _webApp_.join("libjs/jquery-ui/");
-    IAnchor _jQueryUIThemes_ = _webApp_.join("libjs/jquery-ui-themes/");
+    IAnchor _js_ = _webApp_.join("libjs-alt/");
+    IAnchor _jQueryUI_ = _webApp_.join("libjs-alt/jquery-ui/");
+    IAnchor _jQueryUIThemes_ = _webApp_.join("libjs-alt/jquery-ui-themes/");
 
     /** @see LocalResourceMappings#webjarsDir */
     IAnchor _webjars_ = _webApp_.join("webjars/");
