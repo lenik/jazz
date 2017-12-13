@@ -17,10 +17,10 @@ public class StdStates
         return StateGroup.state(id, StdStates.INSTANCE).declaring(StdStates.class);
     }
 
-    public static final State INIT = state(ID_INIT).name("init").type(StateType.NONTERM).build();
-    public static final State OK = state(ID_OK).name("ok").build();
-    public static final State WAIT = state(ID_WAIT).name("wait").build();
-    public static final State ERROR = state(ID_ERROR).name("error").type(StateType.ERROR).build();
-    public static final State EPSILON = state(ID_EPSILON).name("epsilon").type(StateType.NONTERM).build();
+    public static final State INIT = state(ID_INIT).name("init").nonterm().build();
+    public static final State OK = state(ID_OK).name("ok").accepted().build();
+    public static final State WAIT = state(ID_WAIT).name("wait").accepted().build();
+    public static final State ERROR = state(ID_ERROR).name("error").error().build();
+    public static final State EPSILON = state(ID_EPSILON).name("epsilon").nonterm().build();
 
 }

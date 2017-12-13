@@ -33,6 +33,21 @@ public class StateBuilder {
         return this;
     }
 
+    public StateBuilder nonterm() {
+        this.type = StateType.NONTERM;
+        return this;
+    }
+
+    public StateBuilder accepted() {
+        this.type = StateType.ACCEPTED;
+        return this;
+    }
+
+    public StateBuilder error() {
+        this.type = StateType.ERROR;
+        return this;
+    }
+
     public State build() {
         State state = new State(id, name, type, declaringClass);
         if (group != null)
