@@ -6,8 +6,8 @@
 
     <resultMap id="map1" type="net.bodz.violet.tran.TransportOrder" extends="message.MAP_ALL">
         <result property="itemCount" column="size" />
-        <result property="quantity" column="qty" />
-        <result property="total" column="total" />
+        <result property="totalQuantity" column="sum_qty" />
+        <result property="totalAmount" column="sum_amount" />
         <association property="salesOrder" javaType="net.bodz.violet.shop.SalesOrder">
             <id property="id" column="saleodr" />
             <result property="subject" column="saleodr_subject" />
@@ -92,13 +92,13 @@
             t0, t1,
             op, subject, text, form, args, cat, phase,
             prev, topic, org, ou, person,
-            qty, total
+            sum_qty, sum_amount
         ) values(
             #{priority}, #{flags}, #{state}, #{owner.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{beginDate}, #{endDate},
             #{op.id}, #{subject}, #{text}, #{form.id}, #{formArgs}, #{category.id}, #{phase.id},
             #{previous.id}, #{topic.id}, #{org.id}, #{orgUnit.id}, #{person.id},
-            #{quantity}, #{total}
+            #{totalQuantity}, #{totalAmount}
         ) returning id; --
     ]]></insert>
 
@@ -111,8 +111,8 @@
             <if test="org != null">org = #{org.id},</if>
             <if test="orgUnit != null">ou = #{orgUnit.id},</if>
             <if test="person != null">person = #{person.id},</if>
-            qty = #{quantity},
-            total = #{total},
+            sum_qty = #{totalQuantity},
+            sum_amount = #{totalAmount},
         </set>
         <where>
             <if test="id != null">id = #{id}</if>
