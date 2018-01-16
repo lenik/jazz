@@ -31,8 +31,8 @@ public class TypeCollector<T> {
     final Class<?> baseClass;
 
     ClassScanner scanner;
-    List<String> includePackages = new ArrayList<String>();
-    List<String> excludePackages = new ArrayList<String>();
+    List<String> includePrefixes = new ArrayList<String>();
+    List<String> excludePrefixes = new ArrayList<String>();
     boolean scanned;
 
     boolean showPaths;
@@ -86,16 +86,16 @@ public class TypeCollector<T> {
     }
 
     public void includePackageToScan(String packageName) {
-        includePackages.add(packageName);
+        includePrefixes.add(packageName);
     }
 
     public void excludePackageToScan(String packageName) {
-        excludePackages.remove(packageName);
+        excludePrefixes.remove(packageName);
     }
 
     protected void scanTypes()
             throws IOException {
-        for (String packageName : includePackages)
+        for (String packageName : includePrefixes)
             scanner.scan(packageName);
     }
 
@@ -183,8 +183,8 @@ public class TypeCollector<T> {
                     Iterator<String> iterator = lines.iterator();
                     while (iterator.hasNext()) {
                         String line = iterator.next();
-                        for (String pkg : includePackages)
-                            if (line.startsWith(pkg)) {
+                        for (String prefix : includePrefixes)
+                            if (line.startsWith(prefix)) {
                                 iterator.remove();
                                 break;
                             }

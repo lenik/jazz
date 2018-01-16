@@ -3,9 +3,12 @@ package net.bodz.bas.shell.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.loader.scan.TypeCollector;
 import net.bodz.bas.c.type.TypeIndex;
+import net.bodz.bas.io.Stdio;
+import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedType;
@@ -66,8 +69,13 @@ public class TypeCollectorApp
     protected void mainImpl(String... args)
             throws Exception {
 
+        if (logger.getLevel().compareTo(LogLevel.DEBUG) >= 0)
+            URLClassLoaders.dump(classLoader, Stdio.cout);
+
         if (packages.isEmpty())
             buildPackageList(packages);
+        for (String p : packages)
+            logger.info("Search-Prefix: ", p);
 
         if (baseTypes.isEmpty())
             for (Class<?> type : typeIndex.listAnnodated(IndexedType.class))
@@ -94,7 +102,6 @@ public class TypeCollectorApp
     protected void buildPackageList(List<String> packages) {
         String projectPackage = getClass().getPackage().getName();
         packages.add(projectPackage);
-
         packages.add("user");
     }
 
