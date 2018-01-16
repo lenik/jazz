@@ -21,11 +21,11 @@
             <result property="label" column="phase_label" />
         </association>
         <association property="org" javaType="net.bodz.lily.model.contact.Organization">
-            <id property="id" column="org" />
+            <id property="id" column="cust_org" />
             <result property="label" column="org_label" />
         </association>
         <association property="person" javaType="net.bodz.lily.model.contact.Person">
-            <id property="id" column="person" />
+            <id property="id" column="cust_person" />
             <result property="label" column="person_label" />
         </association>
     </resultMap>
@@ -57,8 +57,8 @@
             left join storecat cat on a.cat = cat.id
             left join storephase phase on a.phase = phase.id
             left join plan on a.plan = plan.id
-            left join org on a.org = org.id
-            left join person on a.person = person.id
+            left join org on a.cust_org = org.id
+            left join person on a.cust_person = person.id
         ]]>
     </sql>
 
@@ -80,8 +80,8 @@
             left join storecat cat on a.cat = cat.id
             left join storephase phase on a.phase = phase.id
             left join plan on a.plan = plan.id
-            left join org on a.org = org.id
-            left join person on a.person = person.id
+            left join org on a.cust_org = org.id
+            left join person on a.cust_person = person.id
             left join saleodrl y on y.odr = a.id
         ]]>
     </sql>
@@ -105,8 +105,8 @@
         <if test="m.noPhase">and a.phase is null</if>
 
         <if test="m.planId != null">and a.plan=#{m.planId}</if>
-        <if test="m.orgId != null">and a.org=#{m.orgId}</if>
-        <if test="m.personId != null">and a.person=#{m.personId}</if>
+        <if test="m.orgId != null">and a.cust_org=#{m.orgId}</if>
+        <if test="m.personId != null">and a.cust_person=#{m.personId}</if>
         <if test="m.tagId != null">and x.tag=#{m.tagId}</if>
         <if test="m.noTag">and x.tag is null</if>
     </sql>
@@ -134,14 +134,14 @@
             priority, flags, state, uid, gid, mode, acl,
             t0, t1,
             op, subject, text, form, args, cat, phase,
-            prev, topic, org, person,
-            qty, total
+            prev, topic, cust_org, cust_person,
+            sum_qty, sum_amount
         ) values(
             #{priority}, #{flags}, #{state}, #{owner.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{beginDate}, #{endDate},
             #{op.id}, #{subject}, #{text}, #{form.id}, #{formArgs}, #{category.id}, #{phase.id},
             #{previous.id}, #{topic.id}, #{org.id}, #{person.id},
-            #{quantity}, #{total}
+            #{totalQuantity}, #{totalAmount}
         ) returning id; --
     ]]></insert>
 
@@ -151,10 +151,10 @@
             <include refid="message.set1" />
             <if test="previous != null">prev = #{previous.id},</if>
             <if test="plan != null">plan = #{plan.id},</if>
-            <if test="org != null">org = #{org.id},</if>
-            <if test="person != null">person = #{person.id},</if>
-            qty = #{quantity},
-            total = #{total},
+            <if test="org != null">cust_org = #{org.id},</if>
+            <if test="person != null">cust_person = #{person.id},</if>
+            sum_qty = #{totalQuantity},
+            sum_amount = #{totalAmount},
         </set>
         <where>
             <if test="id != null">id = #{id}</if>
