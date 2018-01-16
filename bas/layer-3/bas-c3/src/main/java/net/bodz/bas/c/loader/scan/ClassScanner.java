@@ -150,43 +150,44 @@ public class ClassScanner
 
         Class<?> superclass = clazz.getSuperclass();
         if (superclass != null) {
-            counter += parseSuperclass(clazz, superclass);
+            counter += addSuperclass(clazz, superclass);
         } else
             rootClasses.add(clazz);
 
         for (Class<?> iface : clazz.getInterfaces())
-            counter += parseImpls(clazz, iface);
+            counter += addImpls_rec(clazz, iface);
 
         // clazz.getDeclaredAnnotations()
         for (Annotation annotation : clazz.getAnnotations())
-            counter += parseAnnotation(clazz, annotation);
+            counter += addAnnotation(clazz, annotation);
 
         return counter;
     }
 
-    int parseSuperclass(Class<?> clazz, Class<?> superclass) {
+    int addSuperclass(Class<?> clazz, Class<?> superclass) {
         int counter = 0;
         Set<Class<?>> subclasses = getSubclasses(superclass);
         if (subclasses.add(clazz))
             counter++;
-        counter += parseClass(superclass);
+
+        counter += analyze(superclass);
         return counter;
     }
 
-    int parseImpls(Class<?> clazz, Class<?> iface) {
+    int addImpls_rec(Class<?> clazz, Class<?> iface) {
         int counter = 0;
         Set<Class<?>> impls = getImpls(iface);
         if (impls.add(clazz))
             counter++;
 
-        for (Class<?> sup : iface.getInterfaces())
-            counter += parseImpls(clazz, sup);
+        for (Class<?> _iface_sup : iface.getInterfaces())
+            counter += addImpls_rec(clazz, _iface_sup);
 
-        counter += parseClass(iface); // iface is also parsed in full-scan.
+        counter += analyze(iface); // iface is also parsed in full-scan.
         return counter;
     }
 
-    int parseAnnotation(Class<?> clazz, Annotation annotation) {
+    int addAnnotation(Class<?> clazz, Annotation annotation) {
         int counter = 0;
         Class<? extends Annotation> annotationType = annotation.annotationType();
         Set<Class<?>> annotatedSet = getAnnotatedClasses(annotationType);

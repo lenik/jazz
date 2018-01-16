@@ -9,7 +9,12 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
+
 public class ResourceScanner {
+
+    static final Logger logger = LoggerFactory.getLogger(ResourceScanner.class);
 
     private ClassLoader classLoader;
     private IFileOrEntryFilter filter;
@@ -69,18 +74,19 @@ public class ResourceScanner {
             } else if ("file".equals(url.getProtocol())) {
                 String path = url.getPath();
                 File file = new File(path);
-                scanFileResources(file, rootResourceName, processor);
+                scanLocalDir(file, rootResourceName, processor);
             }
         }
     }
 
-    void scanFileResources(File file, String resourceName, IFileOrEntryProcessor processor) {
+    void scanLocalDir(File dir, String resourceName, IFileOrEntryProcessor processor) {
+        logger.debug("Scan-LocalDir: ", dir);
         if (!resourceName.isEmpty() && !resourceName.endsWith("/"))
             resourceName += "/";
-        for (File childFile : file.listFiles(filter)) {
+        for (File childFile : dir.listFiles(filter)) {
             String childResourceName = resourceName + childFile.getName();
             if (childFile.isDirectory()) {
-                scanFileResources(childFile, childResourceName, processor);
+                scanLocalDir(childFile, childResourceName, processor);
             } else {
                 processor.process(childFile, childResourceName);
             }
