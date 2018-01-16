@@ -7,6 +7,13 @@ net.bodz.lily.model.contact.impl.OrganizationIndex
 net.bodz.lily.model.contact.impl.PersonIndex
 net.bodz.lily.model.contact.impl.PersonRoleIndex
 net.bodz.lily.model.mx.impl.MailIndex
+net.bodz.violet.art.impl.ArtifactCategoryIndex
+net.bodz.violet.art.impl.ArtifactIndex
+net.bodz.violet.art.impl.ArtifactParameterIndex
+net.bodz.violet.art.impl.ArtifactPhaseIndex
+net.bodz.violet.art.impl.ArtifactPriceIndex
+net.bodz.violet.art.impl.ArtifactTagIndex
+net.bodz.violet.art.impl.UOMIndex
 net.bodz.violet.issue.impl.IssueCategoryIndex
 net.bodz.violet.issue.impl.IssueIndex
 net.bodz.violet.issue.impl.IssuePhaseIndex
@@ -28,6 +35,8 @@ net.bodz.violet.plan.impl.PlanDoTagIndex
 net.bodz.violet.plan.impl.PlanDoVoteIndex
 net.bodz.violet.plan.impl.PlanParameterIndex
 net.bodz.violet.plan.impl.PlanPartyIndex
+net.bodz.violet.plan.impl.PlanPhaseIndex
+net.bodz.violet.plan.impl.PlanTagIndex
 net.bodz.violet.plan.impl.PlanVoteIndex
 net.bodz.violet.shop.impl.CartIndex
 net.bodz.violet.shop.impl.CartItemIndex
@@ -40,11 +49,6 @@ net.bodz.violet.shop.impl.ShopIndex
 net.bodz.violet.shop.impl.ShopItemCategoryIndex
 net.bodz.violet.shop.impl.ShopItemIndex
 net.bodz.violet.shop.impl.ShopTagIndex
-net.bodz.violet.store.impl.ArtifactCategoryIndex
-net.bodz.violet.store.impl.ArtifactIndex
-net.bodz.violet.store.impl.ArtifactPhaseIndex
-net.bodz.violet.store.impl.ArtifactPriceIndex
-net.bodz.violet.store.impl.ArtifactTagIndex
 net.bodz.violet.store.impl.OffStoreItemIndex
 net.bodz.violet.store.impl.RegionCategoryIndex
 net.bodz.violet.store.impl.RegionIndex
@@ -53,6 +57,5 @@ net.bodz.violet.store.impl.StoreItemIndex
 net.bodz.violet.store.impl.StoreOrderIndex
 net.bodz.violet.store.impl.StoreOrderItemIndex
 net.bodz.violet.store.impl.StorePhaseIndex
-net.bodz.violet.store.impl.UOMIndex
 net.bodz.violet.tran.impl.TransportOrderIndex
 net.bodz.violet.tran.impl.TransportOrderItemIndex

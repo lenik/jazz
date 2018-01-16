@@ -99,6 +99,7 @@ public abstract class CoObject
     private int accessMode = M_PUBLIC;
 
     public CoObject() {
+        // Opt to reinit()?
     }
 
     @Override
