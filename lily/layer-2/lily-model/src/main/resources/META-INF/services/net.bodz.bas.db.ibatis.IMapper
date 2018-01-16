@@ -14,6 +14,13 @@ net.bodz.lily.model.contact.impl.OrganizationMapper
 net.bodz.lily.model.contact.impl.PersonMapper
 net.bodz.lily.model.contact.impl.PersonRoleMapper
 net.bodz.lily.model.mx.impl.MailMapper
+net.bodz.violet.art.impl.ArtifactCategoryMapper
+net.bodz.violet.art.impl.ArtifactMapper
+net.bodz.violet.art.impl.ArtifactParameterMapper
+net.bodz.violet.art.impl.ArtifactPhaseMapper
+net.bodz.violet.art.impl.ArtifactPriceMapper
+net.bodz.violet.art.impl.ArtifactTagMapper
+net.bodz.violet.art.impl.UOMMapper
 net.bodz.violet.issue.impl.IssueCategoryMapper
 net.bodz.violet.issue.impl.IssueMapper
 net.bodz.violet.issue.impl.IssuePhaseMapper
@@ -35,6 +42,8 @@ net.bodz.violet.plan.impl.PlanDoTagMapper
 net.bodz.violet.plan.impl.PlanDoVoteMapper
 net.bodz.violet.plan.impl.PlanParameterMapper
 net.bodz.violet.plan.impl.PlanPartyMapper
+net.bodz.violet.plan.impl.PlanPhaseMapper
+net.bodz.violet.plan.impl.PlanTagMapper
 net.bodz.violet.plan.impl.PlanVoteMapper
 net.bodz.violet.shop.impl.CartItemMapper
 net.bodz.violet.shop.impl.CartMapper
@@ -47,12 +56,6 @@ net.bodz.violet.shop.impl.ShopItemCategoryMapper
 net.bodz.violet.shop.impl.ShopItemMapper
 net.bodz.violet.shop.impl.ShopMapper
 net.bodz.violet.shop.impl.ShopTagMapper
-net.bodz.violet.store.impl.ArtifactCategoryMapper
-net.bodz.violet.store.impl.ArtifactMapper
-net.bodz.violet.store.impl.ArtifactParameterMapper
-net.bodz.violet.store.impl.ArtifactPhaseMapper
-net.bodz.violet.store.impl.ArtifactPriceMapper
-net.bodz.violet.store.impl.ArtifactTagMapper
 net.bodz.violet.store.impl.OffStoreItemMapper
 net.bodz.violet.store.impl.RegionCategoryMapper
 net.bodz.violet.store.impl.RegionMapper
@@ -61,6 +64,5 @@ net.bodz.violet.store.impl.StoreItemMapper
 net.bodz.violet.store.impl.StoreOrderItemMapper
 net.bodz.violet.store.impl.StoreOrderMapper
 net.bodz.violet.store.impl.StorePhaseMapper
-net.bodz.violet.store.impl.UOMMapper
 net.bodz.violet.tran.impl.TransportOrderItemMapper
 net.bodz.violet.tran.impl.TransportOrderMapper
