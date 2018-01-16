@@ -6,7 +6,7 @@ import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
-import net.bodz.violet.store.Artifact;
+import net.bodz.violet.art.Artifact;
 
 /**
  * 陈列商品

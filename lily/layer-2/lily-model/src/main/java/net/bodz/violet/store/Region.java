@@ -8,6 +8,9 @@ import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoNode;
 import net.bodz.lily.model.contact.Organization;
 import net.bodz.lily.model.contact.Person;
+import net.bodz.violet.art.Artifact;
+import net.bodz.violet.art.ArtifactCategory;
+import net.bodz.violet.art.Dim3d;
 
 /**
  * 存放区域

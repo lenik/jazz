@@ -1,4 +1,4 @@
---\import violet.store.art
+--\import violet.art.art
 
     create sequence offstorel_seq start with 1000;
     create table offstorel(

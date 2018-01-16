@@ -4,6 +4,7 @@ import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.violet.art.Artifact;
 
 /**
  * 库存操作项目

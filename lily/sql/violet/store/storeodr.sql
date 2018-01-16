@@ -8,7 +8,6 @@
     create sequence storeodr_seq start with 1000;
     create table storeodr(
         id          bigint primary key default nextval('storeodr_seq'),
-
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.ExVer
 --\mixin lily.mixin.Mi
@@ -25,7 +24,8 @@
         prev        bigint              -- previous odr
             references storeodr(id) on update cascade on delete set null,
 
-        plan        int
+        -- aka. opportunity, or project.
+        plan        bigint
             references plan(id) on update cascade on delete set null,
 
         org         int
@@ -36,10 +36,10 @@
 
         person      int
             references person(id) on update cascade,
-
-        size        int not null default 0,
-        qty         numeric(20,2) not null default 0,
-        total       numeric(20,2) not null default 0
+        
+        length      int not null default 0,
+        sum_qty     numeric(20,2) not null default 0,
+        sum_amount  numeric(20,2) not null default 0
     );
 
     create index storeodr_lastmod         on storeodr(lastmod desc);

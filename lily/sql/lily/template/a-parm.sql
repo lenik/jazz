@@ -12,4 +12,3 @@
     create index $1parm_priority    on $1parm(priority);
     create index $1parm_state       on $1parm(state);
     create index $1parm_uid_acl     on $1parm(uid, acl);
-

@@ -17,4 +17,3 @@
             left join person        on a.person = person.id
             left join salecat cat   on a.cat = cat.id
             left join salephase ph  on a.phase = ph.id;
-

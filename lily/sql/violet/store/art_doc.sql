@@ -1,2 +1,0 @@
---\import violet.store.art
---\mixin lily.template.a-docs art

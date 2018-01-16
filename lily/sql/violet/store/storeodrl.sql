@@ -1,4 +1,4 @@
---\import violet.store.art
+--\import violet.art.art
 --\import violet.store.region
 --\import violet.store.storeodr
 
@@ -21,14 +21,16 @@
 --\mixin violet.store._batch
 
         -- start-serial for the batch.
+        -- see also artcat.serialfmt
         serial      bigint,
         expire      timestamp,  -- t0 + art[ "life.shelf" ]
 
         qty         numeric(20,2) not null default 1,
         price       numeric(20,2) not null default 0,
-        total       numeric(20,2) not null default 0,   -- cache
+        -- cache for sorting
+        amount      numeric(20,2) not null default 0,
 
-        comment     varchar(200)
+        notes       varchar(200)
     );
 
     -- trigger support
@@ -37,18 +39,18 @@
             v record;
             c bigint;
             cqty real;
-            ctotal real;
+            camount real;
         begin
-            for v in select count(*) "rows", sum(qty) "qty_sum", sum(total) "total_sum"
+            for v in select count(*) "rows", sum(qty) "sum_qty", sum(amount) "sum_amount"
                 from storeodrl where odr=new.odr
             loop
                 c := v."rows";
-                cqty := v.qty_sum;
-                ctotal := v.total_sum;
+                cqty := v.sum_qty;
+                camount := v.sum_amount;
             end loop;
 
             update storeodr set
-                size = c, qty = cqty, total = ctotal
+                length = c, sum_qty = cqty, sum_amount = camount
                 where id = new.odr;
             return new;
         end $$ language plpgsql;

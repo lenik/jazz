@@ -9,8 +9,8 @@ net.bodz.lily.model.base.schema.impl.TagGroupDefMapper
 net.bodz.lily.model.base.security.impl.GroupMapper
 net.bodz.lily.model.base.security.impl.UserMapper
 net.bodz.lily.model.contact.impl.ContactMapper
-net.bodz.lily.model.contact.impl.OrganizationMapper
 net.bodz.lily.model.contact.impl.OrgUnitMapper
+net.bodz.lily.model.contact.impl.OrganizationMapper
 net.bodz.lily.model.contact.impl.PersonMapper
 net.bodz.lily.model.contact.impl.PersonRoleMapper
 net.bodz.lily.model.mx.impl.MailMapper

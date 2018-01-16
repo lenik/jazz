@@ -6,6 +6,12 @@
 -------- Violet :: Plan --------
 --\import violet.plan
 
+-------- Violet :: Artifact --------
+--\import violet.art
+
+-------- Violet :: Manufacture --------
+--\import violet.manu
+
 -------- Violet :: Store --------
 --\import violet.store
 

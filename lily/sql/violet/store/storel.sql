@@ -1,6 +1,7 @@
---\import violet.store.art
+--\import violet.art.art
 --\import violet.store.region
 
+    -- (cache) available store listing
     create sequence storel_seq start with 1000;
     create table storel(
         id          bigint primary key default nextval('storel_seq'),
@@ -24,4 +25,3 @@
     create index storel_state       on storel(state);
     create index storel_uid_acl     on storel(uid, acl);
   --create index storel_uom         on storel(uom);
-

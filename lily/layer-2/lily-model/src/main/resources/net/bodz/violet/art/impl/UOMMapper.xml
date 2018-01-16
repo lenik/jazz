@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.art.impl.UOMMapper">
+
+    <resultMap id="map1" type="net.bodz.violet.art.UOM" extends="co.MAP_U">
+        <result property="property" column="prop" />
+        <result property="scale" column="scale" />
+        <association property="parent" javaType="net.bodz.violet.art.UOM">
+            <id property="id" column="std" />
+            <result property="codeName" column="s_code" />
+            <result property="label" column="s_label" />
+            <result property="description" column="s_description" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select a.*,
+            std.code "s_code",
+            std.label "s_label",
+            std.description "s_description"
+        from uom a
+            left join uom std on a.std = std.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.property != null">and a.prop=#{m.property}</if>
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <if test="_parameter != null">a.id=#{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into uom(code, label, description, 
+                property, std, scale)
+            values(#{codeName},#{label},#{description}, 
+                #{property}, #{std.id}, #{scale})
+            returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update uom
+        <set>
+            <include refid="co.setU" />
+            prop = #{property},
+            <if test="std != null">std = #{std.id},</if>
+            scale = #{scale},
+        </set>
+        <where>
+            <if test="id != null">id=#{id}</if>
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from uom where id=#{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "total" from uom a
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

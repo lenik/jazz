@@ -2,8 +2,8 @@ net.bodz.lily.model.base.CoIndex
 net.bodz.lily.model.base.security.impl.GroupIndex
 net.bodz.lily.model.base.security.impl.UserIndex
 net.bodz.lily.model.contact.impl.ContactIndex
-net.bodz.lily.model.contact.impl.OrganizationIndex
 net.bodz.lily.model.contact.impl.OrgUnitIndex
+net.bodz.lily.model.contact.impl.OrganizationIndex
 net.bodz.lily.model.contact.impl.PersonIndex
 net.bodz.lily.model.contact.impl.PersonRoleIndex
 net.bodz.lily.model.mx.impl.MailIndex

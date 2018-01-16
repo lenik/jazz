@@ -1,0 +1,12 @@
+--\import violet.art.art
+--\import violet.art.artcat
+--\import violet.art.artprice
+--\import violet.art.art_backref
+--\import violet.art.art_doc
+--\import violet.art.art_fav
+--\import violet.art.art_parm
+--\import violet.art.art_tag
+--\import violet.art.art_vote
+--\import violet.art.v_art
+--\import violet.art.v_artcat
+--\import violet.art.artmodel
