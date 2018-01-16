@@ -8,9 +8,9 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.meta.LilyGroups;
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.violet.art.Artifact;
 import net.bodz.violet.shop.SalesOrder;
 import net.bodz.violet.shop.SalesOrderItem;
-import net.bodz.violet.store.Artifact;
 
 /**
  * 送货单项目

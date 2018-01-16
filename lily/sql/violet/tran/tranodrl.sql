@@ -1,4 +1,4 @@
---\import violet.store.art
+--\import violet.art.art
 --\import violet.tran.tranodr
 
     create sequence tranodrl_seq start with 1000;
@@ -14,7 +14,7 @@
 
         qty         numeric(20,2) not null,
         price       numeric(20,2) not null default 0,
-        total       numeric(20,2) not null default 0   -- cache
+        amount      numeric(20,2) not null default 0   -- cache
     );
 
     -- trigger support
@@ -23,18 +23,18 @@
             v record;
             c int;
             cqty real;
-            ctotal real;
+            camount real;
         begin
-            for v in select count(*) "count", sum(qty) "qty", sum(total) "total"
+            for v in select count(*) "count", sum(qty) "sum_qty", sum(amount) "sum_amount"
                 from tranodrl where doc=new.doc
             loop
                 c := v."count";
-                cqty := v.qty;
-                ctotal := v.total;
+                cqty := v.sum_qty;
+                camount := v.sum_amount;
             end loop;
 
             update tranodr set
-                size = c, qty = cqty, total = ctotal
+                length = c, sum_qty = cqty, sum_amount = camount
                 where id = new.doc;
             return new;
         end $$ language plpgsql;

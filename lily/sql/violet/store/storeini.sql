@@ -1,4 +1,4 @@
---\import violet.store.art
+--\import violet.art.art
 --\import violet.store.region
 
     create sequence storeini_seq start with 1000;

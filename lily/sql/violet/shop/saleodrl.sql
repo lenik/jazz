@@ -1,4 +1,4 @@
---\import violet.store.art
+--\import violet.art.art
 --\import violet.shop.saleodr
 --\import violet.shop.shopitem
 
@@ -11,6 +11,7 @@
         odr         bigint not null
             references saleodr(id) on update cascade on delete cascade,
 
+        -- null if no corresponding shop item.
         shopitem    bigint
             references shopitem(id) on update cascade on delete set null,
         
@@ -25,9 +26,9 @@
 
         qty         numeric(20,2) not null,
         price       numeric(20,2) not null default 0,
-        total       numeric(20,2) not null default 0,   -- cache
-        comment     varchar(200),
-        footnote    varchar(200)
+        amount      numeric(20,2) not null default 0,   -- cache
+        
+        notes       varchar(200)
     );
 
     -- trigger support
@@ -36,18 +37,18 @@
             v record;
             c int;
             cqty real;
-            ctotal real;
+            camount real;
         begin
-            for v in select count(*) "count", sum(qty) "qty", sum(total) "total"
+            for v in select count(*) "count", sum(qty) "sum_qty", sum(amount) "sum_amount"
                 from saleodrl where doc=new.doc
             loop
                 c := v."count";
-                cqty := v.qty;
-                ctotal := v.total;
+                cqty := v.sum_qty;
+                camount := v.sum_amount;
             end loop;
 
             update saleodr set
-                size = c, qty = cqty, total = ctotal
+                length = c, sum_qty = cqty, sum_amount = camount
                 where id = new.doc;
             return new;
         end $$ language plpgsql;

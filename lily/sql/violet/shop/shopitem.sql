@@ -1,5 +1,5 @@
 --\import violet.shop.shop
---\import violet.store.art
+--\import violet.art.art
 
 -- Re-orderred category tree.
 --\mixin lily.template.a-cat shopitem

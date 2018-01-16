@@ -1,3 +1,5 @@
+
+    -- Column-Group: FavLike
         nfav        int not null default 0,
 
         -- nlike = nvote + nhate

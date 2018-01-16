@@ -12,7 +12,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
-import net.bodz.violet.store.Artifact;
+import net.bodz.violet.art.Artifact;
 
 /**
  * 订单项

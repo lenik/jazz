@@ -1,5 +1,5 @@
---\import violet.store.artcat
---\import violet.store.art
+--\import violet.art.artcat
+--\import violet.art.art
 --\mixin lily.template.a-cat region
 --\mixin lily.template.a-tag region
 

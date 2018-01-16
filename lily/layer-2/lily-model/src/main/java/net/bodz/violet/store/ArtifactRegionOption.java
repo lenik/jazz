@@ -3,6 +3,7 @@ package net.bodz.violet.store;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.model.base.CoRelation;
+import net.bodz.violet.art.Artifact;
 
 /**
  * 库位选项

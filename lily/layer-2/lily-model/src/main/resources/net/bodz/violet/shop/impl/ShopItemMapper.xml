@@ -15,7 +15,7 @@
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
         </association>
-        <association property="artifact" javaType="net.bodz.violet.store.Artifact">
+        <association property="artifact" javaType="net.bodz.violet.art.Artifact">
             <id property="id" column="art" />
             <result property="label" column="art_label" />
         </association>

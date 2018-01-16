@@ -1,4 +1,5 @@
 
+    -- Column-Group: Contact
         $1alias       varchar(32),
         $1ctprops     jsonb,          -- contact fields
 
@@ -12,4 +13,3 @@
 
         $1email       varchar(30),    -- the primary email
         $1emailok     boolean not null default false,
-

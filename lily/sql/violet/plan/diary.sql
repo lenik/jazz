@@ -6,7 +6,6 @@
     create sequence diary_seq start with 1000;
     create table diary(
         id          bigint primary key default nextval('diary_seq'),
-
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
 --\mixin lily.mixin.Mi

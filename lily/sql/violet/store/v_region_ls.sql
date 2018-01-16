@@ -1,5 +1,5 @@
---\import violet.store.art
---\import violet.store.artcat
+--\import violet.art.art
+--\import violet.art.artcat
 --\import violet.store.region
 
     create or replace view v_region_ls as select

@@ -10,7 +10,7 @@
         <association property="shopItem" javaType="net.bodz.violet.shop.ShopItem">
             <id property="id" column="shopitem" />
             <result property="label" column="shopitem_label" />
-            <association property="artifact" javaType="net.bodz.violet.store.Artifact">
+            <association property="artifact" javaType="net.bodz.violet.art.Artifact">
                 <id property="id" column="art" />
                 <result property="label" column="art_label" />
             </association>

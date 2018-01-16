@@ -43,9 +43,9 @@
         -- logs: any related info, including grabbed data.
         shipcost    numeric(20, 2) not null default 0,
 
-        size        int not null default 0,
-        qty         numeric(20,2) not null default 0,
-        total       numeric(20,2) not null default 0
+        length      int not null default 0,
+        sum_qty     numeric(20,2) not null default 0,
+        sum_amount  numeric(20,2) not null default 0
     );
 
     create index tranodr_lastmod          on tranodr(lastmod desc);

@@ -7,13 +7,12 @@
     create sequence saleodr_seq start with 1000;
     create table saleodr(                  -- sales/subscription doc
         id          bigint primary key default nextval('saleodr_seq'),
-
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
         -- contract date .. deadline
+--\mixin lily.mixin.Ver
 --\mixin lily.mixin.Mi
         -- subscription category/phase
---\mixin lily.mixin.Ver
 --\mixin lily.mixin.Msg
 
         cat         int not null
@@ -25,20 +24,18 @@
         prev        int             -- previous doc
             references saleodr(id) on update cascade on delete set null,
 
-        plan        int
+        plan        bigint
             references plan(id) on update cascade on delete set null,
 
-        -- customer org.
-        org         int
+        cust_org    int
             references org(id) on update cascade,
 
-        -- customer person.
-        person      int
+        cust_person int
             references person(id) on update cascade,
 
-        size        int not null default 0,
-        qty         numeric(20,2) not null default 0,
-        total       numeric(20,2) not null default 0
+        length      int not null default 0,
+        sum_qty     numeric(20,2) not null default 0,
+        sum_amount  numeric(20,2) not null default 0
     );
 
     create index saleodr_lastmod          on saleodr(lastmod desc);

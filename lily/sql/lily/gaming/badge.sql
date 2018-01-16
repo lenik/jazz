@@ -20,6 +20,6 @@
     create index badge_label          on badge(label);
     create index badge_lastmod        on badge(lastmod desc);
     create index badge_priority       on badge(priority);
-    create index badge_version        on badge(state);
+    create index badge_state          on badge(state);
     create index badge_expr           on badge(expr);
     --create index badge_indexed        on badge(state);

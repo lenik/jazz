@@ -1,4 +1,5 @@
 
+    -- Column-Group: Text
         text        text,
         form        int references _form(id) on update cascade on delete set null,
-        args        text, -- used with the form.
+        formargs    text, -- used with the form.

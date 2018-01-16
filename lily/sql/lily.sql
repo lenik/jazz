@@ -13,6 +13,9 @@
 -------- Lily :: Utilities --------
 --\import lily.util
 
+-------- Lily :: IO --------
+--\import lily.io
+
 -------- Lily :: Internet --------
 --\import lily.inet
 
@@ -21,4 +24,3 @@
 
 -------- Lily :: Gaming --------
 --\import lily.gaming
-
