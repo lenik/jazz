@@ -2,6 +2,7 @@ package net.bodz.bas.site.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.http.ctx.IAnchor;
 
 /**
@@ -24,63 +24,42 @@ import net.bodz.bas.http.ctx.IAnchor;
  */
 public class UploadHandler {
 
-    IFilePathMapping mapping;
+    File localDir;
+    IAnchor anchor;
 
-    public UploadHandler() {
-    }
+    List<IUploadHandlerExtension> extensions = new ArrayList<>();
 
-    public UploadHandler(IFilePathMapping mapping) {
-        if (mapping == null)
-            throw new NullPointerException("mapping");
-        this.mapping = mapping;
+    public UploadHandler(File localDir) {
+        if (localDir == null)
+            throw new NullPointerException("localDir");
+        if (!localDir.isDirectory())
+            throw new IllegalArgumentException("Not a local directory: " + localDir);
+        this.localDir = localDir;
     }
 
     public UploadResult handlePostRequest(HttpServletRequest request)
             throws IOException {
-        IFilePathMapping mapping = this.mapping;
-        if (mapping == null)
-            mapping = (IFilePathMapping) request.getServletContext().getAttribute(IFilePathMapping.ATTRIBUTE_KEY);
-
         if (!ServletFileUpload.isMultipartContent(request))
             throw new IllegalArgumentException("Request is not multipart.");
 
-        ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
+        ServletFileUpload uploader = new ServletFileUpload(new DiskFileItemFactory());
 
         UploadResult result = new UploadResult();
-        String schema = request.getParameter("schema");
-        String subDir = request.getParameter("dir");
-
-        File localDir;
-        IAnchor anchor;
-        if (schema == null) {
-            localDir = mapping.getLocalRoot(request);
-            anchor = mapping.getRootAnchor();
-        } else {
-            localDir = mapping.getLocalDir(request, schema);
-            anchor = mapping.getAnchor(schema + "/");
-        }
-
-        if (subDir != null) {
-            if (!subDir.endsWith(SysProps.fileSep))
-                subDir += SysProps.fileSep;
-            localDir = new File(localDir, subDir);
-            anchor = anchor.join(subDir);
-        }
-        localDir.mkdirs();
-
         try {
-            List<FileItem> items = uploadHandler.parseRequest(request);
+            List<FileItem> items = uploader.parseRequest(request);
             for (FileItem item : items) {
                 if (item.isFormField())
                     continue;
 
                 if (item.getName().isEmpty())
                     throw new IllegalArgumentException("empty filename.");
-                File file = new File(localDir, item.getName());
+                String itemPath = getItemPath(item.getName());
+                File file = new File(localDir, itemPath);
                 item.write(file);
 
                 UploadedFileInfo fileInfo = new UploadedFileInfo(item);
-                fileInfo.url = anchor.join(fileInfo.name).absoluteHref();
+
+                fileInfo.url = anchor.join(itemPath).absoluteHref();
                 fileInfo.deleteUrl = fileInfo.url;
 
                 // TODO image auto-scale...?
@@ -94,6 +73,10 @@ public class UploadHandler {
         } catch (Exception e) {
             throw new IOException(e.getMessage(), e);
         }
+    }
+
+    public String getItemPath(String itemName) {
+        return itemName;
     }
 
 }
