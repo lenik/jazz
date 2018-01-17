@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.lang.StringTypers;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.i18n.dom.iStringTypers;
+import net.bodz.bas.i18n.dom.AbstractiStringTypers;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 
@@ -16,10 +16,10 @@ public class I18nTextMapParser
         extends TextMapParser<String, iString> {
 
     public I18nTextMapParser(Iterator<String> lines, int format) {
-        this(lines, iStringTypers.getInstance(format));
+        this(lines, AbstractiStringTypers.getInstance(format));
     }
 
-    public I18nTextMapParser(Iterator<String> lines, iStringTypers typers) {
+    public I18nTextMapParser(Iterator<String> lines, AbstractiStringTypers typers) {
         super(lines, StringTypers.INSTANCE, typers);
     }
 

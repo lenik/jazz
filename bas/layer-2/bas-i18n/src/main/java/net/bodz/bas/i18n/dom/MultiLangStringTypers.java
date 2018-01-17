@@ -5,7 +5,7 @@ import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.rtx.IOptions;
 
 public class MultiLangStringTypers
-        extends iStringTypers {
+        extends AbstractiStringTypers {
 
     @ParameterType(String.class)
     public static final String OPT_LINE_SEPARATOR = "lineSeparator";
