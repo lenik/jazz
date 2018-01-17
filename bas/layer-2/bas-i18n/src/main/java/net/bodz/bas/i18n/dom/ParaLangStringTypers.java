@@ -4,7 +4,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 
 public class ParaLangStringTypers
-        extends iStringTypers {
+        extends AbstractiStringTypers {
 
     @Override
     public iString parse(String text)

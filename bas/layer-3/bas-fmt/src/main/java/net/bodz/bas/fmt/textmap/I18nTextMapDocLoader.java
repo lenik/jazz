@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.i18n.dom.iStringTypers;
+import net.bodz.bas.i18n.dom.AbstractiStringTypers;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -15,7 +15,7 @@ public class I18nTextMapDocLoader {
 
     public static IElementDoc load(IStreamInputSource inputSource)
             throws ParseException, IOException {
-        int format = iStringTypers.PARA_LANG;
+        int format = AbstractiStringTypers.PARA_LANG;
 
         MutableElementDoc doc = new MutableElementDoc(Xjdocs.getDefaultTagLibrary());
 

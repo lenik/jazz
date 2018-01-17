@@ -7,14 +7,14 @@ import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.ITextForm;
 
-public abstract class iStringTypers
+public abstract class AbstractiStringTypers
         extends AbstractCommonTypers<iString> {
 
     @ParameterType(String.class)
     public static final String OPT_LANG_SEPARATOR = "langSeparator";
     public static final String defaultLangSeparator = "\n";
 
-    public iStringTypers() {
+    public AbstractiStringTypers() {
         super(iString.class);
     }
 
@@ -33,7 +33,7 @@ public abstract class iStringTypers
     public static final int MULTI_LANG = 1;
     public static final int PARA_LANG = 2;
 
-    public static iStringTypers getInstance(int format) {
+    public static AbstractiStringTypers getInstance(int format) {
         switch (format) {
         case PLAIN:
             return PlainStringTypers.INSTANCE;
