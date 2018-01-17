@@ -15,6 +15,8 @@ public class PathFieldList
 
     private static final long serialVersionUID = 1L;
 
+    PathFieldAccessOptons optons;
+
     public void parseAndAdd(IFormDecl knownStruct, String... paths)
             throws NoSuchPropertyException, ParseException {
         for (String path : paths) {
