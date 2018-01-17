@@ -14,6 +14,8 @@ public abstract class StructAnchor
 
     @Override
     public IAnchor join(String spec) {
+        if (spec == null)
+            throw new NullPointerException("spec");
         if (spec.startsWith("/"))
             return new PathAnchor(spec);
 

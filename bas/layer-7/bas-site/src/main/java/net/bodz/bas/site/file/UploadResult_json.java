@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -33,17 +32,14 @@ public class UploadResult_json
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<UploadResult> ref)
             throws ViewBuilderException, IOException {
         UploadResult result = ref.get();
-        IFilePathMapping mapping = ctx.query(IFilePathMapping.class);
-
         JSONArray filesArray = new JSONArray();
         for (UploadedFileInfo item : result) {
             JSONObject fileObj = new JSONObject();
-            IAnchor a = mapping.getAnchor(UploadHandler.class);
             fileObj.put("name", item.name);
             fileObj.put("size", item.size);
-            fileObj.put("url", a + item.url);
-            fileObj.put("thumbnail", a + item.thumbnail);
-            fileObj.put("deleteUrl", a + item.deleteUrl);
+            fileObj.put("url", item.url);
+            fileObj.put("thumbnail", item.thumbnail);
+            fileObj.put("deleteUrl", item.deleteUrl);
             fileObj.put("deleteType", item.deleteType);
             filesArray.put(fileObj);
         }

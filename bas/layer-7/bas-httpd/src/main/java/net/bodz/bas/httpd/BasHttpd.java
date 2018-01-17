@@ -1,5 +1,9 @@
 package net.bodz.bas.httpd;
 
+import javax.servlet.ServletContext;
+
+import org.eclipse.jetty.server.handler.ContextHandler.Context;
+
 import net.bodz.bas.http.config.ServletContextConfig;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.site.vhost.VirtualHostManager;
@@ -51,6 +55,9 @@ public abstract class BasHttpd
 
         EchoServer server = new EchoServer(config);
         server.start();
+
+        Context servletContext = server.getServletContextHandler().getServletContext();
+        onContextStart(servletContext);
     }
 
     protected void initSystemGlobals()
@@ -67,5 +74,8 @@ public abstract class BasHttpd
     }
 
     protected abstract void configure(ServletContextConfig config);
+
+    protected void onContextStart(ServletContext servletContext) {
+    }
 
 }

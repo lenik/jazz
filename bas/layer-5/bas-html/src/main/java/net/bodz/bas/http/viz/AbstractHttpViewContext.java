@@ -1,6 +1,8 @@
 package net.bodz.bas.http.viz;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IQueryable;
@@ -22,10 +24,19 @@ public abstract class AbstractHttpViewContext
     @Override
     public <spec_t> spec_t query(Class<spec_t> specificationClass) {
         HttpServletRequest request = getRequest();
-
         Object requestAttribute = request.getAttribute(specificationClass.getName());
         if (requestAttribute != null)
             return specificationClass.cast(requestAttribute);
+
+        HttpSession session = request.getSession();
+        Object sessionAttribute = session.getAttribute(specificationClass.getName());
+        if (sessionAttribute != null)
+            return specificationClass.cast(sessionAttribute);
+
+        ServletContext servletContext = request.getServletContext();
+        Object contextAttribute = servletContext.getAttribute(specificationClass.getName());
+        if (contextAttribute != null)
+            return specificationClass.cast(contextAttribute);
 
         if (queryContext != null) {
             spec_t impl = queryContext.query(specificationClass);
