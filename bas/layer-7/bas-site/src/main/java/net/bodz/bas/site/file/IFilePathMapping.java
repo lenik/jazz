@@ -8,6 +8,8 @@ import net.bodz.bas.http.ctx.IAnchor;
 
 public interface IFilePathMapping {
 
+    String ATTRIBUTE_KEY = IFilePathMapping.class.getName();
+
     File getLocalRoot(HttpServletRequest req);
 
     File getLocalDir(HttpServletRequest req, Class<?> clazz);

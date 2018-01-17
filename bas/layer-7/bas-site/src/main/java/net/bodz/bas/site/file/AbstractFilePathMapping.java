@@ -42,6 +42,8 @@ public abstract class AbstractFilePathMapping
     @Override
     public IAnchor getAnchor(String schema) {
         IAnchor root = getRootAnchor();
+        if (root == null)
+            throw new NullPointerException("root");
         return root.join(schema);
     }
 

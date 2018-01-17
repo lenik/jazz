@@ -1,5 +1,6 @@
 package net.bodz.bas.c.system;
 
+
 public class SystemProperties {
 
     public static boolean developMode;
@@ -289,7 +290,7 @@ public class SystemProperties {
 
     /**
      * User country.
-     *
+     * 
      * user.country = CN
      */
     public static String getUserCountry() {
