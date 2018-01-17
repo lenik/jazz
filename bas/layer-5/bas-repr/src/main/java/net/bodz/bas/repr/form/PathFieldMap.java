@@ -10,6 +10,8 @@ public class PathFieldMap
 
     private static final long serialVersionUID = 1L;
 
+    PathFieldAccessOptons optons;
+
     public void parseAndAdd(IFormDecl formDecl, String... pathProperties)
             throws NoSuchPropertyException, ParseException {
         if (formDecl == null)

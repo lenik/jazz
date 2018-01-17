@@ -37,6 +37,8 @@ public class PathField
     @Override
     public Object getValue(Object instance)
             throws ReflectiveOperationException {
+        if (instance == null)
+            throw new NullPointerException("null instance for path: " + path);
         Object obj = instance;
         for (IFieldDecl fieldDecl : fieldVector) {
             obj = fieldDecl.getAccessor().getValue(obj);
@@ -49,6 +51,8 @@ public class PathField
     @Override
     public void setValue(Object instance, Object value)
             throws ReflectiveOperationException {
+        if (instance == null)
+            throw new NullPointerException("null instance for path: " + path);
         int max = fieldVector.size() - 1;
         Object obj = instance;
         for (int i = 0; i < max; i++) {
