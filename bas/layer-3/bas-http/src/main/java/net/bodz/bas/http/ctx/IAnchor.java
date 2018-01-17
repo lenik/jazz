@@ -1,5 +1,12 @@
 package net.bodz.bas.http.ctx;
 
+/**
+ * A relative path abstraction.
+ *
+ * @see WebAppAnchor
+ * @see PathAnchor
+ * @see URLAnchor
+ */
 public interface IAnchor {
 
     boolean isDirectory();
