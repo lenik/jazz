@@ -2,9 +2,13 @@ package net.bodz.bas.site.file;
 
 import org.apache.commons.fileupload.FileItem;
 
-public class UploadedFileInfo {
+import net.bodz.bas.fmt.json.JsonSupport;
+
+public class UploadedFileInfo
+        extends JsonSupport {
 
     public String name;
+    public String path;
     public long size;
     public String url;
     public String thumbnail;

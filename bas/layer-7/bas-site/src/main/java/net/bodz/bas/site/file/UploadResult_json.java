@@ -6,8 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.JSONWriter;
 
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
@@ -31,25 +30,19 @@ public class UploadResult_json
     @Override
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<UploadResult> ref)
             throws ViewBuilderException, IOException {
-        UploadResult result = ref.get();
-        JSONArray filesArray = new JSONArray();
-        for (UploadedFileInfo item : result) {
-            JSONObject fileObj = new JSONObject();
-            fileObj.put("name", item.name);
-            fileObj.put("size", item.size);
-            fileObj.put("url", item.url);
-            fileObj.put("thumbnail", item.thumbnail);
-            fileObj.put("deleteUrl", item.deleteUrl);
-            fileObj.put("deleteType", item.deleteType);
-            filesArray.put(fileObj);
-        }
-
-        JSONObject obj = new JSONObject();
-        obj.put("files", filesArray);
-
         PrintWriter out = resp.getWriter();
-        String json = obj.toString();
-        out.println(json);
+        JSONWriter jout = new JSONWriter(out);
+        UploadResult result = ref.get();
+
+        jout.object();
+        {
+            jout.key("files");
+            jout.array();
+            for (UploadedFileInfo item : result)
+                item.writeObject(jout);
+            jout.endArray();
+        }
+        jout.endObject();
 
         return ctx.stop();
     }
