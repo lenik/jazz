@@ -29,12 +29,12 @@
         -- the region body is made up as the specific artifact.
         material    int
             references art(id) on update cascade,
-
+            
         -- reserved for this artifact category.
         for_cat     int
             references artcat(id) on update cascade on delete set null,
 
-        -- reserved/locked for this artifact.
+        -- reserved for this artifact.
         for_art     int     -- state=LOCKED if necessary.
             references art(id) on update cascade on delete set null,
             

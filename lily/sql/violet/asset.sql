@@ -1,0 +1,6 @@
+--\import violet.asset.asset
+--\import violet.asset.asset_user
+--\import violet.asset.asset_group
+--\import violet.asset.asset_org
+--\import violet.asset.asset_ou
+--\import violet.asset.asset_person

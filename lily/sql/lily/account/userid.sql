@@ -16,4 +16,3 @@
         auth        jsonb,
         data        jsonb
     );
-

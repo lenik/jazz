@@ -67,4 +67,3 @@
     insert into uom(id, code, label, prop, std, scale) values(912, '条', '条', '数量', 1, 1);
     insert into uom(id, code, label, prop, std, scale) values(913, '盒', '盒', '数量', 1, 1);
     */
-
