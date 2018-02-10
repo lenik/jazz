@@ -1,8 +1,8 @@
 --\import lily.account
 
-    create sequence artprice_seq start with 1000;
-    create table artprice(
-        id          int primary key default nextval('artprice_seq'),
+    create sequence art_price_seq start with 1000;
+    create table art_price(
+        id          int primary key default nextval('art_price_seq'),
         code        varchar(20) unique, -- not null?
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.Ver
@@ -14,5 +14,5 @@
         sell        decimal(12, 2)
     );
 
-    create index artprice_lastmod     on artprice(lastmod desc);
-    create index artprice_uid_acl     on artprice(uid, acl);
+    create index art_price_lastmod     on art_price(lastmod desc);
+    create index art_price_uid_acl     on art_price(uid, acl);

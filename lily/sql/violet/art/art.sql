@@ -6,11 +6,15 @@
     create sequence art_seq start with 1000;
     create table art(
         id          int primary key default nextval('art_seq'),
-        sku         varchar(30),
-        barcode     varchar(30),
+        sku         varchar(30),    -- aka. code-name
+        barcode     varchar(30),    -- res. for EAN-13 etc.
+        rfid        varchar(30),    -- res. for 96-bit epc
 
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
+
+        -- model name, detail part from the label.
+        model       varchar(80),
 
         -- the initial structure is copied from the proto type.
         -- null proto for system type...
@@ -22,8 +26,6 @@
 
         phase       int
             references artphase(id) on update cascade,
-
-        model       varchar(100),
 
         uom         int
             references uom(id) on update cascade,
@@ -38,6 +40,7 @@
         -- calculate the default expire.
         -- life.shelf   保质期
         -- life.fresh   保鲜期
+        -- life.running 打开后保质期
 
     -- props:
         -- bom: bill of materials

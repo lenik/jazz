@@ -15,3 +15,5 @@
     create index group_label        on "group"(label);
     create index group_lastmod      on "group"(lastmod desc);
     create index group_state        on "group"(state);
+    
+    insert into "group"(id, name, label) values(0, 'root', 'Root');

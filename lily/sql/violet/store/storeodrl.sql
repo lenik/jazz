@@ -23,7 +23,7 @@
         -- start-serial for the batch.
         -- see also artcat.serialfmt
         serial      bigint,
-        expire      timestamp,  -- t0 + art[ "life.shelf" ]
+        expire      timestamp with time zone,  -- t0 + art[ "life.shelf" ]
 
         qty         numeric(20,2) not null default 1,
         price       numeric(20,2) not null default 0,
