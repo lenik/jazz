@@ -18,7 +18,6 @@ net.bodz.violet.art.impl.ArtifactCategoryMapper
 net.bodz.violet.art.impl.ArtifactMapper
 net.bodz.violet.art.impl.ArtifactParameterMapper
 net.bodz.violet.art.impl.ArtifactPhaseMapper
-net.bodz.violet.art.impl.ArtifactPriceMapper
 net.bodz.violet.art.impl.ArtifactTagMapper
 net.bodz.violet.art.impl.UOMMapper
 net.bodz.violet.issue.impl.IssueCategoryMapper
@@ -51,6 +50,7 @@ net.bodz.violet.shop.impl.SalesCategoryMapper
 net.bodz.violet.shop.impl.SalesOrderItemMapper
 net.bodz.violet.shop.impl.SalesOrderMapper
 net.bodz.violet.shop.impl.SalesPhaseMapper
+net.bodz.violet.shop.impl.SellPriceMapper
 net.bodz.violet.shop.impl.ShopCategoryMapper
 net.bodz.violet.shop.impl.ShopItemCategoryMapper
 net.bodz.violet.shop.impl.ShopItemMapper

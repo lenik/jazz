@@ -1,5 +1,7 @@
 package net.bodz.violet.shop;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
@@ -17,8 +19,8 @@ public class CartItem
     private static final long serialVersionUID = 1L;
 
     ShopItem shopItem;
-    double priceSnapshot;
-    double quantity;
+    BigDecimal priceSnapshot = BigDecimal.ZERO;
+    BigDecimal quantity = BigDecimal.ZERO;
 
     /**
      * 商品
@@ -41,32 +43,32 @@ public class CartItem
     /**
      * 当时价格
      */
-    public double getPriceSnapshot() {
+    public BigDecimal getPriceSnapshot() {
         return priceSnapshot;
     }
 
-    public void setPriceSnapshot(double priceSnapshot) {
+    public void setPriceSnapshot(BigDecimal priceSnapshot) {
         this.priceSnapshot = priceSnapshot;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         if (shopItem == null)
-            return 0;
+            return BigDecimal.ZERO;
         else
             return shopItem.getPrice();
     }
 
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
-    public double getTotal() {
-        double price = getPrice();
-        return price * quantity;
+    public BigDecimal getTotal() {
+        BigDecimal price = getPrice();
+        return price.multiply(quantity);
     }
 
 }

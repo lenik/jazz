@@ -1,5 +1,8 @@
 --\import lily.account
+--\import violet.art.art
 
+    -- official price, and price history.
+    
     create sequence art_price_seq start with 1000;
     create table art_price(
         id          int primary key default nextval('art_price_seq'),
@@ -10,8 +13,7 @@
         art         int not null
             references art(id) on update cascade on delete cascade,
 
-        buy         decimal(12, 2),
-        sell        decimal(12, 2)
+        price       decimal(12, 2) not null
     );
 
     create index art_price_lastmod     on art_price(lastmod desc);

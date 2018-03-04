@@ -1,5 +1,7 @@
 package net.bodz.violet.shop;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Table;
 
 import net.bodz.bas.meta.cache.Derived;
@@ -24,8 +26,8 @@ public class ShopItem
     ShopItemCategory category;
     Artifact artifact;
 
-    double quantity;
-    double price;
+    BigDecimal quantity = BigDecimal.ZERO;
+    BigDecimal price = BigDecimal.ZERO;
 
     /**
      * 所属商店
@@ -65,11 +67,11 @@ public class ShopItem
      * 数量
      */
     @Priority(200)
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
@@ -77,11 +79,11 @@ public class ShopItem
      * 价格
      */
     @Priority(201)
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -90,8 +92,8 @@ public class ShopItem
      */
     @Priority(202)
     @Derived
-    public double getTotal() {
-        return price * quantity;
+    public BigDecimal getTotal() {
+        return price.multiply(quantity);
     }
 
 }

@@ -1,5 +1,7 @@
 package net.bodz.violet.shop;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
@@ -38,8 +40,8 @@ public class SalesOrderItem
     String altSpec;
     String altUom;
 
-    double quantity;
-    double price;
+    BigDecimal quantity = BigDecimal.ZERO;
+    BigDecimal price = BigDecimal.ZERO;
     String footnote;
 
     /**
@@ -158,11 +160,13 @@ public class SalesOrderItem
      * 数量
      */
     @Priority(200)
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(BigDecimal quantity) {
+        if (quantity == null)
+            throw new NullPointerException("quantity");
         this.quantity = quantity;
     }
 
@@ -170,11 +174,13 @@ public class SalesOrderItem
      * 价格
      */
     @Priority(201)
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
+        if (price == null)
+            throw new NullPointerException("price");
         this.price = price;
     }
 
@@ -183,8 +189,8 @@ public class SalesOrderItem
      */
     @Priority(202)
     @Derived
-    public double getTotal() {
-        return price * quantity;
+    public BigDecimal getTotal() {
+        return price.multiply(quantity);
     }
 
     /**

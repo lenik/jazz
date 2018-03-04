@@ -48,7 +48,10 @@
         
         -- 0: raw material, large number for finished-product.
         -- For plants, negative number for growing-days.
-        finish      smallint not null default 0
+        finish      smallint not null default 0,
+        
+        -- sell price (cache)
+        price       decimal(12, 2)
     );
 
     create index art_label          on art(label);
