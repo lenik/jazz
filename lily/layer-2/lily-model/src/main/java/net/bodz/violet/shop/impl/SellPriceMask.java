@@ -1,12 +1,12 @@
-package net.bodz.violet.art.impl;
+package net.bodz.violet.shop.impl;
 
 import net.bodz.bas.t.range.DoubleRange;
 import net.bodz.lily.model.base.CoObjectMask;
 
 /**
- * @see net.bodz.violet.art.ArtifactPrice
+ * @see net.bodz.violet.shop.SellPrice
  */
-public class ArtifactPriceMask
+public class SellPriceMask
         extends CoObjectMask {
 
     Integer artifactId;

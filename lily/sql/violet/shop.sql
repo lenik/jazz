@@ -1,3 +1,4 @@
+--\import violet.shop.art_price
 --\import violet.shop.shop
 --\import violet.shop.shopitem
 --\import violet.shop.cartitem

@@ -1,5 +1,7 @@
 package net.bodz.violet.shop;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
@@ -19,9 +21,9 @@ import net.bodz.violet.tran.TransportOrder;
 
 /**
  * 订单
- * 
+ *
  * op: 销售员/经办人
- * 
+ *
  * owner: 制单
  */
 @IdType(Long.class)
@@ -36,8 +38,8 @@ public class SalesOrder
     private Person person;
 
     private SizedList<SalesOrderItem> items;
-    private double quantity;
-    private double total;
+    private BigDecimal quantity = BigDecimal.ZERO;
+    private BigDecimal total = BigDecimal.ZERO;
 
     // make-tasks
     // material-plans (locks)
@@ -90,11 +92,13 @@ public class SalesOrder
      */
     @OfGroup(StdGroup.Statistics.class)
     @Statistics
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(BigDecimal quantity) {
+        if (quantity == null)
+            throw new NullPointerException("quantity");
         this.quantity = quantity;
     }
 
@@ -103,11 +107,13 @@ public class SalesOrder
      */
     @OfGroup(StdGroup.Statistics.class)
     @Statistics
-    public double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(BigDecimal total) {
+        if (total == null)
+            throw new NullPointerException("total");
         this.total = total;
     }
 

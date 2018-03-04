@@ -2,11 +2,10 @@
 <!DOCTYPE mapper 
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.violet.art.impl.ArtifactPriceMapper">
+<mapper namespace="net.bodz.violet.shop.impl.SellPriceMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.art.ArtifactPrice" extends="co.MAP_UVX">
-        <result property="buyPrice" column="buy" />
-        <result property="sellPrice" column="sell" />
+    <resultMap id="map1" type="net.bodz.violet.shop.SellPrice" extends="co.MAP_UVX">
+        <result property="price" column="price" />
         <association property="artifact" javaType="net.bodz.violet.art.Artifact">
             <id property="id" column="art" />
             <result property="label" column="artifact_label" />
@@ -19,7 +18,7 @@
             art.label "art_label",
             u.label "uid_label",
             g.label "gid_label"
-        from artprice a
+        from art_price a
             left join art on a.art = art.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
@@ -32,7 +31,7 @@
             art.label "art_label",
             u.label "uid_label",
             g.label "gid_label"
-        from artprice a
+        from art_price a
             left join art on a.art = art.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
@@ -63,20 +62,19 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into artprice(
-            art, buy, sell
+        insert into art_price(
+            art, price
         ) values(
-            #{artifact.id}, #{buyPrice}, #{sellPrice}
+            #{artifact.id}, #{price}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
-        update artprice
+        update art_price
         <set>
             <include refid="co.setS" />
             art = #{artifact.id},
-            buy = #{buyPrice},
-            sell = #{sellPrice},
+            price = #{price},
         </set>
         <where>
             id = #{id}
@@ -84,11 +82,11 @@
     </update>
 
     <delete id="delete">
-        delete from artprice where id = #{id}
+        delete from art_price where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from artprice
+        select count(*) "rows" from art_price
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -11,7 +11,6 @@ net.bodz.violet.art.impl.ArtifactCategoryIndex
 net.bodz.violet.art.impl.ArtifactIndex
 net.bodz.violet.art.impl.ArtifactParameterIndex
 net.bodz.violet.art.impl.ArtifactPhaseIndex
-net.bodz.violet.art.impl.ArtifactPriceIndex
 net.bodz.violet.art.impl.ArtifactTagIndex
 net.bodz.violet.art.impl.UOMIndex
 net.bodz.violet.issue.impl.IssueCategoryIndex
@@ -44,6 +43,7 @@ net.bodz.violet.shop.impl.SalesCategoryIndex
 net.bodz.violet.shop.impl.SalesOrderIndex
 net.bodz.violet.shop.impl.SalesOrderItemIndex
 net.bodz.violet.shop.impl.SalesPhaseIndex
+net.bodz.violet.shop.impl.SellPriceIndex
 net.bodz.violet.shop.impl.ShopCategoryIndex
 net.bodz.violet.shop.impl.ShopIndex
 net.bodz.violet.shop.impl.ShopItemCategoryIndex
