@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.ctx.scope.experimental.BeanFactory;
 import net.bodz.bas.ctx.scope.experimental.IBeanProvider;
+import net.bodz.bas.err.IllegalUsageException;
 
 public class ScopedTypeInfo<T> {
 
@@ -53,7 +54,13 @@ public class ScopedTypeInfo<T> {
             return ctorWithProvider.newInstance(BeanFactory.getInstance());
         if (ctorWithScopeId != null)
             return ctorWithScopeId.newInstance(scopeInstance.getIdentity());
-        return objectType.newInstance();
+        try {
+            // if (debug)
+            objectType.getConstructor();
+            return objectType.newInstance();
+        } catch (NoSuchMethodException e) {
+            throw new IllegalUsageException("No default constructor on " + objectType);
+        }
     }
 
 }
