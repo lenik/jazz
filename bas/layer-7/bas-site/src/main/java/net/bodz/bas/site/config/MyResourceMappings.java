@@ -24,10 +24,10 @@ public class MyResourceMappings
         File chunk = new File(home, ".chunk");
         if (!chunk.exists())
             chunk = new File(home, "chunk");
-        chunkDir = localLink("/chunk", chunk.getPath(), 365).install(config);
+        chunkDir = fn.localLink(config, "/chunk", chunk.getPath(), 365).install(config);
 
         File public_ = new File(home, "public");
-        publicDir = localLink("/public", public_.getPath(), 1).install(config);
+        publicDir = fn.localLink(config, "/public", public_.getPath(), 1).install(config);
     }
 
 }

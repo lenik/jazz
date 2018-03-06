@@ -1,3 +1,6 @@
 net.bodz.bas.site.config.DesignResourceMappings
-net.bodz.bas.site.config.LocalResourceMappings
+net.bodz.bas.site.config.EmbeddedResourceMappings
 net.bodz.bas.site.config.MyResourceMappings
+net.bodz.bas.site.config.UserResourceMappings
+net.bodz.bas.site.config.UsrShareResourceMappings
+net.bodz.bas.site.config.VhostResourceMappings

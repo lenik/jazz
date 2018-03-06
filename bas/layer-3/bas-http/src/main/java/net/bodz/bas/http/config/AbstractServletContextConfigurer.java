@@ -4,6 +4,11 @@ public abstract class AbstractServletContextConfigurer
         implements IServletContextConfigurer {
 
     @Override
+    public int getPriority() {
+        return 0;
+    }
+
+    @Override
     public void filters(ServletContextConfig config) {
     }
 
