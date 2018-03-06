@@ -4,14 +4,16 @@ import net.bodz.bas.http.config.AbstractResourceMappings;
 import net.bodz.bas.http.config.ServletContextConfig;
 import net.bodz.bas.http.config.ServletDescriptor;
 
-public class DesignResourceMappings
+public class EmbeddedResourceMappings
         extends AbstractResourceMappings {
 
-    ServletDescriptor imgLink;
+    ServletContextConfig config;
+    ServletDescriptor webjarsDir;
 
     @Override
     public void servlets(ServletContextConfig config) {
-        imgLink = fn.localLink(config, "/d-img", "/mnt/istore/projects/design/img", 100).install(config);
+        this.config = config;
+        webjarsDir = fn.resourceLink(config, "/webjars", "META-INF/resources/webjars", 365);
     }
 
 }

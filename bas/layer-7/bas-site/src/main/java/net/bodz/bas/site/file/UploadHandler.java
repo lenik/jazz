@@ -12,29 +12,43 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import net.bodz.bas.http.ctx.IAnchor;
+import net.bodz.bas.site.IBasicSiteAnchors;
 
 /**
- * 
+ *
  * Parameters:
- * 
+ *
  * @param scheme
- * 
+ *
  *            Check out <a href="https://blueimp.github.io/jQuery-File-Upload/">blueimp file
  *            upload</a>
  */
-public class UploadHandler {
+public class UploadHandler
+        implements IBasicSiteAnchors {
 
     File localDir;
     IAnchor anchor;
 
     List<IUploadHandlerExtension> extensions = new ArrayList<>();
 
-    public UploadHandler(File localDir) {
+    /**
+     * @param getPath
+     *            The start part of the download href relative to the webapp. Should be terminated
+     *            with file separator.
+     */
+    public UploadHandler(File localDir, String getPath) {
+        this(localDir, _webApp_.join(getPath));
+    }
+
+    public UploadHandler(File localDir, IAnchor getAnchor) {
         if (localDir == null)
             throw new NullPointerException("localDir");
         if (!localDir.isDirectory())
             throw new IllegalArgumentException("Not a local directory: " + localDir);
+        if (getAnchor == null)
+            throw new NullPointerException("getAnchor");
         this.localDir = localDir;
+        this.anchor = getAnchor;
     }
 
     public UploadResult handlePostRequest(HttpServletRequest request)
