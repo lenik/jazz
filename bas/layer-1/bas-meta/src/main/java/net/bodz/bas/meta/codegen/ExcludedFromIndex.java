@@ -9,4 +9,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface ExcludedFromIndex {
 
+    @Inherited
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface Inherited {
+
+    }
+
 }

@@ -239,8 +239,12 @@ public class TypeCollector<T> {
                 if (!Modifier.isStatic(derivation.getModifiers()))
                     continue;
 
+            // ExcludedFromIndex a = derivation.getAnnotation(ExcludedFromIndex.class);
             if (derivation.isAnnotationPresent(ExcludedFromIndex.class))
                 continue;
+            if (derivation.isAnnotationPresent(ExcludedFromIndex.Inherited.class))
+                continue;
+
             if (derivation.isAnnotationPresent(IndexedTypeLoader.class))
                 continue;
 

@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Flush;
 import org.apache.ibatis.annotations.Param;
 
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
+@ExcludedFromIndex
 public interface IMapperTemplate<T, M>
         extends IMapper {
 
