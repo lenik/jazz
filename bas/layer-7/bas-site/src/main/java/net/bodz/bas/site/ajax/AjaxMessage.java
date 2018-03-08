@@ -1,10 +1,10 @@
 package net.bodz.bas.site.ajax;
 
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
@@ -38,7 +38,7 @@ public class AjaxMessage
 
     /**
      * Or a named context/position where the inline message will go.
-     * 
+     *
      * @see #MSGBOX
      * @see #NOTICE
      * @see #INLINE
@@ -150,42 +150,27 @@ public class AjaxMessage
     }
 
     @Override
-    public void writeObject(JSONWriter out) {
+    public void writeObject(IJsonOut out) {
         out.object();
 
-        if (type != null) {
-            out.key("type");
-            out.value(type);
-        }
-        if (level != null) {
-            out.key("level");
-            out.value(level);
-        }
-        if (css != null) {
-            out.key("css");
-            out.value(css);
-        }
-        if (title != null) {
-            out.key("title");
-            out.value(title);
-        }
-        if (width != null) {
-            out.key("width");
-            out.value(width);
-        }
-        if (height != null) {
-            out.key("height");
-            out.value(height);
-        }
+        if (type != null)
+            out.entry("type", type);
+        if (level != null)
+            out.entry("level", level);
+        if (css != null)
+            out.entry("css", css);
+        if (title != null)
+            out.entry("title", title);
+        if (width != null)
+            out.entry("width", width);
+        if (height != null)
+            out.entry("height", height);
 
         if (htmlOut != null) {
             htmlOut.flush();
-            out.key("html");
-            out.value(this);
-        } else {
-            out.key("text");
-            out.value(this);
-        }
+            out.entry("html", this);
+        } else
+            out.entry("text", this);
 
         out.endObject();
     }

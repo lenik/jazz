@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.html.io.BHtmlOut;
 import net.bodz.bas.html.io.HtmlOutputFormat;
@@ -90,7 +90,7 @@ public class AjaxResult
     }
 
     @Override
-    public void writeObject(JSONWriter out)
+    public void writeObject(IJsonOut out)
             throws IOException {
         out.object();
         out.key("success");

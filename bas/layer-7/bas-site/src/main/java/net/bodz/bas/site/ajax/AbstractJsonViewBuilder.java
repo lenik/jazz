@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONWriter;
-
+import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -52,12 +52,12 @@ public abstract class AbstractJsonViewBuilder<T>
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
         PrintWriter writer = resp.getWriter();
-        JSONWriter out = new JSONWriter(writer);
+        JsonWriter out = new JsonWriter(writer);
         buildJsonView(ctx, out, ref);
         return null;
     }
 
-    protected abstract void buildJsonView(IHttpViewContext ctx, JSONWriter out, IUiRef<T> ref)
+    protected abstract void buildJsonView(IHttpViewContext ctx, IJsonOut out, IUiRef<T> ref)
             throws ViewBuilderException, IOException;
 
 }

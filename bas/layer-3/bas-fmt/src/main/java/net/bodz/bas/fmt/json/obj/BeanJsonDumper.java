@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
-import org.json.JSONWriter;
-
+import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.AbstractJsonDumper;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.ReflectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -22,7 +22,7 @@ public class BeanJsonDumper
 
     static final Logger logger = LoggerFactory.getLogger(BeanJsonDumper.class);
 
-    public BeanJsonDumper(JSONWriter out) {
+    public BeanJsonDumper(IJsonOut out) {
         super(out);
     }
 
@@ -83,7 +83,7 @@ public class BeanJsonDumper
 
     public static String toString(Object obj) {
         StringWriter buf = new StringWriter();
-        JSONWriter out = new JSONWriter(buf);
+        JsonWriter out = new JsonWriter(buf);
         try {
             new BeanJsonDumper(out).dump(obj);
         } catch (IOException e) {
