@@ -10,6 +10,11 @@ import java.util.TreeMap;
 
 import javax.persistence.Table;
 
+import org.json.JSONObject;
+
+import net.bodz.bas.c.org.json.IJsonForm;
+import net.bodz.bas.c.org.json.JsonObj;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.NumericInput;
@@ -251,6 +256,20 @@ public class Artifact
     @Override
     public ITyperFamily<?> getAttributeTypers(String attributeName) {
         return null;
+    }
+
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    public IJsonForm getAttributesJson() {
+        JSONObject obj = new JSONObject(attributes);
+        return new JsonObj(obj);
+    }
+
+    public void setAttributesJson(IJsonForm form) {
+        String json = form.readInStr();
+        attributes = JsonFn.toMap(json);
     }
 
     /**
