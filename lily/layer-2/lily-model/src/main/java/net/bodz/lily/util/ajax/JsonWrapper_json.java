@@ -2,8 +2,7 @@ package net.bodz.lily.util.ajax;
 
 import java.io.IOException;
 
-import org.json.JSONWriter;
-
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -18,7 +17,7 @@ public class JsonWrapper_json
     }
 
     @Override
-    protected void buildJsonView(IHttpViewContext ctx, JSONWriter out, IUiRef<JsonWrapper> ref)
+    protected void buildJsonView(IHttpViewContext ctx, IJsonOut out, IUiRef<JsonWrapper> ref)
             throws ViewBuilderException, IOException {
         JsonWrapper w = ref.get();
 

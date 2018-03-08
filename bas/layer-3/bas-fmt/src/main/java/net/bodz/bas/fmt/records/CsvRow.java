@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -148,7 +148,7 @@ public class CsvRow
     }
 
     @Override
-    public void writeObject(JSONWriter out) {
+    public void writeObject(IJsonOut out) {
         if (fieldNames == null) {
             out.array();
             int n = size();
@@ -161,8 +161,7 @@ public class CsvRow
                 String field = entry.getKey();
                 int index = entry.getValue();
                 String value = get(index);
-                out.key(field);
-                out.value(value);
+                out.entry(field, value);
             }
             out.endObject();
         }

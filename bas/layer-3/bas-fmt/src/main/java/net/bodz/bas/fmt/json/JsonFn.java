@@ -2,12 +2,16 @@ package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
+import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 
@@ -53,17 +57,27 @@ public class JsonFn {
         }
     }
 
+    /**
+     * Without compact.
+     *
+     * @param obj
+     *            Non-<code>null</code> json-support object.
+     */
     public static String toJson(IJsonSerializable obj) {
         return toJson(obj, false);
     }
 
     /**
+     * @param obj
+     *            Non-<code>null</code> json-support object.
      * @param compact
      *            Format json in compact single line form.
      */
     public static String toJson(IJsonSerializable obj, boolean compact) {
+        if (obj == null)
+            throw new NullPointerException("obj");
         StringWriter buf = new StringWriter();
-        JSONWriter writer = new JSONWriter(buf);
+        JsonWriter writer = new JsonWriter(buf);
         try {
             obj.writeObject(writer);
         } catch (IOException e) {
@@ -74,29 +88,48 @@ public class JsonFn {
 
     public static <T extends IJsonSerializable> T fromJson(T obj, String json)
             throws ParseException {
-        JSONObject jsonObj = parseObject(json);
-        obj.readObject(jsonObj);
+        if (json == null)
+            obj.readObject(null);
+        else {
+            JSONObject jsonObj = parseObject(json);
+            obj.readObject(jsonObj);
+        }
         return obj;
     }
 
-    public static void entry(JSONWriter out, String key, boolean value) {
-        out.key(key);
-        out.value(value);
+    public static List<Object> toList(JSONArray json) {
+        int n = json.length();
+        List<Object> list = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            Object val = json.get(i);
+            Object unwrapped = unwrap(val);
+            list.add(unwrapped);
+        }
+        return list;
     }
 
-    public static void entry(JSONWriter out, String key, double value) {
-        out.key(key);
-        out.value(value);
+    public static Map<String, Object> toMap(String json) {
+        JSONObject jsonObj = new JSONObject(json);
+        return toMap(jsonObj);
     }
 
-    public static void entry(JSONWriter out, String key, long value) {
-        out.key(key);
-        out.value(value);
+    public static Map<String, Object> toMap(JSONObject json) {
+        Map<String, Object> map = new HashMap<>();
+        for (Object _key : json.keySet()) {
+            String key = (String) _key;
+            Object val = json.get(key);
+            val = unwrap(val);
+            map.put(key, val);
+        }
+        return map;
     }
 
-    public static void entry(JSONWriter out, String key, Object value) {
-        out.key(key);
-        out.value(value);
+    public static Object unwrap(Object json) {
+        if (json instanceof JSONObject)
+            json = toMap((JSONObject) json);
+        if (json instanceof JSONArray)
+            json = toList((JSONArray) json);
+        return json;
     }
 
 }

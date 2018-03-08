@@ -5,8 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONWriter;
-
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -23,7 +22,7 @@ public class TableData_json
     }
 
     @Override
-    protected void buildJsonView(IHttpViewContext ctx, JSONWriter out, IUiRef<TableData> ref)
+    protected void buildJsonView(IHttpViewContext ctx, IJsonOut out, IUiRef<TableData> ref)
             throws ViewBuilderException, IOException {
         HttpServletRequest req = CurrentHttpService.getRequest();
         IVariantMap<String> q = VariantMaps.fromRequest(req);

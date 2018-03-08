@@ -3,7 +3,6 @@ package net.bodz.bas.fmt.json;
 import java.io.IOException;
 
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
@@ -19,7 +18,7 @@ public abstract class JsonSupport
     }
 
     @Override
-    public void writeObject(JSONWriter out)
+    public void writeObject(IJsonOut out)
             throws IOException {
         new BeanJsonDumper(out).dump(this);
     }

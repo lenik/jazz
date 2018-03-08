@@ -3,11 +3,11 @@ package net.bodz.bas.fmt.json;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import org.json.JSONWriter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 
@@ -34,7 +34,7 @@ public class BeanJsonDumperTest
     public void test1()
             throws Exception {
         StringWriter buf = new StringWriter();
-        JSONWriter out = new JSONWriter(buf);
+        JsonWriter out = new JsonWriter(buf);
         BeanJsonDumper dumper = new BeanJsonDumper(out);
         dumper.exclude("cats[0].color");
         dumper.exclude("cats[1]");

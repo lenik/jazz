@@ -1,10 +1,10 @@
 package net.bodz.lily.model.util;
 
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.MutableElement;
@@ -58,15 +58,13 @@ public class ValueElement
     }
 
     @Override
-    public void writeObject(JSONWriter out) {
+    public void writeObject(IJsonOut out) {
         switch (jsonFormat) {
         case FLOT:
             out.object();
             {
-                out.key("label");
-                out.value(getLabel());
-                out.key("data");
-                out.value(value);
+                out.entry("label", getLabel());
+                out.entry("data", value);
             }
             out.endObject();
             return;

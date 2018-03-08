@@ -11,7 +11,6 @@ import javax.xml.bind.DatatypeConverter;
 import org.joda.time.base.AbstractDateTime;
 import org.joda.time.format.ISODateTimeFormat;
 import org.json.JSONException;
-import org.json.JSONWriter;
 
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
@@ -24,7 +23,7 @@ import net.bodz.bas.typer.std.IParser;
 public abstract class AbstractJsonDumper<self_t>
         implements IJsonDumper {
 
-    protected JSONWriter out;
+    protected IJsonOut out;
     protected StackSet<Object> marks;
 
     protected boolean includeNull = false;
@@ -35,7 +34,7 @@ public abstract class AbstractJsonDumper<self_t>
 
     protected int maxDepth;
 
-    public AbstractJsonDumper(JSONWriter out) {
+    public AbstractJsonDumper(IJsonOut out) {
         this.out = out;
         this.marks = new StackSet<>();
     }

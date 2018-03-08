@@ -6,9 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONWriter;
-
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -33,7 +31,7 @@ public class JsonSerializable_json
             throws ViewBuilderException, IOException {
         IJsonSerializable obj = ref.get();
         PrintWriter writer = resp.getWriter();
-        JSONWriter jsonWriter = new JSONWriter(writer);
+        JsonWriter jsonWriter = new JsonWriter(writer);
         obj.writeObject(jsonWriter);
         return null;
     }

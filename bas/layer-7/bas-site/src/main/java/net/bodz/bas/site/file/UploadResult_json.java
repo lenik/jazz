@@ -6,8 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONWriter;
-
+import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -31,7 +30,7 @@ public class UploadResult_json
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<UploadResult> ref)
             throws ViewBuilderException, IOException {
         PrintWriter out = resp.getWriter();
-        JSONWriter jout = new JSONWriter(out);
+        JsonWriter jout = new JsonWriter(out);
         UploadResult result = ref.get();
 
         jout.object();
