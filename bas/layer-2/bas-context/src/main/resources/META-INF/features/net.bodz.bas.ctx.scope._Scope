@@ -1,2 +1,4 @@
 net.bodz.bas.ctx.scope.LocalScope
 net.bodz.bas.ctx.scope.StaticScope
+net.bodz.bas.ctx.scope.ThreadGroupScope
+net.bodz.bas.ctx.scope.ThreadScope

@@ -43,9 +43,9 @@ public class ClassScanner
 
     /**
      * Get all classes whose parent class is the specified class.
-     * 
+     *
      * Only direct subclass is included.
-     * 
+     *
      * @param parentClass
      *            The parent class.
      * @return Non-<code>null</code> set of subclasses. If there is no subclass of the given parent
@@ -71,7 +71,7 @@ public class ClassScanner
 
     /**
      * Get all classes with the specific annotation type.
-     * 
+     *
      * @param annotationType
      *            The annotation type.
      * @return Non-<code>null</code> set of classes which is annotated with the specific annotation
@@ -93,20 +93,21 @@ public class ClassScanner
         return derivations;
     }
 
-    void findDerivations(Set<Class<?>> markSet, Class<?> base, int selection) {
-        if (!markSet.add(base))
-            return;
-
+    void findDerivations(Set<Class<?>> results, Class<?> base, int selection) {
         if ((selection & SUBCLASSES) != 0) {
             // assert !base.isAnnotation();
-            for (Class<?> subclass : getSubclasses(base))
-                findDerivations(markSet, subclass, selection);
+            for (Class<?> subclass : getSubclasses(base)) {
+                if (results.add(subclass))
+                    findDerivations(results, subclass, selection);
+            }
         }
 
         if ((selection & IMPLS) != 0) {
             // assert base.isInterface();
-            for (Class<?> impl : getImpls(base))
-                findDerivations(markSet, impl, selection);
+            for (Class<?> impl : getImpls(base)) {
+                if (results.add(impl))
+                    findDerivations(results, impl, selection);
+            }
         }
 
         if ((selection & ANNOTATED_CLASSES) != 0) {
@@ -116,7 +117,7 @@ public class ClassScanner
 
             if (!base.isAnnotation() && !Collections.isEmpty(annotatedSet))
                 throw new IllegalUsageException(String.format(//
-                        "A non-annotation %s is used to annotate on: ", base, annotatedSet));
+                        "A non-annotation %s is used to annotate on: %s", base, annotatedSet));
 
             int sel = selection;
             boolean inheritedAnnotation = base.isAnnotationPresent(Inherited.class);
@@ -129,14 +130,16 @@ public class ClassScanner
             if (!isMeta)
                 sel &= ~ANNOTATED_CLASSES;
 
-            for (Class<?> annotatedClass : getAnnotatedClasses(base))
-                findDerivations(markSet, annotatedClass, sel);
+            for (Class<?> annotatedClass : getAnnotatedClasses(base)) {
+                if (results.add(annotatedClass))
+                    findDerivations(results, annotatedClass, sel);
+            }
         }
     }
 
     /**
      * Analyze the given class and all its parents, interfaces, annotations.
-     * 
+     *
      * @retu Modification counter.
      */
     public synchronized int analyze(Class<?> clazz) {

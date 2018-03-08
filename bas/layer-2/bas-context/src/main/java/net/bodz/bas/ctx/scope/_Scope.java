@@ -16,11 +16,11 @@ import net.bodz.bas.meta.meta.MetaAnnotation;
 
 /**
  * This annotation type is indexed.
- * 
+ *
  * @see javax.inject.Scope
  */
 @Documented
-@IndexedType(publishDir = PublishDir.features)
+@IndexedType(publishDir = PublishDir.features, includeClass = false, includeAnnotation = true)
 @MetaAnnotation
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
