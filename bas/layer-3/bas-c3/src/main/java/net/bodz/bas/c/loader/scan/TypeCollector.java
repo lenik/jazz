@@ -111,44 +111,36 @@ public class TypeCollector<T> {
 
             String extensionName = extension.getCanonicalName();
 
-            if (baseClass.isAnnotation())
-                info = "    Subclass: @" + extensionName;
-            else
-                info = "    Subclass: " + extensionName;
-
-            if (aIndexedType == null) {
-                // Not indexed-type, skipped
-                info += " -N";
+            info = "    Subclass: " + (baseClass.isAnnotation() ? "@" : "") + extensionName;
+            if (aIndexedType == null) { // Not indexed-type, skipped
+                info += " -noindex";
                 continue;
             }
 
-            int modifier = extension.getModifiers();
-            if (Modifier.isAbstract(modifier))
-                if (aIndexedType.includeAbstract())
-                    // Included abstract class
-                    info += " +a";
-                else {
-                    info += " -a";
+            if (extension.isAnnotation()) {
+                if (!aIndexedType.includeAnnotation()) {
+                    info += " -ann";
+                    continue;
+                }
+            } else {
+                if (!aIndexedType.includeClass()) {
+                    info += " -class";
                     continue;
                 }
 
-            if (!Modifier.isPublic(modifier))
-                if (aIndexedType.includeNonPublic())
-                    // Included non-public class
-                    info += " -";
-                else {
-                    info += " +";
-                    continue;
-                }
+                int modifier = extension.getModifiers();
+                if (Modifier.isAbstract(modifier))
+                    if (!aIndexedType.includeAbstract()) {
+                        info += " -abstract";
+                        continue;
+                    }
 
-            if (extension.isAnnotation())
-                if (aIndexedType.includeAnnotation())
-                    // Included annotation class
-                    info += " +@";
-                else {
-                    info += " -@";
-                    continue;
-                }
+                if (!Modifier.isPublic(modifier))
+                    if (!aIndexedType.includeNonPublic()) {
+                        info += " -nonpub";
+                        continue;
+                    }
+            }
 
             extensions.add(extension);
 

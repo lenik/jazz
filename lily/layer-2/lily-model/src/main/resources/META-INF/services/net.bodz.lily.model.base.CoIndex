@@ -1,4 +1,3 @@
-net.bodz.lily.model.base.CoIndex
 net.bodz.lily.model.base.security.impl.GroupIndex
 net.bodz.lily.model.base.security.impl.UserIndex
 net.bodz.lily.model.contact.impl.ContactIndex
