@@ -2,12 +2,14 @@ package net.bodz.bas.db.ibatis.type;
 
 import java.sql.*;
 
+import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.JdbcType;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 
+@Alias("DateTime")
 @AliasedType
 public class DateTimeTypeHandler
         extends TypeHandler<DateTime> {
