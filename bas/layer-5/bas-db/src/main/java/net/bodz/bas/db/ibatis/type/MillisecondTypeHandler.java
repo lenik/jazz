@@ -6,12 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.JdbcType;
 
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
+@Alias("Millisecond")
 @AliasedType
 @ExcludedFromIndex
 public class MillisecondTypeHandler

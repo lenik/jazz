@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Set;
 
+import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.JdbcType;
 
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 
+@Alias("Set")
 @AliasedType
 public class SetTypeHandler
         extends TypeHandler<Set<Object>> {
