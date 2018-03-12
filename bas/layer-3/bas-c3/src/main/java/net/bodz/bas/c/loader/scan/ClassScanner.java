@@ -94,6 +94,8 @@ public class ClassScanner
     }
 
     void findDerivations(Set<Class<?>> results, Class<?> base, int selection) {
+        if (base.getSimpleName().equals("ScopeType"))
+            System.out.println();
         if ((selection & SUBCLASSES) != 0) {
             // assert !base.isAnnotation();
             for (Class<?> subclass : getSubclasses(base)) {
@@ -126,14 +128,15 @@ public class ClassScanner
                 sel &= ~IMPLS;
             }
 
-            boolean isMeta = base.isAnnotationPresent(Implicit.class);
-            if (!isMeta)
+            boolean explicit = !base.isAnnotationPresent(Implicit.class);
+            if (explicit)
                 sel &= ~ANNOTATED_CLASSES;
 
-            for (Class<?> annotatedClass : getAnnotatedClasses(base)) {
-                if (results.add(annotatedClass))
-                    findDerivations(results, annotatedClass, sel);
-            }
+            for (Class<?> item : annotatedSet)
+                if (results.add(item)) {
+                    if (!item.isAnnotation())
+                        findDerivations(results, item, sel);
+                }
         }
     }
 

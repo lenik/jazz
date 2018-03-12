@@ -46,9 +46,9 @@ public class ResourceScanner {
 
     public Map<String, List<URL>> scanResources(String rootResourceName)
             throws IOException {
-        BufferedFileOrEntryProcessor buffer = new BufferedFileOrEntryProcessor();
-        scanResources(rootResourceName, buffer);
-        return buffer.getResourceMap();
+        WhereMapProcessor wmap = new WhereMapProcessor();
+        scanResources(rootResourceName, wmap);
+        return wmap.getResourceMap();
     }
 
     public void scanResources(String rootResourceName, IFileOrEntryProcessor processor)

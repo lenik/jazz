@@ -23,7 +23,7 @@ public @interface ScopeTeller {
          * @return Non-<code>null</code> value.
          */
         public static IScopeTeller fromScopedObject(Class<?> objectType) {
-            Annotation aFooScope = ScopeType.fn.getScopeAnnotation(objectType);
+            Annotation aFooScope = ScopeType.fn.getConcreteAnnotation(objectType);
             if (aFooScope == null) {
                 // prototype by default
                 return LocalScopeTeller.INSTANCE;

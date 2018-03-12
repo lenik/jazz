@@ -18,7 +18,7 @@ public class ScopedTypeInfo<T> {
 
     public ScopedTypeInfo(Class<T> objectType) {
         this.objectType = objectType;
-        aFooScope = ScopeType.fn.getScopeAnnotation(objectType);
+        aFooScope = ScopeType.fn.getConcreteAnnotation(objectType);
 
         if (aFooScope == null) {
             // prototype by default
