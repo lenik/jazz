@@ -1,0 +1,4 @@
+net.bodz.bas.ctx.LocalScope
+net.bodz.bas.ctx.StaticScope
+net.bodz.bas.ctx.ThreadGroupScope
+net.bodz.bas.ctx.ThreadScope

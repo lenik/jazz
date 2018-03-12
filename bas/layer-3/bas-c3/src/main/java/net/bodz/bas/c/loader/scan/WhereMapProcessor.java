@@ -10,40 +10,43 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class BufferedFileOrEntryProcessor
+public class WhereMapProcessor
         extends AbstractFileOrEntryProcessor {
 
-    Map<String, List<URL>> resourceMap = new LinkedHashMap<String, List<URL>>();
+    Map<String, List<URL>> whereMap = new LinkedHashMap<String, List<URL>>();
 
     public List<URL> getResources(String resourceName) {
-        List<URL> resources = resourceMap.get(resourceName);
+        List<URL> resources = whereMap.get(resourceName);
         if (resources == null) {
             resources = new ArrayList<URL>();
-            resourceMap.put(resourceName, resources);
+            whereMap.put(resourceName, resources);
         }
         return resources;
     }
 
     @Override
     public void process(File file, String resourceName) {
-        List<URL> resources = getResources(resourceName);
         URL resource = toResource(file);
-        resources.add(resource);
+        add(resourceName, resource);
     }
 
     @Override
     public void process(ZipFile file, ZipEntry entry) {
-        List<URL> resources = getResources(entry.getName());
         URL resource = toResource(file, entry);
-        resources.add(resource);
+        add(entry.getName(), resource);
+    }
+
+    void add(String name, URL resource) {
+        List<URL> list = getResources(name);
+        list.add(resource);
     }
 
     public Map<String, List<URL>> getResourceMap() {
-        return resourceMap;
+        return whereMap;
     }
 
     public Set<String> getResourceNames() {
-        return resourceMap.keySet();
+        return whereMap.keySet();
     }
 
 }

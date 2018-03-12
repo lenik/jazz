@@ -110,6 +110,7 @@ public class TypeCollector<T> {
                 logger.info(info);
 
             String extensionName = extension.getCanonicalName();
+            int modifier = extension.getModifiers();
 
             info = "    Subclass: " + (baseClass.isAnnotation() ? "@" : "") + extensionName;
             if (aIndexedType == null) { // Not indexed-type, skipped
@@ -117,27 +118,26 @@ public class TypeCollector<T> {
                 continue;
             }
 
+            if (!Modifier.isPublic(modifier))
+                if (!aIndexedType.includeNonPublic()) {
+                    info += " -nonpub";
+                    continue;
+                }
+
             if (extension.isAnnotation()) {
                 if (!aIndexedType.includeAnnotation()) {
                     info += " -ann";
                     continue;
                 }
             } else {
+                // Non-annotation.
                 if (!aIndexedType.includeClass()) {
                     info += " -class";
                     continue;
                 }
-
-                int modifier = extension.getModifiers();
                 if (Modifier.isAbstract(modifier))
                     if (!aIndexedType.includeAbstract()) {
                         info += " -abstract";
-                        continue;
-                    }
-
-                if (!Modifier.isPublic(modifier))
-                    if (!aIndexedType.includeNonPublic()) {
-                        info += " -nonpub";
                         continue;
                     }
             }
