@@ -2,8 +2,7 @@ package user;
 
 import java.util.Random;
 
-import org.junit.Assert;
-
+import net.bodz.bas.db.test.DatabaseTester;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
@@ -12,13 +11,19 @@ import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.base.security.impl.UserMapper;
 
 public class UserPlayer
-        extends Assert {
+        extends DatabaseTester {
 
     static Random random = new Random(System.currentTimeMillis());
 
     public static void main(String[] args)
             throws Exception {
-        UserMapper userMapper = TestEnv.getMapper(UserMapper.class);
+        new UserPlayer().main();
+    }
+
+    @Override
+    public void main()
+            throws Exception {
+        UserMapper userMapper = getMapper(UserMapper.class);
         // for (User user : userMapper.all()) dump(user);
         User user = userMapper.select(91);
         dump(user);

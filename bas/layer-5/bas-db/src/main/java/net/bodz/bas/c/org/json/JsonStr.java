@@ -30,7 +30,7 @@ public class JsonStr
     public void writeInStr_sql(String jsonStr)
             throws SQLException {
         try {
-            writeInStr(json);
+            writeInStr(jsonStr);
         } catch (ParseException e) {
             throw new SQLException(String.format(//
                     "Failed to parse: %s, json: %s", e.getMessage(), json), e);

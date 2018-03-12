@@ -9,6 +9,7 @@
         <result property="barCode" column="barcode" />
         <result property="modelName" column="model" />
         <result property="finish" column="finish" />
+        <result property="properties.jsonForm" column="props" />
         <association property="category" javaType="net.bodz.violet.art.ArtifactCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
@@ -89,12 +90,14 @@
             label, description,
             priority, flags, state, uid, gid, mode, acl,
             cat, phase, sku, barcode, model, finish,
-            uom
+            uom, price, 
+            props
         ) values(
             #{label},#{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{category.id}, #{phase.id}, #{skuCode}, #{barCode}, #{modelName}, #{finish},
-            #{uom.id}
+            #{uom.id}, #{price}, 
+            #{properties.jsonForm}::jsonb
         ) returning id; --
     ]]></insert>
 
@@ -109,6 +112,7 @@
             model = #{modelName},
             finish = #{finish},
             <if test="uom != null">uom = #{uom.id},</if>
+            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
         </set>
         <where>
             <if test="id != null">id = #{id}</if>
