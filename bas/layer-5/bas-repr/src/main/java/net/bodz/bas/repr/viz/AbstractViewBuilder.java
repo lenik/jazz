@@ -1,7 +1,7 @@
 package net.bodz.bas.repr.viz;
 
 import net.bodz.bas.c.type.TypeParam;
-import net.bodz.bas.ctx.scope.LocalScope;
+import net.bodz.bas.ctx.LocalScope;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.rtx.IQueryable;

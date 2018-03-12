@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.meta;
+package net.bodz.bas.ctx;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,12 +6,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * <code>@MetaAnnotation @Foo on @Bar</code>, than <code>@Bar is-a @Foo</code>.
- */
+import net.bodz.bas.meta.codegen.IndexedType;
+
 @Documented
+@IndexedType
+@InstanceType
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.ANNOTATION_TYPE)
-public @interface MetaAnnotation {
+@Target(ElementType.TYPE)
+public @interface Service {
 
 }

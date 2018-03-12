@@ -113,11 +113,20 @@ public class JsonFn {
         return toMap(jsonObj);
     }
 
-    public static Map<String, Object> toMap(JSONObject json) {
+    public static Map<String, Object> toMap(Map<String, Object> map, String json) {
+        JSONObject jsonObj = new JSONObject(json);
+        return toMap(map, jsonObj);
+    }
+
+    public static Map<String, Object> toMap(JSONObject jsonObj) {
         Map<String, Object> map = new HashMap<>();
-        for (Object _key : json.keySet()) {
+        return toMap(map, jsonObj);
+    }
+
+    public static Map<String, Object> toMap(Map<String, Object> map, JSONObject jsonObj) {
+        for (Object _key : jsonObj.keySet()) {
             String key = (String) _key;
-            Object val = json.get(key);
+            Object val = jsonObj.get(key);
             val = unwrap(val);
             map.put(key, val);
         }

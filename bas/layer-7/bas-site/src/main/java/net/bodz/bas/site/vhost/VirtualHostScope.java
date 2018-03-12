@@ -7,14 +7,14 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
+import net.bodz.bas.ctx.ScopeType;
 import net.bodz.bas.ctx.scope.ScopeIdClass;
 import net.bodz.bas.ctx.scope.ScopeTeller;
-import net.bodz.bas.ctx.scope._Scope;
 
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@_Scope
+@ScopeType
 @Scope
 @ScopeIdClass(IVirtualHost.class)
 @ScopeTeller(VirtualHostScopeTeller.class)

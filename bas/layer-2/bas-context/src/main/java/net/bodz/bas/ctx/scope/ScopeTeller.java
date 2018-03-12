@@ -8,6 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import net.bodz.bas.c.type.SingletonUtil;
+import net.bodz.bas.ctx.ScopeType;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -22,7 +23,7 @@ public @interface ScopeTeller {
          * @return Non-<code>null</code> value.
          */
         public static IScopeTeller fromScopedObject(Class<?> objectType) {
-            Annotation aFooScope = _Scope.fn.getScopeAnnotation(objectType);
+            Annotation aFooScope = ScopeType.fn.getScopeAnnotation(objectType);
             if (aFooScope == null) {
                 // prototype by default
                 return LocalScopeTeller.INSTANCE;

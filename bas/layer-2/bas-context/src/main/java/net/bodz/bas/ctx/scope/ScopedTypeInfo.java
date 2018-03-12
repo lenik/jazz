@@ -3,6 +3,7 @@ package net.bodz.bas.ctx.scope;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
+import net.bodz.bas.ctx.ScopeType;
 import net.bodz.bas.ctx.scope.experimental.BeanFactory;
 import net.bodz.bas.ctx.scope.experimental.IBeanProvider;
 import net.bodz.bas.err.IllegalUsageException;
@@ -17,7 +18,7 @@ public class ScopedTypeInfo<T> {
 
     public ScopedTypeInfo(Class<T> objectType) {
         this.objectType = objectType;
-        aFooScope = _Scope.fn.getScopeAnnotation(objectType);
+        aFooScope = ScopeType.fn.getScopeAnnotation(objectType);
 
         if (aFooScope == null) {
             // prototype by default

@@ -7,13 +7,13 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Scope;
 import javax.servlet.http.HttpServletRequest;
 
+import net.bodz.bas.ctx.ScopeType;
 import net.bodz.bas.ctx.scope.ScopeIdClass;
 import net.bodz.bas.ctx.scope.ScopeTeller;
-import net.bodz.bas.ctx.scope._Scope;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@_Scope
+@ScopeType
 @Scope
 @ScopeIdClass(HttpServletRequest.class)
 @ScopeTeller(RequestScopeTeller.class)
