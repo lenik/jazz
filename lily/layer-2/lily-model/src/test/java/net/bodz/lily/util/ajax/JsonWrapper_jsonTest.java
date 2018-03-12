@@ -1,9 +1,9 @@
 package net.bodz.lily.util.ajax;
 
-import org.json.JSONStringer;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.org.json.JsonStringer;
 import net.bodz.bas.ui.dom1.UiValue;
 
 public class JsonWrapper_jsonTest
@@ -14,7 +14,7 @@ public class JsonWrapper_jsonTest
             throws Exception {
         JsonWrapper jw = JsonWrapper.wrap(true);
         JsonWrapper_json v = new JsonWrapper_json();
-        JSONStringer out = new JSONStringer();
+        JsonStringer out = new JsonStringer();
         v.buildJsonView(null, out, UiValue.wrap(jw));
     }
 

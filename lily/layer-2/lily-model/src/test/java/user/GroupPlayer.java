@@ -2,8 +2,7 @@ package user;
 
 import java.util.Random;
 
-import org.junit.Assert;
-
+import net.bodz.bas.db.test.DatabaseTester;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
@@ -12,13 +11,19 @@ import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.base.security.impl.GroupMapper;
 
 public class GroupPlayer
-        extends Assert {
+        extends DatabaseTester {
 
     static Random random = new Random(System.currentTimeMillis());
 
     public static void main(String[] args)
             throws Exception {
-        GroupMapper groupMapper = TestEnv.getMapper(GroupMapper.class);
+        new GroupPlayer().main();
+    }
+
+    @Override
+    public void main()
+            throws Exception {
+        GroupMapper groupMapper = getMapper(GroupMapper.class);
 
         Group group = new Group();
         group.setCodeName("Test" + random.nextInt());
