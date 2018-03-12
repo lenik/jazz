@@ -18,7 +18,7 @@ import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.meta.meta.MetaAnnotation;
+import net.bodz.bas.meta.meta.Implicit;
 
 public class ClassScanner
         extends ResourceScanner {
@@ -126,7 +126,7 @@ public class ClassScanner
                 sel &= ~IMPLS;
             }
 
-            boolean isMeta = base.isAnnotationPresent(MetaAnnotation.class);
+            boolean isMeta = base.isAnnotationPresent(Implicit.class);
             if (!isMeta)
                 sel &= ~ANNOTATED_CLASSES;
 

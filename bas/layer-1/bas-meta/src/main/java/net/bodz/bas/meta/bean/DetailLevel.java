@@ -4,7 +4,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import net.bodz.bas.meta.meta.MetaAnnotation;
+import net.bodz.bas.meta.meta.Implicit;
 
 /**
  * The detail level controls whether this element is displayed. When user specifies a display detail
@@ -39,8 +39,8 @@ import net.bodz.bas.meta.meta.MetaAnnotation;
  * </tr>
  * </table>
  */
+@Implicit
 @Inherited
-@MetaAnnotation
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DetailLevel {
 
