@@ -94,8 +94,6 @@ public class ClassScanner
     }
 
     void findDerivations(Set<Class<?>> results, Class<?> base, int selection) {
-        if (base.getSimpleName().equals("ScopeType"))
-            System.out.println();
         if ((selection & SUBCLASSES) != 0) {
             // assert !base.isAnnotation();
             for (Class<?> subclass : getSubclasses(base)) {

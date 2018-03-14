@@ -105,7 +105,8 @@ public class TypeCollector<T> {
         logger.info("For " + baseClass.getCanonicalName());
 
         String info = null;
-        for (Class<?> extension : listFilteredDerivations(baseClass)) {
+        Collection<Class<?>> exts = listFilteredDerivations(baseClass);
+        for (Class<?> extension : exts) {
             if (info != null)
                 logger.info(info);
 
@@ -142,7 +143,7 @@ public class TypeCollector<T> {
                     }
             }
 
-            extensions.add(extension);
+            this.extensions.add(extension);
 
             MavenPomDir pomDir = MavenPomDir.fromClass(extension);
             if (pomDir == null) {
@@ -221,7 +222,8 @@ public class TypeCollector<T> {
     protected Collection<Class<?>> listFilteredDerivations(Class<?> base) {
         List<Class<?>> list = new ArrayList<Class<?>>();
 
-        for (Class<?> derivation : scanner.getDerivations(base, -1)) {
+        Set<Class<?>> derivations = scanner.getDerivations(base, -1);
+        for (Class<?> derivation : derivations) {
             if (derivation.isAnonymousClass())
                 continue;
 
