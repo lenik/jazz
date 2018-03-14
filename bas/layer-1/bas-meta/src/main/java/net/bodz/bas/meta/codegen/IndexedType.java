@@ -18,7 +18,6 @@ import java.lang.annotation.Target;
  */
 @Documented
 @IndexedType(publishDir = PublishDir.features, includeAbstract = true, includeAnnotation = true)
-@ExcludedFromIndex
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface IndexedType {
