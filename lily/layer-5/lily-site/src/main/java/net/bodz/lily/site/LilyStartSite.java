@@ -8,8 +8,6 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
-import net.bodz.bas.site.vhost.IVirtualHost;
-import net.bodz.bas.site.vhost.VhostDataContexts;
 
 public abstract class LilyStartSite
         extends BasicSite {
