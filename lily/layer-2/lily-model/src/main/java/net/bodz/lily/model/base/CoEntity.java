@@ -1,5 +1,7 @@
 package net.bodz.lily.model.base;
 
+import java.io.Serializable;
+
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.lily.entity.IId;
 
@@ -28,6 +30,12 @@ public class CoEntity<Id>
     @Override
     public void setId(Id id) {
         this.id = id;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void setId_(Serializable id) {
+        setId((Id) id);
     }
 
 }

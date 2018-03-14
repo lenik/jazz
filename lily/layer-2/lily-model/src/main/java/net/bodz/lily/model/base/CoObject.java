@@ -107,18 +107,17 @@ public abstract class CoObject
         fn.fillLoginData(this);
     }
 
-    /**
-     * @return Non-<code>null</code> id.
-     */
     public abstract Object getId();
+
+    public abstract void setId_(Serializable id);
 
     /**
      * <p lang="en">
      * An optional unique code name, which can be specified and alternated by user.
-     * 
+     *
      * <p lang="zh">
      * 类似于 id，代码不可重复。和 id 不同的是，代码是可以自行指定的，可以包含数字、字母，且可以更改。
-     * 
+     *
      * @label Code Name
      * @label.zh 代码
      * @placeholder 输入代码/别名…
@@ -136,10 +135,10 @@ public abstract class CoObject
     /**
      * <p lang="en">
      * A short descriptive label.
-     * 
+     *
      * <p lang="zh">
      * 简短的描述性标签。这个标签将出现在打印的列表中，用于标题、抬头等用途。
-     * 
+     *
      * @label Label
      * @label.zh 名称
      * @placeholder 输入简短的描述性名称…
@@ -158,10 +157,10 @@ public abstract class CoObject
     /**
      * <p lang="en">
      * A summary descriptive message.
-     * 
+     *
      * <p lang="zh">
      * 概括性的描述文本，以及必要的附加信息。
-     * 
+     *
      * @label Description
      * @label.zh 描述
      * @placeholder 输入概括性的描述信息…
@@ -198,6 +197,7 @@ public abstract class CoObject
      * @placeholder 输入图像的名称…
      * @deprecated See #
      */
+    @Deprecated
     @OfGroup(StdGroup.Visual.class)
     @TextInput(maxLength = N_IMAGE)
     public String getImage() {
@@ -207,6 +207,7 @@ public abstract class CoObject
     /**
      * @deprecated
      */
+    @Deprecated
     public void setImage(String image) {
         this.image = image;
     }
@@ -233,10 +234,10 @@ public abstract class CoObject
     /**
      * <p lang="en">
      * Describe the priority order. Important objects should have a higher priority.
-     * 
+     *
      * <p lang="zh">
      * 用于指定优先次序，通常重要的信息具有较高的优先级。
-     * 
+     *
      * @label Priority
      * @label.zh 优先级
      */
@@ -255,7 +256,7 @@ public abstract class CoObject
 
     /**
      * 信息的创建时间。
-     * 
+     *
      * @label Creation Date
      * @label.zh 创建时间
      */
@@ -288,7 +289,7 @@ public abstract class CoObject
 
     /**
      * 信息最近一次的修改时间。
-     * 
+     *
      * @label Last Modified Date
      * @label.zh 修改时间
      */
@@ -343,7 +344,7 @@ public abstract class CoObject
 
     /**
      * One day by default.
-     * 
+     *
      * @label Max Age
      * @label.zh 缓存寿命
      */
@@ -422,7 +423,7 @@ public abstract class CoObject
     /**
      * <p lang="zh">
      * 描述信息的所有者（持有者）。
-     * 
+     *
      * @label Owner User
      * @label.zh 属主
      */
@@ -438,7 +439,7 @@ public abstract class CoObject
     /**
      * <p lang="zh">
      * 描述信息所属的用户组。组内成员对该信息具有额外的控制权。
-     * 
+     *
      * @label Owner Group
      * @label.zh 属组
      */
@@ -470,7 +471,7 @@ public abstract class CoObject
     /**
      * <p lang="zh">
      * 指定属主、属组和其它人对该信息的访问权限。
-     * 
+     *
      * 已定义的访问权限有：
      * <dl>
      * <dt>公开
@@ -492,7 +493,7 @@ public abstract class CoObject
      * <dt>私有/锁定
      * <dd>只有属主可以查看。
      * </dl>
-     * 
+     *
      * @label Access Mode
      * @label.zh 访问模式
      */
@@ -510,10 +511,10 @@ public abstract class CoObject
     /**
      * <p lang="en>
      * Access Control List (ACL) applied on this object.
-     * 
+     *
      * <p lang="zh">
      * 在该对象上应用的访问控制列表。
-     * 
+     *
      * @label ACL
      * @label.zh ACL
      */
