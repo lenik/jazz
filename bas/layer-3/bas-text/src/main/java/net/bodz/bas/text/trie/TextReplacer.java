@@ -7,10 +7,11 @@ import net.bodz.bas.meta.decl.Replacement;
 
 public class TextReplacer {
 
-    CharTrie<String> trie;
+    private final CharTrie<String> trie = new CharTrie<String>();
+    private boolean wholeOnly = true;
 
-    public TextReplacer() {
-        trie = new CharTrie<String>();
+    public TextReplacer(boolean wholeOnly) {
+        this.wholeOnly = wholeOnly;
     }
 
     public TextReplacer replace(String pattern, String replacement) {
@@ -29,6 +30,21 @@ public class TextReplacer {
         for (int i = 0; i < heads.length; i++) {
             int head = heads[i];
             if (head != -1) {
+                if (wholeOnly) {
+                    boolean whole = true;
+                    if (head >= 1) {
+                        char back = input.charAt(head - 1);
+                        if (!boundaryTest(back))
+                            whole = false;
+                    }
+                    if (i + 1 < heads.length) {
+                        char ahead = input.charAt(i + 1);
+                        if (!boundaryTest(ahead))
+                            whole = false;
+                    }
+                    if (!whole)
+                        continue;
+                }
                 sb.append(input.substring(pos, head));
 
                 String word = input.substring(head, i + 1);
@@ -43,6 +59,10 @@ public class TextReplacer {
         sb.append(remaining);
 
         return sb.toString();
+    }
+
+    boolean boundaryTest(int codepoint) {
+        return !Character.isAlphabetic(codepoint);
     }
 
     public void loadReplacements() {
@@ -68,7 +88,7 @@ public class TextReplacer {
         }
     }
 
-    static final TextReplacer indexed = new TextReplacer();
+    static final TextReplacer indexed = new TextReplacer(true);
     static {
         indexed.loadReplacements();
     }
