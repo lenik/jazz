@@ -1,8 +1,12 @@
 package net.bodz.bas.db.ibatis;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -11,6 +15,7 @@ import java.util.TreeSet;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.builder.BuilderException;
+import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
@@ -28,9 +33,12 @@ import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.c.type.TypeIndex;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.LoadException;
+import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
+import net.bodz.bas.text.trie.BinaryReplacer;
 
 @IndexedTypeLoader
 public class IbatisMapperProvider
@@ -97,8 +105,15 @@ public class IbatisMapperProvider
 
         for (Class<?> mapperClass : mapperClasses) {
             logger.log("Add Mapper: ", mapperClass);
+
             try {
+                // Eagerly load the mapper xml here, to support xml patches.
+                if (loadMapperXml(config, mapperClass))
+                    continue;
+
                 config.addMapper(mapperClass);
+            } catch (IOException e) {
+                logger.error("Failed to read mapper xml: " + mapperClass, e);
             } catch (BuilderException e) {
                 logger.error("Failed to add mapper: " + mapperClass, e);
                 throw e;
@@ -111,6 +126,28 @@ public class IbatisMapperProvider
 
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         return builder.build(config);
+    }
+
+    protected boolean loadMapperXml(Configuration config, Class<?> mapperClass)
+            throws IOException {
+        String fqcn = mapperClass.getName();
+        if (config.isResourceLoaded("namespace:" + fqcn))
+            return false; // already loaded.
+
+        String resource = fqcn.replace('.', '/') + ".xml";
+        URL url = mapperClass.getResource(mapperClass.getSimpleName() + ".xml");
+        if (url == null)
+            return false;
+
+        byte[] content = new URLResource(url).to(StreamReading.class).read();
+        byte[] patched = BinaryReplacer.getIndexed().transform(content);
+        if (!Arrays.equals(content, patched))
+            System.out.println("Patched: " + url);
+        XMLMapperBuilder xmlParser = new XMLMapperBuilder(//
+                new ByteArrayInputStream(patched), //
+                config, resource, config.getSqlFragments(), fqcn);
+        xmlParser.parse();
+        return true;
     }
 
     Environment buildEnvironment() {
