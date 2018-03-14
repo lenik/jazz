@@ -8,7 +8,7 @@ public class BinaryReplacerTest
 
     @Test
     public void testReplace() {
-        BinaryReplacer replacer = new BinaryReplacer();
+        BinaryReplacer replacer = new BinaryReplacer(true);
         replacer.replace("hello".getBytes(), "world".getBytes());
         replacer.replace("foo".getBytes(), "bar".getBytes());
         byte[] dst = replacer.transform("Hello, foo. This is foo, hello, foo.".getBytes());

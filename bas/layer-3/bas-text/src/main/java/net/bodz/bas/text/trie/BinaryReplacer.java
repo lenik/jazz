@@ -10,6 +10,11 @@ import net.bodz.bas.meta.decl.Replacement;
 public class BinaryReplacer {
 
     private final ByteTrie<byte[]> trie = new ByteTrie<>();
+    private boolean wholeOnly = true;
+
+    public BinaryReplacer(boolean wholeOnly) {
+        this.wholeOnly = wholeOnly;
+    }
 
     public BinaryReplacer replace(byte[] pattern, byte[] replacement) {
         if (pattern == null)
@@ -27,6 +32,21 @@ public class BinaryReplacer {
         for (int i = 0; i < heads.length; i++) {
             int head = heads[i];
             if (head != -1) {
+                if (wholeOnly) {
+                    boolean whole = true;
+                    if (head >= 1) {
+                        int back = input[head - 1] & 0xFF;
+                        if (!boundaryTest(back))
+                            whole = false;
+                    }
+                    if (i + 1 < heads.length) {
+                        int ahead = input[i + 1] & 0xFF;
+                        if (!boundaryTest(ahead))
+                            whole = false;
+                    }
+                    if (!whole)
+                        continue;
+                }
                 buf.write(input, pos, head - pos);
 
                 byte[] replacement = trie.resolve(input, head, i + 1 - head).getData();
@@ -39,6 +59,10 @@ public class BinaryReplacer {
         buf.write(input, pos, input.length - pos);
 
         return buf.toByteArray();
+    }
+
+    boolean boundaryTest(int codepoint) {
+        return !Character.isAlphabetic(codepoint);
     }
 
     public void loadReplacements() {
@@ -63,7 +87,7 @@ public class BinaryReplacer {
         }
     }
 
-    static final BinaryReplacer indexed = new BinaryReplacer();
+    static final BinaryReplacer indexed = new BinaryReplacer(true);
     static {
         indexed.loadReplacements();
     }

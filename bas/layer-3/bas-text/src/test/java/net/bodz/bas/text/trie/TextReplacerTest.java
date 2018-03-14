@@ -8,7 +8,7 @@ public class TextReplacerTest
 
     @Test
     public void testReplace() {
-        TextReplacer replacer = new TextReplacer();
+        TextReplacer replacer = new TextReplacer(true);
         replacer.replace("hello", "world");
         replacer.replace("foo", "bar");
         String dst = replacer.transform("Hello, foo. This is foo, hello, foo.");
