@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.session.Configuration;
 
 import net.bodz.bas.c.type.IndexedTypes;
+import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.err.PackageError;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.io.res.tools.StreamReading;
@@ -31,9 +33,15 @@ public class IncludeMapperXmlConfigurer
             for (String name : names) {
                 String pathName = packagePath + "/" + name;
                 byte[] data = readClassResource(declaringClass, name);
+
                 InputStream in = new ByteArrayInputStream(data);
                 XMLMapperBuilder xmb = new XMLMapperBuilder(in, config, pathName, config.getSqlFragments());
-                xmb.parse();
+                try {
+                    xmb.parse();
+                } catch (BuilderException e) {
+                    throw new IllegalConfigException(String.format(//
+                            "Failed to parse %s: %s", pathName, e.getMessage()), e);
+                }
             }
         }
     }

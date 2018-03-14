@@ -1,1 +1,3 @@
 net.bodz.bas.meta.codegen.IndexedType
+net.bodz.bas.meta.decl.Replacement
+net.bodz.bas.meta.meta.PatchType
