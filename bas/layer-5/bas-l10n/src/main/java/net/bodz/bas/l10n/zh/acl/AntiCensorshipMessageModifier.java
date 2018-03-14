@@ -3,7 +3,6 @@ package net.bodz.bas.l10n.zh.acl;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -21,50 +20,26 @@ public class AntiCensorshipMessageModifier
     public String transform(String input)
             throws RuntimeException {
         StringBuilder sb = new StringBuilder(input.length() * 2);
-        int[] root = breakText(input, trie);
-        int start = 0;
-        for (int end = 1; end < root.length; end++) {
-            int head = root[end];
+        int[] heads = trie.scanTries(input);
+        int pos = 0;
+        for (int i = 0; i < heads.length; i++) {
+            int head = heads[i];
             if (head != -1) {
-                sb.append(input.substring(start, head));
+                sb.append(input.substring(pos, head));
 
-                String word = input.substring(head, end);
+                String word = input.substring(head, i + 1);
                 List<String> replacements = trie.resolve(word).getData();
                 String replacement = replacements.get(random.nextInt(replacements.size()));
                 sb.append(replacement);
 
-                start = end;
+                pos = i + 1;
             }
         }
 
-        String remaining = input.substring(start);
+        String remaining = input.substring(pos);
         sb.append(remaining);
 
         return sb.toString();
-    }
-
-    static int[] breakText(String s, CharTrie<?> trieRoot) {
-        int len = s.length();
-        int root[] = new int[len + 1];
-        Arrays.fill(root, -1);
-        for (int start = 0; start < len; start++)
-            // if (start == 0 || root[start] >= 0)
-            breakText(s, start, len, root, trieRoot);
-        return root;
-    }
-
-    static void breakText(String s, int start, int end, int root[], CharTrie<?> trie) {
-        CharTrie.Node<?> node = trie.getRoot();
-        for (int i = start; i < end; i++) {
-            char ch = s.charAt(i);
-            node = node.getChild(ch);
-            if (node != null) {
-                if (node.isDefined())
-                    if (root[i + 1] == -1)
-                        root[i + 1] = start;
-            } else
-                break;
-        }
     }
 
     static CharTrie<List<String>> trie = new CharTrie<List<String>>();
