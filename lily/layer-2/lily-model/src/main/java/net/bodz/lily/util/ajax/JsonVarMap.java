@@ -2,11 +2,16 @@ package net.bodz.lily.util.ajax;
 
 import org.json.JSONObject;
 
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.t.variant.VariantMapImpl;
 
 public class JsonVarMap
         extends VariantMapImpl<String>
         implements IJSONSupport {
+
+    public JsonVarMap(JsonObject obj) {
+        this(obj.getWrapped());
+    }
 
     public JsonVarMap(JSONObject obj) {
         super(new JsonLookupMap(obj));

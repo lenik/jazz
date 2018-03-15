@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONObject;
-
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.c.type.TypeParam;
@@ -16,6 +14,7 @@ import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
@@ -123,7 +122,7 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
                 target = newHandler(q);
                 break;
             case "save":
-                JSONObject json = HttpPayload.getJsonPayload(req);
+                JsonObject json = HttpPayload.getJsonPayload(req);
                 target = saveHandler(q, json);
                 break;
             default:
@@ -212,12 +211,13 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         return wrapper;
     }
 
-    protected Object saveHandler(IVariantMap<String> q, JSONObject json)
+    protected Object saveHandler(IVariantMap<String> q, JsonObject jsonObj)
             throws RequestHandlerException {
         AjaxResult result = new AjaxResult();
 
         T obj;
-        boolean create = json.isNull("id");
+        Long id = jsonObj.getLong("id");
+        boolean create = id == null;
         if (create) {
             try {
                 obj = create();
@@ -225,12 +225,12 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
                 throw new RequestHandlerException("Failed to instantiate: " + e.getMessage(), e);
             }
         } else {
-            long id = json.getLong("id");
+            assert id != null;
             obj = load(id);
         }
 
         try {
-            obj.readObject(new JsonVarMap(json));
+            obj.readObject(new JsonVarMap(jsonObj));
         } catch (LoaderException e) {
             throw new RequestHandlerException("Failed to apply json: " + e.getMessage(), e);
         }

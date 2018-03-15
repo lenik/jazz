@@ -1,11 +1,10 @@
 package net.bodz.bas.site.ajax;
 
-import org.json.JSONObject;
-
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
@@ -144,7 +143,7 @@ public class AjaxMessage
     }
 
     @Override
-    public void readObject(JSONObject json)
+    public void readObject(JsonObject o)
             throws ParseException {
         throw new NotImplementedException();
     }

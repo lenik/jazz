@@ -17,6 +17,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.rtx.IAttributed;
 
 /**
@@ -38,9 +39,9 @@ public class JsonMap
     }
 
     @Override
-    public void readObject(JSONObject json)
+    public void readObject(JsonObject o)
             throws ParseException {
-        JsonFn.toMap(map, json);
+        JsonFn.toMap(map, o.getWrapped());
     }
 
     @Override
