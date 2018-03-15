@@ -27,6 +27,9 @@ public interface IVarConverter<T>
     T from(Class<?> type, Object obj)
             throws TypeConvertException;
 
+    T fromNumber(Number in)
+            throws TypeConvertException;
+
     T fromString(String in)
             throws TypeConvertException;
 
@@ -34,7 +37,8 @@ public interface IVarConverter<T>
 
     T fromStringArray(String[] in);
 
-    <U> U to(T value, Class<U> type);
+    <U> U to(T value, Class<U> type)
+            throws TypeConvertException;
 
     Number toNumber(T value);
 

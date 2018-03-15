@@ -10,6 +10,12 @@ public class IntegerVarConverter
     }
 
     @Override
+    public Integer fromNumber(Number in)
+            throws TypeConvertException {
+        return in.intValue();
+    }
+
+    @Override
     public Integer fromString(String in)
             throws TypeConvertException {
         // TODO auto radix.

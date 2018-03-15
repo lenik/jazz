@@ -10,6 +10,12 @@ public class ByteVarConverter
     }
 
     @Override
+    public Byte fromNumber(Number in)
+            throws TypeConvertException {
+        return in.byteValue();
+    }
+
+    @Override
     public Byte fromString(String in)
             throws TypeConvertException {
         // TODO auto radix.
@@ -46,7 +52,7 @@ public class ByteVarConverter
 
     @Override
     public long toLong(Byte value) {
-        return (long) (value.byteValue() & 0xff);
+        return value.byteValue() & 0xff;
     }
 
     @Override

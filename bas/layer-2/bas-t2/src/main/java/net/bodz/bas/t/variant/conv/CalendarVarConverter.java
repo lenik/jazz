@@ -14,6 +14,15 @@ public class CalendarVarConverter
     }
 
     @Override
+    public Calendar fromNumber(Number in)
+            throws TypeConvertException {
+        long time = in.longValue();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return calendar;
+    }
+
+    @Override
     public Calendar fromString(String in)
             throws TypeConvertException {
         try {
