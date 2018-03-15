@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonObject;
 
 public class DefaultJsonForm
         implements IJsonForm {
@@ -15,6 +16,7 @@ public class DefaultJsonForm
         this.obj = obj;
     }
 
+    @Override
     public String readInStr() {
         if (obj == null)
             return null;
@@ -22,13 +24,14 @@ public class DefaultJsonForm
             return JsonFn.toJson(obj);
     }
 
+    @Override
     public void writeInStr(String jsonStr)
             throws ParseException {
         if (jsonStr == null) {
             obj.readObject(null);
         } else {
-            JSONObject jsonObject = new JSONObject(jsonStr);
-            obj.readObject(jsonObject);
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            obj.readObject(JsonObject.wrap(jsonObj));
         }
     }
 

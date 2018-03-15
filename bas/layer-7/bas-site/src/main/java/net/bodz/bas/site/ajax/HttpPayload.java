@@ -6,9 +6,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import net.bodz.bas.err.LoadException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.io.res.builtin.ReaderSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 
@@ -17,13 +17,13 @@ public class HttpPayload {
     static String prefix = HttpPayload.class.getName();
     public static String JSON_ATTRIBUTE_NAME = prefix + ".json";
 
-    public static JSONObject getJsonPayload(HttpServletRequest req) {
+    public static JsonObject getJsonPayload(HttpServletRequest req) {
         return getJsonPayload(req, "data");
     }
 
-    public static synchronized JSONObject getJsonPayload(HttpServletRequest req, String altParam)
+    public static synchronized JsonObject getJsonPayload(HttpServletRequest req, String altParam)
             throws LoadException, IllegalStateException {
-        JSONObject jsonObj = (JSONObject) req.getAttribute(JSON_ATTRIBUTE_NAME);
+        JsonObject jsonObj = (JsonObject) req.getAttribute(JSON_ATTRIBUTE_NAME);
         if (jsonObj == null) {
             try {
                 String json = null;
@@ -36,7 +36,7 @@ public class HttpPayload {
                     } catch (IOException e) {
                         throw new LoadException("Failed to read request payload: " + e.getMessage(), e);
                     }
-                jsonObj = new JSONObject(json);
+                jsonObj = new JsonObject(json);
                 req.setAttribute(JSON_ATTRIBUTE_NAME, jsonObj);
                 return jsonObj;
             } catch (JSONException e) {

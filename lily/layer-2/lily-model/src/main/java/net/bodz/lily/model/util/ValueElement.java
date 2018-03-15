@@ -1,11 +1,10 @@
 package net.bodz.lily.model.util;
 
-import org.json.JSONObject;
-
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.MutableElement;
 
@@ -34,13 +33,13 @@ public class ValueElement
     }
 
     @Override
-    public void readObject(JSONObject json)
+    public void readObject(JsonObject o)
             throws ParseException {
         switch (jsonFormat) {
         case FLOT:
-            for (Object key : json.keySet()) {
+            for (Object key : o.keySet()) {
                 String name = (String) key;
-                String str = (String) json.get(name);
+                String str = (String) o.get(name);
                 switch (name) {
                 case "label":
                     setLabel(iString.fn.val(str));

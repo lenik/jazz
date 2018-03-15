@@ -5,11 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.json.JSONObject;
-
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -18,6 +17,7 @@ public class CsvRow
         implements IJsonSerializable {
 
     private static final long serialVersionUID = 1L;
+
     static final Logger logger = LoggerFactory.getLogger(CsvRow.class);
 
     private Map<String, Integer> fieldNames;
@@ -123,26 +123,28 @@ public class CsvRow
     }
 
     @Override
-    public void readObject(JSONObject json)
+    public void readObject(JsonObject o)
             throws ParseException {
         if (fieldNames == null) {
             int index = 0;
-            for (Object key : json.keySet()) {
+            for (Object key : o.keySet()) {
                 String field = (String) key;
-                Object value = json.get(field);
+                Object value = o.get(field);
                 set(index, (String) value);
                 index++;
             }
         } else {
-            for (Object key : json.keySet()) {
+            for (Object key : o.keySet()) {
                 String field = (String) key;
                 Integer index = fieldNames.get(field);
                 if (index == null) {
                     logger.warn("Invalid field name: " + key);
                     continue;
                 }
-                Object value = json.get(field);
-                set(index, (String) value);
+                if (o.has(field)) {
+                    Object value = o.get(field);
+                    set(index, (String) value);
+                }
             }
         }
     }

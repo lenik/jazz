@@ -25,7 +25,7 @@ public class JsonFn {
             if (json.startsWith("["))
                 return new JSONArray(json);
             if (json.startsWith("{"))
-                return new JSONObject(json);
+                return new JsonObject(json);
 
             String v_json = "[" + json + "]";
             JSONArray jsonArray = new JSONArray(v_json);
@@ -46,12 +46,12 @@ public class JsonFn {
         }
     }
 
-    public static JSONObject parseObject(String json)
+    public static JsonObject parseObject(String json)
             throws ParseException {
         if (json == null)
             throw new NullPointerException("json");
         try {
-            return new JSONObject(json);
+            return new JsonObject(json);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
         }
@@ -91,7 +91,7 @@ public class JsonFn {
         if (json == null)
             obj.readObject(null);
         else {
-            JSONObject jsonObj = parseObject(json);
+            JsonObject jsonObj = parseObject(json);
             obj.readObject(jsonObj);
         }
         return obj;
@@ -118,9 +118,17 @@ public class JsonFn {
         return toMap(map, jsonObj);
     }
 
+    public static Map<String, Object> toMap(JsonObject jsonObj) {
+        return toMap(jsonObj.getWrapped());
+    }
+
     public static Map<String, Object> toMap(JSONObject jsonObj) {
         Map<String, Object> map = new HashMap<>();
         return toMap(map, jsonObj);
+    }
+
+    public static Map<String, Object> toMap(Map<String, Object> map, JsonObject jsonObj) {
+        return toMap(map, jsonObj.getWrapped());
     }
 
     public static Map<String, Object> toMap(Map<String, Object> map, JSONObject jsonObj) {
@@ -134,6 +142,8 @@ public class JsonFn {
     }
 
     public static Object unwrap(Object json) {
+        if (json instanceof JsonObject)
+            json = toMap((JsonObject) json);
         if (json instanceof JSONObject)
             json = toMap((JSONObject) json);
         if (json instanceof JSONArray)
