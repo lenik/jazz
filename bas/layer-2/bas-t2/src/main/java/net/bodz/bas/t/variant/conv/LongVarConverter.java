@@ -10,6 +10,12 @@ public class LongVarConverter
     }
 
     @Override
+    public Long fromNumber(Number in)
+            throws TypeConvertException {
+        return in.longValue();
+    }
+
+    @Override
     public Long fromString(String in)
             throws TypeConvertException {
         // TODO auto radix.

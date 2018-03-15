@@ -7,6 +7,13 @@ public class BooleanVarConverter
 
     public BooleanVarConverter() {
         super(Boolean.class);
+
+    }
+
+    @Override
+    public Boolean fromNumber(Number in)
+            throws TypeConvertException {
+        return in.intValue() != 0;
     }
 
     @Override

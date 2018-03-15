@@ -17,6 +17,13 @@ public class SqlDateVarConverter
     }
 
     @Override
+    public java.sql.Date fromNumber(Number in)
+            throws TypeConvertException {
+        long time = in.longValue();
+        return new java.sql.Date(time);
+    }
+
+    @Override
     public java.sql.Date fromString(String in)
             throws TypeConvertException {
         try {

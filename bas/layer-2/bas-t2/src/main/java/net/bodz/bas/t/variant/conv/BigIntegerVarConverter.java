@@ -13,6 +13,23 @@ public class BigIntegerVarConverter
     }
 
     @Override
+    public BigInteger fromNumber(Number in)
+            throws TypeConvertException {
+        Class<?> type = in.getClass();
+
+        if (type == BigDecimal.class)
+            return ((BigDecimal) in).toBigInteger();
+
+        if (type == Float.class || type == Double.class) {
+            double val = in.doubleValue();
+            new BigDecimal(val).toBigInteger();
+        }
+
+        long longValue = in.longValue();
+        return BigInteger.valueOf(longValue);
+    }
+
+    @Override
     public BigInteger fromString(String in)
             throws TypeConvertException {
         return new BigInteger(in);

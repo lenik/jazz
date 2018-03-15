@@ -10,6 +10,12 @@ public class DoubleVarConverter
     }
 
     @Override
+    public Double fromNumber(Number in)
+            throws TypeConvertException {
+        return in.doubleValue();
+    }
+
+    @Override
     public Double fromString(String in)
             throws TypeConvertException {
         return Double.valueOf(in);

@@ -17,6 +17,13 @@ public class DateTimeVarConverter
     }
 
     @Override
+    public DateTime fromNumber(Number in)
+            throws TypeConvertException {
+        long instant = in.longValue();
+        return new DateTime(instant);
+    }
+
+    @Override
     public DateTime fromString(String in)
             throws TypeConvertException {
         try {

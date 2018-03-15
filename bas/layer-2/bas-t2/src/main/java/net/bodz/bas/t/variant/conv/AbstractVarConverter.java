@@ -35,16 +35,25 @@ public abstract class AbstractVarConverter<T>
             }
         });
         frommap.put(String.class, new Transformer<Object, T>() {
+            @Override
             public T transform(Object input) {
                 return fromString((String) input);
             };
         });
+        frommap.put(Number.class, new Transformer<Object, T>() {
+            @Override
+            public T transform(Object input) {
+                return fromNumber((Number) input);
+            };
+        });
         frommap.put(byte[].class, new Transformer<Object, T>() {
+            @Override
             public T transform(Object input) {
                 return fromByteArray((byte[]) input);
             };
         });
         frommap.put(String[].class, new Transformer<Object, T>() {
+            @Override
             public T transform(Object input) {
                 return fromStringArray((String[]) input);
             };
@@ -172,6 +181,7 @@ public abstract class AbstractVarConverter<T>
 
     @Override
     public boolean canConvertFrom(Class<?> type) {
+        // TODO Use Type-Preorder Map here.
         if (frommap.containsKey(type))
             return true;
 
@@ -195,7 +205,8 @@ public abstract class AbstractVarConverter<T>
     }
 
     @Override
-    public final T from(Object obj) {
+    public final T from(Object obj)
+            throws TypeConvertException {
         return from(obj.getClass(), obj);
     }
 
@@ -224,7 +235,8 @@ public abstract class AbstractVarConverter<T>
     }
 
     @Override
-    public <U> U to(T value, Class<U> type) {
+    public <U> U to(T value, Class<U> type)
+            throws TypeConvertException {
         if (type == null)
             throw new NullPointerException("type");
         if (this.type == type)
@@ -308,6 +320,7 @@ public abstract class AbstractVarConverter<T>
             return s.charAt(0);
     }
 
+    @Override
     public String toString(T value) {
         return value.toString();
     }
@@ -324,6 +337,7 @@ public abstract class AbstractVarConverter<T>
         return BigDecimal.valueOf(fval);
     }
 
+    @Override
     public Calendar toCalendar(T value) {
         return CalendarVarConverter.INSTANCE.from(value);
     }

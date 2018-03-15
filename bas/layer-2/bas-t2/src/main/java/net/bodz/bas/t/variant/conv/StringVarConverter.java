@@ -15,6 +15,12 @@ public class StringVarConverter
     }
 
     @Override
+    public String fromNumber(Number in)
+            throws TypeConvertException {
+        return in.toString();
+    }
+
+    @Override
     public String fromString(String in)
             throws TypeConvertException {
         return in;

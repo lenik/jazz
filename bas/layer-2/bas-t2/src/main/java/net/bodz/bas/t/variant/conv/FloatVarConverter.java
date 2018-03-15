@@ -10,6 +10,12 @@ public class FloatVarConverter
     }
 
     @Override
+    public Float fromNumber(Number in)
+            throws TypeConvertException {
+        return in.floatValue();
+    }
+
+    @Override
     public Float fromString(String in)
             throws TypeConvertException {
         return Float.valueOf(in);

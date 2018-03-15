@@ -10,6 +10,12 @@ public class ShortVarConverter
     }
 
     @Override
+    public Short fromNumber(Number in)
+            throws TypeConvertException {
+        return in.shortValue();
+    }
+
+    @Override
     public Short fromString(String in)
             throws TypeConvertException {
         // TODO auto radix.
@@ -38,7 +44,7 @@ public class ShortVarConverter
 
     @Override
     public long toLong(Short value) {
-        return (long) (value.shortValue() & 0xffff);
+        return value.shortValue() & 0xffff;
     }
 
     @Override

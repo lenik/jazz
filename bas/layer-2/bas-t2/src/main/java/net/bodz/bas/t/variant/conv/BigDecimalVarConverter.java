@@ -13,6 +13,18 @@ public class BigDecimalVarConverter
     }
 
     @Override
+    public BigDecimal fromNumber(Number in)
+            throws TypeConvertException {
+        Class<?> type = in.getClass();
+
+        if (type == BigInteger.class)
+            return new BigDecimal((BigInteger) in);
+
+        double val = in.doubleValue();
+        return new BigDecimal(val);
+    }
+
+    @Override
     public BigDecimal fromString(String in)
             throws TypeConvertException {
         return new BigDecimal(in);

@@ -15,6 +15,13 @@ public class DateVarConverter
     }
 
     @Override
+    public Date fromNumber(Number in)
+            throws TypeConvertException {
+        long date = in.longValue();
+        return new Date(date);
+    }
+
+    @Override
     public Date fromString(String in)
             throws TypeConvertException {
         try {

@@ -10,6 +10,13 @@ public class CharacterVarConverter
     }
 
     @Override
+    public Character fromNumber(Number in)
+            throws TypeConvertException {
+        int code = in.intValue();
+        return (char) (code & 0xFFFF);
+    }
+
+    @Override
     public Character fromString(String in)
             throws TypeConvertException {
         if (in.isEmpty())
@@ -36,22 +43,22 @@ public class CharacterVarConverter
 
     @Override
     public int toInt(Character value) {
-        return (int) value.charValue();
+        return value.charValue();
     }
 
     @Override
     public long toLong(Character value) {
-        return (long) value.charValue();
+        return value.charValue();
     }
 
     @Override
     public float toFloat(Character value) {
-        return (float) value.charValue();
+        return value.charValue();
     }
 
     @Override
     public double toDouble(Character value) {
-        return (double) value.charValue();
+        return value.charValue();
     }
 
     @Override
