@@ -1,11 +1,17 @@
 package net.bodz.violet.store.impl;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.lily.model.base.CoIndex;
+import net.bodz.lily.model.base.CoCategoryIndex;
 import net.bodz.violet.store.StoreCategory;
 
 @ObjectType(StoreCategory.class)
 public class StoreCategoryIndex
-        extends CoIndex<StoreCategory, StoreCategoryMask> {
+        extends CoCategoryIndex<StoreCategory, StoreCategoryMask> {
+
+    public static final String SCHEMA = "storecat";
+
+    public StoreCategoryIndex() {
+        super(SCHEMA);
+    }
 
 }

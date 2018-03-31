@@ -1,7 +1,7 @@
 package net.bodz.violet.store.impl;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.lily.model.base.CoIndex;
+import net.bodz.lily.model.base.CoCategoryIndex;
 import net.bodz.violet.store.RegionCategory;
 
 /**
@@ -9,6 +9,12 @@ import net.bodz.violet.store.RegionCategory;
  */
 @ObjectType(RegionCategory.class)
 public class RegionCategoryIndex
-        extends CoIndex<RegionCategory, RegionCategoryMask> {
+        extends CoCategoryIndex<RegionCategory, RegionCategoryMask> {
+
+    public static final String SCHEMA = "regioncat";
+
+    public RegionCategoryIndex() {
+        super(SCHEMA);
+    }
 
 }

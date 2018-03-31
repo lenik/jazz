@@ -1,7 +1,7 @@
 package net.bodz.violet.plan.impl;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.lily.model.base.CoIndex;
+import net.bodz.lily.model.base.CoCategoryIndex;
 import net.bodz.violet.plan.PlanCategory;
 
 /**
@@ -9,6 +9,12 @@ import net.bodz.violet.plan.PlanCategory;
  */
 @ObjectType(PlanCategory.class)
 public class PlanCategoryIndex
-        extends CoIndex<PlanCategory, PlanCategoryMask> {
+        extends CoCategoryIndex<PlanCategory, PlanCategoryMask> {
+
+    public static final String SCHEMA = "plancat";
+
+    public PlanCategoryIndex() {
+        super(SCHEMA);
+    }
 
 }

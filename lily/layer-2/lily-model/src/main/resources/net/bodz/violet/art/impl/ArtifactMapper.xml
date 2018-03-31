@@ -89,15 +89,15 @@
         insert into art(
             label, description,
             priority, flags, state, uid, gid, mode, acl,
+            props,
             cat, phase, sku, barcode, model, finish,
-            uom, price, 
-            props
+            uom, price 
         ) values(
             #{label},#{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{properties.jsonForm}::jsonb,
             #{category.id}, #{phase.id}, #{skuCode}, #{barCode}, #{modelName}, #{finish},
-            #{uom.id}, #{price}, 
-            #{properties.jsonForm}::jsonb
+            #{uom.id}, #{price}
         ) returning id; --
     ]]></insert>
 
@@ -107,12 +107,12 @@
             <include refid="co.setUSA" />
             <if test="category != null">cat = #{category.id},</if>
             <if test="phase != null">phase = #{phase.id},</if>
+            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
             sku = #{skuCode},
             barcode = #{barCode},
             model = #{modelName},
             finish = #{finish},
             <if test="uom != null">uom = #{uom.id},</if>
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
         </set>
         <where>
             <if test="id != null">id = #{id}</if>
