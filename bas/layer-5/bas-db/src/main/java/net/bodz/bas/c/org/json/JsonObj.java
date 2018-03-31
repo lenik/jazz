@@ -16,6 +16,10 @@ public class JsonObj
         this.obj = obj;
     }
 
+    public JSONObject getWrapped() {
+        return obj;
+    }
+
     @Override
     public String readInStr() {
         if (obj == null)

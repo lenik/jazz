@@ -1,4 +1,4 @@
-package net.bodz.lily.util.ajax;
+package net.bodz.bas.site.json;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -49,14 +50,15 @@ public class TableData_json
                     List<?> row = data.convert(item, columns);
                     if (rowArray) {
                         out.array();
-                        for (Object val : row)
-                            out.value(val);
+                        for (Object val : row) {
+                            dumpValue(out, val);
+                        }
                         out.endArray();
                     } else {
                         out.object();
                         for (int i = 0; i < ncol; i++) {
                             out.key(columns.get(i));
-                            out.value(row.get(i));
+                            dumpValue(out, row.get(i));
                         }
                         out.endObject();
                     }
@@ -68,6 +70,16 @@ public class TableData_json
         }
 
         out.endObject();
+    }
+
+    void dumpValue(IJsonOut out, Object val)
+            throws IOException {
+        if (val instanceof IJsonSerializable) {
+            IJsonSerializable jsVal = (IJsonSerializable) val;
+            jsVal.writeObject(out);
+            return;
+        }
+        out.value(val);
     }
 
 }

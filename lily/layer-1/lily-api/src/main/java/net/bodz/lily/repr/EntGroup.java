@@ -23,6 +23,10 @@ public @interface EntGroup {
     @interface CustomExtension {
     }
 
+    /** 生命周期 */
+    @interface Lifecycle {
+    }
+
     /** 包装 */
     @interface Packaging {
     }

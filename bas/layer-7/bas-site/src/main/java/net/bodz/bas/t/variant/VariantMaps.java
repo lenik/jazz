@@ -5,6 +5,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.NullVariantMap;
+
 public class VariantMaps {
 
     public static IVariantMap<String> fromRequestOpt(HttpServletRequest request) {

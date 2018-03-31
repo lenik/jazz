@@ -29,7 +29,10 @@ public interface IMapperTemplate<T, M>
 
     T selectNext(Object id);
 
-    long insert(T obj);
+    /**
+     * @return Number of records.
+     */
+    void insert(T obj);
 
     void insertWithId(T obj);
 

@@ -1,4 +1,4 @@
-package net.bodz.lily.util.ajax;
+package net.bodz.bas.site.json;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -10,6 +10,14 @@ import net.bodz.bas.c.type.TypeKind;
 
 public class JsonValueFormat {
 
+    /**
+     * Convert value to specific format.
+     *
+     * @param fmt
+     *            A SimpleDateFormat format string for Date or Time type.
+     *
+     *            A DecimalFormat format string for numeric type.
+     */
     public static Object format(Class<?> type, String fmt, Object val) {
         int typeId = TypeKind.getTypeId(type);
         switch (typeId) {

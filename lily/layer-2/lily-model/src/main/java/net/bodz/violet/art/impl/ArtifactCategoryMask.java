@@ -1,12 +1,12 @@
 package net.bodz.violet.art.impl;
 
-import net.bodz.lily.model.base.CoNodeMask;
+import net.bodz.lily.model.base.CoCategoryMask;
 
 /**
  * @see net.bodz.violet.art.ArtifactCategory
  */
 public class ArtifactCategoryMask
-        extends CoNodeMask {
+        extends CoCategoryMask {
 
     public static ArtifactCategoryMask below(int maxDepth) {
         ArtifactCategoryMask mask = new ArtifactCategoryMask();

@@ -12,11 +12,12 @@ import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;
 
-public abstract class DefaultSiteDirs
+public class DefaultSiteDirs
         implements IBasicSiteAnchors {
 
     File clusterDataDir;
-    protected final Set<String> schemas = new HashSet<>();
+    Set<String> schemas = new HashSet<>();
+    boolean strict = false;
 
     public DefaultSiteDirs() {
         File baseDir = SysProps.userHome;
@@ -34,11 +35,16 @@ public abstract class DefaultSiteDirs
         return _webApp_.join("files/");
     }
 
+    protected void addSchema(String schema) {
+        schemas.add(schema);
+    }
+
     protected void checkSchema(String schema) {
         if (schema == null)
             throw new NullPointerException("schema");
-        if (!schemas.contains(schema))
-            throw new IllegalArgumentException("Invalid schema name: " + schema);
+        if (strict)
+            if (!schemas.contains(schema))
+                throw new IllegalArgumentException("Invalid schema name: " + schema);
     }
 
     public File getUploadDir(String instanceName, String schema) {
@@ -85,6 +91,12 @@ public abstract class DefaultSiteDirs
             throw new IllegalArgumentException("Missing schema parameter");
 
         return getUploadAnchor(vhost.getName(), schema);
+    }
+
+    static DefaultSiteDirs instance = new DefaultSiteDirs();
+
+    public static DefaultSiteDirs getInstance() {
+        return instance;
     }
 
 }

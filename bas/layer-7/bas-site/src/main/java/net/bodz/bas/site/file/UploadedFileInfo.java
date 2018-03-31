@@ -10,6 +10,8 @@ public class UploadedFileInfo
     String name;
     String path;
     long size;
+    String checksum;
+
     String url;
     String thumbnail;
     String deleteUrl;
@@ -74,6 +76,14 @@ public class UploadedFileInfo
 
     public void setDeleteType(String deleteType) {
         this.deleteType = deleteType;
+    }
+
+    public String getChecksum() {
+        return checksum;
+    }
+
+    public void setChecksum(String checksum) {
+        this.checksum = checksum;
     }
 
 }

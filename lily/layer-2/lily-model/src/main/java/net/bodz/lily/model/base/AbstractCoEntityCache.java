@@ -139,9 +139,8 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     @Override
     protected Entry<K, T> _save(K key, T obj) {
         if (key == null) {
-            long id = getMapper().insert(obj);
-            key = IId.fn.cast(idType, id);
-            obj.setId(key);
+            getMapper().insert(obj);
+            // obj.id is filled now.
         } else {
             getMapper().update(obj);
             // any auto generated fields..?

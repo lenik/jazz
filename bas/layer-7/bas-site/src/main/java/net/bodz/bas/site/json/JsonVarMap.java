@@ -1,4 +1,4 @@
-package net.bodz.lily.util.ajax;
+package net.bodz.bas.site.json;
 
 import org.json.JSONObject;
 
@@ -9,12 +9,19 @@ public class JsonVarMap
         extends VariantMapImpl<String>
         implements IJSONSupport {
 
+    JSONObject wrapped;
+
     public JsonVarMap(JsonObject obj) {
         this(obj.getWrapped());
     }
 
     public JsonVarMap(JSONObject obj) {
         super(new JsonLookupMap(obj));
+        this.wrapped = obj;
+    }
+
+    public JSONObject getWrapped() {
+        return wrapped;
     }
 
     @Override

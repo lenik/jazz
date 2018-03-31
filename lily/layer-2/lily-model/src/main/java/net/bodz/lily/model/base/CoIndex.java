@@ -33,6 +33,9 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.site.ajax.HttpPayload;
+import net.bodz.bas.site.json.JsonVarMap;
+import net.bodz.bas.site.json.JsonWrapper;
+import net.bodz.bas.site.json.TableData;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -40,11 +43,9 @@ import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VariantMaps;
+import net.bodz.lily.entity.ILazyId;
 import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.model.base.security.AccessControl;
-import net.bodz.lily.util.ajax.JsonVarMap;
-import net.bodz.lily.util.ajax.JsonWrapper;
-import net.bodz.lily.util.ajax.TableData;
 
 @AccessControl
 @IndexedType
@@ -288,14 +289,44 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
     }
 
     protected void save(boolean create, T obj, AjaxResult result) {
+        _save(create, obj, result);
+    }
+
+    private void _save(boolean create, T obj, AjaxResult result) {
         IMapperTemplate<T, M> mapper = requireMapper();
         if (create) {
-            long id = mapper.insert(obj);
-            result.message("Inserted id: " + id);
+            mapper.insert(obj);
+            result.message("Inserted id: " + obj.getId());
         } else {
             long rows = mapper.update(obj);
             result.message("Rows updated: " + rows);
         }
+    }
+
+    protected ILazyId lazyId(T obj) {
+        return new LazyId(obj);
+    }
+
+    class LazyId
+            implements ILazyId {
+
+        T obj;
+
+        public LazyId(T obj) {
+            this.obj = obj;
+        }
+
+        @Override
+        public Object require() {
+            Object id = obj.getId();
+            if (id == null) {
+                IMapperTemplate<T, M> mapper = requireMapper();
+                mapper.insert(obj);
+                id = obj.getId();
+            }
+            return id;
+        }
+
     }
 
     protected List<T> buildDataList(IVariantMap<String> q, M mask) {

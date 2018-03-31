@@ -3,12 +3,12 @@ package net.bodz.violet.shop;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoNode;
+import net.bodz.lily.model.base.CoCategory;
 
 @IdType(Integer.class)
 @Table(name = "salecat")
 public class SalesCategory
-        extends CoNode<SalesCategory, Integer> {
+        extends CoCategory<SalesCategory, Integer> {
 
     private static final long serialVersionUID = 1L;
 

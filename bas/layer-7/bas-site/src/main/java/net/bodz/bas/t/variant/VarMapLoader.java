@@ -1,6 +1,6 @@
 package net.bodz.bas.t.variant;
 
-import java.util.List;
+import java.util.*;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.err.LoaderException;
@@ -124,13 +124,13 @@ public class VarMapLoader {
                 break;
             }
 
-            IVarConverter<Object> rconv = (IVarConverter<Object>) VarConverters.getConverter(rtype);
+            IVarConverter<Object> rconv = VarConverters.getConverter(rtype);
             if (rconv != null && rconv.canConvertTo(ltype)) {
                 lval = rconv.to(rval, ltype);
                 break;
             }
 
-            IVarConverter<Object> lconv = (IVarConverter<Object>) VarConverters.getConverter(ltype);
+            IVarConverter<Object> lconv = VarConverters.getConverter(ltype);
             if (lconv != null && lconv.canConvertFrom(rtype)) {
                 lval = lconv.from(rtype, rval);
                 break;
@@ -161,7 +161,12 @@ public class VarMapLoader {
             }
 
             if (rval instanceof List<?>) {
-                // TODO lval.autoCreate();
+                Collection<Object> coll = newConcrete(ltype);
+                List<?> rlist = (List<?>) rval;
+                for (Object r : rlist)
+                    coll.add(r);
+                lval = coll;
+                break;
             }
 
             logger.warn(String.format(//
@@ -174,6 +179,24 @@ public class VarMapLoader {
         } catch (ReflectiveOperationException e) {
             throw new LoaderException("Failed to set property value: " + e.getMessage(), e);
         }
+    }
+
+    static Map<Class<?>, Class<?>> concreteTypes = new HashMap<>();
+    static {
+        concreteTypes.put(List.class, ArrayList.class);
+        concreteTypes.put(Set.class, HashSet.class);
+        concreteTypes.put(NavigableSet.class, TreeSet.class);
+    }
+
+    static Collection<Object> newConcrete(Class<?> generic) {
+        Class<?> concreteType = concreteTypes.get(generic);
+        if (concreteType != null)
+            try {
+                return (Collection<Object>) concreteType.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        return null;
     }
 
 }

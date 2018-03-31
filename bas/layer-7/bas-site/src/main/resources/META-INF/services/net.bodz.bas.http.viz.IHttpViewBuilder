@@ -2,6 +2,8 @@ net.bodz.bas.c.org.json.JSONObject_json
 net.bodz.bas.c.org.json.JSONStringer_json
 net.bodz.bas.fmt.json.JsonSerializable_json
 net.bodz.bas.site.file.UploadResult_json
+net.bodz.bas.site.json.JsonWrapper_json
+net.bodz.bas.site.json.TableData_json
 net.bodz.bas.site.org.SiteGraph_svg
 net.bodz.bas.site.org.Sitemap_xml
 net.bodz.bas.site.viz.input.ListTagsinput_htm

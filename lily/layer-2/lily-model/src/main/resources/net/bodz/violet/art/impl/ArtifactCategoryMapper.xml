@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.violet.art.impl.ArtifactCategoryMapper">
 
     <resultMap id="map1" type="net.bodz.violet.art.ArtifactCategory" extends="co.MAP_UVX">
-        <id column="id" />
+        <result property="properties.jsonForm" column="props" />
         <result property="depth" column="depth" />
         <result property="skuCodeFormat" column="skufmt" />
         <result property="barCodeFormat" column="barfmt" />

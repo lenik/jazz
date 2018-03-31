@@ -1,4 +1,4 @@
-package net.bodz.lily.util.ajax;
+package net.bodz.bas.site.json;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
