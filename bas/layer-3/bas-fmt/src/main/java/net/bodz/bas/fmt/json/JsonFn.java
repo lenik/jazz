@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class JsonFn {
 
@@ -149,6 +151,35 @@ public class JsonFn {
         if (json instanceof JSONArray)
             json = toList((JSONArray) json);
         return json;
+    }
+
+    public static <T> Iterable<T> iterate(final JSONArray array) {
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return new JSONArrayIterator<T>(array);
+            }
+        };
+    }
+
+}
+
+class JSONArrayIterator<T>
+        extends PrefetchedIterator<T> {
+
+    JSONArray array;
+    int index = 0;
+
+    public JSONArrayIterator(JSONArray array) {
+        this.array = array;
+    }
+
+    @Override
+    protected T fetch() {
+        if (index >= array.length())
+            return end();
+        T elm = (T) array.get(index++);
+        return elm;
     }
 
 }

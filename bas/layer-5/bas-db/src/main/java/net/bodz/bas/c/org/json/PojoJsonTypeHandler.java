@@ -23,6 +23,9 @@ import net.bodz.bas.fmt.json.JsonFn;
 public class PojoJsonTypeHandler
         extends TypeHandler<Map<String, Object>> {
 
+    public PojoJsonTypeHandler() {
+    }
+
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Map<String, Object> parameter, JdbcType jdbcType)
             throws SQLException {

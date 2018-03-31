@@ -12,7 +12,6 @@ import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.html.io.IHtmlOut;
@@ -40,7 +39,6 @@ import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.entity.IReinitializable;
-import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.security.Group;
 import net.bodz.lily.model.base.security.IAccessControlled;
 import net.bodz.lily.model.base.security.LoginData;
@@ -565,21 +563,11 @@ public abstract class CoObject
             }
 
         if (creation) {
-            long longId = mapper.insert(this);
-
-            IdType aIdType = getClass().getAnnotation(IdType.class);
-            if (aIdType == null)
-                throw new IllegalUsageException("Unknown id type of " + getClass());
-            Class<?> idType = aIdType.value();
-
-            if (idType == Long.class)
-                return longId;
-            else
-                return (int) longId;
+            mapper.insert(this); // id will be filled.
         } else {
             mapper.update(this);
-            return getId();
         }
+        return getId();
     }
 
     protected static class fn {

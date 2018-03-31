@@ -17,6 +17,9 @@ import net.bodz.bas.db.ibatis.TypeHandler;
 public class JsonFormTypeHandler
         extends TypeHandler<IJsonForm> {
 
+    public JsonFormTypeHandler() {
+    }
+
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, IJsonForm parameter, JdbcType jdbcType)
             throws SQLException {

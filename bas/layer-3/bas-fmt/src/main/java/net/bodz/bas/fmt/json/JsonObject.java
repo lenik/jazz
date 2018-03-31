@@ -172,7 +172,10 @@ public class JsonObject {
 
     public Object get(String key)
             throws JSONException {
-        return get(key, null);
+        Object val = get(key, null);
+        if (val == JSONObject.NULL)
+            return null;
+        return val;
     }
 
     public Object get(String key, Object defaultValue)

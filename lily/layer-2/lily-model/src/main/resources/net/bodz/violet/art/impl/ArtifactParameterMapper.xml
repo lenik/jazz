@@ -63,16 +63,16 @@
             <include refid="co.setU" />
         </set>
         <where>
-            <if test="id != null">id=#{id}</if>
+            id = #{id}
         </where>
     </update>
 
     <delete id="delete">
-        delete from artparm where id=#{id}
+        delete from artparm where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "total" from artparm a
+        select count(*) "rows" from artparm a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

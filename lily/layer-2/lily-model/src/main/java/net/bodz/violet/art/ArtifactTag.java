@@ -9,7 +9,7 @@ import net.bodz.lily.model.base.CoNode;
  * 物品标签
  */
 @IdType(Integer.class)
-@Table(name = "artcat")
+@Table(name = "arttag")
 public class ArtifactTag
         extends CoNode<ArtifactTag, Integer> {
 

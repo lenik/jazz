@@ -7,7 +7,7 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoNode;
+import net.bodz.lily.model.base.CoCategory;
 
 /**
  * 物品分类
@@ -15,7 +15,7 @@ import net.bodz.lily.model.base.CoNode;
 @IdType(Integer.class)
 @Table(name = "artcat")
 public class ArtifactCategory
-        extends CoNode<ArtifactCategory, Integer> {
+        extends CoCategory<ArtifactCategory, Integer> {
 
     private static final long serialVersionUID = 1L;
 

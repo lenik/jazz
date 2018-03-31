@@ -7,12 +7,15 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoNode;
+import net.bodz.lily.model.base.CoCategory;
 
+/**
+ * 机会、计划分类
+ */
 @IdType(Integer.class)
 @Table(name = "plancat")
 public class PlanCategory
-        extends CoNode<PlanCategory, Integer> {
+        extends CoCategory<PlanCategory, Integer> {
 
     private static final long serialVersionUID = 1L;
 

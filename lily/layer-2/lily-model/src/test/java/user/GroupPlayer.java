@@ -28,9 +28,9 @@ public class GroupPlayer
         Group group = new Group();
         group.setCodeName("Test" + random.nextInt());
         group.setLabel("Test1");
-        int id = (int) groupMapper.insert(group);
+        groupMapper.insert(group);
+        int id = group.getId();
 
-        group.setId(id);
         group.setLabel("Changed");
         groupMapper.update(group);
 

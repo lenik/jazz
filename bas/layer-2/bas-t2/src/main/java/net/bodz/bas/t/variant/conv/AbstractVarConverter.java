@@ -181,9 +181,12 @@ public abstract class AbstractVarConverter<T>
 
     @Override
     public boolean canConvertFrom(Class<?> type) {
-        // TODO Use Type-Preorder Map here.
-        if (frommap.containsKey(type))
-            return true;
+        Class<?> sup = type;
+        while (sup != null) {
+            if (frommap.containsKey(sup))
+                return true;
+            sup = sup.getSuperclass();
+        }
 
         for (IVarConverterExtension<T> ext : extensions)
             if (ext.canConvertFrom(type))
@@ -218,9 +221,13 @@ public abstract class AbstractVarConverter<T>
         if (this.type == type)
             return this.type.cast(obj);
 
-        Transformer<Object, T> fn = frommap.get(type);
-        if (fn != null)
-            return fn.transform(obj);
+        Class<?> sup = type;
+        while (sup != null) {
+            Transformer<Object, T> fn = frommap.get(sup);
+            if (fn != null)
+                return fn.transform(obj);
+            sup = sup.getSuperclass();
+        }
 
         for (IVarConverterExtension<T> ext : extensions)
             if (ext.canConvertFrom(type))

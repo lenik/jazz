@@ -1,4 +1,4 @@
-package net.bodz.lily.util.ajax;
+package net.bodz.bas.site.json;
 
 import java.util.Set;
 

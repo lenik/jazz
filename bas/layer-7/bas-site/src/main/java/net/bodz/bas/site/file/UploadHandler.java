@@ -11,8 +11,13 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.http.ctx.IAnchor;
+import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.site.IBasicSiteAnchors;
+import net.bodz.bas.t.pojo.Pair;
 
 /**
  *
@@ -68,12 +73,14 @@ public class UploadHandler
                 if (item.getName().isEmpty())
                     throw new IllegalArgumentException("empty filename.");
                 String itemPath = getItemPath(item.getName());
-                File file = new File(localDir, itemPath);
-                item.write(file);
+                File localFile = new File(localDir, itemPath);
+                item.write(localFile);
+                Pair<File, String> pair = renameToSha1(localFile);
 
                 UploadedFileInfo fileInfo = new UploadedFileInfo(item);
+                fileInfo.checksum = pair.getSecond();
 
-                fileInfo.url = anchor.join(itemPath).absoluteHref();
+                fileInfo.url = anchor.join(pair.getFirst().getName()).absoluteHref();
                 fileInfo.deleteUrl = fileInfo.url;
 
                 // TODO image auto-scale...?
@@ -85,12 +92,30 @@ public class UploadHandler
         } catch (IOException e) {
             throw e;
         } catch (Exception e) {
-            throw new IOException(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     public String getItemPath(String itemName) {
         return itemName;
+    }
+
+    static final HexCodec hexCodec = new HexCodec("");
+
+    Pair<File, String> renameToSha1(File file)
+            throws IOException {
+        byte[] sha1 = new FileResource(file).to(StreamReading.class).sha1();
+        String sha1str = hexCodec.encode(sha1);
+
+        File dir = file.getParentFile();
+        String dotExt = FilePath.getExtension(file, true);
+
+        File newName = new File(dir, sha1str + dotExt);
+        if (!file.renameTo(newName))
+            throw new IOException(String.format("Can't rename file %s to %s.", //
+                    file, newName));
+
+        return Pair.of(newName, sha1str);
     }
 
 }

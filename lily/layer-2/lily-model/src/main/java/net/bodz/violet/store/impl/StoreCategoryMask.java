@@ -1,12 +1,12 @@
 package net.bodz.violet.store.impl;
 
-import net.bodz.lily.model.base.CoNodeMask;
+import net.bodz.lily.model.base.CoCategoryMask;
 
 /**
  * @see net.bodz.violet.store.StoreCategory
  */
 public class StoreCategoryMask
-        extends CoNodeMask {
+        extends CoCategoryMask {
 
     public static StoreCategoryMask below(int maxDepth) {
         StoreCategoryMask mask = new StoreCategoryMask();

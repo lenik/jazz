@@ -1,4 +1,4 @@
-package net.bodz.violet.art;
+package net.bodz.bas.site.json;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -10,7 +10,6 @@ import section.obj;
 import org.json.JSONObject;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.c.org.json.IJsonForm;
 import net.bodz.bas.c.org.json.JsonFormTypeHandler;
 import net.bodz.bas.c.org.json.JsonObj;
 import net.bodz.bas.err.ParseException;
@@ -38,10 +37,26 @@ public class JsonMap
         this.map = map;
     }
 
+    public final void readObject(JSONObject o)
+            throws ParseException {
+        readObject(JsonObject.wrap(o));
+    }
+
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        JsonFn.toMap(map, o.getWrapped());
+        map.clear();
+        for (Object _key : o.keySet()) {
+            String key = (String) _key;
+            Object val = o.get(key);
+            if (!readFromJson(key, val))
+                map.put(key, JsonFn.unwrap(val));
+        }
+    }
+
+    protected boolean readFromJson(String key, Object val)
+            throws ParseException {
+        return false;
     }
 
     @Override
@@ -71,16 +86,14 @@ public class JsonMap
         map.put(name, value);
     }
 
-    public IJsonForm getJsonForm() {
+    public JsonObj getJsonForm() {
         JSONObject obj = new JSONObject(map);
         return new JsonObj(obj);
     }
 
-    public synchronized void setJsonForm(IJsonForm form) {
+    public synchronized void setJsonForm(JsonObj form) {
         map.clear();
-        String json = form.readInStr();
-        if (json != null)
-            JsonFn.toMap(map, json);
+        JsonFn.toMap(map, form.getWrapped());
     }
 
     @Override

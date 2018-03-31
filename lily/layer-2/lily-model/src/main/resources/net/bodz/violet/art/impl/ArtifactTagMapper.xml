@@ -81,7 +81,7 @@
             depth=#{depth},
         </set>
         <where>
-            <if test="id != null">id=#{id}</if>
+            id = #{id}
         </where>
     </update>
 

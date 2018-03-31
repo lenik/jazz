@@ -52,9 +52,11 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into artphase(code, label, description)
-            values(#{codeName},#{label},#{description})
-            returning id; --
+        insert into artphase(
+            code, label, description
+        ) values(
+            #{codeName},#{label},#{description}
+        ) returning id; --
     ]]></insert>
 
     <update id="update">
@@ -63,16 +65,16 @@
             <include refid="co.setU" />
         </set>
         <where>
-            <if test="id != null">id=#{id}</if>
+            id = #{id}
         </where>
     </update>
 
     <delete id="delete">
-        delete from artphase where id=#{id}
+        delete from artphase where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "total" from artphase a
+        select count(*) "rows" from artphase a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

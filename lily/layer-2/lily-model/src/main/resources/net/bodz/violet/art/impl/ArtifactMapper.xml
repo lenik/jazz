@@ -5,11 +5,11 @@
 <mapper namespace="net.bodz.violet.art.impl.ArtifactMapper">
 
     <resultMap id="map1" type="net.bodz.violet.art.Artifact" extends="co.MAP_UVX">
+        <result property="properties.jsonForm" column="props" />
         <result property="skuCode" column="sku" />
         <result property="barCode" column="barcode" />
         <result property="modelName" column="model" />
         <result property="finish" column="finish" />
-        <result property="properties.jsonForm" column="props" />
         <association property="category" javaType="net.bodz.violet.art.ArtifactCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
