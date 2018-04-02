@@ -16,7 +16,7 @@ public class MethodPathDispatcherTest
     public void testGreet()
             throws PathDispatchException {
         MethodPathDispatcher disp = new MethodPathDispatcher();
-        Object actual = disp.dispatchTest(this, "greet:S/lily");
+        Object actual = disp.dispatchTest(this, "greet:S/lily", null);
         assertEquals("hey, lily", actual);
     }
 
@@ -28,7 +28,7 @@ public class MethodPathDispatcherTest
     public void testMethodSig()
             throws PathDispatchException {
         MethodPathDispatcher disp = new MethodPathDispatcher();
-        Object actual = disp.dispatchTest(this, "method1:Si/hello/3");
+        Object actual = disp.dispatchTest(this, "method1:Si/hello/3", null);
         assertEquals("hello:3", actual);
     }
 

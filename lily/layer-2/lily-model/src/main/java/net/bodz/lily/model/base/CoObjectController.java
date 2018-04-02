@@ -52,7 +52,7 @@ public abstract class CoObjectController<T extends CoObject>
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         String token = tokens.peek();
         if (token == null)

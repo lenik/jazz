@@ -5,6 +5,7 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public class OverriddenPathDispatcher
         extends AbstractPathDispatcher {
@@ -17,7 +18,7 @@ public class OverriddenPathDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         Object obj = previous.getTarget();
         if (obj == null)
@@ -27,7 +28,7 @@ public class OverriddenPathDispatcher
             return null;
 
         IPathDispatchable overridden = (IPathDispatchable) obj;
-        return overridden.dispatch(previous, tokens);
+        return overridden.dispatch(previous, tokens, q);
     }
 
 }

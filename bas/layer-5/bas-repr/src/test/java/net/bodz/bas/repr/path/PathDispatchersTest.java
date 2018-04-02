@@ -10,6 +10,7 @@ import net.bodz.bas.repr.path.builtin.FieldPathDispatcher;
 import net.bodz.bas.repr.path.builtin.MapPathDispatcher;
 import net.bodz.bas.repr.path.builtin.NoPathRefDispatcher;
 import net.bodz.bas.repr.path.builtin.OverriddenPathDispatcher;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public class PathDispatchersTest
         extends Assert {
@@ -28,28 +29,28 @@ public class PathDispatchersTest
     @Test
     public void testSelf()
             throws PathDispatchException {
-        IPathArrival arrival = cpd.dispatch(foo, "bar");
+        IPathArrival arrival = cpd.dispatch(foo, "bar", null);
         assertEquals("Bar", arrival.getTarget());
     }
 
     @Test
     public void testField()
             throws PathDispatchException {
-        IPathArrival arrival = cpd.dispatch(foo, "cat");
+        IPathArrival arrival = cpd.dispatch(foo, "cat", null);
         assertEquals("Cat", arrival.getTarget());
     }
 
     @Test
     public void testRef1()
             throws PathDispatchException {
-        IPathArrival arrival = cpd.dispatch(foo, "name");
+        IPathArrival arrival = cpd.dispatch(foo, "name", null);
         assertEquals("Tom", arrival.getTarget());
     }
 
     @Test
     public void testRef2()
             throws PathDispatchException {
-        IPathArrival arrival = cpd.dispatch(foo, "buz/name");
+        IPathArrival arrival = cpd.dispatch(foo, "buz/name", null);
         assertEquals("Kate", arrival.getTarget());
     }
 
@@ -68,7 +69,7 @@ public class PathDispatchersTest
         }
 
         @Override
-        public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+        public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
                 throws PathDispatchException {
             String token = tokens.peek();
             if (token == null)

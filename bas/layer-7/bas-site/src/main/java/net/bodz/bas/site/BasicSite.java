@@ -25,6 +25,7 @@ import net.bodz.bas.site.org.Sitemap;
 import net.bodz.bas.site.org.SitemapGenerator;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.project.IJazzModule;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public abstract class BasicSite
         extends AbstractXjdocContent
@@ -141,7 +142,7 @@ public abstract class BasicSite
     /* _____________________________ */static section.iface __PATH_DISP__;
 
     @Override
-    public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+    public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         String token = tokens.peek();
 

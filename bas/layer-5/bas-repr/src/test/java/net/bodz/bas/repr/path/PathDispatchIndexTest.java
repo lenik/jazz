@@ -53,9 +53,9 @@ public class PathDispatchIndexTest
             throws PathDispatchException {
         Home home = new Home();
         PathDispatchIndex service = PathDispatchIndex.getInstance();
-        assertEquals("coridor", service.dispatchTest(home, "address"));
-        assertEquals("Punjab", service.dispatchTest(home, "city"));
-        assertEquals("very long", service.dispatchTest(home, "road"));
+        assertEquals("coridor", service.dispatchTest(home, "address", null));
+        assertEquals("Punjab", service.dispatchTest(home, "city", null));
+        assertEquals("very long", service.dispatchTest(home, "road", null));
     }
 
 }

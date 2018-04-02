@@ -8,6 +8,7 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public abstract class LilyStartSite
         extends BasicSite {
@@ -24,13 +25,13 @@ public abstract class LilyStartSite
     }
 
     @Override
-    public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+    public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         String token = tokens.peek();
         if (token == null)
             return null;
 
-        return super.dispatch(previous, tokens);
+        return super.dispatch(previous, tokens, q);
     }
 
     @Override

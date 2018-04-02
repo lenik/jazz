@@ -27,6 +27,7 @@ import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.model.base.security.AccessControl;
 
@@ -85,7 +86,7 @@ public abstract class CoObjectIndex<T extends CoObject>
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         String token = tokens.peek();
         if (token == null || pathEnd)
