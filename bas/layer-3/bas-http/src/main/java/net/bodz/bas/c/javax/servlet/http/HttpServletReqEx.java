@@ -74,7 +74,7 @@ public class HttpServletReqEx
             Object value = getAttribute(name);
             out.println("    " + name + " = " + value);
         }
-
+        out.close(); // No-op! just remove warning.
         return out.toString();
     }
 

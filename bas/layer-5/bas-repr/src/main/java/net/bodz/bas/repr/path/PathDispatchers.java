@@ -12,6 +12,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.order.PriorityComparator;
+import net.bodz.bas.t.variant.IVariantMap;
 
 @ExcludedFromIndex
 public class PathDispatchers
@@ -50,7 +51,7 @@ public class PathDispatchers
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         if (previous == null)
             throw new NullPointerException("previous");
@@ -59,7 +60,7 @@ public class PathDispatchers
             throw new PathDispatchException("null prev.target.");
 
         logger.debug("Dispatch " + tokens);
-        Process process = new Process(previous, tokens);
+        Process process = new Process(previous, tokens, q);
         List<Process> list = process.run();
         if (list.isEmpty())
             return null;
@@ -73,9 +74,9 @@ public class PathDispatchers
         return first.start;
     }
 
-    public List<IPathArrival> dispatchMultiple(Object startObject, ITokenQueue tokens) {
+    public List<IPathArrival> dispatchMultiple(Object startObject, ITokenQueue tokens, IVariantMap<String> q) {
         PathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
-        List<IPathArrival> arrivals = dispatchMultiple(start, tokens);
+        List<IPathArrival> arrivals = dispatchMultiple(start, tokens, q);
         for (IPathArrival arrival : arrivals) {
             if (!arrival.getRemainingPath().isEmpty())
                 ; // throw new IncompleteDispatchException(tokens.toString());
@@ -83,15 +84,15 @@ public class PathDispatchers
         return arrivals;
     }
 
-    public List<IPathArrival> dispatchMultiple(MultipleTargets startObjects, ITokenQueue tokens)
+    public List<IPathArrival> dispatchMultiple(MultipleTargets startObjects, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         IPathArrival start = new PathArrival(startObjects, tokens.getRemainingPath());
         List<IPathArrival> starts = MultipleTargets.extract(start);
-        List<IPathArrival> results = dispatchMultiple(starts, tokens);
+        List<IPathArrival> results = dispatchMultiple(starts, tokens, q);
         return results;
     }
 
-    public List<IPathArrival> dispatchMultiple(List<IPathArrival> previouses, ITokenQueue tokens)
+    public List<IPathArrival> dispatchMultiple(List<IPathArrival> previouses, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         if (previouses == null)
             throw new NullPointerException("previouses");
@@ -104,7 +105,7 @@ public class PathDispatchers
 
             logger.debug("Dispatch " + tokens);
 
-            Process process = new Process(previous, tokens);
+            Process process = new Process(previous, tokens, q);
             for (Process p : process.run())
                 all.add(p.start);
         }
@@ -114,11 +115,13 @@ public class PathDispatchers
     class Process {
         IPathArrival start;
         ITokenQueue tokens;
+        IVariantMap<String> q;
         Set<Object> marks;
 
-        public Process(IPathArrival start, ITokenQueue tokens) {
+        public Process(IPathArrival start, ITokenQueue tokens, IVariantMap<String> q) {
             this.start = start;
             this.tokens = tokens;
+            this.q = q;
             if (checkDeadLoop)
                 marks = new IdentityHashSet<>();
         }
@@ -170,7 +173,7 @@ public class PathDispatchers
                 if (tmp == null)
                     tmp = tokens.clone();
 
-                IPathArrival arrival = dispatcher.dispatch(this.start, tmp);
+                IPathArrival arrival = dispatcher.dispatch(this.start, tmp, q);
                 if (arrival == null) // null if token is not recognized by the dispatcher.
                     continue;
                 if (arrival.isMultiple())
@@ -178,7 +181,7 @@ public class PathDispatchers
 
                 if (multipleEnabled) {
                     if (!removeDups || arrivals.add(arrival)) {
-                        Process child = new Process(arrival, tmp);
+                        Process child = new Process(arrival, tmp, q);
                         children.add(child);
                     }
                     tmp = null;

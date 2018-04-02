@@ -16,6 +16,7 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public class PropertyPathDispatcher
         extends AbstractPathDispatcher {
@@ -28,7 +29,7 @@ public class PropertyPathDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         Object obj = previous.getTarget();
         if (obj == null)

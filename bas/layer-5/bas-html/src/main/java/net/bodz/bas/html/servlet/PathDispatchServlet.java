@@ -42,6 +42,8 @@ import net.bodz.bas.rtx.QueryableUnion;
 import net.bodz.bas.std.rfc.http.HttpCacheControl;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.VariantMaps;
 import net.bodz.bas.ui.dom1.UiVar;
 
 public class PathDispatchServlet
@@ -108,11 +110,12 @@ public class PathDispatchServlet
         if (pathInfo.startsWith("/"))
             pathInfo = pathInfo.substring(1);
         TokenQueue tokenQueue = new TokenQueue(pathInfo);
+        IVariantMap<String> q = VariantMaps.fromRequest(req);
 
         Object start = rootObject;
         IPathArrival arrival;
         try {
-            arrival = pathDispatchIndex.dispatch(start, tokenQueue);
+            arrival = pathDispatchIndex.dispatch(start, tokenQueue, q);
             // List<IPathArrival> arrivals = pathDispatchIndex.dispatchMultiple(start, tokenQueue);
             // arrival = arrivals.isEmpty() ? null : arrivals.get(0);
         } catch (PathDispatchException e) {

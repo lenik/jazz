@@ -2,6 +2,7 @@ package net.bodz.bas.repr.path;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.t.order.IPriority;
+import net.bodz.bas.t.variant.IVariantMap;
 
 /**
  * URI-style path dispatcher.
@@ -25,7 +26,7 @@ public interface IPathDispatcher
      * @throws NullPointerException
      *             If either <code>obj</code> or <code>path</code> is <code>null</code>.
      */
-    IPathArrival dispatch(Object obj, String path)
+    IPathArrival dispatch(Object obj, String path, IVariantMap<String> q)
             throws PathDispatchException;
 
 }

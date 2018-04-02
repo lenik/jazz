@@ -17,7 +17,7 @@ public class FieldPathDispatcherTest
             throws PathDispatchException {
         Object test = new FieldPathDispatcherTest();
         FieldPathDispatcher fd = new FieldPathDispatcher();
-        Object target = fd.dispatchTest(test, "publicField");
+        Object target = fd.dispatchTest(test, "publicField", null);
         assertSame(publicField, target);
     }
 
@@ -26,7 +26,7 @@ public class FieldPathDispatcherTest
             throws PathDispatchException {
         Object test = new FieldPathDispatcherTest();
         FieldPathDispatcher fd = new FieldPathDispatcher();
-        Object target = fd.dispatchTest(test, "protectedField");
+        Object target = fd.dispatchTest(test, "protectedField", null);
         assertSame(protectedField, target);
     }
 
@@ -35,7 +35,7 @@ public class FieldPathDispatcherTest
             throws PathDispatchException {
         Object test = new FieldPathDispatcherTest();
         FieldPathDispatcher fd = new FieldPathDispatcher();
-        Object target = fd.dispatchTest(test, "privateField");
+        Object target = fd.dispatchTest(test, "privateField", null);
         assertSame(privateField, target);
     }
 
