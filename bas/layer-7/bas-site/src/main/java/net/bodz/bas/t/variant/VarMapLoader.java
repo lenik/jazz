@@ -161,12 +161,16 @@ public class VarMapLoader {
             }
 
             if (rval instanceof List<?>) {
-                Collection<Object> coll = newConcrete(ltype);
-                List<?> rlist = (List<?>) rval;
-                for (Object r : rlist)
-                    coll.add(r);
-                lval = coll;
-                break;
+                logger.warn("Not supported yet");
+//
+//                Collection<Object> coll = newConcrete(ltype);
+//                List<?> rlist = (List<?>) rval;
+//                for (Object r : rlist) {
+//                    // TODO unwrap this object? convert to ltype-itemtype?
+//                    coll.add(r);
+//                }
+//                lval = coll;
+//                 break;
             }
 
             logger.warn(String.format(//
