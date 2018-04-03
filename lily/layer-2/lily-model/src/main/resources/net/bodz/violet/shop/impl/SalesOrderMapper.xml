@@ -131,13 +131,15 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into saleodr(
-            priority, flags, state, uid, gid, mode, acl,
+            uid, gid, mode, acl,
+            priority, flags, state, 
             t0, t1,
             op, subject, text, form, args, cat, phase,
             prev, topic, cust_org, cust_person,
             sum_qty, sum_amount
         ) values(
-            #{priority}, #{flags}, #{state}, #{owner.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{owner.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
             #{beginDate}, #{endDate},
             #{op.id}, #{subject}, #{text}, #{form.id}, #{formArgs}, #{category.id}, #{phase.id},
             #{previous.id}, #{topic.id}, #{org.id}, #{person.id},

@@ -9,10 +9,14 @@
         <result property="endDate" column="t1" />
     </resultMap>
 
-    <sql id="set1">
-        <include refid="co.setUSA" />
+    <sql id="setT">
         <if test="beginDate != null">t0 = #{beginDate}, </if>
         <if test="endDate != null">t1 = #{endDate}, </if>
+    </sql>
+    
+    <sql id="set1">
+        <include refid="co.setUVSA" />
+        <include refid="mi.setT" />
     </sql>
     
     <sql id="filterSql">

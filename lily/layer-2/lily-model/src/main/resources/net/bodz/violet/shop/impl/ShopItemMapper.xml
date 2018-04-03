@@ -18,6 +18,11 @@
         <association property="artifact" javaType="net.bodz.violet.art.Artifact">
             <id property="id" column="art" />
             <result property="label" column="art_label" />
+            <result property="properties.jsonForm" column="art_props" />
+            <association property="category" javaType="net.bodz.violet.art.ArtifactCategory">
+                <id property="id" column="art_cat" />
+                <result property="label" column="art_cat_label" />
+            </association>
         </association>
     </resultMap>
 
@@ -27,12 +32,16 @@
             shop.label "shop_label",
             cat.label "cat_label",
             art.label "art_label",
+            art.props "art_props",
+            art.cat "art_cat",
+            artcat.label "art_cat_label",
             u.label "uid_label",
             g.label "gid_label"
         from shopitem a
             left join shop on a.shop = shop.id
             left join shopitemcat cat on a.cat = cat.id
             left join art on a.art = art.id
+            left join artcat on art.cat = artcat.id
             left join "user" u on shop.uid = u.id
             left join "group" g on shop.gid = g.id
         ]]>

@@ -13,6 +13,7 @@
             <association property="artifact" javaType="net.bodz.violet.art.Artifact">
                 <id property="id" column="art" />
                 <result property="label" column="art_label" />
+                <result property="properties.jsonForm" column="art_props" />
             </association>
         </association>
     </resultMap>
@@ -23,11 +24,15 @@
             s.label shopitem_label,
             s.art art,
             art.label art_label,
+            art.props art_props,
+            art.cat "art_cat",
+            artcat.label "art_cat_label",
             u.label "uid_label",
             g.label "gid_label"
         from cartitem a
             left join shopitem s on a.shopitem = s.id
             left join art on s.art = art.id
+            left join artcat on art.cat = artcat.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -37,20 +42,26 @@
         select
             a.*,
             s.label shopitem_label,
+            s.art art,
             art.label art_label,
+            art.props art_props,
+            art.cat "art_cat",
+            artcat.label "art_cat_label",
             u.label "uid_label",
             g.label "gid_label"
         from cartitem a
             left join shopitem s on a.shopitem = s.id
             left join art on s.art = art.id
+            left join artcat on art.cat = artcat.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
         <include refid="co.modefilt" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
     </sql>
 
     <select id="all" resultMap="map1">

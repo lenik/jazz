@@ -1,7 +1,6 @@
 package net.bodz.lily.model.contact.impl;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.lily.model.base.CoIndex;
 import net.bodz.lily.model.contact.Organization;
 
 /**
@@ -9,6 +8,12 @@ import net.bodz.lily.model.contact.Organization;
  */
 @ObjectType(Organization.class)
 public class OrganizationIndex
-        extends CoIndex<Organization, OrganizationMask> {
+        extends PartyIndex<Organization, OrganizationMask> {
+
+    public static final String SCHEMA = "org";
+
+    public OrganizationIndex() {
+        super(SCHEMA);
+    }
 
 }

@@ -5,6 +5,7 @@
 <mapper namespace="net.bodz.violet.store.impl.RegionMapper">
 
     <resultMap id="map1" type="net.bodz.violet.store.Region" extends="co.MAP_UVX">
+        <result property="properties.jsonForm" column="props" />
         <result property="fullPath" column="path" />
         <association property="category" javaType="net.bodz.violet.store.RegionCategory">
             <id property="id" column="cat" />
@@ -71,9 +72,11 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into region(
             code, label, description, parent, cat,
+            props,
             path
         ) values(
             #{codeName},#{label},#{description}, #{parent.id}, #{category.id},
+            #{properties.jsonForm}::jsonb,
             #{fullPath}
         ) returning id; --
     ]]></insert>
@@ -84,6 +87,7 @@
             <include refid="co.setUS" />
             <if test="parent != null">parent=#{parent.id}, </if>
             <if test="category != null">cat=#{category.id}, </if>
+            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
             path=#{fullPath},
         </set>
         <where>

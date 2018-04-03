@@ -52,8 +52,8 @@ public class Contact
     private String r2;
     private String r3;
     private String r4;
-    private String address1;
-    private String address2;
+    private String address1 = "";
+    private String address2 = "";
     private String postalCode;
 
     private String tel;
@@ -98,9 +98,9 @@ public class Contact
 
     /**
      * Contact name. Could be different to the real name.
-     * 
+     *
      * <code>null</code> if there is a real name and the contact name should be the real name.
-     * 
+     *
      * @label Alternative Name
      * @label.zh 别名
      */
@@ -115,9 +115,9 @@ public class Contact
 
     /**
      * The usage name, could be "work", "home", in locale language.
-     * 
+     *
      * <code>null</code> for the default/common usage.
-     * 
+     *
      * @label Usage
      * @label.zh 用途
      */
@@ -221,7 +221,7 @@ public class Contact
 
     /**
      * 村、街巷、路等。
-     * 
+     *
      * @label 地址1
      */
     @OfGroup(EntGroup.Position.class)
@@ -231,12 +231,14 @@ public class Contact
     }
 
     public void setAddress1(String address1) {
+        if (address1 == null)
+            throw new NullPointerException("address1");
         this.address1 = address1;
     }
 
     /**
      * 建筑、楼层等。
-     * 
+     *
      * @label 地址2
      */
     @OfGroup(EntGroup.Position.class)
@@ -246,6 +248,8 @@ public class Contact
     }
 
     public void setAddress2(String address2) {
+        if (address2 == null)
+            throw new NullPointerException("address2");
         this.address2 = address2;
     }
 
@@ -338,7 +342,7 @@ public class Contact
 
     /**
      * Get the full address.
-     * 
+     *
      * @label 地址
      */
     @OfGroup(EntGroup.Position.class)
@@ -364,7 +368,7 @@ public class Contact
 
     /**
      * Get telephone numbers.
-     * 
+     *
      * @label 电话/手机
      */
     @OfGroup(EntGroup.Communication.class)

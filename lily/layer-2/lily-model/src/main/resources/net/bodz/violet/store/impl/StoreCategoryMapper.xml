@@ -5,6 +5,7 @@
 <mapper namespace="net.bodz.violet.store.impl.StoreCategoryMapper">
 
     <resultMap id="map1" type="net.bodz.violet.store.StoreCategory" extends="co.MAP_UVX">
+        <result property="properties.jsonForm" column="props" />
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -52,15 +53,20 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into storecat(code, label, description)
-            values(#{codeName},#{label},#{description})
-            returning id; --
+        insert into storecat(
+            code, label, description,
+            props
+        ) values (
+            #{codeName},#{label},#{description},
+            #{properties.jsonForm}::jsonb
+        ) returning id; --
     ]]></insert>
 
     <update id="update">
         update storecat
         <set>
             <include refid="co.setU" />
+            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
         </set>
         <where>
             <if test="id != null">id=#{id}</if>

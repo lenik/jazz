@@ -8,16 +8,12 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.err.LoaderException;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.NumericInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.rtx.IAttributed;
-import net.bodz.bas.site.json.JsonVarMap;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.repr.EntGroup;
@@ -241,21 +237,9 @@ public class Artifact
         properties.setAttribute(name, value);
     }
 
+    @Override
     public ArtifactProperties getProperties() {
         return properties;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws LoaderException {
-        super.readObject(map);
-        JsonVarMap properties = (JsonVarMap) map.get("properties");
-        if (properties != null)
-            try {
-                this.properties.readObject(properties.getWrapped());
-            } catch (ParseException e) {
-                throw new LoaderException(e.getMessage(), e);
-            }
     }
 
 }

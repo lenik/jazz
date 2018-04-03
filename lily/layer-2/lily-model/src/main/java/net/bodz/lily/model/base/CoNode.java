@@ -36,7 +36,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
     /**
      * Reference Count
-     * 
+     *
      * @label.zh 引用统计
      */
     @OfGroup(StdGroup.Statistics.class)
@@ -92,7 +92,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 子结点是否要求唯一性。
-     * 
+     *
      * @label Child Unique
      * @label.zh 唯一性
      */
@@ -135,21 +135,13 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     }
 
     boolean removeChild(self_t child) {
-        if (child == null)
-            throw new NullPointerException("child");
-
-        checkNode(true, child);
-
-        if (!children.remove(child))
-            return false;
-
-        return true;
+        return children.remove(child);
     }
 
     /**
      * <p lang="zh">
      * 指出是否为最顶层的结点。
-     * 
+     *
      * @label Root
      * @label.zh 根结点
      */
@@ -166,7 +158,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 结点的序号。
-     * 
+     *
      * @label Index
      * @label.zh 序号
      */
@@ -186,7 +178,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 结点在树中的深度或层次。
-     * 
+     *
      * @label Depth
      * @label.zh 深度
      */
@@ -212,7 +204,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 子结点的最大（安全）深度。
-     * 
+     *
      * @label Safe Depth
      * @label.zh 安全深度
      */
@@ -225,7 +217,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 指出结点在并排结点中是否为首位。
-     * 
+     *
      * @label First
      * @label.zh 首位
      */
@@ -247,7 +239,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 指出结点在并排结点中是否为末位。
-     * 
+     *
      * @label Last
      * @label.zh 末位
      */
@@ -268,7 +260,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 结点所在完整路径。
-     * 
+     *
      * @label Node Path
      * @label.zh 结点路径
      */
@@ -298,7 +290,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 结点在生成树图案中的字符图案前缀。
-     * 
+     *
      * @label Graph Prefix
      * @label.zh 图前缀
      */
@@ -331,7 +323,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     /**
      * <p lang="zh">
      * 指出的简短的标签名称。
-     * 
+     *
      * @label Node Label
      * @label.zh 结点标签
      */
@@ -359,7 +351,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
     /**
      * Check if the given node may be added to the tree.
-     * 
+     *
      * @param child
      *            <code>true</code> for child node, <code>false</code> for parent node.
      * @param node
@@ -368,14 +360,22 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      *             If the node type is illegal.
      */
     protected void checkNode(boolean child, self_t node) {
-        Class<?> selfType = getClass();
-        if (!selfType.isInstance(node))
-            throw new IllegalArgumentException("Inconsistent node type: tree=" + selfType + ", node=" + node.getClass());
+        if (child) {
+            Class<?> parentType = getClass();
+            if (!parentType.isInstance(node))
+                throw new IllegalArgumentException("Inconsistent node type: parent=" + parentType + ", child="
+                        + node.getClass());
+        } else {
+            Class<?> parentType = node.getClass();
+            if (!parentType.isInstance(this))
+                throw new IllegalArgumentException("Inconsistent node type: parent=" + parentType + ", child="
+                        + getClass());
+        }
     }
 
     /**
      * TODO conformadate to PrincipalDiag#checkDeadLoop.
-     * 
+     *
      * @param order
      *            Max number of nodes in the graph, this enables fast check.
      */

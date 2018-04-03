@@ -7,11 +7,13 @@
     <resultMap id="map1" type="net.bodz.lily.model.base.security.Group" extends="co.MAP_ALL">
         <result property="codeName" column="name" />
         <result property="admin" column="admin" />
+        <result property="properties.jsonForm" column="props" />
         <collection property="users" javaType="ArrayList" ofType="net.bodz.lily.model.base.security.User">
             <id property="id" column="y_id" />
             <result property="codeName" column="y_name" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
+            <result property="properties.jsonForm" column="y_props" />
         </collection>
     </resultMap>
 
@@ -21,7 +23,8 @@
             y.id "y_id",
             y.name "y_name",
             y.label "y_label",
-            y.description "y_description"
+            y.description "y_description",
+            y.props "y_props"
         from "group" a
             left join userof x on x."group"=a.id
             left join "user" y on y.id=x."user" 
@@ -47,18 +50,20 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into "group"(name, label, description)
-        values(#{codeName},#{label},#{description})
-        returning id; --
+        insert into "group"(
+            name, label, description,
+            props
+        ) values(
+            #{codeName},#{label},#{description},
+            #{properties.jsonForm},
+        ) returning id; --
     ]]></insert>
 
     <update id="update">
         update "group"
         <set>
-            <if test="codeName != null">name = #{codeName},</if>
-            <if test="label != null">label = #{label},</if>
-            <if test="description != null">description = #{description},</if>
-            <if test="comment != null">comment = #{comment},</if>
+            <include refid="co.setU" />
+            admin = #{admin},
         </set>
         where id=#{id}
     </update>

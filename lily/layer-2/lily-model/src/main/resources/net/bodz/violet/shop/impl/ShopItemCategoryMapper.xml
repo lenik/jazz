@@ -5,14 +5,22 @@
 <mapper namespace="net.bodz.violet.shop.impl.ShopItemCategoryMapper">
 
     <resultMap id="map1" type="net.bodz.violet.shop.ShopItemCategory" extends="co.MAP_UVX">
+        <result property="properties.jsonForm" column="props" />
+        <result property="depth" column="depth" />
+        <association property="parent" javaType="net.bodz.violet.shop.ShopItemCategory">
+            <id property="id" column="parent" />
+            <result property="label" column="parent_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            parent.label "parent_label",
             u.label "uid_label",
             g.label "gid_label"
         from shopitemcat a
+            left join shopitemcat parent on a.parent=parent.id
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
         ]]>
@@ -21,17 +29,21 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            parent.label "parent_label",
             u.label "uid_label",
             g.label "gid_label"
         from shopitemcat a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join shopitemcat parent on a.parent=parent.id
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
         <include refid="co.modefilt" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
+        <if test="m.maxDepth != null">and a.depth&lt;=#{m.maxDepth}</if>
     </sql>
 
     <select id="all" resultMap="map1">
@@ -52,26 +64,27 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into shopitemcat(
-            code, label, description
-        ) values(
-            #{codeName}, #{label}, #{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into shopitemcat(
-            code, label, description
+            code, label, description,
+            priority, flags, state, uid, gid, mode, acl,
+            props,
+            parent, depth
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{codeName},#{label},#{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{properties.jsonForm}::jsonb,
+            #{parent.id}, #{depth} 
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update shopitemcat
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
+            <if test="parent != null">parent=#{parent.id},</if>
+            depth=#{depth},
+            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
         </set>
         <where>
             id = #{id}

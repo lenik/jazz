@@ -7,6 +7,7 @@
 --\mixin lily.mixin.Ex
 --\mixin lily.mixin.Ver
 
+        -- DEPRECATED: Different to storel, (art, batch*) can be repeated.
         art         int not null
             references art(id) on update cascade,
 

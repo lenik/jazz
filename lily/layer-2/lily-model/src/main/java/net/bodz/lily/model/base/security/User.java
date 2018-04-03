@@ -10,27 +10,26 @@ import java.util.Set;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
 
 /**
  * <p lang="zh-cn">
  * 使用本系统的用户，在登录系统时需要输入密码。
- * 
+ *
  * 和“联系人”不同，用户不具有联系信息。
- * 
+ *
  * @label User (Account)
  * @label.zh 用户（帐户）
- * 
+ *
  * @rel group: 管理用户组
  * @rel person: 管理联系人（自然人）
  * @rel org: 管理联系人（组织、企业）
- * 
+ *
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
 @IdType(Integer.class)
 public class User
-        extends CoEntity<Integer> {
+        extends CoPrincipal {
 
     private static final long serialVersionUID = 1L;
 

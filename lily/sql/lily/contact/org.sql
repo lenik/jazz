@@ -1,5 +1,6 @@
 --\import lily.account
 --\import lily.geo.zone
+--\import lily.contact.partycat
 
     create sequence org_seq start with 1000;
     create table org(
@@ -8,6 +9,9 @@
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Contact ""
 --\mixin lily.mixin.Props
+
+        cat         int
+            references partycat(id) on update cascade,
 
         birthday    date,
         locale      varchar(10),

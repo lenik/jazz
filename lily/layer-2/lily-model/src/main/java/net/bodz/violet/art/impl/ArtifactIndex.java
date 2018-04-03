@@ -6,6 +6,7 @@ import net.bodz.bas.meta.decl.ObjectType;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.site.file.UploadFn;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactProperties;
@@ -33,13 +34,13 @@ public class ArtifactIndex
     static final String SCHEMA = "art";
 
     @Override
-    protected void save(final boolean create, final Artifact obj, final AjaxResult result) {
+    protected void save(IVariantMap<String> q, Artifact obj, AjaxResult result) {
         ArtifactProperties properties = obj.getProperties();
         if (properties != null) {
             List<ItemFile> images = properties.getImages();
             UploadFn.submitFiles(images, SCHEMA, lazyId(obj));
         }
-        super.save(create, obj, result);
+        super.save(q, obj, result);
     }
 
 }

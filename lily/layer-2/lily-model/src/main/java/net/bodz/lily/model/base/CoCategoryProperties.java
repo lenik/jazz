@@ -1,13 +1,10 @@
 package net.bodz.lily.model.base;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.site.file.ItemFile;
@@ -39,13 +36,7 @@ public class CoCategoryProperties
             throws ParseException {
         switch (key) {
         case K_IMAGES:
-            List<ItemFile> images = new ArrayList<>();
-            for (JSONObject el : JsonFn.<JSONObject> iterate((JSONArray) val)) {
-                ItemFile item = new ItemFile();
-                item.readObject(el);
-                images.add(item);
-            }
-            this.setImages(images);
+            setImages(ItemFile.convert((JSONArray) val));
             return true;
         }
         return super.readFromJson(key, val);

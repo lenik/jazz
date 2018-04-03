@@ -18,35 +18,34 @@
             <id property="id" column="op" />
             <result property="label" column="op_label" />
         </association>
-        <association property="form" javaType="net.bodz.lily.model.base.schema.FormDef">
-            <id property="id" column="form" />
-            <result property="label" column="form_label" />
-        </association>
-        <association property="category" javaType="net.bodz.lily.model.base.schema.CategoryDef">
-            <id property="id" column="cat" />
-            <result property="label" column="cat_label" />
-        </association>
-        <association property="phase" javaType="net.bodz.lily.model.base.schema.PhaseDef">
-            <id property="id" column="phase" />
-            <result property="label" column="phase_label" />
-        </association>
     </resultMap>
 
-    <sql id="set1u">
-        <include refid="co.setUSA" />
-        <if test="beginDate != null">t0=#{beginDate},</if>
-        <if test="endDate != null">t1=#{endDate},</if>
+    <sql id="setU">
         <if test="op != null">op=#{op.id},</if>
         <if test="category != null">cat=#{category.id},</if>
         <if test="phase != null">phase=#{phase.id},</if>
     </sql>
-
-    <sql id="set1">
-        <include refid="message.set1u" />
+    
+    <sql id="setM">
         <if test="subject != null">subject=#{subject},</if>
         text=#{text},
-        <if test="form != null">form=#{form.id},</if>
-        args=#{formArgs},
+    </sql>
+    
+    <sql id="setUM">
+        <include refid="message.setU" />
+        <include refid="message.setM" />
+    </sql>
+    
+    <sql id="set1u">
+        <include refid="co.setUSA" />
+        <include refid="mi.setT" />
+        <include refid="message.setU" />
+    </sql>
+
+    <sql id="set1">
+        <include refid="co.setUSA" />
+        <include refid="mi.setT" />
+        <include refid="message.setUM" />
     </sql>
 
     <sql id="filter-op">
