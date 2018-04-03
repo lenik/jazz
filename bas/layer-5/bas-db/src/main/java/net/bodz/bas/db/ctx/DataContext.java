@@ -23,6 +23,7 @@ import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.db.jdbc.IDataSourceProvider;
 import net.bodz.bas.db.jdbc.util.ISqlExecutor;
 import net.bodz.bas.db.jdbc.util.SharedSqlExecutor;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IAttributed;
 
@@ -97,7 +98,7 @@ public class DataContext
         return mapperProvider;
     }
 
-    public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass) {
+    public final <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass) {
         return getMapper(mapperClass, false);
     }
 
@@ -107,6 +108,24 @@ public class DataContext
 
     public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass, SqlSession session) {
         return getMapperProvider().getMapper(mapperClass, session);
+    }
+
+    public final <mapper_t extends IMapper> mapper_t requireMapper(Class<mapper_t> mapperClass) {
+        return requireMapper(mapperClass, false);
+    }
+
+    public <mapper_t extends IMapper> mapper_t requireMapper(Class<mapper_t> mapperClass, boolean batch) {
+        mapper_t mapper = getMapper(mapperClass, batch);
+        if (mapper == null)
+            throw new IllegalUsageException("No mapper for " + mapperClass);
+        return mapper;
+    }
+
+    public <mapper_t extends IMapper> mapper_t requireMapper(Class<mapper_t> mapperClass, SqlSession session) {
+        mapper_t mapper = getMapper(mapperClass, session);
+        if (mapper == null)
+            throw new IllegalUsageException("No mapper for " + mapperClass);
+        return mapper;
     }
 
     @Override
