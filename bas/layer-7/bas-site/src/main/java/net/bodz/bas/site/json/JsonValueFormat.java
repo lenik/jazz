@@ -19,6 +19,8 @@ public class JsonValueFormat {
      *            A DecimalFormat format string for numeric type.
      */
     public static Object format(Class<?> type, String fmt, Object val) {
+        if (fmt == null)
+            throw new NullPointerException("fmt");
         int typeId = TypeKind.getTypeId(type);
         switch (typeId) {
         case TypeId.DATE:
@@ -35,6 +37,15 @@ public class JsonValueFormat {
             DecimalFormat dfmt = new DecimalFormat(fmt);
             return dfmt.format(val);
         }
+
+        // non-primitives.
+//
+//        switch (fmt) {
+//        case "json":
+//            if (val instanceof IJsonSerializable) {
+//                IJsonSerializable js = (IJsonSerializable) val;
+//            }
+//        }
         return val;
     }
 

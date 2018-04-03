@@ -1,6 +1,7 @@
 package net.bodz.bas.site.json;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,15 +51,21 @@ public class TableData_json
                     List<?> row = data.convert(item, columns);
                     if (rowArray) {
                         out.array();
-                        for (Object val : row) {
-                            dumpValue(out, val);
+                        int n = columns.size();
+                        for (int i = 0; i < n; i++) {
+                            String column = columns.get(i);
+                            String fmt = data.getFormat(column);
+                            Object cell = row.get(i);
+                            dumpValue(out, cell, fmt);
                         }
                         out.endArray();
                     } else {
                         out.object();
                         for (int i = 0; i < ncol; i++) {
-                            out.key(columns.get(i));
-                            dumpValue(out, row.get(i));
+                            String column = columns.get(i);
+                            String fmt = data.getFormat(column);
+                            out.key(column);
+                            dumpValue(out, row.get(i), fmt);
                         }
                         out.endObject();
                     }
@@ -72,8 +79,16 @@ public class TableData_json
         out.endObject();
     }
 
-    void dumpValue(IJsonOut out, Object val)
+    void dumpValue(IJsonOut out, Object val, String fmt)
             throws IOException {
+        if (val instanceof Collection) {
+            out.array();
+            for (Object item : (Collection<?>) val) {
+                dumpValue(out, item, null);
+            }
+            out.endArray();
+            return;
+        }
         if (val instanceof IJsonSerializable) {
             IJsonSerializable jsVal = (IJsonSerializable) val;
             jsVal.writeObject(out);

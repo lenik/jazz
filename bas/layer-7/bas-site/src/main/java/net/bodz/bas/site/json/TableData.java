@@ -10,6 +10,8 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IPropertyAccessor;
@@ -18,8 +20,11 @@ import net.bodz.bas.repr.form.FormDeclBuilder;
 import net.bodz.bas.repr.form.MutableFormDecl;
 import net.bodz.bas.repr.form.PathField;
 import net.bodz.bas.repr.form.PathFieldList;
+import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVariantMap;
 
-public class TableData {
+public class TableData
+        implements IVarMapSerializable {
 
     Class<?> objectType;
     Map<String, IPropertyAccessor> colmap = new LinkedHashMap<>();
@@ -51,7 +56,7 @@ public class TableData {
             colmap.put(pathField.getPath(), pathField);
     }
 
-    public void parseColumnsString(String columns)
+    public TableData parseColumnsString(String columns)
             throws NoSuchPropertyException, ParseException {
         List<String> columnList = new ArrayList<>();
         for (String col : columns.split(",")) {
@@ -61,6 +66,11 @@ public class TableData {
             columnList.add(col);
         }
         parseColumnList(columnList);
+        return this;
+    }
+
+    public String getFormat(String column) {
+        return formats.get(column);
     }
 
     public Map<String, String> getFormats() {
@@ -81,12 +91,13 @@ public class TableData {
         formats.put(column, format);
     }
 
-    public void parseFormats(String json) {
+    public TableData parseFormats(String json) {
         JSONObject obj = new JSONObject(json);
         for (String key : (Set<String>) obj.keySet()) {
             String format = obj.getString(key);
             formats.put(key, format);
         }
+        return this;
     }
 
     public List<?> getList() {
@@ -114,6 +125,28 @@ public class TableData {
             row.add(value);
         }
         return row;
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws LoaderException {
+        String columns = map.getString("columns");
+        if (columns == null)
+            throw new IllegalArgumentException("Expected request parameter columns.");
+        try {
+            parseColumnsString(columns);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid columns specified: \"" + columns + "\"", e);
+        }
+
+        String formats = map.getString("formats");
+        if (formats != null)
+            parseFormats(formats);
+    }
+
+    @Override
+    public void writeObject(Map<String, Object> map) {
+        throw new NotImplementedException();
     }
 
 }

@@ -120,4 +120,8 @@ public class JsonMap
         return map.toString();
     }
 
+    public static JsonMap empty() {
+        return EmptyJsonMap.getInstance();
+    }
+
 }
