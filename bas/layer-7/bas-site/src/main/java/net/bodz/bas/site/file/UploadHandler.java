@@ -78,7 +78,7 @@ public class UploadHandler
                 Pair<File, String> pair = renameToSha1(localFile);
 
                 UploadedFileInfo fileInfo = new UploadedFileInfo(item);
-                fileInfo.checksum = pair.getSecond();
+                fileInfo.setSha1(pair.getSecond());
 
                 fileInfo.url = anchor.join(pair.getFirst().getName()).absoluteHref();
                 fileInfo.deleteUrl = fileInfo.url;
