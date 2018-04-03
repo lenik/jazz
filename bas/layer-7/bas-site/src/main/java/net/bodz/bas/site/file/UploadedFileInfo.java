@@ -2,32 +2,18 @@ package net.bodz.bas.site.file;
 
 import org.apache.commons.fileupload.FileItem;
 
-import net.bodz.bas.fmt.json.JsonSupport;
-
 public class UploadedFileInfo
-        extends JsonSupport {
+        extends ItemFile {
 
-    String name;
     String path;
-    long size;
-    String checksum;
-
     String url;
     String thumbnail;
     String deleteUrl;
     String deleteType = "DELETE";
 
     public UploadedFileInfo(FileItem item) {
-        name = item.getName();
-        size = item.getSize();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        setName(item.getName());
+        setSize(item.getSize());
     }
 
     public String getPath() {
@@ -36,14 +22,6 @@ public class UploadedFileInfo
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public long getSize() {
-        return size;
-    }
-
-    public void setSize(long size) {
-        this.size = size;
     }
 
     public String getUrl() {
@@ -76,14 +54,6 @@ public class UploadedFileInfo
 
     public void setDeleteType(String deleteType) {
         this.deleteType = deleteType;
-    }
-
-    public String getChecksum() {
-        return checksum;
-    }
-
-    public void setChecksum(String checksum) {
-        this.checksum = checksum;
     }
 
 }

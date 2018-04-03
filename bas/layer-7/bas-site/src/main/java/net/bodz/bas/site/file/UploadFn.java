@@ -30,14 +30,17 @@ public class UploadFn {
         while (iter.hasNext()) {
             ItemFile item = iter.next();
             String name = item.getName();
-            File dst = new File(lifeDir, idFn.require() + "/" + name);
+            Object id = idFn.require();
+            item.setDir(schema + "/" + id);
+
+            File dst = new File(lifeDir, id + "/" + name);
             if (dst.exists()) // already submitted.
                 continue;
 
             File tmp = new File(lifeDir, getTmpName(item));
             if (!tmp.exists()) {
                 logger.error("Can't find the temporary uploaded file: " + tmp);
-                iter.remove();
+                iter.remove(); // Remove error items from the list.
                 continue;
             }
 
@@ -51,6 +54,7 @@ public class UploadFn {
             } catch (IOException e) {
                 // 缺失的图片会使用户自己主动去重新上传。
                 logger.error("Failed to move", e);
+                iter.remove();
             }
         }
     }

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.http.HttpServlet;
 import net.bodz.bas.http.ResourceTransferer;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.content.MutableContent;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.iterator.Iterables;
@@ -19,6 +21,8 @@ public abstract class AbstractFileAccessServlet
         extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+
+    static final Logger logger = LoggerFactory.getLogger(AbstractFileAccessServlet.class);
 
     public static final String ATTRIBUTE_MAX_AGE = "max-age";
 
@@ -67,6 +71,7 @@ public abstract class AbstractFileAccessServlet
         }
 
         if (!file.exists()) {
+            logger.warn("Not-Found: " + file);
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
