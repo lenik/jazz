@@ -43,31 +43,31 @@ public class DateTimeTypeHandler
     @Override
     public DateTime getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
-        Date date = rs.getDate(columnName);
-        if (date == null)
+        Timestamp timestamp = rs.getTimestamp(columnName);
+        if (timestamp == null)
             return null;
         else
-            return new DateTime(date);
+            return new DateTime(timestamp);
     }
 
     @Override
     public DateTime getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
-        Date date = rs.getDate(columnIndex);
-        if (date == null)
+        Timestamp timestamp = rs.getTimestamp(columnIndex);
+        if (timestamp == null)
             return null;
         else
-            return new DateTime(date);
+            return new DateTime(timestamp);
     }
 
     @Override
     public DateTime getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
-        Date date = cs.getDate(columnIndex);
-        if (date == null)
+        Timestamp timestamp = cs.getTimestamp(columnIndex);
+        if (timestamp == null)
             return null;
         else
-            return new DateTime(date);
+            return new DateTime(timestamp);
     }
 
 }

@@ -40,6 +40,8 @@ public interface IMapperTemplate<T, M>
 
     boolean delete(@Param("id") Object id);
 
+    int deleteFor(@Param("m") M mask);
+
     Map<String, Number> count(@Param("m") M mask);
 
     @Commit

@@ -1,5 +1,6 @@
 package net.bodz.lily.entity;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.type.TypeParam;
 
 public interface IId<Id> {
@@ -40,6 +41,18 @@ public interface IId<Id> {
             return (Id) casted;
         }
 
+    }
+
+    class _null {
+        public static boolean equals(IId<?> a, IId<?> b) {
+            if (a == b)
+                return true;
+            if (a == null || b == null)
+                return false;
+            Object id1 = a.getId();
+            Object id2 = b.getId();
+            return Nullables.equals(id1, id2);
+        }
     }
 
 }
