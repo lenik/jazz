@@ -1,5 +1,7 @@
 package net.bodz.bas.fmt.json;
 
+import java.io.IOException;
+
 import org.json.JSONException;
 
 public interface IJsonOut {
@@ -111,12 +113,43 @@ public interface IJsonOut {
     IJsonOut value(Object object)
             throws JSONException;
 
-    IJsonOut entry(String key, boolean value);
+    IJsonOut entry(String key, boolean value)
+            throws JSONException;
 
-    IJsonOut entry(String key, double value);
+    IJsonOut entry(String key, double value)
+            throws JSONException;
 
-    IJsonOut entry(String key, long value);
+    IJsonOut entry(String key, long value)
+            throws JSONException;
 
-    IJsonOut entry(String key, Object value);
+    IJsonOut entry(String key, Object value)
+            throws JSONException;
+
+    IJsonOut entryNotNull(String key, Object value)
+            throws JSONException;
+
+//    IJsonOut any(Object value)
+//            throws JSONException;
+//
+//    IJsonOut keyAny(String key, Object value)
+//            throws JSONException;
+//
+//    IJsonOut keyAnyNotNull(String key, Object value)
+//            throws JSONException;
+
+    class fn {
+
+        public static void dumpTree(IJsonOut out, Object value)
+                throws IOException {
+            if (value instanceof IJsonSerializable) {
+                IJsonSerializable jsVal = (IJsonSerializable) value;
+                jsVal.writeObject(out);
+                return;
+            }
+            // else:
+            out.value(value);
+        }
+
+    }
 
 }

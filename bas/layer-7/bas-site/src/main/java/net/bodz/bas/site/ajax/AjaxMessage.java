@@ -167,9 +167,9 @@ public class AjaxMessage
 
         if (htmlOut != null) {
             htmlOut.flush();
-            out.entry("html", this);
+            out.entry("html", this.toString());
         } else
-            out.entry("text", this);
+            out.entry("text", this.toString());
 
         out.endObject();
     }

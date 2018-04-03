@@ -1,5 +1,7 @@
 package net.bodz.bas.c.org.json;
 
+import java.io.IOException;
+
 import org.json.JSONException;
 import org.json.JSONStringer;
 
@@ -75,27 +77,42 @@ public class JsonStringer
         return this;
     }
 
+    @Override
     public JsonStringer entry(String key, boolean value) {
         this.key(key);
         this.value(value);
         return this;
     }
 
+    @Override
     public JsonStringer entry(String key, double value) {
         this.key(key);
         this.value(value);
         return this;
     }
 
+    @Override
     public JsonStringer entry(String key, long value) {
         this.key(key);
         this.value(value);
         return this;
     }
 
+    @Override
     public JsonStringer entry(String key, Object value) {
         this.key(key);
-        this.value(value);
+        try {
+            fn.dumpTree(this, value);
+        } catch (IOException e) {
+            throw new JSONException(e);
+        }
+        return this;
+    }
+
+    @Override
+    public final IJsonOut entryNotNull(String key, Object value) {
+        if (value != null)
+            entry(key, value);
         return this;
     }
 
