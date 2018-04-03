@@ -1,6 +1,7 @@
 package net.bodz.lily.model.base;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -8,6 +9,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.t.range.DateRange;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -173,8 +175,9 @@ public class CoObjectMask
     }
 
     @Override
-    public void writeObject(IVariantMap<String> map) {
+    public void writeObject(Map<String, Object> map) {
         // TODO Use reflection to write.
+        throw new NotImplementedException();
     }
 
     @Override

@@ -47,7 +47,6 @@
         -- length(the longest process chain in the bom graph), 0 for raw material.
         
         -- 0: raw material, large number for finished-product.
-        -- For plants, negative number for growing-days.
         finish      smallint not null default 0,
         
         -- sell price (cache)

@@ -5,6 +5,7 @@
 <mapper namespace="net.bodz.lily.model.contact.impl.OrgUnitMapper">
 
     <resultMap id="map1" type="net.bodz.lily.model.contact.OrgUnit" extends="co.MAP_ALL">
+        <!-- result property="properties.jsonForm" column="props" /-->
     </resultMap>
 
     <sql id="select1"><![CDATA[

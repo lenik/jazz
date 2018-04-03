@@ -11,7 +11,6 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.fmt.json.JsonObject;
@@ -42,7 +41,6 @@ import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.bas.t.variant.VariantMaps;
 import net.bodz.lily.entity.ILazyId;
 import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.model.base.security.AccessControl;
@@ -101,10 +99,9 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         HttpServletRequest req = CurrentHttpService.getRequest();
-        IVariantMap<String> q = VariantMaps.fromRequest(req);
 
         String token = tokens.peek();
         if (token == null)
@@ -166,19 +163,11 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
     protected Object listHandler(IVariantMap<String> q)
             throws RequestHandlerException {
         TableData tableData = new TableData(objectType);
-
-        String columns = q.getString("columns");
-        if (columns == null)
-            throw new RequestHandlerException("Expected request parameter columns.");
         try {
-            tableData.parseColumnsString(columns);
+            tableData.readObject(q);
         } catch (Exception e) {
-            throw new RequestHandlerException("Invalid columns specified: \"" + columns + "\"", e);
+            throw new RequestHandlerException(e.getMessage(), e);
         }
-
-        String formats = q.getString("formats");
-        if (formats != null)
-            tableData.parseFormats(formats);
 
         try {
             M mask = maskType.newInstance();
@@ -212,12 +201,12 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         return wrapper;
     }
 
-    protected Object saveHandler(IVariantMap<String> q, JsonObject jsonObj)
+    protected AjaxResult saveHandler(IVariantMap<String> q, JsonObject content)
             throws RequestHandlerException {
         AjaxResult result = new AjaxResult();
 
         T obj;
-        Long id = jsonObj.getLong("id");
+        Long id = content.getLong("id");
         boolean create = id == null;
         if (create) {
             try {
@@ -230,12 +219,14 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
             obj = load(id);
         }
 
+        JsonVarMap contentMap = new JsonVarMap(content);
         try {
-            obj.readObject(new JsonVarMap(jsonObj));
+            obj.readObject(contentMap);
         } catch (LoaderException e) {
             throw new RequestHandlerException("Failed to apply json: " + e.getMessage(), e);
         }
-        save(create, obj, result);
+
+        save(contentMap, obj, result);
         return result;
     }
 
@@ -267,13 +258,10 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         return result;
     }
 
-    protected IMapperTemplate<T, M> requireMapper() {
+    protected <mapper_t extends IMapperTemplate<T, M>> mapper_t requireMapper() {
         Class<T> entityClass = getObjectType();
         Class<IMapperTemplate<T, M>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
-        IMapperTemplate<T, M> mapper = getDataContext().getMapper(mapperClass);
-        if (mapper == null)
-            throw new IllegalUsageException("No mapper for " + entityClass);
-        return mapper;
+        return (mapper_t) getDataContext().requireMapper(mapperClass);
     }
 
     protected T create()
@@ -288,12 +276,13 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         return instance;
     }
 
-    protected void save(boolean create, T obj, AjaxResult result) {
-        _save(create, obj, result);
+    protected void save(IVariantMap<String> q, T obj, AjaxResult result) {
+        _save(obj, result);
     }
 
-    private void _save(boolean create, T obj, AjaxResult result) {
+    private void _save(T obj, AjaxResult result) {
         IMapperTemplate<T, M> mapper = requireMapper();
+        boolean create = obj.getId() == null;
         if (create) {
             mapper.insert(obj);
             result.message("Inserted id: " + obj.getId());

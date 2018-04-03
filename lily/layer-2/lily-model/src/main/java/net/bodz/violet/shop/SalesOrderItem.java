@@ -42,6 +42,8 @@ public class SalesOrderItem
 
     BigDecimal quantity = BigDecimal.ZERO;
     BigDecimal price = BigDecimal.ZERO;
+    BigDecimal n1 = BigDecimal.ZERO;
+
     String footnote;
 
     /**
@@ -203,6 +205,16 @@ public class SalesOrderItem
     @Override
     public String getComment() {
         return super.getComment();
+    }
+
+    public BigDecimal getN1() {
+        return n1;
+    }
+
+    public void setN1(BigDecimal n1) {
+        if (n1 == null)
+            throw new NullPointerException("n1");
+        this.n1 = n1;
     }
 
     /**

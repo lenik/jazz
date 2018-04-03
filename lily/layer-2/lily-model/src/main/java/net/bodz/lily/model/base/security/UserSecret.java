@@ -1,6 +1,6 @@
 package net.bodz.lily.model.base.security;
 
-import net.bodz.bas.typer.std.MutableAttributes;
+import net.bodz.bas.site.json.JsonMap;
 import net.bodz.lily.model.base.CoEntity;
 
 /**
@@ -19,7 +19,7 @@ public class UserSecret
     boolean emailOk;
     String tel;
     boolean telOk;
-    MutableAttributes properties;
+    JsonMap properties = new JsonMap();
 
     String question;
     String answer;
@@ -80,12 +80,9 @@ public class UserSecret
         this.telOk = telOk;
     }
 
-    public MutableAttributes getProperties() {
+    @Override
+    public JsonMap getProperties() {
         return properties;
-    }
-
-    public void setProperties(MutableAttributes properties) {
-        this.properties = properties;
     }
 
     public String getQuestion() {

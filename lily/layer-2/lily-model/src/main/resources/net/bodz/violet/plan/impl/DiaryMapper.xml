@@ -4,74 +4,147 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.DiaryMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.Diary" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.Diary" extends="message.MAP_ALL">
+        <result property="properties.jsonForm" column="props" />
+        <result property="value" column="val" />
+        <association property="category" javaType="net.bodz.violet.plan.DiaryCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+            <result property="properties.jsonForm" column="cat_props" />
+        </association>
+        <association property="phase" javaType="net.bodz.violet.plan.DiaryPhase">
+            <id property="id" column="phase" />
+            <result property="label" column="phase_label" />
+        </association>
+    </resultMap>
+
+    <resultMap id="map2" type="net.bodz.violet.plan.Diary" extends="map1">
+        <collection property="parties" javaType="ArrayList" ofType="net.bodz.violet.plan.DiaryParty">
+            <id property="id" column="party" />
+            <result property="label" column="party_label" />
+            <result property="value" column="party_value" />
+            <association property="user" javaType="net.bodz.lily.model.base.security.User">
+                <id property="id" column="user" />
+                <result property="label" column="user_label" />
+                <result property="properties.jsonForm" column="user_props" />
+            </association>
+            <association property="person" javaType="net.bodz.lily.model.contact.Person">
+                <id property="id" column="person" />
+                <result property="label" column="person_label" />
+                <result property="properties.jsonForm" column="person_props" />
+            </association>
+            <association property="org" javaType="net.bodz.lily.model.contact.Organization">
+                <id property="id" column="org" />
+                <result property="label" column="org_label" />
+                <result property="properties.jsonForm" column="org_props" />
+            </association>
+        </collection>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            cat.label "cat_label",
+            cat.props "cat_props",
+            phase.label "phase_label",
             u.label "uid_label",
             g.label "gid_label"
         from diary a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+            left join diarycat cat on a.cat = cat.id
+            left join diaryphase phase on a.phase = phase.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
+            cat.label "cat_label",
+            cat.props "cat_props",
+            phase.label "phase_label",
+            party.id "party",
+            party.label "party_label",
+            party.value "party_value",
+            "user".id "user",
+            "user".label "user_label",
+            "user".props "user_props",
+            person.id "person",
+            person.label "person_label",
+            person.props "person_props",
+            org.id "org",
+            org.label "org_label",
+            org.props "org_props",
             u.label "uid_label",
             g.label "gid_label"
         from diary a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
+            left join diarycat cat on a.cat = cat.id
+            left join diaryphase phase on a.phase = phase.id
+            full join diary_party party on a.id = party.diary
+            left join "user" on party."user" = "user".id
+            left join person on party.person = person.id
+            left join org on party.org = org.id
         ]]>
     </sql>
 
     <sql id="filtconds">
         <include refid="co.modefilt" />
         <include refid="mi.filterSql" />
+        <include refid="message.filter-op" />
+        <include refid="message.filter-clickInfo" />
+        <include refid="message.filter-tag" />
+        <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
+        <if test="m.phaseId != null">and a.phase = #{m.phaseId}</if>
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="map2">
+        <include refid="select2" />
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="map2">
+        <include refid="select2" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
+    <select id="select" parameterType="int" resultMap="map2">
         <include refid="select2" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into diary(
-            code, label, description
-        ) values(
-            #{codeName},#{label},#{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into diary(
-            code, label, description
+            uid, gid, mode, acl,
+            priority, flags, state, 
+            t0, t1,
+            op, subject, text, 
+            cat, phase,
+            props,
+            value
         ) values(
-            #{codeName},#{label},#{description}
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{beginDate}, #{endDate},
+            #{op.id}, #{subject}, #{text}, 
+            #{category.id}, #{phase.id},
+            #{properties.jsonForm}::jsonb,
+            #{value}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update diary
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            value = #{value},
         </set>
         <where>
             id = #{id}

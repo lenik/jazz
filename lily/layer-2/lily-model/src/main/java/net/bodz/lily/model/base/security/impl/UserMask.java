@@ -1,13 +1,12 @@
 package net.bodz.lily.model.base.security.impl;
 
 import net.bodz.bas.c.string.StringUtil;
-import net.bodz.lily.model.base.CoObjectMask;
 
 /**
  * @see net.bodz.lily.model.base.security.User
  */
 public class UserMask
-        extends CoObjectMask {
+        extends CoPrincipalMask {
 
     public String password;
 

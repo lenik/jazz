@@ -5,6 +5,7 @@
 <mapper namespace="net.bodz.lily.model.base.security.impl.UserMapper">
 
     <resultMap id="map1" type="net.bodz.lily.model.base.security.User" extends="co.MAP_ALL">
+        <result property="properties.jsonForm" column="props" />
         <result property="codeName" column="name" />
         <result property="email" column="email" />
         <result property="emailValidated" column="emailok" />
@@ -105,18 +106,34 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into "user"(name, label, description, gid0)
-        values(#{codeName},#{label},#{description}, #{primaryGroup.id})
-        returning id; --
+        insert into "user"(
+            name, label, description,
+            props,
+            gid0,
+            email, emailok, passwd, salt,
+            lastlog, lastlogip
+        ) values(
+            #{codeName},#{label},#{description},
+            #{properties.jsonForm},
+            #{primaryGroup.id},
+            #{email}, #{emailValidated}, #{password}, #{salt},
+            #{lastLoginTime}, #{lastLoginIp}
+        ) returning id; --
     ]]></insert>
 
     <update id="update">
         update "user"
         <set>
-            <if test="codeName != null">name = #{codeName},</if>
-            <if test="label != null">label = #{label},</if>
-            <if test="description != null">description = #{description},</if>
-            <if test="comment != null">comment = #{comment},</if>
+            <include refid="co.setU" />
+            <if test="email != null">
+                email = #{email},
+                emailok = #{emailValidated},</if>
+            <if test="password != null">
+                passwd = #{password},
+                salt = #{salt},</if>
+            <if test="lastLoginTime != null">lastlog = #{lastLoginTime},</if>
+            <if test="lastLoginIp != null">lastlogip = #{lastLoginIp},</if>
+            <if test="primaryGroup != null">gid0 = #{primaryGroup.id},</if>
         </set>
         where id=#{id}
     </update>

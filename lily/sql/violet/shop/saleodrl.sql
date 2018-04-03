@@ -24,9 +24,14 @@
         olabel      varchar(30),    -- label override
         ospec       varchar(80),    -- spec override
 
-        qty         numeric(20,2) not null,
+        qty         numeric(20,2) not null,             -- n0
         price       numeric(20,2) not null default 0,
         amount      numeric(20,2) not null default 0,   -- cache
+
+        -- aka. n_avail, n_unused, n_stock, n_exist
+        -- this is useful for apps without store.
+        -- generally, use this with related tables such as "reclaim".
+        n1          numeric(20,2) not null default 0,
         
         notes       varchar(200)
     );

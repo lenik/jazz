@@ -38,6 +38,8 @@ public class Region
     private Person person;
     private Organization org;
 
+    private RegionProperties properties;
+
     /**
      * redundant.
      */
@@ -91,7 +93,7 @@ public class Region
 
     /**
      * 位置
-     * 
+     *
      * 用三维笛卡尔坐标系表示的空间位置，对齐到库位的基点。
      * <p>
      * 库位的基点通常选择库位底部的左下角，或垂直于地球表面向下的底部的正西南角。
@@ -112,7 +114,7 @@ public class Region
 
     /**
      * 尺寸
-     * 
+     *
      * 可以用来容纳物件的空间尺寸。
      */
     public Dim3d getBbox() {
@@ -127,7 +129,7 @@ public class Region
 
     /**
      * 代理人
-     * 
+     *
      * 说明这个库位是为指定代理人（供应商或客户）服务的，专门用来存放该代理人的货品。
      */
     public Person getPerson() {
@@ -140,7 +142,7 @@ public class Region
 
     /**
      * 代理企业
-     * 
+     *
      * 说明这个库位是为指定企业（供货商或客户）服务的，专门用来存放该企业的货品。
      */
     public Organization getOrg() {
@@ -149,6 +151,11 @@ public class Region
 
     public void setOrg(Organization org) {
         this.org = org;
+    }
+
+    @Override
+    public RegionProperties getProperties() {
+        return properties;
     }
 
 }

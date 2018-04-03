@@ -34,6 +34,8 @@ public abstract class Party
     public static final int N_LANGTAG = 5;
     public static final int N_TIMEZONEID = 10;
 
+    private PartyCategory category;
+
     private Date birthday;
     private Locale locale = Locale.SIMPLIFIED_CHINESE;
     private TimeZone timeZone = TimeZones.TZ_SHANGHAI;
@@ -48,6 +50,19 @@ public abstract class Party
 
     private String bank;
     private String account;
+
+    private PartyProperties properties = new PartyProperties();
+
+    /**
+     * 分类
+     */
+    public PartyCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(PartyCategory category) {
+        this.category = category;
+    }
 
     /**
      * 生日
@@ -167,7 +182,7 @@ public abstract class Party
 
     /**
      * 兴趣方向
-     * 
+     *
      * 个人的兴趣爱好或公司的主营业务。
      */
     @Priority(300)
@@ -197,7 +212,7 @@ public abstract class Party
 
     /**
      * 默认联系方式
-     * 
+     *
      * 当不特别指定时，默认使用的联系方式。 （通常是较常用的联系方式。）
      */
     @Priority(500)
@@ -214,7 +229,8 @@ public abstract class Party
     public Contact getContact() {
         if (contacts.isEmpty())
             contacts.add(new Contact());
-        return contacts.get(0);
+        Contact contact = contacts.get(0);
+        return contact;
     }
 
     public void setContact(Contact contact) {
@@ -226,7 +242,7 @@ public abstract class Party
 
     /**
      * 银行
-     * 
+     *
      * @placeholder 输入银行名称...
      */
     @Priority(400)
@@ -241,7 +257,7 @@ public abstract class Party
 
     /**
      * 银行帐号
-     * 
+     *
      * @placeholder 输入银行帐号...
      */
     @Priority(401)
@@ -256,7 +272,7 @@ public abstract class Party
 
     /**
      * 由一系列单字符描述的分类特征。
-     * 
+     *
      * @label Characters
      * @label.zh 特征字
      */
@@ -271,6 +287,11 @@ public abstract class Party
         if (isSupplier())
             sb.append("供");
         return sb.toString();
+    }
+
+    @Override
+    public PartyProperties getProperties() {
+        return properties;
     }
 
 }

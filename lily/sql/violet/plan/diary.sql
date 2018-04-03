@@ -8,14 +8,16 @@
         id          bigint primary key default nextval('diary_seq'),
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
+--\mixin lily.mixin.Ver
 --\mixin lily.mixin.Mi
 --\mixin lily.mixin.Msg
---\mixin lily.mixin.Ver
+--\mixin lily.mixin.Props
 
         cat         int not null
             references diarycat(id) on update cascade,
 
-        phase       int not null
+        -- phase is optional.
+        phase       int
             references diaryphase(id) on update cascade,
 
         value       int not null default 0
@@ -33,16 +35,21 @@
     create table diary_party(
         id          bigint primary key default nextval('diary_party_seq'),
 
+--\mixin lily.mixin.Label
+
         diary       bigint not null
-            references diary(id) on update cascade on delete set null,
+            references diary(id) on update cascade on delete cascade,
+
+        "user"      int
+            references "user"(id) on update cascade,
 
         person      int
-            references person(id) on update cascade on delete set null,
+            references person(id) on update cascade,
 
         org         int
-            references org(id)  on update cascade on delete set null,
+            references org(id)  on update cascade,
 
-        description varchar(60)
+        value       int not null default 0
     );
 
 --\mixin lily.template.a-tag diary

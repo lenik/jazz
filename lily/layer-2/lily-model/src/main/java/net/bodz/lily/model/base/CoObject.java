@@ -2,18 +2,21 @@ package net.bodz.lily.model.base;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.joda.time.DateTime;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
@@ -33,8 +36,11 @@ import net.bodz.bas.repr.req.MethodNames;
 import net.bodz.bas.repr.state.IStated;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
+import net.bodz.bas.site.json.JsonMap;
+import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
@@ -326,6 +332,13 @@ public abstract class CoObject
         this.flags = flags;
     }
 
+    public JsonMap getProperties() {
+        return JsonMap.empty();
+    }
+
+    /** ⇱ Implementation Of {@link ICacheControl}. */
+    /* _____________________________ */static section.iface __CACHE__;
+
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Cache.class)
     @Override
@@ -532,10 +545,21 @@ public abstract class CoObject
             throws LoaderException {
         VarMapLoader loader = new VarMapLoader();
         loader.load(getClass(), this, map);
+
+        JsonVarMap propsMap = (JsonVarMap) map.get("properties");
+        if (propsMap != null) {
+            JsonMap properties = this.getProperties();
+            if (properties != null) // null if not supported.
+                try {
+                    properties.readObject(propsMap.getWrapped());
+                } catch (ParseException e) {
+                    throw new LoaderException(e.getMessage(), e);
+                }
+        }
     }
 
     @Override
-    public void writeObject(IVariantMap<String> map) {
+    public void writeObject(Map<String, Object> map) {
         throw new NotImplementedException();
     }
 
@@ -568,6 +592,25 @@ public abstract class CoObject
             mapper.update(this);
         }
         return getId();
+    }
+
+    public boolean partialEquals(CoObject o) {
+        if (!Nullables.equals(codeName, o.codeName))
+            return false;
+        if (!Nullables.equals(label, o.label))
+            return false;
+        if (!Nullables.equals(description, o.description))
+            return false;
+        if (!Nullables.equals(comment, o.comment))
+            return false;
+        if (!Nullables.equals(image, o.image))
+            return false;
+
+        if (flags != o.flags || priority != o.priority || state != o.state)
+            return false;
+
+        // user, group, acl, mode
+        return true;
     }
 
     protected static class fn {

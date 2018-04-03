@@ -4,34 +4,64 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.DiaryPartyMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.DiaryParty" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.DiaryParty" extends="co.MAP_K">
+        <result property="value" column="value" />
+        <association property="diary" javaType="net.bodz.violet.plan.Diary">
+            <id property="id" column="diary" />
+            <result property="subject" column="diary_subject" />
+            <result property="properties.jsonForm" column="diary_props" />
+        </association>
+        <association property="user" javaType="net.bodz.lily.model.base.security.User">
+            <id property="id" column="user" />
+            <result property="label" column="user_label" />
+        </association>
+        <association property="person" javaType="net.bodz.lily.model.contact.Person">
+            <id property="id" column="person" />
+            <result property="label" column="person_label" />
+        </association>
+        <association property="org" javaType="net.bodz.lily.model.contact.Organization">
+            <id property="id" column="org" />
+            <result property="label" column="org_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            diary.subject "diary_subject",
+            diary.props "diary_props",
+            "user".label "user_label",
+            person.label "person_label",
+            org.label "org_label"
         from diary_party a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join diary on a.diary = diary.id
+            left join "user" on a."user" = "user".id
+            left join person on a.person = person.id
+            left join org on a.org = org.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            diary.subject "diary_subject",
+            diary.props "diary_props",
+            "user".label "user_label",
+            person.label "person_label",
+            org.label "org_label"
         from diary_party a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join diary on a.diary = diary.id
+            left join "user" on a."user" = "user".id
+            left join person on a.person = person.id
+            left join org on a.org = org.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
-        <include refid="co.modefilt" />
+        <if test="m.diaryId != null">and a.diary = #{m.diaryId}</if>
+        <if test="m.userId != null">and a."user" = #{m.userId}</if>
+        <if test="m.personId != null">and a.person = #{m.personId}</if>
+        <if test="m.orgId != null">and a.org = #{m.orgId}</if>
     </sql>
 
     <select id="all" resultMap="map1">
@@ -52,26 +82,27 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into diary_party(
-            code, label, description
-        ) values(
-            #{codeName},#{label},#{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into diary_party(
-            code, label, description
+            diary,
+            "user", person, org, description,
+            value
         ) values(
-            #{codeName},#{label},#{description}
+            #{diary.id},
+            #{user.id}, #{person.id}, #{org.id}, #{description},
+            #{value}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update diary_party
         <set>
-            <include refid="co.setUS" />
+            diary = #{diary.id},
+            user = #{user.id},
+            person = #{person.id},
+            org = #{org.id},
+            description = #{description},
+            value = #{value},
         </set>
         <where>
             id = #{id}
@@ -80,6 +111,13 @@
 
     <delete id="delete">
         delete from diary_party where id = #{id}
+    </delete>
+
+    <delete id="deleteFor">
+        delete from diary_party
+        <where>
+            <include refid="filtconds" />
+        </where>
     </delete>
 
     <select id="count" resultType="hashmap">

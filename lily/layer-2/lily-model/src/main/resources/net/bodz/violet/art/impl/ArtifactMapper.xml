@@ -60,6 +60,8 @@
 
     <sql id="filtconds">
         <include refid="co.modefilt" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
         <if test="m.uomId != null">and a.uom = #{m.uomId}</if>
         <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
         <if test="m.phaseId != null">and a.phase = #{m.phaseId}</if>
