@@ -1,6 +1,6 @@
-net.bodz.bas.ctx.Component
-net.bodz.bas.ctx.InstanceType
-net.bodz.bas.ctx.ScopeType
-net.bodz.bas.ctx.Service
+net.bodz.bas.ctx.inject.Bean
+net.bodz.bas.ctx.inject.Service
+net.bodz.bas.ctx.inject._Component
 net.bodz.bas.ctx.scope.IScopedRef
+net.bodz.bas.ctx.scope._Scope
 net.bodz.bas.ctx.util.IBeanResolver
