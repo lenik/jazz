@@ -4,12 +4,12 @@ import org.joda.time.DateTime;
 
 public interface IMomentInterval {
 
-    DateTime getBeginDate();
+    DateTime getBeginTime();
 
-    void setBeginDate(DateTime beginDate);
+    void setBeginTime(DateTime beginTime);
 
-    DateTime getEndDate();
+    DateTime getEndTime();
 
-    void setEndDate(DateTime endDate);
+    void setEndTime(DateTime endTime);
 
 }

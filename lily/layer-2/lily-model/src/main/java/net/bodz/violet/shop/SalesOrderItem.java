@@ -83,14 +83,14 @@ public class SalesOrderItem
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Override
-    public DateTime getBeginDate() {
-        return super.getBeginDate();
+    public DateTime getBeginTime() {
+        return super.getBeginTime();
     }
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Override
-    public DateTime getEndDate() {
-        return super.getEndDate();
+    public DateTime getEndTime() {
+        return super.getEndTime();
     }
 
     /**
@@ -98,11 +98,11 @@ public class SalesOrderItem
      */
     @OfGroup(StdGroup.Schedule.class)
     public DateTime getOrderTime() {
-        return super.getBeginDate();
+        return super.getBeginTime();
     }
 
     public void setOrderTime(DateTime orderTime) {
-        super.setBeginDate(orderTime);
+        super.setBeginTime(orderTime);
     }
 
     /**
@@ -110,11 +110,11 @@ public class SalesOrderItem
      */
     @OfGroup(StdGroup.Schedule.class)
     public DateTime getDeadline() {
-        return super.getEndDate();
+        return super.getEndTime();
     }
 
     public void setDeadline(DateTime deadline) {
-        super.setEndDate(deadline);
+        super.setEndTime(deadline);
     }
 
     /**

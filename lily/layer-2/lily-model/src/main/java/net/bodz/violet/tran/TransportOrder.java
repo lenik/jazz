@@ -70,7 +70,7 @@ public class TransportOrder
 
     /**
      * 订单
-     * 
+     *
      * @placeholder 选择一个源始订单…
      */
     @OfGroup(StdGroup.Process.class)
@@ -84,7 +84,7 @@ public class TransportOrder
 
     /**
      * 库存作业
-     * 
+     *
      * @placeholder 选择一个源始库存作业…
      */
     @OfGroup(StdGroup.Process.class)
@@ -98,7 +98,7 @@ public class TransportOrder
 
     /**
      * 公司
-     * 
+     *
      * @placeholder 选择目标公司…
      */
     public Organization getOrg() {
@@ -111,7 +111,7 @@ public class TransportOrder
 
     /**
      * 联系人
-     * 
+     *
      * @placeholder 选择联系人…
      */
     public Person getPerson() {
@@ -124,7 +124,7 @@ public class TransportOrder
 
     /**
      * 目的地
-     * 
+     *
      * @placeholder 选择目的地…
      */
     @Priority(1)
@@ -139,7 +139,7 @@ public class TransportOrder
 
     /**
      * 承运人
-     * 
+     *
      * @placeholder 选择承运人…
      */
     @Priority(2)
@@ -154,7 +154,7 @@ public class TransportOrder
 
     /**
      * 运单号
-     * 
+     *
      * @placeholder 输入运单号…
      */
     @Priority(3)
@@ -186,11 +186,11 @@ public class TransportOrder
     @Priority(5)
     @OfGroup({ LilyGroups.Transportation.class })
     public DateTime getShipDate() {
-        return super.getBeginDate();
+        return super.getBeginTime();
     }
 
     public void setShipDate(DateTime shipDate) {
-        super.setBeginDate(shipDate);
+        super.setBeginTime(shipDate);
     }
 
     /**
@@ -199,11 +199,11 @@ public class TransportOrder
     @Priority(6)
     @OfGroup({ LilyGroups.Transportation.class })
     public DateTime getArrivedDate() {
-        return super.getEndDate();
+        return super.getEndTime();
     }
 
     public void setArrivedDate(DateTime arrivedDate) {
-        super.setEndDate(arrivedDate);
+        super.setEndTime(arrivedDate);
     }
 
     /**
