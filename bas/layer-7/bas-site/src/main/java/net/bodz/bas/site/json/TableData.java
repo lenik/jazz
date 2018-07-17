@@ -110,6 +110,9 @@ public class TableData
 
     public List<?> convert(Object obj, List<String> columns)
             throws ReflectiveOperationException {
+        if (obj == null)
+            throw new NullPointerException("obj");
+
         List<Object> row = new ArrayList<>(columns.size());
         for (String col : columns) {
             IPropertyAccessor property = colmap.get(col);
