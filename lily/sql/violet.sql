@@ -1,7 +1,7 @@
 --\import lily
 
--------- Violet :: Press --------
---\import violet.post
+-------- Violet :: Pub --------
+--\import violet.pub
 
 -------- Violet :: Plan --------
 --\import violet.plan
@@ -20,3 +20,7 @@
 
 -------- Violet :: Transport --------
 --\import violet.tran
+
+-------- Violet :: Edu --------
+--\import violet.edu
+

@@ -1,4 +1,4 @@
 --\import violet.pub.article
---\import violet.pub.articlel
+--\import violet.pub.article_msg
 --\import violet.pub.post
---\import violet.pub.postreply
+--\import violet.pub.post_msg

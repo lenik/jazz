@@ -1,4 +1,6 @@
---\import violet.test.course
+--\import lily.base
+--\import lily.account
+--\import violet.edu.course
 
     create sequence testq_seq start with 1000;
 
@@ -8,12 +10,16 @@
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Msg
 
-        course  int
+        course  int not null
             references course(id) on update cascade,
         
 --\mixin lily.mixin.Props
 --\mixin lily.mixin.FavLike
 
+        -- insert position of the answer. num of chars to the end if negative.
+        -- for HTML or RichText, the index of the verbatim code is used.
+        pos     int not null default -1,
+        
         answer varchar(100) not null default ''
     );
 

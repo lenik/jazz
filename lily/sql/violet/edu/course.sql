@@ -2,7 +2,6 @@
 --\mixin lily.template.a-cat course
 
     create sequence course_seq start with 1000;
-
     create table course(
         id          int primary key default nextval('course_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
@@ -24,5 +23,5 @@
     create index course_uid_acl         on course(uid, acl);
 
 --\mixin lily.template.a-tag course
---\mixin lily.template.a-tags course int subject
---\mixin lily.template.a-favs course int subject
+--\mixin lily.template.a-tags course int label
+--\mixin lily.template.a-favs course int label
