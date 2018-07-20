@@ -11,7 +11,7 @@
         -- t0: owned since, t1: lost after
 
         owner       ${3=int} not null
-            references $2(id) on update cascade on delete cascade,
+            references "$2"(id) on update cascade on delete cascade,
         
         -- config/preference artcat for auto-create asset_$1 arts.
         art         int not null
