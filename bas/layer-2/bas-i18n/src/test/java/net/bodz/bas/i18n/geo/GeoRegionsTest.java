@@ -10,7 +10,7 @@ public class GeoRegionsTest
         extends Assert {
 
     static void dump(ITreeOut out, GeoRegion r) {
-        out.println(r.joinId() + " - " + r.getLocaleName());
+        out.println(r.buildId() + " - " + r.getLocaleName());
         out.enter();
         for (GeoRegion child : r.getChildren())
             dump(out, child);

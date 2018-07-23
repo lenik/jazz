@@ -147,7 +147,7 @@ public class Contact
     @OfGroup(EntGroup.Position.class)
     @Derived
     public String getRegionId() {
-        return region == null ? null : region.joinId();
+        return region == null ? null : region.buildId();
     }
 
     public void setRegionId(String id) {
