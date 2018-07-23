@@ -63,7 +63,7 @@
     <select id="select" parameterType="int" resultMap="map1">
         <include refid="select2" />
         <where>
-            <if test="_parameter != null">a.id=#{id}</if>
+            <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 

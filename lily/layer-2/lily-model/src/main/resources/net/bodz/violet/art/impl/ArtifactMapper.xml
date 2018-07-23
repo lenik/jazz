@@ -117,7 +117,7 @@
             <if test="uom != null">uom = #{uom.id},</if>
         </set>
         <where>
-            <if test="id != null">id = #{id}</if>
+            id = #{id}
         </where>
     </update>
 
