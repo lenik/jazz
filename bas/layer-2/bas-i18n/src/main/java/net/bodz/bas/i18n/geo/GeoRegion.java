@@ -43,7 +43,11 @@ public class GeoRegion {
         return code;
     }
 
-    public String joinId() {
+    public String getId() {
+        return buildId();
+    }
+
+    public String buildId() {
         StringBuilder sb = new StringBuilder(16);
         for (GeoRegion r : topDown())
             sb.append(r.code);
