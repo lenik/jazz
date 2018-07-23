@@ -22,7 +22,7 @@ public interface IPreorderMapOst<K, V>
 
     V put(K key1, K key2, V value);
 
-    V remove(K key1, K key2);
+    V remove2(K key1, K key2);
 
     int size2();
 

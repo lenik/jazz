@@ -63,7 +63,7 @@ public abstract class AbstractPreorderMapOst<K, V>
     }
 
     @Override
-    public V remove(K key1, K key2) {
+    public V remove2(K key1, K key2) {
         Map<K, V> map2 = get(key1);
         if (map2 == null)
             return null;
