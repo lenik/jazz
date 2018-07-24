@@ -18,6 +18,6 @@
             references article_msg(id) on update cascade on delete cascade
     );
 
-    create index article_msg_lastmod    on articlel(lastmod desc);
+    create index article_msg_lastmod    on article_msg(lastmod desc);
     
 --\mixin lily.template.a-votes article_msg bigint subject
