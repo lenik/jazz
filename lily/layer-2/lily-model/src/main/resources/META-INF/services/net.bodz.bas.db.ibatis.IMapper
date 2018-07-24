@@ -20,6 +20,7 @@ net.bodz.violet.art.impl.ArtifactMapper
 net.bodz.violet.art.impl.ArtifactParameterMapper
 net.bodz.violet.art.impl.ArtifactPhaseMapper
 net.bodz.violet.art.impl.ArtifactTagMapper
+net.bodz.violet.art.impl.PackagingMapper
 net.bodz.violet.art.impl.UOMMapper
 net.bodz.violet.asset.impl.AssetMapper
 net.bodz.violet.edu.impl.CourseCategoryMapper
@@ -52,6 +53,7 @@ net.bodz.violet.plan.impl.PlanDoMapper
 net.bodz.violet.plan.impl.PlanDoParameterMapper
 net.bodz.violet.plan.impl.PlanDoTagMapper
 net.bodz.violet.plan.impl.PlanDoVoteMapper
+net.bodz.violet.plan.impl.PlanMapper
 net.bodz.violet.plan.impl.PlanParameterMapper
 net.bodz.violet.plan.impl.PlanPartyMapper
 net.bodz.violet.plan.impl.PlanPhaseMapper
@@ -78,6 +80,7 @@ net.bodz.violet.shop.impl.ShopTagMapper
 net.bodz.violet.store.impl.OffStoreItemMapper
 net.bodz.violet.store.impl.RegionCategoryMapper
 net.bodz.violet.store.impl.RegionMapper
+net.bodz.violet.store.impl.RegionTagMapper
 net.bodz.violet.store.impl.StoreCategoryMapper
 net.bodz.violet.store.impl.StoreItemMapper
 net.bodz.violet.store.impl.StoreOrderItemMapper
