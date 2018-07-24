@@ -32,9 +32,12 @@ public interface IMapperTemplate<T, M>
     /**
      * @return Number of records.
      */
-    void insert(T obj);
+    long insert(T obj);
 
-    void insertWithId(T obj);
+    /**
+     * @return Number of records.
+     */
+    long insertWithId(T obj);
 
     long update(T obj);
 
