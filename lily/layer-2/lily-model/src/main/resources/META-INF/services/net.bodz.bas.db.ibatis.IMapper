@@ -57,6 +57,12 @@ net.bodz.violet.plan.impl.PlanPartyMapper
 net.bodz.violet.plan.impl.PlanPhaseMapper
 net.bodz.violet.plan.impl.PlanTagMapper
 net.bodz.violet.plan.impl.PlanVoteMapper
+net.bodz.violet.pub.impl.ArticleCategoryMapper
+net.bodz.violet.pub.impl.ArticleMapper
+net.bodz.violet.pub.impl.ArticleTalkMapper
+net.bodz.violet.pub.impl.PostCategoryMapper
+net.bodz.violet.pub.impl.PostMapper
+net.bodz.violet.pub.impl.PostTalkMapper
 net.bodz.violet.shop.impl.CartItemMapper
 net.bodz.violet.shop.impl.CartMapper
 net.bodz.violet.shop.impl.SalesCategoryMapper

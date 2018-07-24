@@ -10,9 +10,6 @@
 --\mixin lily.mixin.Mi
 --\mixin lily.mixin.Msg
 
-        parent      int
-            references article(id) on update cascade on delete set null,
-
         cat         int
             references articlecat(id) on update cascade,
 
