@@ -1,11 +1,16 @@
+net.bodz.lily.model.base.CoCategoryIndex
+net.bodz.lily.model.base.security.impl.CoPrincipalIndex
 net.bodz.lily.model.base.security.impl.GroupIndex
+net.bodz.lily.model.base.security.impl.RoleIndex
 net.bodz.lily.model.base.security.impl.UserIndex
 net.bodz.lily.model.contact.impl.ContactIndex
-net.bodz.lily.model.contact.impl.OrganizationIndex
 net.bodz.lily.model.contact.impl.OrgUnitIndex
+net.bodz.lily.model.contact.impl.OrganizationIndex
 net.bodz.lily.model.contact.impl.PartyCategoryIndex
+net.bodz.lily.model.contact.impl.PartyIndex
 net.bodz.lily.model.contact.impl.PersonIndex
 net.bodz.lily.model.contact.impl.PersonRoleIndex
+net.bodz.lily.model.mx.CoMessageIndex
 net.bodz.lily.model.mx.impl.MailIndex
 net.bodz.violet.art.impl.ArtifactCategoryIndex
 net.bodz.violet.art.impl.ArtifactIndex
