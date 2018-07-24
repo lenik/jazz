@@ -49,6 +49,12 @@ net.bodz.violet.plan.impl.PlanPartyIndex
 net.bodz.violet.plan.impl.PlanPhaseIndex
 net.bodz.violet.plan.impl.PlanTagIndex
 net.bodz.violet.plan.impl.PlanVoteIndex
+net.bodz.violet.pub.impl.ArticleCategoryIndex
+net.bodz.violet.pub.impl.ArticleIndex
+net.bodz.violet.pub.impl.ArticleTalkIndex
+net.bodz.violet.pub.impl.PostCategoryIndex
+net.bodz.violet.pub.impl.PostIndex
+net.bodz.violet.pub.impl.PostTalkIndex
 net.bodz.violet.shop.impl.CartIndex
 net.bodz.violet.shop.impl.CartItemIndex
 net.bodz.violet.shop.impl.SalesCategoryIndex
