@@ -20,7 +20,6 @@ import net.bodz.pkg.sis.ISisProject;
 import net.bodz.pkg.sis.SisProjectInstaller;
 import net.bodz.pkg.sisi.page.ConfigPage;
 import net.bodz.swt.c.canvas.Picture;
-import net.bodz.swt.c.pageflow.PageException;
 import net.bodz.swt.ui.style.SwtImageMapper;
 
 public class WelcomeLogo

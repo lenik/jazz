@@ -31,6 +31,9 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.model.base.security.AccessControl;
 
+/**
+ * Deprecated: Prefer to use MVVN.
+ */
 @Deprecated
 @AccessControl
 @IndexedType
