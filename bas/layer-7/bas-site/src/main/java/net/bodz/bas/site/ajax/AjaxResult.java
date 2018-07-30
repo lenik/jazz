@@ -1,12 +1,12 @@
 package net.bodz.bas.site.ajax;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
@@ -14,71 +14,87 @@ import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.html.io.BHtmlOut;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
-import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.BTreeOut;
 
 public class AjaxResult
-        extends LinkedHashMap<String, Object>
+        extends BTreeOut
         implements IJsonSerializable {
 
-    private static final long serialVersionUID = 1L;
+    Boolean success;
+    int status;
+    StringBuffer message = new StringBuffer(100);
 
+    Map<String, Object> fields;
+
+    Map<String, IHtmlOut> htmlUpdates;
     HtmlOutputFormat htmlOutputFormat;
-    boolean success = false;
-    List<AjaxMessage> messages;
-    Map<String, BCharOut> updates;
-    Map<String, IHtmlOut> updatehtmls;
 
     public AjaxResult() {
-        htmlOutputFormat = new HtmlOutputFormat();
-        messages = new ArrayList<>();
-        updates = new HashMap<>();
+        this(false);
     }
 
-    public boolean isSuccess() {
+    public AjaxResult(Boolean sort) {
+        if (sort == null) {
+            fields = new HashMap<>();
+            htmlUpdates = new HashMap<>();
+        } else if (sort) {
+            fields = new TreeMap<>();
+            htmlUpdates = new TreeMap<>();
+        } else {
+            fields = new LinkedHashMap<>();
+            htmlUpdates = new LinkedHashMap<>();
+        }
+        htmlOutputFormat = new HtmlOutputFormat();
+    }
+
+    public Boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {
+    public void setSuccess(Boolean success) {
         this.success = success;
     }
 
-    public AjaxResult success() {
+    public AjaxResult succeed() {
+        return succeed(0);
+    }
+
+    public AjaxResult succeed(int status) {
         success = true;
+        this.status = status;
         return this;
     }
 
-    public AjaxMessage message(String type) {
-        AjaxMessage message = new AjaxMessage(type);
-        messages.add(message);
-        return message;
+    public AjaxResult fail() {
+        return fail(0, null);
     }
 
-    public AjaxMessage msgbox() {
-        return message(AjaxMessage.MSGBOX);
+    public AjaxResult fail(int status) {
+        return fail(status, null);
     }
 
-    public AjaxMessage msgbox(String title) {
-        return msgbox().title(title);
+    public AjaxResult fail(String message) {
+        return fail(0, message);
     }
 
-    public AjaxMessage notice() {
-        return message(AjaxMessage.NOTICE);
+    public AjaxResult fail(int status, String message) {
+        success = false;
+        this.status = status;
+        if (message != null)
+            this.println(message);
+        return this;
     }
 
-    public AjaxMessage inline() {
-        return message(AjaxMessage.INLINE);
+    public AjaxResult set(String key, Object value) {
+        fields.put(key, value);
+        return this;
     }
 
-    public AjaxMessage log() {
-        return message(AjaxMessage.LOG);
-    }
-
-    public IHtmlOut update(String id) {
-        IHtmlOut out = updatehtmls.get(id);
+    public IHtmlOut newUpdate(String id) {
+        IHtmlOut out = htmlUpdates.get(id);
         if (out == null) {
-            BHtmlOut bout = new BHtmlOut(htmlOutputFormat);
-            updates.put(id, bout.getBuffer());
-            updatehtmls.put(id, out);
+            BHtmlOut htmlOut = new BHtmlOut(htmlOutputFormat);
+            htmlUpdates.put(id, htmlOut);
         }
         return out;
     }
@@ -86,27 +102,31 @@ public class AjaxResult
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
+        throw new NotImplementedException();
     }
 
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
         out.object();
-        out.key("success");
-        out.value(success);
-
-        if (!messages.isEmpty()) {
-            out.key("messages");
-            out.array();
-            for (AjaxMessage message : messages)
-                message.writeObject(out);
-            out.endArray();
+        if (success != null) {
+            out.key("success");
+            out.value(success);
+            out.key("failed");
+            out.value(!success);
         }
+        out.key("status");
+        out.value(status);
 
-        if (!isEmpty()) {
+        flush();
+        String message = toString();
+        out.key("message");
+        out.value(message);
+
+        if (!fields.isEmpty()) {
             out.key("data");
             out.object();
-            for (Map.Entry<String, ?> entry : entrySet()) {
+            for (Map.Entry<String, ?> entry : fields.entrySet()) {
                 Object value = entry.getValue();
                 if (value == null)
                     continue;
@@ -121,14 +141,15 @@ public class AjaxResult
             out.endObject();
         }
 
-        if (!updates.isEmpty()) {
-            for (IHtmlOut html : updatehtmls.values())
+        if (!htmlUpdates.isEmpty()) {
+            for (IHtmlOut html : htmlUpdates.values())
                 html.flush();
             out.key("updates");
             out.object();
-            for (Map.Entry<String, BCharOut> entry : updates.entrySet()) {
+            for (Map.Entry<String, IHtmlOut> entry : htmlUpdates.entrySet()) {
                 out.key(entry.getKey());
-                BCharOut html = entry.getValue();
+                IHtmlOut htmlOut = entry.getValue();
+                String html = htmlOut.toString();
                 out.value(html);
             }
             out.endObject();

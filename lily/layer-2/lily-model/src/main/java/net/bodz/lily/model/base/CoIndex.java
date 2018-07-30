@@ -235,7 +235,7 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         AjaxResult result = new AjaxResult();
         String ids = q.getString("id");
         if (ids == null) {
-            result.msgbox("Id isn't specified.");
+            result.fail("Id isn't specified.");
         } else {
             IMapperTemplate<T, M> mapper = requireMapper();
             StringBuilder fails = new StringBuilder();
@@ -251,8 +251,7 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
             }
             if (fails.length() > 0) {
                 fails.setLength(fails.length() - 1);
-                result.setSuccess(false);
-                result.msgbox("Not deleted: " + fails);
+                result.fail("Not deleted: " + fails);
             }
         }
         return result;
@@ -285,10 +284,10 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
         boolean create = obj.getId() == null;
         if (create) {
             mapper.insert(obj);
-            result.message("Inserted id: " + obj.getId());
+            result.println("Inserted id: " + obj.getId());
         } else {
             long rows = mapper.update(obj);
-            result.message("Rows updated: " + rows);
+            result.println("Rows updated: " + rows);
         }
     }
 
