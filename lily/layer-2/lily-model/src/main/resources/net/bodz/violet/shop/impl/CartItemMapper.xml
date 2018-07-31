@@ -85,9 +85,11 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into cartitem(
             label, description,
+            priority, flags, state, uid, gid, mode, acl,
             shopitem, price, qty
         ) values(
             #{label}, #{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{shopItem.id}, #{priceSnapshot}, #{quantity}
         ) returning id; --
     ]]></insert>
@@ -95,7 +97,7 @@
     <update id="update">
         update cartitem
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
             shopitem = #{shopItem.id},
             price = #{priceSnapshot},
             qty = #{quantity},

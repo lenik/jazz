@@ -75,6 +75,10 @@ public class ShopItem
         this.quantity = quantity;
     }
 
+    public void setQuantity(double quantity) {
+        setQuantity(new BigDecimal(quantity));
+    }
+
     /**
      * 价格
      */
@@ -85,6 +89,10 @@ public class ShopItem
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public void setPrice(double price) {
+        setPrice(new BigDecimal(price));
     }
 
     /**

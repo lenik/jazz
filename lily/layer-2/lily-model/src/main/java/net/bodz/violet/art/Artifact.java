@@ -32,6 +32,7 @@ public class Artifact
 
     public static final int N_SKU_CODE = 30;
     public static final int N_BAR_CODE = 30;
+    public static final int N_RFID_CODE = 30;
     public static final int N_UOM_PROPERTY = 20;
     public static final int N_MODEL_NAME = 100;
 
@@ -41,6 +42,7 @@ public class Artifact
 
     private String skuCode;
     private String barCode;
+    private String rfidCode;
     private String modelName;
     private int finish;
 
@@ -123,6 +125,21 @@ public class Artifact
 
     public void setBarCode(String barCode) {
         this.barCode = barCode;
+    }
+
+    /**
+     * 射频EPC码
+     *
+     * @placeholder 输入射频EPC码
+     */
+    @OfGroup({ StdGroup.Identity.class, EntGroup.Packaging.class })
+    @TextInput(maxLength = N_RFID_CODE)
+    public String getRfidCode() {
+        return rfidCode;
+    }
+
+    public void setRfidCode(String rfidCode) {
+        this.rfidCode = rfidCode;
     }
 
     /**

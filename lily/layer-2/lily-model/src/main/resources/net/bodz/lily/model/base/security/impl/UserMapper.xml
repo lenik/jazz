@@ -7,10 +7,6 @@
     <resultMap id="map1" type="net.bodz.lily.model.base.security.User" extends="co.MAP_ALL">
         <result property="properties.jsonForm" column="props" />
         <result property="codeName" column="name" />
-        <result property="email" column="email" />
-        <result property="emailValidated" column="emailok" />
-        <result property="salt" column="salt" />
-        <result property="password" column="passwd" />
         <result property="lastLoginTime" column="lastlog" />
         <result property="lastLoginIP" column="lastlogip" />
         <association property="primaryGroup" javaType="net.bodz.lily.model.base.security.Group">
@@ -29,6 +25,16 @@
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
             <result property="admin" column="y_admin" />
+        </collection>
+        <collection property="secrets" javaType="ArrayList" ofType="net.bodz.lily.model.base.security.UserSecret">
+            <id property="id" column="s_id" />
+            <result property="salt" column="s_salt" />
+            <result property="password" column="s_passwd" />
+            <result property="publicKey" column="s_pubkey" />
+            <result property="email" column="s_email" />
+            <result property="emailValidated" column="s_emailok" />
+            <result property="mobile" column="s_tel" />
+            <result property="mobileValidated" column="s_telok" />
         </collection>
     </resultMap>
 
@@ -50,6 +56,14 @@
         select
             a.*,
             s.passwd,
+            s.id "s_id",
+            s.salt "s_salt",
+            s.passwd "s_passwd",
+            s.pubkey "s_pubkey",
+            s.email "s_email",
+            s.emailok "s_emailok",
+            s.tel "s_tel",
+            s.telok "s_telok",
             g.name "g_name",
             g.label "g_label",
             g.description "g_description",
@@ -68,8 +82,10 @@
     </sql>
 
     <sql id="filtconds">
-        <if test="m.codeName != null">and a.name=#{m.codeName}</if>
-        <if test="m.password != null">and s.passwd=#{m.password}</if>
+        <if test="m.codeName != null">and a.name = #{m.codeName}</if>
+        <if test="m.password != null">and s.passwd = #{m.password}</if>
+        <if test="m.email != null">and s.email = #{m.email}</if>
+        <if test="m.mobile != null">and s.tel = #{m.mobile}</if>
     </sql>
 
     <select id="all" resultMap="map1">
@@ -84,16 +100,32 @@
     </select>
 
     <select id="select" parameterType="int" resultMap="map2">
-        <include refid="select1" />
+        <include refid="select2" />
         <where>
-            <if test="_parameter != null">a.id=#{id}</if>
+            <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
     <select id="selectByCodeName" parameterType="String" resultMap="map2">
-        <include refid="select1" />
+        <include refid="select2" />
         <where>
-            <if test="_parameter != null">a.name=#{code}</if>
+            <if test="_parameter != null">a.name = #{code}</if>
+        </where>
+    </select>
+
+    <select id="selectByEmail" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <!-- s.emailok = true -->
+            and s.email = #{email}
+        </where>
+    </select>
+
+    <select id="selectByMobile" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <!-- s.telok = true -->
+            and s.tel = #{mobile}
         </where>
     </select>
 
@@ -108,15 +140,15 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into "user"(
             name, label, description,
+            priority, flags, state,
             props,
             gid0,
-            email, emailok, passwd, salt,
             lastlog, lastlogip
         ) values(
             #{codeName},#{label},#{description},
+            #{priority}, #{flags}, #{state},
             #{properties.jsonForm},
             #{primaryGroup.id},
-            #{email}, #{emailValidated}, #{password}, #{salt},
             #{lastLoginTime}, #{lastLoginIp}
         ) returning id; --
     ]]></insert>
@@ -124,13 +156,7 @@
     <update id="update">
         update "user"
         <set>
-            <include refid="co.setU" />
-            <if test="email != null">
-                email = #{email},
-                emailok = #{emailValidated},</if>
-            <if test="password != null">
-                passwd = #{password},
-                salt = #{salt},</if>
+            <include refid="co.setUS" />
             <if test="lastLoginTime != null">lastlog = #{lastLoginTime},</if>
             <if test="lastLoginIp != null">lastlogip = #{lastLoginIp},</if>
             <if test="primaryGroup != null">gid0 = #{primaryGroup.id},</if>

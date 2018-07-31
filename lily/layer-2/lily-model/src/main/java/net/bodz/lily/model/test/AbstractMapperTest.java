@@ -43,7 +43,6 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
     @Test
     public void testInsertDelete() {
         Assume.assumeTrue(getConfig().testInsert);
-        Assume.assumeTrue(getConfig().testDelete);
         T a = buildSample();
 
         mapper_t mapper = getMapper();
@@ -52,13 +51,15 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
         Object newId = a.getId();
         assertNotNull(newId);
 
-        boolean result = mapper.delete(newId);
-        assertTrue(result);
+        if (getConfig().purge) {
+            boolean result = mapper.delete(newId);
+            assertTrue(result);
+        }
     }
 
     @Test
     public void testUpdate() {
-        Assume.assumeTrue(getConfig().testInsert);
+        Assume.assumeTrue(getConfig().testUpdate);
         T a = buildSample();
 
         mapper_t mapper = getMapper();
@@ -70,8 +71,10 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
         num = mapper.update(a);
         assertTrue(num > 0);
 
-        boolean result = mapper.delete(newId);
-        assertTrue(result);
+        if (getConfig().purge) {
+            boolean result = mapper.delete(newId);
+            assertTrue(result);
+        }
     }
 
 }

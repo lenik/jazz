@@ -3,12 +3,15 @@ package net.bodz.lily.model.contact;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Table;
+
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoNode;
 
 /**
  * 部门
  */
+@Table(name = "orgunit")
 @IdType(Integer.class)
 public class OrgUnit
         extends CoNode<OrgUnit, Integer> {

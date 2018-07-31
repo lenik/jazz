@@ -2,8 +2,11 @@ package net.bodz.lily.model.base.security;
 
 import java.util.List;
 
+import javax.persistence.Table;
+
 import net.bodz.lily.entity.IdType;
 
+@Table(name = "role")
 @IdType(Integer.class)
 public class Role
         extends CoPrincipal {

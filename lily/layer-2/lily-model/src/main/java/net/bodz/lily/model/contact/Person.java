@@ -2,6 +2,8 @@ package net.bodz.lily.model.contact;
 
 import java.sql.Date;
 
+import javax.persistence.Table;
+
 import net.bodz.bas.html.meta.Radio;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
@@ -12,6 +14,7 @@ import net.bodz.bas.repr.form.meta.TextInput;
 /**
  * 联系人
  */
+@Table(name = "person")
 public class Person
         extends Party {
 
@@ -54,7 +57,7 @@ public class Person
 
     /**
      * 性别
-     * 
+     *
      * @TODO view builder criteria.
      */
     @Radio
@@ -164,7 +167,7 @@ public class Person
     // TODO xjdoc don't inherit the docs from the super method.
     /**
      * 由一系列单字符描述的分类特征。
-     * 
+     *
      * @label Characters
      * @label.zh 特征字
      */

@@ -1,28 +1,43 @@
 package net.bodz.lily.model.base.security;
 
+import java.util.Random;
+
+import javax.persistence.Table;
+
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.site.json.JsonMap;
+import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 
 /**
  * 分拆至 usersec 为了区分存储。
  */
-@Deprecated
+@Table(name = "usersec")
+@IdType(Integer.class)
 public class UserSecret
         extends CoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
-    int salt;
-    String password;
-    String publicKey;
-    String email;
-    boolean emailOk;
-    String tel;
-    boolean telOk;
-    JsonMap properties = new JsonMap();
+    public static final int N_PASSWORD = 40;
+    public static final int N_EMAIL = 30;
+    public static final int N_MOBILE = 20;
 
-    String question;
-    String answer;
+    private static final Random RANDOM = new Random();
+    private int salt = RANDOM.nextInt();
+    private String password;
+
+    private String publicKey;
+
+    private String email;
+    private boolean emailValidated;
+    private String mobile;
+    private boolean mobileValidated;
+
+    private JsonMap properties = new JsonMap();
+
+    private String question;
+    private String answer;
 
     public int getSalt() {
         return salt;
@@ -32,6 +47,7 @@ public class UserSecret
         this.salt = salt;
     }
 
+    @TextInput(maxLength = N_PASSWORD)
     public String getPassword() {
         return password;
     }
@@ -48,6 +64,10 @@ public class UserSecret
         this.publicKey = publicKey;
     }
 
+    /**
+     * E-mail
+     */
+    @TextInput(maxLength = N_EMAIL)
     public String getEmail() {
         return email;
     }
@@ -56,28 +76,41 @@ public class UserSecret
         this.email = email;
     }
 
-    public boolean isEmailOk() {
-        return emailOk;
+    /**
+     * @label Email-Validated
+     * @label.zh 邮箱通过验证
+     */
+    public boolean isEmailValidated() {
+        return emailValidated;
     }
 
-    public void setEmailOk(boolean emailOk) {
-        this.emailOk = emailOk;
+    public void setEmailValidated(boolean emailValidated) {
+        this.emailValidated = emailValidated;
     }
 
-    public String getTel() {
-        return tel;
+    /**
+     * @label Mobile
+     * @label.zh 手机号码
+     */
+    @TextInput(maxLength = N_MOBILE)
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public boolean isTelOk() {
-        return telOk;
+    /**
+     * @label Mobile-Validated
+     * @label.zh 手机通过验证
+     */
+    public boolean isMobileValidated() {
+        return mobileValidated;
     }
 
-    public void setTelOk(boolean telOk) {
-        this.telOk = telOk;
+    public void setMobileValidated(boolean mobileValidated) {
+        this.mobileValidated = mobileValidated;
     }
 
     @Override

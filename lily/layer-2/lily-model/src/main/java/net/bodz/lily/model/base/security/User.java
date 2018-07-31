@@ -2,10 +2,12 @@ package net.bodz.lily.model.base.security;
 
 import java.beans.Transient;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
+
+import javax.persistence.Table;
 
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -27,6 +29,7 @@ import net.bodz.lily.entity.IdType;
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
+@Table(name = "user")
 @IdType(Integer.class)
 public class User
         extends CoPrincipal {
@@ -35,20 +38,12 @@ public class User
 
     public static final int N_LOGIN_NAME = 30;
     public static final int N_FULL_NAME = 40;
-    public static final int N_EMAIL = 30;
-    public static final int N_PASSWORD = 40;
 
     private Group primaryGroup;
-    private List<Group> groups;
+    private List<Group> groups = new ArrayList<>();
 
-    private String email;
-    private boolean emailValidated;
-
-    private static final Random RANDOM = new Random();
-    private int salt = RANDOM.nextInt();
-    private String password;
-
-    private List<UserId> ids;
+    private List<UserSecret> secrets = new ArrayList<>();
+    private List<UserId> ids = new ArrayList<>();
 
     private InetAddress registerIP;
     private long lastLoginTime;
@@ -99,6 +94,8 @@ public class User
     }
 
     public void setGroups(List<Group> groups) {
+        if (groups == null)
+            throw new NullPointerException("groups");
         this.groups = groups;
     }
 
@@ -114,45 +111,26 @@ public class User
         return gids;
     }
 
-    /**
-     * E-mail
-     */
-    @TextInput(maxLength = N_EMAIL)
-    public String getEmail() {
-        return email;
+    public UserSecret getDefaultSecret() {
+        if (secrets.isEmpty())
+            return null;
+        else
+            try {
+                return secrets.get(0);
+            } catch (IndexOutOfBoundsException e) {
+                // TODO better solution?
+                return null;
+            }
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public List<UserSecret> getSecrets() {
+        return secrets;
     }
 
-    /**
-     * @label Email-Validated
-     * @label.zh 邮箱通过验证
-     */
-    public boolean isEmailValidated() {
-        return emailValidated;
-    }
-
-    public void setEmailValidated(boolean emailValidated) {
-        this.emailValidated = emailValidated;
-    }
-
-    public int getSalt() {
-        return salt;
-    }
-
-    public void setSalt(int salt) {
-        this.salt = salt;
-    }
-
-    @TextInput(maxLength = N_PASSWORD)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSecrets(List<UserSecret> secrets) {
+        if (secrets == null)
+            throw new NullPointerException("secrets");
+        this.secrets = secrets;
     }
 
     public List<UserId> getIds() {
@@ -160,6 +138,8 @@ public class User
     }
 
     public void setIds(List<UserId> ids) {
+        if (ids == null)
+            throw new NullPointerException("ids");
         this.ids = ids;
     }
 

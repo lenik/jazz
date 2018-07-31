@@ -6,9 +6,9 @@
     create sequence art_seq start with 1000;
     create table art(
         id          int primary key default nextval('art_seq'),
-        sku         varchar(30),    -- aka. code-name
-        barcode     varchar(30),    -- res. for EAN-13 etc.
-        rfid        varchar(30),    -- res. for 96-bit epc
+        sku         varchar(30) unique,    -- aka. code-name
+        barcode     varchar(30) unique,    -- res. for EAN-13 etc.
+        rfid        varchar(30) unique,    -- res. for 96-bit epc
 
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer

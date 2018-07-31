@@ -1,5 +1,7 @@
 package net.bodz.lily.model.base.security;
 
+import javax.persistence.Table;
+
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
@@ -8,6 +10,7 @@ import net.bodz.lily.model.base.CoEntity;
  * @label Policy
  * @label.zh 系统配额
  */
+@Table(name = "policy")
 @IdType(Integer.class)
 public class Policy
         extends CoEntity<Integer> {

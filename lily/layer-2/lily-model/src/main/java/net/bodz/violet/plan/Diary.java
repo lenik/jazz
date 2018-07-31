@@ -3,6 +3,8 @@ package net.bodz.violet.plan;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Table;
+
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.site.json.JsonArrayList;
 import net.bodz.bas.site.json.JsonVarMap;
@@ -10,6 +12,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.mx.CoMessage;
 
+@Table(name = "diary")
 @IdType(Long.class)
 public class Diary
         extends CoMessage<Long> {

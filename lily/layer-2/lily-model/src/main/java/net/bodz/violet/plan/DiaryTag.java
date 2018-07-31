@@ -1,13 +1,10 @@
 package net.bodz.violet.plan;
 
+import javax.persistence.Table;
+
 import net.bodz.lily.model.base.CoCode;
 
-/**
- * @see net.bodz.violet.plan.impl.DiaryTagMask
- * @see net.bodz.violet.plan.impl.DiaryTagMapper
- * @see net.bodz.violet.plan.impl.DiaryTagIndex
- * @see src/main/resources/net/bodz/violet/plan/impl/DiaryTagMapper.xml
- */
+@Table(name = "diarytag")
 public class DiaryTag
         extends CoCode<DiaryTag> {
 
@@ -21,6 +18,7 @@ public class DiaryTag
         super(parent);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(128);
         sb.append("diaryTag: ...");
