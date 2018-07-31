@@ -9,6 +9,8 @@ public class DaoTestConfig {
     public boolean testUpdate = testEnabled;
     public boolean testDelete = testEnabled;
 
+    public boolean purge = false;
+
     public static final DaoTestConfig global = new DaoTestConfig();
 
 }
