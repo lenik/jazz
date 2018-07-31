@@ -31,7 +31,7 @@ public class UserPlayer
         user = new User();
         user.setCodeName("Test" + random.nextInt());
         user.setLabel("Test1");
-        user.setPassword("hello");
+        user.getDefaultSecret().setPassword("hello");
         userMapper.insert(user);
         int id = user.getId();
 

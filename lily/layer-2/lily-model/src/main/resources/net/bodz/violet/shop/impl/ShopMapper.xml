@@ -5,6 +5,7 @@
 <mapper namespace="net.bodz.violet.shop.impl.ShopMapper">
 
     <resultMap id="map1" type="net.bodz.violet.shop.Shop" extends="co.MAP_UVX">
+        <result property="properties.jsonForm" column="props" />
         <result property="hydm" column="hydm" />
     </resultMap>
     
@@ -61,26 +62,44 @@
         </where>
     </select>
 
+    <select id="selectByCodeName" parameterType="String" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.code = #{code}</if>
+        </where>
+    </select>
+
     <insert id="_insert"><![CDATA[
         insert into shop(
-            code, label, description
+            code, label, description,
+            priority, flags, state, uid, gid, mode, acl,
+            hydm
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{codeName}, #{label}, #{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{hydm}
         )
     ]]></insert>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into shop(
-            code, label, description
+            code, label, description,
+            priority, flags, state, uid, gid, mode, acl,
+            hydm
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{codeName}, #{label}, #{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{hydm}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update shop
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
+            code = #{code},
+            props = #{properties.jsonForm},
+            hydm = #{hydm},
         </set>
         <where>
             id = #{id}

@@ -8,6 +8,7 @@
         <result property="properties.jsonForm" column="props" />
         <result property="skuCode" column="sku" />
         <result property="barCode" column="barcode" />
+        <result property="rfidCode" column="rfid" />
         <result property="modelName" column="model" />
         <result property="finish" column="finish" />
         <association property="category" javaType="net.bodz.violet.art.ArtifactCategory">
@@ -22,6 +23,9 @@
             <id property="id" column="uom" />
             <result property="label" column="uom_label" />
         </association>
+    </resultMap>
+
+    <resultMap id="map2" type="net.bodz.violet.art.Artifact" extends="map1">
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -80,10 +84,17 @@
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
+    <select id="select" parameterType="int" resultMap="map2">
         <include refid="select2" />
         <where>
-            <if test="_parameter != null">a.id=#{id}</if>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <select id="selectByRfid" parameterType="String" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.rfid = #{rfid}</if>
         </where>
     </select>
 
@@ -92,13 +103,13 @@
             label, description,
             priority, flags, state, uid, gid, mode, acl,
             props,
-            cat, phase, sku, barcode, model, finish,
+            cat, phase, sku, barcode, rfid, model, finish,
             uom, price 
         ) values(
             #{label},#{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{properties.jsonForm}::jsonb,
-            #{category.id}, #{phase.id}, #{skuCode}, #{barCode}, #{modelName}, #{finish},
+            #{category.id}, #{phase.id}, #{skuCode}, #{barCode}, #{rfidCode}, #{modelName}, #{finish},
             #{uom.id}, #{price}
         ) returning id; --
     ]]></insert>
@@ -112,6 +123,7 @@
             <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
             sku = #{skuCode},
             barcode = #{barCode},
+            rfid = #{rfidCode},
             model = #{modelName},
             finish = #{finish},
             <if test="uom != null">uom = #{uom.id},</if>

@@ -5,6 +5,9 @@
 <mapper namespace="net.bodz.violet.shop.impl.ShopItemMapper">
 
     <resultMap id="map1" type="net.bodz.violet.shop.ShopItem" extends="co.MAP_UVX">
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="properties.jsonForm" column="props" />
         <result property="quantity" column="qty" />
         <result property="price" column="price" />
         <association property="shop" javaType="net.bodz.violet.shop.Shop">
@@ -90,9 +93,15 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into shopitem(
             label, description,
+            priority, flags, state,
+            t0, t1,
+            props,
             shop, cat, art, price, qty
         ) values(
             #{label}, #{description},
+            #{priority}, #{flags}, #{state},
+            #{beginTime}, #{endTime},
+            #{properties.jsonForm},
             #{shop.id}, #{category.id}, #{artifact.id}, #{price}, #{quantity}
         ) returning id; --
     ]]></insert>
@@ -101,6 +110,9 @@
         update shopitem
         <set>
             <include refid="co.setUS" />
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            props = #{properties.jsonForm},
             shop = #{shop.id},
             cat = #{category.id},
             art = #{artifact.id},

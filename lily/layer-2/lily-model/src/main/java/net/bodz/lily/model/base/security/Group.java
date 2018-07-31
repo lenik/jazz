@@ -2,6 +2,8 @@ package net.bodz.lily.model.base.security;
 
 import java.util.List;
 
+import javax.persistence.Table;
+
 import net.bodz.lily.entity.IdType;
 
 /**
@@ -24,6 +26,7 @@ import net.bodz.lily.entity.IdType;
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
+@Table(name = "group")
 @IdType(Integer.class)
 public class Group
         extends CoPrincipal {

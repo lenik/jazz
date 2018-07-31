@@ -36,6 +36,11 @@ public class SellPrice
         return price;
     }
 
+    public void setPrice(double price) {
+        BigDecimal d = new BigDecimal(price);
+        setPrice(d);
+    }
+
     public void setPrice(BigDecimal price) {
         if (price == null)
             throw new NullPointerException("price");

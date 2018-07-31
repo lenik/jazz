@@ -1,10 +1,15 @@
 package net.bodz.lily.model.base.security;
 
+import javax.persistence.Table;
+
+import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 
 /**
  * OAuth
  */
+@Table(name = "userid")
+@IdType(Integer.class)
 public class UserId
         extends CoEntity<Integer> {
 

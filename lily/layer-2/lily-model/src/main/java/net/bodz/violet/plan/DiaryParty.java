@@ -2,6 +2,8 @@ package net.bodz.violet.plan;
 
 import java.io.IOException;
 
+import javax.persistence.Table;
+
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -14,6 +16,7 @@ import net.bodz.lily.model.base.security.User;
 import net.bodz.lily.model.contact.Organization;
 import net.bodz.lily.model.contact.Person;
 
+@Table(name = "diary_party")
 @IdType(Long.class)
 public class DiaryParty
         extends CoEntity<Long>

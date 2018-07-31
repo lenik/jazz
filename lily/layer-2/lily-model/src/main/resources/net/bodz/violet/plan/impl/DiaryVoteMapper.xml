@@ -4,28 +4,32 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.DiaryVoteMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.DiaryVote" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.DiaryVote" extends="co.MAP_V">
+        <association property="diary" javaType="net.bodz.violet.plan.Diary">
+            <id property="id" column="diary" />
+            <result property="subject" column="diary_subject" />
+        </association>
+        <association property="user" javaType="net.bodz.lily.model.base.security.User">
+            <id property="id" column="user" />
+            <result property="label" column="user_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
-            a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            a.*
         from diary_vote a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            diary.subject "diary_subject",
+            u.label "user_label"
         from diary_vote a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join diary on a.diary = diary.id
+            left join "user" u on a."user" = u.id
         ]]>
     </sql>
 

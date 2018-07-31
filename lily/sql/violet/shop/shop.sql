@@ -6,6 +6,7 @@
         id          int primary key default nextval('shop_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
+--\mixin lily.mixin.Code
 --\mixin lily.mixin.Props
 
         hydm    int
