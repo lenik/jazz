@@ -19,7 +19,7 @@ public class TagGroupDef
 
     /**
      * Orthogonal
-     * 
+     *
      * @label.zh 正交
      */
     public boolean isOrtho() {
@@ -32,7 +32,7 @@ public class TagGroupDef
 
     /**
      * Tag List
-     * 
+     *
      * @label.zh 标签列表
      */
     public List<TagDef> getTags() {

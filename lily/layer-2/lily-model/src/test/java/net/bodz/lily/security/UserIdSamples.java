@@ -1,7 +1,5 @@
 package net.bodz.lily.security;
 
-import net.bodz.lily.security.UserId;
-
 public class UserIdSamples {
 
     public static UserId build() {

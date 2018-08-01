@@ -3,8 +3,6 @@ package net.bodz.lily.contact.impl;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.OrganizationSamples;
-import net.bodz.lily.contact.impl.OrganizationMapper;
-import net.bodz.lily.contact.impl.OrganizationMask;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 

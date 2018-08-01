@@ -9,7 +9,6 @@ import org.junit.Assert;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.t.variant.IMutableVariantMap;
 import net.bodz.bas.t.variant.MutableVariantMap;
-import net.bodz.lily.security.User;
 
 public class UserTest
         extends Assert {

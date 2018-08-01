@@ -5,9 +5,9 @@ import net.bodz.lily.model.base.CoCode;
 
 /**
  * 度量单位
- * 
+ *
  * 衡量单位的标准定义。
- * 
+ *
  * <p lang="en">
  * Unit Of Measurement
  */

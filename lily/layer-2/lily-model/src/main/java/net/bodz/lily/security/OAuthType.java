@@ -21,7 +21,7 @@ public class OAuthType
      * QQ
      */
     public static final OAuthType QQ = new OAuthType(K_QQ, "QQ");
-    
+
     /**
      * WeChat
      */

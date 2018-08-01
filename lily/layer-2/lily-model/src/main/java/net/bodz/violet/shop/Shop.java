@@ -25,7 +25,7 @@ public class Shop
 
     /**
      * 行业代码
-     * 
+     *
      * @placeholder 输入运单号…
      */
     public String getHydm() {

@@ -5,7 +5,6 @@ import javax.persistence.Table;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
 
-
 @Table(name = "diaryrev_vote")
 @IdType(Integer.class)
 public class DiaryReviewVote

@@ -62,7 +62,7 @@ public class ArtifactRegionOption
 
     /**
      * 安全库存
-     * 
+     *
      * @label 库存安全保留量
      */
     @OfGroup(StdGroup.Schedule.class)

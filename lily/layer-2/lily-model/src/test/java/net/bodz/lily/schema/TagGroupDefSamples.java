@@ -1,7 +1,5 @@
 package net.bodz.lily.schema;
 
-import net.bodz.lily.schema.TagGroupDef;
-
 public class TagGroupDefSamples {
 
     public static TagGroupDef build() {

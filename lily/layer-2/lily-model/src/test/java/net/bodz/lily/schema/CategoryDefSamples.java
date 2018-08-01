@@ -1,7 +1,5 @@
 package net.bodz.lily.schema;
 
-import net.bodz.lily.schema.CategoryDef;
-
 public class CategoryDefSamples {
 
     public static CategoryDef build() {

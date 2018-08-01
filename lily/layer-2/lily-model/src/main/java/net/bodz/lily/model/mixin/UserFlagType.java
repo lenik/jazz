@@ -9,7 +9,7 @@ public enum UserFlagType {
 
     /**
      * rude or abusive.
-     * 
+     *
      * A reasonable person would find this content inappropriate for respectful discourse.
      */
     RUDE,
@@ -27,7 +27,7 @@ public enum UserFlagType {
 
     /**
      * in need of moderator intervention.
-     * 
+     *
      * A problem not lised above that requires action by a moderator. <i>Be specific and
      * detailed.</i>
      */

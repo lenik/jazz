@@ -52,7 +52,7 @@ public abstract class AbstractCoObjectIndex_htm<T extends CoObjectIndex<E>, E ex
                 try {
                     mask.readObject(VariantMaps.fromRequest(request));
                 } catch (LoaderException e) {
-                    throw new ViewBuilderException("Failed to decode mask: "+e.getMessage(), e);
+                    throw new ViewBuilderException("Failed to decode mask: " + e.getMessage(), e);
                 }
                 return mask;
             }

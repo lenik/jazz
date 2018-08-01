@@ -2,7 +2,6 @@ package net.bodz.lily.schema;
 
 import java.util.TreeSet;
 
-
 public class TagDefSet
         extends TreeSet<TagDef> {
 

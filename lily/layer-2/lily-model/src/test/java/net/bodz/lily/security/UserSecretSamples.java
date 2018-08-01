@@ -1,7 +1,5 @@
 package net.bodz.lily.security;
 
-import net.bodz.lily.security.UserSecret;
-
 public class UserSecretSamples {
 
     public static UserSecret build() {

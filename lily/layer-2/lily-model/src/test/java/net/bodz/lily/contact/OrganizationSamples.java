@@ -1,7 +1,5 @@
 package net.bodz.lily.contact;
 
-import net.bodz.lily.contact.Organization;
-
 public class OrganizationSamples {
 
     public static Organization build() {
