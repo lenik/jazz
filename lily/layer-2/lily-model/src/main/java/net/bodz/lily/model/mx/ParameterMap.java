@@ -2,7 +2,7 @@ package net.bodz.lily.model.mx;
 
 import java.util.HashMap;
 
-import net.bodz.lily.model.base.schema.ParameterDef;
+import net.bodz.lily.schema.ParameterDef;
 
 public class ParameterMap
         extends HashMap<ParameterDef, String> {

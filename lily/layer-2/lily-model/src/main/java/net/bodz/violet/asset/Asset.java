@@ -6,13 +6,13 @@ import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
+import net.bodz.lily.contact.OrgUnit;
+import net.bodz.lily.contact.Organization;
+import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
-import net.bodz.lily.model.base.security.Group;
-import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.model.contact.OrgUnit;
-import net.bodz.lily.model.contact.Organization;
-import net.bodz.lily.model.contact.Person;
+import net.bodz.lily.security.Group;
+import net.bodz.lily.security.User;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.store.Region;
 

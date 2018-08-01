@@ -14,7 +14,7 @@
         <result property="clickInfo.pinCount" column="nlike" />
         <result property="clickInfo.readCount" column="nread" />
 
-        <association property="op" javaType="net.bodz.lily.model.base.security.User">
+        <association property="op" javaType="net.bodz.lily.security.User">
             <id property="id" column="op" />
             <result property="label" column="op_label" />
         </association>

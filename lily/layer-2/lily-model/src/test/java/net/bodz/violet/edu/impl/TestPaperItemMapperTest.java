@@ -1,7 +1,7 @@
 package net.bodz.violet.edu.impl;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.lily.model.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 import net.bodz.violet.edu.TestPaperItem;
 import net.bodz.violet.edu.TestPaperItemSamples;

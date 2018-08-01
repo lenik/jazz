@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.schema.impl.TagDefMapper">
+
+    <resultMap id="map1" type="net.bodz.lily.schema.TagDef" extends="co.MAP_ALL">
+        <association property="schema" javaType="net.bodz.lily.schema.SchemaDef">
+            <id property="id" column="schema" />
+            <result property="label" column="schema_label" />
+        </association>
+        <association property="tagGroup" javaType="net.bodz.lily.schema.TagGroupDef">
+            <id property="id" column="tagv" />
+            <result property="label" column="tagv_label" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select a.*,
+            v.schema "schema",
+            s.label schema_label,
+            v.label tagv_label
+        from _tag a
+            left join _tagv v on a.tagv=v.id
+            left join _schema s on v."schema"=s.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select a.*,
+            v.schema "schema",
+            s.label schema_label,
+            v.label tagv_label
+        from _tag a
+            left join _tagv v on a.tagv=v.id
+            left join _schema s on v."schema"=s.id
+        ]]>
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <if test="m.schemaId != null">and v."schema"=#{m.schemaId}</if>
+            <if test="m.tagGroupId != null">and a.tagv=#{m.tagGroupId}</if>
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id=#{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into _tag(
+            code, label, description,
+            priority, flags, state,
+            tagv)
+        values(
+            #{codeName},#{label},#{description},
+            #{priority}, #{flags}, #{state},
+            #{tagGroup.id})
+        returning id
+    ]]></insert>
+
+    <update id="update">
+        update _tag
+        <set>
+            <include refid="co.setUS" />
+            tagv = #{tagGroup.id},
+        </set>
+        <where>
+            <if test="id != null">id=#{id}, </if>
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from _tag where id=#{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from _tag
+    </select>
+
+</mapper>

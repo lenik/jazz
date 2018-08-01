@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
-import net.bodz.lily.model.base.schema.FormDef;
+import net.bodz.lily.schema.FormDef;
 
 public class UseForm
         implements Serializable {

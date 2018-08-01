@@ -11,15 +11,15 @@
             <result property="subject" column="diary_subject" />
             <result property="properties.jsonForm" column="diary_props" />
         </association>
-        <association property="user" javaType="net.bodz.lily.model.base.security.User">
+        <association property="user" javaType="net.bodz.lily.security.User">
             <id property="id" column="user" />
             <result property="label" column="user_label" />
         </association>
-        <association property="person" javaType="net.bodz.lily.model.contact.Person">
+        <association property="person" javaType="net.bodz.lily.contact.Person">
             <id property="id" column="person" />
             <result property="label" column="person_label" />
         </association>
-        <association property="org" javaType="net.bodz.lily.model.contact.Organization">
+        <association property="org" javaType="net.bodz.lily.contact.Organization">
             <id property="id" column="org" />
             <result property="label" column="org_label" />
         </association>
