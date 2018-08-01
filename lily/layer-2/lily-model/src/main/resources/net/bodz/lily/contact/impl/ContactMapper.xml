@@ -5,14 +5,52 @@
 <mapper namespace="net.bodz.lily.contact.impl.ContactMapper">
 
     <resultMap id="map1" type="net.bodz.lily.contact.Contact" extends="co.MAP_ALL">
+        <result property="rename" column="rename" />
+        <result property="usage" column="usage" />
+        
+        <result property="country" column="country" />
+        <result property="r1" column="r1" />
+        <result property="r2" column="r2" />
+        <result property="r3" column="r3" />
+        <result property="r4" column="r4" />
+        
+        <result property="address1" column="address1" />
+        <result property="address2" column="address2" />
+        <result property="postalCode" column="postal" />
+
+        <result property="tel" column="tel" />
+        <result property="mobile" column="mobile" />
+        <result property="fax" column="fax" />
+        <result property="email" column="email" />
+        <result property="web" column="web" />
+        <result property="qq" column="qq" />
+        
+        <association property="org" javaType="net.bodz.lily.contact.Organization">
+            <id property="id" column="org" />
+            <result property="label" column="org_label" />
+        </association>
+        <association property="orgUnit" javaType="net.bodz.lily.contact.OrgUnit">
+            <id property="id" column="ou" />
+            <result property="label" column="ou_label" />
+        </association>
+        <association property="person" javaType="net.bodz.lily.contact.Person">
+            <id property="id" column="person" />
+            <result property="label" column="person_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            org.label "org_label",
+            ou.label "ou_label",
+            p.label "person_label",
             u.label "uid_label",
             g.label "gid_label"
         from contact a
+            left join org on a.org = org.id
+            left join orgunit ou on a.ou = ou.id
+            left join person p on a.person = p.id
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
         ]]>
@@ -21,11 +59,17 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            org.label "org_label",
+            ou.label "ou_label",
+            p.label "person_label",
             u.label "uid_label",
             g.label "gid_label"
         from contact a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join org on a.org = org.id
+            left join orgunit ou on a.ou = ou.id
+            left join person p on a.person = p.id
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
         ]]>
     </sql>
 

@@ -12,7 +12,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from shopCategory a
+        from shopcat a
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
         ]]>
@@ -23,7 +23,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from shopCategory a
+        from shopcat a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,7 +53,7 @@
     </select>
 
     <insert id="_insert"><![CDATA[
-        insert into shopCategory(
+        insert into shopcat(
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
@@ -61,7 +61,7 @@
     ]]></insert>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into shopCategory(
+        insert into shopcat(
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
@@ -69,7 +69,7 @@
     ]]></insert>
 
     <update id="update">
-        update shopCategory
+        update shopcat
         <set>
             <include refid="co.setUS" />
         </set>
@@ -79,11 +79,11 @@
     </update>
 
     <delete id="delete">
-        delete from shopCategory where id = #{id}
+        delete from shopcat where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from shopCategory
+        select count(*) "rows" from shopcat
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

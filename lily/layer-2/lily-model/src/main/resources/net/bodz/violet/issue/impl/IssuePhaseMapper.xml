@@ -12,7 +12,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from issuePhase a
+        from issuephase a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -23,7 +23,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from issuePhase a
+        from issuephase a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,7 +53,7 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into issuePhase(
+        insert into issuephase(
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
@@ -61,7 +61,7 @@
     ]]></insert>
 
     <update id="update">
-        update issuePhase
+        update issuephase
         <set>
             <include refid="co.setUS" />
         </set>
@@ -71,11 +71,11 @@
     </update>
 
     <delete id="delete">
-        delete from issuePhase where id = #{id}
+        delete from issuephase where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from issuePhase
+        select count(*) "rows" from issuephase
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

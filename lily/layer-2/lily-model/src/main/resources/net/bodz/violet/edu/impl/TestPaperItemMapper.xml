@@ -12,7 +12,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from testPaperItem a
+        from testpaperl a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -23,7 +23,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from testPaperItem a
+        from testpaperl a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,7 +53,7 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into testPaperItem(
+        insert into testpaperl(
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
@@ -61,7 +61,7 @@
     ]]></insert>
 
     <update id="update">
-        update testPaperItem
+        update testpaperl
         <set>
             <include refid="co.setUS" />
         </set>
@@ -71,11 +71,11 @@
     </update>
 
     <delete id="delete">
-        delete from testPaperItem where id = #{id}
+        delete from testpaperl where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from testPaperItem
+        select count(*) "rows" from testpaperl
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

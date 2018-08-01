@@ -8,12 +8,14 @@
     </resultMap>
 
     <sql id="select1"><![CDATA[
-        select a.* from _schema a
+        select a.*
+        from _schema a
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
-        select a.*, from _schema a
+        select a.*,
+        from _schema a
         ]]>
     </sql>
 
