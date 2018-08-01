@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.util.mapper.ProfileMapper">
+
+    <resultMap id="rangeMap" type="net.bodz.bas.t.range.LongRange">
+        <result property="start" column="minid" />
+        <result property="end" column="maxid" />
+    </resultMap>
+
+    <select id="findIdRange" resultMap="rangeMap">
+        select min(id)::bigint "minid", max(id)::bigint "maxid" from ${table}
+    </select>
+
+</mapper>
