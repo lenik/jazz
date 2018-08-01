@@ -3,6 +3,8 @@ package net.bodz.lily.contact;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Table;
+
 import net.bodz.bas.i18n.geo.GeoRegion;
 import net.bodz.bas.i18n.geo.GeoRegions;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -16,6 +18,7 @@ import net.bodz.lily.repr.EntGroup;
 /**
  * 联系方式
  */
+@Table(name = "contact")
 @IdType(Integer.class)
 public class Contact
         extends CoEntity<Integer> {

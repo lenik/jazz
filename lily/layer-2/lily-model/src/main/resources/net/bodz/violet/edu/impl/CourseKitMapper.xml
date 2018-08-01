@@ -12,7 +12,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from courseKit a
+        from coursekit a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -23,7 +23,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from courseKit a
+        from coursekit a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,7 +53,7 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into courseKit(
+        insert into coursekit(
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
@@ -61,7 +61,7 @@
     ]]></insert>
 
     <update id="update">
-        update courseKit
+        update coursekit
         <set>
             <include refid="co.setUS" />
         </set>
@@ -71,11 +71,11 @@
     </update>
 
     <delete id="delete">
-        delete from courseKit where id = #{id}
+        delete from coursekit where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from courseKit
+        select count(*) "rows" from coursekit
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

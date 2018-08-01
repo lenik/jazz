@@ -12,7 +12,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from postTalk a
+        from post_msg a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -23,7 +23,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from postTalk a
+        from post_msg a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,7 +53,7 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into postTalk(
+        insert into post_msg(
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
@@ -61,7 +61,7 @@
     ]]></insert>
 
     <update id="update">
-        update postTalk
+        update post_msg
         <set>
             <include refid="co.setUS" />
         </set>
@@ -71,11 +71,11 @@
     </update>
 
     <delete id="delete">
-        delete from postTalk where id = #{id}
+        delete from post_msg where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from postTalk
+        select count(*) "rows" from post_msg
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
