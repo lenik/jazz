@@ -2,28 +2,28 @@ package net.bodz.bas.db.ibatis.sql;
 
 public class Pagination {
 
-    Long offset;
-    Long limit;
+    long limit;
+    long offset;
 
-    public Long getOffset() {
-        return offset;
-    }
-
-    public void setOffset(Long offset) {
-        this.offset = offset;
-    }
-
-    public Long getLimit() {
+    public long getLimit() {
         return limit;
     }
 
-    public void setLimit(Long limit) {
+    public void setLimit(long limit) {
         this.limit = limit;
     }
 
-    public void setOffsetLimit(long offset, long limit) {
+    public long getOffset() {
+        return offset;
+    }
+
+    public void setOffset(long offset) {
         this.offset = offset;
+    }
+
+    public void setLimitOffset(long limit, long offset) {
         this.limit = limit;
+        this.offset = offset;
     }
 
 }
