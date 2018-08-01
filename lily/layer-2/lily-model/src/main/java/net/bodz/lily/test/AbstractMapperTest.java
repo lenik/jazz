@@ -13,11 +13,14 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.test.DaoTestConfig;
 import net.bodz.lily.model.base.CoObject;
+import net.bodz.lily.util.mapper.TableProfiles;
 
 public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends IMapperTemplate<T, M>>
         extends Assert {
 
-    protected final DataContext context;
+    protected DataContext context = getContext();
+    protected TableProfiles tables = new TableProfiles(context);
+
     protected final Class<T> entityClass;
     protected final Class<M> maskClass;
     protected final Class<mapper_t> mapperClass;
@@ -25,7 +28,6 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
     protected final Random random = new Random();
 
     public AbstractMapperTest() {
-        context = getContext();
         Type[] typeArgs = TypeParam.getTypeArgs(getClass(), AbstractMapperTest.class);
         entityClass = TypeParam.bound1(typeArgs[0]);
         maskClass = TypeParam.bound1(typeArgs[1]);
