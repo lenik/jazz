@@ -65,7 +65,7 @@ public abstract class CoMessage<Id>
     /**
      * <p lang="zh">
      * 信息的标题。
-     * 
+     *
      * @label Subject
      * @label.zh 标题
      * @placeholder 输入标题…
@@ -85,7 +85,7 @@ public abstract class CoMessage<Id>
     /**
      * <p lang="zh">
      * 信息的正文。
-     * 
+     *
      * @label Text
      * @label.zh 正文
      * @placeholder 输入正文…
@@ -136,7 +136,7 @@ public abstract class CoMessage<Id>
 
     /**
      * 消息的发送时间。
-     * 
+     *
      * @label Sent Time
      * @label.zh 发送时间
      */
@@ -152,7 +152,7 @@ public abstract class CoMessage<Id>
 
     /**
      * 消息的接受时间。
-     * 
+     *
      * @label Received Time
      * @label.zh 接收时间
      */

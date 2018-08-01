@@ -1,7 +1,5 @@
 package net.bodz.lily.schema;
 
-import net.bodz.lily.schema.PhaseDef;
-
 public class PhaseDefSamples {
 
     public static PhaseDef build() {

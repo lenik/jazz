@@ -1,10 +1,8 @@
 package net.bodz.lily.security.impl;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.lily.security.UserIdSamples;
 import net.bodz.lily.security.UserId;
-import net.bodz.lily.security.impl.UserIdMapper;
-import net.bodz.lily.security.impl.UserIdMask;
+import net.bodz.lily.security.UserIdSamples;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 

@@ -16,7 +16,7 @@ public class TagDef
 
     /**
      * Tag Group
-     * 
+     *
      * @label.zh 标签组
      */
     public TagGroupDef getTagGroup() {

@@ -17,7 +17,7 @@ public class UseForm
     /**
      * <p lang="zh">
      * 正文的形式。
-     * 
+     *
      * @label Form Def
      * @label.zh 形式
      */
@@ -47,7 +47,7 @@ public class UseForm
     /**
      * <p lang="zh">
      * 形式的可选参数。
-     * 
+     *
      * @label Form Arguments
      * @label.zh 形式参数
      * @placeholder 输入形式参数

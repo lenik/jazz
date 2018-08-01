@@ -1,7 +1,5 @@
 package net.bodz.lily.schema;
 
-import net.bodz.lily.schema.SchemaDef;
-
 public class SchemaDefSamples {
 
     public static SchemaDef build() {

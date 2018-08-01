@@ -22,7 +22,7 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
 
     /**
      * Code
-     * 
+     *
      * @label Code
      * @label.zh 代码
      */

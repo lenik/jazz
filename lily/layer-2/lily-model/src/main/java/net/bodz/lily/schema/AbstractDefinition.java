@@ -19,7 +19,7 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
 
     /**
      * Schema
-     * 
+     *
      * @label.zh 模式
      */
     public final SchemaDef getSchema() {

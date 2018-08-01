@@ -1,7 +1,5 @@
 package net.bodz.lily.schema;
 
-import net.bodz.lily.schema.FormDef;
-
 public class FormDefSamples {
 
     public static FormDef build() {

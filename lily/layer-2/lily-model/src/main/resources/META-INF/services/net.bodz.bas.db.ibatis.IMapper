@@ -1,6 +1,6 @@
 net.bodz.lily.contact.impl.ContactMapper
-net.bodz.lily.contact.impl.OrgUnitMapper
 net.bodz.lily.contact.impl.OrganizationMapper
+net.bodz.lily.contact.impl.OrgUnitMapper
 net.bodz.lily.contact.impl.PartyCategoryMapper
 net.bodz.lily.contact.impl.PersonMapper
 net.bodz.lily.contact.impl.PersonRoleMapper
@@ -14,6 +14,7 @@ net.bodz.lily.schema.impl.SchemaDefMapper
 net.bodz.lily.schema.impl.TagDefMapper
 net.bodz.lily.schema.impl.TagGroupDefMapper
 net.bodz.lily.security.impl.GroupMapper
+net.bodz.lily.security.impl.PolicyMapper
 net.bodz.lily.security.impl.RoleMapper
 net.bodz.lily.security.impl.UserIdMapper
 net.bodz.lily.security.impl.UserMapper

@@ -6,7 +6,7 @@ import net.bodz.violet.tran.TransportOrder;
 
 /**
  * 送货单
- * 
+ *
  * @label 送货单
  */
 @ObjectType(TransportOrder.class)

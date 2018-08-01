@@ -1,7 +1,5 @@
 package net.bodz.lily.schema;
 
-import net.bodz.lily.schema.ParameterDef;
-
 public class ParameterDefSamples {
 
     public static ParameterDef build() {

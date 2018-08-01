@@ -23,7 +23,7 @@ public class ArtifactPropertiesTest
         ArtifactProperties props = art.getProperties();
         System.out.println(props);
         props.setColor("Red");
-        props.setAttribute("arr", Arrays.asList(1,2,3));
+        props.setAttribute("arr", Arrays.asList(1, 2, 3));
         mapper.update(art);
         System.out.println(props);
     }

@@ -47,7 +47,7 @@ public class Organization
 
     /**
      * 主营业务
-     * 
+     *
      * @placeholder 输入主营业务…
      */
     @Priority(300)
@@ -59,7 +59,7 @@ public class Organization
 
     /**
      * 描述企业的规模（人数）。
-     * 
+     *
      * @label 规模
      * @format ###人
      */
@@ -86,7 +86,7 @@ public class Organization
 
     /**
      * 税号
-     * 
+     *
      * @placeholder 输入税号…
      * @format ######-###-###-###
      */
@@ -121,7 +121,7 @@ public class Organization
     // TODO xjdoc don't inherit the docs from the super method.
     /**
      * 由一系列单字符描述的分类特征。
-     * 
+     *
      * @label Characters
      * @label.zh 特征字
      */

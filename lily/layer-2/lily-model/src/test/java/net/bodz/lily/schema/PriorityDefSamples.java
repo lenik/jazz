@@ -1,7 +1,5 @@
 package net.bodz.lily.schema;
 
-import net.bodz.lily.schema.PriorityDef;
-
 public class PriorityDefSamples {
 
     public static PriorityDef build() {

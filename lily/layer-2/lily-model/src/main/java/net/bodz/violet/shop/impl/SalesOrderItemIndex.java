@@ -6,7 +6,7 @@ import net.bodz.violet.shop.SalesOrderItem;
 
 /**
  * 销售订单明细
- * 
+ *
  * 销售订单的具体明细项目
  */
 @ObjectType(SalesOrderItem.class)

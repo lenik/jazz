@@ -26,7 +26,7 @@ public class UserClickInfo
 
     /**
      * 正投票的计数，说明多少人赞成、支持了这条信息。
-     * 
+     *
      * @label Vote Ups
      * @label.zh 赞
      */
@@ -41,7 +41,7 @@ public class UserClickInfo
 
     /**
      * 负投票的计数，说明多少人对这条信息表达了反对、扔鸡蛋的态度。
-     * 
+     *
      * @label Vote Downs
      * @label.zh 踩
      */
@@ -56,7 +56,7 @@ public class UserClickInfo
 
     /**
      * 有效投票的计数，和<code>正投票 - 负投票</code>相等。
-     * 
+     *
      * @label Vote Count
      * @label.zh 票数
      */
@@ -69,7 +69,7 @@ public class UserClickInfo
 
     /**
      * 参与投票的信息列表。
-     * 
+     *
      * @label Vote Records
      * @label.zh 投票记录
      */
@@ -85,7 +85,7 @@ public class UserClickInfo
 
     /**
      * 说明这条信息被多少人收藏了。
-     * 
+     *
      * @label Pin Count
      * @label.zh 收藏数
      */
@@ -130,7 +130,7 @@ public class UserClickInfo
 
     /**
      * 这条信息被阅读的次数。
-     * 
+     *
      * @label Read Count
      * @label.zh 阅读数
      */
