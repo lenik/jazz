@@ -12,7 +12,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from courseCategory a
+        from coursecat a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -23,7 +23,7 @@
             a.*,
             u.label "uid_label",
             g.label "gid_label"
-        from courseCategory a
+        from coursecat a
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,17 +53,19 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into courseCategory(
-            code, label, description
+        insert into coursecat(
+            code, label, description,
+            priority, flags, state, uid, gid, mode, acl
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{codeName}, #{label}, #{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
-        update courseCategory
+        update coursecat
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
         </set>
         <where>
             id = #{id}
@@ -71,11 +73,11 @@
     </update>
 
     <delete id="delete">
-        delete from courseCategory where id = #{id}
+        delete from coursecat where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from courseCategory
+        select count(*) "rows" from coursecat
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

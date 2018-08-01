@@ -5,14 +5,23 @@
 <mapper namespace="net.bodz.violet.edu.impl.CourseMapper">
 
     <resultMap id="map1" type="net.bodz.violet.edu.Course" extends="co.MAP_UVX">
+        <result property="properties.jsonForm" column="props" />
+        <result property="credit" column="credit" />
+        <result property="plugins.jsonForm" column="plugins" />
+        <association property="category" javaType="net.bodz.violet.edu.CourseCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            cat.label "cat_label",
             u.label "uid_label",
             g.label "gid_label"
         from course a
+            left join coursecat cat on a.cat = cat.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -21,9 +30,11 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            cat.label "cat_label",
             u.label "uid_label",
             g.label "gid_label"
         from course a
+            left join coursecat cat on a.cat = cat.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -54,16 +65,22 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into course(
-            code, label, description
+            label, description,
+            priority, flags, state, uid, gid, mode, acl,
+            cat, credit
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{label}, #{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{category.id}, #{credit}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update course
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
+            cat = #{category.id},
+            credit = #{credit},
         </set>
         <where>
             id = #{id}
