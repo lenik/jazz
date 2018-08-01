@@ -32,7 +32,7 @@ public class QVariantMap<K>
 
     /**
      * Treat empty value as <code>null</code>.
-     * 
+     *
      * @see #getString(Object, String)
      */
     public final String getStringE4n(K key) {
@@ -41,7 +41,7 @@ public class QVariantMap<K>
 
     /**
      * Treat empty value as <code>null</code>.
-     * 
+     *
      * @see #getString(Object, String)
      */
     public String getStringE4n(K key, String defaultValue) {
@@ -80,7 +80,7 @@ public class QVariantMap<K>
         String s = getString(key);
         if (s == null || s.isEmpty())
             return defaultValue;
-        return IntRange.parse(s);
+        return new IntRange().parse(s);
     }
 
     public LongRange getLongRange(K key, LongRange defaultValue)
@@ -88,7 +88,7 @@ public class QVariantMap<K>
         String s = getString(key);
         if (s == null || s.isEmpty())
             return defaultValue;
-        return LongRange.parse(s);
+        return new LongRange().parse(s);
     }
 
     public FloatRange getFloatRange(K key, FloatRange defaultValue)

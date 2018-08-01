@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.t.range.IntRange;
+import net.bodz.bas.t.range.IntRangeSet;
 
 public class ListAsMap<V>
         implements Map<Integer, V> {
@@ -45,7 +45,7 @@ public class ListAsMap<V>
 
     @Override
     public Set<Integer> keySet() {
-        return new IntRange(0, list.size());
+        return new IntRangeSet(0, list.size());
     }
 
     @Override
