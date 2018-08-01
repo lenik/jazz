@@ -10,7 +10,7 @@
     </resultMap>
 
     <select id="findIdRange" resultMap="rangeMap">
-        select min(id)::bigint "minid", max(id)::bigint "maxid" from ${table}
+        select min(id)::bigint "minid", max(id)::bigint "maxid" from "${table}"
     </select>
 
 </mapper>
