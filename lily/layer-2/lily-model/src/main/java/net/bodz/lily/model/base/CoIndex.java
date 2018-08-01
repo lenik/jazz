@@ -43,7 +43,7 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.ILazyId;
 import net.bodz.lily.entity.Instantiables;
-import net.bodz.lily.model.base.security.AccessControl;
+import net.bodz.lily.security.AccessControl;
 
 @AccessControl
 @IndexedType

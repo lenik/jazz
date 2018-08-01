@@ -4,10 +4,10 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
+import net.bodz.lily.contact.Organization;
+import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoNode;
-import net.bodz.lily.model.contact.Organization;
-import net.bodz.lily.model.contact.Person;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactCategory;
 import net.bodz.violet.art.Dim3d;

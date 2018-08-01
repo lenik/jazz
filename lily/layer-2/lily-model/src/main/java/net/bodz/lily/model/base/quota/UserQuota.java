@@ -4,7 +4,7 @@ import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.security.User;
+import net.bodz.lily.security.User;
 
 /**
  * @label User Quota

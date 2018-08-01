@@ -45,10 +45,10 @@ import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.entity.IReinitializable;
-import net.bodz.lily.model.base.security.Group;
-import net.bodz.lily.model.base.security.IAccessControlled;
-import net.bodz.lily.model.base.security.LoginData;
-import net.bodz.lily.model.base.security.User;
+import net.bodz.lily.security.Group;
+import net.bodz.lily.security.IAccessControlled;
+import net.bodz.lily.security.LoginData;
+import net.bodz.lily.security.User;
 
 /**
  * Co/Con: Concrete, also Content, Controlled

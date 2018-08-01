@@ -20,11 +20,11 @@
             <id property="id" column="phase" />
             <result property="label" column="phase_label" />
         </association>
-        <association property="org" javaType="net.bodz.lily.model.contact.Organization">
+        <association property="org" javaType="net.bodz.lily.contact.Organization">
             <id property="id" column="cust_org" />
             <result property="label" column="org_label" />
         </association>
-        <association property="person" javaType="net.bodz.lily.model.contact.Person">
+        <association property="person" javaType="net.bodz.lily.contact.Person">
             <id property="id" column="cust_person" />
             <result property="label" column="person_label" />
         </association>

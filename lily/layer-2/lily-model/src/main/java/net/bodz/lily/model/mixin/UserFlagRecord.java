@@ -1,6 +1,6 @@
 package net.bodz.lily.model.mixin;
 
-import net.bodz.lily.model.base.security.User;
+import net.bodz.lily.security.User;
 
 public class UserFlagRecord
         extends AbstractUserClickRecord {

@@ -6,11 +6,11 @@ import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
+import net.bodz.lily.contact.OrgUnit;
+import net.bodz.lily.contact.Organization;
+import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.SizedList;
-import net.bodz.lily.model.contact.OrgUnit;
-import net.bodz.lily.model.contact.Organization;
-import net.bodz.lily.model.contact.Person;
 import net.bodz.lily.model.mx.CoMessage;
 import net.bodz.violet.plan.Plan;
 

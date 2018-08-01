@@ -1,6 +1,5 @@
 package net.bodz.lily.model.base;
 
-
 public abstract class CoCategory<self_t extends CoCategory<self_t, Id>, Id>
         extends CoNode<self_t, Id> {
 

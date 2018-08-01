@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.lily.model.base.security.Group;
-import net.bodz.lily.model.base.security.User;
+import net.bodz.lily.security.Group;
+import net.bodz.lily.security.User;
 
 public class F_Log {
 

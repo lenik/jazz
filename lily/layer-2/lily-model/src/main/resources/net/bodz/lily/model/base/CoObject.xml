@@ -9,26 +9,26 @@
     <resultMap id="MAP_K" type="net.bodz.lily.model.base.CoObject">
         <id property="id" column="id" />
     </resultMap>
-    
+
     <resultMap id="MAP_U" type="net.bodz.lily.model.base.CoObject" extends="MAP_K">
         <result property="codeName" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <!-- result property="comment" column="comment" / -->
     </resultMap>
-    
+
     <resultMap id="MAP_V" type="net.bodz.lily.model.base.CoObject" extends="MAP_K">
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
     </resultMap>
-    
+
     <resultMap id="MAP_UV" type="net.bodz.lily.model.base.CoObject" extends="MAP_U">
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
     </resultMap>
-    
+
     <resultMap id="MAP_UVX" type="net.bodz.lily.model.base.CoObject" extends="MAP_UV">
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
@@ -38,18 +38,18 @@
     <resultMap id="MAP_ALL" type="net.bodz.lily.model.base.CoObject" extends="MAP_UVX">
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
-        <association property="ownerUser" javaType="net.bodz.lily.model.base.security.User">
+        <association property="ownerUser" javaType="net.bodz.lily.security.User">
             <id property="id" column="uid" />
             <result property="codeName" column="uid_code" />
             <result property="label" column="uid_label" />
         </association>
-        <association property="ownerGroup" javaType="net.bodz.lily.model.base.security.Group">
+        <association property="ownerGroup" javaType="net.bodz.lily.security.Group">
             <id property="id" column="gid" />
             <result property="codeName" column="gid_code" />
             <result property="label" column="gid_label" />
         </association>
     </resultMap>
-    
+
     <sql id="setU">
         <if test="codeName != null">code = #{codeName},</if>
         <if test="label != null">label = #{label},</if>
@@ -69,7 +69,7 @@
         flags = #{flags},
         state = #{state},
     </sql>
-    
+
     <sql id="setA">
         <if test="ownerUser != null">uid=#{ownerUser.id},</if>
         <if test="ownerGroup != null">gid=#{ownerGroup.id},</if>
@@ -100,17 +100,17 @@
         <include refid="co.setV" />
         <include refid="co.setS" />
     </sql>
-    
+
     <sql id="setVSA">
         <include refid="co.setVS" />
         <include refid="co.setA" />
     </sql>
-    
+
     <sql id="setVA">
         <include refid="co.setV" />
         <include refid="co.setA" />
     </sql>
-    
+
     <sql id="modefilt">
         <if test="m.login != null &amp;&amp; !m.login.user.admin">
             and (
@@ -126,25 +126,38 @@
         </if>
     </sql>
 
+    <sql id="filter-id">
+        <if test="m.idRange.closed">and a.id between #{m.idRange.from} and #{m.idRange.to}</if>
+        <if test="m.idRange.uniOpen">
+            <if test="m.idRange.start != null">and a.id &gt;= #{m.idRange.start}</if>
+            <if test="m.idRange.end != null">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+    </sql>
+
     <sql id="filter-ui">
         <if test="m.codeName != null">and a.codeName = #{m.codeName}</if>
         <if test="m.label != null">and a.label = #{m.label}</if>
         <if test="m.description != null">and a.description like '%#{m.description}%'</if>
         <if test="m.queryText != null">and (
-                a.label like '%${m.queryText}%'
-                or a.description like '%${m.queryText}%'
-        )</if>
+            a.label like '%${m.queryText}%'
+            or a.description like '%${m.queryText}%'
+            )</if>
     </sql>
-    
+
     <sql id="filter-version">
         <if test="m.timeRange != null">and a.lastmod between #{m.timeRange.min, jdbcType=DATE} and #{m.timeRange.max, jdbcType=DATE}</if>
     </sql>
-    
+
     <sql id="filter-mi">
         <if test="m.dateRange != null">and a.t0 between #{m.dateRange.min, jdbcType=DATE} and #{m.dateRange.max, jdbcType=DATE}</if>
         <if test="m.year != null">and extract(year from a.t0)=#{m.year}</if>
         <if test="m.noDate">and a.t0 is null</if>
         <if test="m.noYear">and a.t0 is null</if>
     </sql>
-    
+
+    <sql id="opts">
+        <if test="opt.orders != null">order by ${opt.orders}</if>
+        <if test="opt.page != null">limit #{opt.page.limit} offset #{opt.page.offset}</if>
+    </sql>
+
 </mapper>

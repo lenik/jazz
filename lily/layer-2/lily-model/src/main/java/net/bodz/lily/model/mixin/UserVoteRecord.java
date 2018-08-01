@@ -1,7 +1,7 @@
 package net.bodz.lily.model.mixin;
 
 import net.bodz.bas.c.java.util.Dates;
-import net.bodz.lily.model.base.security.User;
+import net.bodz.lily.security.User;
 
 public class UserVoteRecord
         extends AbstractUserClickRecord {

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.contact.impl.ContactMapper">
+
+    <resultMap id="map1" type="net.bodz.lily.contact.Contact" extends="co.MAP_ALL">
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            u.label "uid_label",
+            g.label "gid_label"
+        from contact a
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            u.label "uid_label",
+            g.label "gid_label"
+        from contact a
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into contact(
+            code, label, description
+        ) values(
+            #{codeName},#{label},#{description}
+        ) returning id
+    ]]></insert>
+
+    <update id="update">
+        update contact
+        <set>
+            <include refid="co.setUS" />
+        </set>
+        <where>
+            <if test="id != null">id = #{id}</if>
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from contact where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from contact
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+</mapper>

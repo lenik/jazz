@@ -6,9 +6,9 @@ import net.bodz.bas.db.test.DatabaseTester;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
-import net.bodz.lily.model.base.security.Group;
-import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.model.base.security.impl.GroupMapper;
+import net.bodz.lily.security.Group;
+import net.bodz.lily.security.User;
+import net.bodz.lily.security.impl.GroupMapper;
 
 public class GroupPlayer
         extends DatabaseTester {

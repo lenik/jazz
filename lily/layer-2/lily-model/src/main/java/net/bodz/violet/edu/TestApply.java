@@ -2,9 +2,9 @@ package net.bodz.violet.edu;
 
 import javax.persistence.Table;
 
+import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
-import net.bodz.lily.model.contact.Person;
 
 /**
  * 测试交卷

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.security.impl.UserMapper">
+
+    <resultMap id="map1" type="net.bodz.lily.security.User" extends="co.MAP_ALL">
+        <result property="properties.jsonForm" column="props" />
+        <result property="codeName" column="name" />
+        <result property="lastLoginTime" column="lastlog" />
+        <result property="lastLoginIP" column="lastlogip" />
+        <association property="primaryGroup" javaType="net.bodz.lily.security.Group">
+            <id property="id" column="gid0" />
+            <result property="codeName" column="g_name" />
+            <result property="label" column="g_label" />
+            <result property="description" column="g_description" />
+            <result property="admin" column="g_admin" />
+        </association>
+    </resultMap>
+
+    <resultMap id="map2" type="net.bodz.lily.security.User" extends="map1">
+        <collection property="groups" javaType="ArrayList" ofType="net.bodz.lily.security.Group">
+            <id property="id" column="y_id" />
+            <result property="codeName" column="y_name" />
+            <result property="label" column="y_label" />
+            <result property="description" column="y_description" />
+            <result property="admin" column="y_admin" />
+        </collection>
+        <collection property="secrets" javaType="ArrayList" ofType="net.bodz.lily.security.UserSecret">
+            <id property="id" column="s_id" />
+            <result property="salt" column="s_salt" />
+            <result property="password" column="s_passwd" />
+            <result property="publicKey" column="s_pubkey" />
+            <result property="email" column="s_email" />
+            <result property="emailValidated" column="s_emailok" />
+            <result property="mobile" column="s_tel" />
+            <result property="mobileValidated" column="s_telok" />
+        </collection>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            s.passwd,
+            g.name "g_name",
+            g.label "g_label",
+            g.description "g_description",
+            g.admin "g_admin"
+        from "user" a
+            left join usersec s on a.id=s."user"
+            left join "group" g on a.gid0=g.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            s.passwd,
+            s.id "s_id",
+            s.salt "s_salt",
+            s.passwd "s_passwd",
+            s.pubkey "s_pubkey",
+            s.email "s_email",
+            s.emailok "s_emailok",
+            s.tel "s_tel",
+            s.telok "s_telok",
+            g.name "g_name",
+            g.label "g_label",
+            g.description "g_description",
+            g.admin "g_admin",
+            y.id "y_id",
+            y.name "y_name",
+            y.label "y_label",
+            y.description "y_description",
+            y.admin "y_admin"
+        from "user" a
+            left join usersec s on a.id=s."user"
+            left join "group" g on a.gid0=g.id
+            left join userof x on x."user"=a.id
+            left join "group" y on y.id=x."group" 
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.codeName != null">and a.name = #{m.codeName}</if>
+        <if test="m.password != null">and s.passwd = #{m.password}</if>
+        <if test="m.email != null">and s.email = #{m.email}</if>
+        <if test="m.mobile != null">and s.tel = #{m.mobile}</if>
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map2">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <select id="selectByCodeName" parameterType="String" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.name = #{code}</if>
+        </where>
+    </select>
+
+    <select id="selectByEmail" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <!-- s.emailok = true -->
+            and s.email = #{email}
+        </where>
+    </select>
+
+    <select id="selectByMobile" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <!-- s.telok = true -->
+            and s.tel = #{mobile}
+        </where>
+    </select>
+
+    <select id="findForLogin" resultMap="map2">
+        <include refid="select2" />
+        <where>
+            <if test="code != null">and a.name=#{code}</if>
+            <if test="password != null">and s.passwd=#{password}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into "user"(
+            name, label, description,
+            priority, flags, state,
+            props,
+            gid0,
+            lastlog, lastlogip
+        ) values(
+            #{codeName},#{label},#{description},
+            #{priority}, #{flags}, #{state},
+            #{properties.jsonForm},
+            #{primaryGroup.id},
+            #{lastLoginTime}, #{lastLoginIp}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update "user"
+        <set>
+            <include refid="co.setUS" />
+            <if test="lastLoginTime != null">lastlog = #{lastLoginTime},</if>
+            <if test="lastLoginIp != null">lastlogip = #{lastLoginIp},</if>
+            <if test="primaryGroup != null">gid0 = #{primaryGroup.id},</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from "user" where id=#{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from "user"
+    </select>
+
+</mapper>

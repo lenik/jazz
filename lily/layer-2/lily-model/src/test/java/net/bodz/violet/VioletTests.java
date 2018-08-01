@@ -2,7 +2,7 @@ package net.bodz.violet;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.jdbc.ConnectOptions;
-import net.bodz.lily.model.test.TestContext;
+import net.bodz.lily.test.TestContext;
 
 public class VioletTests
         extends TestContext {

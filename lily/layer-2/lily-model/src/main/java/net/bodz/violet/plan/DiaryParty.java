@@ -9,12 +9,12 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.lily.contact.Organization;
+import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.security.User;
-import net.bodz.lily.model.contact.Organization;
-import net.bodz.lily.model.contact.Person;
+import net.bodz.lily.security.User;
 
 @Table(name = "diary_party")
 @IdType(Long.class)

@@ -11,10 +11,11 @@ import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.t.range.DateRange;
+import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
-import net.bodz.lily.model.base.security.LoginData;
+import net.bodz.lily.security.LoginData;
 
 /**
  * @see net.bodz.lily.model.base.CoObject
@@ -22,8 +23,7 @@ import net.bodz.lily.model.base.security.LoginData;
 public class CoObjectMask
         implements IVarMapSerializable {
 
-    Long pageOffset;
-    Long pageLimit;
+    LongRange idRange;
 
     String codeName;
     String label;
@@ -40,20 +40,12 @@ public class CoObjectMask
     Integer ownerGroupId;
     Set<Integer> acls;
 
-    public Long getPageOffset() {
-        return pageOffset;
+    public LongRange getIdRange() {
+        return idRange;
     }
 
-    public void setPageOffset(Long pageOffset) {
-        this.pageOffset = pageOffset;
-    }
-
-    public Long getPageLimit() {
-        return pageLimit;
-    }
-
-    public void setPageLimit(Long pageLimit) {
-        this.pageLimit = pageLimit;
+    public void setIdRange(LongRange idRange) {
+        this.idRange = idRange;
     }
 
     public String getCodeName() {

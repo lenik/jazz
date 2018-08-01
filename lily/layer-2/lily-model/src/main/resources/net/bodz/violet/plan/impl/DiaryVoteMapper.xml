@@ -9,7 +9,7 @@
             <id property="id" column="diary" />
             <result property="subject" column="diary_subject" />
         </association>
-        <association property="user" javaType="net.bodz.lily.model.base.security.User">
+        <association property="user" javaType="net.bodz.lily.security.User">
             <id property="id" column="user" />
             <result property="label" column="user_label" />
         </association>
