@@ -22,6 +22,9 @@
 
     <sql id="setU">
         <if test="op != null">op=#{op.id},</if>
+    </sql>
+    
+    <sql id="setCP">
         <if test="category != null">cat=#{category.id},</if>
         <if test="phase != null">phase=#{phase.id},</if>
     </sql>

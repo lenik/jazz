@@ -5,14 +5,23 @@
 <mapper namespace="net.bodz.violet.edu.impl.TestQuestionMapper">
 
     <resultMap id="map1" type="net.bodz.violet.edu.TestQuestion" extends="co.MAP_UVX">
+        <result property="properties.jsonForm" column="props" />
+        <result property="insertPos" column="pos" />
+        <result property="answer" column="answer" />
+        <association property="course" javaType="net.bodz.violet.edu.Course">
+            <id property="id" column="course" />
+            <result property="label" column="course_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            course.label "course_label",
             u.label "uid_label",
             g.label "gid_label"
-        from testQuestion a
+        from testq a
+            left join course on a.course = course.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -21,9 +30,11 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            course.label "course_label",
             u.label "uid_label",
             g.label "gid_label"
-        from testQuestion a
+        from testq a
+            left join course on a.course = course.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,17 +64,34 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into testQuestion(
-            code, label, description
+        insert into testq(
+            label, description,
+            uid, gid, mode, acl,
+            priority, flags, state, 
+            op, subject, text,
+            props, 
+            course,
+            pos, answer
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{label}, #{description},
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{op.id}, #{subject}, #{text}, 
+            #{properties.jsonForm},
+            #{course.id},
+            #{insertPos}, #{answer}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
-        update testQuestion
+        update testq
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
+            <include refid="message.setUM" />
+            props = #{properties.jsonForm},
+            course = #{course.id},
+            pos = #{insertPos},
+            answer = #{answer},
         </set>
         <where>
             id = #{id}
@@ -71,11 +99,11 @@
     </update>
 
     <delete id="delete">
-        delete from testQuestion where id = #{id}
+        delete from testq where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from testQuestion
+        select count(*) "rows" from testq
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
