@@ -26,7 +26,7 @@
             y.description "y_description",
             y.props "y_props"
         from "role" a
-            left join useras x on x."role"=a.id
+            left join role_user x on x."role"=a.id
             left join "user" y on y.id=x."user" 
         ]]>
     </sql>

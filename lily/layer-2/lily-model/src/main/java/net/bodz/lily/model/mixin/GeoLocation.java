@@ -74,7 +74,7 @@ public class GeoLocation
             throws ParseException {
         longitude = o.getDouble("lng");
         latitude = o.getDouble("lat");
-        String regionId = o.getString("region");
+        String regionId = o.getString("id");
         if (regionId != null)
             region = GeoRegions.getChinaRegion(regionId);
     }

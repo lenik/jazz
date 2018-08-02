@@ -26,7 +26,7 @@
             y.description "y_description",
             y.props "y_props"
         from "group" a
-            left join userof x on x."group"=a.id
+            left join group_user x on x."group"=a.id
             left join "user" y on y.id=x."user" 
         ]]>
     </sql>

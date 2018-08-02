@@ -2,11 +2,8 @@ net.bodz.lily.contact.impl.ContactIndex
 net.bodz.lily.contact.impl.OrganizationIndex
 net.bodz.lily.contact.impl.OrgUnitIndex
 net.bodz.lily.contact.impl.PartyCategoryIndex
-net.bodz.lily.contact.impl.PartyIndex
 net.bodz.lily.contact.impl.PersonIndex
 net.bodz.lily.contact.impl.PersonRoleIndex
-net.bodz.lily.model.base.CoCategoryIndex
-net.bodz.lily.model.mx.CoMessageIndex
 net.bodz.lily.model.mx.impl.MailIndex
 net.bodz.lily.schema.impl.CategoryDefIndex
 net.bodz.lily.schema.impl.FormDefIndex
@@ -16,7 +13,6 @@ net.bodz.lily.schema.impl.PriorityDefIndex
 net.bodz.lily.schema.impl.SchemaDefIndex
 net.bodz.lily.schema.impl.TagDefIndex
 net.bodz.lily.schema.impl.TagGroupDefIndex
-net.bodz.lily.security.impl.CoPrincipalIndex
 net.bodz.lily.security.impl.GroupIndex
 net.bodz.lily.security.impl.PolicyIndex
 net.bodz.lily.security.impl.RoleIndex

@@ -11,6 +11,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.fmt.json.JsonObject;
@@ -48,7 +49,7 @@ import net.bodz.lily.security.AccessControl;
 @AccessControl
 @IndexedType
 @VirtualHostScope
-public class CoIndex<T extends CoObject, M extends CoObjectMask>
+public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         extends AbstractCacheControl
         implements IPathDispatchable, IPathArrivalFrameAware, ICacheControl, IDataContextAware {
 
@@ -318,7 +319,8 @@ public class CoIndex<T extends CoObject, M extends CoObjectMask>
     }
 
     protected List<T> buildDataList(IVariantMap<String> q, M mask) {
-        List<T> list = requireMapper().filter(mask);
+        SelectOptions opts = new SelectOptions();
+        List<T> list = requireMapper().filter(mask, null);
         return list;
     }
 

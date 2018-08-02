@@ -7,7 +7,7 @@ import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.site.file.UploadFn;
 import net.bodz.bas.t.variant.IVariantMap;
 
-public class CoCategoryIndex<T extends CoCategory<T, ?>, M extends CoCategoryMask>
+public abstract class CoCategoryIndex<T extends CoCategory<T, ?>, M extends CoCategoryMask>
         extends CoIndex<T, M> {
 
     private String schema;
