@@ -34,7 +34,13 @@ public class CoIndexServiceGroup
                     logger.log("CoIndex skipped: %s", indexClass);
                     continue;
                 }
-                CoIndex index = indexClass.newInstance();
+                CoIndex index;
+                try {
+                    index = indexClass.newInstance();
+                } catch (ReflectiveOperationException e) {
+                    logger.error(e, "Failed to instantiate " + indexClass);
+                    continue;
+                }
                 index.setDataContext(dataContext);
                 map.put(name, index);
             }
