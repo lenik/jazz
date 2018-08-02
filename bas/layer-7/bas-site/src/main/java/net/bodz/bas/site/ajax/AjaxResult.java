@@ -23,6 +23,7 @@ public class AjaxResult
     Boolean success;
     int status;
     StringBuffer message = new StringBuffer(100);
+    Throwable exception;
 
     Map<String, Object> fields;
 
@@ -83,6 +84,15 @@ public class AjaxResult
         if (message != null)
             this.println(message);
         return this;
+    }
+
+    public AjaxResult fail(Throwable e, String message) {
+        return fail(e, 0, message);
+    }
+
+    public AjaxResult fail(Throwable e, int status, String message) {
+        this.exception = e;
+        return fail(message);
     }
 
     public AjaxResult set(String key, Object value) {
