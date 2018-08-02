@@ -11,7 +11,7 @@ import net.bodz.lily.contact.PartyProperties;
 import net.bodz.lily.model.base.CoIndex;
 import net.bodz.lily.model.base.CoObjectMask;
 
-public class PartyIndex<T extends Party, M extends CoObjectMask>
+public abstract class PartyIndex<T extends Party, M extends CoObjectMask>
         extends CoIndex<T, M> {
 
     private String schema;

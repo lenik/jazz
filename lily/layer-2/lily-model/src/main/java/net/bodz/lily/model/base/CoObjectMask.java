@@ -23,7 +23,7 @@ import net.bodz.lily.security.LoginData;
 public class CoObjectMask
         implements IVarMapSerializable {
 
-    LongRange idRange;
+    final LongRange idRange = new LongRange();
 
     String codeName;
     String label;
@@ -42,10 +42,6 @@ public class CoObjectMask
 
     public LongRange getIdRange() {
         return idRange;
-    }
-
-    public void setIdRange(LongRange idRange) {
-        this.idRange = idRange;
     }
 
     public String getCodeName() {

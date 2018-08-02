@@ -40,7 +40,7 @@ public class DiaryIndex
             forThisDiary.setDiaryId(diaryId);
             // partyMapper.deleteFor(forThisDiary);
             Map<Long, DiaryParty> olds = new HashMap<>();
-            for (DiaryParty old : partyMapper.filter(forThisDiary))
+            for (DiaryParty old : partyMapper.filter(forThisDiary, null))
                 olds.put(old.getId(), old);
 
             for (DiaryParty party : obj.getParties()) {

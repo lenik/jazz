@@ -76,7 +76,7 @@
         from "user" a
             left join usersec s on a.id=s."user"
             left join "group" g on a.gid0=g.id
-            left join userof x on x."user"=a.id
+            left join group_user x on x."user"=a.id
             left join "group" y on y.id=x."group" 
         ]]>
     </sql>
@@ -132,8 +132,8 @@
     <select id="findForLogin" resultMap="map2">
         <include refid="select2" />
         <where>
-            <if test="code != null">and a.name=#{code}</if>
-            <if test="password != null">and s.passwd=#{password}</if>
+            <if test="code != null">and a.name = #{code}</if>
+            <if test="password != null">and s.passwd = #{password}</if>
         </where>
     </select>
 

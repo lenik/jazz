@@ -156,8 +156,10 @@
     </sql>
 
     <sql id="opts">
-        <if test="opt.orders != null">order by ${opt.orders}</if>
-        <if test="opt.page != null">limit #{opt.page.limit} offset #{opt.page.offset}</if>
+        <if test="opt != null">
+            <if test="opt.orders != null">order by ${opt.orders}</if>
+            <if test="opt.page != null">limit #{opt.page.limit} offset #{opt.page.offset}</if>
+        </if>
     </sql>
 
 </mapper>
