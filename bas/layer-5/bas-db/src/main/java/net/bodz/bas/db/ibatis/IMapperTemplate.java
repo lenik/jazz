@@ -13,10 +13,12 @@ import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 public interface IMapperTemplate<T, M>
         extends IMapper {
 
+    @Deprecated
     List<T> all();
 
     List<T> all(@Param("opt") SelectOptions opt);
 
+    @Deprecated
     List<T> filter(@Param("m") M mask);
 
     List<T> filter(@Param("m") M mask, @Param("opt") SelectOptions opt);
