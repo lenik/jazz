@@ -179,7 +179,7 @@ public class User
         this.lastLoginIP = lastLoginIP;
     }
 
-    public boolean isAdmin() {
+    public boolean isSuperUser() {
         Integer id = getId();
         if (id == null)
             return false;
@@ -187,12 +187,12 @@ public class User
             return true;
 
         if (primaryGroup != null)
-            if (primaryGroup.isAdmin())
+            if (primaryGroup.getId() == 0)
                 return true;
 
         if (groups != null)
             for (Group g : groups)
-                if (g.isAdmin())
+                if (g.getId() == 0)
                     return true;
 
         return false;

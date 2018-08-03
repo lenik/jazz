@@ -44,9 +44,11 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into _priority(code, label, description)
-            values(#{codeName},#{label},#{description})
-            returning id
+        insert into _priority(
+            code, label, description
+        ) values(
+            #{codeName},#{label},#{description}
+        ) returning id; --
     ]]></insert>
 
     <update id="update">

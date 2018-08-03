@@ -23,6 +23,8 @@ public class UserSecret
     public static final int N_EMAIL = 30;
     public static final int N_MOBILE = 20;
 
+    private User user;
+
     private static final Random RANDOM = new Random();
     private int salt = RANDOM.nextInt();
     private String password;
@@ -38,6 +40,14 @@ public class UserSecret
 
     private String question;
     private String answer;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public int getSalt() {
         return salt;

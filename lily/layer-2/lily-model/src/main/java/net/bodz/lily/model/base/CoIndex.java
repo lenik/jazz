@@ -126,8 +126,10 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                 break;
             default:
                 String fileName = FilePath.stripExtension(token);
-                if (StringPred.isDecimal(fileName))
-                    target = loadHandler(fileName, q);
+                if (StringPred.isDecimal(fileName)) {
+                    String id = fileName;
+                    target = loadHandler(id, q);
+                }
             }
         } catch (LoadException e) {
             throw new PathDispatchException("Failed to read request payload: " + e.getMessage(), e);
@@ -161,7 +163,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return label + "/";
     }
 
-    protected Object listHandler(IVariantMap<String> q)
+    protected TableData listHandler(IVariantMap<String> q)
             throws RequestHandlerException {
         TableData tableData = new TableData(objectType);
         try {
@@ -183,7 +185,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return tableData;
     }
 
-    protected Object newHandler(IVariantMap<String> q)
+    protected JsonWrapper newHandler(IVariantMap<String> q)
             throws RequestHandlerException {
         try {
             T obj = create();
@@ -194,7 +196,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         }
     }
 
-    protected Object loadHandler(String _id, IVariantMap<String> q) {
+    protected JsonWrapper loadHandler(String _id, IVariantMap<String> q) {
         Long id = Long.parseLong(_id);
         IMapperTemplate<T, M> mapper = requireMapper();
         Object obj = mapper.select(id);
@@ -231,7 +233,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return result;
     }
 
-    protected Object deleteHandler(IVariantMap<String> q)
+    protected AjaxResult deleteHandler(IVariantMap<String> q)
             throws RequestHandlerException {
         AjaxResult result = new AjaxResult();
         String ids = q.getString("id");
