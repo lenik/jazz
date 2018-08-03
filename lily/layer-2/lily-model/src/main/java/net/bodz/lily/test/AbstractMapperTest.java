@@ -43,7 +43,10 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
     }
 
     public mapper_t getMapper() {
-        return context.getMapper(mapperClass);
+        mapper_t mapper = context.getMapper(mapperClass);
+        if (mapper == null)
+            throw new NullPointerException("No mapper for " + mapperClass);
+        return mapper;
     }
 
     @Test

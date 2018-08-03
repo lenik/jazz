@@ -7,13 +7,13 @@ import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.impl.ArtifactMapper;
-import net.bodz.violet.asset.AssetSamples;
-import net.bodz.violet.asset.Asset;
+import net.bodz.violet.asset.PersonAsset;
+import net.bodz.violet.asset.PersonAssetSamples;
 import net.bodz.violet.store.Region;
 import net.bodz.violet.store.impl.RegionMapper;
 
-public class AssetMapperTest
-        extends AbstractMapperTest<Asset, AssetMask, AssetMapper> {
+public class PersonAssetMapperTest
+        extends AbstractMapperTest<PersonAsset, AssetMask, PersonAssetMapper> {
 
     @Override
     public DataContext getContext() {
@@ -21,11 +21,11 @@ public class AssetMapperTest
     }
 
     @Override
-    public Asset buildSample() {
+    public PersonAsset buildSample() {
         Artifact artifact = tables.pickAny(ArtifactMapper.class, "art");
         Region region = tables.pickAny(RegionMapper.class, "region");
-        Person person = tables.pickAny(PersonMapper.class, "person");
-        return AssetSamples.build(artifact, region, person);
+        Person owner = tables.pickAny(PersonMapper.class, "person");
+        return PersonAssetSamples.build(artifact, region, owner);
     }
 
 }

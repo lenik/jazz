@@ -1,6 +1,6 @@
 net.bodz.lily.contact.impl.ContactIndex
-net.bodz.lily.contact.impl.OrganizationIndex
 net.bodz.lily.contact.impl.OrgUnitIndex
+net.bodz.lily.contact.impl.OrganizationIndex
 net.bodz.lily.contact.impl.PartyCategoryIndex
 net.bodz.lily.contact.impl.PersonIndex
 net.bodz.lily.contact.impl.PersonRoleIndex
@@ -27,6 +27,11 @@ net.bodz.violet.art.impl.ArtifactTagIndex
 net.bodz.violet.art.impl.PackagingIndex
 net.bodz.violet.art.impl.UOMIndex
 net.bodz.violet.asset.impl.AssetIndex
+net.bodz.violet.asset.impl.GroupAssetIndex
+net.bodz.violet.asset.impl.OrgAssetIndex
+net.bodz.violet.asset.impl.OrgUnitAssetIndex
+net.bodz.violet.asset.impl.PersonAssetIndex
+net.bodz.violet.asset.impl.UserAssetIndex
 net.bodz.violet.edu.impl.CourseCategoryIndex
 net.bodz.violet.edu.impl.CourseIndex
 net.bodz.violet.edu.impl.CourseKitCategoryIndex

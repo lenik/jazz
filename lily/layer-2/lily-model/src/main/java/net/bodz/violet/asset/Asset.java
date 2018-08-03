@@ -1,86 +1,24 @@
 package net.bodz.violet.asset;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Table;
-
-import org.joda.time.DateTime;
 
 import net.bodz.lily.contact.OrgUnit;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
-import net.bodz.violet.art.Artifact;
-import net.bodz.violet.store.Region;
 
-/**
- * 资产
- */
 @Table(name = "asset")
-@IdType(Long.class)
 public class Asset
-        extends CoMomentInterval<Long> {
+        extends AbstractAsset {
 
     private static final long serialVersionUID = 1L;
-
-    Artifact artifact;
-    Region region;
-    // Batch complex
-    BigDecimal quantity;
-    Long serial;
-    DateTime expire;
 
     User user;
     Group group;
     Organization org;
     OrgUnit orgUnit;
     Person person;
-
-    public Asset() {
-    }
-
-    public Artifact getArtifact() {
-        return artifact;
-    }
-
-    public void setArtifact(Artifact artifact) {
-        this.artifact = artifact;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
-    }
-
-    public BigDecimal getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(BigDecimal quantity) {
-        this.quantity = quantity;
-    }
-
-    public Long getSerial() {
-        return serial;
-    }
-
-    public void setSerial(Long serial) {
-        this.serial = serial;
-    }
-
-    public DateTime getExpire() {
-        return expire;
-    }
-
-    public void setExpire(DateTime expire) {
-        this.expire = expire;
-    }
 
     public User getUser() {
         return user;

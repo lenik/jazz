@@ -19,7 +19,7 @@ public class OrgUnit
     private static final long serialVersionUID = 1L;
 
     private Organization org;
-    private Contact contact;
+    private final Contact contact = new Contact();
     private List<PersonRole> staff = new ArrayList<PersonRole>();
 
     public Organization getOrg() {
@@ -36,14 +36,6 @@ public class OrgUnit
 
     public Contact getContact() {
         return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
-    public void setContactId(int contactId) {
-        (this.contact = new Contact()).setId(contactId);
     }
 
     public List<PersonRole> getStaff() {

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper 
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.violet.asset.impl.AssetMapper">
+<mapper namespace="net.bodz.violet.asset.impl.GroupAssetMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.asset.Asset" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.asset.GroupAsset" extends="co.MAP_UVX">
         <result property="quantity" column="qty" />
         <result property="serial" column="serial" />
         <result property="expire" column="expire" />
@@ -16,25 +16,9 @@
             <id property="id" column="region" />
             <result property="label" column="region_label" />
         </association>
-        <association property="user" javaType="net.bodz.lily.security.User">
-            <id property="id" column="o_user" />
-            <result property="label" column="ou_label" />
-        </association>
-        <association property="group" javaType="net.bodz.lily.security.Group">
-            <id property="id" column="o_group" />
-            <result property="label" column="og_label" />
-        </association>
-        <association property="org" javaType="net.bodz.lily.contact.Organization">
-            <id property="id" column="o_org" />
-            <result property="label" column="oo_label" />
-        </association>
-        <association property="orgUnit" javaType="net.bodz.lily.contact.OrgUnit">
-            <id property="id" column="o_orgunit" />
-            <result property="label" column="oou_label" />
-        </association>
-        <association property="person" javaType="net.bodz.lily.contact.Person">
-            <id property="id" column="o_person" />
-            <result property="label" column="op_label" />
+        <association property="owner" javaType="net.bodz.lily.security.Group">
+            <id property="id" column="owner" />
+            <result property="label" column="owner_label" />
         </association>
     </resultMap>
 
@@ -43,11 +27,13 @@
             a.*,
             art.label "art_label",
             region.label "region_label",
+            o.label "owner_label",
             u.label "uid_label",
             g.label "gid_label"
-        from asset a
+        from asset_group a
             left join art on a.art = art.id
             left join region on a.region = region.id
+            left join "group" o on a."owner" = o.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -58,21 +44,13 @@
             a.*,
             art.label "art_label",
             region.label "region_label",
-            ou.label "ou_label",
-            og.label "og_label",
-            oo.label "oo_label",
-            oou.label "oou_label",
-            op.label "op_label",
+            o.label "owner_label",
             u.label "uid_label",
             g.label "gid_label"
-        from asset a
+        from asset_group a
             left join art on a.art = art.id
             left join region on a.region = region.id
-            left join "user" ou on a.o_user = ou.id
-            left join "group" og on a.o_group = og.id
-            left join org oo on a.o_org = oo.id
-            left join orgunit oou on a.o_orgunit = oou.id
-            left join person op on a.o_person = op.id
+            left join "group" o on a."owner" = o.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -102,21 +80,21 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into asset(
+        insert into asset_group(
             priority, flags, state, uid, gid, mode, acl,
             art, region, 
             qty, serial, expire,
-            o_user, o_group, o_org, o_orgunit, o_person
+            owner
         ) values(
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{artifact.id}, #{region.id},
             #{quantity}, #{serial}, #{expire},
-            #{user.id}, #{group.id}, #{org.id}, #{orgUnit.id}, #{person.id}
+            #{owner.id}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
-        update asset
+        update asset_group
         <set>
             <include refid="co.setVSA" />
             art = #{artifact.id},
@@ -124,11 +102,7 @@
             qty = #{quantity}, 
             serial = #{serial},
             expire = #{expire},
-            o_user = #{user.id},
-            o_group = #{group.id},
-            o_org = #{org.id},
-            o_orgunit = #{orgUnit.id},
-            o_person = #{person.id},
+            owner = #{owner.id},
         </set>
         <where>
             id = #{id}
@@ -136,11 +110,11 @@
     </update>
 
     <delete id="delete">
-        delete from asset where id = #{id}
+        delete from asset_group where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from asset
+        select count(*) "rows" from asset_group
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -1,6 +1,6 @@
 net.bodz.lily.contact.impl.ContactMapper
-net.bodz.lily.contact.impl.OrganizationMapper
 net.bodz.lily.contact.impl.OrgUnitMapper
+net.bodz.lily.contact.impl.OrganizationMapper
 net.bodz.lily.contact.impl.PartyCategoryMapper
 net.bodz.lily.contact.impl.PersonMapper
 net.bodz.lily.contact.impl.PersonRoleMapper
@@ -28,6 +28,11 @@ net.bodz.violet.art.impl.ArtifactTagMapper
 net.bodz.violet.art.impl.PackagingMapper
 net.bodz.violet.art.impl.UOMMapper
 net.bodz.violet.asset.impl.AssetMapper
+net.bodz.violet.asset.impl.GroupAssetMapper
+net.bodz.violet.asset.impl.OrgAssetMapper
+net.bodz.violet.asset.impl.OrgUnitAssetMapper
+net.bodz.violet.asset.impl.PersonAssetMapper
+net.bodz.violet.asset.impl.UserAssetMapper
 net.bodz.violet.edu.impl.CourseCategoryMapper
 net.bodz.violet.edu.impl.CourseKitCategoryMapper
 net.bodz.violet.edu.impl.CourseKitMapper

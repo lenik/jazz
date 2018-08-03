@@ -19,7 +19,7 @@
         <result property="contact.address1" column="address1" />
         <result property="contact.address2" column="address2" />
         <result property="contact.tel" column="tel" />
-        
+
         <association property="category" javaType="net.bodz.lily.contact.PartyCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
@@ -75,16 +75,15 @@
         </where>
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into org(
             label, description,
             priority, flags, state, uid, gid, mode, acl,
             props,
+            cat,
             birthday, locale, timezone,
             supplier, customer, subject,
-            <if test="contact != null">
-                address1, address2, tel,
-            </if>
+            address1, address2, tel,
             size, taxid
         ) values(
             #{label},#{description},
@@ -93,35 +92,31 @@
             #{category.id},
             #{birthday}, #{langTag}, #{timeZoneId},
             #{supplier}, #{customer}, #{subject},
-            <if test="contact != null">
-                #{contact.address1}, #{contact.address2}, #{contact.tel},
-            </if>
+            #{contact.address1}, #{contact.address2}, #{contact.tel},
             #{size}, #{taxId}
         ) returning id; --
-    </insert>
+    ]]></insert>
 
     <update id="update">
         update org
         <set>
             <include refid="co.setUVSA" />
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
-            <if test="category != null">cat = #{category.id},</if>
+            props = #{properties.jsonForm}::jsonb,
+            cat = #{category.id},
             birthday = #{birthday},
             locale = #{langTag},
             timezone = #{timeZoneId},
             supplier = #{supplier},
             customer = #{customer},
             subject = #{subject},
-            <if test="contact != null">
-                address1 = #{contact.address1},
-                address2 = #{contact.address2},
-                tel = #{contact.tel},
-            </if>
+            address1 = #{contact.address1},
+            address2 = #{contact.address2},
+            tel = #{contact.tel},
             size = #{size},
             taxid = #{taxId},
         </set>
         <where>
-            <if test="id != null">id = #{id}</if>
+            id = #{id}
         </where>
     </update>
 
