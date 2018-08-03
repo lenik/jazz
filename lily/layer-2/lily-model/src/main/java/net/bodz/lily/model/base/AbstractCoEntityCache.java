@@ -116,7 +116,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     protected void _load() {
         IMapperTemplate<T, ?> mapper = getMapper();
         int n = 0;
-        for (T obj : mapper.all()) {
+        for (T obj : mapper.all(null)) {
             if (n % batch == 0) {
                 logger.debug(String.format("Loading %d-%d of %s...", n - batch + 1, n, friendlyNamePl));
             }

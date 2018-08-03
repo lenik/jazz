@@ -1,6 +1,7 @@
 package net.bodz.lily.security.impl;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.UserSecretSamples;
 import net.bodz.lily.test.AbstractMapperTest;
@@ -16,7 +17,8 @@ public class UserSecretMapperTest
 
     @Override
     public UserSecret buildSample() {
-        return UserSecretSamples.build();
+        User user = tables.pickAny(UserMapper.class, "user");
+        return UserSecretSamples.build(user);
     }
 
 }

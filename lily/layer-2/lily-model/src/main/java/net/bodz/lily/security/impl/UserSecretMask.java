@@ -8,4 +8,14 @@ import net.bodz.lily.model.base.CoObjectMask;
 public class UserSecretMask
         extends CoObjectMask {
 
+    Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
 }
