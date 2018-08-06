@@ -1,6 +1,6 @@
 package net.bodz.violet.store.impl;
 
-import net.bodz.lily.model.base.CoCategoryMask;
+import net.bodz.lily.template.CoCategoryMask;
 import net.bodz.violet.store.RegionCategory;
 
 /**

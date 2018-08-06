@@ -2,11 +2,11 @@ package net.bodz.violet.plan;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.model.base.CoCode;
+import net.bodz.lily.template.CoParameter;
 
 @Table(name = "diaryparm")
 public class DiaryParameter
-        extends CoCode<DiaryParameter> {
+        extends CoParameter<DiaryParameter> {
 
     private static final long serialVersionUID = 1L;
 

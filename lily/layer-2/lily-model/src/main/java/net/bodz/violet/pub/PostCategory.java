@@ -3,7 +3,7 @@ package net.bodz.violet.pub;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoNode;
+import net.bodz.lily.template.CoCategory;
 
 /**
  * 讨论区
@@ -11,7 +11,7 @@ import net.bodz.lily.model.base.CoNode;
 @Table(name = "postcat")
 @IdType(Integer.class)
 public class PostCategory
-        extends CoNode<PostCategory, Integer> {
+        extends CoCategory<PostCategory, Integer> {
 
     private static final long serialVersionUID = 1L;
 

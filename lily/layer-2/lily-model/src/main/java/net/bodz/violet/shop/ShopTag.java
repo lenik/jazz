@@ -2,16 +2,14 @@ package net.bodz.violet.shop;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoNode;
+import net.bodz.lily.template.CoTag;
 
 /**
  * 商店标签
  */
-@IdType(Integer.class)
 @Table(name = "shoptag")
 public class ShopTag
-        extends CoNode<ShopTag, Integer> {
+        extends CoTag<ShopTag> {
 
     private static final long serialVersionUID = 1L;
 

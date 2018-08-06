@@ -1,7 +1,7 @@
 package net.bodz.lily.contact;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoCategory;
+import net.bodz.lily.template.CoCategory;
 
 @IdType(Integer.class)
 public class PartyCategory

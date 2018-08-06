@@ -2,21 +2,18 @@ package net.bodz.violet.pub;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.mx.CoMessage;
+import net.bodz.lily.template.CoTalk;
 
 /**
  * 帖子讨论
  */
 @Table(name = "post_msg")
-@IdType(Long.class)
 public class PostTalk
-        extends CoMessage<Long> {
+        extends CoTalk<PostTalk> {
 
     private static final long serialVersionUID = 1L;
 
     Post post;
-    PostTalk parent;
 
     public PostTalk() {
     }
@@ -27,14 +24,6 @@ public class PostTalk
 
     public void setPost(Post post) {
         this.post = post;
-    }
-
-    public PostTalk getParent() {
-        return parent;
-    }
-
-    public void setParent(PostTalk parent) {
-        this.parent = parent;
     }
 
 }

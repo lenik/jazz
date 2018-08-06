@@ -3,12 +3,12 @@ package net.bodz.violet.plan;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.template.CoParameter;
 
 @Table(name = "planparm")
 @IdType(Integer.class)
 public class PlanParameter
-        extends CoEntity<Integer> {
+        extends CoParameter<PlanParameter> {
 
     private static final long serialVersionUID = 1L;
 

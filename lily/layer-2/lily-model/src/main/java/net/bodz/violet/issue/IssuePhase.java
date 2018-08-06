@@ -2,11 +2,11 @@ package net.bodz.violet.issue;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.model.base.CoCode;
+import net.bodz.lily.template.CoPhase;
 
 @Table(name = "issuephase")
 public class IssuePhase
-        extends CoCode<IssuePhase> {
+        extends CoPhase {
 
     private static final long serialVersionUID = 1L;
 

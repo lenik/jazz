@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.edu.impl.TestQuestionTalkMapper">
+
+    <resultMap id="map1" type="net.bodz.violet.edu.TestQuestionTalk" extends="message.MAP_ALL">
+        <association property="question" javaType="net.bodz.violet.edu.TestQuestion">
+            <id property="id" column="q" />
+            <result property="subject" column="q_subject" />
+        </association>
+        <association property="parent" javaType="net.bodz.violet.edu.TestQuestionTalk">
+            <id property="id" column="parent" />
+            <result property="subject" column="parent_subject" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            q.subject "q_subject",
+            parent.subject "parent_subject",
+            op.label "op_label"
+        from testq_msg a
+            left join testq q on a.q = q.id
+            left join testq_msg parent on a.parent = parent.id
+            left join "user" op on a.op = op.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            q.subject "q_subject",
+            parent.subject "parent_subject",
+            op.label "op_label"
+        from testq_msg a
+            left join testq q on a.q = q.id
+            left join testq_msg parent on a.parent = parent.id
+            left join "user" op on a.op = op.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into testq_msg(
+            priority, flags, state,
+            t0, t1,
+            op, subject, text,
+            parent,
+            q
+        ) values(
+            #{priority}, #{flags}, #{state},
+            #{beginDate}, #{endDate},
+            #{op.id}, #{subject}, #{text},
+            #{parent.id},
+            #{question.id}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update testq_msg
+        <set>
+            <include refid="co.setVS" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            parent = #{parent.id},
+            q = #{question.id},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from testq_msg where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from testq_msg
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>
