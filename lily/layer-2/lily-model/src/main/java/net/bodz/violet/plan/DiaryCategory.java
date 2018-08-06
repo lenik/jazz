@@ -3,7 +3,7 @@ package net.bodz.violet.plan;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoCategory;
+import net.bodz.lily.template.CoCategory;
 
 /**
  * 日记分类

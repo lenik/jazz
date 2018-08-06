@@ -3,7 +3,7 @@ package net.bodz.violet.art;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoCode;
+import net.bodz.lily.template.CoPhase;
 
 /**
  * 物品成熟度
@@ -11,7 +11,7 @@ import net.bodz.lily.model.base.CoCode;
 @IdType(Integer.class)
 @Table(name = "artphase")
 public class ArtifactPhase
-        extends CoCode<ArtifactPhase> {
+        extends CoPhase {
 
     private static final long serialVersionUID = 1L;
 

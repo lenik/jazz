@@ -2,16 +2,14 @@ package net.bodz.violet.art;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoNode;
+import net.bodz.lily.template.CoParameter;
 
 /**
  * 物品参数
  */
-@IdType(Integer.class)
 @Table(name = "artparm")
 public class ArtifactParameter
-        extends CoNode<ArtifactParameter, Integer> {
+        extends CoParameter<ArtifactParameter> {
 
     private static final long serialVersionUID = 1L;
 

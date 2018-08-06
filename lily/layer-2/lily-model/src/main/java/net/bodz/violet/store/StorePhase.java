@@ -2,13 +2,11 @@ package net.bodz.violet.store;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoCode;
+import net.bodz.lily.template.CoPhase;
 
-@IdType(Integer.class)
 @Table(name = "storephase")
 public class StorePhase
-        extends CoCode<StorePhase> {
+        extends CoPhase {
 
     private static final long serialVersionUID = 1L;
 

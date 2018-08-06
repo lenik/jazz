@@ -1,6 +1,6 @@
 package net.bodz.violet.art.impl;
 
-import net.bodz.lily.model.base.CoCategoryMask;
+import net.bodz.lily.template.CoCategoryMask;
 
 /**
  * @see net.bodz.violet.art.ArtifactCategory

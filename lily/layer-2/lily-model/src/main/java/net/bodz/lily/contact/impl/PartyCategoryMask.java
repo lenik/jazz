@@ -1,6 +1,6 @@
 package net.bodz.lily.contact.impl;
 
-import net.bodz.lily.model.base.CoCategoryMask;
+import net.bodz.lily.template.CoCategoryMask;
 
 /**
  * @see net.bodz.lily.contact.PartyCategory

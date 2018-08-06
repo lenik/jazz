@@ -3,7 +3,7 @@ package net.bodz.violet.edu;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoCode;
+import net.bodz.lily.template.CoCategory;
 
 /**
  * 课件分类
@@ -11,7 +11,7 @@ import net.bodz.lily.model.base.CoCode;
 @Table(name = "coursekitcat")
 @IdType(Integer.class)
 public class CourseKitCategory
-        extends CoCode<CourseKitCategory> {
+        extends CoCategory<CourseKitCategory, Integer> {
 
     private static final long serialVersionUID = 1L;
 

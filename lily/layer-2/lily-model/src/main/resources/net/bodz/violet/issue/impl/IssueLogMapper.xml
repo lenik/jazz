@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.issue.impl.IssueLogMapper">
+
+    <resultMap id="map1" type="net.bodz.violet.issue.IssueLog" extends="message.MAP_ALL">
+        <association property="issue" javaType="net.bodz.violet.issue.Issue">
+            <id property="id" column="issue" />
+            <result property="subject" column="issue_subject" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            issue.subject "issue_subject",
+            u.label "uid_label",
+            g.label "gid_label"
+        from issuel a
+            left join issue on a.issue = issue.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            issue.subject "issue_subject",
+            u.label "uid_label",
+            g.label "gid_label"
+        from issuel a
+            left join issue on a.issue = issue.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into issuel(
+            uid, gid, mode, acl,
+            priority, flags, state, 
+            t0, t1,
+            op, subject, text, 
+            issue
+        ) values(
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{beginTime}, #{endTime},
+            #{op.id}, #{subject}, #{text},
+            #{issue.id} 
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update issuel
+        <set>
+            <include refid="co.setVSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            issue = #{issue.id},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from issuel where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from issuel
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

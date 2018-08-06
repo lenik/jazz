@@ -2,11 +2,11 @@ package net.bodz.violet.plan;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.model.base.CoCode;
+import net.bodz.lily.template.CoTag;
 
 @Table(name = "diarytag")
 public class DiaryTag
-        extends CoCode<DiaryTag> {
+        extends CoTag<DiaryTag> {
 
     private static final long serialVersionUID = 1L;
 
