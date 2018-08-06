@@ -5,42 +5,92 @@
 <mapper namespace="net.bodz.violet.tran.impl.TransportOrderMapper">
 
     <resultMap id="map1" type="net.bodz.violet.tran.TransportOrder" extends="message.MAP_ALL">
-        <result property="itemCount" column="size" />
+        <!-- result property="shipDest" column="shipdst" />
+        <result property="shipmentId" column="shipid" /-->
+        <result property="shippingCost" column="shipcost" />
+        
         <result property="totalQuantity" column="sum_qty" />
         <result property="totalAmount" column="sum_amount" />
+        
+        <association property="category" javaType="net.bodz.violet.tran.TransportCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
+        <association property="phase" javaType="net.bodz.violet.tran.TransportPhase">
+            <id property="id" column="phase" />
+            <result property="label" column="phase_label" />
+        </association>
+        <association property="op" javaType="net.bodz.lily.security.User">
+            <id property="id" column="op" />
+            <result property="label" column="op_label" />
+        </association>
+        <association property="previousOrder" javaType="net.bodz.violet.tran.TransportOrder">
+            <id property="id" column="prev" />
+            <result property="subject" column="prev_subject" />
+        </association>
         <association property="salesOrder" javaType="net.bodz.violet.shop.SalesOrder">
             <id property="id" column="saleodr" />
             <result property="subject" column="saleodr_subject" />
+        </association>
+        <association property="storeOrder" javaType="net.bodz.violet.store.StoreOrder">
+            <id property="id" column="storeodr" />
+            <result property="subject" column="storeodr_subject" />
+        </association>
+        <association property="shipper" javaType="net.bodz.lily.contact.Organization">
+            <id property="id" column="shipper" />
+            <result property="label" column="shipper_label" />
         </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            cat.label "cat_label",
+            phase.label "phase_label",
+            op.label "op_label",
+            prev.subject "prev_subject",
             saleodr.subject "saleodr_subject",
+            storeodr.subject "storeodr_subject",
+            shipper.label "shipper_label",
             u.label "uid_label",
             g.label "gid_label",
             op.label "op_label"
         from tranodr a
-            left join saleodr on a.saleodr=saleodr.id
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
-            left join "user" op on a.op=op.id
+            left join trancat cat on a.cat = cat.id
+            left join tranphase phase on a.phase = phase.id
+            left join "user" op on a.op = op.id
+            left join tranodr prev on a.prev = prev.id
+            left join saleodr on a.saleodr = saleodr.id
+            left join storeodr on a.storeodr = storeodr.id
+            left join org shipper on a.shipper = shipper.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
+            cat.label "cat_label",
+            phase.label "phase_label",
+            op.label "op_label",
+            prev.subject "prev_subject",
             saleodr.subject "saleodr_subject",
+            storeodr.subject "storeodr_subject",
+            shipper.label "shipper_label",
             u.label "uid_label",
             g.label "gid_label",
             op.label "op_label"
         from tranodr a
-            left join saleodr on a.saleodr=saleodr.id
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
-            left join "user" op on a.op=op.id
+            left join trancat cat on a.cat = cat.id
+            left join tranphase phase on a.phase = phase.id
+            left join "user" op on a.op = op.id
+            left join tranodr prev on a.prev = prev.id
+            left join saleodr on a.saleodr = saleodr.id
+            left join storeodr on a.storeodr = storeodr.id
+            left join org shipper on a.shipper = shipper.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
         ]]>
     </sql>
 
@@ -82,35 +132,51 @@
     <select id="select" parameterType="int" resultMap="map1">
         <include refid="select2" />
         <where>
-            <if test="_parameter != null">a.id=#{id}</if>
+            <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into tranodr(
-            priority, flags, state, uid, gid, mode, acl,
+            uid, gid, mode, acl,
+            priority, flags, state, 
             t0, t1,
-            op, subject, text, form, args, cat, phase,
-            prev, topic, org, ou, person,
-            sum_qty, sum_amount
+            op, subject, text, 
+            cat, phase,
+            prev, saleodr, storeodr,
+            shipper, shipcost,
+            length, sum_qty, sum_amount
         ) values(
-            #{priority}, #{flags}, #{state}, #{owner.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
-            #{beginDate}, #{endDate},
-            #{op.id}, #{subject}, #{text}, #{form.id}, #{formArgs}, #{category.id}, #{phase.id},
-            #{previous.id}, #{topic.id}, #{org.id}, #{orgUnit.id}, #{person.id},
-            #{totalQuantity}, #{totalAmount}
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{beginTime}, #{endTime},
+            #{op.id}, #{subject}, #{text}, 
+            #{category.id}, #{phase.id},
+            #{previousOrder.id}, #{salesOrder.id}, #{storeOrder.id},
+            #{shipper.id}, #{shippingCost},
+            #{length}, #{totalQuantity}, #{totalAmount}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update tranodr
         <set>
-            <include refid="message.set1" />
-            <if test="previous != null">prev = #{previous.id},</if>
-            <if test="plan != null">plan = #{plan.id},</if>
+            <include refid="co.setVSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            cat = #{category.id},
+            phase = #{phase.id},
+            prev = #{previousOrder.id},
+            saleodr = #{salesOrder.id},
+            storeodr = #{storeOrder.id},
+            <!-- 
             <if test="org != null">org = #{org.id},</if>
             <if test="orgUnit != null">ou = #{orgUnit.id},</if>
             <if test="person != null">person = #{person.id},</if>
+            -->
+            shipper = #{shipper.id},
+            shipcost = #{shippingCost},
+            length = #{length},
             sum_qty = #{totalQuantity},
             sum_amount = #{totalAmount},
         </set>

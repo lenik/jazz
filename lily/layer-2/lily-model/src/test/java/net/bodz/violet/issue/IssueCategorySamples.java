@@ -1,6 +1,9 @@
 package net.bodz.violet.issue;
 
-public class IssueCategorySamples {
+import net.bodz.lily.test.TestSamples;
+
+public class IssueCategorySamples
+        extends TestSamples {
 
     public static IssueCategory build() {
         IssueCategory a = new IssueCategory();

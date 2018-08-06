@@ -5,6 +5,7 @@ import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 import net.bodz.violet.shop.CartItem;
 import net.bodz.violet.shop.CartItemSamples;
+import net.bodz.violet.shop.ShopItem;
 
 public class CartItemMapperTest
         extends AbstractMapperTest<CartItem, CartItemMask, CartItemMapper> {
@@ -16,7 +17,8 @@ public class CartItemMapperTest
 
     @Override
     public CartItem buildSample() {
-        return CartItemSamples.build();
+        ShopItem shopItem = tables.pickAny(ShopItemMapper.class, "shopitem");
+        return CartItemSamples.build(shopItem);
     }
 
 }

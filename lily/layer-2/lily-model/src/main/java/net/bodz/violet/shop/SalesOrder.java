@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.cache.Statistics;
+import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.contact.Organization;
@@ -33,13 +34,18 @@ public class SalesOrder
 
     private static final long serialVersionUID = 1L;
 
+    private SalesCategory category;
+    private SalesPhase phase;
+
+    private SalesOrder previousOrder;
     private Plan plan;
+
     private Organization org;
     private Person person;
 
     private SizedList<SalesOrderItem> items;
-    private BigDecimal quantity = BigDecimal.ZERO;
-    private BigDecimal total = BigDecimal.ZERO;
+    private BigDecimal totalQuantity = BigDecimal.ZERO;
+    private BigDecimal totalAmount = BigDecimal.ZERO;
 
     // make-tasks
     // material-plans (locks)
@@ -51,6 +57,30 @@ public class SalesOrder
         super.reinit();
         setAccessMode(M_COOP);
         items = new SizedList<>();
+    }
+
+    public SalesCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(SalesCategory category) {
+        this.category = category;
+    }
+
+    public SalesPhase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(SalesPhase phase) {
+        this.phase = phase;
+    }
+
+    public SalesOrder getPreviousOrder() {
+        return previousOrder;
+    }
+
+    public void setPreviousOrder(SalesOrder previousOrder) {
+        this.previousOrder = previousOrder;
     }
 
     /**
@@ -85,36 +115,6 @@ public class SalesOrder
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    /**
-     * 总数量
-     */
-    @OfGroup(StdGroup.Statistics.class)
-    @Statistics
-    public BigDecimal getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(BigDecimal quantity) {
-        if (quantity == null)
-            throw new NullPointerException("quantity");
-        this.quantity = quantity;
-    }
-
-    /**
-     * 总金额
-     */
-    @OfGroup(StdGroup.Statistics.class)
-    @Statistics
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        if (total == null)
-            throw new NullPointerException("total");
-        this.total = total;
     }
 
     @DetailLevel(DetailLevel.HIDDEN)
@@ -165,6 +165,44 @@ public class SalesOrder
 
     public void setItems(SizedList<SalesOrderItem> items) {
         this.items = items;
+    }
+
+    @Redundant
+    public int getLength() {
+        if (items == null)
+            return 0;
+        else
+            return items.size();
+    }
+
+    /**
+     * 总数量
+     */
+    @OfGroup(StdGroup.Statistics.class)
+    @Statistics
+    public BigDecimal getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(BigDecimal totalQuantity) {
+        if (totalQuantity == null)
+            throw new NullPointerException("totalQuantity");
+        this.totalQuantity = totalQuantity;
+    }
+
+    /**
+     * 总金额
+     */
+    @OfGroup(StdGroup.Statistics.class)
+    @Statistics
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        if (totalAmount == null)
+            throw new NullPointerException("totalAmount");
+        this.totalAmount = totalAmount;
     }
 
     /**

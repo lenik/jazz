@@ -1,11 +1,19 @@
 package net.bodz.violet.pub;
 
-public class PostTalkSamples {
+import net.bodz.lily.security.User;
+import net.bodz.lily.test.TestSamples;
 
-    public static PostTalk build() {
+public class PostTalkSamples
+        extends TestSamples {
+
+    public static PostTalk build(User op, Post post, PostTalk parent) {
         PostTalk a = new PostTalk();
-        a.setLabel("postTalk-1");
-        a.setDescription("A postTalk named postTalk-1.");
+        a.setSubject("postTalk-1");
+        a.setText("A postTalk named postTalk-1.");
+        a.setOp(op);
+        a.setPost(post);
+        if (random.nextInt(100) < 30)
+            a.setParent(parent);
         return a;
     }
 

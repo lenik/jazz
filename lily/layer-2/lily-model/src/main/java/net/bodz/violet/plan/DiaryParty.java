@@ -28,6 +28,7 @@ public class DiaryParty
     User user;
     Person person;
     Organization org;
+    String role;
     int value;
 
     public DiaryParty() {
@@ -63,6 +64,14 @@ public class DiaryParty
 
     public void setOrg(Organization org) {
         this.org = org;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public int getValue() {

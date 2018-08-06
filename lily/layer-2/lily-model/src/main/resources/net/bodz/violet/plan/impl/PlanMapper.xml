@@ -4,15 +4,36 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.PlanMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.Plan" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.Plan" extends="message.MAP_ALL">
+        <result property="beginTime" column="foobar" />
+        <result property="endTime" column="foobar" />
+        <result property="value" column="value" />
+        <association property="category" javaType="net.bodz.violet.plan.PlanCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
+        <association property="phase" javaType="net.bodz.violet.plan.PlanPhase">
+            <id property="id" column="phase" />
+            <result property="label" column="phase_label" />
+        </association>
+        <association property="op" javaType="net.bodz.lily.security.User">
+            <id property="id" column="op" />
+            <result property="label" column="op_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            op.label "op_label",
+            cat.label "cat_label",
+            phase.label "phase_label",
             u.label "uid_label",
             g.label "gid_label"
         from plan a
+            left join "user" op on a.op = op.id
+            left join plancat cat on a.cat = cat.id
+            left join planphase phase on a.phase = phase.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -21,9 +42,15 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            op.label "op_label",
+            cat.label "cat_label",
+            phase.label "phase_label",
             u.label "uid_label",
             g.label "gid_label"
         from plan a
+            left join "user" op on a.op = op.id
+            left join plancat cat on a.cat = cat.id
+            left join planphase phase on a.phase = phase.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -54,16 +81,31 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into plan(
-            code, label, description
+            uid, gid, mode, acl,
+            priority, flags, state, 
+            t0, t1,
+            op, subject, text, 
+            cat, phase,
+            value
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{beginTime}, #{endTime},
+            #{op.id}, #{subject}, #{text}, 
+            #{category.id}, #{phase.id},
+            #{value}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update plan
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setVSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            cat = #{category.id},
+            phase = #{phase.id},
+            value = #{value},
         </set>
         <where>
             id = #{id}

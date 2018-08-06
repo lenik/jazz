@@ -29,8 +29,8 @@ public class TableProfiles {
     List<entity_t> pickSome(Class<mapper_t> mapperClass, String tableName, int limit) {
         Class<mask_t> maskClass = TypeParam.infer1(mapperClass, IMapperTemplate.class, 1);
 
-        mapper_t mapper = context.getMapper(mapperClass);
-        ProfileMapper prof = context.getMapper(ProfileMapper.class);
+        mapper_t mapper = context.requireMapper(mapperClass);
+        ProfileMapper prof = context.requireMapper(ProfileMapper.class);
 
         LongRange range = prof.findIdRange(tableName);
         if (range == null)

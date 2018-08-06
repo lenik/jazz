@@ -4,28 +4,39 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.tran.impl.TransportOrderItemMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.tran.TransportOrderItem" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.tran.TransportOrderItem" extends="co.MAP_V">
+        <result property="quantity" column="qty" />
+        <result property="price" column="price" />
+        <result property="amount" column="amount" />
+        <association property="order" javaType="net.bodz.violet.tran.TransportOrder">
+            <id property="id" column="odr" />
+            <result property="subject" column="odr_subject" />
+        </association>
+        <association property="artifact" javaType="net.bodz.violet.art.Artifact">
+            <id property="id" column="art" />
+            <result property="label" column="art_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            odr.subject "odr_subject",
+            art.label "art_label"
         from tranodrl a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join tranodr odr on a.odr = odr.id
+            left join art on a.art = art.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            odr.subject "odr_subject",
+            art.label "art_label"
         from tranodrl a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join tranodr odr on a.odr = odr.id
+            left join art on a.art = art.id
         ]]>
     </sql>
 
@@ -54,16 +65,25 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into tranodrl(
-            code, label, description
+            priority, flags, state,
+            odr, art,
+            qty, price, amount
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{priority}, #{flags}, #{state},
+            #{order.id}, #{artifact.id},
+            #{quantity}, #{price}, #{amount}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update tranodrl
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setS" />
+            odr = #{order.id},
+            art = #{artifact.id},
+            qty = #{quantity},
+            price = #{price},
+            amount = #{amount},
         </set>
         <where>
             id = #{id}

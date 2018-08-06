@@ -1,6 +1,9 @@
 package net.bodz.violet.plan;
 
-public class PlanTagSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class PlanTagSamples
+        extends TestSamples {
 
     public static PlanTag build() {
         PlanTag a = new PlanTag();

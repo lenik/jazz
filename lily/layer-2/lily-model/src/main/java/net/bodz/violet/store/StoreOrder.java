@@ -1,9 +1,12 @@
 package net.bodz.violet.store;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Table;
 
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Statistics;
+import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.contact.OrgUnit;
@@ -35,8 +38,8 @@ public class StoreOrder
     private Person person;
 
     private SizedList<StoreOrderItem> items = new SizedList<>();
-    private double quantity;
-    private double total;
+    private BigDecimal totalQuantity = BigDecimal.ZERO;
+    private BigDecimal totalAmount = BigDecimal.ZERO;
 
     public StoreOrder() {
     }
@@ -143,17 +146,25 @@ public class StoreOrder
         this.items = items;
     }
 
+    @Redundant
+    public int getLength() {
+        if (items == null)
+            return 0;
+        else
+            return items.size();
+    }
+
     /**
      * 总数量
      */
     @OfGroup(StdGroup.Statistics.class)
     @Statistics
-    public double getQuantity() {
-        return quantity;
+    public BigDecimal getTotalQuantity() {
+        return totalQuantity;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public void setTotalQuantity(BigDecimal totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
     /**
@@ -161,22 +172,21 @@ public class StoreOrder
      */
     @OfGroup(StdGroup.Statistics.class)
     @Statistics
-    public double getTotal() {
-        return total;
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public synchronized void update() {
-        quantity = 0;
-        total = 0;
+        totalQuantity = BigDecimal.ZERO;
+        totalAmount = BigDecimal.ZERO;
         for (StoreOrderItem item : items) {
-            quantity += item.getQuantity();
-            total += item.getTotal();
+            totalQuantity = totalQuantity.add(item.getQuantity());
+            totalAmount = totalAmount.add(item.getAmount());
         }
-
     }
 
 }

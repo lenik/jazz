@@ -1,11 +1,17 @@
 package net.bodz.lily.security;
 
-public class UserSamples {
+import net.bodz.lily.test.TestSamples;
 
-    public static User build() {
+public class UserSamples
+        extends TestSamples {
+
+    public static User build(Group primaryGroup) {
         User a = new User();
-        a.setLabel("user-1");
-        a.setDescription("A user named user-1.");
+        int rand = random.nextInt(10000);
+        a.setName("user" + rand);
+        a.setLabel("user-" + rand);
+        a.setDescription("A user named user" + rand + ".");
+        a.setPrimaryGroup(primaryGroup);
         return a;
     }
 

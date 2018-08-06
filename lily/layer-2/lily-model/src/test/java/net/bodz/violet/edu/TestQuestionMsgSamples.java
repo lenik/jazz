@@ -1,11 +1,17 @@
 package net.bodz.violet.edu;
 
-public class TestQuestionMsgSamples {
+import net.bodz.lily.security.User;
+import net.bodz.lily.test.TestSamples;
 
-    public static TestQuestionMsg build() {
+public class TestQuestionMsgSamples
+        extends TestSamples {
+
+    public static TestQuestionMsg build(TestQuestion q, User op) {
         TestQuestionMsg a = new TestQuestionMsg();
-        a.setLabel("testQuestionMsg-1");
-        a.setDescription("A testQuestionMsg named testQuestionMsg-1.");
+        a.setSubject("testQuestionMsg-1");
+        a.setText("A testQuestionMsg named testQuestionMsg-1.");
+        a.setQuestion(q);
+        a.setOp(op);
         return a;
     }
 

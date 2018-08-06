@@ -69,18 +69,6 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into shop(
-            code, label, description,
-            priority, flags, state, uid, gid, mode, acl,
-            hydm
-        ) values(
-            #{codeName}, #{label}, #{description},
-            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
-            #{hydm}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into shop(
             code, label, description,
@@ -97,7 +85,7 @@
         update shop
         <set>
             <include refid="co.setUSA" />
-            code = #{code},
+            code = #{codeName},
             props = #{properties.jsonForm},
             hydm = #{hydm},
         </set>

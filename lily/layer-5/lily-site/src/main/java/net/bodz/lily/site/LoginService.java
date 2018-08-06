@@ -63,7 +63,7 @@ public class LoginService
                 result.setSuccess(true);
                 User user = loginData.getUser();
                 result.set("id", user.getId());
-                result.set("name", user.getLoginName());
+                result.set("name", user.getName());
                 result.set("fullName", user.getFullName());
                 result.set("description", user.getDescription());
             }

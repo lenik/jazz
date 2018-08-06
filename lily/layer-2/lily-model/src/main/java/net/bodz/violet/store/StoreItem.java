@@ -7,9 +7,9 @@ import net.bodz.lily.model.base.CoEntity;
 import net.bodz.violet.art.Artifact;
 
 @Table(name = "storel")
-@IdType(Integer.class)
+@IdType(Long.class)
 public class StoreItem
-        extends CoEntity<Integer> {
+        extends CoEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

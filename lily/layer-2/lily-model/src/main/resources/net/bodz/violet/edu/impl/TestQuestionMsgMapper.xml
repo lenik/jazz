@@ -4,28 +4,40 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.edu.impl.TestQuestionMsgMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.edu.TestQuestionMsg" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.edu.TestQuestionMsg" extends="message.MAP_ALL">
+        <association property="question" javaType="net.bodz.violet.edu.TestQuestion">
+            <id property="id" column="q" />
+            <result property="subject" column="q_subject" />
+        </association>
+        <association property="parent" javaType="net.bodz.violet.edu.TestQuestionMsg">
+            <id property="id" column="parent" />
+            <result property="subject" column="parent_subject" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            q.subject "q_subject",
+            parent.subject "parent_subject",
+            op.label "op_label"
         from testq_msg a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join testq q on a.q = q.id
+            left join testq_msg parent on a.parent = parent.id
+            left join "user" op on a.op = op.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            q.subject "q_subject",
+            parent.subject "parent_subject",
+            op.label "op_label"
         from testq_msg a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join testq q on a.q = q.id
+            left join testq_msg parent on a.parent = parent.id
+            left join "user" op on a.op = op.id
         ]]>
     </sql>
 
@@ -54,16 +66,28 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into testq_msg(
-            code, label, description
+            priority, flags, state,
+            t0, t1,
+            op, subject, text,
+            parent,
+            q
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{priority}, #{flags}, #{state},
+            #{beginDate}, #{endDate},
+            #{op.id}, #{subject}, #{text},
+            #{parent.id},
+            #{question.id}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update testq_msg
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setVS" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            parent = #{parent.id},
+            q = #{question.id},
         </set>
         <where>
             id = #{id}

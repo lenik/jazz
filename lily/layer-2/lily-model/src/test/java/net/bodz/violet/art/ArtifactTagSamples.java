@@ -1,6 +1,9 @@
 package net.bodz.violet.art;
 
-public class ArtifactTagSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class ArtifactTagSamples
+        extends TestSamples {
 
     public static ArtifactTag build() {
         ArtifactTag a = new ArtifactTag();

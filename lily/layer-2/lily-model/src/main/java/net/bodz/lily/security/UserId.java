@@ -2,6 +2,7 @@ package net.bodz.lily.security;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.site.json.JsonMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 
@@ -16,11 +17,11 @@ public class UserId
     private static final long serialVersionUID = 1L;
 
     User user;
-    OAuthType type;
+    UserIdType type;
     String oid;
 
-    Object auth;
-    Object data;
+    JsonMap auth;
+    JsonMap data;
 
     public User getUser() {
         return user;
@@ -30,11 +31,11 @@ public class UserId
         this.user = user;
     }
 
-    public OAuthType getType() {
+    public UserIdType getType() {
         return type;
     }
 
-    public void setType(OAuthType type) {
+    public void setType(UserIdType type) {
         this.type = type;
     }
 
@@ -46,19 +47,19 @@ public class UserId
         this.oid = oid;
     }
 
-    public Object getAuth() {
+    public JsonMap getAuth() {
         return auth;
     }
 
-    public void setAuth(Object auth) {
+    public void setAuth(JsonMap auth) {
         this.auth = auth;
     }
 
-    public Object getData() {
+    public JsonMap getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(JsonMap data) {
         this.data = data;
     }
 

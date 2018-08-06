@@ -4,17 +4,26 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.PlanVoteMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.PlanVote" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.PlanVote">
+        <result property="votes" column="votes" />
+        <association property="plan" javaType="net.bodz.violet.plan.Plan">
+            <id property="id" column="plan" />
+            <result property="subject" column="plan_subject" />
+        </association>
+        <association property="user" javaType="net.bodz.lily.security.User">
+            <id property="id" column="user" />
+            <result property="label" column="user_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            plan.subject "plan_subject",
+            u.label "uid_label"
         from plan_vote a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join plan on a.plan = plan.id
+            left join "user" u on a."user" = u.id
         ]]>
     </sql>
 
@@ -52,26 +61,22 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into plan_vote(
-            code, label, description
-        ) values(
-            #{codeName},#{label},#{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into plan_vote(
-            code, label, description
+            plan, "user",
+            votes
         ) values(
-            #{codeName},#{label},#{description}
+            #{plan.id}, #{user.id},
+            #{votes}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update plan_vote
         <set>
-            <include refid="co.setUS" />
+            plan = #{plan.id},
+            "user" = #{user.id},
+            votes = #{votes},
         </set>
         <where>
             id = #{id}

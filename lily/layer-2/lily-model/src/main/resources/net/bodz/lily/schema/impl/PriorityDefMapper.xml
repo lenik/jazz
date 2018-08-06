@@ -45,9 +45,13 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into _priority(
-            code, label, description
+            label, description,
+            priority, flags, state,
+            schema
         ) values(
-            #{codeName},#{label},#{description}
+            #{label},#{description},
+            #{priority}, #{flags}, #{state},
+            #{schema.id}
         ) returning id; --
     ]]></insert>
 
@@ -55,9 +59,10 @@
         update _priority
         <set>
             <include refid="co.setUS" />
+            schema = #{schema.id},
         </set>
         <where>
-            <if test="id != null">id=#{id}, </if>
+            id = #{id}
         </where>
     </update>
 

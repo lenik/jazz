@@ -2,9 +2,7 @@ package net.bodz.lily.schema.impl;
 
 import net.bodz.bas.meta.decl.ObjectType;
 import net.bodz.lily.model.base.CoIndex;
-
 import net.bodz.lily.schema.PhaseDef;
-import net.bodz.lily.schema.impl.PhaseDefMask;
 
 @ObjectType(PhaseDef.class)
 public class PhaseDefIndex

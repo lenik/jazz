@@ -8,10 +8,6 @@
         <result property="itemCount" column="size" />
         <result property="quantity" column="qty" />
         <result property="total" column="total" />
-        <association property="plan" javaType="net.bodz.violet.plan.Plan">
-            <id property="id" column="plan" />
-            <result property="subject" column="plan_subject" />
-        </association>
         <association property="category" javaType="net.bodz.violet.shop.SalesCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
@@ -19,6 +15,10 @@
         <association property="phase" javaType="net.bodz.violet.shop.SalesPhase">
             <id property="id" column="phase" />
             <result property="label" column="phase_label" />
+        </association>
+        <association property="plan" javaType="net.bodz.violet.plan.Plan">
+            <id property="id" column="plan" />
+            <result property="subject" column="plan_subject" />
         </association>
         <association property="org" javaType="net.bodz.lily.contact.Organization">
             <id property="id" column="cust_org" />
@@ -134,29 +134,36 @@
             uid, gid, mode, acl,
             priority, flags, state, 
             t0, t1,
-            op, subject, text, form, args, cat, phase,
-            prev, topic, cust_org, cust_person,
-            sum_qty, sum_amount
+            op, subject, text, 
+            cat, phase,
+            prev, plan, cust_org, cust_person,
+            length, sum_qty, sum_amount
         ) values(
-            #{owner.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{priority}, #{flags}, #{state}, 
-            #{beginDate}, #{endDate},
-            #{op.id}, #{subject}, #{text}, #{form.id}, #{formArgs}, #{category.id}, #{phase.id},
-            #{previous.id}, #{topic.id}, #{org.id}, #{person.id},
-            #{totalQuantity}, #{totalAmount}
+            #{beginTime}, #{endTime},
+            #{op.id}, #{subject}, #{text}, 
+            #{category.id}, #{phase.id},
+            #{previousOrder.id}, #{plan.id}, #{org.id}, #{person.id},
+            #{length}, #{totalQuantity}, #{totalAmount}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update saleodr
         <set>
-            <include refid="message.set1" />
-            <if test="previous != null">prev = #{previous.id},</if>
-            <if test="plan != null">plan = #{plan.id},</if>
-            <if test="org != null">cust_org = #{org.id},</if>
-            <if test="person != null">cust_person = #{person.id},</if>
-            sum_qty = #{totalQuantity},
-            sum_amount = #{totalAmount},
+            <include refid="co.setVSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            prev = #{previousOrder.id},
+            plan = #{plan.id},
+            cust_org = #{org.id},
+            cust_person = #{person.id},
+            <if test="items != null">
+                length = #{length},
+                sum_qty = #{totalQuantity},
+                sum_amount = #{totalAmount},
+            </if>
         </set>
         <where>
             <if test="id != null">id = #{id}</if>

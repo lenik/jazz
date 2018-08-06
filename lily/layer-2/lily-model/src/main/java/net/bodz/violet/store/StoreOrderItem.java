@@ -1,9 +1,16 @@
 package net.bodz.violet.store;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Table;
 
+import org.joda.time.DateTime;
+
+import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.model.mixin.IOrderItem;
 import net.bodz.violet.art.Artifact;
 
 /**
@@ -12,7 +19,8 @@ import net.bodz.violet.art.Artifact;
 @IdType(Long.class)
 @Table(name = "storeodrl")
 public class StoreOrderItem
-        extends CoMomentInterval<Long> {
+        extends CoMomentInterval<Long>
+        implements IOrderItem {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,11 +31,17 @@ public class StoreOrderItem
 
     Artifact artifact;
     Region region;
+
     String batch;
     String divs;
+    Long serial;
+    DateTime expire;
 
-    double quantity;
-    double price;
+    BigDecimal quantity = BigDecimal.ZERO;
+    BigDecimal price = BigDecimal.ZERO;
+    BigDecimal amount;
+
+    String notes;
 
     @Override
     public void reinit() {
@@ -58,24 +72,99 @@ public class StoreOrderItem
         this.region = region;
     }
 
-    public double getQuantity() {
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
+
+    public String getDivs() {
+        return divs;
+    }
+
+    public void setDivs(String divs) {
+        this.divs = divs;
+    }
+
+    public Long getSerial() {
+        return serial;
+    }
+
+    public void setSerial(Long serial) {
+        this.serial = serial;
+    }
+
+    public DateTime getExpire() {
+        return expire;
+    }
+
+    public void setExpire(DateTime expire) {
+        this.expire = expire;
+    }
+
+    /**
+     * 数量
+     */
+    @Priority(200)
+    @Override
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    @Override
+    public synchronized void setQuantity(BigDecimal quantity) {
+        if (quantity == null)
+            throw new NullPointerException("quantity");
         this.quantity = quantity;
+        this.amount = null;
     }
 
-    public double getPrice() {
+    @Override
+    public void setQuantity(double quantity) {
+        setQuantity(BigDecimal.valueOf(quantity));
+    }
+
+    @Override
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    /**
+     * 价格
+     */
+    @Priority(201)
+    @Override
+    public synchronized void setPrice(BigDecimal price) {
+        if (price == null)
+            throw new NullPointerException("price");
         this.price = price;
+        this.amount = null;
     }
 
-    public double getTotal() {
-        return quantity * price;
+    public void setPrice(double price) {
+        setPrice(BigDecimal.valueOf(price));
+    }
+
+    /**
+     * 总额
+     */
+    @Priority(202)
+    @Derived
+    @Override
+    public synchronized BigDecimal getAmount() {
+        if (amount == null)
+            amount = price.multiply(quantity);
+        return amount;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
 }

@@ -1,6 +1,9 @@
 package net.bodz.violet.edu;
 
-public class CourseCategorySamples {
+import net.bodz.lily.test.TestSamples;
+
+public class CourseCategorySamples
+        extends TestSamples {
 
     public static CourseCategory build() {
         CourseCategory a = new CourseCategory();

@@ -4,6 +4,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 import net.bodz.violet.pub.Article;
+import net.bodz.violet.pub.ArticleCategory;
 import net.bodz.violet.pub.ArticleSamples;
 
 public class ArticleMapperTest
@@ -16,7 +17,8 @@ public class ArticleMapperTest
 
     @Override
     public Article buildSample() {
-        return ArticleSamples.build();
+        ArticleCategory category = tables.pickAny(ArticleCategoryMapper.class, "articlecat");
+        return ArticleSamples.build(category);
     }
 
 }

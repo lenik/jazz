@@ -1,11 +1,17 @@
 package net.bodz.violet.plan;
 
-public class DiaryReviewSamples {
+import net.bodz.lily.security.User;
+import net.bodz.lily.test.TestSamples;
 
-    public static DiaryReview build() {
+public class DiaryReviewSamples
+        extends TestSamples {
+
+    public static DiaryReview build(Diary diary, User op) {
         DiaryReview a = new DiaryReview();
-        a.setLabel("diaryReview-1");
-        a.setDescription("A diaryReview named diaryReview-1.");
+        a.setSubject("diaryReview-1");
+        a.setText("A diaryReview named diaryReview-1.");
+        a.setDiary(diary);
+        a.setOp(op);
         return a;
     }
 

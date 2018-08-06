@@ -44,18 +44,25 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into _phase(code, label, description)
-            values(#{codeName},#{label},#{description})
-            returning id
+        insert into _phase(
+            label, description,
+            priority, flags, state,
+            schema
+        ) values(
+            #{label},#{description},
+            #{priority}, #{flags}, #{state},
+            #{schema.id}
+        ) returning id; --
     ]]></insert>
 
     <update id="update">
         update _phase
         <set>
             <include refid="co.setUS" />
+            schema = #{schema.id},
         </set>
         <where>
-            <if test="id != null">id=#{id}, </if>
+            id = #{id}
         </where>
     </update>
 

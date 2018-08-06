@@ -16,7 +16,8 @@ public class CourseKitCategoryMapperTest
 
     @Override
     public CourseKitCategory buildSample() {
-        return CourseKitCategorySamples.build();
+        CourseKitCategory parent = tables.pickAny(CourseKitCategoryMapper.class, "coursekitcat");
+        return CourseKitCategorySamples.build(parent);
     }
 
 }

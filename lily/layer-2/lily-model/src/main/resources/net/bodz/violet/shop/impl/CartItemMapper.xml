@@ -6,7 +6,7 @@
 
     <resultMap id="map1" type="net.bodz.violet.shop.CartItem" extends="co.MAP_UVX">
         <result property="quantity" column="qty" />
-        <result property="priceSnapshot" column="price" />
+        <result property="price" column="price" />
         <association property="shopItem" javaType="net.bodz.violet.shop.ShopItem">
             <id property="id" column="shopitem" />
             <result property="label" column="shopitem_label" />
@@ -90,7 +90,7 @@
         ) values(
             #{label}, #{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
-            #{shopItem.id}, #{priceSnapshot}, #{quantity}
+            #{shopItem.id}, #{price}, #{quantity}
         ) returning id; --
     ]]></insert>
 
@@ -99,7 +99,7 @@
         <set>
             <include refid="co.setUSA" />
             shopitem = #{shopItem.id},
-            price = #{priceSnapshot},
+            price = #{price},
             qty = #{quantity},
         </set>
         <where>

@@ -54,9 +54,15 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into policy(
-            code, label, description
+            code, label, description,
+            priority, flags, state,
+            "class", method,
+            allow, deny
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{codeName}, #{label}, #{description},
+            #{priority}, #{flags}, #{state},
+            #{controlClass}, #{method},
+            #{allowBits}, #{denyBits}
         ) returning id; --
     ]]></insert>
 
@@ -64,6 +70,10 @@
         update policy
         <set>
             <include refid="co.setUS" />
+            "class" = #{controlClass},
+            method = #{method},
+            allow = #{allowBits},
+            deny = #{denyBits},
         </set>
         <where>
             id = #{id}

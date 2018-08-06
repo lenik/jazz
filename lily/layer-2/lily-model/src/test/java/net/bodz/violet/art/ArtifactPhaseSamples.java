@@ -1,6 +1,9 @@
 package net.bodz.violet.art;
 
-public class ArtifactPhaseSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class ArtifactPhaseSamples
+        extends TestSamples {
 
     public static ArtifactPhase build() {
         ArtifactPhase a = new ArtifactPhase();

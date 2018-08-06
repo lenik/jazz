@@ -1,6 +1,9 @@
 package net.bodz.violet.art;
 
-public class PackagingSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class PackagingSamples
+        extends TestSamples {
 
     public static Packaging build() {
         Packaging a = new Packaging();

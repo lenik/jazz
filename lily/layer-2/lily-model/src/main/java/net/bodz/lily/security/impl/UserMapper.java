@@ -13,6 +13,8 @@ import net.bodz.lily.security.User;
 public interface UserMapper
         extends IMapperTemplate<User, UserMask> {
 
+    User selectByName(@Param("name") String name);
+
     List<User> selectByEmail(//
             @Param("email") String email);
 

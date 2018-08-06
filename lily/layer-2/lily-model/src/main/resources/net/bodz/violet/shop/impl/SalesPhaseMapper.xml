@@ -52,26 +52,20 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into salephase(
-            code, label, description
-        ) values(
-            #{codeName}, #{label}, #{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into salephase(
-            code, label, description
+            label, description,
+            priority, flags, state, uid, gid, mode, acl
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{label}, #{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update salephase
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
         </set>
         <where>
             id = #{id}

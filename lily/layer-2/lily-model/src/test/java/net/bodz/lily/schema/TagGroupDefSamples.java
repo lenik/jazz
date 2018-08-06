@@ -1,9 +1,13 @@
 package net.bodz.lily.schema;
 
-public class TagGroupDefSamples {
+import net.bodz.lily.test.TestSamples;
 
-    public static TagGroupDef build() {
+public class TagGroupDefSamples
+        extends TestSamples {
+
+    public static TagGroupDef build(SchemaDef schema) {
         TagGroupDef a = new TagGroupDef();
+        a.setSchema(schema);
         a.setLabel("tagGroupDef-1");
         a.setDescription("A tagGroupDef named tagGroupDef-1.");
         return a;

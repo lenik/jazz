@@ -1,6 +1,9 @@
 package net.bodz.lily.contact;
 
-public class OrgUnitSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class OrgUnitSamples
+        extends TestSamples {
 
     public static OrgUnit build(Organization org, OrgUnit parent) {
         OrgUnit a = new OrgUnit();

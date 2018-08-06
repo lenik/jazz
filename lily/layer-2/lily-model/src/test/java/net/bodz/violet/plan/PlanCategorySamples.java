@@ -1,6 +1,9 @@
 package net.bodz.violet.plan;
 
-public class PlanCategorySamples {
+import net.bodz.lily.test.TestSamples;
+
+public class PlanCategorySamples
+        extends TestSamples {
 
     public static PlanCategory build() {
         PlanCategory a = new PlanCategory();

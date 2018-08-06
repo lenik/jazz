@@ -1,11 +1,15 @@
 package net.bodz.lily.security;
 
-public class UserIdSamples {
+import net.bodz.lily.test.TestSamples;
 
-    public static UserId build() {
+public class UserIdSamples
+        extends TestSamples {
+
+    public static UserId build(User user, UserIdType type) {
         UserId a = new UserId();
-        a.setLabel("userId-1");
-        a.setDescription("A userId named userId-1.");
+        a.setUser(user);
+        a.setType(type);
+        a.setOid("oid-" + random.nextLong());
         return a;
     }
 

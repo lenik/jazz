@@ -4,15 +4,21 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.issue.impl.IssueReplyMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.issue.IssueReply" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.issue.IssueReply" extends="message.MAP_ALL">
+        <association property="issue" javaType="net.bodz.violet.issue.Issue">
+            <id property="id" column="issue" />
+            <result property="subject" column="issue_subject" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            issue.subject "issue_subject",
             u.label "uid_label",
             g.label "gid_label"
-        from issueReply a
+        from issuel a
+            left join issue on a.issue = issue.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -21,9 +27,11 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            issue.subject "issue_subject",
             u.label "uid_label",
             g.label "gid_label"
-        from issueReply a
+        from issuel a
+            left join issue on a.issue = issue.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -53,17 +61,28 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into issueReply(
-            code, label, description
+        insert into issuel(
+            uid, gid, mode, acl,
+            priority, flags, state, 
+            t0, t1,
+            op, subject, text, 
+            issue
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{beginTime}, #{endTime},
+            #{op.id}, #{subject}, #{text},
+            #{issue.id} 
         ) returning id; --
     ]]></insert>
 
     <update id="update">
-        update issueReply
+        update issuel
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setVSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            issue = #{issue.id},
         </set>
         <where>
             id = #{id}
@@ -71,11 +90,11 @@
     </update>
 
     <delete id="delete">
-        delete from issueReply where id = #{id}
+        delete from issuel where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from issueReply
+        select count(*) "rows" from issuel
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

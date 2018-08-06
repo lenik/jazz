@@ -26,7 +26,7 @@
             camount real;
         begin
             for v in select count(*) "count", sum(qty) "sum_qty", sum(amount) "sum_amount"
-                from tranodrl where doc=new.doc
+                from tranodrl where odr=new.odr
             loop
                 c := v."count";
                 cqty := v.sum_qty;
@@ -35,7 +35,7 @@
 
             update tranodr set
                 length = c, sum_qty = cqty, sum_amount = camount
-                where id = new.doc;
+                where id = new.odr;
             return new;
         end $$ language plpgsql;
 

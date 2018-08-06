@@ -3,6 +3,7 @@ package net.bodz.violet.edu.impl;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
+import net.bodz.violet.edu.Course;
 import net.bodz.violet.edu.TestPaper;
 import net.bodz.violet.edu.TestPaperSamples;
 
@@ -16,7 +17,8 @@ public class TestPaperMapperTest
 
     @Override
     public TestPaper buildSample() {
-        return TestPaperSamples.build();
+        Course course = tables.pickAny(CourseMapper.class, "course");
+        return TestPaperSamples.build(course);
     }
 
 }

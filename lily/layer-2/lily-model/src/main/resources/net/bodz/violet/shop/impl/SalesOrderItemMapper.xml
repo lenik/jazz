@@ -11,8 +11,8 @@
         <result property="quantity" column="qty" />
         <result property="price" column="price" />
         <result property="n1" column="n1" />
-        <result property="comment" column="comment" />
-        <result property="footnote" column="footnote" />
+        <!-- result property="comment" column="comment" /-->
+        <result property="notes" column="notes" />
         <association property="order" javaType="net.bodz.violet.shop.SalesOrder">
             <id property="id" column="odr" />
             <result property="subject" column="odr_subject" />
@@ -80,11 +80,11 @@
         insert into saleodrl(
             odr, shopitem, art,
             resale, olabel, ospec,
-            qty, price, total, n1, comment, footnote
+            qty, price, amount, n1, notes
         ) values(
             #{order.id}, #{shopItem.id}, #{artifact.id},
             #{resale}, #{altLabel}, #{altSpec},
-            #{quantity}, #{price}, #{total}, #{n1}, #{comment}, #{footnote}
+            #{quantity}, #{price}, #{amount}, #{n1}, #{notes}
         ) returning id; --
     ]]></insert>
 
@@ -100,9 +100,8 @@
             ospec = #{altSpec},
             qty = #{quantity},
             price = #{price},
-            total = #{total},
-            comment = #{comment},
-            footnote = #{footnote},
+            amount = #{amount},
+            notes = #{notes},
         </set>
         <where>
             id = #{id}

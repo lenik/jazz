@@ -5,14 +5,22 @@
 <mapper namespace="net.bodz.violet.edu.impl.TestPaperMapper">
 
     <resultMap id="map1" type="net.bodz.violet.edu.TestPaper" extends="co.MAP_UVX">
+        <result property="timeout" column="timeout" />
+        <result property="totalScore" column="totalscore" />
+        <association property="course" javaType="net.bodz.violet.edu.Course">
+            <id property="id" column="course" />
+            <result property="label" column="course_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            course.label "course_label",
             u.label "uid_label",
             g.label "gid_label"
         from testpaper a
+            left join course on a.course = course.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -21,9 +29,11 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            course.label "course_label",
             u.label "uid_label",
             g.label "gid_label"
         from testpaper a
+            left join course on a.course = course.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -54,16 +64,23 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into testpaper(
-            code, label, description
+            label, description,
+            priority, flags, state, uid, gid, mode, acl,
+            course, timeout, totalscore
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{label}, #{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{course.id}, #{timeout}, #{totalScore}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update testpaper
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
+            course = #{course.id},
+            timeout = #{timeout},
+            totalscore = #{totalScore},
         </set>
         <where>
             id = #{id}

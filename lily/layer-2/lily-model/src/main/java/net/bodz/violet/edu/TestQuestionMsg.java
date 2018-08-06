@@ -3,7 +3,7 @@ package net.bodz.violet.edu;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.mx.CoMessage;
 
 /**
  * 题目讨论
@@ -11,7 +11,7 @@ import net.bodz.lily.model.base.CoEntity;
 @Table(name = "testq_msg")
 @IdType(Long.class)
 public class TestQuestionMsg
-        extends CoEntity<Long> {
+        extends CoMessage<Long> {
 
     private static final long serialVersionUID = 1L;
 

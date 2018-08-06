@@ -4,28 +4,30 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.edu.impl.TestAnswerMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.edu.TestAnswer" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.edu.TestAnswer" extends="co.MAP_UV">
+        <result property="properties.jsonForm" column="props" />
+        <result property="valid" column="valid" />
+        <association property="question" javaType="net.bodz.violet.edu.TestQuestion">
+            <id property="id" column="q" />
+            <result property="subject" column="q_subject" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            q.subject "q_subject"
         from testans a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join testq q on a.q = q.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            q.subject "q_subject"
         from testans a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join testq q on a.q = q.id
         ]]>
     </sql>
 
@@ -54,9 +56,15 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into testans(
-            code, label, description
+            label, description,
+            priority, flags, state,
+            props,
+            q, valid
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{label}, #{description},
+            #{priority}, #{flags}, #{state},
+            #{properties.jsonForm},
+            #{question.id}, #{valid}
         ) returning id; --
     ]]></insert>
 
@@ -64,6 +72,9 @@
         update testans
         <set>
             <include refid="co.setUS" />
+            props = #{properties.jsonForm},
+            q = #{question.id},
+            valid = #{valid},
         </set>
         <where>
             id = #{id}

@@ -12,14 +12,26 @@ public class DiaryReview
 
     private static final long serialVersionUID = 1L;
 
+    Diary diary;
+    DiaryReview parent;
+
     public DiaryReview() {
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append("diaryReview: ...");
-        return sb.toString();
+    public Diary getDiary() {
+        return diary;
+    }
+
+    public void setDiary(Diary diary) {
+        this.diary = diary;
+    }
+
+    public DiaryReview getParent() {
+        return parent;
+    }
+
+    public void setParent(DiaryReview parent) {
+        this.parent = parent;
     }
 
 }

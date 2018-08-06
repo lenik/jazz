@@ -10,11 +10,13 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.meta.decl.Priority;
+import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.contact.Contact;
+import net.bodz.lily.contact.OrgUnit;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
@@ -37,11 +39,15 @@ public class TransportOrder
 
     private static final long serialVersionUID = 1L;
 
-    private TransportOrder previous;
+    private TransportCategory category;
+    private TransportPhase phase;
+
+    private TransportOrder previousOrder;
     private SalesOrder salesOrder;
     private StoreOrder storeOrder;
 
     private Organization org;
+    private OrgUnit orgUnit;
     private Person person;
 
     private Contact shipDest;
@@ -53,19 +59,35 @@ public class TransportOrder
     // Account-Ticket
 
     private SizedList<TransportOrderItem> items = new SizedList<>();
-    private double quantity;
-    private double total;
+    private double totalQuantity;
+    private double totalAmount;
+
+    public TransportCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(TransportCategory category) {
+        this.category = category;
+    }
+
+    public TransportPhase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(TransportPhase phase) {
+        this.phase = phase;
+    }
 
     /**
      * 前级
      */
     @OfGroup(StdGroup.Process.class)
-    public TransportOrder getPrevious() {
-        return previous;
+    public TransportOrder getPreviousOrder() {
+        return previousOrder;
     }
 
-    public void setPrevious(TransportOrder previous) {
-        this.previous = previous;
+    public void setPreviousOrder(TransportOrder previousOrder) {
+        this.previousOrder = previousOrder;
     }
 
     /**
@@ -92,7 +114,7 @@ public class TransportOrder
         return storeOrder;
     }
 
-    public void setSalesOrder(StoreOrder storeOrder) {
+    public void setStoreOrder(StoreOrder storeOrder) {
         this.storeOrder = storeOrder;
     }
 
@@ -107,6 +129,14 @@ public class TransportOrder
 
     public void setOrg(Organization org) {
         this.org = org;
+    }
+
+    public OrgUnit getOrgUnit() {
+        return orgUnit;
+    }
+
+    public void setOrgUnit(OrgUnit orgUnit) {
+        this.orgUnit = orgUnit;
     }
 
     /**
@@ -211,12 +241,12 @@ public class TransportOrder
      */
     @OfGroup(StdGroup.Statistics.class)
     @Statistics
-    public double getQuantity() {
-        return quantity;
+    public double getTotalQuantity() {
+        return totalQuantity;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public void setTotalQuantity(double totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
     /**
@@ -224,12 +254,17 @@ public class TransportOrder
      */
     @OfGroup(StdGroup.Statistics.class)
     @Statistics
-    public double getTotal() {
-        return total;
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    @Redundant
+    public int getLength() {
+        return items.size();
     }
 
     /**
@@ -268,7 +303,7 @@ public class TransportOrder
                 double price = map.getDouble(priceKey, 0);
 
                 TransportOrderItem item = new TransportOrderItem();
-                item.setDelivery(this);
+                item.setOrder(this);
                 item.setSalesOrder(getSalesOrder());
                 SalesOrderItem siRef = new SalesOrderItem();
                 siRef.setId(sid);

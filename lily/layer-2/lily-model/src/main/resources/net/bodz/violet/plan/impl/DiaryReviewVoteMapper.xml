@@ -5,27 +5,36 @@
 <mapper namespace="net.bodz.violet.plan.impl.DiaryReviewVoteMapper">
 
     <resultMap id="map1" type="net.bodz.violet.plan.DiaryReviewVote" extends="co.MAP_UVX">
+        <result property="votes" column="votes" />
+        <association property="review" javaType="net.bodz.violet.plan.DiaryReview">
+            <id property="id" column="diaryrev" />
+            <result property="label" column="diaryrev_subject" />
+        </association>
+        <association property="user" javaType="net.bodz.lily.security.User">
+            <id property="id" column="user" />
+            <result property="label" column="user_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            diaryrev.subject "diaryrev_subject",
+            u.label "uid_label"
         from diaryrev_vote a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join diaryrev on a.diaryrev = diaryrev.id
+            left join "user" u on a."user" = u.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            diaryrev.subject "diaryrev_subject",
+            u.label "uid_label"
         from diaryrev_vote a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join diaryrev on a.diaryrev = diaryrev.id
+            left join "user" u on a."user" = u.id
         ]]>
     </sql>
 
@@ -54,16 +63,18 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into diaryrev_vote(
-            code, label, description
+            diaryrev, "user", votes
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{review.id}, #{user.id}, #{votes}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update diaryrev_vote
         <set>
-            <include refid="co.setUS" />
+            diaryrev = #{review.id},
+            "user" = #{user.id},
+            votes = #{votes},
         </set>
         <where>
             id = #{id}

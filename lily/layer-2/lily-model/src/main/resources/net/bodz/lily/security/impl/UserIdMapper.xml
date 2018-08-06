@@ -5,27 +5,38 @@
 <mapper namespace="net.bodz.lily.security.impl.UserIdMapper">
 
     <resultMap id="map1" type="net.bodz.lily.security.UserId" extends="co.MAP_UVX">
+        <result property="oid" column="oid" />
+        <result property="auth.jsonForm" column="auth" />
+        <result property="data.jsonForm" column="data" />
+        <association property="type" javaType="net.bodz.lily.security.UserIdType">
+            <id property="id" column="type" />
+            <result property="label" column="type_label" />
+        </association>
+        <association property="user" javaType="net.bodz.lily.security.User">
+            <id property="id" column="user" />
+            <result property="label" column="user_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            u.label "user_label",
+            type.label "type_label"
         from userid a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join "user" u on a."user" = u.id
+            left join useridtype type on a.type = type.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            u.label "user_label",
+            type.label "type_label"
         from userid a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join "user" u on a."user" = u.id
+            left join useridtype type on a.type = type.id
         ]]>
     </sql>
 
@@ -54,16 +65,24 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into userid(
-            code, label, description
+            "user", type, oid,
+            auth,
+            data
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{user.id}, #{type.id}, #{oid},
+            #{auth.jsonForm},
+            #{data.jsonForm}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update userid
         <set>
-            <include refid="co.setUS" />
+            "user" = #{user.id},
+            type = #{type.id},
+            oid = #{oid},
+            auth = #{auth.jsonForm},
+            data = #{data.jsonForm},
         </set>
         <where>
             id = #{id}

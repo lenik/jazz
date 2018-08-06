@@ -1,15 +1,14 @@
 package net.bodz.violet.asset;
 
 import java.math.BigDecimal;
-import java.util.Random;
 
 import net.bodz.lily.contact.Person;
+import net.bodz.lily.test.TestSamples;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.store.Region;
 
-public class AssetSamples {
-
-    static Random random = new Random();
+public class AssetSamples
+        extends TestSamples {
 
     public static Asset build(Artifact artifact, Region region, Person person) {
         Asset a = new Asset();

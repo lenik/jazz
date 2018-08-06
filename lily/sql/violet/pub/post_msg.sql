@@ -5,7 +5,7 @@
 
     create table post_msg(
         id          bigint primary key default nextval('post_msg_seq'),
---\mixin lily.mixin.LabelExVer
+--\mixin lily.mixin.ExVer
 --\mixin lily.mixin.MiMsg
 
         post        bigint not null

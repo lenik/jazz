@@ -1,6 +1,9 @@
 package net.bodz.violet.plan;
 
-public class PlanDoParameterSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class PlanDoParameterSamples
+        extends TestSamples {
 
     public static PlanDoParameter build() {
         PlanDoParameter a = new PlanDoParameter();

@@ -19,6 +19,7 @@ public class Plan
     private PlanCategory category;
     private PlanPhase phase;
     private Set<PlanTag> tags;
+    private double value;
 
     /**
      * @label Category
@@ -49,6 +50,14 @@ public class Plan
 
     public void setTags(Set<PlanTag> tags) {
         this.tags = tags;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 
 }

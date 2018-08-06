@@ -2,7 +2,7 @@
     create table policy(
         id          int primary key default nextval('policy_seq'),
 --\mixin lily.mixin.Code
---\mixin lily.mixin.Label
+--\mixin lily.mixin.LabelExVer
         
         class       varchar(80) not null,
         method      varchar(40) null,

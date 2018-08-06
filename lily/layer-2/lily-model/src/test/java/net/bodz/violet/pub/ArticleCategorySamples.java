@@ -1,6 +1,9 @@
 package net.bodz.violet.pub;
 
-public class ArticleCategorySamples {
+import net.bodz.lily.test.TestSamples;
+
+public class ArticleCategorySamples
+        extends TestSamples {
 
     public static ArticleCategory build() {
         ArticleCategory a = new ArticleCategory();

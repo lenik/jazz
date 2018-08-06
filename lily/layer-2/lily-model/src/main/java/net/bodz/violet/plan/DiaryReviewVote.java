@@ -2,24 +2,25 @@ package net.bodz.violet.plan;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.template.VoteRecord;
 
 @Table(name = "diaryrev_vote")
-@IdType(Integer.class)
 public class DiaryReviewVote
-        extends CoMomentInterval<Integer> {
+        extends VoteRecord {
 
     private static final long serialVersionUID = 1L;
+
+    DiaryReview review;
 
     public DiaryReviewVote() {
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append("diaryReviewVote: ...");
-        return sb.toString();
+    public DiaryReview getReview() {
+        return review;
+    }
+
+    public void setReview(DiaryReview review) {
+        this.review = review;
     }
 
 }

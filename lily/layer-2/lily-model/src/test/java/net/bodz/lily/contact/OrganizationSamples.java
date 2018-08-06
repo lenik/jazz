@@ -1,6 +1,9 @@
 package net.bodz.lily.contact;
 
-public class OrganizationSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class OrganizationSamples
+        extends TestSamples {
 
     public static Organization build() {
         Organization a = new Organization();

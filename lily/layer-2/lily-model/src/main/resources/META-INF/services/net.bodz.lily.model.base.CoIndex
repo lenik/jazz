@@ -17,7 +17,9 @@ net.bodz.lily.security.impl.GroupIndex
 net.bodz.lily.security.impl.PolicyIndex
 net.bodz.lily.security.impl.RoleIndex
 net.bodz.lily.security.impl.UserIdIndex
+net.bodz.lily.security.impl.UserIdTypeIndex
 net.bodz.lily.security.impl.UserIndex
+net.bodz.lily.security.impl.UserRunIndex
 net.bodz.lily.security.impl.UserSecretIndex
 net.bodz.violet.art.impl.ArtifactCategoryIndex
 net.bodz.violet.art.impl.ArtifactIndex
@@ -95,5 +97,7 @@ net.bodz.violet.store.impl.StoreItemIndex
 net.bodz.violet.store.impl.StoreOrderIndex
 net.bodz.violet.store.impl.StoreOrderItemIndex
 net.bodz.violet.store.impl.StorePhaseIndex
+net.bodz.violet.tran.impl.TransportCategoryIndex
 net.bodz.violet.tran.impl.TransportOrderIndex
 net.bodz.violet.tran.impl.TransportOrderItemIndex
+net.bodz.violet.tran.impl.TransportPhaseIndex

@@ -13,29 +13,19 @@ public class Role
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_LOGIN_NAME = 30;
-    public static final int N_FULL_NAME = 40;
+    public static final int RANK_ROOT = 0;
+    public static final int RANK_NORMAL = 30;
+    public static final int RANK_GUEST = 90;
 
-    private boolean admin;
+    private int rank = RANK_NORMAL;
     private List<User> users;
 
-    public boolean isAdmin() {
-        return admin;
+    public int getRank() {
+        return rank;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    /**
-     * 全称
-     */
-    public final String getFullName() {
-        return getLabel();
-    }
-
-    public final void setFullName(String fullName) {
-        setLabel(fullName);
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     /**
