@@ -5,6 +5,7 @@ import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 import net.bodz.violet.edu.TestAnswer;
 import net.bodz.violet.edu.TestAnswerSamples;
+import net.bodz.violet.edu.TestQuestion;
 
 public class TestAnswerMapperTest
         extends AbstractMapperTest<TestAnswer, TestAnswerMask, TestAnswerMapper> {
@@ -16,7 +17,8 @@ public class TestAnswerMapperTest
 
     @Override
     public TestAnswer buildSample() {
-        return TestAnswerSamples.build();
+        TestQuestion question = tables.pickAny(TestQuestionMapper.class, "testq");
+        return TestAnswerSamples.build(question);
     }
 
 }

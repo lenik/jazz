@@ -3,6 +3,7 @@ package net.bodz.lily.schema.impl;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.schema.ParameterDef;
 import net.bodz.lily.schema.ParameterDefSamples;
+import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 
@@ -16,7 +17,8 @@ public class ParameterDefMapperTest
 
     @Override
     public ParameterDef buildSample() {
-        return ParameterDefSamples.build();
+        SchemaDef schema = tables.pickAny(SchemaDefMapper.class, "_schema");
+        return ParameterDefSamples.build(schema);
     }
 
 }

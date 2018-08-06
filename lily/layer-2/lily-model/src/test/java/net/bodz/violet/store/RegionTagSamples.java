@@ -1,6 +1,9 @@
 package net.bodz.violet.store;
 
-public class RegionTagSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class RegionTagSamples
+        extends TestSamples {
 
     public static RegionTag build() {
         RegionTag a = new RegionTag();

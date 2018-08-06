@@ -3,6 +3,7 @@ package net.bodz.lily.schema.impl;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.schema.FormDef;
 import net.bodz.lily.schema.FormDefSamples;
+import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 
@@ -16,7 +17,8 @@ public class FormDefMapperTest
 
     @Override
     public FormDef buildSample() {
-        return FormDefSamples.build();
+        SchemaDef schema = tables.pickAny(SchemaDefMapper.class, "_schema");
+        return FormDefSamples.build(schema);
     }
 
 }

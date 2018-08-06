@@ -1,11 +1,17 @@
 package net.bodz.violet.plan;
 
-public class PlanDoSamples {
+import net.bodz.lily.test.TestSamples;
 
-    public static PlanDo build() {
+public class PlanDoSamples
+        extends TestSamples {
+
+    public static PlanDo build(Plan plan, PlanDo parent) {
         PlanDo a = new PlanDo();
-        a.setLabel("planDo-1");
-        a.setDescription("A planDo named planDo-1.");
+        a.setSubject("planDo-1");
+        a.setText("A planDo named planDo-1.");
+        a.setPlan(plan);
+        if (random.nextInt(100) < 30)
+            a.setParent(parent);
         return a;
     }
 

@@ -6,25 +6,32 @@
 
     <resultMap id="map1" type="net.bodz.lily.security.User" extends="co.MAP_ALL">
         <result property="properties.jsonForm" column="props" />
-        <result property="codeName" column="name" />
-        <result property="lastLoginTime" column="lastlog" />
-        <result property="lastLoginIP" column="lastlogip" />
+        <result property="name" column="name" />
         <association property="primaryGroup" javaType="net.bodz.lily.security.Group">
             <id property="id" column="gid0" />
-            <result property="codeName" column="g_name" />
+            <result property="name" column="g_name" />
             <result property="label" column="g_label" />
             <result property="description" column="g_description" />
-            <result property="admin" column="g_admin" />
+            <association property="admin" javaType="net.bodz.lily.security.User">
+                <id property="id" column="g_admin" />
+            </association>
         </association>
     </resultMap>
 
     <resultMap id="map2" type="net.bodz.lily.security.User" extends="map1">
+        <association property="runningState" javaType="net.bodz.lily.security.UserRun">
+            <result property="label" column="run_label" />
+            <result property="lastLoginTime" column="lastlog" />
+            <result property="lastLoginIP" column="lastlogip" />
+        </association>
         <collection property="groups" javaType="ArrayList" ofType="net.bodz.lily.security.Group">
             <id property="id" column="y_id" />
-            <result property="codeName" column="y_name" />
+            <result property="name" column="y_name" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
-            <result property="admin" column="y_admin" />
+            <association property="admin" javaType="net.bodz.lily.security.User">
+                <id property="id" column="y_admin" />
+            </association>
         </collection>
         <collection property="secrets" javaType="ArrayList" ofType="net.bodz.lily.security.UserSecret">
             <id property="id" column="s_id" />
@@ -41,14 +48,18 @@
     <sql id="select1"><![CDATA[
         select
             a.*,
-            s.passwd,
             g.name "g_name",
             g.label "g_label",
             g.description "g_description",
-            g.admin "g_admin"
+            g.admin "g_admin",
+            s.passwd,
+            r.label "run_label",
+            r.lastlog,
+            r.lastlogip
         from "user" a
-            left join usersec s on a.id=s."user"
             left join "group" g on a.gid0=g.id
+            left join usersec s on a.id=s."user"
+            left join user_run r on a.id = r."user"
         ]]>
     </sql>
 
@@ -72,17 +83,21 @@
             y.name "y_name",
             y.label "y_label",
             y.description "y_description",
-            y.admin "y_admin"
+            y.admin "y_admin",
+            r.label "run_label",
+            r.lastlog,
+            r.lastlogip
         from "user" a
-            left join usersec s on a.id=s."user"
-            left join "group" g on a.gid0=g.id
-            left join group_user x on x."user"=a.id
-            left join "group" y on y.id=x."group" 
+            left join "group" g on a.gid0 = g.id
+            left join group_user x on x."user" = a.id
+            left join "group" y on y.id = x."group" 
+            left join usersec s on a.id = s."user"
+            left join user_run r on a.id = r."user"
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <if test="m.codeName != null">and a.name = #{m.codeName}</if>
+        <if test="m.name != null">and a.name = #{m.name}</if>
         <if test="m.password != null">and s.passwd = #{m.password}</if>
         <if test="m.email != null">and s.email = #{m.email}</if>
         <if test="m.mobile != null">and s.tel = #{m.mobile}</if>
@@ -106,10 +121,10 @@
         </where>
     </select>
 
-    <select id="selectByCodeName" parameterType="String" resultMap="map2">
+    <select id="selectByName" parameterType="String" resultMap="map2">
         <include refid="select2" />
         <where>
-            <if test="_parameter != null">a.name = #{code}</if>
+            <if test="_parameter != null">a.name = #{name}</if>
         </where>
     </select>
 
@@ -132,7 +147,7 @@
     <select id="findForLogin" resultMap="map2">
         <include refid="select2" />
         <where>
-            <if test="code != null">and a.name = #{code}</if>
+            <if test="name != null">and a.name = #{name}</if>
             <if test="password != null">and s.passwd = #{password}</if>
         </where>
     </select>
@@ -142,14 +157,12 @@
             name, label, description,
             priority, flags, state,
             props,
-            gid0,
-            lastlog, lastlogip
+            gid0
         ) values(
-            #{codeName},#{label},#{description},
+            #{name}, #{label}, #{description},
             #{priority}, #{flags}, #{state},
             #{properties.jsonForm},
-            #{primaryGroup.id},
-            #{lastLoginTime}, #{lastLoginIp}
+            #{primaryGroup.id}
         ) returning id; --
     ]]></insert>
 
@@ -157,11 +170,13 @@
         update "user"
         <set>
             <include refid="co.setUS" />
-            <if test="lastLoginTime != null">lastlog = #{lastLoginTime},</if>
-            <if test="lastLoginIp != null">lastlogip = #{lastLoginIp},</if>
-            <if test="primaryGroup != null">gid0 = #{primaryGroup.id},</if>
+            name = #{name},
+            props = #{properties.jsonForm},
+            gid0 = #{primaryGroup.id},
         </set>
-        where id=#{id}
+        <where>
+            id = #{id}
+        </where>
     </update>
 
     <delete id="delete">

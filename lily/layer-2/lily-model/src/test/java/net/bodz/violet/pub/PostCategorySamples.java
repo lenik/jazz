@@ -1,6 +1,9 @@
 package net.bodz.violet.pub;
 
-public class PostCategorySamples {
+import net.bodz.lily.test.TestSamples;
+
+public class PostCategorySamples
+        extends TestSamples {
 
     public static PostCategory build() {
         PostCategory a = new PostCategory();

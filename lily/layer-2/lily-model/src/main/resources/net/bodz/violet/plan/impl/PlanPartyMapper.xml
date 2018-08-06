@@ -4,28 +4,45 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.PlanPartyMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.PlanParty" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.PlanParty">
+        <result property="description" column="description" />
+        <association property="plan" javaType="net.bodz.violet.plan.Plan">
+            <id property="id" column="plan" />
+            <result property="subject" column="plan_subject" />
+        </association>
+        <association property="person" javaType="net.bodz.lily.contact.Person">
+            <id property="id" column="person" />
+            <result property="label" column="person_label" />
+        </association>
+        <association property="org" javaType="net.bodz.lily.contact.Organization">
+            <id property="id" column="org" />
+            <result property="label" column="org_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            plan.subject "plan_subject",
+            person.label "person_label",
+            org.label "org_label"
         from plan_party a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join plan on a.plan = plan.id
+            left join person on a.person = person.id
+            left join org on a.org = org.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            plan.subject "plan_subject",
+            person.label "person_label",
+            org.label "org_label"
         from plan_party a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join plan on a.plan = plan.id
+            left join person on a.person = person.id
+            left join org on a.org = org.id
         ]]>
     </sql>
 
@@ -52,26 +69,21 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into plan_party(
-            code, label, description
-        ) values(
-            #{codeName},#{label},#{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into plan_party(
-            code, label, description
+            plan, person, org, description
         ) values(
-            #{codeName},#{label},#{description}
+            #{plan.id}, #{person.id}, #{org.id}, #{description}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update plan_party
         <set>
-            <include refid="co.setUS" />
+            plan = #{plan.id},
+            person = #{person.id},
+            org = #{org.id},
+            description = #{description},
         </set>
         <where>
             id = #{id}

@@ -1,6 +1,9 @@
 package net.bodz.lily.schema;
 
-public class SchemaDefSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class SchemaDefSamples
+        extends TestSamples {
 
     public static SchemaDef build() {
         SchemaDef a = new SchemaDef();

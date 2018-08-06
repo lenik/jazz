@@ -1,11 +1,16 @@
 package net.bodz.violet.plan;
 
-public class PlanVoteSamples {
+import net.bodz.lily.security.User;
+import net.bodz.lily.test.TestSamples;
 
-    public static PlanVote build() {
+public class PlanVoteSamples
+        extends TestSamples {
+
+    public static PlanVote build(Plan plan, User user) {
         PlanVote a = new PlanVote();
-        a.setLabel("planVote-1");
-        a.setDescription("A planVote named planVote-1.");
+        a.setPlan(plan);
+        a.setUser(user);
+        a.setVotes(random.nextInt(3) - 1);
         return a;
     }
 

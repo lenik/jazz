@@ -5,12 +5,12 @@
 <mapper namespace="net.bodz.lily.security.impl.RoleMapper">
 
     <resultMap id="map1" type="net.bodz.lily.security.Role" extends="co.MAP_ALL">
-        <result property="codeName" column="name" />
-        <result property="admin" column="admin" />
+        <result property="name" column="name" />
+        <result property="rank" column="rank" />
         <result property="properties.jsonForm" column="props" />
         <collection property="users" javaType="ArrayList" ofType="net.bodz.lily.security.User">
             <id property="id" column="y_id" />
-            <result property="codeName" column="y_name" />
+            <result property="name" column="y_name" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
             <result property="properties.jsonForm" column="y_props" />
@@ -38,7 +38,7 @@
     <select id="filter" resultMap="map1">
         <include refid="select1" />
         <where>
-            <if test="m.codeName != null">and a.name=#{m.codeName}</if>
+            <if test="m.codeName != null">and a.name=#{m.name}</if>
         </where>
     </select>
 
@@ -52,18 +52,23 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into "role"(
             name, label, description,
-            props
+            priority, flags, state,
+            props,
+            rank
         ) values(
-            #{codeName},#{label},#{description},
+            #{name}, #{label}, #{description},
+            #{priority}, #{flags}, #{state},
             #{properties.jsonForm},
+            #{rank}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update "role"
         <set>
-            <include refid="co.setU" />
-            admin = #{admin},
+            <include refid="co.setUS" />
+            name = #{name},
+            rank = #{rank},
         </set>
         where id=#{id}
     </update>

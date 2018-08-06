@@ -5,14 +5,22 @@
 <mapper namespace="net.bodz.violet.shop.impl.SellPriceMapper">
 
     <resultMap id="map1" type="net.bodz.violet.shop.SellPrice" extends="co.MAP_UVX">
+        <!--result property="code" column="code" /-->
+        <result property="price" column="price" />
+        <association property="artifact" javaType="net.bodz.violet.art.Artifact">
+            <id property="id" column="art" />
+            <result property="label" column="art_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            art.label "art_label",
             u.label "uid_label",
             g.label "gid_label"
         from art_price a
+            left join art on a.art = art.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -54,16 +62,20 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into art_price(
-            code, label, description
+            uid, gid, mode, acl,
+            art, price
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{artifact.id}, #{price}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update art_price
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setA" />
+            art = #{artifact.id},
+            price = #{price},
         </set>
         <where>
             id = #{id}

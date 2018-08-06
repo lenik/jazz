@@ -5,7 +5,7 @@
 
     create table diaryrev(
         id          bigint primary key default nextval('diaryrev_seq'),
---\mixin lily.mixin.LabelExVer
+--\mixin lily.mixin.ExVer
 --\mixin lily.mixin.MiMsg
 
         diary       bigint not null

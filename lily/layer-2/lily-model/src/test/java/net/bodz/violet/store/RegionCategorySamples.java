@@ -1,6 +1,9 @@
 package net.bodz.violet.store;
 
-public class RegionCategorySamples {
+import net.bodz.lily.test.TestSamples;
+
+public class RegionCategorySamples
+        extends TestSamples {
 
     public static RegionCategory build() {
         RegionCategory a = new RegionCategory();

@@ -54,16 +54,18 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into plancat(
-            code, label, description
+            code, label, description,
+            priority, flags, state, uid, gid, mode, acl
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{codeName}, #{label}, #{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update plancat
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setUSA" />
         </set>
         <where>
             id = #{id}

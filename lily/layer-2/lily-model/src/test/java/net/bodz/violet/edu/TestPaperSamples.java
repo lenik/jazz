@@ -1,11 +1,15 @@
 package net.bodz.violet.edu;
 
-public class TestPaperSamples {
+import net.bodz.lily.test.TestSamples;
 
-    public static TestPaper build() {
+public class TestPaperSamples
+        extends TestSamples {
+
+    public static TestPaper build(Course course) {
         TestPaper a = new TestPaper();
         a.setLabel("testPaper-1");
         a.setDescription("A testPaper named testPaper-1.");
+        a.setCourse(course);
         return a;
     }
 

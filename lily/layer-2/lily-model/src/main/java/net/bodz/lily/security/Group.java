@@ -33,9 +33,6 @@ public class Group
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_LOGIN_NAME = 30;
-    public static final int N_FULL_NAME = 40;
-
     private User admin;
     private List<User> users;
 
@@ -48,17 +45,6 @@ public class Group
 
     public void setAdmin(User admin) {
         this.admin = admin;
-    }
-
-    /**
-     * 全称
-     */
-    public final String getFullName() {
-        return getLabel();
-    }
-
-    public final void setFullName(String fullName) {
-        setLabel(fullName);
     }
 
     /**

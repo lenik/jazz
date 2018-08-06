@@ -1,6 +1,9 @@
 package net.bodz.violet.plan;
 
-public class DiaryTagSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class DiaryTagSamples
+        extends TestSamples {
 
     public static DiaryTag build() {
         DiaryTag a = new DiaryTag();

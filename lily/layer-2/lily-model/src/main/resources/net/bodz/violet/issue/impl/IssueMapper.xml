@@ -4,7 +4,15 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.issue.impl.IssueMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.issue.Issue" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.issue.Issue" extends="message.MAP_ALL">
+        <association property="category" javaType="net.bodz.violet.issue.IssueCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
+        <association property="phase" javaType="net.bodz.violet.issue.IssuePhase">
+            <id property="id" column="phase" />
+            <result property="label" column="phase_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -13,6 +21,8 @@
             u.label "uid_label",
             g.label "gid_label"
         from issue a
+            left join issuecat cat on a.cat = cat.id
+            left join issuephase phase on a.phase = phase.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -24,6 +34,8 @@
             u.label "uid_label",
             g.label "gid_label"
         from issue a
+            left join issuecat cat on a.cat = cat.id
+            left join issuephase phase on a.phase = phase.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -54,16 +66,26 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into issue(
-            code, label, description
+            uid, gid, mode, acl,
+            priority, flags, state, 
+            t0, t1,
+            op, subject, text, 
+            cat, phase
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{beginTime}, #{endTime},
+            #{op.id}, #{subject}, #{text}, 
+            #{category.id}, #{phase.id}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update issue
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setVSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
         </set>
         <where>
             id = #{id}

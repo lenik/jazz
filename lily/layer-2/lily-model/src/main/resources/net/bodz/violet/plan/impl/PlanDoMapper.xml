@@ -4,15 +4,27 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.PlanDoMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.PlanDo" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.violet.plan.PlanDo" extends="message.MAP_ALL">
+        <association property="plan" javaType="net.bodz.violet.plan.Plan">
+            <id property="id" column="plan" />
+            <result property="subject" column="plan_subject" />
+        </association>
+        <association property="parent" javaType="net.bodz.violet.plan.PlanDo">
+            <id property="id" column="parent" />
+            <result property="subject" column="parent_subject" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            plan.subject "plan_subject",
+            parent.subject "parent_subject",
             u.label "uid_label",
             g.label "gid_label"
         from plando a
+            left join plan on a.plan = plan.id
+            left join plando parent on a.parent = parent.id
             left join "user" u on a.uid=u.id
             left join "group" g on a.gid=g.id
         ]]>
@@ -21,11 +33,15 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            plan.subject "plan_subject",
+            parent.subject "parent_subject",
             u.label "uid_label",
             g.label "gid_label"
         from plando a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join plan on a.plan = plan.id
+            left join plando parent on a.parent = parent.id
+            left join "user" u on a.uid=u.id
+            left join "group" g on a.gid=g.id
         ]]>
     </sql>
 
@@ -52,26 +68,30 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into plando(
-            code, label, description
-        ) values(
-            #{codeName},#{label},#{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into plando(
-            code, label, description
+            uid, gid, mode, acl,
+            priority, flags, state, 
+            t0, t1,
+            op, subject, text,
+            plan, parent
         ) values(
-            #{codeName},#{label},#{description}
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{beginTime}, #{endTime},
+            #{op.id}, #{subject}, #{text},
+            #{plan.id}, #{parent.id}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update plando
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setVSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            plan = #{plan.id},
+            parent = #{parent.id},
         </set>
         <where>
             id = #{id}

@@ -1,3 +1,2 @@
 net.bodz.lily.contact.Gender
-net.bodz.lily.security.OAuthType
 net.bodz.lily.security.impl.AccessMode

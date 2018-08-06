@@ -4,6 +4,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 import net.bodz.violet.pub.Post;
+import net.bodz.violet.pub.PostCategory;
 import net.bodz.violet.pub.PostSamples;
 
 public class PostMapperTest
@@ -16,7 +17,9 @@ public class PostMapperTest
 
     @Override
     public Post buildSample() {
-        return PostSamples.build();
+        PostCategory category = tables.pickAny(PostCategoryMapper.class, "postcat");
+        Post parent = tables.pickAny(PostMapper.class, "post");
+        return PostSamples.build(category, parent);
     }
 
 }

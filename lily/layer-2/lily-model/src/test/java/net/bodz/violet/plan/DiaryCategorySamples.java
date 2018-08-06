@@ -1,6 +1,9 @@
 package net.bodz.violet.plan;
 
-public class DiaryCategorySamples {
+import net.bodz.lily.test.TestSamples;
+
+public class DiaryCategorySamples
+        extends TestSamples {
 
     public static DiaryCategory build() {
         DiaryCategory a = new DiaryCategory();

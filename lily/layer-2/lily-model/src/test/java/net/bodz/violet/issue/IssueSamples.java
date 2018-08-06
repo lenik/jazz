@@ -1,11 +1,16 @@
 package net.bodz.violet.issue;
 
-public class IssueSamples {
+import net.bodz.lily.test.TestSamples;
 
-    public static Issue build() {
+public class IssueSamples
+        extends TestSamples {
+
+    public static Issue build(IssueCategory category, IssuePhase phase) {
         Issue a = new Issue();
-        a.setLabel("issue-1");
-        a.setDescription("A issue named issue-1.");
+        a.setSubject("issue-1");
+        a.setText("A issue named issue-1.");
+        a.setCategory(category);
+        a.setPhase(phase);
         return a;
     }
 

@@ -1,6 +1,9 @@
 package net.bodz.violet.store;
 
-public class StorePhaseSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class StorePhaseSamples
+        extends TestSamples {
 
     public static StorePhase build() {
         StorePhase a = new StorePhase();

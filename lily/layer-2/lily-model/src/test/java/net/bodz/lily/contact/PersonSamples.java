@@ -1,6 +1,9 @@
 package net.bodz.lily.contact;
 
-public class PersonSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class PersonSamples
+        extends TestSamples {
 
     public static Person build() {
         Person a = new Person();

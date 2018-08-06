@@ -9,7 +9,7 @@
         --\mixin lily.mixin.LabelExVer
         --\mixin lily.mixin.Props
 
-        dummy       int
+        rank        int not null default 30
     );
 
     create index role_label        on "role"(label);

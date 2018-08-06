@@ -56,26 +56,20 @@
         </where>
     </select>
 
-    <insert id="_insert"><![CDATA[
-        insert into diary_vote(
-            code, label, description
-        ) values(
-            #{codeName},#{label},#{description}
-        )
-    ]]></insert>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into diary_vote(
-            code, label, description
+            diary, "user", votes
         ) values(
-            #{codeName},#{label},#{description}
+            #{diary.id}, #{user.id}, #{votes}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update diary_vote
         <set>
-            <include refid="co.setUS" />
+            diary = #{diary.id},
+            "user" = #{user.id},
+            votes = #{votes},
         </set>
         <where>
             id = #{id}

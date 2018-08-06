@@ -17,7 +17,9 @@ net.bodz.lily.security.impl.GroupMapper
 net.bodz.lily.security.impl.PolicyMapper
 net.bodz.lily.security.impl.RoleMapper
 net.bodz.lily.security.impl.UserIdMapper
+net.bodz.lily.security.impl.UserIdTypeMapper
 net.bodz.lily.security.impl.UserMapper
+net.bodz.lily.security.impl.UserRunMapper
 net.bodz.lily.security.impl.UserSecretMapper
 net.bodz.lily.util.mapper.ProfileMapper
 net.bodz.violet.art.impl.ArtifactCategoryMapper
@@ -96,5 +98,7 @@ net.bodz.violet.store.impl.StoreItemMapper
 net.bodz.violet.store.impl.StoreOrderItemMapper
 net.bodz.violet.store.impl.StoreOrderMapper
 net.bodz.violet.store.impl.StorePhaseMapper
+net.bodz.violet.tran.impl.TransportCategoryMapper
 net.bodz.violet.tran.impl.TransportOrderItemMapper
 net.bodz.violet.tran.impl.TransportOrderMapper
+net.bodz.violet.tran.impl.TransportPhaseMapper

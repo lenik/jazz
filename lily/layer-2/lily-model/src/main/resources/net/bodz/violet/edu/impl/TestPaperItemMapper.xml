@@ -5,16 +5,26 @@
 <mapper namespace="net.bodz.violet.edu.impl.TestPaperItemMapper">
 
     <resultMap id="map1" type="net.bodz.violet.edu.TestPaperItem" extends="co.MAP_UVX">
+        <result property="properties.jsonForm" column="props" />
+        <result property="score" column="score" />
+        <association property="paper" javaType="net.bodz.violet.edu.TestPaper">
+            <id property="id" column="paper" />
+            <result property="label" column="paper_label" />
+        </association>
+        <association property="question" javaType="net.bodz.violet.edu.TestQuestion">
+            <id property="id" column="q" />
+            <result property="label" column="q_subject" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            paper.label "paper_label",
+            q.subject "q_subject"
         from testpaperl a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join testpaper paper on a.paper = paper.id
+            left join testq q on a.q = q.id
         ]]>
     </sql>
 
@@ -54,16 +64,24 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into testpaperl(
-            code, label, description
+            priority, flags, state,
+            props,
+            paper, q, score
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{priority}, #{flags}, #{state},
+            #{properties.jsonForm},
+            #{paper.id}, #{question.id}, #{score}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update testpaperl
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setVS" />
+            props = #{properties.jsonForm},
+            paper = #{paper.id},
+            q = #{question.id},
+            score = #{score},
         </set>
         <where>
             id = #{id}

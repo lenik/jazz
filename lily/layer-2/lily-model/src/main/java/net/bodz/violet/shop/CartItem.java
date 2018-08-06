@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.mixin.IOrderItem;
 import net.bodz.violet.art.Artifact;
 
 /**
@@ -14,13 +17,15 @@ import net.bodz.violet.art.Artifact;
 @IdType(Long.class)
 @Table(name = "cartitem")
 public class CartItem
-        extends CoEntity<Long> {
+        extends CoEntity<Long>
+        implements IOrderItem {
 
     private static final long serialVersionUID = 1L;
 
     ShopItem shopItem;
-    BigDecimal priceSnapshot = BigDecimal.ZERO;
+    BigDecimal price = BigDecimal.ZERO;
     BigDecimal quantity = BigDecimal.ZERO;
+    BigDecimal amount;
 
     /**
      * 商品
@@ -41,34 +46,54 @@ public class CartItem
     }
 
     /**
-     * 当时价格
+     * 数量
      */
-    public BigDecimal getPriceSnapshot() {
-        return priceSnapshot;
-    }
-
-    public void setPriceSnapshot(BigDecimal priceSnapshot) {
-        this.priceSnapshot = priceSnapshot;
-    }
-
-    public BigDecimal getPrice() {
-        if (shopItem == null)
-            return BigDecimal.ZERO;
-        else
-            return shopItem.getPrice();
-    }
-
+    @Override
+    @Priority(200)
     public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(BigDecimal quantity) {
+    @Override
+    public synchronized void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
+        this.amount = null;
     }
 
-    public BigDecimal getTotal() {
-        BigDecimal price = getPrice();
-        return price.multiply(quantity);
+    @Override
+    public void setQuantity(double quantity) {
+        setQuantity(BigDecimal.valueOf(quantity));
+    }
+
+    /**
+     * 价格 (当时价格)
+     */
+    @Override
+    @Priority(201)
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    @Override
+    public synchronized void setPrice(BigDecimal price) {
+        this.price = price;
+        this.amount = null;
+    }
+
+    public void setPrice(double price) {
+        setPrice(BigDecimal.valueOf(price));
+    }
+
+    /**
+     * 总额
+     */
+    @Derived
+    @Override
+    @Priority(202)
+    public synchronized BigDecimal getAmount() {
+        if (amount == null)
+            amount = price.multiply(quantity);
+        return amount;
     }
 
 }

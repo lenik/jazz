@@ -4,6 +4,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 import net.bodz.violet.edu.Course;
+import net.bodz.violet.edu.CourseCategory;
 import net.bodz.violet.edu.CourseSamples;
 
 public class CourseMapperTest
@@ -16,7 +17,8 @@ public class CourseMapperTest
 
     @Override
     public Course buildSample() {
-        return CourseSamples.build();
+        CourseCategory category = tables.pickAny(CourseCategoryMapper.class, "coursecat");
+        return CourseSamples.build(category);
     }
 
 }

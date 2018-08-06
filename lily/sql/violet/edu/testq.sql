@@ -7,7 +7,7 @@
     create table testq(
         id          bigint primary key default nextval('testq_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
---\mixin lily.mixin.LabelExVer
+--\mixin lily.mixin.ExVer
 --\mixin lily.mixin.Msg
 
         course  int not null

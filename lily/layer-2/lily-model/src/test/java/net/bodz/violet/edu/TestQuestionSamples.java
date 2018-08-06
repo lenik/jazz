@@ -1,6 +1,9 @@
 package net.bodz.violet.edu;
 
-public class TestQuestionSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class TestQuestionSamples
+        extends TestSamples {
 
     public static TestQuestion build(Course course) {
         TestQuestion a = new TestQuestion();

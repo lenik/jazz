@@ -4,28 +4,46 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.contact.impl.PersonRoleMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.contact.PersonRole" extends="co.MAP_ALL">
+    <resultMap id="map1" type="net.bodz.lily.contact.PersonRole">
+        <result property="role" column="role" />
+        <result property="description" column="description" />
+        <association property="org" javaType="net.bodz.lily.contact.Organization">
+            <id property="id" column="org" />
+            <result property="label" column="org_label" />
+        </association>
+        <association property="orgUnit" javaType="net.bodz.lily.contact.OrgUnit">
+            <id property="id" column="ou" />
+            <result property="label" column="ou_label" />
+        </association>
+        <association property="person" javaType="net.bodz.lily.contact.Person">
+            <id property="id" column="person" />
+            <result property="label" column="person_label" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            org.label "org_label",
+            ou.label "ou_label",
+            p.label "person_label"
         from personrole a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join org on a.org = org.id
+            left join orgunit ou on a.ou = ou.id
+            left join person p on a.person = p.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            org.label "org_label",
+            ou.label "ou_label",
+            p.label "person_label"
         from personrole a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join org on a.org = org.id
+            left join orgunit ou on a.ou = ou.id
+            left join person p on a.person = p.id
         ]]>
     </sql>
 
@@ -54,19 +72,25 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into personrole(
-            code, label, description
+            org, ou, person,
+            role, description
         ) values(
-            #{codeName},#{label},#{description}
+            #{org.id}, #{orgUnit.id}, #{person.id},
+            #{role}, #{description}
         ) returning id
     ]]></insert>
 
     <update id="update">
         update personrole
         <set>
-            <include refid="co.setUS" />
+            org = #{org.id},
+            ou = #{orgUnit.id},
+            person = #{person.id},
+            role = #{role},
+            description = #{description},
         </set>
         <where>
-            <if test="id != null">id = #{id}</if>
+            id = #{id}
         </where>
     </update>
 

@@ -2,24 +2,25 @@ package net.bodz.violet.plan;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.template.VoteRecord;
 
 @Table(name = "plando_vote")
-@IdType(Integer.class)
 public class PlanDoVote
-        extends CoEntity<Integer> {
+        extends VoteRecord {
 
     private static final long serialVersionUID = 1L;
+
+    PlanDo planDo;
 
     public PlanDoVote() {
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append("planLogVote: ...");
-        return sb.toString();
+    public PlanDo getPlanDo() {
+        return planDo;
+    }
+
+    public void setPlanDo(PlanDo planDo) {
+        this.planDo = planDo;
     }
 
 }

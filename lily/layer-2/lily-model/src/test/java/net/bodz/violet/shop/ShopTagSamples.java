@@ -1,6 +1,9 @@
 package net.bodz.violet.shop;
 
-public class ShopTagSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class ShopTagSamples
+        extends TestSamples {
 
     public static ShopTag build() {
         ShopTag a = new ShopTag();

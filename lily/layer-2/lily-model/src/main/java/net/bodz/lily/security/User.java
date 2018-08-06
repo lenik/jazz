@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.persistence.Table;
 
 import net.bodz.bas.meta.cache.Derived;
-import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.lily.entity.IdType;
 
 /**
@@ -36,9 +36,6 @@ public class User
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_LOGIN_NAME = 30;
-    public static final int N_FULL_NAME = 40;
-
     private Group primaryGroup;
     private List<Group> groups = new ArrayList<>();
 
@@ -46,36 +43,7 @@ public class User
     private List<UserId> ids = new ArrayList<>();
 
     private InetAddress registerIP;
-    private long lastLoginTime;
-    private InetAddress lastLoginIP; // =Inet4Address.getByAddress();
-
-    /**
-     * @label Login Name
-     * @label.zh 用户名
-     */
-    @TextInput(maxLength = N_LOGIN_NAME)
-    public final String getLoginName() {
-        return getCodeName();
-    }
-
-    public final void setLoginName(String loginName) {
-        if (loginName == null)
-            throw new NullPointerException("loginName");
-        setCodeName(loginName);
-    }
-
-    /**
-     * @label Full Name
-     * @label.zh 真实姓名
-     */
-    @TextInput(maxLength = N_FULL_NAME)
-    public final String getFullName() {
-        return getLabel();
-    }
-
-    public final void setFullName(String fullName) {
-        setLabel(fullName);
-    }
+    private UserRun runningState;
 
     /**
      * @label Primary Group
@@ -143,42 +111,7 @@ public class User
         this.ids = ids;
     }
 
-    /**
-     * @label Register IP
-     * @label.zh 注册IP
-     */
-    public InetAddress getRegisterIP() {
-        return registerIP;
-    }
-
-    public void setRegisterIP(InetAddress registerIP) {
-        this.registerIP = registerIP;
-    }
-
-    /**
-     * @label Last Login Time
-     * @label.zh 上次登录时间
-     */
-    public long getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(long lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
-    /**
-     * @label Last Login IP
-     * @label.zh 上次登录IP
-     */
-    public InetAddress getLastLoginIP() {
-        return lastLoginIP;
-    }
-
-    public void setLastLoginIP(InetAddress lastLoginIP) {
-        this.lastLoginIP = lastLoginIP;
-    }
-
+    @Redundant
     public boolean isSuperUser() {
         Integer id = getId();
         if (id == null)
@@ -196,6 +129,26 @@ public class User
                     return true;
 
         return false;
+    }
+
+    /**
+     * @label Register IP
+     * @label.zh 注册IP
+     */
+    public InetAddress getRegisterIP() {
+        return registerIP;
+    }
+
+    public void setRegisterIP(InetAddress registerIP) {
+        this.registerIP = registerIP;
+    }
+
+    public UserRun getRunningState() {
+        return runningState;
+    }
+
+    public void setRunningState(UserRun runningState) {
+        this.runningState = runningState;
     }
 
 }

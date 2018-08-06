@@ -1,6 +1,7 @@
 package net.bodz.lily.schema.impl;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.schema.TagGroupDef;
 import net.bodz.lily.schema.TagGroupDefSamples;
 import net.bodz.lily.test.AbstractMapperTest;
@@ -16,7 +17,8 @@ public class TagGroupDefMapperTest
 
     @Override
     public TagGroupDef buildSample() {
-        return TagGroupDefSamples.build();
+        SchemaDef schema = tables.pickAny(SchemaDefMapper.class, "_schema");
+        return TagGroupDefSamples.build(schema);
     }
 
 }

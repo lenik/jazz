@@ -1,6 +1,9 @@
 package net.bodz.violet.plan;
 
-public class PlanPhaseSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class PlanPhaseSamples
+        extends TestSamples {
 
     public static PlanPhase build() {
         PlanPhase a = new PlanPhase();

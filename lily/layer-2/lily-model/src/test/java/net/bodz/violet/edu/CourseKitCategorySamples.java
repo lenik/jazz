@@ -1,11 +1,15 @@
 package net.bodz.violet.edu;
 
-public class CourseKitCategorySamples {
+import net.bodz.lily.test.TestSamples;
 
-    public static CourseKitCategory build() {
+public class CourseKitCategorySamples
+        extends TestSamples {
+
+    public static CourseKitCategory build(CourseKitCategory parent) {
         CourseKitCategory a = new CourseKitCategory();
         a.setLabel("courseKitCategory-1");
         a.setDescription("A courseKitCategory named courseKitCategory-1.");
+        a.setParent(parent);
         return a;
     }
 

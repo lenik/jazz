@@ -3,7 +3,9 @@ package net.bodz.violet.edu.impl;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
+import net.bodz.violet.edu.Course;
 import net.bodz.violet.edu.CourseKit;
+import net.bodz.violet.edu.CourseKitCategory;
 import net.bodz.violet.edu.CourseKitSamples;
 
 public class CourseKitMapperTest
@@ -16,7 +18,9 @@ public class CourseKitMapperTest
 
     @Override
     public CourseKit buildSample() {
-        return CourseKitSamples.build();
+        CourseKitCategory category = tables.pickAny(CourseKitCategoryMapper.class, "coursekitcat");
+        Course course = tables.pickAny(CourseMapper.class, "course");
+        return CourseKitSamples.build(category, course);
     }
 
 }

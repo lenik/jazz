@@ -5,11 +5,11 @@
 <mapper namespace="net.bodz.lily.security.impl.GroupMapper">
 
     <resultMap id="map1" type="net.bodz.lily.security.Group" extends="co.MAP_ALL">
-        <result property="codeName" column="name" />
+        <result property="name" column="name" />
         <result property="properties.jsonForm" column="props" />
         <association property="admin" javaType="net.bodz.lily.security.User">
             <id property="id" column="admin" />
-            <result property="codeName" column="admin_name" />
+            <result property="name" column="admin_name" />
             <result property="label" column="admin_label" />
         </association>
     </resultMap>
@@ -17,7 +17,7 @@
     <resultMap id="map2" type="net.bodz.lily.security.Group" extends="map1">
         <collection property="users" javaType="ArrayList" ofType="net.bodz.lily.security.User">
             <id property="id" column="y_id" />
-            <result property="codeName" column="y_name" />
+            <result property="name" column="y_name" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
             <result property="properties.jsonForm" column="y_props" />
@@ -75,7 +75,7 @@
             props,
             admin
         ) values(
-            #{codeName}, #{label}, #{description},
+            #{name}, #{label}, #{description},
             #{properties.jsonForm},
             #{admin.id}
         ) returning id; --

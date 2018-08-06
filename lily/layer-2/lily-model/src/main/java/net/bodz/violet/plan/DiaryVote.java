@@ -2,24 +2,25 @@ package net.bodz.violet.plan;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.template.VoteRecord;
 
 @Table(name = "diary_vote")
-@IdType(Integer.class)
 public class DiaryVote
-        extends CoEntity<Integer> {
+        extends VoteRecord {
 
     private static final long serialVersionUID = 1L;
+
+    Diary diary;
 
     public DiaryVote() {
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append("diaryVote: ...");
-        return sb.toString();
+    public Diary getDiary() {
+        return diary;
+    }
+
+    public void setDiary(Diary diary) {
+        this.diary = diary;
     }
 
 }

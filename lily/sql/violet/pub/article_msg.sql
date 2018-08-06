@@ -7,7 +7,7 @@
 
     create table article_msg(
         id          bigint primary key default nextval('article_msg_seq'),
---\mixin lily.mixin.LabelExVer
+--\mixin lily.mixin.ExVer
 --\mixin lily.mixin.Mi
 --\mixin lily.mixin.Msg
 

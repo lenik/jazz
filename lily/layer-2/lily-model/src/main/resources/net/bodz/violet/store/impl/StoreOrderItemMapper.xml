@@ -12,8 +12,8 @@
         <result property="expire" column="serial" />
         <result property="quantity" column="qty" />
         <result property="price" column="price" />
-        <result property="total" column="total" />
-        <result property="comment" column="comment" />
+        <result property="amount" column="amount" />
+        <result property="notes" column="notes" />
         
         <!-- result property="batchStruct" column="batch" / -->
         
@@ -95,11 +95,11 @@
         insert into storeodrl(
             odr, art, region,
             serial, expire,
-            qty, price, total, comment
+            qty, price, amount, notes
         ) values(
             #{order.id}, #{artifact.id}, #{region.id},
             #{serial}, #{expire},
-            #{quantity}, #{price}, #{total}, #{comment}
+            #{quantity}, #{price}, #{amount}, #{notes}
         ) returning id; --
     ]]></insert>
 
@@ -114,8 +114,8 @@
             expire = #{expire},
             qty = #{quantity},
             price = #{price},
-            total = #{total},
-            comment= #{comment},
+            amount = #{amount},
+            notes = #{notes},
         </set>
         <where>
             id = #{id}

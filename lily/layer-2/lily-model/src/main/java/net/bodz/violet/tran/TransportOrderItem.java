@@ -1,13 +1,17 @@
 package net.bodz.violet.tran;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Table;
 
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.meta.LilyGroups;
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.model.mixin.IOrderItem;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.shop.SalesOrder;
 import net.bodz.violet.shop.SalesOrderItem;
@@ -18,31 +22,33 @@ import net.bodz.violet.shop.SalesOrderItem;
 @IdType(Long.class)
 @Table(name = "tranodrl")
 public class TransportOrderItem
-        extends CoMomentInterval<Long> {
+        extends CoMomentInterval<Long>
+        implements IOrderItem {
 
     private static final long serialVersionUID = 1L;
 
     public static final int N_ALT_LABEL = 30;
     public static final int N_ALT_SPEC = 80;
 
-    TransportOrder delivery;
+    TransportOrder order;
     SalesOrder salesOrder;
     SalesOrderItem salesOrderItem;
     Artifact artifact;
 
-    double quantity;
-    double price;
+    BigDecimal quantity = BigDecimal.ZERO;
+    BigDecimal price = BigDecimal.ZERO;
+    BigDecimal amount;
 
     /**
      * 送货单
      */
     @OfGroup(StdGroup.Process.class)
-    public TransportOrder getDelivery() {
-        return delivery;
+    public TransportOrder getOrder() {
+        return order;
     }
 
-    public void setDelivery(TransportOrder delivery) {
-        this.delivery = delivery;
+    public void setOrder(TransportOrder order) {
+        this.order = order;
     }
 
     /**
@@ -85,33 +91,54 @@ public class TransportOrderItem
      * 出货数量
      */
     @OfGroup(LilyGroups.Trade.class)
-    public double getQuantity() {
+    @Priority(200)
+    @Override
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    @Override
+    public synchronized void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
+        this.amount = null;
+    }
+
+    @Override
+    public void setQuantity(double quantity) {
+        setQuantity(BigDecimal.valueOf(quantity));
     }
 
     /**
      * 出货价
      */
     @OfGroup(LilyGroups.Trade.class)
-    public double getPrice() {
+    @Override
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    @Override
+    @Priority(201)
+    public synchronized void setPrice(BigDecimal price) {
         this.price = price;
+        this.amount = null;
+    }
+
+    public void setPrice(double price) {
+        setPrice(BigDecimal.valueOf(price));
     }
 
     /**
      * 出货金额
      */
-    @OfGroup(LilyGroups.Trade.class)
     @Derived
-    public double getTotal() {
-        return price * quantity;
+    @OfGroup(LilyGroups.Trade.class)
+    @Override
+    @Priority(202)
+    public synchronized BigDecimal getAmount() {
+        if (amount == null)
+            amount = price.multiply(quantity);
+        return amount;
     }
 
 }

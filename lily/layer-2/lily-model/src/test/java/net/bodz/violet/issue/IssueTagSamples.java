@@ -1,6 +1,9 @@
 package net.bodz.violet.issue;
 
-public class IssueTagSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class IssueTagSamples
+        extends TestSamples {
 
     public static IssueTag build() {
         IssueTag a = new IssueTag();

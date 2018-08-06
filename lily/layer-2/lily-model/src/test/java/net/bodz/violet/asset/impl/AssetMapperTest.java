@@ -7,8 +7,8 @@ import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.impl.ArtifactMapper;
-import net.bodz.violet.asset.AssetSamples;
 import net.bodz.violet.asset.Asset;
+import net.bodz.violet.asset.AssetSamples;
 import net.bodz.violet.store.Region;
 import net.bodz.violet.store.impl.RegionMapper;
 

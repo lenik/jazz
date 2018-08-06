@@ -1,6 +1,9 @@
 package net.bodz.violet.art;
 
-public class ArtifactParameterSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class ArtifactParameterSamples
+        extends TestSamples {
 
     public static ArtifactParameter build() {
         ArtifactParameter a = new ArtifactParameter();

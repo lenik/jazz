@@ -5,6 +5,7 @@
 <mapper namespace="net.bodz.lily.schema.impl.SchemaDefMapper">
 
     <resultMap id="map1" type="net.bodz.lily.schema.SchemaDef" extends="co.MAP_ALL">
+        
     </resultMap>
 
     <sql id="select1"><![CDATA[
@@ -37,18 +38,23 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into _schema(code, label, description)
-            values(#{codeName},#{label},#{description})
-            returning id
+        insert into _schema(
+            code, label, description,
+            priority, flags, state
+        ) values(
+            #{codeName}, #{label}, #{description},
+            #{priority}, #{flags}, #{state}
+        ) returning id; --
     ]]></insert>
 
     <update id="update">
         update _schema
         <set>
             <include refid="co.setUS" />
+            code = #{codeName},
         </set>
         <where>
-            <if test="id != null">id=#{id}, </if>
+            id = #{id}
         </where>
     </update>
 

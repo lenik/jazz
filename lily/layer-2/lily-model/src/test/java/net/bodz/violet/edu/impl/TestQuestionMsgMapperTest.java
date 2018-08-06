@@ -1,8 +1,11 @@
 package net.bodz.violet.edu.impl;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.lily.security.User;
+import net.bodz.lily.security.impl.UserMapper;
 import net.bodz.lily.test.AbstractMapperTest;
 import net.bodz.violet.VioletTests;
+import net.bodz.violet.edu.TestQuestion;
 import net.bodz.violet.edu.TestQuestionMsg;
 import net.bodz.violet.edu.TestQuestionMsgSamples;
 
@@ -16,7 +19,9 @@ public class TestQuestionMsgMapperTest
 
     @Override
     public TestQuestionMsg buildSample() {
-        return TestQuestionMsgSamples.build();
+        TestQuestion question = tables.pickAny(TestQuestionMapper.class, "testq");
+        User op = tables.pickAny(UserMapper.class, "user");
+        return TestQuestionMsgSamples.build(question, op);
     }
 
 }

@@ -5,27 +5,39 @@
 <mapper namespace="net.bodz.violet.edu.impl.TestApplyItemMapper">
 
     <resultMap id="map1" type="net.bodz.violet.edu.TestApplyItem" extends="co.MAP_UVX">
+        <result property="answerInt" column="ans" />
+        <result property="answerText" column="anstext" />
+        <result property="score" column="score" />
+        <result property="waitTime" column="waittime" />
+        <association property="apply" javaType="net.bodz.violet.edu.TestApply">
+            <id property="id" column="apply" />
+            <result property="label" column="apply_label" />
+        </association>
+        <association property="question" javaType="net.bodz.violet.edu.TestQuestion">
+            <id property="id" column="q" />
+            <result property="subject" column="q_subject" />
+        </association>
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            apply.label "apply_label",
+            q.subject "q_subject"
         from testapplyl a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join testapply apply on a.apply = apply.id
+            left join testq q on a.q = q.id
         ]]>
     </sql>
 
     <sql id="select2"><![CDATA[
         select
             a.*,
-            u.label "uid_label",
-            g.label "gid_label"
+            apply.label "apply_label",
+            q.subject "q_subject"
         from testapplyl a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            left join testapply apply on a.apply = apply.id
+            left join testq q on a.q = q.id
         ]]>
     </sql>
 
@@ -54,16 +66,28 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into testapplyl(
-            code, label, description
+            priority, flags, state,
+            apply, q,
+            ans, anstext, score,
+            waittime
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{priority}, #{flags}, #{state},
+            #{apply.id}, #{question.id},
+            #{answerInt}, #{answerText}, #{score},
+            #{waitTime}
         ) returning id; --
     ]]></insert>
 
     <update id="update">
         update testapplyl
         <set>
-            <include refid="co.setUS" />
+            <include refid="co.setVS" />
+            apply = #{apply.id},
+            q = #{question.id},
+            ans = #{answerInt},
+            anstext = #{answerText},
+            score = #{score},
+            waittime = #{waitTime},
         </set>
         <where>
             id = #{id}

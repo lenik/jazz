@@ -1,6 +1,9 @@
 package net.bodz.violet.store;
 
-public class StoreCategorySamples {
+import net.bodz.lily.test.TestSamples;
+
+public class StoreCategorySamples
+        extends TestSamples {
 
     public static StoreCategory build() {
         StoreCategory a = new StoreCategory();

@@ -58,14 +58,14 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into _tag(
-            code, label, description,
+            label, description,
             priority, flags, state,
-            tagv)
-        values(
-            #{codeName},#{label},#{description},
+            tagv
+        ) values(
+            #{label}, #{description},
             #{priority}, #{flags}, #{state},
-            #{tagGroup.id})
-        returning id
+            #{tagGroup.id}
+        ) returning id; --
     ]]></insert>
 
     <update id="update">
@@ -75,7 +75,7 @@
             tagv = #{tagGroup.id},
         </set>
         <where>
-            <if test="id != null">id=#{id}, </if>
+            id = #{id}
         </where>
     </update>
 

@@ -1,11 +1,16 @@
 package net.bodz.violet.store;
 
-public class StoreItemSamples {
+import net.bodz.lily.test.TestSamples;
+import net.bodz.violet.art.Artifact;
 
-    public static StoreItem build() {
+public class StoreItemSamples
+        extends TestSamples {
+
+    public static StoreItem build(Artifact artifact, Region region) {
         StoreItem a = new StoreItem();
-        a.setLabel("storeItem-1");
-        a.setDescription("A storeItem named storeItem-1.");
+        a.setArtifact(artifact);
+        a.setRegion(region);
+        a.setQuantity(random.nextInt(100));
         return a;
     }
 

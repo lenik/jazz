@@ -1,6 +1,9 @@
 package net.bodz.violet.issue;
 
-public class IssuePhaseSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class IssuePhaseSamples
+        extends TestSamples {
 
     public static IssuePhase build() {
         IssuePhase a = new IssuePhase();

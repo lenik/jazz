@@ -98,7 +98,7 @@
         update diary_party
         <set>
             diary = #{diary.id},
-            user = #{user.id},
+            "user" = #{user.id},
             person = #{person.id},
             org = #{org.id},
             description = #{description},

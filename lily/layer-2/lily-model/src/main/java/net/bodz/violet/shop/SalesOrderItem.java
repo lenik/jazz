@@ -14,6 +14,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.model.mixin.IOrderItem;
 import net.bodz.violet.art.Artifact;
 
 /**
@@ -22,14 +23,14 @@ import net.bodz.violet.art.Artifact;
 @IdType(Long.class)
 @Table(name = "saleodrl")
 public class SalesOrderItem
-        extends CoMomentInterval<Long> {
+        extends CoMomentInterval<Long>
+        implements IOrderItem {
 
     private static final long serialVersionUID = 1L;
 
     public static final int N_ALT_LABEL = 30;
     public static final int N_ALT_SPEC = 80;
-    public static final int N_COMMENT1 = 200;
-    public static final int N_FOOTNOTE = 200;
+    public static final int N_NOTES = 200;
 
     SalesOrder order;
     ShopItem shopItem;
@@ -42,9 +43,10 @@ public class SalesOrderItem
 
     BigDecimal quantity = BigDecimal.ZERO;
     BigDecimal price = BigDecimal.ZERO;
+    BigDecimal amount = null;
     BigDecimal n1 = BigDecimal.ZERO;
 
-    String footnote;
+    String notes;
 
     /**
      * 订单
@@ -161,38 +163,52 @@ public class SalesOrderItem
     /**
      * 数量
      */
+    @Override
     @Priority(200)
     public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(BigDecimal quantity) {
-        if (quantity == null)
-            throw new NullPointerException("quantity");
+    @Override
+    public synchronized void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
+        this.amount = null;
+    }
+
+    @Override
+    public void setQuantity(double quantity) {
+        setQuantity(BigDecimal.valueOf(quantity));
     }
 
     /**
      * 价格
      */
+    @Override
     @Priority(201)
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        if (price == null)
-            throw new NullPointerException("price");
+    @Override
+    public synchronized void setPrice(BigDecimal price) {
         this.price = price;
+        this.amount = null;
+    }
+
+    public void setPrice(double price) {
+        setPrice(BigDecimal.valueOf(price));
     }
 
     /**
      * 总额
      */
-    @Priority(202)
     @Derived
-    public BigDecimal getTotal() {
-        return price.multiply(quantity);
+    @Override
+    @Priority(202)
+    public synchronized BigDecimal getAmount() {
+        if (amount == null)
+            amount = price.multiply(quantity);
+        return amount;
     }
 
     /**
@@ -221,13 +237,13 @@ public class SalesOrderItem
      * 注释/附加
      */
     @Priority(801)
-    @TextInput(maxLength = N_FOOTNOTE)
-    public String getFootnote() {
-        return footnote;
+    @TextInput(maxLength = N_NOTES)
+    public String getNotes() {
+        return notes;
     }
 
-    public void setFootnote(String footnote) {
-        this.footnote = footnote;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
 }

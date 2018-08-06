@@ -1,6 +1,9 @@
 package net.bodz.violet.plan;
 
-public class DiaryParameterSamples {
+import net.bodz.lily.test.TestSamples;
+
+public class DiaryParameterSamples
+        extends TestSamples {
 
     public static DiaryParameter build() {
         DiaryParameter a = new DiaryParameter();
