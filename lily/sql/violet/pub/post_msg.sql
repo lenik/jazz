@@ -1,5 +1,5 @@
 --\import lily.inc.msg
---\import violet.pub.post
+--\import lily.pub.post
 
     create sequence post_msg_seq start with 1000;
 

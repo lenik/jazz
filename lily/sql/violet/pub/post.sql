@@ -1,5 +1,5 @@
 --\import lily.inc.msg
---\import violet.pub.postcat
+--\import lily.pub.postcat
 
     create sequence post_seq start with 1000;
 
