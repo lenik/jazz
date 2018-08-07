@@ -2,7 +2,7 @@
 
     create sequence manutask_seq start with 1000;
     create table manutask(
-        id          int primary key default nextval('manutask_seq'),
+        id          bigint primary key default nextval('manutask_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Mi

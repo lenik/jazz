@@ -7,7 +7,7 @@
         id          int primary key default nextval('manustdtest_parm_seq'),
 --\mixin lily.mixin.Ver
         
-        std         int not null
+        test        int not null
             references manustdtest(id) on update cascade on delete cascade,
         required    boolean not null default false,
         

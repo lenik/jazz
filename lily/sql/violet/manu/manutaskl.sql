@@ -3,12 +3,12 @@
 
     create sequence manutaskl_seq start with 1000;
     create table manutaskl(
-        id          int primary key default nextval('manutaskl_seq'),
+        id          bigint primary key default nextval('manutaskl_seq'),
 --\mixin lily.mixin.ExVer
         -- priority: index
 --\mixin lily.mixin.Mi
         
-        task        int not null
+        task        bigint not null
             references manutask(id) on update cascade on delete cascade,
         deadline    timestamp with time zone not null,
         status      varchar(100),
