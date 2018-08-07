@@ -4,7 +4,7 @@
 
     create sequence manuproc_seq start with 1000;
     create table manuproc(
-        id          int primary key default nextval('manuproc_seq'),
+        id          bigint primary key default nextval('manuproc_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Mi

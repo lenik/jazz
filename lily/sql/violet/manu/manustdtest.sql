@@ -14,6 +14,9 @@
 --\mixin lily.mixin.Props
     -- bonus
 
+        cat         int not null
+            references manustdtestcat(id) on update cascade,
+        
         parent      int
             references manustdtest(id) on update cascade on delete cascade,
 
