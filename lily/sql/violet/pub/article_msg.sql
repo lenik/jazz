@@ -1,5 +1,5 @@
 --\import lily.inc.msg
---\import violet.pub.article
+--\import lily.pub.article
 
     -- listing, left message
 

@@ -1,5 +1,5 @@
 --\import lily.inc.msg
---\mixin violet.pub.articlecat
+--\mixin lily.pub.articlecat
 
     create sequence article_seq start with 1000;
 

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.pub.impl.ArticleTalkMapper">
+
+    <resultMap id="map1" type="net.bodz.lily.pub.ArticleTalk" extends="message.MAP_ALL">
+        <association property="article" javaType="net.bodz.lily.pub.Article">
+            <id property="id" column="article" />
+            <result property="label" column="article_subject" />
+        </association>
+        <association property="parent" javaType="net.bodz.lily.pub.ArticleTalk">
+            <id property="id" column="parent" />
+            <result property="label" column="parent_subject" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            op.label "op_label",
+            article.subject "article_subject",
+            parent.subject "parent_subject"
+        from article_msg a
+            left join "user" op on a.op = op.id
+            left join article on a.article = article.id
+            left join article_msg parent on a.parent = parent.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            op.label "op_label",
+            article.subject "article_subject",
+            parent.subject "parent_subject"
+        from article_msg a
+            left join "user" op on a.op = op.id
+            left join article on a.article = article.id
+            left join article_msg parent on a.parent = parent.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into article_msg(
+            priority, flags, state,
+            t0, t1,
+            op, subject, text,
+            parent,
+            article
+        ) values(
+            #{priority}, #{flags}, #{state},
+            #{beginDate}, #{endDate},
+            #{op.id}, #{subject}, #{text},
+            #{parent.id},
+            #{article.id}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update article_msg
+        <set>
+            <include refid="co.setVS" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            parent = #{parent.id},
+            article = #{article.id},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from article_msg where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from article_msg
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>
