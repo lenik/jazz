@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.api.impl.ApiGrantedMapper">
+
+    <resultMap id="map1" type="net.bodz.lily.api.ApiGranted" extends="co.MAP_V">
+        <result property="mode" column="mode" />
+        <association property="app" javaType="net.bodz.lily.api.App">
+            <id property="id" column="app" />
+            <result property="label" column="app_label" />
+        </association>
+        <association property="api" javaType="net.bodz.lily.api.Api">
+            <id property="id" column="api" />
+            <result property="label" column="api_label" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            app.label "app_label",
+            api.label "api_label"
+        from app_api a
+            left join app on a.app = app.id
+            left join api on a.api = api.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            app.label "app_label",
+            api.label "api_label"
+        from app_api a
+            left join app on a.app = app.id
+            left join api on a.api = api.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into app_api(
+            app, api, mode
+        ) values(
+            #{app.id}, #{api.id}, #{mode}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update app_api
+        <set>
+            <include refid="co.setV" />
+            app = #{app.id},
+            api = #{api.id},
+            mode = #{mode},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from app_api where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from app_api
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>
