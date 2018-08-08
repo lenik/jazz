@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.api.impl.ApiRequestMapper">
+
+    <resultMap id="map1" type="net.bodz.lily.api.ApiRequest" extends="co.MAP_UV">
+        <association property="apply" javaType="net.bodz.lily.api.AppApply">
+            <id property="id" column="apply" />
+            <result property="subject" column="apply_subject" />
+        </association>
+        <association property="api" javaType="net.bodz.lily.api.Api">
+            <id property="id" column="api" />
+            <result property="label" column="api_label" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            apply.subject "apply_subject",
+            api.label "api_label"
+        from apply_api a
+            left join apply on a.apply = apply.id
+            left join api on a.api = api.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            apply.subject "apply_subject",
+            api.label "api_label"
+        from apply_api a
+            left join apply on a.apply = apply.id
+            left join api on a.api = api.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into apply_api(
+            priority, flags, state,
+            apply, api
+        ) values(
+            #{priority}, #{flags}, #{state},
+            #{apply.id}, #{api.id}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update apply_api
+        <set>
+            <include refid="co.setVS" />
+            apply = #{apply.id},
+            api = #{api.id},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from apply_api where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from apply_api
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

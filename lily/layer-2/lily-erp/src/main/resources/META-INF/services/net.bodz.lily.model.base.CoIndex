@@ -12,10 +12,10 @@ net.bodz.violet.manu.impl.ManuProcessIndex
 net.bodz.violet.manu.impl.ManuStdProcessIndex
 net.bodz.violet.manu.impl.ManuStdProcessInputIndex
 net.bodz.violet.manu.impl.ManuStdTestCategoryIndex
-net.bodz.violet.manu.impl.ManuStdTesterIndex
-net.bodz.violet.manu.impl.ManuStdTesterTypeIndex
 net.bodz.violet.manu.impl.ManuStdTestIndex
 net.bodz.violet.manu.impl.ManuStdTestParameterIndex
+net.bodz.violet.manu.impl.ManuStdTesterIndex
+net.bodz.violet.manu.impl.ManuStdTesterTypeIndex
 net.bodz.violet.manu.impl.ManuTaskIndex
 net.bodz.violet.manu.impl.ManuTaskItemIndex
 net.bodz.violet.manu.impl.ManuTrackIndex

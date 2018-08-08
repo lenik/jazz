@@ -7,6 +7,9 @@
 -------- Lily :: Account --------
 --\import lily.account
 
+-------- Lily :: Api --------
+--\import lily.api
+
 -------- Lily :: Contact --------
 --\import lily.contact
 

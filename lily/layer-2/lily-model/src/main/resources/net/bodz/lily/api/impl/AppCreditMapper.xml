@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.api.impl.AppCreditMapper">
+
+    <resultMap id="map1" type="net.bodz.lily.api.AppCredit" extends="co.MAP_UV">
+        <result property="credit" column="credit" />
+        <association property="app" javaType="net.bodz.lily.api.App">
+            <id property="id" column="app" />
+            <result property="label" column="app_label" />
+        </association>
+        <association property="api" javaType="net.bodz.lily.api.Api">
+            <id property="id" column="api" />
+            <result property="label" column="api_label" />
+        </association>
+    </resultMap>
+
+    <sql id="select1"><![CDATA[
+        select
+            a.*,
+            app.label "app_label",
+            api.label "api_label"
+        from appcred a
+            left join app on a.app = app.id
+            left join api on a.api = api.id
+        ]]>
+    </sql>
+
+    <sql id="select2"><![CDATA[
+        select
+            a.*,
+            app.label "app_label",
+            api.label "api_label"
+        from appcred a
+            left join app on a.app = app.id
+            left join api on a.api = api.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="map1">
+        <include refid="select1" />
+    </select>
+
+    <select id="filter" resultMap="map1">
+        <include refid="select1" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="map1">
+        <include refid="select2" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into appcred(
+            priority, flags, state,
+            app, api, credit
+        ) values(
+            #{priority}, #{flags}, #{state},
+            #{app.id}, #{api.id}, #{credit}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update appcred
+        <set>
+            <include refid="co.setVS" />
+            app = #{app.id},
+            api = #{api.id},
+            credit = #{credit},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from appcred where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from appcred
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>
