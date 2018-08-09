@@ -4,6 +4,7 @@
     create table manuproc_sn(
         id          bigint primary key default nextval('manuproc_sn_seq'),
 --\mixin lily.mixin.Ver
+
         proc        bigint not null
             references manuproc(id) on update cascade on delete cascade,
         serial      varchar(40) not null

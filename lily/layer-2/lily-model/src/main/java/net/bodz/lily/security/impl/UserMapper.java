@@ -22,7 +22,7 @@ public interface UserMapper
             @Param("mobile") String mobile);
 
     List<User> findForLogin(//
-            @Param("code") String name, //
+            @Param("name") String name, //
             @Param("password") String password);
 
 }

@@ -153,17 +153,33 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into "user"(
-            name, label, description,
-            priority, flags, state,
-            props,
-            gid0
-        ) values(
-            #{name}, #{label}, #{description},
-            #{priority}, #{flags}, #{state},
-            #{properties.jsonForm},
-            #{primaryGroup.id}
-        ) returning id; --
+        with u as (
+            insert into "user"(
+                name, label, description,
+                priority, flags, state,
+                props,
+                gid0
+            ) values(
+                #{name}, #{label}, #{description},
+                #{priority}, #{flags}, #{state},
+                #{properties.jsonForm},
+                #{primaryGroup.id}
+            ) returning id
+        ) insert into usersec(
+                "user", salt, passwd, pubkey,
+                email, emailok,
+                tel, telok,
+                props,
+                ques, ans
+            )
+            select
+                u.id, #{secret.salt}, #{secret.password}, #{secret.publicKey},
+                #{secret.email}, #{secret.emailValidated},
+                #{secret.mobile}, #{secret.mobileValidated},
+                #{secret.properties.jsonForm},
+                #{secret.question}, #{secret.answer}
+            from u
+            returning "user" "id"; --
     ]]></insert>
 
     <update id="update">
@@ -176,7 +192,25 @@
         </set>
         <where>
             id = #{id}
-        </where>
+        </where>;
+        
+        update usersec s
+        <set>
+            "user" = #{id},
+            salt = #{secret.salt},
+            passwd = #{secret.password},
+            pubkey = #{secret.publicKey},
+            email = #{secret.email},
+            emailok = #{secret.emailValidated},
+            tel = #{secret.mobile},
+            telok = #{secret.mobileValidated},
+            props = #{secret.properties.jsonForm},
+            ques = #{secret.question},
+            ans = #{secret.answer},
+        </set>
+        <where>
+            s."user" = #{id}
+        </where>;
     </update>
 
     <delete id="delete">

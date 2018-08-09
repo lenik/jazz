@@ -8,7 +8,7 @@
 --\mixin lily.mixin.ExVer
 
         apply       bigint not null
-            references testapply(id) on update cascade,
+            references testapply(id) on update cascade on delete cascade,
         
         q           bigint not null
             references testq(id) on update cascade,

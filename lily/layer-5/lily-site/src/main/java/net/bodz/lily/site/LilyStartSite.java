@@ -1,5 +1,7 @@
 package net.bodz.lily.site;
 
+import java.util.List;
+
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -7,11 +9,16 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.BasicSite;
+import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.security.LoginData;
+import net.bodz.lily.security.User;
+import net.bodz.lily.security.impl.UserMapper;
 
 public abstract class LilyStartSite
-        extends BasicSite {
+        extends BasicSite
+        implements ILoginHandler {
 
     static final Logger logger = LoggerFactory.getLogger(LilyStartSite.class);
 
@@ -41,6 +48,40 @@ public abstract class LilyStartSite
 
     void setupServices() {
         pathMap.install(new CoIndexServiceGroup(dataContext).getNameMap());
+        pathMap.install("session", new LoginService(dataContext, this));
+    }
+
+    @Override
+    public boolean login(AjaxResult result, User user, IVariantMap<String> q) {
+        String userName = q.getString("username");
+        String password = q.getString("password");
+        if (userName == null || password == null) {
+            result.fail("Username or password not specified.");
+            return false;
+        }
+
+        UserMapper mapper = dataContext.getMapper(UserMapper.class);
+        List<User> users = mapper.findForLogin(userName, password);
+        if (users.isEmpty()) {
+            result.fail("Bad user or password");
+            return false;
+        }
+
+        if (users.size() != 1) {
+            result.fail("Ambiguous user from " + users);
+            return false;
+        }
+
+        User got = users.get(0);
+        if (got.getId().intValue() != user.getId().intValue()) {
+            result.fail("Unexpected: found another user: " + got);
+        }
+        return true;
+    }
+
+    @Override
+    public final boolean logout(AjaxResult result, LoginData data) {
+        return true;
     }
 
 }

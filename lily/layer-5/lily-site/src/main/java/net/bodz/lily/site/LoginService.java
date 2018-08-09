@@ -1,11 +1,12 @@
 package net.bodz.lily.site;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -20,85 +21,61 @@ import net.bodz.lily.security.impl.UserMapper;
 public class LoginService
         implements IPathDispatchable {
 
+    static final Logger logger = LoggerFactory.getLogger(LoginService.class);
+
     DataContext dataContext;
     LoginData fileLoginData = new LoginData();
+    ILoginHandler loginHandler;
 
-    public LoginService(DataContext dataContext) {
+    public LoginService(DataContext dataContext, ILoginHandler loginHandler) {
         if (dataContext == null)
             throw new NullPointerException("dataContext");
+        if (loginHandler == null)
+            throw new NullPointerException("loginHandler");
         this.dataContext = dataContext;
+        this.loginHandler = loginHandler;
     }
 
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         HttpServletRequest request = CurrentHttpService.getRequest();
+        HttpSession session = request.getSession();
+
         String origin = request.getHeader("Origin");
         boolean fileOrigin = false;
         if (origin != null) {
             if (origin.equals("null") || origin.startsWith("file://"))
                 fileOrigin = true;
         }
-
-        Object target = null;
+        LoginData loginData;
+        if (fileOrigin) {
+            loginData = fileLoginData;
+        } else {
+            loginData = LoginData.fromSession(session);
+        }
 
         String token = tokens.peek();
         if (token == null)
             return null;
 
-        LoginData loginData;
+        Object target = null;
         AjaxResult result = new AjaxResult();
 
         switch (token) {
         case "status":
-            if (fileOrigin) {
-                loginData = fileLoginData;
-            } else {
-                loginData = LoginData.fromSession(request.getSession());
-            }
-
-            if (loginData == null || loginData.getUser() == null) {
-                result.fail("Not login");
-            } else {
-                result.setSuccess(true);
-                User user = loginData.getUser();
-                result.set("id", user.getId());
-                result.set("name", user.getName());
-                result.set("fullName", user.getFullName());
-                result.set("description", user.getDescription());
-            }
-            target = result;
+            target = status(loginData);
             break;
 
         case "login":
-            target = result;
-
-            String userName = q.getString("username");
-            String password = q.getString("password");
-            if (userName == null || password == null) {
-                result.fail("Username or password not specified.");
-                break;
-            }
-
-            UserMapper mapper = dataContext.getMapper(UserMapper.class);
-            List<User> users = mapper.findForLogin(userName, password);
-            if (users.isEmpty()) {
-                result.fail("Bad user or password");
-                break;
-            }
-            User user = users.get(0);
-            loginData = new LoginData();
-            loginData.setUser(user);
-            if (fileOrigin)
-                fileLoginData = loginData;
-            else
-                loginData.saveInSession(request.getSession());
-            result.setSuccess(true);
+            target = login(loginData, q);
             break;
 
         case "logout":
-            LoginData.removeFromSession(request.getSession());
-            result.setSuccess(true);
+            if (loginHandler.logout(result, loginData)) {
+                LoginData.removeFromSession(session);
+                result.succeed();
+            }
             target = result;
             break;
         }
@@ -107,6 +84,46 @@ public class LoginService
             return PathArrival.shift(previous, target, tokens);
         else
             return null;
+    }
+
+    AjaxResult status(LoginData loginData) {
+        AjaxResult result = new AjaxResult();
+        if (loginData.getUser() == null)
+            return result.fail("Not login");
+
+        User user = loginData.getUser();
+        result.set("id", user.getId());
+        result.set("name", user.getName());
+        result.set("fullName", user.getFullName());
+        result.set("description", user.getDescription());
+        return result.succeed();
+    }
+
+    AjaxResult login(LoginData loginData, IVariantMap<String> q) {
+        AjaxResult result = new AjaxResult();
+
+        String userName = q.getString("user");
+        if (userName == null)
+            userName = q.getString("username");
+        if (userName == null)
+            return result.fail(100, "用户名未指定.");
+
+        try {
+            UserMapper userMapper = dataContext.getMapper(UserMapper.class);
+            User user = userMapper.selectByName(userName);
+            if (user == null)
+                return result.fail(101, "用户 %s 不存在", userName);
+
+            if (!loginHandler.login(result, user, q))
+                return result;
+
+            loginData.setUser(user);
+            loginData.saveInSession();
+        } catch (Exception e) {
+            logger.error(e, "Data access error: " + e.getMessage());
+            return result.fail(e, "系统错误：" + e.getMessage());
+        }
+        return result;
     }
 
 }

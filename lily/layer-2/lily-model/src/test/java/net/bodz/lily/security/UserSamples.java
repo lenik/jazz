@@ -12,6 +12,9 @@ public class UserSamples
         a.setLabel("user-" + rand);
         a.setDescription("A user named user" + rand + ".");
         a.setPrimaryGroup(primaryGroup);
+
+        UserSecret secret = UserSecretSamples.build(a);
+        a.setSecret(secret);
         return a;
     }
 

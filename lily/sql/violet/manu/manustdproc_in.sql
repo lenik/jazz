@@ -6,6 +6,7 @@
     create table manustdproc_in(
         id          int primary key default nextval('manustdproc_in_seq'),
 --\mixin lily.mixin.Ver
+
         proc        int not null
             references manustdproc(id) on update cascade on delete cascade,
         

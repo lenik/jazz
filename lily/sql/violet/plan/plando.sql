@@ -15,10 +15,10 @@
         nvote       int not null default 0,
 
         plan       bigint not null
-            references plan(id) on update cascade on delete set null,
+            references plan(id) on update cascade,
 
         parent      int
-            references plando(id) on update cascade on delete set null,
+            references plando(id) on update cascade,
 
         changes     text[]
     );

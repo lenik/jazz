@@ -36,9 +36,14 @@ public class LoginData {
     }
 
     public void saveInSession(HttpSession session) {
-        session.setAttribute(LoginData.ATTRIBUTE_KEY, this);
+        synchronized (session) {
+            session.setAttribute(LoginData.ATTRIBUTE_KEY, this);
+        }
     }
 
+    /**
+     * @return Non-<code>null</code> instance.
+     */
     public static LoginData fromSession() {
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session == null)
@@ -47,8 +52,18 @@ public class LoginData {
             return fromSession(session);
     }
 
+    /**
+     * @return Non-<code>null</code> instance.
+     */
     public static LoginData fromSession(HttpSession session) {
-        return (LoginData) session.getAttribute(LoginData.ATTRIBUTE_KEY);
+        synchronized (session) {
+            LoginData data = (LoginData) session.getAttribute(LoginData.ATTRIBUTE_KEY);
+            if (data == null) {
+                data = new LoginData();
+                session.setAttribute(LoginData.ATTRIBUTE_KEY, data);
+            }
+            return data;
+        }
     }
 
     public static void removeFromSession() {
@@ -58,7 +73,9 @@ public class LoginData {
     }
 
     public static void removeFromSession(HttpSession session) {
-        session.removeAttribute(LoginData.ATTRIBUTE_KEY);
+        synchronized (session) {
+            session.removeAttribute(LoginData.ATTRIBUTE_KEY);
+        }
     }
 
 }

@@ -8,7 +8,7 @@
 --\mixin lily.mixin.Ver
         
         app         int not null
-            references app(id) on update cascade,
+            references app(id) on update cascade on delete cascade,
         
         api         int not null
             references api(id) on update cascade,
