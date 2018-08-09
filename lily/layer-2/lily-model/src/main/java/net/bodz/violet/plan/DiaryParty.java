@@ -111,8 +111,7 @@ public class DiaryParty
         throw new NotImplementedException();
     }
 
-    @Override
-    public void writeObject(IJsonOut out)
+    public void writeObject2(IJsonOut out)
             throws IOException {
         out.object();
 

@@ -17,6 +17,11 @@ import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
+import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
@@ -55,7 +60,8 @@ import net.bodz.lily.security.User;
  */
 @IncludeMapperXml
 public abstract class CoObject
-        implements IAccessControlled, IContent, IReinitializable, IStated, IVarMapSerializable, Serializable {
+        implements IAccessControlled, IContent, IReinitializable, IStated, //
+        Serializable, IVarMapSerializable, IJsonSerializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -540,6 +546,9 @@ public abstract class CoObject
         this.acl = acl;
     }
 
+    /** ⇱ Implementation Of {@link IVarMapSerializable}. */
+    /* _____________________________ */static section.iface __VAR_MAP__;
+
     @Override
     public void readObject(IVariantMap<String> map)
             throws LoaderException {
@@ -561,6 +570,26 @@ public abstract class CoObject
     @Override
     public void writeObject(Map<String, Object> map) {
         throw new NotImplementedException();
+    }
+
+    /** ⇱ Implementation Of {@link IJsonSerializable}. */
+    /* _____________________________ */static section.iface __JSON__;
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        try {
+            BeanJsonLoader.getInstance().load(this, o);
+        } catch (Exception e) {
+            throw new ParseException("Failed to load: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        BeanJsonDumper dumper = new BeanJsonDumper(out);
+        dumper.dump(this);
     }
 
     public Object persist(IHtmlViewContext ctx, IHtmlOut out)

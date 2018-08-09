@@ -19,4 +19,4 @@
     insert into "user"(id, name, label) values(0, 'root', 'Root');
 
 --\import lily.account.usersec
-    insert into usersec("user", passwd) values(0, 'root');
+    insert into usersec(id, "user", passwd) values(0, 0, 'root');

@@ -10,6 +10,7 @@
         
         task        bigint not null
             references manutask(id) on update cascade on delete cascade,
+
         deadline    timestamp with time zone not null,
         status      varchar(100),
         

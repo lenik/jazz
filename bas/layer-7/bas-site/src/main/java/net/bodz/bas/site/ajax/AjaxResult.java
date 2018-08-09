@@ -56,6 +56,14 @@ public class AjaxResult
         this.success = success;
     }
 
+    public boolean isSuccess() {
+        return success == Boolean.TRUE;
+    }
+
+    public boolean isFailed() {
+        return success == Boolean.FALSE;
+    }
+
     public AjaxResult succeed() {
         return succeed(0);
     }
@@ -74,8 +82,16 @@ public class AjaxResult
         return fail(status, null);
     }
 
+    public AjaxResult fail(String messageFormat, Object... args) {
+        return fail(String.format(messageFormat, args));
+    }
+
     public AjaxResult fail(String message) {
         return fail(0, message);
+    }
+
+    public AjaxResult fail(int status, String messageFormat, Object... args) {
+        return fail(status, String.format(messageFormat, args));
     }
 
     public AjaxResult fail(int status, String message) {
@@ -86,8 +102,16 @@ public class AjaxResult
         return this;
     }
 
+    public AjaxResult fail(Throwable e, String messageFormat, Object... args) {
+        return fail(e, String.format(messageFormat, args));
+    }
+
     public AjaxResult fail(Throwable e, String message) {
         return fail(e, 0, message);
+    }
+
+    public AjaxResult fail(Throwable e, int status, String messageFormat, Object... args) {
+        return fail(e, status, String.format(messageFormat, args));
     }
 
     public AjaxResult fail(Throwable e, int status, String message) {

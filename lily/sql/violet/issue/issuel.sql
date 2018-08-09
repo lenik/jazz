@@ -15,10 +15,10 @@
         nvote       int not null default 0,
 
         issue       bigint not null
-            references issue(id) on update cascade on delete set null,
+            references issue(id) on update cascade,
 
         parent      bigint
-            references issuel(id) on update cascade on delete set null,
+            references issuel(id) on update cascade,
 
         changes     text[]
     );

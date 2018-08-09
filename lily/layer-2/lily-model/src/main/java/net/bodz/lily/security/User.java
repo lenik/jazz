@@ -45,6 +45,9 @@ public class User
     private InetAddress registerIP;
     private UserRun runningState;
 
+    public User() {
+    }
+
     /**
      * @label Primary Group
      * @label.zh 首要的组
@@ -79,7 +82,7 @@ public class User
         return gids;
     }
 
-    public UserSecret getDefaultSecret() {
+    public UserSecret getSecret() {
         if (secrets.isEmpty())
             return null;
         else
@@ -89,6 +92,12 @@ public class User
                 // TODO better solution?
                 return null;
             }
+    }
+
+    public void setSecret(UserSecret secret) {
+        secrets.clear();
+        if (secret != null)
+            secrets.add(secret);
     }
 
     public List<UserSecret> getSecrets() {

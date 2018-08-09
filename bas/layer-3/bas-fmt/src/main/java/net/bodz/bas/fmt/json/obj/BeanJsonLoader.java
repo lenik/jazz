@@ -21,6 +21,7 @@ import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.AbstractJsonLoader;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.variant.MutableVariant;
@@ -35,14 +36,14 @@ public class BeanJsonLoader
     public void parse(Object obj, String json)
             throws ParseException {
         try {
-            JSONObject node = new JSONObject(json);
+            JsonObject node = new JsonObject(json);
             parse(obj, node);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
         }
     }
 
-    public void parse(Object obj, JSONObject node)
+    public void parse(Object obj, JsonObject node)
             throws ParseException {
         try {
             new BeanJsonLoader().load(obj, node);
@@ -54,7 +55,7 @@ public class BeanJsonLoader
     }
 
     @Override
-    public void load(Object ctx, JSONObject node)
+    public void load(Object ctx, JsonObject node)
             throws Exception {
         Class<?> ctxType = ctx.getClass();
         BeanInfo beanInfo;
@@ -105,7 +106,7 @@ public class BeanJsonLoader
                     continue;
                 }
 
-                if (!(jsonVal instanceof JSONObject)) {
+                if (!(jsonVal instanceof JsonObject)) {
                     // Should be terminated.
                     continue;
                 }
@@ -127,7 +128,7 @@ public class BeanJsonLoader
                         continue;
                 }
 
-                JSONObject jsonObj = (JSONObject) jsonVal;
+                JsonObject jsonObj = (JsonObject) jsonVal;
                 load(obj, jsonObj);
 
                 if (create)

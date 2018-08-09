@@ -9,7 +9,7 @@
 --\mixin lily.mixin.Props
 
         paper       int not null
-            references testpaper(id) on update cascade,
+            references testpaper(id) on update cascade on delete cascade,
         
         q           bigint not null
             references testq(id) on update cascade,
