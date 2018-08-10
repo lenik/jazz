@@ -11,6 +11,7 @@
     <artifactId>layer-4</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>bas-scanner</module>
     </modules>
     <name>BAS :: Layer 4</name>
 </project>
