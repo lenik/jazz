@@ -84,4 +84,14 @@ public class StringSearch {
         return s.toLowerCase().indexOf(Character.toLowerCase(needle));
     }
 
+    public static boolean contains(String s, char ch) {
+        if (s == null)
+            return false;
+        char[] v = s.toCharArray();
+        for (int i = 0; i < v.length; i++)
+            if (v[i] == ch)
+                return true;
+        return false;
+    }
+
 }
