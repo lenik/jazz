@@ -26,9 +26,9 @@ public class StringBuilderCharOut
     }
 
     @Override
-    public void write(CharSequence chars, int off, int len)
+    public void write(CharSequence chars, int start, int end)
             throws IOException {
-        sb.append(chars, off, off + len);
+        sb.append(chars, start, end - start);
     }
 
 }

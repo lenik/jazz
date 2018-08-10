@@ -47,6 +47,12 @@ public abstract class DecoratedCharOut
     }
 
     @Override
+    public void write(CharSequence chars)
+            throws IOException {
+        getWrapped().write(chars);
+    }
+
+    @Override
     public void write(CharSequence chars, int start, int end)
             throws IOException {
         getWrapped().write(chars, start, end);

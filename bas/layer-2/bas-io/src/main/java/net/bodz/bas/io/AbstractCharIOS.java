@@ -41,10 +41,16 @@ public abstract class AbstractCharIOS
     }
 
     @Override
-    public void write(CharSequence chars, int off, int len)
+    public void write(CharSequence chars)
             throws IOException {
-        CharBuffer buf = CharBuffer.wrap(chars, off, off + len);
-        write(buf);
+        write(chars, 0, chars.length());
+    }
+
+    @Override
+    public void write(CharSequence chars, int start, int end)
+            throws IOException {
+        for (int i = start; i < end; i++)
+            write(chars.charAt(i));
     }
 
     @Override

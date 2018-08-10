@@ -41,7 +41,12 @@ public class NullCharOut
     }
 
     @Override
-    public void write(CharSequence chars, int off, int len)
+    public void write(CharSequence chars)
+            throws IOException {
+    }
+
+    @Override
+    public void write(CharSequence chars, int start, int end)
             throws IOException {
     }
 

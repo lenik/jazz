@@ -120,6 +120,12 @@ public class MergedCharIOS
     }
 
     @Override
+    public void write(CharSequence chars)
+            throws IOException {
+        out.write(chars);
+    }
+
+    @Override
     public void write(CharSequence chars, int start, int end)
             throws IOException {
         out.write(chars, start, end);

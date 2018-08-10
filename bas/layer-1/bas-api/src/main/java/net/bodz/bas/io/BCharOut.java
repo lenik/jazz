@@ -55,7 +55,7 @@ public class BCharOut
 
     @Override
     public void write(CharSequence chars, int start, int end) {
-        buffer.append(chars, start, end);
+        buffer.append(chars, start, end - start);
     }
 
     @Override
