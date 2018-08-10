@@ -12,38 +12,38 @@ import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.meta.codegen.CopyAndPaste;
 
-public class HexCodec
+@CopyAndPaste(HexCodec.class)
+public class DecimalCodec
         extends AbstractByteCodec {
-
-    private final char[] enctbl = CharFeature.n2lc;
-    private final byte[] dectbl = CharFeature.c2n;
 
     private final int bytesPerColumn;
     private final String columnSeparator;
     private final int columnsPerRow;
     private final String rowSeparator;
 
+    private int radix = 10;
     private int width = 2;
     private char paddingChar = '0';
 
-    public HexCodec() {
+    public DecimalCodec() {
         this(" ");
     }
 
-    public HexCodec(String columnSeparator) {
+    public DecimalCodec(String columnSeparator) {
         this(columnSeparator, 1);
     }
 
-    public HexCodec(String columnSeparator, int bytesPerColumn) {
+    public DecimalCodec(String columnSeparator, int bytesPerColumn) {
         this(columnSeparator, bytesPerColumn, null, 0);
     }
 
-    public HexCodec(String columnSeparator, String rowSeparator, int columnsPerRow) {
+    public DecimalCodec(String columnSeparator, String rowSeparator, int columnsPerRow) {
         this(columnSeparator, 1, rowSeparator, columnsPerRow);
     }
 
-    public HexCodec(String columnSeparator, int bytesPerColumn, String rowSeparator, int columnsPerRow) {
+    public DecimalCodec(String columnSeparator, int bytesPerColumn, String rowSeparator, int columnsPerRow) {
         super(bytesPerColumn, 2 * bytesPerColumn + (columnSeparator == null ? 0 : columnSeparator.length()));
         this.columnSeparator = columnSeparator;
         this.bytesPerColumn = bytesPerColumn;
@@ -67,9 +67,14 @@ public class HexCodec
         this.paddingChar = paddingChar;
     }
 
-    public HexCodec padding(int width, char paddingChar) {
+    public DecimalCodec padding(int width, char paddingChar) {
         this.width = width;
         this.paddingChar = paddingChar;
+        return this;
+    }
+
+    public DecimalCodec radix(int radix) {
+        this.radix = radix;
         return this;
     }
 
@@ -84,8 +89,7 @@ public class HexCodec
         boolean startOfRow = true;
         int byteIndex = 0;
         int columnIndex = 0;
-        StringBuilder column = new StringBuilder(bytesPerColumn + width);
-        char ch;
+        long val = 0;
 
         for (int b = in.read(); b != -1; b = in.read()) {
             if (bytesPerColumn != 0)
@@ -94,12 +98,11 @@ public class HexCodec
 
                     if (!startOfRow) {
                         // flush
-                        if (column.length() == 0)
-                            column.append('0');
-                        for (int pad = column.length(); pad < width; pad++)
+                        String s = Long.toString(val, radix);
+                        for (int pad = s.length(); pad < width; pad++)
                             out.write(paddingChar);
-                        out.write(column);
-                        column.setLength(0);
+                        out.write(s);
+                        val = 0;
 
                         if (columnsPerRow != 0 && ++columnIndex >= columnsPerRow) {
                             out.write(rowSeparator);
@@ -111,61 +114,52 @@ public class HexCodec
                     }
                 }
 
-            int hi = b >> 4;
-            if (hi != 0) {
-                ch = enctbl[hi];
-                column.append(ch);
-            }
-            int lo = b & 0xF;
-            if (lo != 0) {
-                ch = enctbl[lo];
-                column.append(ch);
-            }
+            val = val * 0x100 + b;
             startOfRow = false;
             byteIndex++;
         }
         if (byteIndex != 0) { // flush
-            if (column.length() == 0)
-                column.append('0');
-            for (int pad = column.length(); pad < width; pad++)
+            String s = Long.toString(val, radix);
+            for (int pad = s.length(); pad < width; pad++)
                 out.write(paddingChar);
-            out.write(column);
+            out.write(s);
+            val = 0;
         }
     }
 
     @Override
     public void decode(ICharIn in, IByteOut out)
             throws IOException, EncodeException {
-        int byt = 0;
+        long val = 0;
         int digits = 0;
-        for (int c = in.read(); c != -1; c = in.read()) {
+        int c;
+        while (true) {
+            c = in.read();
             char ch = (char) c;
-            if (StringSearch.contains(columnSeparator, ch) || StringSearch.contains(rowSeparator, ch)
+            if (c == -1 || StringSearch.contains(columnSeparator, ch) || StringSearch.contains(rowSeparator, ch)
                     || Character.isWhitespace(c)) {
                 if (digits != 0) {
-                    out.write(byt);
-                    byt = 0;
+                    byte[] column = new byte[bytesPerColumn];
+                    for (int i = 0; i < bytesPerColumn; i++) {
+                        int lastByte = (int) (val % 0x100);
+                        column[i] = (byte) lastByte;
+                        val >>= 8;
+                    }
+                    for (int i = bytesPerColumn - 1; i >= 0; i--)
+                        out.write(column[i]);
+                    val = 0;
                     digits = 0;
                 }
-                continue;
+                if (c == -1)
+                    break;
+                else
+                    continue;
             }
-            byte hexval = dectbl[c];
-            if (digits == 0) {
-                byt = hexval;
-                digits = 1;
-            } else {
-                byt = (byt << 4) | hexval;
-                out.write(byt);
-                byt = 0;
-                digits = 0;
-            }
-        }
-        if (digits != 0)
-            out.write(byt);
-    }
 
-    public static HexCodec getInstance() {
-        return new HexCodec();
+            int c2n = CharFeature.c2n[c] & 0xFF;
+            val = val * radix + c2n;
+            digits++;
+        }
     }
 
 }

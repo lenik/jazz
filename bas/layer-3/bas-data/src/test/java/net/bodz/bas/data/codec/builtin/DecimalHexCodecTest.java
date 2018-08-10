@@ -3,10 +3,10 @@ package net.bodz.bas.data.codec.builtin;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class HexCodecTest
+public class DecimalHexCodecTest
         extends Assert {
 
-    HexCodec hexCodec = new HexCodec();
+    DecimalCodec hexCodec = new DecimalCodec().radix(16);
 
     @Test
     public void testEncode()
@@ -27,7 +27,7 @@ public class HexCodecTest
     @Test
     public void testRowSep()
             throws Exception {
-        final HexCodec codec = new HexCodec(",", 1, ":", 1);
+        final DecimalCodec codec = new DecimalCodec(",", 1, ":", 1).radix(16);
         class D {
             void o(String input, String expected)
                     throws Exception {
@@ -44,7 +44,7 @@ public class HexCodecTest
     @Test
     public void testRowSep1_2()
             throws Exception {
-        final HexCodec codec = new HexCodec(",", 1, ":", 2);
+        final DecimalCodec codec = new DecimalCodec(",", 1, ":", 2).radix(16);
         class D {
             void o(String input, String expected)
                     throws Exception {
@@ -61,7 +61,7 @@ public class HexCodecTest
     @Test
     public void testRowSep2_1()
             throws Exception {
-        final HexCodec codec = new HexCodec(",", 2, ":", 1);
+        final DecimalCodec codec = new DecimalCodec(",", 2, ":", 1).radix(16);
         class D {
             void o(String input, String expected)
                     throws Exception {
@@ -78,7 +78,7 @@ public class HexCodecTest
     @Test
     public void testRowSep2_2()
             throws Exception {
-        final HexCodec codec = new HexCodec(",", 2, ":", 2);
+        final DecimalCodec codec = new DecimalCodec(",", 2, ":", 2).radix(16);
         class D {
             void o(String input, String expected)
                     throws Exception {
@@ -95,7 +95,7 @@ public class HexCodecTest
     @Test
     public void testPadding1_1()
             throws Exception {
-        final HexCodec codec = new HexCodec(",", 1);
+        final DecimalCodec codec = new DecimalCodec(",", 1).radix(16);
         codec.padding(1, '*');
         class D {
             void o(String input, String expected)
@@ -113,7 +113,7 @@ public class HexCodecTest
     @Test
     public void testPadding1_2()
             throws Exception {
-        final HexCodec codec = new HexCodec(",", 2);
+        final DecimalCodec codec = new DecimalCodec(",", 2).radix(16);
         codec.padding(1, '*');
         class D {
             void o(String input, String expected)
@@ -131,7 +131,7 @@ public class HexCodecTest
     @Test
     public void testPadding3_1()
             throws Exception {
-        final HexCodec codec = new HexCodec(",", 1);
+        final DecimalCodec codec = new DecimalCodec(",", 1).radix(16);
         codec.padding(3, '*');
         class D {
             void o(String input, String expected)
@@ -149,7 +149,7 @@ public class HexCodecTest
     @Test
     public void testPadding3_2()
             throws Exception {
-        final HexCodec codec = new HexCodec(",", 2);
+        final DecimalCodec codec = new DecimalCodec(",", 2).radix(16);
         codec.padding(3, '*');
         class D {
             void o(String input, String expected)

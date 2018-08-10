@@ -1,7 +1,5 @@
 package net.bodz.bas.data.codec.builtin;
 
-import java.nio.charset.Charset;
-
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
@@ -10,11 +8,16 @@ import net.bodz.bas.typer.std.AbstractParser;
 public class HexParser
         extends AbstractParser<byte[]> {
 
-    static final HexCodec hexCodec;
-    static final Charset hexCharset;
-    static {
-        hexCodec = HexCodec.getInstance();
-        hexCharset = hexCodec.getPreferredCharsetForEncodedContents();
+    private HexCodec hexCodec;
+
+    public HexParser() {
+        this(new HexCodec());
+    }
+
+    public HexParser(HexCodec hexCodec) {
+        if (hexCodec == null)
+            throw new NullPointerException("hexCodec");
+        this.hexCodec = hexCodec;
     }
 
     @Override
