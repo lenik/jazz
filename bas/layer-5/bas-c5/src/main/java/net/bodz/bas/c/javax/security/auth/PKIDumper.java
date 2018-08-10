@@ -614,10 +614,10 @@ public class PKIDumper {
                 hex += " ...";
             out.println(hex);
         } else {
-            String sep = "\n" + prefix;
-            HexCodec hexCodec = new HexCodec(" ", 16, sep);
+            String rowSep = "\n" + prefix;
+            HexCodec hexCodec = new HexCodec(" ", rowSep, 16);
             if (bytes.length > dumpWidth)
-                out.print(sep);
+                out.print(rowSep);
             String hex = hexCodec.encode(bytes).trim();
             out.print(hex);
             out.println();
