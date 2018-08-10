@@ -36,10 +36,20 @@ public abstract class AbstractCharOut
     }
 
     @Override
+    public final void write(CharSequence chars)
+            throws IOException {
+        write(chars, 0, chars.length());
+    }
+
+    @Override
     public void write(CharSequence chars, int start, int end)
             throws IOException {
-        CharBuffer buf = CharBuffer.wrap(chars, start, end);
-        write(buf);
+        if (chars == null)
+            throw new NullPointerException("chars");
+        for (int i = start; i < end; i++) {
+            char ch = chars.charAt(i);
+            write(ch);
+        }
     }
 
     @Override

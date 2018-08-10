@@ -41,6 +41,13 @@ public interface ICharOut
      * @throws NullPointerException
      *             If <code>chars</code> is <code>null</code>.
      */
+    void write(CharSequence chars)
+            throws IOException;
+
+    /**
+     * @throws NullPointerException
+     *             If <code>chars</code> is <code>null</code>.
+     */
     void write(CharSequence chars, int start, int end)
             throws IOException;
 
