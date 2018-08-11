@@ -21,7 +21,7 @@
             <groupId>net.bodz.lily</groupId>
             <artifactId>lily-model</artifactId>
             <version>${project.version}</version>
-            <classifier>test</classifier>
+            <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
     </dependencies>
