@@ -103,6 +103,8 @@ public class Strings {
     }
 
     public static String ucfirstWords(String s) {
+        if (s == null)
+            return null;
         boolean boundary = true;
         int len = s.length();
         StringBuilder buf = new StringBuilder(len);
@@ -181,7 +183,7 @@ public class Strings {
 
     /**
      * Returns <code>"head..."</code> if given <code>s</code> is too long.
-     * 
+     *
      * @return {@link #ellipsisNull} if <code>s</code> is <code>null</code>.
      */
     public static String ellipsis(String s, int len) {
