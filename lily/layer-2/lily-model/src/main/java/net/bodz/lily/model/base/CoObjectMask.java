@@ -10,7 +10,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.t.range.DateRange;
+import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -30,7 +30,9 @@ public class CoObjectMask
     String description;
 
     String queryText;
-    DateRange timeRange;
+
+    DateTimeRange creation = new DateTimeRange();
+    DateTimeRange lastmod = new DateTimeRange();
 
     Set<Integer> priorities;
     Set<Integer> flags;
@@ -77,13 +79,20 @@ public class CoObjectMask
         return this;
     }
 
-    public DateRange getTimeRange() {
-        return timeRange;
+    public DateTimeRange getCreation() {
+        return creation;
     }
 
-    public CoObjectMask setTimeRange(DateRange timeRange) {
-        this.timeRange = timeRange;
-        return this;
+    public void setCreation(DateTimeRange creation) {
+        this.creation = creation;
+    }
+
+    public DateTimeRange getLastmod() {
+        return lastmod;
+    }
+
+    public void setLastmod(DateTimeRange lastmod) {
+        this.lastmod = lastmod;
     }
 
     public Set<Integer> getPriorities() {

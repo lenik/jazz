@@ -145,13 +145,42 @@
     </sql>
 
     <sql id="filter-version">
-        <if test="m.timeRange != null">and a.lastmod between #{m.timeRange.min, jdbcType=DATE} and #{m.timeRange.max, jdbcType=DATE}</if>
+        <if test="m.creation != null">
+            <if test="m.creation.hasStartIncl">and a.creation >= #{m.creation.start}</if>
+            <if test="m.creation.hasStartExcl">and a.creation > #{m.creation.start}</if>
+            <if test="m.creation.hasEndIncl">and a.creation &lt;= #{m.creation.end}</if>
+            <if test="m.creation.hasEndExcl">and a.creation &lt; #{m.creation.end}</if>
+        </if>
+        <if test="m.lastmod != null">
+            <if test="m.lastmod.hasStartIncl">and a.lastmod >= #{m.lastmod.start}</if>
+            <if test="m.lastmod.hasStartExcl">and a.lastmod > #{m.lastmod.start}</if>
+            <if test="m.lastmod.hasEndIncl">and a.lastmod &lt;= #{m.lastmod.end}</if>
+            <if test="m.lastmod.hasEndExcl">and a.lastmod &lt; #{m.lastmod.end}</if>
+        </if>
     </sql>
 
     <sql id="filter-mi">
-        <if test="m.dateRange != null">and a.t0 between #{m.dateRange.min, jdbcType=DATE} and #{m.dateRange.max, jdbcType=DATE}</if>
-        <if test="m.year != null">and extract(year from a.t0)=#{m.year}</if>
+        <if test="m.date != null">
+            <if test="m.date.hasStartIncl">and a.t0 >= #{m.date.start}</if>
+            <if test="m.date.hasStartExcl">and a.t0 > #{m.date.start}</if>
+            <if test="m.date.hasEndIncl">and a.t0 &lt;= #{m.date.end}</if>
+            <if test="m.date.hasEndExcl">and a.t0 &lt; #{m.date.end}</if>
+        </if>
+        <if test="m.beginTime != null">
+            <if test="m.beginTime.hasStartIncl">and a.t0 >= #{m.beginTime.start}</if>
+            <if test="m.beginTime.hasStartExcl">and a.t0 > #{m.beginTime.start}</if>
+            <if test="m.beginTime.hasEndIncl">and a.t0 &lt;= #{m.beginTime.end}</if>
+            <if test="m.beginTime.hasEndExcl">and a.t0 &lt; #{m.beginTime.end}</if>
+        </if>
+        <if test="m.endTime != null">
+            <if test="m.endTime.hasStartIncl">and a.t1 >= #{m.endTime.start}</if>
+            <if test="m.endTime.hasStartExcl">and a.t1 > #{m.endTime.start}</if>
+            <if test="m.endTime.hasEndIncl">and a.t1 &lt;= #{m.endTime.end}</if>
+            <if test="m.endTime.hasEndExcl">and a.t1 &lt; #{m.endTime.end}</if>
+        </if>
         <if test="m.noDate">and a.t0 is null</if>
+        
+        <if test="m.year != null">and extract(year from a.t0)=#{m.year}</if>
         <if test="m.noYear">and a.t0 is null</if>
     </sql>
 

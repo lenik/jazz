@@ -2,7 +2,7 @@ package net.bodz.lily.model.mx;
 
 import java.util.Collection;
 
-import net.bodz.bas.t.range.DateRange;
+import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntRange;
 import net.bodz.lily.model.base.CoMomentIntervalMask;
 
@@ -17,7 +17,7 @@ public class CoMessageMask
     public Integer tagId;
     public Collection<Integer> tagIds;
 
-    public DateRange mailDateRange;
+    public DateTimeRange mailDateRange;
 
     public IntRange voteCountRange;
     public IntRange likerCountRange;
@@ -70,11 +70,11 @@ public class CoMessageMask
         this.tagIds = tagIds;
     }
 
-    public DateRange getMailDateRange() {
+    public DateTimeRange getMailDateRange() {
         return mailDateRange;
     }
 
-    public void setMailDateRange(DateRange mailDateRange) {
+    public void setMailDateRange(DateTimeRange mailDateRange) {
         this.mailDateRange = mailDateRange;
     }
 
