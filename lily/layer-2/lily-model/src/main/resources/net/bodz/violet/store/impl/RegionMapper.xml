@@ -48,7 +48,11 @@
     </sql>
 
     <sql id="filtconds">
-
+        <include refid="co.modefilt" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
+        <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
+        <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
     </sql>
 
     <select id="all" resultMap="map1">
@@ -71,11 +75,14 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into region(
-            code, label, description, parent, cat,
+            code, label, description, parent,
+            cat,
             props,
             path
         ) values(
-            #{codeName},#{label},#{description}, #{parent.id}, #{category.id},
+            #{codeName},#{label},#{description}, #{parent.id},]]>
+            <if test="category == null">default,</if>
+            <if test="category != null">#{category.id},</if><![CDATA[
             #{properties.jsonForm}::jsonb,
             #{fullPath}
         ) returning id; --
