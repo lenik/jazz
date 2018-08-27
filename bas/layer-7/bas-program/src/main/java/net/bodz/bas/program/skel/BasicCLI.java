@@ -25,6 +25,7 @@ import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.program.IPerformanceAware;
 import net.bodz.bas.program.IProgram;
 import net.bodz.bas.program.model.ArtifactObjectWithOptions;
 import net.bodz.bas.program.model.HelpPageFormatter;
@@ -42,25 +43,25 @@ import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 
 /**
  * Basic CLI Framework
- * 
+ *
  * <p lang="zh-cn">
  * 基本 CLI 框架
- * 
+ *
  * @usage.std [OPTIONS] -- FILES...
  */
 @RcsKeywords(id = "$Id$")
 public abstract class BasicCLI
         extends ArtifactObjectWithOptions
-        implements IProgram, Runnable, II18nCapable {
+        implements IProgram, Runnable, II18nCapable, IPerformanceAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BasicCLI.class);
 
     /**
      * Send output to the stdout.
-     * 
+     *
      * <p lang="zh-cn">
      * 将输出重定向到标准输出。
-     * 
+     *
      * @option --stdout hidden weak
      */
     protected IPrintOut stdout = Stdio.cout;
@@ -69,20 +70,20 @@ public abstract class BasicCLI
 
     /**
      * Show prefix in the log messages.
-     * 
+     *
      * <p lang="zh-cn">
      * 在输出的日志中显示信息源前缀。
-     * 
+     *
      * @option hidden
      */
     boolean _logWithPrefix = true;
 
     /**
      * Show date time in the log messages.
-     * 
+     *
      * <p lang="zh-cn">
      * 在输出的日志中包含日期信息。
-     * 
+     *
      * @option hidden
      */
     boolean _logWithDate = false;
@@ -91,10 +92,10 @@ public abstract class BasicCLI
 
     /**
      * Repeat to get more info.
-     * 
+     *
      * <p lang="zh-cn">
      * 重复此选项以显示更多可用的信息。
-     * 
+     *
      * @option -v
      */
     void _verbose() {
@@ -103,10 +104,10 @@ public abstract class BasicCLI
 
     /**
      * Repeat to get less info.
-     * 
+     *
      * <p lang="zh-cn">
      * 重复此选项以抑制不必要的信息。
-     * 
+     *
      * @option -q
      */
     void _quiet() {
@@ -115,10 +116,10 @@ public abstract class BasicCLI
 
     /**
      * Define variable.
-     * 
+     *
      * <p lang="zh-cn">
      * 定义变量。
-     * 
+     *
      * @option -D --define =NAM=VAL
      */
     void _define(String exp)
@@ -149,10 +150,10 @@ public abstract class BasicCLI
 
     /**
      * Show version information
-     * 
+     *
      * <p lang="zh-cn">
      * 显示版本信息。
-     * 
+     *
      * @option --version
      */
     protected final void showVersion() {
@@ -172,10 +173,10 @@ public abstract class BasicCLI
 
     /**
      * Show this help text.
-     * 
+     *
      * <p lang="zh-cn">
      * 显示这个帮助文本。
-     * 
+     *
      * @option -h --help weak
      */
     protected final void showHelpPage() {
