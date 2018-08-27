@@ -1,5 +1,7 @@
 package net.bodz.bas.t.range;
 
+import net.bodz.bas.err.ParseException;
+
 public class LongRange
         extends AbstractRange<LongRange, Long> {
 
@@ -20,8 +22,12 @@ public class LongRange
 
     @Override
     public Long parseValue(String s)
-            throws NumberFormatException {
-        return new Long(s);
+            throws ParseException {
+        try {
+            return new Long(s);
+        } catch (NumberFormatException e) {
+            throw new ParseException(e.getMessage(), e);
+        }
     }
 
     @Override

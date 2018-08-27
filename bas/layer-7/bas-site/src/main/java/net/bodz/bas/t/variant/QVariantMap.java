@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.predef.Predef;
 import net.bodz.bas.t.predef.PredefMetadata;
-import net.bodz.bas.t.range.DateRange;
+import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.DoubleRange;
 import net.bodz.bas.t.range.FloatRange;
 import net.bodz.bas.t.range.IntRange;
@@ -96,7 +96,8 @@ public class QVariantMap<K>
         String s = getString(key);
         if (s == null || s.isEmpty())
             return defaultValue;
-        return FloatRange.parse(s);
+        FloatRange range = new FloatRange();
+        return range.parse(s);
     }
 
     public DoubleRange getDoubleRange(K key, DoubleRange defaultValue)
@@ -104,15 +105,19 @@ public class QVariantMap<K>
         String s = getString(key);
         if (s == null || s.isEmpty())
             return defaultValue;
-        return DoubleRange.parse(s);
+        DoubleRange range = new DoubleRange();
+        return range.parse(s);
     }
 
-    public DateRange getDateRange(K key, DateRange defaultValue)
+    public DateTimeRange getDateRange(K key, DateTimeRange defaultValue)
             throws ParseException {
         String s = getString(key);
         if (s == null || s.isEmpty())
             return defaultValue;
-        return DateRange.parse(s, false);
+        DateTimeRange range = new DateTimeRange();
+        // TODO timeZone, ...
+        range.parse(s, false);
+        return range;
     }
 
     public <T extends IId<Integer>> T getIntIdRef(K key, T skel) {
