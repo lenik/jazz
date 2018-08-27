@@ -1,9 +1,12 @@
 package net.bodz.bas.io.data;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import net.bodz.bas.io.AbstractByteIn;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IDataIn;
+import net.bodz.bas.io.adapter.InputStreamByteIn;
 
 public class DataInImplBE
         extends AbstractDataInBE
@@ -22,6 +25,16 @@ public class DataInImplBE
             return (DataInImplBE) byteIn;
         else
             return new DataInImplBE(byteIn);
+    }
+
+    public static DataInImplBE from(InputStream in) {
+        IByteIn byteIn = new InputStreamByteIn(in);
+        return from(byteIn);
+    }
+
+    // Resolve the ambiguous.
+    public static DataInImplBE from(AbstractByteIn byteIn) {
+        return from((IByteIn) byteIn);
     }
 
     @Override
