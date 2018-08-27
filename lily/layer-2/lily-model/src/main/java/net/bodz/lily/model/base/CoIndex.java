@@ -287,9 +287,11 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         boolean create = obj.getId() == null;
         if (create) {
             mapper.insert(obj);
+            result.set("id", obj.getId());
             result.println("Inserted id: " + obj.getId());
         } else {
             long rows = mapper.update(obj);
+            result.set("count", rows);
             result.println("Rows updated: " + rows);
         }
     }
