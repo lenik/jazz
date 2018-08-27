@@ -22,11 +22,11 @@ public class TagLibraryLoader {
     public TagLibraryLoader(ClassLoader loader) {
         taglibMap = new HashMap<String, ITagLibrary>();
 
-        logger.info("Search taglibs in class loader:");
+        logger.trace("Search taglibs in class loader:");
         try {
             for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class, loader)) {
                 String name = taglib.getName();
-                logger.info("    Found taglib " + name + " = " + ObjectInfo.getSimpleId(taglib));
+                logger.trace("    Found taglib " + name + " = " + ObjectInfo.getSimpleId(taglib));
                 register(name, taglib);
             }
         } catch (Error e) {
