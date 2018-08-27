@@ -14,22 +14,26 @@ public class SerialSupport {
     public final InputStream in;
     public final OutputStream out;
 
-    public SerialSupport(int baudRate)
+    public SerialSupport(String portName, int baudRate)
             throws IOException {
-        for (String first : SerialPorts.list("USB")) {
-            portName = first;
-            break;
-        }
-        if (portName == null)
-            throw new RuntimeException("No available USB serial port.");
         try {
             port = SerialPorts.open(portName, baudRate);
         } catch (CommException e) {
             throw new RuntimeException("Failed to open " + portName, e);
         }
-
         in = port.getInputStream();
         out = port.getOutputStream();
+    }
+
+    public SerialSupport(int baudRate)
+            throws IOException {
+        this(firstPort(), baudRate);
+    }
+
+    static String firstPort() {
+        for (String first : SerialPorts.list("USB"))
+            return first;
+        throw new RuntimeException("No available USB serial port.");
     }
 
     public void close() {
