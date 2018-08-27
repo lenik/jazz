@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import net.bodz.bas.scanner.ztx965n.*;
-
 public class Ztx965nRs232Test
         extends Assert
         implements IDataTypes {
