@@ -139,7 +139,7 @@ public class TableData
         try {
             parseColumnsString(columns);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid columns specified: \"" + columns + "\"", e);
+            throw new IllegalArgumentException("Invalid columns specified: \"" + columns + "\": " + e.getMessage(), e);
         }
 
         String formats = map.getString("formats");

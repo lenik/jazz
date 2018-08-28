@@ -205,7 +205,8 @@ public class PathDispatchServlet
             try {
                 viewBuilder.buildHttpViewStart(ctx, resp, ref);
             } catch (ViewBuilderException e) {
-                throw new ServletException("Build view: " + e.getMessage(), e);
+                throw new ServletException(String.format(//
+                        "Failed to build view for %s: %s", pathInfo, e.getMessage()), e);
             }
         } // if is-html.
     }

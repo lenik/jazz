@@ -119,6 +119,7 @@ public class LoginService
 
             loginData.setUser(user);
             loginData.saveInSession();
+            result.succeed();
         } catch (Exception e) {
             logger.error(e, "Data access error: " + e.getMessage());
             return result.fail(e, "系统错误：" + e.getMessage());

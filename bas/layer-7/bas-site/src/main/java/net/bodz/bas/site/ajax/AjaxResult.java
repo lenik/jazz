@@ -102,6 +102,14 @@ public class AjaxResult
         return this;
     }
 
+    public AjaxResult fail(Throwable e) {
+        return fail(e, e.getMessage());
+    }
+
+    public AjaxResult fail(Throwable e, int status) {
+        return fail(e, e.getMessage(), status);
+    }
+
     public AjaxResult fail(Throwable e, String messageFormat, Object... args) {
         return fail(e, String.format(messageFormat, args));
     }
