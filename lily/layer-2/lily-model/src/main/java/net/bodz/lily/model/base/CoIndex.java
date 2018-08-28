@@ -112,17 +112,33 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         try {
             switch (token) {
             case "__data__":
-                target = listHandler(q);
+                try {
+                    target = listHandler(q);
+                } catch (RequestHandlerException e) {
+                    target = new AjaxResult().fail(e, "Failed to handle list request: " + e.getMessage());
+                }
                 break;
             case "delete":
-                target = deleteHandler(q);
+                try {
+                    target = deleteHandler(q);
+                } catch (RequestHandlerException e) {
+                    target = new AjaxResult().fail(e, "Failed to handle delete request: " + e.getMessage());
+                }
                 break;
             case "new":
-                target = newHandler(q);
+                try {
+                    target = newHandler(q);
+                } catch (RequestHandlerException e) {
+                    target = new AjaxResult().fail(e, "Failed to handle new-form request: " + e.getMessage());
+                }
                 break;
             case "save":
                 JsonObject json = HttpPayload.getJsonPayload(req);
-                target = saveHandler(q, json);
+                try {
+                    target = saveHandler(q, json);
+                } catch (RequestHandlerException e) {
+                    target = new AjaxResult().fail(e, "Failed to handle save request: " + e.getMessage());
+                }
                 break;
             default:
                 String fileName = FilePath.stripExtension(token);
@@ -133,8 +149,6 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             }
         } catch (LoadException e) {
             throw new PathDispatchException("Failed to read request payload: " + e.getMessage(), e);
-        } catch (RequestHandlerException e) {
-            throw new PathDispatchException("Failed to handle request: " + e.getMessage(), e);
         }
 
         if (target != null)
@@ -294,6 +308,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             result.set("count", rows);
             result.println("Rows updated: " + rows);
         }
+        result.succeed();
     }
 
     protected ILazyId lazyId(T obj) {
@@ -324,7 +339,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     protected List<T> buildDataList(IVariantMap<String> q, M mask) {
         SelectOptions opts = new SelectOptions();
-        List<T> list = requireMapper().filter(mask, null);
+        List<T> list = requireMapper().filter(mask, opts);
         return list;
     }
 
