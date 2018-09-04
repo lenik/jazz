@@ -1,0 +1,26 @@
+
+    vfs root
+        bin/
+            cmd1            (used in end-user script)
+                            in stdio manners.
+        home/(user)
+            avatar/
+                face1.jpg
+                face2.png
+            music
+            video
+            data
+            ...
+        
+        data/
+            acdoc/
+                1247/
+                    file1.pdf
+            sdoc/
+        share
+            avatar/
+                user1.jpg
+                ...
+            emotion/
+                smile1.jpg
+
