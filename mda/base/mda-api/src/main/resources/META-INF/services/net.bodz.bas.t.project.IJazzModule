@@ -1,2 +1,2 @@
 net.bodz.mda.AbstractMdaModule
-net.bodz.mda.MdaApiModule
+net.bodz.mda.api.MdaApiModule

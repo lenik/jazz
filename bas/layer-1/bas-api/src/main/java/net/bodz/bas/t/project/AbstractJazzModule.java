@@ -1,5 +1,8 @@
 package net.bodz.bas.t.project;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * To make the default {@link #getPackageName()} and all the related methods work, your direct
  * derivation of this abstract class should be declared as <code>final</code>.
@@ -9,6 +12,8 @@ public abstract class AbstractJazzModule
 
     private String name;
     private String packageName;
+
+    private Set<String> managedClassNames = new TreeSet<>();
 
     public AbstractJazzModule() {
         String baseName = getClass().getSimpleName();
@@ -26,6 +31,11 @@ public abstract class AbstractJazzModule
 
     public String getPackageName() {
         return packageName;
+    }
+
+    @Override
+    public Set<String> getManagedClassNames() {
+        return managedClassNames;
     }
 
 }
