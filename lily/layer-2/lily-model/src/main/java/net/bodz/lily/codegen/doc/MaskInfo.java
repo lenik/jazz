@@ -16,7 +16,7 @@ public class MaskInfo
     }
 
     @Override
-    protected void parse(IType declaredType) {
+    protected void parse(IType declaredType, ModuleIndexer indexer) {
         for (IProperty property : declaredType.getProperties()) {
             String name = property.getName();
             if (properties.containsKey(name))

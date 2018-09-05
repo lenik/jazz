@@ -1,7 +1,9 @@
 package net.bodz.lily.codegen.doc;
 
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.potato.element.IProperty;
@@ -21,6 +23,8 @@ public class EntityInfo
     ReferenceMap refmap = new ReferenceMap();
     IPropertyMap propertyMap;
 
+    private Set<EntityInfo> dependencies = new LinkedHashSet<>();
+
     public EntityInfo(Class<?> clazz, Class<?> maskClass) {
         super(clazz);
         if (maskClass != null)
@@ -36,17 +40,20 @@ public class EntityInfo
     }
 
     @Override
-    protected void parse(IType declaredType) {
+    protected void parse(IType declaredType, ModuleIndexer indexer) {
         propertyMap = declaredType.getPropertyMap();
         for (IProperty property : propertyMap.getProperties()) {
-            parseIfAnyRef(property);
+            parseIfAnyRef(property, indexer);
         }
     }
 
-    void parseIfAnyRef(IProperty property) {
+    void parseIfAnyRef(IProperty property, ModuleIndexer indexer) {
         Class<?> type = property.getPropertyType();
         if (CoObject.class.isAssignableFrom(type)) { // is a relation reference.
             refmap.put(type, ReferenceType.ManyToOne);
+            EntityInfo target = indexer.getEntity(type);
+            if (target != this)
+                dependencies.add(target);
             return;
         }
         if (Collection.class.isAssignableFrom(type)) {
@@ -68,6 +75,15 @@ public class EntityInfo
                 return;
             }
         }
+    }
+
+    public Set<EntityInfo> getDependencies() {
+        return dependencies;
+    }
+
+    @Override
+    public String toString() {
+        return declaredClass.getName();
     }
 
 }

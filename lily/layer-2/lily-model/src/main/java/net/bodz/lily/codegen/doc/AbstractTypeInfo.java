@@ -23,7 +23,7 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
         this.doc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(declaredClass);
     }
 
-    public synchronized void parseUptoParent() {
+    public synchronized void parseUptoParent(ModuleIndexer indexer) {
         if (parsed)
             return;
         Class<?> clazz = declaredClass;
@@ -32,13 +32,13 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
             stopClass = parent.declaredClass;
         while (clazz != stopClass) {
             IType type = declares.loadType(clazz);
-            parse(type);
+            parse(type, indexer);
             clazz = clazz.getSuperclass();
         }
         parsed = true;
     }
 
-    protected abstract void parse(IType declaredType);
+    protected abstract void parse(IType declaredType, ModuleIndexer indexer);
 
     static ReflectTypeProvider_declared declares;
     static {
