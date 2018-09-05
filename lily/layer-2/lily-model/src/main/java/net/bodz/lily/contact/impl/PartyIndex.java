@@ -9,9 +9,8 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.contact.Party;
 import net.bodz.lily.contact.PartyProperties;
 import net.bodz.lily.model.base.CoIndex;
-import net.bodz.lily.model.base.CoObjectMask;
 
-public abstract class PartyIndex<T extends Party, M extends CoObjectMask>
+public abstract class PartyIndex<T extends Party, M extends PartyMask>
         extends CoIndex<T, M> {
 
     private String schema;
