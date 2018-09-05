@@ -1,0 +1,15 @@
+net.bodz.bas.vcs.git.NativeGitLogParser
+net.bodz.bas.vcs.git.NativeGitVcsProvider
+net.bodz.bas.vcs.git.NativeGitVcsWorkingCopy
+net.bodz.bas.vcs.IMutableVcsLogEntry
+net.bodz.bas.vcs.AbstractVcsWorkingCopy
+net.bodz.bas.vcs.IVcsWorkingCopy
+net.bodz.bas.vcs.BasVcsModule
+net.bodz.bas.vcs.IVcsProvider
+net.bodz.bas.vcs.IFileChangement
+net.bodz.bas.vcs.AbstractVcsProvider
+net.bodz.bas.vcs.FileChangeStatus
+net.bodz.bas.vcs.IVcsLogEntry
+net.bodz.bas.vcs.MutableVcsLogEntry
+net.bodz.bas.vcs.VcsLogOptions
+net.bodz.bas.vcs.FileChangement

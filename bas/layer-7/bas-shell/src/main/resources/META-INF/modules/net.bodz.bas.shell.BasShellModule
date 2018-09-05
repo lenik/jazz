@@ -1,0 +1,14 @@
+net.bodz.bas.shell.win32.Fix_BatBB
+net.bodz.bas.shell.Main
+net.bodz.bas.shell.util.Xjdoc2TextMap
+net.bodz.bas.shell.util.XjdocDumper
+net.bodz.bas.shell.util.TypeCollectorApp
+net.bodz.bas.shell.BasShellModule
+net.bodz.bas.shell.runner.StartGen
+net.bodz.bas.shell.runner.ExecutableExecutor
+net.bodz.bas.shell.runner.ExecutableVarArgsExecutor
+net.bodz.bas.shell.runner.MainMethodInvoker
+net.bodz.bas.shell.runner.AbstractRedirectedLauncher
+net.bodz.bas.shell.runner.RunnableRunner
+net.bodz.bas.shell.runner.AbstractProgramRunner
+net.bodz.bas.shell.runner.IProgramRunner

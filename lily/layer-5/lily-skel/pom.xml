@@ -7,6 +7,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>lily-skel</artifactId>
-    <dependencies />
+    <dependencies>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>lily-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <name>Lily :: Skel</name>
 </project>

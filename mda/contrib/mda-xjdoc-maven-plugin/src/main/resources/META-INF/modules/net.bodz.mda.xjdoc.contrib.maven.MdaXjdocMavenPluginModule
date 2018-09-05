@@ -1,0 +1,4 @@
+net.bodz.mda.xjdoc.contrib.maven.ClassDocBuilderMojo
+net.bodz.mda.xjdoc.contrib.maven.MdaXjdocMavenPluginModule
+lenik.lab.m2.IncludeProjectDependenciesConfigurator
+lenik.lab.m2.ProjectInfoMojo

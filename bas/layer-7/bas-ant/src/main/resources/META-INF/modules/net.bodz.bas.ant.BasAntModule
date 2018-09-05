@@ -1,0 +1,16 @@
+net.bodz.bas.ant.logger.TaskLogger
+net.bodz.bas.ant.logger.LoggerVC
+net.bodz.bas.ant.test.TaskTester
+net.bodz.bas.ant.BasAntModule
+net.bodz.bas.ant.IBasAntHashConsts
+net.bodz.bas.ant.util.TextElement
+net.bodz.bas.ant.util.WithParameters
+net.bodz.bas.ant.util.Parameter
+net.bodz.bas.ant.util.ValueConstruct
+net.bodz.bas.ant.util.NamedParameter
+net.bodz.bas.ant.util.WithNamedParameters
+net.bodz.bas.ant.task.ProjectInfo
+net.bodz.bas.ant.task.EchoReferencesTask
+net.bodz.bas.ant.task.PropertyBeanTask
+net.bodz.bas.ant.task.CLITask
+net.bodz.bas.ant.task.IPureTask
