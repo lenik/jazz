@@ -10,7 +10,7 @@ import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 /**
  * Service provider interface.
- * 
+ *
  * @see Xjdocs
  */
 @IndexedType
@@ -21,6 +21,9 @@ public interface IXjdocProvider
 
     void setTagLibrary(ITagLibrary tagLibrary);
 
+    /**
+     * @return <code>null</code> if no doc available.
+     */
     ClassDoc getClassDoc(Class<?> clazz)
             throws XjdocLoaderException;
 
