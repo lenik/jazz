@@ -12,6 +12,7 @@ import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.codegen.doc.ModuleIndexer;
 import net.bodz.lily.security.LoginData;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
@@ -49,6 +50,7 @@ public abstract class LilyStartSite
     void setupServices() {
         pathMap.install(new CoIndexServiceGroup(dataContext).getNameMap());
         pathMap.install("session", new LoginService(dataContext, this));
+        pathMap.install("module", new ModuleIndexer());
     }
 
     @Override

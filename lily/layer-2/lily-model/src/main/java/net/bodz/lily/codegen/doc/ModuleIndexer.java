@@ -1,33 +1,51 @@
 package net.bodz.lily.codegen.doc;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.err.LoadException;
+import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.IPathDispatchable;
+import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathArrival;
+import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.t.project.IJazzModule;
-import net.bodz.lily.contact.Person;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoIndex;
 
-public class ModuleIndexer {
+public class ModuleIndexer
+        implements IPathDispatchable {
 
+    List<ModuleInfo> modules = new ArrayList<>();
     Map<String, ModuleInfo> classModule = new HashMap<>();
 
     Map<String, EntityInfo> nameEntity = new HashMap<>();
 
     public ModuleIndexer() {
+        try {
+            index();
+        } catch (Exception e) {
+            throw new LoadException(e.getMessage(), e);
+        }
     }
 
     @SuppressWarnings("rawtypes")
-    public void run()
+    public void index()
             throws Exception {
 
         for (IJazzModule mod : ServiceLoader.load(IJazzModule.class)) {
             ModuleInfo modInfo = new ModuleInfo(mod);
+            modules.add(modInfo);
             for (String cn : mod.getManagedClassNames())
                 classModule.put(cn, modInfo);
         }
@@ -46,7 +64,16 @@ public class ModuleIndexer {
                 entity.parent = loadRec(entity.declaredClass.getSuperclass());
 
         for (EntityInfo entity : nameEntity.values())
-            entity.parseUptoParent();
+            entity.parseUptoParent(this);
+
+        for (EntityInfo entity : nameEntity.values()) {
+            for (EntityInfo dep : entity.getDependencies()) {
+                if (entity.module != dep.module)
+                    entity.module.addDependency(dep.module);
+            }
+        }
+
+        Collections.sort(modules, ModuleDepOrder.INSTANCE);
     }
 
     void addIndexClass(Class<?> indexClass) {
@@ -65,6 +92,10 @@ public class ModuleIndexer {
             EntityInfo entity = resolveEntity(entityType, maskType);
             entity.setMapperClass(mapperClass);
         }
+    }
+
+    public EntityInfo getEntity(Class<?> entityType) {
+        return nameEntity.get(entityType.getName());
     }
 
     EntityInfo resolveEntity(Class<?> entityType, Class<?> maskType) {
@@ -104,13 +135,33 @@ public class ModuleIndexer {
         return entity;
     }
 
-    public static void main(String[] args)
-            throws Exception {
-        ModuleIndexer indexer = new ModuleIndexer();
-        indexer.run();
+    public AjaxResult getModules() {
+        AjaxResult result = new AjaxResult();
+        JsonWriter out = result.begin("modules").object();
+        for (ModuleInfo modinfo : modules) {
+            IJazzModule module = modinfo.getModule();
+        }
+        out.endObject();
+        return result.succeed();
+    }
 
-        EntityInfo info = indexer.nameEntity.get(Person.class.getName());
-        System.out.println(info);
+    @Override
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        String token = tokens.peek();
+        if (token == null)
+            return null;
+
+        Object target = null;
+        switch (token) {
+        case "test":
+            target = 1;
+            break;
+        }
+
+        if (target == null)
+            return null;
+        return PathArrival.shift(previous, target, tokens);
     }
 
 }
