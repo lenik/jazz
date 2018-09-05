@@ -1,16 +1,19 @@
 package net.bodz.bas.site.ajax;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.fmt.json.JsonVerbatimBuf;
 import net.bodz.bas.html.io.BHtmlOut;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
@@ -130,6 +133,12 @@ public class AjaxResult
     public AjaxResult set(String key, Object value) {
         fields.put(key, value);
         return this;
+    }
+
+    public JsonWriter begin(String key) {
+        StringWriter buf = new StringWriter();
+        fields.put(key, new JsonVerbatimBuf(buf));
+        return new JsonWriter(buf);
     }
 
     public IHtmlOut newUpdate(String id) {

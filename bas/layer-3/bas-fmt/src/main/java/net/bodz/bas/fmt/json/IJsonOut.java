@@ -1,10 +1,16 @@
 package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
+import java.io.Writer;
 
 import org.json.JSONException;
 
 public interface IJsonOut {
+
+    /**
+     * To support verbatims.
+     */
+    Writer getWriter();
 
     /**
      * Begin appending a new array. All values until the balancing <code>endArray</code> will be
@@ -128,14 +134,14 @@ public interface IJsonOut {
     IJsonOut entryNotNull(String key, Object value)
             throws JSONException;
 
-//    IJsonOut any(Object value)
-//            throws JSONException;
+// IJsonOut any(Object value)
+// throws JSONException;
 //
-//    IJsonOut keyAny(String key, Object value)
-//            throws JSONException;
+// IJsonOut keyAny(String key, Object value)
+// throws JSONException;
 //
-//    IJsonOut keyAnyNotNull(String key, Object value)
-//            throws JSONException;
+// IJsonOut keyAnyNotNull(String key, Object value)
+// throws JSONException;
 
     class fn {
 

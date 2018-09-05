@@ -16,6 +16,10 @@ public class JsonWriter
         super(w);
     }
 
+    public Writer getWriter() {
+        return super.writer;
+    }
+
     @Override
     public JsonWriter array()
             throws JSONException {

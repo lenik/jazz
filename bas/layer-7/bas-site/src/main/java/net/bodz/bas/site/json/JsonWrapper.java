@@ -8,6 +8,11 @@ import org.json.JSONObject;
 
 import net.bodz.bas.t.variant.IVariantMap;
 
+/**
+ * Add json support to pojo.
+ *
+ * @see JsonWrapper_json
+ */
 public class JsonWrapper {
 
     String key;
