@@ -17,14 +17,19 @@ import net.bodz.mda.xjdoc.util.MethodId;
 public class ReflectType_declared
         extends AbstractReflectType {
 
-    public static final int PACKAGE_PRIVATE = 0x0001;
+    /** @see Modifier#PUBLIC */
+    public static final int PUBLIC = 0x0001;
+
     /** @see Modifier#PRIVATE */
     public static final int PRIVATE = 0x0002;
+
     /** @see Modifier#PROTECTED */
     public static final int PROTECTED = 0x0004;
 
     /** @see Modifier#STATIC */
     public static final int STATIC = 0x0008;
+
+    public static final int PACKAGE_PRIVATE = 0x0010;
 
     /**
      * @param flatten

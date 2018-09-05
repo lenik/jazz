@@ -11,9 +11,19 @@ public class ReflectTypeProvider_declared
 
     public static final int PRIORITY = 299;
 
-    int visibilities = ReflectType_declared.PRIVATE //
+    final int visibilities;
+    static int defaultVisibilities = ReflectType_declared.PUBLIC//
+            | ReflectType_declared.PRIVATE //
             | ReflectType_declared.PACKAGE_PRIVATE //
             | ReflectType_declared.PROTECTED;
+
+    public ReflectTypeProvider_declared() {
+        this(defaultVisibilities);
+    }
+
+    public ReflectTypeProvider_declared(int visibilities) {
+        this.visibilities = visibilities;
+    }
 
     @Override
     public int getPriority() {
@@ -27,6 +37,12 @@ public class ReflectTypeProvider_declared
             classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
 
         return new ReflectType_declared(clazz, infoset | visibilities, false, classDoc);
+    }
+
+    static ReflectTypeProvider_declared instance = new ReflectTypeProvider_declared();
+
+    public static ReflectTypeProvider_declared getInstance() {
+        return instance;
     }
 
 }
