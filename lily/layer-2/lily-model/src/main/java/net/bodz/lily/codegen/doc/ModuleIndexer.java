@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ibatis.IMapper;
@@ -18,7 +17,6 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoIndex;
@@ -29,6 +27,7 @@ public class ModuleIndexer
     List<ModuleInfo> modules = new ArrayList<>();
     Map<String, ModuleInfo> classModule = new HashMap<>();
 
+    EntityIndex entityIndex = new EntityIndex(this);
     Map<String, EntityInfo> nameEntity = new HashMap<>();
 
     public ModuleIndexer() {
@@ -133,16 +132,6 @@ public class ModuleIndexer
         entity = resolveEntity(clazz, maskClass);
         entity.parent = loadRec(clazz.getSuperclass());
         return entity;
-    }
-
-    public AjaxResult getModules() {
-        AjaxResult result = new AjaxResult();
-        JsonWriter out = result.begin("modules").object();
-        for (ModuleInfo modinfo : modules) {
-            IJazzModule module = modinfo.getModule();
-        }
-        out.endObject();
-        return result.succeed();
     }
 
     @Override

@@ -15,6 +15,8 @@ public class ModuleInfo
 
     IJazzModule module;
     ClassDoc doc;
+    String displayName;
+
     TreeSet<EntityInfo> entities;
 
     Set<ModuleInfo> dependencies = new LinkedHashSet<>();
@@ -22,6 +24,7 @@ public class ModuleInfo
     public ModuleInfo(IJazzModule module) {
         this.module = module;
         this.doc = Xjdocs.getDefaultProvider().getClassDoc(module.getClass());
+        this.displayName = DocUtil.getLabel(doc);
         this.entities = new TreeSet<>(EntityNameOrder.INSTANCE);
     }
 
@@ -31,6 +34,10 @@ public class ModuleInfo
 
     public ClassDoc getDoc() {
         return doc;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     public TreeSet<EntityInfo> getEntities() {
