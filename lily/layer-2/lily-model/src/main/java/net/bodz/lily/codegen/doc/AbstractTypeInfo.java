@@ -13,6 +13,7 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
 
     Class<?> declaredClass;
     ClassDoc doc;
+    String displayName;
 
     boolean parsed;
 
@@ -21,6 +22,19 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
             throw new NullPointerException("declaredClass");
         this.declaredClass = declaredClass;
         this.doc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(declaredClass);
+        this.displayName = DocUtil.getLabel(doc);
+    }
+
+    public Class<?> getDeclaredClass() {
+        return declaredClass;
+    }
+
+    public ClassDoc getDoc() {
+        return doc;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     public synchronized void parseUptoParent(ModuleIndexer indexer) {
