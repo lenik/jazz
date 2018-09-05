@@ -1,16 +1,13 @@
 package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import org.json.JSONException;
 
 public interface IJsonOut {
 
-    /**
-     * To support verbatims.
-     */
-    Writer getWriter();
+    IJsonOut verbatim(String code)
+            throws JSONException;
 
     /**
      * Begin appending a new array. All values until the balancing <code>endArray</code> will be

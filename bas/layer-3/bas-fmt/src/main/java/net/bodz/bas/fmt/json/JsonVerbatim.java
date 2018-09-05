@@ -1,7 +1,6 @@
 package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import net.bodz.bas.err.ParseException;
 
@@ -31,8 +30,7 @@ public class JsonVerbatim
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
-        Writer writer = out.getWriter();
-        writer.write(str);
+        out.verbatim(str);
     }
 
 }
