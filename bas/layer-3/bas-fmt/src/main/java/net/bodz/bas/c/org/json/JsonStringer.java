@@ -3,15 +3,21 @@ package net.bodz.bas.c.org.json;
 import java.io.IOException;
 
 import org.json.JSONException;
-import org.json.JSONStringer;
 
 import net.bodz.bas.fmt.json.IJsonOut;
 
 public class JsonStringer
-        extends JSONStringer
+        extends JSONStringer_patch
         implements IJsonOut {
 
     public JsonStringer() {
+    }
+
+    @Override
+    public JsonStringer verbatim(String code)
+            throws JSONException {
+        append(code);
+        return this;
     }
 
     @Override

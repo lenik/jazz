@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.json.JSONException;
-import org.json.JSONWriter;
 
 import net.bodz.bas.fmt.json.IJsonOut;
 
 public class JsonWriter
-        extends JSONWriter
+        extends JSONWriter_patch
         implements IJsonOut {
+
+    char lastMode;
+    int verbatimLevel;
 
     public JsonWriter(Writer w) {
         super(w);
@@ -18,6 +20,12 @@ public class JsonWriter
 
     public Writer getWriter() {
         return super.writer;
+    }
+
+    public JsonWriter verbatim(String code)
+            throws JSONException {
+        append(code);
+        return this;
     }
 
     @Override
