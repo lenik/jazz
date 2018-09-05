@@ -1,0 +1,9 @@
+net.bodz.bas.jvm._class.NamedFrame
+net.bodz.bas.jvm._class.AsmClassLoader
+net.bodz.bas.jvm.exit.MayExit
+net.bodz.bas.jvm.exit.SecurityControl
+net.bodz.bas.jvm.exit.CatchExit
+net.bodz.bas.jvm.stack.FrameConstructError
+net.bodz.bas.jvm.stack.Caller
+net.bodz.bas.jvm.stack.StackTrace
+net.bodz.bas.jvm.BasJvmhackModule
