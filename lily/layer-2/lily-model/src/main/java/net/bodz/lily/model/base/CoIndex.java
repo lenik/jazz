@@ -47,7 +47,7 @@ import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.security.AccessControl;
 
 @AccessControl
-@IndexedType
+@IndexedType(includeAbstract = true)
 @VirtualHostScope
 public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         extends AbstractCacheControl
