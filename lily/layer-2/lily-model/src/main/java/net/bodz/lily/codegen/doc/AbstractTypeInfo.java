@@ -1,8 +1,8 @@
 package net.bodz.lily.codegen.doc;
 
+import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.potato.provider.reflect.ReflectTypeProvider_declared;
-import net.bodz.bas.potato.provider.reflect.ReflectType_declared;
+import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
@@ -54,10 +54,10 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
 
     protected abstract void parse(IType declaredType, ModuleIndexer indexer);
 
-    static ReflectTypeProvider_declared declares;
+    static ITypeProvider declares;
     static {
-        declares = new ReflectTypeProvider_declared(ReflectType_declared.PUBLIC);
-
+        declares = new BeanTypeProvider(//
+                ITypeProvider.PROPERTIES | ITypeProvider.METHODS | ITypeProvider.DOCS);
     }
 
 }

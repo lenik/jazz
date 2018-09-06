@@ -1,7 +1,7 @@
 package net.bodz.lily;
 
 /**
- * Lily Models
+ * Lily Framework Models
  */
 public class LilyModelModule
         extends AbstractLilyModule {

@@ -3,7 +3,7 @@ package net.bodz.mda;
 import net.bodz.bas.t.project.AbstractJazzModule;
 import net.bodz.bas.t.project.IJazzProject;
 
-public class AbstractMdaModule
+public abstract class AbstractMdaModule
         extends AbstractJazzModule {
 
     @Override

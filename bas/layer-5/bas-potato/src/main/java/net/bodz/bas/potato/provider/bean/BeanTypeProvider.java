@@ -16,6 +16,10 @@ public class BeanTypeProvider
 
     public static final int PRIORITY = 100;
 
+    public BeanTypeProvider(int infoset) {
+        super(infoset);
+    }
+
     @Override
     public int getPriority() {
         return PRIORITY;
@@ -29,6 +33,8 @@ public class BeanTypeProvider
             ClassDoc classDoc = null;
             if ((infoset & ITypeProvider.DOCS) != 0)
                 classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
+            else
+                classDoc = ClassDoc.n_a(clazz.getName());
 
             return new BeanType(beanInfo, infoset, classDoc, UnionXjdocProvider.getInstance());
         } catch (IntrospectionException e) {

@@ -1,15 +1,16 @@
 package net.bodz.bas.potato;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.meta.decl.Volatile;
@@ -26,6 +27,10 @@ public class PotatoTypes
     static final Logger logger = LoggerFactory.getLogger(PotatoTypes.class);
 
     private Map<Class<?>, IType> cache = new HashMap<>();
+
+    public PotatoTypes(int infoset) {
+        super(infoset);
+    }
 
     @Override
     public synchronized IType loadType(Class<?> clazz, Object obj, int infoset) {
@@ -61,12 +66,18 @@ public class PotatoTypes
     static TreeSet<ITypeProvider> typeProviders;
     static {
         typeProviders = new TreeSet<>(PriorityComparator.INSTANCE);
-        for (ITypeProvider provider : ServiceLoader.load(ITypeProvider.class)) {
-            typeProviders.add(provider);
+        for (Class<? extends ITypeProvider> providerClass : IndexedTypes.list(ITypeProvider.class, false)) {
+            try {
+                Constructor<? extends ITypeProvider> ctor = providerClass.getConstructor(int.class);
+                ITypeProvider provider = ctor.newInstance(-1);
+                typeProviders.add(provider);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    static PotatoTypes instance = new PotatoTypes();
+    static PotatoTypes instance = new PotatoTypes(-1);
 
     public static ITypeProvider getInstance() {
         return instance;
