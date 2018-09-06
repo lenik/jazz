@@ -11,6 +11,10 @@ public class ReflectTypeProvider
 
     public static final int PRIORITY = 200;
 
+    public ReflectTypeProvider(int infoset) {
+        super(infoset);
+    }
+
     @Override
     public int getPriority() {
         return PRIORITY;

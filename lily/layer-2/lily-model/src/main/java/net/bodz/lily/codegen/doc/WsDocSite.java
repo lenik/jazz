@@ -24,6 +24,7 @@ public class WsDocSite
             out.object();
             out.key("doc");
             out.value(modinfo.getDisplayName());
+
             out.key("entities");
             out.object();
             for (EntityInfo entity : modinfo.getEntities()) {

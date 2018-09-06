@@ -5,17 +5,26 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IPropertyMap;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.IPathDispatchable;
+import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathArrival;
+import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.site.ajax.AjaxResult;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoObject;
 
 /**
  * @see ModuleInfo
  */
 public class EntityInfo
-        extends AbstractTypeInfo<EntityInfo> {
+        extends AbstractTypeInfo<EntityInfo>
+        implements IPathDispatchable {
 
     MaskInfo maskInfo;
     IndexInfo indexInfo;
@@ -37,6 +46,73 @@ public class EntityInfo
 
     public void setIndexClass(Class<?> indexClass) {
         this.indexInfo = new IndexInfo(indexClass);
+    }
+
+    public ReferenceMap getReferenceMap() {
+        return refmap;
+    }
+
+    public AjaxResult getProperties() {
+        AjaxResult result = new AjaxResult();
+        JsonWriter out = result.begin("groups").array();
+        EntityInfo node = this;
+        while (node != null) {
+            out.object();
+            // out.entry("declaredClass", node.getDeclaredClass().getName());
+            out.entry("name", node.declaredClass.getName());
+            out.entry("doc", node.doc.toString());
+            out.key("properties");
+            out.array();
+            for (IProperty property : node.propertyMap.getProperties()) {
+                out.object();
+                out.entry("name", property.getName());
+                out.entry("type", property.getPropertyType().getName());
+                out.entry("label", property.getLabel());
+                out.entry("description", property.getDescription());
+                out.endObject();
+            }
+            out.endArray();
+            node = node.parent;
+            out.endObject();
+        }
+        out.endArray();
+        return result.succeed();
+    }
+
+    public AjaxResult getMaskProperties() {
+        AjaxResult result = new AjaxResult();
+        JsonWriter out = result.begin("groups").array();
+        MaskInfo node = maskInfo;
+        while (node != null) {
+            out.object();
+            // out.entry("declaredClass", node.getDeclaredClass().getName());
+            out.entry("name", node.declaredClass.getName());
+            out.entry("doc", node.doc.toString());
+            out.key("properties");
+            out.array();
+            for (IProperty property : node.properties.values()) {
+                out.object();
+                out.entry("name", property.getName());
+                out.entry("type", property.getPropertyType().getName());
+                out.entry("label", property.getLabel());
+                out.entry("description", property.getDescription());
+                out.endObject();
+            }
+            out.endArray();
+            node = node.parent;
+            out.endObject();
+        }
+        out.endArray();
+        return result.succeed();
+    }
+
+    public Set<EntityInfo> getDependencies() {
+        return dependencies;
+    }
+
+    @Override
+    public String toString() {
+        return declaredClass.getName();
     }
 
     @Override
@@ -77,13 +153,23 @@ public class EntityInfo
         }
     }
 
-    public Set<EntityInfo> getDependencies() {
-        return dependencies;
-    }
-
     @Override
-    public String toString() {
-        return declaredClass.getName();
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        String token = tokens.peek();
+        if (token == null)
+            return null;
+
+        Object target = null;
+        switch (token) {
+        case "test":
+            target = 1;
+            break;
+        }
+
+        if (target == null)
+            return null;
+        return PathArrival.shift(previous, target, tokens);
     }
 
 }

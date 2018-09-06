@@ -3,7 +3,7 @@ package net.bodz.lily;
 import net.bodz.bas.t.project.AbstractJazzModule;
 import net.bodz.bas.t.project.IJazzProject;
 
-public class AbstractLilyModule
+public abstract class AbstractLilyModule
         extends AbstractJazzModule {
 
     @Override

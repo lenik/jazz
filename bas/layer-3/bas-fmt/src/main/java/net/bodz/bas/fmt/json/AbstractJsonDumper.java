@@ -14,6 +14,7 @@ import org.json.JSONException;
 
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.set.StackSet;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
@@ -239,8 +240,13 @@ public abstract class AbstractJsonDumper<self_t>
             out.value(jodaDateStr);
             return;
 
-//            TODO Scalar
+// TODO Scalar
         default:
+            if (iString.class.isAssignableFrom(type)) {
+                out.value(obj);
+                return;
+            }
+
             IParser<?> parser = Typers.getTyper(type, IParser.class);
             if (parser != null) {
                 IFormatter<Object> formatter = Typers.getTyper(type, IFormatter.class);
@@ -283,7 +289,7 @@ public abstract class AbstractJsonDumper<self_t>
             try {
                 out.endObject();
             } catch (JSONException e) {
-                 throw e;
+                throw e;
             }
         }
     }

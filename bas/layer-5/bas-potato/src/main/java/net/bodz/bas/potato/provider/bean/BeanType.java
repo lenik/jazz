@@ -25,6 +25,8 @@ import net.bodz.mda.xjdoc.util.MethodId;
 public class BeanType
         extends AbstractType {
 
+    public static final int FLATTEN = 0x0001;
+
     private BeanDescriptor beanDescriptor;
     private Class<?> beanClass;
 
@@ -41,6 +43,8 @@ public class BeanType
         super(beanInfo.getBeanDescriptor().getBeanClass(), //
                 beanInfo.getBeanDescriptor().getName(), //
                 classDoc);
+
+        boolean declaredOnly = (infoset & FLATTEN) == 0;
 
         beanDescriptor = beanInfo.getBeanDescriptor();
         beanClass = beanDescriptor.getBeanClass();
@@ -68,6 +72,13 @@ public class BeanType
                     // TODO This could be an indexed property. Not supported, yet.
                     continue;
 
+                if (declaredOnly) {
+                    if (getter != null && getter.getDeclaringClass() != beanClass)
+                        continue;
+                    if (setter != null && setter.getDeclaringClass() != beanClass)
+                        continue;
+                }
+
                 String name = propertyDescriptor.getName();
                 MethodDoc propertyDoc = null;
                 if (docs) {
@@ -86,8 +97,10 @@ public class BeanType
         if ((infoset & ITypeProvider.METHODS) != 0) {
             MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
             for (MethodDescriptor methodDescriptor : methodDescriptors) {
-
                 Method method = methodDescriptor.getMethod();
+                if (declaredOnly)
+                    if (method.getDeclaringClass() != beanClass)
+                        continue;
 
                 MethodDoc methodDoc = null;
                 if (docs) {
@@ -104,6 +117,10 @@ public class BeanType
         if ((infoset & ITypeProvider.EVENTS) != 0) {
             EventSetDescriptor[] eventSetDescriptors = beanInfo.getEventSetDescriptors();
             for (EventSetDescriptor eventSetDescriptor : eventSetDescriptors) {
+                Method addListener = eventSetDescriptor.getAddListenerMethod();
+                if (declaredOnly)
+                    if (addListener != null && addListener.getDeclaringClass() != beanClass)
+                        continue;
 
                 IElementDoc eventDoc = null;
                 if (docs) {

@@ -11,7 +11,7 @@ public class TypeKind {
 
     /**
      * Normal class type is a type which is not primitive, interface, or array.
-     * 
+     *
      * @return <code>true</code> For normal class.
      */
     public static boolean isNormalClass(Class<?> type) {

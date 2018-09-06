@@ -2,7 +2,7 @@ package net.bodz.bas.c.type;
 
 /**
  * Keep the id compatible with eclipse jdt TypeIds.
- * 
+ *
  * @see TypeKind#getTypeId(Class)
  */
 public interface TypeId {
@@ -56,4 +56,5 @@ public interface TypeId {
     int CALENDAR = 1010;
 
     int Z_PREDEF = 2000;
+
 }
