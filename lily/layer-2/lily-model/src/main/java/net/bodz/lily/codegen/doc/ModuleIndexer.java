@@ -30,7 +30,7 @@ public class ModuleIndexer
     EntityIndex entityIndex = new EntityIndex(this);
     Map<String, EntityInfo> nameEntity = new HashMap<>();
 
-    public ModuleIndexer() {
+    private ModuleIndexer() {
         try {
             index();
         } catch (Exception e) {
@@ -151,6 +151,12 @@ public class ModuleIndexer
         if (target == null)
             return null;
         return PathArrival.shift(previous, target, tokens);
+    }
+
+    static ModuleIndexer instance = new ModuleIndexer();
+
+    public static ModuleIndexer getInstance() {
+        return instance;
     }
 
 }

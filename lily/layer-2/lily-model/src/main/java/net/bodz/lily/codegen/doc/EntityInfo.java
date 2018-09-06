@@ -1,14 +1,16 @@
 package net.bodz.lily.codegen.doc;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.c.type.TypeParam;
+import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
-import net.bodz.bas.potato.element.IPropertyMap;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
@@ -26,13 +28,15 @@ public class EntityInfo
         extends AbstractTypeInfo<EntityInfo>
         implements IPathDispatchable {
 
+    ModuleIndexer indexer;
+
     MaskInfo maskInfo;
     IndexInfo indexInfo;
 
     ReferenceMap refmap = new ReferenceMap();
-    IPropertyMap propertyMap;
+    Map<String, IProperty> properties = new LinkedHashMap<>();
 
-    private Set<EntityInfo> dependencies = new LinkedHashSet<>();
+    Set<EntityInfo> dependencies = new LinkedHashSet<>();
 
     public EntityInfo(Class<?> clazz, Class<?> maskClass) {
         super(clazz);
@@ -52,29 +56,21 @@ public class EntityInfo
         return refmap;
     }
 
+    @Override
+    public Map<String, IProperty> getPropertyMap() {
+        return properties;
+    }
+
+    @Override
+    public Map<String, IMethod> getMethodMap() {
+        return Collections.emptyMap();
+    }
+
     public AjaxResult getProperties() {
         AjaxResult result = new AjaxResult();
         JsonWriter out = result.begin("groups").array();
-        EntityInfo node = this;
-        while (node != null) {
-            out.object();
-            // out.entry("declaredClass", node.getDeclaredClass().getName());
-            out.entry("name", node.declaredClass.getName());
-            out.entry("doc", node.doc.toString());
-            out.key("properties");
-            out.array();
-            for (IProperty property : node.propertyMap.getProperties()) {
-                out.object();
-                out.entry("name", property.getName());
-                out.entry("type", property.getPropertyType().getName());
-                out.entry("label", property.getLabel());
-                out.entry("description", property.getDescription());
-                out.endObject();
-            }
-            out.endArray();
-            node = node.parent;
-            out.endObject();
-        }
+        PropertyExporter exporter = new PropertyExporter(ModuleIndexer.getInstance());
+        exporter.export(out, this);
         out.endArray();
         return result.succeed();
     }
@@ -82,26 +78,8 @@ public class EntityInfo
     public AjaxResult getMaskProperties() {
         AjaxResult result = new AjaxResult();
         JsonWriter out = result.begin("groups").array();
-        MaskInfo node = maskInfo;
-        while (node != null) {
-            out.object();
-            // out.entry("declaredClass", node.getDeclaredClass().getName());
-            out.entry("name", node.declaredClass.getName());
-            out.entry("doc", node.doc.toString());
-            out.key("properties");
-            out.array();
-            for (IProperty property : node.properties.values()) {
-                out.object();
-                out.entry("name", property.getName());
-                out.entry("type", property.getPropertyType().getName());
-                out.entry("label", property.getLabel());
-                out.entry("description", property.getDescription());
-                out.endObject();
-            }
-            out.endArray();
-            node = node.parent;
-            out.endObject();
-        }
+        PropertyExporter exporter = new PropertyExporter(ModuleIndexer.getInstance());
+        exporter.export(out, maskInfo);
         out.endArray();
         return result.succeed();
     }
@@ -117,8 +95,8 @@ public class EntityInfo
 
     @Override
     protected void parse(IType declaredType, ModuleIndexer indexer) {
-        propertyMap = declaredType.getPropertyMap();
-        for (IProperty property : propertyMap.getProperties()) {
+        for (IProperty property : declaredType.getProperties()) {
+            properties.put(property.getName(), property);
             parseIfAnyRef(property, indexer);
         }
     }

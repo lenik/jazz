@@ -13,7 +13,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 public class WsDocSite
         implements IPathDispatchable {
 
-    ModuleIndexer indexer = new ModuleIndexer();
+    ModuleIndexer indexer = ModuleIndexer.getInstance();
 
     public AjaxResult getModules() {
         AjaxResult result = new AjaxResult();

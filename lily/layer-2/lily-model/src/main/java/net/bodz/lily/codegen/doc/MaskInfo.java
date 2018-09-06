@@ -1,8 +1,10 @@
 package net.bodz.lily.codegen.doc;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
@@ -13,6 +15,16 @@ public class MaskInfo
 
     public MaskInfo(Class<?> clazz) {
         super(clazz);
+    }
+
+    @Override
+    public Map<String, IProperty> getPropertyMap() {
+        return properties;
+    }
+
+    @Override
+    public Map<String, IMethod> getMethodMap() {
+        return Collections.emptyMap();
     }
 
     @Override
