@@ -15,6 +15,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 public class PropertyExporter {
 
     ModuleIndexer indexer;
+    boolean usePathKey = true;
 
     public PropertyExporter(ModuleIndexer indexer) {
         if (indexer == null)
@@ -24,11 +25,11 @@ public class PropertyExporter {
 
     public <node_t extends AbstractTypeInfo<node_t>> //
     void export(JsonWriter out, node_t start) {
-        export(out, start, null);
+        export(out, start, null, "");
     }
 
     public <node_t extends AbstractTypeInfo<node_t>> //
-    void export(JsonWriter out, node_t start, Set<String> includes) {
+    void export(JsonWriter out, node_t start, Set<String> includes, String pathPrefix) {
         node_t node = start;
         while (node != null) {
             List<IProperty> properties = new ArrayList<>();
@@ -54,9 +55,13 @@ public class PropertyExporter {
             for (IProperty property : properties) {
                 String name = property.getName();
                 Class<?> type = property.getPropertyType();
-                out.key(name);
+                if (usePathKey)
+                    out.key(pathPrefix + name);
+                else
+                    out.key(name);
                 out.object();
-                out.entry("name", property.getName());
+                out.entry("name", name);
+                out.entry("namePath", pathPrefix + name);
                 out.entry("type", type.getName());
                 out.entry("label", property.getLabel());
                 out.entry("description", property.getDescription());
@@ -76,7 +81,8 @@ public class PropertyExporter {
 
                     out.key("propertyGroups");
                     out.array();
-                    export(out, nested, fieldSet);
+                    export(out, nested, fieldSet, //
+                            usePathKey ? (pathPrefix + name + ".") : name);
                     out.endArray();
                 }
                 out.endObject(); // property
