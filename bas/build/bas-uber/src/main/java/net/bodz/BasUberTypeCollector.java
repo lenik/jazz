@@ -2,12 +2,12 @@ package net.bodz;
 
 import net.bodz.bas.shell.util.TypeCollectorApp;
 
-public class TestTypeCollector
+public class BasUberTypeCollector
         extends TypeCollectorApp {
 
     public static void main(String[] args)
             throws Exception {
-        new TestTypeCollector().execute(args);
+        new BasUberTypeCollector().execute(args);
     }
 
 }

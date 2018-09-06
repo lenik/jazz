@@ -1,13 +1,13 @@
-package net.bodz.lily;
+package net.bodz;
 
 import net.bodz.bas.shell.util.TypeCollectorApp;
 
-public class MainTypeCollector
+public class BasUberTestTypeCollector
         extends TypeCollectorApp {
 
     public static void main(String[] args)
             throws Exception {
-        new MainTypeCollector().execute(args);
+        new BasUberTestTypeCollector().execute(args);
     }
 
 }
