@@ -10,20 +10,14 @@ public class ReflectTypeProvider_declared
         extends AbstractTypeProvider {
 
     public static final int PRIORITY = 299;
-
-    final int visibilities;
-    static int defaultVisibilities = ReflectType_declared.PUBLIC//
-            | ReflectType_declared.PRIVATE //
-            | ReflectType_declared.PACKAGE_PRIVATE //
-            | ReflectType_declared.PROTECTED;
+    public static final int I_Default = -1;
 
     public ReflectTypeProvider_declared(int infoset) {
-        this(infoset, defaultVisibilities);
+        super(infoset);
     }
 
-    public ReflectTypeProvider_declared(int infoset, int visibilities) {
-        super(infoset);
-        this.visibilities = visibilities;
+    public ReflectTypeProvider_declared(int withInfo, int withoutInfo) {
+        super(withInfo, withoutInfo);
     }
 
     @Override
@@ -32,15 +26,20 @@ public class ReflectTypeProvider_declared
     }
 
     @Override
-    public IType loadType(Class<?> clazz, Object obj, int infoset) {
-        ClassDoc classDoc = null;
-        if ((infoset & ITypeProvider.DOCS) != 0)
-            classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
-
-        return new ReflectType_declared(clazz, infoset | visibilities, false, classDoc);
+    public int getDefaultInfoset() {
+        return I_Default;
     }
 
-    static ReflectTypeProvider_declared instance = new ReflectTypeProvider_declared(-1);
+    @Override
+    public IType loadType(Class<?> clazz, Object obj, int infoset) {
+        ClassDoc classDoc = null;
+        if ((infoset & ITypeProvider.I_Docs) != 0)
+            classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
+
+        return new ReflectType_declared(clazz, infoset, false, classDoc);
+    }
+
+    static ReflectTypeProvider_declared instance = new ReflectTypeProvider_declared(0, 0);
 
     public static ReflectTypeProvider_declared getInstance() {
         return instance;

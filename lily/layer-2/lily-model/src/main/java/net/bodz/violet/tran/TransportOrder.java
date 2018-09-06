@@ -270,7 +270,7 @@ public class TransportOrder
     /**
      * 明细列表
      */
-    @DetailLevel(DetailLevel.EXTEND)
+    @DetailLevel(DetailLevel.DETAIL)
     public SizedList<TransportOrderItem> getItems() {
         return items;
     }

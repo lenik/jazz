@@ -8,11 +8,14 @@ import net.bodz.bas.t.order.IPriority;
 public interface ITypeProvider
         extends IPriority {
 
-    int PROPERTIES = 0x1_0000;
-    int METHODS = 0x2_0000;
-    int CONSTRUCTORS = 0x4_0000;
-    int EVENTS = 0x8_0000;
-    int DOCS = 0x10_0000;
+    int I_Properties = 0x1_0000;
+    int I_Methods = 0x2_0000;
+    int I_Constructors = 0x4_0000;
+    int I_Events = 0x8_0000;
+    int I_Docs = 0x10_0000;
+    int I_Default = I_Properties | I_Methods | I_Constructors | I_Events | I_Docs;
+
+    int getDefaultInfoset();
 
     IType loadType(Class<?> clazz);
 

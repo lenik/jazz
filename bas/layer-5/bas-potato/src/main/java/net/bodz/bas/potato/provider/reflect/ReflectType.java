@@ -17,9 +17,9 @@ public class ReflectType
     public ReflectType(Class<?> clazz, int infoset, ClassDoc classDoc) {
         super(clazz, infoset, classDoc);
 
-        boolean docs = (infoset & ITypeProvider.DOCS) != 0;
+        boolean docs = (infoset & ITypeProvider.I_Docs) != 0;
 
-        if ((infoset & ITypeProvider.PROPERTIES) != 0)
+        if ((infoset & ITypeProvider.I_Properties) != 0)
             for (Field field : clazz.getFields()) {
 
                 if (field.isSynthetic())
@@ -42,7 +42,7 @@ public class ReflectType
                 propertyMap.addProperty(reflectProperty);
             }
 
-        if ((infoset & ITypeProvider.METHODS) != 0)
+        if ((infoset & ITypeProvider.I_Methods) != 0)
             for (Method method : clazz.getMethods()) {
 
                 if (method.isSynthetic())
@@ -61,7 +61,7 @@ public class ReflectType
                 methodMap.addMethod(reflectMethod);
             }
 
-        if ((infoset & ITypeProvider.CONSTRUCTORS) != 0)
+        if ((infoset & ITypeProvider.I_Constructors) != 0)
             for (Constructor<?> ctor : clazz.getConstructors()) {
 
                 if (ctor.isSynthetic())

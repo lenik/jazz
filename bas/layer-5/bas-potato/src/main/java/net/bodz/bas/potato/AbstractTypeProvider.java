@@ -11,6 +11,13 @@ public abstract class AbstractTypeProvider
         this.infoset = infoset;
     }
 
+    public AbstractTypeProvider(int withInfo, int withoutInfo) {
+        int infoset = getDefaultInfoset();
+        infoset |= withInfo;
+        infoset &= ~withoutInfo;
+        this.infoset = infoset;
+    }
+
     @Override
     public int getPriority() {
         return 0;

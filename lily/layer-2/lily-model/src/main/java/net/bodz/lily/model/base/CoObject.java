@@ -190,7 +190,7 @@ public abstract class CoObject
      * @label.zh 注释
      * @placeholder 输入注释…
      */
-    @DetailLevel(DetailLevel.EXPERT)
+    @DetailLevel(DetailLevel.DETAIL2)
     @Priority(800)
     @TextInput(maxLength = N_COMMENT)
     public String getComment() {
@@ -328,7 +328,7 @@ public abstract class CoObject
      * @label Flags
      * @label.zh 标志位
      */
-    @DetailLevel(DetailLevel.EXPERT)
+    @DetailLevel(DetailLevel.DETAIL2)
     @OfGroup(StdGroup.Settings.class)
     public int getFlags() {
         return flags;
@@ -338,6 +338,10 @@ public abstract class CoObject
         this.flags = flags;
     }
 
+    /**
+     * 自定义属性
+     */
+    @DetailLevel(DetailLevel.EXPERT2)
     public JsonMap getProperties() {
         return JsonMap.empty();
     }
@@ -402,7 +406,7 @@ public abstract class CoObject
      * @label State
      * @label.zh 状态
      */
-    @DetailLevel(DetailLevel.EXPERT)
+    @DetailLevel(DetailLevel.DETAIL)
     @OfGroup(StdGroup.Status.class)
     @Override
     public State getState() {
@@ -419,7 +423,7 @@ public abstract class CoObject
      * @label Version
      * @label.zh 版本
      */
-    @DetailLevel(DetailLevel.NORMAL)
+    @DetailLevel(DetailLevel.DETAIL)
     @OfGroup(StdGroup.Version.class)
     public int getVersion() {
         return version;

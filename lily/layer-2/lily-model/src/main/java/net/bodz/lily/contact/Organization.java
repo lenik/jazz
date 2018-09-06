@@ -104,7 +104,7 @@ public class Organization
      * 人员表
      */
     @Priority(400)
-    @DetailLevel(DetailLevel.EXTEND)
+    @DetailLevel(DetailLevel.DETAIL2)
     @Derived
     public List<Person> getStaff() {
         return staff;

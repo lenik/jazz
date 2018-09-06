@@ -25,8 +25,6 @@ import net.bodz.mda.xjdoc.util.MethodId;
 public class BeanType
         extends AbstractType {
 
-    public static final int FLATTEN = 0x0001;
-
     private BeanDescriptor beanDescriptor;
     private Class<?> beanClass;
 
@@ -44,7 +42,7 @@ public class BeanType
                 beanInfo.getBeanDescriptor().getName(), //
                 classDoc);
 
-        boolean declaredOnly = (infoset & FLATTEN) == 0;
+        boolean declaredOnly = (infoset & BeanTypeProvider.I_DeclaredOnly) != 0;
 
         beanDescriptor = beanInfo.getBeanDescriptor();
         beanClass = beanDescriptor.getBeanClass();
@@ -61,15 +59,19 @@ public class BeanType
         Priority aPriority = beanClass.getAnnotation(Priority.class);
         priority = aPriority == null ? 0 : aPriority.value();
 
-        boolean docs = (infoset & ITypeProvider.DOCS) != 0;
+        boolean docs = (infoset & ITypeProvider.I_Docs) != 0;
 
-        if ((infoset & ITypeProvider.PROPERTIES) != 0) {
+        if ((infoset & ITypeProvider.I_Properties) != 0) {
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
                 Method getter = propertyDescriptor.getReadMethod();
                 Method setter = propertyDescriptor.getWriteMethod();
                 if (getter == null && setter == null)
                     // TODO This could be an indexed property. Not supported, yet.
+                    continue;
+                if (getter == null && (infoset & BeanTypeProvider.I_WriteOnly) == 0)
+                    continue;
+                if (setter == null && (infoset & BeanTypeProvider.I_ReadOnly) == 0)
                     continue;
 
                 if (declaredOnly) {
@@ -94,7 +96,7 @@ public class BeanType
             }
         }
 
-        if ((infoset & ITypeProvider.METHODS) != 0) {
+        if ((infoset & ITypeProvider.I_Methods) != 0) {
             MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
             for (MethodDescriptor methodDescriptor : methodDescriptors) {
                 Method method = methodDescriptor.getMethod();
@@ -114,7 +116,7 @@ public class BeanType
             }
         }
 
-        if ((infoset & ITypeProvider.EVENTS) != 0) {
+        if ((infoset & ITypeProvider.I_Events) != 0) {
             EventSetDescriptor[] eventSetDescriptors = beanInfo.getEventSetDescriptors();
             for (EventSetDescriptor eventSetDescriptor : eventSetDescriptors) {
                 Method addListener = eventSetDescriptor.getAddListenerMethod();

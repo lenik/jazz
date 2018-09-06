@@ -18,7 +18,7 @@ public interface ISisInstallProfile
 
 /**
  * Installs most recommended components
- * 
+ *
  * @label Standard
  */
 class Standard
@@ -34,7 +34,7 @@ class Standard
 
 /**
  * Only installs the required components
- * 
+ *
  * @label Minimum
  */
 class Minimum
@@ -50,7 +50,7 @@ class Minimum
 
 /**
  * Install all components
- * 
+ *
  * @label Maximum
  */
 class Maximum
@@ -59,14 +59,14 @@ class Maximum
     @Override
     public void preset(ISisComponent component) {
         int detailLevel = component.getDetailLevel();
-        component.setSelected(detailLevel <= DetailLevel.EXTEND);
+        component.setSelected(detailLevel < DetailLevel.EXPERT);
     }
 
 }
 
 /**
  * Custom components to satisfy what you need
- * 
+ *
  * @label Custom
  */
 class Custom

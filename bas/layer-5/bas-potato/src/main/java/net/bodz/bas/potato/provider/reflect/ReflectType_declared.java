@@ -18,18 +18,18 @@ public class ReflectType_declared
         extends AbstractReflectType {
 
     /** @see Modifier#PUBLIC */
-    public static final int PUBLIC = 0x0001;
+    public static final int I_Public = 0x0001;
 
     /** @see Modifier#PRIVATE */
-    public static final int PRIVATE = 0x0002;
+    public static final int I_Private = 0x0002;
 
     /** @see Modifier#PROTECTED */
-    public static final int PROTECTED = 0x0004;
+    public static final int I_Protected = 0x0004;
 
     /** @see Modifier#STATIC */
-    public static final int STATIC = 0x0008;
+    public static final int I_Static = 0x0008;
 
-    public static final int PACKAGE_PRIVATE = 0x0010;
+    public static final int I_PackagePrivate = 0x0010;
 
     /**
      * @param flatten
@@ -38,21 +38,21 @@ public class ReflectType_declared
     public ReflectType_declared(Class<?> clazz, int infoset, boolean flatten, ClassDoc classDoc) {
         super(clazz, infoset, classDoc);
 
-        boolean docs = (infoset & ITypeProvider.DOCS) != 0;
+        boolean docs = (infoset & ITypeProvider.I_Docs) != 0;
 
         int visibilityMask = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE;
         Set<Integer> includeVisibilities = new HashSet<Integer>();
-        if ((infoset & PACKAGE_PRIVATE) != 0)
+        if ((infoset & I_PackagePrivate) != 0)
             includeVisibilities.add(0);
-        if ((infoset & PRIVATE) != 0)
+        if ((infoset & I_Private) != 0)
             includeVisibilities.add(Modifier.PRIVATE);
-        if ((infoset & PROTECTED) != 0)
+        if ((infoset & I_Protected) != 0)
             includeVisibilities.add(Modifier.PROTECTED);
 
-        boolean includeStatic = (infoset & STATIC) != 0;
+        boolean includeStatic = (infoset & I_Static) != 0;
 
         while (true) {
-            if ((infoset & ITypeProvider.PROPERTIES) != 0)
+            if ((infoset & ITypeProvider.I_Properties) != 0)
                 for (Field field : clazz.getDeclaredFields()) {
 
                     if (field.isSynthetic())
@@ -78,7 +78,7 @@ public class ReflectType_declared
                     propertyMap.addProperty(reflectProperty);
                 }
 
-            if ((infoset & ITypeProvider.METHODS) != 0)
+            if ((infoset & ITypeProvider.I_Methods) != 0)
                 for (Method method : clazz.getDeclaredMethods()) {
 
                     if (method.isSynthetic())
@@ -103,7 +103,7 @@ public class ReflectType_declared
                     methodMap.addMethod(reflectMethod);
                 }
 
-            if ((infoset & ITypeProvider.CONSTRUCTORS) != 0)
+            if ((infoset & ITypeProvider.I_Constructors) != 0)
                 for (Constructor<?> ctor : clazz.getConstructors()) {
 
                     if (ctor.isSynthetic())
