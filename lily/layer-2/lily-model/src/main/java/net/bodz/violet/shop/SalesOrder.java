@@ -158,7 +158,7 @@ public class SalesOrder
     /**
      * 明细列表
      */
-    @DetailLevel(DetailLevel.EXTEND)
+    @DetailLevel(DetailLevel.DETAIL)
     public SizedList<SalesOrderItem> getItems() {
         return items;
     }
@@ -208,7 +208,7 @@ public class SalesOrder
     /**
      * 送货跟踪
      */
-    @DetailLevel(DetailLevel.EXTEND)
+    @DetailLevel(DetailLevel.DETAIL2)
     public SizedList<TransportOrder> getDeliveries() {
         return deliveries;
     }

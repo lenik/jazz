@@ -137,7 +137,7 @@ public class StoreOrder
     /**
      * 明细
      */
-    @DetailLevel(DetailLevel.EXTEND)
+    @DetailLevel(DetailLevel.DETAIL)
     public SizedList<StoreOrderItem> getItems() {
         return items;
     }

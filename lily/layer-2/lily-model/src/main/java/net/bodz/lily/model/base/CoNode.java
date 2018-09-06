@@ -74,7 +74,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label.zh 子结点
      */
     @OfGroup(StdGroup.Graph.class)
-    @DetailLevel(DetailLevel.EXTEND)
+    @DetailLevel(DetailLevel.DETAIL)
     public List<self_t> getChildren() {
         return children;
     }

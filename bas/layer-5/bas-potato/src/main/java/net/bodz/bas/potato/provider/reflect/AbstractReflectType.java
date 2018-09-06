@@ -25,10 +25,10 @@ public abstract class AbstractReflectType
     /**
      * @param infoset
      *            Selection bits. See
-     * @see ITypeProvider#PROPERTIES
-     * @see ITypeProvider#METHODS
-     * @see ITypeProvider#CONSTRUCTORS
-     * @see ITypeProvider#EVENTS
+     * @see ITypeProvider#I_Properties
+     * @see ITypeProvider#I_Methods
+     * @see ITypeProvider#I_Constructors
+     * @see ITypeProvider#I_Events
      */
     public AbstractReflectType(Class<?> clazz, int infoset, IClassDoc doc) {
         super(clazz, clazz.getName(), doc);

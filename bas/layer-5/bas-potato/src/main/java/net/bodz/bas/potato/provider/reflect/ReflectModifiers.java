@@ -13,10 +13,10 @@ public class ReflectModifiers {
             return DetailLevel.NORMAL;
 
         case Modifier.PROTECTED:
-            return DetailLevel.EXPERT;
+            return DetailLevel.DETAIL;
 
         case 0: /* package-protected */
-            return DetailLevel.EXPERT2;
+            return DetailLevel.EXPERT;
 
         case Modifier.PRIVATE:
         default:

@@ -32,6 +32,15 @@ public class PotatoTypes
         super(infoset);
     }
 
+    public PotatoTypes(int withInfo, int withoutInfo) {
+        super(withInfo, withoutInfo);
+    }
+
+    @Override
+    public int getDefaultInfoset() {
+        return I_Default;
+    }
+
     @Override
     public synchronized IType loadType(Class<?> clazz, Object obj, int infoset) {
         boolean isVolatile = clazz.isAnnotationPresent(Volatile.class);
@@ -46,7 +55,8 @@ public class PotatoTypes
     IType load(Class<?> clazz) {
         List<IType> type1v = new ArrayList<>();
         for (ITypeProvider provider : typeProviders) {
-            IType type1 = provider.loadType(clazz, null, -1);
+            int infoset = provider.getDefaultInfoset();
+            IType type1 = provider.loadType(clazz, null, infoset);
             if (type1 != null)
                 type1v.add(type1);
         }
@@ -77,7 +87,7 @@ public class PotatoTypes
         }
     }
 
-    static PotatoTypes instance = new PotatoTypes(-1);
+    static PotatoTypes instance = new PotatoTypes(0, 0);
 
     public static ITypeProvider getInstance() {
         return instance;

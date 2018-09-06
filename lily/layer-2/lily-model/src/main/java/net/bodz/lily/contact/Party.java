@@ -199,7 +199,7 @@ public abstract class Party
      * 联系方式
      */
     @Priority(501)
-    @DetailLevel(DetailLevel.EXTEND)
+    @DetailLevel(DetailLevel.NORMAL)
     public List<Contact> getContacts() {
         return contacts;
     }
