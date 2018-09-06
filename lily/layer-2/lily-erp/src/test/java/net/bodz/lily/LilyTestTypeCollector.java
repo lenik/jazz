@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.bodz.bas.shell.util.TypeCollectorApp;
 
-public class TestTypeCollector
+public class LilyTestTypeCollector
         extends TypeCollectorApp {
 
     @Override
@@ -15,7 +15,7 @@ public class TestTypeCollector
 
     public static void main(String[] args)
             throws Exception {
-        new TestTypeCollector().execute(args);
+        new LilyTestTypeCollector().execute(args);
     }
 
 }
