@@ -17,6 +17,7 @@ import net.bodz.bas.rtx.IAttributed;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.repr.EntGroup;
+import net.bodz.lily.util.mapper.DataListFields;
 
 /**
  * 物品
@@ -63,6 +64,7 @@ public class Artifact
     /**
      * 分类
      */
+    @DataListFields
     @OfGroup(StdGroup.Classification.class)
     public ArtifactCategory getCategory() {
         return category;
@@ -75,6 +77,7 @@ public class Artifact
     /**
      * 成熟度
      */
+    @DataListFields
     public ArtifactPhase getPhase() {
         return phase;
     }
@@ -158,6 +161,7 @@ public class Artifact
     /**
      * 单位
      */
+    @DataListFields
     @OfGroup(EntGroup.Packaging.class)
     public UOM getUom() {
         return uom;

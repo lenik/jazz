@@ -1,6 +1,10 @@
 package net.bodz.lily.codegen.doc;
 
+import java.util.Map;
+
 import net.bodz.bas.potato.ITypeProvider;
+import net.bodz.bas.potato.element.IMethod;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.mda.xjdoc.Xjdocs;
@@ -36,6 +40,10 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
     public String getDisplayName() {
         return displayName;
     }
+
+    public abstract Map<String, IProperty> getPropertyMap();
+
+    public abstract Map<String, IMethod> getMethodMap();
 
     public synchronized void parseUptoParent(ModuleIndexer indexer) {
         if (parsed)
