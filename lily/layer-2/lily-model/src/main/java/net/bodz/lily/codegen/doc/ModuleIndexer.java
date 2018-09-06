@@ -20,6 +20,7 @@ import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoIndex;
+import net.bodz.lily.model.base.CoObjectMask;
 
 public class ModuleIndexer
         implements IPathDispatchable {
@@ -28,7 +29,12 @@ public class ModuleIndexer
     Map<String, ModuleInfo> classModule = new HashMap<>();
 
     EntityIndex entityIndex = new EntityIndex(this);
+
     Map<String, EntityInfo> nameEntity = new HashMap<>();
+    Map<String, MaskInfo> nameMask = new HashMap<>();
+
+    // Map<String, MapperInfo> nameMapper= new HashMap<>();
+    // Map<String, IndexInfo> nameIndex = new HashMap<>();
 
     private ModuleIndexer() {
         try {
@@ -56,15 +62,25 @@ public class ModuleIndexer
             addMapperClass(mapperClass);
 
         addIndexClass(CoIndex.class);
-        addMapperClass(IMapperTemplate.class);
+        // addMapperClass(IMapperTemplate.class);
 
+        // load/wire parents
         for (EntityInfo entity : new ArrayList<>(nameEntity.values()))
             if (entity.parent == null)
                 entity.parent = loadRec(entity.declaredClass.getSuperclass());
 
+        for (MaskInfo mask : new ArrayList<>(nameMask.values()))
+            if (mask.parent == null)
+                mask.parent = loadMaskRec(mask.declaredClass.getSuperclass());
+
+        // parse properties
         for (EntityInfo entity : nameEntity.values())
             entity.parseUptoParent(this);
 
+        for (MaskInfo mask : nameMask.values())
+            mask.parseUptoParent(this);
+
+        // analyze dependencies
         for (EntityInfo entity : nameEntity.values()) {
             for (EntityInfo dep : entity.getDependencies()) {
                 if (entity.module != dep.module)
@@ -81,6 +97,8 @@ public class ModuleIndexer
         Class<?> maskType = pv[1];
         EntityInfo entity = resolveEntity(entityType, maskType);
         entity.setIndexClass(indexClass);
+        // IndexInfo index = new IndexInfo(indexClass);
+        // nameIndex.put(indexClass.getName(), index);
     }
 
     void addMapperClass(Class<?> mapperClass) {
@@ -98,11 +116,20 @@ public class ModuleIndexer
     }
 
     EntityInfo resolveEntity(Class<?> entityType, Class<?> maskType) {
+        if (entityType == null)
+            throw new NullPointerException("entityType");
+        if (maskType == null)
+            throw new NullPointerException("maskType");
+
         String fqcn = entityType.getName();
         EntityInfo entity = nameEntity.get(fqcn);
         if (entity == null) {
-            entity = new EntityInfo(entityType, maskType);
+            MaskInfo mask = loadMaskRec(maskType);
+            if (mask == null)
+                throw new NullPointerException("mask");
+            entity = new EntityInfo(entityType, mask);
             nameEntity.put(fqcn, entity);
+
             ModuleInfo modInfo = classModule.get(entityType.getName());
             if (modInfo != null) {
                 entity.module = modInfo;
@@ -128,10 +155,28 @@ public class ModuleIndexer
         try {
             maskClass = clazz.getClassLoader().loadClass(maskName);
         } catch (ClassNotFoundException e) {
+            maskClass = CoObjectMask.class;
         }
         entity = resolveEntity(clazz, maskClass);
         entity.parent = loadRec(clazz.getSuperclass());
         return entity;
+    }
+
+    MaskInfo loadMaskRec(Class<?> maskClass) {
+        if (maskClass == null)
+            return null;
+        if (maskClass == Object.class)
+            return null;
+
+        String fqcn = maskClass.getName();
+        MaskInfo mask = nameMask.get(fqcn);
+        if (mask != null)
+            return mask;
+
+        mask = new MaskInfo(maskClass);
+        mask.parent = loadMaskRec(maskClass.getSuperclass());
+        nameMask.put(fqcn, mask);
+        return mask;
     }
 
     @Override

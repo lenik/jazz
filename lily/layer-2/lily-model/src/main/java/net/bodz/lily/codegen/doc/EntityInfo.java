@@ -2,12 +2,10 @@ package net.bodz.lily.codegen.doc;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
@@ -17,7 +15,6 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoObject;
 
@@ -34,14 +31,18 @@ public class EntityInfo
     IndexInfo indexInfo;
 
     ReferenceMap refmap = new ReferenceMap();
-    Map<String, IProperty> properties = new LinkedHashMap<>();
 
     Set<EntityInfo> dependencies = new LinkedHashSet<>();
 
-    public EntityInfo(Class<?> clazz, Class<?> maskClass) {
+    public EntityInfo(Class<?> clazz, MaskInfo maskInfo) {
         super(clazz);
-        if (maskClass != null)
-            this.maskInfo = new MaskInfo(maskClass);
+        if (maskInfo == null)
+            throw new NullPointerException("maskInfo");
+        this.maskInfo = maskInfo;
+    }
+
+    public MaskInfo getMaskInfo() {
+        return maskInfo;
     }
 
     public void setMapperClass(Class<?> mapperClass) {
@@ -57,31 +58,8 @@ public class EntityInfo
     }
 
     @Override
-    public Map<String, IProperty> getPropertyMap() {
-        return properties;
-    }
-
-    @Override
     public Map<String, IMethod> getMethodMap() {
         return Collections.emptyMap();
-    }
-
-    public AjaxResult getProperties() {
-        AjaxResult result = new AjaxResult();
-        JsonWriter out = result.begin("groups").array();
-        PropertyExporter exporter = new PropertyExporter(ModuleIndexer.getInstance());
-        exporter.export(out, this);
-        out.endArray();
-        return result.succeed();
-    }
-
-    public AjaxResult getMaskProperties() {
-        AjaxResult result = new AjaxResult();
-        JsonWriter out = result.begin("groups").array();
-        PropertyExporter exporter = new PropertyExporter(ModuleIndexer.getInstance());
-        exporter.export(out, maskInfo);
-        out.endArray();
-        return result.succeed();
     }
 
     public Set<EntityInfo> getDependencies() {
@@ -96,7 +74,7 @@ public class EntityInfo
     @Override
     protected void parse(IType declaredType, ModuleIndexer indexer) {
         for (IProperty property : declaredType.getProperties()) {
-            properties.put(property.getName(), property);
+            addProperty(property);
             parseIfAnyRef(property, indexer);
         }
     }

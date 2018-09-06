@@ -1,16 +1,25 @@
 package net.bodz.lily.codegen.doc;
 
+import java.lang.annotation.Annotation;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
+import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
+import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
-public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
+public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<self_t>> {
 
     ModuleInfo module;
     self_t parent;
@@ -20,6 +29,7 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
     String displayName;
 
     boolean parsed;
+    Map<String, IProperty> properties = new TreeMap<>();
 
     public AbstractTypeInfo(Class<?> declaredClass) {
         if (declaredClass == null)
@@ -41,7 +51,32 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
         return displayName;
     }
 
-    public abstract Map<String, IProperty> getPropertyMap();
+    public Map<String, IProperty> getPropertyMap() {
+        return properties;
+    }
+
+    Set<Class<? extends Annotation>> includes = new HashSet<>();
+    Set<Class<? extends Annotation>> excludes = new HashSet<>();
+    {
+        excludes.add(Redundant.class);
+        excludes.add(Derived.class);
+    }
+
+    protected void addProperty(IProperty property) {
+        boolean included = false;
+        if (!included)
+            for (Class<? extends Annotation> a : excludes)
+                if (property.isAnnotationPresent(a))
+                    return;
+
+        DetailLevel aDetailLevel = property.getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null) {
+            int detailLevel = aDetailLevel.value();
+            if (detailLevel > DetailLevel.EXPERT)
+                return;
+        }
+        properties.put(property.getName(), property);
+    }
 
     public abstract Map<String, IMethod> getMethodMap();
 
@@ -62,10 +97,24 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<?>> {
 
     protected abstract void parse(IType declaredType, ModuleIndexer indexer);
 
+    public AjaxResult getProperties() {
+        AjaxResult result = new AjaxResult();
+        JsonWriter out = result.begin("propertyGroups").array();
+        PropertyExporter exporter = new PropertyExporter(ModuleIndexer.getInstance());
+
+        @SuppressWarnings("unchecked")
+        self_t start = (self_t) this;
+        exporter.export(out, start);
+
+        out.endArray();
+        return result.succeed();
+    }
+
     static ITypeProvider declares;
     static {
         declares = new BeanTypeProvider(//
-                ITypeProvider.PROPERTIES | ITypeProvider.METHODS | ITypeProvider.DOCS);
+                ITypeProvider.I_Properties | ITypeProvider.I_Methods | ITypeProvider.I_Docs //
+                        | BeanTypeProvider.I_DeclaredOnly | BeanTypeProvider.I_ReadOnly);
     }
 
 }
