@@ -24,7 +24,6 @@ public class LoginService
     static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
     DataContext dataContext;
-    LoginData fileLoginData = new LoginData();
     ILoginHandler loginHandler;
 
     public LoginService(DataContext dataContext, ILoginHandler loginHandler) {
@@ -40,20 +39,11 @@ public class LoginService
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         HttpServletRequest request = CurrentHttpService.getRequest();
-        HttpSession session = request.getSession();
+        // TODO file-scope
+        HttpSession session = CurrentHttpService.getSession();
 
-        String origin = request.getHeader("Origin");
-        boolean fileOrigin = false;
-        if (origin != null) {
-            if (origin.equals("null") || origin.startsWith("file://"))
-                fileOrigin = true;
-        }
         LoginData loginData;
-        if (fileOrigin) {
-            loginData = fileLoginData;
-        } else {
-            loginData = LoginData.fromSession(session);
-        }
+        loginData = LoginData.fromSession(session);
 
         String token = tokens.peek();
         if (token == null)

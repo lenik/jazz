@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter;
 import net.bodz.bas.c.javax.servlet.http.IHttpFilter;
 import net.bodz.bas.c.javax.servlet.http.IServletRequestListener;
+import net.bodz.bas.c.javax.servlet.http.MutableHttpSession;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -116,11 +117,37 @@ public class CurrentHttpService
         HttpServletRequest request = getRequestOpt();
         if (request == null)
             return null;
-        return request.getSession();
+        return getSession(request);
     }
 
     public static HttpSession getSession() {
-        return getRequest().getSession();
+        HttpServletRequest request = getRequest();
+        return getSession(request);
+    }
+
+    static boolean allowFileScope = true;
+
+    public static HttpSession getSession(HttpServletRequest request) {
+        if (allowFileScope) {
+            String origin = request.getHeader("Origin");
+            boolean fileOrigin = false;
+            if (origin != null) {
+                if (origin.equals("null") || origin.startsWith("file://"))
+                    fileOrigin = true;
+            }
+
+            if (fileOrigin) {
+                ServletContext servletContext = request.getServletContext();
+                HttpSession fileSession = (HttpSession) servletContext.getAttribute("file-session");
+                if (fileSession == null) {
+                    fileSession = new MutableHttpSession(servletContext);
+                    servletContext.setAttribute("file-session", fileSession);
+                }
+                return fileSession;
+            }
+        }
+        HttpSession session = request.getSession();
+        return session;
     }
 
     public static ServletContext getServletContextOpt() {
