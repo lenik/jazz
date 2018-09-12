@@ -1,0 +1,31 @@
+#views > [k=project] {
+  margin: 1em; }
+
+#views > [k=modules] {
+  margin: 1em; }
+  #views > [k=modules] a {
+    cursor: pointer; }
+
+#views > [k=list] {
+  margin: 1em; }
+  #views > [k=list] .name {
+    font-weight: bold; }
+
+.ws-url {
+  margin: 1em;
+  padding: 1em;
+  border: solid 1px gray;
+  font-family: monospace; }
+
+.syntax {
+  margin: 1em !important;
+  padding: 1em !important;
+  border: solid 1px gray; }
+  .syntax .nonterm {
+    font-weight: bold; }
+  .syntax .token:before {
+    content: '"'; }
+  .syntax .token:after {
+    content: '"'; }
+  .syntax li {
+    margin: .5em 0; }

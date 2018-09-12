@@ -57,9 +57,24 @@
     </sql>
     
     <sql id="filter-clickInfo">
-        <if test="m.voteCountRange != null">and a.nvote between #{m.voteCountRange.min} and #{m.voteCountRange.max}</if>
-        <if test="m.likerCountRange != null">and a.nlike between #{m.likerCountRange.min} and #{m.likerCountRange.max}</if>
-        <if test="m.readCountRange != null">and a.nread between #{m.readCountRange.min} and #{m.readCountRange.max}</if>
+        <if test="m.voteCountRange != null">
+            <if test="m.voteCountRange.hasStartIncl">and a.nvote >= #{m.voteCountRange.start}</if>
+            <if test="m.voteCountRange.hasStartExcl">and a.nvote > #{m.voteCountRange.start}</if>
+            <if test="m.voteCountRange.hasEndIncl">and a.nvote &lt;= #{m.voteCountRange.end}</if>
+            <if test="m.voteCountRange.hasEndExcl">and a.nvote &lt; #{m.voteCountRange.end}</if>
+        </if>
+        <if test="m.likerCountRange != null">
+            <if test="m.likerCountRange.hasStartIncl">and a.nlike >= #{m.likerCountRange.start}</if>
+            <if test="m.likerCountRange.hasStartExcl">and a.nlike > #{m.likerCountRange.start}</if>
+            <if test="m.likerCountRange.hasEndIncl">and a.nlike &lt;= #{m.likerCountRange.end}</if>
+            <if test="m.likerCountRange.hasEndExcl">and a.nlike &lt; #{m.likerCountRange.end}</if>
+        </if>
+        <if test="m.readCountRange != null">
+            <if test="m.readCountRange.hasStartIncl">and a.nread >= #{m.readCountRange.start}</if>
+            <if test="m.readCountRange.hasStartExcl">and a.nread > #{m.readCountRange.start}</if>
+            <if test="m.readCountRange.hasEndIncl">and a.nread &lt;= #{m.readCountRange.end}</if>
+            <if test="m.readCountRange.hasEndExcl">and a.nread &lt; #{m.readCountRange.end}</if>
+        </if>
     </sql>
     
     <sql id="filter-tag">
