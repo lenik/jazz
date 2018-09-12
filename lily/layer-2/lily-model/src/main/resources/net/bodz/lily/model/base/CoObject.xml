@@ -127,10 +127,11 @@
     </sql>
 
     <sql id="filter-id">
-        <if test="m.idRange.closed">and a.id between #{m.idRange.from} and #{m.idRange.to}</if>
-        <if test="m.idRange.uniOpen">
-            <if test="m.idRange.start != null">and a.id &gt;= #{m.idRange.start}</if>
-            <if test="m.idRange.end != null">and a.id &lt; #{m.idRange.end}</if>
+        <if test="m.idRange != null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
     </sql>
 

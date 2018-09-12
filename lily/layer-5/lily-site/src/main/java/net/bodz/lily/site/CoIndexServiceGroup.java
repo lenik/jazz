@@ -30,8 +30,8 @@ public class CoIndexServiceGroup
 
                 CoIndex<?, ?> existing = map.get(name);
                 if (existing != null) {
-                    logger.error("CoIndex name conflicts: %s and %s", existing.getClass(), indexClass);
-                    logger.log("CoIndex skipped: %s", indexClass);
+                    logger.errorf("CoIndex name conflicts: %s and %s", existing.getClass(), indexClass);
+                    logger.logf("CoIndex skipped: %s", indexClass);
                     continue;
                 }
                 CoIndex index;

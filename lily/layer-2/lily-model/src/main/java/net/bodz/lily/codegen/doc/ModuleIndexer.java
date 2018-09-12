@@ -12,6 +12,8 @@ import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.LoadException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -24,6 +26,8 @@ import net.bodz.lily.model.base.CoObjectMask;
 
 public class ModuleIndexer
         implements IPathDispatchable {
+
+    static final Logger logger = LoggerFactory.getLogger(ModuleIndexer.class);
 
     List<ModuleInfo> modules = new ArrayList<>();
     Map<String, ModuleInfo> classModule = new HashMap<>();
@@ -83,8 +87,11 @@ public class ModuleIndexer
         // analyze dependencies
         for (EntityInfo entity : nameEntity.values()) {
             for (EntityInfo dep : entity.getDependencies()) {
-                if (entity.module != dep.module)
+                if (entity.module != dep.module) {
+                    if (entity.module == null)
+                        throw new NullPointerException("entity.module");
                     entity.module.addDependency(dep.module);
+                }
             }
         }
 
@@ -134,6 +141,8 @@ public class ModuleIndexer
             if (modInfo != null) {
                 entity.module = modInfo;
                 modInfo.add(entity);
+            } else {
+                logger.warn("No module: " + entityType);
             }
         }
         return entity;
