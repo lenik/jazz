@@ -1,5 +1,6 @@
 package net.bodz.bas.t.range;
 
+import net.bodz.bas.c.primitive.IntegerComparator;
 import net.bodz.bas.err.ParseException;
 
 public class IntRange
@@ -7,12 +8,14 @@ public class IntRange
 
     private static final long serialVersionUID = 1L;
 
+    static final IntegerComparator ORDER = IntegerComparator.INSTANCE;
+
     public IntRange() {
-        super();
+        super(ORDER);
     }
 
     public IntRange(Integer start, Integer end) {
-        super(start, end);
+        super(ORDER, start, end);
     }
 
     @Override

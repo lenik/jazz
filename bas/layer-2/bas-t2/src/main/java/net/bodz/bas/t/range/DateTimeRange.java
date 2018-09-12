@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 import org.joda.time.DateTimeZone;
 import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.format.DateTimeFormat;
@@ -20,6 +21,8 @@ public class DateTimeRange
 
     private static final long serialVersionUID = 1L;
 
+    static final DateTimeComparator ORDER = DateTimeComparator.getInstance();
+
     Chronology chrono = GregorianChronology.getInstance();
     DateTimeZone timeZone = DateTimeZone.getDefault();
     Locale locale = Locale.getDefault();
@@ -28,12 +31,12 @@ public class DateTimeRange
     DateTimeParser parser;
 
     public DateTimeRange() {
-        super();
+        super(ORDER);
         init();
     }
 
     public DateTimeRange(DateTime start, DateTime end) {
-        super(start, end);
+        super(ORDER, start, end);
         init();
     }
 

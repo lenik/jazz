@@ -1,6 +1,7 @@
 package net.bodz.bas.t.range;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import net.bodz.bas.err.ParseException;
 
@@ -9,16 +10,20 @@ public abstract class AbstractRange<self_t, val_t>
 
     private static final long serialVersionUID = 1L;
 
+    private final Comparator<? super val_t> order;
+
     public val_t start;
     public val_t end;
 
     boolean startInclusive = true;
     boolean endInclusive;
 
-    public AbstractRange() {
+    public AbstractRange(Comparator<? super val_t> order) {
+        this.order = order;
     }
 
-    public AbstractRange(val_t start, val_t end) {
+    public AbstractRange(Comparator<? super val_t> order, val_t start, val_t end) {
+        this.order = order;
         this.start = start;
         this.end = end;
     }
@@ -166,5 +171,17 @@ public abstract class AbstractRange<self_t, val_t>
     public abstract val_t preceding(val_t val);
 
     public abstract val_t successor(val_t val);
+
+    public void include(val_t val) {
+        if (start == null)
+            start = val;
+        else if (order.compare(val, start) < 0)
+            start = val;
+
+        if (end == null)
+            end = val;
+        else if (order.compare(end, val) < 0)
+            end = val;
+    }
 
 }
