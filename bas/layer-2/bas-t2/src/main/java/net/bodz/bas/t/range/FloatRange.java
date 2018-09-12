@@ -1,5 +1,6 @@
 package net.bodz.bas.t.range;
 
+import net.bodz.bas.c.primitive.FloatComparator;
 import net.bodz.bas.err.ParseException;
 
 public class FloatRange
@@ -7,12 +8,14 @@ public class FloatRange
 
     private static final long serialVersionUID = 1L;
 
+    static final FloatComparator ORDER = FloatComparator.INSTANCE;
+
     public FloatRange() {
-        super();
+        super(ORDER);
     }
 
     public FloatRange(Float start, Float end) {
-        super(start, end);
+        super(ORDER, start, end);
     }
 
     @Override

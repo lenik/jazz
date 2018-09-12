@@ -1,5 +1,6 @@
 package net.bodz.bas.t.range;
 
+import net.bodz.bas.c.primitive.DoubleComparator;
 import net.bodz.bas.err.ParseException;
 
 public class DoubleRange
@@ -7,12 +8,14 @@ public class DoubleRange
 
     private static final long serialVersionUID = 1L;
 
+    static final DoubleComparator ORDER = DoubleComparator.INSTANCE;
+
     public DoubleRange() {
-        super();
+        super(ORDER);
     }
 
     public DoubleRange(Double start, Double end) {
-        super(start, end);
+        super(ORDER, start, end);
     }
 
     @Override

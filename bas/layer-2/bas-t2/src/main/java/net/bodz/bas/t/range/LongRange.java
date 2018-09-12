@@ -1,5 +1,6 @@
 package net.bodz.bas.t.range;
 
+import net.bodz.bas.c.primitive.LongComparator;
 import net.bodz.bas.err.ParseException;
 
 public class LongRange
@@ -7,12 +8,14 @@ public class LongRange
 
     private static final long serialVersionUID = 1L;
 
+    static final LongComparator ORDER = LongComparator.INSTANCE;
+
     public LongRange() {
-        super();
+        super(ORDER);
     }
 
     public LongRange(Long start, Long end) {
-        super(start, end);
+        super(ORDER, start, end);
     }
 
     @Override
