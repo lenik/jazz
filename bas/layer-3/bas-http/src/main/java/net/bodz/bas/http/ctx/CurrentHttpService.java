@@ -14,8 +14,6 @@ import javax.servlet.http.HttpSession;
 import net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter;
 import net.bodz.bas.c.javax.servlet.http.IHttpFilter;
 import net.bodz.bas.c.javax.servlet.http.IServletRequestListener;
-import net.bodz.bas.c.javax.servlet.http.MutableHttpSession;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -25,14 +23,10 @@ public class CurrentHttpService
 
     static final Logger logger = LoggerFactory.getLogger(CurrentHttpService.class);
 
-    ThreadLocal<HttpServletRequest> requestRef = new ThreadLocal<HttpServletRequest>();
-    ThreadLocal<HttpServletResponse> responseRef = new ThreadLocal<HttpServletResponse>();
+    static ThreadLocal<HttpServletRequest> requestRef = new ThreadLocal<HttpServletRequest>();
+    static ThreadLocal<HttpServletResponse> responseRef = new ThreadLocal<HttpServletResponse>();
 
     public CurrentHttpService() {
-        if (instance == null)
-            instance = this;
-        else
-            throw new IllegalStateException("Multiple instances.");
     }
 
     /** ⇱ Implementation Of {@link IServletRequestListener}. */
@@ -53,13 +47,13 @@ public class CurrentHttpService
 
         if (request instanceof HttpServletRequest) {
             HttpServletRequest req = (HttpServletRequest) request;
-            CurrentHttpService.setRequest(req);
+            requestRef.set(req);
         }
     }
 
     @Override
     public void requestDestroyed(ServletRequestEvent event) {
-        CurrentHttpService.setRequest(null);
+        requestRef.remove();
     }
 
     /** ⇱ Implementation Of {@link IHttpFilter}. */
@@ -73,11 +67,13 @@ public class CurrentHttpService
     @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        requestRef.set(request);
         responseRef.set(response);
         try {
             chain.doFilter(request, response);
         } finally {
             responseRef.set(null);
+            requestRef.set(null);
         }
     }
 
@@ -85,18 +81,8 @@ public class CurrentHttpService
     // ⇱ Part: Static Accessor
     //
 
-    private static CurrentHttpService instance;
-
-    static void ensureInstance() {
-        if (instance == null)
-            throw new IllegalUsageException("The listener/filter isn't configured.");
-    }
-
     public static HttpServletRequest getRequestOpt() {
-        if (instance == null)
-            return null;
-        else
-            return instance.requestRef.get();
+        return requestRef.get();
     }
 
     public static HttpServletRequest getRequest() {
@@ -108,46 +94,16 @@ public class CurrentHttpService
         return request;
     }
 
-    public static void setRequest(HttpServletRequest request) {
-        ensureInstance();
-        instance.requestRef.set(request);
-    }
-
     public static HttpSession getSessionOpt() {
         HttpServletRequest request = getRequestOpt();
         if (request == null)
             return null;
-        return getSession(request);
+        return request.getSession();
     }
 
     public static HttpSession getSession() {
         HttpServletRequest request = getRequest();
-        return getSession(request);
-    }
-
-    static boolean allowFileScope = true;
-
-    public static HttpSession getSession(HttpServletRequest request) {
-        if (allowFileScope) {
-            String origin = request.getHeader("Origin");
-            boolean fileOrigin = false;
-            if (origin != null) {
-                if (origin.equals("null") || origin.startsWith("file://"))
-                    fileOrigin = true;
-            }
-
-            if (fileOrigin) {
-                ServletContext servletContext = request.getServletContext();
-                HttpSession fileSession = (HttpSession) servletContext.getAttribute("file-session");
-                if (fileSession == null) {
-                    fileSession = new MutableHttpSession(servletContext);
-                    servletContext.setAttribute("file-session", fileSession);
-                }
-                return fileSession;
-            }
-        }
-        HttpSession session = request.getSession();
-        return session;
+        return request.getSession();
     }
 
     public static ServletContext getServletContextOpt() {
@@ -166,7 +122,7 @@ public class CurrentHttpService
         try {
             runnable.run();
         } finally {
-            setRequest(request);
+            requestRef.set(request);
         }
     }
 
