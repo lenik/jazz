@@ -10,8 +10,16 @@ import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter;
 
+/**
+ * Redirect to login page for access controled pages.
+ */
 public class LoginFilter
         extends AbstractHttpFilter {
+
+    @Override
+    public int getPriority() {
+        return 10;
+    }
 
     @Override
     public String getPreferredMapping() {

@@ -6,9 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Modifier;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +14,8 @@ import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.codegen.PublishDir;
+import net.bodz.bas.t.order.IPriority;
+import net.bodz.bas.t.order.PriorityComparator;
 
 /**
  * Similar to {@link java.util.ServiceLoader} but won't instantiate.
@@ -106,6 +106,22 @@ public class IndexedTypes {
         }
 
         return classes;
+    }
+
+    public static <S extends IPriority> List<S> loadInOrder(Class<S> service) {
+        List<S> list = new ArrayList<>();
+        for (S instance : ServiceLoader.load(service))
+            list.add(instance);
+        Collections.sort(list, PriorityComparator.INSTANCE);
+        return list;
+    }
+
+    public static <S extends IPriority> List<S> loadInOrder(Class<S> service, ClassLoader classLoader) {
+        List<S> list = new ArrayList<>();
+        for (S instance : ServiceLoader.load(service, classLoader))
+            list.add(instance);
+        Collections.sort(list, PriorityComparator.INSTANCE);
+        return list;
     }
 
 }

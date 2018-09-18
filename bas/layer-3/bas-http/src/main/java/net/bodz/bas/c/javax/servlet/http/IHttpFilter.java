@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.t.order.IPriority;
 
 @IndexedType
 public interface IHttpFilter
-        extends Filter {
+        extends Filter, IPriority {
 
     String getPreferredMapping();
 

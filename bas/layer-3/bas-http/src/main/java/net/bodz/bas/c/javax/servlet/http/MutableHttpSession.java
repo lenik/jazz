@@ -23,10 +23,11 @@ public class MutableHttpSession
     boolean invalid;
     boolean isNewCreated;
 
-    public MutableHttpSession(ServletContext servletContext) {
+    public MutableHttpSession(ServletContext servletContext, String id) {
         if (servletContext == null)
             throw new NullPointerException("servletContext");
         this.servletContext = servletContext;
+        this.id = id;
     }
 
     @Override
