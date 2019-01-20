@@ -1,5 +1,6 @@
 --\import violet.art.artcat
 --\import violet.art.art
+--\import violet.store.regionlevel
 --\mixin lily.template.a-cat region
 --\mixin lily.template.a-tag region
 
@@ -26,21 +27,8 @@
         -- to estimate the scale of the region tree.
         height      int not null default -1, -- || longest descendant ||
 
-        -- the region body is made up as the specific artifact.
-        material    int
-            references art(id) on update cascade,
-            
-        -- reserved for this artifact category.
-        for_cat     int
-            references artcat(id) on update cascade on delete set null,
-
-        -- reserved for this artifact.
-        for_art     int     -- state=LOCKED if necessary.
-            references art(id) on update cascade on delete set null,
-            
-        -- (state) filled with this artifact.
-        art         int     -- state=LOCKED if necessary.
-            references art(id) on update cascade on delete set null,
+        level       int not null default 0
+            references regionlevel(id) on update cascade,
 
         cat         int not null
             references regioncat(id) on update cascade,

@@ -138,6 +138,7 @@ net.bodz.violet.shop.impl.ShopTagIndex
 net.bodz.violet.store.impl.OffStoreItemIndex
 net.bodz.violet.store.impl.RegionCategoryIndex
 net.bodz.violet.store.impl.RegionIndex
+net.bodz.violet.store.impl.RegionLevelIndex
 net.bodz.violet.store.impl.RegionTagIndex
 net.bodz.violet.store.impl.StoreCategoryIndex
 net.bodz.violet.store.impl.StoreItemIndex

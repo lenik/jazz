@@ -1,6 +1,7 @@
 --\import violet.store.art_region
 --\import violet.store.offstorel
 --\import violet.store.region
+--\import violet.store.region-art
 --\import violet.store.storeini
 --\import violet.store.storel
 --\import violet.store.storeodr

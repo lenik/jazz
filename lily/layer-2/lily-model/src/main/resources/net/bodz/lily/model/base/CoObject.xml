@@ -112,7 +112,7 @@
     </sql>
 
     <sql id="modefilt">
-        <if test="m.login != null &amp;&amp; !m.login.user.superUser">
+        <if test="m.login != null &amp;&amp; !m.login.ignoreAcl">
             and (
             a.uid=#{m.login.user.id}
             <if test="!m.login.user.groupIds.empty">

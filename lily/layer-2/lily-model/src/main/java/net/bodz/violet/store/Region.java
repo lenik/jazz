@@ -25,20 +25,23 @@ public class Region
     public static final int ID_AbstractRoot = 1;
     public static final int ID_TemplateRoot = 2;
 
+    public static final int LEVEL_Default = 0;
+
     private String fullPath = "";
 
-    private Artifact asArtifact;
-    private ArtifactCategory forArtifactCategory;
-    private Artifact forArtifact;
+    private RegionLevel level;
     private RegionCategory category;
     private Set<RegionTag> tags;
+    private RegionProperties properties;
 
     private Dim3d position = new Dim3d();
     private Dim3d bbox = new Dim3d();
+
     private Person person;
     private Organization org;
-
-    private RegionProperties properties;
+    private Artifact asArtifact;
+    private ArtifactCategory forArtifactCategory;
+    private Artifact forArtifact;
 
     /**
      * redundant.
@@ -51,28 +54,19 @@ public class Region
         this.fullPath = fullPath;
     }
 
-    public Artifact getAsArtifact() {
-        return asArtifact;
+    public RegionLevel getLevel() {
+        return level;
     }
 
-    public void setAsArtifact(Artifact asArtifact) {
-        this.asArtifact = asArtifact;
+    public void setLevel(RegionLevel level) {
+        this.level = level;
     }
 
-    public ArtifactCategory getForArtifactCategory() {
-        return forArtifactCategory;
-    }
-
-    public void setForArtifactCategory(ArtifactCategory forArtifactCategory) {
-        this.forArtifactCategory = forArtifactCategory;
-    }
-
-    public Artifact getForArtifact() {
-        return forArtifact;
-    }
-
-    public void setForArtifact(Artifact forArtifact) {
-        this.forArtifact = forArtifact;
+    public int getLevelId() {
+        if (level == null)
+            return LEVEL_Default;
+        Integer levelId = level.getId();
+        return levelId == null ? LEVEL_Default : levelId.intValue();
     }
 
     public RegionCategory getCategory() {
@@ -89,6 +83,11 @@ public class Region
 
     public void setTags(Set<RegionTag> tags) {
         this.tags = tags;
+    }
+
+    @Override
+    public RegionProperties getProperties() {
+        return properties;
     }
 
     /**
@@ -153,9 +152,28 @@ public class Region
         this.org = org;
     }
 
-    @Override
-    public RegionProperties getProperties() {
-        return properties;
+    public Artifact getAsArtifact() {
+        return asArtifact;
+    }
+
+    public void setAsArtifact(Artifact asArtifact) {
+        this.asArtifact = asArtifact;
+    }
+
+    public ArtifactCategory getForArtifactCategory() {
+        return forArtifactCategory;
+    }
+
+    public void setForArtifactCategory(ArtifactCategory forArtifactCategory) {
+        this.forArtifactCategory = forArtifactCategory;
+    }
+
+    public Artifact getForArtifact() {
+        return forArtifact;
+    }
+
+    public void setForArtifact(Artifact forArtifact) {
+        this.forArtifact = forArtifact;
     }
 
 }

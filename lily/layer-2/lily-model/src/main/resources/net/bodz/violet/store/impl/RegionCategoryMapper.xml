@@ -14,8 +14,8 @@
             u.label "uid_label",
             g.label "gid_label"
         from regioncat a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
         ]]>
     </sql>
 
@@ -25,8 +25,8 @@
             u.label "uid_label",
             g.label "gid_label"
         from regioncat a
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
         ]]>
     </sql>
 
@@ -48,7 +48,7 @@
     <select id="select" parameterType="int" resultMap="map1">
         <include refid="select2" />
         <where>
-            <if test="_parameter != null">a.id=#{id}</if>
+            <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
@@ -69,21 +69,21 @@
             <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
         </set>
         <where>
-            <if test="id != null">id=#{id}</if>
+            id = #{id}
         </where>
     </update>
 
     <delete id="delete">
-        delete from regioncat where id=#{id}
+        delete from regioncat where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
         select count(*) "total" from regioncat a
         <where>
-            <if test="_parameter != null">
+            <if test="_parameter ! =  null">
                 <include refid="filtconds" />
             </if>
         </where>
     </select>
-    
+
 </mapper>
