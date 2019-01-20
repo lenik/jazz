@@ -13,6 +13,8 @@ import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -25,6 +27,8 @@ import net.bodz.lily.model.base.CoObjectMask;
 
 public class ModuleIndexer
         implements IPathDispatchable {
+
+    static final Logger logger = LoggerFactory.getLogger(ModuleIndexer.class);
 
     List<ModuleInfo> modules = new ArrayList<>();
     Map<String, ModuleInfo> classModule = new HashMap<>();
@@ -84,6 +88,10 @@ public class ModuleIndexer
         // analyze dependencies
         for (EntityInfo entity : nameEntity.values()) {
             for (EntityInfo dep : entity.getDependencies()) {
+                if (dep == null) {
+                    logger.error("null dependency in entity " + entity);
+                    continue;
+                }
                 if (entity.module != dep.module)
                     entity.module.addDependency(dep.module);
             }

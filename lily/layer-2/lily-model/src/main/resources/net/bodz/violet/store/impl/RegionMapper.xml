@@ -7,6 +7,10 @@
     <resultMap id="map1" type="net.bodz.violet.store.Region" extends="co.MAP_UVX">
         <result property="properties.jsonForm" column="props" />
         <result property="fullPath" column="path" />
+        <association property="level" javaType="net.bodz.violet.store.RegionLevel">
+            <id property="id" column="level" />
+            <result property="label" column="level_label" />
+        </association>
         <association property="category" javaType="net.bodz.violet.store.RegionCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
@@ -20,11 +24,13 @@
     <sql id="select1"><![CDATA[
         select
             a.*,
+            level.label "level_label",
             cat.label "cat_label",
             parent.label "parent_label",
             u.label "uid_label",
             g.label "gid_label"
         from region a
+            left join regionlevel level on a.level = level.id
             left join regioncat cat on a.cat = cat.id
             left join region parent on a.parent = parent.id
             left join "user" u on a.uid=u.id
@@ -35,11 +41,13 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            level.label "level_label",
             cat.label "cat_label",
             parent.label "parent_label",
             u.label "uid_label",
             g.label "gid_label"
         from region a
+            left join regionlevel level on a.level = level.id
             left join regioncat cat on a.cat = cat.id
             left join region parent on a.parent = parent.id
             left join "user" u on a.uid=u.id
@@ -52,6 +60,7 @@
         <include refid="co.filter-ui" />
         <include refid="co.filter-version" />
         <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
+        <if test="m.levelId != null">and a.level = #{m.levelId}</if>
         <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
     </sql>
 
@@ -76,11 +85,12 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into region(
             code, label, description, parent,
-            cat,
+            level, cat,
             props,
             path
         ) values(
-            #{codeName},#{label},#{description}, #{parent.id},]]>
+            #{codeName},#{label},#{description}, #{parent.id},
+            #{levelId}, ]]>
             <if test="category == null">default,</if>
             <if test="category != null">#{category.id},</if><![CDATA[
             #{properties.jsonForm}::jsonb,
@@ -92,18 +102,19 @@
         update region
         <set>
             <include refid="co.setUS" />
-            <if test="parent != null">parent=#{parent.id}, </if>
-            <if test="category != null">cat=#{category.id}, </if>
+            <if test="parent != null">parent = #{parent.id}, </if>
+            <if test="level != null">level = #{level.id}, </if>
+            <if test="category != null">cat = #{category.id}, </if>
             <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
-            path=#{fullPath},
+            path = #{fullPath},
         </set>
         <where>
-            <if test="id != null">id=#{id}</if>
+            id = #{id}
         </where>
     </update>
 
     <delete id="delete">
-        delete from region where id=#{id}
+        delete from region where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">

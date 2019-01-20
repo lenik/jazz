@@ -23,6 +23,14 @@ public class LoginData {
         this.user = user;
     }
 
+    public boolean isIgnoreAcl() {
+        if (user == null)
+            return true;
+        if (user.isSuperUser())
+            return true;
+        return false;
+    }
+
     public PrefixMap<String> getPermissions() {
         return permissions;
     }

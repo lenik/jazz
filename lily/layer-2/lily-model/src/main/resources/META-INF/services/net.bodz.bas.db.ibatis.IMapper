@@ -134,6 +134,7 @@ net.bodz.violet.shop.impl.ShopMapper
 net.bodz.violet.shop.impl.ShopTagMapper
 net.bodz.violet.store.impl.OffStoreItemMapper
 net.bodz.violet.store.impl.RegionCategoryMapper
+net.bodz.violet.store.impl.RegionLevelMapper
 net.bodz.violet.store.impl.RegionMapper
 net.bodz.violet.store.impl.RegionTagMapper
 net.bodz.violet.store.impl.StoreCategoryMapper

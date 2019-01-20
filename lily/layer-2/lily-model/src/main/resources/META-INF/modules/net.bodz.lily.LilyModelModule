@@ -275,6 +275,7 @@ net.bodz.violet.issue.impl.IssueCategoryMapper
 net.bodz.violet.issue.impl.IssueFavMask
 net.bodz.violet.issue.impl.IssuePhaseMapper
 net.bodz.violet.issue.IssueParameter
+net.bodz.violet.store.RegionLevel
 net.bodz.violet.store.RegionProperties
 net.bodz.violet.store.RegionTag
 net.bodz.violet.store.ArtifactRegionOption
