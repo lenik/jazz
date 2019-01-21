@@ -5,6 +5,9 @@
         id          int primary key default nextval('api_seq'),
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Code
+
+        -- Properties:
+        --   callback: template...
 --\mixin lily.mixin.Props
         
         uom         varchar(30) not null default 'times'

@@ -13,7 +13,8 @@
         apply       int
             references apply(id) on update cascade,
 
-        secret      varchar(40) not null
+        -- can be public key.
+        secret      text not null
     );
 
     create index app_label          on app(label);
