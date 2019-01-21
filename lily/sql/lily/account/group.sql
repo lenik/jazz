@@ -17,3 +17,7 @@
     create index group_state        on "group"(state);
     
     insert into "group"(id, name, label) values(0, 'root', 'Root');
+    insert into "group"(id, name, label) values(1, 'admin', 'Administrators');
+    insert into "group"(id, name, label) values(2, 'user', 'Normal Users');
+    insert into "group"(id, name, label) values(3, 'guest', 'Guest Users');
+

@@ -28,9 +28,8 @@
         references "user"(id) on update cascade on delete set null;
         
     -- primary gid, 0 for root user.
-    alter table "user" add gid0 int not null default 0
-        references "group"(id) on update cascade on delete set null;
-    alter table "user" alter gid0 drop default;
+    -- alter table "user" alter gid0 drop default;
     
-    insert into group_user("group", "user") values(0, 0);
+    insert into group_user("user", "group") values(0, 0);
+    insert into group_user("user", "group") values(1, 3);
     
