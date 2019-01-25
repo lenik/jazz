@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Table;
 
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.site.json.JsonArrayList;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -14,6 +15,7 @@ import net.bodz.lily.model.mx.CoMessage;
 
 @Table(name = "diary")
 @IdType(Long.class)
+@UploadHint
 public class Diary
         extends CoMessage<Long> {
 

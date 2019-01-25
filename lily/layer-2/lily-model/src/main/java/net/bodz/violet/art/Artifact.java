@@ -14,6 +14,7 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.rtx.IAttributed;
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.repr.EntGroup;
@@ -23,8 +24,8 @@ import net.bodz.lily.util.mapper.DataListFields;
  * 物品
  */
 @IdType(Integer.class)
-// @SchemaPref(Schemas.ARTIFACT)
 @Table(name = "art")
+@UploadHint
 public class Artifact
         extends CoEntity<Integer>
         implements IAttributed {
