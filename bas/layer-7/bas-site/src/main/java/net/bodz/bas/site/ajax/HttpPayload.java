@@ -25,8 +25,8 @@ public class HttpPayload {
             throws LoadException, IllegalStateException {
         JsonObject jsonObj = (JsonObject) req.getAttribute(JSON_ATTRIBUTE_NAME);
         if (jsonObj == null) {
+            String json = null;
             try {
-                String json = null;
                 if (altParam != null)
                     json = req.getParameter(altParam);
                 if (json == null)
@@ -36,13 +36,16 @@ public class HttpPayload {
                     } catch (IOException e) {
                         throw new LoadException("Failed to read request payload: " + e.getMessage(), e);
                     }
+                if (json.isEmpty())
+                    throw new IllegalArgumentException("json payload is empty.");
                 jsonObj = new JsonObject(json);
                 req.setAttribute(JSON_ATTRIBUTE_NAME, jsonObj);
                 return jsonObj;
             } catch (JSONException e) {
-                throw new LoadException("Failed to parse json: " + e.getMessage(), e);
+                throw new LoadException("Failed to parse json: " + json, e);
             }
         }
         return jsonObj;
     }
+
 }
