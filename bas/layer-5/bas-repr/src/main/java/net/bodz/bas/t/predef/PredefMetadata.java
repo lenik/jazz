@@ -1,10 +1,6 @@
 package net.bodz.bas.t.predef;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.meta.stereo.IMetadata;
@@ -13,15 +9,19 @@ import net.bodz.bas.t.order.DefaultComparator;
 public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         implements IMetadata {
 
+    static Random random = new Random();
+
     private final Class<E> itemClass;
     private final Class<?> stopClass;
     private final int level;
 
     private Map<K, E> localKeyMap = new TreeMap<>(DefaultComparator.getInstance());
     private Map<String, E> localNameMap = new TreeMap<>(DefaultComparator.getInstance());
+    private List<E> localValueList = new ArrayList<>();
 
     private Map<K, E> keyMap = new TreeMap<>(DefaultComparator.getInstance());
     private Map<String, E> nameMap = new TreeMap<>(DefaultComparator.getInstance());
+    private List<E> valueList = new ArrayList<>();
 
     PredefMetadata(Class<E> itemClass) {
         this(itemClass, Predef.class);
@@ -67,6 +67,16 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         return Collections.unmodifiableCollection(localKeyMap.values());
     }
 
+    public List<E> geLocalValueList() {
+        return Collections.unmodifiableList(localValueList);
+    }
+
+    public synchronized E getAnyLocalValue() {
+        int n = localValueList.size();
+        int index = random.nextInt(n);
+        return localValueList.get(index);
+    }
+
     public Map<K, E> getKeyMap() {
         return Collections.unmodifiableMap(keyMap);
     }
@@ -79,6 +89,16 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         return Collections.unmodifiableCollection(keyMap.values());
     }
 
+    public List<E> getValueList() {
+        return Collections.unmodifiableList(valueList);
+    }
+
+    public synchronized E getAnyValue() {
+        int n = valueList.size();
+        int index = random.nextInt(n);
+        return valueList.get(index);
+    }
+
     public E ofKey(K key) {
         return keyMap.get(key);
     }
@@ -87,7 +107,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         return nameMap.get(name);
     }
 
-    public void addValue(E value) {
+    public synchronized void addValue(E value) {
         if (value == null)
             throw new NullPointerException("value");
         if (!value.getClass().equals(itemClass))
@@ -102,11 +122,11 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
             throw new DuplicatedKeyException(localNameMap, key, "name");
         localKeyMap.put(key, value);
         localNameMap.put(name, value);
+        localValueList.add(value);
 
         Class<E> c = itemClass;
         while (true) {
-            @SuppressWarnings("unchecked")
-            PredefMetadata<E, K> metadata = (PredefMetadata<E, K>) (Object) forClass(c);
+            PredefMetadata<E, K> metadata = forClass(c);
 
             if (metadata.keyMap.containsKey(key))
                 throw new DuplicatedKeyException(metadata.keyMap, key, "more key");
@@ -114,6 +134,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
                 throw new DuplicatedKeyException(metadata.nameMap, name, "more name");
             metadata.keyMap.put(key, value);
             metadata.nameMap.put(name, value);
+            metadata.valueList.add(value);
 
             c = (Class<E>) c.getSuperclass();
             if (c == null)
