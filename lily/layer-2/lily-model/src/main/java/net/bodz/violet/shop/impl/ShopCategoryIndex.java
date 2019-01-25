@@ -8,10 +8,7 @@ import net.bodz.violet.shop.ShopCategory;
 public class ShopCategoryIndex
         extends CoCategoryIndex<ShopCategory, ShopCategoryMask> {
 
-    public static final String SCHEMA = "shopcat";
-
     public ShopCategoryIndex() {
-        super(SCHEMA);
     }
 
 }

@@ -8,10 +8,7 @@ import net.bodz.violet.plan.DiaryCategory;
 public class DiaryCategoryIndex
         extends CoCategoryIndex<DiaryCategory, DiaryCategoryMask> {
 
-    public static final String SCHEMA = "diarycat";
-
     public DiaryCategoryIndex() {
-        super(SCHEMA);
     }
 
 }

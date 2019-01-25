@@ -6,13 +6,10 @@ import java.util.Map;
 
 import net.bodz.bas.meta.decl.ObjectType;
 import net.bodz.bas.site.ajax.AjaxResult;
-import net.bodz.bas.site.file.ItemFile;
-import net.bodz.bas.site.file.UploadFn;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.mx.CoMessageIndex;
 import net.bodz.violet.plan.Diary;
 import net.bodz.violet.plan.DiaryParty;
-import net.bodz.violet.plan.DiaryProperties;
 
 @ObjectType(Diary.class)
 public class DiaryIndex
@@ -22,12 +19,6 @@ public class DiaryIndex
 
     @Override
     protected void save(IVariantMap<String> q, Diary obj, AjaxResult result) {
-        DiaryProperties properties = obj.getProperties();
-        if (properties != null) {
-            List<ItemFile> images = properties.getImages();
-            UploadFn.submitFiles(images, SCHEMA, lazyId(obj));
-        }
-
         super.save(q, obj, result);
 
         // Update diary parties.

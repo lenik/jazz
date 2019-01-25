@@ -8,10 +8,7 @@ import net.bodz.violet.issue.IssueCategory;
 public class IssueCategoryIndex
         extends CoCategoryIndex<IssueCategory, IssueCategoryMask> {
 
-    public static final String SCHEMA = "issuecat";
-
     public IssueCategoryIndex() {
-        super(SCHEMA);
     }
 
 }

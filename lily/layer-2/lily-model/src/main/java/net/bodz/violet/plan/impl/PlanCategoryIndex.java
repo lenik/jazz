@@ -11,10 +11,7 @@ import net.bodz.violet.plan.PlanCategory;
 public class PlanCategoryIndex
         extends CoCategoryIndex<PlanCategory, PlanCategoryMask> {
 
-    public static final String SCHEMA = "plancat";
-
     public PlanCategoryIndex() {
-        super(SCHEMA);
     }
 
 }
