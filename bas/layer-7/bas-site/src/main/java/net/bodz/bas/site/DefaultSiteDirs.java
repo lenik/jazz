@@ -7,8 +7,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.system.SysProps;
+import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.http.ctx.IAnchor;
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;
 
@@ -25,6 +27,18 @@ public class DefaultSiteDirs
         // TODO appdata/APP/sites/SITE/files/SCHEMA/...
         clusterDataDir = new File(baseDir, "sites");
         clusterDataDir.mkdirs();
+
+        for (Class<?> uploadable : IndexedTypes.list(UploadHint.class, true)) {
+            UploadHint aHint = uploadable.getAnnotation(UploadHint.class);
+            String[] schemas = aHint.schemas();
+            if (schemas.length == 0) {
+                String schema = uploadable.getSimpleName();
+                addSchema(schema);
+            } else {
+                for (String schema : schemas)
+                    addSchema(schema);
+            }
+        }
     }
 
     public File getDataDir(String instanceName) {

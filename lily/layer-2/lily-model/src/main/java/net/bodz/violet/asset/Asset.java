@@ -2,6 +2,7 @@ package net.bodz.violet.asset;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.contact.OrgUnit;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
@@ -9,6 +10,7 @@ import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
 
 @Table(name = "asset")
+@UploadHint
 public class Asset
         extends AbstractAsset {
 
