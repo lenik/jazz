@@ -47,8 +47,7 @@
             left join artcat on art.cat = artcat.id
             left join "user" u on shop.uid = u.id
             left join "group" g on shop.gid = g.id
-        ]]>
-    </sql>
+    ]]></sql>
 
     <sql id="select2"><![CDATA[
         select
