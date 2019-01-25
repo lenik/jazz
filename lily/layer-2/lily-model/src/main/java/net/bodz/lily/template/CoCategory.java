@@ -1,7 +1,9 @@
 package net.bodz.lily.template;
 
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.model.base.CoNode;
 
+@UploadHint
 public abstract class CoCategory<self_t extends CoCategory<self_t, Id>, Id>
         extends CoNode<self_t, Id> {
 
