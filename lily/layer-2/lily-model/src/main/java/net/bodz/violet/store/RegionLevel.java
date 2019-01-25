@@ -4,6 +4,7 @@ import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoCode;
+import net.bodz.lily.template.RichProperties;
 
 /**
  * 区域级别
@@ -19,5 +20,12 @@ public class RegionLevel
     public static final int ID_Place = 1;
     public static final int ID_Room = 2;
     public static final int ID_Shelf = 3;
+
+    RichProperties properties = new RichProperties();
+
+    @Override
+    public RichProperties getProperties() {
+        return properties;
+    }
 
 }

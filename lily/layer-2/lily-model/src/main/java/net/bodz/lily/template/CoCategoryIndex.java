@@ -20,7 +20,7 @@ public abstract class CoCategoryIndex<T extends CoCategory<T, ?>, M extends CoCa
     @Override
     protected void save(IVariantMap<String> q, T obj, AjaxResult result) {
         CoCategory<?, ?> cat = obj;
-        CoCategoryProperties properties = cat.getProperties();
+        RichProperties properties = cat.getProperties();
         if (properties != null) {
             List<ItemFile> images = properties.getImages();
             UploadFn.submitFiles(images, schema, lazyId(obj));

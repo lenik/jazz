@@ -7,7 +7,7 @@ public abstract class CoCategory<self_t extends CoCategory<self_t, Id>, Id>
 
     private static final long serialVersionUID = 1L;
 
-    CoCategoryProperties properties = new CoCategoryProperties();;
+    RichProperties properties = new RichProperties();;
 
     public CoCategory() {
         super();
@@ -18,7 +18,7 @@ public abstract class CoCategory<self_t extends CoCategory<self_t, Id>, Id>
     }
 
     @Override
-    public CoCategoryProperties getProperties() {
+    public RichProperties getProperties() {
         return properties;
     }
 
