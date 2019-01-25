@@ -46,10 +46,10 @@
 
     <insert id = "insert" useGeneratedKeys = "true" keyProperty = "id"><![CDATA[
         insert into regionlevel(
-            code, label, description,
+            label, description,
             props
         ) values(
-            #{codeName},#{label},#{description},
+            #{label},#{description},
             #{properties.jsonForm}::jsonb
         ) returning id; --
     ]]></insert>

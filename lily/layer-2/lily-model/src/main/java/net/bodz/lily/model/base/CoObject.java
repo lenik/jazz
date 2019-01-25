@@ -655,7 +655,8 @@ public abstract class CoObject
                 if (loginData != null) {
                     User user = loginData.getUser();
                     obj.setOwnerUser(user);
-                    obj.setOwnerGroup(user.getPrimaryGroup());
+                    if (user != null)
+                        obj.setOwnerGroup(user.getPrimaryGroup());
                 }
             }
         }
