@@ -2,6 +2,7 @@ package net.bodz.violet.store;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoCode;
 import net.bodz.lily.template.RichProperties;
@@ -11,6 +12,7 @@ import net.bodz.lily.template.RichProperties;
  */
 @IdType(Integer.class)
 @Table(name = "regionlevel")
+@UploadHint
 public class RegionLevel
         extends CoCode<RegionLevel> {
 

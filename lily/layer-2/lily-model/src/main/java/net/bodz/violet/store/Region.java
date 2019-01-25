@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
@@ -17,6 +18,7 @@ import net.bodz.violet.art.Dim3d;
  */
 @IdType(Integer.class)
 @Table(name = "region")
+@UploadHint
 public class Region
         extends CoNode<Region, Integer> {
 

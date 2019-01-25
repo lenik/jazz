@@ -2,6 +2,9 @@ package net.bodz.lily.contact;
 
 import net.bodz.lily.template.RichProperties;
 
+/**
+ * @see Party
+ */
 public class PartyProperties
         extends RichProperties {
 

@@ -15,6 +15,7 @@ import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.PriorityUtils;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
@@ -23,6 +24,7 @@ import net.bodz.lily.model.base.CoEntity;
  * 参与方
  */
 @IdType(Integer.class)
+@UploadHint
 public abstract class Party
         extends CoEntity<Integer> {
 
