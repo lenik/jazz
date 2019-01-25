@@ -11,10 +11,7 @@ import net.bodz.violet.store.RegionCategory;
 public class RegionCategoryIndex
         extends CoCategoryIndex<RegionCategory, RegionCategoryMask> {
 
-    public static final String SCHEMA = "regioncat";
-
     public RegionCategoryIndex() {
-        super(SCHEMA);
     }
 
 }

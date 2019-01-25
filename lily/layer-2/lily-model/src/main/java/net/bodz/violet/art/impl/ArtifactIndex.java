@@ -1,15 +1,8 @@
 package net.bodz.violet.art.impl;
 
-import java.util.List;
-
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.bas.site.ajax.AjaxResult;
-import net.bodz.bas.site.file.ItemFile;
-import net.bodz.bas.site.file.UploadFn;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.art.Artifact;
-import net.bodz.violet.art.ArtifactProperties;
 
 /**
  * 定义生产过程或供销中使用的制品（成品或半成品）。<br>
@@ -32,15 +25,5 @@ public class ArtifactIndex
         extends CoIndex<Artifact, ArtifactMask> {
 
     static final String SCHEMA = "art";
-
-    @Override
-    protected void save(IVariantMap<String> q, Artifact obj, AjaxResult result) {
-        ArtifactProperties properties = obj.getProperties();
-        if (properties != null) {
-            List<ItemFile> images = properties.getImages();
-            UploadFn.submitFiles(images, SCHEMA, lazyId(obj));
-        }
-        super.save(q, obj, result);
-    }
 
 }

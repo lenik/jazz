@@ -33,6 +33,9 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.site.ajax.HttpPayload;
+import net.bodz.bas.site.file.ItemFile;
+import net.bodz.bas.site.file.UploadFn;
+import net.bodz.bas.site.json.JsonMap;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.site.json.TableData;
@@ -45,6 +48,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.ILazyId;
 import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.security.AccessControl;
+import net.bodz.lily.template.RichProperties;
 
 @AccessControl
 @IndexedType(includeAbstract = true)
@@ -299,6 +303,15 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     private void _save(T obj, AjaxResult result) {
         IMapperTemplate<T, M> mapper = requireMapper();
         boolean create = obj.getId() == null;
+
+        // TODO as an extension.
+        JsonMap properties = obj.getProperties();
+        if (properties instanceof RichProperties) {
+            RichProperties props = (RichProperties) properties;
+            List<ItemFile> images = props.getImages();
+            UploadFn.submitFiles(images, getObjectType().getSimpleName(), lazyId(obj));
+        }
+
         if (create) {
             mapper.insert(obj);
             result.set("id", obj.getId());

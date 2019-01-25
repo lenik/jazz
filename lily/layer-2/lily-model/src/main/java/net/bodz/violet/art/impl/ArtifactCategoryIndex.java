@@ -15,10 +15,7 @@ import net.bodz.violet.art.ArtifactCategory;
 public class ArtifactCategoryIndex
         extends CoCategoryIndex<ArtifactCategory, ArtifactCategoryMask> {
 
-    public static final String SCHEMA = "artcat";
-
     public ArtifactCategoryIndex() {
-        super(SCHEMA);
     }
 
 }
