@@ -10,7 +10,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.site.json.JsonMap;
 
-public class CoCategoryProperties
+public class RichProperties
         extends JsonMap {
 
     private static final long serialVersionUID = 1L;
@@ -23,11 +23,11 @@ public class CoCategoryProperties
      * 对应的图片，其中第一幅图片一般用于显示主图标。
      */
     @OfGroup(StdGroup.Visual.class)
-    public List<ItemFile> getImages() {
+    public final List<ItemFile> getImages() {
         return getAttribute(K_IMAGES);
     }
 
-    public void setImages(List<ItemFile> images) {
+    public final void setImages(List<ItemFile> images) {
         setAttribute(K_IMAGES, images);
     }
 
