@@ -18,10 +18,14 @@ import net.bodz.bas.html.io.BHtmlOut;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.io.BTreeOut;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class AjaxResult
         extends BTreeOut
         implements IJsonSerializable {
+
+    static final Logger logger = LoggerFactory.getLogger(AjaxResult.class);
 
     Boolean success;
     int status;
@@ -126,6 +130,7 @@ public class AjaxResult
     }
 
     public AjaxResult fail(Throwable e, int status, String message) {
+        logger.warn(e, "ajax failed with: " + message);
         this.exception = e;
         return fail(message);
     }
