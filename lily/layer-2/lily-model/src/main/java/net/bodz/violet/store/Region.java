@@ -34,7 +34,7 @@ public class Region
     private RegionLevel level;
     private RegionCategory category;
     private Set<RegionTag> tags;
-    private RegionProperties properties;
+    private RegionProperties properties = new RegionProperties();
 
     private Dim3d position = new Dim3d();
     private Dim3d bbox = new Dim3d();
