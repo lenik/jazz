@@ -9,17 +9,17 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 public class GeoRegionsTest
         extends Assert {
 
-    static void dump(ITreeOut out, GeoRegion r) {
+    static void dump(ITreeOut out, GeoZone r) {
         out.println(r.buildId() + " - " + r.getLocaleName());
         out.enter();
-        for (GeoRegion child : r.getChildren())
+        for (GeoZone child : r.getChildren())
             dump(out, child);
         out.leave();
     }
 
     public static void main(String[] args) {
         ITreeOut out = TreeOutImpl.from(Stdio.cout);
-        dump(out, GeoRegions.getChina());
+        dump(out, GeoZones.getChina());
     }
 
 }

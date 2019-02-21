@@ -30,27 +30,32 @@ public class ModuleIndexer
 
     static final Logger logger = LoggerFactory.getLogger(ModuleIndexer.class);
 
-    List<ModuleInfo> modules = new ArrayList<>();
-    Map<String, ModuleInfo> classModule = new HashMap<>();
+    boolean loaded;
 
-    EntityIndex entityIndex = new EntityIndex(this);
+    private List<ModuleInfo> modules = new ArrayList<>();
+    private Map<String, ModuleInfo> classModule = new HashMap<>();
 
-    Map<String, EntityInfo> nameEntity = new HashMap<>();
-    Map<String, MaskInfo> nameMask = new HashMap<>();
+    private EntityIndex entityIndex = new EntityIndex(this);
 
-    // Map<String, MapperInfo> nameMapper= new HashMap<>();
-    // Map<String, IndexInfo> nameIndex = new HashMap<>();
+    private Map<String, EntityInfo> nameEntity = new HashMap<>();
+    private Map<String, MaskInfo> nameMask = new HashMap<>();
 
-    private ModuleIndexer() {
+    // private Map<String, MapperInfo> nameMapper= new HashMap<>();
+    // private Map<String, IndexInfo> nameIndex = new HashMap<>();
+
+    synchronized void lazyLoad() {
+        if (loaded)
+            return;
         try {
-            index();
+            _index();
+            loaded = true;
         } catch (Exception e) {
             throw new LoadException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings("rawtypes")
-    public void index()
+    void _index()
             throws Exception {
 
         for (IJazzModule mod : ServiceLoader.load(IJazzModule.class)) {
@@ -120,10 +125,6 @@ public class ModuleIndexer
         }
     }
 
-    public EntityInfo getEntity(Class<?> entityType) {
-        return nameEntity.get(entityType.getName());
-    }
-
     EntityInfo resolveEntity(Class<?> entityType, Class<?> maskType) {
         if (entityType == null)
             throw new NullPointerException("entityType");
@@ -188,6 +189,26 @@ public class ModuleIndexer
         mask.parent = loadMaskRec(maskClass.getSuperclass());
         nameMask.put(fqcn, mask);
         return mask;
+    }
+
+    public List<ModuleInfo> getModules() {
+        lazyLoad();
+        return modules;
+    }
+
+    public EntityIndex getEntityIndex() {
+        lazyLoad();
+        return entityIndex;
+    }
+
+    public EntityInfo getEntity(String name) {
+        lazyLoad();
+        return nameEntity.get(name);
+    }
+
+    public EntityInfo getEntity(Class<?> entityType) {
+        lazyLoad();
+        return nameEntity.get(entityType.getName());
     }
 
     @Override

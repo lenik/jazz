@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GeoRegion {
+public class GeoZone {
 
     private final String code;
     private final String localeName;
@@ -12,10 +12,10 @@ public class GeoRegion {
     private String enName;
     private String zhName;
 
-    private final GeoRegion parent;
-    private final List<GeoRegion> children = new ArrayList<GeoRegion>();;
+    private final GeoZone parent;
+    private final List<GeoZone> children = new ArrayList<GeoZone>();;
 
-    public GeoRegion(String code, String localeName, GeoRegion parent) {
+    public GeoZone(String code, String localeName, GeoZone parent) {
         this.code = code;
         this.localeName = localeName;
         this.parent = parent;
@@ -23,9 +23,9 @@ public class GeoRegion {
             parent.children.add(this);
     }
 
-    public List<GeoRegion> bottomUp() {
-        List<GeoRegion> list = new ArrayList<>();
-        GeoRegion node = this;
+    public List<GeoZone> bottomUp() {
+        List<GeoZone> list = new ArrayList<>();
+        GeoZone node = this;
         while (node != null) {
             list.add(node);
             node = node.getParent();
@@ -33,8 +33,8 @@ public class GeoRegion {
         return list;
     }
 
-    public List<GeoRegion> topDown() {
-        List<GeoRegion> list = bottomUp();
+    public List<GeoZone> topDown() {
+        List<GeoZone> list = bottomUp();
         Collections.reverse(list);
         return list;
     }
@@ -49,7 +49,7 @@ public class GeoRegion {
 
     public String buildId() {
         StringBuilder sb = new StringBuilder(16);
-        for (GeoRegion r : topDown())
+        for (GeoZone r : topDown())
             sb.append(r.code);
         return sb.toString();
     }
@@ -74,11 +74,11 @@ public class GeoRegion {
         this.zhName = zhName;
     }
 
-    public GeoRegion getParent() {
+    public GeoZone getParent() {
         return parent;
     }
 
-    public List<GeoRegion> getChildren() {
+    public List<GeoZone> getChildren() {
         return children;
     }
 
@@ -89,7 +89,7 @@ public class GeoRegion {
 
     public String toString(String delimit) {
         StringBuilder sb = new StringBuilder();
-        GeoRegion r = this;
+        GeoZone r = this;
         while (true) {
             sb.append(r.enName);
             r = r.parent;
