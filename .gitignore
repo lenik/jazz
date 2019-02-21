@@ -85,7 +85,6 @@ COPYING
 ChangeLog
 FILES
 INSTALL
-Makefile
 Makefile.in
 POTFILES
 RELEASE-NOTES

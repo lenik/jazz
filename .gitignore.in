@@ -85,7 +85,6 @@ COPYING                                 # cooldeb
 ChangeLog                               # coolauto
 FILES                                   # coolmake
 INSTALL                                 # cooldeb
-Makefile
 Makefile.in                             # Makefile.am
 POTFILES                                # gettextize
 RELEASE-NOTES                           # coolmaven
