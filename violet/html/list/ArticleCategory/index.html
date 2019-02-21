@@ -28,12 +28,6 @@
 
         <script type="text/javascript" src="../../.skel/async.js"></script>
         <script type="text/javascript" src="../../.skel/list-model.js"></script>
-        <script>
-            $(document).ready(function() {
-                app.dataFilter["depthRange.to"] = 1;
-            });
-        </script>
-        
         <script type="text/javascript" src="../../.skel/skel.js"></script>
         <script type="text/javascript" src="../../site.js"></script>
         <script type="text/javascript" src="../../.skel/list.js"></script>
@@ -53,12 +47,11 @@
 <!------------------------------- BEGIN OF VIEWS ---------------------------->
 <div k="list" :class="{selected: view=='list'}"><div class="list-cmds flex-column">
     <div class="list">
-        <table :class="css.dataTable"
-                data-href="../../Zone" data-form="zone"
-                data-filter="app.dataFilter"><thead>
+        <table :class="css.dataTable" data-href="../../ArticleCategory" data-form="artcat"
+                data-filter="location.params"><thead>
             <th data-field="id" class="id">id</th>
-            <th data-field="category.label">类型</th>
-            <th data-field="label">全名</th>
+            <th data-field="properties" class="hidden"></th>
+            <th data-field="label" class="with-image" image="rowIm(row)">类型</th>
             <th data-field="description">描述</th>
             <th data-field="creationDate" data-format="yyyy-MM-dd" class="detail">创建时间</th>
             <th data-field="lastModifiedDate" data-format="yyyy-MM-dd">修改时间</th>
@@ -66,13 +59,10 @@
         </tbody></table>
     </div>
     <div class="cmds">
-        <ul class="btns">
-            <li class="">
-                <a href="reload"><i class="fa fa-refresh"></i> 刷新</a></li>
-            <li class="">
-                <a href="select"><i class="fa fa-check"></i> 选择</a></li>
-            <li class="">
-                <a href="close"><i class="fa fa-close"></i> 关闭</a></li>
+        <ul>
+            <li class=""><a href="reload"><i class="fa fa-refresh"></i> 刷新</a></li>
+            <li class=""><a href="select"><i class="fa fa-check"></i> 选择</a></li>
+            <li class=""><a href="close"><i class="fa fa-close"></i> 关闭</a></li>
         </ul>
      </div>
 </div></div>

@@ -1,3 +1,4 @@
 net.bodz.lily.model.base.CoMomentInterval
+net.bodz.lily.model.base.CoNode
 net.bodz.lily.model.base.CoObject
 net.bodz.lily.model.mx.CoMessage

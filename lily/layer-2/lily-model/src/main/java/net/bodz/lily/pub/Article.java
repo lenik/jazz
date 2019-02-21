@@ -18,7 +18,7 @@ public class Article
 
     ArticleCategory category;
     // int ntalk;
-    JsonMap plugins;
+    final JsonMap plugins = new JsonMap();
 
     public Article() {
     }
@@ -33,10 +33,6 @@ public class Article
 
     public JsonMap getPlugins() {
         return plugins;
-    }
-
-    public void setPlugins(JsonMap plugins) {
-        this.plugins = plugins;
     }
 
 }

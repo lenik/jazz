@@ -4,15 +4,18 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.pub.impl.ArticleCategoryMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.pub.ArticleCategory" extends="co.MAP_UVX">
+    <resultMap id="map1" type="net.bodz.lily.pub.ArticleCategory" extends="node.map1">
+        <result property="properties.jsonForm" column="props" />
     </resultMap>
 
     <sql id="select1"><![CDATA[
         select
             a.*,
+            parent.label "parent_label",
             u.label "uid_label",
             g.label "gid_label"
         from articlecat a
+            left join articlecat parent on a.parent = parent.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -21,9 +24,11 @@
     <sql id="select2"><![CDATA[
         select
             a.*,
+            parent.label "parent_label",
             u.label "uid_label",
             g.label "gid_label"
         from articlecat a
+            left join articlecat parent on a.parent = parent.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -32,6 +37,9 @@
     <sql id="filtconds">
         <!-- co -->
         <include refid="co.modefilt" />
+        <include refid="co.filter-id" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
     </sql>
 
     <select id="all" resultMap="map1">
@@ -55,10 +63,14 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into articlecat(
             code, label, description,
-            priority, flags, state, uid, gid, mode, acl
+            priority, flags, state, uid, gid, mode, acl,
+            props,
+            parent, depth
         ) values(
             #{codeName}, #{label}, #{description},
-            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl}
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{properties.jsonForm}::jsonb,
+            #{parent.id}, #{depth}
         ) returning id; --
     ]]></insert>
 
@@ -66,6 +78,9 @@
         update articlecat
         <set>
             <include refid="co.setUSA" />
+            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="parent != null">parent = #{parent.id},</if>
+            depth = #{depth}
         </set>
         <where>
             id = #{id}

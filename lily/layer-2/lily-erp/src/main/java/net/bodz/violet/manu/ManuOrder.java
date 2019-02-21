@@ -12,8 +12,8 @@ import net.bodz.violet.plan.Plan;
 
 import user.book.Org;
 
-@Table(name = "manuodr")
 @IdType(Long.class)
+@Table(name = "manuodr")
 public class ManuOrder
         extends CoMessage<Long> {
 

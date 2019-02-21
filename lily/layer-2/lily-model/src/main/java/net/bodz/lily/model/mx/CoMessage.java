@@ -11,18 +11,21 @@ import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.model.mixin.UseForm;
 import net.bodz.lily.model.mixin.UserClickInfo;
 import net.bodz.lily.security.User;
+import net.bodz.lily.template.RichProperties;
 
 /**
  * @label Message
  * @label.zh 消息
  */
 @IncludeMapperXml
+@UploadHint
 public abstract class CoMessage<Id>
         extends CoMomentInterval<Id>
         implements IPriority, IId<Id> {
@@ -40,6 +43,8 @@ public abstract class CoMessage<Id>
 
     private Date sentTime;
     private Date receivedTime;
+
+    private RichProperties properties = createProperties();
 
     public CoMessage() {
     }
@@ -164,6 +169,19 @@ public abstract class CoMessage<Id>
 
     public void setReceivedTime(Date receivedTime) {
         this.receivedTime = receivedTime;
+    }
+
+    protected RichProperties createProperties() {
+        return new RichProperties();
+    }
+
+    @Override
+    public RichProperties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(RichProperties properties) {
+        this.properties = properties;
     }
 
     @Override

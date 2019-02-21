@@ -1,8 +1,16 @@
+net.bodz.lily.api.AppApply
 net.bodz.lily.contact.Organization
 net.bodz.lily.contact.PartyCategory
 net.bodz.lily.contact.Person
+net.bodz.lily.geo.Zone
+net.bodz.lily.geo.ZoneCategory
+net.bodz.lily.model.mx.Mail
+net.bodz.lily.pub.Article
 net.bodz.lily.pub.ArticleCategory
+net.bodz.lily.pub.ArticleTalk
+net.bodz.lily.pub.Post
 net.bodz.lily.pub.PostCategory
+net.bodz.lily.pub.PostTalk
 net.bodz.lily.security.Group
 net.bodz.lily.security.Role
 net.bodz.lily.security.User

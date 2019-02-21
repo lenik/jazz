@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="node">
+
+    <resultMap id="map1" type="net.bodz.lily.model.base.CoNode" extends="co.MAP_ALL">
+        <result property="depth" column="depth" />
+    </resultMap>
+
+    <sql id="set">
+        <if test="depth != null">depth = #{depth}, </if>
+    </sql>
+    
+    <sql id="filter-node">
+        <if test="m.depthRange != null">
+            <if test="m.depthRange.start != null">
+                <if test="m.depthRange.startInclusive">and a.depth >= #{m.depthRange.start}</if>
+                <if test="m.depthRange.startExclusive">and a.depth > #{m.depthRange.start}</if>
+            </if>
+            <if test="m.depthRange.end != null">
+                <if test="m.depthRange.endInclusive">and a.depth &lt;= #{m.depthRange.end}</if>
+                <if test="m.depthRange.endExclusive">and a.depth &lt; #{m.depthRange.end}</if>
+            </if>
+        </if>
+    </sql>
+
+</mapper>

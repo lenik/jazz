@@ -13,7 +13,6 @@ public class ZoneMask
     private final GeoLocationMask geo = new GeoLocationMask();
 
     public ZoneMask() {
-        getIdRange().setStart(0L);
     }
 
     public Integer getCategoryId() {

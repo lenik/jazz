@@ -16,10 +16,13 @@
         select
             a.*,
             cat.label "cat_label",
+            op.name "op_name",
+            op.label "op_label",
             u.label "uid_label",
             g.label "gid_label"
         from article a
             left join articlecat cat on a.cat = cat.id
+            left join "user" op on a.op = op.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -29,10 +32,13 @@
         select
             a.*,
             cat.label "cat_label",
+            op.name "op_name",
+            op.label "op_label",
             u.label "uid_label",
             g.label "gid_label"
         from article a
             left join articlecat cat on a.cat = cat.id
+            left join "user" op on a.op = op.id
             left join "user" u on a.uid = u.id
             left join "group" g on a.gid = g.id
         ]]>
@@ -41,6 +47,11 @@
     <sql id="filtconds">
         <!-- co -->
         <include refid="co.modefilt" />
+        <include refid="co.filter-id" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
+        <include refid="message.filter-all" />
+        <if test="m.categoryId != null">and cat = #{m.categoryId}</if>
     </sql>
 
     <select id="all" resultMap="map1">
@@ -68,6 +79,7 @@
             t0, t1,
             op, subject, text, 
             cat,
+            props,
             plugins
         ) values(
             #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
@@ -75,6 +87,7 @@
             #{beginTime}, #{endTime},
             #{op.id}, #{subject}, #{text}, 
             #{category.id},
+            #{properties.jsonForm},
             #{plugins.jsonForm}
         ) returning id; --
     ]]></insert>
@@ -86,6 +99,7 @@
             <include refid="mi.setT" />
             <include refid="message.setUM" />
             cat = #{category.id},
+            props = #{properties.jsonForm},
             plugins = #{plugins.jsonForm},
         </set>
         <where>
