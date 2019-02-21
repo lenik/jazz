@@ -25,7 +25,6 @@ public class Diary
     DiaryPhase phase;
     int value;
 
-    DiaryProperties properties = new DiaryProperties();
     List<DiaryParty> parties;
 
     public Diary() {
@@ -56,8 +55,13 @@ public class Diary
     }
 
     @Override
+    protected DiaryProperties createProperties() {
+        return new DiaryProperties();
+    }
+
+    @Override
     public DiaryProperties getProperties() {
-        return properties;
+        return (DiaryProperties) super.getProperties();
     }
 
     public List<DiaryParty> getParties() {

@@ -15,7 +15,7 @@
         country     char(2),
         parent      int
             references zone(id) on update cascade on delete cascade,
-        depth       int,
+        depth       int not null default -1,
 
         telcode     varchar(10),
         postcode    varchar(10),

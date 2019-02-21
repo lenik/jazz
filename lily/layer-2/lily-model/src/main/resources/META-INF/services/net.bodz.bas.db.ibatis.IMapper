@@ -8,8 +8,8 @@ net.bodz.lily.api.impl.AppCreditMapper
 net.bodz.lily.api.impl.AppLogMapper
 net.bodz.lily.api.impl.AppMapper
 net.bodz.lily.contact.impl.ContactMapper
-net.bodz.lily.contact.impl.OrganizationMapper
 net.bodz.lily.contact.impl.OrgUnitMapper
+net.bodz.lily.contact.impl.OrganizationMapper
 net.bodz.lily.contact.impl.PartyCategoryMapper
 net.bodz.lily.contact.impl.PersonMapper
 net.bodz.lily.contact.impl.PersonRoleMapper

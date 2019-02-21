@@ -86,13 +86,13 @@
         <set>
             <include refid="co.setUSA" />
             <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
-            <if test="parent != null">parent=#{parent.id},</if>
-            depth=#{depth},
-            skufmt=#{skuCodeFormat},
-            barfmt=#{barCodeFormat}
+            <if test="parent != null">parent = #{parent.id},</if>
+            depth = #{depth},
+            skufmt = #{skuCodeFormat},
+            barfmt = #{barCodeFormat}
         </set>
         <where>
-            <if test="id != null">id=#{id}</if>
+            <if test="id != null">id = #{id}</if>
         </where>
     </update>
 

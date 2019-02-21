@@ -5,6 +5,8 @@
 <mapper namespace="message">
 
     <resultMap id="MAP_ALL" type="net.bodz.lily.model.mx.CoMessage" extends="co.MAP_ALL">
+        <result property="properties.jsonForm" column="props" />
+
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
         <result property="subject" column="subject" />
@@ -23,22 +25,22 @@
     <sql id="setU">
         op = #{op.id},
     </sql>
-    
+
     <sql id="setCP">
         cat = #{category.id},
         phase = #{phase.id},
     </sql>
-    
+
     <sql id="setM">
         subject = #{subject},
         text = #{text},
     </sql>
-    
+
     <sql id="setUM">
         <include refid="message.setU" />
         <include refid="message.setM" />
     </sql>
-    
+
     <sql id="set1u">
         <include refid="co.setUSA" />
         <include refid="mi.setT" />
@@ -50,12 +52,12 @@
         <include refid="mi.setT" />
         <include refid="message.setUM" />
     </sql>
-
+    
     <sql id="filter-op">
         <if test="m.opId != null">and a.op = #{m.opId}</if>
         <if test="m.noOp">and a.op is null</if>
     </sql>
-    
+
     <sql id="filter-clickInfo">
         <if test="m.voteCountRange != null">
             <if test="m.voteCountRange.hasStartIncl">and a.nvote >= #{m.voteCountRange.start}</if>
@@ -76,10 +78,16 @@
             <if test="m.readCountRange.hasEndExcl">and a.nread &lt; #{m.readCountRange.end}</if>
         </if>
     </sql>
-    
+
     <sql id="filter-tag">
         <if test="m.tagId != null">and x.tag = #{m.tagId}</if>
         <if test="m.noTag">and x.tag is null</if>
+    </sql>
+
+    <sql id="filter-all">
+        <include refid="message.filter-op" />
+        <include refid="message.filter-clickInfo" />
+        <include refid="message.filter-tag" />
     </sql>
 
 </mapper>

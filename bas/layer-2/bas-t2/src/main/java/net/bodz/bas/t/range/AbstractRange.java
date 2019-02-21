@@ -104,12 +104,28 @@ public abstract class AbstractRange<self_t, val_t>
         this.startInclusive = startInclusive;
     }
 
+    public boolean isStartExclusive() {
+        return !startInclusive;
+    }
+
+    public void setStartExclusive(boolean startExclusive) {
+        this.startInclusive = !startExclusive;
+    }
+
     public boolean isEndInclusive() {
         return endInclusive;
     }
 
     public void setEndInclusive(boolean endInclusive) {
         this.endInclusive = endInclusive;
+    }
+
+    public boolean isEndExclusive() {
+        return !endInclusive;
+    }
+
+    public void setEndExclusive(boolean endExclusive) {
+        this.endInclusive = !endExclusive;
     }
 
     public val_t getFrom() {

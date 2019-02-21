@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.Stdio;
@@ -15,6 +16,7 @@ import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 
+@IncludeMapperXml
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         extends CoEntity<Id> {
 

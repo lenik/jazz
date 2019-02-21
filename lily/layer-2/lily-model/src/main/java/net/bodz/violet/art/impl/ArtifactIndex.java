@@ -24,6 +24,4 @@ import net.bodz.violet.art.Artifact;
 public class ArtifactIndex
         extends CoIndex<Artifact, ArtifactMask> {
 
-    static final String SCHEMA = "art";
-
 }

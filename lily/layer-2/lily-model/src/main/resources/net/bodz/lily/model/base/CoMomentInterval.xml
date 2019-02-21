@@ -21,11 +21,10 @@
     
     <sql id="filterSql">
         <if test="m.dateRange != null">
-            <if test="m.dateRange.start != null">and t0 >= #{m.dateRange.start}</if>
-            <if test="m.dateRange.end != null">
-                <if test="m.dateRange.inclusiveEnd">and t1 &lt;= #{m.dateRange.end}</if>
-                <if test="! m.dateRange.inclusiveEnd">and t1 &lt; #{m.dateRange.end}</if>
-            </if>
+            <if test="m.dateRange.hasStartIncl != null">and t0 >= #{m.dateRange.start}</if>
+            <if test="m.dateRange.hasStartExcl != null">and t0 > #{m.dateRange.start}</if>
+            <if test="m.dateRange.hasEndIncl">and t1 &lt;= #{m.dateRange.end}</if>
+            <if test="m.dateRange.hasEndExcl">and t1 &lt; #{m.dateRange.end}</if>
         </if>
         <if test="m.year != null">and extract(year from t0) = #{m.year}</if>
         <if test="m.started == true">and t0 is not null</if>

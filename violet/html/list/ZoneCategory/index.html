@@ -47,7 +47,8 @@
 <!------------------------------- BEGIN OF VIEWS ---------------------------->
 <div k="list" :class="{selected: view=='list'}"><div class="list-cmds flex-column">
     <div class="list">
-        <table :class="css.dataTable" data-href="../../ZoneCategory" data-form="zone"><thead>
+        <table :class="css.dataTable" data-href="../../ZoneCategory" data-form="zone"
+                data-filter="location.params"><thead>
             <th data-field="id" class="id">id</th>
             <th data-field="label">名称</th>
             <th data-field="description">描述</th>
