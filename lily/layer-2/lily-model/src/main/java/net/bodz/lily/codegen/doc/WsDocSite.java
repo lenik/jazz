@@ -13,12 +13,16 @@ import net.bodz.bas.t.variant.IVariantMap;
 public class WsDocSite
         implements IPathDispatchable {
 
-    ModuleIndexer indexer = ModuleIndexer.getInstance();
+    ModuleIndexer indexer;
+
+    public WsDocSite() {
+        indexer = ModuleIndexer.getInstance();
+    }
 
     public AjaxResult getModules() {
         AjaxResult result = new AjaxResult();
         JsonWriter out = result.begin("modules").object();
-        for (ModuleInfo modinfo : indexer.modules) {
+        for (ModuleInfo modinfo : indexer.getModules()) {
             IJazzModule module = modinfo.getModule();
             out.key(module.getName());
             out.object();
@@ -48,7 +52,7 @@ public class WsDocSite
         Object target = null;
         switch (token) {
         case "entity":
-            target = indexer.entityIndex;
+            target = indexer.getEntityIndex();
             break;
         }
 

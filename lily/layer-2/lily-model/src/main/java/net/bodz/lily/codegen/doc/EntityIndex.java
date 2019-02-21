@@ -25,7 +25,7 @@ public class EntityIndex
         if (token == null)
             return null;
 
-        Object target = indexer.nameEntity.get(token);
+        Object target = indexer.getEntity(token);
         if (target == null)
             return null;
         return PathArrival.shift(previous, target, tokens);

@@ -12,16 +12,16 @@ import java.util.Map;
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.ParseException;
 
-public class GeoRegions {
+public class GeoZones {
 
-    private static final GeoRegion china = new GeoRegion("", "中国", null);
-    private static final Map<String, GeoRegion> chinaIndex = new HashMap<String, GeoRegion>();
+    private static final GeoZone china = new GeoZone("", "中国", null);
+    private static final Map<String, GeoZone> chinaIndex = new HashMap<String, GeoZone>();
 
-    public static GeoRegion getChina() {
+    public static GeoZone getChina() {
         return china;
     }
 
-    public static GeoRegion getChinaRegion(String id) {
+    public static GeoZone getChinaRegion(String id) {
         return chinaIndex.get(id);
     }
 
@@ -35,7 +35,7 @@ public class GeoRegions {
 
     private static void loadChinaRegions()
             throws IOException, ParseException {
-        URL csv = GeoRegions.class.getResource("china-2013.csv");
+        URL csv = GeoZones.class.getResource("china-2013.csv");
         InputStream in = csv.openStream();
 
         try {
@@ -57,7 +57,7 @@ public class GeoRegions {
 
                 String id = line.substring(0, colon);
                 String zhName = line.substring(colon + 1);
-                GeoRegion parent;
+                GeoZone parent;
                 String code;
 
                 // AABBCCDDD
@@ -86,9 +86,9 @@ public class GeoRegions {
                     throw new ParseException("Bad ID: " + id);
                 }
 
-                GeoRegion region = new GeoRegion(code, zhName, parent);
-                region.setZhName(zhName);
-                chinaIndex.put(id, region);
+                GeoZone zone = new GeoZone(code, zhName, parent);
+                zone.setZhName(zhName);
+                chinaIndex.put(id, zone);
             }
         } finally {
             in.close();

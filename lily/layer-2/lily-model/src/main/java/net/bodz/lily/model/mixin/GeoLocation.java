@@ -7,8 +7,8 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
-import net.bodz.bas.i18n.geo.GeoRegion;
-import net.bodz.bas.i18n.geo.GeoRegions;
+import net.bodz.bas.i18n.geo.GeoZone;
+import net.bodz.bas.i18n.geo.GeoZones;
 
 public class GeoLocation
         implements Serializable, IJsonSerializable {
@@ -17,7 +17,7 @@ public class GeoLocation
 
     double longitude;
     double latitude;
-    GeoRegion region;
+    GeoZone region;
 
     public double getSphereX() {
         return longitude;
@@ -61,11 +61,11 @@ public class GeoLocation
         this.latitude = latitude;
     }
 
-    public GeoRegion getRegion() {
+    public GeoZone getRegion() {
         return region;
     }
 
-    public void setRegion(GeoRegion region) {
+    public void setRegion(GeoZone region) {
         this.region = region;
     }
 
@@ -76,7 +76,7 @@ public class GeoLocation
         latitude = o.getDouble("lat");
         String regionId = o.getString("id");
         if (regionId != null)
-            region = GeoRegions.getChinaRegion(regionId);
+            region = GeoZones.getChinaRegion(regionId);
     }
 
     @Override

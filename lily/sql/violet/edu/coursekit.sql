@@ -16,6 +16,7 @@
 
         -- {
         --   duration: estimated minutes to take to learn.
+        --   files: UploadedFile[]
         -- }
 --\mixin lily.mixin.Props
 --\mixin lily.mixin.FavLike

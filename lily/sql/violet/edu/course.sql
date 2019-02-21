@@ -1,6 +1,9 @@
 --\import lily.account
+
+    -- 课程分类
 --\mixin lily.template.a-cat course
 
+    -- 课程
     create sequence course_seq start with 1000;
     create table course(
         id          int primary key default nextval('course_seq'),
@@ -13,6 +16,7 @@
 
 --\mixin lily.mixin.FavLike
 
+        -- 学分
         credit      int not null default 0,
         plugins     jsonb
     );

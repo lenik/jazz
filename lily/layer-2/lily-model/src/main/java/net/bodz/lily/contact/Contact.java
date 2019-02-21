@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.i18n.geo.GeoRegion;
-import net.bodz.bas.i18n.geo.GeoRegions;
+import net.bodz.bas.i18n.geo.GeoZone;
+import net.bodz.bas.i18n.geo.GeoZones;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -49,7 +49,7 @@ public class Contact
     private String rename;
     private String usage;
 
-    private GeoRegion region;
+    private GeoZone zone;
     private String country = "cn";
     private String r1;
     private String r2;
@@ -138,23 +138,23 @@ public class Contact
      */
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(EntGroup.Position.class)
-    public GeoRegion getRegion() {
-        return region;
+    public GeoZone getZone() {
+        return zone;
     }
 
-    public void setRegion(GeoRegion region) {
-        this.region = region;
+    public void setZone(GeoZone zone) {
+        this.zone = zone;
     }
 
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(EntGroup.Position.class)
     @Derived
-    public String getRegionId() {
-        return region == null ? null : region.buildId();
+    public String getZoneId() {
+        return zone == null ? null : zone.buildId();
     }
 
-    public void setRegionId(String id) {
-        this.region = GeoRegions.getChinaRegion(id);
+    public void setZoneId(String id) {
+        this.zone = GeoZones.getChinaRegion(id);
     }
 
     /**
@@ -352,8 +352,8 @@ public class Contact
     @Derived
     public String getFullAddress() {
         StringBuilder sb = new StringBuilder(80);
-        if (region != null) {
-            String zhString = region.toZhString();
+        if (zone != null) {
+            String zhString = zone.toZhString();
             sb.append(zhString);
             sb.append(" ");
         }
@@ -399,8 +399,8 @@ public class Contact
         if (usage != null)
             sb.append("[" + usage + "]");
 
-        if (region != null)
-            sb.append(region);
+        if (zone != null)
+            sb.append(zone);
         else {
             if (address1 != null)
                 sb.append('\n' + address1);
