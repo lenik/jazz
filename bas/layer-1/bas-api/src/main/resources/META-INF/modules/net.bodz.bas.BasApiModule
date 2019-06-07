@@ -13,6 +13,7 @@ net.bodz.bas.t.model.IWrapper
 net.bodz.bas.t.model.AbstractAdapter
 net.bodz.bas.t.iterator.PrefetchSeed
 net.bodz.bas.t.iterator.NestedIterator
+net.bodz.bas.t.iterator.Enumerations
 net.bodz.bas.t.iterator.Iterables
 net.bodz.bas.t.iterator.LazyIterator
 net.bodz.bas.t.iterator.PrefetchedIterator
@@ -342,3 +343,5 @@ net.bodz.bas.err.StackUnderflowException
 net.bodz.bas.err.RecoverableExceptionEvent
 net.bodz.bas.err.IllegalUsageError
 net.bodz.bas.BasApiModule
+net.bodz.lily.entity.ILazyId
+net.bodz.lily.entity.IId

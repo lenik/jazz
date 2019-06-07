@@ -1,11 +1,11 @@
 package net.bodz.bas.std.misc;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.c.java.nio.Charsets;
 
 public class Licenses {
@@ -20,15 +20,13 @@ public class Licenses {
         try {
             in = resource.openStream();
             InputStreamReader reader = new InputStreamReader(in, Charsets.UTF8);
-
-            // BufferedReader br = new BufferedReader(reader);
-            @SuppressWarnings("resource") LineReader lineReader = new LineReader(reader);
+            BufferedReader lineReader = new BufferedReader(reader);
 
             StringBuilder buf = new StringBuilder(4096);
             String line;
             while ((line = lineReader.readLine()) != null) {
                 buf.append(line);
-                // buf.append('\n');
+                buf.append('\n');
             }
 
             String license = buf.toString();

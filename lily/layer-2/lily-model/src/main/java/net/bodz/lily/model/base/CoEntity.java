@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.lily.entity.IId;
+import net.bodz.lily.entity.IdAwares;
 
 /**
  * aka. Common Entity.
@@ -18,7 +19,7 @@ public class CoEntity<Id>
 
     @Override
     public Class<Id> idType() {
-        return IId.fn._getIdType(getClass());
+        return IdAwares._getIdType(getClass());
     }
 
     @FormInput(readOnly = true)

@@ -6,13 +6,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.exceptions.PersistenceException;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.db.ibatis.IMapper;
-import net.bodz.bas.db.ibatis.IMapperProvider;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
@@ -22,8 +18,6 @@ import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
-import net.bodz.bas.html.io.IHtmlOut;
-import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -36,8 +30,6 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.meta.Face;
-import net.bodz.bas.repr.req.IMethodOfRequest;
-import net.bodz.bas.repr.req.MethodNames;
 import net.bodz.bas.repr.state.IStated;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StdStates;
@@ -50,6 +42,8 @@ import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.entity.IReinitializable;
+import net.bodz.lily.model.base.impl.DefaultWebSupport;
+import net.bodz.lily.model.base.impl.IWebSupport;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.IAccessControlled;
 import net.bodz.lily.security.LoginData;
@@ -596,35 +590,8 @@ public abstract class CoObject
         dumper.dump(this);
     }
 
-    public Object persist(IHtmlViewContext ctx, IHtmlOut out)
-            throws PersistenceException, IOException {
-        IMapperProvider provider = ctx.query(IMapperProvider.class);
-        Class<IMapperTemplate<CoObject, ?>> mapperClass = IMapper.fn.getMapperClass(getClass());
-        IMapperTemplate<CoObject, ?> mapper = provider.getMapper(mapperClass);
-        if (mapper == null)
-            throw new PersistenceException("No mapper for " + getClass());
-
-        String methodName = ctx.query(IMethodOfRequest.class).getMethodName();
-
-        boolean creation = false;
-        if (getId() == null)
-            creation = true;
-        else if (methodName != null)
-            switch (methodName) {
-            case MethodNames.CREATE:
-                creation = true;
-                break;
-            case MethodNames.UPDATE:
-                creation = false;
-                break;
-            }
-
-        if (creation) {
-            mapper.insert(this); // id will be filled.
-        } else {
-            mapper.update(this);
-        }
-        return getId();
+    public IWebSupport getWebSupport() {
+        return new DefaultWebSupport(this);
     }
 
     public boolean partialEquals(CoObject o) {

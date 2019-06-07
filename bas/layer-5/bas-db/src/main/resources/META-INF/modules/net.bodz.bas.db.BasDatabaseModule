@@ -1,12 +1,8 @@
 net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler
 net.bodz.bas.c.org.postgresql.util.PGobjects
-net.bodz.bas.c.org.json.DefaultJsonForm
 net.bodz.bas.c.org.json.JsonFormTypeHandler
-net.bodz.bas.c.org.json.IJsonForm
 net.bodz.bas.c.org.json.JsonObjTypeHandler
-net.bodz.bas.c.org.json.JsonObj
 net.bodz.bas.c.org.json.PojoJsonTypeHandler
-net.bodz.bas.c.org.json.JsonStr
 net.bodz.bas.dbi.RuntimeDataAccessException
 net.bodz.bas.dbi.IRepository
 net.bodz.bas.dbi.AbstractSelection
@@ -40,9 +36,7 @@ net.bodz.bas.db.cache.AbstractCache
 net.bodz.bas.db.test.DatabaseTester
 net.bodz.bas.db.test.DaoTestConfig
 net.bodz.bas.db.ibatis.AbstractIbatisConfigurer
-net.bodz.bas.db.ibatis.PatchMapperXml
 net.bodz.bas.db.ibatis.IncludeMapperXmlConfigurer
-net.bodz.bas.db.ibatis.IncludeMapperXml
 net.bodz.bas.db.ibatis.IMapperXmlProvider
 net.bodz.bas.db.ibatis.MapperXml
 net.bodz.bas.db.ibatis.IMapper
@@ -55,8 +49,6 @@ net.bodz.bas.db.ibatis.IMapperTemplate
 net.bodz.bas.db.ibatis.IIbatisConfigurer
 net.bodz.bas.db.ibatis.IFnMapper
 net.bodz.bas.db.ibatis.PrivateSessionMapperProxy
-net.bodz.bas.db.ibatis.Commit
-net.bodz.bas.db.ibatis.AliasedType
 net.bodz.bas.db.ibatis.MapperClassXmls
 net.bodz.bas.db.ibatis.TypeHandler
 net.bodz.bas.db.ibatis.SharedSessionMapperProxy
@@ -98,10 +90,3 @@ net.bodz.bas.db.ctx.IDataContexts
 net.bodz.bas.db.ctx.IDataContextAware
 net.bodz.bas.db.ctx.DataContext
 net.bodz.bas.db.ctx.JdbcDataContexts
-net.bodz.lily.entity.SizedList
-net.bodz.lily.entity.Instantiables
-net.bodz.lily.entity.IdType
-net.bodz.lily.entity.DecoratedList
-net.bodz.lily.entity.ILazyId
-net.bodz.lily.entity.IId
-net.bodz.lily.entity.IReinitializable

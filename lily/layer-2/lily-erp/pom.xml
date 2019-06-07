@@ -14,12 +14,12 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-model</artifactId>
+            <artifactId>lily-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-model</artifactId>
+            <artifactId>lily-impl</artifactId>
             <version>${project.version}</version>
             <classifier>tests</classifier>
             <scope>test</scope>

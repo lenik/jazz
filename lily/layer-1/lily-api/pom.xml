@@ -8,13 +8,17 @@
     <artifactId>lily-api</artifactId>
     <dependencies>
         <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-html</artifactId>
+            <artifactId>bas-api</artifactId>
             <version>${bas.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-db</artifactId>
+            <artifactId>bas-meta</artifactId>
             <version>${bas.version}</version>
         </dependency>
     </dependencies>

@@ -4,9 +4,10 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.persistence.Table;
+
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.db.meta.TableUtils;
 import net.bodz.bas.repr.path.PathToken;
 
 public class PathConventions {
@@ -30,10 +31,11 @@ public class PathConventions {
         if (aPathToken != null)
             tokens.add(StringArray.join("/", aPathToken.value()));
 
-        String tableName = TableUtils.aTableName(clazz);
-        if (tableName != null)
+        Table aTable = clazz.getAnnotation(Table.class);
+        if (aTable != null) {
+            String tableName = aTable.name();
             tokens.add(tableName);
-
+        }
         tokens.add(Strings.hyphenatize(clazz.getSimpleName()));
 
         return tokens;
