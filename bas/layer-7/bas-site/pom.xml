@@ -19,9 +19,15 @@
             <version>2.5</version>
         </dependency>
         <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-db</artifactId>
             <version>${project.version}</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -31,6 +37,11 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-html</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-json</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

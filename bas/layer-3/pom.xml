@@ -15,6 +15,7 @@
         <module>bas-data</module>
         <module>bas-fmt</module>
         <module>bas-http</module>
+        <module>bas-json</module>
         <module>bas-log</module>
         <module>bas-m2</module>
         <module>bas-pojo-eg</module>

@@ -9,7 +9,29 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-db</artifactId>
+            <version>${bas.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-json</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-repr-api</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-site</artifactId>
+            <version>${bas.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-t2</artifactId>
             <version>${bas.version}</version>
         </dependency>
         <dependency>
@@ -18,9 +40,8 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <optional>true</optional>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
         </dependency>
     </dependencies>
     <name>Lily :: Layer 2 :: Lily Model</name>

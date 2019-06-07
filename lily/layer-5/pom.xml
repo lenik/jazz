@@ -11,6 +11,9 @@
     <artifactId>layer-5</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>lily-db</module>
+        <module>lily-html</module>
+        <module>lily-impl</module>
         <module>lily-site</module>
         <module>lily-skel</module>
     </modules>

@@ -8,6 +8,7 @@ net.bodz.bas.c.javax.servlet.http.IHttpSessionBindingListener
 net.bodz.bas.c.javax.servlet.http.AbstractServletRequestAttributeListener
 net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter
 net.bodz.bas.c.javax.servlet.http.HttpServletReqEx
+net.bodz.bas.c.javax.servlet.http.MutableHttpSession
 net.bodz.bas.c.javax.servlet.http.IHttpFilter
 net.bodz.bas.c.javax.servlet.http.IServletContextAttributeListener
 net.bodz.bas.c.javax.servlet.http.IHttpSessionListener
@@ -18,6 +19,7 @@ net.bodz.bas.c.javax.servlet.http.IServletContextListener
 net.bodz.bas.c.javax.servlet.http.RequestLogger
 net.bodz.bas.c.javax.servlet.http.AbstractServletContextAttributeListener
 net.bodz.bas.c.javax.servlet.http.AbstractHttpSessionListener
+net.bodz.bas.c.javax.servlet.http.MutableHttpServletRequest
 net.bodz.bas.c.javax.servlet.http.AbstractHttpSessionActivationListener
 net.bodz.bas.c.javax.servlet.http.AbstractServletRequestListener
 net.bodz.bas.c.javax.servlet.http.IServletRequestListener
@@ -28,6 +30,7 @@ net.bodz.bas.std.rfc.http.ContentRange
 net.bodz.bas.http.BasHttpModule
 net.bodz.bas.http.HttpServlet
 net.bodz.bas.http.ResourceTransferer
+net.bodz.bas.http.HttpModFilter
 net.bodz.bas.http.config.IPluginDescriptor
 net.bodz.bas.http.config.PluginDescriptorComparator
 net.bodz.bas.http.config.ServletContextConfigAdapter

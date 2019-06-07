@@ -1,0 +1,8 @@
+
+symlink:
+	ln -snf .violet-html/list/* .
+
+copy:
+	cp -aT .violet-html/list/user user
+	cp -aT .violet-html/list/group group
+

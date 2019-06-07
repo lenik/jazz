@@ -20,6 +20,7 @@
         <module>bas-l10n</module>
         <module>bas-ogl</module>
         <module>bas-potato</module>
+        <module>bas-repr-api</module>
         <module>bas-repr</module>
         <module>bas-search</module>
         <module>bas-ui</module>

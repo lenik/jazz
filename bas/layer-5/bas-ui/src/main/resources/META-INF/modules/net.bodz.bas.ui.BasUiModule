@@ -111,13 +111,11 @@ net.bodz.bas.ui.layout.AbstractLayout
 net.bodz.bas.ui.layout.SizeInfo
 net.bodz.bas.ui.layout.ILayout
 net.bodz.bas.ui.dialog.IUserDialogs
-net.bodz.bas.ui.dialog.IProposalMapProvider
 net.bodz.bas.ui.dialog.DirectiveCommand
 net.bodz.bas.ui.dialog.ConsoleDialogs
 net.bodz.bas.ui.dialog.DirectiveCommands
 net.bodz.bas.ui.dialog.TryBlock
 net.bodz.bas.ui.dialog.AbstractTryBlock
-net.bodz.bas.ui.dialog.IProposalListProvider
 net.bodz.bas.ui.dialog.IDirectiveCommand
 net.bodz.bas.ui.dialog.AbstractUserDialogs
 net.bodz.bas.ui.err.UiException

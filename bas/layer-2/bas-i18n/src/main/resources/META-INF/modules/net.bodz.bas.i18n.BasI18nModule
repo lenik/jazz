@@ -16,8 +16,8 @@ net.bodz.bas.i18n.dom1.DecoratedElement
 net.bodz.bas.i18n.dom1.ElementFlags
 net.bodz.bas.i18n.dom1.IElement
 net.bodz.bas.i18n.dom1.IMutableElement
-net.bodz.bas.i18n.geo.GeoRegion
-net.bodz.bas.i18n.geo.GeoRegions
+net.bodz.bas.i18n.geo.GeoZones
+net.bodz.bas.i18n.geo.GeoZone
 net.bodz.bas.i18n.dom.DomainStrings
 net.bodz.bas.i18n.dom.PlainStringTypers
 net.bodz.bas.i18n.dom.DomainResolveMode
