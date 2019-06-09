@@ -3,7 +3,7 @@ package net.bodz.bas.flow.unit.builtins.text;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
-import org.apache.commons.lang.ArrayUtils;
+import net.bodz.bas.c.java.util.Arrays;
 
 public class BreakOrCutLinesUnit
         extends TextProcessUnit {
@@ -58,7 +58,7 @@ public class BreakOrCutLinesUnit
     public void recv(char[] chars, int start, int end)
             throws IOException {
         do {
-            int newLinePos = ArrayUtils.indexOf(chars, '\n', start);
+            int newLinePos = Arrays.indexOf(chars, start, '\n');
             if (newLinePos == -1 || newLinePos >= end) {
                 recvl(chars, start, end - start);
                 break;

@@ -8,6 +8,10 @@
     <artifactId>lily-model</artifactId>
     <dependencies>
         <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-db</artifactId>
             <version>${bas.version}</version>

@@ -3,9 +3,8 @@ package net.bodz.bas.t.variant.conv;
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.commons.collections15.Transformer;
-
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.fn.ITransformer;
 
 public abstract class AbstractVarConverterExtension<T>
         implements IVarConverterExtension<T> {
@@ -16,12 +15,12 @@ public abstract class AbstractVarConverterExtension<T>
     }
 
     @Override
-    public Map<Class<?>, Transformer<Object, T>> getFromMap() {
+    public Map<Class<?>, ITransformer<Object, T>> getFromMap() {
         return Collections.emptyMap();
     }
 
     @Override
-    public Map<Class<?>, Transformer<T, Object>> getToMap() {
+    public Map<Class<?>, ITransformer<T, Object>> getToMap() {
         return Collections.emptyMap();
     }
 

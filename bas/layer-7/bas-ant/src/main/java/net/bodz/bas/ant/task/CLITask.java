@@ -6,7 +6,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.RuntimeConfigurable;
 import org.apache.tools.ant.Task;
@@ -135,7 +134,7 @@ public class CLITask
             throws BuildException {
         try {
             if (remainingArguments != null && !remainingArguments.isEmpty()) {
-                String[] moreargv = remainingArguments.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
+                String[] moreargv = remainingArguments.toArray(new String[0]);
                 program.receive(moreargv);
             }
             // adapting attributes

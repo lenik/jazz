@@ -7,8 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import org.apache.commons.lang.ArrayUtils;
-
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -61,27 +60,27 @@ public class Processes {
     public static Process shellExec(String... cmdarray)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        cmdarray = (String[]) ArrayUtils.addAll(shvec, cmdarray);
+        cmdarray = Arrays.concat(shvec, cmdarray);
         return runtime.exec(cmdarray);
     }
 
     public static Process shellExec(String[] cmdarray, String[] envp)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        cmdarray = (String[]) ArrayUtils.addAll(shvec, cmdarray);
+        cmdarray = Arrays.concat(shvec, cmdarray);
         return runtime.exec(cmdarray, envp);
     }
 
     public static Process shellExec(String[] cmdarray, String[] envp, File dir)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        cmdarray = (String[]) ArrayUtils.addAll(shvec, cmdarray);
+        cmdarray = Arrays.concat(shvec, cmdarray);
         return runtime.exec(cmdarray, envp, dir);
     }
 
     /**
      * outSink and errSink may be same.
-     * 
+     *
      * @return exit code returned by the <code>process</code>.
      */
     public static int iocap(Process process, final InputStream sendSrc, final OutputStream outSink,

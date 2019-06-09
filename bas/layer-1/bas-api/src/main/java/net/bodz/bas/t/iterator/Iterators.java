@@ -11,9 +11,10 @@ public class Iterators {
 
     /**
      * Get an empty iterator.
-     * 
+     *
      * @deprecated See {@link Collections#emptyIterator()}.
      */
+    @Deprecated
     public static <T> Iterator<T> empty() {
         @SuppressWarnings("unchecked")
         Iterator<T> empty = (Iterator<T>) EmptyIterator.EMPTY;
@@ -22,7 +23,7 @@ public class Iterators {
 
     /**
      * One time iterator.
-     * 
+     *
      * @param object
      *            The object to repeat.
      */
@@ -32,7 +33,7 @@ public class Iterators {
 
     /**
      * Repeat specified times.
-     * 
+     *
      * @param object
      *            The object to repeat.
      * @param count
@@ -234,49 +235,6 @@ class ArrayIterator<T>
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
-    }
-
-}
-
-class ConcatIterator<T>
-        extends PrefetchedIterator<T> {
-
-    private List<Iterator<T>> iterators;
-    private int num;
-
-    private int currentIteratorIndex;
-    private Iterator<T> currentIterator;
-
-    /**
-     * As iterators are only for (fast-forward) iterating, i.e., it won't accept to add new
-     * elements, so its safe-varargs definitely.
-     */
-    public ConcatIterator(List<Iterator<T>> iterators) {
-        if (iterators == null)
-            throw new NullPointerException("iterators");
-        this.iterators = iterators;
-        this.num = iterators.size();
-    }
-
-    @Override
-    protected T fetch() {
-        if (currentIterator == null) {
-            if (currentIteratorIndex < num) {
-                currentIterator = iterators.get(currentIteratorIndex++);
-                return fetch();
-            } else
-                return end();
-        }
-        if (!currentIterator.hasNext()) {
-            currentIterator = null;
-            return fetch();
-        }
-        return currentIterator.next();
-    }
-
-    @Override
-    public void remove() {
-        currentIterator.remove();
     }
 
 }
