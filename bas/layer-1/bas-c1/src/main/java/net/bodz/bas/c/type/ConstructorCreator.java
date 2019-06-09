@@ -2,8 +2,7 @@ package net.bodz.bas.c.type;
 
 import java.lang.reflect.Constructor;
 
-import org.apache.commons.lang.ArrayUtils;
-
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.t.factory.AbstractCreator;
 
@@ -52,7 +51,7 @@ public final class ConstructorCreator<T>
 
     public T _create(Object... moreParameters)
             throws ReflectiveOperationException {
-        Object[] all = ArrayUtils.addAll(parameters, moreParameters);
+        Object[] all = Arrays.concat(parameters, moreParameters);
         return constructor.newInstance(all);
     }
 

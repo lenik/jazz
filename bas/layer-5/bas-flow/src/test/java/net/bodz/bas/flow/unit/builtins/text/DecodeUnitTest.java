@@ -3,7 +3,6 @@ package net.bodz.bas.flow.unit.builtins.text;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -36,7 +35,7 @@ public class DecodeUnitTest
                     throws Exception {
                 Collection<Object> out;
                 if (inHex == null)
-                    out = WhatIf.send(decode, tostr, ArrayUtils.EMPTY_BYTE_ARRAY, true);
+                    out = WhatIf.send(decode, tostr, new byte[0], true);
                 else {
                     byte[] in = hexCodec.decode(inHex);
                     out = WhatIf.send(decode, tostr, in);

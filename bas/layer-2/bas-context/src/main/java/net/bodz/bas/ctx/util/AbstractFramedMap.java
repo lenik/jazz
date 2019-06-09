@@ -1,15 +1,11 @@
 package net.bodz.bas.ctx.util;
 
 import java.util.*;
-import java.util.Map.Entry;
-
-import org.apache.commons.collections15.Transformer;
-import org.apache.commons.collections15.collection.TransformedCollection;
-import org.apache.commons.collections15.set.TransformedSet;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.StackUnderflowException;
+import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.t.pojo.Pair;
 
 public abstract class AbstractFramedMap<K, V>
@@ -216,14 +212,28 @@ public abstract class AbstractFramedMap<K, V>
         return initmap.keySet();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Collection<V> values() {
-        return TransformedCollection.decorate(initmap.values(), new VarNode.ToV<V>());
+        List<V> dataList = new ArrayList<>(initmap.size());
+        for (VarNode node : initmap.values()) {
+            dataList.add((V) node.data);
+        }
+        return dataList;
     }
 
+    /**
+     * TODO Use transformed fn instead of hard copy.
+     */
+    @SuppressWarnings("unchecked")
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        return TransformedSet.decorate(initmap.entrySet(), new VarNode.ToVEntry<K, V>());
+        Set<Map.Entry<K, V>> set = new HashSet<>();
+        for (Entry<K, VarNode> entry : initmap.entrySet()) {
+            VarNode node = entry.getValue();
+            set.add(new Pair<>(entry.getKey(), (V) node.data));
+        }
+        return set;
     }
 
 }
@@ -286,8 +296,8 @@ class VarNode {
         prevVar = nextVar = null;
     }
 
-    public static class ToV<T>
-            implements Transformer<VarNode, T> {
+    public static class GetData<T>
+            implements ITransformer<VarNode, T> {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -297,12 +307,12 @@ class VarNode {
 
     }
 
-    public static class ToVEntry<K, T>
-            implements Transformer<Entry<K, VarNode>, Entry<K, T>> {
+    public static class GetEntryOfData<K, T>
+            implements ITransformer<Map.Entry<K, VarNode>, Map.Entry<K, T>> {
 
         @SuppressWarnings("unchecked")
         @Override
-        public Entry<K, T> transform(Entry<K, VarNode> input) {
+        public Map.Entry<K, T> transform(Map.Entry<K, VarNode> input) {
             Pair<K, T> pair = new Pair<K, T>(input.getKey(), (T) input.getValue().data);
             return pair;
         }

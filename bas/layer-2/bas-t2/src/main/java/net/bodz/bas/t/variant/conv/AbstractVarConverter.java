@@ -10,142 +10,141 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections15.Transformer;
-import org.apache.commons.collections15.functors.NOPTransformer;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.fn.ITransformer;
 
 public abstract class AbstractVarConverter<T>
         implements IVarConverter<T> {
 
     final Class<T> type;
-    final Map<Class<?>, Transformer<Object, T>> frommap = new HashMap<>();
-    final Map<Class<?>, Transformer<T, ?>> tomap = new HashMap<>();
+    final Map<Class<?>, ITransformer<Object, T>> frommap = new HashMap<>();
+    final Map<Class<?>, ITransformer<T, ?>> tomap = new HashMap<>();
     final Set<IVarConverterExtension<T>> extensions;
 
     public AbstractVarConverter(Class<T> type) {
         this.type = type;
 
-        frommap.put(type, new Transformer<Object, T>() {
+        frommap.put(type, new ITransformer<Object, T>() {
             @Override
             public T transform(Object input) {
                 return AbstractVarConverter.this.type.cast(input);
             }
         });
-        frommap.put(String.class, new Transformer<Object, T>() {
+        frommap.put(String.class, new ITransformer<Object, T>() {
             @Override
             public T transform(Object input) {
                 return fromString((String) input);
             };
         });
-        frommap.put(Number.class, new Transformer<Object, T>() {
+        frommap.put(Number.class, new ITransformer<Object, T>() {
             @Override
             public T transform(Object input) {
                 return fromNumber((Number) input);
             };
         });
-        frommap.put(byte[].class, new Transformer<Object, T>() {
+        frommap.put(byte[].class, new ITransformer<Object, T>() {
             @Override
             public T transform(Object input) {
                 return fromByteArray((byte[]) input);
             };
         });
-        frommap.put(String[].class, new Transformer<Object, T>() {
+        frommap.put(String[].class, new ITransformer<Object, T>() {
             @Override
             public T transform(Object input) {
                 return fromStringArray((String[]) input);
             };
         });
 
-        tomap.put(Byte.class, new Transformer<T, Byte>() {
+        tomap.put(Byte.class, new ITransformer<T, Byte>() {
             @Override
             public Byte transform(T input) {
                 return toByte(input);
             }
         });
-        tomap.put(Short.class, new Transformer<T, Short>() {
+        tomap.put(Short.class, new ITransformer<T, Short>() {
             @Override
             public Short transform(T input) {
                 return toShort(input);
             }
         });
-        tomap.put(Integer.class, new Transformer<T, Integer>() {
+        tomap.put(Integer.class, new ITransformer<T, Integer>() {
             @Override
             public Integer transform(T input) {
                 return toInt(input);
             }
         });
-        tomap.put(Long.class, new Transformer<T, Long>() {
+        tomap.put(Long.class, new ITransformer<T, Long>() {
             @Override
             public Long transform(T input) {
                 return toLong(input);
             }
         });
 
-        tomap.put(type, NOPTransformer.<T> getInstance());
-        tomap.put(Float.class, new Transformer<T, Float>() {
+        tomap.put(type, ITransformer.Nop.<T> getInstance());
+        tomap.put(Float.class, new ITransformer<T, Float>() {
             @Override
             public Float transform(T input) {
                 return toFloat(input);
             }
         });
-        tomap.put(Double.class, new Transformer<T, Double>() {
+        tomap.put(Double.class, new ITransformer<T, Double>() {
             @Override
             public Double transform(T input) {
                 return toDouble(input);
             }
         });
-        tomap.put(Boolean.class, new Transformer<T, Boolean>() {
+        tomap.put(Boolean.class, new ITransformer<T, Boolean>() {
             @Override
             public Boolean transform(T input) {
                 return toBoolean(input);
             }
         });
-        tomap.put(Character.class, new Transformer<T, Character>() {
+        tomap.put(Character.class, new ITransformer<T, Character>() {
             @Override
             public Character transform(T input) {
                 return toChar(input);
             }
         });
-        tomap.put(String.class, new Transformer<T, String>() {
+        tomap.put(String.class, new ITransformer<T, String>() {
             @Override
             public String transform(T input) {
                 return AbstractVarConverter.this.toString(input);
             }
         });
-        tomap.put(BigInteger.class, new Transformer<T, BigInteger>() {
+        tomap.put(BigInteger.class, new ITransformer<T, BigInteger>() {
             @Override
             public BigInteger transform(T input) {
                 return toBigInteger(input);
             }
         });
-        tomap.put(BigDecimal.class, new Transformer<T, BigDecimal>() {
+        tomap.put(BigDecimal.class, new ITransformer<T, BigDecimal>() {
             @Override
             public BigDecimal transform(T input) {
                 return toBigDecimal(input);
             }
         });
-        tomap.put(Calendar.class, new Transformer<T, Calendar>() {
+        tomap.put(Calendar.class, new ITransformer<T, Calendar>() {
             @Override
             public Calendar transform(T input) {
                 return toCalendar(input);
             }
         });
-        tomap.put(Date.class, new Transformer<T, Date>() {
+        tomap.put(Date.class, new ITransformer<T, Date>() {
             @Override
             public Date transform(T input) {
                 return toDate(input);
             }
         });
-        tomap.put(java.sql.Date.class, new Transformer<T, java.sql.Date>() {
+        tomap.put(java.sql.Date.class, new ITransformer<T, java.sql.Date>() {
             @Override
             public java.sql.Date transform(T input) {
                 return toSqlDate(input);
             }
         });
-        tomap.put(DateTime.class, new Transformer<T, DateTime>() {
+        tomap.put(DateTime.class, new ITransformer<T, DateTime>() {
             @Override
             public DateTime transform(T input) {
                 return toDateTime(input);
@@ -157,12 +156,12 @@ public abstract class AbstractVarConverter<T>
         while (it.hasNext()) {
             IVarConverterExtension<T> ext = it.next();
 
-            Map<Class<?>, Transformer<Object, T>> fm = ext.getFromMap();
+            Map<Class<?>, ITransformer<Object, T>> fm = ext.getFromMap();
             for (Class<?> t : fm.keySet())
                 if (!frommap.containsKey(t))
                     frommap.put(t, fm.get(t));
 
-            Map<Class<?>, Transformer<T, Object>> tm = ext.getToMap();
+            Map<Class<?>, ITransformer<T, Object>> tm = ext.getToMap();
             for (Class<?> t : tm.keySet())
                 if (!tomap.containsKey(t))
                     tomap.put(t, tm.get(t));
@@ -223,7 +222,7 @@ public abstract class AbstractVarConverter<T>
 
         Class<?> sup = type;
         while (sup != null) {
-            Transformer<Object, T> fn = frommap.get(sup);
+            ITransformer<Object, T> fn = frommap.get(sup);
             if (fn != null)
                 return fn.transform(obj);
             sup = sup.getSuperclass();
@@ -250,7 +249,7 @@ public abstract class AbstractVarConverter<T>
             return type.cast(value);
 
         Class<?> boxed = Primitives.box(type);
-        Transformer<T, ?> fn = tomap.get(boxed);
+        ITransformer<T, ?> fn = tomap.get(boxed);
         if (fn != null)
             return (U) fn.transform(value);
 

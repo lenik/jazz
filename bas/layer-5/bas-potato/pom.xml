@@ -17,6 +17,11 @@
             <artifactId>mda-xjdoc</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 5 :: Potato</name>
 </project>

@@ -2,7 +2,7 @@ package net.bodz.bas.flow.unit.builtins.text;
 
 import java.io.IOException;
 
-import org.apache.commons.lang.ArrayUtils;
+import net.bodz.bas.c.java.util.Arrays;
 
 public class BreakLinesUnit
         extends TextProcessUnit {
@@ -60,7 +60,7 @@ public class BreakLinesUnit
     public void recv(char[] chars, int start, int end)
             throws IOException {
         do {
-            int newLinePos = ArrayUtils.indexOf(chars, '\n', start);
+            int newLinePos = Arrays.indexOf(chars, start, '\n');
             if (newLinePos == -1 || newLinePos >= end) {
                 lineBuf.append(chars, start, end - start);
                 break;

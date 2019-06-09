@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.commons.collections15.iterators.IteratorChain;
+import net.bodz.bas.t.iterator.ConcatIterator;
 
 public abstract class CCollection<E>
         extends _ChainedScope<Collection<E>>
@@ -84,7 +84,7 @@ public abstract class CCollection<E>
         public Iterator<El> iterator() {
             Iterator<El> it1 = _this.iterator();
             Iterator<El> it2 = next.iterator();
-            return new IteratorChain<El>(it1, it2);
+            return new ConcatIterator<El>(it1, it2);
         }
 
     }

@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
-
-import org.apache.commons.collections15.map.HashedMap;
 
 import net.bodz.bas.c.javax.servlet.http.*;
 import net.bodz.bas.c.object.UseNet;
@@ -35,7 +34,7 @@ public class ServletContextConfig {
     String contextPath = "";
 
     List<String> welcomeFiles = new ArrayList<>();
-    Map<String, String> initParamMap = new HashedMap<>();
+    Map<String, String> initParamMap = new HashMap<>();
 
     UseNet<IPluginDescriptor> pluginNet = new UseNet<>();
     PluginDescriptorComparator pluginCmp = new PluginDescriptorComparator(pluginNet);
