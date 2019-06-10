@@ -6,8 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.ArrayUtils;
-
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
@@ -20,12 +19,12 @@ public class TypeChain {
             list.add(clazz);
             clazz = clazz.getSuperclass();
         }
-        return list.toArray(ArrayUtils.EMPTY_CLASS_ARRAY);
+        return list.toArray(new Class<?>[0]);
     }
 
     public static Class<?>[] listSuperFirst(Class<?> clazz) {
         Class<?>[] list = listSuperLast(clazz);
-        ArrayUtils.reverse(list);
+        Arrays.reverse(list);
         return list;
     }
 
