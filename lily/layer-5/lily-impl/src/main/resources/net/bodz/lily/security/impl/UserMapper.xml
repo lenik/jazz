@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.security.impl.UserMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.security.User" extends="co.MAP_ALL">
+    <resultMap id="objlist_map" type="net.bodz.lily.security.User" extends="co.MAP_ALL">
         <result property="properties.jsonForm" column="props" />
         <result property="name" column="name" />
         <association property="primaryGroup" javaType="net.bodz.lily.security.Group">
@@ -18,7 +18,7 @@
         </association>
     </resultMap>
 
-    <resultMap id="map2" type="net.bodz.lily.security.User" extends="map1">
+    <resultMap id="objedit_map" type="net.bodz.lily.security.User" extends="objlist_map">
         <association property="runningState" javaType="net.bodz.lily.security.UserRun">
             <result property="label" column="run_label" />
             <result property="lastLoginTime" column="lastlog" />
@@ -45,7 +45,7 @@
         </collection>
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             g.name "g_name",
@@ -63,7 +63,7 @@
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             s.passwd,
@@ -103,49 +103,49 @@
         <if test="m.mobile != null">and s.tel = #{m.mobile}</if>
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
     </select>
 
-    <select id="filter" resultMap="map2">
-        <include refid="select1" />
+    <select id="filter" resultMap="objedit_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map2">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
-    <select id="selectByName" parameterType="String" resultMap="map2">
-        <include refid="select2" />
+    <select id="selectByName" parameterType="String" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.name = #{name}</if>
         </where>
     </select>
 
-    <select id="selectByEmail" resultMap="map2">
-        <include refid="select2" />
+    <select id="selectByEmail" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <!-- s.emailok = true -->
             and s.email = #{email}
         </where>
     </select>
 
-    <select id="selectByMobile" resultMap="map2">
-        <include refid="select2" />
+    <select id="selectByMobile" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <!-- s.telok = true -->
             and s.tel = #{mobile}
         </where>
     </select>
 
-    <select id="findForLogin" resultMap="map2">
-        <include refid="select2" />
+    <select id="findForLogin" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="name != null">and a.name = #{name}</if>
             <if test="password != null">and s.passwd = #{password}</if>

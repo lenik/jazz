@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.DiaryVoteMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.DiaryVote" extends="co.MAP_V">
+    <resultMap id="objlist_map" type="net.bodz.violet.plan.DiaryVote" extends="co.MAP_V">
         <association property="diary" javaType="net.bodz.violet.plan.Diary">
             <id property="id" column="diary" />
             <result property="subject" column="diary_subject" />
@@ -15,14 +15,14 @@
         </association>
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*
         from diary_vote a
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             diary.subject "diary_subject",
@@ -38,19 +38,19 @@
         <include refid="co.modefilt" />
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
         </where>

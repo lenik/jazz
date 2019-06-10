@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.art.impl.ArtifactMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.art.Artifact" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.violet.art.Artifact" extends="co.MAP_UVX">
         <result property="properties.jsonForm" column="props" />
         <result property="skuCode" column="sku" />
         <result property="barCode" column="barcode" />
@@ -25,10 +25,10 @@
         </association>
     </resultMap>
 
-    <resultMap id="map2" type="net.bodz.violet.art.Artifact" extends="map1">
+    <resultMap id="objedit_map" type="net.bodz.violet.art.Artifact" extends="objlist_map">
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             artcat.label "cat_label",
@@ -45,7 +45,7 @@
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             artcat.label "cat_label",
@@ -73,26 +73,26 @@
         <if test="m.noPhase">and a.phase is null</if>
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map2">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
-    <select id="selectByRfid" parameterType="String" resultMap="map2">
-        <include refid="select2" />
+    <select id="selectByRfid" parameterType="String" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.rfid = #{rfid}</if>
         </where>

@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.art.impl.ArtifactCategoryMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.art.ArtifactCategory" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.violet.art.ArtifactCategory" extends="co.MAP_UVX">
         <result property="properties.jsonForm" column="props" />
         <result property="depth" column="depth" />
         <result property="skuCodeFormat" column="skufmt" />
@@ -16,7 +16,7 @@
         </association>
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             parent.label "parent_label",
@@ -29,7 +29,7 @@
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             parent.label "parent_label",
@@ -49,19 +49,19 @@
         <if test="m.maxDepth != null">and a.depth&lt;=#{m.maxDepth}</if>
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
         </where>

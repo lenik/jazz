@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.store.impl.StoreOrderMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.store.StoreOrder" extends="message.MAP_ALL">
+    <resultMap id="objlist_map" type="net.bodz.violet.store.StoreOrder" extends="message.MAP_ALL">
         <result property="itemCount" column="size" />
         <result property="totalQuantity" column="sum_qty" />
         <result property="totalAmount" column="sum_amount" />
@@ -34,7 +34,7 @@
         </association>
     </resultMap>
 
-    <resultMap id="map2" type="net.bodz.violet.store.StoreOrder" extends="map1">
+    <resultMap id="objedit_map" type="net.bodz.violet.store.StoreOrder" extends="objlist_map">
         <collection property="items" javaType="net.bodz.lily.entity.SizedList" ofType="net.bodz.violet.store.StoreOrderItem">
             <id property="id" column="y_id" />
             <result property="codeName" column="y_name" />
@@ -43,7 +43,7 @@
         </collection>
     </resultMap>
     
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             u.label "uid_label",
@@ -68,7 +68,7 @@
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             u.label "uid_label",
@@ -120,22 +120,22 @@
         <if test="m.noTag">and x.tag is null</if>
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="co.modefilt" />
         </where>
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id=#{id}</if>
         </where>

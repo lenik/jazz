@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.geo.impl.ZoneMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.geo.Zone" extends="node.map1">
+    <resultMap id="objlist_map" type="net.bodz.lily.geo.Zone" extends="node.objlist_map">
         <result property="properties.jsonForm" column="props" />
         <association property="category" javaType="net.bodz.lily.geo.ZoneCategory">
             <id property="id" column="cat" />
@@ -16,7 +16,7 @@
         </association>
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             cat.label "cat_label",
@@ -31,7 +31,7 @@
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             cat.label "cat_label",
@@ -57,19 +57,19 @@
         <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
         </where>
