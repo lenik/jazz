@@ -4,11 +4,11 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.store.impl.StoreCategoryMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.store.StoreCategory" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.violet.store.StoreCategory" extends="co.MAP_UVX">
         <result property="properties.jsonForm" column="props" />
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             u.label "uid_label",
@@ -19,7 +19,7 @@
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             u.label "uid_label",
@@ -34,19 +34,19 @@
 
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id=#{id}</if>
         </where>

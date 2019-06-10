@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.edu.impl.TestAnswerMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.edu.TestAnswer" extends="co.MAP_UV">
+    <resultMap id="objlist_map" type="net.bodz.violet.edu.TestAnswer" extends="co.MAP_UV">
         <result property="properties.jsonForm" column="props" />
         <result property="valid" column="valid" />
         <association property="question" javaType="net.bodz.violet.edu.TestQuestion">
@@ -13,7 +13,7 @@
         </association>
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             q.subject "q_subject"
@@ -22,7 +22,7 @@
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             q.subject "q_subject"
@@ -36,19 +36,19 @@
         <include refid="co.modefilt" />
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
         </where>

@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.impl.DiaryMapper">
 
-    <resultMap id="map1" type="net.bodz.violet.plan.Diary" extends="message.MAP_ALL">
+    <resultMap id="objlist_map" type="net.bodz.violet.plan.Diary" extends="message.MAP_ALL">
         <result property="properties.jsonForm" column="props" />
         <result property="value" column="val" />
         <association property="category" javaType="net.bodz.violet.plan.DiaryCategory">
@@ -18,7 +18,7 @@
         </association>
     </resultMap>
 
-    <resultMap id="map2" type="net.bodz.violet.plan.Diary" extends="map1">
+    <resultMap id="objedit_map" type="net.bodz.violet.plan.Diary" extends="objlist_map">
         <collection property="parties" javaType="ArrayList" ofType="net.bodz.violet.plan.DiaryParty">
             <id property="id" column="party" />
             <result property="label" column="party_label" />
@@ -41,7 +41,7 @@
         </collection>
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             cat.label "cat_label",
@@ -57,7 +57,7 @@
         ]]>
     </sql>
 
-    <sql id="select2"><![CDATA[
+    <sql id="objedit_sql"><![CDATA[
         select
             a.*,
             cat.label "cat_label",
@@ -99,19 +99,19 @@
         <if test="m.phaseId != null">and a.phase = #{m.phaseId}</if>
     </sql>
 
-    <select id="all" resultMap="map2">
-        <include refid="select2" />
+    <select id="all" resultMap="objedit_map">
+        <include refid="objedit_sql" />
     </select>
 
-    <select id="filter" resultMap="map2">
-        <include refid="select2" />
+    <select id="filter" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <include refid="filtconds" />
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map2">
-        <include refid="select2" />
+    <select id="select" parameterType="int" resultMap="objedit_map">
+        <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
         </where>

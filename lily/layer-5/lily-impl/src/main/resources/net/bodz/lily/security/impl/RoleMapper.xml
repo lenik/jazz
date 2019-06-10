@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.security.impl.RoleMapper">
 
-    <resultMap id="map1" type="net.bodz.lily.security.Role" extends="co.MAP_ALL">
+    <resultMap id="objlist_map" type="net.bodz.lily.security.Role" extends="co.MAP_ALL">
         <result property="name" column="name" />
         <result property="rank" column="rank" />
         <result property="properties.jsonForm" column="props" />
@@ -17,7 +17,7 @@
         </collection>
     </resultMap>
 
-    <sql id="select1"><![CDATA[
+    <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             y.id "y_id",
@@ -31,19 +31,19 @@
         ]]>
     </sql>
 
-    <select id="all" resultMap="map1">
-        <include refid="select1" />
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
     </select>
 
-    <select id="filter" resultMap="map1">
-        <include refid="select1" />
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <if test="m.codeName != null">and a.name=#{m.name}</if>
         </where>
     </select>
 
-    <select id="select" parameterType="int" resultMap="map1">
-        <include refid="select1" />
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objlist_sql" />
         <where>
             <if test="_parameter != null">a.id=#{id}</if>
         </where>
