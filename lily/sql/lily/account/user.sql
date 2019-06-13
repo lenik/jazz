@@ -1,8 +1,11 @@
 --\import lily.account.group
+--\import lily.account.usercat
 
     create sequence user_seq start with 1000;
     create table "user"(
         id          int primary key default nextval('user_seq'),
+        cat         int not null default 0
+            references usercat(id) on update cascade,
         name        varchar(32) not null unique,
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Props
@@ -28,4 +31,3 @@
     insert into usersec(id, "user", passwd) values(1, 1, 'nimda');
     insert into usersec(id, "user", passwd) values(2, 2, 'resu');
     insert into usersec(id, "user", passwd) values(3, 3, 'guest');
-

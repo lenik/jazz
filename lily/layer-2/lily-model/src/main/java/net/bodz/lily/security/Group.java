@@ -33,6 +33,11 @@ public class Group
 
     private static final long serialVersionUID = 1L;
 
+    public static final int ID_Root = 0;
+    public static final int ID_Administrators = 1;
+    public static final int ID_NormalUsers = 2;
+    public static final int ID_GuestUsers = 3;
+
     private User admin;
     private List<User> users;
 

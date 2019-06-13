@@ -7,6 +7,10 @@
     <resultMap id="objlist_map" type="net.bodz.lily.security.User" extends="co.MAP_ALL">
         <result property="properties.jsonForm" column="props" />
         <result property="name" column="name" />
+        <association property="category" javaType="net.bodz.lily.security.UserCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
         <association property="primaryGroup" javaType="net.bodz.lily.security.Group">
             <id property="id" column="gid0" />
             <result property="name" column="g_name" />
@@ -48,6 +52,7 @@
     <sql id="objlist_sql"><![CDATA[
         select
             a.*,
+            cat.label "cat_label",
             g.name "g_name",
             g.label "g_label",
             g.description "g_description",
@@ -57,15 +62,17 @@
             r.lastlog,
             r.lastlogip
         from "user" a
-            left join "group" g on a.gid0=g.id
-            left join usersec s on a.id=s."user"
-            left join user_run r on a.id = r."user"
+            left join usercat cat on a.cat = cat.id
+            left join "group" g on a.gid0 = g.id
+            left join usersec s on a.id = s."user"
+            left join user_run r on a.id  =  r."user"
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
             a.*,
+            cat.label "cat_label",
             s.passwd,
             s.id "s_id",
             s.salt "s_salt",
@@ -88,6 +95,7 @@
             r.lastlog,
             r.lastlogip
         from "user" a
+            left join usercat cat on a.cat = cat.id
             left join "group" g on a.gid0 = g.id
             left join group_user x on x."user" = a.id
             left join "group" y on y.id = x."group" 
@@ -97,6 +105,8 @@
     </sql>
 
     <sql id="filtconds">
+        <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
+        <if test="m.primaryGroupId != null">and a.gid0 = #{m.primaryGroupId}</if>
         <if test="m.name != null">and a.name = #{m.name}</if>
         <if test="m.password != null">and s.passwd = #{m.password}</if>
         <if test="m.email != null">and s.email = #{m.email}</if>
@@ -214,7 +224,7 @@
     </update>
 
     <delete id="delete">
-        delete from "user" where id=#{id}
+        delete from "user" where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">

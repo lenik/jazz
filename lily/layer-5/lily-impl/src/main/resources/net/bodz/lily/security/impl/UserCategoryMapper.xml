@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.security.impl.UserCategoryMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.security.UserCategory" extends="co.MAP_UVX">
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.*,
+            parent.label "parent_label",
+            u.label "uid_label",
+            g.label "gid_label"
+        from usercat a
+            left join usercat parent on a.parent=parent.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.*,
+            parent.label "parent_label",
+            u.label "uid_label",
+            g.label "gid_label"
+        from usercat a
+            left join usercat parent on a.parent=parent.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
+        <if test="m.maxDepth != null">and a.depth&lt;=#{m.maxDepth}</if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into usercat(
+            code, label, description,
+            priority, flags, state, uid, gid, mode, acl,
+            props,
+            parent, depth
+        ) values(
+            #{codeName},#{label},#{description},
+            #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{properties.jsonForm}::jsonb,
+            #{parent.id}, #{depth}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update usercat
+        <set>
+            <include refid="co.setUSA" />
+            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="parent != null">parent = #{parent.id},</if>
+            depth = #{depth},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from usercat where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from usercat
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -48,6 +48,7 @@ net.bodz.lily.security.impl.CoPrincipalIndex
 net.bodz.lily.security.impl.GroupIndex
 net.bodz.lily.security.impl.PolicyIndex
 net.bodz.lily.security.impl.RoleIndex
+net.bodz.lily.security.impl.UserCategoryIndex
 net.bodz.lily.security.impl.UserIdIndex
 net.bodz.lily.security.impl.UserIdTypeIndex
 net.bodz.lily.security.impl.UserIndex
