@@ -10,6 +10,11 @@
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
         </association>
+        <association property="op" javaType="net.bodz.lily.security.User">
+            <id property="id" column="op" />
+            <result property="name" column="op_name" />
+            <result property="label" column="op_label" />
+        </association>
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[

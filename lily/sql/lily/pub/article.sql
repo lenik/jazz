@@ -1,5 +1,5 @@
 --\import lily.inc.msg
---\mixin lily.pub.articlecat
+--\import lily.pub.articlecat
 
     create sequence article_seq start with 1000;
 
