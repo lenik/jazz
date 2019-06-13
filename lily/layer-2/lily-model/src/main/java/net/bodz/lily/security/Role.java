@@ -13,6 +13,8 @@ public class Role
 
     private static final long serialVersionUID = 1L;
 
+    public static final int ID_Manage = 0;
+
     public static final int RANK_ROOT = 0;
     public static final int RANK_NORMAL = 30;
     public static final int RANK_GUEST = 90;

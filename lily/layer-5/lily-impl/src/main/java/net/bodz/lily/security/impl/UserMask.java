@@ -1,15 +1,42 @@
 package net.bodz.lily.security.impl;
 
-
 /**
  * @see net.bodz.lily.security.User
  */
 public class UserMask
         extends CoPrincipalMask {
 
-    public String password;
-    public String email;
-    public String mobile;
+    Integer categoryId;
+    Integer primaryGroupId;
+    Integer groupId;
+
+    String password;
+    String email;
+    String mobile;
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Integer getPrimaryGroupId() {
+        return primaryGroupId;
+    }
+
+    public void setPrimaryGroupId(Integer primaryGroupId) {
+        this.primaryGroupId = primaryGroupId;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
 
     public String getPassword() {
         return password;

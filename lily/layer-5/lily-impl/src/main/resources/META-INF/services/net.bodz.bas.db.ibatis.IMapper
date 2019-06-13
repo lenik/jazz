@@ -45,6 +45,7 @@ net.bodz.lily.schema.impl.TagGroupDefMapper
 net.bodz.lily.security.impl.GroupMapper
 net.bodz.lily.security.impl.PolicyMapper
 net.bodz.lily.security.impl.RoleMapper
+net.bodz.lily.security.impl.UserCategoryMapper
 net.bodz.lily.security.impl.UserIdMapper
 net.bodz.lily.security.impl.UserIdTypeMapper
 net.bodz.lily.security.impl.UserMapper

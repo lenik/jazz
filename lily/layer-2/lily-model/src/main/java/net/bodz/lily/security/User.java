@@ -36,8 +36,14 @@ public class User
 
     private static final long serialVersionUID = 1L;
 
-    private Group primaryGroup;
+    public static final int ID_Root = 0;
+    public static final int ID_Admin = 1;
+    public static final int ID_DefaultUser = 2;
+    public static final int ID_Guest = 3;
+
+    private UserCategory category;
     private List<Group> groups = new ArrayList<>();
+    private Group primaryGroup;
 
     private List<UserSecret> secrets = new ArrayList<>();
     private List<UserId> ids = new ArrayList<>();
@@ -46,6 +52,18 @@ public class User
     private UserRun runningState;
 
     public User() {
+    }
+
+    /**
+     * @label User Category
+     * @label.zh 用户分类
+     */
+    public UserCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(UserCategory category) {
+        this.category = category;
     }
 
     /**
