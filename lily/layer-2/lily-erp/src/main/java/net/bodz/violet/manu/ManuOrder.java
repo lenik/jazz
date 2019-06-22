@@ -4,13 +4,12 @@ import java.math.BigDecimal;
 
 import javax.persistence.Table;
 
+import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.SizedList;
 import net.bodz.lily.model.mx.CoMessage;
 import net.bodz.violet.plan.Plan;
-
-import user.book.Org;
 
 @IdType(Long.class)
 @Table(name = "manuodr")
@@ -20,7 +19,7 @@ public class ManuOrder
     private static final long serialVersionUID = 1L;
 
     Plan plan;
-    Org customerOrg;
+    Organization customerOrg;
     Person customerPerson;
     Person clerk;
 
@@ -44,11 +43,11 @@ public class ManuOrder
         this.plan = plan;
     }
 
-    public Org getCustomerOrg() {
+    public Organization getCustomerOrg() {
         return customerOrg;
     }
 
-    public void setCustomerOrg(Org customerOrg) {
+    public void setCustomerOrg(Organization customerOrg) {
         this.customerOrg = customerOrg;
     }
 
