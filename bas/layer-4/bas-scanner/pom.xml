@@ -29,5 +29,5 @@
             <version>2.2.1</version>
         </dependency>
     </dependencies>
-    <name>net.bodz.bas.scanner</name>
+    <name>BAS :: Layer 4 :: Scanner</name>
 </project>

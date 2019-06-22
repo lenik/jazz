@@ -5,12 +5,12 @@ import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import net.bodz.bas.c.system.LibraryPath;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.t.iterator.Iterables;
 
 public class SerialPorts {
 
@@ -24,17 +24,18 @@ public class SerialPorts {
         return list(null);
     }
 
-    @SuppressWarnings("unchecked")
     public static List<String> list(String pattern) {
         List<String> ports = new ArrayList<>();
-        for (CommPortIdentifier id : Iterables.<CommPortIdentifier> otp(CommPortIdentifier.getPortIdentifiers())) {
-            String name = id.getName();
+        Enumeration<?> portIdentifiers = CommPortIdentifier.getPortIdentifiers();
+        while (portIdentifiers.hasMoreElements()) {
+            CommPortIdentifier portId = (CommPortIdentifier) portIdentifiers.nextElement();
+            String name = portId.getName();
 
-            int portType = id.getPortType();
+            int portType = portId.getPortType();
             if (portType != CommPortIdentifier.PORT_SERIAL)
                 continue;
 
-            String currentOwner = id.getCurrentOwner();
+            String currentOwner = portId.getCurrentOwner();
 
             logger.debugf("Port %s: type %d, owned by %s.", name, portType, currentOwner);
             if (pattern != null && !name.contains(pattern))
