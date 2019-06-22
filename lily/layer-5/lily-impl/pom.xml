@@ -9,6 +9,10 @@
     <artifactId>lily-impl</artifactId>
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-db</artifactId>
             <version>${bas.version}</version>
