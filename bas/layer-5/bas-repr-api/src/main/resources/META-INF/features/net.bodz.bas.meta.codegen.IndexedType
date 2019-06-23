@@ -1,2 +1,3 @@
 net.bodz.bas.repr.path.IPathDispatcher
+net.bodz.bas.repr.state.StateGroup
 net.bodz.bas.t.predef.Predef

@@ -1,3 +1,2 @@
 net.bodz.bas.repr.req.IHttpRequestProcessor
-net.bodz.bas.repr.state.StateGroup
 net.bodz.bas.repr.viz.IViewBuilderFactory
