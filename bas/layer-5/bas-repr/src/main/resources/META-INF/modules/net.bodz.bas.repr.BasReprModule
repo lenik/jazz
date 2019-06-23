@@ -29,12 +29,6 @@ net.bodz.bas.repr.viz.ViewBuilderException
 net.bodz.bas.repr.meta.Face
 net.bodz.bas.repr.meta.FaceQualifiers
 net.bodz.bas.repr.BasReprModule
-net.bodz.bas.repr.state.StateGroup
-net.bodz.bas.repr.state.StateBuilder
-net.bodz.bas.repr.state.Start
-net.bodz.bas.repr.state.StateTypers
-net.bodz.bas.repr.state.StdStates
-net.bodz.bas.repr.state.StateGroups
 net.bodz.bas.repr.req.IMethodOfRequest
 net.bodz.bas.repr.req.DefaultViewOfRequest
 net.bodz.bas.repr.req.IResultOfRequest
