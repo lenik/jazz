@@ -200,6 +200,20 @@ public abstract class CoMessage<Id>
     public void readObject(JsonObject o)
             throws ParseException {
         super.readObject(o);
+
+        op = o.readInto("op", op, new User());
+        subject = o.getString("subject", subject);
+        text = o.getString("text", text);
+
+        subject = o.getString("subject", subject);
+        // form = o.readInto("form", form, new UseForm());
+        // parameters;
+        // clickInfo;
+
+        sentTime = o.getDate("sentTime", sentTime);
+        receivedTime = o.getDate("receivedTime", receivedTime);
+
+        o.readInto("properties", properties);
     }
 
     @Override

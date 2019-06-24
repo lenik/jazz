@@ -576,10 +576,38 @@ public abstract class CoObject
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
+        boolean autoMode = false;
         try {
-            new BeanJsonLoader().load(this, o, false);
-        } catch (Exception e) {
-            throw new ParseException("Failed to load: " + e.getMessage(), e);
+            getClass().getMethod("readObject", JsonObject.class);
+        } catch (NoSuchMethodException e) {
+            autoMode = true;
+        }
+
+        if (autoMode) {
+            try {
+                new BeanJsonLoader().load(this, o, false);
+            } catch (Exception e) {
+                throw new ParseException("Failed to load: " + e.getMessage(), e);
+            }
+        } else {
+            codeName = o.getString("codeName", codeName);
+            label = o.getString("label", label);
+            description = o.getString("description", description);
+            comment = o.getString("comment", comment);
+            image = o.getString("image", image);
+
+            flags = o.getInt("flags", flags);
+            priority = o.getInt("priority", priority);
+            // state = o.getEnum("state", state, State.class);
+
+            creationDate = o.getDateTime("creationDate", creationDate);
+            lastModifiedDate = o.getDateTime("lastModifiedDate", lastModifiedDate);
+            version = o.getInt("version", version);
+
+            ownerUser = o.readInto("ownerUser", ownerUser, new User());
+            ownerGroup = o.readInto("ownerGroup", ownerGroup, new Group());
+            acl = o.getInt("acl", acl);
+            accessMode = o.getInt("accessMode", accessMode);
         }
     }
 
