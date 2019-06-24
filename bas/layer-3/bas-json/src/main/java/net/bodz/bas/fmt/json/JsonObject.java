@@ -2,15 +2,18 @@ package net.bodz.bas.fmt.json;
 
 import java.io.Writer;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.t.model.IWrapper;
 import net.bodz.bas.t.variant.conv.*;
@@ -534,6 +537,47 @@ public class JsonObject
             return false;
         JsonObject o = (JsonObject) obj;
         return jsonObj.equals(o.jsonObj);
+    }
+
+    public <T extends IJsonSerializable> T readInto(String key, T obj)
+            throws ParseException {
+        return readInto(key, obj, null);
+    }
+
+    public <T extends IJsonSerializable> T readInto(String key, T obj, T newObj)
+            throws ParseException {
+        assert obj != null;
+        if (has(key)) {
+            JsonObject node = getChild(key);
+            if (obj == null)
+                obj = newObj;
+            obj.readObject(node);
+        }
+        return obj;
+    }
+
+    public Date getDate(String key) {
+        return getDate(key, null);
+    }
+
+    public Date getDate(String key, Date defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        Object val = _get(key);
+        Date date = (Date) VarConverters.getConverter(Date.class).from(val);
+        return date;
+    }
+
+    public DateTime getDateTime(String key) {
+        return getDateTime(key, null);
+    }
+
+    public DateTime getDateTime(String key, DateTime defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        Object val = _get(key);
+        DateTime date = (DateTime) VarConverters.getConverter(DateTime.class).from(val);
+        return date;
     }
 
 }
