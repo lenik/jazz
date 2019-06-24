@@ -2,7 +2,7 @@ package net.bodz.bas.log;
 
 import java.util.ServiceLoader;
 
-import net.bodz.bas.log.impl.Log4jLogger;
+import net.bodz.bas.log.impl.Slf4jLogger;
 
 public class LoggerFactory {
 
@@ -12,11 +12,11 @@ public class LoggerFactory {
     }
 
     public static Logger getLogger(Class<?> clazz) {
-        return Log4jLogger.getInstance(clazz);
+        return Slf4jLogger.getInstance(clazz);
     }
 
     public static Logger getLogger(String name) {
-        return Log4jLogger.getInstance(name);
+        return Slf4jLogger.getInstance(name);
     }
 
 }
