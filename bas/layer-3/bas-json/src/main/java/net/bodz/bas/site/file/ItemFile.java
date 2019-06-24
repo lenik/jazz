@@ -1,5 +1,6 @@
 package net.bodz.bas.site.file;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +8,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.fmt.json.JsonSupport;
+import net.bodz.bas.fmt.json.JsonObject;
 
 public class ItemFile
-        extends JsonSupport {
+        implements IJsonSerializable {
 
     private String dir;
     private String name;
@@ -59,12 +62,34 @@ public class ItemFile
         this.label = label;
     }
 
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        dir = o.getString("dir", dir);
+        name = o.getString("name", name);
+        size = o.getLong("size", size);
+        sha1 = o.getString("sha1", sha1);
+        label = o.getString("label", label);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        out.object();
+        out.entry("dir", dir);
+        out.entry("name", name);
+        out.entry("size", size);
+        out.entry("sha1", sha1);
+        out.entry("label", label);
+        out.endObject();
+    }
+
     public static List<ItemFile> convert(JSONArray array)
             throws ParseException {
         List<ItemFile> items = new ArrayList<>();
-        for (JSONObject el : JsonFn.<JSONObject> iterate(array)) {
+        for (JSONObject o : JsonFn.<JSONObject> iterate(array)) {
             ItemFile item = new ItemFile();
-            item.readObject(el);
+            item.readObject(JsonObject.wrap(o));
             items.add(item);
         }
         return items;
