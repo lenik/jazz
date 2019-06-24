@@ -10,6 +10,11 @@ public class Log4jMdcConfigurer
 
     @Override
     public void initLoggingSystem() {
+        try {
+            Class.forName("org.apache.log4j.MDC");
+        } catch (NoClassDefFoundError | ClassNotFoundException e) {
+            return;
+        }
         MDC.put("contexts", CompositeDiagContext.CONTEXTS);
     }
 
