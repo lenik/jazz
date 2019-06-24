@@ -577,7 +577,7 @@ public abstract class CoObject
     public void readObject(JsonObject o)
             throws ParseException {
         try {
-            BeanJsonLoader.getInstance().load(this, o);
+            new BeanJsonLoader().load(this, o, false);
         } catch (Exception e) {
             throw new ParseException("Failed to load: " + e.getMessage(), e);
         }

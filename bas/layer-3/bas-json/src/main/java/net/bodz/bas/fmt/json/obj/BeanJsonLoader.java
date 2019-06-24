@@ -21,6 +21,7 @@ import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.AbstractJsonLoader;
+import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -57,6 +58,19 @@ public class BeanJsonLoader
     @Override
     public void load(Object ctx, JsonObject node)
             throws Exception {
+        load(ctx, node, false);
+    }
+
+    public void load(Object ctx, JsonObject node, boolean overridable)
+            throws Exception {
+        if (overridable) {
+            if (ctx instanceof IJsonSerializable) {
+                IJsonSerializable js = (IJsonSerializable) ctx;
+                js.readObject(node);
+                return;
+            }
+        }
+
         Class<?> ctxType = ctx.getClass();
         BeanInfo beanInfo;
         try {
@@ -88,7 +102,7 @@ public class BeanJsonLoader
                 logger.error(e, "Failed to invoke getter: " + e.getMessage());
                 continue;
             }
-            Object jsonVal = node.get(propertyName);
+            Object jsonVal = node._get(propertyName);
 
             try {
                 if (jsonVal == null) {
@@ -106,20 +120,24 @@ public class BeanJsonLoader
                     continue;
                 }
 
-                if (!(jsonVal instanceof JsonObject)) {
-                    // Should be terminated.
+                JsonObject jsonObj;
+                if (jsonVal instanceof JSONObject)
+                    jsonObj = JsonObject.wrap((JSONObject) jsonVal);
+                else if (jsonVal instanceof JsonObject)
+                    jsonObj = (JsonObject) jsonVal;
+                else
                     continue;
-                }
 
                 Object obj = propertyValue;
                 boolean create = setter == null;
                 Constructor<?> ctor0 = null;
-                if (create)
+                if (create) {
                     try {
                         ctor0 = propertyType.getConstructor();
                     } catch (NoSuchMethodException e) {
                         create = false;
                     }
+                }
 
                 if (create)
                     obj = ctor0.newInstance();
@@ -128,8 +146,7 @@ public class BeanJsonLoader
                         continue;
                 }
 
-                JsonObject jsonObj = (JsonObject) jsonVal;
-                load(obj, jsonObj);
+                load(obj, jsonObj, true);
 
                 if (create)
                     setter.invoke(ctx, obj);
@@ -255,12 +272,6 @@ public class BeanJsonLoader
         }
 
         return NonTerm;
-    }
-
-    static BeanJsonLoader instance = new BeanJsonLoader();
-
-    public static BeanJsonLoader getInstance() {
-        return instance;
     }
 
 }
