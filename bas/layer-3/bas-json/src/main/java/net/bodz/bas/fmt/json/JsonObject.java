@@ -12,9 +12,11 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.t.model.IWrapper;
 import net.bodz.bas.t.variant.conv.*;
 
-public class JsonObject {
+public class JsonObject
+        implements IWrapper<JSONObject> {
 
     private final JSONObject jsonObj;
 
@@ -142,6 +144,7 @@ public class JsonObject {
         return new JsonObject(jsonObj);
     }
 
+    @Override
     public JSONObject getWrapped() {
         return jsonObj;
     }
@@ -170,24 +173,26 @@ public class JsonObject {
         return jsonObj.names();
     }
 
-    public Object get(String key)
+    public Object _get(String key)
             throws JSONException {
-        Object val = get(key, null);
+        Object val = _get(key, null);
         if (val == JSONObject.NULL)
             return null;
         return val;
     }
 
-    public Object get(String key, Object defaultValue)
+    public Object _get(String key, Object defaultValue)
             throws JSONException {
-        if (jsonObj.has(key))
-            return jsonObj.get(key);
-        else
+        if (!jsonObj.has(key))
             return defaultValue;
+        Object val = jsonObj.get(key);
+        // if (val instanceof JSONObject)
+        // return new JsonObject((JSONObject) val);
+        return val;
     }
 
     public Boolean getBoolean(String key) {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return null;
         return BooleanVarConverter.INSTANCE.from(val);
@@ -195,7 +200,7 @@ public class JsonObject {
 
     public boolean getBoolean(String key, boolean defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         try {
@@ -207,7 +212,7 @@ public class JsonObject {
 
     public Float getFloat(String key)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return null;
         return FloatVarConverter.INSTANCE.from(val);
@@ -215,7 +220,7 @@ public class JsonObject {
 
     public float getFloat(String key, float defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         try {
@@ -227,7 +232,7 @@ public class JsonObject {
 
     public Double getDouble(String key)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return null;
         return DoubleVarConverter.INSTANCE.from(val);
@@ -235,7 +240,7 @@ public class JsonObject {
 
     public double getDouble(String key, double defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         try {
@@ -247,7 +252,7 @@ public class JsonObject {
 
     public Byte getByte(String key)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return null;
         return ByteVarConverter.INSTANCE.from(val);
@@ -255,7 +260,7 @@ public class JsonObject {
 
     public byte getByte(String key, byte defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         try {
@@ -267,7 +272,7 @@ public class JsonObject {
 
     public Short getShort(String key)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return null;
         return ShortVarConverter.INSTANCE.from(val);
@@ -275,7 +280,7 @@ public class JsonObject {
 
     public short getShort(String key, short defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         try {
@@ -287,7 +292,7 @@ public class JsonObject {
 
     public Integer getInt(String key)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return null;
         return IntegerVarConverter.INSTANCE.from(val);
@@ -295,7 +300,7 @@ public class JsonObject {
 
     public int getInt(String key, int defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         try {
@@ -307,7 +312,7 @@ public class JsonObject {
 
     public Long getLong(String key)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return null;
         return LongVarConverter.INSTANCE.from(val);
@@ -315,7 +320,7 @@ public class JsonObject {
 
     public long getLong(String key, long defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         try {
@@ -327,7 +332,7 @@ public class JsonObject {
 
     public Character getChar(String key)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return null;
         return CharacterVarConverter.INSTANCE.from(val);
@@ -335,7 +340,7 @@ public class JsonObject {
 
     public char getChar(String key, char defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         try {
@@ -352,7 +357,7 @@ public class JsonObject {
 
     public String getString(String key, String defaultValue)
             throws JSONException {
-        Object val = get(key);
+        Object val = _get(key);
         if (val == null)
             return defaultValue;
         return StringVarConverter.INSTANCE.from(val);
@@ -360,7 +365,7 @@ public class JsonObject {
 
     public JSONArray getJSONArray(String key)
             throws JSONException {
-        return getJSONArray(key, null);
+        return jsonObj.getJSONArray(key);
     }
 
     public JSONArray getJSONArray(String key, JSONArray defaultValue)
@@ -372,7 +377,7 @@ public class JsonObject {
 
     public JSONObject getJSONObject(String key)
             throws JSONException {
-        return getJSONObject(key, null);
+        return jsonObj.getJSONObject(key);
     }
 
     public JSONObject getJSONObject(String key, JSONObject defaultValue)
@@ -380,6 +385,41 @@ public class JsonObject {
         if (!has(key))
             return defaultValue;
         return jsonObj.getJSONObject(key);
+    }
+
+    public final JsonArray getJsonArray(String key)
+            throws JSONException {
+        return getJsonArray(key, null);
+    }
+
+    public JsonArray getJsonArray(String key, JsonArray defaultValue)
+            throws JSONException {
+        if (!has(key))
+            return defaultValue;
+        JSONArray array = getJSONArray(key);
+        return new JsonArray(array);
+    }
+
+    /**
+     * See {@link #getChild(String)}
+     *
+     * @deprecated
+     */
+    @Deprecated
+    public final JsonObject getJsonObject(String key)
+            throws JSONException {
+        return getChild(key);
+    }
+
+    /**
+     * See {@link #getChild(String, JsonObject)}
+     *
+     * @deprecated
+     */
+    @Deprecated
+    public JsonObject getJsonObject(String key, JsonObject defaultValue)
+            throws JSONException {
+        return getChild(key, defaultValue);
     }
 
     public JsonObject getChild(String key)

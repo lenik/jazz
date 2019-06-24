@@ -1,9 +1,14 @@
 package net.bodz.lily.model.mx;
 
+import java.io.IOException;
 import java.util.Date;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.NullConvertion;
@@ -13,6 +18,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.IPriority;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.model.mixin.UseForm;
@@ -182,6 +188,24 @@ public abstract class CoMessage<Id>
 
     public void setProperties(RichProperties properties) {
         this.properties = properties;
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws LoaderException {
+        super.readObject(map);
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        super.writeObject(out);
     }
 
     @Override

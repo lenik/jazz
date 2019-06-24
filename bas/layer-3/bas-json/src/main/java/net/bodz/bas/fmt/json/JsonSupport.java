@@ -19,7 +19,7 @@ public abstract class JsonSupport
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        BeanJsonLoader.getInstance().parse(this, o);
+        new BeanJsonLoader().parse(this, o);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class ValueElement
         case FLOT:
             for (Object key : o.keySet()) {
                 String name = (String) key;
-                String str = (String) o.get(name);
+                String str = o.getString(name);
                 switch (name) {
                 case "label":
                     setLabel(iString.fn.val(str));
