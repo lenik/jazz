@@ -9,6 +9,8 @@ import java.util.Set;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -450,6 +452,16 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     public void dump()
             throws IOException {
         dump(Stdio.cout);
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+
+        refCount = o.getInt("refCount", refCount);
+        // parent
+        // children
     }
 
 }

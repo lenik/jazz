@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.i18n.geo.GeoZones;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -41,6 +43,7 @@ public class Contact
     public static final int N_EMAIL = 30;
     public static final int N_WEB = 80;
     public static final int N_QQ = 20;
+    public static final int N_WECHAT = 30;
 
     private Organization org;
     private OrgUnit orgUnit;
@@ -65,6 +68,7 @@ public class Contact
     private String email;
     private String web;
     private String qq;
+    private String wechat;
 
     /**
      * 公司/单位
@@ -344,6 +348,19 @@ public class Contact
     }
 
     /**
+     * @label WeChat
+     */
+    @OfGroup(EntGroup.Communication.class)
+    @TextInput(maxLength = N_WECHAT)
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
+
+    /**
      * Get the full address.
      *
      * @label 地址
@@ -394,6 +411,36 @@ public class Contact
     }
 
     @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+
+        org = o.readInto("org", org, new Organization());
+        orgUnit = o.readInto("orgUnit", orgUnit, new OrgUnit());
+        person = o.readInto("person", person, new Person());
+
+        rename = o.getString("rename", rename);
+        usage = o.getString("usage", usage);
+
+        country = o.getString("country", country);
+        r1 = o.getString("r1", r1);
+        r2 = o.getString("r2", r2);
+        r3 = o.getString("r3", r3);
+        r4 = o.getString("r4", r4);
+        address1 = o.getString("address1", address1);
+        address2 = o.getString("address2", address2);
+        postalCode = o.getString("postalCode", postalCode);
+
+        tel = o.getString("tel", tel);
+        mobile = o.getString("mobile", mobile);
+        fax = o.getString("fax", fax);
+        email = o.getString("email", email);
+        web = o.getString("web", web);
+        qq = o.getString("qq", qq);
+        wechat = o.getString("wechat", wechat);
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (usage != null)
@@ -430,6 +477,8 @@ public class Contact
             sb.append("\nWeb: " + web);
         if (qq != null)
             sb.append("\nQQ: " + qq);
+        if (wechat != null)
+            sb.append("\nWeChat: " + qq);
 
         return sb.toString();
     }

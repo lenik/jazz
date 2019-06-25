@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.lily.entity.IdType;
@@ -176,6 +178,15 @@ public class User
 
     public void setRunningState(UserRun runningState) {
         this.runningState = runningState;
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+        category = o.readInto("category", category, new UserCategory());
+        primaryGroup = o.readInto("primaryGroup", primaryGroup, new Group());
+        // TODO
     }
 
 }
