@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.lily.entity.IdType;
 
 /**
@@ -61,6 +63,14 @@ public class Group
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+        admin = o.readInto("admin", admin, new User());
+        // users
     }
 
 }

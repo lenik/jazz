@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.lily.entity.IdType;
 
 @Table(name = "role")
@@ -39,6 +41,13 @@ public class Role
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+        rank = o.getInt("rank", rank);
     }
 
 }

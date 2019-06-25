@@ -1,8 +1,13 @@
 package net.bodz.lily.model.base;
 
+import java.io.IOException;
+
 import org.joda.time.DateTime;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
@@ -96,6 +101,21 @@ public abstract class CoMomentInterval<Id>
     @Deprecated
     public final void setEndDate(DateTime endDate) {
         setEndTime(endDate);
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+
+        beginTime = o.getDateTime("beginTime", beginTime);
+        endTime = o.getDateTime("endTime", endTime);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        super.writeObject(out);
     }
 
 }
