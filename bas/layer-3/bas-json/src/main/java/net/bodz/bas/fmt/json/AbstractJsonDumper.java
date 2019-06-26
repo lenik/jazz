@@ -3,8 +3,12 @@ package net.bodz.bas.fmt.json;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Modifier;
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -15,6 +19,7 @@ import org.json.JSONException;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.t.set.StackSet;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
@@ -27,7 +32,6 @@ public abstract class AbstractJsonDumper<self_t>
     protected IJsonOut out;
     protected StackSet<Object> marks;
 
-    protected boolean mixinMode = false;
     protected boolean includeNull = false;
     protected boolean includeFalse = false;
 
@@ -39,18 +43,6 @@ public abstract class AbstractJsonDumper<self_t>
     public AbstractJsonDumper(IJsonOut out) {
         this.out = out;
         this.marks = new StackSet<>();
-    }
-
-    public boolean isMixinMode() {
-        return mixinMode;
-    }
-
-    public void setMixinMode(boolean mixinMode) {
-        this.mixinMode = mixinMode;
-    }
-
-    public void mixin() {
-        this.mixinMode = true;
     }
 
     public boolean isIncludeNull() {
@@ -93,9 +85,9 @@ public abstract class AbstractJsonDumper<self_t>
     }
 
     @Override
-    public void dump(Object obj)
+    public void dump(Object obj, boolean enclosed)
             throws IOException {
-        formatRaw_once(obj, 0, "");
+        _dumpOnce(enclosed, obj, 0, "");
     }
 
     protected boolean isIncluded(String name) {
@@ -107,7 +99,7 @@ public abstract class AbstractJsonDumper<self_t>
         return includes.isEmpty();
     }
 
-    protected void formatRaw_once(Object obj, int depth, String prefix)
+    protected void _dumpOnce(boolean enclosed, Object obj, int depth, String prefix)
             throws IOException {
         if (obj == null) {
             out.value(null);
@@ -120,69 +112,64 @@ public abstract class AbstractJsonDumper<self_t>
         }
 
         if (marks.push(obj)) {
-            __formatRaw_nonnull(obj, depth, prefix);
+            _dumpImpl(enclosed, obj, depth, prefix);
             marks.pop();
         } else {
             out.value("<dup>");
         }
     }
 
-    protected void __formatRaw_nonnull(Object obj, int depth, String prefix)
+    protected void _dumpImpl(boolean enclosed, @NotNull Object obj, int depth, String prefix)
             throws IOException {
-        // boolean mixin = mixinMode && depth == 0;
-
         Class<?> type = obj.getClass();
         if (type.isArray()) {
-            out.array();
-            try {
-                int length = Array.getLength(obj);
-                for (int i = 0; i < length; i++) {
-                    formatRaw_once(Array.get(obj, i), depth + 1, //
-                            prefix == null ? null : (prefix + "[" + i + "]"));
-                }
-            } finally {
-                out.endArray();
+            if (enclosed)
+                out.array();
+            int length = Array.getLength(obj);
+            for (int i = 0; i < length; i++) {
+                _dumpOnce(true, Array.get(obj, i), depth + 1, //
+                        prefix == null ? null : (prefix + "[" + i + "]"));
             }
+            if (enclosed)
+                out.endArray();
             return;
         }
 
         if (obj instanceof Collection<?>) {
-            out.array();
+            if (enclosed)
+                out.array();
             int i = 0;
-            try {
-                for (Object item : (Collection<?>) obj) {
-                    formatRaw_once(item, depth + 1, //
-                            prefix == null ? null : (prefix + "[" + i + "]"));
-                    i++;
-                }
-            } finally {
-                out.endArray();
+            for (Object item : (Collection<?>) obj) {
+                _dumpOnce(true, item, depth + 1, //
+                        prefix == null ? null : (prefix + "[" + i + "]"));
+                i++;
             }
+            if (enclosed)
+                out.endArray();
             return;
         }
 
         if (obj instanceof Map<?, ?>) {
-            out.object();
-            try {
-                for (Entry<?, ?> entry : ((Map<?, ?>) obj).entrySet()) {
-                    Object key = entry.getKey();
-                    Object value = entry.getValue();
-                    if (key == null) // null-key isn't supported in json.
+            if (enclosed)
+                out.object();
+            for (Map.Entry<?, ?> entry : ((Map<?, ?>) obj).entrySet()) {
+                Object key = entry.getKey();
+                Object value = entry.getValue();
+                if (key == null) // null-key isn't supported in json.
+                    continue;
+
+                if (value == null)
+                    if (!includeNull)
                         continue;
 
-                    if (value == null)
-                        if (!includeNull)
-                            continue;
-
-                    String qname = prefix == null ? null : (prefix + "{" + key + "}");
-                    if (isIncluded(qname)) {
-                        out.key(key.toString());
-                        formatRaw_once(value, depth + 1, qname);
-                    }
+                String qname = prefix == null ? null : (prefix + "{" + key + "}");
+                if (isIncluded(qname)) {
+                    out.key(key.toString());
+                    _dumpOnce(true, value, depth + 1, qname);
                 }
-            } finally {
-                out.endObject();
             }
+            if (enclosed)
+                out.endObject();
             return;
         }
 
@@ -194,7 +181,11 @@ public abstract class AbstractJsonDumper<self_t>
         if (depth > 0)
             if (obj instanceof IJsonSerializable) {
                 IJsonSerializable jser = (IJsonSerializable) obj;
+                if (enclosed)
+                    out.object();
                 jser.writeObject(out);
+                if (enclosed)
+                    out.endObject();
                 return;
             }
 
@@ -254,7 +245,7 @@ public abstract class AbstractJsonDumper<self_t>
             out.value(jodaDateStr);
             return;
 
-// TODO Scalar
+            // TODO Scalar
         default:
             if (iString.class.isAssignableFrom(type)) {
                 out.value(obj);
@@ -275,7 +266,7 @@ public abstract class AbstractJsonDumper<self_t>
 
         int modifiers = type.getModifiers();
         if ((modifiers & Modifier.PUBLIC) == 0) {
-            // don't try to dump members from private types.
+            // don't try to dump members from non-public types.
             formatException(depth + 1, new IllegalAccessException());
             return;
         }
@@ -285,22 +276,14 @@ public abstract class AbstractJsonDumper<self_t>
             return;
         }
 
-        try {
+        if (enclosed)
             out.object();
-        } catch (JSONException e) {
-            throw e;
-        }
 
         try {
             formatObjectMembers(type, obj, depth, prefix);
 
-            try {
+            if (enclosed)
                 out.endObject();
-            } catch (JSONException e) {
-                throw e;
-            }
-        } catch (IOException e) {
-            throw e;
         } catch (JSONException e) {
             throw e;
         } catch (Exception e) {

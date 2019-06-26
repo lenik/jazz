@@ -82,7 +82,7 @@ public class BeanJsonDumper
 
             else if (marks.push(propertyValue)) {
                 out.key(propertyName);
-                __formatRaw_nonnull(propertyValue, depth + 1, qname);
+                _dumpImpl(true, propertyValue, depth + 1, qname);
                 marks.pop();
             }
         }
@@ -92,7 +92,7 @@ public class BeanJsonDumper
         StringWriter buf = new StringWriter();
         JsonWriter out = new JsonWriter(buf);
         try {
-            new BeanJsonDumper(out).dump(obj);
+            new BeanJsonDumper(out).dump(obj, true);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }

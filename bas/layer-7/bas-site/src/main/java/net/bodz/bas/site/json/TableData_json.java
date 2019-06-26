@@ -91,7 +91,9 @@ public class TableData_json
         }
         if (val instanceof IJsonSerializable) {
             IJsonSerializable jsVal = (IJsonSerializable) val;
+            out.object();
             jsVal.writeObject(out);
+            out.endObject();
             return;
         }
         out.value(val);

@@ -620,7 +620,7 @@ public abstract class CoObject
     public void writeObject(IJsonOut out)
             throws IOException {
         BeanJsonDumper dumper = new BeanJsonDumper(out);
-        dumper.dump(this);
+        dumper.dump(this, false);
     }
 
     public IWebSupport getWebSupport() {

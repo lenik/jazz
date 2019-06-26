@@ -79,9 +79,11 @@ public class JsonFn {
         if (obj == null)
             throw new NullPointerException("obj");
         StringWriter buf = new StringWriter();
-        JsonWriter writer = new JsonWriter(buf);
+        JsonWriter out = new JsonWriter(buf);
         try {
-            obj.writeObject(writer);
+            out.object();
+            obj.writeObject(out);
+            out.endObject();
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
