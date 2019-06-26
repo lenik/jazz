@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GeoZone {
 
-    private final String code;
+    private final String localCode;
     private final String localeName;
 
     private String enName;
@@ -15,8 +15,8 @@ public class GeoZone {
     private final GeoZone parent;
     private final List<GeoZone> children = new ArrayList<GeoZone>();;
 
-    public GeoZone(String code, String localeName, GeoZone parent) {
-        this.code = code;
+    public GeoZone(String localCode, String localeName, GeoZone parent) {
+        this.localCode = localCode;
         this.localeName = localeName;
         this.parent = parent;
         if (parent != null)
@@ -39,18 +39,18 @@ public class GeoZone {
         return list;
     }
 
-    public String getCode() {
-        return code;
+    public String getLocalCode() {
+        return localCode;
     }
 
-    public String getId() {
-        return buildId();
+    public String getFullCode() {
+        return buildCode();
     }
 
-    public String buildId() {
+    public String buildCode() {
         StringBuilder sb = new StringBuilder(16);
         for (GeoZone r : topDown())
-            sb.append(r.code);
+            sb.append(r.localCode);
         return sb.toString();
     }
 

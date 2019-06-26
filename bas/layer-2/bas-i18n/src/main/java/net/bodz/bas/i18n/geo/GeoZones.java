@@ -15,14 +15,14 @@ import net.bodz.bas.err.ParseException;
 public class GeoZones {
 
     private static final GeoZone china = new GeoZone("", "中国", null);
-    private static final Map<String, GeoZone> chinaIndex = new HashMap<String, GeoZone>();
+    private static final Map<String, GeoZone> codeMap = new HashMap<String, GeoZone>();
 
     public static GeoZone getChina() {
         return china;
     }
 
-    public static GeoZone getChinaRegion(String id) {
-        return chinaIndex.get(id);
+    public static GeoZone getChinaRegion(String code) {
+        return codeMap.get(code);
     }
 
     static {
@@ -55,40 +55,40 @@ public class GeoZones {
                     throw new ParseException("Expected colon(:) at line " + lineNo);
                 lineNo++;
 
-                String id = line.substring(0, colon);
+                String fullCode = line.substring(0, colon);
                 String zhName = line.substring(colon + 1);
                 GeoZone parent;
-                String code;
+                String localCode;
 
                 // AABBCCDDD
-                switch (id.length()) {
+                switch (fullCode.length()) {
                 case 2:
                     parent = china;
-                    code = id;
+                    localCode = fullCode;
                     break;
 
                 case 4:
-                    parent = chinaIndex.get(id.substring(0, 2));
-                    code = id.substring(2);
+                    parent = codeMap.get(fullCode.substring(0, 2));
+                    localCode = fullCode.substring(2);
                     break;
 
                 case 6:
-                    parent = chinaIndex.get(id.substring(0, 4));
-                    code = id.substring(4);
+                    parent = codeMap.get(fullCode.substring(0, 4));
+                    localCode = fullCode.substring(4);
                     break;
 
                 case 9:
-                    parent = chinaIndex.get(id.substring(0, 6));
-                    code = id.substring(6);
+                    parent = codeMap.get(fullCode.substring(0, 6));
+                    localCode = fullCode.substring(6);
                     break;
 
                 default:
-                    throw new ParseException("Bad ID: " + id);
+                    throw new ParseException("Bad ID: " + fullCode);
                 }
 
-                GeoZone zone = new GeoZone(code, zhName, parent);
+                GeoZone zone = new GeoZone(localCode, zhName, parent);
                 zone.setZhName(zhName);
-                chinaIndex.put(id, zone);
+                codeMap.put(fullCode, zone);
             }
         } finally {
             in.close();
