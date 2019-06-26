@@ -1,10 +1,8 @@
 package net.bodz.lily.model.base;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.t.variant.conv.IVarConverter;
@@ -56,12 +54,6 @@ public class CoEntity<Id>
             Id newId = idConv.from(o._get("id"));
             this.id = newId;
         }
-    }
-
-    @Override
-    public void writeObject(IJsonOut out)
-            throws IOException {
-        super.writeObject(out);
     }
 
 }

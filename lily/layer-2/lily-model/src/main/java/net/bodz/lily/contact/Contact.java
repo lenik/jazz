@@ -153,12 +153,12 @@ public class Contact
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(EntGroup.Position.class)
     @Derived
-    public String getZoneId() {
-        return zone == null ? null : zone.buildId();
+    public String getZoneCode() {
+        return zone == null ? null : zone.buildCode();
     }
 
-    public void setZoneId(String id) {
-        this.zone = GeoZones.getChinaRegion(id);
+    public void setZoneCode(String code) {
+        this.zone = GeoZones.getChinaRegion(code);
     }
 
     /**

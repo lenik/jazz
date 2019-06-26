@@ -164,7 +164,6 @@ public class AjaxResult
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
-        out.object();
         if (success != null) {
             out.key("success");
             out.value(success);
@@ -210,7 +209,6 @@ public class AjaxResult
             }
             out.endObject();
         }
-        out.endObject();
     }
 
 }

@@ -576,6 +576,9 @@ public abstract class CoObject
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
+        if (o == null)
+            throw new NullPointerException("o");
+
         boolean autoMode = false;
         try {
             getClass().getMethod("readObject", JsonObject.class);
@@ -608,6 +611,8 @@ public abstract class CoObject
             ownerGroup = o.readInto("ownerGroup", ownerGroup, new Group());
             acl = o.getInt("acl", acl);
             accessMode = o.getInt("accessMode", accessMode);
+
+            o.readInto("properties", getProperties());
         }
     }
 

@@ -17,7 +17,7 @@ public class GeoLocation
 
     double longitude;
     double latitude;
-    GeoZone region;
+    GeoZone zone;
 
     public double getSphereX() {
         return longitude;
@@ -61,12 +61,12 @@ public class GeoLocation
         this.latitude = latitude;
     }
 
-    public GeoZone getRegion() {
-        return region;
+    public GeoZone getZone() {
+        return zone;
     }
 
-    public void setRegion(GeoZone region) {
-        this.region = region;
+    public void setZone(GeoZone zone) {
+        this.zone = zone;
     }
 
     @Override
@@ -74,20 +74,18 @@ public class GeoLocation
             throws ParseException {
         longitude = o.getDouble("lng");
         latitude = o.getDouble("lat");
-        String regionId = o.getString("id");
-        if (regionId != null)
-            region = GeoZones.getChinaRegion(regionId);
+        String code = o.getString("code");
+        if (code != null)
+            zone = GeoZones.getChinaRegion(code);
     }
 
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
-        out.object();
         out.entry("lng", longitude);
         out.entry("lat", latitude);
-        if (region != null)
-            out.entry("id", region.getId());
-        out.endObject();
+        if (zone != null)
+            out.entry("code", zone.getFullCode());
     }
 
 }

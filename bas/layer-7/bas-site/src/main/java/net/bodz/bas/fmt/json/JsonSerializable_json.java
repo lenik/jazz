@@ -32,7 +32,9 @@ public class JsonSerializable_json
         IJsonSerializable obj = ref.get();
         PrintWriter writer = resp.getWriter();
         JsonWriter jsonWriter = new JsonWriter(writer);
+        jsonWriter.object();
         obj.writeObject(jsonWriter);
+        jsonWriter.endObject();
         return null;
     }
 
