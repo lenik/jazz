@@ -146,7 +146,9 @@ public interface IJsonOut {
                 throws IOException {
             if (value instanceof IJsonSerializable) {
                 IJsonSerializable jsVal = (IJsonSerializable) value;
+                out.object();
                 jsVal.writeObject(out);
+                out.endObject();
                 return;
             }
             // else:

@@ -188,7 +188,9 @@ public class AjaxResult
                 out.key(entry.getKey());
                 if (value instanceof IJsonSerializable) {
                     IJsonSerializable child = (IJsonSerializable) value;
+                    out.object();
                     child.writeObject(out);
+                    out.endObject();
                 } else {
                     out.value(value);
                 }

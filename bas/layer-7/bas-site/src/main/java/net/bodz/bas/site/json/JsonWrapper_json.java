@@ -30,7 +30,7 @@ public class JsonWrapper_json
         dumper.setIncludeNull(w.includeNull);
         dumper.setIncludeFalse(w.includeFalse);
         dumper.depth(w.maxDepth);
-        dumper.dump(w.obj);
+        dumper.dump(w.obj, true);
 
         if (w.key != null) {
             out.endObject();

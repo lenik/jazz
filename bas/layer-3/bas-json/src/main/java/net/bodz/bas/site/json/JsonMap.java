@@ -3,6 +3,7 @@ package net.bodz.bas.site.json;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import section.obj;
@@ -60,7 +61,12 @@ public class JsonMap
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
-        out.value(map);
+        for (Entry<String, ?> entry : map.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            out.key(key);
+            out.value(value);
+        }
     }
 
     /** ⇱ Implementation Of {@link IAttributed}. */
