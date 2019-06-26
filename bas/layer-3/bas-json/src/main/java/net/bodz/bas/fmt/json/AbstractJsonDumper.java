@@ -27,6 +27,7 @@ public abstract class AbstractJsonDumper<self_t>
     protected IJsonOut out;
     protected StackSet<Object> marks;
 
+    protected boolean mixinMode = false;
     protected boolean includeNull = false;
     protected boolean includeFalse = false;
 
@@ -38,6 +39,18 @@ public abstract class AbstractJsonDumper<self_t>
     public AbstractJsonDumper(IJsonOut out) {
         this.out = out;
         this.marks = new StackSet<>();
+    }
+
+    public boolean isMixinMode() {
+        return mixinMode;
+    }
+
+    public void setMixinMode(boolean mixinMode) {
+        this.mixinMode = mixinMode;
+    }
+
+    public void mixin() {
+        this.mixinMode = true;
     }
 
     public boolean isIncludeNull() {
@@ -116,8 +129,9 @@ public abstract class AbstractJsonDumper<self_t>
 
     protected void __formatRaw_nonnull(Object obj, int depth, String prefix)
             throws IOException {
-        Class<?> type = obj.getClass();
+        // boolean mixin = mixinMode && depth == 0;
 
+        Class<?> type = obj.getClass();
         if (type.isArray()) {
             out.array();
             try {
@@ -262,7 +276,7 @@ public abstract class AbstractJsonDumper<self_t>
         int modifiers = type.getModifiers();
         if ((modifiers & Modifier.PUBLIC) == 0) {
             // don't try to dump members from private types.
-            formatException(new IllegalAccessException());
+            formatException(depth + 1, new IllegalAccessException());
             return;
         }
 
@@ -279,38 +293,40 @@ public abstract class AbstractJsonDumper<self_t>
 
         try {
             formatObjectMembers(type, obj, depth, prefix);
+
+            try {
+                out.endObject();
+            } catch (JSONException e) {
+                throw e;
+            }
         } catch (IOException e) {
             throw e;
         } catch (JSONException e) {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
-        } finally {
-            try {
-                out.endObject();
-            } catch (JSONException e) {
-                throw e;
-            }
         }
     }
 
     protected abstract void formatObjectMembers(Class<?> type, Object obj, int depth, String prefix)
             throws ReflectiveOperationException, IOException;
 
-    protected void formatException(Throwable e) {
+    protected void formatException(int depth, Throwable e) {
         out.object();
-        out.key("type");
-        out.value(e.getClass().getName());
-        out.key("message");
-        out.value(e.getMessage());
+        try {
+            out.key("type");
+            out.value(e.getClass().getName());
+            out.key("message");
+            out.value(e.getMessage());
 
-        Throwable cause = e.getCause();
-        if (cause != null) {
-            out.key("cause");
-            formatException(cause);
+            Throwable cause = e.getCause();
+            if (cause != null) {
+                out.key("cause");
+                formatException(depth + 1, cause);
+            }
+        } finally {
+            out.endObject();
         }
-
-        out.endObject();
     }
 
 }

@@ -9,7 +9,8 @@ public class ReflectOptions {
 
     public static final Set<Class<?>> stopClasses = new HashSet<>();
     public static final Set<Class<?>> copyTypes = new HashSet<>();
-    {
+
+    static {
         stopClasses.add(Object.class);
 
         Class<?>[] types1 = { byte.class, short.class, int.class, long.class, float.class, double.class, boolean.class,

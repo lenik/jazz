@@ -5,9 +5,11 @@ import java.io.Serializable;
 
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.codegen.PublishDir;
+import net.bodz.bas.meta.decl.Stop;
 import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
 
 @IndexedType(publishDir = PublishDir.features)
+@Stop
 public abstract class Predef<self_t extends Predef<self_t, K>, K extends Comparable<K>>
         extends XjdocObject
         implements Serializable, Comparable<self_t> {

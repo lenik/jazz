@@ -434,8 +434,12 @@ public class JsonObject
             throws JSONException {
         if (!has(key))
             return defaultValue;
-        JSONObject val = jsonObj.getJSONObject(key);
-        return new JsonObject(val);
+        Object _val = _get(key);
+        if (_val instanceof JSONObject) {
+            JSONObject val = (JSONObject) _val;
+            return new JsonObject(val);
+        }
+        return null;
     }
 
     public JSONObject put(String key, boolean value)
@@ -547,12 +551,24 @@ public class JsonObject
     public <T extends IJsonSerializable> T readInto(String key, T obj, T newObj)
             throws ParseException {
         assert obj != null;
-        if (has(key)) {
-            JsonObject node = getChild(key);
-            if (obj == null)
+
+        if (!has(key)) // nothing to change
+            return obj;
+
+        Object _node = _get(key);
+        if (_node == null) // force set to null
+            return null;
+
+        if (_node instanceof JSONObject) {
+            JsonObject node = JsonObject.wrap((JSONObject) _node);
+            if (obj == null) {
+                if (newObj == null) // don't auto-create
+                    return null;
                 obj = newObj;
+            }
             obj.readObject(node);
         }
+
         return obj;
     }
 
@@ -576,7 +592,10 @@ public class JsonObject
         if (!has(key))
             return defaultValue;
         Object val = _get(key);
-        DateTime date = (DateTime) VarConverters.getConverter(DateTime.class).from(val);
+        IVarConverter<Object> conv = VarConverters.getConverter(DateTime.class);
+        if (conv == null)
+            throw new NullPointerException("conv");
+        DateTime date = (DateTime) conv.from(val);
         return date;
     }
 

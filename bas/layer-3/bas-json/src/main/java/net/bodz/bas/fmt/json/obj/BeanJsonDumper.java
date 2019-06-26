@@ -16,6 +16,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.ReflectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.Stop;
 
 public class BeanJsonDumper
         extends AbstractJsonDumper<BeanJsonDumper> {
@@ -35,7 +36,7 @@ public class BeanJsonDumper
         } catch (IntrospectionException e) {
             logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
             out.key("error");
-            formatException(e);
+            formatException(depth + 1, e);
             return;
         }
 
@@ -47,7 +48,13 @@ public class BeanJsonDumper
             if (getter.isAnnotationPresent(Transient.class))
                 continue;
 
-            if (ReflectOptions.stopClasses.contains(getter.getDeclaringClass()))
+            Class<?> declaringClass = getter.getDeclaringClass();
+            if (ReflectOptions.stopClasses.contains(declaringClass))
+                continue;
+
+            // TODO value-property
+            Class<?> propertyType = propertyDescriptor.getPropertyType();
+            if (propertyType.isAnnotationPresent(Stop.class))
                 continue;
 
             String propertyName = propertyDescriptor.getName();
@@ -62,7 +69,7 @@ public class BeanJsonDumper
             } catch (ReflectiveOperationException e) {
                 logger.error(e, "Failed to invoke getter: " + e.getMessage());
                 out.key(propertyName);
-                formatException(e);
+                formatException(depth + 1, e);
                 continue;
             }
 

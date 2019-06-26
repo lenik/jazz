@@ -75,13 +75,11 @@ public class ItemFile
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
-        out.object();
         out.entry("dir", dir);
         out.entry("name", name);
         out.entry("size", size);
         out.entry("sha1", sha1);
         out.entry("label", label);
-        out.endObject();
     }
 
     public static List<ItemFile> convert(JSONArray array)
