@@ -1,6 +1,12 @@
 package net.bodz.bas.site.file;
 
+import java.io.IOException;
+
 import org.apache.commons.fileupload.FileItem;
+
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonObject;
 
 public class UploadedFileInfo
         extends ItemFile {
@@ -54,6 +60,29 @@ public class UploadedFileInfo
 
     public void setDeleteType(String deleteType) {
         this.deleteType = deleteType;
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+
+        path = o.getString("path", path);
+        url = o.getString("url", url);
+        thumbnail = o.getString("thumbnail", thumbnail);
+        deleteUrl = o.getString("deleteUrl", deleteUrl);
+        deleteType = o.getString("deleteType", deleteType);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        super.writeObject(out);
+        out.entry("path", path);
+        out.entry("url", url);
+        out.entry("thumbnail", thumbnail);
+        out.entry("deleteUrl", deleteUrl);
+        out.entry("deleteType", deleteType);
     }
 
 }

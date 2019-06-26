@@ -60,12 +60,10 @@ public class ValueElement
     public void writeObject(IJsonOut out) {
         switch (jsonFormat) {
         case FLOT:
-            out.object();
             {
                 out.entry("label", getLabel());
                 out.entry("data", value);
             }
-            out.endObject();
             return;
 
         default:
