@@ -14,6 +14,7 @@ import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
@@ -242,8 +243,8 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
         JsonVarMap contentMap = new JsonVarMap(content);
         try {
-            obj.readObject(contentMap);
-        } catch (LoaderException e) {
+            obj.readObject(content);
+        } catch (ParseException e) {
             throw new RequestHandlerException("Failed to apply json: " + e.getMessage(), e);
         }
 
