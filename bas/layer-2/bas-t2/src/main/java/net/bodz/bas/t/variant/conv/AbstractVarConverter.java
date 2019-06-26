@@ -209,7 +209,10 @@ public abstract class AbstractVarConverter<T>
     @Override
     public final T from(Object obj)
             throws TypeConvertException {
-        return from(obj.getClass(), obj);
+        if (obj == null)
+            return null;
+        else
+            return from(obj.getClass(), obj);
     }
 
     @Override
