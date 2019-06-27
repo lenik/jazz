@@ -93,4 +93,9 @@ public class ItemFile
         return items;
     }
 
+    @Override
+    public String toString() {
+        return String.format("(%s)/%s: size %,d bytes", dir, name, size);
+    }
+
 }
