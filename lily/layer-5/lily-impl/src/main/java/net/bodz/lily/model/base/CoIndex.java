@@ -297,22 +297,20 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return instance;
     }
 
-    protected void save(IVariantMap<String> q, T obj, AjaxResult result) {
-        _save(obj, result);
-    }
-
-    private void _save(T obj, AjaxResult result) {
-        IMapperTemplate<T, M> mapper = requireMapper();
-        boolean create = obj.getId() == null;
-
-        // TODO as an extension.
+    protected void preSave(IVariantMap<String> q, T obj, AjaxResult result) {
         JsonMap properties = obj.getProperties();
         if (properties instanceof RichProperties) {
             RichProperties props = (RichProperties) properties;
             List<ItemFile> images = props.getImages();
             UploadFn.submitFiles(images, getObjectType().getSimpleName(), lazyId(obj));
         }
+    }
 
+    protected void save(IVariantMap<String> q, T obj, AjaxResult result) {
+        preSave(q, obj, result);
+
+        IMapperTemplate<T, M> mapper = requireMapper();
+        boolean create = obj.getId() == null;
         if (create) {
             mapper.insert(obj);
             result.set("id", obj.getId());
