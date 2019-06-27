@@ -137,7 +137,7 @@ public class ContentRange
             throws IOException {
         ContentRange range = new ContentRange();
 
-        String error = range.parseRange(rangeHeader, 1);
+        String error = range.parseRange(rangeHeader, 0); // zero-base
         if (error != null) {
             resp.setHeader("Content-Range", "*/" + lengthAvailable);
             resp.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, //
