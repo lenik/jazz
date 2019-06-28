@@ -23,7 +23,7 @@ import net.bodz.bas.program.skel.BasicCLI;
  * @label TypeColl
  * @label.zh_cn 类收集器
  */
-@ProgramName("type-coll")
+@ProgramName("tcoll")
 public class TypeCollectorApp
         extends BasicCLI {
 
