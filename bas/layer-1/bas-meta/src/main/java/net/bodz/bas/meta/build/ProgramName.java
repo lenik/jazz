@@ -14,19 +14,39 @@ import net.bodz.bas.meta.codegen.IndexedType;
 @Target(ElementType.TYPE)
 public @interface ProgramName {
 
+    String LIST_FILE = "META-INF/programs";
+
     String value();
+
+    public static class fn {
+
+        public static String getValue(Class<?> type) {
+            return getValue(type, null);
+        }
+
+        public static String getValue(Class<?> type, Boolean toUpperCase) {
+            ProgramName pn = type.getAnnotation(ProgramName.class);
+            if (pn != null)
+                return pn.value();
+            String name = type.getSimpleName();
+            if (toUpperCase != null)
+                name = toUpperCase ? name.toUpperCase() : name.toLowerCase();
+            return name;
+        }
+
+    }
 
     public class ProgramEtcFiles
             implements IEtcFilesInstaller {
 
         @Override
         public void install(Class<?> clazz, IEtcFilesEditor editor) {
-            ProgramName _programName = clazz.getAnnotation(ProgramName.class);
-            String name = _programName.value();
+            ProgramName aProgramName = clazz.getAnnotation(ProgramName.class);
+            String name = aProgramName.value();
             String runner = "main";
             String fqcn = clazz.getCanonicalName();
             String line = String.format("%s = %s %s", name, runner, fqcn);
-            editor.addLine("META-INF/programs", line);
+            editor.addLine(LIST_FILE, line);
         }
 
     }
