@@ -3,7 +3,7 @@ package user;
 import java.util.Map.Entry;
 
 import net.bodz.bas.meta.build.MainVersion;
-import net.bodz.bas.program.meta.ProgramName;
+import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 
 /**

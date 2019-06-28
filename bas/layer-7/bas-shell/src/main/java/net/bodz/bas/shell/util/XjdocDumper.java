@@ -8,7 +8,7 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.MainVersion;
-import net.bodz.bas.program.meta.ProgramName;
+import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;

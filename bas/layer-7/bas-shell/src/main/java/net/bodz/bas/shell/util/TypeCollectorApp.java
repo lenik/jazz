@@ -11,19 +11,19 @@ import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.program.meta.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 
 /**
  * Collect derived types for specific base types.
  * <p lang="zh-cn">
  * 收集指定类的派生类型集。
- * 
+ *
  * @label TypeColl
  * @label.zh_cn 类收集器
  */
-@ProgramName("tcoll")
+@ProgramName("type-coll")
 public class TypeCollectorApp
         extends BasicCLI {
 
@@ -33,7 +33,7 @@ public class TypeCollectorApp
      * Don't collect, just show the extensions.
      * <p lang="zh-cn">
      * 只显示扩展类，不执行收集动作。
-     * 
+     *
      * @option -l
      */
     boolean listOnly;
@@ -42,7 +42,7 @@ public class TypeCollectorApp
      * Base types to be scanned.
      * <p lang="zh-cn">
      * 指定要收集的基类。
-     * 
+     *
      * @option -t
      */
     List<Class<?>> baseTypes = new ArrayList<>();
@@ -51,7 +51,7 @@ public class TypeCollectorApp
      * Packages to be collected.
      * <p lang="zh-cn">
      * 指定要收集的包名列表。
-     * 
+     *
      * @option -p =FQPN
      */
     List<String> packages = new ArrayList<>();
