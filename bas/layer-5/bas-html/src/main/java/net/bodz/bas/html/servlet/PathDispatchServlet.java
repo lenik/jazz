@@ -152,7 +152,7 @@ public class PathDispatchServlet
         contentType = viewBuilder.getContentType(req, target);
         resp.setContentType(contentType.getName());
 
-        String encoding = viewBuilder.getEncoding();
+        String encoding = viewBuilder.getEncoding(target);
         if (encoding != null)
             resp.setCharacterEncoding(encoding);
 

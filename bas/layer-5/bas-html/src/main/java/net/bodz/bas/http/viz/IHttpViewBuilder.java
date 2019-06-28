@@ -22,7 +22,7 @@ public interface IHttpViewBuilder<T>
 
     ContentType getContentType(HttpServletRequest request, T value);
 
-    String getEncoding();
+    String getEncoding(T value);
 
     /**
      * Starts a new frame chain.
