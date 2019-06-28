@@ -38,9 +38,16 @@ public class URLClassLoaders {
     }
 
     public static List<File> getLocalURLs(ClassLoader cl) {
+        return getLocalURLs(cl, 1000);
+    }
+
+    public static List<File> getLocalURLs(ClassLoader cl, int size) {
         List<File> localFileList = new ArrayList<File>();
+        int i = 0;
         while (cl != null) {
             if (cl instanceof URLClassLoader) {
+                if (++i > size)
+                    break;
                 URLClassLoader ucl = (URLClassLoader) cl;
                 for (URL url : ucl.getURLs()) {
                     File localFile = FileURL.toFile(url, null);
@@ -104,7 +111,7 @@ public class URLClassLoaders {
 
     /**
      * try to not add duplicated urls.
-     * 
+     *
      * @return <code>false</code> if specified url is already existed in ucl or its parents.
      */
     public static int addURLs(URLClassLoader urlClassLoader, URL... urls) {
