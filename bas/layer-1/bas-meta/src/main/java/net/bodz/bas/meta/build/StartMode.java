@@ -1,4 +1,4 @@
-package net.bodz.bas.program.meta;
+package net.bodz.bas.meta.build;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

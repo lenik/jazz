@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.fmt.textmap.TextMapFormat;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.program.meta.ProgramName;
+import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BatchEditCLI;
 import net.bodz.bas.program.skel.FileHandler;
 import net.bodz.mda.xjdoc.FlatfDocLoader;
