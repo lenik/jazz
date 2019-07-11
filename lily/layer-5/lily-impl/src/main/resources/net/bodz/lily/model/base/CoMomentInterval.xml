@@ -5,13 +5,13 @@
 <mapper namespace="mi">
 
     <resultMap id="objlist_map" type="net.bodz.lily.model.base.CoMomentInterval" extends="co.MAP_ALL">
-        <result property="beginDate" column="t0" />
-        <result property="endDate" column="t1" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
     </resultMap>
 
     <sql id="setT">
-        <if test="beginDate != null">t0 = #{beginDate}, </if>
-        <if test="endDate != null">t1 = #{endDate}, </if>
+        <if test="beginTime != null">t0 = #{beginTime}, </if>
+        <if test="endTime != null">t1 = #{endTime}, </if>
     </sql>
     
     <sql id="set1">
@@ -20,17 +20,24 @@
     </sql>
     
     <sql id="filterSql">
-        <if test="m.dateRange != null">
-            <if test="m.dateRange.hasStartIncl != null">and t0 >= #{m.dateRange.start}</if>
-            <if test="m.dateRange.hasStartExcl != null">and t0 > #{m.dateRange.start}</if>
-            <if test="m.dateRange.hasEndIncl">and t1 &lt;= #{m.dateRange.end}</if>
-            <if test="m.dateRange.hasEndExcl">and t1 &lt; #{m.dateRange.end}</if>
+        <include refid="mi.filter-all"/>
+    </sql>
+
+    <sql id="filter-all">
+        <if test="m.date != null">
+            <if test="m.date.hasStartIncl">and (t0 >= #{m.date.start} or t0 is null)</if>
+            <if test="m.date.hasStartExcl">and (t0 > #{m.date.start} or t0 is null)</if>
+            <if test="m.date.hasEndIncl">and (t1 &lt;= #{m.date.end} or t1 is null)</if>
+            <if test="m.date.hasEndExcl">and (t1 &lt; #{m.date.end} or t1 is null)</if>
         </if>
-        <if test="m.year != null">and extract(year from t0) = #{m.year}</if>
-        <if test="m.started == true">and t0 is not null</if>
-        <if test="m.started == false">and t0 is null</if>
-        <if test="m.ended == true">and t1 is not null</if>
-        <if test="m.ended == false">and t1 is null</if>
+        <!-- <if test="m.year != null">and (t0 is null or extract(year from t0) = #{m.year})</if>-->
+        <if test="m.year != null">and year = #{m.year}</if>
+        <!-- 
+        <if test="m.started">and t0 is not null</if>
+        <if test="! m.started">and t0 is null</if>
+        <if test="m.ended">and t1 is not null</if>
+        <if test="! m.ended">and t1 is null</if>
+         -->
     </sql>
 
 </mapper>
