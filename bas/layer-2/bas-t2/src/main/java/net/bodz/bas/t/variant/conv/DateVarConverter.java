@@ -1,10 +1,10 @@
 package net.bodz.bas.t.variant.conv;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.xml.bind.DatatypeConverter;
-
+import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.err.TypeConvertException;
 
 public class DateVarConverter
@@ -25,10 +25,11 @@ public class DateVarConverter
     public Date fromString(String in)
             throws TypeConvertException {
         try {
-            Calendar calendar = DatatypeConverter.parseDateTime(in);
-            return calendar.getTime();
+            return Dates.YYYY_MM_DD.parse(in);
         } catch (IllegalArgumentException e) {
             throw new TypeConvertException("Failed to parse date " + in, e);
+        } catch (ParseException e) {
+            throw new TypeConvertException("Parse error: " + e.getMessage(), e);
         }
     }
 
@@ -36,8 +37,8 @@ public class DateVarConverter
     public String toString(Date value) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(value);
-        String iso8601 = DatatypeConverter.printDateTime(calendar);
-        return iso8601;
+        String str = Dates.YYYY_MM_DD.format(calendar);
+        return str;
     }
 
     @Override
