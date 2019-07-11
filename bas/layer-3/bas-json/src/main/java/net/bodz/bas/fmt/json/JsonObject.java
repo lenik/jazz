@@ -550,8 +550,6 @@ public class JsonObject
 
     public <T extends IJsonSerializable> T readInto(String key, T obj, T newObj)
             throws ParseException {
-        assert obj != null;
-
         if (!has(key)) // nothing to change
             return obj;
 
