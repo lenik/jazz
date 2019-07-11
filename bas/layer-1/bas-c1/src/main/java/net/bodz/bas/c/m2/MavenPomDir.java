@@ -3,6 +3,7 @@ package net.bodz.bas.c.m2;
 import java.io.File;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.err.UnexpectedException;
@@ -38,7 +39,7 @@ public class MavenPomDir {
 
     /**
      * Find the maven project directory from the specific class.
-     * 
+     *
      * @param clazz
      *            The specific class.
      * @return <code>null</code> if the class bytes resource couldn't be found for the specific
@@ -68,6 +69,19 @@ public class MavenPomDir {
         File dir = new File(dirname);
 
         return new MavenPomDir(dir);
+    }
+
+    public static MavenPomDir closest(String child) {
+        return closest(new File(child));
+    }
+
+    public static MavenPomDir closest(File child) {
+        while (child != null) {
+            if (new File(child, "pom.xml").exists())
+                return new MavenPomDir(child);
+            child = child.getParentFile();
+        }
+        return null;
     }
 
     public File getSourceFile(Class<?> clazz) {
@@ -109,7 +123,7 @@ public class MavenPomDir {
 
     /**
      * Find the source dir within the maven project directory from the specific class.
-     * 
+     *
      * @param clazz
      *            The specific class.
      * @return <code>null</code> if the class bytes resource couldn't be found for the specific
@@ -161,6 +175,31 @@ public class MavenPomDir {
             return path.substring(0, pos) + "/src/test/resources/";
 
         return null;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((baseDir == null) ? 0 : baseDir.hashCode());
+        result = prime * result + ((pomFile == null) ? 0 : pomFile.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MavenPomDir other = (MavenPomDir) obj;
+        if (!Nullables.equals(baseDir, other.baseDir))
+            return false;
+        if (!Nullables.equals(pomFile, other.pomFile))
+            return false;
+        return true;
     }
 
 }
