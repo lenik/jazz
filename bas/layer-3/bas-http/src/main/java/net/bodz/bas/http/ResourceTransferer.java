@@ -51,6 +51,7 @@ public class ResourceTransferer {
         // resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
         // return;
         // }
+        resp.setHeader("Local-Resource", url.toString());
 
         ContentType contentType = ContentType.forPath(url.getPath());
         if (contentType != null)
