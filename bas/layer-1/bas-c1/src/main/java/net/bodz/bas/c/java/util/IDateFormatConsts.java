@@ -31,6 +31,8 @@ public interface IDateFormatConsts {
     DateFormat RFC822 = RFC822_w4s;
     DateFormat[] RFC822_ALL = { RFC822_w2, RFC822_w2s, RFC822_w4, RFC822_w4s, RFC822_2, RFC822_2s, RFC822_4, RFC822_4s, };
 
+    DateFormat ISO8601 = Dates.format("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+
     /** <code>1980-12-31</code> */
     DateFormat YYYY_MM_DD = Dates.format("yyyy-MM-dd");
     /** <code>1980-12</code> */
@@ -61,5 +63,7 @@ public interface IDateFormatConsts {
     DateFormat D8T6 = Dates.format("yyyyMMdd-hhmmss");
     /** <code>801231-173059</code> */
     DateFormat D6T6 = Dates.format("yyMMdd-hhmmss");
+
+    DateFormat JAVASCRIPT = Dates.format("EE MMM d y H:m:s 'GMT'Z (zz)");
 
 }

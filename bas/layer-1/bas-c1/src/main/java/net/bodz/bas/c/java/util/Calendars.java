@@ -1,5 +1,6 @@
 package net.bodz.bas.c.java.util;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.SimpleTimeZone;
@@ -7,8 +8,13 @@ import java.util.TimeZone;
 
 public class Calendars {
 
-    public static Calendar parseIso8601(String s) {
-        return javax.xml.bind.DatatypeConverter.parseDateTime(s);
+    public static Calendar parseIso8601(String s)
+            throws ParseException {
+        Date date = Dates.ISO8601.parse(s);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date.getTime());
+        // XXX TimeZone
+        return calendar;
     }
 
     public static String formatIso8601(Date date) {
@@ -22,7 +28,7 @@ public class Calendars {
     }
 
     public static String formatIso8601(Calendar calendar) {
-        return javax.xml.bind.DatatypeConverter.printDateTime(calendar);
+        return Dates.ISO8601.format(calendar);
     }
 
     public static Calendar parseTimestampTZ(String s) {

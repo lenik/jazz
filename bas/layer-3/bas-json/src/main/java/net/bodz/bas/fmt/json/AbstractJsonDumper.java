@@ -10,12 +10,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.bind.DatatypeConverter;
-
 import org.joda.time.base.AbstractDateTime;
 import org.joda.time.format.ISODateTimeFormat;
 import org.json.JSONException;
 
+import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.i18n.dom.iString;
@@ -235,7 +234,7 @@ public abstract class AbstractJsonDumper<self_t>
             Date date = (Date) obj;
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            String dateStr = DatatypeConverter.printDateTime(cal);
+            String dateStr = Dates.ISO8601.format(cal);
             out.value(dateStr);
             return;
 
