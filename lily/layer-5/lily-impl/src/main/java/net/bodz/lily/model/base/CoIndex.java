@@ -1,5 +1,6 @@
 package net.bodz.lily.model.base;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.site.ajax.HttpPayload;
+import net.bodz.bas.site.file.IFileNameListener;
 import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.site.file.UploadFn;
 import net.bodz.bas.site.json.JsonMap;
@@ -297,13 +299,23 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return instance;
     }
 
-    protected void preSave(IVariantMap<String> q, T obj, AjaxResult result) {
+    protected void preSave(IVariantMap<String> q, final T obj, AjaxResult result) {
         JsonMap properties = obj.getProperties();
         if (properties instanceof RichProperties) {
             RichProperties props = (RichProperties) properties;
             List<ItemFile> images = props.getImages();
-            UploadFn.submitFiles(images, getObjectType().getSimpleName(), lazyId(obj));
+            UploadFn.submitFiles(obj, images, getObjectType().getSimpleName(), new InsertOnRequire(), //
+                    new IFileNameListener() {
+                        @Override
+                        public void onFileNameChange(File oldName, File newName) {
+                            String relativePath = FilePath.getRelativePath(newName, oldName);
+                            renameUrlAsFileChange(obj, relativePath, oldName, newName);
+                        }
+                    });
         }
+    }
+
+    protected void renameUrlAsFileChange(T obj, String relativePath, File oldName, File newName) {
     }
 
     protected void save(IVariantMap<String> q, T obj, AjaxResult result) {
@@ -323,21 +335,13 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         result.succeed();
     }
 
-    protected ILazyId lazyId(T obj) {
-        return new LazyId(obj);
-    }
-
-    class LazyId
+    class InsertOnRequire
             implements ILazyId {
 
-        T obj;
-
-        public LazyId(T obj) {
-            this.obj = obj;
-        }
-
         @Override
-        public Object require() {
+        public Object require(Object context) {
+            @SuppressWarnings("unchecked")
+            T obj = (T) context;
             Object id = obj.getId();
             if (id == null) {
                 IMapperTemplate<T, M> mapper = requireMapper();
