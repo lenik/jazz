@@ -19,7 +19,8 @@ public class UploadFn {
 
     static final Logger logger = LoggerFactory.getLogger(UploadFn.class);
 
-    public static void submitFiles(List<ItemFile> items, String schema, ILazyId idFn) {
+    public static void submitFiles(Object context, List<ItemFile> items, String schema, ILazyId idFn,
+            IFileNameListener listener) {
         if (items == null || items.isEmpty())
             return;
 
@@ -29,11 +30,11 @@ public class UploadFn {
         Iterator<ItemFile> iter = items.iterator();
         while (iter.hasNext()) {
             ItemFile item = iter.next();
-            String name = item.getName();
-            Object id = idFn.require();
+            String newName = item.getName(); // TODO use sha1?
+            Object id = idFn.require(context);
             item.setDir(schema + "/" + id);
 
-            File dst = new File(lifeDir, id + "/" + name);
+            File dst = new File(lifeDir, id + "/" + newName);
             if (dst.exists()) // already submitted.
                 continue;
 
@@ -56,6 +57,8 @@ public class UploadFn {
                 logger.error("Failed to move", e);
                 iter.remove();
             }
+
+            listener.onFileNameChange(tmp, dst);
         }
     }
 

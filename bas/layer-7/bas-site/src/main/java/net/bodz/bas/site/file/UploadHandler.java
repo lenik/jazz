@@ -17,7 +17,6 @@ import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.site.IBasicSiteAnchors;
-import net.bodz.bas.t.pojo.Pair;
 
 /**
  *
@@ -75,12 +74,12 @@ public class UploadHandler
                 String itemPath = getItemPath(item.getName());
                 File localFile = new File(localDir, itemPath);
                 item.write(localFile);
-                Pair<File, String> pair = renameToSha1(localFile);
+                RenameResult renameResult = renameToSha1(localFile);
 
                 UploadedFileInfo fileInfo = new UploadedFileInfo(item);
-                fileInfo.setSha1(pair.getSecond());
+                fileInfo.setSha1(renameResult.sha1);
 
-                fileInfo.url = anchor.join(pair.getFirst().getName()).absoluteHref();
+                fileInfo.url = anchor.join(renameResult.newFile.getName()).absoluteHref();
                 fileInfo.deleteUrl = fileInfo.url;
 
                 // TODO image auto-scale...?
@@ -102,7 +101,7 @@ public class UploadHandler
 
     static final HexCodec hexCodec = new HexCodec("");
 
-    Pair<File, String> renameToSha1(File file)
+    RenameResult renameToSha1(File file)
             throws IOException {
         byte[] sha1 = new FileResource(file).to(StreamReading.class).sha1();
         String sha1str = hexCodec.encode(sha1);
@@ -115,7 +114,7 @@ public class UploadHandler
             throw new IOException(String.format("Can't rename file %s to %s.", //
                     file, newName));
 
-        return Pair.of(newName, sha1str);
+        return new RenameResult(file, newName, sha1str);
     }
 
 }
