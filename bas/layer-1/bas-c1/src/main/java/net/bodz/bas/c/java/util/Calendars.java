@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class Calendars {
 
     public static Calendar parseIso8601(String s)
@@ -61,6 +63,25 @@ public class Calendars {
         calendar.setTimeInMillis(millis);
 
         return calendar;
+    }
+
+    public static Calendar parseXmlCalendar(String s) {
+        return DatatypeConverter.parseDateTime(s);
+    }
+
+    public static String formatXmlCalendar(Calendar calendar) {
+        return DatatypeConverter.printDateTime(calendar);
+    }
+
+    public static Date parseXmlDate(String s) {
+        Calendar calendar = parseXmlCalendar(s);
+        return calendar.getTime();
+    }
+
+    public static String formatXmlDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return formatXmlCalendar(calendar);
     }
 
 }
