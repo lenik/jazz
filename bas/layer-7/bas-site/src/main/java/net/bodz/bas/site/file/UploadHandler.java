@@ -61,6 +61,7 @@ public class UploadHandler
             throw new IllegalArgumentException("Request is not multipart.");
 
         ServletFileUpload uploader = new ServletFileUpload(new DiskFileItemFactory());
+        uploader.setHeaderEncoding("utf-8");
 
         UploadResult result = new UploadResult();
         try {
