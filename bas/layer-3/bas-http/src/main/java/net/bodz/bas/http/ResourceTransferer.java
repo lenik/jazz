@@ -164,7 +164,13 @@ public class ResourceTransferer {
                 if (cb == 0)
                     break;
 
-                out.write(block, 0, cb);
+                try {
+                    out.write(block, 0, cb);
+                } catch (IOException e) {
+                    // connection reset is highly possible.
+                    logger.errorf("Failed to transfer %s: %s: %s", url, e.getClass(), e.getMessage());
+                    break;
+                }
 
                 if (remaining != -1)
                     remaining -= cb;
@@ -175,9 +181,16 @@ public class ResourceTransferer {
             if (range != null)
                 logger.debug("    expected size " + (range.end - range.start));
             if (in != null)
-                in.close();
+                try {
+                    in.close();
+                } catch (Exception e) {
+                }
             if (out != null)
-                out.close();
+                try {
+                    out.flush();
+                } catch (IOException e) {
+                    logger.errorf("Failed to flush out, when transfer %s: %s: %s", url, e.getClass(), e.getMessage());
+                }
         }
     }
 
