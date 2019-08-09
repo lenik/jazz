@@ -220,7 +220,8 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     protected JsonWrapper loadHandler(String _id, IVariantMap<String> q) {
         Long id = Long.parseLong(_id);
         IMapperTemplate<T, M> mapper = requireMapper();
-        Object obj = mapper.select(id);
+        T obj = mapper.select(id);
+        obj = postLoad(obj);
         JsonWrapper wrapper = JsonWrapper.wrap(obj, "data").params(q).withNull().withFalse();
         return wrapper;
     }
@@ -299,6 +300,10 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return instance;
     }
 
+    protected T postLoad(T obj) {
+        return obj;
+    }
+
     protected void preSave(IVariantMap<String> q, final T obj, AjaxResult result) {
         JsonMap properties = obj.getProperties();
         if (properties instanceof RichProperties) {
@@ -309,13 +314,13 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                         @Override
                         public void onFileNameChange(File oldName, File newName) {
                             String relativePath = FilePath.getRelativePath(newName, oldName);
-                            renameUrlAsFileChange(obj, relativePath, oldName, newName);
+                            renameUrlAsFileChange(obj, oldName, newName, relativePath);
                         }
                     });
         }
     }
 
-    protected void renameUrlAsFileChange(T obj, String relativePath, File oldName, File newName) {
+    protected void renameUrlAsFileChange(T obj, File oldName, File newName, String relativePath) {
     }
 
     protected void save(IVariantMap<String> q, T obj, AjaxResult result) {
@@ -335,8 +340,11 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         result.succeed();
     }
 
-    class InsertOnRequire
+    protected class InsertOnRequire
             implements ILazyId {
+
+        public InsertOnRequire() {
+        }
 
         @Override
         public Object require(Object context) {
