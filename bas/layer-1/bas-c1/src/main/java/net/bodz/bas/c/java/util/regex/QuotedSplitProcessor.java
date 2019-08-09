@@ -25,17 +25,18 @@ public class QuotedSplitProcessor
     }
 
     @Override
-    protected void matched(String part) {
+    protected String matched(String part) {
         if (dequote)
             part = processQuotedText(part);
         partBuffer.append(part);
+        return part;
     }
 
     @Override
-    protected void unmatched(String text) {
+    protected String unmatched(String text) {
         String[] v = delimitorPattern.split(text, remainingPartCount);
         if (v.length == 0) // Expected??
-            return;
+            return "";
         for (int i = 0; i < v.length - 1; i++) {
             partBuffer.append(v[i]);
             parts.add(partBuffer.toString());
@@ -43,6 +44,7 @@ public class QuotedSplitProcessor
         }
         remainingPartCount -= v.length - 1;
         partBuffer.append(v[v.length - 1]);
+        return "";
     }
 
     public synchronized List<String> splitList(String s) {

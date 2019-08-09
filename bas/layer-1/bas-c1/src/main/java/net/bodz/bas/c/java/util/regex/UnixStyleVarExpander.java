@@ -7,7 +7,7 @@ import net.bodz.bas.c.java.util.MapGetTransformer;
 import net.bodz.bas.fn.ITransformer;
 
 public class UnixStyleVarExpander
-        extends PatternProcessor {
+        extends TextPrepByParts.Matches {
 
     private static Pattern variableRefPattern;
     static {
@@ -45,25 +45,25 @@ public class UnixStyleVarExpander
     }
 
     @Override
-    protected void matched(int start, int end) {
+    protected String matched(String part) {
         String name = matcher.group(1);
         if (name == null) {
             name = unescapeBracedName(matcher.group(2));
         }
         assert name != null;
         String expanded = expand(name);
-        if (expanded == null)
-            undefined(name, start, end);
+        if (expanded != null)
+            return defined(name, expanded);
         else
-            defined(name, expanded);
+            return undefined(name, part);
     }
 
-    protected void defined(String name, String expanded) {
-        append(expanded);
+    protected String defined(String name, String expanded) {
+        return expanded;
     }
 
-    protected void undefined(String name, int start, int end) {
-        super.unmatched(start, end);
+    protected String undefined(String name, String content) {
+        return content;
     }
 
 }

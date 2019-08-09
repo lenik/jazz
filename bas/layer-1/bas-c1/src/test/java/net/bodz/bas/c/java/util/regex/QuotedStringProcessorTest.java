@@ -11,14 +11,14 @@ public class QuotedStringProcessorTest
         final QuoteFormat qf = QuoteFormat.Q;
         final QuotedStringProcessor q = new QuotedStringProcessor(qf) {
             @Override
-            protected void matched(String text) {
+            protected String matched(String text) {
                 text = processQuotedText(text);
-                append("<" + text + ">");
+                return ("<" + text + ">");
             }
 
             @Override
-            protected void unmatched(String text) {
-                append("[" + text + "]");
+            protected String unmatched(String text) {
+                return ("[" + text + "]");
             }
         };
         class D {

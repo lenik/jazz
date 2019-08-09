@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.c.java.util.regex.PatternProcessor;
+import net.bodz.bas.c.java.util.regex.IPartProcessor;
+import net.bodz.bas.c.java.util.regex.TextPrepByParts;
 
 public class ArraysCG {
 
@@ -112,14 +114,9 @@ public class ArraysCG {
                 s = s.replace("ZERO", type.ZERO);
 
                 if ("alg".equals(mode)) {
-                    class FNPROC
-                            extends PatternProcessor {
-                        public FNPROC() {
-                            super(FNCALL);
-                        }
-
+                    TextPrepByParts prep = TextPrepByParts.match(FNCALL, new IPartProcessor() {
                         @Override
-                        protected void matched(String part) {
+                        public String process(String part, Matcher matcher) {
                             String fn = matcher.group(1);
                             String args = matcher.group(2);
                             String argv[] = args.split(", ");
@@ -143,10 +140,10 @@ public class ArraysCG {
                                 part = type.GREATER_THAN(argv[0], argv[1]);
                                 break;
                             }
-                            append(part);
+                            return part;
                         }
-                    }
-                    s = new FNPROC().process(s);
+                    });
+                    s = prep.process(s);
                 }
 
                 System.out.println("    " + s);
