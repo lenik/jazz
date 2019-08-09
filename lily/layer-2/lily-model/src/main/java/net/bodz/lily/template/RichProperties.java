@@ -16,6 +16,7 @@ public class RichProperties
     private static final long serialVersionUID = 1L;
 
     static final String K_IMAGES = "images";
+    static final String K_VIDEOS = "videos";
 
     /**
      * 图片
@@ -31,12 +32,29 @@ public class RichProperties
         setAttribute(K_IMAGES, images);
     }
 
+    /**
+     * 视频
+     *
+     * 对应的视频，通常最多只有一个视频。
+     */
+    @OfGroup(StdGroup.Visual.class)
+    public final List<ItemFile> getVideos() {
+        return getAttribute(K_VIDEOS);
+    }
+
+    public final void setVideos(List<ItemFile> videos) {
+        setAttribute(K_VIDEOS, videos);
+    }
+
     @Override
     protected boolean readFromJson(String key, Object val)
             throws ParseException {
         switch (key) {
         case K_IMAGES:
             setImages(ItemFile.convert((JSONArray) val));
+            return true;
+        case K_VIDEOS:
+            setVideos(ItemFile.convert((JSONArray) val));
             return true;
         }
         return super.readFromJson(key, val);
