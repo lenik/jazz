@@ -3,6 +3,7 @@ package net.bodz.bas.site.file;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Iterator;
 import java.util.List;
@@ -49,9 +50,22 @@ public class UploadFn {
             if (!dstDir.exists())
                 dstDir.mkdirs();
 
+            boolean usePath = false;
             try {
-                Files.move(tmp.toPath(), dst.toPath(), //
-                        StandardCopyOption.REPLACE_EXISTING);
+                // XXX failed on chinese filenames.
+                // See: https://stackoverflow.com/questions/37409379/
+                // # The encoding can be 'ANSI_X3.4-1968' when not specified.
+                // : ${JAVAOPTS:=-ea -Dsun.jnu.encoding=utf-8 -Dfile.encoding=utf-8}
+                if (usePath) {
+                    Path tmpPath = tmp.toPath();
+                    Path dstPath = dst.toPath();
+                    Files.move(tmpPath, dstPath, StandardCopyOption.REPLACE_EXISTING);
+                } else {
+                    if (dst.exists() && !dst.delete())
+                        logger.error("Failed to delete pre-existing file: " + dst);
+                    if (!tmp.renameTo(dst))
+                        logger.errorf("Failed to rename %s to %s: ", tmp, dst);
+                }
             } catch (IOException e) {
                 // 缺失的图片会使用户自己主动去重新上传。
                 logger.error("Failed to move", e);
