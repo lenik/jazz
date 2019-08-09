@@ -2,6 +2,8 @@ package net.bodz.lily.pub;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.site.json.JsonMap;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.mx.CoMessage;
@@ -33,6 +35,14 @@ public class Article
 
     public JsonMap getPlugins() {
         return plugins;
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+
+        category = o.readInto("category", category, new ArticleCategory());
     }
 
 }
