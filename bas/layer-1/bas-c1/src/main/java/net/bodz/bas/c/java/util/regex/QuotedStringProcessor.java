@@ -1,7 +1,7 @@
 package net.bodz.bas.c.java.util.regex;
 
 public class QuotedStringProcessor
-        extends PatternProcessor {
+        extends TextPrepByParts {
 
     protected final QuoteFormat quoteFormat;
 
@@ -19,15 +19,15 @@ public class QuotedStringProcessor
     }
 
     @Override
-    protected void matched(String part) {
+    protected String matched(String part) {
         String dequoted = processQuotedText(part);
-        append(dequoted);
+        return dequoted;
     }
 
     @Override
-    protected void unmatched(String part) {
+    protected String unmatched(String part) {
         String s = processNormalText(part);
-        append(s);
+        return s;
     }
 
     protected String processNormalText(String s) {

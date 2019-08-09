@@ -1,25 +1,27 @@
 package net.bodz.bas.c.java.util.regex;
 
+import java.util.regex.Pattern;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-public class PatternProcessorTest
+public class TextPrepByPartsTest
         extends Assert {
 
     @Test
     public void testAdd() {
-
-        PatternProcessor pp = new PatternProcessor("\\d+") {
+        Pattern pattern = Pattern.compile("\\d+");
+        TextPrepByParts pp = new TextPrepByParts(pattern) {
 
             @Override
-            protected void matched(String part) {
+            protected String matched(String part) {
                 int num = Integer.parseInt(part);
-                append(num + 1);
+                return String.valueOf(num + 1);
             }
 
             @Override
-            protected void unmatched(String part) {
-                super.unmatched(part);
+            protected String unmatched(String part) {
+                return part;
             }
 
         };

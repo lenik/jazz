@@ -2,43 +2,41 @@ package net.bodz.bas.c.string;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import net.bodz.bas.c.java.util.regex.PatternProcessor;
+import net.bodz.bas.c.java.util.regex.IPartProcessor;
+import net.bodz.bas.c.java.util.regex.TextPrepByParts;
 import net.bodz.bas.io.IPrintOut;
 
 public class StringUtil {
 
-    private static PatternProcessor UNESCAPE;
+    private static TextPrepByParts UNESCAPE;
     static {
-        UNESCAPE = new PatternProcessor("\\\\(.)") {
+        Pattern pattern = Pattern.compile("\\\\(.)");
+        UNESCAPE = TextPrepByParts.match(pattern, new IPartProcessor() {
             @Override
-            protected void matched(String part) {
+            public String process(String part, Matcher matcher) {
                 switch (part.charAt(1)) {
                 case 'a':
-                    part = "&";
-                    break;
+                    return "&";
                 case 'l':
-                    part = "<";
-                    break;
+                    return "<";
                 case 'n':
-                    part = "\n";
-                    break;
+                    return "\n";
                 case 'g':
-                    part = ">";
-                    break;
+                    return ">";
                 case 'p':
-                    part = "'";
-                    break;
+                    return "'";
                 case 'q':
-                    part = "\"";
-                    break;
+                    return "\"";
                 case 't':
-                    part = "\t";
-                    break;
+                    return "\t";
+                default:
+                    return part;
                 }
-                super.matched(part);
             }
-        };
+        });
     }
 
     public static String unescape(boolean escaped, String s) {
