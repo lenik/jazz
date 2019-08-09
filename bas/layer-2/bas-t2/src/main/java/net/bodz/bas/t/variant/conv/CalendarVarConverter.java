@@ -1,9 +1,8 @@
 package net.bodz.bas.t.variant.conv;
 
-import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
 
+import net.bodz.bas.c.java.util.Calendars;
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.err.TypeConvertException;
 
@@ -27,14 +26,9 @@ public class CalendarVarConverter
     public Calendar fromString(String in)
             throws TypeConvertException {
         try {
-            Date date = Dates.ISO8601.parse(in);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(date.getTime());
-            return calendar;
+            return Calendars.parseXmlCalendar(in);
         } catch (IllegalArgumentException e) {
             throw new TypeConvertException("Failed to parse date " + in, e);
-        } catch (ParseException e) {
-            throw new TypeConvertException("Parse error: " + e.getMessage(), e);
         }
     }
 
