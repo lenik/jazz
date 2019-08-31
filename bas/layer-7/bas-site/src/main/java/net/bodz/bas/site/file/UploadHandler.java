@@ -78,6 +78,7 @@ public class UploadHandler
                 RenameResult renameResult = renameToSha1(localFile);
 
                 UploadedFileInfo fileInfo = new UploadedFileInfo(item);
+                fileInfo.setFile(localFile);
                 fileInfo.setSha1(renameResult.sha1);
 
                 fileInfo.url = anchor.join(renameResult.newFile.getName()).absoluteHref();

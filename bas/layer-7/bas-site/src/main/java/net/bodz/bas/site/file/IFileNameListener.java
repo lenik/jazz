@@ -10,4 +10,10 @@ public interface IFileNameListener {
 
     void onFileNameChange(File oldName, File newName);
 
+    IFileNameListener NOP = new IFileNameListener() {
+        @Override
+        public void onFileNameChange(File oldName, File newName) {
+        }
+    };
+
 }

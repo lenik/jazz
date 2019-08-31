@@ -34,7 +34,8 @@ public class Processes {
             String shell = System.getenv("SHELL");
             if (shell == null)
                 shell = "sh";
-            shvec = new String[] { shell, "-c" };
+            // shvec = new String[] { shell, "-c" };
+            shvec = new String[] { shell };
         }
         shprefix = StringArray.join(" ", shvec) + " ";
     }

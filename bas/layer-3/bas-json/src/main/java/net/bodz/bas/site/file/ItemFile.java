@@ -1,5 +1,6 @@
 package net.bodz.bas.site.file;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,34 @@ import net.bodz.bas.fmt.json.JsonObject;
 public class ItemFile
         implements IJsonSerializable {
 
+    private File file;
+
     private String dir;
     private String name;
     private long size;
     private String sha1;
     private String label;
+
+    public ItemFile() {
+    }
+
+    public ItemFile(ItemFile o) {
+        this.file = o.file;
+        this.dir = o.dir;
+        this.name = o.name;
+        this.size = o.size;
+        this.sha1 = o.sha1;
+        this.label = o.label;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+        this.name = file.getName();
+    }
 
     public String getDir() {
         return dir;

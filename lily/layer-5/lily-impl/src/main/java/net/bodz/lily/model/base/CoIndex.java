@@ -1,6 +1,7 @@
 package net.bodz.lily.model.base;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +37,8 @@ import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.site.ajax.HttpPayload;
 import net.bodz.bas.site.file.IFileNameListener;
+import net.bodz.bas.site.file.IncomingSaver;
 import net.bodz.bas.site.file.ItemFile;
-import net.bodz.bas.site.file.UploadFn;
 import net.bodz.bas.site.json.JsonMap;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.site.json.JsonWrapper;
@@ -304,19 +305,23 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return obj;
     }
 
-    protected void preSave(IVariantMap<String> q, final T obj, AjaxResult result) {
+    protected void preSave(IVariantMap<String> q, final T obj, AjaxResult result)
+            throws IOException {
         JsonMap properties = obj.getProperties();
         if (properties instanceof RichProperties) {
             RichProperties props = (RichProperties) properties;
             List<ItemFile> images = props.getImages();
-            UploadFn.submitFiles(obj, images, getObjectType().getSimpleName(), new InsertOnRequire(), //
-                    new IFileNameListener() {
-                        @Override
-                        public void onFileNameChange(File oldName, File newName) {
-                            String relativePath = FilePath.getRelativePath(newName, oldName);
-                            renameUrlAsFileChange(obj, oldName, newName, relativePath);
-                        }
-                    });
+
+            String schema = getObjectType().getSimpleName();
+            IncomingSaver handler = new IncomingSaver(schema, obj, new InsertOnRequire());
+            handler.fileName(new IFileNameListener() {
+                @Override
+                public void onFileNameChange(File oldName, File newName) {
+                    String relativePath = FilePath.getRelativePath(newName, oldName);
+                    renameUrlAsFileChange(obj, oldName, newName, relativePath);
+                }
+            });
+            handler.accept(images);
         }
     }
 
@@ -324,7 +329,12 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     }
 
     protected void save(IVariantMap<String> q, T obj, AjaxResult result) {
-        preSave(q, obj, result);
+        try {
+            preSave(q, obj, result);
+        } catch (IOException e) {
+            result.fail(e, "pre-save failed: " + e.getMessage());
+            return;
+        }
 
         IMapperTemplate<T, M> mapper = requireMapper();
         boolean create = obj.getId() == null;
