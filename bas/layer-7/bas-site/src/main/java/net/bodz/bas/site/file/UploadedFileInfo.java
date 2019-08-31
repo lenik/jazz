@@ -19,6 +19,7 @@ public class UploadedFileInfo
 
     public UploadedFileInfo(FileItem item) {
         setName(item.getName());
+        setLabel(item.getName());
         setSize(item.getSize());
     }
 

@@ -1,6 +1,7 @@
 package net.bodz.lily.model.mx;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +46,8 @@ public abstract class CoMessageIndex<T extends CoMessage<?>, M extends CoMessage
     }
 
     @Override
-    protected void preSave(IVariantMap<String> q, T obj, AjaxResult result) {
+    protected void preSave(IVariantMap<String> q, T obj, AjaxResult result)
+            throws IOException {
         String html = obj.getText();
         String mod = stripAbsoluteUrls(html);
         obj.setText(mod);

@@ -1,5 +1,6 @@
 package net.bodz.lily.template;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -18,6 +19,13 @@ public class RichProperties
     static final String K_IMAGES = "images";
     static final String K_VIDEOS = "videos";
 
+    public final synchronized <T> List<T> getListAttribute(String name) {
+        List<T> list = getAttribute(name);
+        if (list == null)
+            setAttribute(name, list = new ArrayList<>());
+        return list;
+    }
+
     /**
      * 图片
      *
@@ -25,7 +33,7 @@ public class RichProperties
      */
     @OfGroup(StdGroup.Visual.class)
     public final List<ItemFile> getImages() {
-        return getAttribute(K_IMAGES);
+        return getListAttribute(K_IMAGES);
     }
 
     public final void setImages(List<ItemFile> images) {
@@ -39,7 +47,7 @@ public class RichProperties
      */
     @OfGroup(StdGroup.Visual.class)
     public final List<ItemFile> getVideos() {
-        return getAttribute(K_VIDEOS);
+        return getListAttribute(K_VIDEOS);
     }
 
     public final void setVideos(List<ItemFile> videos) {
