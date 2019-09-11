@@ -16,7 +16,7 @@ public class MutableArtifactManager
     protected Map<String, Map<IVersion, IArtifact>> nameMap;
 
     public MutableArtifactManager() {
-        nameMap = new HashMap<>();
+        nameMap = new HashMap<String, Map<IVersion, IArtifact>>();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MutableArtifactManager
         if (versionMap == null)
             synchronized (nameMap) {
                 if ((versionMap = nameMap.get(name)) == null) {
-                    versionMap = new HashMap<>();
+                    versionMap = new HashMap<IVersion, IArtifact>();
                     nameMap.put(name, versionMap);
                 }
             }

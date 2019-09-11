@@ -8,7 +8,7 @@ import net.bodz.bas.c.object.NonNullPoolIdComparator;
 
 /**
  * Quick-Merged-Iteration Tagged Set.
- * 
+ *
  * <ol>
  * <li>The order is defined by the pool.
  * </ol>
@@ -23,8 +23,8 @@ public class QmiTaggedSet<K>
     private Map<String, TreeSet<K>> tagKeysMap;
 
     public QmiTaggedSet() {
-        keyTagsMap = new IdentityHashMap<>();
-        tagKeysMap = new HashMap<>();
+        keyTagsMap = new IdentityHashMap<K, Set<String>>();
+        tagKeysMap = new HashMap<String, TreeSet<K>>();
     }
 
     @Override
@@ -127,7 +127,7 @@ public class QmiTaggedSet<K>
 
     public Collection<K> notTagged() {
         // TODO optim... workaround..
-        List<K> list = new ArrayList<>();
+        List<K> list = new ArrayList<K>();
         for (Entry<K, Set<String>> entry : keyTagsMap.entrySet()) {
             Set<String> tags = entry.getValue();
             if (tags.isEmpty())

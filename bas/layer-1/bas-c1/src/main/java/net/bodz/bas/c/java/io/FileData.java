@@ -15,13 +15,16 @@ public class FileData {
         ByteArrayOutputStream buf = new ByteArrayOutputStream(alloc);
 
         byte[] block = new byte[4096];
-        try (InputStream in = new FileInputStream(file)) {
+        InputStream in = new FileInputStream(file);
+        try {
             while (true) {
                 int cb = in.read(block);
                 if (cb == -1)
                     break;
                 buf.write(block, 0, cb);
             }
+        } finally {
+            in.close();
         }
 
         return buf.toByteArray();
@@ -56,8 +59,11 @@ public class FileData {
             throw new NullPointerException("file");
         if (data == null)
             throw new NullPointerException("data");
-        try (OutputStream out = new FileOutputStream(file)) {
+        OutputStream out = new FileOutputStream(file);
+        try {
             out.write(data, off, len);
+        } finally {
+            out.close();
         }
     }
 
@@ -83,7 +89,7 @@ public class FileData {
     /**
      * Trim the file to the length, or extend the file, the extension part may be filled with
      * unknown bytes. If the file isn't existed, a new file may be created.
-     * 
+     *
      * @param newLength
      *            New length to be set. The length should be >= <code>0</code>.
      * @return <code>false</code> If the given file object does not denote an existing, writable
@@ -97,12 +103,14 @@ public class FileData {
         RandomAccessFile raf = null;
         try {
             raf = new RandomAccessFile(file, "rw");
-
             raf.setLength(newLength);
         } catch (FileNotFoundException e) {
             return false;
         } finally {
-            raf.close();
+            try {
+                raf.close();
+            } catch (IOException e) {
+            }
         }
         return true;
     }
@@ -110,9 +118,17 @@ public class FileData {
     public static boolean touch(File file, boolean updateLastModifiedTime)
             throws IOException {
         if (!file.exists()) {
-            try (FileOutputStream out = new FileOutputStream(file)) {
+            FileOutputStream out = null;
+            try {
+                out = new FileOutputStream(file);
             } catch (FileNotFoundException e) {
                 return false;
+            } finally {
+                if (out != null)
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                    }
             }
         } else {
             if (updateLastModifiedTime)
@@ -120,5 +136,4 @@ public class FileData {
         }
         return true;
     }
-
 }

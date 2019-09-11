@@ -2,7 +2,7 @@ package net.bodz.bas.t.buffer;
 
 public interface IMovableBuffer {
 
-    int SIZE_MAX = 0x7fff_fff0;
+    int SIZE_MAX = 0x7ffffff0;
 
     int size();
 

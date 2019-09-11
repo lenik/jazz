@@ -9,7 +9,7 @@ import net.bodz.bas.html.io.HtmlDoc;
 public class HtmlForModTable
         extends AbstractRecHtmlOut<HtmlForModTable> {
 
-    List<ModTable> tables = new ArrayList<>();
+    List<ModTable> tables = new ArrayList<ModTable>();
 
     public HtmlForModTable(HtmlDoc doc) {
         super(doc);

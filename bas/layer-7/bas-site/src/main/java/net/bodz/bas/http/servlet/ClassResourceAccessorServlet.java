@@ -37,11 +37,8 @@ public class ClassResourceAccessorServlet
     protected void setInitParameter(String name, String value)
             throws ServletException {
         super.setInitParameter(name, value);
-        switch (name) {
-        case ATTRIBUTE_PATH:
+        if (ATTRIBUTE_PATH.equals(name))
             startPath = FilePath.removeTrailingSlashes(value);
-            break;
-        }
     }
 
     @Override

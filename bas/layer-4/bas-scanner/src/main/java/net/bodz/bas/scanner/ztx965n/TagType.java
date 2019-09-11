@@ -26,7 +26,7 @@ public enum TagType {
     }
 
     static class Index {
-        static Map<Integer, TagType> map = new HashMap<>();
+        static Map<Integer, TagType> map = new HashMap<Integer, TagType>();
     }
 
     public static TagType forCode(int code) {

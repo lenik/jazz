@@ -31,7 +31,7 @@ public class PojfVfsDriver
     public PojfVfsDriver(String protocol) {
         this.protocol = protocol;
         superDrive = new PojfVfsDevice(this, null);
-        driveMap = new HashMap<>();
+        driveMap = new HashMap<String, PojfVfsDevice>();
     }
 
     @Override

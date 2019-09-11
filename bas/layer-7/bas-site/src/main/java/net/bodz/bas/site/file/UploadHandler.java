@@ -33,7 +33,7 @@ public class UploadHandler
     File localDir;
     IAnchor anchor;
 
-    List<IUploadHandlerExtension> extensions = new ArrayList<>();
+    List<IUploadHandlerExtension> extensions = new ArrayList<IUploadHandlerExtension>();
 
     /**
      * @param getPath

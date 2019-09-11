@@ -28,7 +28,7 @@ public class TypeKind {
     }
 
     static Set<Class<?>> setOf(Class<?>... v) {
-        HashSet<Class<?>> set = new HashSet<>();
+        HashSet<Class<?>> set = new HashSet<Class<?>>();
         for (Class<?> c : v)
             set.add(c);
         return set;
@@ -80,7 +80,7 @@ public class TypeKind {
 
     static final Map<Class<?>, Integer> typeIdMap;
     static {
-        typeIdMap = new HashMap<>();
+        typeIdMap = new HashMap<Class<?>, Integer>();
         typeIdMap.put(void.class, TypeId._void);
         typeIdMap.put(char.class, TypeId._char);
         typeIdMap.put(byte.class, TypeId._byte);

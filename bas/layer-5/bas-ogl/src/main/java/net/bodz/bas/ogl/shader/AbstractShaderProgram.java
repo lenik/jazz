@@ -28,10 +28,12 @@ public abstract class AbstractShaderProgram
     public AbstractShaderProgram() {
     }
 
+    @Override
     public int getProgram() {
         return program.program();
     }
 
+    @Override
     public void source(Class<?> context, String... filenames) {
         this.context = context;
         this.filenames = filenames;
@@ -54,21 +56,18 @@ public abstract class AbstractShaderProgram
             ShaderCode code;
             String name = filename.substring(0, lastDot);
             String extension = filename.substring(lastDot + 1);
-            switch (extension) {
-            case "fp":
+            if ("fp".equals(extension))
                 code = factory.createMutableFragmentShader(gl, context, name);
-                break;
-            case "vp":
+            else if ("vp".equals(extension))
                 code = factory.createMutableVertexShader(gl, context, name);
-                break;
-            default:
+            else
                 throw new IllegalArgumentException("Unknown extension: " + filename);
-            }
             program.add(code);
         } // for filename
         loaded = true;
     }
 
+    @Override
     public synchronized void link(GL2ES2 gl)
             throws GLLinkException {
         if (!loaded)
@@ -98,32 +97,39 @@ public abstract class AbstractShaderProgram
         }
     }
 
+    @Override
     public boolean isLinked() {
         return program.linked();
     }
 
+    @Override
     public boolean validate(GL2ES2 gl, PrintStream verboseOut) {
         return program.validateProgram(gl, verboseOut);
     }
 
+    @Override
     public void begin(GL2ES2 gl) {
         if (program.linked())
             program.useProgram(gl, true);
     }
 
+    @Override
     public void end(GL2ES2 gl) {
         if (program.linked())
             program.useProgram(gl, false);
     }
 
+    @Override
     public boolean isActive() {
         return program.inUse();
     }
 
+    @Override
     public void release(GL2ES2 gl) {
         program.release(gl);
     }
 
+    @Override
     public void release(GL2ES2 gl, boolean destroyShaderCode) {
         program.release(gl, destroyShaderCode);
     }

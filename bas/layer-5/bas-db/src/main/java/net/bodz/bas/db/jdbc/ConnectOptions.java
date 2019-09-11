@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Properties;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.db.ctx.DataContext;
 
 public class ConnectOptions
         implements Serializable, Cloneable {
@@ -181,6 +182,10 @@ public class ConnectOptions
         if (Nullables.notEquals(database, o.database))
             return false;
         return true;
+    }
+
+    public DataContext newDataContext() {
+        return new DataContext(this);
     }
 
 }

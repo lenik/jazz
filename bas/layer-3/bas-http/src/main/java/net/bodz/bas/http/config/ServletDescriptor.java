@@ -11,8 +11,8 @@ public class ServletDescriptor
         extends AbstractPluginDescriptor {
 
     Class<? extends Servlet> servletClass;
-    List<String> mappings = new ArrayList<>();
-    Map<String, String> initParameterMap = new HashMap<>();
+    List<String> mappings = new ArrayList<String>();
+    Map<String, String> initParameterMap = new HashMap<String, String>();
 
     public ServletDescriptor(Class<? extends Servlet> servletClass) {
         this(null, servletClass);

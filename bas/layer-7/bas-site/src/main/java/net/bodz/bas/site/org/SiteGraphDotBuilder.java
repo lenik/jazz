@@ -56,7 +56,7 @@ public class SiteGraphDotBuilder
         StringBuilder sb = new StringBuilder();
         sb.append(node.getId());
 
-        Map<String, Object> attrs = new HashMap<>();
+        Map<String, Object> attrs = new HashMap<String, Object>();
         String label = node.getName(); // getLabel().toString();
         attrs.put("label", StringQuote.qqJavaString(label));
         attrs.put("fontsize", 30 - node.getLevel() * 5);
@@ -94,7 +94,7 @@ public class SiteGraphDotBuilder
             sb.append(" -> ");
             sb.append(dstId);
 
-            Map<String, String> attrs = new HashMap<>();
+            Map<String, String> attrs = new HashMap<String, String>();
 
             sb.append(" [");
             int i = 0;

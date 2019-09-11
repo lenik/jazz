@@ -7,8 +7,8 @@ import java.util.Set;
 
 public class ReflectOptions {
 
-    public static final Set<Class<?>> stopClasses = new HashSet<>();
-    public static final Set<Class<?>> copyTypes = new HashSet<>();
+    public static final Set<Class<?>> stopClasses = new HashSet<Class<?>>();
+    public static final Set<Class<?>> copyTypes = new HashSet<Class<?>>();
 
     static {
         stopClasses.add(Object.class);

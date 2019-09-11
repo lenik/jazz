@@ -60,7 +60,7 @@ public class HttpServletReqEx
         }
 
         out.println("Parameters:");
-        Set<String> keys = new TreeSet<>(getParameterMap().keySet());
+        Set<String> keys = new TreeSet<String>(getParameterMap().keySet());
         for (String key : keys) {
             String[] values = getParameterValues(key);
             for (String value : values)

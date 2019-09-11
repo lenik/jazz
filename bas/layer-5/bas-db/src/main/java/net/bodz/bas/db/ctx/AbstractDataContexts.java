@@ -15,7 +15,7 @@ public abstract class AbstractDataContexts<K>
 
     static final Logger logger = LoggerFactory.getLogger(AbstractDataContexts.class);
 
-    private Map<Object, DataContext> contexts = new IdentityHashMap<>();
+    private Map<Object, DataContext> contexts = new IdentityHashMap<Object, DataContext>();
 
     @Override
     public synchronized DataContext get(K key) {

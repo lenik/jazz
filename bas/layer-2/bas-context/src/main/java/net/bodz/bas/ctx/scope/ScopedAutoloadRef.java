@@ -21,12 +21,12 @@ public class ScopedAutoloadRef<T>
         if (objectType == null)
             throw new NullPointerException("objectType");
         this.objectType = objectType;
-        this.info = new ScopedTypeInfo<>(objectType);
+        this.info = new ScopedTypeInfo<T>(objectType);
         this.name = objectType.getName();
     }
 
     public static <T> ScopedAutoloadRef<T> of(Class<T> objectType) {
-        return new ScopedAutoloadRef<>(objectType);
+        return new ScopedAutoloadRef<T>(objectType);
     }
 
     @Override

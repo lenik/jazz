@@ -103,7 +103,7 @@ public class JsonFn {
 
     public static List<Object> toList(JSONArray json) {
         int n = json.length();
-        List<Object> list = new ArrayList<>(n);
+        List<Object> list = new ArrayList<Object>(n);
         for (int i = 0; i < n; i++) {
             Object val = json.get(i);
             Object unwrapped = unwrap(val);
@@ -127,7 +127,7 @@ public class JsonFn {
     }
 
     public static Map<String, Object> toMap(JSONObject jsonObj) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<String, Object>();
         return toMap(map, jsonObj);
     }
 

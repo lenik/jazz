@@ -18,7 +18,7 @@ public abstract class AbstractPluginDescriptor
 
     public AbstractPluginDescriptor(String id) {
         this.id = id != null ? id : ObjectInfo.getSimpleId(this);
-        this.dependencies = new IdentityHashSet<>();
+        this.dependencies = new IdentityHashSet<Object>();
     }
 
     @Override

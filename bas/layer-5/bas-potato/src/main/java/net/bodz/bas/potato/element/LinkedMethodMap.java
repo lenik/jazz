@@ -32,7 +32,7 @@ public class LinkedMethodMap
 
     @Override
     public Iterable<IMethod> getMethods() {
-        List<Iterable<IMethod>> iterables = new ArrayList<>(maps.size());
+        List<Iterable<IMethod>> iterables = new ArrayList<Iterable<IMethod>>(maps.size());
 
         for (IMethodMap map : maps)
             iterables.add(map.getMethods());

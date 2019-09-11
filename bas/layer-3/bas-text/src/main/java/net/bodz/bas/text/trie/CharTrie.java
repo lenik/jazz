@@ -61,14 +61,14 @@ public class CharTrie<T>
     }
 
     public static CharTrie<String> buildDictionaryTrie(Set<String> dictionary) {
-        CharTrie<String> trie = new CharTrie<>();
+        CharTrie<String> trie = new CharTrie<String>();
         for (String word : dictionary)
             trie.resolve(word).define(word);
         return trie;
     }
 
     public static <T> CharTrie<T> buildDictionaryTrie(Map<String, T> dictionaryMap) {
-        CharTrie<T> trie = new CharTrie<>();
+        CharTrie<T> trie = new CharTrie<T>();
         for (Map.Entry<String, T> entry : dictionaryMap.entrySet())
             trie.resolve(entry.getKey()).define(entry.getValue());
         return trie;
@@ -80,7 +80,7 @@ public class CharTrie<T>
         private T data;
 
         public Node() {
-            childMap = new HashMap<>();
+            childMap = new HashMap<Character, Node<T>>();
         }
 
         @Override

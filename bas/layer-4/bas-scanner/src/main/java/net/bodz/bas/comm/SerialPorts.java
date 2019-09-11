@@ -25,7 +25,7 @@ public class SerialPorts {
     }
 
     public static List<String> list(String pattern) {
-        List<String> ports = new ArrayList<>();
+        List<String> ports = new ArrayList<String>();
         Enumeration<?> portIdentifiers = CommPortIdentifier.getPortIdentifiers();
         while (portIdentifiers.hasMoreElements()) {
             CommPortIdentifier portId = (CommPortIdentifier) portIdentifiers.nextElement();

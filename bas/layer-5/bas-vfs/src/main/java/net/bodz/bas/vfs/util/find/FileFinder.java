@@ -35,7 +35,7 @@ public class FileFinder
     private int order = FILE | DIR;
     private Comparator<IFile> comparator;
 
-    private List<IFileFoundListener> fileFoundListeners = new ArrayList<>();
+    private List<IFileFoundListener> fileFoundListeners = new ArrayList<IFileFoundListener>();
 
     class Filter
             implements IFilter<IFile> {

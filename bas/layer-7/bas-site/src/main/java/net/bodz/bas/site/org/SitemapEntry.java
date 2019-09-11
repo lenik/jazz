@@ -6,7 +6,7 @@ import java.util.Map;
 public class SitemapEntry {
 
     private String url;
-    private Map<String, String> alternates = new LinkedHashMap<>();
+    private Map<String, String> alternates = new LinkedHashMap<String, String>();
     private long lastModified;
     private ChangeFreq changeFreq = ChangeFreq.ALWAYS;
     private double priority;

@@ -13,8 +13,8 @@ public abstract class AbstractProgressMonitor
     private int totalProgress;
     private int progress;
 
-    private List<ICancelListener> cancelListeners = new ArrayList<>();
-    private List<IProgressChangeListener> progressChangeListeners = new ArrayList<>();
+    private List<ICancelListener> cancelListeners = new ArrayList<ICancelListener>();
+    private List<IProgressChangeListener> progressChangeListeners = new ArrayList<IProgressChangeListener>();
 
     @Override
     public int getTotalProgress() {

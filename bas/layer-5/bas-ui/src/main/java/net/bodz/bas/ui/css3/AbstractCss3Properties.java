@@ -71,9 +71,7 @@ public abstract class AbstractCss3Properties
     public static ICss3Length parseCssLength(String str) {
         if (str == null)
             return null;
-        switch (str) {
-        case "auto":
-        case "none":
+        if ("auto".equals(str) || "none".equals(str)) {
             return Css3Length.NaN;
         }
 
@@ -170,11 +168,11 @@ public abstract class AbstractCss3Properties
     /**
      * Parse CSS-like style script.
      * <p>
-     * 
+     *
      * Example:
-     * 
+     *
      * <pre>
-     * color: red; 
+     * color: red;
      * font-size: large;
      * </pre>.
      */

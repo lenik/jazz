@@ -14,12 +14,12 @@ public class ClassLoaderAnalyzer {
     public static ClassLoaderNode[] mergeParents(ClassLoader... classLoaders) {
         ClassLoaderNode classLoaderNodes[] = new ClassLoaderNode[classLoaders.length];
 
-        Map<ClassLoader, ClassLoaderNode> loaderNodeMap = new IdentityHashMap<>();
+        Map<ClassLoader, ClassLoaderNode> loaderNodeMap = new IdentityHashMap<ClassLoader, ClassLoaderNode>();
 
         for (int i = 0; i < classLoaders.length; i++) {
             ClassLoader loader = classLoaders[i];
 
-            List<ClassLoader> vector = new ArrayList<>();
+            List<ClassLoader> vector = new ArrayList<ClassLoader>();
             while (loader != null) {
                 vector.add(loader);
                 loader = loader.getParent();
@@ -42,7 +42,7 @@ public class ClassLoaderAnalyzer {
     }
 
     public static Set<ClassLoaderNode> getRoots(ClassLoaderNode... nodes) {
-        Set<ClassLoaderNode> roots = new IdentityHashSet<>();
+        Set<ClassLoaderNode> roots = new IdentityHashSet<ClassLoaderNode>();
         for (ClassLoaderNode node : nodes) {
             ClassLoaderNode root = node.getRoot();
             roots.add(root);

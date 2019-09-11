@@ -33,7 +33,7 @@ public class LinkedPropertyMap
 
     @Override
     public Iterable<IProperty> getProperties() {
-        List<Iterable<IProperty>> iterables = new ArrayList<>(maps.size());
+        List<Iterable<IProperty>> iterables = new ArrayList<Iterable<IProperty>>(maps.size());
 
         for (IPropertyMap map : maps)
             iterables.add(map.getProperties());
@@ -43,7 +43,7 @@ public class LinkedPropertyMap
 
     @Override
     public Set<String> getPropertyNames() {
-        Set<String> set = new LinkedHashSet<>();
+        Set<String> set = new LinkedHashSet<String>();
 
         for (IPropertyMap map : maps)
             set.addAll(map.getPropertyNames());

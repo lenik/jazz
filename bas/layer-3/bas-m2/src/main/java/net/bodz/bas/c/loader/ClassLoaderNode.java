@@ -12,7 +12,7 @@ public class ClassLoaderNode
     private static final long serialVersionUID = 1L;
 
     ClassLoader loader;
-    Set<String> tags = new LinkedHashSet<>();
+    Set<String> tags = new LinkedHashSet<String>();
 
     public ClassLoaderNode(ClassLoaderNode parent, ClassLoader loader) {
         super(parent);

@@ -192,7 +192,7 @@ public abstract class AbstractCache<K, T> {
     }
 
     protected void _purge() {
-        keyMap = new HashMap<>();
+        keyMap = new HashMap<K, T>();
     }
 
     protected void _wire(T obj) {

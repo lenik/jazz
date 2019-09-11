@@ -14,8 +14,8 @@ public class Zoo
     public String owner;
     public int createdYear;
 
-    public List<Cat> cats = new ArrayList<>();
-    public List<Dog> dogs = new ArrayList<>();
+    public List<Cat> cats = new ArrayList<Cat>();
+    public List<Dog> dogs = new ArrayList<Dog>();
 
     @Override
     public IElementHandler beginChild(String name, String[] args)

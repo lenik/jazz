@@ -67,8 +67,7 @@ public class VarMapLoader {
             loadProperty(obj, property, anyVal);
             return;
         }
-        switch (remain) {
-        case "null":
+        if ("null".equals(remain)) {
             // if (anyVal)
             try {
                 property.setValue(obj, null);
@@ -163,14 +162,14 @@ public class VarMapLoader {
             if (rval instanceof List<?>) {
                 logger.warn("Not supported yet");
 //
-//                Collection<Object> coll = newConcrete(ltype);
-//                List<?> rlist = (List<?>) rval;
-//                for (Object r : rlist) {
-//                    // TODO unwrap this object? convert to ltype-itemtype?
-//                    coll.add(r);
-//                }
-//                lval = coll;
-//                 break;
+// Collection<Object> coll = newConcrete(ltype);
+// List<?> rlist = (List<?>) rval;
+// for (Object r : rlist) {
+// // TODO unwrap this object? convert to ltype-itemtype?
+// coll.add(r);
+// }
+// lval = coll;
+// break;
             }
 
             logger.warn(String.format(//
@@ -185,7 +184,7 @@ public class VarMapLoader {
         }
     }
 
-    static Map<Class<?>, Class<?>> concreteTypes = new HashMap<>();
+    static Map<Class<?>, Class<?>> concreteTypes = new HashMap<Class<?>, Class<?>>();
     static {
         concreteTypes.put(List.class, ArrayList.class);
         concreteTypes.put(Set.class, HashSet.class);
@@ -197,7 +196,7 @@ public class VarMapLoader {
         if (concreteType != null)
             try {
                 return (Collection<Object>) concreteType.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
         return null;

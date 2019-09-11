@@ -16,7 +16,7 @@ public class DoubleTypers
 
     /**
      * The distribution algorithm used to generate samples.
-     * 
+     *
      * @see #normalSampleDistribution
      * @see #gaussianSampleDistribution
      */
@@ -55,14 +55,11 @@ public class DoubleTypers
             throws CreateException {
         Random prng = options.get(Random.class, random);
         String distribution = options.get(sampleDistribution, defaultSampleDistribution);
-        switch (distribution) {
-        case normalSampleDistribution:
+        if (normalSampleDistribution.equals(distribution))
             return prng.nextDouble();
-        case gaussianSampleDistribution:
+        if (gaussianSampleDistribution.equals(distribution))
             return prng.nextGaussian();
-        default:
-            throw new IllegalParameterUsageException(options.getOption(sampleDistribution));
-        }
+        throw new IllegalParameterUsageException(options.getOption(sampleDistribution));
     }
 
 }

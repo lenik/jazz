@@ -8,7 +8,7 @@ public class Marks
     IdentityHashSet<Object> idSet;
 
     public Marks() {
-        idSet = new IdentityHashSet<>();
+        idSet = new IdentityHashSet<Object>();
     }
 
     @Override

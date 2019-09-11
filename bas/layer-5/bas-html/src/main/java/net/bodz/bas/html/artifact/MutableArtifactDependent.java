@@ -18,8 +18,8 @@ public class MutableArtifactDependent
     private Map<ArtifactType, Map<String, MutableArtifactDependency>> typeMap;
 
     public MutableArtifactDependent() {
-        nameMap = new LinkedHashMap<>();
-        typeMap = new HashMap<>();
+        nameMap = new LinkedHashMap<String, MutableArtifactDependency>();
+        typeMap = new HashMap<ArtifactType, Map<String, MutableArtifactDependency>>();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MutableArtifactDependent
         if (map == null)
             synchronized (typeMap) {
                 if ((map = typeMap.get(type)) == null)
-                    typeMap.put(type, map = new LinkedHashMap<>());
+                    typeMap.put(type, map = new LinkedHashMap<String, MutableArtifactDependency>());
             }
         return map;
     }

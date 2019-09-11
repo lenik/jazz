@@ -99,14 +99,14 @@ public abstract class AbstractPotatoElement
 
     @Override
     public Map<Class<?>, Annotation> getAnnotationMap() {
-        Map<Class<?>, Annotation> map = new HashMap<>();
+        Map<Class<?>, Annotation> map = new HashMap<Class<?>, Annotation>();
         dumpAnnotations(map);
         return map;
     }
 
     @Override
     public Map<Class<?>, Annotation> getDeclaredAnnotationMap() {
-        Map<Class<?>, Annotation> map = new HashMap<>();
+        Map<Class<?>, Annotation> map = new HashMap<Class<?>, Annotation>();
         for (Annotation annotation : getDeclaredAnnotations())
             map.put(annotation.getClass(), annotation);
         return map;

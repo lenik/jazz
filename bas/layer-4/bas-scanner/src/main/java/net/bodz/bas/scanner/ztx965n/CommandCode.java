@@ -193,7 +193,7 @@ public enum CommandCode {
     }
 
     static class Index {
-        static Map<Integer, CommandCode> map = new HashMap<>();
+        static Map<Integer, CommandCode> map = new HashMap<Integer, CommandCode>();
     }
 
     public static CommandCode forCode(int code) {

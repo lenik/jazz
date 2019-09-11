@@ -25,7 +25,7 @@ public class UiActionNode {
         this.element = element;
 
         this.parent = parent;
-        this.children = new TreeSet<>(UiActionNodeComparator.INSTANCE);
+        this.children = new TreeSet<UiActionNode>(UiActionNodeComparator.INSTANCE);
         if (parent != null)
             parent.addChild(this);
     }

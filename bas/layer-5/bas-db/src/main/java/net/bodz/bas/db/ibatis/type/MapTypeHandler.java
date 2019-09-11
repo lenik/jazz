@@ -14,7 +14,7 @@ public class MapTypeHandler
 
     @Override
     protected Map<String, Object> createMap() {
-        return new LinkedHashMap<>();
+        return new LinkedHashMap<String, Object>();
     }
 
     @Override

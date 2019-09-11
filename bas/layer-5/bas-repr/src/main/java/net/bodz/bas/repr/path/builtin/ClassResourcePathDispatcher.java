@@ -33,7 +33,7 @@ public class ClassResourcePathDispatcher
             throw new PathDispatchException("null target.");
 
         String remaining = tokens.getRemainingPath();
-        List<String> checkList = new ArrayList<>();
+        List<String> checkList = new ArrayList<String>();
         if (remaining == null || remaining.isEmpty()) {
             checkList.add("index.html");
         } else if (tokens.isEntered()) {

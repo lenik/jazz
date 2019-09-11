@@ -21,7 +21,7 @@ public class AbstractTreeNodeFormatter<node_t extends ITreeNode<node_t>>
         List<node_t> visibleChildren = null;
         int n = 0;
         if (depth < maxDepth || maxDepth == -1) {
-            visibleChildren = new ArrayList<>();
+            visibleChildren = new ArrayList<node_t>();
             for (node_t child : node.getChildren()) {
                 if (isVisible(child))
                     visibleChildren.add(child);

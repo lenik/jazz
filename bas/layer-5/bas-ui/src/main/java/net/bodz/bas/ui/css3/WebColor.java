@@ -8,7 +8,7 @@ import net.bodz.bas.ui.style.color.RGB24Color;
 
 public class WebColor {
 
-    private static Map<String, RGB24Color> colorMap = new HashMap<>();
+    private static Map<String, RGB24Color> colorMap = new HashMap<String, RGB24Color>();
 
     private static RGB24Color create(String name, int red, int green, int blue) {
         RGB24Color color = new RGB24Color((byte) red, (byte) green, (byte) blue);

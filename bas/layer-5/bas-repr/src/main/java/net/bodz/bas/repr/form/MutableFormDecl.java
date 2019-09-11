@@ -17,15 +17,15 @@ public class MutableFormDecl
         this.source = source;
         switch (sortOrder) {
         case NO_SORT:
-            map = new LinkedHashMap<>();
+            map = new LinkedHashMap<String, IFieldDecl>();
             break;
         case ASCENDING:
-            map = new TreeMap<>(DefaultComparator.getInstance());
+            map = new TreeMap<String, IFieldDecl>(DefaultComparator.getInstance());
         case DESCENDING:
-            map = new TreeMap<>(DefaultDescendingComparator.getInstance());
+            map = new TreeMap<String, IFieldDecl>(DefaultDescendingComparator.getInstance());
         case NONE:
         default:
-            map = new HashMap<>();
+            map = new HashMap<String, IFieldDecl>();
             break;
         }
     }

@@ -16,10 +16,10 @@ import net.bodz.bas.io.StringCharIn;
 /**
  * Half width characters:
  * !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
- * 
+ *
  * Full width characters:
  * ！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～
- * 
+ *
  * @see <a href="http://www.unicode.org/charts/PDF/UFF00.pdf">Halfwidth and Fullwidth Forms</a>
  */
 public class CharWidthConverter {
@@ -27,8 +27,8 @@ public class CharWidthConverter {
     static final Set<Integer> f2hSpaceBeforeSet;
     static final Set<Integer> f2hSpaceAfterSet;
     static {
-        f2hSpaceBeforeSet = new HashSet<>();
-        f2hSpaceAfterSet = new HashSet<>();
+        f2hSpaceBeforeSet = new HashSet<Integer>();
+        f2hSpaceAfterSet = new HashSet<Integer>();
 
         String both = "＆＊＋－／＜＝＞＾｜～";
         String before = "“‘（［｛";

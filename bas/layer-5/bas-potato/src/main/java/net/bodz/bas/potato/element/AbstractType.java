@@ -63,7 +63,7 @@ public abstract class AbstractType
         if (pathProperty == null)
             throw new NullPointerException("pathProperty");
         IType type = this;
-        List<IProperty> properties = new ArrayList<>(2);
+        List<IProperty> properties = new ArrayList<IProperty>(2);
         IProperty lastProperty = null;
 
         StringTokenizer tokens = new StringTokenizer(pathProperty, ".");
@@ -104,7 +104,7 @@ public abstract class AbstractType
     }
 
     private Map<String, IMethod> loadOverloadedMethods() {
-        Map<String, List<IMethod>> nameListMap = new HashMap<>();
+        Map<String, List<IMethod>> nameListMap = new HashMap<String, List<IMethod>>();
         for (IMethod method : getMethods()) {
             String name = method.getName();
             List<IMethod> list = nameListMap.get(name);
@@ -115,7 +115,7 @@ public abstract class AbstractType
             list.add(method);
         }
 
-        Map<String, IMethod> map = new HashMap<>();
+        Map<String, IMethod> map = new HashMap<String, IMethod>();
         for (Entry<String, List<IMethod>> entry : nameListMap.entrySet()) {
             String name = entry.getKey();
             List<IMethod> list = entry.getValue();

@@ -8,7 +8,7 @@ import net.bodz.bas.err.DuplicatedKeyException;
 public class HtmlTagMap
         implements IHtmlTagMap {
 
-    private Map<String, IHtmlTag> map = new HashMap<>();
+    private Map<String, IHtmlTag> map = new HashMap<String, IHtmlTag>();
 
     @Override
     public IHtmlTag get(String id) {

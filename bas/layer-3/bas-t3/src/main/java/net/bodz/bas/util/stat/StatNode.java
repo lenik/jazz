@@ -12,7 +12,7 @@ public class StatNode
 
     private final StatNode parent;
     private final String name;
-    private final Map<String, StatNode> children = new LinkedHashMap<>();
+    private final Map<String, StatNode> children = new LinkedHashMap<String, StatNode>();
 
     public StatNode() {
         this(null, null);

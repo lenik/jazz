@@ -81,16 +81,13 @@ public class URLResourceScanner {
 
         String relativePath = dotForStart ? "." : "";
 
-        switch (start.getProtocol()) {
-        case "file":
+        String protocol = start.getProtocol();
+        if ("file".equals(protocol)) {
             File startFile = FileURL.toFile(start, null);
             if (startFile == null)
                 throw new IllegalArgumentException("Illegal file URL: " + start);
             scanFiles(map, relativePath, startFile, 0);
-            break;
-
-        case "zip":
-        case "jar":
+        } else if ("zip".equals(protocol) || "jar".equals(protocol)) {
             String _start = start.toString();
             String _zipURI = StringPart.beforeLast(_start, '!');
             _zipURI = StringPart.after(_zipURI, "jar:");
@@ -104,12 +101,14 @@ public class URLResourceScanner {
                 throw new UnexpectedException(e.getMessage(), e);
             }
 
-            try (ZipFile zipFile = new ZipFile(new File(zipURI))) {
+            ZipFile zipFile = new ZipFile(new File(zipURI));
+            try {
                 scanZipEntries(map, relativePath, start, zipFile, startEntryName);
             } catch (MalformedURLException e) {
                 throw new UnexpectedException(e.getMessage(), e);
+            } finally {
+                zipFile.close();
             }
-            break;
         }
 
         return map;

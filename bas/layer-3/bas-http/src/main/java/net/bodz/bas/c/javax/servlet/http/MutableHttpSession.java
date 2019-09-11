@@ -19,7 +19,7 @@ public class MutableHttpSession
     ServletContext servletContext;
     HttpSessionContext sessionContext;
 
-    Hashtable<String, Object> attributes = new Hashtable<>();
+    Hashtable<String, Object> attributes = new Hashtable<String, Object>();
     boolean invalid;
     boolean isNewCreated;
 

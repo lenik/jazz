@@ -25,7 +25,7 @@ public abstract class AbstractFormDecl
     @Override
     public Collection<FieldDeclGroup> getFieldGroups(IFieldDeclFilter filter) {
         Map<FieldCategory, FieldDeclGroup> map;
-        map = new TreeMap<>(FieldCategoryComparator.INSTANCE);
+        map = new TreeMap<FieldCategory, FieldDeclGroup>(FieldCategoryComparator.INSTANCE);
 
         for (IFieldDecl fieldDecl : getFieldDecls(filter)) {
             FieldCategory category = fieldDecl.getCategory();

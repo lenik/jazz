@@ -20,7 +20,7 @@ public class PseudoVfsDevice
 
     public PseudoVfsDevice(PseudoVfsDriver driver, String scopeName) {
         super(driver, driver.protocol, scopeName);
-        registeredFiles = new TreeMap<>();
+        registeredFiles = new TreeMap<String, PseudoFile>();
     }
 
     public String getScopeName() {

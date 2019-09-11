@@ -22,7 +22,7 @@ public class NioVfsDriver
     public NioVfsDriver(String protocol) {
         this.protocol = protocol;
 
-        rootMap = new SubPathMap<>();
+        rootMap = new SubPathMap<NioVfsDevice>();
 
         FileSystem fileSystem = FileSystems.getDefault();
         String separator = fileSystem.getSeparator();

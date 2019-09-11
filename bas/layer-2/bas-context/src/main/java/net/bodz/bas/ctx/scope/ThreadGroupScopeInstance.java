@@ -3,11 +3,10 @@ package net.bodz.bas.ctx.scope;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ThreadGroupScopeInstance
         extends MutableScopeInstance {
 
-    private static Map<ThreadGroup, Map<String, Object>> tlsVars = new HashMap<>();
+    private static Map<ThreadGroup, Map<String, Object>> tlsVars = new HashMap<ThreadGroup, Map<String, Object>>();
 
     private final ThreadGroup threadGroup;
     private final Map<String, Object> vars;
@@ -21,7 +20,7 @@ public class ThreadGroupScopeInstance
         this.threadGroup = threadGroup;
         Map<String, Object> vars = tlsVars.get(threadGroup);
         if (vars == null) {
-            vars = new HashMap<>();
+            vars = new HashMap<String, Object>();
             tlsVars.put(threadGroup, vars);
         }
         this.vars = vars;

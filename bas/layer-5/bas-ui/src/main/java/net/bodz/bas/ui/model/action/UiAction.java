@@ -12,7 +12,7 @@ public abstract class UiAction
     private List<Class<?>> locations;
 
     public UiAction() {
-        locations = new ArrayList<>();
+        locations = new ArrayList<Class<?>>();
         Location aLocation = getClass().getAnnotation(Location.class);
         if (aLocation != null)
             for (Class<?> c : aLocation.value())

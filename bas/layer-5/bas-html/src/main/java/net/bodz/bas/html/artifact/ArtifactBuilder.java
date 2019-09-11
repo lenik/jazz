@@ -54,16 +54,12 @@ public class ArtifactBuilder {
             String ext = FilePath.getExtension(file, true);
             String fragmentName = name + "/" + base;
             IMutableArtifact fragment;
-            switch (ext) {
-            case ".js":
+            if (".js".equals(ext))
                 fragment = javascript(fragmentName, version, a);
-                break;
-            case ".css":
+            else if (".css".equals(ext))
                 fragment = css(fragmentName, version, a);
-                break;
-            default:
+            else
                 throw new UnsupportedFeatureException("Extension: " + ext);
-            }
             if (last != null)
                 fragment.addDependency(last);
             last = fragment;

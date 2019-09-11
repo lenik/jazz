@@ -14,7 +14,7 @@ public class FilterDescriptor
 
     Class<? extends Filter> filterClass;
     List<String> mappings = new ArrayList<String>();
-    Map<String, String> initParamMap = new HashMap<>();
+    Map<String, String> initParamMap = new HashMap<String, String>();
 
     EnumSet<DispatcherType> dispatcherTypes = EnumSet.noneOf(DispatcherType.class);
     boolean suspendable = false;

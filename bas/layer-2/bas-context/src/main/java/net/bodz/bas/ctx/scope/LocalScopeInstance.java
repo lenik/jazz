@@ -7,7 +7,7 @@ import java.util.Map;
 public class LocalScopeInstance
         extends MutableScopeInstance {
 
-    private final Map<String, Object> vars = new HashMap<>();
+    private final Map<String, Object> vars = new HashMap<String, Object>();
 
     public LocalScopeInstance() {
         this(null, null);

@@ -14,8 +14,8 @@ public class TellableReaderTest
     @Test
     public void test1()
             throws IOException {
-        try (TellableReader r = new TellableReader(new StringReader(hello))) {
-
+        TellableReader r = new TellableReader(new StringReader(hello));
+        try {
             assertEquals(0, r.tell());
             r.read();
             r.read();
@@ -45,7 +45,8 @@ public class TellableReaderTest
 
             r.read(new char[100]);
             assertEquals(hello.length(), r.tell());
+        } finally {
+            r.close();
         }
     }
-
 }

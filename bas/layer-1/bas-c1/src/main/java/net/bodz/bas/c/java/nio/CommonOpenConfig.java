@@ -25,7 +25,7 @@ public class CommonOpenConfig {
 
     static Map<Class<?>, IOpenConfigCollector<?>> collectorMap;
     static {
-        collectorMap = new HashMap<>();
+        collectorMap = new HashMap<Class<?>, IOpenConfigCollector<?>>();
         collectorMap.put(StandardOpenOption.class, new StandardOpenOptionCollector());
         collectorMap.put(LinkOption.class, new LinkOptionCollector());
         collectorMap.put(CreateOption.class, new InstallOptionCollector());

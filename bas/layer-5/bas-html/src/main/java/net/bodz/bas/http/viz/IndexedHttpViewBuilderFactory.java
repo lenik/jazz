@@ -15,7 +15,7 @@ import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 public class IndexedHttpViewBuilderFactory
         extends AbstractHttpViewBuilderFactory {
 
-    private List<ITypeMapper> viewMappers = new ArrayList<>();
+    private List<ITypeMapper> viewMappers = new ArrayList<ITypeMapper>();
 
     public IndexedHttpViewBuilderFactory() {
         viewMappers.add(NameConventions.foo_bar_htm);

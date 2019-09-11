@@ -63,7 +63,9 @@ public class MapElementHandler<K, V>
         try {
             V value = valueType.newInstance();
             return value;
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            throw new ElementHandlerException(e.getMessage(), e);
+        } catch (IllegalAccessException e) {
             throw new ElementHandlerException(e.getMessage(), e);
         }
     }

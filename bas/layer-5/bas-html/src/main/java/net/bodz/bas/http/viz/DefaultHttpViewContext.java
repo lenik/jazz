@@ -33,7 +33,7 @@ public class DefaultHttpViewContext
         this.response = response;
 
         attributes = new HashMap<String, Object>();
-        varMap = new StrictFramedMap<>();
+        varMap = new StrictFramedMap<String, Object>();
     }
 
     @Override

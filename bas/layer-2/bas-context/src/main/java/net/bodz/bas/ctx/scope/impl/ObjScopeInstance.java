@@ -12,7 +12,7 @@ public class ObjScopeInstance
     /**
      * object-local storage.
      */
-    private static Map<Object, Map<String, Object>> olsVars = new HashMap<>();
+    private static Map<Object, Map<String, Object>> olsVars = new HashMap<Object, Map<String, Object>>();
 
     private final Map<String, Object> vars;
 
@@ -24,7 +24,7 @@ public class ObjScopeInstance
         super(name, identity, parent);
         Map<String, Object> vars = olsVars.get(identity);
         if (vars == null) {
-            vars = new HashMap<>();
+            vars = new HashMap<String, Object>();
             olsVars.put(identity, vars);
         }
         this.vars = vars;

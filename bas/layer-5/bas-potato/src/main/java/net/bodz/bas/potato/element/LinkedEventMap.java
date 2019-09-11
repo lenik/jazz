@@ -33,7 +33,7 @@ public class LinkedEventMap
 
     @Override
     public Iterable<IEvent> getEvents() {
-        List<Iterable<IEvent>> iterables = new ArrayList<>(maps.size());
+        List<Iterable<IEvent>> iterables = new ArrayList<Iterable<IEvent>>(maps.size());
 
         for (IEventMap map : maps)
             iterables.add(map.getEvents());
@@ -43,7 +43,7 @@ public class LinkedEventMap
 
     @Override
     public Set<String> getEventNames() {
-        Set<String> set = new LinkedHashSet<>();
+        Set<String> set = new LinkedHashSet<String>();
 
         for (IEventMap map : maps)
             set.addAll(map.getEventNames());

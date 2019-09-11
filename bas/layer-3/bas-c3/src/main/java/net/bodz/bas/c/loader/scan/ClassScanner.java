@@ -29,11 +29,11 @@ public class ClassScanner
     public static final int IMPLS = 2;
     public static final int ANNOTATED_CLASSES = 4;
 
-    private Set<Class<?>> analyzedClasses = new HashSet<>();
-    private Set<Class<?>> rootClasses = new HashSet<>();
-    private Map<Class<?>, Set<Class<?>>> subclassesMap = new HashMap<>();
-    private Map<Class<?>, Set<Class<?>>> implsMap = new HashMap<>();
-    private Map<Class<?>, Set<Class<?>>> annotatedClassesMap = new HashMap<>();
+    private Set<Class<?>> analyzedClasses = new HashSet<Class<?>>();
+    private Set<Class<?>> rootClasses = new HashSet<Class<?>>();
+    private Map<Class<?>, Set<Class<?>>> subclassesMap = new HashMap<Class<?>, Set<Class<?>>>();
+    private Map<Class<?>, Set<Class<?>>> implsMap = new HashMap<Class<?>, Set<Class<?>>>();
+    private Map<Class<?>, Set<Class<?>>> annotatedClassesMap = new HashMap<Class<?>, Set<Class<?>>>();
 
     // private Map<String, Set<Class<?>>> featureMap = new HashMap<>();
 
@@ -222,7 +222,10 @@ public class ClassScanner
             Class<?> clazz;
             try {
                 clazz = Class.forName(fqcn, false, getClassLoader());
-            } catch (ClassNotFoundException | NoClassDefFoundError e) {
+            } catch (ClassNotFoundException e) {
+                logger.error("Failed to resolve class: " + fqcn);
+                return false;
+            } catch (NoClassDefFoundError e) {
                 logger.error("Failed to resolve class: " + fqcn);
                 return false;
             }

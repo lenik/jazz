@@ -18,7 +18,7 @@ public class MutableVirtualHostResolver
 
     private int priority;
     private IVirtualHost default_;
-    private TokenTrie<HostBinding> trie = new TokenTrie<>();
+    private TokenTrie<HostBinding> trie = new TokenTrie<HostBinding>();
     private Map<String, IVirtualHost> map = new TreeMap<String, IVirtualHost>();
 
     public MutableVirtualHostResolver() {

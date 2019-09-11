@@ -26,7 +26,7 @@ public class PotatoTypes
         extends AbstractTypeProvider {
     static final Logger logger = LoggerFactory.getLogger(PotatoTypes.class);
 
-    private Map<Class<?>, IType> cache = new HashMap<>();
+    private Map<Class<?>, IType> cache = new HashMap<Class<?>, IType>();
 
     public PotatoTypes(int infoset) {
         super(infoset);
@@ -53,7 +53,7 @@ public class PotatoTypes
     }
 
     IType load(Class<?> clazz) {
-        List<IType> type1v = new ArrayList<>();
+        List<IType> type1v = new ArrayList<IType>();
         for (ITypeProvider provider : typeProviders) {
             int infoset = provider.getDefaultInfoset();
             IType type1 = provider.loadType(clazz, null, infoset);
@@ -75,7 +75,7 @@ public class PotatoTypes
 
     static TreeSet<ITypeProvider> typeProviders;
     static {
-        typeProviders = new TreeSet<>(PriorityComparator.INSTANCE);
+        typeProviders = new TreeSet<ITypeProvider>(PriorityComparator.INSTANCE);
         for (Class<? extends ITypeProvider> providerClass : IndexedTypes.list(ITypeProvider.class, false)) {
             try {
                 Constructor<? extends ITypeProvider> ctor = providerClass.getConstructor(int.class);

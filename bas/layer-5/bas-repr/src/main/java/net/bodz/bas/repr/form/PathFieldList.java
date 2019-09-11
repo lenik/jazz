@@ -48,7 +48,7 @@ public class PathFieldList
             throws NoSuchPropertyException, ParseException {
         List<IProperty> propertyVector = type.getPropertyVector(path);
 
-        List<IFieldDecl> fieldVector = new ArrayList<>(propertyVector.size());
+        List<IFieldDecl> fieldVector = new ArrayList<IFieldDecl>(propertyVector.size());
         fieldVector.add(fieldDeclPrefix);
         for (IProperty property : propertyVector) {
             IFieldDecl field = new MutableFieldDecl().populate(property);

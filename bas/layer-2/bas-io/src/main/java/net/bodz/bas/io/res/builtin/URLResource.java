@@ -84,17 +84,16 @@ public class URLResource
 
         boolean append = OpenOptions.isAppend(options);
 
-        switch (url.getProtocol()) {
-        case "file":
+        String protocol = url.getProtocol();
+        if ("file".equals(protocol)) {
             File file = FileURL.toFile(url, null);
             if (file == null)
                 throw new IOException("Illegal file URL: " + url);
             else
                 return new FileOutputStream(file, append);
-
-        default:
-            return url.openConnection().getOutputStream();
         }
+
+        return url.openConnection().getOutputStream();
     }
 
     public long lastModified() {

@@ -71,7 +71,7 @@ public class PerfTimer {
     }
 
     private static PerfTimer instance = new PerfTimer();
-    private static Map<String, PerfTimer> registry = new HashMap<>();
+    private static Map<String, PerfTimer> registry = new HashMap<String, PerfTimer>();
 
     public static PerfTimer getInstance() {
         return instance;

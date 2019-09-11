@@ -32,7 +32,7 @@ public class LinkedConstructorMap
 
     @Override
     public Iterable<IConstructor> getConstructors() {
-        List<Iterable<IConstructor>> iterables = new ArrayList<>(maps.size());
+        List<Iterable<IConstructor>> iterables = new ArrayList<Iterable<IConstructor>>(maps.size());
 
         for (IConstructorMap map : maps)
             iterables.add(map.getConstructors());

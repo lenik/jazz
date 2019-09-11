@@ -11,7 +11,7 @@ import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 @IndexedTypeLoader
 public class VarConverters {
 
-    static Map<Class<?>, IVarConverter<?>> map = new HashMap<>();
+    static Map<Class<?>, IVarConverter<?>> map = new HashMap<Class<?>, IVarConverter<?>>();
 
     static {
         load();

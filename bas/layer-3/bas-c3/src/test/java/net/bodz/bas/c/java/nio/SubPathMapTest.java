@@ -8,7 +8,7 @@ import net.bodz.bas.c.java.util.Collections;
 public class SubPathMapTest
         extends Assert {
 
-    SubPathMap<String> map = new SubPathMap<>();
+    SubPathMap<String> map = new SubPathMap<String>();
 
     public SubPathMapTest() {
         map.put("/usr/lib/bar", "bar");

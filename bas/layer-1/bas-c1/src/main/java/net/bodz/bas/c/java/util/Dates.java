@@ -13,7 +13,7 @@ public class Dates
     }
 
     public static Date addDays(Date date, int days) {
-        return new Date(date.getTime() + 86400_000L * days);
+        return new Date(date.getTime() + 86400L * 1000 * days);
     }
 
     public static int getYear(Date date) {

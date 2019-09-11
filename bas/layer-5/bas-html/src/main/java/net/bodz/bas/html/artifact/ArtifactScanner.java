@@ -20,8 +20,8 @@ public class ArtifactScanner
 
     int seq;
 
-    Stack<IArtifactDependent> stack = new Stack<>();
-    Map<IArtifact, OrderItem> closure = new LinkedHashMap<>();
+    Stack<IArtifactDependent> stack = new Stack<IArtifactDependent>();
+    Map<IArtifact, OrderItem> closure = new LinkedHashMap<IArtifact, OrderItem>();
 
     public ArtifactScanner(IArtifactManager artifactManager, ArtifactType type, Boolean optional) {
         this.artifactManager = artifactManager;
@@ -30,7 +30,7 @@ public class ArtifactScanner
     }
 
     public Set<IArtifact> getSortedResult() {
-        List<OrderItem> list = new ArrayList<>(closure.size());
+        List<OrderItem> list = new ArrayList<OrderItem>(closure.size());
         for (OrderItem item : closure.values())
             if (type == null || type == item.artifact.getType()) {
                 list.add(item);
@@ -38,7 +38,7 @@ public class ArtifactScanner
 
         // Collections.sort(list, ItemComparator.INSTANCE);
 
-        LinkedHashSet<IArtifact> artifacts = new LinkedHashSet<>();
+        LinkedHashSet<IArtifact> artifacts = new LinkedHashSet<IArtifact>();
         for (OrderItem item : list)
             artifacts.add(item.artifact);
         return artifacts;

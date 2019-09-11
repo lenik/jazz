@@ -197,7 +197,7 @@ public abstract class AbstractPreorderMapOst<K, V>
     @Override
     public Map<Pair<K, K>, V> joinMap(K key1, K key2) {
         Map<K, IPreorderMap<K, V>> map1 = joinMap(key1);
-        Map<Pair<K, K>, V> map = new LinkedHashMap<>();
+        Map<Pair<K, K>, V> map = new LinkedHashMap<Pair<K, K>, V>();
         for (Entry<K, IPreorderMap<K, V>> entry1 : map1.entrySet()) {
             K key1j = entry1.getKey();
             for (Entry<K, V> entry2 : entry1.getValue().joinMap(key2).entrySet()) {
@@ -216,7 +216,7 @@ public abstract class AbstractPreorderMapOst<K, V>
 
     @Override
     public Set<V> joinValueSet(K key1, K key2) {
-        Set<V> set = new HashSet<>();
+        Set<V> set = new HashSet<V>();
         for (IPreorderMap<K, V> map2 : joinValueSet(key1))
             for (V val : map2.joinMap(key2).values())
                 set.add(val);

@@ -142,7 +142,9 @@ public class CLITask
                 Logger logger = (Logger) appType.getProperty("logger").getValue(program);
                 logger.setDelta(logLevel);
             }
-        } catch (CLISyntaxException | ApplyOptionException e) {
+        } catch (CLISyntaxException e) {
+            throw new BuildException(e.getMessage(), e);
+        } catch (ApplyOptionException e) {
             throw new BuildException(e.getMessage(), e);
         } catch (ReflectiveOperationException e) {
             throw new BuildException(e.getMessage(), e);

@@ -31,9 +31,11 @@ public class MovableByteBufferTest
     @Test
     public void testCapacityAlign() {
         MovableByteBuffer buf = new MovableByteBuffer(sample, 3, 5);
-        buf.resize(0b11010010);
+        // buf.resize(0b11010010);
+        buf.resize(0xD2);
         int capacity = buf.capacity();
-        assertEquals(0b1_0000_0000, capacity);
+        // assertEquals(0b1_0000_0000, capacity);
+        assertEquals(0x100, capacity);
     }
 
     public static void main(String[] args) {

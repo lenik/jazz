@@ -14,7 +14,7 @@ public class Command {
 
     public Command(String name) {
         setName(name);
-        this.parameters = new LinkedHashMap<>();
+        this.parameters = new LinkedHashMap<String, String>();
     }
 
     public String getName() {

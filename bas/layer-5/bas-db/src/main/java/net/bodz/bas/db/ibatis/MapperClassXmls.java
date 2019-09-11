@@ -23,8 +23,8 @@ public class MapperClassXmls
 
     static final Logger logger = LoggerFactory.getLogger(MapperClassXmls.class);
 
-    Map<String, MapperXml> map = new LinkedHashMap<>();
-    Set<Class<?>> withoutXmls = new LinkedHashSet<>();
+    Map<String, MapperXml> map = new LinkedHashMap<String, MapperXml>();
+    Set<Class<?>> withoutXmls = new LinkedHashSet<Class<?>>();
 
     public MapperClassXmls() {
         lastInstance = this;
@@ -32,7 +32,7 @@ public class MapperClassXmls
     }
 
     void load() {
-        Set<Class<?>> mappers = new TreeSet<>(ClassNameComparator.getInstance());
+        Set<Class<?>> mappers = new TreeSet<Class<?>>(ClassNameComparator.getInstance());
         for (Class<?> mapper : IndexedTypes.list(IMapper.class, true)) {
             mappers.add(mapper);
         }

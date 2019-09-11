@@ -43,14 +43,14 @@ public class AjaxResult
 
     public AjaxResult(Boolean sort) {
         if (sort == null) {
-            fields = new HashMap<>();
-            htmlUpdates = new HashMap<>();
+            fields = new HashMap<String, Object>();
+            htmlUpdates = new HashMap<String, IHtmlOut>();
         } else if (sort) {
-            fields = new TreeMap<>();
-            htmlUpdates = new TreeMap<>();
+            fields = new TreeMap<String, Object>();
+            htmlUpdates = new TreeMap<String, IHtmlOut>();
         } else {
-            fields = new LinkedHashMap<>();
-            htmlUpdates = new LinkedHashMap<>();
+            fields = new LinkedHashMap<String, Object>();
+            htmlUpdates = new LinkedHashMap<String, IHtmlOut>();
         }
         htmlOutputFormat = new HtmlOutputFormat();
     }

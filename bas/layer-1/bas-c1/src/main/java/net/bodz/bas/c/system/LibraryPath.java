@@ -86,7 +86,7 @@ public class LibraryPath {
                 v = (String[]) sysPathsField.get(null);
             else
                 v = (String[]) usrPathsField.get(null);
-            return new ArrayList<>(Arrays.asList(v));
+            return new ArrayList<String>(Arrays.asList(v));
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

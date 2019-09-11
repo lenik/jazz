@@ -29,7 +29,7 @@ public class Xjdoc2TextMap
     @Override
     public void processFile(FileHandler handler)
             throws Exception {
-        Map<String, iString> map = new LinkedHashMap<>();
+        Map<String, iString> map = new LinkedHashMap<String, iString>();
 
         IElementDoc doc = flatfDocLoader.load(handler.getInputSource());
         for (Entry<String, Object> entry : doc.getTagMap().entrySet()) {

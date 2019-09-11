@@ -27,10 +27,10 @@ public class LinkedType
         this.clazz = clazz;
 
         int n = types.size();
-        List<IPropertyMap> propertyMaps = new ArrayList<>(n);
-        List<IMethodMap> methodMaps = new ArrayList<>(n);
-        List<IConstructorMap> constructorMaps = new ArrayList<>(n);
-        List<IEventMap> eventMaps = new ArrayList<>(n);
+        List<IPropertyMap> propertyMaps = new ArrayList<IPropertyMap>(n);
+        List<IMethodMap> methodMaps = new ArrayList<IMethodMap>(n);
+        List<IConstructorMap> constructorMaps = new ArrayList<IConstructorMap>(n);
+        List<IEventMap> eventMaps = new ArrayList<IEventMap>(n);
 
         for (IType type : types) {
             IPropertyMap propertyMap = type.getPropertyMap();

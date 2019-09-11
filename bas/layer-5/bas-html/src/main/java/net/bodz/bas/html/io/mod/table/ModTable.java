@@ -21,7 +21,7 @@ public class ModTable
     public ModTable(HtmlDoc doc) {
         super(doc);
         headRow = new DataRow();
-        rows = new ArrayList<>();
+        rows = new ArrayList<DataRow>();
         footRow = new DataRow();
     }
 

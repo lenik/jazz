@@ -53,7 +53,7 @@ public class MovableByteBuffer
     }
 
     static int getRecommendCapacity(int size) {
-        if (size <= 0x4000_0000)
+        if (size <= 0x40000000)
             return IntMath.min2eGreaterOrEqualsTo(size);
         else if (size <= SIZE_MAX)
             return SIZE_MAX;

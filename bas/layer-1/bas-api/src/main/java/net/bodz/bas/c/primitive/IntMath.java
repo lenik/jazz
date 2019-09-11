@@ -145,13 +145,17 @@ public class IntMath {
         return out;
     }
 
-    static final int _swapper_H1 = 0b10101010_10101010_10101010_10101010;
+    // static final int _swapper_H1 = 0b10101010_10101010_10101010_10101010;
+    static final int _swapper_H1 = 0xAAAAAAAA;
     static final int _swapper_L1 = _swapper_H1 >> 1;
-    static final int _swapper_H2 = 0b11001100_11001100_11001100_11001100;
+    // static final int _swapper_H2 = 0b11001100_11001100_11001100_11001100;
+    static final int _swapper_H2 = 0xCCCCCCCC;
     static final int _swapper_L2 = _swapper_H2 >> 2;
-    static final int _swapper_H4 = 0b11110000_11110000_11110000_11110000;
+    // static final int _swapper_H4 = 0b11110000_11110000_11110000_11110000;
+    static final int _swapper_H4 = 0xF0F0F0F0;
     static final int _swapper_L4 = _swapper_H4 >> 4;
-    static final int _swapper_H8 = 0b11111111_00000000_11111111_00000000;
+    // static final int _swapper_H8 = 0b11111111_00000000_11111111_00000000;
+    static final int _swapper_H8 = 0xFF00FF00;
     static final int _swapper_L8 = _swapper_H8 >> 8;
 
     public static int reflect8(int n) {

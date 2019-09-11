@@ -20,7 +20,7 @@ public class TaggedType
 
     public TaggedType(Class<?> type, Collection<String> tags) {
         this.type = type;
-        this.tags = new HashSet<>();
+        this.tags = new HashSet<String>();
         this.tags.addAll(tags);
     }
 

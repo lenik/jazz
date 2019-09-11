@@ -109,7 +109,7 @@ public class IndexedTypes {
     }
 
     public static <S extends IPriority> List<S> loadInOrder(Class<S> service) {
-        List<S> list = new ArrayList<>();
+        List<S> list = new ArrayList<S>();
         for (S instance : ServiceLoader.load(service))
             list.add(instance);
         Collections.sort(list, PriorityComparator.INSTANCE);
@@ -117,7 +117,7 @@ public class IndexedTypes {
     }
 
     public static <S extends IPriority> List<S> loadInOrder(Class<S> service, ClassLoader classLoader) {
-        List<S> list = new ArrayList<>();
+        List<S> list = new ArrayList<S>();
         for (S instance : ServiceLoader.load(service, classLoader))
             list.add(instance);
         Collections.sort(list, PriorityComparator.INSTANCE);

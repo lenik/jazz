@@ -89,7 +89,7 @@ public class Err {
 
     static Set<Class<? extends Throwable>> unwraps;
     static {
-        unwraps = new HashSet<>();
+        unwraps = new HashSet<Class<? extends Throwable>>();
         unwraps.add(UndeclaredThrowableException.class);
         unwraps.add(InvocationTargetException.class);
         unwraps.add(RuntimizedException.class);

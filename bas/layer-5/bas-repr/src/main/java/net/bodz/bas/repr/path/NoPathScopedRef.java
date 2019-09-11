@@ -11,7 +11,7 @@ public class NoPathScopedRef<T>
     }
 
     public static <T> NoPathScopedRef<T> of(Class<T> objectType) {
-        return new NoPathScopedRef<>(objectType);
+        return new NoPathScopedRef<T>(objectType);
     }
 
     @Override

@@ -26,7 +26,7 @@ public enum DataParam {
     }
 
     static class Index {
-        static Map<Integer, DataParam> map = new HashMap<>();
+        static Map<Integer, DataParam> map = new HashMap<Integer, DataParam>();
     }
 
     public static DataParam forCode(int code) {

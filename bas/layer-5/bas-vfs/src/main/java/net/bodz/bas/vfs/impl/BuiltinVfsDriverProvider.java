@@ -17,7 +17,7 @@ public class BuiltinVfsDriverProvider
 
     @Override
     public Collection<? extends IVfsDriver> getDrivers() {
-        List<IVfsDriver> drivers = new ArrayList<>();
+        List<IVfsDriver> drivers = new ArrayList<IVfsDriver>();
         drivers.add(PojfVfsDriver.getInstance());
         drivers.add(NioVfsDriver.getInstance());
         drivers.add(URLVfsDriver.getInstance());

@@ -14,8 +14,8 @@ public class StackSet<T>
     private final Stack<T> stack;
 
     public StackSet() {
-        idSet = new IdentityHashSet<>();
-        stack = new Stack<>();
+        idSet = new IdentityHashSet<T>();
+        stack = new Stack<T>();
     }
 
     public boolean push(T elm) {

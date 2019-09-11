@@ -16,11 +16,11 @@ public class ReaderInputStreamTest
         // E4 BD A0 E5 A5 BD
         String s = "abc你好";
         Reader reader = new StringReader(s);
-
-        try (ReaderInputStream in = new ReaderInputStream(reader, "utf-8")) {
-            assertEquals((int) 'a', in.read());
-            assertEquals((int) 'b', in.read());
-            assertEquals((int) 'c', in.read());
+        ReaderInputStream in = new ReaderInputStream(reader, "utf-8");
+        try {
+            assertEquals('a', in.read());
+            assertEquals('b', in.read());
+            assertEquals('c', in.read());
 
             assertEquals(0xE4, in.read());
             assertEquals(0xBD, in.read());
@@ -28,6 +28,8 @@ public class ReaderInputStreamTest
             assertEquals(0xE5, in.read());
             assertEquals(0xA5, in.read());
             assertEquals(0xBD, in.read());
+        } finally {
+            reader.close();
         }
     }
 

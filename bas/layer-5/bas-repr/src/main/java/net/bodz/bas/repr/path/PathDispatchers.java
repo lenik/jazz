@@ -123,12 +123,12 @@ public class PathDispatchers
             this.tokens = tokens;
             this.q = q;
             if (checkDeadLoop)
-                marks = new IdentityHashSet<>();
+                marks = new IdentityHashSet<Object>();
         }
 
         public List<Process> run()
                 throws PathDispatchException {
-            List<Process> ended = new ArrayList<>();
+            List<Process> ended = new ArrayList<Process>();
 
             int index = 0;
             List<Process> procs = Arrays.asList(this);
@@ -136,7 +136,7 @@ public class PathDispatchers
                 // no more token: must be checked in every dispatcher implementation.
                 // if (tokens.isEmpty()) break;
 
-                List<Process> children = new ArrayList<>();
+                List<Process> children = new ArrayList<Process>();
                 for (Process proc : procs) {
                     for (Process child : proc.stepForward()) {
                         IPathArrival arrival = child.start;
@@ -199,7 +199,7 @@ public class PathDispatchers
                 if (i == 0)
                     child.marks = marks;
                 else
-                    child.marks = new IdentityHashSet<>(marks);
+                    child.marks = new IdentityHashSet<Object>(marks);
                 child.checkDeadLoop(child.start);
             }
             return children;

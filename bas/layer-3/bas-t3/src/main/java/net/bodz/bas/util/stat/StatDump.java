@@ -9,8 +9,8 @@ public class StatDump {
 
     StatFormatter formatter;
 
-    Map<String, ICounterDef<?>> usedCounterDefs = new LinkedHashMap<>();
-    Map<String, Integer> counterIndex = new HashMap<>();
+    Map<String, ICounterDef<?>> usedCounterDefs = new LinkedHashMap<String, ICounterDef<?>>();
+    Map<String, Integer> counterIndex = new HashMap<String, Integer>();
 
     int fieldCount;
     List<StatDumpLine> lines = new ArrayList<StatDumpLine>();
@@ -103,7 +103,8 @@ public class StatDump {
         if (formatter.isTreeGraph()) {
             TreeLineChars treeLineChars = formatter.getTreeLineChars();
 
-            List<Entry<String, StatNode>> entries = new ArrayList<>(node.getChildMap().entrySet());
+            List<Entry<String, StatNode>> entries//
+            = new ArrayList<Entry<String, StatNode>>(node.getChildMap().entrySet());
             int entryCount = entries.size();
 
             if (!prefix.isEmpty()) {

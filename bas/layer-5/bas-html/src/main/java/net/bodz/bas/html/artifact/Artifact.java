@@ -23,7 +23,7 @@ public class Artifact
     private ContentType contentType;
     private IAnchor anchor;
     private IArtifact parent;
-    private List<IArtifact> children = new ArrayList<>();
+    private List<IArtifact> children = new ArrayList<IArtifact>();
 
     private MutableArtifactDependent dependent = new MutableArtifactDependent();
 

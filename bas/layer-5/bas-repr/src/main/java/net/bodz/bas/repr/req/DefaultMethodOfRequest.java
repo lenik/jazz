@@ -14,10 +14,10 @@ import net.bodz.bas.t.variant.MutableVariantMap;
 /**
  * Find method name in the dispatch path, translate into request attributes and remove them from
  * path.
- * 
+ *
  * This preprocessor find method name in following order, [F] means "final", if there are multiple
  * non-final method name occurrences, the latter ones will overwrite the former ones.
- * 
+ *
  * <ol>
  * <li>HTTP request parameter: method:
  * <li>HTTP request parameter: m:
@@ -35,7 +35,7 @@ public class DefaultMethodOfRequest
     MutableVariantMap<String> parameters;
 
     public DefaultMethodOfRequest() {
-        this.parameters = new MutableVariantMap<>();
+        this.parameters = new MutableVariantMap<String>();
     }
 
     public DefaultMethodOfRequest(String methodName, Map<String, Object> parameterMap) {

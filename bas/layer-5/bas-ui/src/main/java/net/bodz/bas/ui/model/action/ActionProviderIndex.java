@@ -14,8 +14,8 @@ public class ActionProviderIndex {
     public static List<IActionProvider> generalActionProviders;
 
     static {
-        clsActionProviders = new TypePoMap<>();
-        generalActionProviders = new ArrayList<>();
+        clsActionProviders = new TypePoMap<List<IActionProvider>>();
+        generalActionProviders = new ArrayList<IActionProvider>();
 
         for (IActionProvider provider : ServiceLoader.load(IActionProvider.class)) {
             Class<?> targetClass = provider.getTargetClass();

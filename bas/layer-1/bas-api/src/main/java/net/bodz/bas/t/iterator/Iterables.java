@@ -32,7 +32,7 @@ public class Iterables {
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {
-                List<Iterator<T>> iterators = new ArrayList<>(iterables.size());
+                List<Iterator<T>> iterators = new ArrayList<Iterator<T>>(iterables.size());
 
                 for (Iterable<T> iterable : iterables)
                     iterators.add(iterable.iterator());
@@ -91,11 +91,11 @@ public class Iterables {
     }
 
     public static <T> Iterable<T> filter(Iterable<? extends T> iterable, IFilter<? super T> filter) {
-        return new FilteredIterable<>(iterable, filter);
+        return new FilteredIterable<T>(iterable, filter);
     }
 
     public static <S, T> Iterable<T> transform(Iterable<S> iterable, ITransformer<S, T> transformer) {
-        return new TransformedIterable<>(iterable, transformer);
+        return new TransformedIterable<S, T>(iterable, transformer);
     }
 
 }

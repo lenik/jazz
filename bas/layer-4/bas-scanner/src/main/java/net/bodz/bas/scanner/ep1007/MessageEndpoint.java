@@ -23,7 +23,7 @@ public enum MessageEndpoint {
     }
 
     static class Index {
-        static Map<Integer, MessageEndpoint> map = new HashMap<>();
+        static Map<Integer, MessageEndpoint> map = new HashMap<Integer, MessageEndpoint>();
     }
 
     public static MessageEndpoint forCode(int code) {

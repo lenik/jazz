@@ -27,7 +27,7 @@ public class ExtraFieldMap
     static Map<Integer, ExtraFieldMetadata> tagMetaMap;
 
     static {
-        tagMetaMap = new HashMap<>();
+        tagMetaMap = new HashMap<Integer, ExtraFieldMetadata>();
 
         for (ExtraField inst : ServiceLoader.load(ExtraField.class)) {
             Class<? extends ExtraField> clazz = inst.getClass();

@@ -63,6 +63,7 @@ public abstract class CounterDef<T extends Number>
         return valueType;
     }
 
+    @Override
     public boolean appxEquals(T a, T b) {
         return a.equals(b);
     }
@@ -141,7 +142,7 @@ public abstract class CounterDef<T extends Number>
 
     static Map<Class<?>, Integer> typeMap;
     static {
-        typeMap = new HashMap<>();
+        typeMap = new HashMap<Class<?>, Integer>();
         typeMap.put(byte.class, keyByte);
         typeMap.put(short.class, keyShort);
         typeMap.put(int.class, keyInteger);

@@ -58,7 +58,7 @@ public class TokenTrie<T>
         private T data;
 
         public Node() {
-            childMap = new HashMap<>();
+            childMap = new HashMap<String, Node<T>>();
         }
 
         @Override

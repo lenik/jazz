@@ -61,7 +61,7 @@ public class MultipleTargets
             return Arrays.asList(arrival);
 
         MultipleTargets targets = (MultipleTargets) arrival.getTarget();
-        List<IPathArrival> arrivals = new ArrayList<>(targets.size());
+        List<IPathArrival> arrivals = new ArrayList<IPathArrival>(targets.size());
         for (Object target : targets) {
             PathArrival clone = new PathArrival(arrival);
             clone.setTarget(target);

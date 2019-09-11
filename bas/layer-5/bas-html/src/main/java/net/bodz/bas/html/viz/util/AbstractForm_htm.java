@@ -66,7 +66,7 @@ public abstract class AbstractForm_htm<T>
                 continue;
 
             // filter field[category] -> selection
-            List<IFieldDecl> selection = new ArrayList<>();
+            List<IFieldDecl> selection = new ArrayList<IFieldDecl>();
             for (IFieldDecl fieldDecl : group)
                 if (filterField(fieldDecl))
                     selection.add(fieldDecl);

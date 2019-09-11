@@ -18,7 +18,7 @@ public abstract class UiLocationDecl
     private Set<UiLocationDecl> children;
 
     public UiLocationDecl() {
-        children = new TreeSet<>(ElementComparator.LOCALE);
+        children = new TreeSet<UiLocationDecl>(ElementComparator.LOCALE);
     }
 
     public abstract LocationType getLocationType();

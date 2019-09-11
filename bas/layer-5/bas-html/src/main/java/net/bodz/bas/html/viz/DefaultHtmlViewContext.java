@@ -20,7 +20,7 @@ public class DefaultHtmlViewContext
     public DefaultHtmlViewContext(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
         headData = new HtmlHeadData();
-        viewBuilderCache = new IdentityHashMap<>();
+        viewBuilderCache = new IdentityHashMap<Object, IHtmlViewBuilder<?>>();
     }
 
     @Override

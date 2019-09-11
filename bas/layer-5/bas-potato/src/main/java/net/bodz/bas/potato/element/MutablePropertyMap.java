@@ -20,9 +20,9 @@ public class MutablePropertyMap
 
     protected Map<String, IProperty> createMap(boolean sorted) {
         if (sorted)
-            return new TreeMap<>(DefaultComparator.getInstance());
+            return new TreeMap<String, IProperty>(DefaultComparator.getInstance());
         else
-            return new LinkedHashMap<>();
+            return new LinkedHashMap<String, IProperty>();
     }
 
     @Override

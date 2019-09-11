@@ -14,7 +14,7 @@ public class MutableActionContext
     private ITransactionLog transactionLog;
 
     public MutableActionContext() {
-        this.attributes = new HashMap<>();
+        this.attributes = new HashMap<String, Object>();
     }
 
     public Map<String, Object> getAttributeMap() {
