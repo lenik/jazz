@@ -33,25 +33,25 @@ public class ServletContextConfig {
     int portNumber;
     String contextPath = "";
 
-    List<String> welcomeFiles = new ArrayList<>();
-    Map<String, String> initParamMap = new HashMap<>();
+    List<String> welcomeFiles = new ArrayList<String>();
+    Map<String, String> initParamMap = new HashMap<String, String>();
 
-    UseNet<IPluginDescriptor> pluginNet = new UseNet<>();
+    UseNet<IPluginDescriptor> pluginNet = new UseNet<IPluginDescriptor>();
     PluginDescriptorComparator pluginCmp = new PluginDescriptorComparator(pluginNet);
-    Map<String, ServletDescriptor> servletMap = new TreeMap<>();
-    Map<String, FilterDescriptor> filterMap = new TreeMap<>();
+    Map<String, ServletDescriptor> servletMap = new TreeMap<String, ServletDescriptor>();
+    Map<String, FilterDescriptor> filterMap = new TreeMap<String, FilterDescriptor>();
     int servletIndex;
     int filterIndex;
 
-    List<IServletContextListener> servletContextListeners = new ArrayList<>();
-    List<IServletRequestListener> servletRequestListeners = new ArrayList<>();
-    List<IServletContextAttributeListener> servletContextAttributeListeners = new ArrayList<>();
-    List<IServletRequestAttributeListener> servletRequestAttributeListeners = new ArrayList<>();
+    List<IServletContextListener> servletContextListeners = new ArrayList<IServletContextListener>();
+    List<IServletRequestListener> servletRequestListeners = new ArrayList<IServletRequestListener>();
+    List<IServletContextAttributeListener> servletContextAttributeListeners = new ArrayList<IServletContextAttributeListener>();
+    List<IServletRequestAttributeListener> servletRequestAttributeListeners = new ArrayList<IServletRequestAttributeListener>();
 
-    List<IHttpSessionListener> sessionListeners = new ArrayList<>();
-    List<IHttpSessionAttributeListener> sessionAttributeListeners = new ArrayList<>();
-    List<IHttpSessionActivationListener> sessionActivationListeners = new ArrayList<>();
-    List<IHttpSessionBindingListener> sessionBindingListeners = new ArrayList<>();
+    List<IHttpSessionListener> sessionListeners = new ArrayList<IHttpSessionListener>();
+    List<IHttpSessionAttributeListener> sessionAttributeListeners = new ArrayList<IHttpSessionAttributeListener>();
+    List<IHttpSessionActivationListener> sessionActivationListeners = new ArrayList<IHttpSessionActivationListener>();
+    List<IHttpSessionBindingListener> sessionBindingListeners = new ArrayList<IHttpSessionBindingListener>();
 
     public ServletContextConfig() {
     }
@@ -160,7 +160,7 @@ public class ServletContextConfig {
     }
 
     public List<FilterDescriptor> getFilters() {
-        List<FilterDescriptor> list = new ArrayList<>(filterMap.size());
+        List<FilterDescriptor> list = new ArrayList<FilterDescriptor>(filterMap.size());
         list.addAll(filterMap.values());
         Collections.sort(list, pluginCmp);
         return list;
@@ -192,7 +192,7 @@ public class ServletContextConfig {
     }
 
     public List<ServletDescriptor> getServlets() {
-        List<ServletDescriptor> list = new ArrayList<>(servletMap.size());
+        List<ServletDescriptor> list = new ArrayList<ServletDescriptor>(servletMap.size());
         list.addAll(servletMap.values());
         Collections.sort(list, pluginCmp);
         return list;

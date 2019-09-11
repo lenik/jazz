@@ -11,7 +11,8 @@ import net.bodz.bas.t.order.PriorityComparator;
 
 public class VarConverterExtensions {
 
-    static Map<Class<?>, NavigableSet<IVarConverterExtension<?>>> extensions = new HashMap<>();
+    static Map<Class<?>, NavigableSet<IVarConverterExtension<?>>> extensions //
+    = new HashMap<Class<?>, NavigableSet<IVarConverterExtension<?>>>();
 
     static {
         load();
@@ -22,7 +23,7 @@ public class VarConverterExtensions {
             Class<?> type = ext.getType();
             NavigableSet<IVarConverterExtension<?>> set = extensions.get(type);
             if (set == null) {
-                set = new TreeSet<>(PriorityComparator.INSTANCE);
+                set = new TreeSet<IVarConverterExtension<?>>(PriorityComparator.INSTANCE);
                 extensions.put(type, set);
             }
             set.add(ext);
@@ -35,8 +36,7 @@ public class VarConverterExtensions {
                 .get(type);
         if (set == null)
             // Java 8: set = Collections.emptySortedSet();
-            set = new TreeSet<>();
+            set = new TreeSet<IVarConverterExtension<T>>();
         return set;
     }
-
 }

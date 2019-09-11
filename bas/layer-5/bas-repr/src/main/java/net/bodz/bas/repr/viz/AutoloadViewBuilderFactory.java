@@ -18,11 +18,11 @@ public abstract class AutoloadViewBuilderFactory
 
     static final Logger logger = LoggerFactory.getLogger(AutoloadViewBuilderFactory.class);
 
-    private TypePoMap<TaggedSet<IViewBuilder<?>>> typeMap = new TypePoMap<>();
+    private TypePoMap<TaggedSet<IViewBuilder<?>>> typeMap = new TypePoMap<TaggedSet<IViewBuilder<?>>>();
 
     @Override
     protected <T> ViewBuilderSet<T> findViewBuilders(Class<? extends T> clazz, String... features) {
-        ViewBuilderSet<T> list = new ViewBuilderSet<>();
+        ViewBuilderSet<T> list = new ViewBuilderSet<T>();
         for (Class<?> c : TypeChain.ancestors(clazz, Object.class)) {
             TaggedSet<IViewBuilder<?>> tset = typeMap.get(c);
 
@@ -41,7 +41,7 @@ public abstract class AutoloadViewBuilderFactory
             if (tset != null) {
                 @SuppressWarnings("unchecked")
                 Collection<? extends IViewBuilder<T>> selection //
-                = (Collection<? extends IViewBuilder<T>>) (Object) tset.selectForAll(features);
+                = (Collection<? extends IViewBuilder<T>>) tset.selectForAll(features);
                 if (!selection.isEmpty()) {
                     list.addAll(selection);
                     break; // stop if vbo for any subclass exists.
@@ -58,7 +58,7 @@ public abstract class AutoloadViewBuilderFactory
         if (tset == null) {
             if (autoCreate) {
                 // tset = new QmiTaggedSet<>();
-                tset = new FullSearchTaggedSet<>();
+                tset = new FullSearchTaggedSet<IViewBuilder<?>>();
                 typeMap.put(clazz, tset);
             } else {
                 // set = TaggedSet.fn.empty();

@@ -27,9 +27,9 @@ public class SortedList<E>
      *            Should contains only {@link Comparable} elements, otherwise
      *            {@link ClassCastException} may be thrown when sorting.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public SortedList(List<E> sortedList) {
-        this(sortedList, (Comparator<? super E>) new NaturalComparator<>());
+        this(sortedList, new NaturalComparator());
     }
 
     @Override

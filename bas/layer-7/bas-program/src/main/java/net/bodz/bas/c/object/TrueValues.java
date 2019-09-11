@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class TrueValues {
 
-    static Map<Class<?>, Object> trueValueMap = new HashMap<>();
+    static Map<Class<?>, Object> trueValueMap = new HashMap<Class<?>, Object>();
     static {
         trueValueMap.put(boolean.class, true);
         trueValueMap.put(Boolean.class, true);

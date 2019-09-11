@@ -7,7 +7,7 @@ public class Org {
 
     String name;
 
-    List<Author> authors = new ArrayList<>();
+    List<Author> authors = new ArrayList<Author>();
 
     public Org(String name) {
         this.name = name;

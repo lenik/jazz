@@ -13,9 +13,9 @@ public abstract class AbstractEndpointRegistry<config_t extends IEndpointConfig>
     List<String> keys;
 
     public AbstractEndpointRegistry() {
-        map = new HashMap<>();
-        tagmap = new FullSearchTaggedSet<>();
-        keys = new ArrayList<>();
+        map = new HashMap<String, config_t>();
+        tagmap = new FullSearchTaggedSet<String>();
+        keys = new ArrayList<String>();
     }
 
     @Override
@@ -49,7 +49,7 @@ public abstract class AbstractEndpointRegistry<config_t extends IEndpointConfig>
     @Override
     public List<config_t> selectConfigs(String... tags) {
         Collection<String> names = tagmap.selectForAll(tags);
-        List<config_t> list = new ArrayList<>(names.size());
+        List<config_t> list = new ArrayList<config_t>(names.size());
         for (String name : names)
             list.add(getConfig(name));
         return list;
@@ -62,6 +62,7 @@ public abstract class AbstractEndpointRegistry<config_t extends IEndpointConfig>
         keys.add(name);
     }
 
+    @Override
     public void addConfig(String name, config_t config, String... tags) {
         addConfig(name, config, Arrays.asList(tags));
     }

@@ -53,8 +53,8 @@ public class FileURL {
         if (url == null)
             return null;
 
-        switch (url.getProtocol()) {
-        case "file":
+        String protocol = url.getProtocol();
+        if ("file".equals(protocol)) {
             URI uri;
             try {
                 uri = url.toURI();
@@ -62,10 +62,8 @@ public class FileURL {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }
             return new File(uri);
-
-        default:
-            return fallback;
         }
+        return fallback;
     }
 
     /**
@@ -77,16 +75,14 @@ public class FileURL {
         if (url == null)
             return null;
 
-        switch (url.getProtocol()) {
-        case "file":
+        String protocol = url.getProtocol();
+        if ("file".equals(protocol))
             return new File(url.getFile());
 
-        case "jar":
+        if ("jar".equals(protocol))
             return getJarFile(url);
 
-        default:
-            return null;
-        }
+        return null;
     }
 
     public static File toNearestFile(URL url, String removeSubPath, File fallback) {
@@ -125,15 +121,16 @@ public class FileURL {
             throws IOException {
         if (url == null)
             throw new NullPointerException("url");
-        switch (url.getProtocol()) {
-        case "file":
+        String protocol = url.getProtocol();
+        if ("file".equals(protocol)) {
             File file = FileURL.toFile(url, null);
             if (file.exists())
                 return file.length();
             else
                 return notExisted;
+        }
 
-        case "jar":
+        if ("jar".equals(protocol)) {
             Entry<ZipFile, ZipEntry> pair = openEntry(url);
             if (pair == null)
                 return null;
@@ -142,25 +139,25 @@ public class FileURL {
             long size = zipEntry.getSize();
             zipFile.close();
             return size;
-
-        default:
-            return null;
         }
+
+        return null;
     }
 
     public static Long lastModified(URL url, Long notExisted)
             throws IOException {
         if (url == null)
             throw new NullPointerException("url");
-        switch (url.getProtocol()) {
-        case "file":
+        String protocol = url.getProtocol();
+        if ("file".equals(protocol)) {
             File file = FileURL.toFile(url, null);
             if (file.exists())
                 return file.lastModified();
             else
                 return notExisted;
+        }
 
-        case "jar":
+        if ("jar".equals(protocol)) {
             Entry<ZipFile, ZipEntry> pair = openEntry(url);
             if (pair == null)
                 return null;
@@ -169,10 +166,9 @@ public class FileURL {
             long time = zipEntry.getTime();
             zipFile.close();
             return time;
-
-        default:
-            return null;
         }
+
+        return null;
     }
 
     static File getJarFile(URL jarURL) {

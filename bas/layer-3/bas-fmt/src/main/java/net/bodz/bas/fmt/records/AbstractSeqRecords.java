@@ -28,7 +28,7 @@ public abstract class AbstractSeqRecords<T>
     }
 
     public List<T> toList(long offset, long limit) {
-        List<T> list = new ArrayList<>();
+        List<T> list = new ArrayList<T>();
         long index = 0;
         for (T item : this) {
             long pos = index++ - offset;

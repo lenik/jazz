@@ -14,15 +14,19 @@ import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenPomXml;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
 
 @ProgramName("lib-updater")
 public class LibUpdater {
 
+    static final Logger logger = LoggerFactory.getLogger(LibUpdater.class);
+
     ClassLoader loader = getClass().getClassLoader();
     MavenPomDir project;
 
-    Set<String> unpacks = new HashSet<>();
+    Set<String> unpacks = new HashSet<String>();
 
     public LibUpdater() {
         project = MavenPomDir.closest(SysProps.userWorkDir);
@@ -42,6 +46,13 @@ public class LibUpdater {
             throws Exception {
         File libdir = new File("lib").getCanonicalFile();
         System.out.println("libdir: " + libdir);
+        if (libdir.exists()) {
+            logger.debug("Create non-existing libdir: " + libdir);
+            if (!libdir.mkdirs()) {
+                logger.error("Failed to mkdir.");
+                System.exit(1);
+            }
+        }
 
         File orders = new File("order.lst");
         PrintStream out = new PrintStream(orders);

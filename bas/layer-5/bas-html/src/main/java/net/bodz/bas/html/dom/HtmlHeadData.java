@@ -25,13 +25,13 @@ public class HtmlHeadData
     private List<MutableStyle> styles;
 
     public HtmlHeadData() {
-        metaMap = new TreeMap<>();
-        httpEquivMetaMap = new TreeMap<>();
+        metaMap = new TreeMap<String, String>();
+        httpEquivMetaMap = new TreeMap<String, String>();
 
         optHead = new MutableHead(null);
-        links = new ArrayList<>();
-        scripts = new ArrayList<>();
-        styles = new ArrayList<>();
+        links = new ArrayList<MutableLink>();
+        scripts = new ArrayList<MutableScript>();
+        styles = new ArrayList<MutableStyle>();
     }
 
     @Override

@@ -138,7 +138,7 @@ public class Iterators {
     }
 
     public static <S, T> Iterator<T> transform(Iterator<S> iterable, ITransformer<S, T> transformer) {
-        return new TransformedIterator<>(iterable, transformer);
+        return new TransformedIterator<S, T>(iterable, transformer);
     }
 
     public static <S, T> Iterator<T> transform(Enumeration<? extends S> enm, ITransformer<S, T> transformer) {

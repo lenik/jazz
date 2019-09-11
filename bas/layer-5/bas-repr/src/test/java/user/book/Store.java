@@ -7,7 +7,7 @@ public class Store {
 
     String logo;
 
-    List<Book> books = new ArrayList<>();
+    List<Book> books = new ArrayList<Book>();
 
     public Store(String logo) {
         this.logo = logo;

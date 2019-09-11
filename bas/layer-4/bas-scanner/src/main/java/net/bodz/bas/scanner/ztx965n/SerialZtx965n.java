@@ -64,7 +64,7 @@ public class SerialZtx965n
 
         RxPacket rx = RxPacket.start(in, tx);
         int nTags = rx.readByte() & 0xFF;
-        List<Words> list = new ArrayList<>();
+        List<Words> list = new ArrayList<Words>();
         for (int i = 0; i < nTags; i++) {
             Words words = new Words().parse(rx);
             list.add(words);
@@ -82,7 +82,7 @@ public class SerialZtx965n
         tx.end();
 
         RxPacket rx = RxPacket.start(in, tx);
-        List<Words> list = new ArrayList<>();
+        List<Words> list = new ArrayList<Words>();
         for (int i = 0; i < count; i++) {
             Words words = new Words().parse(rx);
             list.add(words);
@@ -168,6 +168,7 @@ public class SerialZtx965n
         rx.readDataAndCheck();
     }
 
+    @Override
     public EpcAndData readEpcAndData(Integer address, int memBank, int start, int len)
             throws IOException, Ztx965nException {
         TxPacket tx = TxPacket.start(out, CommandCode.ReadEpcAndData);
@@ -451,7 +452,7 @@ public class SerialZtx965n
 
         RxPacket rx = RxPacket.start(in, tx);
         int nRecord = rx.readByte() & 0xFF;
-        List<TagRecord> list = new ArrayList<>();
+        List<TagRecord> list = new ArrayList<TagRecord>();
         for (int i = 0; i < nRecord; i++) {
             TagRecord record = new TagRecord().parse(rx);
             list.add(record);

@@ -20,8 +20,8 @@ public abstract class AbstractVarConverter<T>
         implements IVarConverter<T> {
 
     final Class<T> type;
-    final Map<Class<?>, ITransformer<Object, T>> frommap = new HashMap<>();
-    final Map<Class<?>, ITransformer<T, ?>> tomap = new HashMap<>();
+    final Map<Class<?>, ITransformer<Object, T>> frommap = new HashMap<Class<?>, ITransformer<Object, T>>();
+    final Map<Class<?>, ITransformer<T, ?>> tomap = new HashMap<Class<?>, ITransformer<T, ?>>();
     final Set<IVarConverterExtension<T>> extensions;
 
     public AbstractVarConverter(Class<T> type) {

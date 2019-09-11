@@ -17,8 +17,8 @@ public abstract class StateGroup {
     private String name;
     private int nextId;
 
-    private Map<Integer, State> keyMap = new TreeMap<>(DefaultComparator.getInstance());
-    private Map<String, State> nameMap = new TreeMap<>(DefaultComparator.getInstance());
+    private Map<Integer, State> keyMap = new TreeMap<Integer, State>(DefaultComparator.getInstance());
+    private Map<String, State> nameMap = new TreeMap<String, State>(DefaultComparator.getInstance());
 
     public StateGroup() {
         this(null, null);

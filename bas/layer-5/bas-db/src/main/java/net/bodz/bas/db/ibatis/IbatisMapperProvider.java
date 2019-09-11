@@ -59,7 +59,7 @@ public class IbatisMapperProvider
     SqlSessionFactory buildSqlSessionFactory() {
         Configuration config = new Configuration();
 
-        List<IIbatisConfigurer> configurers = new ArrayList<>();
+        List<IIbatisConfigurer> configurers = new ArrayList<IIbatisConfigurer>();
         for (IIbatisConfigurer configurer : ServiceLoader.load(IIbatisConfigurer.class))
             configurers.add(configurer);
 

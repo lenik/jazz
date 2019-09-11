@@ -10,7 +10,7 @@ public abstract class MutableActionProvider
     private List<IAction> actions;
 
     public MutableActionProvider() {
-        actions = new ArrayList<>();
+        actions = new ArrayList<IAction>();
     }
 
     @Override

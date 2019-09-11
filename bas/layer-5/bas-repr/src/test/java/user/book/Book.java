@@ -13,10 +13,10 @@ public class Book {
      * @http.header Comment: page lists.
      */
     // Default: @PathToken("page")
-    List<Page> pages = new ArrayList<>();
+    List<Page> pages = new ArrayList<Page>();
 
     @PathToken("page:alt")
-    List<Page> altPageList = new ArrayList<>();
+    List<Page> altPageList = new ArrayList<Page>();
 
     Author author;
 

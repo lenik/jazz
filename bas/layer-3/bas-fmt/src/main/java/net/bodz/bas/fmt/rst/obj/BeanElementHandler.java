@@ -21,7 +21,7 @@ public class BeanElementHandler
         extends AbstractElementHandler {
 
     private Class<?> type;
-    private Map<String, PropertyDescriptor> properties = new LinkedHashMap<>();
+    private Map<String, PropertyDescriptor> properties = new LinkedHashMap<String, PropertyDescriptor>();
     private Object obj;
 
     public BeanElementHandler() {

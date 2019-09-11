@@ -14,7 +14,7 @@ public class MutableUiStyleDeclaration
     IFontType fontType;
     IStrokeType strokeType;
     IFillType fillType;
-    Map<ImageUsage, IImageData> imageMap = new HashMap<>();
+    Map<ImageUsage, IImageData> imageMap = new HashMap<ImageUsage, IImageData>();
 
     Boolean enabled;
     Boolean readOnly;

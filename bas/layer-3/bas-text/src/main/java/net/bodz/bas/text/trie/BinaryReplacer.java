@@ -9,7 +9,7 @@ import net.bodz.bas.meta.decl.Replacement;
 
 public class BinaryReplacer {
 
-    private final ByteTrie<byte[]> trie = new ByteTrie<>();
+    private final ByteTrie<byte[]> trie = new ByteTrie<byte[]>();
     private boolean wholeOnly = true;
 
     public BinaryReplacer(boolean wholeOnly) {

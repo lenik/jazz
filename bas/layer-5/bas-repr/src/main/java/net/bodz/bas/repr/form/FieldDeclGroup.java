@@ -39,7 +39,7 @@ public class FieldDeclGroup
     }
 
     public List<IFieldDecl> select(Set<String> includes, Set<String> excludes) {
-        List<IFieldDecl> fields = new ArrayList<>();
+        List<IFieldDecl> fields = new ArrayList<IFieldDecl>();
         for (IFieldDecl field : this) {
             String name = field.getName();
             if (excludes != null && excludes.contains(name))

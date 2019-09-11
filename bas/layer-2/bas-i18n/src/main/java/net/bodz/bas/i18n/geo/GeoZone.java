@@ -24,7 +24,7 @@ public class GeoZone {
     }
 
     public List<GeoZone> bottomUp() {
-        List<GeoZone> list = new ArrayList<>();
+        List<GeoZone> list = new ArrayList<GeoZone>();
         GeoZone node = this;
         while (node != null) {
             list.add(node);

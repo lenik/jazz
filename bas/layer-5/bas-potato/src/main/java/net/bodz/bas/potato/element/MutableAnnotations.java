@@ -66,7 +66,7 @@ public class MutableAnnotations
 
     @Override
     public Annotation[] getAnnotations() {
-        Map<Class<?>, Annotation> all = new HashMap<>();
+        Map<Class<?>, Annotation> all = new HashMap<Class<?>, Annotation>();
         dumpAnnotations(all);
         Annotation[] array = all.values().toArray(new Annotation[0]);
         return array;
@@ -82,7 +82,7 @@ public class MutableAnnotations
 
     @Override
     public Map<Class<?>, Annotation> getAnnotationMap() {
-        Map<Class<?>, Annotation> all = new HashMap<>();
+        Map<Class<?>, Annotation> all = new HashMap<Class<?>, Annotation>();
         dumpAnnotations(all);
         return all;
     }

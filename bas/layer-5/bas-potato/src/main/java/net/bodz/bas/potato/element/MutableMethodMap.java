@@ -20,9 +20,9 @@ public class MutableMethodMap
 
     protected Map<MethodSignature, IMethod> createMap(boolean sorted) {
         if (sorted)
-            return new TreeMap<>(MethodSignatureComparator.getInstance());
+            return new TreeMap<MethodSignature, IMethod>(MethodSignatureComparator.getInstance());
         else
-            return new LinkedHashMap<>();
+            return new LinkedHashMap<MethodSignature, IMethod>();
     }
 
     @Override

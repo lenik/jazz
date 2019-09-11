@@ -32,7 +32,7 @@ public class MapDumper {
     public <K> void dump(Map<K, ?> map) {
         Collection<K> keys = map.keySet();
         if (comparator != null) {
-            List<K> sortedList = new ArrayList<>(keys);
+            List<K> sortedList = new ArrayList<K>(keys);
             Collections.sort(sortedList, comparator);
             keys = sortedList;
         }

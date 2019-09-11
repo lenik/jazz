@@ -23,7 +23,7 @@ public class Throwable_htm
     PackageMap<String> pkgStyleMap;
 
     public Throwable_htm() {
-        pkgStyleMap = new PackageMap<>();
+        pkgStyleMap = new PackageMap<String>();
         pkgStyleMap.put("net.bodz", "p-bodz");
         pkgStyleMap.put("org.eclipse", "p-eclipse");
         pkgStyleMap.put("java", "p-java");

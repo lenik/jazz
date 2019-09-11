@@ -221,11 +221,11 @@ public class BeanJsonLoader
                 coll = (Collection<Object>) ctor0.newInstance();
             } catch (NoSuchMethodException e) {
                 if (List.class.isAssignableFrom(type))
-                    coll = new ArrayList<>();
+                    coll = new ArrayList<Object>();
                 else if (Set.class.isAssignableFrom(type))
-                    coll = new LinkedHashSet<>();
+                    coll = new LinkedHashSet<Object>();
                 else if (Queue.class.isAssignableFrom(type))
-                    coll = new LinkedBlockingDeque<>();
+                    coll = new LinkedBlockingDeque<Object>();
             }
             if (coll != null) {
                 JSONArray jsonArray = (JSONArray) jsonVal;
@@ -249,7 +249,7 @@ public class BeanJsonLoader
                     Constructor<?> ctor0 = type.getConstructor();
                     map = (Map<String, Object>) ctor0.newInstance();
                 } catch (NoSuchMethodException e) {
-                    map = new HashMap<>();
+                    map = new HashMap<String, Object>();
                 }
                 if (map != null) {
                     JSONObject jsonMap = (JSONObject) jsonVal;

@@ -13,7 +13,7 @@ public class AbstractCounterGroup
     Map<String, ICounter<?>> counterMap;
 
     public AbstractCounterGroup() {
-        counterMap = new TreeMap<>();
+        counterMap = new TreeMap<String, ICounter<?>>();
     }
 
     @Override

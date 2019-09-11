@@ -61,14 +61,11 @@ public class Css3Int
             return new Css3Int(num);
         }
 
-        switch (str) {
-        case "auto":
+        if ("auto".equals(str))
             return new Css3Int(AUTO, 0);
-        case "none":
+        if ("none".equals(str))
             return new Css3Int(NONE, 0);
-        default:
-            return fail;
-        }
+        return fail;
     }
 
 }

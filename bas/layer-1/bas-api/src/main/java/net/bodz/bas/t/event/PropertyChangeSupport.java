@@ -21,7 +21,7 @@ public class PropertyChangeSupport
     public PropertyChangeSupport(Object source) {
         this.source = source;
         this.superListeners = new ArrayList<IPropertyChangeListener>();
-        this.namedListeners = new HashMap<>();
+        this.namedListeners = new HashMap<String, List<IPropertyChangeListener>>();
     }
 
     @Override

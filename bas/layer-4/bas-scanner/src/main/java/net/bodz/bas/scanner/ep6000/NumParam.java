@@ -313,7 +313,7 @@ public enum NumParam {
     }
 
     static class Index {
-        static Map<Integer, NumParam> map = new HashMap<>();
+        static Map<Integer, NumParam> map = new HashMap<Integer, NumParam>();
     }
 
     public static NumParam forCode(int code) {

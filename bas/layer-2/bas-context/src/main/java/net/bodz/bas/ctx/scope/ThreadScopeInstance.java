@@ -7,7 +7,7 @@ import java.util.Map;
 public class ThreadScopeInstance
         extends MutableScopeInstance {
 
-    private static Map<Thread, Map<String, Object>> tlsVars = new HashMap<>();
+    private static Map<Thread, Map<String, Object>> tlsVars = new HashMap<Thread, Map<String, Object>>();
 
     private Map<String, Object> vars;
 
@@ -15,7 +15,7 @@ public class ThreadScopeInstance
         super(thread.getName(), thread);
         Map<String, Object> vars = tlsVars.get(thread);
         if (vars == null) {
-            vars = new HashMap<>();
+            vars = new HashMap<String, Object>();
             tlsVars.put(thread, vars);
         }
         this.vars = vars;

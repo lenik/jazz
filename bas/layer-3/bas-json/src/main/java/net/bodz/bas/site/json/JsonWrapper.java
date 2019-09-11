@@ -20,7 +20,7 @@ public class JsonWrapper {
     boolean includeNull = false;
     boolean includeFalse = false;
     int maxDepth = -1;
-    Map<String, String> formats = new HashMap<>();
+    Map<String, String> formats = new HashMap<String, String>();
 
     public JsonWrapper(String key, Object obj) {
         this.key = key;

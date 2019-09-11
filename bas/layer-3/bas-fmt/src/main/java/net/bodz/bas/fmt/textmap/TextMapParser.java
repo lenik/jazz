@@ -26,7 +26,7 @@ public class TextMapParser<K, V>
     }
 
     public Map<K, V> toMap() {
-        Map<K, V> map = new LinkedHashMap<>();
+        Map<K, V> map = new LinkedHashMap<K, V>();
         for (Entry<K, V> entry : this)
             map.put(entry.getKey(), entry.getValue());
         return map;

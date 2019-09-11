@@ -23,7 +23,7 @@ public class OverloadedMethod
     private int minParameterCount;
 
     private List<IMethod> methods;
-    private Map<TypeArray, Object> tvConvMap = new HashMap<>();
+    private Map<TypeArray, Object> tvConvMap = new HashMap<TypeArray, Object>();
     private static Object NONE = new Object();
 
     public OverloadedMethod(Class<?> declaringType, List<IMethod> methods, IElementDoc doc) {

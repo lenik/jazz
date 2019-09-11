@@ -120,7 +120,7 @@ public class KeyMap<K>
         @Override
         public Iterator<Map.Entry<K, K>> iterator() {
             Iterator<K> iterator = set.iterator();
-            return new EntryIterator<>(iterator);
+            return new EntryIterator<K>(iterator);
         }
 
         @Override

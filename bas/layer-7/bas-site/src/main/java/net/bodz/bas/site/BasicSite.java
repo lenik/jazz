@@ -32,7 +32,7 @@ public abstract class BasicSite
         implements IQueryable, IPathDispatchable, ICrawlable {
 
     private IQueryable queryContext;
-    private Map<String, IJazzModule> modules = new TreeMap<>();
+    private Map<String, IJazzModule> modules = new TreeMap<String, IJazzModule>();
     protected final PathMap pathMap;
 
     public BasicSite() {

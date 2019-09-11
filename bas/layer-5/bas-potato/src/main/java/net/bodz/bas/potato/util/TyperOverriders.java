@@ -15,7 +15,7 @@ public class TyperOverriders {
         return map.get(typerClass);
     }
 
-    static Map<Class<?>, Class<? extends Annotation>> map = new HashMap<>();
+    static Map<Class<?>, Class<? extends Annotation>> map = new HashMap<Class<?>, Class<? extends Annotation>>();
 
     static {
         try {

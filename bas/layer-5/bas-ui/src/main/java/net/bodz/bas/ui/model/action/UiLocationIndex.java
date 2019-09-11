@@ -15,8 +15,8 @@ public class UiLocationIndex {
     static List<UiLocationDecl> roots;
 
     static {
-        map = new HashMap<>();
-        roots = new ArrayList<>();
+        map = new HashMap<Class<?>, UiLocationDecl>();
+        roots = new ArrayList<UiLocationDecl>();
 
         for (UiLocationDecl decl : ServiceLoader.load(UiLocationDecl.class)) {
             map.put(decl.getClass(), decl);

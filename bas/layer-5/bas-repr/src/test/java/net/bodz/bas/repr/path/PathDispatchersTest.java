@@ -58,8 +58,8 @@ public class PathDispatchersTest
             implements IPathDispatchable, INoPathRef {
 
         public String cat = "Cat";
-        private Map<String, String> map1 = new HashMap<>();
-        private Map<String, String> map2 = new HashMap<>();
+        private Map<String, String> map1 = new HashMap<String, String>();
+        private Map<String, String> map2 = new HashMap<String, String>();
 
         public INoPathRef buz = NprWrapper.wrap(NprWrapper.wrap(map2));
 
@@ -75,8 +75,7 @@ public class PathDispatchersTest
             if (token == null)
                 return null;
 
-            switch (token) {
-            case "bar":
+            if ("bar".equals(token)) {
                 return PathArrival.shift(previous, "Bar", tokens);
             }
             return null;

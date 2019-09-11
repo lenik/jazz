@@ -108,7 +108,7 @@ public class ItemFile
 
     public static List<ItemFile> convert(JSONArray array)
             throws ParseException {
-        List<ItemFile> items = new ArrayList<>();
+        List<ItemFile> items = new ArrayList<ItemFile>();
         for (JSONObject o : JsonFn.<JSONObject> iterate(array)) {
             ItemFile item = new ItemFile();
             item.readObject(JsonObject.wrap(o));

@@ -14,8 +14,8 @@ public class ActionIndex {
     public static List<IAction> generalActions;
 
     static {
-        clsActions = new TypePoMap<>();
-        generalActions = new ArrayList<>();
+        clsActions = new TypePoMap<List<IAction>>();
+        generalActions = new ArrayList<IAction>();
 
         for (IAction action : ServiceLoader.load(IAction.class)) {
             Class<?> targetClass = action.getTargetClass();

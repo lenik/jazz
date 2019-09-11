@@ -9,7 +9,7 @@ public class FullSearchTaggedSet<V>
     Map<V, Set<String>> map;
 
     public FullSearchTaggedSet() {
-        map = new IdentityHashMap<>();
+        map = new IdentityHashMap<V, Set<String>>();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class FullSearchTaggedSet<V>
             return map.keySet();
 
         List<String> q = Arrays.asList(qtags);
-        List<V> ans = new ArrayList<>();
+        List<V> ans = new ArrayList<V>();
         for (Entry<V, Set<String>> entry : map.entrySet()) {
             Set<String> tags = entry.getValue();
             if (tags.containsAll(q))
@@ -68,7 +68,7 @@ public class FullSearchTaggedSet<V>
             return map.keySet();
 
         List<String> q = Arrays.asList(qtags);
-        List<V> ans = new ArrayList<>();
+        List<V> ans = new ArrayList<V>();
         for (Entry<V, Set<String>> entry : map.entrySet()) {
             Set<String> tags = entry.getValue();
             if (containsAny(tags, q))

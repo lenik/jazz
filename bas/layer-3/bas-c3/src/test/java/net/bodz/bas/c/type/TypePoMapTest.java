@@ -37,11 +37,11 @@ public class TypePoMapTest
         TypePoMap<Object> map = new TypePoMap<Object>();
         map.putAll(orig);
 
-        Set<Object> set = new HashSet<>();
+        Set<Object> set = new HashSet<Object>();
         for (Object o : map.join(Number.class))
             set.add(o);
 
-        Set<String> expected = new HashSet<>(Arrays.asList(//
+        Set<String> expected = new HashSet<String>(Arrays.asList(//
                 "Number", "Integer", "Long", "Double"));
 
         assertEquals(expected, set);

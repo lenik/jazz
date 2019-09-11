@@ -25,7 +25,7 @@ public enum RxErrorCode {
     }
 
     static class Index {
-        static Map<Integer, RxErrorCode> map = new HashMap<>();
+        static Map<Integer, RxErrorCode> map = new HashMap<Integer, RxErrorCode>();
     }
 
     public static RxErrorCode forCode(int code) {

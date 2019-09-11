@@ -95,6 +95,15 @@ public class DatabaseType
             SqlFormats.ORACLE);
 
     /**
+     * Oracle Enterprise Database
+     */
+    public static final DatabaseType ORACLE_THIN = new DatabaseType("ORACLE_THIN",//
+            "org.hibernate.dialect.OracleDialect", //
+            "oracle.jdbc.driver.OracleDriver", //
+            "jdbc:oracle:thin:@${server}:${database}", //
+            SqlFormats.ORACLE);
+
+    /**
      * MySQL RDBMS
      */
     public static final DatabaseType MYSQL = new DatabaseType("MYSQL",//

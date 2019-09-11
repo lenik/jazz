@@ -258,7 +258,7 @@ public class TypeCollector<T> {
     protected List<String> loadFile(File file) {
         List<String> list = fileContentMap.get(file);
         if (list == null) {
-            list = new ArrayList<>();
+            list = new ArrayList<String>();
             if (file.exists())
                 for (String line : new FileResource(file).to(StreamReading.class).lines()) {
                     list.add(line.trim());
@@ -317,7 +317,7 @@ public class TypeCollector<T> {
     synchronized void _collect()
             throws IOException {
         fileContentMap.clear();
-        extensions = new ArrayList<>();
+        extensions = new ArrayList<Class<?>>();
         scanTypes();
         createFiles();
         saveFiles(fileContentMap);

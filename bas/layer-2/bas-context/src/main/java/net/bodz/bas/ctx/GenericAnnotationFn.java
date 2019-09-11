@@ -8,7 +8,7 @@ import net.bodz.bas.c.type.IndexedTypes;
 
 public class GenericAnnotationFn {
 
-    Set<Class<? extends Annotation>> concreteAnnotationClasses = new HashSet<>();
+    Set<Class<? extends Annotation>> concreteAnnotationClasses = new HashSet<Class<? extends Annotation>>();
 
     public GenericAnnotationFn(Class<? extends Annotation> genericAnnotationType) {
         for (Class<?> c : IndexedTypes.list(genericAnnotationType, true)) {

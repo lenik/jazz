@@ -23,11 +23,11 @@ public class MutableHttpServletRequest
     public MutableHttpServletRequest(HttpServletRequest request) {
         super(request);
 
-        headers = new Hashtable<>();
+        headers = new Hashtable<String, List<String>>();
         Enumeration<String> names = request.getHeaderNames();
         while (names.hasMoreElements()) {
             String name = names.nextElement();
-            List<String> list = new ArrayList<>();
+            List<String> list = new ArrayList<String>();
             Enumeration<String> vals = request.getHeaders(name);
             while (vals.hasMoreElements())
                 list.add(vals.nextElement());
@@ -60,7 +60,7 @@ public class MutableHttpServletRequest
     public synchronized List<String> getOrCreateHeaders(String name) {
         List<String> vals = headers.get(name);
         if (vals == null) {
-            vals = new ArrayList<>();
+            vals = new ArrayList<String>();
             headers.put(name, vals);
         }
         return vals;
@@ -72,7 +72,7 @@ public class MutableHttpServletRequest
     }
 
     public void setHeader(String name, String header) {
-        List<String> vals = new ArrayList<>(1);
+        List<String> vals = new ArrayList<String>(1);
         vals.add(header);
         headers.put(name, vals);
     }

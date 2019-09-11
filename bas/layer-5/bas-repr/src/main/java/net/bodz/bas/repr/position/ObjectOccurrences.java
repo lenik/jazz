@@ -7,7 +7,7 @@ public class ObjectOccurrences
         implements IObjectOccurrences {
 
     private final Object object;
-    private List<IObjectOccurrence> occurrences = new ArrayList<>();
+    private List<IObjectOccurrence> occurrences = new ArrayList<IObjectOccurrence>();
     private boolean complete;
 
     public ObjectOccurrences(Object object) {

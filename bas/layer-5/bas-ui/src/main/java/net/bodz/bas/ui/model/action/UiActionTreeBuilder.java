@@ -12,8 +12,8 @@ public class UiActionTreeBuilder {
     Set<UiActionNode> roots;
 
     public UiActionTreeBuilder() {
-        nodes = new HashMap<>();
-        roots = new TreeSet<>(UiActionNodeComparator.INSTANCE);
+        nodes = new HashMap<Class<?>, UiActionNode>();
+        roots = new TreeSet<UiActionNode>(UiActionNodeComparator.INSTANCE);
     }
 
     public Map<Class<?>, UiActionNode> getNodes() {

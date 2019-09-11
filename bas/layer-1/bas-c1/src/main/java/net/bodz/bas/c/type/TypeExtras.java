@@ -7,8 +7,8 @@ import java.util.Set;
 public class TypeExtras {
 
     private final Class<?> type;
-    private Map<String, Object> attributes = new HashMap<>();
-    private Map<Class<?>, Object> features = new HashMap<>();
+    private Map<String, Object> attributes = new HashMap<String, Object>();
+    private Map<Class<?>, Object> features = new HashMap<Class<?>, Object>();
 
     public TypeExtras(Class<?> type) {
         if (type == null)

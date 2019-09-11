@@ -50,11 +50,8 @@ public abstract class AbstractFileAccessServlet
 
     protected void setInitParameter(String name, String value)
             throws ServletException {
-        switch (name) {
-        case ATTRIBUTE_MAX_AGE:
+        if (ATTRIBUTE_MAX_AGE.equals(name))
             maxAge = Integer.parseInt(value);
-            break;
-        }
     }
 
     @Override

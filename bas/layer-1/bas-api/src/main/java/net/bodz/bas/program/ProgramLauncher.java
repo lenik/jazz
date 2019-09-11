@@ -75,15 +75,13 @@ public class ProgramLauncher {
                     String alias = matcher.group(1);
                     String type = matcher.group(2);
                     String fqcn = matcher.group(3);
-                    switch (type) {
-                    case "main":
+                    if ("main".equals(type)) {
                         if (alias.equals(prog))
                             try {
                                 return Class.forName(fqcn);
                             } catch (ClassNotFoundException e) {
                                 throw new Error(String.format("No class %s for program %s.", fqcn, prog), e);
                             }
-                        break;
                     }
                 }
             }

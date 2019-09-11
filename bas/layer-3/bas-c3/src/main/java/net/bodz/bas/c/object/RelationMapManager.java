@@ -8,7 +8,7 @@ public class RelationMapManager {
     private IdentityObjectMap<RelationMap> objects;
 
     public RelationMapManager() {
-        objects = new IdentityObjectMap<>();
+        objects = new IdentityObjectMap<RelationMap>();
     }
 
     public Set<Entry<Object, RelationMap>> entrySet() {

@@ -16,7 +16,7 @@ public class ResultSets {
 
     public static Map<Object, Object> toMap(ResultSet rs, boolean indexKeys, boolean nameKeys)
             throws SQLException {
-        Map<Object, Object> map = new HashMap<>();
+        Map<Object, Object> map = new HashMap<Object, Object>();
         ResultSetMetaData metaData = rs.getMetaData();
         int cc = metaData.getColumnCount();
 

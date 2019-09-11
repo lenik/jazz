@@ -6,7 +6,7 @@ import java.util.Set;
 public abstract class AbstractSqlFormat
         implements ISqlFormat {
 
-    Set<String> keywords = new HashSet<>();
+    Set<String> keywords = new HashSet<String>();
 
     public AbstractSqlFormat(String... keywords) {
         for (String keyword : keywords)

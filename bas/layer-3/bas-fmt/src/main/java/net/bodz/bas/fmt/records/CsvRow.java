@@ -48,7 +48,7 @@ public class CsvRow
     public Map<String, Integer> setFieldNamesFromHeaderRow(CsvRow header, int startFieldIndex) {
         if (header == null)
             throw new NullPointerException("header");
-        fieldNames = new LinkedHashMap<>();
+        fieldNames = new LinkedHashMap<String, Integer>();
         for (String name : header)
             fieldNames.put(name, startFieldIndex++);
         return fieldNames;

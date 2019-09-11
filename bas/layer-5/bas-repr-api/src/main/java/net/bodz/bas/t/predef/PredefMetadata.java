@@ -15,13 +15,13 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
     private final Class<?> stopClass;
     private final int level;
 
-    private Map<K, E> localKeyMap = new TreeMap<>(DefaultComparator.getInstance());
-    private Map<String, E> localNameMap = new TreeMap<>(DefaultComparator.getInstance());
-    private List<E> localValueList = new ArrayList<>();
+    private Map<K, E> localKeyMap = new TreeMap<K, E>(DefaultComparator.getInstance());
+    private Map<String, E> localNameMap = new TreeMap<String, E>(DefaultComparator.getInstance());
+    private List<E> localValueList = new ArrayList<E>();
 
-    private Map<K, E> keyMap = new TreeMap<>(DefaultComparator.getInstance());
-    private Map<String, E> nameMap = new TreeMap<>(DefaultComparator.getInstance());
-    private List<E> valueList = new ArrayList<>();
+    private Map<K, E> keyMap = new TreeMap<K, E>(DefaultComparator.getInstance());
+    private Map<String, E> nameMap = new TreeMap<String, E>(DefaultComparator.getInstance());
+    private List<E> valueList = new ArrayList<E>();
 
     PredefMetadata(Class<E> itemClass) {
         this(itemClass, Predef.class);
@@ -147,14 +147,14 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
 
     private static Map<Class<?>, PredefMetadata<?, ?>> classLocalMap;
     static {
-        classLocalMap = new HashMap<>();
+        classLocalMap = new HashMap<Class<?>, PredefMetadata<?, ?>>();
     }
 
     public static <E extends Predef<?, K>, K extends Comparable<K>> //
     PredefMetadata<E, K> forClass(Class<E> type) {
         PredefMetadata<E, K> metadata = (PredefMetadata<E, K>) classLocalMap.get(type);
         if (metadata == null)
-            classLocalMap.put(type, metadata = new PredefMetadata<>(type));
+            classLocalMap.put(type, metadata = new PredefMetadata<E, K>(type));
         return metadata;
     }
 

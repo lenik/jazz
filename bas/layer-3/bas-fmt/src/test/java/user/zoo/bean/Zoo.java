@@ -16,8 +16,8 @@ public class Zoo
     private String owner;
     private int createdYear;
 
-    private List<Cat> cats = new ArrayList<>();
-    private List<Dog> dogs = new ArrayList<>();
+    private List<Cat> cats = new ArrayList<Cat>();
+    private List<Dog> dogs = new ArrayList<Dog>();
 
     public String getOwner() {
         return owner;

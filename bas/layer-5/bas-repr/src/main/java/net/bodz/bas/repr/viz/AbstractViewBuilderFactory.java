@@ -28,7 +28,7 @@ public abstract class AbstractViewBuilderFactory
     private Map<TaggedType, Object> viewBuilderCache;
 
     public AbstractViewBuilderFactory() {
-        viewBuilderCache = new HashMap<>();
+        viewBuilderCache = new HashMap<TaggedType, Object>();
     }
 
     protected void lazyInit() {

@@ -67,9 +67,12 @@ public class TexCompiler {
         byte[] pdf = new FileResource(pdfFile).to(StreamReading.class).read();
 
         if (autoClean) {
-            try (DirectoryStream<Path> ds = Files.newDirectoryStream(workdir.toPath(), jobname + ".*")) {
+            DirectoryStream<Path> ds = Files.newDirectoryStream(workdir.toPath(), jobname + ".*");
+            try {
                 for (Path f : ds)
                     f.toFile().delete();
+            } finally {
+                ds.close();
             }
         }
 

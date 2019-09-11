@@ -85,7 +85,7 @@ public class WildcardsExpander
     class Iter
             extends PrefetchedIterator<String> {
 
-        StackedIterator<Path> stack = new StackedIterator<>();
+        StackedIterator<Path> stack = new StackedIterator<Path>();
 
         public Iter() {
             Iterator<Path> startIterator = Iterators.iterate(startPath);

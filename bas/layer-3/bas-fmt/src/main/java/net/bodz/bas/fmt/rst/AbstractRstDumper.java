@@ -104,35 +104,35 @@ public abstract class AbstractRstDumper
 
         switch (typeEnum) {
         case BYTE:
-            out.attribute(name, (byte) value);
+            out.attribute(name, (Byte) value);
             break;
 
         case SHORT:
-            out.attribute(name, (short) value);
+            out.attribute(name, (Short) value);
             break;
 
         case INT:
-            out.attribute(name, (int) value);
+            out.attribute(name, (Integer) value);
             break;
 
         case LONG:
-            out.attribute(name, (long) value);
+            out.attribute(name, (Long) value);
             break;
 
         case FLOAT:
-            out.attribute(name, (float) value);
+            out.attribute(name, (Float) value);
             break;
 
         case DOUBLE:
-            out.attribute(name, (double) value);
+            out.attribute(name, (Double) value);
             break;
 
         case BOOL:
-            out.attribute(name, (boolean) value);
+            out.attribute(name, (Boolean) value);
             break;
 
         case CHAR:
-            out.attribute(name, (char) value);
+            out.attribute(name, (Character) value);
             break;
 
         case STRING:
@@ -199,7 +199,7 @@ public abstract class AbstractRstDumper
         }
     }
 
-    protected static final Set<Class<?>> stopClasses = new HashSet<>();
+    protected static final Set<Class<?>> stopClasses = new HashSet<Class<?>>();
     {
         stopClasses.add(Object.class);
         stopClasses.add(ReflectElementHandler.class);

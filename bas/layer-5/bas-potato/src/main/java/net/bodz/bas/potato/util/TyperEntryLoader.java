@@ -21,7 +21,7 @@ public class TyperEntryLoader<T>
     }
 
     public static <T> TyperEntryLoader<T> forClass(Class<T> typerClass) {
-        return new TyperEntryLoader<>(typerClass);
+        return new TyperEntryLoader<T>(typerClass);
     }
 
 }

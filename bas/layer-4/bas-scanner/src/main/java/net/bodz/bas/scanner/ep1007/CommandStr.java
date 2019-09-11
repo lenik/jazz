@@ -174,7 +174,7 @@ public enum CommandStr {
     }
 
     static class Index {
-        static Map<String, CommandStr> map = new HashMap<>();
+        static Map<String, CommandStr> map = new HashMap<String, CommandStr>();
     }
 
     public static CommandStr forStr(String str) {

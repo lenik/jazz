@@ -17,7 +17,7 @@ public class IdPool {
 
     public IdPool(Class<?> clazz) {
         this.clazz = clazz;
-        this.allocation = new IdentityHashMap<>();
+        this.allocation = new IdentityHashMap<Object, Integer>();
     }
 
     public int next() {

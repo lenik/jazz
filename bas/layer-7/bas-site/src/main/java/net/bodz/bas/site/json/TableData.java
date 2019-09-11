@@ -27,8 +27,8 @@ public class TableData
         implements IVarMapSerializable {
 
     Class<?> objectType;
-    Map<String, IPropertyAccessor> colmap = new LinkedHashMap<>();
-    Map<String, String> formats = new HashMap<>();
+    Map<String, IPropertyAccessor> colmap = new LinkedHashMap<String, IPropertyAccessor>();
+    Map<String, String> formats = new HashMap<String, String>();
     List<?> list;
 
     public TableData(Class<?> objectType) {
@@ -36,7 +36,7 @@ public class TableData
     }
 
     public List<String> getColumnList() {
-        List<String> cols = new ArrayList<>(colmap.keySet());
+        List<String> cols = new ArrayList<String>(colmap.keySet());
         return cols;
     }
 
@@ -58,7 +58,7 @@ public class TableData
 
     public TableData parseColumnsString(String columns)
             throws NoSuchPropertyException, ParseException {
-        List<String> columnList = new ArrayList<>();
+        List<String> columnList = new ArrayList<String>();
         for (String col : columns.split(",")) {
             col = col.trim();
             if (col.isEmpty())
@@ -113,7 +113,7 @@ public class TableData
         if (obj == null)
             throw new NullPointerException("obj");
 
-        List<Object> row = new ArrayList<>(columns.size());
+        List<Object> row = new ArrayList<Object>(columns.size());
         for (String col : columns) {
             IPropertyAccessor property = colmap.get(col);
             if (property == null)

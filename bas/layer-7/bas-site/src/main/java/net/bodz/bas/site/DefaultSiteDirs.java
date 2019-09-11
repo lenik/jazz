@@ -18,7 +18,7 @@ public class DefaultSiteDirs
         implements IBasicSiteAnchors {
 
     File clusterDataDir;
-    Set<String> schemas = new HashSet<>();
+    Set<String> schemas = new HashSet<String>();
     boolean strict = false;
 
     public DefaultSiteDirs() {

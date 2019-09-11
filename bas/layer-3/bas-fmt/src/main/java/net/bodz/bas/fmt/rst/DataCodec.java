@@ -265,10 +265,8 @@ public class DataCodec
 
         if (data == null)
             return null;
-        switch (data) {
-        case "null":
+        if ("null".equals(data))
             return null;
-        }
 
         String str;
         try {
@@ -282,6 +280,7 @@ public class DataCodec
     }
 
 // @Override
+    @Override
     public <T extends Enum<T>> T parseEnum(String field, Class<T> clazz, String data)
             throws ParseException {
         if (clazz == null)

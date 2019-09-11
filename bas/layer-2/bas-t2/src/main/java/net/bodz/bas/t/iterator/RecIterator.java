@@ -10,7 +10,7 @@ public abstract class RecIterator<T>
     private int lastElementDepth;
 
     public RecIterator(Iterator<? extends T> start) {
-        stack = new LinkedList<>();
+        stack = new LinkedList<Iterator<? extends T>>();
         stack.push(start);
     }
 

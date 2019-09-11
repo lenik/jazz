@@ -9,11 +9,11 @@ import net.bodz.bas.err.DuplicatedKeyException;
 
 public class StateGroups {
 
-    static Map<Class<?>, StateGroup> groupTypes = new HashMap<>();
-    static Map<String, StateGroup> groupNames = new HashMap<>();
+    static Map<Class<?>, StateGroup> groupTypes = new HashMap<Class<?>, StateGroup>();
+    static Map<String, StateGroup> groupNames = new HashMap<String, StateGroup>();
 
-    static Map<Integer, State> stateKeys = new HashMap<>();
-    static Map<String, State> stateNames = new HashMap<>();
+    static Map<Integer, State> stateKeys = new HashMap<Integer, State>();
+    static Map<String, State> stateNames = new HashMap<String, State>();
 
     static {
         load();

@@ -86,7 +86,7 @@ public class HelpPageFormatter {
         while (group != null) {
 
             Map<String, IOption> localOptionMap = group.getLocalOptionMap();
-            List<IOption> localOptions = new ArrayList<>(localOptionMap.size());
+            List<IOption> localOptions = new ArrayList<IOption>(localOptionMap.size());
             for (IOption option : localOptionMap.values()) {
                 if (option.isHidden())
                     continue;

@@ -17,7 +17,7 @@ public class URLData {
 
     /**
      * Read the contents as UTF-8 lines.
-     * 
+     *
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @return Non-<code>null</code> array of lines.
@@ -31,7 +31,7 @@ public class URLData {
 
     /**
      * Read the contents as lines with specific charset.
-     * 
+     *
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @param charsetName
@@ -46,9 +46,9 @@ public class URLData {
     }
 
     /**
-     * 
+     *
      * Read the contents with specific charset.
-     * 
+     *
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @param charset
@@ -58,21 +58,27 @@ public class URLData {
     public static String readTextContents(URL url, Charset charset)
             throws IOException {
         StringBuilder buf = new StringBuilder();
-        try (InputStream in = url.openStream(); //
-                Reader r = new InputStreamReader(in, charset)) {
-
-            char block[] = new char[4096];
-            int cc;
-            while ((cc = r.read(block)) != -1) {
-                buf.append(block, 0, cc);
+        InputStream in = url.openStream();
+        try {
+            Reader r = new InputStreamReader(in, charset);
+            try {
+                char block[] = new char[4096];
+                int cc;
+                while ((cc = r.read(block)) != -1) {
+                    buf.append(block, 0, cc);
+                }
+            } finally {
+                r.close();
             }
+        } finally {
+            in.close();
         }
         return buf.toString();
     }
 
     /**
      * Read the contents as UTF-8 lines.
-     * 
+     *
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @return Non-<code>null</code> array of lines.
@@ -86,7 +92,7 @@ public class URLData {
 
     /**
      * Read the contents as lines with specific charset.
-     * 
+     *
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @param charsetName
@@ -101,9 +107,9 @@ public class URLData {
     }
 
     /**
-     * 
+     *
      * Read the contents as lines with specific charset.
-     * 
+     *
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @param charsetName
@@ -112,9 +118,10 @@ public class URLData {
      */
     public static List<String> readLines(URL url, Charset charset)
             throws IOException {
-        try (InputStream in = url.openStream();
-                Reader r = new InputStreamReader(in, charset);
-                BufferedReader br = new BufferedReader(r)) {
+        InputStream in = url.openStream();
+        try {
+            Reader r = new InputStreamReader(in, charset);
+            BufferedReader br = new BufferedReader(r);
 
             List<String> lines = new ArrayList<String>(100);
             String line;
@@ -123,7 +130,8 @@ public class URLData {
             }
 
             return lines;
+        } finally {
+            in.close();
         }
     }
-
 }

@@ -34,14 +34,14 @@ public abstract class AbstractJsonDumper<self_t>
     protected boolean includeNull = false;
     protected boolean includeFalse = false;
 
-    protected Set<String> includes = new HashSet<>();
-    protected Set<String> excludes = new HashSet<>();
+    protected Set<String> includes = new HashSet<String>();
+    protected Set<String> excludes = new HashSet<String>();
 
     protected int maxDepth;
 
     public AbstractJsonDumper(IJsonOut out) {
         this.out = out;
-        this.marks = new StackSet<>();
+        this.marks = new StackSet<Object>();
     }
 
     public boolean isIncludeNull() {

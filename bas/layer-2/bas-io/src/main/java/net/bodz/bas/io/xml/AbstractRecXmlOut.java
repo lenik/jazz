@@ -37,11 +37,11 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
             throw new NullPointerException("outputFormat");
         if (outputFormat.attributeBuffer) {
             if (outputFormat.sortAttributeNames == null)
-                this.attributes = new HashMap<>();
+                this.attributes = new HashMap<String, String>();
             else if (outputFormat.sortAttributeNames)
-                this.attributes = new TreeMap<>();
+                this.attributes = new TreeMap<String, String>();
             else
-                this.attributes = new LinkedHashMap<>();
+                this.attributes = new LinkedHashMap<String, String>();
         }
     }
 

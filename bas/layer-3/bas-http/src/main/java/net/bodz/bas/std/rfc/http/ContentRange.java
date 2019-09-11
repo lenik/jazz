@@ -40,13 +40,10 @@ public class ContentRange
 
         int unit = BYTE;
         String unitSpec = str.substring(0, EQ).trim();
-        switch (unitSpec) {
-        case "bytes":
+        if ("bytes".equals(unitSpec))
             unit = BYTE;
-            break;
-        default:
+        else
             return "bad unit: " + unitSpec;
-        }
 
         str = str.substring(EQ + 1);
         int dash = str.indexOf('-');
@@ -88,13 +85,10 @@ public class ContentRange
 
         int unit = BYTE;
         String unitSpec = str.substring(0, SP).trim();
-        switch (unitSpec) {
-        case "bytes":
+        if ("bytes".equals(unitSpec))
             unit = BYTE;
-            break;
-        default:
+        else
             return "bad unit: " + unitSpec;
-        }
 
         str = str.substring(SP + 1);
         int slash = str.indexOf('/');

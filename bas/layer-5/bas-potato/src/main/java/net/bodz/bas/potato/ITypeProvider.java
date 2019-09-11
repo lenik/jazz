@@ -8,11 +8,11 @@ import net.bodz.bas.t.order.IPriority;
 public interface ITypeProvider
         extends IPriority {
 
-    int I_Properties = 0x1_0000;
-    int I_Methods = 0x2_0000;
-    int I_Constructors = 0x4_0000;
-    int I_Events = 0x8_0000;
-    int I_Docs = 0x10_0000;
+    int I_Properties = 0x10000;
+    int I_Methods = 0x20000;
+    int I_Constructors = 0x40000;
+    int I_Events = 0x80000;
+    int I_Docs = 0x100000;
     int I_Default = I_Properties | I_Methods | I_Constructors | I_Events | I_Docs;
 
     int getDefaultInfoset();

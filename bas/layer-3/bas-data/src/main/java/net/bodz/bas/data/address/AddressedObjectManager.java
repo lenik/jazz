@@ -9,7 +9,7 @@ public class AddressedObjectManager<T extends IAddressed>
     private final TreeMap<Integer, T> map;
 
     public AddressedObjectManager() {
-        this.map = new TreeMap<>();
+        this.map = new TreeMap<Integer, T>();
     }
 
     @Override

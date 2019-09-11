@@ -34,8 +34,8 @@ public class NativeLibraryInstaller {
     }
 
     private File installDir;
-    private List<ClassLoader> loaders = new ArrayList<>();
-    private Map<String, File> installedLibraries = new HashMap<>();
+    private List<ClassLoader> loaders = new ArrayList<ClassLoader>();
+    private Map<String, File> installedLibraries = new HashMap<String, File>();
 
     public NativeLibraryInstaller() {
         this(DEFAULT_INSTALL_DIR);
@@ -88,7 +88,7 @@ public class NativeLibraryInstaller {
 
     /**
      * Install the library to local file somewhere.
-     * 
+     *
      * @return <code>null</code> if not found.
      * @throws IOException
      */
@@ -110,14 +110,29 @@ public class NativeLibraryInstaller {
         if (installedFile == null) {
             installedFile = new File(installDir, filename);
 
-            try (InputStream in = resource.openStream(); //
-                    OutputStream out = new FileOutputStream(installedFile)) {
+            InputStream in = null;
+            OutputStream out = null;
+
+            try {
+                in = resource.openStream();
+                out = new FileOutputStream(installedFile);
 
                 byte[] block = new byte[8192];
                 int cb;
                 while ((cb = in.read(block)) != -1) {
                     out.write(block, 0, cb);
                 }
+            } finally {
+                if (out != null)
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                    }
+                if (in != null)
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                    }
             }
 
             installedLibraries.put(libname, installedFile);

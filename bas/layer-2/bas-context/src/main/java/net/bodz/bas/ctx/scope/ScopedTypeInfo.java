@@ -38,7 +38,8 @@ public class ScopedTypeInfo<T> {
                 if (aScopeIdClass != null)
                     try {
                         ctorWithScopeId = objectType.getConstructor(aScopeIdClass.value());
-                    } catch (NoSuchMethodError | NoSuchMethodException e) {
+                    } catch (NoSuchMethodError e) {
+                    } catch (NoSuchMethodException e) {
                     }
             }
     }

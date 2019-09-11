@@ -14,11 +14,11 @@ public interface IMapEntryLoader<K, V> {
     class fn {
 
         public static <K, k, v> NewHashMap<K, k, v> newHashMap() {
-            return new NewHashMap<>();
+            return new NewHashMap<K, k, v>();
         }
 
         public static <K, k, v> NewTreeMap<K, k, v> newTreeMap() {
-            return new NewTreeMap<>();
+            return new NewTreeMap<K, k, v>();
         }
 
     }
@@ -29,7 +29,7 @@ public interface IMapEntryLoader<K, V> {
         @Override
         public Map<k, v> loadValue(K key)
                 throws LazyLoadException {
-            return new HashMap<>();
+            return new HashMap<k, v>();
         }
 
     }
@@ -40,7 +40,7 @@ public interface IMapEntryLoader<K, V> {
         @Override
         public Map<k, v> loadValue(K key)
                 throws LazyLoadException {
-            return new TreeMap<>();
+            return new TreeMap<k, v>();
         }
 
     }

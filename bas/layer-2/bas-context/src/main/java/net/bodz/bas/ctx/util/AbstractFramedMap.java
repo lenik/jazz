@@ -22,12 +22,12 @@ public abstract class AbstractFramedMap<K, V>
 
     public AbstractFramedMap(Boolean order) {
         if (order == null)
-            initmap = new LinkedHashMap<>();
+            initmap = new LinkedHashMap<K, VarNode>();
         else if (order)
-            initmap = new TreeMap<>();
+            initmap = new TreeMap<K, VarNode>();
         else
-            initmap = new HashMap<>();
-        stack = new Stack<>();
+            initmap = new HashMap<K, VarNode>();
+        stack = new Stack<VarFrame>();
         enter();
     }
 
@@ -215,7 +215,7 @@ public abstract class AbstractFramedMap<K, V>
     @SuppressWarnings("unchecked")
     @Override
     public Collection<V> values() {
-        List<V> dataList = new ArrayList<>(initmap.size());
+        List<V> dataList = new ArrayList<V>(initmap.size());
         for (VarNode node : initmap.values()) {
             dataList.add((V) node.data);
         }
@@ -228,10 +228,10 @@ public abstract class AbstractFramedMap<K, V>
     @SuppressWarnings("unchecked")
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        Set<Map.Entry<K, V>> set = new HashSet<>();
+        Set<Map.Entry<K, V>> set = new HashSet<Map.Entry<K, V>>();
         for (Entry<K, VarNode> entry : initmap.entrySet()) {
             VarNode node = entry.getValue();
-            set.add(new Pair<>(entry.getKey(), (V) node.data));
+            set.add(new Pair<K, V>(entry.getKey(), (V) node.data));
         }
         return set;
     }

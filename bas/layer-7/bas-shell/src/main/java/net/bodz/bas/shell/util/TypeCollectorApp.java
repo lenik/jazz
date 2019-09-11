@@ -45,7 +45,7 @@ public class TypeCollectorApp
      *
      * @option -t
      */
-    List<Class<?>> baseTypes = new ArrayList<>();
+    List<Class<?>> baseTypes = new ArrayList<Class<?>>();
 
     /**
      * Packages to be collected.
@@ -54,7 +54,7 @@ public class TypeCollectorApp
      *
      * @option -p =FQPN
      */
-    List<String> packages = new ArrayList<>();
+    List<String> packages = new ArrayList<String>();
 
     // List<String> excludedPackages;
 

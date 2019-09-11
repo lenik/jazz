@@ -3,7 +3,9 @@ package net.bodz.bas.db.ctx;
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +53,7 @@ public class DataContext
             throw new NullPointerException("dataSource");
 
         mapperProvider = new IbatisMapperProvider(dataSource);
-        attributes = new HashMap<>();
+        attributes = new HashMap<String, Object>();
     }
 
     @SuppressWarnings("unchecked")
@@ -207,6 +209,18 @@ public class DataContext
     @Override
     public SqlSession openSession(ExecutorType execType, Connection connection) {
         return getSessionFactory().openSession(execType, connection);
+    }
+
+    /**
+     * @TODO shortcuts...
+     */
+    public ResultSet query(String sql)
+            throws SQLException {
+        DataSource ds = getDataSource();
+        Connection conn = ds.getConnection();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        return rs;
     }
 
 }

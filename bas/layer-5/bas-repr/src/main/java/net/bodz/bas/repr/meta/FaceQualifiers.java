@@ -14,7 +14,7 @@ public class FaceQualifiers
         extends Qualifiers {
 
     public static List<String> getQualifierNames(AnnotatedElement el) {
-        List<String> names = new ArrayList<>();
+        List<String> names = new ArrayList<String>();
         for (Annotation a : el.getAnnotations()) {
             if (a instanceof Face) {
                 Face aFace = (Face) a;

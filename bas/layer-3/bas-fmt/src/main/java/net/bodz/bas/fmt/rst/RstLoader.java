@@ -47,7 +47,7 @@ public class RstLoader {
             throws IOException, ParseException, ElementHandlerException {
         int token;
 
-        LinkedList<Frame> stack = new LinkedList<>();
+        LinkedList<Frame> stack = new LinkedList<Frame>();
         Frame frame = new Frame(null, IEmptyConsts.emptyStringArray, handler);
         stack.push(frame);
 

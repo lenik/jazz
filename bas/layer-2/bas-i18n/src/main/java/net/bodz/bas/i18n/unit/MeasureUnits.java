@@ -10,8 +10,8 @@ import net.bodz.bas.err.DuplicatedKeyException;
 
 public class MeasureUnits {
 
-    static Map<String, IMeasureUnit> nameMap = new HashMap<>();
-    static Map<String, List<IMeasureUnit>> symbolMap = new HashMap<>();
+    static Map<String, IMeasureUnit> nameMap = new HashMap<String, IMeasureUnit>();
+    static Map<String, List<IMeasureUnit>> symbolMap = new HashMap<String, List<IMeasureUnit>>();
 
     public static synchronized void register(IMeasureUnit unit) {
         if (unit == null)
@@ -31,7 +31,7 @@ public class MeasureUnits {
 
     /**
      * Get the measure unit by name.
-     * 
+     *
      * @param name
      *            The measure unit name to get.
      * @return The measure unit.
@@ -49,7 +49,7 @@ public class MeasureUnits {
 
     /**
      * Get the measure unit with the specific symbol.
-     * 
+     *
      * @return <code>null</code> if the unit for the symbol isn't defined.
      */
     public static List<IMeasureUnit> forSymbol(String symbol) {
@@ -58,7 +58,7 @@ public class MeasureUnits {
 
         List<IMeasureUnit> unitList = symbolMap.get(symbol);
         if (unitList == null)
-            symbolMap.put(symbol, unitList = new ArrayList<>());
+            symbolMap.put(symbol, unitList = new ArrayList<IMeasureUnit>());
 
         return unitList;
     }

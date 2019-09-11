@@ -77,7 +77,7 @@ public class ByteTrie<T>
         private T data;
 
         public Node() {
-            childMap = new HashMap<>();
+            childMap = new HashMap<Byte, Node<T>>();
         }
 
         @Override

@@ -119,7 +119,7 @@ public class UiActionNode_htm
                 if (!isIncluded(child))
                     continue;
                 if (mergeChildren) {
-                    List<UiActionNode> selection = new ArrayList<>();
+                    List<UiActionNode> selection = new ArrayList<UiActionNode>();
                     for (UiActionNode childChild : child.getChildren())
                         if (isIncluded(childChild))
                             selection.add(childChild);

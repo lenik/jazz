@@ -19,8 +19,8 @@ public class HttpSnap
 
     public HttpSnap(long id) {
         this.id = id;
-        this.attributeMap = new HashMap<>();
-        this.parameterMap = new HashMap<>();
+        this.attributeMap = new HashMap<String, Object>();
+        this.parameterMap = new HashMap<String, String[]>();
     }
 
     public long getId() {

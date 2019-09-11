@@ -13,7 +13,7 @@ public class ZwkPackage
 
     private static final long serialVersionUID = 1L;
 
-    Map<String, IArtifact> pageMap = new HashMap<>();
+    Map<String, IArtifact> pageMap = new HashMap<String, IArtifact>();
 
     public ZwkPackage(String name, String versionStr) {
         super(name, versionStr);

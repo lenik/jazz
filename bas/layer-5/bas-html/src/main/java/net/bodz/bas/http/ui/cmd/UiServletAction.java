@@ -23,8 +23,8 @@ public abstract class UiServletAction
 
     public UiServletAction() {
         locations = new ArrayList<Class<?>>();
-        scripts = new HashMap<>();
-        attributes = new HashMap<>();
+        scripts = new HashMap<String, String>();
+        attributes = new HashMap<String, String>();
 
         Location aLocation = getClass().getAnnotation(Location.class);
         if (aLocation != null)

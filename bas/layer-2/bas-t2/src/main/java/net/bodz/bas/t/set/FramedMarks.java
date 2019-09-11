@@ -10,7 +10,7 @@ public class FramedMarks
     Stack<Marks> stack;
 
     public FramedMarks() {
-        stack = new Stack<>();
+        stack = new Stack<Marks>();
         enter();
     }
 

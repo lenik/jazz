@@ -44,7 +44,7 @@ public abstract class AbstractTaggedSetTest
     public AbstractTaggedSetTest()
             throws ReflectiveOperationException {
 
-        itemMap = new IdentityHashMap<>();
+        itemMap = new IdentityHashMap<Object, String[]>();
         for (Field field : ReflectQuery.selectDeclaredFields(getClass())) {
             if (field.isAnnotationPresent(Tags.class)) {
                 field.setAccessible(true);

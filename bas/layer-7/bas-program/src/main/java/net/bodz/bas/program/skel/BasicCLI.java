@@ -337,7 +337,7 @@ public abstract class BasicCLI
     };
 
     protected Iterable<String> expandWildcards(final String... pathnames) {
-        List<Iterable<String>> iterableList = new ArrayList<>(pathnames.length);
+        List<Iterable<String>> iterableList = new ArrayList<Iterable<String>>(pathnames.length);
         for (String pathname : pathnames)
             iterableList.add(expandWildcards(pathname));
         return Iterables.concat(iterableList);

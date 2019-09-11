@@ -28,7 +28,7 @@ class InMemoryURLConnection
         this.inputSource = inputSource;
         this.length = length;
 
-        headerList = new ArrayList<>();
+        headerList = new ArrayList<Entry<String, String>>();
         headerMap = new HashMap<String, List<String>>();
 
         for (Entry<String, String> entry : headers.entrySet()) {

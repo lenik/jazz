@@ -11,7 +11,7 @@ public class HttpSnapManager {
     private long nextId = 1;
 
     public HttpSnapManager() {
-        snaps = new HashMap<>();
+        snaps = new HashMap<Long, HttpSnap>();
     }
 
     public HttpSnap get(long id) {

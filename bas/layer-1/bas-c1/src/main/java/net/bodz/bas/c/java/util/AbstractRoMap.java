@@ -38,7 +38,7 @@ public abstract class AbstractRoMap<K, V>
 
     @Override
     public Collection<V> values() {
-        List<V> values = new ArrayList<>();
+        List<V> values = new ArrayList<V>();
         for (K key : keySet())
             values.add(get(key));
         return values;

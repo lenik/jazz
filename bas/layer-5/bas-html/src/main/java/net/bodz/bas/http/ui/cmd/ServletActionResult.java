@@ -20,7 +20,7 @@ public class ServletActionResult {
     public ServletActionResult() {
         reloadMap = new LinkedHashMap<String, String>();
         updateMap = new LinkedHashMap<String, String>();
-        logs = new ArrayList<>();
+        logs = new ArrayList<Object>();
     }
 
     public Object getData() {

@@ -22,8 +22,8 @@ public class UseNet<T>
 
     public UseNet(boolean checked) {
         this.checked = checked;
-        nextMap = new IdentityHashMap<>();
-        prevMap = new IdentityHashMap<>();
+        nextMap = new IdentityHashMap<T, Set<T>>();
+        prevMap = new IdentityHashMap<T, Set<T>>();
     }
 
     public boolean isChecked() {
@@ -77,13 +77,13 @@ public class UseNet<T>
     }
 
     public Set<T> getNextClosure(T node) {
-        Set<T> closure = new IdentityHashSet<>();
+        Set<T> closure = new IdentityHashSet<T>();
         fillNextClosure(closure, node);
         return closure;
     }
 
     public Set<T> getPrevClosure(T node) {
-        Set<T> closure = new IdentityHashSet<>();
+        Set<T> closure = new IdentityHashSet<T>();
         fillPrevClosure(closure, node);
         return closure;
     }
@@ -131,7 +131,7 @@ public class UseNet<T>
     synchronized Set<T> resolveNextSet(T node) {
         Set<T> nextSet = nextMap.get(node);
         if (nextSet == null) {
-            nextSet = new HashSet<>();
+            nextSet = new HashSet<T>();
             nextMap.put(node, nextSet);
         }
         return nextSet;
@@ -140,7 +140,7 @@ public class UseNet<T>
     synchronized Set<T> resolvePrevSet(T node) {
         Set<T> prevSet = prevMap.get(node);
         if (prevSet == null) {
-            prevSet = new HashSet<>();
+            prevSet = new HashSet<T>();
             prevMap.put(node, prevSet);
         }
         return prevSet;

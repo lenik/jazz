@@ -10,7 +10,7 @@ public abstract class AbstractCounterSpec
     Map<String, ICounterDef<?>> defMap;
 
     public AbstractCounterSpec() {
-        defMap = new LinkedHashMap<>();
+        defMap = new LinkedHashMap<String, ICounterDef<?>>();
     }
 
     @Override

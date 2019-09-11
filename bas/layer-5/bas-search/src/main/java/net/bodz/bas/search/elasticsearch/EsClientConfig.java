@@ -30,8 +30,8 @@ public class EsClientConfig
 
     public EsClientConfig() {
         settingsBuilder = Settings.builder();
-        plugins = new ArrayList<>();
-        addresses = new ArrayList<>();
+        plugins = new ArrayList<Class<? extends Plugin>>();
+        addresses = new ArrayList<TransportAddress>();
     }
 
     public Settings.Builder getSettingsBuilder() {

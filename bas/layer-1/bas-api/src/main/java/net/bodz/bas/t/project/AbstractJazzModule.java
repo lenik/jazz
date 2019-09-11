@@ -19,7 +19,7 @@ public abstract class AbstractJazzModule
     private String name;
     private String packageName;
 
-    private Set<String> managedClassNames = new TreeSet<>();
+    private Set<String> managedClassNames = new TreeSet<String>();
 
     static Charset utf8 = Charset.forName("utf-8");
 

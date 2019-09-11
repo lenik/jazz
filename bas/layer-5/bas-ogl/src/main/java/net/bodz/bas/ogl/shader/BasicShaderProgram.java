@@ -30,7 +30,7 @@ public class BasicShaderProgram
     }
 
     public void setTime(GL2ES2 gl, long timel) {
-        int time = (int) (timel % 60_000);
+        int time = (int) (timel % (60 * 1000));
         float timef = (time / 1000.0f * 3.0f);
         setTime(gl, timef);
     }
