@@ -4,13 +4,16 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.err.CreateException;
 
-public class NewInstanceOfClassnameFactory
+/**
+ * New instance from class name.
+ */
+public class ScriptingInstantiator
         extends AbstractFactory<Object> {
 
     private final ClassLoader loader;
     private final String name;
 
-    public NewInstanceOfClassnameFactory(ClassLoader loader, String name) {
+    public ScriptingInstantiator(ClassLoader loader, String name) {
         if (loader == null)
             throw new NullPointerException("classLoader");
         if (name == null)

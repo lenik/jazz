@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.err.Err;
 import net.bodz.bas.err.IteratorTargetException;
-import net.bodz.bas.t.factory.ICreatorX;
+import net.bodz.bas.t.factory.IFactoryX;
 import net.bodz.bas.t.iterator.Iterators;
 
 public class Mitors {
@@ -48,21 +48,21 @@ public class Mitors {
         return list;
     }
 
-    public static <T, X extends Throwable> Mitorx<T, X> lazyCreate(ICreatorX<? extends T, ? extends X> creator) {
+    public static <T, X extends Throwable> Mitorx<T, X> lazyCreate(IFactoryX<? extends T, ? extends X> creator) {
         return Mitors.<T, X> lazyCreate(creator, 1, (Object[]) null);
     }
 
-    public static <T, X extends Throwable> Mitorx<T, X> lazyCreate(ICreatorX<? extends T, ? extends X> creator,
+    public static <T, X extends Throwable> Mitorx<T, X> lazyCreate(IFactoryX<? extends T, ? extends X> creator,
             int count) {
         return Mitors.<T, X> lazyCreate(creator, count, (Object[]) null);
     }
 
-    public static <T, X extends Throwable> Mitorx<T, X> lazyCreate(ICreatorX<? extends T, ? extends X> creator,
+    public static <T, X extends Throwable> Mitorx<T, X> lazyCreate(IFactoryX<? extends T, ? extends X> creator,
             Object... createParameters) {
         return Mitors.<T, X> lazyCreate(creator, 1, createParameters);
     }
 
-    public static <T, X extends Throwable> Mitorx<T, X> lazyCreate(ICreatorX<T, X> creator, int count,
+    public static <T, X extends Throwable> Mitorx<T, X> lazyCreate(IFactoryX<T, X> creator, int count,
             Object... createParameters) {
         return new FactoryMitor<T, X>(creator, count, createParameters);
     }
@@ -108,13 +108,13 @@ class EmptyMitor<T>
 class FactoryMitor<T, X extends Throwable>
         extends AbstractMitorx<T, X> {
 
-    private final ICreatorX<? extends T, ? extends X> creator;
+    private final IFactoryX<? extends T, ? extends X> creator;
     private final Object[] createParameters;
 
     private final int count;
     private int createdCount;
 
-    public FactoryMitor(ICreatorX<? extends T, ? extends X> creator, int count, Object... createParameters) {
+    public FactoryMitor(IFactoryX<? extends T, ? extends X> creator, int count, Object... createParameters) {
         if (creator == null)
             throw new NullPointerException("creator");
         if (count < 0)

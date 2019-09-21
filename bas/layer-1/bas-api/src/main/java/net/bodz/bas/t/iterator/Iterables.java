@@ -10,8 +10,8 @@ import java.util.Set;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.fn.ITransformer;
-import net.bodz.bas.t.factory.ICreator;
-import net.bodz.bas.t.factory.NewInstanceCreator;
+import net.bodz.bas.t.factory.IFactory;
+import net.bodz.bas.t.factory.Instantiator;
 
 public class Iterables {
 
@@ -47,7 +47,7 @@ public class Iterables {
         return concat(Arrays.asList(iterables));
     }
 
-    public static <T> Iterable<T> create(ICreator<? extends Iterator<T>> iteratorCreator) {
+    public static <T> Iterable<T> create(IFactory<? extends Iterator<T>> iteratorCreator) {
         return new CreateIterable<T>(iteratorCreator);
     }
 
@@ -103,13 +103,13 @@ public class Iterables {
 class CreateIterable<T>
         implements Iterable<T> {
 
-    final ICreator<? extends Iterator<T>> iteratorCreator;
+    final IFactory<? extends Iterator<T>> iteratorCreator;
 
     public CreateIterable(Class<? extends Iterator<T>> iteratorClass) {
-        this(new NewInstanceCreator<Iterator<T>>(iteratorClass));
+        this(new Instantiator<Iterator<T>>(iteratorClass));
     }
 
-    public CreateIterable(ICreator<? extends Iterator<T>> iteratorCreator) {
+    public CreateIterable(IFactory<? extends Iterator<T>> iteratorCreator) {
         this.iteratorCreator = iteratorCreator;
     }
 
