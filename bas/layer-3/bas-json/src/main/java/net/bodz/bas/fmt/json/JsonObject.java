@@ -1,11 +1,7 @@
 package net.bodz.bas.fmt.json;
 
 import java.io.Writer;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.joda.time.DateTime;
 import org.json.JSONArray;
@@ -15,6 +11,8 @@ import org.json.JSONTokener;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.t.factory.IFactory;
 import net.bodz.bas.t.model.IWrapper;
 import net.bodz.bas.t.variant.conv.*;
 
@@ -568,6 +566,53 @@ public class JsonObject
         }
 
         return obj;
+    }
+
+    public <T extends IJsonSerializable> List<T> readArrayInto(String key, List<T> list, IFactory<T> factory)
+            throws ParseException {
+        return readArrayInto(key, list, factory, ArrayList.class);
+    }
+
+    public <T extends IJsonSerializable> Set<T> readArrayInto(String key, Set<T> list, IFactory<T> factory)
+            throws ParseException {
+        return readArrayInto(key, list, factory, TreeSet.class);
+    }
+
+    public <C extends Collection<T>, T extends IJsonSerializable> C readArrayInto(String key, C set,
+            IFactory<T> factory, Class<?> newSetClass)
+            throws ParseException {
+        if (!has(key)) // nothing to change
+            return set;
+
+        Object _node = _get(key);
+        if (_node == null) // force set to null
+            return null;
+
+        if (_node instanceof JSONArray) {
+            JsonArray array = JsonArray.wrap((JSONArray) _node);
+            if (set == null) {
+                if (newSetClass == null) // don't auto-create
+                    return null;
+                try {
+                    set = (C) newSetClass.newInstance();
+                } catch (Exception e) {
+                    throw new UnexpectedException(e.getMessage(), e);
+                }
+            } else {
+                set.clear();
+            }
+
+            // set.readObject(array);
+            int n = array.length();
+            for (int i = 0; i < n; i++) {
+                JsonObject node = array.getJsonObject(i);
+                T obj = factory.create();
+                obj.readObject(node);
+                set.add(obj);
+            }
+        }
+
+        return set;
     }
 
     public Date getDate(String key) {
