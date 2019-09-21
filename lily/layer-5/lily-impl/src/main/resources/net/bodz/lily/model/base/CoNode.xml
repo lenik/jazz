@@ -13,6 +13,8 @@
     </sql>
     
     <sql id="filter-node">
+        <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
+        <if test="m.maxDepth != null">and a.depth &lt;= #{m.maxDepth}</if>
         <if test="m.depthRange != null">
             <if test="m.depthRange.start != null">
                 <if test="m.depthRange.startInclusive">and a.depth >= #{m.depthRange.start}</if>
