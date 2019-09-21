@@ -4,6 +4,7 @@ import java.sql.*;
 
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.db.ibatis.AliasedType;
@@ -11,6 +12,7 @@ import net.bodz.bas.db.ibatis.TypeHandler;
 
 @Alias("DateTime")
 @AliasedType
+@MappedTypes(DateTime.class)
 public class DateTimeTypeHandler
         extends TypeHandler<DateTime> {
 

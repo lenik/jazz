@@ -9,12 +9,14 @@ import java.util.Set;
 
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 
 @Alias("Set")
 @AliasedType
+@MappedTypes(Set.class)
 public class SetTypeHandler
         extends TypeHandler<Set<Object>> {
 

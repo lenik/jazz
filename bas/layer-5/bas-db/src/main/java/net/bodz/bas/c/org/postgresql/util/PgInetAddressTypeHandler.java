@@ -7,10 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 import org.postgresql.util.PGobject;
 
 import net.bodz.bas.db.ibatis.TypeHandler;
 
+@MappedTypes(InetAddress.class)
 public class PgInetAddressTypeHandler
         extends TypeHandler<InetAddress> {
 

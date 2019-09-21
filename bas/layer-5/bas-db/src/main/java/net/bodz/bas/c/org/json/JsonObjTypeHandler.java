@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 import org.postgresql.util.PGobject;
 
 import net.bodz.bas.db.ibatis.AliasedType;
@@ -15,6 +16,7 @@ import net.bodz.bas.err.ParseException;
 
 @Alias("JsonObj")
 @AliasedType
+@MappedTypes(JsonObj.class)
 public class JsonObjTypeHandler
         extends TypeHandler<JsonObj> {
 

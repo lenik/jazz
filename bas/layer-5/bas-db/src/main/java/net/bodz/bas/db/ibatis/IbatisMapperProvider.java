@@ -74,10 +74,14 @@ public class IbatisMapperProvider
         TypeAliasRegistry typeAliasRegistry = config.getTypeAliasRegistry();
         TypeHandlerRegistry typeHandlerRegistry = config.getTypeHandlerRegistry();
         try {
-            for (Class<?> typeHandlerClass : typeIndex.list(TypeHandler.class, false))
+            for (Class<?> typeHandlerClass : typeIndex.list(TypeHandler.class, false)) {
+                logger.debug("Register type handler: " + typeHandlerClass);
                 typeHandlerRegistry.register(typeHandlerClass);
-            for (Class<?> aliasedClass : typeIndex.listIndexed(AliasedType.class))
+            }
+            for (Class<?> aliasedClass : typeIndex.listIndexed(AliasedType.class)) {
+                logger.debug("Register type alias for " + aliasedClass);
                 typeAliasRegistry.registerAlias(aliasedClass);
+            }
         } catch (Exception e) {
             throw new IllegalUsageError(e.getMessage(), e);
         }
