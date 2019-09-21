@@ -7,6 +7,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.junit.Assert;
 
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IMutableVariantMap;
 import net.bodz.bas.t.variant.MutableVariantMap;
 
@@ -14,7 +15,7 @@ public class UserTest
         extends Assert {
 
     public static void main(String[] args)
-            throws LoaderException {
+            throws LoaderException, ParseException {
         Map<String, Object> map = new HashMap<>();
         IMutableVariantMap<String> vmap = MutableVariantMap.fromMap(map);
         map.put("codeName", "Lenik");

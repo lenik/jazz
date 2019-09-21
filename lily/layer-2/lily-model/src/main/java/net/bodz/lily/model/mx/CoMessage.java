@@ -190,7 +190,7 @@ public abstract class CoMessage<Id>
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException {
+            throws LoaderException, ParseException {
         super.readObject(map);
     }
 

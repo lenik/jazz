@@ -549,7 +549,7 @@ public abstract class CoObject
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException {
+            throws LoaderException, ParseException {
         VarMapLoader loader = new VarMapLoader();
         loader.load(getClass(), this, map);
 
@@ -557,11 +557,7 @@ public abstract class CoObject
         if (propsMap != null) {
             JsonMap properties = this.getProperties();
             if (properties != null) // null if not supported.
-                try {
-                    properties.readObject(propsMap.getWrapped());
-                } catch (ParseException e) {
-                    throw new LoaderException(e.getMessage(), e);
-                }
+                properties.readObject(propsMap.getWrapped());
         }
     }
 
