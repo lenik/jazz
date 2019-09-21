@@ -46,10 +46,10 @@ public class LibUpdater {
             throws Exception {
         File libdir = new File("lib").getCanonicalFile();
         System.out.println("libdir: " + libdir);
-        if (libdir.exists()) {
+        if (!libdir.exists()) {
             logger.debug("Create non-existing libdir: " + libdir);
             if (!libdir.mkdirs()) {
-                logger.error("Failed to mkdir.");
+                logger.error("Failed to mkdir: " + libdir);
                 System.exit(1);
             }
         }
