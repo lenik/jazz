@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.io.ICharOut;
@@ -27,6 +28,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     private int refCount;
     private self_t parent;
     private List<self_t> children = new ArrayList<self_t>();
+
+    // private int depth;
 
     public CoNode() {
         this(null);
@@ -71,6 +74,13 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         if (parent != null)
             checkNode(false, parent);
         this.parent = parent;
+
+// if (parent == null) {
+// depth = 0;
+// } else {
+// int parentDepth = parent.getDepth();
+// depth = parentDepth + 1;
+// }
     }
 
     /**
@@ -190,7 +200,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     @Derived
     public int getDepth() {
         int safeDepth = getSafeDepth();
-        int depth = 0;
+        int depth = -1;
         self_t node = self();
         while (node != null) {
             node = node.getParent();
@@ -460,7 +470,15 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         super.readObject(o);
 
         refCount = o.getInt("refCount", refCount);
-        // parent
+
+        self_t dup;
+        try {
+            dup = (self_t) getClass().newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new LoadException(e.getMessage(), e);
+        }
+        parent = o.readInto("parent", parent, dup);
+
         // children
     }
 
