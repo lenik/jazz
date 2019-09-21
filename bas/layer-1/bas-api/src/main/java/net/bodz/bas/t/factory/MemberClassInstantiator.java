@@ -3,23 +3,23 @@ package net.bodz.bas.t.factory;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 
-public class CtorFactory<T>
+public class MemberClassInstantiator<T>
         extends AbstractFactory<T> {
 
     private Class<? extends T> clazz;
-    private Object outer;
+    private Object enclosingObject;
 
-    public CtorFactory(Class<? extends T> clazz, Object outer) {
+    public MemberClassInstantiator(Class<? extends T> clazz, Object enclosingObject) {
         assert clazz != null;
         if (clazz.isMemberClass()) {
-            if (outer == null)
-                throw new NullPointerException("no outer specified for member " + clazz);
+            if (enclosingObject == null)
+                throw new NullPointerException("no enclosingObject specified for member " + clazz);
         }
         this.clazz = clazz;
-        this.outer = outer;
+        this.enclosingObject = enclosingObject;
     }
 
-    public CtorFactory(Class<? extends T> clazz) {
+    public MemberClassInstantiator(Class<? extends T> clazz) {
         this(clazz, null);
     }
 
