@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 
 import net.bodz.bas.db.ibatis.TypeHandler;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StateGroups;
 
+@MappedTypes(State.class)
 public class StateTypeHandler
         extends TypeHandler<State> {
 

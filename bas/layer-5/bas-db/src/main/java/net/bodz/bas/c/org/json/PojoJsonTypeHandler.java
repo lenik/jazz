@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
@@ -20,6 +21,7 @@ import net.bodz.bas.fmt.json.JsonFn;
  */
 @Alias("PojoJson")
 @AliasedType
+@MappedTypes(Map.class)
 public class PojoJsonTypeHandler
         extends TypeHandler<Map<String, Object>> {
 
