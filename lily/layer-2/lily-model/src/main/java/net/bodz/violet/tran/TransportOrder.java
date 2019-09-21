@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.meta.decl.Priority;
@@ -290,14 +291,19 @@ public class TransportOrder
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException {
+            throws LoaderException, ParseException {
         super.readObject(map);
 
         List<TransportOrderItem> items = getItems();
         for (String key : map.keySet()) {
             if (key.startsWith("qty-")) {
                 String sidStr = key.substring(4);
-                long sid = Long.parseLong(sidStr);
+                long sid;
+                try {
+                    sid = Long.parseLong(sidStr);
+                } catch (NumberFormatException e) {
+                    throw new ParseException(e);
+                }
                 double qty = map.getDouble(key, 0);
                 String priceKey = "price-" + sid;
                 double price = map.getDouble(priceKey, 0);
