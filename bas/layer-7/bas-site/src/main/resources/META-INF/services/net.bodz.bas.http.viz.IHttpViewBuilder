@@ -1,4 +1,7 @@
 net.bodz.bas.c.org.json.JSONObject_json
+net.bodz.bas.c.org.json.JsonObject_json_1
+net.bodz.bas.c.org.json.JSONArray_json
+net.bodz.bas.c.org.json.JsonArray_json_1
 net.bodz.bas.c.org.json.JSONStringer_json
 net.bodz.bas.fmt.json.JsonSerializable_json
 net.bodz.bas.site.file.UploadResult_json
