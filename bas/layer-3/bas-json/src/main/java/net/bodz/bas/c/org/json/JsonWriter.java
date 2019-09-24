@@ -18,10 +18,15 @@ public class JsonWriter
         super(w);
     }
 
+    public static JsonBuffer buffer() {
+        return new JsonBuffer();
+    }
+
     public Writer getWriter() {
         return super.writer;
     }
 
+    @Override
     public JsonWriter verbatim(String code)
             throws JSONException {
         append(code);
