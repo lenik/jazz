@@ -1,6 +1,7 @@
 net.bodz.bas.db.ibatis.AliasedType
 net.bodz.bas.db.ibatis.IncludeMapperXml
 net.bodz.bas.db.ibatis.PatchMapperXml
+net.bodz.bas.meta.build.ProgramName
 net.bodz.bas.meta.codegen.IndexedType
 net.bodz.bas.meta.decl.Replacement
 net.bodz.bas.meta.meta.PatchType

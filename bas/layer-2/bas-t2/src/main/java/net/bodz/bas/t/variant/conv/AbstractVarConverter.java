@@ -19,7 +19,7 @@ import net.bodz.bas.fn.ITransformer;
 public abstract class AbstractVarConverter<T>
         implements IVarConverter<T> {
 
-    final Class<T> type;
+    protected final Class<T> type;
     final Map<Class<?>, ITransformer<Object, T>> frommap = new HashMap<Class<?>, ITransformer<Object, T>>();
     final Map<Class<?>, ITransformer<T, ?>> tomap = new HashMap<Class<?>, ITransformer<T, ?>>();
     final Set<IVarConverterExtension<T>> extensions;

@@ -23,7 +23,8 @@ public class SingletonUtil {
             Object instance = field.get(null);
             return clazz.cast(instance);
         } catch (Exception e) {
-            throw new LoadException("Failed to get instance field: " + e.getMessage(), e);
+            throw new LoadException(String.format(//
+                    "Failed to get instance field from class %s: %s", clazz.getName(), e.getMessage()), e);
         }
     }
 
