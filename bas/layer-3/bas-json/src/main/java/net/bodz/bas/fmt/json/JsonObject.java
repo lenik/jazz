@@ -615,16 +615,32 @@ public class JsonObject
         return set;
     }
 
+    public <T> T getVar(Class<T> type, String key) {
+        return getVar(type, key, null);
+    }
+
+    public <T> T getVar(Class<T> type, String key, T defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        Object val = _get(key);
+        IVarConverter<Object> converter = VarConverters.getConverter(type);
+        if (converter == null)
+            throw new UnsupportedOperationException(String.format(//
+                    "No converter for class %s.", type.getName()));
+        // try {
+        T var = (T) converter.from(val);
+        // } catch (TypeConvertException e) {
+        // throw new JSONException(e);
+        // }
+        return var;
+    }
+
     public Date getDate(String key) {
         return getDate(key, null);
     }
 
     public Date getDate(String key, Date defaultValue) {
-        if (!has(key))
-            return defaultValue;
-        Object val = _get(key);
-        Date date = (Date) VarConverters.getConverter(Date.class).from(val);
-        return date;
+        return getVar(Date.class, key, defaultValue);
     }
 
     public DateTime getDateTime(String key) {
@@ -632,14 +648,7 @@ public class JsonObject
     }
 
     public DateTime getDateTime(String key, DateTime defaultValue) {
-        if (!has(key))
-            return defaultValue;
-        Object val = _get(key);
-        IVarConverter<Object> conv = VarConverters.getConverter(DateTime.class);
-        if (conv == null)
-            throw new NullPointerException("conv");
-        DateTime date = (DateTime) conv.from(val);
-        return date;
+        return getVar(DateTime.class, key, defaultValue);
     }
 
 }
