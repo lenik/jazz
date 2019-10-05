@@ -37,4 +37,9 @@ public class JsonObj
             obj = new JSONObject(jsonStr);
     }
 
+    @Override
+    public String toString() {
+        return readInStr();
+    }
+
 }
