@@ -2,6 +2,7 @@ package net.bodz.bas.t.predef;
 
 import java.util.*;
 
+import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.meta.stereo.IMetadata;
 import net.bodz.bas.t.order.DefaultComparator;
@@ -12,6 +13,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
     static Random random = new Random();
 
     private final Class<E> itemClass;
+    private final Class<K> keyType;
     private final Class<?> stopClass;
     private final int level;
 
@@ -23,16 +25,19 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
     private Map<String, E> nameMap = new TreeMap<String, E>(DefaultComparator.getInstance());
     private List<E> valueList = new ArrayList<E>();
 
-    PredefMetadata(Class<E> itemClass) {
-        this(itemClass, Predef.class);
+    PredefMetadata(Class<E> itemClass, Class<K> keyType) {
+        this(itemClass, keyType, Predef.class);
     }
 
-    PredefMetadata(Class<E> itemClass, Class<?> stopClass) {
+    PredefMetadata(Class<E> itemClass, Class<K> keyType, Class<?> stopClass) {
         if (itemClass == null)
             throw new NullPointerException("itemClass");
+        if (keyType == null)
+            throw new NullPointerException("keyType");
         if (stopClass == null)
             throw new NullPointerException("stopClass");
         this.itemClass = itemClass;
+        this.keyType = keyType;
         this.stopClass = stopClass;
 
         int level = -1;
@@ -49,6 +54,10 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
 
     public Class<E> getItemClass() {
         return itemClass;
+    }
+
+    public Class<K> getKeyType() {
+        return keyType;
     }
 
     public int getLevel() {
@@ -126,7 +135,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
 
         Class<E> c = itemClass;
         while (true) {
-            PredefMetadata<E, K> metadata = forClass(c);
+            PredefMetadata<E, K> metadata = forClass(c, keyType);
 
             if (metadata.keyMap.containsKey(key))
                 throw new DuplicatedKeyException(metadata.keyMap, key, "more key");
@@ -152,9 +161,15 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
 
     public static <E extends Predef<?, K>, K extends Comparable<K>> //
     PredefMetadata<E, K> forClass(Class<E> type) {
+        Class<K> keyType = TypeParam.infer1(type, Predef.class, 1);
+        return forClass(type, keyType);
+    }
+
+    static <E extends Predef<?, K>, K extends Comparable<K>> //
+    PredefMetadata<E, K> forClass(Class<E> type, Class<K> keyType) {
         PredefMetadata<E, K> metadata = (PredefMetadata<E, K>) classLocalMap.get(type);
         if (metadata == null)
-            classLocalMap.put(type, metadata = new PredefMetadata<E, K>(type));
+            classLocalMap.put(type, metadata = new PredefMetadata<E, K>(type, keyType));
         return metadata;
     }
 

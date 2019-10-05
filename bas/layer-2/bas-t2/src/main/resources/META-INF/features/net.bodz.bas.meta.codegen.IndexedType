@@ -1,2 +1,3 @@
 net.bodz.bas.t.variant.conv.IVarConverter
 net.bodz.bas.t.variant.conv.IVarConverterExtension
+net.bodz.bas.t.variant.conv.IVarConverterProvider

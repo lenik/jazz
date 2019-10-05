@@ -27,8 +27,8 @@ public class IndexedTypes {
     static Logger logger = Logger.getLogger(IndexedTypes.class.getName());
 
     public static <T> Iterable<Class<? extends T>> list(Class<T> serviceBaseType, boolean includeAbstract) {
-        // TODO Or using Context class loader?...
         ClassLoader classLoader = serviceBaseType.getClassLoader();
+        // ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         return list(serviceBaseType, includeAbstract, classLoader);
     }
 
