@@ -66,7 +66,18 @@ public class IndexedTypes {
                 InputStreamReader reader = new InputStreamReader(in, Charsets.UTF8);
                 BufferedReader br = new BufferedReader(reader);
                 String line;
-                while ((line = br.readLine()) != null) {
+                while (true) {
+                    try {
+                        line = br.readLine();
+                    } catch (Exception e) { // SecurityException: digest error
+                        logger.severe("Can't read from " + url + ": " + e.getMessage());
+                        e.printStackTrace();
+                        break;
+                    }
+
+                    if (line == null)
+                        break;
+
                     String className = line.trim();
 
                     if (className.isEmpty())
