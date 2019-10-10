@@ -1,0 +1,2 @@
+include .skel/skel.mk
+
