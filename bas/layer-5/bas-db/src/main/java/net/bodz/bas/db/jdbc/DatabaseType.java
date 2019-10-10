@@ -22,7 +22,7 @@ public class DatabaseType
     private final String urlFormat;
     private final ISqlFormat sqlFormat;
 
-    private DatabaseType(String name, String hibernateDialect, String driverClass, String urlFormat,
+    public DatabaseType(String name, String hibernateDialect, String driverClass, String urlFormat,
             ISqlFormat sqlFormat) {
         super(name, name, meta);
         this.hibernateDialect = hibernateDialect;
