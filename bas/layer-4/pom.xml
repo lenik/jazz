@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-scanner</module>
+        <module>bas-sms</module>
     </modules>
     <name>BAS :: Layer 4</name>
 </project>
