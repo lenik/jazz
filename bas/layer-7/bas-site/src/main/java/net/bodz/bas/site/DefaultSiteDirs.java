@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.http.ctx.IAnchor;
+import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;

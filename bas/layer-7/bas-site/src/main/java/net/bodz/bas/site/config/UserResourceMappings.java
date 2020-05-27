@@ -4,9 +4,9 @@ import java.io.File;
 
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.http.config.AbstractResourceMappings;
-import net.bodz.bas.http.config.ServletContextConfig;
-import net.bodz.bas.http.config.ServletDescriptor;
-import net.bodz.bas.http.ctx.IAnchor;
+import net.bodz.bas.servlet.config.ServletContextConfig;
+import net.bodz.bas.servlet.config.ServletDescriptor;
+import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.IBasicSiteAnchors;
 
 public class UserResourceMappings

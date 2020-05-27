@@ -3,6 +3,9 @@ package net.bodz.bas.http.config;
 import net.bodz.bas.http.servlet.ClassResourceAccessorServlet;
 import net.bodz.bas.http.servlet.StaticFileAccessServlet;
 import net.bodz.bas.http.servlet.StaticVhostFileAccessServlet;
+import net.bodz.bas.servlet.config.AbstractServletContextConfigurer;
+import net.bodz.bas.servlet.config.ServletContextConfig;
+import net.bodz.bas.servlet.config.ServletDescriptor;
 
 public abstract class AbstractResourceMappings
         extends AbstractServletContextConfigurer {

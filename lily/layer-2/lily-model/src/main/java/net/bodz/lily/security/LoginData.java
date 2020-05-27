@@ -2,7 +2,7 @@ package net.bodz.lily.security;
 
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.http.ctx.CurrentHttpService;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.t.preorder.PrefixMap;
 
 public class LoginData {

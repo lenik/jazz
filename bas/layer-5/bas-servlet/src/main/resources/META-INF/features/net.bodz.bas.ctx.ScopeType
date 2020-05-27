@@ -1,0 +1,3 @@
+net.bodz.bas.http.ctx.RequestScope
+net.bodz.bas.http.ctx.ServletContextScope
+net.bodz.bas.http.ctx.SessionScope

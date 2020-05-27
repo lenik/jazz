@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.java.util.regex.IPartProcessor;
 import net.bodz.bas.c.java.util.regex.TextPrepByParts;
-import net.bodz.bas.http.ctx.CurrentHttpService;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoIndex;
