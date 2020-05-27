@@ -209,6 +209,17 @@ public class Nullables {
         return annotation;
     }
 
+    public static boolean isBlank(String string) {
+        if (string == null)
+            return true;
+        else
+            return string.trim().isEmpty();
+    }
+
+    public static boolean isNotBlank(String string) {
+        return !isBlank(string);
+    }
+
     public static boolean isEmpty(String string) {
         if (string == null)
             return true;
