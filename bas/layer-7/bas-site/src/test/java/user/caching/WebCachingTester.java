@@ -1,6 +1,6 @@
 package user.caching;
 
-import net.bodz.bas.http.config.ServletContextConfig;
+import net.bodz.bas.servlet.config.ServletContextConfig;
 import net.bodz.uni.echo.test.AbstractWebAppRunner;
 
 public class WebCachingTester

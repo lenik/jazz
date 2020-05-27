@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.ctx.scope.AbstractScopeTeller;
 import net.bodz.bas.ctx.scope.IScopeInstance;
-import net.bodz.bas.http.ctx.CurrentHttpService;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 
 public class VirtualHostScopeTeller
         extends AbstractScopeTeller {

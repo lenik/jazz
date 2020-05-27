@@ -18,6 +18,11 @@
             <artifactId>bas-repr</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-servlet</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 5 :: Html</name>
 </project>

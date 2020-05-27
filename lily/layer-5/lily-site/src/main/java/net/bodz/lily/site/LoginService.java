@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -12,6 +11,7 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.LoginData;

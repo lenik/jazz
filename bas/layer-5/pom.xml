@@ -23,6 +23,7 @@
         <module>bas-repr-api</module>
         <module>bas-repr</module>
         <module>bas-search</module>
+        <module>bas-servlet</module>
         <module>bas-ui</module>
         <module>bas-vfs</module>
     </modules>

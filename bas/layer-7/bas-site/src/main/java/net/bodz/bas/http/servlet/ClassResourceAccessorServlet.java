@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.err.IllegalConfigException;
-import net.bodz.bas.http.ResourceTransferer;
+import net.bodz.bas.servlet.ResourceTransferer;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 
 public class ClassResourceAccessorServlet

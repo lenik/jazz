@@ -13,9 +13,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.data.codec.builtin.HexCodec;
-import net.bodz.bas.http.ctx.IAnchor;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.tools.StreamReading;
+import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.IBasicSiteAnchors;
 
 /**

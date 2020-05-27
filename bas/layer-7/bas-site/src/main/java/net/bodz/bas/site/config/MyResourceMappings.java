@@ -4,8 +4,8 @@ import java.io.File;
 
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.http.config.AbstractResourceMappings;
-import net.bodz.bas.http.config.ServletContextConfig;
-import net.bodz.bas.http.config.ServletDescriptor;
+import net.bodz.bas.servlet.config.ServletContextConfig;
+import net.bodz.bas.servlet.config.ServletDescriptor;
 
 public class MyResourceMappings
         extends AbstractResourceMappings {

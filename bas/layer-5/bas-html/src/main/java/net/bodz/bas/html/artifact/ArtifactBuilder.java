@@ -2,7 +2,7 @@ package net.bodz.bas.html.artifact;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.err.UnsupportedFeatureException;
-import net.bodz.bas.http.ctx.IAnchor;
+import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 
 public class ArtifactBuilder {

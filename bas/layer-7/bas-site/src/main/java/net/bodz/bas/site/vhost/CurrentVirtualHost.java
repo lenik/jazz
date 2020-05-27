@@ -3,10 +3,10 @@ package net.bodz.bas.site.vhost;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.IllegalRequestException;
-import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.log.diag.CompositeDiagContext;
 import net.bodz.bas.log.diag.IContextsCdcConfigurer;
 import net.bodz.bas.log.diag.IDiagContextTeller;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 
 public class CurrentVirtualHost
         implements IContextsCdcConfigurer, IDiagContextTeller {

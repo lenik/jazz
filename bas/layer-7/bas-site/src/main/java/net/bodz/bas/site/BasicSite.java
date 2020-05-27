@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.JazzBasProject;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.http.ctx.CurrentHttpService;
 import net.bodz.bas.i18n.LocaleVars;
 import net.bodz.bas.repr.content.AbstractXjdocContent;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -19,6 +18,7 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.org.ICrawlable;
 import net.bodz.bas.site.org.SiteGraph;
 import net.bodz.bas.site.org.Sitemap;

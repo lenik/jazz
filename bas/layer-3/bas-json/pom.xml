@@ -23,7 +23,6 @@
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-i18n</artifactId>
             <version>${project.version}</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
