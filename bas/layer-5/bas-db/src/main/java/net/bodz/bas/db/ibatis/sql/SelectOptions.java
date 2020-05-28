@@ -5,6 +5,18 @@ public class SelectOptions {
     private Pagination page;
     private Orders orders;
 
+    public SelectOptions() {
+    }
+
+    public SelectOptions(Pagination page) {
+        this.page = page;
+    }
+
+    public SelectOptions(Pagination page, Orders orders) {
+        this.page = page;
+        this.orders = orders;
+    }
+
     public Pagination getPage() {
         return page;
     }
@@ -35,5 +47,8 @@ public class SelectOptions {
         orders.add(order);
         return this;
     }
+
+    public static final SelectOptions FIRST = new SelectOptions(new Pagination(1, 0));
+    public static final SelectOptions ALL = new SelectOptions();
 
 }
