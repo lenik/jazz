@@ -5,6 +5,14 @@ public class Pagination {
     long limit;
     long offset;
 
+    public Pagination() {
+    }
+
+    public Pagination(long limit, long offset) {
+        this.limit = limit;
+        this.offset = offset;
+    }
+
     public long getLimit() {
         return limit;
     }
