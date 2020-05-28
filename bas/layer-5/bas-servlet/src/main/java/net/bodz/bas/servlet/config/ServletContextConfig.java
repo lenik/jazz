@@ -2,12 +2,8 @@ package net.bodz.bas.servlet.config;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.Map.Entry;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -15,6 +11,12 @@ import javax.servlet.Servlet;
 import net.bodz.bas.c.javax.servlet.http.*;
 import net.bodz.bas.c.object.UseNet;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.io.BTreeOut;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.xml.IXmlOut;
+import net.bodz.bas.io.xml.RecXmlOut;
+import net.bodz.bas.io.xml.XmlDoc;
+import net.bodz.bas.io.xml.XmlOutputFormat;
 import net.bodz.bas.t.order.PrioritySortedLists;
 import net.bodz.uni.echo.resource.IResourceProvider;
 
@@ -178,6 +180,9 @@ public class ServletContextConfig {
             throw new NullPointerException("filterConfig");
 
         String id = filterConfig.getId();
+        if (id == null)
+            id = generateId(filterConfig);
+
         FilterDescriptor old = filterMap.get(id);
         if (old != null)
             throw new DuplicatedKeyException(id);
@@ -210,6 +215,9 @@ public class ServletContextConfig {
             throw new NullPointerException("servletConfig");
 
         String id = servletConfig.getId();
+        if (id == null)
+            id = generateId(servletConfig);
+
         ServletDescriptor old = servletMap.get(id);
         if (old != null)
             throw new DuplicatedKeyException(id);
@@ -347,6 +355,111 @@ public class ServletContextConfig {
         if (listener == null)
             throw new NullPointerException("listener");
         PrioritySortedLists.remove(sessionBindingListeners, listener);
+    }
+
+    public String dumpWebXml() {
+        ITreeOut buf = new BTreeOut();
+        XmlDoc doc = new XmlDoc(buf, XmlOutputFormat.DEFAULT);
+        IXmlOut out = new RecXmlOut(doc);
+
+        IXmlOut node;
+        node = out.begin("welcome-file-list");
+        {
+            for (String wf : welcomeFiles)
+                node.begin("welcome-file").text(wf).end();
+            node.end();
+        }
+
+        node = out; // out.begin("init-params");
+        dumpInitParams(node, initParamMap);
+
+        node = out; // out.begin("servlets");
+        for (ServletDescriptor sd : getServlets()) {
+            IXmlOut sNode = out.begin("servlet");
+            {
+                sNode.begin("servlet-name").text(sd.getId()).end();
+                sNode.begin("servlet-class").text(sd.getServletClass().getName()).end();
+// sNode.begin("description").text(sd.getDisplayName()).end();
+                dumpInitParams(sNode, sd.getInitParamMap());
+                sNode.end();
+            }
+            for (String mapping : sd.getMappings()) {
+                IXmlOut mNode = out.begin("servlet-mapping");
+                mNode.begin("servlet-name").text(sd.getId()).end();
+                mNode.begin("url-pattern").text(mapping).end();
+                mNode.end();
+            }
+        }
+
+        node = out; // out.begin("filters");
+        for (FilterDescriptor fd : getFilters()) {
+            IXmlOut fNode = out.begin("filter");
+            {
+                fNode.begin("filter-name").text(fd.getId()).end();
+                fNode.begin("filter-class").text(fd.getFilterClass().getName()).end();
+// fNode.begin("description").text(fd.getDisplayName()).end();
+                dumpInitParams(fNode, fd.getInitParamMap());
+                fNode.end();
+            }
+
+            for (String mapping : fd.getMappings()) {
+                IXmlOut mNode = out.begin("filter-mapping");
+                mNode.begin("filter-name").text(fd.getId()).end();
+                mNode.begin("url-pattern").text(mapping).end();
+                mNode.end();
+            }
+        }
+
+        dumpListeners(out, servletContextListeners);
+        dumpListeners(out, servletRequestListeners);
+        dumpListeners(out, servletContextAttributeListeners);
+        dumpListeners(out, servletRequestAttributeListeners);
+        dumpListeners(out, sessionListeners);
+        dumpListeners(out, sessionActivationListeners);
+        dumpListeners(out, sessionActivationListeners);
+        dumpListeners(out, sessionBindingListeners);
+
+        return buf.toString();
+    }
+
+    Map<Class<?>, Integer> lastIdMap = new HashMap<>();
+
+    String generateId(ServletDescriptor sd) {
+        String id = generateId(sd.getServletClass());
+        sd.setId(id);
+        return id;
+    }
+
+    String generateId(FilterDescriptor fd) {
+        String id = generateId(fd.getFilterClass());
+        fd.setId(id);
+        return id;
+    }
+
+    synchronized String generateId(Class<?> type) {
+        Integer _lastId = lastIdMap.get(type);
+        int lastId = _lastId == null ? 0 : _lastId.intValue();
+        lastId++;
+        String id = type.getSimpleName() + "_" + lastId;
+        lastIdMap.put(type, lastId);
+        return id;
+    }
+
+    static void dumpInitParams(IXmlOut out, Map<String, ?> map) {
+        for (Entry<String, ?> ent : map.entrySet()) {
+            IXmlOut ip = out.begin("init-param");
+            ip.begin("param-name").text(ent.getKey()).end();
+            ip.begin("param-value").text(ent.getValue().toString()).end();
+            ip.end();
+        }
+    }
+
+    static void dumpListeners(IXmlOut out, Collection<?> listeners) {
+        for (Object l : listeners) {
+            IXmlOut node = out.begin("listener");
+            node.begin("listener-class").text(l.getClass().getName()).end();
+            node.end();
+        }
     }
 
 }

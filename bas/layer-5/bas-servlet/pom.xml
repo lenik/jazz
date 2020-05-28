@@ -23,6 +23,12 @@
             <artifactId>bas-std</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- xml out -->
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-io</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-log</artifactId>
