@@ -25,6 +25,8 @@ public class MavenXjdocProvider
         File sourceFile = pomDir.getSourceFile(clazz);
         if (sourceFile == null) // Not belong to the maven project.
             return null;
+        if (!sourceFile.exists())
+            return null;
 
         ClassLoader classLoader = clazz.getClassLoader();
         ClassDocBuilder classDocBuilder = new ClassDocBuilder(getTagLibrary());
