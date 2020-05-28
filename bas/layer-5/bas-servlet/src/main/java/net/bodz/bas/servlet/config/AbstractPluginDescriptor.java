@@ -1,7 +1,6 @@
 package net.bodz.bas.servlet.config;
 
 import net.bodz.bas.c.object.IdentityHashSet;
-import net.bodz.bas.c.object.ObjectInfo;
 
 public abstract class AbstractPluginDescriptor
         implements IPluginDescriptor {
@@ -17,7 +16,7 @@ public abstract class AbstractPluginDescriptor
     }
 
     public AbstractPluginDescriptor(String id) {
-        this.id = id != null ? id : ObjectInfo.getSimpleId(this);
+        this.id = id; // != null ? id : ObjectInfo.getSimpleId(this);
         this.dependencies = new IdentityHashSet<Object>();
     }
 
