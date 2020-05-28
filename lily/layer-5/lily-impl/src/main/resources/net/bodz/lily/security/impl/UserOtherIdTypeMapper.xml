@@ -2,28 +2,31 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.lily.security.impl.UserIdTypeMapper">
+<mapper namespace="net.bodz.lily.security.impl.UserOtherIdTypeMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.lily.security.UserIdType" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.lily.security.UserOtherIdType" extends="co.MAP_UVX">
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
             a.*
-        from useridtype a
+        from useroidtype a
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
             a.*
-        from useridtype a
+        from useroidtype a
         ]]>
     </sql>
 
     <sql id="filtconds">
         <!-- co -->
         <include refid="co.modefilt" />
+        <include refid="co.filter-id" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -45,7 +48,7 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into useridtype(
+        insert into useroidtype(
             label, description,
             priority, flags, state
         ) values(
@@ -55,7 +58,7 @@
     ]]></insert>
 
     <update id="update">
-        update useridtype
+        update useroidtype
         <set>
             <include refid="co.setUS" />
         </set>
@@ -65,11 +68,11 @@
     </update>
 
     <delete id="delete">
-        delete from useridtype where id = #{id}
+        delete from useroidtype where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from useridtype
+        select count(*) "rows" from useroidtype
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -16,10 +16,6 @@ public class UserSecretSamples
 
         a.setPassword("" + random.nextLong());
         a.setPublicKey("abcdefghijklmnopqrstuvwxyz");
-        a.setEmail("foo@bar.com");
-        a.setEmailValidated(random.nextBoolean());
-        a.setMobile("" + random.nextLong() % 1000_0000_0000L);
-        a.setMobileValidated(random.nextBoolean());
 
         return a;
     }

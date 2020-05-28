@@ -43,7 +43,22 @@ public abstract class CoPrincipal
 
     @Override
     public CoPrincipalProperties getProperties() {
+        if (properties == null) {
+            synchronized (this) {
+                if (properties == null) {
+                    properties = createProperties();
+                }
+            }
+        }
         return properties;
+    }
+
+    public void setProperties(CoPrincipalProperties properties) {
+        this.properties = properties;
+    }
+
+    public CoPrincipalProperties createProperties() {
+        return new CoPrincipalProperties();
     }
 
 }

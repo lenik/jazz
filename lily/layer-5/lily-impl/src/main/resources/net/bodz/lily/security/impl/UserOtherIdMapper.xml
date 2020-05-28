@@ -2,19 +2,23 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.lily.security.impl.UserIdMapper">
+<mapper namespace="net.bodz.lily.security.impl.UserOtherIdMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.lily.security.UserId" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.lily.security.UserOtherId" extends="mi.objlist_map">
+        <result property="properties.jsonForm" column="props" />
         <result property="oid" column="oid" />
         <result property="auth.jsonForm" column="auth" />
-        <result property="data.jsonForm" column="data" />
-        <association property="type" javaType="net.bodz.lily.security.UserIdType">
-            <id property="id" column="type" />
-            <result property="label" column="type_label" />
-        </association>
         <association property="user" javaType="net.bodz.lily.security.User">
             <id property="id" column="user" />
             <result property="label" column="user_label" />
+            <collection property="secrets" javaType="java.util.ArrayList" ofType="net.bodz.violet.store.StoreOrderItem">
+                <id property="id" column="sec_id" />
+                <result property="passwd" column="sec_passwd" />
+            </collection>
+        </association>
+        <association property="type" javaType="net.bodz.lily.security.UserOtherIdType">
+            <id property="id" column="type" />
+            <result property="label" column="type_label" />
         </association>
     </resultMap>
 
@@ -22,10 +26,13 @@
         select
             a.*,
             u.label "user_label",
-            type.label "type_label"
-        from userid a
+            type.label "type_label",
+            s.id "sec_id",
+            s.passwd "sec_passwd"
+        from useroid a
             left join "user" u on a."user" = u.id
-            left join useridtype type on a.type = type.id
+            left join useroidtype type on a.type = type.id
+            left join usersec s on a."user" = s."user";
         ]]>
     </sql>
 
@@ -33,16 +40,22 @@
         select
             a.*,
             u.label "user_label",
-            type.label "type_label"
-        from userid a
+            type.label "type_label",
+            s.id "sec_id",
+            s.passwd "sec_passwd"
+        from useroid a
             left join "user" u on a."user" = u.id
-            left join useridtype type on a.type = type.id
+            left join useroidtype type on a.type = type.id
+            left join usersec s on a."user" = s."user";
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
         <include refid="co.modefilt" />
+        <include refid="co.filter-id" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
+        <include refid="mi.filter-all" />
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -64,25 +77,31 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into userid(
-            "user", type, oid,
-            auth,
-            data
+        insert into useroid(
+            label, description,
+            priority, flags, state,
+            props,
+            "user", "type",
+            oid, auth
         ) values(
-            #{user.id}, #{type.id}, #{oid},
+            #{label}, #{description},
+            #{priority}, #{flags}, #{state},
+            #{properties.jsonForm},
+            #{user.id}, #{type.id},
+            #{oid},
             #{auth.jsonForm},
-            #{data.jsonForm}
-        ) returning id; --
+        ); --
     ]]></insert>
 
     <update id="update">
-        update userid
+        update useroid
         <set>
+            <include refid="co.setUS" />
+            props = #{properties.jsonForm},
             "user" = #{user.id},
             type = #{type.id},
             oid = #{oid},
             auth = #{auth.jsonForm},
-            data = #{data.jsonForm},
         </set>
         <where>
             id = #{id}
@@ -90,11 +109,11 @@
     </update>
 
     <delete id="delete">
-        delete from userid where id = #{id}
+        delete from useroid where id = #{id}
     </delete>
 
     <select id="count" resultType="hashmap">
-        select count(*) "rows" from userid
+        select count(*) "rows" from useroid
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

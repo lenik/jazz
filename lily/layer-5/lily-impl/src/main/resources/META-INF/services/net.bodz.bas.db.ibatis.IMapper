@@ -46,9 +46,9 @@ net.bodz.lily.security.impl.GroupMapper
 net.bodz.lily.security.impl.PolicyMapper
 net.bodz.lily.security.impl.RoleMapper
 net.bodz.lily.security.impl.UserCategoryMapper
-net.bodz.lily.security.impl.UserIdMapper
-net.bodz.lily.security.impl.UserIdTypeMapper
 net.bodz.lily.security.impl.UserMapper
+net.bodz.lily.security.impl.UserOtherIdMapper
+net.bodz.lily.security.impl.UserOtherIdTypeMapper
 net.bodz.lily.security.impl.UserRunMapper
 net.bodz.lily.security.impl.UserSecretMapper
 net.bodz.lily.util.mapper.ProfileMapper
