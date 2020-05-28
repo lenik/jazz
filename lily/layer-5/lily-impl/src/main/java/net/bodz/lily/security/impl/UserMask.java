@@ -14,6 +14,36 @@ public class UserMask
     String email;
     String mobile;
 
+    public UserMask categoryId(Integer categoryId) {
+        setCategoryId(categoryId);
+        return this;
+    }
+
+    public UserMask primaryGroupId(Integer primaryGroupId) {
+        setPrimaryGroupId(primaryGroupId);
+        return this;
+    }
+
+    public UserMask groupId(Integer groupId) {
+        setGroupId(groupId);
+        return this;
+    }
+
+    public UserMask password(String password) {
+        setPassword(password);
+        return this;
+    }
+
+    public UserMask email(String email) {
+        setEmail(email);
+        return this;
+    }
+
+    public UserMask mobile(String mobile) {
+        setMobile(mobile);
+        return this;
+    }
+
     public Integer getCategoryId() {
         return categoryId;
     }

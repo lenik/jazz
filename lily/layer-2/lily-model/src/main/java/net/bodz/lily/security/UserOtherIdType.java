@@ -4,12 +4,12 @@ import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 
 @IdType(Integer.class)
-public class UserIdType
+public class UserOtherIdType
         extends CoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
-    public UserIdType() {
+    public UserOtherIdType() {
     }
 
     @Override

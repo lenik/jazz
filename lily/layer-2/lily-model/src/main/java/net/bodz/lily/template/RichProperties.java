@@ -11,6 +11,9 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.site.json.JsonMap;
 
+/**
+ * A common support for object icon, etc.
+ */
 public class RichProperties
         extends JsonMap {
 

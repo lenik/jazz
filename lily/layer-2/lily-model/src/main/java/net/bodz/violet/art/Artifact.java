@@ -53,14 +53,10 @@ public class Artifact
     private Map<UOM, Double> convMap = new HashMap<UOM, Double>();
     private int decimalDigits = 2;
 
-    private ArtifactProperties properties = createProperties();
+    private ArtifactProperties properties;
 
     // cache
     private BigDecimal price = BigDecimal.ZERO;
-
-    protected ArtifactProperties createProperties() {
-        return new ArtifactProperties();
-    }
 
     /**
      * 分类
@@ -261,7 +257,22 @@ public class Artifact
 
     @Override
     public ArtifactProperties getProperties() {
+        if (properties == null) {
+            synchronized (this) {
+                if (properties == null) {
+                    properties = createProperties();
+                }
+            }
+        }
         return properties;
+    }
+
+    public void setProperties(ArtifactProperties properties) {
+        this.properties = properties;
+    }
+
+    protected ArtifactProperties createProperties() {
+        return new ArtifactProperties();
     }
 
 }
