@@ -50,6 +50,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-servlet</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.uni</groupId>
             <artifactId>echo-client</artifactId>
             <version>1.0.0-SNAPSHOT</version>
