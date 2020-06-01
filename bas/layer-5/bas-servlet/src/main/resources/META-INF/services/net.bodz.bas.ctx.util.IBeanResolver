@@ -1,2 +1,2 @@
-net.bodz.bas.http.ctx.ServletContextScopeTeller
-net.bodz.bas.http.ctx.SessionScopeTeller
+net.bodz.bas.servlet.ctx.ServletContextScopeTeller
+net.bodz.bas.servlet.ctx.SessionScopeTeller

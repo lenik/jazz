@@ -3,7 +3,7 @@ package net.bodz.bas.site.config;
 import java.io.File;
 
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.bas.http.config.AbstractResourceMappings;
+import net.bodz.bas.servlet.config.AbstractResourceMappings;
 import net.bodz.bas.servlet.config.ServletContextConfig;
 import net.bodz.bas.servlet.config.ServletDescriptor;
 

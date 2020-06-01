@@ -2,9 +2,9 @@ package net.bodz.bas.pdf.viz;
 
 import java.util.ServiceLoader;
 
-import net.bodz.bas.http.viz.AbstractHttpViewBuilderFactory;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.repr.viz.IViewBuilder;
+import net.bodz.bas.servlet.viz.AbstractHttpViewBuilderFactory;
 
 /**
  * @see IPdfViewBuilder The indexed type.

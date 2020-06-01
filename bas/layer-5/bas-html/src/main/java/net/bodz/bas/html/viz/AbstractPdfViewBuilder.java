@@ -2,10 +2,10 @@ package net.bodz.bas.html.viz;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
-import net.bodz.bas.http.viz.HttpViewBuilderFamily;
 import net.bodz.bas.pdf.viz.IPdfViewBuilder;
 import net.bodz.bas.repr.req.IViewOfRequest;
+import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.servlet.viz.HttpViewBuilderFamily;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 

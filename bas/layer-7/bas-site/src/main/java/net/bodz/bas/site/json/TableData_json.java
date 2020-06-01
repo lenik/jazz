@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
+import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.site.ajax.AbstractJsonViewBuilder;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VariantMaps;

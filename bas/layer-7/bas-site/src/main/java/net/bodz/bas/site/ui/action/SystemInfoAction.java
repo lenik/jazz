@@ -1,6 +1,6 @@
 package net.bodz.bas.site.ui.action;
 
-import net.bodz.bas.http.ui.cmd.UiScriptAction;
+import net.bodz.bas.servlet.ui.cmd.UiScriptAction;
 import net.bodz.bas.ui.model.action.Location;
 
 /**

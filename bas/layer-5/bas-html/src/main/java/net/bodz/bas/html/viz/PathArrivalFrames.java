@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.ctx.util.IFramedMap;
-import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.ViewBuilderSet;
+import net.bodz.bas.servlet.viz.IHttpViewBuilderFactory;
 
 public class PathArrivalFrames
         extends ArrayList<PathArrivalFrame> {

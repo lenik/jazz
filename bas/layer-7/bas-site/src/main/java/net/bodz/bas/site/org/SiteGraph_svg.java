@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
-import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;

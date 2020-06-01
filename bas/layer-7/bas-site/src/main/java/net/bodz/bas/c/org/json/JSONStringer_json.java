@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONStringer;
 
-import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
-import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;

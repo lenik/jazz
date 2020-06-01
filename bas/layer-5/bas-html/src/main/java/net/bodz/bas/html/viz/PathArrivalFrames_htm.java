@@ -9,9 +9,9 @@ import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.servlet.DumpServlet;
 import net.bodz.bas.html.viz.builtin.Throwable_htm;
-import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
-import net.bodz.bas.http.viz.IndexedHttpViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.servlet.viz.IHttpViewBuilderFactory;
+import net.bodz.bas.servlet.viz.IndexedHttpViewBuilderFactory;
 import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.bas.ui.dom1.UiVar;
 

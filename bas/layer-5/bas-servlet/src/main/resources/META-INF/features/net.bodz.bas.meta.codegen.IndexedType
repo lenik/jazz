@@ -1,4 +1,4 @@
 net.bodz.bas.c.javax.servlet.http.IHttpFilter
 net.bodz.bas.c.javax.servlet.http.IServletContextListener
 net.bodz.bas.c.javax.servlet.http.IServletRequestListener
-net.bodz.bas.http.config.IServletContextConfigurer
+net.bodz.bas.servlet.config.IServletContextConfigurer

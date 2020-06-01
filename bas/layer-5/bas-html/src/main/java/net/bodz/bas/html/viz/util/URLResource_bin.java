@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileURL;
-import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
-import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.repr.content.MutableContent;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.servlet.ResourceTransferer;
+import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
