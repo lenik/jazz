@@ -6,6 +6,9 @@ import org.json.JSONException;
 
 import net.bodz.bas.fmt.json.JsonObject;
 
+/**
+ * @see JsonStringer
+ */
 public class JsonBuffer
         extends JsonWriter {
 
