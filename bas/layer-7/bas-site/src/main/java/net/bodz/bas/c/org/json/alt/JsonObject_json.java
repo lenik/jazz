@@ -1,4 +1,4 @@
-package net.bodz.bas.c.org.json;
+package net.bodz.bas.c.org.json.alt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,10 +17,10 @@ import net.bodz.bas.ui.dom1.IUiRef;
 /**
  * _1 to avoid same names with different case.
  */
-public class JsonObject_json_1
+public class JsonObject_json
         extends AbstractHttpViewBuilder<JsonObject> {
 
-    public JsonObject_json_1() {
+    public JsonObject_json() {
         super(JsonObject.class);
     }
 

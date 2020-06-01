@@ -1,4 +1,4 @@
-package net.bodz.bas.c.org.json;
+package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,10 +17,10 @@ import net.bodz.bas.ui.dom1.IUiRef;
 /**
  * _1 to avoid same names with different case.
  */
-public class JsonArray_json_1
+public class JsonArray_json
         extends AbstractHttpViewBuilder<JsonArray> {
 
-    public JsonArray_json_1() {
+    public JsonArray_json() {
         super(JsonArray.class);
     }
 

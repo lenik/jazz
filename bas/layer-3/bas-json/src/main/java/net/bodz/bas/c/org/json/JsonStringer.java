@@ -6,6 +6,9 @@ import org.json.JSONException;
 
 import net.bodz.bas.fmt.json.IJsonOut;
 
+/**
+ * @see JsonBuffer
+ */
 public class JsonStringer
         extends JSONStringer_patch
         implements IJsonOut {

@@ -1,4 +1,4 @@
-package net.bodz.bas.c.org.json;
+package net.bodz.bas.c.org.json.alt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,8 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-
+import net.bodz.bas.c.org.json.JsonStringer;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.servlet.viz.IHttpViewContext;
@@ -15,23 +14,23 @@ import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-public class JSONArray_json
-        extends AbstractHttpViewBuilder<JSONArray> {
+public class JsonStringer_json
+        extends AbstractHttpViewBuilder<JsonStringer> {
 
-    public JSONArray_json() {
-        super(JSONArray.class);
+    public JsonStringer_json() {
+        super(JsonStringer.class);
     }
 
     @Override
-    public ContentType getContentType(HttpServletRequest request, JSONArray value) {
+    public ContentType getContentType(HttpServletRequest request, JsonStringer value) {
         return ContentTypes.application_json;
     }
 
     @Override
-    public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<JSONArray> ref)
+    public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<JsonStringer> ref)
             throws ViewBuilderException, IOException {
-        JSONArray jsonArray = ref.get();
-        String json = jsonArray.toString();
+        JsonStringer js = ref.get();
+        String json = js.toString();
         PrintWriter writer = resp.getWriter();
         writer.print(json);
         return null;
