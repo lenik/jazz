@@ -1,6 +1,6 @@
 package net.bodz.bas.site.config;
 
-import net.bodz.bas.http.config.AbstractResourceMappings;
+import net.bodz.bas.servlet.config.AbstractResourceMappings;
 import net.bodz.bas.servlet.config.ServletContextConfig;
 import net.bodz.bas.servlet.config.ServletDescriptor;
 

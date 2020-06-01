@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.html.dom.HtmlHeadData;
 import net.bodz.bas.html.dom.IHtmlHeadData;
-import net.bodz.bas.http.viz.DefaultHttpViewContext;
+import net.bodz.bas.servlet.viz.DefaultHttpViewContext;
 
 public class DefaultHtmlViewContext
         extends DefaultHttpViewContext

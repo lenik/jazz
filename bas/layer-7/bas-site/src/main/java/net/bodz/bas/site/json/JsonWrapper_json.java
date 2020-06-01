@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
-import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.site.ajax.AbstractJsonViewBuilder;
 import net.bodz.bas.ui.dom1.IUiRef;
 

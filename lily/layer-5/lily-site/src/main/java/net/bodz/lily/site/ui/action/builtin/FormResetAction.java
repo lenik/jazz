@@ -1,6 +1,6 @@
 package net.bodz.lily.site.ui.action.builtin;
 
-import net.bodz.bas.http.ui.cmd.UiScriptAction;
+import net.bodz.bas.servlet.ui.cmd.UiScriptAction;
 
 /**
  * Reset

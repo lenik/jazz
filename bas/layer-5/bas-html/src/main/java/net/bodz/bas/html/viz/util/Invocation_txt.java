@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.http.viz.AbstractHttpViewBuilder;
-import net.bodz.bas.http.viz.IHttpViewContext;
 import net.bodz.bas.potato.invoke.IInvocation;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
+import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.typer.Typers;

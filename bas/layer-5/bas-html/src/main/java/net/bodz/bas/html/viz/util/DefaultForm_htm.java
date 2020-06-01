@@ -8,12 +8,12 @@ import net.bodz.bas.html.io.tag.HtmlTable;
 import net.bodz.bas.html.io.tag.HtmlTd;
 import net.bodz.bas.html.io.tag.HtmlTr;
 import net.bodz.bas.html.viz.IHtmlViewContext;
-import net.bodz.bas.http.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldCategory;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
+import net.bodz.bas.servlet.viz.IHttpViewBuilderFactory;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class DefaultForm_htm<T>
