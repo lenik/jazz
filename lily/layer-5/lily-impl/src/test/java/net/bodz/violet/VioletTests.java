@@ -1,15 +1,14 @@
 package net.bodz.violet;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.DataContexts;
 import net.bodz.bas.db.jdbc.ConnectOptions;
-import net.bodz.lily.test.TestContext;
 
 public class VioletTests
-        extends TestContext {
+        extends DataContexts {
 
-    static final ConnectOptions LOCAL;
+    static final ConnectOptions LOCAL = declare("local test");
     static {
-        LOCAL = new ConnectOptions();
         LOCAL.setServer("localhost:5432");
         LOCAL.setDatabase("violet");
         LOCAL.setUserName("postgres");
