@@ -1,17 +1,30 @@
 package net.bodz.lily.site;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.loader.ClassLoaders;
+import net.bodz.bas.c.type.ClassNameComparator;
 import net.bodz.bas.c.type.TypeIndex;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.html.io.BHtmlOut;
+import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.html.io.tag.HtmlUl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.IPathDispatchable;
+import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathArrival;
+import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoIndex;
 
 public class CoIndexServiceGroup
-        implements INamingGroup<CoIndex<?, ?>> {
+        implements INamingGroup<CoIndex<?, ?>>, IPathDispatchable {
 
     static final Logger logger = LoggerFactory.getLogger(CoIndexServiceGroup.class);
 
@@ -52,6 +65,42 @@ public class CoIndexServiceGroup
     @Override
     public Map<String, ? extends CoIndex<?, ?>> getNameMap() {
         return map;
+    }
+
+    @Override
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        String token = tokens.peek();
+        if (token == null)
+            return null;
+
+        Object target = null;
+        switch (token) {
+        case "_q":
+            IHtmlOut out = new BHtmlOut();
+            out.p().text("Available entities: ");
+            List<Class<?>> etypes = new ArrayList<>(map.size());
+            for (String k : map.keySet())
+                etypes.add(map.get(k).getObjectType());
+            Collections.sort(etypes, ClassNameComparator.getInstance());
+
+            HtmlUl ul = out.ul();
+            for (Class<?> etype : etypes) {
+                String name = etype.getSimpleName();
+                String label = etype.getName();
+                ul.li().a().href("../" + name + "/__data__?columns=*").text(label);
+            }
+            ul.end();
+            target = out;
+            break;
+
+        default:
+            target = map.get(token);
+        }
+
+        if (target != null)
+            return PathArrival.shift(previous, target, tokens);
+        return null;
     }
 
 }
