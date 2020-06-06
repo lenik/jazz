@@ -1,5 +1,7 @@
 package net.bodz.lily.security.login;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 public class SecretChallenger
         extends AbstractTimeoutChallenger {
 
@@ -17,7 +19,8 @@ public class SecretChallenger
     protected String mix(long index) {
         String salt = salts.mix(index);
         String s = salt + secret + salt;
-        return null;
+        String sha = DigestUtils.shaHex(s);
+        return sha;
     }
 
 }

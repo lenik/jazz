@@ -1,4 +1,4 @@
-package net.bodz.lily.security;
+package net.bodz.lily.security.login;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter;
 /**
  * Redirect to login page for access controled pages.
  */
-public class LoginFilter
+public class LoggedInEnsurer
         extends AbstractHttpFilter {
 
     @Override
@@ -35,8 +35,8 @@ public class LoginFilter
         }
 
         HttpSession session = request.getSession();
-        LoginData loginData = LoginData.fromSession(session);
-        if (loginData != null) {
+        LoginToken token = LoginToken.fromSession(session);
+        if (token != null) {
             chain.doFilter(request, response);
             return;
         }
