@@ -5,6 +5,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.LoginData;
 import net.bodz.lily.security.User;
 
+@Deprecated
 public interface ILoginHandler {
 
     boolean login(AjaxResult result, User user, IVariantMap<String> q);
