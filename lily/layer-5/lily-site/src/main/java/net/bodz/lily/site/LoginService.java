@@ -1,6 +1,8 @@
 package net.bodz.lily.site;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.db.ctx.DataContext;
@@ -17,6 +19,9 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.LoginData;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
+import net.bodz.lily.security.login.ILoginListener;
+import net.bodz.lily.security.login.ILoginResolver;
+import net.bodz.lily.security.login.LoginResult;
 
 public class LoginService
         implements IPathDispatchable {
@@ -24,21 +29,21 @@ public class LoginService
     static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
     DataContext dataContext;
-    ILoginHandler loginHandler;
+    ILoginResolver loginResolver;
+    List<ILoginListener> loginListeners = new ArrayList<>();
 
-    public LoginService(DataContext dataContext, ILoginHandler loginHandler) {
+    public LoginService(DataContext dataContext, ILoginResolver loginResolver) {
         if (dataContext == null)
             throw new NullPointerException("dataContext");
-        if (loginHandler == null)
-            throw new NullPointerException("loginHandler");
+        if (loginResolver == null)
+            throw new NullPointerException("loginResolver");
         this.dataContext = dataContext;
-        this.loginHandler = loginHandler;
+        this.loginResolver = loginResolver;
     }
 
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        HttpServletRequest request = CurrentHttpService.getRequest();
         // TODO file-scope
         HttpSession session = CurrentHttpService.getSession();
 
@@ -58,15 +63,32 @@ public class LoginService
             break;
 
         case "login":
-            target = login(loginData, q);
+            result = login(loginData, q);
+            if (result.isFailed()) {
+                target = result;
+                break;
+            }
+
             break;
 
         case "logout":
-            if (loginHandler.logout(result, loginData)) {
-                LoginData.removeFromSession(session);
-                result.succeed();
+            if (loginData == null) {
+                target = LoginResult.fail("Not logged in.");
+                break;
             }
-            target = result;
+
+            User user = loginData.getUser();
+            for (ILoginListener listener : loginListeners)
+                try {
+                    listener.logout(user);
+                } catch (Exception e) {
+                    target = LoginResult.fail("Can't logged out: " + listener + ": " + e.getMessage());
+                    break;
+                }
+            if (target == null) { // no error happens.
+                LoginData.removeFromSession(session);
+                target = result.succeed();
+            }
             break;
         }
 
