@@ -8,31 +8,22 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.c.org.json.JsonWriter;
-import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.fmt.json.JsonVerbatimBuf;
 import net.bodz.bas.html.io.BHtmlOut;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
-import net.bodz.bas.io.BTreeOut;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
+@Deprecated
 public class AjaxResult
-        extends BTreeOut
-        implements IJsonSerializable {
+        extends AbstractJsonResult<AjaxResult> {
 
     static final Logger logger = LoggerFactory.getLogger(AjaxResult.class);
 
-    Boolean success;
-    int status;
-    StringBuffer message = new StringBuffer(100);
-    Throwable exception;
-
-    Map<String, Object> fields;
+    Map<String, Object> headers;
 
     Map<String, IHtmlOut> htmlUpdates;
     HtmlOutputFormat htmlOutputFormat;
@@ -42,107 +33,28 @@ public class AjaxResult
     }
 
     public AjaxResult(Boolean sort) {
+        super(0, null);
         if (sort == null) {
-            fields = new HashMap<String, Object>();
+            headers = new HashMap<String, Object>();
             htmlUpdates = new HashMap<String, IHtmlOut>();
         } else if (sort) {
-            fields = new TreeMap<String, Object>();
+            headers = new TreeMap<String, Object>();
             htmlUpdates = new TreeMap<String, IHtmlOut>();
         } else {
-            fields = new LinkedHashMap<String, Object>();
+            headers = new LinkedHashMap<String, Object>();
             htmlUpdates = new LinkedHashMap<String, IHtmlOut>();
         }
         htmlOutputFormat = new HtmlOutputFormat();
     }
 
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public boolean isSuccess() {
-        return success == Boolean.TRUE;
-    }
-
-    public boolean isFailed() {
-        return success == Boolean.FALSE;
-    }
-
-    public AjaxResult succeed() {
-        return succeed(0);
-    }
-
-    public AjaxResult succeed(int status) {
-        success = true;
-        this.status = status;
-        return this;
-    }
-
-    public AjaxResult fail() {
-        return fail(0, null);
-    }
-
-    public AjaxResult fail(int status) {
-        return fail(status, null);
-    }
-
-    public AjaxResult fail(String messageFormat, Object... args) {
-        return fail(String.format(messageFormat, args));
-    }
-
-    public AjaxResult fail(String message) {
-        return fail(0, message);
-    }
-
-    public AjaxResult fail(int status, String messageFormat, Object... args) {
-        return fail(status, String.format(messageFormat, args));
-    }
-
-    public AjaxResult fail(int status, String message) {
-        success = false;
-        this.status = status;
-        if (message != null)
-            this.println(message);
-        return this;
-    }
-
-    public AjaxResult fail(Throwable e) {
-        return fail(e, e.getMessage());
-    }
-
-    public AjaxResult fail(Throwable e, int status) {
-        return fail(e, e.getMessage(), status);
-    }
-
-    public AjaxResult fail(Throwable e, String messageFormat, Object... args) {
-        return fail(e, String.format(messageFormat, args));
-    }
-
-    public AjaxResult fail(Throwable e, String message) {
-        return fail(e, 0, message);
-    }
-
-    public AjaxResult fail(Throwable e, int status, String messageFormat, Object... args) {
-        return fail(e, status, String.format(messageFormat, args));
-    }
-
-    public AjaxResult fail(Throwable e, int status, String message) {
-        logger.warn(e, "ajax failed with: " + message);
-        this.exception = e;
-        return fail(message);
-    }
-
     public AjaxResult set(String key, Object value) {
-        fields.put(key, value);
+        headers.put(key, value);
         return this;
     }
 
     public JsonWriter begin(String key) {
         StringWriter buf = new StringWriter();
-        fields.put(key, new JsonVerbatimBuf(buf));
+        headers.put(key, new JsonVerbatimBuf(buf));
         return new JsonWriter(buf);
     }
 
@@ -156,32 +68,14 @@ public class AjaxResult
     }
 
     @Override
-    public void readObject(JsonObject o)
-            throws ParseException {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public void writeObject(IJsonOut out)
             throws IOException {
-        if (success != null) {
-            out.key("success");
-            out.value(success);
-            out.key("failed");
-            out.value(!success);
-        }
-        out.key("status");
-        out.value(status);
+        super.writeObject(out);
 
-        flush();
-        String message = toString();
-        out.key("message");
-        out.value(message);
-
-        if (!fields.isEmpty()) {
+        if (!headers.isEmpty()) {
             out.key("data");
             out.object();
-            for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            for (Map.Entry<String, ?> entry : headers.entrySet()) {
                 Object value = entry.getValue();
                 if (value == null)
                     continue;
