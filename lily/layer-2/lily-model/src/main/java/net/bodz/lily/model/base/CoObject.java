@@ -46,8 +46,8 @@ import net.bodz.lily.model.base.impl.DefaultWebSupport;
 import net.bodz.lily.model.base.impl.IWebSupport;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.IAccessControlled;
-import net.bodz.lily.security.LoginData;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.login.LoginToken;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
@@ -647,9 +647,9 @@ public abstract class CoObject
         public static void fillLoginData(CoObject obj) {
             HttpSession session = CurrentHttpService.getSessionOpt();
             if (session != null) {
-                LoginData loginData = LoginData.fromSession(session);
-                if (loginData != null) {
-                    User user = loginData.getUser();
+                LoginToken token = LoginToken.fromSession(session);
+                if (token != null) {
+                    User user = token.getUser();
                     obj.setOwnerUser(user);
                     if (user != null)
                         obj.setOwnerGroup(user.getPrimaryGroup());

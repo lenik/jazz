@@ -1,55 +1,49 @@
 package net.bodz.lily.security.login;
 
-import net.bodz.lily.security.User;
+import java.io.IOException;
 
-public class LoginResult {
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.site.json.AbstractJsonResponse;
 
-    public static final int OK = 0;
-    public static final int ERROR = 1;
+public class LoginResult
+        extends AbstractJsonResponse<LoginResult>
+        implements IJsonSerializable {
 
-    boolean success;
-    User user;
-    // Integer userId;
-    int statusCode;
-    String reason;
+    String serverChallenge;
+    LoginToken token;
 
-    public LoginResult(User user, int statusCode, String reason) {
-        this.success = user != null;
-        this.user = user;
-        this.statusCode = statusCode;
-        this.reason = reason;
+    public String getServerChallenge() {
+        return serverChallenge;
     }
 
-    public static LoginResult success(User user) {
-        return success(OK, user);
+    public void setServerChallenge(String serverChallenge) {
+        this.serverChallenge = serverChallenge;
     }
 
-    public static LoginResult success(int statusCode, User user) {
-        return new LoginResult(user, statusCode, null);
+    public LoginToken getToken() {
+        return token;
     }
 
-    public static LoginResult fail(String reason) {
-        return fail(ERROR, reason);
+    public void setToken(LoginToken token) {
+        this.token = token;
     }
 
-    public static LoginResult fail(int statusCode, String reason) {
-        return new LoginResult(null, statusCode, reason);
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        throw new NotImplementedException();
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        out.entry("sc", serverChallenge);
+        if (token != null)
+            out.entry("token", token);
     }
 
 }
