@@ -47,6 +47,8 @@ public interface IPathArrival {
      */
     Object getTarget();
 
+    // TODO target annotations
+
     boolean isMultiple();
 
     /**

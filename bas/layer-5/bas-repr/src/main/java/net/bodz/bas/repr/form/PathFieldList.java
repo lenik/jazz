@@ -30,6 +30,16 @@ public class PathFieldList
                 remaining = path.substring(dot + 1);
             }
 
+            // TODO pattern matching...
+            if ("*".equals(head)) {
+                for (IFieldDecl f : knownStruct.getFieldDecls()) {
+                    if (!f.getProperty().isReadable())
+                        continue;
+                    this.add(new PathField(f.getName(), Arrays.asList(f)));
+                }
+                continue;
+            }
+
             IFieldDecl fieldDecl = knownStruct.getFieldDecl(head);
             if (fieldDecl == null)
                 throw new NoSuchPropertyException("Bad head: " + head);

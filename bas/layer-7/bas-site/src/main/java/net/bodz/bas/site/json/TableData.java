@@ -58,6 +58,10 @@ public class TableData
 
     public TableData parseColumnsString(String columns)
             throws NoSuchPropertyException, ParseException {
+        if (columns == null)
+            throw new NullPointerException("columns");
+        columns = columns.trim();
+
         List<String> columnList = new ArrayList<String>();
         for (String col : columns.split(",")) {
             col = col.trim();
