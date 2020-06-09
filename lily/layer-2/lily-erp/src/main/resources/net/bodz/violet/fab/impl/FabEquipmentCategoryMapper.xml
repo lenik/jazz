@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.fab.impl.FabEquipmentCategoryMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.fab.FabEquipmentCategory" extends="co.MAP_UVX">
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.*,
+            u.label "uid_label",
+            g.label "gid_label"
+        from fabEquipmentCategory a
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.*,
+            u.label "uid_label",
+            g.label "gid_label"
+        from fabEquipmentCategory a
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into fabEquipmentCategory(
+            code, label, description
+        ) values(
+            #{codeName}, #{label}, #{description}
+        ) returning id; --
+    ]]></insert>
+
+    <update id="update">
+        update fabEquipmentCategory
+        <set>
+            <include refid="co.setUS" />
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from fabEquipmentCategory where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from fabEquipmentCategory
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

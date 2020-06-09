@@ -23,7 +23,7 @@ public class ArtifactModel
     String modelName;
 
     final ValidControl validControl = new ValidControl();
-    final ManuCost cost = new ManuCost();
+    final FabCost cost = new FabCost();
 
     public ArtifactModel() {
     }
@@ -56,7 +56,7 @@ public class ArtifactModel
         return validControl;
     }
 
-    public ManuCost getCost() {
+    public FabCost getCost() {
         return cost;
     }
 
