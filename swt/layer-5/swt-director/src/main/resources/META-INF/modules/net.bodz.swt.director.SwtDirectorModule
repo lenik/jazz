@@ -1,9 +1,9 @@
-net.bodz.swt.director.timeline.Scheduler
-net.bodz.swt.director.layers.Snapshot
+net.bodz.swt.director.layers.BlockOverlay
 net.bodz.swt.director.layers.InvalidateEvent
 net.bodz.swt.director.layers.InvalidateListener
 net.bodz.swt.director.layers._Overlay
-net.bodz.swt.director.layers.Paintable
-net.bodz.swt.director.layers.BlockOverlay
 net.bodz.swt.director.layers.Overlay
+net.bodz.swt.director.layers.Paintable
+net.bodz.swt.director.layers.Snapshot
 net.bodz.swt.director.SwtDirectorModule
+net.bodz.swt.director.timeline.Scheduler

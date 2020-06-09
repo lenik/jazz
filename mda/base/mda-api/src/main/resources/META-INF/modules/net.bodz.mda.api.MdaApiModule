@@ -1,4 +1,4 @@
-net.bodz.mda.JazzMdaProject
-net.bodz.mda.api.package-info
-net.bodz.mda.api.MdaApiModule
 net.bodz.mda.AbstractMdaModule
+net.bodz.mda.api.MdaApiModule
+net.bodz.mda.api.package-info
+net.bodz.mda.JazzMdaProject
