@@ -19,37 +19,43 @@ public abstract class AbstractTimeoutChallenger
         this.slotSize = window / nslot;
     }
 
+    @Override
+    public long getWindow() {
+        return timeWindow;
+    }
+
     long getIndex(long time) {
         long index = time / slotSize;
         return index;
     }
 
     @Override
-    public String compute() {
-        return computeAt(System.currentTimeMillis());
+    public final String getCodeForNow() {
+        return getCodeAtTime(System.currentTimeMillis());
     }
 
     @Override
-    public String computeAt(long time) {
+    public String getCodeAtTime(long time) {
         long index = getIndex(time);
-        return mix(index);
+        return getCode(index);
     }
 
-    protected abstract String mix(long index);
+    @Override
+    public abstract String getCode(long index);
 
     @Override
     public int rcheck(String code) {
-        return rcheckAt(System.currentTimeMillis(), code);
+        return rcheckAtTime(System.currentTimeMillis(), code);
     }
 
     @Override
-    public int rcheckAt(long time, String code) {
+    public int rcheckAtTime(long time, String code) {
         code = code.toLowerCase();
         long index = getIndex(time);
         int validSlots = nslot + extraSlots;
         // search in history slots
         for (int s = -validSlots; s <= 0; s++) {
-            String m = mix(index + s);
+            String m = getCode(index + s);
             if (code.equals(m))
                 return -s;
         }

@@ -10,7 +10,7 @@ import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.codegen.doc.WsDocSite;
-import net.bodz.lily.security.login.DefaultLoginResolver;
+import net.bodz.lily.security.login.LoginManager;
 
 public abstract class LilyStartSite
         extends BasicSite {
@@ -45,7 +45,7 @@ public abstract class LilyStartSite
         CoIndexServiceGroup group = new CoIndexServiceGroup(dataContext);
         pathMap.install("data", group);
         pathMap.install(group.getNameMap());
-        pathMap.install("session", new DefaultLoginResolver(dataContext));
+        pathMap.install("session", new LoginManager(dataContext));
         pathMap.install("ws-doc", new WsDocSite());
     }
 

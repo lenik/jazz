@@ -2,12 +2,16 @@ package net.bodz.lily.security.login;
 
 public interface ITimeoutChallenger {
 
-    String compute();
+    long getWindow();
 
-    String computeAt(long time);
+    String getCodeForNow();
+
+    String getCodeAtTime(long time);
+
+    String getCode(long index);
 
     int rcheck(String code);
 
-    int rcheckAt(long time, String code);
+    int rcheckAtTime(long time, String code);
 
 }

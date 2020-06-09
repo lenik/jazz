@@ -11,7 +11,10 @@ import net.bodz.lily.security.User;
 @IndexedType
 public interface ILoginResolver {
 
-    Result login(IVariantMap<String> q);
+    /**
+     * @return {@link Result} contains the user or error message if any.
+     */
+    Result login(ISignatureChecker checker, IVariantMap<String> q);
 
     public class Result
             extends AbstractJsonResponse<Result> {

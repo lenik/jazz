@@ -36,7 +36,7 @@ public class VerificationCodeChallenger
     }
 
     @Override
-    protected String mix(long index) {
+    public String getCode(long index) {
         long hash = index * prime;
         hash ^= keyHash;
         return format(hash);
