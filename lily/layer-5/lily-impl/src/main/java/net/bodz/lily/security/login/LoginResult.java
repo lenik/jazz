@@ -14,6 +14,7 @@ public class LoginResult
         implements IJsonSerializable {
 
     String serverChallenge;
+    String expectedClientResp; // for debug
     LoginToken token;
 
     public String getServerChallenge() {
@@ -22,6 +23,14 @@ public class LoginResult
 
     public void setServerChallenge(String serverChallenge) {
         this.serverChallenge = serverChallenge;
+    }
+
+    public String getExpectedClientResp() {
+        return expectedClientResp;
+    }
+
+    public void setExpectedClientResp(String expectedClientResp) {
+        this.expectedClientResp = expectedClientResp;
     }
 
     public LoginToken getToken() {
@@ -42,6 +51,8 @@ public class LoginResult
     public void writeObject(IJsonOut out)
             throws IOException {
         out.entry("sc", serverChallenge);
+        if (expectedClientResp != null)
+            out.entry("ecr", expectedClientResp);
         if (token != null)
             out.entry("token", token);
     }

@@ -7,16 +7,12 @@ public class UserSecretSamples
 
     public static UserSecret build(User user) {
         UserSecret a = new UserSecret();
-        a.setUser(user);
-
         a.setLabel("userSecret-1");
         a.setDescription("A userSecret named userSecret-1.");
+        a.setUser(user);
+        a.setPassword("" + random.nextLong());
         a.setQuestion("Where is your home");
         a.setAnswer("newyork");
-
-        a.setPassword("" + random.nextLong());
-        a.setPublicKey("abcdefghijklmnopqrstuvwxyz");
-
         return a;
     }
 

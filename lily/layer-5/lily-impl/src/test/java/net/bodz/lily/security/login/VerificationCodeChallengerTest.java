@@ -3,8 +3,6 @@ package net.bodz.lily.security.login;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.lily.security.login.VerificationCodeChallenger;
-
 public class VerificationCodeChallengerTest
         extends Assert {
 
@@ -17,14 +15,14 @@ public class VerificationCodeChallengerTest
     public void testRcheck()
             throws InterruptedException {
         long time = System.currentTimeMillis();
-        String code = vcg.computeAt(time);
+        String code = vcg.getCodeAtTime(time);
         int safeSlots = 1;
         for (int i = 0; i <= (slots + safeSlots); i++) {
-            int s = vcg.rcheckAt(time + delta * i, code);
+            int s = vcg.rcheckAtTime(time + delta * i, code);
             assertEquals(i, s);
         }
         long boundary = time + delta * (slots + safeSlots + 1);
-        int s = vcg.rcheckAt(boundary, code);
+        int s = vcg.rcheckAtTime(boundary, code);
         assertEquals(-1, s);
     }
 
@@ -37,7 +35,7 @@ public class VerificationCodeChallengerTest
         for (int i = 0; i < slots * 10; i++) {
             long time = System.currentTimeMillis();
             long idx = vcg.getIndex(time);
-            String s = vcg.computeAt(time);
+            String s = vcg.getCodeAtTime(time);
             System.out.println(idx + ": " + s);
             Thread.sleep(delta / 3);
         }
@@ -50,15 +48,15 @@ public class VerificationCodeChallengerTest
 
         long time = System.currentTimeMillis();
         long index = vcg.getIndex(time);
-        String code = vcg.computeAt(time);
+        String code = vcg.getCodeAtTime(time);
         System.out.printf("Current time %d, index %d, code %s.\n", time, index, code);
 
         for (int i = 0; i < 10; i++) {
-            String c = vcg.mix(index + i);
+            String c = vcg.getCode(index + i);
             System.out.printf("    idx+%d: %s\n", i, c);
         }
 
-        int s = vcg.rcheckAt(time, "491727");
+        int s = vcg.rcheckAtTime(time, "491727");
         System.out.println("Last slot: " + s);
     }
 

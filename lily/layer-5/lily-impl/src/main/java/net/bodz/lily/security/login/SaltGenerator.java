@@ -17,7 +17,7 @@ public class SaltGenerator
     }
 
     @Override
-    protected String mix(long index) {
+    public String getCode(long index) {
         long hash = index * prime;
         hash %= 1_000_000_000;
         return String.valueOf(hash);

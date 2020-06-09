@@ -2,17 +2,24 @@ package net.bodz.lily.security.login;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.UserSecret;
+import net.bodz.lily.security.impl.UserSecretMapper;
+import net.bodz.lily.security.impl.UserSecretMask;
+import net.bodz.lily.security.login.ILoginResolver.Result;
 
 public class LoginManager
         extends LoginTokenManager
@@ -21,13 +28,18 @@ public class LoginManager
     // long timeout = 3600_000;
     DataContext dataContext;
 
-    List<ILoginResolver> loginResolver = new ArrayList<>();
+    ILoginResolverProvider resolverProvider;
     List<ILoginListener> loginListeners = new ArrayList<>();
 
     public LoginManager(DataContext dataContext) {
         if (dataContext == null)
             throw new NullPointerException("dataContext");
         this.dataContext = dataContext;
+
+        resolverProvider = new IndexedLoginResolverProvider(dataContext);
+        for (ILoginListener listener : ServiceLoader.load(ILoginListener.class)) {
+            loginListeners.add(listener);
+        }
     }
 
     int saltTimeout = 10_000; // 10 seconds
@@ -41,7 +53,6 @@ public class LoginManager
             return null;
 
         Object target = null;
-        AjaxResult result = new AjaxResult();
 
         switch (token) {
         case "init":
@@ -63,21 +74,42 @@ public class LoginManager
         LoginResult result = new LoginResult();
         String clientResp = q.getString("cr");
         if (clientResp == null) { // pass 1:
-            String serverChallenge = saltgen.compute();
+            String serverChallenge = saltgen.getCodeForNow();
             result.setServerChallenge(serverChallenge);
+
+            Integer userId = q.getInt("user");
+            if (userId != null) {
+                String password = getAnyPassword(userId);
+                if (password != null) {
+                    String ecr = DigestUtils.shaHex(serverChallenge + password + serverChallenge);
+                    result.setExpectedClientResp(ecr);
+                }
+            }
             return result;
         }
 
         // pass 2:
-        String secret = "";
-        SecretChallenger secretChallenger = new SecretChallenger(saltgen, secret, saltTimeout);
+        SecretCrChecker signChecker = new SecretCrChecker();
+        for (ILoginResolver resolver : resolverProvider.getResolvers()) {
+            Result rr = resolver.login(signChecker, q);
+            if (rr.isSuccess()) {
+                User user = rr.getUser();
+                result.token = new LoginToken(this, 123, user);
+                result.succeed();
+            }
+        }
+        return result.fail();
+    }
 
-        int ridx = secretChallenger.rcheck(clientResp);
-        if (ridx == -1)
-            return result.fail("server challenge failed.");
-
-        result.succeed();
-        return result;
+    String getAnyPassword(int userId) {
+        UserSecretMapper secretMapper = dataContext.getMapper(UserSecretMapper.class);
+        List<UserSecret> secrets = secretMapper.filter(new UserSecretMask().userId(userId), SelectOptions.ALL);
+        for (UserSecret secret : secrets) {
+            String password = secret.getPassword();
+            if (password != null)
+                break;
+        }
+        return null;
     }
 
     JsonResponse logout() {
