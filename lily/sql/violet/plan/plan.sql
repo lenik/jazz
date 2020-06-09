@@ -1,3 +1,4 @@
+--\import lily.inc.msg
 --\import lily.contact.org
 --\import lily.contact.person
 --\mixin lily.template.a-cat plan

@@ -16,8 +16,8 @@
             left join saleodr on a.saleodr=saleodr.id
             left join storeodr on a.storeodr=storeodr.id
             left join "user" op on a.op=op.id
-            left join org on saleodr.cust_org=org.id
-            left join person on saleodr.cust_person=person.id
+            left join org on saleodr.customer_org=org.id
+            left join person on saleodr.customer=person.id
             left join trancat cat on a.cat=cat.id
             left join tranphase phase on a.phase=phase.id;
 

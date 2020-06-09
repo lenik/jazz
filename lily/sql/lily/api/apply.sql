@@ -1,5 +1,4 @@
---\import lily.base._form
---\import lily.account
+--\import lily.inc.msg
 
     create sequence apply_seq start with 1000;
     create table apply(

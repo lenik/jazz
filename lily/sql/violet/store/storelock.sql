@@ -1,6 +1,6 @@
 --\import violet.art.art
 --\import violet.store.region
---\import violet.manu.manuproc
+--\import violet.fab.fabproc
 
     create sequence storelock_seq start with 1000;
     create table storelock(
@@ -11,8 +11,8 @@
         -- INVALID records should be deleted.
 
         -- holders
-        h_manuproc bigint
-            references manuproc(id) on update cascade on delete cascade,
+        h_fabproc bigint
+            references fabproc(id) on update cascade on delete cascade,
 
         art         int not null
             references art(id) on update cascade,

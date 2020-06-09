@@ -1,5 +1,7 @@
+--\import lily.inc.msg
 --\import lily.contact.org
 --\import lily.contact.person
+
 --\mixin lily.template.a-cat diary
 --\mixin lily.template.a-phase diary
 

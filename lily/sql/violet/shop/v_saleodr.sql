@@ -15,7 +15,7 @@
             left join _form form on a.form=form.id
             left join plan on a.plan=plan.id
             left join "user" op on a.op=op.id
-            left join org on a.cust_org=org.id
-            left join person on a.cust_person=person.id
+            left join org on a.customer_org=org.id
+            left join person on a.customer=person.id
             left join salecat cat on a.cat=cat.id
             left join salephase phase on a.phase=phase.id;

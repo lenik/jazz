@@ -1,5 +1,5 @@
 --\import lily.account
---* mixin lily.template.a-cat * fabstdtest
+--\mixin lily.template.a-cat fabstdtest
 
     create sequence fabstdtest_seq start with 1000;
     create table fabstdtest(
