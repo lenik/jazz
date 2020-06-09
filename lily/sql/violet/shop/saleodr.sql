@@ -15,10 +15,13 @@
         -- subscription category/phase
 --\mixin lily.mixin.Msg
 
-        cat         int not null
+        --
+--\mixin lily.mixin.Props
+
+        cat         int
             references salecat(id) on update cascade,
 
-        phase       int not null
+        phase       int
             references salephase(id) on update cascade,
 
         prev        int             -- previous doc
@@ -27,10 +30,10 @@
         plan        bigint
             references plan(id) on update cascade on delete set null,
 
-        cust_org    int
+        customer_org int
             references org(id) on update cascade,
 
-        cust_person int
+        customer    int
             references person(id) on update cascade,
 
         length      int not null default 0,
