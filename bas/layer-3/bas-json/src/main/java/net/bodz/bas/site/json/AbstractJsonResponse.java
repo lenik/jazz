@@ -35,6 +35,14 @@ public class AbstractJsonResponse<self_t>
         this.data = data;
     }
 
+    public boolean isSuccess() {
+        return status < ERROR;
+    }
+
+    public boolean isError() {
+        return status >= ERROR;
+    }
+
     public self_t succeed() {
         this.status = OK;
         return (self_t) this;

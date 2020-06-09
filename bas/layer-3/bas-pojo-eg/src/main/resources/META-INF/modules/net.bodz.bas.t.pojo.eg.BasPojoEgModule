@@ -1,8 +1,8 @@
-net.bodz.bas.t.pojo.eg.Dog
-net.bodz.bas.t.pojo.eg.CountryAliasUtil
-net.bodz.bas.t.pojo.eg.BasPojoEgModule
-net.bodz.bas.t.pojo.eg.PostCodeUtil
 net.bodz.bas.t.pojo.eg.Address
 net.bodz.bas.t.pojo.eg.AddressTypers
-net.bodz.bas.t.pojo.eg.PersonTypers
+net.bodz.bas.t.pojo.eg.BasPojoEgModule
+net.bodz.bas.t.pojo.eg.CountryAliasUtil
+net.bodz.bas.t.pojo.eg.Dog
 net.bodz.bas.t.pojo.eg.Person
+net.bodz.bas.t.pojo.eg.PersonTypers
+net.bodz.bas.t.pojo.eg.PostCodeUtil

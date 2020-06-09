@@ -1,5 +1,5 @@
-user.xjdoc.MdaXjdocSamplesModule
-user.xjdoc.taglib.AnimalTagLibrary
-user.xjdoc.pojo.Dog
-user.xjdoc.pojo.Animal
 user.err.IOException
+user.xjdoc.MdaXjdocSamplesModule
+user.xjdoc.pojo.Animal
+user.xjdoc.pojo.Dog
+user.xjdoc.taglib.AnimalTagLibrary

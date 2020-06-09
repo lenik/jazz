@@ -1,6 +1,6 @@
-net.bodz.swt.image.SwtImageModule
-net.bodz.swt.image.accessor.SWTImageAccessor
-net.bodz.swt.image.accessor.ImageOp
+net.bodz.swt.graphics.ImagePainter
 net.bodz.swt.image.accessor._ImageAccessor
 net.bodz.swt.image.accessor.ImageAccessor
-net.bodz.swt.graphics.ImagePainter
+net.bodz.swt.image.accessor.ImageOp
+net.bodz.swt.image.accessor.SWTImageAccessor
+net.bodz.swt.image.SwtImageModule
