@@ -12,8 +12,8 @@
 -------- Violet :: Issue --------
 --\import violet.issue
 
--------- Violet :: Manufacture --------
---\import violet.manu
+-------- Violet :: Fabrication --------
+--\import violet.fab
 
 -------- Violet :: Store --------
 --\import violet.store

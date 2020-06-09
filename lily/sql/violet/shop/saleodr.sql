@@ -1,6 +1,8 @@
+--\import lily.inc.msg
 --\import lily.contact.org
 --\import lily.contact.person
 --\import violet.plan.plan
+
 --\mixin lily.template.a-cat sale
 --\mixin lily.template.a-phase sale
 
