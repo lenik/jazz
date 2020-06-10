@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.repr.meta.RealType;
 import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -47,6 +48,12 @@ public class ClassResourcePathDispatcher
 
         Class<?> clazz = obj.getClass();
         URL url = null;
+
+        // XXX VhostCluster workarounds...
+        RealType _realType = clazz.getAnnotation(RealType.class);
+        if (_realType != null)
+            clazz = _realType.value();
+
         L: while (clazz != null && !shouldStop(clazz)) {
             String packageName = clazz.getPackage().getName();
             if (packageName.startsWith("java."))
