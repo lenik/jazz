@@ -363,33 +363,8 @@ public class ServletContextConfig {
         IXmlOut out = new RecXmlOut(doc);
 
         IXmlOut node;
-        node = out.begin("welcome-file-list");
-        {
-            for (String wf : welcomeFiles)
-                node.begin("welcome-file").text(wf).end();
-            node.end();
-        }
-
         node = out; // out.begin("init-params");
         dumpInitParams(node, initParamMap);
-
-        node = out; // out.begin("servlets");
-        for (ServletDescriptor sd : getServlets()) {
-            IXmlOut sNode = out.begin("servlet");
-            {
-                sNode.begin("servlet-name").text(sd.getId()).end();
-                sNode.begin("servlet-class").text(sd.getServletClass().getName()).end();
-// sNode.begin("description").text(sd.getDisplayName()).end();
-                dumpInitParams(sNode, sd.getInitParamMap());
-                sNode.end();
-            }
-            for (String mapping : sd.getMappings()) {
-                IXmlOut mNode = out.begin("servlet-mapping");
-                mNode.begin("servlet-name").text(sd.getId()).end();
-                mNode.begin("url-pattern").text(mapping).end();
-                mNode.end();
-            }
-        }
 
         node = out; // out.begin("filters");
         for (FilterDescriptor fd : getFilters()) {
@@ -401,7 +376,9 @@ public class ServletContextConfig {
                 dumpInitParams(fNode, fd.getInitParamMap());
                 fNode.end();
             }
+        }
 
+        for (FilterDescriptor fd : getFilters()) {
             for (String mapping : fd.getMappings()) {
                 IXmlOut mNode = out.begin("filter-mapping");
                 mNode.begin("filter-name").text(fd.getId()).end();
@@ -419,6 +396,31 @@ public class ServletContextConfig {
         dumpListeners(out, sessionActivationListeners);
         dumpListeners(out, sessionBindingListeners);
 
+        node = out; // out.begin("servlets");
+        for (ServletDescriptor sd : getServlets()) {
+            IXmlOut sNode = out.begin("servlet");
+            sNode.begin("servlet-name").text(sd.getId()).end();
+            sNode.begin("servlet-class").text(sd.getServletClass().getName()).end();
+            // sNode.begin("description").text(sd.getDisplayName()).end();
+            dumpInitParams(sNode, sd.getInitParamMap());
+            sNode.end();
+        }
+
+        for (ServletDescriptor sd : getServlets()) {
+            for (String mapping : sd.getMappings()) {
+                IXmlOut mNode = out.begin("servlet-mapping");
+                mNode.begin("servlet-name").text(sd.getId()).end();
+                mNode.begin("url-pattern").text(mapping).end();
+                mNode.end();
+            }
+        }
+
+        node = out.begin("welcome-file-list");
+        {
+            for (String wf : welcomeFiles)
+                node.begin("welcome-file").text(wf).end();
+            node.end();
+        }
         return buf.toString();
     }
 
