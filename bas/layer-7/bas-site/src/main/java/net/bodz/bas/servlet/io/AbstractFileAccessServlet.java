@@ -67,6 +67,9 @@ public abstract class AbstractFileAccessServlet
             file = new File(file, pathInfo);
         }
 
+        if (file == null)
+            throw new NullPointerException("file");
+
         if (!file.exists()) {
             logger.warn("Not-Found: " + file);
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
