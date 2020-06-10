@@ -54,7 +54,7 @@ public class AjaxResult
 
     public JsonWriter begin(String key) {
         StringWriter buf = new StringWriter();
-        headers.put(key, new JsonVerbatimBuf(buf));
+        headers.put(key, new JsonVerbatimBuf(key, buf));
         return new JsonWriter(buf);
     }
 
@@ -79,13 +79,11 @@ public class AjaxResult
                 Object value = entry.getValue();
                 if (value == null)
                     continue;
-                out.key(entry.getKey());
-                if (value instanceof IJsonSerializable) {
+                if (value instanceof JsonVerbatimBuf) {
                     IJsonSerializable child = (IJsonSerializable) value;
-                    out.object();
                     child.writeObject(out);
-                    out.endObject();
                 } else {
+                    out.key(entry.getKey());
                     out.value(value);
                 }
             }
