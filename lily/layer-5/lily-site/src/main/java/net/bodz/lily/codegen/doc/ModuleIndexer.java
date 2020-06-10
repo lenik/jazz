@@ -30,7 +30,11 @@ public class ModuleIndexer
 
     static final Logger logger = LoggerFactory.getLogger(ModuleIndexer.class);
 
-    boolean loaded;
+    static final int INIT = 0;
+    static final int LOADING = 1;
+    static final int LOADED = 2;
+    static final int STOP = 3;
+    int loadState = INIT;
 
     private List<ModuleInfo> modules = new ArrayList<>();
     private Map<String, ModuleInfo> classModule = new HashMap<>();
@@ -44,14 +48,16 @@ public class ModuleIndexer
     // private Map<String, IndexInfo> nameIndex = new HashMap<>();
 
     synchronized void lazyLoad() {
-        if (loaded)
+        if (loadState != INIT)
             return;
+        loadState = LOADING;
         try {
             _index();
-            loaded = true;
         } catch (Exception e) {
+            loadState = STOP;
             throw new LoadException(e.getMessage(), e);
         }
+        loadState = LOADED;
     }
 
     @SuppressWarnings("rawtypes")

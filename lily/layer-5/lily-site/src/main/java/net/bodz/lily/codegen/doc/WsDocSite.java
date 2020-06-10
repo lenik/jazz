@@ -21,22 +21,28 @@ public class WsDocSite
 
     public AjaxResult getModules() {
         AjaxResult result = new AjaxResult();
-        JsonWriter out = result.begin("modules").object();
+        JsonWriter out = result.begin("modules");
+        out.object();
         for (ModuleInfo modinfo : indexer.getModules()) {
             IJazzModule module = modinfo.getModule();
             out.key(module.getName());
             out.object();
-            out.key("doc");
-            out.value(modinfo.getDisplayName());
+            {
+                out.key("doc");
+                out.value(modinfo.getDisplayName());
 
-            out.key("entities");
-            out.object();
-            for (EntityInfo entity : modinfo.getEntities()) {
-                out.key(entity.declaredClass.getName());
-                out.value(entity.getDisplayName());
+                out.key("entities");
+                out.object();
+                {
+                    for (EntityInfo entity : modinfo.getEntities()) {
+                        out.key(entity.declaredClass.getName());
+                        out.value(entity.getDisplayName());
+                    }
+                    out.endObject();
+                }
+
+                out.endObject();
             }
-            out.endObject();
-            out.endObject();
         }
         out.endObject();
         return result.succeed();
