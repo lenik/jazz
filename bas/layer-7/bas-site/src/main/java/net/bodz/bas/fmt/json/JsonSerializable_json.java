@@ -31,10 +31,10 @@ public class JsonSerializable_json
             throws ViewBuilderException, IOException {
         IJsonSerializable obj = ref.get();
         PrintWriter writer = resp.getWriter();
-        JsonWriter jsonWriter = new JsonWriter(writer);
-        jsonWriter.object();
-        obj.writeObject(jsonWriter);
-        jsonWriter.endObject();
+        JsonWriter out = new JsonWriter(writer);
+        out.object();
+        obj.writeObject(out);
+        out.endObject();
         return null;
     }
 

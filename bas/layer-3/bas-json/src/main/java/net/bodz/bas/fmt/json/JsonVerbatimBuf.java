@@ -8,9 +8,13 @@ import net.bodz.bas.err.ParseException;
 public class JsonVerbatimBuf
         implements IJsonSerializable {
 
+    String key;
     StringWriter buf;
 
-    public JsonVerbatimBuf(StringWriter buf) {
+    public JsonVerbatimBuf(String key, StringWriter buf) {
+        if (key == null)
+            throw new NullPointerException("key");
+        this.key = key;
         this.buf = buf;
     }
 
@@ -23,7 +27,9 @@ public class JsonVerbatimBuf
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
-        out.verbatim(buf.toString());
+        String js = buf.toString();
+        out.key(key);
+        out.verbatim(js);
     }
 
 }
