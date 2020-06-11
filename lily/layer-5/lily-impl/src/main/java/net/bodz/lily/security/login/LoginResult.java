@@ -17,6 +17,13 @@ public class LoginResult
     String expectedClientResp; // for debug
     LoginToken token;
 
+    public LoginResult() {
+    }
+
+    public LoginResult(AbstractJsonResponse<?> o) {
+        super(o);
+    }
+
     public String getServerChallenge() {
         return serverChallenge;
     }
@@ -50,6 +57,7 @@ public class LoginResult
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
+        super.writeObject(out);
         out.entry("sc", serverChallenge);
         if (expectedClientResp != null)
             out.entry("ecr", expectedClientResp);

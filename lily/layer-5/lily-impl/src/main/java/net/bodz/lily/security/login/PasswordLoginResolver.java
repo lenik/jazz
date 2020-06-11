@@ -10,6 +10,7 @@ import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.impl.UserOtherIdMapper;
 import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
+import net.bodz.lily.security.login.key.ISignatureChecker;
 
 public class PasswordLoginResolver
         extends DataBackedLoginResolver {

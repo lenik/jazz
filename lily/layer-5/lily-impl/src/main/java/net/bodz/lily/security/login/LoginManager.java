@@ -20,6 +20,7 @@ import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
 import net.bodz.lily.security.login.ILoginResolver.Result;
+import net.bodz.lily.security.login.key.FlyingSignatureChecker;
 
 public class LoginManager
         extends LoginTokenManager
@@ -42,9 +43,6 @@ public class LoginManager
         }
     }
 
-    int saltTimeout = 10_000; // 10 seconds
-    SaltGenerator saltgen = new SaltGenerator(saltTimeout);
-
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
@@ -59,8 +57,13 @@ public class LoginManager
             target = initiate(q);
             break;
 
+        case "login":
+            target = login(q);
+            break;
+
         case "exit":
         case "quit":
+        case "logout":
             target = logout();
             break;
         }
@@ -70,14 +73,19 @@ public class LoginManager
         return null;
     }
 
+    boolean debug = true;
+    int window = 1_000;
+    int distance = 10 * 60; // 10 minutes
+    FlyingSignatureChecker signChecker = new FlyingSignatureChecker(window, distance);
+
     LoginResult initiate(IVariantMap<String> q) {
         LoginResult result = new LoginResult();
-        String clientResp = q.getString("cr");
-        if (clientResp == null) { // pass 1:
-            String serverChallenge = saltgen.getCodeForNow();
-            result.setServerChallenge(serverChallenge);
+        String serverChallenge = signChecker.getSalt();
+        result.setServerChallenge(serverChallenge);
 
-            Integer userId = q.getInt("user");
+        // diag helper.
+        if (debug) {
+            Integer userId = q.getInt("userId");
             if (userId != null) {
                 String password = getAnyPassword(userId);
                 if (password != null) {
@@ -85,20 +93,26 @@ public class LoginManager
                     result.setExpectedClientResp(ecr);
                 }
             }
-            return result;
         }
+        return result;
+    }
 
-        // pass 2:
-        SecretCrChecker signChecker = new SecretCrChecker();
+    LoginResult login(IVariantMap<String> q) {
+        Result lastRr = null;
         for (ILoginResolver resolver : resolverProvider.getResolvers()) {
             Result rr = resolver.login(signChecker, q);
             if (rr.isSuccess()) {
                 User user = rr.getUser();
+                LoginResult result = new LoginResult();
                 result.token = new LoginToken(this, 123, user);
-                result.succeed();
+                return result.succeed();
             }
+            lastRr = rr;
         }
-        return result.fail();
+        if (lastRr != null)
+            return new LoginResult(lastRr);
+
+        return new LoginResult().fail("No successful login.");
     }
 
     String getAnyPassword(int userId) {
@@ -107,7 +121,7 @@ public class LoginManager
         for (UserSecret secret : secrets) {
             String password = secret.getPassword();
             if (password != null)
-                break;
+                return password;
         }
         return null;
     }
