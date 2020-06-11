@@ -48,7 +48,7 @@ public class User
     private Group primaryGroup;
 
     private List<UserSecret> secrets = new ArrayList<>();
-    private List<UserOtherId> ids = new ArrayList<>();
+    private List<UserOtherId> oids = new ArrayList<>();
 
     private InetAddress registerIP;
     private UserRun runningState;
@@ -130,14 +130,14 @@ public class User
         this.secrets = secrets;
     }
 
-    public List<UserOtherId> getIds() {
-        return ids;
+    public List<UserOtherId> getOtherIds() {
+        return oids;
     }
 
-    public void setIds(List<UserOtherId> ids) {
-        if (ids == null)
+    public void setIds(List<UserOtherId> otherIds) {
+        if (otherIds == null)
             throw new NullPointerException("ids");
-        this.ids = ids;
+        this.oids = otherIds;
     }
 
     @Redundant

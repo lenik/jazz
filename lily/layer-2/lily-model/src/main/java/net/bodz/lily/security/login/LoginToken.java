@@ -186,9 +186,21 @@ public class LoginToken
         out.entry("txn", transaction);
         out.entry("timeout", Long.MAX_VALUE);
 
-        out.entry("user", user.getId());
-        out.entry("userName", user.getCodeName());
-        out.entry("userFullName", user.getFullName());
+        out.key("user");
+        out.object();
+        {
+            out.entry("id", user.getId());
+            out.entry("name", user.getCodeName());
+            out.entry("fullName", user.getFullName());
+            out.endObject();
+        }
+    }
+
+    @Override
+    public String toString() {
+        String s = String.format("token_%d<user(%d: %s), txn %d>", //
+                id, user.getId(), user.getName(), transaction);
+        return s;
     }
 
 }

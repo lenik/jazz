@@ -14,6 +14,8 @@ public interface ILoginResolver {
 
     /**
      * @return {@link Result} contains the user or error message if any.
+     *
+     *         Returns <code>null</code> to try other resolver.
      */
     Result login(ISignatureChecker checker, IVariantMap<String> q);
 

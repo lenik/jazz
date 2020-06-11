@@ -11,6 +11,16 @@ public class UserSecretMask
     Integer userId;
     String userName;
     String password;
+    String mobile;
+    String email;
+
+    public UserSecretMask() {
+    }
+
+    public UserSecretMask(Integer userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -43,6 +53,16 @@ public class UserSecretMask
 
     public UserSecretMask userName(String name) {
         this.userName = name;
+        return this;
+    }
+
+    public UserSecretMask mobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+    public UserSecretMask email(String email) {
+        this.email = email;
         return this;
     }
 

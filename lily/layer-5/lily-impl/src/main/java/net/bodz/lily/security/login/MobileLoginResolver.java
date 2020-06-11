@@ -12,13 +12,13 @@ import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
 import net.bodz.lily.security.login.key.ISignatureChecker;
 
-public class PasswordLoginResolver
+public class MobileLoginResolver
         extends DataBackedLoginResolver {
 
     protected UserSecretMapper userSecretMapper;
     protected UserOtherIdMapper userOtherIdMapper;
 
-    public PasswordLoginResolver(DataContext dataContext) {
+    public MobileLoginResolver(DataContext dataContext) {
         super(dataContext);
         this.userSecretMapper = dataContext.getMapper(UserSecretMapper.class);
         this.userOtherIdMapper = dataContext.getMapper(UserOtherIdMapper.class);
@@ -26,34 +26,41 @@ public class PasswordLoginResolver
 
     @Override
     public Result login(ISignatureChecker checker, IVariantMap<String> q) {
-        String userName = q.getString("user");
-        if (userName == null)
-            userName = q.getString("username");
-        if (userName == null)
-            return failed("User isn't specified.");
+        String mobile = q.getString("mobile");
+        if (mobile == null)
+            mobile = q.getString("tel");
+        if (mobile == null)
+            return null;
 
-        String passwordCr = q.getString("password");
+        String passwordCr = q.getString("cr");
         if (passwordCr == null) {
             return failed("Password isn't specified.");
         }
 
-        User namedUser = userMapper.selectByName(userName);
-        if (namedUser == null)
-            return failed("No such user: %s", userName);
+        List<User> users = userMapper.selectByMobile(mobile);
+        switch (users.size()) {
+        case 0:
+            return failed("Not registered mobile number: %s", mobile);
+        case 1:
+            break;
+        default:
+            return failed("Multiple users using the same mobile number %s.", mobile);
+        }
 
+        User matchedUser = users.get(0);
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretMask().userName(userName), SelectOptions.ALL);
+                new UserSecretMask().userName(mobile), SelectOptions.ALL);
         if (userSecrets.isEmpty())
-            return failed("User %s has no secret.", userName);
+            return failed("User %s has no secret.", mobile);
 
         for (UserSecret userSecret : userSecrets) {
             String passwd = userSecret.getPassword();
             if (checker.checkSignature(passwd, passwordCr)) {
-                return new Result(namedUser);
+                return new Result(matchedUser);
             }
         }
 
-        return failed("Incorrect password for user %s.", userName);
+        return failed("Incorrect password for user %s.", mobile);
     }
 
 }
