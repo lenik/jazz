@@ -9,6 +9,7 @@ public class TimeZones
 
 interface ITimeZoneConsts {
 
+    TimeZone TZ_0 = TimeZone.getTimeZone("GMT+0:00");
     TimeZone TZ_SHANGHAI = TimeZone.getTimeZone("GMT+8:00");
 
 }
