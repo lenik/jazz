@@ -35,6 +35,13 @@ public class AbstractJsonResponse<self_t>
         this.data = data;
     }
 
+    public AbstractJsonResponse(AbstractJsonResponse<?> o) {
+        this.status = o.status;
+        this.message = o.message;
+        this.exception = o.exception;
+        this.data = o.data;
+    }
+
     public boolean isSuccess() {
         return status < ERROR;
     }
