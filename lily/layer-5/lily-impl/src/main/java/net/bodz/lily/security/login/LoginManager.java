@@ -98,20 +98,18 @@ public class LoginManager
     }
 
     LoginResult login(IVariantMap<String> q) {
-        Result lastRr = null;
         for (ILoginResolver resolver : resolverProvider.getResolvers()) {
             Result rr = resolver.login(signChecker, q);
+            if (rr == null)
+                continue;
             if (rr.isSuccess()) {
                 User user = rr.getUser();
                 LoginResult result = new LoginResult();
                 result.token = new LoginToken(this, 123, user);
                 return result.succeed();
             }
-            lastRr = rr;
+            return new LoginResult(rr);
         }
-        if (lastRr != null)
-            return new LoginResult(lastRr);
-
         return new LoginResult().fail("No successful login.");
     }
 

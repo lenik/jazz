@@ -20,6 +20,13 @@
                 <id property="id" column="g_admin" />
             </association>
         </association>
+        <collection property="otherIds" javaType="ArrayList" ofType="net.bodz.lily.security.UserOtherId">
+            <id property="id" column="o_id" />
+            <result property="otherId" column="o_oid" />
+            <association property="type" javaType="net.bodz.lily.security.UserOtherIdType">
+                <id property="id" column="o_type" />
+            </association>
+        </collection>
     </resultMap>
 
     <resultMap id="objedit_map" type="net.bodz.lily.security.User" extends="objlist_map">
@@ -52,6 +59,9 @@
             g.description "g_description",
             g.admin "g_admin",
             s.passwd,
+            o.id "o_id",
+            o.type "o_type",
+            o.oid "o_oid",
             r.label "run_label",
             r.lastlog,
             r.lastlogip
@@ -59,6 +69,7 @@
             left join usercat cat on a.cat = cat.id
             left join "group" g on a.gid0 = g.id
             left join usersec s on a.id = s."user"
+            left join useroid o on a.id = o."user"
             left join user_run r on a.id  =  r."user"
         ]]>
     </sql>
@@ -70,6 +81,9 @@
             s.passwd,
             s.id "s_id",
             s.passwd "s_passwd",
+            o.id "o_id",
+            o.type "o_type",
+            o.oid "o_oid",
             g.name "g_name",
             g.label "g_label",
             g.description "g_description",
@@ -88,6 +102,7 @@
             left join group_user x on x."user" = a.id
             left join "group" y on y.id = x."group" 
             left join usersec s on a.id = s."user"
+            left join useroid o on a.id = o."user"
             left join user_run r on a.id = r."user"
         ]]>
     </sql>
@@ -97,6 +112,8 @@
         <if test="m.primaryGroupId != null">and a.gid0 = #{m.primaryGroupId}</if>
         <if test="m.name != null">and a.name = #{m.name}</if>
         <if test="m.password != null">and s.passwd = #{m.password}</if>
+        <if test="m.email != null">and (o.type = 1 and o.oid = #{m.email})</if>
+        <if test="m.mobile != null">and (o.type = 2 and o.oid = #{m.mobile})</if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -127,16 +144,18 @@
     <select id="selectByEmail" resultMap="objedit_map">
         <include refid="objedit_sql" />
         <where>
-            <!-- s.emailok = true -->
-            and s.email = #{email}
+            and o.type = 2
+            and o.oid = #{email}
+            <!-- and o.state = VALIDATED -->
         </where>
     </select>
 
     <select id="selectByMobile" resultMap="objedit_map">
         <include refid="objedit_sql" />
         <where>
-            <!-- s.telok = true -->
-            and s.tel = #{mobile}
+            and o.type = 2
+            and o.oid = #{mobile}
+            <!-- and o.state = VALIDATED -->
         </where>
     </select>
 
@@ -184,19 +203,22 @@
         </set>
         <where>
             id = #{id}
-        </where>;
-        
+        </where>
+        ;
+
         update usersec s
         <set>
             "user" = #{id},
             passwd = #{secret.password},
             props = #{secret.properties.jsonForm},
-            question = #{secret.question},
+            question =
+            #{secret.question},
             answer = #{secret.answer},
         </set>
         <where>
             s."user" = #{id}
-        </where>;
+        </where>
+        ;
     </update>
 
     <delete id="delete">
