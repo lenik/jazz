@@ -13,7 +13,7 @@ public abstract class CoPrincipal
     public static final int N_LOGIN_NAME = 30;
     public static final int N_FULL_NAME = 40;
 
-    String name;
+    // String name;
     CoPrincipalProperties properties;
 
     /**
@@ -21,11 +21,11 @@ public abstract class CoPrincipal
      * @label.zh 登录名
      */
     public String getName() {
-        return name;
+        return getCodeName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        setCodeName(name);
     }
 
     /**
