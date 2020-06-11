@@ -1,1 +1,1 @@
-net.bodz.lily.security.LoginFilter
+net.bodz.lily.security.login.LoggedInEnsurer

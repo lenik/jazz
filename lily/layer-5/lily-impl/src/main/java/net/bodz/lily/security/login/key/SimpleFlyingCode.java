@@ -1,9 +1,9 @@
-package net.bodz.lily.security.login;
+package net.bodz.lily.security.login.key;
 
-public class VerificationCodeChallenger
-        extends AbstractTimeoutChallenger {
 
-    static final int NSLOT = 10;
+public class SimpleFlyingCode
+        extends AbstractFlyingCode {
+
     static final int DEFAULT_LENGTH = 6;
 
     static final int prime = 45077;
@@ -14,19 +14,19 @@ public class VerificationCodeChallenger
     long modulo;
     int radix = 10;
 
-    public VerificationCodeChallenger(Object key, long window) {
+    public SimpleFlyingCode(Object key, long window) {
         this(key, window, DEFAULT_LENGTH);
     }
 
-    public VerificationCodeChallenger(Object key, long window, int length) {
-        super(window, NSLOT);
+    public SimpleFlyingCode(Object key, long window, int length) {
+        super(window);
         if (key == null)
             throw new NullPointerException("key");
         this.keyHash = key.hashCode();
         length(length);
     }
 
-    VerificationCodeChallenger length(int len) {
+    SimpleFlyingCode length(int len) {
         this.length = len;
         long m = 1;
         for (int i = 0; i < len; i++)
