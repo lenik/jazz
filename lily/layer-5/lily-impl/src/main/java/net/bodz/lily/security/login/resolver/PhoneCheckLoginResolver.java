@@ -1,24 +1,22 @@
-package net.bodz.lily.security.login;
+package net.bodz.lily.security.login.resolver;
 
 import java.util.List;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
-import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.impl.UserOtherIdMapper;
 import net.bodz.lily.security.impl.UserSecretMapper;
-import net.bodz.lily.security.impl.UserSecretMask;
+import net.bodz.lily.security.login.DataBackedLoginResolver;
 import net.bodz.lily.security.login.key.ISignatureChecker;
 
-public class MobileLoginResolver
+public class PhoneCheckLoginResolver
         extends DataBackedLoginResolver {
 
     protected UserSecretMapper userSecretMapper;
     protected UserOtherIdMapper userOtherIdMapper;
 
-    public MobileLoginResolver(DataContext dataContext) {
+    public PhoneCheckLoginResolver(DataContext dataContext) {
         super(dataContext);
         this.userSecretMapper = dataContext.getMapper(UserSecretMapper.class);
         this.userOtherIdMapper = dataContext.getMapper(UserOtherIdMapper.class);
@@ -28,12 +26,10 @@ public class MobileLoginResolver
     public Result login(ISignatureChecker checker, IVariantMap<String> q) {
         String mobile = q.getString("mobile");
         if (mobile == null)
-            mobile = q.getString("tel");
-        if (mobile == null)
             return null;
 
-        String passwordCr = q.getString("cr");
-        if (passwordCr == null) {
+        String sign = q.getString("e_cr");
+        if (sign == null) {
             return failed("Password isn't specified.");
         }
 
@@ -48,19 +44,10 @@ public class MobileLoginResolver
         }
 
         User matchedUser = users.get(0);
-        List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretMask().userName(mobile), SelectOptions.ALL);
-        if (userSecrets.isEmpty())
-            return failed("User %s has no secret.", mobile);
+        if (checker.checkSignature(mobile, sign))
+            return new Result(matchedUser);
 
-        for (UserSecret userSecret : userSecrets) {
-            String passwd = userSecret.getPassword();
-            if (checker.checkSignature(passwd, passwordCr)) {
-                return new Result(matchedUser);
-            }
-        }
-
-        return failed("Incorrect password for user %s.", mobile);
+        return failed("Incorrect verification code for mobile number %s.", mobile);
     }
 
 }

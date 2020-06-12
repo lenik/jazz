@@ -1,4 +1,4 @@
-package net.bodz.lily.security.login;
+package net.bodz.lily.security.login.resolver;
 
 import java.util.List;
 
@@ -10,15 +10,17 @@ import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.impl.UserOtherIdMapper;
 import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
+import net.bodz.lily.security.login.DataBackedLoginResolver;
 import net.bodz.lily.security.login.key.ISignatureChecker;
 
-public class UserNameLoginResolver
-        extends DataBackedLoginResolver {
+public class UserPasswordLoginResolver
+        extends DataBackedLoginResolver
+        implements ILoginConsts {
 
     protected UserSecretMapper userSecretMapper;
     protected UserOtherIdMapper userOtherIdMapper;
 
-    public UserNameLoginResolver(DataContext dataContext) {
+    public UserPasswordLoginResolver(DataContext dataContext) {
         super(dataContext);
         this.userSecretMapper = dataContext.getMapper(UserSecretMapper.class);
         this.userOtherIdMapper = dataContext.getMapper(UserOtherIdMapper.class);
@@ -32,9 +34,9 @@ public class UserNameLoginResolver
         if (userName == null)
             return null;
 
-        String passwordCr = q.getString("cr");
-        if (passwordCr == null)
-            return failed("Password isn't specified.");
+        String sign = q.getString(K_PASSWD);
+        if (sign == null)
+            return null;
 
         User namedUser = userMapper.selectByName(userName);
         if (namedUser == null)
@@ -47,7 +49,7 @@ public class UserNameLoginResolver
 
         for (UserSecret userSecret : userSecrets) {
             String passwd = userSecret.getPassword();
-            if (checker.checkSignature(passwd, passwordCr)) {
+            if (checker.checkSignature(passwd, sign)) {
                 return new Result(namedUser);
             }
         }

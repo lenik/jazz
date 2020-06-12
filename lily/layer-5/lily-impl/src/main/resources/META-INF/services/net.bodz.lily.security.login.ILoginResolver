@@ -1,3 +1,4 @@
-net.bodz.lily.security.login.EmailLoginResolver
-net.bodz.lily.security.login.MobileLoginResolver
-net.bodz.lily.security.login.UserNameLoginResolver
+net.bodz.lily.security.login.resolver.EmailPasswordLoginResolver
+net.bodz.lily.security.login.resolver.PhoneCheckLoginResolver
+net.bodz.lily.security.login.resolver.PhonePasswordLoginResolver
+net.bodz.lily.security.login.resolver.UserPasswordLoginResolver

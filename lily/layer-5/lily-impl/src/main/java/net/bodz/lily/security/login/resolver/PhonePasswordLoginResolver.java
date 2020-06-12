@@ -1,4 +1,4 @@
-package net.bodz.lily.security.login;
+package net.bodz.lily.security.login.resolver;
 
 import java.util.List;
 
@@ -10,15 +10,17 @@ import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.impl.UserOtherIdMapper;
 import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
+import net.bodz.lily.security.login.DataBackedLoginResolver;
 import net.bodz.lily.security.login.key.ISignatureChecker;
 
-public class EmailLoginResolver
-        extends DataBackedLoginResolver {
+public class PhonePasswordLoginResolver
+        extends DataBackedLoginResolver
+        implements ILoginConsts {
 
     protected UserSecretMapper userSecretMapper;
     protected UserOtherIdMapper userOtherIdMapper;
 
-    public EmailLoginResolver(DataContext dataContext) {
+    public PhonePasswordLoginResolver(DataContext dataContext) {
         super(dataContext);
         this.userSecretMapper = dataContext.getMapper(UserSecretMapper.class);
         this.userOtherIdMapper = dataContext.getMapper(UserOtherIdMapper.class);
@@ -26,41 +28,40 @@ public class EmailLoginResolver
 
     @Override
     public Result login(ISignatureChecker checker, IVariantMap<String> q) {
-        String email = q.getString("email");
-        if (email == null)
-            email = q.getString("e-mail");
-        if (email == null)
+        String mobile = q.getString("mobile");
+        if (mobile == null)
+            mobile = q.getString("tel");
+        if (mobile == null)
             return null;
 
-        String passwordCr = q.getString("cr");
-        if (passwordCr == null) {
-            return failed("Password isn't specified.");
-        }
+        String sign = q.getString(K_PASSWD);
+        if (sign == null)
+            return null;
 
-        List<User> users = userMapper.selectByMobile(email);
+        List<User> users = userMapper.selectByMobile(mobile);
         switch (users.size()) {
         case 0:
-            return failed("Not registered email: %s", email);
+            return failed("Not registered mobile number: %s", mobile);
         case 1:
             break;
         default:
-            return failed("Multiple users using the same email %s.", email);
+            return failed("Multiple users using the same mobile number %s.", mobile);
         }
 
         User matchedUser = users.get(0);
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretMask().email(email), SelectOptions.ALL);
+                new UserSecretMask().userName(mobile), SelectOptions.ALL);
         if (userSecrets.isEmpty())
-            return failed("User %s has no secret.", email);
+            return failed("User %s has no secret.", mobile);
 
         for (UserSecret userSecret : userSecrets) {
             String passwd = userSecret.getPassword();
-            if (checker.checkSignature(passwd, passwordCr)) {
+            if (checker.checkSignature(passwd, sign)) {
                 return new Result(matchedUser);
             }
         }
 
-        return failed("Incorrect password for user %s.", email);
+        return failed("Incorrect password for user %s.", mobile);
     }
 
 }
