@@ -39,11 +39,13 @@ public abstract class AutoloadViewBuilderFactory
             }
 
             if (tset != null) {
-                @SuppressWarnings("unchecked")
-                Collection<? extends IViewBuilder<T>> selection //
-                = (Collection<? extends IViewBuilder<T>>) tset.selectForAll(features);
+                Collection<IViewBuilder<?>> selection = tset.selectForAll(features);
                 if (!selection.isEmpty()) {
-                    list.addAll(selection);
+                    for (IViewBuilder<?> vb : selection) {
+                        @SuppressWarnings("unchecked")
+                        IViewBuilder<T> item = (IViewBuilder<T>) vb;
+                        list.add(item);
+                    }
                     break; // stop if vbo for any subclass exists.
                 }
             }
