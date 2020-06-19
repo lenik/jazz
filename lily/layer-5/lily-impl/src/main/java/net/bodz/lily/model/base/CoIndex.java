@@ -34,12 +34,12 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
-import net.bodz.bas.site.ajax.AjaxResult;
-import net.bodz.bas.site.ajax.HttpPayload;
 import net.bodz.bas.site.file.IFileNameListener;
 import net.bodz.bas.site.file.IncomingSaver;
 import net.bodz.bas.site.file.ItemFile;
+import net.bodz.bas.site.json.HttpPayload;
 import net.bodz.bas.site.json.JsonMap;
+import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.site.json.TableData;
@@ -123,21 +123,21 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                 try {
                     target = listHandler(q);
                 } catch (RequestHandlerException e) {
-                    target = new AjaxResult().fail(e, "Failed to handle list request: " + e.getMessage());
+                    target = new JsonResponse().fail(e, "Failed to handle list request: " + e.getMessage());
                 }
                 break;
             case "delete":
                 try {
                     target = deleteHandler(q);
                 } catch (RequestHandlerException e) {
-                    target = new AjaxResult().fail(e, "Failed to handle delete request: " + e.getMessage());
+                    target = new JsonResponse().fail(e, "Failed to handle delete request: " + e.getMessage());
                 }
                 break;
             case "new":
                 try {
                     target = newHandler(q);
                 } catch (RequestHandlerException e) {
-                    target = new AjaxResult().fail(e, "Failed to handle new-form request: " + e.getMessage());
+                    target = new JsonResponse().fail(e, "Failed to handle new-form request: " + e.getMessage());
                 }
                 break;
             case "save":
@@ -145,7 +145,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                 try {
                     target = saveHandler(q, json);
                 } catch (RequestHandlerException e) {
-                    target = new AjaxResult().fail(e, "Failed to handle save request: " + e.getMessage());
+                    target = new JsonResponse().fail(e, "Failed to handle save request: " + e.getMessage());
                 }
                 break;
             default:
@@ -227,9 +227,9 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return wrapper;
     }
 
-    protected AjaxResult saveHandler(IVariantMap<String> q, JsonObject content)
+    protected JsonResponse saveHandler(IVariantMap<String> q, JsonObject content)
             throws RequestHandlerException {
-        AjaxResult result = new AjaxResult();
+        JsonResponse result = new JsonResponse();
 
         T obj;
         Long id = content.getLong("id");
@@ -256,16 +256,15 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return result;
     }
 
-    protected AjaxResult deleteHandler(IVariantMap<String> q)
+    protected JsonResponse deleteHandler(IVariantMap<String> q)
             throws RequestHandlerException {
-        AjaxResult result = new AjaxResult();
+        JsonResponse result = new JsonResponse();
         String ids = q.getString("id");
         if (ids == null) {
             result.fail("Id isn't specified.");
         } else {
             IMapperTemplate<T, M> mapper = requireMapper();
             StringBuilder fails = new StringBuilder();
-            result.setSuccess(true);
             for (String idStr : ids.split(",")) {
                 try {
                     long id = Long.parseLong(idStr);
@@ -305,7 +304,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return obj;
     }
 
-    protected void preSave(IVariantMap<String> q, final T obj, AjaxResult result)
+    protected void preSave(IVariantMap<String> q, final T obj, JsonResponse result)
             throws IOException {
         JsonMap properties = obj.getProperties();
         if (properties instanceof RichProperties) {
@@ -328,7 +327,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     protected void renameUrlAsFileChange(T obj, File oldName, File newName, String relativePath) {
     }
 
-    protected void save(IVariantMap<String> q, T obj, AjaxResult result) {
+    protected void save(IVariantMap<String> q, T obj, JsonResponse result) {
         try {
             preSave(q, obj, result);
         } catch (IOException e) {
@@ -341,11 +340,11 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         if (create) {
             mapper.insert(obj);
             result.set("id", obj.getId());
-            result.println("Inserted id: " + obj.getId());
+            result.getLogger().info("Inserted id: " + obj.getId());
         } else {
             long rows = mapper.update(obj);
             result.set("count", rows);
-            result.println("Rows updated: " + rows);
+            result.getLogger().info("Rows updated: " + rows);
         }
         result.succeed();
     }

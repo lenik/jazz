@@ -1,4 +1,4 @@
-package net.bodz.bas.site.ajax;
+package net.bodz.bas.site.json;
 
 import java.io.IOException;
 import java.io.PrintWriter;

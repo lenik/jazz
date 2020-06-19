@@ -1,8 +1,5 @@
 package net.bodz.bas.servlet.config;
 
-import net.bodz.bas.servlet.config.AbstractServletContextConfigurer;
-import net.bodz.bas.servlet.config.ServletContextConfig;
-import net.bodz.bas.servlet.config.ServletDescriptor;
 import net.bodz.bas.servlet.io.ClassResourceAccessorServlet;
 import net.bodz.bas.servlet.io.StaticFileAccessServlet;
 import net.bodz.bas.servlet.io.StaticVhostFileAccessServlet;

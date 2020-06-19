@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.bas.site.ajax.AjaxResult;
+import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.t.base.CoMessageIndex;
 import net.bodz.violet.plan.Diary;
@@ -18,7 +18,7 @@ public class DiaryIndex
     public static final String SCHEMA = "diary";
 
     @Override
-    protected void save(IVariantMap<String> q, Diary obj, AjaxResult result) {
+    protected void save(IVariantMap<String> q, Diary obj, JsonResponse result) {
         super.save(q, obj, result);
 
         // Update diary parties.

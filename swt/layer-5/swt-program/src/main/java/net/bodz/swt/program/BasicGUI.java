@@ -34,7 +34,7 @@ import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
-import net.bodz.bas.program.meta.StartMode;
+import net.bodz.bas.meta.build.StartMode;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.bas.ui.err.UiException;
@@ -54,7 +54,7 @@ import net.bodz.swt.c.resources.SWTResources;
 
 /**
  * @style width: 320px; height: 240px;
- * 
+ *
  * @lang en, zh-cn
  * @site.web http://www.bodz.net/products/BasicGUI
  */
