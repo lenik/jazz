@@ -8,7 +8,7 @@
 --\mixin lily.mixin.Props
 
         parent      int
-            references extsite(id) on update cascade on delete cascade,
+            references extsite on update cascade on delete cascade,
 
         depth       int not null default -1,
 

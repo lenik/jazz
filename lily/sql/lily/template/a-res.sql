@@ -9,7 +9,7 @@
 --\mixin lily.mixin.FavLike
 
         "$1"        ${2=int} not null
-            references "$1"(id) on update cascade on delete cascade
+            references "$1" on update cascade on delete cascade
     );
 
     create index $1_re_lastmod  on $1_re(lastmod desc);

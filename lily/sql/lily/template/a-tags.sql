@@ -9,10 +9,10 @@
 --\mixin lily.mixin.Ver
 
         "$1"        ${2=int} not null
-            references "$1"(id) on update cascade on delete cascade,
+            references "$1" on update cascade on delete cascade,
 
         tag         int not null
-            references $1tag(id) on update cascade on delete cascade
+            references $1tag on update cascade on delete cascade
 
         -- , constraint $1_tag_uk unique("$1", tag)
     );

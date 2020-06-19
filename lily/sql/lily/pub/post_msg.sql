@@ -9,10 +9,10 @@
 --\mixin lily.mixin.MiMsg
 
         post        bigint not null
-            references post(id) on update cascade on delete cascade,
+            references post on update cascade on delete cascade,
 
         parent      bigint
-            references post_msg(id) on update cascade on delete cascade
+            references post_msg on update cascade on delete cascade
     );
 
     create index post_msg_lastmod    on post_msg(lastmod desc);

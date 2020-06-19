@@ -6,13 +6,13 @@
     create table personrole(
         id          int primary key default nextval('personrole_seq'),
         org         int not null
-            references org(id) on update cascade on delete cascade,
+            references org on update cascade on delete cascade,
 
         ou          int
-            references orgunit(id) on update cascade on delete cascade,
+            references orgunit on update cascade on delete cascade,
 
         person      int not null
-            references person(id) on update cascade on delete cascade,
+            references person on update cascade on delete cascade,
 
         role        varchar(20),
         description varchar(200),

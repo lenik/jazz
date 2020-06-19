@@ -5,10 +5,10 @@
 
     create table group_user(
         "group" int not null
-            references "group"(id) on update cascade on delete cascade,
+            references "group" on update cascade on delete cascade,
 
         "user" int not null
-            references "user"(id) on update cascade on delete cascade,
+            references "user" on update cascade on delete cascade,
         
 --\mixin lily.mixin.Label
         -- a descriptive role name.
@@ -25,7 +25,7 @@
     -- the admin user for this group.
     -- by default it should be the creator.
     alter table "group" add admin int not null default 0
-        references "user"(id) on update cascade on delete set null;
+        references "user" on update cascade on delete set null;
         
     -- primary gid, 0 for root user.
     -- alter table "user" alter gid0 drop default;

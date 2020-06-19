@@ -14,7 +14,7 @@
     -- bonus
 
         parent      int
-            references $1cat(id) on update cascade on delete cascade,
+            references $1cat on update cascade on delete cascade,
 
         depth       int not null default -1,
 

@@ -11,10 +11,10 @@
 --\mixin lily.mixin.Ver
         
         app         int not null
-            references app(id) on update cascade,
+            references app on update cascade,
         
         api         int
-            references api(id) on update cascade,
+            references api on update cascade,
         
         -- exception dump.
         err         text,

@@ -11,7 +11,7 @@
         
         -- (optional)
         apply       int
-            references apply(id) on update cascade,
+            references apply on update cascade,
 
         -- can be public key.
         secret      text not null

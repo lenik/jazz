@@ -6,7 +6,7 @@
         id          int primary key default nextval('_tag_seq'),
 --\mixin lily.mixin.LabelExVer
         tagv        int not null
-            references _tagv(id) on update cascade on delete cascade
+            references _tagv on update cascade on delete cascade
     );
 
     create index _tag_label          on _tag(label);

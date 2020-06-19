@@ -11,10 +11,10 @@
 --\mixin lily.mixin.Props
 
         org         int not null
-            references org(id) on update cascade on delete cascade,
+            references org on update cascade on delete cascade,
 
         parent      int
-            references orgunit(id) on update cascade on delete cascade,
+            references orgunit on update cascade on delete cascade,
 
         depth       int not null default 0
     );

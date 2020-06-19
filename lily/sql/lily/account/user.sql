@@ -5,15 +5,15 @@
     create table "user"(
         id          int primary key default nextval('user_seq'),
         cat         int not null default 0
-            references usercat(id) on update cascade,
+            references usercat on update cascade,
         name        varchar(32) not null unique,
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Props
 
         gid0        int not null default 2
-            references "group"(id) on update cascade,
+            references "group" on update cascade,
         referer     int
-            references "user"(id) on update cascade on delete set null
+            references "user" on update cascade on delete set null
     );
 
     create index user_label         on "user"(label);

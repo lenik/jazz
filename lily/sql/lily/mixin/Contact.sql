@@ -6,7 +6,7 @@
         $1address1    varchar(80) not null default '',
         $1address2    varchar(80) not null default '',
         $1zone        int
-            references zone(id) on update cascade,
+            references zone on update cascade,
 
         $1tel         varchar(20),    -- the primary tel
         $1telok       boolean not null default false,

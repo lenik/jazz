@@ -11,7 +11,7 @@
 --\mixin lily.mixin.Props
 
         cat         int
-            references partycat(id) on update cascade,
+            references partycat on update cascade,
 
         birthday    date,
         locale      varchar(10),

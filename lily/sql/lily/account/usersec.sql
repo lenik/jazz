@@ -11,7 +11,7 @@
 --\mixin lily.mixin.Props
 
         "user"      int not null
-            references "user"(id) on update cascade on delete cascade,
+            references "user" on update cascade on delete cascade,
 
         passwd      varchar(40) not null default '',
 

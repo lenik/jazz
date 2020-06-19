@@ -11,7 +11,7 @@
 --\mixin lily.mixin.Msg
 
         cat         int
-            references articlecat(id) on update cascade,
+            references articlecat on update cascade,
 
     -- props:
         -- seealso.orig: for template

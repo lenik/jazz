@@ -8,5 +8,5 @@
 --\mixin lily.mixin.LabelExVer
 
         schema      int not null
-            references _schema(id) on update cascade on delete cascade
+            references _schema on update cascade on delete cascade
     );
