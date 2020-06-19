@@ -6,7 +6,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.site.json.JsonMap;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.mx.CoMessage;
+import net.bodz.lily.t.base.CoMessage;
 
 /**
  * 文章

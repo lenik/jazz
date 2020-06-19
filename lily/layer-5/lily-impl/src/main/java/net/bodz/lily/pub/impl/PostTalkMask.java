@@ -1,6 +1,6 @@
 package net.bodz.lily.pub.impl;
 
-import net.bodz.lily.model.mx.CoMessageMask;
+import net.bodz.lily.t.base.CoMessageMask;
 
 /**
  * @see net.bodz.lily.pub.PostTalk

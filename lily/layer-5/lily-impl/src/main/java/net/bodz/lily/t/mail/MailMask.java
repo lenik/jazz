@@ -1,6 +1,6 @@
-package net.bodz.lily.model.mx.impl;
+package net.bodz.lily.t.mail;
 
-import net.bodz.lily.model.mx.CoMessageMask;
+import net.bodz.lily.t.base.CoMessageMask;
 
 public class MailMask
         extends CoMessageMask {

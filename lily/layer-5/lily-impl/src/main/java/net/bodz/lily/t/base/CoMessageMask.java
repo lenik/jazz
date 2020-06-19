@@ -1,4 +1,4 @@
-package net.bodz.lily.model.mx;
+package net.bodz.lily.t.base;
 
 import java.util.Collection;
 
@@ -6,7 +6,7 @@ import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntRange;
 import net.bodz.lily.model.base.CoMomentIntervalMask;
 
-public class CoMessageMask
+public abstract class CoMessageMask
         extends CoMomentIntervalMask {
 
     public Integer formId;

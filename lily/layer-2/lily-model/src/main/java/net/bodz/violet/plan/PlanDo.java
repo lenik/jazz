@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.mx.CoMessage;
+import net.bodz.lily.t.base.CoMessage;
 
 @Table(name = "plando")
 @IdType(Long.class)

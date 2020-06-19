@@ -1,7 +1,7 @@
 package net.bodz.violet.shop.impl;
 
 import net.bodz.bas.t.range.DoubleRange;
-import net.bodz.lily.model.mx.CoMessageMask;
+import net.bodz.lily.t.base.CoMessageMask;
 
 public class SalesOrderMask
         extends CoMessageMask {

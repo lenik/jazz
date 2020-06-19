@@ -1,10 +1,11 @@
-package net.bodz.lily.model.mx;
+package net.bodz.lily.t.mail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.security.User;
+import net.bodz.lily.t.base.CoMessage;
 
 @IdType(Long.class)
 public class Mail

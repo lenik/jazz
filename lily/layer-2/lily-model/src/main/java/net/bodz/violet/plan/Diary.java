@@ -12,7 +12,7 @@ import net.bodz.bas.site.json.JsonArrayList;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.mx.CoMessage;
+import net.bodz.lily.t.base.CoMessage;
 
 @Table(name = "diary")
 @IdType(Long.class)

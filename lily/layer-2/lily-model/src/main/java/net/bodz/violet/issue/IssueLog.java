@@ -3,7 +3,7 @@ package net.bodz.violet.issue;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.mx.CoMessage;
+import net.bodz.lily.t.base.CoMessage;
 
 @IdType(Long.class)
 @Table(name = "issuelog")
