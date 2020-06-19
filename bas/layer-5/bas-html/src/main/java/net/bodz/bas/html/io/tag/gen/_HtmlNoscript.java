@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
-import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.AbstractRecHtmlOut;
+import net.bodz.bas.html.io.HtmlDoc;
 
 /**
  * The noscript element is a blunt instrument. Sometimes, scripts might be enabled, but for some

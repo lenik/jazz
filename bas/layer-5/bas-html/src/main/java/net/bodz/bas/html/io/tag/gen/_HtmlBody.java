@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
-import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.AbstractRecHtmlOut;
+import net.bodz.bas.html.io.HtmlDoc;
 
 /**
  * The body element exposes as event handler content attributes a number of the event handlers of

@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
-import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.AbstractRecHtmlOut;
+import net.bodz.bas.html.io.HtmlDoc;
 
 /**
  * <!--TOPIC:HTML-->The dfn element represents the defining instance of a term. The paragraph,

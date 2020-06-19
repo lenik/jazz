@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
-import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.AbstractRecHtmlOut;
+import net.bodz.bas.html.io.HtmlDoc;
 
 /**
  * <!--TOPIC:HTML-->The bdi element represents a span of text that is to be isolated from its

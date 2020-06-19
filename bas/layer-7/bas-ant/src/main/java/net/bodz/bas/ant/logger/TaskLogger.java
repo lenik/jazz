@@ -4,8 +4,8 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 
 import net.bodz.bas.log.AbstractLogSink;
-import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.SinkBasedLogger;
 
 public class TaskLogger
         extends SinkBasedLogger {

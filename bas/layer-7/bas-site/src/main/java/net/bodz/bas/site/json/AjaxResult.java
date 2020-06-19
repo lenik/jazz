@@ -9,8 +9,6 @@ import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.site.json.AbstractJsonResponse;
-import net.bodz.bas.site.json.JsonResponse;
 
 public class AjaxResult
         extends AbstractJsonResponse<JsonResponse> {

@@ -1,7 +1,7 @@
 package net.bodz.bas.html.io.tag.gen;
 
-import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.AbstractRecHtmlOut;
+import net.bodz.bas.html.io.HtmlDoc;
 
 /**
  * The main element is not suitable for use to identify the main content areas of sub sections of a

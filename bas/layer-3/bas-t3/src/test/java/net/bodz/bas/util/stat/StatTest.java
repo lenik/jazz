@@ -3,10 +3,6 @@ package net.bodz.bas.util.stat;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.util.stat.ICounter;
-import net.bodz.bas.util.stat.StatNode;
-import net.bodz.bas.util.stat.SubCounterMode;
-
 public class StatTest
         extends Assert {
 

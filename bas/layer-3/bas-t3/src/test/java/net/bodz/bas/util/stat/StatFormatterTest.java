@@ -3,10 +3,6 @@ package net.bodz.bas.util.stat;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.util.stat.StatDumpFormat;
-import net.bodz.bas.util.stat.StatFormatter;
-import net.bodz.bas.util.stat.StatNode;
-
 public class StatFormatterTest
         extends Assert {
 

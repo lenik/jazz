@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.DataCodec;
-import net.bodz.bas.fmt.rst.IDataCodec;
 
 public class DataCodecTest
         extends Assert {

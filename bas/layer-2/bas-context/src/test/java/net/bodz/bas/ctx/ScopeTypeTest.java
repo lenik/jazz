@@ -2,8 +2,6 @@ package net.bodz.bas.ctx;
 
 import org.junit.Assert;
 
-import net.bodz.bas.ctx.ScopeType;
-
 public class ScopeTypeTest
         extends Assert {
 

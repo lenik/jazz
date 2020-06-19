@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import net.bodz.bas.err.ExpectedException;
 import net.bodz.bas.fn.IExecutableX;
-import net.bodz.bas.ui.dialog.ConsoleDialogs;
 
 public class ConsoleDialogTest
         extends Assert {

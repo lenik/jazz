@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import net.bodz.bas.t.iterator.PrefetchedIterator;
 import net.bodz.bas.t.iterator.PrefetchSeed;
+import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class PreorderTreeMap<K, V>
         extends TreeMap<K, V>

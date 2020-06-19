@@ -1,6 +1,5 @@
 package net.bodz.bas.err;
 
-import net.bodz.bas.err.IllegalUsageException;
 
 public class ConflictedVersionException
         extends IllegalUsageException {
