@@ -15,7 +15,7 @@ import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
-import net.bodz.bas.site.ajax.AjaxResult;
+import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
@@ -97,8 +97,8 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<self_t>> 
 
     protected abstract void parse(IType declaredType, ModuleIndexer indexer);
 
-    public AjaxResult getProperties() {
-        AjaxResult result = new AjaxResult();
+    public JsonResponse getProperties() {
+        JsonResponse result = new JsonResponse();
         JsonWriter out = result.begin("propertyGroups").array();
         PropertyExporter exporter = new PropertyExporter(ModuleIndexer.getInstance());
 

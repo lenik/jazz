@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.bodz.bas.c.java.util.regex.IPartProcessor;
 import net.bodz.bas.c.java.util.regex.TextPrepByParts;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
-import net.bodz.bas.site.ajax.AjaxResult;
+import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.CoIndex;
 
@@ -46,7 +46,7 @@ public abstract class CoMessageIndex<T extends CoMessage<?>, M extends CoMessage
     }
 
     @Override
-    protected void preSave(IVariantMap<String> q, T obj, AjaxResult result)
+    protected void preSave(IVariantMap<String> q, T obj, JsonResponse result)
             throws IOException {
         String html = obj.getText();
         String mod = stripAbsoluteUrls(html);

@@ -78,26 +78,31 @@ public class LoginManager
     int distance = 10 * 60; // 10 minutes
     FlyingSignatureChecker signChecker = new FlyingSignatureChecker(window, distance);
 
-    LoginResult initiate(IVariantMap<String> q) {
+    public LoginResult initiate(IVariantMap<String> q) {
         LoginResult result = new LoginResult();
         String serverChallenge = signChecker.getSalt();
         result.setServerChallenge(serverChallenge);
 
         // diag helper.
         if (debug) {
-            Integer userId = q.getInt("userId");
+            Integer userId = q.getInt("uid");
             if (userId != null) {
                 String password = getAnyPassword(userId);
                 if (password != null) {
                     String ecr = DigestUtils.shaHex(serverChallenge + password + serverChallenge);
-                    result.setExpectedClientResp(ecr);
+                    result.set("e_passwd", ecr);
                 }
+            }
+            String phone = q.getString("phone");
+            if (phone != null) {
+                String ecr = DigestUtils.shaHex(serverChallenge + phone + serverChallenge);
+                result.set("e_cr", ecr);
             }
         }
         return result;
     }
 
-    LoginResult login(IVariantMap<String> q) {
+    public LoginResult login(IVariantMap<String> q) {
         for (ILoginResolver resolver : resolverProvider.getResolvers()) {
             Result rr = resolver.login(signChecker, q);
             if (rr == null)

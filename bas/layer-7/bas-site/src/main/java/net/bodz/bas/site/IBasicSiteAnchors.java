@@ -2,8 +2,8 @@ package net.bodz.bas.site;
 
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.servlet.ctx.WebAppAnchor;
-import net.bodz.bas.site.config.UsrShareResourceMappings;
 import net.bodz.bas.site.config.MyResourceMappings;
+import net.bodz.bas.site.config.UsrShareResourceMappings;
 
 public interface IBasicSiteAnchors {
 
