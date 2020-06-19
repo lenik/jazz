@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.mx.CoMessage;
+import net.bodz.lily.t.base.CoMessage;
 
 @IdType(Long.class)
 @Table(name = "issue")

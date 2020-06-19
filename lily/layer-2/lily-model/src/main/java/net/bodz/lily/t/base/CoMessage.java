@@ -1,4 +1,4 @@
-package net.bodz.lily.model.mx;
+package net.bodz.lily.t.base;
 
 import java.util.Date;
 
@@ -21,6 +21,7 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.model.mixin.UseForm;
 import net.bodz.lily.model.mixin.UserClickInfo;
+import net.bodz.lily.schema.ParameterMap;
 import net.bodz.lily.security.User;
 import net.bodz.lily.template.RichProperties;
 

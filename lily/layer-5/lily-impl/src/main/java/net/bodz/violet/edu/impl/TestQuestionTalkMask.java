@@ -1,6 +1,6 @@
 package net.bodz.violet.edu.impl;
 
-import net.bodz.lily.model.mx.CoMessageMask;
+import net.bodz.lily.t.base.CoMessageMask;
 
 /**
  * @see net.bodz.violet.edu.TestQuestionTalk

@@ -7,7 +7,7 @@ import java.util.Map;
 import net.bodz.bas.meta.decl.ObjectType;
 import net.bodz.bas.site.ajax.AjaxResult;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.mx.CoMessageIndex;
+import net.bodz.lily.t.base.CoMessageIndex;
 import net.bodz.violet.plan.Diary;
 import net.bodz.violet.plan.DiaryParty;
 

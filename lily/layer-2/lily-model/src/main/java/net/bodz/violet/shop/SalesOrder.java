@@ -16,7 +16,7 @@ import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.SizedList;
-import net.bodz.lily.model.mx.CoMessage;
+import net.bodz.lily.t.base.CoMessage;
 import net.bodz.violet.plan.Plan;
 import net.bodz.violet.tran.TransportOrder;
 
