@@ -2,7 +2,7 @@ package net.bodz.violet.art;
 
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
-import net.bodz.lily.model.mixin.ValidControl;
+import net.bodz.lily.t.struct.ValidControl;
 
 @IdType(Integer.class)
 public class ArtifactModel
