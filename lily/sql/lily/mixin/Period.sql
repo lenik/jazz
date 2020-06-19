@@ -1,0 +1,8 @@
+        $1years       smallint not null default 0,
+        $1months      smallint not null default 0,
+        $1weeks       smallint not null default 0,
+        $1days        int not null default 0,
+        $1workdays    boolean not null default false,
+        $1hours       int not null default 0,
+        $1minutes     int not null default 0,
+        $1seconds     int not null default 0,
